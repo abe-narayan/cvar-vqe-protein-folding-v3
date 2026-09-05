@@ -1,0 +1,138 @@
+{
+  "claim": "A wall-clock lower bound for the folding pipeline on this machine, with bit-identical science.",
+  "derivation": "With C cores, wall >= total_CPU_work / C. So a target speedup X requires CPU_work <= (baseline_wall/X)*C.",
+  "baseline_wall_s": 2537.568,
+  "cores": {
+    "logical": 8,
+    "fastest_core_equivalents": 6.426,
+    "per_core_relative_speed": [
+      0.974,
+      1.0,
+      0.935,
+      0.882,
+      0.64,
+      0.693,
+      0.6,
+      0.702
+    ],
+    "measured_with": "the AMBER production recipe, not a proxy kernel"
+  },
+  "cpu_work_s": {
+    "total": 2034.6999999999998,
+    "amber": 1285.85,
+    "everything_else": 748.85,
+    "basis": "AMBER at w1 parity (no contention); reference_arms (70.81 s, a reporting arm the baseline does not run) excluded. Measured CPU-work at w8 will be HIGHER than this because of contention, so the bound is optimistic."
+  },
+  "targets": {
+    "10x": {
+      "wall_needed_s": 253.8,
+      "cpu_work_allowed_s": 1630.6,
+      "cpu_work_have_s": 2034.7,
+      "short_by_s": 404.1,
+      "feasible_at_perfect_scaling": false,
+      "note": "unreachable: needs perfect scaling AND a 20%% CPU-work cut"
+    },
+    "20x": {
+      "wall_needed_s": 126.9,
+      "cpu_work_allowed_s": 815.3,
+      "cpu_work_have_s": 2034.7,
+      "short_by_s": 1219.4,
+      "feasible_at_perfect_scaling": false,
+      "note": "allows less total CPU-work than AMBER alone (1285.8 s)"
+    },
+    "30x": {
+      "wall_needed_s": 84.6,
+      "cpu_work_allowed_s": 543.5,
+      "cpu_work_have_s": 2034.7,
+      "short_by_s": 1491.2,
+      "feasible_at_perfect_scaling": false,
+      "note": "allows less total CPU-work than AMBER alone (1285.8 s)"
+    }
+  },
+  "why_amber_cannot_shrink": [
+    "threads>1 on the CPU platform is deterministic but NOT bit-identical, and threads=1 is what the 2142/2142 per-target result rests on",
+    "the OpenCL platform does not expose DeterministicForces at all: three runs of identical input gave -489.94942065568176 / -489.84656905084980 / -489.83860512515605, a 0.11 kcal/mol spread. A tolerance requires the same input to give the same answer twice.",
+    "OpenCL is also not faster here: ~1.06x geometric mean over six targets, slower on four of six; kernel launch overhead swamps a ~230-atom GBn2 kernel",
+    "reducing evaluations, raising the minimiser tolerance, or dropping GBn2 would be reducing the science, which is forbidden"
+  ],
+  "remaining_bit_identical_lever": "Compiling the projection kernel. core/project.py is dispatch-bound (~60 numpy dispatches per placement at ~0.47 us each), and a compiled loop performing the SAME operations in the SAME order is bit-identical because IEEE754 is deterministic for a fixed operation sequence. Blocked here: numba and cython are not installed and no C compiler (gcc/cl/clang) is on PATH.",
+  "CORRECTION": "The first version of this file divided by 8 cores and was 24 PERCENT OPTIMISTIC. This machine is not 8 equal cores. Ranked with the AMBER workload itself (one process at a time, idle box) the per-core CPU-seconds per structure are 4.375/4.260/4.557/4.828/6.661/6.146/7.099/6.073, a clean 4/4 split at 1.67x on the P-core / LP-E boundary. Capacity is sum(rel) = 6.426 fastest-core-equivalents, so the bound is wall >= CPU_work / 6.426. An earlier probe of mine using a float64 spin loop found only a 1.24x spread and no 4/4 pattern, and I wrongly concluded core type was not a factor: a cache-resident spin loop does not rank these cores the way a bandwidth-bound GBn2 kernel does. Rank with the real workload.",
+  "amber_inflation_is_heterogeneity_not_contention": {
+    "per_core_relative_speed": [
+      0.974,
+      1.0,
+      0.935,
+      0.882,
+      0.64,
+      0.693,
+      0.6,
+      0.702
+    ],
+    "equal_count_regime": {
+      "predicted": 1.2908,
+      "measured": 1.2913,
+      "error_pct": 0.03,
+      "note": "chunked dispatch, equal job COUNT per core"
+    },
+    "dynamic_regime": {
+      "predicted": 1.2449,
+      "measured": 1.2533,
+      "error_pct": 0.67,
+      "note": "longest-processing-time-first; work taken by availability, so each core does work in proportion to its speed"
+    },
+    "gap_between_regimes_cpu_s": 59.0,
+    "harvested_by_rescheduling_cpu_s": 48.8,
+    "residual_above_dynamic_floor_cpu_s": 10.8,
+    "residual_pct_of_stage": 0.67,
+    "conclusion": "AMBER has essentially no memory-bandwidth contention left: the residual above the dynamic heterogeneity floor is 10.8 CPU-s, 0.67% of the stage. Rescheduling captured 48.8 of the 59.0 CPU-s available between the two regimes; the uncaptured remainder IS that residual. An AMBER concurrency cap cannot help, and was measured as a negative."
+  },
+  "machine_ceiling": {
+    "superseded": true,
+    "see": "CORRECTION_2",
+    "scheduling_limit": {
+      "core_occupancy_pct": 95.9,
+      "wall_s": 290.7,
+      "speedup": 8.73,
+      "basis": "measured occupancy; at most ~4% more is available from placement"
+    },
+    "achieved": {
+      "wall_s": 303.1,
+      "speedup": 8.371,
+      "pct_of_scheduling_limit": 95.9
+    }
+  },
+  "achieved_decomposition": {
+    "machine_capacity_fast_core_equivalents": 6.426,
+    "baseline_cpu_work_s": 2535.41,
+    "pure_parallelism_of_the_UNoptimised_pipeline": {
+      "wall_s": 394.6,
+      "speedup": 6.43,
+      "meaning": "what perfectly parallelising the original pipeline would give, with no structural change"
+    },
+    "achieved": {
+      "wall_s": 367.12,
+      "speedup": 6.91,
+      "beats_pure_parallelism_by": 1.075,
+      "meaning": "faster than perfectly parallelising the original, because structural work genuinely removed CPU-work"
+    },
+    "genuine_cpu_work_reduction": {
+      "baseline_fast_core_s": 2535.41,
+      "optimised_fast_core_s": 1898.9,
+      "factor": 1.335,
+      "method": "optimised CPU-seconds deflated by the measured heterogeneity factor 1.2908, since they were accrued across all 8 cores while the baseline ran on fast cores. An estimate, not a direct measurement."
+    },
+    "residual_headroom": {
+      "core_occupancy": 6.68,
+      "of_cores": 8,
+      "occupancy_pct": 83.5,
+      "perfect_load_balance_wall_s": 306.4,
+      "perfect_load_balance_speedup": 8.28,
+      "worth": 1.198,
+      "measured_directly": "CPU-seconds / wall-seconds; no deflation assumption",
+      "cause": "load imbalance, most likely the cost-vs-count chunking used to restore memo locality: chunks equal in target COUNT are unequal in COST because AMBER scales steeply with residue count (n runs 9-16). The run tail accounts for well under 1%.",
+      "bit_identical": "yes by construction -- per-target results are already proven independent of worker count and dispatch order"
+    }
+  },
+  "CORRECTION_2": "The machine_ceiling of 8.01x recorded here was UNIT-INCONSISTENT and was later exceeded by a measured 8.371x. It summed AMBER at its single-worker cost (measured on fast cores) with projection at a cost measured across mixed cores, then divided by the fast-core capacity 6.426. Neither quantity was in the units the divisor consumes. The defensible statements are (a) core occupancy, measured directly as CPU-seconds over wall-seconds, and (b) the AMBER-alone comparison in the 'targets' block, which is what rules out 20x and 30x and does not depend on any scheduling assumption.",
+  "CORRECTION_3": "'AMBER is at its irreducible cost' was wrong, and the sharper version is stronger. mean(1/rel)=1.2908 is not a floor: it is the prediction for the EQUAL-COUNT regime, where every core receives the same NUMBER of jobs, which is where the old chunked dispatcher sat. The DYNAMIC floor, where work is taken by availability so each core does work in proportion to its speed, is N/sum(rel) = 8/6.426 = 1.2449. The core map therefore predicts BOTH regimes, and both were measured: equal-count predicted 1.2908 vs measured 1.2913 (+0.03%), dynamic predicted 1.2449 vs measured 1.2533 (+0.67%). Two schedules in different regimes each landing on its own prediction is a much stronger validation of the core map than a single 0.03% agreement that was partly luck."
+}

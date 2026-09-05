@@ -1,0 +1,22 @@
+{
+  "A_cvar_value_diff": 2.220446049250313e-16,
+  "A_probs_bit_identical": false,
+  "A_probs_max_abs_diff": 2.7755575615628914e-17,
+  "A_state_max_abs_diff": 6.938893903907228e-17,
+  "B_paramshift_max_abs_diff_vs_ref_fd": 4.485250088004378e-10,
+  "B_paramshift_vs_INDEPENDENT_fd_cosine": 0.9999999999999999,
+  "B_paramshift_vs_INDEPENDENT_fd_relnorm": 1.0000000002110283,
+  "B_paramshift_vs_core_fd_cosine": 0.9999999999999999,
+  "C_const_baseline_cosine_vs_paramshift": 1.0,
+  "C_const_baseline_relnorm": 0.9999999999999994,
+  "C_no_baseline_cosine_vs_paramshift": 1.0,
+  "C_sampled_const_cosine": 0.9999386854540011,
+  "D_sampled_tail_cosine": 0.6850042577480431,
+  "D_tail_baseline_cosine_vs_paramshift": 0.6846730107146582,
+  "D_tail_baseline_relnorm": 0.6305261569174653,
+  "E_all_defaults_const": true,
+  "E_baseline_defaults": {
+    "cvar_gradient": "const",
+    "grad_cvar_score": "const"
+  }
+}

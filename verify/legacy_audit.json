@@ -1,0 +1,69 @@
+{
+  "FITTED_WEIGHTS": {
+    "aromatic": 0.8,
+    "compactness": 0.4,
+    "contact": 1.0,
+    "coop_helix": 2.0,
+    "coop_sheet": 2.0,
+    "electrostatic": 1.0,
+    "hbond_local": 1.0,
+    "hbond_longrange": 3.0,
+    "solvation": 0.5,
+    "steric": 4.0,
+    "torsion": 0.15
+  },
+  "SUBSETS_keys": [
+    "all",
+    "burial",
+    "hb",
+    "packing"
+  ],
+  "TERMS": [
+    "steric",
+    "contact",
+    "hbond_local",
+    "hbond_longrange",
+    "coop_helix",
+    "coop_sheet",
+    "solvation",
+    "electrostatic",
+    "aromatic",
+    "torsion",
+    "compactness"
+  ],
+  "TERMS_matches_energy_terms": true,
+  "decomposition_is_not_degenerate": true,
+  "legacy_backend": "core.energy",
+  "max_abs_offdiag_correlation": 0.687733046152731,
+  "n_distinct_weights": 8,
+  "n_terms": 11,
+  "n_terms_with_variation": 8,
+  "reference_module": "legacy_field",
+  "shuffled_weights_change_total": true,
+  "term_matrix_bit_identical": true,
+  "term_matrix_max_abs_diff": 0.0,
+  "term_matrix_rank": 8,
+  "term_matrix_shape": [
+    24,
+    11
+  ],
+  "terms_with_variation": [
+    "steric",
+    "contact",
+    "hbond_local",
+    "coop_helix",
+    "solvation",
+    "electrostatic",
+    "torsion",
+    "compactness"
+  ],
+  "weighted_total_first5": [
+    "-16.178463248076582",
+    "-7.53081581241335",
+    "-22.47957885162284",
+    "-6.012422087672505",
+    "-22.917180066173614"
+  ],
+  "weights_match_reference": true,
+  "weights_not_all_equal": true
+}

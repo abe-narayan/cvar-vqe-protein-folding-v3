@@ -1,0 +1,2407 @@
+{
+ "agg": {
+  "n_targets": 126,
+  "n_bit_identical": 126,
+  "worst_abs_diff": 0.0,
+  "seconds": 575.6888613998308,
+  "s_per_target": 4.568959217458975,
+  "L_worst": 1.0,
+  "not_identical": []
+ },
+ "rows": [
+  {
+   "pdb": "1A13",
+   "n": 14,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1A1P",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1CB3",
+   "n": 11,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1CEK",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1CS9",
+   "n": 9,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1D0W",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1D6X",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1DEP",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1DJF",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1FUV",
+   "n": 11,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1G89",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1I6Y",
+   "n": 11,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1I8E",
+   "n": 11,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1I93",
+   "n": 11,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1ID6",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1IM7",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1JBF",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1KMR",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1KWE",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1KYC",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1KZ2",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1LB7",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1M02",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1M23",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1MF6",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1N9U",
+   "n": 10,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1NIZ",
+   "n": 14,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1RG4",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1RSW",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1S9Z",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1TOR",
+   "n": 10,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "1U62",
+   "n": 11,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2BAO",
+   "n": 10,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2BFI",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2BP4",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2EFZ",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2F3A",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2FBU",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2JN5",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2L7T",
+   "n": 11,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2LER",
+   "n": 11,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2LM8",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2LNG",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2LU6",
+   "n": 14,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2LWS",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2LWU",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2MAA",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2MAI",
+   "n": 14,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2MD2",
+   "n": 10,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2MFV",
+   "n": 14,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2MID",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2MIG",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2MJQ",
+   "n": 10,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2MK7",
+   "n": 9,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2MLQ",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2MP9",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2MQ2",
+   "n": 14,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2MSA",
+   "n": 14,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2N5C",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2N9A",
+   "n": 11,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2N9M",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2NB7",
+   "n": 14,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2NBC",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2NDM",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2NDN",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2O0S",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2P5H",
+   "n": 9,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2RUO",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "2XL1",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "3BTB",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "3SGO",
+   "n": 11,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "5H1H",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "5MML",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "5MXS",
+   "n": 14,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "5NVB",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "5V5B",
+   "n": 10,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "5W52",
+   "n": 11,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "5Z5W",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6A5J",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6B9K",
+   "n": 10,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6BJF",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6BX9",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6CEJ",
+   "n": 14,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6EY3",
+   "n": 9,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6F3V",
+   "n": 9,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6GIJ",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6HVK",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6J9P",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6MBM",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6MK8",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6OQP",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6Q08",
+   "n": 14,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6QAX",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6RRL",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6RRO",
+   "n": 11,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6S0N",
+   "n": 9,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6TWG",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "6WPB",
+   "n": 14,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "7BX2",
+   "n": 14,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "7JGX",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "7JS6",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "7LCW",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "7N2I",
+   "n": 9,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "7P3M",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "7QZV",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "7S3O",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "7T3H",
+   "n": 10,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "7VI4",
+   "n": 10,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "7YFS",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "8FLP",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "8HVS",
+   "n": 10,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "8IL1",
+   "n": 14,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "8IS3",
+   "n": 9,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "8T61",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "8T62",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "8T63",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "8TXS",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "8UN8",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "8ZG2",
+   "n": 11,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "9BAF",
+   "n": 16,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "9BFL",
+   "n": 10,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "9KAR",
+   "n": 15,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "9L1M",
+   "n": 12,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "9S5G",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "9UV5",
+   "n": 9,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  },
+  {
+   "pdb": "9WXK",
+   "n": 13,
+   "max_abs_diff": 0.0,
+   "per_key": {
+    "fval": 0.0,
+    "fit_fval": 0.0,
+    "dC": 0.0,
+    "rmsd": 0.0,
+    "fit_rmsd": 0.0,
+    "step_mean": 0.0,
+    "step_sd": 0.0,
+    "pseudoangle_mean": 0.0,
+    "rg": 0.0,
+    "posphi_con_nongly": 0.0,
+    "min_nonlocal_CA": 0.0
+   },
+   "L": 1.0
+  }
+ ]
+}

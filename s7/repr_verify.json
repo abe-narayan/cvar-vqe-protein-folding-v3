@@ -1,0 +1,25 @@
+{
+ "n_raw": 6790,
+ "n_pca32": 6790,
+ "raw_dims": [
+  1280
+ ],
+ "shape_violations": 0,
+ "compute_mentions_coordinates": false,
+ "recompute": [
+  {
+   "seq": "AAADDAIDRAEDT",
+   "max_abs_diff": 0.0001220703125
+  },
+  {
+   "seq": "AAAEVADGA",
+   "max_abs_diff": 0.000244140625
+  },
+  {
+   "seq": "AAAEVADGAI",
+   "max_abs_diff": 0.0001220703125
+  }
+ ],
+ "n_pca32_checked": 20,
+ "pca32_matches_projection": true
+}

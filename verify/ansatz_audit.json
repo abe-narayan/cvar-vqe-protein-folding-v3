@@ -1,0 +1,21 @@
+{
+  "1_distribution_moves_with_theta": 0.09053642605065487,
+  "1_onelayer_closedform_vs_circuit_max_abs_diff": 1.1102230246251565e-16,
+  "1_onelayer_is_the_circuit": true,
+  "1_probs_sum": 1.0,
+  "2_mps_dim": 1024,
+  "2_mps_logp_vs_probs_max_abs_diff": 0.0,
+  "2_mps_moves_with_theta": 0.03958448811635526,
+  "2_mps_probs_sum": 1.0000000000000002,
+  "2_mps_schmidt_rank_gt1": true,
+  "2_mps_support": 1024,
+  "3_cvar_gradient_exact_cosine_vs_independent_fd": 1.0,
+  "3_cvar_gradient_exact_relnorm": 1.0000000000358864,
+  "3_cvar_value_vs_independent": 2.220446049250313e-16,
+  "4_cvar_alpha0.05_minus_full_mean": -2.093247047632955,
+  "4_cvar_alpha0.05_vs_sorted_tail_mean": 0.0021158390586872855,
+  "4_cvar_alpha0.15_minus_full_mean": -1.5870449422082484,
+  "4_cvar_alpha0.15_vs_sorted_tail_mean": 0.0008620710996534164,
+  "4_cvar_alpha0.5_minus_full_mean": -0.8192686526308822,
+  "4_cvar_alpha0.5_vs_sorted_tail_mean": 0.0
+}

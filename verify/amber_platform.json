@@ -1,0 +1,207 @@
+{
+ "machine": {
+  "cpu": "Intel Core Ultra 7 256V",
+  "physical_cores": 8,
+  "logical": 8,
+  "hyperthreading": false,
+  "L3_MB": 12,
+  "gpu": "Intel Arc 140V (8GB, iGPU)",
+  "openmm": "8.5.2.dev-36a30cb",
+  "numpy": "2.5.1",
+  "scipy": "1.18.0"
+ },
+ "golden": {
+  "1A13_native_interaction": -489.9138948277905,
+  "reproduced_on_CPU_threads1": true,
+  "evaluations": 726
+ },
+ "opencl": {
+  "verdict": "NEGATIVE -- structural, not a tuning failure",
+  "initialises": true,
+  "device": "Intel(R) Arc(TM) 140V GPU (8GB)",
+  "honours_double": true,
+  "platform_properties": {
+   "CPU": [
+    "DeterministicForces",
+    "Threads"
+   ],
+   "OpenCL": [
+    "DeviceIndex",
+    "DeviceName",
+    "DisablePmeStream",
+    "OpenCLPlatformIndex",
+    "OpenCLPlatformName",
+    "Precision",
+    "UseCpuPme"
+   ]
+  },
+  "why": "OpenCL does not expose DeterministicForces; the CPU platform does and core/amber.py sets it true, which is what makes the pinned golden reproducible.  Bitwise reproducibility is unavailable by construction.",
+  "three_identical_runs_1A13": [
+   -489.94942065568176,
+   -489.8465690508498,
+   -489.83860512515605
+  ],
+  "run_to_run_spread_kcal": 0.1108,
+  "run_to_run_CA_movement_A": 0.00723,
+  "speedup_by_target": {
+   "1A13": 3.33,
+   "1A1P": 0.93,
+   "1CB3": 0.8,
+   "1CEK": 1.18,
+   "1CS9": 0.41,
+   "1D0W": 1.2
+  },
+  "speedup_geometric_mean": 1.06,
+  "traps": {
+   "no_Precision_property_means_single": {
+    "interaction": -498.41402388439576,
+    "d_golden_kcal": -8.500129
+   },
+   "building_the_Hamiltonian_on_OpenCL_resolves_calibrate_hydrogens": {
+    "hydrogen_frame_shift_nm": 0.1884,
+    "d_golden_kcal": 2.926108,
+    "note": "_calibrate_hydrogens is itself a LocalEnergyMinimizer call"
+   }
+  }
+ },
+ "core_map": {
+  "note": "ranked with the AMBER workload itself, not a proxy kernel.  A GBn2 minimisation is bandwidth-bound and ranks the cores differently from a float64 spin loop (1.24x, no pattern) or a cache-resident matmul (1.7x, no pattern).  With the real workload the split is clean and 4/4.",
+  "min_cpu_seconds_per_structure": {
+   "0": 4.375,
+   "1": 4.26,
+   "2": 4.557,
+   "3": 4.828,
+   "4": 6.661,
+   "5": 6.146,
+   "6": 7.099,
+   "7": 6.073
+  },
+  "relative_to_fastest": {
+   "0": 0.974,
+   "1": 1.0,
+   "2": 0.935,
+   "3": 0.882,
+   "4": 0.64,
+   "5": 0.693,
+   "6": 0.6,
+   "7": 0.702
+  },
+  "fast_set": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "slow_set": [
+   4,
+   5,
+   6,
+   7
+  ],
+  "fastest_to_slowest_ratio": 1.666,
+  "fastest_core_equivalents": 6.426,
+  "implication": "the machine is 6.43 fast-core-equivalents, not 8.  The bench sweep's saturation at ~3.9 effective workers is the P-core COUNT, not the memory wall, which bites later at w8.",
+  "predicted_cpu_inflation_if_work_spreads_evenly": {
+   "CORRECTION": "this block previously called mean(1/rel) 'the floor'.  It is not.  It is the prediction for ONE scheduling regime -- equal COUNT of structures per core -- and the old dispatcher happened to be in it (contiguous equal-count chunks).  There are two regimes and each has its own prediction; both are now measured and both land.",
+   "regime_equal_count_per_core": {
+    "formula": "mean(1/rel)",
+    "predicted": 1.2908,
+    "applies_to": "static contiguous equal-count chunks (the old dispatcher)",
+    "measured": 1.2913,
+    "agreement_percent": 0.03
+   },
+   "regime_equal_wall_per_core": {
+    "formula": "n / sum(rel)",
+    "predicted": 1.2449,
+    "applies_to": "any DYNAMIC dispatch: every core stays busy the same wall time, so fast cores complete MORE structures and the per-structure CPU average is weighted toward them.  This is the true floor at w8.",
+    "measured": 1.2533,
+    "agreement_percent": 0.67
+   },
+   "gap_between_regimes_percent": 3.69,
+   "cpu_seconds_recoverable_by_scheduling_alone": 59.0,
+   "conclusion": "The core map is confirmed TWICE, by two schedules that sit in different regimes and each land on their own prediction to within 0.7%.  The residual excess over the dynamic floor is +0.67%, about 8.6 CPU-s of 1611.59 -- so there is no memory-bandwidth contention left in AMBER at all.  A concurrency cap would idle cores to relieve nothing."
+  },
+  "methodological_finding": "A PROXY KERNEL DID NOT ADD ERROR, IT REMOVED THE SIGNAL.  Two independent proxy rankings of these cores -- a float64 spin loop (1.24x spread) and a cache-resident matmul (1.7x spread) -- both found NO 4/4 pattern and both led to the conclusion that core heterogeneity was not the constraint.  The real workload finds a clean 4/4 split at 1.67x that accounts for AMBER's entire w8 inflation to 0.03%.  The reason is mechanistic rather than statistical: a cache-resident kernel and a bandwidth-bound one load different parts of the machine, so they do not merely rank the cores noisily, they rank them by a different quantity.  Rank hardware with the workload whose cost you are trying to explain.  (The same lesson this project already recorded when a decoy-bank ranker failed to transfer to real pools.)"
+ },
+ "affinity": {
+  "verdict": "NEGATIVE -- pinning to the fast cores is worse than letting the OS place",
+  "box_was_idle": true,
+  "drift_check_A_prime_vs_A": 0.986,
+  "arms_cpu_seconds_per_structure": {
+   "A_w1_pinned_fastest": 5.143,
+   "B_w4_unpinned": 5.882,
+   "C_w4_pinned_fast4": 6.375,
+   "D_w1_pinned_slowest": 7.237,
+   "A_prime_drift_check": 5.07
+  },
+  "arms_relative_to_A": {
+   "A": 1.0,
+   "B": 1.144,
+   "C": 1.239,
+   "D": 1.407
+  },
+  "arms_wall_seconds_per_structure": {
+   "A": 9.722,
+   "B": 6.061,
+   "C": 20.003,
+   "D": 9.91
+  },
+  "C_wall_blowup_reproduced_on_a_second_run": {
+   "B": 10.682,
+   "C": 18.854
+  },
+  "conclusions": [
+   "B reproduces the bench sweep's +14.9% at w4 (+14.4%) in a pure AMBER harness with a tiny footprint and RAM nowhere near the gate -- so the AMBER inflation is NOT page pressure and NOT the window-bank footprint.",
+   "D is +40.7% with exactly zero contention: one process, one slow core.  Core heterogeneity alone is a LARGER effect than the entire w4 regression, so the w4 inflation is dominated by placement onto slow cores, not by L3 contention.",
+   "C is worse than B on both CPU (+24% vs +14%) and wall (3.3x), reproduced twice.  Packing four workers onto the four P-cores makes them contend with each other and with the OS threads that also prefer P-cores, and forbids the E-cores entirely.  There is no cheap bit-identical affinity fix."
+  ],
+  "bit_identity": {
+   "1A13": -489.9138948277905,
+   "1A1P": -711.849194589003,
+   "1CB3": -413.27521709415504,
+   "note": "one distinct energy per target across every arm; placement cannot change arithmetic, and this verifies it rather than assuming it"
+  }
+ },
+ "threads": {
+  "verdict": "t2 is a REGRESSION; t4 is 1.97x wall for 1.65x the CPU-seconds",
+  "measured_on_fast_cores_one_process": true,
+  "rows": [
+   {
+    "threads": 1,
+    "wall_s": 4.058,
+    "cpu_s": 3.969,
+    "wall_speedup": 1.0,
+    "cpu_cost": 1.0,
+    "d_golden_kcal": 0.0
+   },
+   {
+    "threads": 2,
+    "wall_s": 4.469,
+    "cpu_s": 5.359,
+    "wall_speedup": 0.908,
+    "cpu_cost": 1.35,
+    "d_golden_kcal": -0.03352
+   },
+   {
+    "threads": 4,
+    "wall_s": 2.061,
+    "cpu_s": 6.557,
+    "wall_speedup": 1.969,
+    "cpu_cost": 1.652,
+    "d_golden_kcal": -0.01617
+   }
+  ],
+  "corrects": "the feasibility model assumed AMBER thread speedups of 1.5 at t2 and 2.2 at t4.  t2 measures 0.908 -- slower than t1 -- which falsifies the recommended w4 x t2 hybrid.  t4's 1.97 is close to the assumed 2.2 but costs 1.65x the CPU-seconds, and the feasibility bound counts CPU-seconds, so threading makes the BOUND worse while improving wall only where cores would otherwise sit idle.",
+  "stronger_reason_to_reject": "The wall numbers alone kill t2, but the decisive objection is that OpenMM's thread count changes the RESULT and not only the speed: _calibrate_hydrogens inherits the thread count and settles in a different minimum, moving the energy by ~144 kcal/mol.  So a w4 x t2 arm would have to be restated as a tolerance, while w8 x t1 is both faster and bit-identical -- the trade was never live.  (Measured by the bench agent; consistent with the -3.4e-2 kcal/mol per-structure deviation measured here, which is the minimisation alone with the calibration held fixed.)"
+ },
+ "ceiling": {
+  "note": "wall >= CPU_work / effective_cores.  Dividing by 8 is 24% optimistic on this box; the AMBER-workload capacity is 6.426 fastest-core-equivalents. NOTE: the per-structure inflation floor depends on the SCHEDULE (1.2908 static equal-count, 1.2449 dynamic); the core-equivalents figure 6.426 does not.",
+  "cpu_work_s": 2034.7,
+  "effective_cores": 6.426,
+  "perfect_scaling_wall_s": 316.6,
+  "baseline_wall_s": 2537.6,
+  "ceiling_x": 8.01,
+  "achieved_bit_identical_x": 6.91,
+  "fraction_of_machine_maximum": 0.862
+ }
+}

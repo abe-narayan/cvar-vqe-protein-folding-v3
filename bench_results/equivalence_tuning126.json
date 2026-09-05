@@ -1,0 +1,103 @@
+{
+ "what": "baseline (s9 reference path, workers=1) vs optimised (core.* backends, workers=4), manifest tuning126, both cold, dev_mode empty",
+ "baseline_cfg_key": "a228c9d36ed57f36",
+ "optimised_cfg_key": "8043a81ae8f95e5e",
+ "n_targets": 126,
+ "fields_compared": [
+  "shipped",
+  "pool_best",
+  "pool_mean",
+  "top_m_best",
+  "top_m_mean",
+  "rmsd_avg",
+  "rmsd_fit",
+  "rmsd_arm",
+  "rmsd_full",
+  "d_rmsd",
+  "amber_e0",
+  "amber_e1",
+  "amber_moved",
+  "amber_strain_after",
+  "n",
+  "fold",
+  "n_windows"
+ ],
+ "per_target_numbers_compared": 2142,
+ "per_target_fields_differing": {},
+ "per_target_bit_identical": true,
+ "excluded_from_comparison": [
+  "wall (per-target wall seconds -- the quantity being optimised; differs on 126/126 by design)"
+ ],
+ "aggregate_deviations": {
+  "worst_relative": 3.301e-16,
+  "n_leaves": 77,
+  "n_exact": 70,
+  "fields": [
+   "paired/rmsd_full_vs_shipped/ci95[1]",
+   "ablations/amber_validity_cost/mean_without",
+   "rmsd_arm/mean",
+   "rmsd_avg/sd",
+   "rmsd_arm/sd",
+   "paired/rmsd_full_vs_shipped/mean_diff",
+   "ablations/amber_validity_cost/se"
+  ],
+  "mechanism": "PROVEN, not assumed: every per-target input to these aggregates is bit-identical, so the only remaining free variable is the order of accumulation across 4 workers. Fix is to reduce in canonical pdb order.",
+  "tolerance": "1-2 ulp of float64 (<=4e-16 relative) on aggregate statistics only"
+ },
+ "wall_speedup": 3.966,
+ "arms_verified": {
+  "optimised_tuning126_w4.json": {
+   "workers": 4,
+   "wall_s": 639.825,
+   "speedup": 3.966,
+   "n_targets": 126,
+   "n_compared": 2142,
+   "per_target_bit_identical": true,
+   "cpu_work_s": 2486.8,
+   "effective_cores": 3.89,
+   "components": {
+    "amber": true,
+    "quantum": false,
+    "legacy": false
+   }
+  },
+  "optimised_tuning126_w8.json": {
+   "workers": 8,
+   "wall_s": 303.137,
+   "speedup": 8.371,
+   "n_targets": 126,
+   "n_compared": 2142,
+   "per_target_bit_identical": true,
+   "cpu_work_s": 2325.9,
+   "effective_cores": 7.67,
+   "core_occupancy_pct": 95.9,
+   "scheduling": "longest-processing-time-first",
+   "components": {
+    "amber": true,
+    "quantum": false,
+    "legacy": false
+   }
+  },
+  "fourcomponent_tuning126_w8.json": {
+   "workers": 8,
+   "wall_s": 824.047,
+   "speedup": 3.079,
+   "n_targets": 126,
+   "n_compared": 2142,
+   "per_target_bit_identical": true,
+   "cpu_work_s": 5591.8,
+   "effective_cores": 6.79,
+   "components": {
+    "amber": true,
+    "quantum": true,
+    "legacy": true
+   }
+  }
+ },
+ "headline": {
+  "like_for_like": "optimised_tuning126_w8.json",
+  "speedup": 8.371,
+  "wall_s": 303.137,
+  "note": "The four-component arm is NOT a speedup figure: core/bench.py refuses --components on the baseline arm because s9/final.py contains no VQE and no Legacy stage, so it has no baseline counterpart. It is reported as an absolute cost with its ablations (see FINDINGS S11-1)."
+ }
+}

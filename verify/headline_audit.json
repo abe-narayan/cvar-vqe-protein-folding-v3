@@ -1,0 +1,167 @@
+{
+  "arms_126": {
+    "pool_best": {
+      "harness_mean": 1.7108244199364904,
+      "max_abs_per_target": 0.0,
+      "mean_diff": 0.0,
+      "n": 126,
+      "n_bit_identical": 126,
+      "n_within_1e-9": 126,
+      "s9_reference_mean": 1.7108244199364904,
+      "worst_harness": 1.7591813802719116,
+      "worst_s9": 1.7591813802719116,
+      "worst_target": "1A13"
+    },
+    "rmsd_avg": {
+      "harness_mean": 3.048338093879532,
+      "max_abs_per_target": 2.930988785010413e-14,
+      "mean_diff": 0.0,
+      "n": 126,
+      "n_bit_identical": 57,
+      "n_within_1e-9": 126,
+      "s9_reference_mean": 3.048338093879532,
+      "worst_harness": 0.5155438066356897,
+      "worst_s9": 0.515543806635719,
+      "worst_target": "2XL1"
+    },
+    "rmsd_fit": {
+      "harness_mean": 3.2040761603809194,
+      "max_abs_per_target": 0.3388709435016066,
+      "mean_diff": 0.003556783480354486,
+      "n": 126,
+      "n_bit_identical": 0,
+      "n_within_1e-9": 0,
+      "s9_reference_mean": 3.200519376900565,
+      "worst_harness": 3.282606262281762,
+      "worst_s9": 2.9437353187801554,
+      "worst_target": "8IL1"
+    },
+    "shipped": {
+      "harness_mean": 3.4540004952559396,
+      "max_abs_per_target": 0.0,
+      "mean_diff": 0.0,
+      "n": 126,
+      "n_bit_identical": 126,
+      "n_within_1e-9": 126,
+      "s9_reference_mean": 3.4540004952559396,
+      "worst_harness": 2.8480167388916016,
+      "worst_s9": 2.8480167388916016,
+      "worst_target": "1A13"
+    },
+    "top_m_best": {
+      "harness_mean": 2.3061526409453816,
+      "max_abs_per_target": 0.0,
+      "mean_diff": 0.0,
+      "n": 126,
+      "n_bit_identical": 126,
+      "n_within_1e-9": 126,
+      "s9_reference_mean": 2.3061526409453816,
+      "worst_harness": 2.243894338607788,
+      "worst_s9": 2.243894338607788,
+      "worst_target": "1A13"
+    },
+    "top_m_mean": {
+      "harness_mean": 3.5506829818026735,
+      "max_abs_per_target": 0.0,
+      "mean_diff": 0.0,
+      "n": 126,
+      "n_bit_identical": 126,
+      "n_within_1e-9": 126,
+      "s9_reference_mean": 3.5506829818026735,
+      "worst_harness": 2.7985515848795575,
+      "worst_s9": 2.7985515848795575,
+      "worst_target": "1A13"
+    }
+  },
+  "benchmark60": {
+    "arms": {
+      "full": {
+        "abs_diff": 4.7261008293553175e-05,
+        "cached": 2.9610472610082934,
+        "matches_to_4dp": true,
+        "recorded": 2.961
+      },
+      "pool_best": {
+        "abs_diff": 3.4151836236340216e-05,
+        "cached": 1.4666341518362362,
+        "matches_to_4dp": true,
+        "recorded": 1.4666
+      },
+      "shipped": {
+        "abs_diff": 2.3577539126407032e-05,
+        "cached": 2.9507235775391263,
+        "matches_to_4dp": true,
+        "recorded": 2.9507
+      }
+    },
+    "n": 60,
+    "preregistration": {
+      "K": 500,
+      "amber_k": 10.0,
+      "amber_steps": 0,
+      "dev_mean": 3.221,
+      "lam": 0.3,
+      "m": 75,
+      "multi_start": true,
+      "n_folds": 5,
+      "penalty": "ramah",
+      "tuning_mean": 3.204
+    },
+    "source": "s9/final_report.json (cached, NOT re-run)"
+  },
+  "harness_backends": {
+    "arm": "baseline_s9"
+  },
+  "harness_cfg": {
+    "amber": true,
+    "amber_k": 10.0,
+    "amber_steps": 0,
+    "dev_mode": "",
+    "k": 500,
+    "lam": 0.3,
+    "m": 75,
+    "maxiter": 300,
+    "min_sep": 2,
+    "multi_start": true,
+    "n_folds": 5,
+    "penalty": "ramah",
+    "reference_precision": true,
+    "tie_break": "stable",
+    "torsion_window": 8
+  },
+  "n_common": 126,
+  "n_harness": 126,
+  "n_s9_reference": 126,
+  "recorded_126": {
+    "pool_best": {
+      "abs_diff": 2.4419936490271965e-05,
+      "harness": 1.7108244199364904,
+      "matches_to_4dp": true,
+      "recorded": 1.7108
+    },
+    "rmsd_avg": {
+      "abs_diff": 3.8093879532130615e-05,
+      "harness": 3.048338093879532,
+      "matches_to_4dp": true,
+      "recorded": 3.0483
+    },
+    "rmsd_fit": {
+      "abs_diff": 0.0035761603809194575,
+      "harness": 3.2040761603809194,
+      "matches_to_4dp": false,
+      "recorded": 3.2005
+    },
+    "shipped": {
+      "abs_diff": 4.95255939370054e-07,
+      "harness": 3.4540004952559396,
+      "matches_to_4dp": true,
+      "recorded": 3.454
+    },
+    "top_m_best": {
+      "abs_diff": 0.000152640945381588,
+      "harness": 2.3061526409453816,
+      "matches_to_4dp": true,
+      "recorded": 2.306
+    }
+  }
+}

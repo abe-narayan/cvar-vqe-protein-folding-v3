@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "peptide-fold"
+version = "10.0.0"
+description = "A retrieve/filter/synthesise/relax structure predictor for short peptides, and the instrument that measures it"
+requires-python = ">=3.10"
+
+# Every entry below is imported by code that ships.  The audit is an AST walk over
+# core/ and tests/ plus their transitive import closure; the file each one is needed
+# by is named beside it.  Nothing is declared "just in case".
+dependencies = [
+    # core.geometry, core.data, core.energy, core.amber, core.predict, core.quantum --
+    # every module in the package.
+    "numpy>=1.23",
+    # core.predict (Bayes-risk sharpening), core.pipeline (the manifold projection),
+    # core.quantum (optimisers).
+    "scipy>=1.10",
+    # core.predict (the distogram), core.data (ESM feature blocks), core.pipeline.
+    "torch>=2.0",
+    # core.amber -- ff14SB/GBn2 restrained relaxation on the CPU platform with
+    # DeterministicForces.  There is no fallback; AMBER is the validity stage.
+    "openmm>=8.0",
+    # core.quantum -- the VQE/CVaR arm.  lightning.qubit is the device the circuits
+    # are built for and the one the exactness tests assert against with ==.
+    "pennylane>=0.35",
+    "pennylane-lightning>=0.35",
+    # core.data / esm_features -- ESM-2 embeddings.  Provides the `esm` module.
+    # S7-11: ESM pca32 buys -0.288 A of selected RMSD over one-hot; it is load-bearing.
+    "fair-esm>=2.0",
+    # core.energy -- the learned combiner in the classical energy terms.
+    "scikit-learn>=1.0",
+    # core.geometry -- PDB parsing (Bio.PDB) for pdbs/, pdbs_ext/, prots/.
+    "biopython>=1.80",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7.0"]
+
+# REMOVED from the previous requirements.txt, both now unimported anywhere in the tree:
+#   quimb        -- the matrix-product-state arm (mps/, deleted).  See project memory:
+#                   a dense statevector was bit-exact but 2.5x slower than lightning,
+#                   and the MPS route was abandoned.
+#   matplotlib   -- only ever used by the plotting and poster scripts (plot_structures,
+#                   poster_figures, diagnose_*), all deleted.  Nothing that ships plots.
+
+[tool.setuptools]
+packages = ["core"]
+py-modules = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

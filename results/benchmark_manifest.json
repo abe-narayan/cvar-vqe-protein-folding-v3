@@ -1,0 +1,491 @@
+{
+ "n_targets": 60,
+ "selection": "peptide_db.benchmark(n=60,seed=11)",
+ "length_range": [
+  9,
+  16
+ ],
+ "reference": "deposited coordinates, model 1",
+ "targets": [
+  {
+   "pdb": "1LVR",
+   "seq": "DIRALKTLV",
+   "n": 9,
+   "cluster": 74,
+   "rebuild_rmsd": 0.494,
+   "fold": 3
+  },
+  {
+   "pdb": "1Y49",
+   "seq": "PFCNAFTGC",
+   "n": 9,
+   "cluster": 132,
+   "rebuild_rmsd": 0.083,
+   "fold": 1
+  },
+  {
+   "pdb": "2JQU",
+   "seq": "GGSLYSFGL",
+   "n": 9,
+   "cluster": 165,
+   "rebuild_rmsd": 0.142,
+   "fold": 2
+  },
+  {
+   "pdb": "2MG0",
+   "seq": "VLVNEILNH",
+   "n": 9,
+   "cluster": 226,
+   "rebuild_rmsd": 0.249,
+   "fold": 3
+  },
+  {
+   "pdb": "2MGO",
+   "seq": "CYIQNCPLG",
+   "n": 9,
+   "cluster": 130,
+   "rebuild_rmsd": 0.25,
+   "fold": 2
+  },
+  {
+   "pdb": "2N0V",
+   "seq": "SVAGRAQGM",
+   "n": 9,
+   "cluster": 260,
+   "rebuild_rmsd": 0.068,
+   "fold": 3
+  },
+  {
+   "pdb": "4RIK",
+   "seq": "AVVTGVTAV",
+   "n": 9,
+   "cluster": 297,
+   "rebuild_rmsd": 0.36,
+   "fold": 0
+  },
+  {
+   "pdb": "6AXZ",
+   "seq": "QYNNQNNFV",
+   "n": 9,
+   "cluster": 343,
+   "rebuild_rmsd": 0.299,
+   "fold": 3
+  },
+  {
+   "pdb": "7N2D",
+   "seq": "FRNWQAYMQ",
+   "n": 9,
+   "cluster": 401,
+   "rebuild_rmsd": 0.457,
+   "fold": 2
+  },
+  {
+   "pdb": "1C9A",
+   "seq": "GNLWATGHFM",
+   "n": 10,
+   "cluster": 14,
+   "rebuild_rmsd": 0.138,
+   "fold": 2
+  },
+  {
+   "pdb": "1HFF",
+   "seq": "LGASWHRPDK",
+   "n": 10,
+   "cluster": 41,
+   "rebuild_rmsd": 0.143,
+   "fold": 3
+  },
+  {
+   "pdb": "1KUW",
+   "seq": "SNNFGAILSS",
+   "n": 10,
+   "cluster": 60,
+   "rebuild_rmsd": 0.14,
+   "fold": 1
+  },
+  {
+   "pdb": "1N0D",
+   "seq": "CVWEGNKLHC",
+   "n": 10,
+   "cluster": 84,
+   "rebuild_rmsd": 0.237,
+   "fold": 0
+  },
+  {
+   "pdb": "1P9F",
+   "seq": "DMHDFFVGLM",
+   "n": 10,
+   "cluster": 85,
+   "rebuild_rmsd": 0.141,
+   "fold": 2
+  },
+  {
+   "pdb": "1UAO",
+   "seq": "GYDPETGTWG",
+   "n": 10,
+   "cluster": 122,
+   "rebuild_rmsd": 0.17,
+   "fold": 2
+  },
+  {
+   "pdb": "1YT6",
+   "seq": "ACLPWSDGPC",
+   "n": 10,
+   "cluster": 134,
+   "rebuild_rmsd": 0.06,
+   "fold": 4
+  },
+  {
+   "pdb": "2GFR",
+   "seq": "PDPNAFYGLM",
+   "n": 10,
+   "cluster": 82,
+   "rebuild_rmsd": 0.151,
+   "fold": 3
+  },
+  {
+   "pdb": "2JTA",
+   "seq": "LEDGRTLSDY",
+   "n": 10,
+   "cluster": 170,
+   "rebuild_rmsd": 0.394,
+   "fold": 2
+  },
+  {
+   "pdb": "2MZX",
+   "seq": "QYQFWKNFQT",
+   "n": 10,
+   "cluster": 256,
+   "rebuild_rmsd": 0.263,
+   "fold": 2
+  },
+  {
+   "pdb": "2RVD",
+   "seq": "YYDPETGTWY",
+   "n": 10,
+   "cluster": 122,
+   "rebuild_rmsd": 0.098,
+   "fold": 2
+  },
+  {
+   "pdb": "7OB2",
+   "seq": "RLKWVRIWRR",
+   "n": 10,
+   "cluster": 403,
+   "rebuild_rmsd": 0.007,
+   "fold": 3
+  },
+  {
+   "pdb": "1LVZ",
+   "seq": "IRENLKDSGLF",
+   "n": 11,
+   "cluster": 8,
+   "rebuild_rmsd": 0.144,
+   "fold": 2
+  },
+  {
+   "pdb": "1QWP",
+   "seq": "GSNKGAIIGLM",
+   "n": 11,
+   "cluster": 82,
+   "rebuild_rmsd": 0.169,
+   "fold": 3
+  },
+  {
+   "pdb": "1RVS",
+   "seq": "YTIAALLSPYS",
+   "n": 11,
+   "cluster": 109,
+   "rebuild_rmsd": 0.093,
+   "fold": 3
+  },
+  {
+   "pdb": "1Y5C",
+   "seq": "RRWQWRMKKLG",
+   "n": 11,
+   "cluster": 133,
+   "rebuild_rmsd": 0.151,
+   "fold": 2
+  },
+  {
+   "pdb": "7T7W",
+   "seq": "LKKLWRFLKKL",
+   "n": 11,
+   "cluster": 414,
+   "rebuild_rmsd": 0.203,
+   "fold": 3
+  },
+  {
+   "pdb": "8Y3S",
+   "seq": "GVAFRAPSIHG",
+   "n": 11,
+   "cluster": 446,
+   "rebuild_rmsd": 0.437,
+   "fold": 3
+  },
+  {
+   "pdb": "8ZG3",
+   "seq": "LGGGSVRFGPG",
+   "n": 11,
+   "cluster": 448,
+   "rebuild_rmsd": 0.152,
+   "fold": 0
+  },
+  {
+   "pdb": "1LE0",
+   "seq": "SWTWEGNKWTWK",
+   "n": 12,
+   "cluster": 71,
+   "rebuild_rmsd": 0.584,
+   "fold": 2
+  },
+  {
+   "pdb": "1MYU",
+   "seq": "DVPKSDQFVGLM",
+   "n": 12,
+   "cluster": 83,
+   "rebuild_rmsd": 0.176,
+   "fold": 3
+  },
+  {
+   "pdb": "1XBH",
+   "seq": "CIYYKDGEALKY",
+   "n": 12,
+   "cluster": 129,
+   "rebuild_rmsd": 0.202,
+   "fold": 2
+  },
+  {
+   "pdb": "2EVQ",
+   "seq": "KTWNPATGKWTE",
+   "n": 12,
+   "cluster": 151,
+   "rebuild_rmsd": 0.46,
+   "fold": 3
+  },
+  {
+   "pdb": "6FGM",
+   "seq": "ACFLTRLGTYVC",
+   "n": 12,
+   "cluster": 353,
+   "rebuild_rmsd": 0.109,
+   "fold": 4
+  },
+  {
+   "pdb": "6H7I",
+   "seq": "SWTWENGKWTWK",
+   "n": 12,
+   "cluster": 71,
+   "rebuild_rmsd": 0.605,
+   "fold": 2
+  },
+  {
+   "pdb": "7TVQ",
+   "seq": "STCCGYRMCVPC",
+   "n": 12,
+   "cluster": 416,
+   "rebuild_rmsd": 0.34,
+   "fold": 2
+  },
+  {
+   "pdb": "1LCX",
+   "seq": "ELLELDKWASLWN",
+   "n": 13,
+   "cluster": 70,
+   "rebuild_rmsd": 0.066,
+   "fold": 4
+  },
+  {
+   "pdb": "1PJD",
+   "seq": "LLVPSIIFILAYS",
+   "n": 13,
+   "cluster": 101,
+   "rebuild_rmsd": 0.091,
+   "fold": 0
+  },
+  {
+   "pdb": "1QMW",
+   "seq": "ICCNPACGPKYSC",
+   "n": 13,
+   "cluster": 10,
+   "rebuild_rmsd": 0.213,
+   "fold": 3
+  },
+  {
+   "pdb": "1S4H",
+   "seq": "EEADDDMGFGLFD",
+   "n": 13,
+   "cluster": 110,
+   "rebuild_rmsd": 0.098,
+   "fold": 2
+  },
+  {
+   "pdb": "1T52",
+   "seq": "ILGKIWKGIKSLF",
+   "n": 13,
+   "cluster": 117,
+   "rebuild_rmsd": 0.054,
+   "fold": 2
+  },
+  {
+   "pdb": "2FBS",
+   "seq": "FKRIVQRIKDFLR",
+   "n": 13,
+   "cluster": 153,
+   "rebuild_rmsd": 0.121,
+   "fold": 0
+  },
+  {
+   "pdb": "2JSI",
+   "seq": "LSGAQYQQHGRAL",
+   "n": 13,
+   "cluster": 168,
+   "rebuild_rmsd": 0.232,
+   "fold": 4
+  },
+  {
+   "pdb": "2JUT",
+   "seq": "GCCSDPRCRYRCR",
+   "n": 13,
+   "cluster": 3,
+   "rebuild_rmsd": 0.145,
+   "fold": 3
+  },
+  {
+   "pdb": "2L24",
+   "seq": "IFGAIAGFIKNIW",
+   "n": 13,
+   "cluster": 177,
+   "rebuild_rmsd": 0.24,
+   "fold": 0
+  },
+  {
+   "pdb": "1K43",
+   "seq": "RGKWTYNGITYEGR",
+   "n": 14,
+   "cluster": 56,
+   "rebuild_rmsd": 0.28,
+   "fold": 4
+  },
+  {
+   "pdb": "1O53",
+   "seq": "GLFDKLKSLVSDDKK",
+   "n": 15,
+   "cluster": 90,
+   "rebuild_rmsd": 0.172,
+   "fold": 4
+  },
+  {
+   "pdb": "1R8T",
+   "seq": "RCCHPQCGAAYSCRK",
+   "n": 15,
+   "cluster": 10,
+   "rebuild_rmsd": 0.127,
+   "fold": 3
+  },
+  {
+   "pdb": "2JMY",
+   "seq": "KWKLFKKIGAVLKVL",
+   "n": 15,
+   "cluster": 161,
+   "rebuild_rmsd": 0.533,
+   "fold": 1
+  },
+  {
+   "pdb": "2JRV",
+   "seq": "PMTLPENYFSERPYH",
+   "n": 15,
+   "cluster": 167,
+   "rebuild_rmsd": 0.204,
+   "fold": 2
+  },
+  {
+   "pdb": "1LE3",
+   "seq": "GEWTWDDATKTWTWTE",
+   "n": 16,
+   "cluster": 72,
+   "rebuild_rmsd": 0.7,
+   "fold": 3
+  },
+  {
+   "pdb": "1NKF",
+   "seq": "DKDGDGYISAAEAAAQ",
+   "n": 16,
+   "cluster": 88,
+   "rebuild_rmsd": 0.271,
+   "fold": 3
+  },
+  {
+   "pdb": "1UL2",
+   "seq": "GCCSHPACAGNNQHIC",
+   "n": 16,
+   "cluster": 3,
+   "rebuild_rmsd": 0.15,
+   "fold": 3
+  },
+  {
+   "pdb": "2H8S",
+   "seq": "GCCSDPRCNYDHPEIC",
+   "n": 16,
+   "cluster": 3,
+   "rebuild_rmsd": 0.167,
+   "fold": 3
+  },
+  {
+   "pdb": "2IV4",
+   "seq": "VNITIKQHTVTTTTKG",
+   "n": 16,
+   "cluster": 160,
+   "rebuild_rmsd": 0.274,
+   "fold": 1
+  },
+  {
+   "pdb": "2N0X",
+   "seq": "LVRYTKKVPQVSTPTL",
+   "n": 16,
+   "cluster": 261,
+   "rebuild_rmsd": 0.117,
+   "fold": 3
+  },
+  {
+   "pdb": "2NDL",
+   "seq": "GPCFPMGPWGPFCIPD",
+   "n": 16,
+   "cluster": 276,
+   "rebuild_rmsd": 0.419,
+   "fold": 0
+  },
+  {
+   "pdb": "2RLJ",
+   "seq": "GAAIGLAWIPYFGPAA",
+   "n": 16,
+   "cluster": 285,
+   "rebuild_rmsd": 0.207,
+   "fold": 4
+  },
+  {
+   "pdb": "6IMG",
+   "seq": "GCPCIWPELCPWIRSC",
+   "n": 16,
+   "cluster": 359,
+   "rebuild_rmsd": 0.138,
+   "fold": 4
+  },
+  {
+   "pdb": "6RQS",
+   "seq": "RRWRRWWRRWWRRWRR",
+   "n": 16,
+   "cluster": 372,
+   "rebuild_rmsd": 0.603,
+   "fold": 1
+  },
+  {
+   "pdb": "9GRK",
+   "seq": "PSICHVHRPDWPCAYR",
+   "n": 16,
+   "cluster": 454,
+   "rebuild_rmsd": 0.645,
+   "fold": 4
+  }
+ ]
+}

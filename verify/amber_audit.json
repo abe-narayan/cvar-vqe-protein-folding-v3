@@ -1,0 +1,42 @@
+{
+  "1_forcefield": "amber14/protein.ff14SB.xml + implicit/gbn2.xml",
+  "1_forces": [
+    "CustomExternalForce",
+    "CustomGBForce",
+    "HarmonicAngleForce",
+    "HarmonicBondForce",
+    "NonbondedForce",
+    "PeriodicTorsionForce"
+  ],
+  "1_gb_computed_values": 2,
+  "1_gb_particles": 237,
+  "1_gb_per_particle_params": 7,
+  "1_has_CustomGBForce": true,
+  "1_has_NonbondedForce": true,
+  "1_n_atoms": 237,
+  "2_charges_not_all_zero": true,
+  "2_ff14sb_params_identical": true,
+  "2_max_abs_charge_diff_e": 0.0,
+  "2_max_abs_epsilon_diff_kJ": 0.0,
+  "2_max_abs_sigma_diff_nm": 0.0,
+  "2_n_distinct_charges": 105,
+  "2_total_charge": 3.0000000000000013,
+  "3_gb_distinct_radii": 7,
+  "3_gb_params_identical": true,
+  "3_gb_params_max_abs_diff": 0.0,
+  "4_abs_diff": 0.0,
+  "4_bit_exact": true,
+  "4_components": {
+    "angle": 34.15263763994527,
+    "bond": 7.4143404408698705,
+    "nonbonded": 44.81222009863782,
+    "solvation": -534.7261149264283,
+    "torsion": 134.09760690128917
+  },
+  "4_interaction": -489.9138948277905,
+  "4_reference": -489.9138948277905,
+  "5_solvation_is_large": true,
+  "5_solvation_native": -534.7261149264283,
+  "5_solvation_translated": -535.2706931026897,
+  "5_translation_invariant": 0.5445781762614388
+}

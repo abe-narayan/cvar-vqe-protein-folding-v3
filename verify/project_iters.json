@@ -1,0 +1,32 @@
+{
+ "n_targets": 10,
+ "arms": [
+  {
+   "arm": "ref",
+   "solves": 90,
+   "nit_mean": 161.33333333333334,
+   "nit_max": 300,
+   "nfev_mean": 231.04444444444445,
+   "nfev_sum": 20794,
+   "frac_hitting_maxiter": 0.1
+  },
+  {
+   "arm": "fd",
+   "solves": 90,
+   "nit_mean": 159.32222222222222,
+   "nit_max": 300,
+   "nfev_mean": 225.23333333333332,
+   "nfev_sum": 20271,
+   "frac_hitting_maxiter": 0.1
+  },
+  {
+   "arm": "an",
+   "solves": 90,
+   "nit_mean": 157.11111111111111,
+   "nit_max": 300,
+   "nfev_mean": 218.48888888888888,
+   "nfev_sum": 19664,
+   "frac_hitting_maxiter": 0.13333333333333333
+  }
+ ]
+}

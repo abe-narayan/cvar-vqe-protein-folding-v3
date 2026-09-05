@@ -1,0 +1,110 @@
+{
+  "COLLISION": true,
+  "config_has_a_field_for_the_gradient": false,
+  "mixed_provenance_demonstration": {
+    "cache_dir": "bench_results/cache/dcf43832dbdf5986",
+    "per_target": {
+      "1D6X": {
+        "analytic_recomputed": 1.8066106936776112,
+        "delta": 0.045691473310783604,
+        "fd_cached": 1.7609192203668276
+      },
+      "1DEP": {
+        "analytic_recomputed": 0.9193658489254889,
+        "delta": -0.0006847688425831722,
+        "fd_cached": 0.9200506177680721
+      }
+    },
+    "result": "That one cache directory now holds 6 targets projected with the finite-difference gradient and 2 with the analytic gradient, under a single cfg_key, with nothing in the records distinguishing them. Any mean taken over it is a blend of two different pipelines.",
+    "severity": "Worse than serving a stale array: a stale read is at least self-consistent. This silently produces a mixed-provenance result set.",
+    "what_happened": "Deleted 1D6X and 1DEP from the cache written by the PROJECT_GRAD=fd arm, then resumed the manifest with no PROJECT_GRAD set, i.e. under the analytic default. The resume recomputed exactly those two."
+  },
+  "same_cfg_key_for_both_gradients": true,
+  "science_fields": [
+    "amber",
+    "amber_k",
+    "amber_steps",
+    "dev_mode",
+    "k",
+    "lam",
+    "legacy",
+    "legacy_top",
+    "m",
+    "maxiter",
+    "min_sep",
+    "multi_start",
+    "n_folds",
+    "penalty",
+    "quantum",
+    "reference_precision",
+    "report_single_start_fit",
+    "tie_break",
+    "torsion_window",
+    "vqe_iters",
+    "vqe_layers",
+    "vqe_qubits",
+    "vqe_seed"
+  ],
+  "targets": {
+    "1CB3": {
+      "DIFFERS": true,
+      "GRAD_a": "fd",
+      "GRAD_b": "analytic",
+      "amber_ca": {
+        "bit_identical": false,
+        "max_abs_diff": 0.004553207033936246
+      },
+      "avg_ca": {
+        "bit_identical": true,
+        "max_abs_diff": 0.0
+      },
+      "backend": "core.project",
+      "ca": {
+        "bit_identical": false,
+        "max_abs_diff": 0.0015158648845217115
+      },
+      "fit_ca": {
+        "bit_identical": false,
+        "max_abs_diff": 0.001829708664606855
+      },
+      "phi": {
+        "bit_identical": false,
+        "max_abs_diff": 0.00022802871969396232
+      },
+      "psi": {
+        "bit_identical": false,
+        "max_abs_diff": 0.000269199492836103
+      }
+    },
+    "1CS9": {
+      "DIFFERS": true,
+      "GRAD_a": "fd",
+      "GRAD_b": "analytic",
+      "amber_ca": {
+        "bit_identical": false,
+        "max_abs_diff": 0.4507970761578708
+      },
+      "avg_ca": {
+        "bit_identical": true,
+        "max_abs_diff": 0.0
+      },
+      "backend": "core.project",
+      "ca": {
+        "bit_identical": false,
+        "max_abs_diff": 0.4473562022963229
+      },
+      "fit_ca": {
+        "bit_identical": false,
+        "max_abs_diff": 0.346045107232154
+      },
+      "phi": {
+        "bit_identical": false,
+        "max_abs_diff": 0.039184157273447484
+      },
+      "psi": {
+        "bit_identical": false,
+        "max_abs_diff": 0.08922573873863404
+      }
+    }
+  }
+}

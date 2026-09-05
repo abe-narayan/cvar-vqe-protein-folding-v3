@@ -1,0 +1,33 @@
+{
+ "what": "Safety and integrity items found during pre-Fable reconnaissance. Nothing here was fixed; they are recorded so the next sprint cannot trip over them.",
+ "items": [
+  {"id": "H1", "severity": "high",
+   "title": "FRAG_LARGE=1 loads fold-stale distogram models",
+   "detail": "distogram_models_large/*.pt were written 2026-09-01 11:10-11:57. peptide_clusters.json (22:30) and peptide_folds.json (23:03) were repinned the same day, and the production distogram_models/*_esm_frag.pt were retrained 2026-09-02 00:10-00:36 AFTER the repin. The large checkpoints therefore encode the PRE-correction fold assignment -- the one the record says silently moved 13 benchmark targets. Checkpoints store only {sd, mu, s}: no fold or cluster digest, so nothing detects the mismatch and no error is raised.",
+   "consequence": "Anyone flipping FRAG_LARGE=1 may get a distogram that trained on their own target.",
+   "fix": "Write a folds() digest into every checkpoint and refuse to load on mismatch; quarantine or delete distogram_models_large/.",
+   "note": "The library-saturation measurement in recon_library_saturation.json is NOT affected: it is retrieval-only and loads no model (verified)."},
+  {"id": "H2", "severity": "high",
+   "title": "benchmark60 has never had a leakage audit and is ~2x leakier than tuning126",
+   "detail": "Sequence-only audit over the whole library: tuning126 10/126 targets carry a >=0.6-identity window (15 windows); benchmark60 10/60 (16.7%, 16 windows) with TWO verbatim copies (8Y3S and 8ZG3, both from library member 8XTO); dev24 0/24. The single pre-registered benchmark pass was run on the most contaminated of the three manifests.",
+   "consequence": "Does not explain the +0.0103 null (leakage inflates both arms), but the ABSOLUTE 2.9507/2.9610 are optimistic, and the 0.243 A 'the benchmark is easier' gap now has a candidate mechanism.",
+   "fix": "Price the leak on benchmark60 the way S10-4 priced it on tuning126."},
+  {"id": "H3", "severity": "high",
+   "title": "identity() normalises by the LONGER sequence; containment() is dead code",
+   "detail": "core/data.py:188 identity() divides by max(len); containment() at :202 divides by min(len), is documented as the correct unit, and is called by nothing on the production path. IDENTITY_THRESHOLD=0.6 feeds clusters() -> folds(), holdout() and fold_fragments(). The peptide channel (pipeline.py:706) applies NO identity test at all -- only the fold split, which is itself built from the same longer-normalised metric.",
+   "examples": "1CEK<-1A11, 2FBU<-2LMF, 2P5H<-2P5J, 6B9K<-1U6V: all contain the target VERBATIM (window identity 1.000) at member identity 0.52-0.59, so they sit in DIFFERENT identity clusters and can land in different folds.",
+   "consequence": "This corrupts the FOLD SPLIT, not merely the retrieval pool -- the distogram for that target's fold may have trained on the target's own structure."},
+  {"id": "H4", "severity": "medium",
+   "title": "S10-1's operator law is an ecological regression",
+   "detail": "operator loss = 0.741*(set mean) - 1.673, R^2 0.912 is fitted across TWELVE aggregated counterfactual sets. The WITHIN-target regression on the shipped set gives slope 0.236, intercept -0.096, R^2 0.341, and a break-even set mean of -0.125 A, i.e. never.",
+   "consequence": "The RANKING of the twelve sets is real; the COEFFICIENT must not be used to price an intervention, and 'averaging becomes a gain below set mean 2.26 A' is a between-set extrapolation, not a within-target prediction."},
+  {"id": "H5", "severity": "medium",
+   "title": "The S9-10 replication table compares different arms",
+   "detail": "Tuning '3.204' is the lambda=0 projection with no AMBER; benchmark '2.9610' is lambda=0.3 plus AMBER. Like-for-like the tuning full-system mean is 3.2355 and the gain is -0.2185 [-0.3530, -0.0841] rather than -0.250.",
+   "consequence": "The non-replication conclusion survives, with less margin than the published table shows."},
+  {"id": "H6", "severity": "low",
+   "title": "A reproducibility floor under small claims",
+   "detail": "The projection disagrees with itself by mean 0.1209 A / p90 0.255 / max 1.625 under a rigid rotation of its input, which is exactly null for the objective. Upper bound on the induced SE of a 126-target mean is about +-0.025 A.",
+   "consequence": "The -0.250 A headline survives comfortably. But multi_start's claimed +0.0025 A null and any future comparison that changes the projection's INPUT sit below this floor. Paired comparisons downstream of a SHARED projection (AMBER's +0.0207, the leak's +0.0004) are unaffected."}
+ ]
+}

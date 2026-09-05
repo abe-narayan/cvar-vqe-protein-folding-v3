@@ -1,0 +1,145 @@
+{
+ "sprint": "Repository consolidation and organisation",
+ "date": "2026-09-04/05",
+ "scope": "STRUCTURAL ONLY. Zero .py files modified, added or removed. Verified: `git diff --name-only <base>..HEAD -- '*.py'` returns 0 files.",
+ "commits": [
+  "9d20d20  Consolidation: navigation, the traps that pin the layout, and 99 logs archived",
+  "65b5d18  Protect the sole-source golden evidence, and correct two claims of mine"
+ ],
+
+ "equivalence": {
+  "method": "Golden capture taken BEFORE any change and again at the end, compared by a recursive tree walk that counts the leaves it actually compared and refuses a verdict on an empty intersection.",
+  "captured": [
+   "core.backend_report() for the default arm",
+   "PROD config dict and its cache key",
+   "all four manifests, with full pdb and sequence lists",
+   "the complete folds map for all 787 peptides",
+   "the peptide ENUMERATION ORDER -- this is the BLOSUM tie-break and the most order-sensitive object in the repository",
+   "fragment counts and first/last ordering for both libraries, and all five fold_fragments sets",
+   "every committed bench_results science and per_target block",
+   "the full smoke8 production path per target: n_windows, sim, sc, filter subset, medoid index, coordinate average C, and projected ca/phi/psi/fit"
+  ],
+  "leaves_compared": 68471,
+  "differing": 0,
+  "max_abs_diff": 0.0,
+  "verdict": "BIT-IDENTICAL",
+  "runs": "twice -- after the first batch of changes and again at the end; 68471/0 both times"
+ },
+
+ "tests": {
+  "before": "219 passed, 13 skipped, 0 failed",
+  "after": "219 passed, 13 skipped, 0 failed",
+  "exit_code": 0,
+  "note": "Identical by construction, since no .py file was touched. Run anyway as the gate."
+ },
+
+ "counts": {
+  "tracked_before": 218, "tracked_after": 345,
+  "python_before": 80, "python_after": 80,
+  "top_level_dirs_before": 11, "top_level_dirs_after": 11,
+  "root_files_before": 31, "root_files_after": 31,
+  "note": "The tracked count went UP by 127, deliberately: 126 sole-source golden records plus one audit artefact were promoted from untracked to tracked. The brief forbids forcing an arbitrary file count, and protecting unrecoverable evidence beats a smaller number."
+ },
+
+ "deleted_tracked": {
+  "count": 0,
+  "why_none": "Two independent audits classified all 218 tracked files. Class E (obsolete) and class F (junk) came back EMPTY. No tracked file passed all nine deletion checks in the brief. The nearest misses are recorded under 'redundant_but_required'."
+ },
+
+ "deleted_untracked": [
+  {"what": "__pycache__/ (8 directories) and *.pyc (192 files)",
+   "proof": "git ls-files matched 0; .gitignore line 2 covers __pycache__/; regenerated on next import"},
+  {"what": ".pytest_cache/", "proof": "gitignored pytest run state"},
+  {"what": "an empty recon/ directory", "proof": "never tracked; created accidentally by a mkdir -p earlier in this session"}
+ ],
+
+ "moved": [
+  {"from": "s5|s7|s8|s9/*.log (99 files)", "to": "_archive/logs/<sprint>/", "tracked": false,
+   "why": "Console output from Sprint 5-9 runs. s8/ showed 104 files on disk against 14 tracked. ARCHIVED RATHER THAN DELETED because .gitignore treats *.log as disposable but two of them are not: FINDINGS.md:3711 cites s8/predictor_report.log as S8-13's evidence, and s8/libceil.log is the only on-disk source for the 126 per-target library-best values behind the attrition ledger's 'library best 1.313'.",
+   "caveat": "_archive/ is gitignored, so these files are NOT in git history and cannot be recovered if that directory is deleted. Stated in _archive/README.txt.",
+   "restore": "mv _archive/logs/s8/*.log s8/"},
+  {"from": "leak_audit_mine.json (repository root, untracked)", "to": "verify/recon_containment_audit.json (tracked)",
+   "why": "Per-target containment data behind hazards H2 and H3. It was a stray root artefact; verify/ is where audit evidence lives."}
+ ],
+
+ "renamed": [
+  {"from": "distogram_models_large/", "to": "distogram_models_large.STALE-PRE-FOLD-REPIN-DO-NOT-USE/", "tracked": false,
+   "why": "Hazard H1. Written 2026-09-01 11:10-11:57; peptide_clusters.json was repinned at 22:30 and peptide_folds.json at 23:03 the SAME day, and the production models were retrained 2026-09-02 00:10-00:36 AFTER the repin. These checkpoints encode the pre-correction fold assignment and store only {sd, mu, s} -- no fold digest, so nothing detects the mismatch. FRAG_LARGE=1 could load a model that trained on its own target.",
+   "behavioural_note": "This is the ONE change in the sprint that alters behaviour, and only under a non-default flag: it converts a silent wrong answer into a loud failure. The default path is provably unaffected -- USE_LARGE defaults False and MODEL_DIR resolves to distogram_models/. No committed result was ever produced with FRAG_LARGE=1; the flag appears nowhere in FINDINGS.md.",
+   "explanation_left_in_place": "distogram_models_large.STALE-PRE-FOLD-REPIN-DO-NOT-USE/WHY_THIS_IS_QUARANTINED.txt"}
+ ],
+
+ "newly_tracked": [
+  {"what": "s9/synth_cache/full_sc_75_*.json", "n": 126, "size": "2.0 MB",
+   "why": "SOLE SOURCE of four 126-target golden constants, and until now it existed in exactly one place on one disk: the directory was gitignored AND its writer s9/synth.py was deleted in d182738, so git history could not recover it either.",
+   "verified": "Two constants recompute exactly: rmsd_avg 3.0483380938795319 against the recorded 3.048338093879532, and single-start fit 3.2005193769005649 against the recorded 3.2005.",
+   "urgency": "tests/test_equivalence.py and verify/headline_audit.py read these by glob and SKIP rather than fail when the count is short. The suite goes GREEN as the evidence disappears."}
+ ],
+
+ "documentation": {
+  "README.md": {
+   "lines_before": 167, "lines_after": 240,
+   "added": [
+    "a 'Where everything is' navigation table above the fold, one row per navigation question",
+    "a role map for all 24 root modules, grouped by function",
+    "a rewritten layout section stating WHY the layout is flat, with four pins each verified rather than assumed",
+    "the write-on-first-use trap, called out as the most dangerous operation in the repository"
+   ],
+   "corrected": [
+    "the stage table named s8.project as the synthesise backend; the default is core.project, verified by backend_report(). s8.project is the LEGACY backend for that stage.",
+    "'70 findings' -> '72 findings across seven sprints'"
+   ],
+   "verified": "every backticked path in the README resolves (58 of 60 directly; the 2 apparent misses are bare filenames that are correct in their verify/ context), and no top-level tracked directory is unmentioned"
+  }
+ },
+
+ "corrections_to_my_own_work": [
+  {"claim": "README stage table: s8.project is the synthesise backend", "status": "WRONG, fixed",
+   "truth": "core/project.py satisfies CONTRACT['project'], so the default resolves to core.project. s8.project is legacy-only as a backend -- though core/project.py does import it as REF and core/bench.py imports it directly."},
+  {"claim": "_archive/README.txt: none of the 108 logs is cited by path in FINDINGS.md", "status": "WRONG, fixed",
+   "truth": "FINDINGS.md:3711 cites s8/predictor_report.log. The claim was wrong because the CHECK was wrong: the grep mixed explicit filenames with '-r .' and \"--include='*.py'\", which silently excluded FINDINGS.md and returned zero for every file. Re-checked properly, exactly one log is cited; a second apparent hit was a substring of the same filename."}
+ ],
+
+ "redundant_but_required": {
+  "finding": "There is heavy textual duplication -- energy_terms.py:136-143 is byte-identical to core/energy.py:199-206; vqe.py against core/quantum.py; peptide_db._scan against core/data._scan; s8/project.RamaPenalty against core/project.",
+  "why_kept": "Every one of those pairs IS the CORE_BACKENDS=legacy reference arm, which is what every equivalence claim in the project is proven against. Deleting the duplicate is precisely the operation that makes those claims unprovable.",
+  "sharper_fact": "33 of the 36 legacy-arm modules are ALSO hard dependencies of core/ itself. They are not a fallback -- they load on the default path too, because core/pipeline.py imports s7.debias unconditionally and that pulls in eight root modules. Only foldvqe.py, objective.py and qansatz.py are legacy-exclusive."
+ },
+
+ "frozen_do_not_touch": [
+  {"what": "prots/ (13,751 files, untracked)",
+   "mechanism": "fragment_db.py:80 and core/data.py:742 do sorted(glob(...)) then rng.shuffle(paths). Adding, removing or renaming ONE file re-permutes the whole corpus -> different fragments kept -> different retrieval library -> different pool -> a different final RMSD on every target."},
+  {"what": "pdbs/ (61 tracked) and pdbs_ext/ (untracked)",
+   "mechanism": "_scan membership -> load() -> clusters() -> dev_set(24), whose reps list is indexed by rng.permutation(len(reps)). len(reps) changing by ONE re-draws all 24 dev targets, which changes the exclusion set, which changes the entire tuning126 manifest."},
+  {"what": "peptide_folds.json, peptide_clusters.json, catrace_prior.npz",
+   "mechanism": "WRITE-ON-FIRST-USE caches. A missing file is not an error, it is a silent re-derivation. Correcting the identity clustering once moved 13 benchmark targets and invalidated every model on disk. This is the most dangerous operation in the repository and it looks like a trivial data tidy-up."},
+  {"what": "s9/synth_cache, s9/final_cache, s8/generate_univ, s8/consensus2_cache, s7/*_cache, bench_results/cache",
+   "mechanism": "Tests SKIP silently when these are absent. Removing them looks green and deletes coverage."},
+  {"what": "verify/",
+   "mechanism": "Not a script folder. core/project.py WRITES its evidence there (_outpath) and READS project_inputs.json and project_equiv.json back at runtime; tests/test_project.py globs it; tests/test_integration.py imports three of its scripts as modules."},
+  {"what": "the 24 root modules and the s5/s7/s8/s9 packages",
+   "mechanism": "Seven root modules set BASE = dirname(abspath(__file__)) and assume it IS the repository root, resolving pdbs/, prots/, results/ and the pinned caches from it. All eleven sprint modules do sys.path.insert(dirname(dirname(__file__))) with a hardcoded hop count, and core/bench.py rebuilds that preamble in a SUBPROCESS where a parent shim would not reach."}
+ ],
+
+ "known_defects_recorded_not_fixed": [
+  {"what": "verify/amber_platform.py:23, verify/amber_affinity.py:27 and verify/amber_threads.py:22 each contain a hardcoded absolute machine path",
+   "impact": "those three audits are unrunnable on any other machine, or if this repository is relocated",
+   "why_not_fixed": "a code edit not required by any move; the brief forbids code changes this sprint"},
+  {"what": "rmsd_full (3.2354598538973844) and rmsd_arm (3.214765154210998) have NO guardian test",
+   "impact": "their only protection is an arm-vs-arm comparison that would pass if both arms moved together",
+   "why_not_fixed": "adding assertions is a test edit"},
+  {"what": "rmsd_fit_single is asserted conditionally and exists in exactly one results file (optimised_tuning126_w4.json)",
+   "impact": "deleting that one file silently disables the check",
+   "why_not_fixed": "same"},
+  {"what": "tests/test_pipeline.py reads bench_results/smoke_opt_test.json, which does not exist, so that test always skips",
+   "impact": "the dev-mode / headline-eligibility guard is currently unexercised on real data",
+   "why_not_fixed": "same"},
+  {"what": "three further caches use the skip-rather-than-fail pattern",
+   "why_not_fixed": "fixing means editing tests; recorded so a future sprint can add manifest+digest tests that FAIL instead of skipping"},
+  {"what": "FINDINGS.md:3711 now cites a stale path -- s8/predictor_report.log moved to _archive/logs/s8/",
+   "impact": "the file was never at risk; only the citation path is one level stale",
+   "why_not_fixed": "FINDINGS.md is append-only with a corrections ledger and the whole project cites it by finding number; editing bodies is out of scope"}
+ ],
+
+ "audit_method": "Four agents ran concurrently and were instructed to challenge each other, with disagreement resolved as KEEP: a dependency auditor (AST import graph including function-local imports, two LIVE runtime closure probes, a 16-row glob/listdir order-sensitivity table, a fan-in table for all 80 Python files); a scientific reproducibility auditor (claim-to-evidence map over all 174 path tokens cited in FINDINGS.md, a golden-value guardian map, and cache regeneration costs); a repository architect (target hierarchy derived from the real dependency graph rather than a template); and an independent destruction tester working in a scratch copy."
+}

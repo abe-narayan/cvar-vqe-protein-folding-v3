@@ -1,0 +1,1393 @@
+{
+  "ALL_BIT_IDENTICAL": true,
+  "VERDICT": "BIT-IDENTICAL on all 8 targets",
+  "baseline_dir": "C:\\Users\\abena\\Protein-Folding-Algorithm\\bench_results\\cache\\29cc4e7cba2feeff",
+  "baseline_key": "29cc4e7cba2feeff",
+  "n_baseline": 8,
+  "n_common": 8,
+  "n_optimised": 8,
+  "only_baseline": [],
+  "only_optimised": [],
+  "optimised_dir": "C:\\Users\\abena\\Protein-Folding-Algorithm\\bench_results\\cache\\40774ae7b037d259",
+  "optimised_key": "40774ae7b037d259",
+  "per_target": {
+    "1A13": {
+      "amber_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_e0": {
+        "abs": 0.0,
+        "baseline": 604323.2548077808,
+        "bit_identical": true,
+        "optimised": 604323.2548077808,
+        "rel": 0.0
+      },
+      "amber_e1": {
+        "abs": 0.0,
+        "baseline": -347.2650824559028,
+        "bit_identical": true,
+        "optimised": -347.2650824559028,
+        "rel": 0.0
+      },
+      "amber_moved": {
+        "abs": 0.0,
+        "baseline": 0.1555233757520084,
+        "bit_identical": true,
+        "optimised": 0.1555233757520084,
+        "rel": 0.0
+      },
+      "amber_phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_strain_after": {
+        "abs": 0.0,
+        "baseline": 30.761742125572052,
+        "bit_identical": true,
+        "optimised": 30.761742125572052,
+        "rel": 0.0
+      },
+      "avg_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "d_rmsd": {
+        "abs": 0.0,
+        "baseline": 0.02600989459985037,
+        "bit_identical": true,
+        "optimised": 0.02600989459985037,
+        "rel": 0.0
+      },
+      "fit_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "n_windows": {
+        "abs": 0.0,
+        "baseline": 13247,
+        "bit_identical": true,
+        "optimised": 13247,
+        "rel": 0.0
+      },
+      "phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "pool_best": {
+        "abs": 0.0,
+        "baseline": 1.7591813802719116,
+        "bit_identical": true,
+        "optimised": 1.7591813802719116,
+        "rel": 0.0
+      },
+      "pool_mean": {
+        "abs": 0.0,
+        "baseline": 3.9105566565990446,
+        "bit_identical": true,
+        "optimised": 3.9105566565990446,
+        "rel": 0.0
+      },
+      "psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "rmsd_arm": {
+        "abs": 0.0,
+        "baseline": 2.6359449136296362,
+        "bit_identical": true,
+        "optimised": 2.6359449136296362,
+        "rel": 0.0
+      },
+      "rmsd_avg": {
+        "abs": 0.0,
+        "baseline": 2.6158612331525766,
+        "bit_identical": true,
+        "optimised": 2.6158612331525766,
+        "rel": 0.0
+      },
+      "rmsd_fit": {
+        "abs": 0.0,
+        "baseline": 2.6401382085110643,
+        "bit_identical": true,
+        "optimised": 2.6401382085110643,
+        "rel": 0.0
+      },
+      "rmsd_full": {
+        "abs": 0.0,
+        "baseline": 2.6619548082294866,
+        "bit_identical": true,
+        "optimised": 2.6619548082294866,
+        "rel": 0.0
+      },
+      "shipped": {
+        "abs": 0.0,
+        "baseline": 2.8480167388916016,
+        "bit_identical": true,
+        "optimised": 2.8480167388916016,
+        "rel": 0.0
+      },
+      "sub_len": [
+        75,
+        75
+      ],
+      "sub_order_identical": true,
+      "sub_set_identical": true,
+      "sub_symdiff": 0,
+      "top_m_best": {
+        "abs": 0.0,
+        "baseline": 2.243894338607788,
+        "bit_identical": true,
+        "optimised": 2.243894338607788,
+        "rel": 0.0
+      },
+      "top_m_mean": {
+        "abs": 0.0,
+        "baseline": 2.7985515848795575,
+        "bit_identical": true,
+        "optimised": 2.7985515848795575,
+        "rel": 0.0
+      }
+    },
+    "1A1P": {
+      "amber_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_e0": {
+        "abs": 0.0,
+        "baseline": 19965.3742363407,
+        "bit_identical": true,
+        "optimised": 19965.3742363407,
+        "rel": 0.0
+      },
+      "amber_e1": {
+        "abs": 0.0,
+        "baseline": -501.0767846123149,
+        "bit_identical": true,
+        "optimised": -501.0767846123149,
+        "rel": 0.0
+      },
+      "amber_moved": {
+        "abs": 0.0,
+        "baseline": 0.15847061648092992,
+        "bit_identical": true,
+        "optimised": 0.15847061648092992,
+        "rel": 0.0
+      },
+      "amber_phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_strain_after": {
+        "abs": 0.0,
+        "baseline": 73.53099893992902,
+        "bit_identical": true,
+        "optimised": 73.53099893992902,
+        "rel": 0.0
+      },
+      "avg_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "d_rmsd": {
+        "abs": 0.0,
+        "baseline": 0.050591159802783725,
+        "bit_identical": true,
+        "optimised": 0.050591159802783725,
+        "rel": 0.0
+      },
+      "fit_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "n_windows": {
+        "abs": 0.0,
+        "baseline": 17088,
+        "bit_identical": true,
+        "optimised": 17088,
+        "rel": 0.0
+      },
+      "phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "pool_best": {
+        "abs": 0.0,
+        "baseline": 2.5868396759033203,
+        "bit_identical": true,
+        "optimised": 2.5868396759033203,
+        "rel": 0.0
+      },
+      "pool_mean": {
+        "abs": 0.0,
+        "baseline": 4.875755885124207,
+        "bit_identical": true,
+        "optimised": 4.875755885124207,
+        "rel": 0.0
+      },
+      "psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "rmsd_arm": {
+        "abs": 0.0,
+        "baseline": 3.4421328534429145,
+        "bit_identical": true,
+        "optimised": 3.4421328534429145,
+        "rel": 0.0
+      },
+      "rmsd_avg": {
+        "abs": 0.0,
+        "baseline": 3.231358532035026,
+        "bit_identical": true,
+        "optimised": 3.231358532035026,
+        "rel": 0.0
+      },
+      "rmsd_fit": {
+        "abs": 0.0,
+        "baseline": 3.565788568898884,
+        "bit_identical": true,
+        "optimised": 3.565788568898884,
+        "rel": 0.0
+      },
+      "rmsd_full": {
+        "abs": 0.0,
+        "baseline": 3.4927240132456983,
+        "bit_identical": true,
+        "optimised": 3.4927240132456983,
+        "rel": 0.0
+      },
+      "shipped": {
+        "abs": 0.0,
+        "baseline": 3.5196731090545654,
+        "bit_identical": true,
+        "optimised": 3.5196731090545654,
+        "rel": 0.0
+      },
+      "sub_len": [
+        75,
+        75
+      ],
+      "sub_order_identical": true,
+      "sub_set_identical": true,
+      "sub_symdiff": 0,
+      "top_m_best": {
+        "abs": 0.0,
+        "baseline": 2.852372884750366,
+        "bit_identical": true,
+        "optimised": 2.852372884750366,
+        "rel": 0.0
+      },
+      "top_m_mean": {
+        "abs": 0.0,
+        "baseline": 4.1630704339345295,
+        "bit_identical": true,
+        "optimised": 4.1630704339345295,
+        "rel": 0.0
+      }
+    },
+    "1CB3": {
+      "amber_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_e0": {
+        "abs": 0.0,
+        "baseline": 3.656837122941291,
+        "bit_identical": true,
+        "optimised": 3.656837122941291,
+        "rel": 0.0
+      },
+      "amber_e1": {
+        "abs": 0.0,
+        "baseline": -293.8296066768579,
+        "bit_identical": true,
+        "optimised": -293.8296066768579,
+        "rel": 0.0
+      },
+      "amber_moved": {
+        "abs": 0.0,
+        "baseline": 0.15830477621878775,
+        "bit_identical": true,
+        "optimised": 0.15830477621878775,
+        "rel": 0.0
+      },
+      "amber_phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_strain_after": {
+        "abs": 0.0,
+        "baseline": 38.56507827222619,
+        "bit_identical": true,
+        "optimised": 38.56507827222619,
+        "rel": 0.0
+      },
+      "avg_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "d_rmsd": {
+        "abs": 0.0,
+        "baseline": 0.0066953144412065235,
+        "bit_identical": true,
+        "optimised": 0.0066953144412065235,
+        "rel": 0.0
+      },
+      "fit_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "n_windows": {
+        "abs": 0.0,
+        "baseline": 26746,
+        "bit_identical": true,
+        "optimised": 26746,
+        "rel": 0.0
+      },
+      "phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "pool_best": {
+        "abs": 0.0,
+        "baseline": 2.0284502506256104,
+        "bit_identical": true,
+        "optimised": 2.0284502506256104,
+        "rel": 0.0
+      },
+      "pool_mean": {
+        "abs": 0.0,
+        "baseline": 3.7524357843399048,
+        "bit_identical": true,
+        "optimised": 3.7524357843399048,
+        "rel": 0.0
+      },
+      "psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "rmsd_arm": {
+        "abs": 0.0,
+        "baseline": 2.93444144788262,
+        "bit_identical": true,
+        "optimised": 2.93444144788262,
+        "rel": 0.0
+      },
+      "rmsd_avg": {
+        "abs": 0.0,
+        "baseline": 2.856256771954497,
+        "bit_identical": true,
+        "optimised": 2.856256771954497,
+        "rel": 0.0
+      },
+      "rmsd_fit": {
+        "abs": 0.0,
+        "baseline": 2.9344394519587005,
+        "bit_identical": true,
+        "optimised": 2.9344394519587005,
+        "rel": 0.0
+      },
+      "rmsd_full": {
+        "abs": 0.0,
+        "baseline": 2.9411367623238265,
+        "bit_identical": true,
+        "optimised": 2.9411367623238265,
+        "rel": 0.0
+      },
+      "shipped": {
+        "abs": 0.0,
+        "baseline": 2.6669931411743164,
+        "bit_identical": true,
+        "optimised": 2.6669931411743164,
+        "rel": 0.0
+      },
+      "sub_len": [
+        75,
+        75
+      ],
+      "sub_order_identical": true,
+      "sub_set_identical": true,
+      "sub_symdiff": 0,
+      "top_m_best": {
+        "abs": 0.0,
+        "baseline": 2.3139922618865967,
+        "bit_identical": true,
+        "optimised": 2.3139922618865967,
+        "rel": 0.0
+      },
+      "top_m_mean": {
+        "abs": 0.0,
+        "baseline": 3.0113277212778726,
+        "bit_identical": true,
+        "optimised": 3.0113277212778726,
+        "rel": 0.0
+      }
+    },
+    "1CEK": {
+      "amber_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_e0": {
+        "abs": 0.0,
+        "baseline": 7684.904887862792,
+        "bit_identical": true,
+        "optimised": 7684.904887862792,
+        "rel": 0.0
+      },
+      "amber_e1": {
+        "abs": 0.0,
+        "baseline": -335.1119301654857,
+        "bit_identical": true,
+        "optimised": -335.1119301654857,
+        "rel": 0.0
+      },
+      "amber_moved": {
+        "abs": 0.0,
+        "baseline": 0.16820416285936143,
+        "bit_identical": true,
+        "optimised": 0.16820416285936143,
+        "rel": 0.0
+      },
+      "amber_phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_strain_after": {
+        "abs": 0.0,
+        "baseline": 34.77546840934478,
+        "bit_identical": true,
+        "optimised": 34.77546840934478,
+        "rel": 0.0
+      },
+      "avg_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "d_rmsd": {
+        "abs": 0.0,
+        "baseline": 0.00502279419595153,
+        "bit_identical": true,
+        "optimised": 0.00502279419595153,
+        "rel": 0.0
+      },
+      "fit_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "n_windows": {
+        "abs": 0.0,
+        "baseline": 17032,
+        "bit_identical": true,
+        "optimised": 17032,
+        "rel": 0.0
+      },
+      "phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "pool_best": {
+        "abs": 0.0,
+        "baseline": 0.3419731855392456,
+        "bit_identical": true,
+        "optimised": 0.3419731855392456,
+        "rel": 0.0
+      },
+      "pool_mean": {
+        "abs": 0.0,
+        "baseline": 3.1770652280449867,
+        "bit_identical": true,
+        "optimised": 3.1770652280449867,
+        "rel": 0.0
+      },
+      "psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "rmsd_arm": {
+        "abs": 0.0,
+        "baseline": 0.5251420854561515,
+        "bit_identical": true,
+        "optimised": 0.5251420854561515,
+        "rel": 0.0
+      },
+      "rmsd_avg": {
+        "abs": 0.0,
+        "baseline": 0.5330998407105982,
+        "bit_identical": true,
+        "optimised": 0.5330998407105982,
+        "rel": 0.0
+      },
+      "rmsd_fit": {
+        "abs": 0.0,
+        "baseline": 0.5251418433409641,
+        "bit_identical": true,
+        "optimised": 0.5251418433409641,
+        "rel": 0.0
+      },
+      "rmsd_full": {
+        "abs": 0.0,
+        "baseline": 0.530164879652103,
+        "bit_identical": true,
+        "optimised": 0.530164879652103,
+        "rel": 0.0
+      },
+      "shipped": {
+        "abs": 0.0,
+        "baseline": 0.719850480556488,
+        "bit_identical": true,
+        "optimised": 0.719850480556488,
+        "rel": 0.0
+      },
+      "sub_len": [
+        75,
+        75
+      ],
+      "sub_order_identical": true,
+      "sub_set_identical": true,
+      "sub_symdiff": 0,
+      "top_m_best": {
+        "abs": 0.0,
+        "baseline": 0.3419731855392456,
+        "bit_identical": true,
+        "optimised": 0.3419731855392456,
+        "rel": 0.0
+      },
+      "top_m_mean": {
+        "abs": 0.0,
+        "baseline": 0.663980236450831,
+        "bit_identical": true,
+        "optimised": 0.663980236450831,
+        "rel": 0.0
+      }
+    },
+    "1CS9": {
+      "amber_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_e0": {
+        "abs": 0.0,
+        "baseline": 313.40920123918,
+        "bit_identical": true,
+        "optimised": 313.40920123918,
+        "rel": 0.0
+      },
+      "amber_e1": {
+        "abs": 0.0,
+        "baseline": -595.7008953305296,
+        "bit_identical": true,
+        "optimised": -595.7008953305296,
+        "rel": 0.0
+      },
+      "amber_moved": {
+        "abs": 0.0,
+        "baseline": 0.16008698899954366,
+        "bit_identical": true,
+        "optimised": 0.16008698899954366,
+        "rel": 0.0
+      },
+      "amber_phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_strain_after": {
+        "abs": 0.0,
+        "baseline": 20.775224634508604,
+        "bit_identical": true,
+        "optimised": 20.775224634508604,
+        "rel": 0.0
+      },
+      "avg_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "d_rmsd": {
+        "abs": 0.0,
+        "baseline": 0.012741064108006128,
+        "bit_identical": true,
+        "optimised": 0.012741064108006128,
+        "rel": 0.0
+      },
+      "fit_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "n_windows": {
+        "abs": 0.0,
+        "baseline": 39247,
+        "bit_identical": true,
+        "optimised": 39247,
+        "rel": 0.0
+      },
+      "phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "pool_best": {
+        "abs": 0.0,
+        "baseline": 1.358286738395691,
+        "bit_identical": true,
+        "optimised": 1.358286738395691,
+        "rel": 0.0
+      },
+      "pool_mean": {
+        "abs": 0.0,
+        "baseline": 4.087069707632065,
+        "bit_identical": true,
+        "optimised": 4.087069707632065,
+        "rel": 0.0
+      },
+      "psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "rmsd_arm": {
+        "abs": 0.0,
+        "baseline": 4.205953875937748,
+        "bit_identical": true,
+        "optimised": 4.205953875937748,
+        "rel": 0.0
+      },
+      "rmsd_avg": {
+        "abs": 0.0,
+        "baseline": 3.832165823009019,
+        "bit_identical": true,
+        "optimised": 3.832165823009019,
+        "rel": 0.0
+      },
+      "rmsd_fit": {
+        "abs": 0.0,
+        "baseline": 4.196229943951492,
+        "bit_identical": true,
+        "optimised": 4.196229943951492,
+        "rel": 0.0
+      },
+      "rmsd_full": {
+        "abs": 0.0,
+        "baseline": 4.218694940045754,
+        "bit_identical": true,
+        "optimised": 4.218694940045754,
+        "rel": 0.0
+      },
+      "shipped": {
+        "abs": 0.0,
+        "baseline": 4.315847396850586,
+        "bit_identical": true,
+        "optimised": 4.315847396850586,
+        "rel": 0.0
+      },
+      "sub_len": [
+        75,
+        75
+      ],
+      "sub_order_identical": true,
+      "sub_set_identical": true,
+      "sub_symdiff": 0,
+      "top_m_best": {
+        "abs": 0.0,
+        "baseline": 2.674936294555664,
+        "bit_identical": true,
+        "optimised": 2.674936294555664,
+        "rel": 0.0
+      },
+      "top_m_mean": {
+        "abs": 0.0,
+        "baseline": 4.271977659861247,
+        "bit_identical": true,
+        "optimised": 4.271977659861247,
+        "rel": 0.0
+      }
+    },
+    "1D0W": {
+      "amber_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_e0": {
+        "abs": 0.0,
+        "baseline": 1655.3842917383768,
+        "bit_identical": true,
+        "optimised": 1655.3842917383768,
+        "rel": 0.0
+      },
+      "amber_e1": {
+        "abs": 0.0,
+        "baseline": -1073.0958105923016,
+        "bit_identical": true,
+        "optimised": -1073.0958105923016,
+        "rel": 0.0
+      },
+      "amber_moved": {
+        "abs": 0.0,
+        "baseline": 0.12433323510225268,
+        "bit_identical": true,
+        "optimised": 0.12433323510225268,
+        "rel": 0.0
+      },
+      "amber_phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_strain_after": {
+        "abs": 0.0,
+        "baseline": 53.57926720964018,
+        "bit_identical": true,
+        "optimised": 53.57926720964018,
+        "rel": 0.0
+      },
+      "avg_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "d_rmsd": {
+        "abs": 0.0,
+        "baseline": 0.004192885718499628,
+        "bit_identical": true,
+        "optimised": 0.004192885718499628,
+        "rel": 0.0
+      },
+      "fit_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "n_windows": {
+        "abs": 0.0,
+        "baseline": 21547,
+        "bit_identical": true,
+        "optimised": 21547,
+        "rel": 0.0
+      },
+      "phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "pool_best": {
+        "abs": 0.0,
+        "baseline": 0.9470975399017334,
+        "bit_identical": true,
+        "optimised": 0.9470975399017334,
+        "rel": 0.0
+      },
+      "pool_mean": {
+        "abs": 0.0,
+        "baseline": 3.0455458037853242,
+        "bit_identical": true,
+        "optimised": 3.0455458037853242,
+        "rel": 0.0
+      },
+      "psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "rmsd_arm": {
+        "abs": 0.0,
+        "baseline": 1.6416796768713136,
+        "bit_identical": true,
+        "optimised": 1.6416796768713136,
+        "rel": 0.0
+      },
+      "rmsd_avg": {
+        "abs": 0.0,
+        "baseline": 1.639519583283183,
+        "bit_identical": true,
+        "optimised": 1.639519583283183,
+        "rel": 0.0
+      },
+      "rmsd_fit": {
+        "abs": 0.0,
+        "baseline": 1.6416731863393865,
+        "bit_identical": true,
+        "optimised": 1.6416731863393865,
+        "rel": 0.0
+      },
+      "rmsd_full": {
+        "abs": 0.0,
+        "baseline": 1.6458725625898132,
+        "bit_identical": true,
+        "optimised": 1.6458725625898132,
+        "rel": 0.0
+      },
+      "shipped": {
+        "abs": 0.0,
+        "baseline": 1.4640815258026123,
+        "bit_identical": true,
+        "optimised": 1.4640815258026123,
+        "rel": 0.0
+      },
+      "sub_len": [
+        75,
+        75
+      ],
+      "sub_order_identical": true,
+      "sub_set_identical": true,
+      "sub_symdiff": 0,
+      "top_m_best": {
+        "abs": 0.0,
+        "baseline": 1.4422764778137207,
+        "bit_identical": true,
+        "optimised": 1.4422764778137207,
+        "rel": 0.0
+      },
+      "top_m_mean": {
+        "abs": 0.0,
+        "baseline": 1.6759918880462648,
+        "bit_identical": true,
+        "optimised": 1.6759918880462648,
+        "rel": 0.0
+      }
+    },
+    "1D6X": {
+      "amber_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_e0": {
+        "abs": 0.0,
+        "baseline": 1451792161.8573978,
+        "bit_identical": true,
+        "optimised": 1451792161.8573978,
+        "rel": 0.0
+      },
+      "amber_e1": {
+        "abs": 0.0,
+        "baseline": -842.184090481989,
+        "bit_identical": true,
+        "optimised": -842.184090481989,
+        "rel": 0.0
+      },
+      "amber_moved": {
+        "abs": 0.0,
+        "baseline": 0.520712948879934,
+        "bit_identical": true,
+        "optimised": 0.520712948879934,
+        "rel": 0.0
+      },
+      "amber_phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_strain_after": {
+        "abs": 0.0,
+        "baseline": 79.28174881755226,
+        "bit_identical": true,
+        "optimised": 79.28174881755226,
+        "rel": 0.0
+      },
+      "avg_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "d_rmsd": {
+        "abs": 0.0,
+        "baseline": -0.03412133361572045,
+        "bit_identical": true,
+        "optimised": -0.03412133361572045,
+        "rel": 0.0
+      },
+      "fit_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "n_windows": {
+        "abs": 0.0,
+        "baseline": 17107,
+        "bit_identical": true,
+        "optimised": 17107,
+        "rel": 0.0
+      },
+      "phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "pool_best": {
+        "abs": 0.0,
+        "baseline": 2.4193971157073975,
+        "bit_identical": true,
+        "optimised": 2.4193971157073975,
+        "rel": 0.0
+      },
+      "pool_mean": {
+        "abs": 0.0,
+        "baseline": 4.139931920051574,
+        "bit_identical": true,
+        "optimised": 4.139931920051574,
+        "rel": 0.0
+      },
+      "psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "rmsd_arm": {
+        "abs": 0.0,
+        "baseline": 1.7814298703635463,
+        "bit_identical": true,
+        "optimised": 1.7814298703635463,
+        "rel": 0.0
+      },
+      "rmsd_avg": {
+        "abs": 0.0,
+        "baseline": 2.0900107504193635,
+        "bit_identical": true,
+        "optimised": 2.0900107504193635,
+        "rel": 0.0
+      },
+      "rmsd_fit": {
+        "abs": 0.0,
+        "baseline": 1.9033334199928054,
+        "bit_identical": true,
+        "optimised": 1.9033334199928054,
+        "rel": 0.0
+      },
+      "rmsd_full": {
+        "abs": 0.0,
+        "baseline": 1.7473085367478258,
+        "bit_identical": true,
+        "optimised": 1.7473085367478258,
+        "rel": 0.0
+      },
+      "shipped": {
+        "abs": 0.0,
+        "baseline": 3.1749768257141113,
+        "bit_identical": true,
+        "optimised": 3.1749768257141113,
+        "rel": 0.0
+      },
+      "sub_len": [
+        75,
+        75
+      ],
+      "sub_order_identical": true,
+      "sub_set_identical": true,
+      "sub_symdiff": 0,
+      "top_m_best": {
+        "abs": 0.0,
+        "baseline": 2.4193971157073975,
+        "bit_identical": true,
+        "optimised": 2.4193971157073975,
+        "rel": 0.0
+      },
+      "top_m_mean": {
+        "abs": 0.0,
+        "baseline": 3.5116978677113853,
+        "bit_identical": true,
+        "optimised": 3.5116978677113853,
+        "rel": 0.0
+      }
+    },
+    "1DEP": {
+      "amber_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_e0": {
+        "abs": 0.0,
+        "baseline": 77820.68283781015,
+        "bit_identical": true,
+        "optimised": 77820.68283781015,
+        "rel": 0.0
+      },
+      "amber_e1": {
+        "abs": 0.0,
+        "baseline": -896.9773457340527,
+        "bit_identical": true,
+        "optimised": -896.9773457340527,
+        "rel": 0.0
+      },
+      "amber_moved": {
+        "abs": 0.0,
+        "baseline": 0.17907880455286637,
+        "bit_identical": true,
+        "optimised": 0.17907880455286637,
+        "rel": 0.0
+      },
+      "amber_phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "amber_strain_after": {
+        "abs": 0.0,
+        "baseline": 40.79337174486596,
+        "bit_identical": true,
+        "optimised": 40.79337174486596,
+        "rel": 0.0
+      },
+      "avg_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "d_rmsd": {
+        "abs": 0.0,
+        "baseline": 0.013178103008198772,
+        "bit_identical": true,
+        "optimised": 0.013178103008198772,
+        "rel": 0.0
+      },
+      "fit_ca": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "n_windows": {
+        "abs": 0.0,
+        "baseline": 9752,
+        "bit_identical": true,
+        "optimised": 9752,
+        "rel": 0.0
+      },
+      "phi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "pool_best": {
+        "abs": 0.0,
+        "baseline": 0.5086030960083008,
+        "bit_identical": true,
+        "optimised": 0.5086030960083008,
+        "rel": 0.0
+      },
+      "pool_mean": {
+        "abs": 0.0,
+        "baseline": 3.491176216363907,
+        "bit_identical": true,
+        "optimised": 3.491176216363907,
+        "rel": 0.0
+      },
+      "psi": {
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "max_rel": 0.0
+      },
+      "rmsd_arm": {
+        "abs": 0.0,
+        "baseline": 0.8716032573661616,
+        "bit_identical": true,
+        "optimised": 0.8716032573661616,
+        "rel": 0.0
+      },
+      "rmsd_avg": {
+        "abs": 0.0,
+        "baseline": 0.8185488680874436,
+        "bit_identical": true,
+        "optimised": 0.8185488680874436,
+        "rel": 0.0
+      },
+      "rmsd_fit": {
+        "abs": 0.0,
+        "baseline": 0.8108155035492894,
+        "bit_identical": true,
+        "optimised": 0.8108155035492894,
+        "rel": 0.0
+      },
+      "rmsd_full": {
+        "abs": 0.0,
+        "baseline": 0.8847813603743604,
+        "bit_identical": true,
+        "optimised": 0.8847813603743604,
+        "rel": 0.0
+      },
+      "shipped": {
+        "abs": 0.0,
+        "baseline": 1.2750941514968872,
+        "bit_identical": true,
+        "optimised": 1.2750941514968872,
+        "rel": 0.0
+      },
+      "sub_len": [
+        75,
+        75
+      ],
+      "sub_order_identical": true,
+      "sub_set_identical": true,
+      "sub_symdiff": 0,
+      "top_m_best": {
+        "abs": 0.0,
+        "baseline": 0.6234277486801147,
+        "bit_identical": true,
+        "optimised": 0.6234277486801147,
+        "rel": 0.0
+      },
+      "top_m_mean": {
+        "abs": 0.0,
+        "baseline": 1.3486058894793194,
+        "bit_identical": true,
+        "optimised": 1.3486058894793194,
+        "rel": 0.0
+      }
+    }
+  },
+  "stage_rollup": {
+    "amber_ca": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_max_abs": 0.0,
+      "worst_max_rel": 0.0
+    },
+    "amber_e0": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    },
+    "amber_e1": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    },
+    "amber_moved": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    },
+    "amber_phi": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_max_abs": 0.0,
+      "worst_max_rel": 0.0
+    },
+    "amber_psi": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_max_abs": 0.0,
+      "worst_max_rel": 0.0
+    },
+    "amber_strain_after": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    },
+    "avg_ca": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_max_abs": 0.0,
+      "worst_max_rel": 0.0
+    },
+    "ca": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_max_abs": 0.0,
+      "worst_max_rel": 0.0
+    },
+    "d_rmsd": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    },
+    "fit_ca": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_max_abs": 0.0,
+      "worst_max_rel": 0.0
+    },
+    "n_windows": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    },
+    "phi": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_max_abs": 0.0,
+      "worst_max_rel": 0.0
+    },
+    "pool_best": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    },
+    "pool_mean": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    },
+    "psi": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_max_abs": 0.0,
+      "worst_max_rel": 0.0
+    },
+    "rmsd_arm": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    },
+    "rmsd_avg": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    },
+    "rmsd_fit": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    },
+    "rmsd_full": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    },
+    "shipped": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    },
+    "sub": {
+      "n": 8,
+      "n_order_identical": 8,
+      "n_set_identical": 8,
+      "worst_symdiff": 0
+    },
+    "top_m_best": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    },
+    "top_m_mean": {
+      "n": 8,
+      "n_bit_identical": 8,
+      "worst_abs": 0.0,
+      "worst_rel": 0.0
+    }
+  }
+}

@@ -1,0 +1,154 @@
+[  1/8] 1DEP   n=15 synth=0.872 full=0.885 pool=0.509 shipped=1.275 (26.0s) [mem 71%]
+[  2/8] 1A1P   n=13 synth=3.442 full=3.493 pool=2.587 shipped=3.520 (20.6s) [mem 71%]
+[  3/8] 1CS9   n= 9 synth=4.206 full=4.219 pool=1.358 shipped=4.316 (13.4s) [mem 73%]
+[  4/8] 1CB3   n=11 synth=2.934 full=2.941 pool=2.028 shipped=2.667 (9.8s) [mem 71%]
+[  5/8] 1D0W   n=12 synth=1.642 full=1.646 pool=0.947 shipped=1.464 (16.0s) [mem 72%]
+[  6/8] 1CEK   n=13 synth=0.525 full=0.530 pool=0.342 shipped=0.720 (14.5s) [mem 73%]
+[  7/8] 1D6X   n=13 synth=1.781 full=1.747 pool=2.419 shipped=3.175 (32.2s) [mem 72%]
+[  8/8] 1A13   n=14 synth=2.636 full=2.662 pool=1.759 shipped=2.848 (17.9s) [mem 72%]
+{
+  "manifest": "smoke8",
+  "n_requested": 8,
+  "n_done": 8,
+  "wall": 150.77972340001725,
+  "workers": 1,
+  "threads_per_worker": 1,
+  "cfg": {
+    "k": 500,
+    "m": 75,
+    "penalty": "ramah",
+    "lam": 0.3,
+    "amber_k": 10.0,
+    "amber_steps": 0,
+    "amber": true,
+    "n_folds": 5,
+    "min_sep": 2,
+    "maxiter": 300,
+    "multi_start": true,
+    "tie_break": "stable",
+    "torsion_window": 8,
+    "reference_precision": true,
+    "dev_mode": ""
+  },
+  "cfg_key": "29cc4e7cba2feeff",
+  "dev_mode": "",
+  "backends": {
+    "forced": "legacy"
+  },
+  "cache_dir": "C:\\Users\\abena\\Protein-Folding-Algorithm\\bench_results\\cache\\29cc4e7cba2feeff",
+  "errors": [],
+  "stage_totals": {
+    "retrieval": 14.468200000000001,
+    "distogram": 1.127,
+    "filter": 0.2109,
+    "average": 0.0036,
+    "projection": 58.7344,
+    "amber": 75.7756,
+    "reporting": 0.0237,
+    "io": 0.0252,
+    "serialise": 0.0001,
+    "_sum": 150.3687,
+    "_fresh_retrieval": 14.468200000000001,
+    "_fresh_distogram": 1.127,
+    "_fresh_filter": 0.2109,
+    "_fresh_average": 0.0036,
+    "_fresh_projection": 58.7344,
+    "_fresh_amber": 75.7756,
+    "_fresh_reporting": 0.0237,
+    "_fresh_io": 0.0252,
+    "_fresh_serialise": 0.0001,
+    "_fresh_sum": 150.3687,
+    "_n_fresh": 8,
+    "_n_resumed": 0
+  },
+  "summary": {
+    "n": 8,
+    "shipped": {
+      "n": 8,
+      "mean": 2.498066671192646,
+      "median": 2.757504940032959,
+      "sd": 1.2354325399488046,
+      "min": 0.719850480556488,
+      "max": 4.315847396850586,
+      "frac_under_2.0": 0.375
+    },
+    "pool_best": {
+      "n": 8,
+      "mean": 1.4937286227941513,
+      "median": 1.5587340593338013,
+      "sd": 0.8470376323677269,
+      "min": 0.3419731855392456,
+      "max": 2.5868396759033203,
+      "frac_under_2.0": 0.625
+    },
+    "top_m_best": {
+      "n": 8,
+      "mean": 1.8640337884426117,
+      "median": 2.2789433002471924,
+      "sd": 0.9504294659522506,
+      "min": 0.3419731855392456,
+      "max": 2.852372884750366,
+      "frac_under_2.0": 0.375
+    },
+    "rmsd_avg": {
+      "n": 8,
+      "mean": 2.2021026753314636,
+      "median": 2.3529359917859702,
+      "sd": 1.155387575347706,
+      "min": 0.5330998407105982,
+      "max": 3.832165823009019,
+      "frac_under_2.0": 0.375
+    },
+    "rmsd_fit": {
+      "n": 8,
+      "mean": 2.2771950158178234,
+      "median": 2.271735814251935,
+      "sd": 1.2912057538906996,
+      "min": 0.5251418433409641,
+      "max": 4.196229943951492,
+      "frac_under_2.0": 0.5
+    },
+    "rmsd_arm": {
+      "n": 8,
+      "mean": 2.2547909976187612,
+      "median": 2.208687391996591,
+      "sd": 1.272168577952717,
+      "min": 0.5251420854561515,
+      "max": 4.205953875937748,
+      "frac_under_2.0": 0.5
+    },
+    "rmsd_full": {
+      "n": 8,
+      "mean": 2.2653297329011086,
+      "median": 2.2046316724886563,
+      "sd": 1.2820153200362372,
+      "min": 0.530164879652103,
+      "max": 4.218694940045754,
+      "frac_under_2.0": 0.5
+    },
+    "paired": {
+      "rmsd_arm_vs_shipped": {
+        "mean_diff": -0.24327567357388455,
+        "se": 0.18103660773180533,
+        "ci95": [
+          -0.598107424728223,
+          0.11155607758045391
+        ],
+        "n_better": 6,
+        "n_worse": 2,
+        "n": 8
+      },
+      "rmsd_full_vs_shipped": {
+        "mean_diff": -0.23273693829153752,
+        "se": 0.18642387318404355,
+        "ci95": [
+          -0.5981277297322629,
+          0.13265385314918782
+        ],
+        "n_better": 6,
+        "n_worse": 2,
+        "n": 8
+      }
+    }
+  }
+}
