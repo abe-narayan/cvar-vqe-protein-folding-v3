@@ -23,8 +23,8 @@ energy. The one arm that beat the comparator on RMSD (trust region, radius/3, -0
 -0.0547], 20W/10L) is **MOVE-SIZE, NOT PHYSICS** -- against its own matched null it is
 `-0.0207 [-0.3185, +0.1736]`, 15W/15L.
 
-**And the selection side at n = 126: all 60 arms of the mandatory matrix's physics half are WORSE
-than a matched-count random tail, 60/60 CIs excluding zero.** Sprint 20's argmin result **does**
+**And the selection side at n = 126: all 42 arm-rows of the mandatory matrix's physics half are WORSE
+than a matched-count random tail, 42/42 CIs excluding zero.** Sprint 20's argmin result **does**
 transfer to the tail operator. Full detail in `s21/agentC_FINDINGS.md`.
 
 ---

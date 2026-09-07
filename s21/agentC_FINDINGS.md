@@ -91,9 +91,9 @@ requested *is* the full subset, so a smoke run cannot write one — verified in 
 > ## 4. THE MANDATORY MATRIX'S PHYSICS HALF IS WORSE THAN CHANCE — ALL 60 ARMS, n = 126, EVERY CI EXCLUDING ZERO.
 >
 > Pool-restricted CVaR α = 0.15 tail selection, point-cloud readout: matched-count **random** tail
-> **3.101**; Legacy **3.208 (+0.106)**; AMBER **3.216 (+0.115)**; best of all 58 mixtures across four
-> normalisations **3.182 (+0.080 [+0.041, +0.119])**. **60 of 60 arms positive, 60 of 60 CIs
-> excluding zero.** `BRIEF` §2 asked whether Sprint 20's argmin result transfers to a **tail**
+> **3.101**; Legacy **3.208 (+0.106)**; AMBER **3.216 (+0.115)**; best mixture over three normalisations
+> **3.182 (+0.080 [+0.041, +0.119])**. **42 of 42 arm-rows positive, 42 of 42 CIs excluding zero**
+> (`raw`, `Nz`, `Nt`; `Ng` was run at n = 30 only). `BRIEF` §2 asked whether Sprint 20's argmin result transfers to a **tail**
 > selector. **It does.** The tail *is* better than the argmin (3.18–3.23 vs 3.50–3.69) — and both are
 > worse than picking at random.
 >
@@ -423,12 +423,13 @@ circuit is built.
 | AMBER (λ = 1) | 3.216 | **+0.115 [+0.074, +0.170]** | 54/72 |
 | `raw` λ = 0.5 | 3.221 | **+0.120 [+0.081, +0.174]** | 51/75 |
 | `Nt` λ = 0.35 | 3.202 | **+0.101 [+0.081, +0.130]** | 50/76 |
-| **best of all 60 arms** (`Nz` λ = 0.95) | **3.182** | **+0.080 [+0.041, +0.119]** | 48/78 |
+| **best of all 42 arms** (`Nz` λ = 0.95) | **3.182** | **+0.080 [+0.041, +0.119]** | 48/78 |
 
-> ### EVERY arm of the mandatory matrix's physics half — Legacy alone, AMBER alone, and all fifty-eight mixtures across four normalisations — is WORSE than a matched-count RANDOM tail, with a CI excluding zero, at n = 126.
+> ### EVERY arm of the mandatory matrix's physics half — Legacy alone, AMBER alone, and every mixture across three normalisations — is WORSE than a matched-count RANDOM tail, with a CI excluding zero, at n = 126.
 >
 > Not null. **Worse.** The best mixture in the entire family is **+0.080 Å worse than chance**, and
-> the sign is unanimous: **60 of 60 arms positive, 60 of 60 CIs excluding zero.**
+> the sign is unanimous: **42 of 42 arm-rows positive, 42 of 42 CIs excluding zero** (`raw`, `Nz`,
+> `Nt`; 41 distinct λ values — `Ng` was run at n = 30 only, where it agrees).
 >
 > This is `s20`'s argmin result (`BRIEF` §2) transferred to the **tail** operator the sprint was
 > built to test. **The tail-mean-versus-minimum distinction does not rescue the physics
@@ -505,6 +506,39 @@ identical. Verified rather than assumed, on all 126 targets × 75 candidates:
 **Reported rather than rounded to 126/126**, and worth stating for its own sake: the transform did
 not break an ordering, it **collapsed a one-ULP tie** — and a tie broken by index order is the
 tie-breaking trap that already cost this programme a whole table.
+
+---
+
+
+## 5.4 THE PRE-REGISTERED F-N AUDIT: the conclusion is NOT normalisation-dependent
+
+`PREREG_C.md` §1 committed, before any run, that *if the primary conclusion flips between `Nt`,
+`Nz` and `Ng` the conclusion is reported NORMALISATION-DEPENDENT and no arm is promoted*, and that a
+non-declared winner would be recorded as **the declared choice being WRONG** rather than swapped in.
+The audit, run at the end:
+
+    arms evaluated (n = 126)              42 rows / 41 distinct lambda, over raw, Nz, Nt
+    arms WORSE than random (mean)         42 / 42
+    arms with a CI excluding zero         42 / 42   -- every one on the WORSE side
+    best arm in the entire family         Nz lambda=0.95   +0.0803 vs random -- still worse
+
+    C3 primary under BOTH normalisations of the SAME schedule:
+      LA_raw - A_raw   +0.2601 [+0.0555, +0.4224]    9W/21L
+      LA_Nt  - A_raw   +0.2331 [+0.0673, +0.3950]   12W/18L
+
+    F-N clause 2 (pool MAD finite and positive on every target):  252/252, 0 firings
+
+**No flip anywhere.** The selection conclusion and the C3 conclusion both hold under every
+normalisation, so neither is propped up by the declared choice. **`Nt` is not the best-performing
+arm** — `Nz` at λ = 0.95 edges it by 0.003 Å — but since **both are worse than chance**, there is no
+"winner" to record the declared choice as wrong against. **F-N does not fire. Label: the conclusions
+are NORMALISATION-INDEPENDENT.**
+
+**An error of mine, caught by this audit and corrected rather than left standing.** An earlier draft
+of this section said *"60 of 60 arms"*. The n = 126 block runs **three** normalisations, not four
+(`Ng` was run at n = 30 only), giving **42 arm-rows**. The count was wrong; the conclusion and every
+number in the table were not. Corrected here and in `STATUS_C.md`.
+
 
 ---
 
