@@ -590,6 +590,12 @@ matched null, so a schedule cannot win by simply moving less:**
 > primary endpoint, at n = 30, with a CI excluding zero, and with its mechanism independently
 > refuted at n = 30 in §3.**
 
+**And the staged arms were not under-budgeted — they spent MORE.** The obvious objection to a
+staged schedule losing is that splitting `MAXITER` starves each stage. It does not: realised `nfev`
+is **142 for `LA_Nt`, 172 for `L5A_Nt` and 196 for `ramp_Nt` against 102 for `A_raw`.** **The
+continuation arms used 39-92% more genuine function evaluations than the comparator and still
+finished further from the native.** The budget cap is not the binding constraint on any arm (§11.2).
+
 **The honesty layer, applied to my own strongest number.** `LA_Nt`'s mean is **CONCENTRATED**: the
 largest single target (`8TXS`, +1.961) carries 14.3% of the total absolute effect, against a
 **uniform-effect null percentile of 98.4**. The mean `+0.2331` therefore overstates the typical
