@@ -1,0 +1,109 @@
+{
+ "n_comparisons": 12,
+ "n_mismatch": 0,
+ "mismatches": [],
+ "gate_targets": [
+  "1CS9",
+  "1ID6",
+  "1TOR"
+ ],
+ "PASS": true,
+ "rows": [
+  {
+   "pdb": "1CS9",
+   "kind": "AMBc",
+   "arm": "spsa",
+   "seed": 0,
+   "enc": "theta",
+   "ok": true
+  },
+  {
+   "pdb": "1CS9",
+   "kind": "AMBc",
+   "arm": "spsa",
+   "seed": 0,
+   "enc": "emb",
+   "ok": true
+  },
+  {
+   "pdb": "1CS9",
+   "kind": "AMBc",
+   "arm": "spsa",
+   "seed": 1,
+   "enc": "theta",
+   "ok": true
+  },
+  {
+   "pdb": "1CS9",
+   "kind": "AMBc",
+   "arm": "spsa",
+   "seed": 1,
+   "enc": "emb",
+   "ok": true
+  },
+  {
+   "pdb": "1ID6",
+   "kind": "AMBc",
+   "arm": "spsa",
+   "seed": 0,
+   "enc": "theta",
+   "ok": true
+  },
+  {
+   "pdb": "1ID6",
+   "kind": "AMBc",
+   "arm": "spsa",
+   "seed": 0,
+   "enc": "emb",
+   "ok": true
+  },
+  {
+   "pdb": "1ID6",
+   "kind": "AMBc",
+   "arm": "spsa",
+   "seed": 1,
+   "enc": "theta",
+   "ok": true
+  },
+  {
+   "pdb": "1ID6",
+   "kind": "AMBc",
+   "arm": "spsa",
+   "seed": 1,
+   "enc": "emb",
+   "ok": true
+  },
+  {
+   "pdb": "1TOR",
+   "kind": "AMBc",
+   "arm": "spsa",
+   "seed": 0,
+   "enc": "theta",
+   "ok": true
+  },
+  {
+   "pdb": "1TOR",
+   "kind": "AMBc",
+   "arm": "spsa",
+   "seed": 0,
+   "enc": "emb",
+   "ok": true
+  },
+  {
+   "pdb": "1TOR",
+   "kind": "AMBc",
+   "arm": "spsa",
+   "seed": 1,
+   "enc": "theta",
+   "ok": true
+  },
+  {
+   "pdb": "1TOR",
+   "kind": "AMBc",
+   "arm": "spsa",
+   "seed": 1,
+   "enc": "emb",
+   "ok": true
+  }
+ ]
+}

@@ -1,0 +1,710 @@
+ARTEFACT C:\Users\abena\Protein-Folding-Algorithm\s21\results\tailprice.json
+  complete=False  n_rows=42  n_expected=126  n_skipped=0  n_complete_rows=42  required_keys/row=946  cfg=5249fb8982862872
+
+==============================================================================================
+STAGE 1 -- DISTRIBUTIONAL FACTS, measured BEFORE any combination
+==============================================================================================
+                   mean          sd        skew        kurt          q0         q25         q50         q75         q99        q100 frac_gt_1e4 finite_frac
+  disto           2.284       0.914       1.557       5.077       1.318       1.771       2.042       2.726       5.281        6.14           0           1
+  legacy         -9.876       7.154      0.6452       3.581      -26.28      -15.26      -10.67      -5.853       7.305       15.12           0           1
+  amber       1.043e+14   1.898e+15       22.14       493.2      -158.9       972.7   2.825e+04   2.776e+06   7.676e+12    4.13e+16       0.566           1
+  (per-target medians of the per-target statistic.  AMBER's q100 is the tail §6 warns about.)
+
+  RANK AGREEMENT within each pool (per-target Spearman, median over targets):
+    rho_leg_amb       -0.1071   mean -0.1155
+    rho_dis_leg       +0.6243   mean +0.4784
+    rho_dis_amb       -0.0438   mean -0.0464
+    rho_true_trueRB   +0.9880   mean +0.9857
+
+  ORACLE MARGINAL rank skill of each energy against TRUE RMSD
+  (POSITIVE = lower energy goes with lower RMSD = CORRECT ordering):
+    ORACLE_rho_dis_d    +0.6179 med +0.7417 iid[+0.5144,+0.7140] fold[+0.5233,+0.7072]  3/42 negative
+    ORACLE_rho_leg_d    +0.3281 med +0.3074 iid[+0.2250,+0.4276] fold[+0.3011,+0.3552]  8/42 negative
+    ORACLE_rho_amb_d    -0.0421 med -0.0352 iid[-0.1097,+0.0255] fold[-0.1157,+0.0315]  23/42 negative
+
+  ORACLE PARTIAL rank skill, GIVEN THE DEPLOYED DISTOGRAM -- the contribution:
+    legacy | disto  -0.0076 med -0.0332 iid[-0.0757,+0.0590] fold[-0.0616,+0.0681]  25/42 negative
+    amber  | disto  -0.0290 med -0.0322 iid[-0.0762,+0.0180] fold[-0.0593,-0.0036]  25/42 negative
+    (the AMBER row is the CONTROL: its marginal is already ~0, so a partial that
+     also lands ~0 shows the partialling is not manufacturing structure.)
+    CONSEQUENCE, already visible in the tables below: d+l never beats d, at any
+    alpha or any readout.  This is the mechanism for that.
+
+  BASIS SHIFT rebuild - window, per-member mean: +0.0103 A
+
+==============================================================================================
+AUDIT -- the two normalisations that were NOT declared (raw sum, per-target z)
+==============================================================================================
+  ham        declared rank     raw sum     z-score   (tail 0.15, W basis, mean A)
+  d+l                3.081       3.530       3.161
+  d+a                2.984       3.810       2.893
+  l+a                3.389       3.789       3.556
+  d+l+a              3.060       3.784       3.160
+  If a non-declared arm wins, the declared choice is recorded as WRONG, not swapped.
+
+==============================================================================================
+TAIL PRICING -- basis W  (coordinate average of REAL retrieved windows)
+n = 42.  POOL-RESTRICTED selection over the shipped K=500 pool.  POINT-CLOUD basis, unprojected.
+==============================================================================================
+  pool mean 4.357   ORACLE pool best 1.790   (median pool mean 4.248)
+
+  alpha       k   random   ORACLE        disto    legacy     amber       d+l       d+a       l+a     d+l+a
+  argmin      1       --       --        3.246     4.234     5.458     3.280     3.255     4.037     3.234
+  0.01        5    3.638    1.524        3.005     3.741     5.168     3.104     3.086     3.426     2.998
+  0.05       25    3.352    1.618        2.889     3.528     4.382     3.038     2.978     3.309     3.035
+  0.15       75    3.293    1.855        2.892     3.558     3.811     3.081     2.984     3.389     3.060
+  0.3       150    3.290    2.119        2.937     3.552     3.468     3.147     2.993     3.362     3.131
+  0.5       250    3.286    2.421        3.002     3.420     3.306     3.185     3.051     3.352     3.194
+  1         500    3.275    3.275        3.275     3.275     3.275     3.275     3.275     3.275     3.275
+
+  MEDIANS over targets (same table):
+  alpha      random   ORACLE        disto    legacy     amber       d+l       d+a       l+a     d+l+a
+  argmin         --       --        3.433     4.050     5.165     3.297     3.470     3.867     3.208
+  0.01        3.494    1.712        2.922     3.617     5.175     3.273     3.014     3.202     3.017
+  0.05        3.347    1.605        2.655     3.850     4.264     2.982     2.985     3.233     3.099
+  0.15        3.348    1.857        2.740     3.876     4.019     2.921     2.945     3.473     3.078
+  0.3         3.280    2.145        2.867     3.838     3.415     3.057     2.985     3.576     3.177
+  0.5         3.303    2.414        3.015     3.707     3.297     3.331     3.025     3.510     3.380
+  1           3.379    3.379        3.379     3.379     3.379     3.379     3.379     3.379     3.379
+
+  SINGLE-STRUCTURE readouts -- MEDOID of the alpha-tail (no averaging).
+  This is the family the deployed pillar actually emits.  Means over targets.
+  alpha     randmed   ORACLE        disto    legacy     amber       d+l       d+a       l+a     d+l+a
+  0.01        3.932    1.930        3.284     3.923     5.826     3.305     3.302     3.689     3.248
+  0.05        3.658    2.159        3.156     3.839     5.027     3.308     3.229     3.472     3.323
+  0.15        3.573    2.347        3.105     3.897     4.114     3.263     3.256     3.738     3.338
+  0.3         3.579    2.608        3.260     3.862     3.596     3.404     3.309     3.708     3.370
+  0.5         3.573    2.902        3.331     3.727     3.481     3.462     3.286     3.728     3.531
+  1           3.574    3.574        3.574     3.574     3.574     3.574     3.574     3.574     3.574
+
+  SINGLE-STRUCTURE readouts -- RANDOM MEMBER of the alpha-tail (selection WITHIN the tail removed).
+  alpha     randmem                 disto    legacy     amber       d+l       d+a       l+a     d+l+a
+  0.01        4.379                 3.268     4.152     5.726     3.330     3.375     3.895     3.323
+  0.05        4.433                 3.296     3.935     5.222     3.385     3.419     3.796     3.459
+  0.15        4.235                 3.414     3.886     4.840     3.421     3.545     3.946     3.558
+  0.3         4.364                 3.450     3.911     4.528     3.655     3.638     3.881     3.607
+  0.5         4.323                 3.684     3.919     4.337     3.649     3.907     4.065     3.810
+  1           4.443                 4.440     4.354     4.414     4.382     4.350     4.274     4.266
+
+----------------------------------------------------------------------------------------------
+  ***  PRIMARY (amended) -- ARM minus its MATCHED-COUNT RANDOM control.  ***
+  Negative = the Hamiltonian's alpha-tail carries selection information over chance.
+  Each readout is compared to the SAME readout of a random subset of the same size,
+  because a control must be matched in the space the operator works in.
+----------------------------------------------------------------------------------------------
+
+  == AVERAGED tail (Sprint-19 lever, NOT the pillar's readout)
+    alpha=0.01  (k=5)
+      disto   -0.632 med -0.770 se 0.151 (MDE 0.422)  iid[-0.922,-0.333]  fold[-1.039,-0.194]  33W/9L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.103 med +0.034 se 0.149 (MDE 0.418)  iid[-0.188,+0.402]  fold[-0.217,+0.361]  21W/21L  folds 2/5 neg
+      amber   +1.530 med +1.505 se 0.251 (MDE 0.702)  iid[+1.034,+2.026]  fold[+1.208,+1.990]  6W/36L  folds 0/5 neg  <-- WORSE than random
+      d+l     -0.533 med -0.458 se 0.155 (MDE 0.433)  iid[-0.836,-0.246]  fold[-0.878,-0.264]  30W/12L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.552 med -0.643 se 0.137 (MDE 0.385)  iid[-0.815,-0.286]  fold[-0.978,-0.235]  32W/10L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.212 med -0.397 se 0.140 (MDE 0.393)  iid[-0.480,+0.077]  fold[-0.455,+0.025]  29W/13L  folds 3/5 neg
+      d+l+a   -0.640 med -0.679 se 0.152 (MDE 0.425)  iid[-0.943,-0.346]  fold[-1.121,-0.322]  31W/11L  folds 5/5 neg  <-- BEATS random
+    alpha=0.05  (k=25)
+      disto   -0.464 med -0.387 se 0.141 (MDE 0.396)  iid[-0.749,-0.191]  fold[-0.977,-0.177]  30W/12L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.176 med +0.236 se 0.111 (MDE 0.312)  iid[-0.039,+0.391]  fold[+0.020,+0.339]  16W/26L  folds 1/5 neg
+      amber   +1.029 med +0.856 se 0.164 (MDE 0.459)  iid[+0.717,+1.350]  fold[+0.828,+1.297]  5W/37L  folds 0/5 neg  <-- WORSE than random
+      d+l     -0.314 med -0.272 se 0.130 (MDE 0.365)  iid[-0.578,-0.074]  fold[-0.647,-0.071]  25W/17L  folds 4/5 neg  <-- BEATS random
+      d+a     -0.374 med -0.423 se 0.128 (MDE 0.357)  iid[-0.628,-0.125]  fold[-0.875,-0.069]  28W/14L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.043 med -0.092 se 0.110 (MDE 0.307)  iid[-0.265,+0.170]  fold[-0.299,+0.254]  24W/18L  folds 3/5 neg
+      d+l+a   -0.317 med -0.186 se 0.125 (MDE 0.350)  iid[-0.571,-0.081]  fold[-0.722,-0.020]  28W/14L  folds 4/5 neg  <-- BEATS random
+    alpha=0.15  (k=75)
+      disto   -0.401 med -0.500 se 0.138 (MDE 0.386)  iid[-0.671,-0.133]  fold[-0.892,-0.093]  30W/12L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.265 med +0.312 se 0.110 (MDE 0.309)  iid[+0.048,+0.477]  fold[+0.125,+0.372]  15W/27L  folds 1/5 neg  <-- WORSE than random
+      amber   +0.519 med +0.512 se 0.099 (MDE 0.277)  iid[+0.329,+0.715]  fold[+0.329,+0.656]  9W/33L  folds 0/5 neg  <-- WORSE than random
+      d+l     -0.212 med -0.214 se 0.114 (MDE 0.320)  iid[-0.438,+0.003]  fold[-0.471,+0.018]  27W/15L  folds 4/5 neg
+      d+a     -0.309 med -0.399 se 0.106 (MDE 0.298)  iid[-0.512,-0.102]  fold[-0.681,-0.063]  29W/13L  folds 5/5 neg  <-- BEATS random
+      l+a     +0.096 med +0.060 se 0.097 (MDE 0.272)  iid[-0.097,+0.281]  fold[-0.125,+0.270]  17W/25L  folds 1/5 neg
+      d+l+a   -0.232 med -0.174 se 0.103 (MDE 0.290)  iid[-0.436,-0.035]  fold[-0.462,-0.002]  26W/16L  folds 3/5 neg  <-- BEATS random
+    alpha=0.3  (k=150)
+      disto   -0.353 med -0.481 se 0.120 (MDE 0.336)  iid[-0.584,-0.121]  fold[-0.772,-0.072]  28W/14L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.262 med +0.228 se 0.107 (MDE 0.299)  iid[+0.056,+0.467]  fold[+0.124,+0.363]  15W/27L  folds 1/5 neg  <-- WORSE than random
+      amber   +0.178 med +0.225 se 0.081 (MDE 0.227)  iid[+0.022,+0.339]  fold[+0.034,+0.290]  15W/27L  folds 1/5 neg  <-- WORSE than random
+      d+l     -0.143 med -0.127 se 0.098 (MDE 0.273)  iid[-0.329,+0.047]  fold[-0.340,+0.036]  26W/16L  folds 4/5 neg
+      d+a     -0.297 med -0.430 se 0.080 (MDE 0.224)  iid[-0.452,-0.138]  fold[-0.521,-0.125]  29W/13L  folds 5/5 neg  <-- BEATS random
+      l+a     +0.072 med +0.053 se 0.083 (MDE 0.232)  iid[-0.088,+0.232]  fold[-0.131,+0.209]  20W/22L  folds 1/5 neg
+      d+l+a   -0.159 med -0.052 se 0.089 (MDE 0.250)  iid[-0.336,+0.013]  fold[-0.341,+0.044]  24W/18L  folds 3/5 neg
+    alpha=0.5  (k=250)
+      disto   -0.284 med -0.414 se 0.096 (MDE 0.268)  iid[-0.472,-0.100]  fold[-0.565,-0.101]  26W/16L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.134 med +0.135 se 0.078 (MDE 0.219)  iid[-0.018,+0.283]  fold[-0.006,+0.251]  18W/24L  folds 1/5 neg
+      amber   +0.020 med +0.040 se 0.054 (MDE 0.150)  iid[-0.087,+0.125]  fold[-0.092,+0.110]  18W/24L  folds 2/5 neg
+      d+l     -0.102 med -0.078 se 0.079 (MDE 0.220)  iid[-0.254,+0.054]  fold[-0.282,+0.073]  23W/19L  folds 2/5 neg
+      d+a     -0.235 med -0.295 se 0.061 (MDE 0.171)  iid[-0.354,-0.115]  fold[-0.374,-0.103]  30W/12L  folds 5/5 neg  <-- BEATS random
+      l+a     +0.066 med +0.031 se 0.069 (MDE 0.194)  iid[-0.068,+0.199]  fold[-0.104,+0.171]  19W/23L  folds 1/5 neg
+      d+l+a   -0.092 med -0.032 se 0.070 (MDE 0.195)  iid[-0.226,+0.046]  fold[-0.226,+0.048]  23W/19L  folds 2/5 neg
+
+  == MEDOID of tail   (single structure -- the pillar's family)
+    alpha=0.01  (k=5)
+      disto   -0.648 med -0.722 se 0.159 (MDE 0.445)  iid[-0.950,-0.325]  fold[-1.031,-0.112]  34W/8L  folds 5/5 neg  <-- BEATS random
+      legacy  -0.008 med -0.226 se 0.207 (MDE 0.579)  iid[-0.370,+0.418]  fold[-0.507,+0.624]  24W/18L  folds 4/5 neg
+      amber   +1.895 med +1.948 se 0.321 (MDE 0.899)  iid[+1.250,+2.512]  fold[+1.228,+2.538]  10W/32L  folds 0/5 neg  <-- WORSE than random
+      d+l     -0.627 med -0.679 se 0.157 (MDE 0.440)  iid[-0.921,-0.320]  fold[-0.937,-0.274]  34W/8L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.629 med -0.646 se 0.162 (MDE 0.454)  iid[-0.921,-0.294]  fold[-1.041,-0.237]  35W/7L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.243 med -0.387 se 0.169 (MDE 0.474)  iid[-0.561,+0.108]  fold[-0.516,+0.017]  27W/15L  folds 4/5 neg
+      d+l+a   -0.683 med -0.576 se 0.147 (MDE 0.411)  iid[-0.986,-0.406]  fold[-1.096,-0.331]  34W/8L  folds 5/5 neg  <-- BEATS random
+    alpha=0.05  (k=25)
+      disto   -0.502 med -0.253 se 0.141 (MDE 0.394)  iid[-0.792,-0.234]  fold[-0.978,-0.186]  27W/15L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.180 med +0.083 se 0.127 (MDE 0.357)  iid[-0.074,+0.424]  fold[-0.073,+0.404]  13W/29L  folds 1/5 neg
+      amber   +1.368 med +0.857 se 0.268 (MDE 0.752)  iid[+0.872,+1.908]  fold[+0.911,+1.664]  9W/33L  folds 0/5 neg  <-- WORSE than random
+      d+l     -0.351 med -0.104 se 0.126 (MDE 0.354)  iid[-0.613,-0.117]  fold[-0.590,-0.153]  24W/18L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.429 med -0.266 se 0.133 (MDE 0.373)  iid[-0.695,-0.182]  fold[-0.969,-0.108]  27W/15L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.187 med -0.015 se 0.109 (MDE 0.306)  iid[-0.409,+0.019]  fold[-0.527,+0.060]  22W/20L  folds 3/5 neg
+      d+l+a   -0.335 med -0.003 se 0.113 (MDE 0.318)  iid[-0.575,-0.140]  fold[-0.630,-0.139]  22W/20L  folds 5/5 neg  <-- BEATS random
+    alpha=0.15  (k=75)
+      disto   -0.469 med -0.317 se 0.155 (MDE 0.435)  iid[-0.766,-0.150]  fold[-0.891,-0.136]  28W/14L  folds 4/5 neg  <-- BEATS random
+      legacy  +0.323 med +0.108 se 0.102 (MDE 0.285)  iid[+0.141,+0.531]  fold[+0.150,+0.447]  11W/31L  folds 0/5 neg  <-- WORSE than random
+      amber   +0.541 med +0.282 se 0.157 (MDE 0.440)  iid[+0.244,+0.857]  fold[+0.092,+0.785]  11W/31L  folds 1/5 neg  <-- WORSE than random
+      d+l     -0.310 med -0.067 se 0.108 (MDE 0.302)  iid[-0.531,-0.114]  fold[-0.502,-0.138]  25W/17L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.318 med -0.065 se 0.137 (MDE 0.384)  iid[-0.579,-0.050]  fold[-0.739,+0.014]  22W/20L  folds 4/5 neg  <-- BEATS random
+      l+a     +0.165 med +0.072 se 0.076 (MDE 0.213)  iid[+0.024,+0.318]  fold[+0.010,+0.265]  11W/31L  folds 1/5 neg  <-- WORSE than random
+      d+l+a   -0.235 med +0.017 se 0.096 (MDE 0.269)  iid[-0.426,-0.054]  fold[-0.377,-0.090]  20W/22L  folds 5/5 neg  <-- BEATS random
+    alpha=0.3  (k=150)
+      disto   -0.318 med -0.090 se 0.121 (MDE 0.340)  iid[-0.559,-0.086]  fold[-0.652,-0.052]  25W/17L  folds 4/5 neg  <-- BEATS random
+      legacy  +0.284 med +0.104 se 0.098 (MDE 0.276)  iid[+0.105,+0.484]  fold[+0.120,+0.401]  13W/29L  folds 0/5 neg  <-- WORSE than random
+      amber   +0.018 med -0.015 se 0.106 (MDE 0.296)  iid[-0.175,+0.236]  fold[-0.161,+0.138]  22W/20L  folds 3/5 neg
+      d+l     -0.174 med -0.006 se 0.086 (MDE 0.240)  iid[-0.341,-0.013]  fold[-0.294,-0.064]  23W/19L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.270 med -0.090 se 0.083 (MDE 0.234)  iid[-0.438,-0.112]  fold[-0.448,-0.135]  26W/16L  folds 5/5 neg  <-- BEATS random
+      l+a     +0.130 med +0.089 se 0.072 (MDE 0.203)  iid[-0.009,+0.273]  fold[-0.020,+0.241]  14W/28L  folds 1/5 neg
+      d+l+a   -0.209 med -0.007 se 0.086 (MDE 0.241)  iid[-0.379,-0.050]  fold[-0.322,-0.096]  22W/20L  folds 4/5 neg  <-- BEATS random
+    alpha=0.5  (k=250)
+      disto   -0.242 med -0.070 se 0.104 (MDE 0.292)  iid[-0.448,-0.043]  fold[-0.449,-0.095]  25W/17L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.154 med +0.022 se 0.082 (MDE 0.230)  iid[-0.012,+0.313]  fold[+0.040,+0.238]  16W/26L  folds 1/5 neg
+      amber   -0.092 med -0.040 se 0.073 (MDE 0.204)  iid[-0.241,+0.045]  fold[-0.288,+0.046]  22W/20L  folds 2/5 neg
+      d+l     -0.111 med +0.007 se 0.082 (MDE 0.229)  iid[-0.279,+0.036]  fold[-0.349,+0.101]  20W/22L  folds 2/5 neg
+      d+a     -0.286 med -0.048 se 0.081 (MDE 0.228)  iid[-0.448,-0.135]  fold[-0.437,-0.159]  26W/16L  folds 5/5 neg  <-- BEATS random
+      l+a     +0.156 med +0.022 se 0.080 (MDE 0.225)  iid[-0.002,+0.313]  fold[-0.053,+0.304]  16W/26L  folds 1/5 neg
+      d+l+a   -0.042 med +0.006 se 0.072 (MDE 0.203)  iid[-0.191,+0.097]  fold[-0.214,+0.092]  20W/22L  folds 2/5 neg
+
+  == MEMBER of tail   (single structure, no within-tail choice)
+    alpha=0.01  (k=5)
+      disto   -1.111 med -1.190 se 0.167 (MDE 0.468)  iid[-1.449,-0.779]  fold[-1.604,-0.770]  36W/6L  folds 5/5 neg  <-- BEATS random
+      legacy  -0.227 med -0.240 se 0.201 (MDE 0.563)  iid[-0.608,+0.180]  fold[-0.786,+0.213]  24W/18L  folds 3/5 neg
+      amber   +1.348 med +1.343 se 0.242 (MDE 0.677)  iid[+0.866,+1.815]  fold[+0.757,+1.775]  6W/36L  folds 0/5 neg  <-- WORSE than random
+      d+l     -1.049 med -1.071 se 0.172 (MDE 0.482)  iid[-1.393,-0.721]  fold[-1.389,-0.784]  34W/8L  folds 5/5 neg  <-- BEATS random
+      d+a     -1.003 med -1.005 se 0.165 (MDE 0.463)  iid[-1.322,-0.683]  fold[-1.507,-0.625]  34W/8L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.484 med -0.521 se 0.151 (MDE 0.423)  iid[-0.772,-0.185]  fold[-0.837,-0.085]  30W/12L  folds 4/5 neg  <-- BEATS random
+      d+l+a   -1.056 med -0.855 se 0.177 (MDE 0.497)  iid[-1.405,-0.729]  fold[-1.560,-0.700]  35W/7L  folds 5/5 neg  <-- BEATS random
+    alpha=0.05  (k=25)
+      disto   -1.137 med -0.823 se 0.155 (MDE 0.433)  iid[-1.449,-0.849]  fold[-1.473,-0.832]  38W/4L  folds 5/5 neg  <-- BEATS random
+      legacy  -0.498 med -0.312 se 0.140 (MDE 0.391)  iid[-0.784,-0.236]  fold[-0.877,-0.191]  30W/12L  folds 5/5 neg  <-- BEATS random
+      amber   +0.789 med +0.778 se 0.150 (MDE 0.419)  iid[+0.502,+1.092]  fold[+0.394,+1.063]  8W/34L  folds 0/5 neg  <-- WORSE than random
+      d+l     -1.048 med -0.838 se 0.145 (MDE 0.405)  iid[-1.340,-0.779]  fold[-1.342,-0.708]  38W/4L  folds 5/5 neg  <-- BEATS random
+      d+a     -1.014 med -0.785 se 0.144 (MDE 0.403)  iid[-1.305,-0.740]  fold[-1.299,-0.759]  37W/5L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.637 med -0.484 se 0.151 (MDE 0.424)  iid[-0.939,-0.351]  fold[-1.101,-0.350]  32W/10L  folds 5/5 neg  <-- BEATS random
+      d+l+a   -0.974 med -0.779 se 0.145 (MDE 0.406)  iid[-1.267,-0.698]  fold[-1.243,-0.687]  35W/7L  folds 5/5 neg  <-- BEATS random
+    alpha=0.15  (k=75)
+      disto   -0.821 med -0.815 se 0.133 (MDE 0.374)  iid[-1.071,-0.561]  fold[-1.044,-0.580]  36W/6L  folds 5/5 neg  <-- BEATS random
+      legacy  -0.348 med -0.208 se 0.129 (MDE 0.360)  iid[-0.601,-0.098]  fold[-0.477,-0.251]  29W/13L  folds 5/5 neg  <-- BEATS random
+      amber   +0.605 med +0.580 se 0.126 (MDE 0.352)  iid[+0.364,+0.866]  fold[+0.348,+0.788]  11W/31L  folds 0/5 neg  <-- WORSE than random
+      d+l     -0.814 med -0.770 se 0.116 (MDE 0.326)  iid[-1.050,-0.589]  fold[-0.923,-0.752]  37W/5L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.690 med -0.612 se 0.098 (MDE 0.275)  iid[-0.880,-0.506]  fold[-0.780,-0.602]  36W/6L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.289 med -0.287 se 0.114 (MDE 0.319)  iid[-0.504,-0.062]  fold[-0.449,-0.174]  26W/16L  folds 5/5 neg  <-- BEATS random
+      d+l+a   -0.677 med -0.423 se 0.105 (MDE 0.294)  iid[-0.887,-0.480]  fold[-0.805,-0.534]  38W/4L  folds 5/5 neg  <-- BEATS random
+    alpha=0.3  (k=150)
+      disto   -0.914 med -0.752 se 0.145 (MDE 0.405)  iid[-1.199,-0.644]  fold[-1.146,-0.626]  36W/6L  folds 5/5 neg  <-- BEATS random
+      legacy  -0.453 med -0.452 se 0.126 (MDE 0.354)  iid[-0.699,-0.213]  fold[-0.640,-0.282]  30W/12L  folds 5/5 neg  <-- BEATS random
+      amber   +0.164 med +0.288 se 0.113 (MDE 0.316)  iid[-0.051,+0.382]  fold[+0.027,+0.334]  18W/24L  folds 1/5 neg
+      d+l     -0.709 med -0.605 se 0.132 (MDE 0.369)  iid[-0.959,-0.462]  fold[-0.888,-0.448]  34W/8L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.726 med -0.624 se 0.136 (MDE 0.381)  iid[-0.986,-0.471]  fold[-0.924,-0.443]  35W/7L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.483 med -0.423 se 0.128 (MDE 0.359)  iid[-0.725,-0.228]  fold[-0.635,-0.286]  31W/11L  folds 5/5 neg  <-- BEATS random
+      d+l+a   -0.757 med -0.776 se 0.125 (MDE 0.350)  iid[-0.987,-0.510]  fold[-0.889,-0.527]  34W/8L  folds 5/5 neg  <-- BEATS random
+    alpha=0.5  (k=250)
+      disto   -0.639 med -0.555 se 0.111 (MDE 0.310)  iid[-0.855,-0.429]  fold[-0.785,-0.414]  38W/4L  folds 5/5 neg  <-- BEATS random
+      legacy  -0.404 med -0.334 se 0.123 (MDE 0.345)  iid[-0.642,-0.169]  fold[-0.603,-0.169]  28W/14L  folds 5/5 neg  <-- BEATS random
+      amber   +0.014 med +0.113 se 0.101 (MDE 0.284)  iid[-0.188,+0.210]  fold[-0.096,+0.152]  18W/24L  folds 2/5 neg
+      d+l     -0.674 med -0.492 se 0.118 (MDE 0.332)  iid[-0.906,-0.455]  fold[-0.792,-0.498]  36W/6L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.416 med -0.359 se 0.091 (MDE 0.255)  iid[-0.604,-0.243]  fold[-0.504,-0.282]  33W/9L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.258 med -0.189 se 0.115 (MDE 0.322)  iid[-0.481,-0.032]  fold[-0.450,-0.076]  26W/16L  folds 5/5 neg  <-- BEATS random
+      d+l+a   -0.513 med -0.454 se 0.100 (MDE 0.281)  iid[-0.714,-0.322]  fold[-0.640,-0.349]  36W/6L  folds 5/5 neg  <-- BEATS random
+
+----------------------------------------------------------------------------------------------
+  OPERATOR DECOMPOSITION -- what the two operators are each worth, held apart.
+----------------------------------------------------------------------------------------------
+  (i) THE TAIL, averaging held out:  medoid(tail) - argmin
+    alpha=0.05
+      disto   -0.090 med -0.010 se 0.097 (MDE 0.271)  iid[-0.285,+0.089]  fold[-0.300,+0.060]  22W/17L  folds 4/5 neg
+      legacy  -0.395 med +0.004 se 0.419 (MDE 1.175)  iid[-1.236,+0.376]  fold[-1.074,+0.426]  19W/21L  folds 3/5 neg
+      amber   -0.432 med -0.021 se 0.328 (MDE 0.919)  iid[-1.077,+0.175]  fold[-0.961,-0.024]  21W/20L  folds 4/5 neg
+      d+l     +0.028 med +0.000 se 0.091 (MDE 0.256)  iid[-0.149,+0.207]  fold[-0.292,+0.297]  19W/18L  folds 3/5 neg
+      d+a     -0.025 med -0.033 se 0.113 (MDE 0.316)  iid[-0.239,+0.192]  fold[-0.113,+0.063]  24W/18L  folds 4/5 neg
+      l+a     -0.565 med -0.009 se 0.291 (MDE 0.816)  iid[-1.172,-0.042]  fold[-1.134,+0.185]  21W/20L  folds 3/5 neg
+      d+l+a   +0.090 med -0.029 se 0.108 (MDE 0.304)  iid[-0.115,+0.313]  fold[-0.067,+0.288]  24W/17L  folds 2/5 neg
+    alpha=0.15
+      disto   -0.141 med -0.097 se 0.104 (MDE 0.291)  iid[-0.348,+0.058]  fold[-0.450,+0.071]  26W/14L  folds 3/5 neg
+      legacy  -0.337 med +0.026 se 0.427 (MDE 1.197)  iid[-1.183,+0.445]  fold[-1.120,+0.610]  20W/22L  folds 3/5 neg
+      amber   -1.344 med -1.605 se 0.332 (MDE 0.929)  iid[-1.979,-0.689]  fold[-1.770,-1.025]  32W/9L  folds 5/5 neg
+      d+l     -0.017 med +0.003 se 0.165 (MDE 0.461)  iid[-0.355,+0.272]  fold[-0.469,+0.366]  19W/21L  folds 2/5 neg
+      d+a     +0.001 med +0.001 se 0.116 (MDE 0.324)  iid[-0.213,+0.226]  fold[-0.230,+0.264]  21W/21L  folds 4/5 neg
+      l+a     -0.298 med +0.078 se 0.319 (MDE 0.895)  iid[-0.948,+0.299]  fold[-0.856,+0.464]  18W/24L  folds 3/5 neg
+      d+l+a   +0.105 med -0.030 se 0.175 (MDE 0.489)  iid[-0.249,+0.437]  fold[-0.337,+0.562]  22W/18L  folds 2/5 neg
+    alpha=0.3
+      disto   +0.015 med +0.018 se 0.109 (MDE 0.306)  iid[-0.207,+0.227]  fold[-0.235,+0.193]  20W/22L  folds 3/5 neg
+      legacy  -0.372 med -0.008 se 0.425 (MDE 1.190)  iid[-1.218,+0.408]  fold[-1.121,+0.535]  21W/21L  folds 3/5 neg
+      amber   -1.862 med -2.142 se 0.360 (MDE 1.009)  iid[-2.555,-1.147]  fold[-2.224,-1.470]  31W/11L  folds 5/5 neg
+      d+l     +0.124 med +0.041 se 0.178 (MDE 0.499)  iid[-0.240,+0.448]  fold[-0.319,+0.511]  15W/27L  folds 1/5 neg
+      d+a     +0.054 med +0.022 se 0.137 (MDE 0.383)  iid[-0.204,+0.324]  fold[-0.330,+0.481]  20W/22L  folds 3/5 neg
+      l+a     -0.328 med +0.082 se 0.321 (MDE 0.898)  iid[-0.980,+0.266]  fold[-0.891,+0.448]  19W/23L  folds 3/5 neg
+      d+l+a   +0.136 med +0.008 se 0.173 (MDE 0.484)  iid[-0.205,+0.465]  fold[-0.309,+0.622]  20W/21L  folds 2/5 neg
+
+  (ii) THE AVERAGING, tail held fixed:  tail_avg - medoid(tail)
+    alpha=0.05
+      disto   -0.268 med -0.127 se 0.060 (MDE 0.169)  iid[-0.388,-0.156]  fold[-0.353,-0.203]  32W/10L  folds 5/5 neg
+      legacy  -0.311 med -0.158 se 0.095 (MDE 0.266)  iid[-0.489,-0.136]  fold[-0.458,-0.144]  32W/10L  folds 5/5 neg
+      amber   -0.645 med -0.587 se 0.149 (MDE 0.417)  iid[-0.938,-0.364]  fold[-0.869,-0.359]  33W/9L  folds 5/5 neg
+      d+l     -0.270 med -0.162 se 0.059 (MDE 0.166)  iid[-0.390,-0.164]  fold[-0.428,-0.125]  33W/9L  folds 5/5 neg
+      d+a     -0.251 med -0.173 se 0.059 (MDE 0.166)  iid[-0.371,-0.142]  fold[-0.351,-0.192]  31W/11L  folds 5/5 neg
+      l+a     -0.162 med -0.108 se 0.071 (MDE 0.199)  iid[-0.298,-0.025]  fold[-0.265,-0.004]  30W/12L  folds 4/5 neg
+      d+l+a   -0.288 med -0.168 se 0.056 (MDE 0.156)  iid[-0.398,-0.186]  fold[-0.433,-0.195]  33W/9L  folds 5/5 neg
+    alpha=0.15
+      disto   -0.213 med -0.102 se 0.051 (MDE 0.143)  iid[-0.315,-0.120]  fold[-0.354,-0.119]  32W/10L  folds 5/5 neg
+      legacy  -0.339 med -0.204 se 0.081 (MDE 0.226)  iid[-0.503,-0.191]  fold[-0.478,-0.169]  34W/8L  folds 5/5 neg
+      amber   -0.303 med -0.481 se 0.107 (MDE 0.299)  iid[-0.509,-0.099]  fold[-0.451,-0.130]  26W/16L  folds 5/5 neg
+      d+l     -0.182 med -0.090 se 0.067 (MDE 0.188)  iid[-0.310,-0.046]  fold[-0.375,+0.022]  29W/13L  folds 4/5 neg
+      d+a     -0.272 med -0.115 se 0.053 (MDE 0.148)  iid[-0.379,-0.175]  fold[-0.340,-0.197]  34W/8L  folds 5/5 neg
+      l+a     -0.350 med -0.290 se 0.075 (MDE 0.209)  iid[-0.493,-0.209]  fold[-0.425,-0.249]  34W/8L  folds 5/5 neg
+      d+l+a   -0.278 med -0.145 se 0.071 (MDE 0.199)  iid[-0.417,-0.144]  fold[-0.477,-0.080]  37W/5L  folds 4/5 neg
+    alpha=0.3
+      disto   -0.323 med -0.180 se 0.065 (MDE 0.182)  iid[-0.454,-0.208]  fold[-0.503,-0.201]  35W/7L  folds 5/5 neg
+      legacy  -0.310 med -0.276 se 0.071 (MDE 0.199)  iid[-0.450,-0.178]  fold[-0.438,-0.153]  33W/9L  folds 5/5 neg
+      amber   -0.129 med -0.151 se 0.090 (MDE 0.253)  iid[-0.302,+0.050]  fold[-0.239,+0.004]  26W/16L  folds 4/5 neg
+      d+l     -0.257 med -0.207 se 0.072 (MDE 0.201)  iid[-0.394,-0.115]  fold[-0.448,-0.068]  33W/9L  folds 4/5 neg
+      d+a     -0.316 med -0.240 se 0.057 (MDE 0.161)  iid[-0.428,-0.206]  fold[-0.484,-0.181]  36W/6L  folds 5/5 neg
+      l+a     -0.346 med -0.311 se 0.071 (MDE 0.199)  iid[-0.485,-0.211]  fold[-0.426,-0.249]  35W/7L  folds 5/5 neg
+      d+l+a   -0.239 med -0.171 se 0.061 (MDE 0.170)  iid[-0.358,-0.124]  fold[-0.424,-0.071]  33W/9L  folds 4/5 neg
+
+  (iii) the CONFOUNDED original primary, retained and relabelled:
+        tail_avg(0.15) - argmin  ==  (i) + (ii).  It is a sum of two operators.
+      disto   -0.354 med -0.212 se 0.098 (MDE 0.274)  iid[-0.551,-0.165]  fold[-0.616,-0.118]  32W/10L  folds 4/5 neg
+      legacy  -0.676 med -0.163 se 0.382 (MDE 1.071)  iid[-1.458,+0.023]  fold[-1.390,+0.187]  27W/15L  folds 3/5 neg
+      amber   -1.647 med -1.993 se 0.297 (MDE 0.831)  iid[-2.204,-1.069]  fold[-1.911,-1.398]  34W/8L  folds 5/5 neg
+      d+l     -0.199 med -0.055 se 0.126 (MDE 0.352)  iid[-0.458,+0.033]  fold[-0.500,+0.016]  23W/19L  folds 4/5 neg
+      d+a     -0.271 med -0.073 se 0.108 (MDE 0.302)  iid[-0.478,-0.069]  fold[-0.486,-0.027]  28W/14L  folds 4/5 neg
+      l+a     -0.648 med -0.268 se 0.287 (MDE 0.804)  iid[-1.239,-0.119]  fold[-1.178,+0.062]  30W/12L  folds 4/5 neg
+      d+l+a   -0.174 med -0.149 se 0.131 (MDE 0.367)  iid[-0.439,+0.076]  fold[-0.405,+0.085]  29W/13L  folds 3/5 neg
+
+  vs the STRUCTURAL-ONLY reference (disto at the same alpha) -- does physics add?
+    readout = tail
+      alpha=0.05
+        legacy  +0.640 med +0.448 se 0.177 (MDE 0.496)  iid[+0.292,+0.992]  fold[+0.256,+1.080]  10W/32L  folds 0/5 neg
+        amber   +1.493 med +1.467 se 0.245 (MDE 0.687)  iid[+1.029,+1.988]  fold[+1.039,+2.282]  5W/37L  folds 0/5 neg
+        d+l     +0.149 med +0.039 se 0.081 (MDE 0.227)  iid[+0.005,+0.319]  fold[+0.004,+0.312]  17W/25L  folds 1/5 neg
+        d+a     +0.090 med -0.003 se 0.061 (MDE 0.170)  iid[-0.020,+0.212]  fold[+0.013,+0.137]  21W/21L  folds 1/5 neg
+        l+a     +0.420 med +0.099 se 0.184 (MDE 0.515)  iid[+0.051,+0.779]  fold[-0.069,+1.002]  13W/29L  folds 1/5 neg
+        d+l+a   +0.147 med +0.045 se 0.090 (MDE 0.251)  iid[-0.027,+0.329]  fold[-0.001,+0.307]  19W/23L  folds 1/5 neg
+      alpha=0.15
+        legacy  +0.666 med +0.506 se 0.186 (MDE 0.522)  iid[+0.315,+1.037]  fold[+0.301,+1.150]  13W/29L  folds 0/5 neg
+        amber   +0.920 med +0.975 se 0.185 (MDE 0.518)  iid[+0.573,+1.289]  fold[+0.525,+1.523]  6W/36L  folds 0/5 neg
+        d+l     +0.189 med +0.045 se 0.099 (MDE 0.276)  iid[-0.001,+0.379]  fold[+0.024,+0.394]  13W/29L  folds 1/5 neg
+        d+a     +0.092 med +0.064 se 0.055 (MDE 0.154)  iid[-0.007,+0.205]  fold[+0.010,+0.202]  16W/26L  folds 1/5 neg
+        l+a     +0.497 med +0.276 se 0.185 (MDE 0.517)  iid[+0.136,+0.866]  fold[+0.052,+1.051]  16W/26L  folds 1/5 neg
+        d+l+a   +0.168 med +0.013 se 0.114 (MDE 0.320)  iid[-0.064,+0.387]  fold[-0.068,+0.468]  20W/22L  folds 2/5 neg
+    readout = tailmed
+      alpha=0.05
+        legacy  +0.682 med +0.243 se 0.217 (MDE 0.608)  iid[+0.249,+1.095]  fold[+0.204,+1.157]  14W/25L  folds 1/5 neg
+        amber   +1.870 med +1.568 se 0.313 (MDE 0.877)  iid[+1.285,+2.508]  fold[+1.159,+2.592]  9W/32L  folds 0/5 neg
+        d+l     +0.151 med +0.000 se 0.097 (MDE 0.272)  iid[-0.029,+0.354]  fold[-0.031,+0.391]  13W/20L  folds 1/5 neg
+        d+a     +0.073 med +0.000 se 0.097 (MDE 0.272)  iid[-0.109,+0.264]  fold[-0.010,+0.156]  19W/15L  folds 2/5 neg
+        l+a     +0.315 med +0.026 se 0.187 (MDE 0.523)  iid[-0.072,+0.678]  fold[-0.318,+0.874]  17W/24L  folds 1/5 neg
+        d+l+a   +0.167 med +0.004 se 0.118 (MDE 0.331)  iid[-0.059,+0.406]  fold[-0.026,+0.370]  16W/21L  folds 1/5 neg
+      alpha=0.15
+        legacy  +0.792 med +0.356 se 0.224 (MDE 0.626)  iid[+0.363,+1.232]  fold[+0.394,+1.280]  9W/29L  folds 0/5 neg
+        amber   +1.010 med +0.816 se 0.209 (MDE 0.586)  iid[+0.603,+1.424]  fold[+0.578,+1.437]  9W/33L  folds 0/5 neg
+        d+l     +0.158 med +0.000 se 0.137 (MDE 0.384)  iid[-0.135,+0.385]  fold[-0.153,+0.440]  9W/20L  folds 1/5 neg
+        d+a     +0.151 med +0.030 se 0.057 (MDE 0.160)  iid[+0.045,+0.266]  fold[+0.112,+0.175]  9W/23L  folds 0/5 neg
+        l+a     +0.634 med +0.101 se 0.201 (MDE 0.563)  iid[+0.230,+1.030]  fold[+0.208,+1.084]  11W/30L  folds 1/5 neg
+        d+l+a   +0.234 med +0.057 se 0.155 (MDE 0.434)  iid[-0.091,+0.511]  fold[-0.122,+0.616]  9W/24L  folds 1/5 neg
+
+==============================================================================================
+CROSS-READOUT MATRIX -- basis W.  rows = TRAINING H (defines the tail); cols = READOUT H (argmin inside it).
+Single structure, no averaging anywhere.  Mean Ca-RMSD over targets.
+==============================================================================================
+
+  alpha = 0.05
+    train\read       disto    legacy     amber       d+l       d+a       l+a     d+l+a   argminTr
+    disto            3.246     3.186     3.365     3.178     3.235     3.209     3.233      3.246
+    legacy           3.260     4.234     4.011     3.293     3.378     3.989     3.387      4.234
+    amber            3.428     3.962     5.458     3.590     3.643     4.099     3.562      5.458
+    d+l              3.253     3.557     3.336     3.280     3.136     3.429     3.260      3.280
+    d+a              3.237     3.302     4.061     3.228     3.255     3.581     3.244      3.255
+    l+a              3.267     4.120     4.092     3.309     3.415     4.037     3.355      4.037
+    d+l+a            3.174     3.399     3.510     3.285     3.255     3.437     3.234      3.234
+    IDENTITY CHECK (not a discovery): max |diag - argmin(train)| = 0.00e+00
+
+  alpha = 0.15
+    train\read       disto    legacy     amber       d+l       d+a       l+a     d+l+a   argminTr
+    disto            3.246     3.278     3.518     3.186     3.192     3.345     3.190      3.246
+    legacy           3.415     4.234     3.847     3.355     3.470     4.043     3.444      4.234
+    amber            3.430     3.659     5.458     3.305     3.399     3.862     3.349      5.458
+    d+l              3.246     3.819     3.381     3.280     3.153     3.540     3.283      3.280
+    d+a              3.260     3.266     4.809     3.181     3.255     3.373     3.210      3.255
+    l+a              3.187     4.281     4.461     3.464     3.353     4.037     3.262      4.037
+    d+l+a            3.220     3.790     3.881     3.280     3.255     4.037     3.234      3.234
+    IDENTITY CHECK (not a discovery): max |diag - argmin(train)| = 0.00e+00
+
+  alpha = 0.3
+    train\read       disto    legacy     amber       d+l       d+a       l+a     d+l+a   argminTr
+    disto            3.246     3.350     3.661     3.215     3.255     3.356     3.229      3.246
+    legacy           3.396     4.234     3.838     3.350     3.398     4.043     3.346      4.234
+    amber            3.046     4.114     5.458     3.374     3.257     4.019     3.221      5.458
+    d+l              3.246     4.234     3.437     3.280     3.192     3.952     3.234      3.280
+    d+a              3.246     3.464     5.402     3.211     3.255     3.534     3.210      3.255
+    l+a              3.139     4.234     5.329     3.313     3.378     4.037     3.234      4.037
+    d+l+a            3.260     4.227     3.917     3.280     3.255     4.037     3.234      3.234
+    IDENTITY CHECK (not a discovery): max |diag - argmin(train)| = 0.00e+00
+
+  alpha = 0.5
+    train\read       disto    legacy     amber       d+l       d+a       l+a     d+l+a   argminTr
+    disto            3.246     3.572     3.822     3.276     3.255     3.456     3.229      3.246
+    legacy           3.284     4.234     4.127     3.280     3.279     4.037     3.306      4.234
+    amber            3.169     3.965     5.458     3.350     3.313     4.038     3.219      5.458
+    d+l              3.246     4.234     3.714     3.280     3.192     4.040     3.234      3.280
+    d+a              3.246     3.499     5.566     3.281     3.255     3.761     3.234      3.255
+    l+a              3.166     4.234     5.446     3.303     3.338     4.037     3.234      4.037
+    d+l+a            3.257     4.234     4.565     3.280     3.255     4.037     3.234      3.234
+    IDENTITY CHECK (not a discovery): max |diag - argmin(train)| = 0.00e+00
+
+  Best OFF-DIAGONAL cell vs the best DIAGONAL cell, paired over targets:
+    alpha=0.05  best off-diag d+l>d+a vs best diag d+l+a>d+l+a: -0.098 med +0.000 se 0.077 (MDE 0.215)  iid[-0.243,+0.047]  fold[-0.220,+0.083]  17W/9L
+      (both chosen ON this instrument -- a max over 42 and 7 cells, reported as a CEILING, not a validated method)
+    alpha=0.15  best off-diag d+l>d+a vs best diag d+l+a>d+l+a: -0.081 med +0.000 se 0.092 (MDE 0.258)  iid[-0.257,+0.096]  fold[-0.264,+0.151]  17W/12L
+      (both chosen ON this instrument -- a max over 42 and 7 cells, reported as a CEILING, not a validated method)
+    alpha=0.3  best off-diag amber>disto vs best diag d+l+a>d+l+a: -0.187 med -0.009 se 0.074 (MDE 0.208)  iid[-0.333,-0.048]  fold[-0.365,-0.040]  21W/9L
+      (both chosen ON this instrument -- a max over 42 and 7 cells, reported as a CEILING, not a validated method)
+
+==============================================================================================
+TAIL PRICING -- basis RB  (coordinate average of ideal-geometry REBUILDS)
+n = 42.  POOL-RESTRICTED selection over the shipped K=500 pool.  POINT-CLOUD basis, unprojected.
+==============================================================================================
+  pool mean 4.367   ORACLE pool best 1.798   (median pool mean 4.254)
+
+  alpha       k   random   ORACLE        disto    legacy     amber       d+l       d+a       l+a     d+l+a
+  argmin      1       --       --        3.291     4.245     5.481     3.298     3.270     4.053     3.274
+  0.01        5    3.647    1.555        3.018     3.771     5.224     3.117     3.095     3.439     3.023
+  0.05       25    3.347    1.628        2.896     3.530     4.426     3.045     2.991     3.311     3.044
+  0.15       75    3.308    1.854        2.899     3.549     3.808     3.090     2.999     3.397     3.056
+  0.3       150    3.303    2.121        2.931     3.546     3.502     3.158     3.011     3.374     3.139
+  0.5       250    3.299    2.415        3.004     3.426     3.317     3.207     3.069     3.358     3.209
+  1         500    3.290    3.290        3.290     3.290     3.290     3.290     3.290     3.290     3.290
+
+  MEDIANS over targets (same table):
+  alpha      random   ORACLE        disto    legacy     amber       d+l       d+a       l+a     d+l+a
+  argmin         --       --        3.413     4.124     5.247     3.357     3.569     3.837     3.177
+  0.01        3.491    1.633        2.968     3.627     5.251     3.298     3.045     3.272     3.035
+  0.05        3.289    1.650        2.723     3.827     4.373     2.997     3.012     3.197     3.113
+  0.15        3.385    1.881        2.794     3.872     3.806     2.927     2.960     3.488     3.073
+  0.3         3.297    2.205        2.870     3.857     3.448     3.031     2.997     3.589     3.195
+  0.5         3.291    2.445        3.023     3.733     3.303     3.342     3.148     3.523     3.391
+  1           3.262    3.262        3.262     3.262     3.262     3.262     3.262     3.262     3.262
+
+  SINGLE-STRUCTURE readouts -- MEDOID of the alpha-tail (no averaging).
+  This is the family the deployed pillar actually emits.  Means over targets.
+  alpha     randmed   ORACLE        disto    legacy     amber       d+l       d+a       l+a     d+l+a
+  0.01        3.895    1.989        3.305     4.028     5.874     3.314     3.288     3.690     3.274
+  0.05        3.652    2.180        3.183     3.828     4.948     3.326     3.282     3.480     3.330
+  0.15        3.591    2.360        3.177     3.902     4.111     3.332     3.275     3.757     3.368
+  0.3         3.590    2.547        3.236     3.852     3.603     3.431     3.330     3.713     3.392
+  0.5         3.600    2.873        3.325     3.736     3.522     3.532     3.385     3.741     3.537
+  1           3.585    3.585        3.585     3.585     3.585     3.585     3.585     3.585     3.585
+
+  SINGLE-STRUCTURE readouts -- RANDOM MEMBER of the alpha-tail (selection WITHIN the tail removed).
+  alpha     randmem                 disto    legacy     amber       d+l       d+a       l+a     d+l+a
+  0.01        4.388                 3.296     4.168     5.767     3.343     3.388     3.919     3.338
+  0.05        4.443                 3.303     3.947     5.245     3.400     3.423     3.808     3.473
+  0.15        4.255                 3.428     3.900     4.849     3.438     3.563     3.957     3.570
+  0.3         4.368                 3.461     3.916     4.547     3.667     3.655     3.871     3.614
+  0.5         4.345                 3.691     3.921     4.350     3.657     3.912     4.081     3.821
+  1           4.453                 4.457     4.357     4.430     4.392     4.365     4.272     4.282
+
+----------------------------------------------------------------------------------------------
+  ***  PRIMARY (amended) -- ARM minus its MATCHED-COUNT RANDOM control.  ***
+  Negative = the Hamiltonian's alpha-tail carries selection information over chance.
+  Each readout is compared to the SAME readout of a random subset of the same size,
+  because a control must be matched in the space the operator works in.
+----------------------------------------------------------------------------------------------
+
+  == AVERAGED tail (Sprint-19 lever, NOT the pillar's readout)
+    alpha=0.01  (k=5)
+      disto   -0.629 med -0.799 se 0.150 (MDE 0.420)  iid[-0.912,-0.335]  fold[-0.988,-0.200]  34W/8L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.123 med +0.046 se 0.151 (MDE 0.423)  iid[-0.172,+0.421]  fold[-0.179,+0.365]  20W/22L  folds 2/5 neg
+      amber   +1.576 med +1.416 se 0.247 (MDE 0.692)  iid[+1.087,+2.058]  fold[+1.252,+2.028]  6W/36L  folds 0/5 neg  <-- WORSE than random
+      d+l     -0.530 med -0.472 se 0.153 (MDE 0.430)  iid[-0.830,-0.244]  fold[-0.830,-0.285]  29W/13L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.552 med -0.655 se 0.133 (MDE 0.372)  iid[-0.810,-0.292]  fold[-0.927,-0.280]  32W/10L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.208 med -0.355 se 0.142 (MDE 0.399)  iid[-0.479,+0.083]  fold[-0.438,+0.032]  29W/13L  folds 3/5 neg
+      d+l+a   -0.624 med -0.677 se 0.149 (MDE 0.417)  iid[-0.921,-0.334]  fold[-1.061,-0.324]  31W/11L  folds 5/5 neg  <-- BEATS random
+    alpha=0.05  (k=25)
+      disto   -0.451 med -0.453 se 0.140 (MDE 0.393)  iid[-0.733,-0.181]  fold[-0.941,-0.162]  30W/12L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.184 med +0.223 se 0.108 (MDE 0.303)  iid[-0.025,+0.394]  fold[+0.048,+0.332]  16W/26L  folds 1/5 neg
+      amber   +1.079 med +0.972 se 0.166 (MDE 0.465)  iid[+0.762,+1.409]  fold[+0.871,+1.344]  6W/36L  folds 0/5 neg  <-- WORSE than random
+      d+l     -0.301 med -0.236 se 0.128 (MDE 0.358)  iid[-0.559,-0.064]  fold[-0.621,-0.053]  25W/17L  folds 4/5 neg  <-- BEATS random
+      d+a     -0.356 med -0.448 se 0.124 (MDE 0.347)  iid[-0.597,-0.117]  fold[-0.836,-0.063]  28W/14L  folds 4/5 neg  <-- BEATS random
+      l+a     -0.036 med -0.096 se 0.107 (MDE 0.301)  iid[-0.250,+0.171]  fold[-0.283,+0.253]  24W/18L  folds 2/5 neg
+      d+l+a   -0.302 med -0.171 se 0.121 (MDE 0.339)  iid[-0.548,-0.072]  fold[-0.693,-0.005]  27W/15L  folds 4/5 neg  <-- BEATS random
+    alpha=0.15  (k=75)
+      disto   -0.408 med -0.478 se 0.137 (MDE 0.383)  iid[-0.678,-0.140]  fold[-0.888,-0.115]  31W/11L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.242 med +0.318 se 0.108 (MDE 0.302)  iid[+0.030,+0.448]  fold[+0.091,+0.358]  15W/27L  folds 1/5 neg  <-- WORSE than random
+      amber   +0.500 med +0.448 se 0.103 (MDE 0.288)  iid[+0.303,+0.702]  fold[+0.352,+0.620]  9W/33L  folds 0/5 neg  <-- WORSE than random
+      d+l     -0.218 med -0.217 se 0.112 (MDE 0.313)  iid[-0.437,-0.010]  fold[-0.461,+0.013]  27W/15L  folds 4/5 neg  <-- BEATS random
+      d+a     -0.308 med -0.408 se 0.104 (MDE 0.293)  iid[-0.508,-0.105]  fold[-0.667,-0.078]  29W/13L  folds 5/5 neg  <-- BEATS random
+      l+a     +0.089 med +0.065 se 0.095 (MDE 0.267)  iid[-0.101,+0.267]  fold[-0.144,+0.274]  19W/23L  folds 1/5 neg
+      d+l+a   -0.252 med -0.217 se 0.099 (MDE 0.279)  iid[-0.448,-0.064]  fold[-0.465,-0.040]  26W/16L  folds 4/5 neg  <-- BEATS random
+    alpha=0.3  (k=150)
+      disto   -0.372 med -0.485 se 0.120 (MDE 0.336)  iid[-0.604,-0.140]  fold[-0.802,-0.090]  28W/14L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.244 med +0.214 se 0.103 (MDE 0.290)  iid[+0.046,+0.441]  fold[+0.101,+0.354]  15W/27L  folds 1/5 neg  <-- WORSE than random
+      amber   +0.200 med +0.251 se 0.086 (MDE 0.241)  iid[+0.031,+0.372]  fold[+0.046,+0.315]  14W/28L  folds 1/5 neg  <-- WORSE than random
+      d+l     -0.145 med -0.093 se 0.095 (MDE 0.267)  iid[-0.329,+0.042]  fold[-0.344,+0.022]  27W/15L  folds 4/5 neg
+      d+a     -0.292 med -0.400 se 0.081 (MDE 0.227)  iid[-0.447,-0.131]  fold[-0.517,-0.115]  29W/13L  folds 5/5 neg  <-- BEATS random
+      l+a     +0.071 med +0.075 se 0.084 (MDE 0.234)  iid[-0.093,+0.232]  fold[-0.144,+0.212]  19W/23L  folds 1/5 neg
+      d+l+a   -0.164 med -0.070 se 0.087 (MDE 0.243)  iid[-0.336,+0.006]  fold[-0.336,+0.027]  25W/17L  folds 3/5 neg
+    alpha=0.5  (k=250)
+      disto   -0.295 med -0.392 se 0.096 (MDE 0.268)  iid[-0.484,-0.107]  fold[-0.576,-0.107]  25W/17L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.127 med +0.211 se 0.073 (MDE 0.205)  iid[-0.016,+0.266]  fold[-0.003,+0.239]  17W/25L  folds 1/5 neg
+      amber   +0.019 med +0.028 se 0.058 (MDE 0.163)  iid[-0.097,+0.131]  fold[-0.109,+0.121]  18W/24L  folds 2/5 neg
+      d+l     -0.091 med -0.077 se 0.076 (MDE 0.214)  iid[-0.240,+0.058]  fold[-0.247,+0.052]  24W/18L  folds 2/5 neg
+      d+a     -0.230 med -0.273 se 0.064 (MDE 0.179)  iid[-0.353,-0.104]  fold[-0.365,-0.101]  28W/14L  folds 5/5 neg  <-- BEATS random
+      l+a     +0.060 med +0.033 se 0.070 (MDE 0.196)  iid[-0.074,+0.196]  fold[-0.130,+0.176]  17W/25L  folds 1/5 neg
+      d+l+a   -0.090 med -0.007 se 0.067 (MDE 0.188)  iid[-0.221,+0.044]  fold[-0.218,+0.046]  22W/20L  folds 2/5 neg
+
+  == MEDOID of tail   (single structure -- the pillar's family)
+    alpha=0.01  (k=5)
+      disto   -0.590 med -0.623 se 0.157 (MDE 0.439)  iid[-0.887,-0.279]  fold[-0.928,-0.117]  32W/10L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.133 med -0.147 se 0.226 (MDE 0.634)  iid[-0.263,+0.609]  fold[-0.410,+0.717]  24W/18L  folds 3/5 neg
+      amber   +1.979 med +2.123 se 0.300 (MDE 0.840)  iid[+1.389,+2.549]  fold[+1.449,+2.643]  6W/36L  folds 0/5 neg  <-- WORSE than random
+      d+l     -0.581 med -0.586 se 0.158 (MDE 0.442)  iid[-0.871,-0.271]  fold[-0.821,-0.283]  32W/10L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.607 med -0.638 se 0.140 (MDE 0.392)  iid[-0.862,-0.325]  fold[-0.855,-0.348]  34W/8L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.206 med -0.332 se 0.167 (MDE 0.468)  iid[-0.516,+0.140]  fold[-0.531,+0.068]  26W/16L  folds 4/5 neg
+      d+l+a   -0.621 med -0.582 se 0.137 (MDE 0.383)  iid[-0.892,-0.358]  fold[-0.974,-0.307]  35W/7L  folds 5/5 neg  <-- BEATS random
+    alpha=0.05  (k=25)
+      disto   -0.469 med -0.307 se 0.132 (MDE 0.369)  iid[-0.729,-0.218]  fold[-0.829,-0.242]  30W/12L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.176 med +0.099 se 0.121 (MDE 0.339)  iid[-0.061,+0.417]  fold[-0.019,+0.373]  16W/26L  folds 1/5 neg
+      amber   +1.297 med +1.065 se 0.235 (MDE 0.659)  iid[+0.857,+1.774]  fold[+0.844,+1.590]  9W/33L  folds 0/5 neg  <-- WORSE than random
+      d+l     -0.326 med -0.108 se 0.130 (MDE 0.364)  iid[-0.585,-0.074]  fold[-0.572,-0.117]  26W/16L  folds 4/5 neg  <-- BEATS random
+      d+a     -0.370 med -0.228 se 0.126 (MDE 0.352)  iid[-0.619,-0.134]  fold[-0.753,-0.096]  27W/15L  folds 4/5 neg  <-- BEATS random
+      l+a     -0.172 med -0.038 se 0.100 (MDE 0.281)  iid[-0.372,+0.021]  fold[-0.483,+0.039]  23W/19L  folds 3/5 neg
+      d+l+a   -0.322 med -0.061 se 0.108 (MDE 0.304)  iid[-0.550,-0.128]  fold[-0.609,-0.136]  25W/17L  folds 5/5 neg  <-- BEATS random
+    alpha=0.15  (k=75)
+      disto   -0.414 med -0.374 se 0.146 (MDE 0.409)  iid[-0.686,-0.106]  fold[-0.861,-0.062]  31W/11L  folds 4/5 neg  <-- BEATS random
+      legacy  +0.311 med +0.094 se 0.099 (MDE 0.278)  iid[+0.129,+0.516]  fold[+0.147,+0.428]  12W/30L  folds 0/5 neg  <-- WORSE than random
+      amber   +0.520 med +0.279 se 0.166 (MDE 0.465)  iid[+0.205,+0.847]  fold[+0.108,+0.762]  14W/28L  folds 1/5 neg  <-- WORSE than random
+      d+l     -0.259 med -0.045 se 0.093 (MDE 0.261)  iid[-0.455,-0.094]  fold[-0.464,-0.068]  24W/18L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.316 med -0.139 se 0.129 (MDE 0.361)  iid[-0.563,-0.055]  fold[-0.702,-0.011]  28W/14L  folds 4/5 neg  <-- BEATS random
+      l+a     +0.166 med +0.082 se 0.074 (MDE 0.207)  iid[+0.030,+0.309]  fold[+0.005,+0.280]  11W/31L  folds 1/5 neg  <-- WORSE than random
+      d+l+a   -0.223 med -0.037 se 0.091 (MDE 0.254)  iid[-0.399,-0.060]  fold[-0.374,-0.078]  23W/19L  folds 5/5 neg  <-- BEATS random
+    alpha=0.3  (k=150)
+      disto   -0.354 med -0.126 se 0.122 (MDE 0.342)  iid[-0.596,-0.121]  fold[-0.719,-0.087]  24W/18L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.262 med +0.083 se 0.100 (MDE 0.280)  iid[+0.086,+0.470]  fold[+0.105,+0.380]  12W/30L  folds 0/5 neg  <-- WORSE than random
+      amber   +0.013 med +0.020 se 0.106 (MDE 0.296)  iid[-0.183,+0.226]  fold[-0.163,+0.144]  21W/21L  folds 3/5 neg
+      d+l     -0.158 med -0.003 se 0.071 (MDE 0.199)  iid[-0.294,-0.027]  fold[-0.277,-0.061]  23W/19L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.260 med -0.098 se 0.083 (MDE 0.232)  iid[-0.426,-0.102]  fold[-0.452,-0.109]  24W/18L  folds 5/5 neg  <-- BEATS random
+      l+a     +0.123 med +0.085 se 0.075 (MDE 0.211)  iid[-0.018,+0.276]  fold[-0.055,+0.248]  13W/29L  folds 1/5 neg
+      d+l+a   -0.198 med +0.034 se 0.077 (MDE 0.216)  iid[-0.351,-0.054]  fold[-0.338,-0.069]  19W/23L  folds 4/5 neg  <-- BEATS random
+    alpha=0.5  (k=250)
+      disto   -0.275 med -0.039 se 0.093 (MDE 0.261)  iid[-0.460,-0.106]  fold[-0.507,-0.106]  28W/14L  folds 5/5 neg  <-- BEATS random
+      legacy  +0.135 med +0.074 se 0.070 (MDE 0.197)  iid[-0.006,+0.269]  fold[+0.014,+0.222]  14W/28L  folds 1/5 neg
+      amber   -0.078 med -0.015 se 0.065 (MDE 0.182)  iid[-0.210,+0.042]  fold[-0.251,+0.053]  23W/19L  folds 3/5 neg
+      d+l     -0.068 med -0.007 se 0.062 (MDE 0.174)  iid[-0.196,+0.045]  fold[-0.207,+0.064]  22W/20L  folds 2/5 neg
+      d+a     -0.215 med -0.045 se 0.073 (MDE 0.205)  iid[-0.360,-0.077]  fold[-0.366,-0.071]  26W/16L  folds 4/5 neg  <-- BEATS random
+      l+a     +0.141 med +0.076 se 0.078 (MDE 0.219)  iid[-0.014,+0.292]  fold[-0.101,+0.306]  13W/29L  folds 1/5 neg
+      d+l+a   -0.064 med -0.007 se 0.062 (MDE 0.175)  iid[-0.192,+0.053]  fold[-0.206,+0.059]  23W/19L  folds 3/5 neg
+
+  == MEMBER of tail   (single structure, no within-tail choice)
+    alpha=0.01  (k=5)
+      disto   -1.092 med -1.157 se 0.161 (MDE 0.451)  iid[-1.417,-0.770]  fold[-1.566,-0.762]  36W/6L  folds 5/5 neg  <-- BEATS random
+      legacy  -0.220 med -0.182 se 0.199 (MDE 0.558)  iid[-0.599,+0.182]  fold[-0.779,+0.221]  25W/17L  folds 3/5 neg
+      amber   +1.378 med +1.298 se 0.240 (MDE 0.671)  iid[+0.905,+1.844]  fold[+0.792,+1.764]  5W/37L  folds 0/5 neg  <-- WORSE than random
+      d+l     -1.045 med -1.039 se 0.167 (MDE 0.467)  iid[-1.380,-0.731]  fold[-1.384,-0.782]  35W/7L  folds 5/5 neg  <-- BEATS random
+      d+a     -1.000 med -0.953 se 0.160 (MDE 0.450)  iid[-1.305,-0.683]  fold[-1.483,-0.639]  34W/8L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.469 med -0.516 se 0.151 (MDE 0.422)  iid[-0.759,-0.168]  fold[-0.836,-0.056]  29W/13L  folds 4/5 neg  <-- BEATS random
+      d+l+a   -1.050 med -0.809 se 0.173 (MDE 0.485)  iid[-1.394,-0.731]  fold[-1.546,-0.691]  35W/7L  folds 5/5 neg  <-- BEATS random
+    alpha=0.05  (k=25)
+      disto   -1.140 med -0.899 se 0.154 (MDE 0.431)  iid[-1.453,-0.854]  fold[-1.469,-0.827]  38W/4L  folds 5/5 neg  <-- BEATS random
+      legacy  -0.496 med -0.329 se 0.139 (MDE 0.388)  iid[-0.781,-0.237]  fold[-0.878,-0.194]  28W/14L  folds 5/5 neg  <-- BEATS random
+      amber   +0.802 med +0.849 se 0.155 (MDE 0.434)  iid[+0.498,+1.115]  fold[+0.395,+1.086]  7W/35L  folds 0/5 neg  <-- WORSE than random
+      d+l     -1.042 med -0.814 se 0.144 (MDE 0.404)  iid[-1.334,-0.777]  fold[-1.341,-0.700]  38W/4L  folds 5/5 neg  <-- BEATS random
+      d+a     -1.020 med -0.845 se 0.144 (MDE 0.404)  iid[-1.311,-0.746]  fold[-1.301,-0.765]  38W/4L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.635 med -0.480 se 0.153 (MDE 0.429)  iid[-0.942,-0.349]  fold[-1.103,-0.343]  32W/10L  folds 5/5 neg  <-- BEATS random
+      d+l+a   -0.970 med -0.781 se 0.147 (MDE 0.411)  iid[-1.264,-0.694]  fold[-1.242,-0.684]  35W/7L  folds 5/5 neg  <-- BEATS random
+    alpha=0.15  (k=75)
+      disto   -0.827 med -0.776 se 0.133 (MDE 0.373)  iid[-1.078,-0.566]  fold[-1.079,-0.567]  36W/6L  folds 5/5 neg  <-- BEATS random
+      legacy  -0.355 med -0.264 se 0.128 (MDE 0.359)  iid[-0.604,-0.105]  fold[-0.484,-0.258]  28W/14L  folds 5/5 neg  <-- BEATS random
+      amber   +0.594 med +0.551 se 0.125 (MDE 0.351)  iid[+0.350,+0.852]  fold[+0.328,+0.767]  12W/30L  folds 0/5 neg  <-- WORSE than random
+      d+l     -0.817 med -0.733 se 0.116 (MDE 0.324)  iid[-1.051,-0.593]  fold[-0.919,-0.742]  37W/5L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.692 med -0.574 se 0.101 (MDE 0.284)  iid[-0.886,-0.503]  fold[-0.798,-0.575]  37W/5L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.298 med -0.320 se 0.117 (MDE 0.326)  iid[-0.518,-0.067]  fold[-0.461,-0.182]  26W/16L  folds 5/5 neg  <-- BEATS random
+      d+l+a   -0.685 med -0.459 se 0.108 (MDE 0.302)  iid[-0.902,-0.482]  fold[-0.820,-0.537]  38W/4L  folds 5/5 neg  <-- BEATS random
+    alpha=0.3  (k=150)
+      disto   -0.907 med -0.800 se 0.144 (MDE 0.404)  iid[-1.191,-0.636]  fold[-1.143,-0.608]  36W/6L  folds 5/5 neg  <-- BEATS random
+      legacy  -0.452 med -0.474 se 0.125 (MDE 0.349)  iid[-0.697,-0.217]  fold[-0.630,-0.283]  29W/13L  folds 5/5 neg  <-- BEATS random
+      amber   +0.179 med +0.295 se 0.112 (MDE 0.313)  iid[-0.037,+0.395]  fold[+0.032,+0.351]  18W/24L  folds 1/5 neg
+      d+l     -0.701 med -0.665 se 0.131 (MDE 0.368)  iid[-0.950,-0.449]  fold[-0.887,-0.437]  33W/9L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.712 med -0.665 se 0.135 (MDE 0.379)  iid[-0.972,-0.453]  fold[-0.913,-0.425]  35W/7L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.497 med -0.414 se 0.127 (MDE 0.357)  iid[-0.737,-0.242]  fold[-0.628,-0.301]  30W/12L  folds 5/5 neg  <-- BEATS random
+      d+l+a   -0.753 med -0.740 se 0.123 (MDE 0.344)  iid[-0.979,-0.510]  fold[-0.881,-0.527]  34W/8L  folds 5/5 neg  <-- BEATS random
+    alpha=0.5  (k=250)
+      disto   -0.655 med -0.643 se 0.111 (MDE 0.310)  iid[-0.873,-0.447]  fold[-0.808,-0.430]  38W/4L  folds 5/5 neg  <-- BEATS random
+      legacy  -0.425 med -0.432 se 0.123 (MDE 0.345)  iid[-0.663,-0.193]  fold[-0.634,-0.183]  30W/12L  folds 5/5 neg  <-- BEATS random
+      amber   +0.005 med +0.085 se 0.103 (MDE 0.289)  iid[-0.200,+0.208]  fold[-0.116,+0.145]  18W/24L  folds 2/5 neg
+      d+l     -0.689 med -0.546 se 0.117 (MDE 0.326)  iid[-0.918,-0.472]  fold[-0.811,-0.507]  36W/6L  folds 5/5 neg  <-- BEATS random
+      d+a     -0.433 med -0.405 se 0.091 (MDE 0.254)  iid[-0.618,-0.260]  fold[-0.532,-0.296]  33W/9L  folds 5/5 neg  <-- BEATS random
+      l+a     -0.264 med -0.256 se 0.117 (MDE 0.328)  iid[-0.493,-0.034]  fold[-0.444,-0.075]  26W/16L  folds 5/5 neg  <-- BEATS random
+      d+l+a   -0.524 med -0.453 se 0.100 (MDE 0.280)  iid[-0.724,-0.331]  fold[-0.655,-0.365]  37W/5L  folds 5/5 neg  <-- BEATS random
+
+----------------------------------------------------------------------------------------------
+  OPERATOR DECOMPOSITION -- what the two operators are each worth, held apart.
+----------------------------------------------------------------------------------------------
+  (i) THE TAIL, averaging held out:  medoid(tail) - argmin
+    alpha=0.05
+      disto   -0.108 med -0.023 se 0.097 (MDE 0.271)  iid[-0.304,+0.071]  fold[-0.313,+0.052]  22W/18L  folds 4/5 neg
+      legacy  -0.417 med +0.066 se 0.418 (MDE 1.172)  iid[-1.261,+0.352]  fold[-1.077,+0.382]  19W/22L  folds 3/5 neg
+      amber   -0.532 med -0.048 se 0.315 (MDE 0.884)  iid[-1.158,+0.077]  fold[-1.123,-0.088]  21W/20L  folds 4/5 neg
+      d+l     +0.028 med +0.000 se 0.094 (MDE 0.262)  iid[-0.153,+0.214]  fold[-0.314,+0.311]  17W/20L  folds 3/5 neg
+      d+a     +0.012 med -0.011 se 0.112 (MDE 0.314)  iid[-0.196,+0.231]  fold[-0.139,+0.187]  21W/18L  folds 4/5 neg
+      l+a     -0.573 med -0.029 se 0.290 (MDE 0.813)  iid[-1.176,-0.049]  fold[-1.138,+0.173]  22W/19L  folds 3/5 neg
+      d+l+a   +0.056 med +0.000 se 0.111 (MDE 0.310)  iid[-0.156,+0.283]  fold[-0.126,+0.280]  20W/19L  folds 2/5 neg
+    alpha=0.15
+      disto   -0.114 med -0.079 se 0.103 (MDE 0.289)  iid[-0.321,+0.087]  fold[-0.357,+0.074]  25W/17L  folds 4/5 neg
+      legacy  -0.343 med +0.059 se 0.425 (MDE 1.192)  iid[-1.178,+0.433]  fold[-1.108,+0.582]  20W/22L  folds 3/5 neg
+      amber   -1.370 med -1.684 se 0.329 (MDE 0.921)  iid[-2.001,-0.732]  fold[-1.760,-1.085]  30W/12L  folds 5/5 neg
+      d+l     +0.034 med +0.056 se 0.162 (MDE 0.453)  iid[-0.313,+0.317]  fold[-0.419,+0.397]  12W/27L  folds 2/5 neg
+      d+a     +0.005 med -0.036 se 0.106 (MDE 0.297)  iid[-0.192,+0.210]  fold[-0.187,+0.226]  22W/19L  folds 3/5 neg
+      l+a     -0.296 med +0.070 se 0.316 (MDE 0.886)  iid[-0.946,+0.288]  fold[-0.865,+0.478]  19W/23L  folds 3/5 neg
+      d+l+a   +0.095 med +0.002 se 0.170 (MDE 0.477)  iid[-0.245,+0.412]  fold[-0.326,+0.536]  19W/21L  folds 2/5 neg
+    alpha=0.3
+      disto   -0.055 med +0.028 se 0.117 (MDE 0.327)  iid[-0.287,+0.170]  fold[-0.267,+0.120]  19W/22L  folds 3/5 neg
+      legacy  -0.393 med -0.002 se 0.423 (MDE 1.186)  iid[-1.236,+0.382]  fold[-1.121,+0.488]  21W/21L  folds 3/5 neg
+      amber   -1.878 med -2.222 se 0.360 (MDE 1.008)  iid[-2.578,-1.162]  fold[-2.175,-1.546]  31W/11L  folds 5/5 neg
+      d+l     +0.133 med +0.071 se 0.175 (MDE 0.491)  iid[-0.226,+0.447]  fold[-0.276,+0.505]  14W/28L  folds 1/5 neg
+      d+a     +0.060 med -0.017 se 0.129 (MDE 0.361)  iid[-0.186,+0.308]  fold[-0.259,+0.424]  23W/19L  folds 3/5 neg
+      l+a     -0.340 med +0.040 se 0.316 (MDE 0.886)  iid[-0.983,+0.251]  fold[-0.905,+0.421]  18W/23L  folds 3/5 neg
+      d+l+a   +0.118 med +0.014 se 0.171 (MDE 0.480)  iid[-0.226,+0.443]  fold[-0.341,+0.636]  20W/22L  folds 2/5 neg
+
+  (ii) THE AVERAGING, tail held fixed:  tail_avg - medoid(tail)
+    alpha=0.05
+      disto   -0.288 med -0.166 se 0.062 (MDE 0.175)  iid[-0.406,-0.171]  fold[-0.452,-0.158]  32W/10L  folds 5/5 neg
+      legacy  -0.298 med -0.193 se 0.096 (MDE 0.268)  iid[-0.480,-0.117]  fold[-0.444,-0.119]  32W/10L  folds 5/5 neg
+      amber   -0.523 med -0.481 se 0.139 (MDE 0.391)  iid[-0.793,-0.243]  fold[-0.743,-0.229]  32W/10L  folds 5/5 neg
+      d+l     -0.281 med -0.153 se 0.059 (MDE 0.167)  iid[-0.401,-0.174]  fold[-0.460,-0.109]  36W/6L  folds 5/5 neg
+      d+a     -0.291 med -0.214 se 0.058 (MDE 0.163)  iid[-0.409,-0.183]  fold[-0.434,-0.179]  33W/9L  folds 5/5 neg
+      l+a     -0.170 med -0.163 se 0.070 (MDE 0.195)  iid[-0.304,-0.034]  fold[-0.281,+0.002]  28W/14L  folds 4/5 neg
+      d+l+a   -0.286 med -0.169 se 0.060 (MDE 0.167)  iid[-0.405,-0.177]  fold[-0.420,-0.181]  31W/11L  folds 5/5 neg
+    alpha=0.15
+      disto   -0.278 med -0.106 se 0.058 (MDE 0.162)  iid[-0.390,-0.170]  fold[-0.397,-0.203]  33W/9L  folds 5/5 neg
+      legacy  -0.352 med -0.238 se 0.080 (MDE 0.224)  iid[-0.513,-0.204]  fold[-0.479,-0.204]  33W/9L  folds 5/5 neg
+      amber   -0.303 med -0.412 se 0.115 (MDE 0.323)  iid[-0.530,-0.085]  fold[-0.421,-0.120]  27W/15L  folds 4/5 neg
+      d+l     -0.243 med -0.180 se 0.068 (MDE 0.190)  iid[-0.372,-0.104]  fold[-0.416,-0.029]  34W/8L  folds 4/5 neg
+      d+a     -0.275 med -0.183 se 0.053 (MDE 0.149)  iid[-0.382,-0.177]  fold[-0.341,-0.224]  32W/10L  folds 5/5 neg
+      l+a     -0.360 med -0.296 se 0.079 (MDE 0.223)  iid[-0.515,-0.210]  fold[-0.450,-0.245]  33W/9L  folds 5/5 neg
+      d+l+a   -0.312 med -0.205 se 0.074 (MDE 0.208)  iid[-0.460,-0.172]  fold[-0.482,-0.140]  34W/8L  folds 4/5 neg
+    alpha=0.3
+      disto   -0.304 med -0.175 se 0.063 (MDE 0.176)  iid[-0.429,-0.192]  fold[-0.453,-0.197]  32W/10L  folds 5/5 neg
+      legacy  -0.305 med -0.248 se 0.070 (MDE 0.195)  iid[-0.439,-0.171]  fold[-0.421,-0.163]  33W/9L  folds 5/5 neg
+      amber   -0.101 med -0.125 se 0.094 (MDE 0.264)  iid[-0.283,+0.081]  fold[-0.183,+0.005]  24W/18L  folds 4/5 neg
+      d+l     -0.274 med -0.239 se 0.076 (MDE 0.214)  iid[-0.415,-0.122]  fold[-0.455,-0.097]  32W/10L  folds 4/5 neg
+      d+a     -0.319 med -0.298 se 0.055 (MDE 0.155)  iid[-0.429,-0.212]  fold[-0.467,-0.215]  37W/5L  folds 5/5 neg
+      l+a     -0.339 med -0.302 se 0.071 (MDE 0.199)  iid[-0.477,-0.204]  fold[-0.429,-0.232]  34W/8L  folds 5/5 neg
+      d+l+a   -0.253 med -0.210 se 0.061 (MDE 0.171)  iid[-0.373,-0.136]  fold[-0.441,-0.075]  33W/9L  folds 4/5 neg
+
+  (iii) the CONFOUNDED original primary, retained and relabelled:
+        tail_avg(0.15) - argmin  ==  (i) + (ii).  It is a sum of two operators.
+      disto   -0.392 med -0.280 se 0.100 (MDE 0.281)  iid[-0.589,-0.195]  fold[-0.639,-0.160]  32W/10L  folds 4/5 neg
+      legacy  -0.695 med -0.139 se 0.381 (MDE 1.066)  iid[-1.469,-0.002]  fold[-1.394,+0.150]  26W/16L  folds 3/5 neg
+      amber   -1.673 med -2.107 se 0.296 (MDE 0.828)  iid[-2.236,-1.084]  fold[-1.915,-1.410]  33W/9L  folds 5/5 neg
+      d+l     -0.209 med -0.039 se 0.125 (MDE 0.349)  iid[-0.463,+0.018]  fold[-0.520,-0.005]  24W/18L  folds 4/5 neg
+      d+a     -0.270 med -0.151 se 0.102 (MDE 0.287)  iid[-0.466,-0.081]  fold[-0.461,-0.088]  27W/15L  folds 4/5 neg
+      l+a     -0.656 med -0.321 se 0.285 (MDE 0.797)  iid[-1.244,-0.130]  fold[-1.184,+0.046]  29W/13L  folds 4/5 neg
+      d+l+a   -0.218 med -0.214 se 0.129 (MDE 0.361)  iid[-0.484,+0.024]  fold[-0.451,+0.053]  30W/12L  folds 3/5 neg
+
+  vs the STRUCTURAL-ONLY reference (disto at the same alpha) -- does physics add?
+    readout = tail
+      alpha=0.05
+        legacy  +0.634 med +0.454 se 0.173 (MDE 0.484)  iid[+0.302,+0.984]  fold[+0.296,+1.035]  12W/30L  folds 0/5 neg
+        amber   +1.530 med +1.467 se 0.246 (MDE 0.689)  iid[+1.068,+2.026]  fold[+1.048,+2.296]  4W/38L  folds 0/5 neg
+        d+l     +0.149 med +0.067 se 0.076 (MDE 0.213)  iid[+0.012,+0.307]  fold[+0.010,+0.308]  14W/28L  folds 1/5 neg
+        d+a     +0.095 med -0.002 se 0.062 (MDE 0.174)  iid[-0.018,+0.217]  fold[+0.014,+0.150]  22W/20L  folds 1/5 neg
+        l+a     +0.415 med +0.164 se 0.185 (MDE 0.518)  iid[+0.037,+0.777]  fold[-0.072,+0.972]  15W/27L  folds 1/5 neg
+        d+l+a   +0.148 med +0.054 se 0.086 (MDE 0.242)  iid[-0.021,+0.323]  fold[+0.006,+0.305]  18W/24L  folds 1/5 neg
+      alpha=0.15
+        legacy  +0.650 med +0.499 se 0.185 (MDE 0.520)  iid[+0.298,+1.017]  fold[+0.268,+1.137]  12W/30L  folds 0/5 neg
+        amber   +0.908 med +0.928 se 0.187 (MDE 0.524)  iid[+0.564,+1.283]  fold[+0.544,+1.503]  7W/35L  folds 0/5 neg
+        d+l     +0.190 med +0.048 se 0.096 (MDE 0.269)  iid[+0.005,+0.375]  fold[+0.020,+0.398]  15W/27L  folds 1/5 neg
+        d+a     +0.100 med +0.050 se 0.055 (MDE 0.155)  iid[-0.002,+0.212]  fold[+0.025,+0.220]  16W/26L  folds 0/5 neg
+        l+a     +0.497 med +0.277 se 0.183 (MDE 0.513)  iid[+0.140,+0.863]  fold[+0.033,+1.061]  14W/28L  folds 1/5 neg
+        d+l+a   +0.156 med +0.019 se 0.111 (MDE 0.310)  iid[-0.070,+0.367]  fold[-0.083,+0.451]  18W/24L  folds 2/5 neg
+    readout = tailmed
+      alpha=0.05
+        legacy  +0.644 med +0.239 se 0.207 (MDE 0.581)  iid[+0.235,+1.041]  fold[+0.294,+0.971]  13W/28L  folds 0/5 neg
+        amber   +1.765 med +1.525 se 0.281 (MDE 0.786)  iid[+1.240,+2.333]  fold[+1.127,+2.363]  8W/34L  folds 0/5 neg
+        d+l     +0.143 med +0.000 se 0.077 (MDE 0.217)  iid[-0.001,+0.302]  fold[-0.057,+0.309]  16W/20L  folds 1/5 neg
+        d+a     +0.099 med +0.000 se 0.083 (MDE 0.233)  iid[-0.046,+0.269]  fold[+0.043,+0.154]  18W/20L  folds 0/5 neg
+        l+a     +0.297 med +0.100 se 0.173 (MDE 0.484)  iid[-0.065,+0.627]  fold[-0.226,+0.750]  17W/25L  folds 1/5 neg
+        d+l+a   +0.147 med +0.000 se 0.096 (MDE 0.270)  iid[-0.037,+0.338]  fold[+0.035,+0.260]  18W/18L  folds 1/5 neg
+      alpha=0.15
+        legacy  +0.724 med +0.339 se 0.212 (MDE 0.594)  iid[+0.303,+1.133]  fold[+0.288,+1.246]  8W/28L  folds 1/5 neg
+        amber   +0.933 med +0.667 se 0.216 (MDE 0.606)  iid[+0.515,+1.356]  fold[+0.478,+1.450]  9W/32L  folds 0/5 neg
+        d+l     +0.155 med +0.080 se 0.132 (MDE 0.371)  iid[-0.135,+0.375]  fold[-0.204,+0.452]  8W/25L  folds 1/5 neg
+        d+a     +0.097 med +0.000 se 0.059 (MDE 0.166)  iid[-0.013,+0.217]  fold[+0.049,+0.159]  13W/20L  folds 0/5 neg
+        l+a     +0.580 med +0.088 se 0.195 (MDE 0.547)  iid[+0.183,+0.955]  fold[+0.101,+1.089]  13W/24L  folds 1/5 neg
+        d+l+a   +0.191 med +0.051 se 0.151 (MDE 0.423)  iid[-0.129,+0.459]  fold[-0.172,+0.573]  9W/23L  folds 1/5 neg
+
+==============================================================================================
+CROSS-READOUT MATRIX -- basis RB.  rows = TRAINING H (defines the tail); cols = READOUT H (argmin inside it).
+Single structure, no averaging anywhere.  Mean Ca-RMSD over targets.
+==============================================================================================
+
+  alpha = 0.05
+    train\read       disto    legacy     amber       d+l       d+a       l+a     d+l+a   argminTr
+    disto            3.291     3.198     3.384     3.210     3.259     3.204     3.251      3.291
+    legacy           3.257     4.245     4.034     3.298     3.388     4.016     3.403      4.245
+    amber            3.426     3.940     5.481     3.588     3.663     4.109     3.560      5.481
+    d+l              3.299     3.558     3.337     3.298     3.164     3.450     3.305      3.298
+    d+a              3.264     3.301     4.063     3.274     3.270     3.584     3.257      3.270
+    l+a              3.290     4.125     4.103     3.316     3.424     4.053     3.403      4.053
+    d+l+a            3.203     3.407     3.491     3.305     3.270     3.462     3.274      3.274
+    IDENTITY CHECK (not a discovery): max |diag - argmin(train)| = 0.00e+00
+
+  alpha = 0.15
+    train\read       disto    legacy     amber       d+l       d+a       l+a     d+l+a   argminTr
+    disto            3.291     3.306     3.492     3.217     3.213     3.363     3.222      3.291
+    legacy           3.433     4.245     3.894     3.372     3.510     4.065     3.487      4.245
+    amber            3.430     3.679     5.481     3.313     3.409     3.880     3.360      5.481
+    d+l              3.291     3.828     3.401     3.298     3.173     3.578     3.329      3.298
+    d+a              3.311     3.291     4.851     3.205     3.270     3.395     3.254      3.270
+    l+a              3.211     4.291     4.509     3.465     3.338     4.053     3.303      4.053
+    d+l+a            3.272     3.808     3.867     3.298     3.270     4.053     3.274      3.274
+    IDENTITY CHECK (not a discovery): max |diag - argmin(train)| = 0.00e+00
+
+  alpha = 0.3
+    train\read       disto    legacy     amber       d+l       d+a       l+a     d+l+a   argminTr
+    disto            3.291     3.354     3.669     3.242     3.270     3.372     3.272      3.291
+    legacy           3.428     4.245     3.819     3.367     3.420     4.065     3.389      4.245
+    amber            3.079     4.157     5.481     3.410     3.266     4.038     3.250      5.481
+    d+l              3.291     4.245     3.443     3.298     3.212     3.989     3.274      3.298
+    d+a              3.291     3.456     5.441     3.229     3.270     3.558     3.254      3.270
+    l+a              3.162     4.245     5.343     3.331     3.391     4.053     3.274      4.053
+    d+l+a            3.311     4.237     3.935     3.298     3.270     4.053     3.274      3.274
+    IDENTITY CHECK (not a discovery): max |diag - argmin(train)| = 0.00e+00
+
+  alpha = 0.5
+    train\read       disto    legacy     amber       d+l       d+a       l+a     d+l+a   argminTr
+    disto            3.291     3.582     3.826     3.301     3.270     3.492     3.272      3.291
+    legacy           3.323     4.245     4.115     3.298     3.272     4.053     3.346      4.245
+    amber            3.209     4.000     5.481     3.372     3.323     4.052     3.258      5.481
+    d+l              3.291     4.245     3.710     3.298     3.213     4.061     3.274      3.298
+    d+a              3.291     3.519     5.589     3.297     3.270     3.779     3.274      3.270
+    l+a              3.204     4.245     5.467     3.320     3.348     4.053     3.274      4.053
+    d+l+a            3.303     4.245     4.605     3.298     3.270     4.053     3.274      3.274
+    IDENTITY CHECK (not a discovery): max |diag - argmin(train)| = 0.00e+00
+
+  Best OFF-DIAGONAL cell vs the best DIAGONAL cell, paired over targets:
+    alpha=0.05  best off-diag d+l>d+a vs best diag d+a>d+a: -0.105 med +0.000 se 0.084 (MDE 0.235)  iid[-0.275,+0.044]  fold[-0.239,+0.049]  11W/6L
+      (both chosen ON this instrument -- a max over 42 and 7 cells, reported as a CEILING, not a validated method)
+    alpha=0.15  best off-diag d+l>d+a vs best diag d+a>d+a: -0.096 med +0.000 se 0.070 (MDE 0.195)  iid[-0.243,+0.018]  fold[-0.169,+0.027]  6W/2L
+      (both chosen ON this instrument -- a max over 42 and 7 cells, reported as a CEILING, not a validated method)
+    alpha=0.3  best off-diag amber>disto vs best diag d+a>d+a: -0.190 med +0.000 se 0.093 (MDE 0.260)  iid[-0.373,-0.023]  fold[-0.285,-0.103]  17W/7L
+      (both chosen ON this instrument -- a max over 42 and 7 cells, reported as a CEILING, not a validated method)
+
+READ.  A tail beating argmin proves nothing on its own -- as alpha -> 1 the tail
+becomes the whole-pool average, a zero-information operator that is already decent.
+The matched-count RANDOM control is the only comparison that means anything, and any
+Hamiltonian whose tail does not beat it bounds a CVaR-VQE over it at chance.

@@ -1,0 +1,48 @@
+============================================================================================================
+BLOCK C1 -- DOES LEGACY RELAXATION DE-SINGULARISE AMBER?   n = 30
+  BASIS: BUILT CHAIN.  theta_0 = pool start.  theta_L = the same point after a Legacy
+  minimisation at the IDENTICAL optimiser and budget as s20/c_land.py.
+  AMBER = BARE SINGLE POINT (no minimisation).  NULL = a realisable geodesic move of
+  the SAME per-coordinate RMS torus magnitude toward another pool member.
+============================================================================================================
+
+  MEDIANS over targets (AMBER energies span 8 orders; a MEAN of those is meaningless)
+    quantity                        at theta_0      at theta_L         at NULL
+    E_AMBER  (kcal/mol)              1.827e+04       1.868e+06       5.771e+04
+    ||grad E_AMBER||                 1.285e+06       1.286e+08       6.333e+06
+    Legacy E                            -12.44          -17.65              --
+
+  MEANS over targets of the scale-free spectrum of AMBER's Hessian (medoid start)
+    participation ratio                 0.0745         0.08772         0.07878
+    near-zero mode frac                 0.4418           0.497             nan
+    anisotropy                           18.77           16.56             nan
+    condition number (median)        2.166e+06       2.731e+08             nan
+
+  THE PRE-REGISTERED PRIMARY ENDPOINT (F-C1) -- paired, FOLD-CLUSTERED CI
+  comparison                                       mean                 CI95   median       W/L
+  (participation ratio: HIGHER is better, so its W/L column is DOWN/UP.
+   `s18.phys_lib.paired` sets W = count(a-b < 0), a WIN only for lower-is-better.
+   Mislabelling this would invert the verdict, so it is labelled explicitly.)
+participation ratio:  theta_L - theta_0  [dn/UP]  +0.0132  [ +0.0019, +0.0226]  +0.0105   11/19    *
+participation ratio:  NULL    - theta_0  [dn/UP]  +0.0043  [ -0.0094, +0.0161]  +0.0004   14/16     
+participation ratio:  theta_L - NULL     [dn/UP]  +0.0089  [ -0.0039, +0.0197]  +0.0077   11/19     
+
+log10 E_AMBER:  theta_L - theta_0             +1.4947  [ +1.1437, +2.0174]  +0.7587    5/25    *
+log10 E_AMBER:  NULL    - theta_0             +1.0908  [ +0.2293, +2.2148]  +0.2080    8/22    *
+log10 E_AMBER:  theta_L - NULL                +0.4040  [ -0.8360, +1.0984]  +0.5666    9/21     
+log10 ||grad E_AMBER||:  theta_L - theta_0    +1.4550  [ +1.0944, +1.9101]  +0.7963    6/24    *
+log10 ||grad E_AMBER||:  NULL    - theta_0    +1.1058  [ +0.2724, +2.3072]  +0.1870   10/20    *
+log10 ||grad E_AMBER||:  theta_L - NULL       +0.3491  [ -0.8838, +1.1021]  +0.7007   10/20     
+
+Ca-RMSD:  theta_L - theta_0  (ORACLE read)    +0.1541  [ -0.0372, +0.4977]  +0.0037   14/16     
+
+  mean torus magnitude of the Legacy move: 0.1037 rad/coord
+
+  VERDICT -- all THREE registered predictions of H-C1, not the primary alone:
+    (i)   E_AMBER falls at theta_L      -> REFUTED, it RISES with a CI excluding zero
+    (ii)  ||grad E_AMBER|| falls        -> REFUTED, it RISES with a CI excluding zero
+    (iii) participation ratio rises     -> holds against theta_0, but against the MATCHED-MAGNITUDE NULL it is NOT MEASURED
+    F-C1 as literally written -- clause (iii) alone -- DOES NOT FIRE.  It was the
+    WRONG ENDPOINT and its own matched control says so; the stated MECHANISM of the
+    continuation hypothesis is REFUTED on both direct energetic reads.
+============================================================================================================

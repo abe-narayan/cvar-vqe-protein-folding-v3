@@ -1,0 +1,2 @@
+2026-09-07 11:00:26
+n=75 (every target with n<=13) M=[1, 8, 64, 512] R_DRAW=8 readouts=argmin,member,medoid,avg controls=matched-count random window keys=44 functional=Bayes basis=built-chain

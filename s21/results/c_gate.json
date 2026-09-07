@@ -1,0 +1,94 @@
+{
+ "GC21a": [
+  {
+   "pdb": "1IM7",
+   "legacy": {
+    "neg_frac": 0.0,
+    "nearzero_frac": 0.0,
+    "cond_med": 0.0,
+    "gap_rel": 0.0,
+    "part_ratio": 0.0,
+    "aniso": 0.0,
+    "spec_skew": 0.0,
+    "E0": 0.0
+   },
+   "amber": {
+    "neg_frac": 0.0,
+    "nearzero_frac": 0.0,
+    "cond_med": 0.0,
+    "gap_rel": 0.0,
+    "part_ratio": 0.0,
+    "aniso": 0.0,
+    "spec_skew": 0.0,
+    "E0": 0.0
+   }
+  },
+  {
+   "pdb": "1KMR",
+   "legacy": {
+    "neg_frac": 0.0,
+    "nearzero_frac": 0.0,
+    "cond_med": 0.0,
+    "gap_rel": 0.0,
+    "part_ratio": 0.0,
+    "aniso": 0.0,
+    "spec_skew": 0.0,
+    "E0": 0.0
+   },
+   "amber": {
+    "neg_frac": 0.0,
+    "nearzero_frac": 0.0,
+    "cond_med": 0.0,
+    "gap_rel": 0.0,
+    "part_ratio": 0.0,
+    "aniso": 0.0,
+    "spec_skew": 0.0,
+    "E0": 0.0
+   }
+  },
+  {
+   "pdb": "1KZ2",
+   "legacy": {
+    "neg_frac": 0.0,
+    "nearzero_frac": 0.0,
+    "cond_med": 0.0,
+    "gap_rel": 0.0,
+    "part_ratio": 0.0,
+    "aniso": 0.0,
+    "spec_skew": 0.0,
+    "E0": 0.0
+   },
+   "amber": {
+    "neg_frac": 0.0,
+    "nearzero_frac": 0.0,
+    "cond_med": 0.0,
+    "gap_rel": 0.0,
+    "part_ratio": 0.0,
+    "aniso": 0.0,
+    "spec_skew": 0.0,
+    "E0": 0.0
+   }
+  }
+ ],
+ "GC21c": {
+  "monotone_on_synthetic_range": true,
+  "derivative_positive": true,
+  "n_pairs_checked": 9000,
+  "range": [
+   -1000000.0,
+   1e+24
+  ],
+  "max_finite_output": 46.74484904044086
+ },
+ "GC21d": {
+  "path": "results/benchmark_manifest.json",
+  "sha256": "a40581ad01cfd2b77aa755a149fe40f3661dc5d35d4c4be0133f6bf23248422d",
+  "bytes": 8002,
+  "read_by_this_lane": false
+ },
+ "firings": {
+  "GC21a_reproduction": 0,
+  "GC21c_monotonicity": 0
+ },
+ "passed": true
+}

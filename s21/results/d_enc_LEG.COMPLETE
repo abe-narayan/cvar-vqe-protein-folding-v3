@@ -1,0 +1,2 @@
+2026-09-07 09:40:20
+targets=10 kinds=['LEG'] arms=['spsa', 'adam_fd'] encs=['theta', 'emb'] budgets=[256, 512, 1024] seeds=[0, 1, 2, 3] cells=480 track_quality=False

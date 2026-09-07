@@ -1,0 +1,2 @@
+2026-09-07 09:34:40
+n=126 hams=['disto', 'legacy', 'rand'] alphas=[0.05, 0.15, 0.3] R_DRAW=16 readouts=argmin,tail_min,tail_member,tail_medoid,tail_avg controls=rand_member,rand_medoid,rand_avg keys=50

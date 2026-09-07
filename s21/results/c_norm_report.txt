@@ -1,0 +1,48 @@
+========================================================================================================
+BLOCK N -- COMPONENT MEASUREMENT BEFORE ANY COMBINATION   n = 30 targets
+  domain: the shipped top-75 REAL rebuilds per target.  AMBER = BARE SINGLE POINT, no
+  minimisation.  The deployed H_AMBER is E o Relax_50 and is a DIFFERENT operator.
+========================================================================================================
+
+statistic              LEGACY (arb. units)          AMBER (kcal/mol)
+pool median                         -12.33                 1.072e+04
+pool 1.4826*MAD                      2.856                 1.134e+04
+pool sd                              3.209                 2.686e+10
+pool IQR                             4.006                 1.209e+05
+pool min                            -20.36                     155.4
+pool max                            -2.494                 1.795e+11
+pool p1                             -19.86                     315.1
+pool p99                            -3.856                 6.687e+10
+skew                                0.5283                     8.131
+kurtosis                             3.598                      68.9
+frac > 1e4                               0                      0.52
+frac > 1e6                               0                      0.16
+||grad|| at medoid                     31.86                 1.607e+06
+||grad|| CV over starts                    0.2224                     1.329
+||Hess||_2                           61.12                 2.258e+08
+E at medoid start                    -14.72                  3.12e+04
+
+  (medians over targets.  Raw scales are NOT comparable across the two columns --
+   that is the entire reason this block exists.)
+
+  RAW-UNIT CROSSOVER  lambda* = ||grad E_L|| / (||grad E_L|| + ||grad E_A||)
+    median 1.989e-05   min 1.513e-09   max 5.582e-02   spread 36888025.2x
+    -> in RAW units a uniform lambda grid is AMBER-dominated above lambda ~ 1.99e-05.
+
+  SCALE-FREE SPECTRUM at the medoid start (reproducing s20 L12):
+    metric                legacy       amber
+    neg_frac                0.32      0.2725
+    nearzero_frac              0      0.4811
+    cond_med               6.258        7756
+    gap_rel               0.1007     0.03989
+    part_ratio            0.4965     0.06683
+    aniso                  4.177       18.19
+    spec_skew             0.1904      0.7972
+
+  WHAT EACH DECLARED NORMALISATION DOES TO THE WORST REAL AMBER VALUE IN THIS SET:
+    raw           5.458e+23   (pool median maps to +2.321e+04)
+    Nz            1.571e+19   (pool median maps to +0)
+    Ng            1.608e+12   (pool median maps to +0)
+    Nt                44.89   (pool median maps to +0)
+    target 2MIG: raw worst 5.458e+23, pool median 2.321e+04, MAD_n 3.475e+04
+========================================================================================================

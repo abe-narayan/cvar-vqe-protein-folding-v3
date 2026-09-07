@@ -1,0 +1,1 @@
+{"n_expected": 2328, "n_present": 1552, "missing_examples": [["1CS9", "AMBc|prod|0"], ["1CS9", "AMBc|prod|1"], ["1CS9", "AMBc|prod|2"], ["1CS9", "AMBc|prod|3"], ["1CS9", "AMBc|mps_L1|0"], ["1CS9", "AMBc|mps_L1|1"], ["1CS9", "AMBc|mps_L1|2"], ["1CS9", "AMBc|mps_L1|3"], ["1CS9", "AMBc|mps_L2|0"], ["1CS9", "AMBc|mps_L2|1"], ["1CS9", "AMBc|mps_L2|2"], ["1CS9", "AMBc|mps_L2|3"]]}

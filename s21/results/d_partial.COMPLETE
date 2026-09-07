@@ -1,0 +1,3 @@
+2026-09-07 10:03:11
+n=42 (source tailprice.json complete=False) cells=7 marginal+partial for legacy and amber, fold-clustered CIs
+NOTE: n follows Workstream A's run; re-run when their artefact completes.
