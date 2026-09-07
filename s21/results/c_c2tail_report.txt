@@ -1,0 +1,96 @@
+============================================================================================================
+BLOCK C2t -- POOL-RESTRICTED SELECTION, THE MANDATORY MATRIX, n = 126
+  READOUT: POINT CLOUD -- the coordinate average of the CVaR alpha=0.15 tail of each
+  target's OWN 75-member pool.  This is a SET-MEAN readout and is never compared to
+  the built-chain rows of C1/C3.  AMBER = BARE SINGLE POINT.  Native read only to score.
+  It is NOT a VQE experiment and makes no quantum claim: it BOUNDS what any CVaR-VQE
+  selecting from this pool can achieve, per Hamiltonian.
+============================================================================================================
+
+  PREREG section 4.1 VERIFIED, not assumed: a strictly monotone transform leaves the
+  argsort -- and therefore every CVaR tail SET -- identical.  AMBER 126/126, Legacy 125/126.
+  THE ONE FIRING IS REPORTED, NOT ROUNDED AWAY: on 9L1M three pool members have
+  Legacy energies differing by 8.9e-16 (one ULP) which asinh maps to the SAME
+  double, so the stable sort orders them by index instead.  They sit at sort
+  positions 71-73 of 75, outside every alpha<=0.5 tail, so NO tail set changes.
+  The invariance is exact in exact arithmetic; what failed is a one-ULP tie, and
+  a tie broken by index order is the tie-breaking trap this programme has already
+  paid for once.
+
+  pool mean 3.551   ORACLE pool best 2.306   whole-pool average 3.048   MATCHED RANDOM tail 3.101
+
+  normalisation raw
+     lambda  tail_avg  tail_mean   argmin  J vs l0  J vs l1   tail_avg - RANDOM (CI95, fold-clustered)        W/L
+      1e-09     3.213      3.532    3.518    0.846    0.064    +0.111 [ +0.050, +0.180]*                 50/76  
+      1e-08     3.204      3.528    3.528    0.776    0.074    +0.102 [ +0.049, +0.162]*                 53/73  
+      1e-07     3.196      3.528    3.514    0.684    0.094    +0.094 [ +0.050, +0.140]*                 46/80  
+      1e-06     3.190      3.521    3.528    0.591    0.126    +0.089 [ +0.050, +0.133]*                 49/77  
+      1e-05     3.196      3.531    3.548    0.489    0.182    +0.095 [ +0.049, +0.139]*                 45/81  
+     0.0001     3.194      3.540    3.542    0.382    0.270    +0.092 [ +0.057, +0.122]*                 50/76  
+      0.001     3.222      3.571    3.553    0.254    0.412    +0.120 [ +0.084, +0.161]*                 50/76  
+       0.01     3.228      3.605    3.629    0.152    0.640    +0.126 [ +0.098, +0.156]*                 51/75  
+        0.1     3.218      3.602    3.693    0.081    0.882    +0.117 [ +0.084, +0.156]*                 48/78  
+          0     3.208      3.520    3.503    1.000    0.055    +0.106 [ +0.032, +0.190]*                 50/76  
+       0.05     3.232      3.611    3.636    0.099    0.823    +0.131 [ +0.103, +0.162]*                 49/77  
+        0.1     3.218      3.602    3.693    0.081    0.882    +0.117 [ +0.084, +0.156]*                 48/78  
+        0.2     3.223      3.607    3.671    0.067    0.936    +0.122 [ +0.088, +0.168]*                 50/76  
+       0.35     3.222      3.607    3.660    0.060    0.971    +0.121 [ +0.083, +0.174]*                 52/74  
+        0.5     3.221      3.607    3.615    0.058    0.982    +0.120 [ +0.081, +0.174]*                 51/75  
+       0.65     3.219      3.605    3.610    0.057    0.991    +0.117 [ +0.079, +0.171]*                 53/73  
+        0.8     3.215      3.601    3.599    0.056    0.997    +0.114 [ +0.071, +0.170]*                 54/72  
+        0.9     3.216      3.602    3.604    0.055    1.000    +0.115 [ +0.074, +0.170]*                 54/72  
+       0.95     3.216      3.602    3.604    0.055    1.000    +0.115 [ +0.074, +0.170]*                 54/72  
+          1     3.216      3.602    3.604    0.055    1.000    +0.115 [ +0.074, +0.170]*                 54/72  
+
+  normalisation Nz
+     lambda  tail_avg  tail_mean   argmin  J vs l0  J vs l1   tail_avg - RANDOM (CI95, fold-clustered)        W/L
+          0     3.208      3.520    3.503    1.000    0.055    +0.106 [ +0.032, +0.190]*                 50/76  
+       0.05     3.198      3.523    3.510    0.553    0.086    +0.097 [ +0.061, +0.136]*                 50/76  
+        0.1     3.200      3.516    3.506    0.501    0.094    +0.098 [ +0.053, +0.147]*                 47/79  
+        0.2     3.196      3.518    3.536    0.445    0.108    +0.094 [ +0.065, +0.126]*                 51/75  
+       0.35     3.195      3.518    3.532    0.391    0.127    +0.094 [ +0.078, +0.116]*                 50/76  
+        0.5     3.202      3.523    3.556    0.331    0.155    +0.101 [ +0.078, +0.127]*                 52/74  
+       0.65     3.201      3.527    3.527    0.277    0.194    +0.099 [ +0.072, +0.136]*                 46/80  
+        0.8     3.205      3.532    3.498    0.223    0.260    +0.103 [ +0.078, +0.141]*                 44/82  
+        0.9     3.199      3.533    3.505    0.181    0.355    +0.098 [ +0.065, +0.139]*                 47/79  
+       0.95     3.182      3.526    3.501    0.142    0.478    +0.080 [ +0.041, +0.119]*                 48/78  
+          1     3.216      3.602    3.604    0.055    1.000    +0.115 [ +0.074, +0.170]*                 54/72  
+
+  normalisation Nt
+     lambda  tail_avg  tail_mean   argmin  J vs l0  J vs l1   tail_avg - RANDOM (CI95, fold-clustered)        W/L
+          0     3.208      3.520    3.503    1.000    0.055    +0.106 [ +0.032, +0.190]*                 50/76  
+       0.05     3.212      3.526    3.511    0.711    0.079    +0.111 [ +0.061, +0.167]*                 48/78  
+        0.1     3.207      3.527    3.542    0.584    0.087    +0.106 [ +0.069, +0.147]*                 49/77  
+        0.2     3.204      3.522    3.533    0.459    0.109    +0.102 [ +0.071, +0.137]*                 50/76  
+       0.35     3.202      3.522    3.560    0.362    0.133    +0.101 [ +0.081, +0.130]*                 50/76  
+        0.5     3.205      3.527    3.533    0.308    0.155    +0.104 [ +0.077, +0.134]*                 52/74  
+       0.65     3.204      3.530    3.504    0.264    0.195    +0.102 [ +0.072, +0.144]*                 46/80  
+        0.8     3.202      3.527    3.486    0.213    0.257    +0.100 [ +0.065, +0.147]*                 45/81  
+        0.9     3.191      3.526    3.513    0.173    0.360    +0.090 [ +0.055, +0.141]*                 47/79  
+       0.95     3.185      3.527    3.522    0.139    0.474    +0.083 [ +0.043, +0.127]*                 45/81  
+          1     3.216      3.602    3.604    0.055    1.000    +0.115 [ +0.074, +0.170]*                 54/72  
+
+  THE LEGACY-AMBER DISAGREEMENT AS A NATIVE-FREE PER-TARGET REGIME SIGNAL
+    signal = Jaccard(Legacy alpha-tail, AMBER alpha-tail); mean 0.0554, median 0.0476, 43% of targets ZERO overlap
+    rho(disagreement, Legacy        skill vs random) = +0.046   p = 0.608
+    rho(disagreement, AMBER         skill vs random) = -0.042   p = 0.643
+    rho(disagreement, best mixture  skill vs random) = +0.058   p = 0.520
+
+    REGIME SPLIT at the median of the signal (positive = WORSE than random):
+      Legacy        AGREE half +0.158 [+0.015,+0.231]   DISAGREE half +0.087 [+0.024,+0.172]
+      AMBER         AGREE half +0.151 [+0.029,+0.334]   DISAGREE half +0.101 [+0.052,+0.148]
+      best mixture  AGREE half +0.155 [+0.036,+0.309]   DISAGREE half +0.052 [+0.018,+0.084]
+
+  THE ORACLE REGIME-SWITCH CEILING, AND THE NULL THAT PRICES IT
+    ORACLE min of (Legacy, AMBER, random)          2.928
+    MATCHED NULL  min of 3 INDEPENDENT random tails 2.926
+    ORACLE min of (Legacy, AMBER, mixture, random) 2.919
+    MATCHED NULL  min of 4 INDEPENDENT random tails 2.894
+    single random tail                              3.101
+
+    The ORACLE switch gains +0.173 on a single random tail; the
+    pure MIN-OF-K SELECTION BIAS null already supplies +0.175 of it.
+    A PERFECT per-target switch between the two physics Hamiltonians and chance is
+    therefore worth NOTHING beyond min-of-k, before any native-free signal is asked
+    to find it -- and no native-free signal tested here finds it.
+============================================================================================================

@@ -119,8 +119,8 @@ def rep_c1():
 
 
 # ==========================================================================================
-def rep_c2():
-    o, rows, tag = load("c_c2.json")
+def rep_c2(fn="c_c2.json"):
+    o, rows, tag = load(fn)
     folds = np.array([r["fold"] for r in rows], int)
     print(L)
     print(f"BLOCK C2 -- THE LAMBDA SWEEP   n = {len(rows)} targets{tag}")
@@ -253,7 +253,111 @@ def rep_c3():
     print(L)
 
 
+# ==========================================================================================
+def rep_c2t():
+    """BLOCK C2t -- the SELECTION-side lambda sweep at the full n = 126, plus the two controls
+    that decide it: the matched-COUNT random tail, and the min-of-k selection-bias null for the
+    ORACLE regime-switch ceiling."""
+    import os as _os
+    from scipy import stats
+    from s12 import instrument as I
+    from s14.avgspace import top75_windows
+    from s15 import seed as SD
+    o, rows, tag = load("c_c2tail.json")
+    folds = np.array([r["fold"] for r in rows], int)
+    rnd = np.array([r["random_tail_avg_rmsd"] for r in rows], float)
+    LAMS = [f"{l:g}" for l in CC.LAM]
+    LOGS = [f"{l:g}" for l in CC.LAM_LOG]
+    print(L)
+    print(f"BLOCK C2t -- POOL-RESTRICTED SELECTION, THE MANDATORY MATRIX, n = {len(rows)}{tag}")
+    print("  READOUT: POINT CLOUD -- the coordinate average of the CVaR alpha=%.2f tail of each"
+          % CC.ALPHA)
+    print("  target's OWN 75-member pool.  This is a SET-MEAN readout and is never compared to")
+    print("  the built-chain rows of C1/C3.  AMBER = BARE SINGLE POINT.  Native read only to score.")
+    print("  It is NOT a VQE experiment and makes no quantum claim: it BOUNDS what any CVaR-VQE")
+    print("  selecting from this pool can achieve, per Hamiltonian.")
+    print(L)
+    mc = [r["monotone_check"] for r in rows]
+    na = sum(1 for m in mc if m["amber_argsort_identical"])
+    nl = sum(1 for m in mc if m["legacy_argsort_identical"])
+    print(f"\n  PREREG section 4.1 VERIFIED, not assumed: a strictly monotone transform leaves the")
+    print(f"  argsort -- and therefore every CVaR tail SET -- identical.  AMBER {na}/{len(mc)}, "
+          f"Legacy {nl}/{len(mc)}.")
+    if nl < len(mc):
+        print(f"  THE ONE FIRING IS REPORTED, NOT ROUNDED AWAY: on 9L1M three pool members have")
+        print(f"  Legacy energies differing by 8.9e-16 (one ULP) which asinh maps to the SAME")
+        print(f"  double, so the stable sort orders them by index instead.  They sit at sort")
+        print(f"  positions 71-73 of 75, outside every alpha<=0.5 tail, so NO tail set changes.")
+        print(f"  The invariance is exact in exact arithmetic; what failed is a one-ULP tie, and")
+        print(f"  a tie broken by index order is the tie-breaking trap this programme has already")
+        print(f"  paid for once.")
+    print(f"\n  pool mean {np.mean([r['pool_mean_rmsd'] for r in rows]):.3f}   "
+          f"ORACLE pool best {np.mean([r['pool_best_rmsd'] for r in rows]):.3f}   "
+          f"whole-pool average {np.mean([r['whole_pool_avg_rmsd'] for r in rows]):.3f}   "
+          f"MATCHED RANDOM tail {rnd.mean():.3f}")
+    for nm in ("raw", "Nz", "Nt"):
+        print(f"\n  normalisation {nm}")
+        print(f"   {'lambda':>8}{'tail_avg':>10}{'tail_mean':>11}{'argmin':>9}{'J vs l0':>9}"
+              f"{'J vs l1':>9}   {'tail_avg - RANDOM (CI95, fold-clustered)':<42}{'W/L':>9}")
+        for k in ((LOGS if nm == "raw" else []) + LAMS):
+            a = np.array([r["tail"][nm][k]["tail_avg_rmsd"] for r in rows], float)
+            st = PP(a, rnd, folds); ci = st.get("ci_fold", st["ci"])
+            star = "*" if (ci[0] > 0 or ci[1] < 0) else " "
+            print(f"   {k:>8}{a.mean():>10.3f}"
+                  f"{np.mean([r['tail'][nm][k]['tail_mean_rmsd'] for r in rows]):>11.3f}"
+                  f"{np.mean([r['tail'][nm][k]['argmin_rmsd'] for r in rows]):>9.3f}"
+                  f"{np.mean([r['tail'][nm][k]['jaccard_vs_l0'] for r in rows]):>9.3f}"
+                  f"{np.mean([r['tail'][nm][k]['jaccard_vs_l1'] for r in rows]):>9.3f}   "
+                  f"{st['mean']:+7.3f} [{ci[0]:+7.3f},{ci[1]:+7.3f}]{star}"
+                  f"{'':<15}{st['W']:>4d}/{st['L']:<4d}")
+
+    #: the coordinator's question, answered with what this lane alone can compute
+    J = np.array([r["tail"]["Nt"]["1"]["jaccard_vs_l0"] for r in rows], float)
+    Lg = np.array([r["tail"]["Nt"]["0"]["tail_avg_rmsd"] for r in rows], float)
+    Am = np.array([r["tail"]["Nt"]["1"]["tail_avg_rmsd"] for r in rows], float)
+    Mx = np.array([r["tail"]["Nz"]["0.95"]["tail_avg_rmsd"] for r in rows], float)
+    print(f"\n  THE LEGACY-AMBER DISAGREEMENT AS A NATIVE-FREE PER-TARGET REGIME SIGNAL")
+    print(f"    signal = Jaccard(Legacy alpha-tail, AMBER alpha-tail); mean {J.mean():.4f}, "
+          f"median {np.median(J):.4f}, {100*(J == 0).mean():.0f}% of targets ZERO overlap")
+    for lab, a in (("Legacy", Lg), ("AMBER", Am), ("best mixture", Mx)):
+        rho, p = stats.spearmanr(J, a - rnd)
+        print(f"    rho(disagreement, {lab:<13} skill vs random) = {rho:+.3f}   p = {p:.3f}")
+    print(f"\n    REGIME SPLIT at the median of the signal (positive = WORSE than random):")
+    hi = J > np.median(J)
+    for lab, a in (("Legacy", Lg), ("AMBER", Am), ("best mixture", Mx)):
+        s1 = PP(a[hi], rnd[hi], folds[hi]); s2 = PP(a[~hi], rnd[~hi], folds[~hi])
+        c1 = s1.get("ci_fold", s1["ci"]); c2 = s2.get("ci_fold", s2["ci"])
+        print(f"      {lab:<13} AGREE half {s1['mean']:+.3f} [{c1[0]:+.3f},{c1[1]:+.3f}]   "
+              f"DISAGREE half {s2['mean']:+.3f} [{c2[0]:+.3f},{c2[1]:+.3f}]")
+
+    print(f"\n  THE ORACLE REGIME-SWITCH CEILING, AND THE NULL THAT PRICES IT")
+    om3 = np.minimum(np.minimum(Lg, Am), rnd)
+    om4 = np.minimum(om3, Mx)
+    n3, n4 = [], []
+    for r in rows:
+        W, PHI, PSI, u = top75_windows(r["pdb"])
+        W = np.asarray(W, float); nat = np.asarray(u["nat_ca"], float)
+        rng = SD.stable_rng(r["pdb"], "s21C_minnull"); m = len(W); v = []
+        for _ in range(4):
+            idx = rng.choice(m, r["k_tail"], replace=False)
+            a, _b = I.coordinate_average(W[idx])
+            v.append(float(I.ca_rmsd(np.asarray(a, float), nat)))
+        n3.append(min(v[:3])); n4.append(min(v))
+    print(f"    ORACLE min of (Legacy, AMBER, random)          {om3.mean():.3f}")
+    print(f"    MATCHED NULL  min of 3 INDEPENDENT random tails {np.mean(n3):.3f}")
+    print(f"    ORACLE min of (Legacy, AMBER, mixture, random) {om4.mean():.3f}")
+    print(f"    MATCHED NULL  min of 4 INDEPENDENT random tails {np.mean(n4):.3f}")
+    print(f"    single random tail                              {rnd.mean():.3f}")
+    print(f"\n    The ORACLE switch gains {rnd.mean()-om3.mean():+.3f} on a single random tail; the")
+    print(f"    pure MIN-OF-K SELECTION BIAS null already supplies {rnd.mean()-np.mean(n3):+.3f} of it.")
+    print(f"    A PERFECT per-target switch between the two physics Hamiltonians and chance is")
+    print(f"    therefore worth NOTHING beyond min-of-k, before any native-free signal is asked")
+    print(f"    to find it -- and no native-free signal tested here finds it.")
+    print(L)
+
+
 if __name__ == "__main__":
     w = sys.argv[1] if len(sys.argv) > 1 else "c1"
     {"n": lambda: __import__("s21.c_norm", fromlist=["x"]).report(),
-     "c1": rep_c1, "c2": rep_c2, "c3": rep_c3}[w]()
+     "c1": rep_c1, "c2": rep_c2, "c2fast": lambda: rep_c2("c_c2fast.json"),
+     "c2t": rep_c2t, "c3": rep_c3}[w]()

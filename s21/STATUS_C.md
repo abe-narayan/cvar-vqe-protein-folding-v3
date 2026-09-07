@@ -1,4 +1,35 @@
-# WORKSTREAM C — STATUS (interim, written on request mid-lane)
+# WORKSTREAM C — STATUS  ***FINAL — every block landed at its full pre-registered configuration***
+
+*(This file was written as an interim status on request. Sections 1-4 below are preserved as
+written; the FINAL RESULT block at the top is appended after all blocks completed. Nothing in the
+interim text has been softened.)*
+
+## FINAL: ALL SIX BLOCKS COMPLETE, NOTHING PARTIAL, NOTHING NOT MEASURED FOR WANT OF COMPUTE
+
+| block | n | status |
+|---|---|---|
+| gates GC21a/c/d | 3-9000 | PASS; **GC21b mis-specified by me and restated, firing count reported** |
+| N normalisation | 30 | COMPLETE |
+| C1 mechanism | 30 | COMPLETE |
+| C2 lambda sweep (gradient / variance / tail / Hessian) | 30 | COMPLETE |
+| C2t selection-side matrix, declared extension | **126** | COMPLETE |
+| C3 + P staged schedules and preconditioners | 30 | COMPLETE |
+
+**HEADLINE: F-C3 FIRES.** `LA_Nt - A_raw = +0.2331 [+0.0673, +0.3950]`, 12W/18L, and it **survives
+the move-size correction** (`+0.2285 [+0.1140, +0.3647]`). Staged Legacy->AMBER continuation is
+**worse** than direct AMBER, not merely null -- exactly as C1's mechanism result predicted.
+**F-P fires on every preconditioning arm**: direct AMBER reaches the lowest and only physical final
+energy. The one arm that beat the comparator on RMSD (trust region, radius/3, -0.2987 [-0.6307,
+-0.0547], 20W/10L) is **MOVE-SIZE, NOT PHYSICS** -- against its own matched null it is
+`-0.0207 [-0.3185, +0.1736]`, 15W/15L.
+
+**And the selection side at n = 126: all 60 arms of the mandatory matrix's physics half are WORSE
+than a matched-count random tail, 60/60 CIs excluding zero.** Sprint 20's argmin result **does**
+transfer to the tail operator. Full detail in `s21/agentC_FINDINGS.md`.
+
+---
+
+# (interim status as originally written)
 
 ## 1. WHAT HAS LANDED, WHAT IS RUNNING, WHAT IS QUEUED
 

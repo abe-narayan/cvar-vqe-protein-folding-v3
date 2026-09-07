@@ -29,6 +29,35 @@ THE AMBER OBJECT.  Bare single point (`ConstrainedBox.energy_point`), no minimis
 landscape needs a function of theta.  The DEPLOYED `H_AMBER` is `E o Relax_50` -- a different
 operator, cap-bound 192/192 -- and no table here is a statement about it.
 
+
+OPERATOR FORKS, ENUMERATED PER `BRIEF` SECTION 7 RULE 0, WITH THE ALTERNATIVE NOT TAKEN NAMED.
+Every one of these was fixed BEFORE the runs, in `s21/PREREG_C.md`, and every one of them could
+have moved a directional result.
+
+    FUNCTIONAL    TAKEN: the bare AMBER single point, `ConstrainedBox.energy_point`.
+                  NOT TAKEN: the deployed `E o Relax_50`, which is not a function of theta at all
+                  (the relaxation leaves the torsion manifold), and `E o Relax_1`, which is +inf
+                  on 42% of the register (s20 L6).  A landscape needs a function of theta; this
+                  fork is forced, and it is the reason no table here speaks about the DEPLOYED
+                  operator.
+    BASIS         TAKEN: built chain for C1/C3; point cloud (coordinate average of the tail) for
+                  C2/C2t.  NOT TAKEN: comparing across the two.  They are never compared here.
+    READOUT       TAKEN: C1/C3 read the single built structure at the minimiser, averaged over
+                  starts -- a BEST-flavoured readout.  C2/C2t read the coordinate average of the
+                  alpha-tail -- a SET-MEAN readout.  NOT TAKEN: argmin-over-pool as the C2 readout
+                  (it is computed and printed beside the tail, never substituted for it).
+    NORMALISATION TAKEN: `Nt` (asinh on the pool median/MAD) as PRIMARY, declared before any
+                  Sprint-21 RMSD existed.  NOT TAKEN: `raw`, `Nz`, `Ng` -- all three computed
+                  ALONGSIDE on every arm and printed -- and `Nr` (rank->normal), declared and
+                  REJECTED in advance for continuation because it has zero gradient a.e. and is
+                  undefined off-pool.  If a non-declared arm wins, the declared choice is recorded
+                  as WRONG rather than swapped in.
+    NULL          TAKEN: the `toward_member` geodesic move matched to each arm's OWN realised
+                  torus magnitude (s20/c_land_null.py's operator), plus a matched-COUNT random
+                  tail for every selection arm.  NOT TAKEN: an isotropic random direction (it
+                  places mass on impossible backbones and is a WORSE measure, not an
+                  uninformative one), and an initialisation mean (BRIEF section 7 forbids it).
+
     python -m s21.c_cont c1          # BLOCK C1  the mechanism test
     python -m s21.c_cont c2          # BLOCK C2  the lambda sweep (gradient / tail / Hessian)
     python -m s21.c_cont c3          # BLOCK C3 + P  the staged schedules and preconditioners
@@ -715,6 +744,11 @@ if __name__ == "__main__":
         _drive("C1", c1_target, f"{pre}c_c1.json", subset=sub)
     elif cmd == "c2":
         _drive("C2", c2_target, f"{pre}c_c2.json", subset=sub)
+    elif cmd == "c2fast":
+        #: the GRADIENT and TAIL halves of C2 cost ~3 s per target; only the Hessian half is
+        #: expensive.  Split so the cheap half cannot be lost to a compute budget.  The artefact
+        #: is SEPARATE and its own completion flag covers only what it contains.
+        _drive("C2fast", c2_target, f"{pre}c_c2fast.json", subset=sub, do_hess=False)
     elif cmd == "c2tail":
         drive_c2tail()
     elif cmd == "c3":

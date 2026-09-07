@@ -1,0 +1,59 @@
+============================================================================================================
+BLOCK C3 + BLOCK P -- STAGED SCHEDULES AND PRECONDITIONERS   n = 30
+  identical starts, identical TOTAL function-evaluation budget (realised nfev printed).
+  BASIS: BUILT CHAIN from continuous torsions.  AMBER = BARE SINGLE POINT.
+============================================================================================================
+
+  start Ca-RMSD 3.1477   median E_AMBER at start 1.403e+04 kcal/mol
+
+  arm           RMSD_end d vs start NULL(move)   excess  |dtheta|   nfev   E_AMBER_end  E_Leg_end
+  L_raw           3.3154    +0.1676     3.1632  +0.1522    0.1120     90     8.252e+06     -17.63
+  A_raw           3.6974    +0.5497     3.5802  +0.1172    0.5755    102        -46.45     -8.693
+  A_Nt            3.8112    +0.6635     3.5319  +0.2793    0.5236     67         13.45     -8.966
+  LA_raw          3.9575    +0.8098     3.6210  +0.3364    0.5954    146           -41     -8.488
+  LA_Nt           3.9306    +0.7829     3.5849  +0.3457    0.5722    142         31.04     -8.848
+  L5A_Nt          3.9503    +0.8026     3.5764  +0.3739    0.5439    172         37.28     -9.218
+  ramp_Nt         3.7719    +0.6242     3.4869  +0.2850    0.4580    196         44.34     -8.493
+  A_tr            3.6926    +0.5449     3.5007  +0.1919    0.4361     86          60.1     -8.278
+  A_tr3           3.3987    +0.2510     3.3022  +0.0965    0.1760     70         88.04      -10.1
+  AbondA          4.1592    +1.0115     3.6938  +0.4655    0.7103    102        -8.925     -6.357
+
+  THE PRE-REGISTERED PRIMARY ENDPOINT (F-C3), paired, fold-clustered CI
+  comparison                                       mean                 CI95   median       W/L
+RMSD_end:  L_raw - A_raw                      -0.3821  [ -0.9521, +0.1883]  -0.4720   21/9      
+RMSD_end:  A_Nt - A_raw                       +0.1138  [ +0.0157, +0.2435]  -0.0008   16/14    *
+RMSD_end:  LA_raw - A_raw                     +0.2601  [ +0.0555, +0.4224]  +0.1089    9/21    *
+RMSD_end:  LA_Nt - A_raw                      +0.2331  [ +0.0673, +0.3950]  +0.0925   12/18    *
+RMSD_end:  L5A_Nt - A_raw                     +0.2529  [ +0.1007, +0.3916]  +0.1733    8/22    *
+RMSD_end:  ramp_Nt - A_raw                    +0.0745  [ -0.0627, +0.1852]  +0.0303   14/16     
+RMSD_end:  A_tr - A_raw                       -0.0048  [ -0.2315, +0.1935]  -0.0128   16/14     
+RMSD_end:  A_tr3 - A_raw                      -0.2987  [ -0.6307, -0.0547]  -0.2644   20/10    *
+RMSD_end:  AbondA - A_raw                     +0.4618  [ +0.3489, +0.5918]  +0.2874    7/23    *
+
+  THE SECONDARY THAT DECIDES PROMOTION -- each arm MINUS ITS OWN move-size null,
+  so a schedule cannot win by simply moving less:
+excess-over-null:  L_raw - A_raw              +0.0350  [ -0.4980, +0.5389]  +0.0670   13/17     
+excess-over-null:  A_Nt - A_raw               +0.1621  [ -0.0169, +0.3730]  +0.0276   11/19     
+excess-over-null:  LA_raw - A_raw             +0.2193  [ -0.0019, +0.3810]  +0.0733   12/18     
+excess-over-null:  LA_Nt - A_raw              +0.2285  [ +0.1140, +0.3647]  +0.1008   12/18    *
+excess-over-null:  L5A_Nt - A_raw             +0.2567  [ +0.1167, +0.3614]  +0.1054   11/19    *
+excess-over-null:  ramp_Nt - A_raw            +0.1679  [ +0.0827, +0.2484]  +0.1062   10/20    *
+excess-over-null:  A_tr - A_raw               +0.0747  [ -0.0557, +0.1888]  -0.0520   16/14     
+excess-over-null:  A_tr3 - A_raw              -0.0207  [ -0.3185, +0.1736]  +0.0027   15/15     
+excess-over-null:  AbondA - A_raw             +0.3483  [ +0.1838, +0.5252]  +0.2526    8/22    *
+
+  F-P -- does each preconditioner actually PRECONDITION?  (final E_AMBER, log10,
+  lower is better; this is the arm's own stated objective, not RMSD)
+log10(E_AMBER_end + 2000):  L_raw - A_raw     +2.9668  [ +2.2256, +3.5495]  +3.3171    0/30    *
+log10(E_AMBER_end + 2000):  A_Nt - A_raw      +0.0038  [ -0.0008, +0.0082]  +0.0000   10/20     
+log10(E_AMBER_end + 2000):  LA_raw - A_raw    +0.0012  [ +0.0005, +0.0017]  +0.0005    9/21    *
+log10(E_AMBER_end + 2000):  LA_Nt - A_raw     +0.0067  [ +0.0020, +0.0110]  +0.0008    9/21    *
+log10(E_AMBER_end + 2000):  L5A_Nt - A_raw    +0.0052  [ +0.0011, +0.0092]  +0.0007    3/27    *
+log10(E_AMBER_end + 2000):  ramp_Nt - A_raw   +0.0071  [ +0.0029, +0.0111]  +0.0020    2/28    *
+log10(E_AMBER_end + 2000):  A_tr - A_raw      +0.0220  [ +0.0097, +0.0394]  +0.0065    3/27    *
+log10(E_AMBER_end + 2000):  A_tr3 - A_raw     +0.0496  [ +0.0248, +0.0850]  +0.0139    1/29    *
+log10(E_AMBER_end + 2000):  AbondA - A_raw    +0.0974  [ +0.0014, +0.2988]  +0.0009    3/27    *
+
+  (the +2000 shift makes the log defined for the physical negative range; it is a
+   monotone reparameterisation of the same comparison and changes no ordering.)
+============================================================================================================

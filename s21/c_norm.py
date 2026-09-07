@@ -23,6 +23,16 @@ THE FOUR NORMALISATIONS.  Declared in `PREREG_C.md` section 1; `Nt` (asinh) is P
 declared REJECTED for continuation with its reason -- zero gradient a.e., undefined off-pool --
 and is not implemented here for landscape use.
 
+OPERATOR FORKS (`BRIEF` section 7 rule 0), with the alternative NOT taken named:
+    FUNCTIONAL    TAKEN bare AMBER single point / NOT TAKEN `E o Relax_50` (not a function of
+                  theta) and `E o Relax_1` (+inf on 42% of the register).
+    BASIS         TAKEN the shipped top-75 real rebuilds / NOT TAKEN the k=8 lattice register.
+    READOUT       none -- this module reads no RMSD at all, which is the point of running it
+                  first.
+    NORMALISATION TAKEN `Nt` PRIMARY / NOT TAKEN `raw`, `Nz`, `Ng` (all computed alongside) and
+                  `Nr` (declared and rejected in advance: zero gradient a.e., undefined off-pool).
+    NULL          none required -- no comparison is made here, only measurement.
+
     python -m s21.c_norm --gate      # GC21a/c/d
     python -m s21.c_norm --smoke     # 3 targets
     python -m s21.c_norm             # the 30-target c_land subset
