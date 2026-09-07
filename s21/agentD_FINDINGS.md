@@ -65,6 +65,9 @@ All under `s21/results/`. Code: `s21/d_cvarop.py`, `d_enc.py`, `d_sim.py`, `d_nu
 | **D14** | **Legacy carries NO in-band rank information beyond the distogram.** Its marginal Spearman against true RMSD is **+0.3281 [+0.3011, +0.3552]** fold-clustered; partialled on the distogram — with which it correlates **+0.4784** — it is **−0.0076 [−0.0616, +0.0681]**, median −0.033, 25/42 targets negative. It retains **−2%**. Control: AMBER's partial stays ~0, so the partialling is not manufacturing structure. | **ESTABLISHED** (n = 42, Workstream A's live artefact) |
 | **D13** | **"MDE = 0.084 Å" is not a property of the instrument.** MDE = 2.8016·sd(paired differences)/√n, so it belongs to the *comparison*. Across 26 real comparisons the per-comparison MDE spans **0.11× to 9.54×** the quoted constant — a factor of **84** — and only 12% fall within ±1.5× of it. It errs both ways: the deployed AMBER repair has MDE **0.0096 Å** and a **6.09 SE** effect the briefs call "a quarter of the MDE"; Sprint 20's `AMBc/spsa` encoding cell has MDE **0.8014 Å**, larger than the −0.649 it declared significant (power 0.62, Type-M 1.27×). | **ESTABLISHED** — methodological |
 | **D18** | **The exhaustive-latent control (§3.1a's O7) is built, run and COMPLETE at n = 126 — it closes the search half by construction, on the whole instrument.** Given exhaustive access to **every one** of `2^n` latent configurations, the objective's **exact** argmin still misses the latent's own ORACLE best by **+1.8149 [+1.6129, +2.0594] with 0 of 122 targets reversed** (+1.7202, 0/119, under the Bayes score). The latent contains structures **1.18 Å better than the incumbent** on 104/126, and the objective **does** order it (beats the space's own mean by −1.3674 on 109/126). The matched primary is **+0.0851 [−0.0176, +0.1691]**, 53W/73L — magnitude **NOT MEASURED**, directional falsifier **DID NOT FIRE**. | **ESTABLISHED**, n = 126 |
+| **D29** | **The sprint's first positive result survives both of my attacks, and the second sharpens it.** The Rg channel (functionals of the distogram's PREDICTION, not its scores) clears its permuted best-of-K bar. Their `i,i+1` length artefact is **impossible by construction** — stratified by n it is **+0.462**, larger than pooled. And under the native-free extension control the **scale-free disagreement arms survive** (`rg_z` 0.379→0.335, `rg_gap` 0.372→0.326, bar 0.280) while every scale-carrying arm dies: **the signal is prediction/pool DISAGREEMENT, not "the target is extended"** — so the primary should be `rg_gap`/`rg_z`, not `rg_disto`. Leave-one-stratum-out spans +0.289…+0.513, the weakest sitting on the bar. My §1.5g stands: **the objective cannot audit itself**; the prediction can. | **DEMONSTRATED as a signal** / Å value **NOT MEASURED** |
+| **D27** | **The bimodal containment route is NOT DEMONSTRATED, and the first "DEMONSTRATED" was a confound in a label I defined.** Raw \|AUC\| 0.776 for `nf_score_conc512` clears the permuted best-of-11 bar of 0.691 — but `contained := rank_pct ≤ 100·512/2^n` is a **length-dependent threshold** (100% of targets at n = 9, 6% at n = 13), `corr(n, label) = −0.367`, `corr(n, predictor) = −0.896`: **length predicting length**. Length-invariant and difficulty-partialled (Q11 binding): **+0.322 against a bar of 0.327 — NOT DEMONSTRATED**, and the difficulty control consumes the native, so no deployable pipeline could even construct it. | **NOT DEMONSTRATED** |
+| **D28** | **Rule 0 needs a sixth entry: THE LABEL.** A binarised label whose threshold depends on a covariate manufactures a predictor of that covariate. My own pre-registered best-of-K null passed it; only the continuous, length-invariant version caught it. The tell was already in my table — the predictor was **+0.040** on the continuous label and **0.776** on the binarised one. | **ESTABLISHED** — methodological |
 | **D25** | **The objective's argmin over 512 RANDOM latent draws is statistically indistinguishable from its argmin over the ENTIRE 8192-configuration latent** — `rand{M}_argmin` falls 4.665 → 4.040 → 3.684 → **3.494** against the exhaustive 3.449, ending at **−0.045 [−0.177, +0.137], NOT MEASURED.** A third independent route to search saturation, and the most operationally direct: the search is *done* at 512 draws, measured against its own exact optimum. **The difference between 512 and 8192 evaluations is under the MDE.** | **ESTABLISHED**, n = 45 interim → final in the artefact |
 | **D26** | **T2 is REFUTED, and my error-coherence mechanism with it.** The latent's top-M averages against its matched random control by **−0.478** (M = 64) and **−0.327** (M = 512) against the pool's **−0.377**, clearing its own MDE at every M — comparable or larger, not smaller. **The T2 generalisation I offered for the next sprint is WITHDRAWN** (§4.35) rather than rescued with an unregistered selectivity caveat. T1 and T3 SUPPORTED. | **REFUTED** (my hypothesis) |
 | **D22** | **The source swap loses, and the fork verdicts I gave were computed rather than requested.** `lat_avg75 − pool_avg75` (basis-matched) = **+0.3898 [+0.3225, +0.4793]**, 47W/79L at n = 126: the latent through the *identical shipped operator* is 0.41 Å worse than the pool, and its ORACLE ceiling is 0.56 Å worse too. The composite footnote decomposes as **96.2% source, 3.8% basis** (basis price +0.0155 [+0.0093, +0.0232]). The `n = 9` hazard does not move the primary — which instead **grows monotonically** with the length floor (+0.427 at n ≥ 10, +0.475 at n ≥ 12), the min-of-M lesson in a third place. | **ESTABLISHED**, n = 126 |
@@ -711,36 +714,165 @@ assumed in either direction.
 
 ### 1.5f D10 — CAN A NATIVE-FREE READOUT TRAVERSE THE OBJECTIVE'S TOP-M ON THE LATENT?
 
-`s21/d_lrank.py` → `d_lrank.json`. 75 targets (`n ≤ 13`, `2^n ≤ 8192`), every latent mode
-enumerated, four readouts inside the objective's top-M against a **matched-count random M-window**,
-`M ∈ {1, 8, 64, 512}`, `R_DRAW = 8`. Pre-registered as D10 with T1/T2/T3 and their falsifier;
-the containment column and the best-of-K null were registered as D11 before either was read.
-**FINAL TABLE AND DISPOSITIONS: see the artefact and the closing message — the run's own flag
-requires all 75 rows to carry every `nf_*` and `ORACLE_contained*` key.**
+`s21/d_lrank.py` → `d_lrank.json` + `.COMPLETE` (44 required keys, all present, all finite).
+**75 targets** (`n ≤ 13`), every latent mode enumerated, four readouts inside the objective's top-M
+against a **matched-count random M-window**, `M ∈ {1, 8, 64, 512}`, `R_DRAW = 8`. Pre-registered as
+D10 (T1/T2/T3) and D11 (the containment column and its best-of-K null), both before any number.
 
-*Interim at n = 45, labelled as interim, is what the coordinator was sent to prevent a withdrawn
-prediction reaching the report:* **T1 SUPPORTED** (the averaging readout beats the deployed argmin —
-`top64_avg` 3.163, `top512_avg` 3.265 against 3.449); **T2 REFUTED on both halves** (the
-avg-vs-random gain is **−0.478** at M = 64 and **−0.327** at M = 512, against the pool's **−0.377**,
-clearing its own MDE at every M — larger, not smaller, and my error-coherence mechanism with it);
-**T3 SUPPORTED** (`top512_avg` 3.265 against `ORACLE_top512` 2.211, a 1.05 Å gap unclosed).
+| M | readout | top-M | rand-M | **top − rand** | W/L | own MDE |
+|---|---|---|---|---|---|---|
+| 1 | (all identical) | 3.281 | 4.501 | **−1.2192** [−1.5800, −0.9632] | 65/10 | 0.391 |
+| 8 | argmin | 3.281 | 3.895 | −0.6135 [−0.9309, −0.3318] | 52/23 | 0.338 |
+| 8 | avg | 3.136 | 3.595 | −0.4597 [−0.7401, −0.2570] | 49/26 | 0.343 |
+| 64 | argmin | 3.281 | 3.560 | −0.2785 [−0.4452, −0.0908] | 46/29 | 0.244 |
+| 64 | avg | **3.000** | 3.444 | −0.4448 [−0.6306, −0.3322] | 54/21 | 0.256 |
+| **512** | **argmin** | 3.281 | **3.331** | **−0.0491** [−0.1530, +0.0890] | 42/29 | **0.118** |
+| 512 | avg | 3.098 | 3.408 | −0.3103 [−0.3690, −0.2332] | 55/20 | 0.180 |
 
-> **The row I did not predict, and the one worth keeping.** `top{M}_argmin` is 3.449 at every M by
-> construction — the argmin of the top-M *is* the global argmin. `rand{M}_argmin` falls
-> **4.665 → 4.040 → 3.684 → 3.494**, ending at **−0.045 [−0.177, +0.137], NOT MEASURED.**
-> **The objective's argmin over 512 random latent draws is statistically indistinguishable from its
-> argmin over the entire 8192-configuration latent.** Exhaustive enumeration buys essentially
-> nothing over 512 draws for the deployed readout — a **third** independent route to search
-> saturation, and the most operationally direct: not *"searching harder does not help the
-> structure"* but *"the search is DONE at 512 draws"*, measured against its own exact optimum. It
-> also prices the budget ladder: **the difference between 512 and 8192 evaluations is under the
-> MDE.**
+`ORACLE_top512` **1.986** · `rand512_ORACLE` **1.875**.
 
-**And an independent cross-check of §1.5b in a different instrument:** `rand512_ORACLE` **1.975**
-against `ORACLE_top512` **2.211** — the random window's ceiling is *better* than the ordered
-window's, reproducing D9's reversal from a different construction on a different subset.
+**D25 confirmed at full n.** `rand512_argmin` 3.331 against the exhaustive 3.281 —
+**−0.0491 [−0.1530, +0.0890], MDE 0.118, NOT MEASURED.** *The objective's argmin over 512 random
+latent draws reaches its argmin over the entire 8192-configuration latent.* And `rand512_ORACLE`
+1.875 beats `ORACLE_top512` 1.986, reproducing §1.5b's reversal at full n in a second instrument.
 
-### 1.5c AUDITING `latentsel.py` — the fork verdicts I was asked for, computed rather than requested
+**T1 SUPPORTED, with the readout split.** `avg` beats the deployed argmin at every M (−0.146,
+−0.282, −0.184); **`medoid` does not** (+0.007, +0.059, +0.193). **T2 REFUTED** (−0.460 / −0.445 /
+−0.310 against the pool's −0.377, clearing its MDE at every M). **T3 SUPPORTED and it grows with
+M**: best native-free minus `ORACLE_topM` is +0.068 (M = 8), +0.502 (M = 64), **+1.112** (M = 512) —
+the window's ceiling runs away from any native-free readout exactly as the window widens.
+
+### 1.5g THE CONTAINMENT VERDICT — and the first "DEMONSTRATED" was a confound in my own label
+
+Three nested controls. The effect dies at the binding one.
+
+| control | best predictor | statistic | permuted best-of-11 bar | verdict |
+|---|---|---|---|---|
+| raw AUC vs `ORACLE_contained512` | `nf_score_conc512` | **\|AUC\| 0.776** | 0.691 | *"DEMONSTRATED"* — **an artefact** |
+| Spearman vs `ORACLE_rank_pct`, partialled on **n** | `nf_score_iqr_over_range` | **+0.367** | 0.323 | DEMONSTRATED, marginally |
+| **Q11-binding: partialled on n AND target difficulty** | `nf_score_iqr_over_range` | **+0.322** | **0.327** | **NOT DEMONSTRATED** |
+
+**The first row is a confound in a label I defined myself.** `contained` is
+`rank_pct ≤ 100·512/2^n`, and **that threshold is length-dependent** — 100% at `n = 9`, then 50%,
+25%, 12%, 6% at `n = 13`. **At `n = 9` every target is "contained" by construction.**
+`corr(n, ORACLE_contained512) = −0.367` and `corr(n, nf_score_conc512) = −0.896`. The best predictor
+is a proxy for peptide length and the label is a proxy for peptide length: **length predicting
+length**, and my own pre-registered best-of-K null passed it.
+
+**The tell was in my own table before the null ran**: `conc512`'s Spearman against the *continuous*
+`rank_pct` is **+0.040** — nothing — while its AUC is 0.776. **A predictor strong on a binarised
+label and null on the continuous one is not a predictor.**
+
+**VERDICT: NOT DEMONSTRATED.** No native-free quantity available to me separates the regimes once
+length and difficulty are removed. And the control I lost to is stronger than anything deployable —
+`latent_mean` **consumes the native** — so the honest form is the stronger one: *even against a
+difficulty control no native-free pipeline could construct, the best predictor sits **at** the noise
+bar.* The two spread predictors the coordinator flagged fail on their own disambiguation:
+`rand{M}_spread` tracks length harder than `top{M}_spread` does (corr 0.90–0.94 against 0.14–0.66),
+so the tightening is **difficulty**, not the mechanism.
+
+> **The methodological output, and it needs a sixth entry in rule 0.** *A binarised label whose
+> threshold depends on a covariate will manufacture a predictor of that covariate.* Mine did; my own
+> best-of-K null passed it; only the continuous, length-invariant version caught it. That is the
+> same shape as the sprint's three unstated operator forks and my four wrong mechanisms — **the null
+> was correct and the LABEL was the unstated operator.** Rule 0 enumerates functional, basis,
+> readout, normalisation and null. **It needs THE LABEL, and this is the worked example.**
+
+### 1.5h AUDITING `rgsign.py` — the sprint's first positive result, attacked and STRENGTHENED
+
+The coordinator ran my D11 protocol on a channel I did not have: **functionals of the distogram's
+own PREDICTION** (`Rg² = (1/N²) Σ_{i<j} d̂²_ij`) rather than of its scores. My eleven predictors were
+all functionals of the objective's **score distribution** plus window geometry, so what §1.5g
+established is narrower than *"no native-free signal exists"* — it is **the objective cannot audit
+itself**: a Bayes risk over predicted distances has no way to represent *the prediction is wrong on
+this target*. Their result, on my panel with my controls: best `rg_z` **+0.3788** against a permuted
+best-of-6 bar of **0.2899**; and pooling all 17 predictors tried tonight into one family, `rg_z`
+still clears (bar 0.334) while my best falls at +0.278 against 0.317 — **a family separating from a
+family**, which chance finds much harder than one winner.
+
+They asked me to attack two things. **Both were computed from their artefact rather than proposed,
+and the result survives both — the second one sharpens what can be claimed.**
+
+**Their concern 2 — the `i,i+1` constant (3.8046 Å applied to `n−1` of `n(n−1)/2` terms, so its
+weight varies with `n`, which is what they partial on) — is not a hazard, and it is *impossible*
+rather than merely handled.** Within a fixed `n` the constant contributes the **same** amount to
+every target's `Rg²`, so it cannot create within-stratum variation. Stratifying by `n` uses **no
+between-length variation at all**:
+
+| stratified by n, partialled on `latent_mean` within each stratum, Fisher-z pooled | ρ-equivalent | per-n (9…13) |
+|---|---|---|
+| `rg_disto` | **+0.486** | +0.07 +0.43 +0.88 +0.36 +0.38 |
+| **`rg_z`** | **+0.462** | +0.15 +0.38 +0.92 +0.36 +0.20 |
+| `rg_gap` | +0.441 | |
+| `rg_pool_sd` | +0.257 | −0.59 +0.07 +0.58 +0.30 +0.34 — sign flips, i.e. noise |
+
+The effect is **larger** stratified (+0.462) than pooled (+0.379). The artefact could not have
+existed, and that is a statement about the construction, not a passed check.
+
+**Their concern 1 — is `latent_mean` the right difficulty control? — is the real one, and answering
+it improves the claim.** The right native-free control for an *Rg* predictor is not general
+difficulty but **the pool's own realised extension**, which they already compute. Partialling on
+`n`, `latent_mean` **and** `rg_pool_mean`:
+
+| predictor | \|n,diff | \|n,diff,rg_pool | Δ |
+|---|---|---|---|
+| **`rg_z`** | 0.3792 | **0.3350** | −0.044 — survives |
+| **`rg_gap`** | 0.3719 | **0.3260** | −0.046 — survives |
+| `rg_disto` | 0.3520 | 0.2809 | −0.071 |
+| `rg_emit` | 0.2014 | 0.1079 | −0.094 |
+| `rg_pool_sd` | 0.2046 | 0.0709 | −0.134 |
+| `rg_pool_mean` | 0.2227 | **−0.0101** | −0.233 — sanity: a variable partialled on itself dies |
+
+Permuted best-of-6 bar under the three-control residualisation: **0.280**; observed **0.335 —
+CLEARS**. (Under their two-control version I reproduce their bar at 0.286 against their 0.2899.)
+
+> **The signal is not "the target is extended". It is the DISAGREEMENT between the distogram's
+> predicted extension and the pool's realised extension.** The two **scale-free** arms — `rg_z`, a
+> z-score, and `rg_gap`, a difference — survive controlling for the pool's actual extension almost
+> intact; every **scale-carrying** arm loses most of its signal. That is a better mechanism than
+> "extended targets are hard", it is the concentrated-wrong-region story with a native-free
+> signature, and it is not a difficulty proxy in disguise.
+
+**Consequence: the primary should be `rg_gap` or `rg_z`, not `rg_disto`** — which is second in their
+table at 0.372 and is the arm most contaminated by scale, dropping to 0.281 under the proper control.
+
+**What I would still flag, honestly rather than fatally.** Leave-one-length-stratum-out on `rg_z`
+(partial `|n,diff`): **+0.367 / +0.370 / +0.289 / +0.513 / +0.387** dropping n = 9/10/11/12/13. All
+positive and substantial, so no single stratum drives it — but dropping `n = 11` (13 targets,
+per-stratum ρ +0.92) lands at **+0.289, essentially ON the permuted bar**. The result is robust to
+dropping any stratum and is *not* comfortably above the bar when the strongest one is removed. That
+is the **fourth** arrival of *an aggregate hides a structure* (§5.1, §5.2, §1.5e) — and this time it
+does not overturn the finding, it prices it.
+
+**My verdict as the adversary: DEMONSTRATED AS A SIGNAL**, scope intact, with the strengthening
+above. **The Ångström value remains NOT MEASURED** and belongs in the same sentence every time: ρ
+0.38 against a position in an ordering is not 0.4 Å, and the ρ→RMSD composition is exactly what
+`in-band-ordering-is-per-target` records as unmeasured.
+
+**A second, independent leg arrived from the coordinator's own `rgcheck.py`, run before my message
+and with different controls.** Recording it because two constructions agreeing is worth more than
+either alone:
+
+| their check | result |
+|---|---|
+| **ablation** — `i,i+1` terms omitted entirely | `rg_nobond` **+0.3691** vs `rg_disto` +0.3721, `corr = 0.9999` |
+| **native-free difficulty** — `pool_spread`, mean pairwise RMSD inside the pool | best **0.3431**, bar 0.2858 — **CLEARS** |
+| both difficulty controls together | `rg_z` **0.3596**, bar 0.2872 — **CLEARS** |
+
+The two halves are complementary and neither substitutes for the other. **Their ablation shows the
+constant contributes nothing; my stratification shows it *could not have* contributed** — within a
+fixed `n` it adds the same amount to every target, so no between-length variation is used at all.
+And on the difficulty axis: **my control is the pool's realised *extension*, which answers the
+specific worry; theirs is the pool's geometric *diversity*, which is what matters for deployment,
+because `pool_spread` is computable by a shipped pipeline and `latent_mean` is not.** The result
+clears both.
+
+**And the disclosure they volunteered belongs at the same prominence as the result.** Their first run
+used an **undeclared** `dhat` because a patch silently failed; caught, rewired, and both now
+reported (+0.3833 undeclared vs +0.3721 declared). The gap is **0.011** — and that is the point:
+nothing about the number would have told them.
+
+### 1.5c AUDITING `latentsel.py`### 1.5c AUDITING `latentsel.py` — the fork verdicts I was asked for, computed rather than requested
 
 The coordinator sent the **operator-fork list before reading the numbers** — the first application
 of the rule in §2 — and asked my view on one undecided fork. All three rows I recommended were
@@ -942,6 +1074,19 @@ and is noted here so it is not re-discovered a fourth time.
 `d_sim`'s normalisation check fired **64 times, all passing** (Σp = 1.0000000000). `d_cvarop`'s
 `tail_min ≡ argmin` identity check fired **9 times**, max difference 0 — and it is reported as an
 identity, not as a finding.
+
+**The most transferable process finding of the sprint, and it cost both lanes.** Project memory is
+an index of one-line summaries over bodies. `in-band-ordering-is-per-target`'s **index line** says
+in-band ordering is learnable but per-target; its **body** says the only leverage supplies the
+**per-target SIGN at inference** — a *continuous* per-target quantity — and, in a section headed
+*"and that direction is not closed"*, points at compactness proxies. I cited that memory from its
+index line and built a **binary** label (§1.5g, D28). The coordinator cited the same memory twice
+from the same index line before a retraction sent them to the body — where the **Rg channel that
+produced this sprint's only positive result was sitting unread**. Two lanes, one file, the same
+failure: **it cost me a confound and them a retraction, while its unread section held the answer.**
+**Read the body, not the index line** — and the reason is not diligence, it is that an index line is
+a lossy summary written for recall, and the part that gets dropped first is the scope condition and
+the open direction.
 
 **Shared referent floor.** No correlation between two deviations-from-a-common-reference is claimed
 in this document, so the 0.505 floor does not bind on anything here. Stated explicitly because the
@@ -1524,15 +1669,18 @@ selector.
   **CONFIRMED**, 0/51 new and 0/122 merged. P3 — exhaustive search still does not beat the pool on
   the targets where the sampler was genuinely searching: **CONFIRMED**, +0.1738 [−0.0079, +0.3715].
 * **D10 (registered before `s21/d_lrank.py` produced a number).** T1 — medoid/avg beat the deployed
-  argmin inside the top-M: **SUPPORTED.** T2 — the avg-vs-matched-random gain is *smaller* on the
+  argmin inside the top-M: **SUPPORTED for `avg` (−0.146/−0.282/−0.184), NOT for `medoid`
+  (+0.007/+0.059/+0.193)** — the readout split again. T2 — the avg-vs-matched-random gain is *smaller* on the
   latent than on the pool and may not clear the MDE: **REFUTED on both halves** (−0.478 at M = 64,
   −0.327 at M = 512 against the pool's −0.377, clearing its own MDE at every M). T3 — no native-free
   readout reaches the ORACLE top-M ceiling: **SUPPORTED** (1.05 Å unclosed at M = 512).
 * **D11 (registered before any AUC was read).** The bimodal containment route is DEMONSTRATED only
   if the best native-free predictor's folded |AUC| exceeds the **95th percentile of a permuted
-  best-of-K maximum** (≈ 0.690 at this n and split) and its own CI excludes 0.5. **Anything in
-  0.55–0.65 is NOT MEASURED and the route NOT DEMONSTRATED — never "promising".** Simulated at this
-  experiment's own n: pure noise gives a best-of-10 |AUC| whose *median* is **0.625**.
+  best-of-K maximum** and its own CI excludes 0.5; **anything in 0.55–0.65 is NOT MEASURED and the
+  route NOT DEMONSTRATED — never "promising".** **Outcome: the rule worked and was not enough.** The
+  raw AUC cleared its bar (0.776 vs 0.691) on a **length-confounded label of my own construction**;
+  the length-invariant, difficulty-partialled version is **+0.322 against 0.327 → NOT
+  DEMONSTRATED.** A correct null cannot rescue a label that encodes a covariate (§1.5g, D28).
 * **D9 (registered before `s21/latentrank.py` produced a number).** The ORACLE-best's percentile in
   the objective's own ranking lands **between the 0.1st and 5th**; worse than the 20th or better
   than the 0.01st **refutes** it. And the top-M ceiling **must** be plotted against a min-of-M over

@@ -330,15 +330,35 @@ def main(path=None):
     print("    Single-component cells are EXACTLY invariant (gate G-A3), so only hybrids "
           "can move.")
     print(f"{'='*100}")
-    print(f"  {'Hamiltonian':<14}{'declared':>12}" + "".join(f"{a:>12}" for a in A.AUDIT_NORMS))
+    #: DEFECT FOUND IN MY OWN TABLE (coordinator fork review, 2026-09-07).  The audit arms are
+    #: run at SEED 0 only, but the first published version of this table put the DECLARED form's
+    #: FOUR-SEED MEAN beside them -- an unmatched comparison across the seed dimension, on an
+    #: instrument whose seed sd is 0.51-1.06 A.  The declared column is now the SEED-0 value, so
+    #: all three forms are read on the identical circuit.  The 4-seed mean is printed beside it,
+    #: labelled, and is NOT the comparator.
+    print(f"  {'Hamiltonian':<14}{'declared@s0':>13}" +
+          "".join(f"{a + '@s0':>13}" for a in A.AUDIT_NORMS) +
+          f"{'WINNER':>14}{'| declared 4-seed':>19}")
+    best = []
     for h in ("Leg+Amb", "Dist+Leg", "Dist+Amb", "Dist+Leg+Amb"):
-        line = f"  {h:<14}{np.nanmean(tab[(h,'vqe')]):>12.3f}"
+        vals = {"declared": float(np.nanmean(_cell(rows, h, "vqe", A.SEEDS[0])))}
         for nm in A.AUDIT_NORMS:
             v = np.array([float(r["cells"].get(f"AUD{nm}|{h}|vqe|{A.SEEDS[0]}", {})
                                 .get("rmsd_ORACLE", np.nan)) for r in rows])
-            line += f"{np.nanmean(v):>12.3f}"
-        print(line)
-    print("  If a non-declared form wins, the declared choice is recorded as WRONG.")
+            vals[nm] = float(np.nanmean(v))
+        w = min(vals, key=vals.get)
+        best.append(vals[w])
+        line = f"  {h:<14}" + "".join(f"{vals[k]:>13.3f}"
+                                      for k in ("declared",) + tuple(A.AUDIT_NORMS))
+        print(line + f"{w:>14}" + f"{np.nanmean(tab[(h,'vqe')]):>19.3f}")
+    print("  If a non-declared form wins, the declared choice is recorded as WRONG on that cell.")
+    d0 = float(np.nanmean(_cell(rows, "Distance", "vqe", A.SEEDS[0])))
+    print(f"\n  THE FORK IS NOT LOAD-BEARING, and this is the strong form of the answer:")
+    print(f"    best normalisation PER CELL = {[round(b, 3) for b in best]}, min {min(best):.3f}")
+    print(f"    Distance-only at the same seed  = {d0:.3f}  (it carries NO normalisation at all)")
+    print(f"    margin {min(best) - d0:+.3f} A -- Distance still wins, but by far less than an")
+    print(f"    unmatched table would have suggested, and the margin is deep inside the")
+    print(f"    0.51-1.06 A seed noise, so it is NOT MEASURED in either direction.")
 
     # =================================================================== 8. gates
     print(f"\n{'='*100}")

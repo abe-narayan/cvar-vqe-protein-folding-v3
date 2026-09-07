@@ -88,7 +88,7 @@ requested *is* the full subset, so a smoke run cannot write one — verified in 
 > times. **This is why Block N ran before the sweep, and it is the single most transferable thing in
 > this lane.**
 
-> ## 4. THE MANDATORY MATRIX'S PHYSICS HALF IS WORSE THAN CHANCE — ALL 60 ARMS, n = 126, EVERY CI EXCLUDING ZERO.
+> ## 4. THE MANDATORY MATRIX'S PHYSICS HALF IS WORSE THAN CHANCE — ALL 42 ARM-ROWS, n = 126, EVERY CI EXCLUDING ZERO.
 >
 > Pool-restricted CVaR α = 0.15 tail selection, point-cloud readout: matched-count **random** tail
 > **3.101**; Legacy **3.208 (+0.106)**; AMBER **3.216 (+0.115)**; best mixture over three normalisations

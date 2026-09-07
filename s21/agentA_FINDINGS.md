@@ -17,12 +17,32 @@ judged against the wrong MDE is not a null.
 
 ## 0. THE ONE-LINE RESULT, and it damages my own lane
 
-**The mandatory matrix was bounded before a single circuit was built.** Over the shipped K=500
-pool, the α-tail of **AMBER is significantly WORSE than a matched-count random subset of the same
-size** — on every readout, at every tail width up to α=0.30, on both geometric bases, with 0/5
-folds on the good side. **No Hamiltonian containing Legacy or AMBER beats the structural-only
-arm.** The pre-registered falsifier F-A1 fires: a CVaR-VQE selecting over this candidate set is
-bounded at chance on those two Hamiltonians *no matter how well it optimises*.
+**The mandatory matrix was bounded before a single circuit was built, and then the circuits agreed
+with the bound.** Over the shipped K=500 pool, the α-tail of **AMBER is significantly WORSE than a
+matched-count random subset of the same size** — on every readout, at every tail width up to
+α=0.30, on both geometric bases, with 0/5 folds on the good side. **No Hamiltonian containing
+Legacy or AMBER beats the structural-only arm.** The pre-registered falsifier F-A1 fires: a
+CVaR-VQE selecting over this candidate set is bounded at chance on those two Hamiltonians *no
+matter how well it optimises*.
+
+**The mandatory matrix (§2), run with genuine CVaR-VQE on 12 targets, 4 seeds, matched budget,
+delivered exactly that.** Distance-only **3.845 / 3.686** (mean/median) wins; every one of the six
+Hamiltonians containing Legacy or AMBER is worse, all six point estimates on the harmful side,
+AMBER worst at **+1.471** vs Distance with **2W/10L**. **AMBER's VQE does not beat a constant
+α-helix with noise** (+0.131 [−0.681, +1.035], 6W/6L).
+
+> **Two scope limits on that paragraph, both found by the coordinator's fork review and both
+> narrowing my own claim.** (i) `H_AMBER` is the **bare single point**, not the deployed
+> `E ∘ Relax₅₀` whose own cost Sprint 20 puts at +0.021 — **+1.471 Å is not the pipeline's AMBER
+> cost**, and only **two** of the six rows (Legacy, Dist+Leg) are AMBER-free, so the direction is
+> 2/2 independent of that fork and 4/4 conditional on it (§2.8, OPEN O7). (ii) **Seed count was a
+> fork I failed to enumerate** and it is the one that most constrains the table (§2.3).
+
+**And the honest counterweight: at this budget the matrix cannot resolve its own magnitudes.**
+Ansatz-seed sd is **0.51–1.06 Å**, two to five times Sprint 20's figure, and the VQE does **not**
+beat best-of-N from the untrained circuit on any Hamiltonian (F-A2 **NOT MEASURED**, a scope
+restriction on Sprint 20 Q4, not a refutation). Every §2.2 magnitude is **NOT MEASURED**; only the
+**direction** — six of six against physics — is established.
 
 **Three qualifications, each of which cost me a claim I would otherwise have made.**
 
@@ -372,17 +392,12 @@ soundness gate passed, not a result produced.
 
 ## 2. THE MANDATORY MATRIX — `s21/a_matrix.py`
 
-> **STATUS — 2026-09-07 10:48.** **3 of 12 targets complete** (1CS9, 1IM7, 1NIZ), **106 of 106
-> cells on every completed row**, **0 blocked**. Per-target wall 549 / 846 / 968 s (rising with
-> chain length); **ETA ≈ 2.1 h for the remaining 9**. Nothing is expected to fail to land — the
-> only risk is wall clock, and if it bites the artefact stops with `complete=false` and the
-> achieved n printed, which is the honest failure mode. Machinery verified end to end; all three
-> gates PASS; one heavy process holding the AMBER context. The artefact
-> (`s21/results/a_matrix.json`) is checkpointed per target and its `complete` flag requires the
-> **full** configuration — 7 Hamiltonians × 5 arms × their declared seeds × 4 readouts × 3 α,
-> plus the 7×7 cross-readout on all four variational seeds, plus both audit normalisations —
-> so a partial run cannot certify as complete. Results are appended below when it lands; design,
-> gates and scope were recorded here **before any matrix RMSD was read.**
+> **COMPLETE.** `s21/results/a_matrix.json` — **12/12 targets, 12/12 complete rows, 106/106 cells
+> per row, `complete=true`**, 9,385 s wall on one heavy process holding the AMBER context (now
+> released). Report: `s21/results/a_matrix_report.txt`. The completion flag requires the **full**
+> configuration — 7 Hamiltonians × 5 arms × their declared seeds × 4 readouts × 3 α, the 7×7
+> cross-readout on all four variational seeds, and both audit normalisations — so it cannot
+> certify a subset.
 
 Seven Hamiltonians, genuine CVaR-VQE as the selector, every component separably evaluable.
 
@@ -455,6 +470,7 @@ docstring and repeated here, each with the direction it would have pushed:
 | normalisation | signed-log + robust z on the target's own pool | raw sum; pool-quantile rank | **toward my conclusion** — a raw sum is an AMBER-outlier detector. Both computed as declared audits |
 | null | matched-count random from the **arm's own** generated set | uniform-on-the-torus; the initialisation **mean** | both forbidden by BRIEF §7 rule 4 and the untrained-circuit rule |
 | budget | matched in **candidate evaluations** | matching **wall clock** | **AGAINST my conclusion** — it would give single-component Hamiltonians ~3× more candidates and favour Legacy-only/AMBER-only |
+| **seed count** *(FORK I OMITTED — added on review)* | **4 seeds** on variational arms, 2 on controls | more seeds; or quoting best-of-seeds | **the fork that most constrains the table.** Seed sd is 0.51–1.06 Å and best-of-4 beats the 4-seed mean by 0.65–1.36 Å — larger than most row-to-row gaps. I disclosed this in §2.3 but did **not** enumerate it as a fork, which is the omission. Consequence: only the DIRECTION is safe; **every row-to-row gap sits inside seed noise** |
 
 I designed these comparisons and have a stake in their direction, so this list is offered for
 **independent fork review** rather than treated as sufficient on its own.
@@ -477,6 +493,237 @@ finite on every continuous torsion sample the VQE and its controls drew. That is
 §1.3 (finite fraction 1.000 on the K=500 pool) and with Sprint 20 L5c: on plausible geometry AMBER
 is *finite-but-meaningless*, and nothing throws. **A guard that never fires is not evidence that
 the hazard is absent** — it is evidence that this sampler never visited it.
+
+---
+
+### 2.1 THE MANDATORY MATRIX — final Cα-RMSD, the endpoint
+
+n = 12 targets, BUILT-CHAIN basis (single structure from continuous torsions via
+`build_ca_exact`), **readout = argmin of the training Hamiltonian over everything seen**, every
+variational cell the mean over **4 ansatz seeds**. ORACLE references, never achieved: retrieval
+pool mean 4.919, pool best member 1.535.
+
+| Hamiltonian | **VQE** mean/median | vqe_untrained | best_of_N | metro | helix (zero-info) |
+|---|---|---|---|---|---|
+| Legacy | 4.767 / 4.775 | 4.817 | 4.856 | 4.832 | 5.176 |
+| **AMBER** | **5.316 / 5.161** | 5.524 | 5.687 | 5.378 | 5.185 |
+| Leg+Amb | 4.789 / 4.504 | 4.721 | 4.703 | 4.918 | 5.181 |
+| **Distance** | **3.845 / 3.686** | 4.079 | 3.890 | 3.751 | 4.295 |
+| Dist+Leg | 4.119 / 3.790 | 4.480 | 4.301 | 4.095 | 4.956 |
+| Dist+Amb | 4.118 / 4.067 | 4.238 | 4.252 | 3.924 | 4.496 |
+| Dist+Leg+Amb | 4.406 / 4.265 | 4.298 | 4.257 | 4.269 | 5.089 |
+
+**Distance-only wins the matrix on both mean and median. All six Hamiltonians containing Legacy
+or AMBER are worse.** Mean and median agree throughout, so no row is an outlier artefact.
+
+### 2.2 Target-level paired differences, CI, W/L, folds — before any diagnostic
+
+**vs the structural-only reference (Distance, VQE).** Negative would mean physics helps:
+
+| Hamiltonian | mean | median | se | own MDE | i.i.d. CI | fold CI | W/L |
+|---|---|---|---|---|---|---|---|
+| Legacy | **+0.922** | +0.949 | 0.396 | 1.110 | [+0.180, +1.642] | [+0.010, +1.834] | 4W/8L |
+| **AMBER** | **+1.471** | +1.616 | 0.630 | 1.764 | [+0.266, +2.625] | [+0.378, +2.601] | **2W/10L** |
+| Leg+Amb | +0.944 | +0.859 | 0.528 | 1.478 | [−0.026, +1.951] | [−0.249, +1.969] | 4W/8L |
+| Dist+Leg | +0.274 | +0.179 | 0.253 | 0.708 | [−0.190, +0.748] | [−0.379, +0.854] | 5W/7L |
+| Dist+Amb | +0.273 | +0.149 | 0.140 | 0.391 | [+0.021, +0.552] | [−0.021, +0.561] | **2W/10L** |
+| Dist+Leg+Amb | +0.561 | +0.313 | 0.292 | 0.819 | [+0.013, +1.114] | [−0.144, +1.278] | 3W/9L |
+
+**All six point estimates are on the harmful side; four have i.i.d. CIs excluding zero.** But
+**each of those four has an effect smaller than its own MDE** — the winner's-curse flag:
+significant *and* underpowered means the point estimate is very likely inflated. The honest
+reading is **consistently harmful in direction, magnitude NOT MEASURED at n=12**. Per-fold means
+carry the same sign structure: AMBER positive on 4/5 folds (+3.13, +1.25, +1.68, −0.14, +1.41),
+Legacy on 4/5.
+
+**FALSIFIER F-A1 fires on the mandatory matrix as well as on the pool.**
+
+**MANDATORY CONTROL — VQE minus best-of-N from the UNTRAINED circuit** (θ never stepped; not an
+initialisation mean). Every cell **NOT MEASURED**: Legacy −0.050, AMBER −0.208, Leg+Amb +0.068,
+Distance −0.234 [−0.512, +0.033], Dist+Amb −0.120, Dist+Leg+Amb +0.108. Only Dist+Leg reaches
+−0.361 [−0.663, −0.093] (9W/3L, fold CI excludes zero), and it is still under its own 0.423 MDE.
+
+> **FALSIFIER F-A2 is not passed at this budget, and that is a negative against my own pillar.**
+> Sprint 20 Q4 (−0.210 [−0.339, −0.082], 5/5 folds) was measured at **8192** evaluations; at
+> **512** the same comparison is NOT MEASURED on every Hamiltonian. This is a **scope restriction
+> on Q4, not a refutation of it** — 16× less budget and n=12 rather than 126. Recorded as
+> **OPEN**, never as a contradiction.
+
+**MATCHED CLASSICAL CONTROLS.** VQE − `best_of_N`: all seven NOT MEASURED (−0.371 to +0.148).
+VQE − `metro`: all seven NOT MEASURED (−0.129 to +0.194). **F-A3's condition holds — at this
+budget the quantum arm is reproduced by simpler classical baselines.**
+
+**ZERO-INFORMATION reference** (constant α-helix + matched torsion noise, same H, same budget).
+As a *reference* it is a null; as a *gate* it is the worst arm measured. The VQE beats it on six
+of seven, but only `Dist+Leg` (−0.837 [−1.424, −0.272], 9W/3L) has a CI excluding zero — and
+**AMBER does not beat the helix at all** (+0.131 [−0.681, +1.035], 6W/6L). **A genuine CVaR-VQE
+on genuine AMBER is indistinguishable from a constant α-helix with noise.**
+
+### 2.3 Ansatz-seed sensitivity — why 4 seeds was the floor, and why it was not enough
+
+| Hamiltonian | within-target seed sd | untrained | best-of-4-seeds | 4-seed mean |
+|---|---|---|---|---|
+| Legacy | 0.649 | 0.630 | 3.873 | 4.767 |
+| **AMBER** | **1.062** | 1.147 | 3.952 | 5.316 |
+| Distance | 0.539 | 0.460 | 3.192 | 3.845 |
+| Dist+Leg+Amb | 0.511 | 0.571 | 3.698 | 4.406 |
+
+**Seed sd here is 0.51–1.06 Å — two to five times Sprint 20's 0.200 Å**, because the budget is
+16× smaller. **The whole matrix is seed-noise-limited**: the gap between best-of-4-seeds and the
+4-seed mean (0.65–1.36 Å) exceeds most of the Hamiltonian differences it is being used to
+resolve. That is the strongest single reason the §2.2 magnitudes are NOT MEASURED, and it is why
+quoting a best-seed number here would be indefensible.
+
+### 2.4 THE READOUT COLUMN — the pool result replicates on generated candidates
+
+α = 0.15, VQE arm, each readout against **its own** matched-count random control drawn from
+**that arm's own generated set**:
+
+| Hamiltonian | member | medoid | AVERAGED |
+|---|---|---|---|
+| **Legacy** | **−0.368 [−0.554, −0.196], 11W/1L — BETTER** | −0.321 [−0.571, −0.091], under own MDE | −0.133 [−0.326, +0.038] NOT MEASURED |
+| **AMBER** | +0.087 [−0.279, +0.420], 3W/9L | **+0.335** fold[+0.023, +0.626], 4W/8L | **+0.368** fold[+0.014, +0.722], 3W/9L |
+| Distance | **−0.794**, 10W/2L — BETTER | −0.618, 9W/3L | −0.582, 8W/4L |
+| Dist+Leg | **−0.628**, 9W/3L — BETTER | −0.509, 10W/2L | −0.411, 9W/3L |
+| Dist+Amb | **−0.677**, 11W/1L — BETTER | **−0.502** — BETTER | **−0.556** — BETTER |
+| Dist+Leg+Amb | **−0.558**, 10W/2L — BETTER | **−0.518** — BETTER | −0.410, 8W/4L |
+
+**A third independent instrument for the readout effect, on a candidate distribution that is not
+the pool.** Legacy's advantage is largest at `member` (−0.368, above its own MDE), halves at
+`medoid`, and vanishes at `AVERAGED` — the same monotone ordering the coordinator measured at
+n=126 and I measured at n=42, now reproduced on VQE-generated candidates. **AMBER is the mirror
+image: positive on all three readouts, with fold CIs excluding zero on the worse side at medoid
+and averaged.**
+
+### 2.5 CROSS-READOUT — the coordinator's priority cell, answered with a negative
+
+Rows = training H (defines the candidate set), columns = readout H (argmin inside it), single
+structure, all 4 variational seeds:
+
+| train ＼ read | Legacy | AMBER | Leg+Amb | **Distance** | Dist+Leg | Dist+Amb | D+L+A |
+|---|---|---|---|---|---|---|---|
+| Legacy | 4.767 | 5.385 | 4.869 | 4.070 | 4.369 | 4.036 | 4.354 |
+| AMBER | 5.073 | 5.316 | 4.924 | 4.202 | 4.403 | 4.213 | 4.229 |
+| Leg+Amb | 4.916 | 5.504 | 4.789 | 4.198 | 4.326 | 4.121 | 4.115 |
+| **Distance** | 4.918 | 5.118 | 4.841 | **3.845** | 4.239 | 3.922 | 4.248 |
+| Dist+Leg | 4.761 | 5.120 | 4.930 | 4.049 | 4.119 | 3.942 | 4.226 |
+| Dist+Amb | 4.966 | 5.256 | 4.786 | 4.045 | 4.243 | 4.118 | 4.297 |
+| Dist+Leg+Amb | 4.851 | 5.359 | 4.849 | 4.031 | 4.371 | 3.989 | 4.406 |
+
+**IDENTITY CHECK** (a check, never a discovery): `max |diagonal − argmin(train)| = 0.000e+00`,
+confirming on generated sets what §1.6 confirmed on the pool.
+
+**Best off-diagonal vs best diagonal: `Distance→Dist+Amb` (3.922) against `Distance→Distance`
+(3.845) is +0.077 [−0.187, +0.348], 5W/7L — the off-diagonal is WORSE, and NOT MEASURED.**
+Changing the readout Hamiltonian away from the best single Hamiltonian buys nothing here. The
+column structure is the whole story: **every training Hamiltonian read out with Distance lands at
+4.03–4.20, and Distance→Distance alone reaches 3.845.** Restricting the candidate set by physics
+and then reading with the distogram is worse than the distogram alone.
+
+> **Scope, stated plainly, because this looks like a contradiction and is not one.** Workstream B
+> measures changing the READOUT Hamiltonian at **−0.697 [−1.059, −0.352], 5/5 folds**, against a
+> null for changing the TRAINING Hamiltonian. My matrix does not contradict that: B compares
+> readouts *across* Hamiltonians on a fixed generated set, whereas my off-diagonal is measured
+> against **the best diagonal**, which already carries the best readout available. Both are true
+> — a readout swap is worth a great deal relative to a *bad* readout and nothing relative to the
+> *best* one. Neither result displaces the other.
+
+### 2.6 Explanation — objective convergence, gradient, CVaR behaviour
+
+`d_cvar` is negative on **all seven** Hamiltonians (−0.149 to −0.412): **the VQE genuinely
+optimises its objective on every one.** Gradient norms 0.26–1.47, ESS/shots 0.41–0.60,
+cos(g_α, g_α=1) 0.21–0.64, |Δθ| 4.3–4.6 — the machinery moves and the CVaR tail is not degenerate.
+
+**And it does not convert.** ρ(objective gained, RMSD gained), trained minus untrained: Distance
+**+0.035**, Dist+Amb **−0.476**, Dist+Leg+Amb −0.112, Legacy +0.182, Leg+Amb +0.441, Dist+Leg
++0.413, AMBER +0.762. **On the Hamiltonian that actually works, optimising the objective harder is
+uncorrelated with getting a better structure.** A sixth independent instrument for *search
+saturates, discrimination binds*.
+
+**The sentinel guard fired 0 times over 24,576 evaluations per Hamiltonian** — reported as
+vacuous, per BRIEF §7.3.
+
+### 2.7 Normalisation audit — a defect in my own table, then the rule applied
+
+**First, the defect, because it changes the answer.** The audit arms run at **seed 0 only**. The
+version of this table I first published put the declared form's **four-seed mean** beside them —
+an **unmatched comparison across the seed dimension**, on an instrument whose seed sd is
+0.51–1.06 Å. Corrected, with all three forms read on the identical circuit:
+
+| Hamiltonian | **declared** @s0 | robustz @s0 | rank @s0 | winner | *(declared 4-seed, not the comparator)* |
+|---|---|---|---|---|---|
+| Leg+Amb | **4.757** | 4.880 | 5.194 | declared | 4.789 |
+| Dist+Leg | **3.866** | 4.151 | 4.494 | declared | 4.119 |
+| Dist+Amb | **4.080** | 4.086 | 4.198 | declared | 4.118 |
+| Dist+Leg+Amb | 4.363 | 4.503 | **4.224** | **rank** | 4.406 |
+
+**The unmatched table cost a cell.** It showed `robustz` beating the declared form on `Dist+Amb`
+(4.086 vs 4.118); matched at seed 0 the declared form wins that cell (4.080 vs 4.086). So the
+count is **declared 3 of 4, not 2 of 4** — a correction that happens to favour my own declared
+choice, which is exactly why it is stated first and in full.
+
+**Now the rule, applied.** I wrote: *"If a non-declared form wins, the declared choice is recorded
+as WRONG, not quietly swapped."* On **`Dist+Leg+Amb` the `rank` transform wins by 0.139 Å, so the
+declared signed-log + robust-z normalisation is recorded as WRONG on that cell.** It is not
+swapped: the pre-registered form stands for every other cell and no alternative is promoted, since
+0.139 Å is far inside the 0.51–1.06 Å seed noise and is therefore **NOT MEASURED**. Invoking low
+power after the fact does not release me from a rule I declared before the run — the cell is
+labelled wrong *and* the difference is labelled unresolvable, and both are true.
+
+**The fork is not load-bearing, and this is the strong form of the answer.** Taking the **best**
+normalisation on every hybrid cell — 4.757, 3.866, 4.080, 4.224, minimum **3.866** — still does
+not reach **Distance-only at the same seed, 3.807**, which carries no normalisation at all.
+
+> **The margin is 0.059 Å, not the ~0.24 Å the fork review inferred from my unmatched table.** The
+> review's conclusion survives; its margin does not. 0.059 Å is deep inside seed noise, so the
+> correct label is **NOT MEASURED in either direction** — Distance is not shown to beat the
+> best-normalised hybrid at this budget, it is merely not beaten by it. The verdict of §2.1 rests
+> on Distance beating the hybrids **as declared** (0.27–0.94 Å), not on this reconstruction.
+
+
+---
+
+### 2.8 SCOPE OF THE AMBER MAGNITUDE — the fork I flagged was worse than I said
+
+**`H_AMBER` here is the BARE single point. My +1.471 Å is NOT the deployed Hamiltonian's cost.**
+
+The deployed object is `E ∘ Relax₅₀` — restrain at k=100, minimise, report the *unrestrained*
+energy at the minimised coordinates — and Sprint 20 L7c established that the relaxation is
+**constitutive**, not cosmetic. Sprint 20 measured deployed AMBER's own cost at **+0.021
+[+0.014, +0.028]**, and at k=30 it *beats* the projection by **−0.022**. **The deployed AMBER is
+roughly two orders of magnitude less catastrophic than the bare one.**
+
+So every AMBER magnitude in §2 — +1.471 vs Distance, +0.335/+0.368 vs its readout controls, the
+5.316 cell — is a property of the **bare single point** and **does not transfer to the deployed
+Hamiltonian**. Anyone quoting +1.471 as "AMBER's cost in the pipeline" is quoting the wrong
+object. This was the fork I named as the one to distrust most, and naming it is what stopped it
+being quoted wrongly.
+
+**And a correction to how far the direction survives it, which cuts against me.** The fork review
+states that "the four Legacy-containing rows never touch the AMBER functional". That is not right,
+and the artefact settles it: `Leg+Amb = (LEG, AMB)` and `Dist+Leg+Amb = (DIST, LEG, AMB)` both
+contain AMBER. Of the six non-reference rows, only **two are AMBER-free**:
+
+| row | components | AMBER-free? | vs Distance |
+|---|---|---|---|
+| **Legacy** | (LEG,) | **yes** | **+0.922** |
+| **Dist+Leg** | (DIST, LEG) | **yes** | **+0.274** |
+| AMBER | (AMB,) | no | +1.471 |
+| Leg+Amb | (LEG, AMB) | no | +0.944 |
+| Dist+Amb | (DIST, AMB) | no | +0.273 |
+| Dist+Leg+Amb | (DIST, LEG, AMB) | no | +0.561 |
+
+**So the 6/6 direction is not 6/6 independent of the AMBER functional fork — it is 2/2 on the
+AMBER-free rows and 4/4 on rows that carry it.** The honest statement is:
+
+- **Independent of the AMBER fork:** Legacy and Dist+Leg are both harmful (+0.922, +0.274). Two
+  rows, both on the harmful side, and Legacy's is one of the two largest effects in the table.
+- **Conditional on the bare-AMBER fork:** the remaining four rows, whose *magnitudes* would
+  shrink substantially under `E ∘ Relax₅₀` and whose *signs* are untested under it.
+
+That is a weaker claim than the review credited me with, and it is the correct one. **The untested
+regime — the whole matrix re-run with `H_AMBER = E ∘ Relax₅₀` — is recorded as OPEN (O7).**
+
 
 ---
 
@@ -505,6 +752,8 @@ beneath it.
 
 ---
 
+---
+
 ## 3b. UNTESTED REGIMES, recorded as OPEN
 
 Per BRIEF §8: a pre-registration that could not be executed in full says so, keeps its text
@@ -517,6 +766,7 @@ unedited, and records what it did not reach.
 | O3 | **Budget > 512 evaluations per arm** | not a scientific choice — the matrix is a Hamiltonian comparison, not an attempt on the incumbent | a budget ladder; Sprint 20 Q3 predicts no arm crosses the pool at any budget |
 | O4 | **The PARTIAL of each component on the VQE's *generated* set** | §1.3's partial is measured on the K=500 **pool**; the matrix records each component's marginal on generated candidates but not the cross-component correlations needed to partial | one extra recorded coefficient per cell; the matrix's Legacy rank-skill column is therefore reported as a **marginal only** |
 | O5 | **Legacy's `member`-readout advantage, causally** | measured twice (n=126 and n=42) and reproduced to the third decimal, but the error-coherence mechanism is **cited from Sprint 20 L2c, not re-measured here** | a compactness/coherence decomposition of the member vs medoid gap |
+| O7 | **The whole matrix with `H_AMBER = E ∘ Relax₅₀`** | §2 uses the BARE single point; the deployed object relaxes first, and Sprint 20 prices its own cost at +0.021 [+0.014, +0.028] — two orders of magnitude smaller | re-run `a_matrix.py` with the relaxed functional. **Until then the four AMBER-containing rows' magnitudes and signs are untested under the deployed Hamiltonian** |
 | O6 | **AMBER's non-monotonicity, directly** | inferred from ρ≈0 marginal *plus* a tail significantly worse than random; the radius-of-gyration decomposition was not recorded | add `rg` to the tail-pricing row and regress tail membership on it |
 
 ---
@@ -543,3 +793,17 @@ sign is a function of the readout.
 | A9 | **AMBER is finite everywhere on the K=500 pool** (finite fraction 1.000) with a ~16-decade per-target range and a median **58.2%** of members above 1e4 kcal/mol — Sprint 20 L5c (53.5% on the already-filtered top-75) reproduced and exceeded on the unfiltered pool. | ESTABLISHED | ibid. |
 | A10 | **A completion flag that counts skipped rows certifies failure as success**, and a resume path that trusts it silently shrinks n. Both were live in this lane's own artefact; both fixed. | recorded as process | §1.1 |
 | A11 | **`pkill -f` returning success is not evidence a process died.** Three of my processes were alive while I believed one was; the check is `ps`. This lane contributed to a measured 9× AMBER slowdown on the shared box. | recorded as process | §3 |
+| A12 | **THE MANDATORY MATRIX, n=12, genuine CVaR-VQE, 4 seeds, matched budget, argmin readout: Distance-only 3.845/3.686 wins on mean and median; all six Hamiltonians containing Legacy or AMBER are worse** (Legacy +0.922, AMBER +1.471 with 2W/10L, Leg+Amb +0.944, Dist+Leg +0.274, Dist+Amb +0.273 with 2W/10L, D+L+A +0.561). Six of six on the harmful side; four i.i.d. CIs exclude zero but **each effect is under its own MDE**, so the DIRECTION is established and every MAGNITUDE is NOT MEASURED. | ESTABLISHED (direction) / NOT MEASURED (magnitude) | `a_matrix.json` complete=true, `a_matrix_report.txt` §1–2 |
+| A12a | **SCOPE ON A12, and it is narrower than the fork review credited.** `H_AMBER` is the **bare single point**, not the deployed `E ∘ Relax₅₀` (Sprint 20: deployed cost +0.021 [+0.014, +0.028]). **+1.471 Å is not the pipeline's AMBER cost.** Only **two** of the six non-reference rows are AMBER-free — Legacy +0.922 and Dist+Leg +0.274 — not four. **The direction is 2/2 independent of the AMBER functional fork and 4/4 conditional on it.** | ESTABLISHED (the scope) / OPEN (O7) | §2.8 |
+| A13 | **A genuine CVaR-VQE on genuine AMBER is indistinguishable from a constant α-helix with noise** — +0.131 [−0.681, +1.035], 6W/6L, at matched budget on the same Hamiltonian. Every other Hamiltonian beats the zero-information reference in direction. | ESTABLISHED | §2.2 |
+| A14 | **FALSIFIER F-A2 is not passed at 512 evaluations**: VQE minus best-of-N from the UNTRAINED circuit is NOT MEASURED on all seven Hamiltonians (−0.361 to +0.108). This is a **scope restriction on Sprint 20 Q4** (measured at 8192 evaluations, n=126), **not a refutation of it**, and the untested regime is OPEN. | NOT MEASURED | §2.2 |
+| A15 | **F-A3's condition holds at this budget**: VQE minus `best_of_N` and VQE minus `metro` are NOT MEASURED on all seven Hamiltonians. The quantum arm is reproduced by simpler classical baselines here. | NOT MEASURED / kill-rule condition met | §2.2 |
+| A16 | **The matrix is seed-noise-limited.** Within-target ansatz-seed sd **0.51–1.06 Å**, two to five times Sprint 20's 0.200 Å at 16× the budget; best-of-4-seeds beats the 4-seed mean by 0.65–1.36 Å, which exceeds most Hamiltonian differences. Four seeds was the declared floor and it was **not enough**. | ESTABLISHED | §2.3 |
+| A17 | **The readout effect replicates on VQE-GENERATED candidates**, a distribution that is not the pool: Legacy beats its matched control at `member` (−0.368 [−0.554, −0.196], 11W/1L, above its own MDE), is under-MDE at `medoid`, and NOT MEASURED at `AVERAGED`. **AMBER is the mirror image — positive on all three readouts**, fold CIs excluding zero on the worse side at medoid (+0.335) and averaged (+0.368). Third independent instrument. | ESTABLISHED | §2.4 |
+| A18 | **The cross-readout cell — the coordinator's priority — is a NEGATIVE.** Best off-diagonal `Distance→Dist+Amb` (3.922) vs best diagonal `Distance→Distance` (3.845) = **+0.077 [−0.187, +0.348], 5W/7L**: the off-diagonal is *worse*, and NOT MEASURED. Every training Hamiltonian read out with Distance lands 4.03–4.20 while Distance→Distance alone reaches 3.845. **Does not contradict Workstream B's −0.697 readout effect** — B measures a readout swap against a *bad* readout, this measures it against the *best* one. | ESTABLISHED (negative) | §2.5 |
+| A19 | **The VQE optimises every one of the seven objectives** (`d_cvar` negative on all seven, −0.149 to −0.412) **and it does not convert**: ρ(objective gained, RMSD gained) is **+0.035** on Distance and **−0.476** on Dist+Amb. Sixth independent instrument for *search saturates, discrimination binds*. | ESTABLISHED | §2.6 |
+| A20 | **RETRACTED AND RESTATED — my audit table was unmatched across the seed dimension.** It compared seed-0 audit arms to the declared form's 4-seed mean. Matched at seed 0 the declared form wins **3 of 4** hybrids, not 2 of 4 (`robustz` does *not* win Dist+Amb: 4.080 vs 4.086). | RETRACTED (the 2-of-4 count) | §2.7 |
+| A20a | **The declared normalisation is recorded as WRONG on `Dist+Leg+Amb`**, where `rank` wins by 0.139 Å — my own pre-registered rule, applied rather than escaped by invoking low power. It is **not swapped**: the declared form stands elsewhere and no alternative is promoted, since 0.139 Å is inside the 0.51–1.06 Å seed noise. | recorded as declared-WRONG on one cell / NOT MEASURED (the difference) | §2.7 |
+| A20b | **The normalisation fork is not load-bearing, but the margin is thinner than the review inferred from my broken table.** Best-per-cell normalisation reaches **3.866** against Distance-only at **3.807** — a **+0.059 Å** margin, not ~0.24 Å, and itself deep inside seed noise. Distance is **not shown** to beat the best-normalised hybrid; it is merely not beaten by it. §2.1's verdict rests on the declared comparison (0.27–0.94 Å), not on this reconstruction. | NOT MEASURED | §2.7 |
+| A20c | **SEED COUNT was a fork I failed to enumerate**, and it is the one that most constrains the matrix — disclosed in §2.3 but absent from my fork list until the review. It is the reason every row-to-row magnitude stays NOT MEASURED. | recorded as process | fork table, §2.3 |
+| A21 | **The identity `tail_min ≡ argmin` holds on VQE-generated sets too** — `max |diag − argmin(train)| = 0.000e+00` across the full 7×7 × 4-seed cross-readout. Verified now on the pool (n=42, both bases) and on generated candidates. | **EXACT** (verified three times) | §2.5 |

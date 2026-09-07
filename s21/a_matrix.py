@@ -95,6 +95,13 @@ is offered to the coordinator for independent fork review rather than treated as
                NOT TAKEN: uniform-on-the-torus (BRIEF section 7 rule 4 -- not zero-information)
                and the initialisation MEAN (forbidden; best-of-N from the untrained circuit is
                used instead).
+  SEED COUNT   4 seeds on variational arms, 2 on the non-variational controls.
+               **THIS FORK WAS OMITTED FROM MY FIRST LIST and added on coordinator review.**
+               NOT TAKEN: more seeds, or quoting best-of-seeds.  It is the fork that most
+               constrains the table: seed sd is 0.51-1.06 A (2-5x Sprint 20's 0.200 at 16x the
+               budget) and best-of-4 beats the 4-seed mean by 0.65-1.36 A, which is LARGER than
+               most row-to-row gaps.  Consequence: only the DIRECTION of the matrix is safe;
+               every row-to-row MAGNITUDE sits inside seed noise.
   BUDGET       matched in CANDIDATE EVALUATIONS.  NOT TAKEN: matching WALL CLOCK, which would
                give the single-component Hamiltonians roughly 3x more candidates than the
                three-component hybrids.  **This fork points AGAINST my expected conclusion** --

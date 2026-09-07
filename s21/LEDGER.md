@@ -1088,8 +1088,17 @@ native. These are **CEILINGS, not achievable arms.** The correction above does n
 with **no objective involved at all**.
 
 **The project has measured the achievable fraction on the POOL and it is the binding constraint**
-(`in-band-ordering-is-per-target`: 0.986 within a target, **0.600 across targets**, 2.0 Å needs
-0.638; `nothing-ranks-within-the-pool`; `in-band-signal-limited-not-sample-limited`). It has **not**
+(`in-band-ordering-is-per-target`; `nothing-ranks-within-the-pool`, whose 2.355/3.324/+0.004 are
+**dev_set(24)** numbers, not this instrument; `in-band-signal-limited-not-sample-limited`). It has **not**
+
+> **SCOPE CORRECTION, 2026-09-07, self-audit after the L23 retraction.** This entry originally read
+> *"0.986 within a target, 0.600 across targets, 2.0 Å needs 0.638"*, which invites the reading that
+> cross-target ordering is *near* the requirement. **The source forbids exactly that juxtaposition.**
+> Its comparability caution states the cross-target 0.600 must not be read against a figure from a
+> different population, and **the structural number that travels with 0.600 is `d_top100 = -0.047 Å`
+> — nothing.** The 0.638 requirement is also specific to a **top-100** terminal, not to the top-75 or
+> top-512 operators used here. **Correct statement: cross-target in-band ordering is worth
+> essentially zero Å structurally**, which strengthens rather than weakens L18's caveat.
 measured it on the LATENT, and D7 showed a pool-measured relationship failing to transfer to the
 latent (L14), so those bounds carry over in neither direction.
 
@@ -1241,7 +1250,8 @@ statistics of the same window.**
     this readout is an AVERAGE over the window -> dominated by the window's MEAN
 
 `operator-consumes-set-mean` measured that exact decomposition on this instrument:
-**`d_out = 1.16 * d_set_mean + 0.04 * d_set_best`, R² 0.89.** So an ordering can be useless for
+**`d_out = 0.803*d_set_mean + 0.298*d_set_best` on WIDE sets like this latent (R² 0.960; the
+narrow-set m=75-over-K=500 fit is 1.16/0.04 and understates set-best by ~7x here).** So an ordering can be useless for
 *containing the best* while being very valuable for *raising the mean*, and this objective is
 precisely that — consistent with `structural-objective-beats-the-energies`: **the distogram orders
 the bulk.** The apparent contradiction is a readout mismatch, not a measurement error in either lane,
@@ -1394,14 +1404,34 @@ Note the shape: **both the argmin (-30%) and the whole-pool medoid (-49%) are fa
 incumbent.** The argmin discards the averaging operator; the whole-pool medoid discards the score.
 **The incumbent's value is the CONJUNCTION**, and each half alone loses more than either is worth.
 
-### The m-ladder: a registered forward prediction, resolved NEGATIVE
+### The m-ladder — **RETRACTED as a forward prediction**
 
-`operator-consumes-set-mean` predicts **m\* SHRINKS 500 → 75 → 20 → 3-5 as the objective improves.**
-That prediction was made from memory *before* the ladder ran, so it is a genuine forward test and not
-best-of-K wearing a monotone hat.
-
-**m\* has NOT moved from S8-11's 75.** Therefore, by the prediction's own logic, **the objective has
-not improved** — which is precisely what L14/L17/L19/L20 independently establish.
+> **RETRACTION, 2026-09-07, found by re-reading the source memory rather than the index line.**
+> I claimed the m-ladder was *"a registered forward prediction, resolved NEGATIVE: m\* shrinks as
+> the objective improves; m\* has not moved; therefore the objective has not improved."*
+> **The inference is void, for two independent reasons, and I quoted the law without deriving its
+> operator — my fourth instance of that exact failure this sprint.**
+>
+> **(1) THE ARGUMENT OF m\* IS THE WRONG VARIABLE.** The law indexes m\* by the **distogram prior's
+> MAE**, not by the selector's ordering quality: `m* = 500 (MAE 3.5) -> 75-110 (MAE 2.34, today) ->
+> 20 (MAE 1.2) -> 3-5 (MAE 0)`. **Nothing in Sprint 21 changed the prior's MAE** — it is the same
+> distogram throughout. So m\* staying at 75 is what the law predicts **trivially**, and carries
+> **no information whatever** about whether the selector improved. Worse, the source states outright
+> *"the shipped objective sits at 2.34, far on the averaging side, so **m=75 is correct today**"* —
+> **I "predicted" a value the memory already asserts. That is a restatement, not a forward test.**
+>
+> **(2) THE LAW IS SCOPED OUT OF THIS REGIME ENTIRELY.** Its Sprint 18 amendment reads: *"THE LAW IS
+> DESCRIPTIVE OVER RANDOM SUBSETS AND BREAKS UNDER SCORE-BASED SELECTION … **never use it to predict
+> the effect of a physics score, a ranker, or any gate that orders candidates**"* — miss +0.094
+> [+0.063,+0.132] on a Legacy gate against +0.006 [-0.003,+0.014] on a random one. **The m-ladder is
+> a top-m-by-Bayes-score gate: precisely the excluded case.**
+>
+> **What survives.** The measurement itself stands — m\* is INTERIOR, and the ladder cannot separate
+> m ∈ [20,150] (median tied-set size 2.0 of 6 rungs; m=150 and m=20 both flat against m=75). It is a
+> **confirmation that m=75 remains correct at the current prior MAE**, which is useful and
+> unsurprising. **The conclusion I hung on it — that the objective has not improved — is
+> independently established by L14, L17, L19 and L20 and does not depend on this claim at all**, so
+> nothing downstream collapses. Only G4's warrant is void, and it is withdrawn.
 
 > **WORKSTREAM D's CAVEAT 2 AND 3, both correct and both applied.**
 >
@@ -1497,3 +1527,581 @@ Combined with **L16** (training-H `+0.056`, a null; readout-H `-0.697`), the pic
 natural parameterisation is degenerate in the units anyone would use. **Both of the user's named
 Hamiltonian-design hypotheses — continuation and preconditioning — are closed or blocked, and
 neither closure came from a null on RMSD alone; each came with a mechanism.**
+
+---
+
+## L25 — THE BIMODAL ROUTE IS **NOT DEMONSTRATED**, AND THE LABEL WAS THE UNSTATED OPERATOR
+
+`d_lrank`, **n=75, complete**, 44 required keys present and finite. Benchmark seal re-verified by
+hash, unchanged.
+
+### The readout table confirms every prior finding at full n
+
+    M    readout   top-M   rand-M   top - rand                     W/L      MDE
+    1    (all)     3.281   4.501    -1.2192 [-1.5800,-0.9632]     65/10    0.391
+    8    avg       3.136   3.595    -0.4597 [-0.7401,-0.2570]     49/26    0.343
+    64   avg       3.000   3.444    -0.4448 [-0.6306,-0.3322]     54/21    0.256
+    512  argmin    3.281   3.331    -0.0491 [-0.1530,+0.0890]     42/29    0.118
+    512  avg       3.098   3.408    -0.3103 [-0.3690,-0.2332]     55/20    0.180
+    ORACLE_top512 1.986        rand512_ORACLE 1.875
+
+**512 random draws reach the objective's global argmin** (-0.049, MDE 0.118, NOT MEASURED) — L14/L17
+confirmed at full n from a third construction. **`rand512_ORACLE` 1.875 beats `ORACLE_top512` 1.986**,
+reproducing the D9 reversal in an independent instrument. **T1 SUPPORTED with the readout split
+predicted by L20/E5**: the averaging readout beats the deployed argmin at every M (-0.146/-0.282/
+-0.184) while **the medoid does not** (+0.007/+0.059/+0.193). **T3 SUPPORTED and it GROWS with M**:
+best native-free minus `ORACLE_topM` is +0.068 at M=8, +0.502 at M=64, **+1.112 at M=512** — the
+window's ceiling runs away from any native-free readout exactly as the window widens.
+
+### The containment verdict: three nested controls, and the effect dies at the binding one
+
+| control | best predictor | value | permuted best-of-11 bar | verdict |
+|---|---|---|---|---|
+| (1) raw AUC vs `contained512` | `nf_score_conc512` | **0.776** | 0.691 | **ARTEFACT** |
+| (2) Spearman vs `rank_pct`, partialled on **n** | `nf_score_iqr_over_range` | +0.367 | 0.323 | demonstrated, marginally |
+| (3) **+ partialled on target DIFFICULTY** | same | **+0.322** | 0.327 | **NOT DEMONSTRATED** |
+
+> **(1) IS AN ARTEFACT OF THE LABEL D DEFINED ITSELF, AND IT PASSED D's OWN BEST-OF-K NULL.**
+> `contained` is `rank_pct <= 100 * 512 / 2**n` — **a threshold that depends on peptide length**:
+> 100% at n=9, 50% at n=10, down to 6% at n=13. **At n=9 every target is "contained" by
+> construction.** `corr(n, contained512) = -0.367` and `corr(n, nf_score_conc512) = -0.896`.
+> **It is length predicting length.**
+>
+> **The tell was in D's own table before the null ran**: `conc512`'s Spearman against the
+> *continuous* `rank_pct` is **+0.040** — nothing — while its AUC on the *binarised* label is 0.776.
+> **A predictor strong on a binarised label and null on the continuous one is not a predictor.**
+
+**VERDICT: NOT DEMONSTRATED.** No native-free quantity separates the regimes once length and
+difficulty are removed. **And the honest form is the stronger one**: the control it lost to
+(`latent_mean`) **consumes the native**, so *even against a difficulty control no deployable pipeline
+could construct*, the best native-free predictor sits **at** the noise bar.
+
+The two spread predictors — the arm the coordinator flagged as most promising and most likely to be a
+false positive — **fail cleanly on the coordinator's own disambiguation**: `rand{M}_spread` tracks
+length harder than `top{M}_spread` does (corr 0.90–0.94 vs 0.14–0.66), so **the tightening is
+difficulty, not the mechanism.**
+
+### BRIEF §7 RULE 0 GAINS A SIXTH FORK: **THE LABEL**
+
+> **A BINARISED LABEL WHOSE THRESHOLD DEPENDS ON A COVARIATE WILL MANUFACTURE A PREDICTOR OF THAT
+> COVARIATE.**
+
+D's label did exactly that, **its own best-of-K permutation null passed it**, and only the continuous
+length-invariant version caught it. **This is the same shape as the coordinator's three operator
+forks and D's four wrong mechanisms: the null was correct and the LABEL was the unstated operator.**
+Rule 0 previously enumerated *functional, basis, readout, normalisation, null*. It now enumerates
+**six**, and this is the worked example.
+
+### Consequence for the sprint
+
+**The 0.4 Å the bimodal route would have been worth is not accessible, and the aggregate +0.107 is
+what ships.** E4's bimodality stands as **mechanism** — it explains why the aggregate looks like a
+null — and is **not** a route. The last open question of the sprint is closed, negatively.
+
+
+---
+
+## L26 — SELF-AUDIT OF EVERY MEMORY THIS SPRINT QUOTED, AND ONE UNTESTED CHANNEL IT SURFACED
+
+After retracting L23's m-ladder claim, I audited **every** project memory the sprint leaned on against
+its **body** rather than its index line. Three more scope errors, all mine, none load-bearing:
+
+| memory | what I carried | what the body says |
+|---|---|---|
+| `operator-consumes-set-mean` | m\* prediction; coefficients 1.16/0.04 | m\*'s argument is the **prior's MAE**; law **scoped out of score-ordered gates**; and 1.16/0.04 is the **narrow-set** fit — wide sets are **0.803/0.298** |
+| `in-band-ordering-is-per-target` | "0.600 across targets, 2.0 Å needs 0.638" | explicit **comparability caution** against that juxtaposition; 0.638 is a **top-100** requirement; the number travelling with 0.600 is **d_top100 = -0.047 Å, nothing** |
+| `nothing-ranks-within-the-pool` | "+0.004 Å reranking" as prior belief | **dev_set(24)**, 48 cells — not the 126 instrument |
+
+**Every one is the same failure as the sprint's three operator forks: a statement carried without its
+operator.** All four instances were found by reading bodies, none by looking harder at results.
+
+### And the audit surfaced a channel neither lane tested
+
+`in-band-ordering-is-per-target` carries a section headed **"AND THAT DIRECTION IS NOT CLOSED —
+measured, 126 targets"**: the shipped distogram predicts every pair distance, so
+`Rg^2 = (1/(2N^2)) Σ_ij d_ij^2` follows **in closed form** — a **native-free compactness estimate
+already in the pipeline and never read this way.** Length-residualised:
+
+    retrieval pool mean Rg    0.244 [+0.031,+0.444]
+    distogram-predicted Rg    0.313 [+0.110,+0.518]
+    incumbent emitted Rg      0.365 [+0.155,+0.577]      ORACLE 0.909
+
+**All three CIs exclude zero.** Real, free, and weak (~61% sign accuracy against 0.909), with three
+stated limitations: the chain was never measured end to end, the best proxy is partly circular, and
+the `i,i+2` Rg term is an ideal-geometry approximation.
+
+**Why this matters now.** L25 closed the containment route on **eleven** native-free predictors —
+**every one of them a functional of the objective's own score distribution, plus window geometry.**
+**Rg is a different channel entirely**, it is length-residualised by construction (which is precisely
+the confound that killed D's best predictor), and it is the one thing this memory names as *the only
+direction with leverage: anything that supplies the PER-TARGET SIGN at inference.* **It is the
+natural first experiment of the next sprint**, and it was not tested tonight by either lane.
+
+---
+
+## L27 — THE SPRINT'S FIRST POSITIVE RESULT: A COMPACTNESS CHANNEL CLEARS WHERE ELEVEN SCORE FUNCTIONALS DID NOT
+
+`s21/rgsign.py`, n=75 (D's panel), complete. Run under **Workstream D's exact protocol** so the
+answer is directly comparable to its eleven: continuous label `ORACLE_rank_pct`, partialled on length
+AND target difficulty, permutation null on the label with the **maximum over the family recomputed
+inside each permutation**.
+
+### What L25 actually established, restated precisely
+
+L25 closed the containment route on eleven native-free predictors — **every one of them a functional
+of the OBJECTIVE'S OWN SCORE DISTRIBUTION over candidates, plus window geometry.** So what was
+established is narrower than "no native-free signal exists". It is: **the objective cannot audit
+itself.** A Bayes risk over predicted distances has no way to represent the possibility that
+**the prediction itself is wrong on this target.**
+
+### The channel, and the result
+
+The shipped distogram predicts every pair distance, so `Rg² = (1/N²) Σ_{i<j} d̂²` follows in closed
+form — **a native-free compactness estimate already in the pipeline, flagged by
+`in-band-ordering-is-per-target` under a heading reading "AND THAT DIRECTION IS NOT CLOSED", and
+never read this way.** Six predictors, pre-declared as one family.
+
+    CONTROL: length + DIFFICULTY (the binding one)
+      rg_z            +0.3788   <- best      (rg_disto - rg_pool_mean) / rg_pool_sd
+      rg_disto        +0.3721                Rg from the distogram's own predicted distances
+      rg_gap          +0.3712                the DISAGREEMENT term
+      rg_pool_mean    +0.3056
+      rg_emit         +0.2238   PARTLY CIRCULAR
+      rg_pool_sd      +0.2023
+      permuted best-of-6 bar 0.2899   |  best 0.3788  CI [+0.156,+0.557]   -> CLEARS
+
+**The pre-registered falsifier FIRES**, and my registered estimate (`|ρ| < 0.30`) was **too
+pessimistic** — the first time this sprint a registered expectation was beaten rather than met.
+
+### It survives the sceptic's framing, which is the test that matters
+
+Seventeen predictors were tried on this label tonight across two lanes. Pooling them into one family
+and re-deriving the null:
+
+| family | best arm | ρ | permuted bar | verdict |
+|---|---|---|---|---|
+| Rg family (6) | `rg_z` | **+0.3788** | 0.2827 | **CLEARS** |
+| D's family (11) | `nf_score_iqr_over_range` | +0.2775 | 0.3170 | NOT DEMONSTRATED *(reproduces L25)* |
+| **POOLED (17) — the sceptic's family** | `rg_z` | **+0.3788** | **0.3341** | **CLEARS** |
+
+**The top FOUR arms are all Rg (0.379, 0.372, 0.371, 0.306); the best non-Rg is 0.278.** This is not
+a lone spike that a maximum plucked out of noise — **the family separates from D's as a family**,
+which is much harder for chance to produce than one winner. And the **partly-circular arm ranks 7th
+of 17**, so the result is not driven by the one predictor that reads its own output.
+
+**Direction and mechanism:** ρ is **positive** — the objective's ordering fails on targets the
+distogram predicts to be **EXTENDED**. That is mechanism-shaped and consistent with L19's
+concentrated wrong region: an extended target admits many ways to match a distogram loosely, so the
+objective's top window can fill with structures that satisfy the distances and not the fold.
+
+### DISPOSITION, in two parts that must not borrow strength from each other
+
+**DEMONSTRATED as a SIGNAL.** A native-free quantity correlates with the bimodal regime past a
+pooled 17-predictor permuted bar, with a CI excluding zero, under a difficulty control that
+**consumes the native** — i.e. a control **stronger than any deployable pipeline could construct**.
+
+**The ÅNGSTRÖM VALUE IS NOT MEASURED.** ρ = 0.38 is a correlation with *where the answer sits in an
+ordering*. **It is not 0.4 Å, and nothing here delivers a single Ångström.** The chain from ρ to RMSD
+is exactly the composition `in-band-ordering-is-per-target` warns is unmeasured
+(*"composing them assumes linearity and independent errors"*). **Anyone quoting L27 as "0.4 Å is
+live" is quoting it wrong.**
+
+**Four further limits, stated rather than discovered later.** (i) The magnitude is a **maximum over
+the family and is upward-biased** — three arms cluster at ~0.37, so read that, not 0.3788. (ii) The
+channel is **NOT independent of the distogram** — it is independent of the objective's *score
+distribution*, which is what D exhausted, but it is another functional of the same prediction.
+(iii) **n=75, the n≤13 panel**, inherited from D and not generalised. (iv) An **undeclared first
+version** of this file used the risk-minimising point estimate instead of the declared posterior
+mean; both are now computed and agree (+0.3833 vs +0.3721), and the declared one stands.
+
+**Promotion: NONE.** Clearing the bar buys a replication — on n≥14, on the pool rather than the
+latent, and end-to-end to RMSD — not a claim.
+
+---
+
+## L28 — L27 ATTACKED FROM BOTH SIDES AND SURVIVES; THE MECHANISM IS *DISAGREEMENT*, NOT EXTENSION
+
+I raised two weaknesses against my own result and ran them (`s21/rgcheck.py`); Workstream D ran its
+own versions independently off the artefact. **Both attacks fail, and the second changes which arm
+is primary.**
+
+### Attack 1 — the difficulty control consumed the native. It does not need to.
+
+    CONTROL                                   best arm    rho      bar      verdict
+    ORACLE difficulty (latent_mean)           rg_z       0.3788   0.2853   CLEARS
+    NATIVE-FREE difficulty (pool_spread)      rg_disto   0.3431   0.2858   CLEARS
+    BOTH difficulty controls                  rg_z       0.3596   0.2872   CLEARS
+
+`pool_spread` — mean pairwise RMSD inside the K=500 pool — is purely geometric and purely
+native-free. **The result no longer rests on an oracle control at all**, which matters because a
+deployable pipeline can compute `pool_spread` and cannot compute `latent_mean`.
+
+### Attack 2 — the i,i+1 constant. Refuted twice, and the second refutation is structural.
+
+**Measured (mine):** recomputing `rg_disto` with the virtual-bond terms **omitted entirely** gives
+`rg_nobond`, and `corr(rg_disto, rg_nobond) = 0.9999`. Partial ρ is unchanged at every control —
+0.3691 vs 0.3721, 0.3410 vs 0.3431, 0.3295 vs 0.3328. **The constant contributes nothing.**
+
+**Structural (D's, and it is the better argument):** within a **fixed n** the constant contributes
+*the same amount to every target*, so it **cannot create within-stratum variation at all.**
+Stratifying by n uses no between-length variation whatever, and there the effect is **LARGER**:
+
+    stratified by n, partialled within stratum, Fisher-z pooled
+      rg_disto  +0.486     rg_z  +0.462     rg_gap  +0.441     (pooled, unstratified: +0.379)
+
+**The artefact was impossible, not merely controlled** — a stronger statement than my ablation, and
+it is D's.
+
+### The finding that changes the claim: it is DISAGREEMENT, not extension
+
+D partialled additionally on **the pool's own realised extension** (`rg_pool_mean`) — the targeted
+control my "concern 1" was reaching for and did not name:
+
+| arm | \|n,diff | \|n,diff,rg_pool | Δ | |
+|---|---|---|---|---|
+| **`rg_z`** (z-score, scale-free) | 0.3792 | **0.3350** | −0.044 | **survives** |
+| **`rg_gap`** (difference, scale-free) | 0.3719 | **0.3260** | −0.046 | **survives** |
+| `rg_disto` (scale-carrying) | 0.3520 | 0.2809 | −0.071 | weakens |
+| `rg_emit` | 0.2014 | 0.1079 | −0.094 | dies |
+| `rg_pool_sd` | 0.2046 | 0.0709 | −0.134 | dies |
+| `rg_pool_mean` | 0.2227 | −0.0101 | −0.233 | **dies — a variable partialled on itself, the wiring check** |
+
+*(permuted best-of-6 bar under the 3-control residualisation: 0.280; observed 0.335 → **CLEARS**)*
+
+> **THE SIGNAL IS NOT "THIS TARGET IS EXTENDED". IT IS THE DISAGREEMENT BETWEEN THE DISTOGRAM'S
+> PREDICTED EXTENSION AND THE POOL'S REALISED EXTENSION.** The two **scale-free** arms survive
+> controlling for the pool's actual extension almost intact; **every scale-carrying arm loses most of
+> its signal.**
+
+**That is a better mechanism than the one I published**, it is L19's concentrated-wrong-region with a
+native-free signature, and — decisively — **it is not a difficulty proxy in disguise**, which is
+exactly what my concern 1 was worried about.
+
+**CONSEQUENCE, adopted: `rg_gap`/`rg_z` become the PRIMARY and `rg_disto` is DEMOTED.** L27's table
+put `rg_disto` second at 0.372; under the proper control it falls to 0.281, below both scale-free
+arms. **Reporting it near the top invites precisely the "extended targets are hard" reading the
+mechanism does not support.**
+
+### The honest flag, which prices the result rather than overturning it
+
+Leave-one-length-stratum-out on `rg_z`: **+0.367 / +0.370 / +0.289 / +0.513 / +0.387** (dropping
+n=9/10/11/12/13). All positive, all substantial, **no single stratum drives it** — but dropping
+**n=11** lands at **+0.289 against a bar of 0.286–0.290, i.e. essentially ON it.** The n=11 stratum
+(13 targets, per-stratum ρ +0.92) does real work.
+
+**This is the sprint's fourth arrival at "an aggregate hides a structure that decides the
+disposition"** (after D13's MDE, D14's Legacy marginal, and L19's bimodality). **This time it does
+not overturn the finding — it prices it**, and the leave-one-out row goes in the report.
+
+### Final disposition, unchanged in kind and sharpened in content
+
+**DEMONSTRATED AS A SIGNAL** — survives length stratification (impossible by construction), a
+native-free difficulty control, the pool's realised extension, and a pooled 17-predictor permuted
+bar. **THE ÅNGSTRÖM VALUE REMAINS NOT MEASURED**, in the same sentence, every time.
+
+---
+
+## L29 — WORKSTREAM B CLOSES F-Q3 ON AMBER, AND GIVES THE SPRINT ITS ONE ARCHITECTURE INSTRUCTION
+
+Block Q complete on all three Hamiltonians. The AMBER cell was the sprint's last compute-blocked
+question and it returns the lane's two largest effects.
+
+### (a) On AMBER, optimising is significantly HARMFUL
+
+    pooled 5 optimisers - best_of_N   +0.523 A [+0.248,+0.791]   4W/16L, 5/5 folds
+
+Significant under both CI constructions and above the design's MDE. **Adam optimises the loss best
+and produces the worst structure.** And `best_of_N` itself (5.053) is **worse than the
+zero-evaluation pool mean (4.739)** — so on AMBER the whole apparatus is below a coin flip.
+
+### (b) F-Q3 is two-sided, which is exactly why it was worth the compute
+
+`qng_diag` is **the one arm on the one Hamiltonian where geometry-aware preconditioning closes the
+objective gap to Adam** (+0.037 ns, against +0.214 and +0.291 elsewhere) — **precisely where its
+a-priori case was strongest.** *And the reward is +0.496 Å of harm.* A result that had come out
+one-sided would have been a null; this one says the method works and the working is the damage.
+
+### (c) The condition orders monotonically — and the third clause of my memory does NOT reproduce
+
+Three Hamiltonians through identical machinery:
+
+    rho(E, RMSD)   -0.071    +0.191    +0.497
+    harm           +0.523    +0.113    +0.091
+
+`search-saturates-discrimination-binds` states: *searching harder **hurts** on a bad objective, is
+**neutral** on a mediocre one, and **HELPS** on a good one.* **The first two clauses reproduce. The
+third does not — nothing helps, on any of the three.** B labels the AMBER cell ESTABLISHED and the
+ordering SUPPORTED-by-mechanism only, and deliberately does **not** restate the ratio it retracted at
+n=15. Both calls are correct and adopted.
+
+> **RECONCILIATION WITH L15, BEFORE ANYONE READS THEM AS CONTRADICTORY.** Workstream D measured the
+> distogram's **step-count** response at **-0.087 [-0.168,-0.018]** — *more optimisation is BETTER*.
+> Workstream B measures every **optimiser** on the distogram as still losing to `best_of_N`
+> (+0.091). **Both are true and they are different comparisons.** D's contrast is *more steps vs
+> fewer steps within an optimiser*; B's is *the optimiser's endpoint vs the best of N draws*. An
+> optimiser can improve monotonically with steps and still converge somewhere worse than the best of
+> N random samples — that is what a bad basin looks like.
+>
+> **This is the FIFTH time this sprint two numbers reconciled only once what each one consumes was
+> named** (after squared-vs-Bayes, min-vs-mean, argmin-vs-average, and budget-vs-steps). The pattern
+> is now the most reproduced methodological fact in the programme.
+
+**Memory consequence:** the third clause is now **carried as UNCONFIRMED on this instrument**, with
+the caveat that B's test is optimiser-vs-`best_of_N` and D's step-count test on the same objective
+points the other way. **Neither result licenses the clause; neither refutes it; they measure
+different things and both are recorded.**
+
+### (d) THE ARCHITECTURE INSTRUCTION — the one actionable line the sprint produces
+
+    the READOUT effect on AMBER   -1.299 A [-2.002,-0.550]   17W/3L, 5/5 folds
+                                  all seven arm-level CIs excluding zero
+
+**Nearly double the Legacy figure (-0.697), and its size tracks how badly the readout Hamiltonian
+RANKS** — AMBER -1.30, Legacy -0.70. Combined with L16's null on the training Hamiltonian
+(+0.056 [-0.020,+0.129]):
+
+> **IF AMBER IS TO ENTER A CVaR-VQE AT ALL, PUT IT IN THE TRAINING ROLE AND TAKE THE ARGMIN WITH
+> SOMETHING THAT RANKS.**
+
+That is a **concrete, measured architecture instruction that preserves both mandated pillars**: the
+CVaR-VQE stays the selector, and Legacy and AMBER remain separably evaluable — they simply occupy
+**different roles**, which is what the separability requirement was for. **It is the only
+prescriptive statement this sprint has earned**, and it follows from two independent measurements
+(the training-H null and the readout-H effect) rather than from a single arm.
+
+---
+
+## L30 — THE GAUGE SWEEP: THE "ENCODING" IS A STEP-SIZE REPARAMETERISATION, AND THE BUG COSTS 0.015 Å
+
+Workstream B's Block E, on the distogram, with `track_quality` off. Two falsifiers refuted, one
+mechanism identified analytically, and **one correction to what this ledger published about D6.**
+
+### The mechanism, and it is the deepest form of D1
+
+The outcome is **not** gauge-invariant — and the two gauge families **map onto each other through
+angular displacement almost exactly**:
+
+| chart | ‖Δθ‖ | objective | RMSD |
+|---|---|---|---|
+| `th_s2` | 3.368 | **-1.600** | 4.074 |
+| `emb_r05` | **3.677** | -1.485 | 4.143 |
+| `th` | 1.436 | -1.331 | 4.120 |
+| `emb_r1` | 1.521 | -1.339 | 4.117 |
+| `th_s05` | 0.649 | -0.893 | 4.230 |
+| `emb_r2` | **0.661** | -0.906 | 4.211 |
+
+`emb_r05 ≈ th_s2` and `emb_r2 ≈ th_s05` in **both** displacement and objective.
+
+> **THE CIRCLE CHART'S RADIUS AND THE ANGLE CHART'S SCALE ARE THE SAME KNOB.**
+
+**This is the strongest possible form of the D1 verdict.** L13 argued from symmetry that a change of
+coordinates cannot help on one energy and hurt on another; L15 showed the step-count response
+*predicts* the effect to 0.004 Å. **L30 now identifies what the "encoding" IS: a step-size
+reparameterisation wearing a coordinate system's clothes.** Three independent routes, ending in a
+mechanism rather than a null.
+
+### F-E3 (wrap) — REFUTED ANALYTICALLY, not merely measured
+
+`th_nowrap - th = -0.000 [0.000, 0.000]` for `adam_fd`, with the wrap firing 1.5 times per run.
+**Adam's state depends only on gradients, and gradients at `z` and `z+2π` are identical — so wrapping
+is EXACTLY THE IDENTITY for a gradient-state optimiser.** The only measurable trace is on SPSA
+(+0.039, ns) after 256 iterations, which is **floating-point precision loss** as the unwrapped
+iterate drifts. A proof with a measurement attached, which is the strongest thing a falsifier can
+return.
+
+### F-E4 — AND THIS CORRECTS WHAT L13 PUBLISHED ABOUT D6
+
+> **CORRECTION.** L13 recorded the gauge-radius defect as *"the durable output of the lane"* and
+> BRIEF §5 carried *"fix before any future embedded arm means anything."* **D6's diagnosis is
+> confirmed and its consequence is now measured — and the consequence is ~0.015 Å.**
+>
+> B implemented **exactly D's prescribed fix** — `emb_norm` retracts `‖u‖` every step — and it
+> **lands within 0.015 Å of the unfixed `emb_r1`.** So: the bug is **real** (`‖u‖` does grow along a
+> direction whose true gradient is exactly zero, and that direction is pure injected noise), the
+> diagnosis is **right**, and **fixing it changes essentially nothing about the endpoint.**
+>
+> **Both statements stand and neither cancels the other.** What must change is the *priority*: "fix
+> before any embedded arm means anything" is **too strong** and is downgraded to "a real defect,
+> worth fixing for hygiene, measured at 0.015 Å." **I published the stronger form; B measured it; the
+> weaker form is correct.** This is the sixth time this sprint a claim needed its magnitude measured
+> rather than asserted.
+
+### F-E2 — and B's own honest caveat, which I am keeping
+
+On the distogram the embedding is **not better anywhere**: `emb_r1 - th` is `-0.003 [-0.052,+0.044]`
+on SPSA at matched iterations and **`+0.149 [+0.010,+0.286]`, significantly WORSE**, on `adam_fd`.
+
+**B states the limitation itself and it is the right one:** *Sprint 20's encoding arms were
+AMB/AMBc/LEG, not the distogram*, so this is a mechanism study on a different objective and **not**
+the direct replication. `e:LEG` is running and is that replication. **The D1 disposition does not
+rest on this cell** — it rests on the n=60 powered replication (L15) and the AMBc panel (L13) — so
+nothing is contingent on the run in flight.
+
+---
+
+## L31 — THE MANDATORY MATRIX IS DELIVERED, AND THE COORDINATOR'S FORK REVIEW OF IT
+
+`a_matrix.json` + `.COMPLETE`, **n=12, genuine CVaR-VQE, 4 seeds, matched candidate-evaluation
+budget**, every component separably evaluable throughout — the directive's core requirement, met.
+
+| Hamiltonian | VQE mean / median | vs Distance | W/L |
+|---|---|---|---|
+| **Distance** | **3.845 / 3.686** | — | — |
+| Dist+Amb | 4.118 / 4.067 | +0.273 | 2W/10L |
+| Dist+Leg | 4.119 / 3.790 | +0.274 | 5W/7L |
+| Dist+Leg+Amb | 4.406 / 4.265 | +0.561 | 3W/9L |
+| Legacy | 4.767 / 4.775 | +0.922 | 4W/8L |
+| Leg+Amb | 4.789 / 4.504 | +0.944 | 4W/8L |
+| **AMBER** | **5.316 / 5.161** | **+1.471** | 2W/10L |
+
+**Distance-only wins on mean AND median; all six Legacy/AMBER Hamiltonians are worse — six of six on
+the harmful side.** Four CIs exclude zero, but **every effect is below its own MDE**: direction
+**ESTABLISHED**, every magnitude **NOT MEASURED**. A's falsifier F-A1 does not fire.
+
+### THE FORK REVIEW A REQUESTED — rule 0 clause 2, first invocation
+
+A applied rule 0, declared six forks, named the direction each would push, and — correctly — asked
+for review by someone without its stake. **The list is honest: it names the one fork that points
+AGAINST its own conclusion** (matching wall-clock instead of candidate evaluations would favour the
+single-component arms). That is the signature of a real enumeration rather than a defensive one.
+
+**FINDING 1 — A PRINTED ITS OWN RULE AND DID NOT APPLY IT.** A declared: *"If a non-declared form
+wins, the declared choice is recorded as WRONG, not quietly swapped."* Its own audit table:
+
+    Hamiltonian      declared   robustz     rank
+    Leg+Amb             4.789     4.880     5.194     declared wins
+    Dist+Leg            4.119     4.151     4.494     declared wins
+    Dist+Amb            4.118     4.086*    4.198     ROBUSTZ WINS
+    Dist+Leg+Amb        4.406     4.503     4.224*    RANK WINS
+
+**On 2 of the 4 hybrid cells a non-declared normalisation wins.** By A's own pre-registered rule the
+declared choice is **recorded as WRONG on those cells**.
+
+> **CORRECTED BY A, AND THE CORRECTION IS AGAINST MY REVIEW TWICE OVER.** A's audit table compared
+> **seed-0 audit arms against the declared form's 4-SEED MEAN** — an unmatched comparison across the
+> seed dimension, on an instrument with 0.51–1.06 Å of seed noise. **I read that table and repeated
+> its arithmetic without checking the comparison was matched** — the same unstated-operator failure
+> this review existed to catch, committed inside the review.
+>
+> **Matched at seed 0, the declared form wins 3 of 4, not 2 of 4:**
+>
+>     cell            declared@s0   robustz@s0   rank@s0    winner
+>     Leg+Amb            4.757        4.880       5.194     declared
+>     Dist+Leg           3.866        4.151       4.494     declared
+>     Dist+Amb           4.080        4.086       4.198     declared   <- robustz does NOT win
+>     Dist+Leg+Amb       4.363        4.503       4.224     RANK
+>
+> **Only `Dist+Leg+Amb` goes to a non-declared form**, and A records the declared choice WRONG there
+> — not swapped, and 0.139 Å is inside seed noise so nothing is promoted either. A's own note is the
+> right principle: *invoking low power after the fact does not release you from a rule declared
+> before the run.*
+>
+> **AND MY LOAD-BEARING CHECK WAS MUCH THINNER THAN I CLAIMED.** I wrote *"taking the best
+> normalisation per hybrid — 4.086, 4.119, 4.198 — none reaches Distance's 3.845."* Matched at seed
+> 0 the best-normalised hybrid reaches **3.866 against Distance-only's 3.807 — a margin of +0.059 Å,
+> not ~0.24 Å, and itself NOT MEASURED.**
+>
+> **So the correct statement is weaker and I am replacing mine with it: Distance is NOT SHOWN to beat
+> the best-normalised hybrid; it is merely not beaten by it.** §2.1's verdict rests on the **declared**
+> comparison (0.27–0.94 Å), not on this reconstruction, and that is where it must be left.
+
+**FINDING 2 — THE MOST DANGEROUS FORK IS THE ONE A FLAGGED, AND IT IS WORSE THAN A SAID.**
+`H_AMBER` here is the **BARE single point**; the deployed object is `E ∘ Relax_50` (Sprint 20 L7c —
+the relaxation is *constitutive*, and Sprint 20 defect #9 was my own discovery that the deployed
+Hamiltonian restrains at k=100, minimises, then reports the unrestrained energy at the minimised
+coordinates). **Sprint 20 measured deployed AMBER's cost at +0.021 [+0.014,+0.028], and at k=30 it
+BEATS the projection by −0.022.** So the deployed AMBER is **two orders of magnitude less
+catastrophic than the bare one.**
+
+> **VERDICT: the AMBER row's +1.471 is a property of the BARE single point and MUST NOT be quoted as
+> the deployed Hamiltonian's cost.** The magnitude does not transfer, and this is the fork I would
+> have got wrong had A not named it.
+>
+> **AND MY SUPPORTING CLAIM WAS FALSE, corrected by A.** I wrote *"the four Legacy-containing rows do
+> not use the AMBER functional at all."* **They do:** `Leg+Amb = (LEG, AMB)` and
+> `Dist+Leg+Amb = (DIST, LEG, AMB)` both contain AMBER. **Only TWO of the six non-reference rows are
+> AMBER-free — Legacy +0.922 and Dist+Leg +0.274.**
+>
+> **The correct form: the direction is 2/2 independent of the AMBER functional fork, and 4/4
+> CONDITIONAL on it.** That is materially weaker than the robustness I credited, and I asserted it
+> rather than counting. A caught it.
+
+**FINDING 3 — AN UNNAMED FORK, AND IT IS THE BIGGEST THREAT TO THE MATRIX.** A's list omits **seed
+count**, yet A reports the matrix is **seed-noise-limited**: ansatz-seed sd **0.51–1.06 Å**, 2–5×
+Sprint 20's 0.200, and **best-of-4-seeds beats the 4-seed mean by 0.65–1.36 Å, which exceeds most of
+the Hamiltonian differences in the table.** A reported this honestly in its findings but did not
+enumerate it as an operator fork. **Consequence: only the DIRECTION (6/6) is safe; every individual
+row-to-row gap sits inside seed noise.** That is consistent with A's own "every magnitude NOT
+MEASURED" and is the reason it must stay that way.
+
+**Forks 2, 3, 5 and 6 (basis, readout, null, budget) pass review.** Basis was *measured* rather than
+assumed (both carried, agreeing to ~0.06 Å). Readout emits four with none privileged and explicitly
+declines to quote `tail_avg` alone — *the readout where Legacy looks worst*, i.e. A declined the
+choice that would have flattered its own hypothesis. Null correctly avoids both uniform-on-the-torus
+and the initialisation mean. Budget is matched in the selector's own space per rule 1.
+
+### The cross-readout cell, and why it does NOT contradict L16/L29
+
+A's priority cell is a **negative**: best off-diagonal `Distance→Dist+Amb` (3.922) against best
+diagonal `Distance→Distance` (3.845) = **+0.077 [−0.187,+0.348], 5W/7L — worse, NOT MEASURED.**
+Every training H read out with Distance lands 4.03–4.20; **Distance alone reaches 3.845.**
+
+**A's reconciliation is correct and I am adopting it: B swaps against a BAD readout; A measures
+against the BEST one.** Both are true, and together they sharpen the sprint's prescription:
+
+> **L29 said: if AMBER is to enter a CVaR-VQE at all, put it in the training role.**
+> **L31 adds the prior question: it should not enter at all.** Distance alone beats every one of the
+> seven cells, and the best cross-readout recombination still does not reach it.
+
+**The honest prescriptive statement is therefore the conjunction:** *the readout Hamiltonian is where
+the measurable effect lives (B6/B11), AND no arrangement of Legacy or AMBER in either role beats the
+structural objective alone (A).* Anyone quoting L29 without L31 is quoting a conditional as though
+it were a recommendation.
+
+### A's self-damaging disclosures, all adopted
+
+**F-A2 is NOT passed** — VQE minus best-of-N from the *untrained* circuit is NOT MEASURED on all
+seven (−0.361 to +0.108). A records this as a **scope restriction on Sprint 20 Q4** (8192 evals,
+n=126), **not a refutation**, and leaves it **OPEN**. Correct. **F-A3's kill condition holds**: VQE
+vs `best_of_N` and vs `metro` NOT MEASURED on all seven. **Legacy's marginal +0.328 → partial
+−0.0076**, with A noting its own artefact held the refutation three lines above the error. **An
+inverted legend**, found and fixed. **Three live processes while believing one** — `pkill -f`
+succeeding is not evidence a process died; this lane contributed to the measured 9× AMBER slowdown,
+and it is L22's write-collision hazard in a third form.
+
+**Sixth instrument for search-saturates:** `d_cvar` fell on all seven (the VQE genuinely optimises),
+yet ρ(objective gained, RMSD gained) is **+0.035** on Distance and **−0.476** on Dist+Amb.
+
+**Gates:** G-A1 0.000e+00 over 36 comparisons (fired 36×); G-A2 0 breaks / 576 ranks (fired 576×);
+G-A3 0 breaks / 27 checks. **The sentinel guard fired 0 times over 24,576 evaluations and is reported
+VACUOUS** — §7 rule 3, applied by the lane to itself. `tail_min ≡ argmin` verified at exactly
+**0.000e+00** on both pool bases and on generated sets.
+
+
+---
+
+## L32 — THE FORK REVIEW ITSELF CARRIED TWO UNCHECKED OPERATORS
+
+**Recorded plainly because the pattern is now the sprint's signature and this is its purest
+instance.** L31's fork review — written to catch exactly this class of error in another lane —
+contained two of its own, **both overstating robustness, both in my favour**:
+
+1. **I repeated A's audit arithmetic without checking that the comparison was matched.** Its table
+   compared seed-0 audit arms to a 4-seed mean on an instrument with 0.51–1.06 Å of seed noise.
+   *The unstated operator was the seed dimension*, and I had just finished writing that unstated
+   operators compound in the author's favour.
+2. **I asserted "the four Legacy rows never touch the AMBER functional" without counting them.**
+   Two of them do.
+
+**Neither error changes the matrix's direction (6/6 harmful, Distance best on mean and median).
+Both weaken the robustness claims I attached to it**, and A found both by checking rather than
+accepting a review that had just praised its work.
+
+**The transferable point:** rule 0 clause 2 says the forks should be enumerated by someone without a
+stake in the direction. **A reviewer acquires a stake the moment they write a verdict.** The
+correction to the rule is that **a fork review is itself an artefact with operators, and it needs the
+same treatment as the work it reviews** — which is exactly what A did to mine, unprompted, having
+just been on the receiving end of it.
+
+**Sprint tally, coordinator: six magnitude-or-scope errors, zero mechanism errors.** Every one was a
+quantity carried without deriving its operator; every underlying mechanism has survived.

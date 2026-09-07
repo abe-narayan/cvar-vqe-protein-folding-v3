@@ -293,9 +293,25 @@ sprint. **A completion flag must require the FULL configuration, not the subset 
 
 0. **ENUMERATE THE OPERATOR FORKS BEFORE THE RUN — and name the alternative you did NOT take.**
    *(Added 2026-09-07; proposed by WORKSTREAM D, adopted verbatim, binding.)* For any comparison
-   with a **directional hypothesis**, list the five operator axes in the module docstring —
-   **functional, basis, readout, normalisation, null** — and beside each declared choice write the
-   alternative you rejected.
+   with a **directional hypothesis**, list the **six** operator axes in the module docstring —
+   **functional, basis, readout, normalisation, null, and THE LABEL** — and beside each declared
+   choice write the alternative you rejected.
+
+   **THE SIXTH AXIS WAS ADDED 2026-09-07 BY WORKSTREAM D, FROM ITS OWN FAILURE:**
+   **a binarised label whose threshold depends on a covariate will MANUFACTURE a predictor of that
+   covariate.** D's `contained512` label was `rank_pct <= 100*512/2**n` — length-dependent, 100% at
+   n=9 and 6% at n=13 — and the best predictor scored |AUC| **0.776 against a permuted best-of-11
+   bar of 0.691**, i.e. **it passed D's own correct best-of-K null.** It was length predicting
+   length. The tell was that the same predictor scored **+0.040** against the *continuous* label:
+   **a predictor strong on a binarised label and null on the continuous one is not a predictor.**
+
+   **CLAUSE 3 — a best-of-K result's null is the distribution of the MAXIMUM**, not of a single
+   candidate. Simulated at a 75-target panel: a single predictor's folded |AUC| has a 95th percentile
+   of **0.633** under pure noise, and the **best of K=10 has a MEDIAN of 0.625**. A "nothing below
+   0.65 is usable" bar would license a value noise produces half the time. **A pre-specified
+   ORDERING is immune where a pre-specified SET of arms is not** — reporting all K does not help,
+   because the reader's eye goes to the winner; only a claim that can *fail across the arms* is
+   immune.
 
    **The evidence for making this binding rather than advisory is the coordinator's own arm tonight**
    (L14). Its primary carried **three** unstated operator differences — argmin vs average, squared

@@ -97,13 +97,25 @@ my own pre-registration named first, as the thing that would damage my framing m
 is a clean null: the whole ladder from chi = 1 to a measured chi = 48 spans **0.37 A on 20 targets
 with an MDE of 0.2-0.4 A**, and gradient norms *rise* with depth, so it is not a trainability null.
 
-**3. The optimizer question separates into two columns that disagree, and that IS the answer.**
-Adam beats every alternative on the CVaR training loss at **0W/20L (DIST) and 0W/14L (LEG), 5/5
-folds, every CI excluding zero** — and **no optimiser, Adam included, beats `best_of_N` on
-Ca-RMSD**. Training the circuit at all is worth **+0.003 A [-0.136, +0.144]**. QNG does not help,
-and the reason is a property of the **parameterisation** (the MPS Fisher is rank-deficient by
-construction, condition number 2.5e17 at 32 shots) rather than of the landscape — the distinction
-the brief said not to conflate.
+**3. The optimizer question separates into two columns that disagree, and on AMBER the disagreement
+becomes a significant HARM.** Adam beats every alternative on the CVaR training loss at **0W/20L on
+all three Hamiltonians, 5/5 folds, every CI excluding zero** — and **no optimiser, Adam included,
+beats `best_of_N` on Ca-RMSD anywhere**. On the distogram and Legacy that is a null (+0.091,
++0.113). **On AMBER it is a measured loss: +0.523 A [+0.248, +0.791], 4W/16L, 5/5 folds, above this
+design's MDE and significant under both CI constructions** — and the arm that optimises the loss
+best (`adam`) has the worst structure (5.811 against `best_of_N`'s 5.053, itself worse than the
+zero-evaluation pool mean of 4.739).
+
+**F-Q3 answered, and two-sided.** `qng_diag` is **the one arm, on the one Hamiltonian, where
+geometry-aware preconditioning closes the objective gap to Adam** (+0.037 ns, against +0.214 on
+DIST and +0.291 on LEG) — exactly where its a-priori case was strongest, the concentrated
+ill-conditioned steric landscape — **and the reward for succeeding there is +0.496 A of harm.**
+Where QNG fails, it fails for a property of the **parameterisation** (the MPS Fisher is
+rank-deficient by construction, condition number 2.5e17 at 32 shots), not of the landscape.
+
+**And the harm from optimising orders monotonically with how well the Hamiltonian ranks the pool**
+(rho(E,RMSD) −0.071 / +0.191 / +0.497 -> harm +0.523 / +0.113 / +0.091). *Searching harder hurts on
+a bad objective and is neutral on a better one — and here **nothing helps**, on any of the three.*
 
 **4. Two things I got wrong and corrected in place**: I quoted a 17x conditional from a 15-target
 snapshot that did not survive to n=20 (§3e, retracted), and my own F-A3 threshold demanded a
@@ -565,11 +577,8 @@ circuit** — on Legacy, training is on the *harmful* side, though not measurabl
 
 > **F-Q2 fires on the second Hamiltonian too.** No optimiser beats `best_of_N` on Legacy either, so
 > **the limitation is the landscape/discrimination and not the optimiser, on both objectives
-> tested** — and no optimiser claim may be made from this lane. **F-Q3's contrast (does QNG help on
-> one Hamiltonian and not the other?) returns NO on both**: `qng − adam` is +0.235 on `DIST` and
-> +0.288 on `LEG`, both on the wrong side, both CIs excluding zero, on the objective; and both null
-> on RMSD. The AMBER arm, which is where bad conditioning was supposed to be QNG's case, is queued
-> behind the box's OpenMM serialisation and its status is in §9.
+> tested** — and no optimiser claim may be made from this lane. **F-Q3 is answered in §5c**, on the
+> badly-conditioned Hamiltonian, and the answer is two-sided.
 
 ### 5b. The readout result REPLICATES INDEPENDENTLY
 
@@ -582,6 +591,78 @@ seeds, separate ansatz sets and separate optimisers, on the same 20 targets:
 **They agree to 0.011 A.** The readout effect is not a property of one block's configuration.
 
 ---
+
+### 5c. AMBc — F-Q3 ANSWERED. On the badly-conditioned Hamiltonian, optimising is significantly HARMFUL.
+
+`qb3_q_COMPLETE`, 560/560 rows, n = 20, 4 seeds, B = 512, shots = 32. The bare ff14SB/GBn2 single
+point under the strictly monotone `sign(E)log1p|E|` conditioning — same call, same ranking, EXACT.
+
+| arm | CVaR loss − adam | Ca-RMSD − `best_of_N` | folds |
+|---|---|---|---|
+| `adam` | — (best, −1.206) | **+0.758 [+0.429, +1.096]** 4W/16L | 5/5 |
+| `sgd` | +0.166 [+0.026, +0.296] | +0.364 [−0.040, +0.796] | 4/5 |
+| `qng` | +0.163 [+0.056, +0.253] | **+0.598 [+0.338, +0.857]** 3W/17L | 5/5 |
+| `qng_diag` | **+0.037 [−0.068, +0.138] — TIES adam** | **+0.496 [+0.046, +0.953]** | 5/5 |
+| `spsa_ansatz` | +0.474 [+0.317, +0.645] | **+0.399 [+0.118, +0.703]** | 5/5 |
+| `untrained` | +0.417 [+0.275, +0.559] | +0.295 [−0.040, +0.642] | 4/5 |
+| **pooled 5 optimisers** | — | **+0.523 [+0.248, +0.791]** 4W/16L, fold-CI [+0.272, +0.799] | **5/5** |
+
+    absolute:  adam 5.811 | qng 5.651 | qng_diag 5.549 | spsa 5.452 | sgd 5.417
+               untrained 5.348 | best_of_N 5.053 | [pool mean ORACLE] 4.739
+
+> **On AMBER the optimisers are significantly WORSE than doing nothing** — the pooled contrast
+> excludes zero under **both** CI constructions, sits above this design's 0.394 A MDE, and is 5/5
+> folds. **Adam optimises the loss best and has the worst structure.** `best_of_N` itself
+> (5.053) is worse than the zero-evaluation pool mean (4.739).
+
+**And F-Q3 has a genuinely two-sided answer, which is why it was worth running.**
+**`qng_diag` is the ONE arm, on the ONE Hamiltonian, where geometry-aware preconditioning closes
+the objective gap to Adam** (+0.037, ns — against +0.214 on `DIST` and +0.291 on `LEG`, both CIs
+excluding zero). **That is exactly where QNG's a-priori case was strongest — the concentrated,
+ill-conditioned steric landscape — and the reward for succeeding there is +0.496 A of harm.**
+
+> **F-Q2, final, on all three Hamiltonians:** no optimiser beats `best_of_N` anywhere, and on AMBER
+> they lose significantly. **The limitation is discrimination, not the optimiser** — and on the
+> worst-ranking Hamiltonian the optimiser is actively the problem.
+
+### 5d. THE CONDITION, measured on three Hamiltonians through identical machinery
+
+| H | pool rho(E, RMSD) | pool argmin | **5 optimisers − `best_of_N`** | folds |
+|---|---|---|---|---|
+| **AMBER** | **−0.071** | 4.990 | **+0.523 [+0.248, +0.791]** | 5/5 |
+| Legacy | +0.191 | 5.487 | +0.113 [−0.159, +0.394] | 4/5 |
+| distogram | +0.497 | 3.676 | +0.091 [−0.083, +0.283] | 5/5 |
+
+**The harm from optimising orders monotonically with how well the Hamiltonian ranks the pool** —
+and `search-saturates-discrimination-binds` requires exactly that condition to be stated:
+*searching harder hurts on a bad objective, is neutral on a mediocre one, helps on a good one.*
+**Here the first two clauses are reproduced on one instrument with identical machinery, and the
+third is NOT: nothing helps, even on the best-ranking objective (+0.091).**
+
+**How far I am entitled to push this, given I retracted a weaker version of it earlier (§3e).**
+The **AMBER cell is a measured result** — CI excludes zero under both constructions, 5/5 folds,
+above MDE. **The ordering across three objectives is three points**, and although it agrees with an
+independently-measured pool statistic, three points is a pattern and not a test. **The cell:
+ESTABLISHED on this instrument. The ordering: SUPPORTED by mechanism, not established.** I am
+deliberately not restating the ratio I retracted at n=15.
+
+### 5e. The readout effect on AMBER is nearly TWICE the Legacy one
+
+Pooled over all seven arms on AMBc-trained sets, `read DIST − read AMBc`:
+**−1.299 A [−2.002, −0.550], 17W/3L, 5/5 folds**, fold-CI **[−1.884, −0.754]**. Per arm:
+
+    adam -1.742* | qng -1.388* | spsa -1.336* | qng_diag -1.299* | sgd -1.207*
+    untrained -1.070* | best_of_N -1.049*        ALL SEVEN CIs EXCLUDE ZERO
+
+**And the size tracks the readout Hamiltonian's ranking quality**: AMBER (rho −0.071) is worth
+−1.30, Legacy (rho +0.191) −0.70. **The arm that optimises AMBER hardest (`adam`) has the largest
+readout gain (−1.742)** — it drives furthest into AMBER's bad argmin and so has the most to recover.
+`best_of_N` read with the distogram reaches **4.003**, the best absolute number in the block and
+better than the 4.739 pool mean.
+
+> **This is the same statement as §4 with the volume turned up: the READOUT Hamiltonian is the
+> expensive choice and the TRAINING Hamiltonian is nearly free.** Three Hamiltonians now, seventeen
+> arm-level tests on AMBER and Legacy, every CI excluding zero.
 
 ## 6. BLOCK S — the shots/iterations trade. "Fewer steps helps" is NOT SUPPORTED on the variational arm.
 
@@ -652,9 +733,9 @@ configuration, not against the subset the call happened to run.
 | block | objective | status |
 |---|---|---|
 | A (ansatz) | `DIST`, `LEG` | **COMPLETE**, n=20, 4 seeds |
-| A (ansatz) | `AMBc` | **NOT RUN** — lowest priority, queued behind everything else |
+| A (ansatz) | `AMBc` | **NOT RUN** — lowest priority; Block Q's AMBER arm (§5c) covers the Hamiltonian |
 | Q (optimizer) | `DIST`, `LEG` | **COMPLETE**, n=20, 4 seeds |
-| Q (optimizer) | `AMBc` | **running at hand-off — 56 of 560 rows (2 targets) at the time of writing.** Far too few to report; the driver continues and `qb3_q__PARTIAL_` tracks it |
+| Q (optimizer) | `AMBc` | **COMPLETE**, 560/560 rows, n=20, 4 seeds — see §5c |
 | S (shots/steps) | `DIST`, `LEG` | **COMPLETE**, n=20, 4 seeds |
 | S (shots/steps) | `AMBc` | **NOT RUN** |
 | E (gauge sweep) | all | **NOT RUN** — de-prioritised on the coordinator's redirect |
@@ -738,7 +819,10 @@ persisted seeds and reproduced **bit-exactly, 20/20**. Recorded because the next
 | "Fewer gradient steps helps" on the variational arm | **NOT SUPPORTED** — point estimates run the other way | Block S, 8x step sweep, DIST and LEG |
 | The 8 charts are physically identical (F-E1's premise) | **EXACT** | 7.77e-16 objective agreement; arctan2 round-trip 0.00e+00 |
 | The lane's own new machinery (scores, Fisher, chi) is correct | **EXACT / verified** | E_p[score]=0 to 1e-15; grad vs FD to 1e-10 |
-| F-Q3: does QNG help on the badly-conditioned AMBER landscape? | **NOT MEASURED** — AMBER arm did not finish | §7 |
+| F-Q3: does QNG help on the badly-conditioned AMBER landscape? | **ANSWERED, two-sided**: `qng_diag` alone ties Adam on the OBJECTIVE there (+0.037 ns) and costs +0.496 A on structure | §5c |
+| On AMBER, optimising is significantly WORSE than `best_of_N` | **ESTABLISHED** on this instrument | +0.523 [+0.248,+0.791], 5/5 folds, both CI constructions |
+| Harm from optimising orders with the H's pool ranking quality | **SUPPORTED by mechanism, NOT established** (3 objectives) | +0.523 / +0.113 / +0.091 vs rho −0.071 / +0.191 / +0.497 |
+| The readout swap grows as the readout H ranks worse | **SUPPORTED** | AMBER −1.299, Legacy −0.708 |
 
 ### The three questions I was given, answered
 
@@ -779,9 +863,10 @@ objective column of Block Q is significant at 0W/20L with 5/5 folds. The structu
    §9 and none of them is large: matched-step-norm optimisers, `shots >= P` for a full-rank Fisher,
    and the 0.084-0.30 A band this design cannot resolve.
 
-3. **If the AMBER arm matters, run it alone on a quiet box.** F-Q3 is the one assigned question
-   this lane could not answer, and the reason is entirely compute: 4-6 competing processes and a
-   92% memory ceiling. It is a ~40-minute job unattended and a multi-hour job contended.
+3. **Treat AMBER-in-the-training-loop as a measured negative, not an untried idea.** §5c is the
+   only place in this lane where an arm is significantly WORSE than doing nothing, and it is the
+   Hamiltonian the sprint most wants to use. If AMBER is to appear in a CVaR-VQE at all, §5e says
+   put it in the TRAINING role and take the argmin with something that ranks — never the reverse.
 
 4. **Block E is built and gated; run it if the audit lane's control leaves the encoding open.** Its
    distinctive contribution is separating step SIZE from step COUNT — the angle-scale family

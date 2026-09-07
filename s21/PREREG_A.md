@@ -181,3 +181,26 @@ against a 6 ms nominal** under four-way contention and the mandatory matrix is t
 **This is a compute cut, not a scientific one**: per-cell configuration is intact, only power is
 reduced, and the power warning prints on every table. The untested regime — Stage 0 at the full
 n=126 — is recorded as **OPEN**, and `tailprice.json` remains resumable.
+
+**ADD-6 — 2026-09-07, coordinator fork review; two corrections against me and one for me.**
+
+*(a)* **A defect in my own audit table.** The normalisation audit arms run at seed 0, but the
+first published table put the declared form's **4-seed mean** beside them — unmatched across the
+seed dimension on an instrument with 0.51–1.06 Å seed sd. Matched at seed 0 the declared form
+wins **3 of 4** hybrids, not 2 of 4. **On `Dist+Leg+Amb` the `rank` form still wins, so the
+declared normalisation is recorded as WRONG on that cell**, per the rule I declared before the
+run. It is not swapped, and 0.139 Å is inside seed noise, so no alternative is promoted either.
+The fork is not load-bearing: best-per-cell normalisation reaches 3.866 against Distance-only at
+3.807 — **a 0.059 Å margin, not the ~0.24 Å my unmatched table implied**, and itself NOT MEASURED.
+
+*(b)* **The AMBER magnitude does not transfer to the deployed Hamiltonian.** `H_AMBER` here is
+the bare single point; the deployed object is `E ∘ Relax₅₀`, whose own cost Sprint 20 measured at
++0.021 [+0.014, +0.028]. **+1.471 Å is the bare energy's cost, not the pipeline's.** And, against
+the review's supporting statement, only **two** of the six non-reference rows are AMBER-free
+(Legacy +0.922, Dist+Leg +0.274) — not four. **The direction is 2/2 independent of the AMBER fork
+and 4/4 conditional on it**, which is weaker than the review credited. Re-running the matrix with
+`E ∘ Relax₅₀` is **OPEN (O7)**.
+
+*(c)* **SEED COUNT was a fork I failed to enumerate**, and it is the one that most constrains the
+matrix. Disclosed in the findings but absent from the fork list; now added to both. It is the
+reason every row-to-row magnitude stays NOT MEASURED.
