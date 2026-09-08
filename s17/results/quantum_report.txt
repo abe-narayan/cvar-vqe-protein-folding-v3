@@ -1,0 +1,532 @@
+SPRINT 17 / QUANTUM -- regenerated report, Sun, Sep  6, 2026 12:22:07 PM
+
+##### PARETO sel75
+
+=== P1  THE PARETO TEST, set size m = 75, consumption = TOP-m BY THE OBJECTIVE among distinct visited (the pipeline's own cut), n = 10 targets, seeds averaged within target ===
+     lower M is better, higher D is better.  tau = 0.02 A.  floor = 0.08 A.
+
+arm                          M       D  readout  set_best  distinct  obj_evals  wall_s
+vqe_a0.02                3.310   1.807    2.741     1.168      3892       8192     5.7
+vqe_a0.05                3.289   1.816    2.702     1.218      3784       8192     3.5
+vqe_a0.10                3.243   1.798    2.666     1.186      3525       8192     4.2
+vqe_a0.25                3.306   1.813    2.731     1.184      3153       8192     6.9
+vqe_a0.50                3.277   1.791    2.711     1.226      2791       8192     3.8
+vqe_a1.00                3.257   1.785    2.691     1.247      2564       8192     3.6
+vqe_deep_mps3f           3.286   1.810    2.709     1.172      4061       8192    34.0
+vqe_sched_hi_lo          3.274   1.802    2.702     1.209      3319       8192     4.0
+vqe_sched_lo_hi          3.295   1.816    2.712     1.163      2999       8192     3.6
+vqe_warm_prior           3.266   1.806    2.681     1.178      2989       8192     6.7
+------------------------------------------------------------------------------------
+anneal                   3.165   1.726    2.612     1.151      4135       8192     0.1
+anneal_q                 3.230   1.756    2.675     1.185      1235       2048     0.0
+greedy                   3.268   1.800    2.690     1.029      2876       8192     0.0
+metro1opt_T0.05          3.174   1.737    2.615     1.180      2042       8192     0.1
+metro1opt_T0.2           3.160   1.720    2.610     1.096      3542       8192     0.1
+metro1opt_T0.8           3.257   1.811    2.669     1.089      5237       8192     0.1
+metro_T0.02              3.282   1.823    2.693     1.350       496       8192     0.2
+metro_T0.05              3.172   1.744    2.606     1.363       798       8192     0.1
+metro_T0.1               3.156   1.721    2.605     1.233      1685       8192     0.1
+metro_T0.2               3.157   1.722    2.605     1.089      3587       8192     0.1
+metro_T0.4               3.184   1.751    2.619     1.022      6255       8192     0.1
+metro_T0.8               3.179   1.816    2.575     1.040      7431       8192     0.1
+metro_T1.6               3.239   1.995    2.507     1.033      7625       8192     0.1
+metro_T12.8              3.336   2.156    2.502     1.071      7730       8192     0.1
+metro_T3.2               3.296   2.074    2.514     1.108      7694       8192     0.1
+random                   3.357   2.160    2.530     1.084      8075       8192     0.0
+retrieval_T0.1           4.187   2.488    3.339     2.241       276          0     0.0
+retrieval_T0.3           3.460   2.099    2.714     1.152      4268          0     0.0
+retrieval_T1.0           3.343   2.081    2.572     1.049      7917          0     0.0
+retrieval_T3.0           3.303   2.131    2.478     1.088      8058          0     0.0
+retrieval_T30.0          3.399   2.167    2.583     1.037      8071          0     0.0
+------------------------------------------------------------------------------------
+tilt_exact               3.269   1.876    2.635     1.214      3171     318318     1.4
+tilt_samples             3.430   2.106    2.667     1.395      1771       8192     0.0
+untrained                3.430   2.106    2.667     1.279      4510       8192     0.0
+
+--- P1 PRIMARY: additive epsilon-dominance of each QUANTUM arm against the 21-point classical attainable set
+    eps = min_c max( M_c - M_vqe , D_vqe - D_c ),  in Angstroms.
+    eps > 0  =>  NO classical point dominates the VQE point  =>  a QUANTUM WIN.
+    eps <= 0 =>  some classical point weakly dominates it.
+    Defined on EVERY target, including those where the VQE out-diversifies every
+    classical arm -- the case the conditional M-margin below leaves undefined.
+
+arm                     mean eps   median                 CI95    eps>0  foldsign
+vqe_a0.02                 -0.190   -0.089 [ -0.348, -0.073]   0/10   4/4
+vqe_a0.05                 -0.168   -0.062 [ -0.324, -0.051]   1/10   4/4
+vqe_a0.10                 -0.129   -0.037 [ -0.273, -0.017]   3/10   4/4
+vqe_a0.25                 -0.182   -0.080 [ -0.342, -0.065]   0/10   4/4
+vqe_a0.50                 -0.158   -0.081 [ -0.291, -0.060]   2/10   3/4
+vqe_a1.00                 -0.181   -0.134 [ -0.321, -0.072]   1/10   4/4
+vqe_deep_mps3f            -0.158   -0.134 [ -0.290, -0.053]   3/10   4/4
+vqe_sched_hi_lo           -0.173   -0.118 [ -0.297, -0.073]   1/10   3/4
+vqe_sched_lo_hi           -0.160   -0.077 [ -0.318, -0.043]   2/10   3/4
+vqe_warm_prior            -0.140   -0.019 [ -0.312, -0.012]   5/10   2/4
+
+    THE NULL THIS MUST BE READ AGAINST: the same statistic for each CLASSICAL arm, leave-one-out against the rest of the classical set.
+anneal                    -0.141   -0.026                        0/10  
+anneal_q                  -0.152   -0.052                        1/10  
+greedy                    -0.174   -0.095                        2/10  
+metro1opt_T0.05           -0.148   -0.032                        0/10  
+metro1opt_T0.2            -0.139   -0.028                        1/10  
+metro1opt_T0.8            -0.157   -0.070                        4/10  
+metro_T0.02               -0.150   -0.061                        3/10  
+metro_T0.05               -0.137   -0.033                        2/10  
+metro_T0.1                -0.134   -0.028                        1/10  
+metro_T0.2                -0.136   -0.028                        0/10  
+metro_T0.4                -0.150   -0.047                        0/10  
+metro_T0.8                -0.126   -0.070                        1/10  
+metro_T1.6                -0.094   -0.052                        3/10  
+metro_T12.8               +0.003   -0.012                        5/10  
+metro_T3.2                -0.064   -0.024                        3/10  
+random                    -0.028   -0.007                        3/10  
+retrieval_T0.1            +0.282   +0.321                        8/10  
+retrieval_T0.3            -0.084   -0.015                        4/10  
+retrieval_T1.0            -0.065   -0.000                        5/10  
+retrieval_T3.0            -0.031   +0.020                        6/10  
+retrieval_T30.0           -0.041   +0.001                        5/10  
+
+--- SECONDARY: M-margin = M_vqe - min{ M_c : D_c >= D_vqe - tau }. NEGATIVE = quantum win.
+    UNDEFINED where the VQE out-diversifies every classical arm; that count is printed and those cells are NOT dropped from the primary above.
+
+arm                        mean   median                 CI95     W/L    undef
+vqe_a0.02                +0.268   +0.129 [ +0.113, +0.454]   0/10    0/10  
+vqe_a0.05                +0.239   +0.089 [ +0.080, +0.426]   1/9     0/10  
+vqe_a0.10                +0.230   +0.060 [ +0.058, +0.435]   3/7     0/10  
+vqe_a0.25                +0.270   +0.106 [ +0.095, +0.474]   0/10    0/10  
+vqe_a0.50                +0.244   +0.116 [ +0.116, +0.397]   0/10    0/10  
+vqe_a1.00                +0.238   +0.144 [ +0.094, +0.416]   1/9     0/10  
+vqe_deep_mps3f           +0.255   +0.181 [ +0.094, +0.435]   2/8     0/10  
+vqe_sched_hi_lo          +0.256   +0.155 [ +0.129, +0.410]   0/10    0/10  
+vqe_sched_lo_hi          +0.259   +0.083 [ +0.080, +0.470]   2/8     0/10  
+vqe_warm_prior           +0.163   +0.019 [ -0.072, +0.404]   5/5     0/10  
+
+    THE FALSIFIER'S LITERAL SET -- thermostat ladder + 1-opt only (13 points), epsilon-dominance; eps > 0 = quantum win:
+vqe_a0.02                -0.112   -0.078 [ -0.192, -0.042]   1/10  
+vqe_a0.05                -0.087   -0.058 [ -0.169, -0.016]   2/10  
+vqe_a0.10                -0.063   -0.036 [ -0.137, +0.004]   3/10  
+vqe_a0.25                -0.095   -0.080 [ -0.164, -0.034]   1/10  
+vqe_a0.50                -0.074   -0.034 [ -0.133, -0.025]   3/10  
+vqe_a1.00                -0.098   -0.078 [ -0.165, -0.038]   2/10  
+vqe_deep_mps3f           -0.079   -0.058 [ -0.145, -0.019]   4/10  
+vqe_sched_hi_lo          -0.091   -0.052 [ -0.155, -0.033]   2/10  
+vqe_sched_lo_hi          -0.078   -0.057 [ -0.153, -0.013]   3/10  
+vqe_warm_prior           -0.066   -0.019 [ -0.144, +0.002]   5/10  
+
+    (reference, not classical: circuit-derived arms through the same rule)
+tilt_exact               -0.101   -0.039 [ -0.264, +0.006]   3/10  
+tilt_samples             -0.054   -0.018 [ -0.165, +0.036]   4/10  
+untrained                -0.054   -0.018 [ -0.165, +0.036]   4/10  
+
+--- per-target JOINT Pareto front (quantum + classical together): how often is each arm non-dominated?
+   classical retrieval_T0.1           8/10
+   classical retrieval_T3.0           5/10
+   classical metro_T12.8              4/10
+   classical retrieval_T1.0           4/10
+   QUANTUM  vqe_warm_prior           3/10
+   classical metro1opt_T0.8           3/10
+   classical random                   3/10
+   classical retrieval_T0.3           3/10
+   classical retrieval_T30.0          3/10
+   QUANTUM  vqe_a0.10                2/10
+   QUANTUM  vqe_deep_mps3f           2/10
+   classical metro_T0.02              2/10
+   classical metro_T0.05              2/10
+   classical metro_T3.2               2/10
+   QUANTUM  vqe_a0.05                1/10
+   QUANTUM  vqe_a1.00                1/10
+   classical greedy                   1/10
+   classical metro_T0.8               1/10
+   classical metro_T1.6               1/10
+   quantum arms on the joint front, total cells: 9 ; classical: 42
+
+--- the OPPOSITE preference (a consumer that wants LOW diversity, e.g. an argmin readout): margin against classical points with D <= D_vqe + tau
+
+--- identity check across every aggregated point: max |readout^2 - (M^2 - D^2)| = 2.398e-14 A^2  (n = 340)
+
+##### PARETO unif75
+
+=== P1  THE PARETO TEST, set size m = 75, consumption = UNIFORM draw from the arm's visited multiset (no ranker), n = 10 targets, seeds averaged within target ===
+     lower M is better, higher D is better.  tau = 0.02 A.  floor = 0.08 A.
+
+arm                          M       D  readout  set_best  distinct  obj_evals  wall_s
+vqe_a0.02                3.885   2.563    2.894     1.168      3892       8192     5.7
+vqe_a0.05                3.838   2.561    2.824     1.218      3784       8192     3.5
+vqe_a0.10                3.836   2.542    2.848     1.186      3525       8192     4.2
+vqe_a0.25                3.793   2.504    2.799     1.184      3153       8192     6.9
+vqe_a0.50                3.725   2.417    2.789     1.226      2791       8192     3.8
+vqe_a1.00                3.681   2.311    2.818     1.247      2564       8192     3.6
+vqe_deep_mps3f           3.818   2.500    2.866     1.172      4061       8192    34.0
+vqe_sched_hi_lo          3.808   2.511    2.826     1.209      3319       8192     4.0
+vqe_sched_lo_hi          3.768   2.461    2.808     1.163      2999       8192     3.6
+vqe_warm_prior           3.793   2.503    2.829     1.178      2989       8192     6.7
+------------------------------------------------------------------------------------
+anneal                   3.632   2.421    2.672     1.151      4135       8192     0.1
+anneal_q                 3.651   2.416    2.704     1.185      1235       2048     0.0
+greedy                   3.634   2.370    2.710     1.029      2876       8192     0.0
+metro1opt_T0.05          3.555   2.258    2.704     1.180      2042       8192     0.1
+metro1opt_T0.2           3.630   2.356    2.721     1.096      3542       8192     0.1
+metro1opt_T0.8           3.757   2.530    2.752     1.089      5237       8192     0.1
+metro_T0.02              3.427   2.002    2.722     1.350       496       8192     0.2
+metro_T0.05              3.453   2.077    2.710     1.363       798       8192     0.1
+metro_T0.1               3.441   2.161    2.637     1.233      1685       8192     0.1
+metro_T0.2               3.496   2.312    2.587     1.089      3587       8192     0.1
+metro_T0.4               3.606   2.428    2.642     1.022      6255       8192     0.1
+metro_T0.8               3.826   2.516    2.863     1.040      7431       8192     0.1
+metro_T1.6               3.929   2.555    2.960     1.033      7625       8192     0.1
+metro_T12.8              4.016   2.565    3.064     1.071      7730       8192     0.1
+metro_T3.2               3.969   2.547    3.022     1.108      7694       8192     0.1
+random                   4.021   2.582    3.055     1.084      8075       8192     0.0
+retrieval_T0.1           4.038   1.665    3.639     2.241       276          0     0.0
+retrieval_T0.3           4.295   2.661    3.340     1.152      4268          0     0.0
+retrieval_T1.0           3.999   2.592    3.018     1.049      7917          0     0.0
+retrieval_T3.0           4.005   2.574    3.041     1.088      8058          0     0.0
+retrieval_T30.0          4.001   2.561    3.047     1.037      8071          0     0.0
+------------------------------------------------------------------------------------
+tilt_exact               3.755   2.369    2.888     1.214      3171     318318     1.4
+tilt_samples             3.707   2.338    2.838     1.395      1771       8192     0.0
+untrained                4.003   2.554    3.052     1.279      4510       8192     0.0
+
+--- P1 PRIMARY: additive epsilon-dominance of each QUANTUM arm against the 21-point classical attainable set
+    eps = min_c max( M_c - M_vqe , D_vqe - D_c ),  in Angstroms.
+    eps > 0  =>  NO classical point dominates the VQE point  =>  a QUANTUM WIN.
+    eps <= 0 =>  some classical point weakly dominates it.
+    Defined on EVERY target, including those where the VQE out-diversifies every
+    classical arm -- the case the conditional M-margin below leaves undefined.
+
+arm                     mean eps   median                 CI95    eps>0  foldsign
+vqe_a0.02                 -0.004   +0.023 [ -0.064, +0.055]   6/10   2/4
+vqe_a0.05                 -0.013   +0.029 [ -0.086, +0.052]   6/10   2/4
+vqe_a0.10                 -0.021   -0.007 [ -0.081, +0.032]   5/10   3/4
+vqe_a0.25                 -0.041   +0.011 [ -0.147, +0.051]   5/10   2/4
+vqe_a0.50                 -0.070   -0.053 [ -0.186, +0.031]   4/10   2/4
+vqe_a1.00                 -0.127   -0.079 [ -0.237, -0.022]   3/10   3/4
+vqe_deep_mps3f            -0.086   -0.058 [ -0.154, -0.027]   2/10   3/4
+vqe_sched_hi_lo           -0.036   -0.020 [ -0.125, +0.038]   4/10   3/4
+vqe_sched_lo_hi           -0.037   +0.037 [ -0.160, +0.068]   6/10   2/4
+vqe_warm_prior            +0.006   +0.021 [ -0.100, +0.110]   6/10   2/4
+
+    THE NULL THIS MUST BE READ AGAINST: the same statistic for each CLASSICAL arm, leave-one-out against the rest of the classical set.
+anneal                    -0.056   +0.005                        5/10  
+anneal_q                  -0.049   +0.010                        6/10  
+greedy                    -0.086   -0.015                        3/10  
+metro1opt_T0.05           -0.095   -0.007                        5/10  
+metro1opt_T0.2            -0.110   -0.057                        2/10  
+metro1opt_T0.8            +0.006   +0.031                        7/10  
+metro_T0.02               -0.154   +0.027                        6/10  
+metro_T0.05               -0.158   -0.008                        4/10  
+metro_T0.1                -0.100   -0.005                        5/10  
+metro_T0.2                -0.071   -0.022                        5/10  
+metro_T0.4                -0.048   -0.043                        3/10  
+metro_T0.8                -0.033   -0.002                        3/10  
+metro_T1.6                -0.025   -0.026                        2/10  
+metro_T12.8               -0.032   -0.024                        2/10  
+metro_T3.2                -0.034   -0.024                        1/10  
+random                    -0.026   -0.012                        3/10  
+retrieval_T0.1            -0.444   -0.463                        2/10  
+retrieval_T0.3            +0.067   +0.080                        6/10  
+retrieval_T1.0            -0.001   -0.002                        4/10  
+retrieval_T3.0            -0.018   -0.001                        4/10  
+retrieval_T30.0           -0.039   -0.039                        3/10  
+
+--- SECONDARY: M-margin = M_vqe - min{ M_c : D_c >= D_vqe - tau }. NEGATIVE = quantum win.
+    UNDEFINED where the VQE out-diversifies every classical arm; that count is printed and those cells are NOT dropped from the primary above.
+
+arm                        mean   median                 CI95     W/L    undef
+vqe_a0.02                +0.010   -0.021 [ -0.327, +0.325]   5/4     1/10  
+vqe_a0.05                -0.131   -0.127 [ -0.455, +0.202]   6/4     0/10  
+vqe_a0.10                +0.020   +0.063 [ -0.286, +0.333]   5/5     0/10  
+vqe_a0.25                +0.141   +0.093 [ -0.126, +0.427]   4/5     1/10  
+vqe_a0.50                +0.126   +0.125 [ -0.115, +0.373]   4/6     0/10  
+vqe_a1.00                +0.285   +0.229 [ +0.075, +0.493]   3/7     0/10  
+vqe_deep_mps3f           +0.200   +0.253 [ +0.019, +0.372]   2/8     0/10  
+vqe_sched_hi_lo          +0.141   +0.181 [ -0.032, +0.317]   3/7     0/10  
+vqe_sched_lo_hi          +0.058   -0.042 [ -0.343, +0.406]   5/4     1/10  
+vqe_warm_prior           -0.066   +0.110 [ -0.547, +0.322]   3/5     2/10  
+
+    THE FALSIFIER'S LITERAL SET -- thermostat ladder + 1-opt only (13 points), epsilon-dominance; eps > 0 = quantum win:
+vqe_a0.02                +0.002   +0.023 [ -0.059, +0.062]   6/10  
+vqe_a0.05                -0.001   +0.046 [ -0.074, +0.065]   6/10  
+vqe_a0.10                -0.013   -0.005 [ -0.072, +0.039]   5/10  
+vqe_a0.25                -0.021   +0.054 [ -0.133, +0.075]   6/10  
+vqe_a0.50                -0.056   -0.049 [ -0.158, +0.036]   4/10  
+vqe_a1.00                -0.116   -0.066 [ -0.220, -0.016]   3/10  
+vqe_deep_mps3f           -0.032   -0.000 [ -0.095, +0.029]   5/10  
+vqe_sched_hi_lo          -0.022   +0.004 [ -0.112, +0.053]   5/10  
+vqe_sched_lo_hi          -0.032   +0.037 [ -0.154, +0.072]   6/10  
+vqe_warm_prior           +0.023   +0.024 [ -0.079, +0.118]   6/10  
+
+    (reference, not classical: circuit-derived arms through the same rule)
+tilt_exact               -0.117   -0.136 [ -0.171, -0.063]   1/10  
+tilt_samples             -0.088   -0.079 [ -0.183, -0.006]   3/10  
+untrained                -0.040   -0.038 [ -0.078, -0.001]   3/10  
+
+--- per-target JOINT Pareto front (quantum + classical together): how often is each arm non-dominated?
+   classical metro_T0.02              5/10
+   QUANTUM  vqe_a0.25                4/10
+   QUANTUM  vqe_warm_prior           4/10
+   classical retrieval_T0.3           4/10
+   QUANTUM  vqe_a0.05                3/10
+   QUANTUM  vqe_sched_lo_hi          3/10
+   classical greedy                   3/10
+   classical metro1opt_T0.05          3/10
+   QUANTUM  vqe_a0.10                2/10
+   classical anneal_q                 2/10
+   classical metro1opt_T0.2           2/10
+   classical metro_T0.1               2/10
+   classical metro_T0.2               2/10
+   classical metro_T12.8              2/10
+   classical random                   2/10
+   classical retrieval_T0.1           2/10
+   classical retrieval_T3.0           2/10
+   QUANTUM  vqe_a0.02                1/10
+   QUANTUM  vqe_a0.50                1/10
+   QUANTUM  vqe_a1.00                1/10
+   QUANTUM  vqe_sched_hi_lo          1/10
+   classical anneal                   1/10
+   classical metro1opt_T0.8           1/10
+   classical metro_T0.05              1/10
+   classical metro_T0.4               1/10
+   classical metro_T0.8               1/10
+   classical metro_T1.6               1/10
+   classical retrieval_T1.0           1/10
+   classical retrieval_T30.0          1/10
+   quantum arms on the joint front, total cells: 20 ; classical: 39
+
+--- the OPPOSITE preference (a consumer that wants LOW diversity, e.g. an argmin readout): margin against classical points with D <= D_vqe + tau
+vqe_a0.02                +0.722 [ +0.380, +1.086]   0/10 
+vqe_a0.05                +0.685 [ +0.366, +1.011]   0/10 
+vqe_a0.10                +0.683 [ +0.376, +1.010]   0/10 
+vqe_a0.25                +0.606 [ +0.312, +0.937]   1/9  
+vqe_a0.50                +0.539 [ +0.270, +0.835]   2/8  
+vqe_a1.00                +0.487 [ +0.226, +0.786]   2/8  
+vqe_deep_mps3f           +0.665 [ +0.460, +0.871]   0/10 
+vqe_sched_hi_lo          +0.647 [ +0.347, +0.951]   1/9  
+vqe_sched_lo_hi          +0.581 [ +0.262, +0.923]   1/9  
+vqe_warm_prior           +0.607 [ +0.322, +0.930]   0/10 
+
+--- identity check across every aggregated point: max |readout^2 - (M^2 - D^2)| = 2.132e-14 A^2  (n = 340)
+
+##### SCHED
+
+=== T6  SHOTS / RESTARTS / THE ENTANGLEMENT CONTROL, m = 75, n = 10 targets, seeds ['0'] ===
+
+arm                          M       D  readout  set_best  distinct  iters
+product_a0.05            3.236   1.823    2.643     1.365      2004     16
+product_a0.25            3.257   1.871    2.624     1.330      1589     16
+product_a1.0             3.287   1.875    2.666     1.283      1364     16
+restart4                 3.281   1.819    2.701     1.121      5915     16
+shots128                 3.277   1.778    2.703     1.271      2070     64
+shots2048                3.276   1.852    2.665     1.165      4191      4
+shots512                 3.297   1.808    2.716     1.176      3191     16
+
+--- dominance margin of the mps2f arms against classical (21) PLUS the product-ansatz classical variational sampler (3)
+arm                        mean   median                 CI95     W/L  outside
+vqe_a0.02                -0.170   -0.049 [ -0.335, -0.044]   1/10  
+vqe_a0.05                -0.136   -0.055 [ -0.303, +0.003]   2/10  
+vqe_a0.10                -0.108   -0.049 [ -0.266, +0.030]   3/10  
+vqe_a0.25                -0.175   -0.055 [ -0.343, -0.041]   1/10  
+vqe_a0.50                -0.152   -0.074 [ -0.292, -0.034]   2/10  
+vqe_a1.00                -0.162   -0.104 [ -0.308, -0.049]   2/10  
+vqe_sched_hi_lo          -0.146   -0.083 [ -0.281, -0.032]   2/10  
+vqe_sched_lo_hi          -0.127   -0.057 [ -0.299, +0.012]   3/10  
+vqe_warm_prior           -0.148   -0.022 [ -0.320, -0.018]   5/10  
+vqe_deep_mps3f           -0.155   -0.134 [ -0.286, -0.056]   2/10  
+
+--- head-to-head: entangled mps2f vs the CNOT-free product ansatz at matched alpha, budget, estimator, optimiser and seed (paired over targets)
+   vqe_a0.05 - product_a0.05:  dM +0.012 [-0.125,+0.156] W/L 6/4   dD -0.020 [-0.144,+0.109]   dreadout +0.012 [-0.111,+0.136] W/L 5/5
+   vqe_a0.25 - product_a0.25:  dM +0.039 [-0.150,+0.261] W/L 6/4   dD -0.063 [-0.157,+0.036]   dreadout +0.092 [-0.107,+0.324] W/L 6/4
+   vqe_a1.00 - product_a1.0:  dM -0.055 [-0.156,+0.048] W/L 7/3   dD -0.121 [-0.206,-0.021]   dreadout +0.005 [-0.107,+0.116] W/L 6/4
+
+##### LOCAL
+C:\Users\abena\Protein-Folding-Algorithm\s17\q_report.py:468: RuntimeWarning: Mean of empty slice
+  print(f"{a:20s} {np.nanmean(M):7.3f} {np.nanmean(D):7.3f} "
+C:\Users\abena\Protein-Folding-Algorithm\s17\q_report.py:469: RuntimeWarning: Mean of empty slice
+  f"{np.nanmean(per_target(a,'readout')):8.3f} "
+C:\Users\abena\Protein-Folding-Algorithm\s17\q_report.py:472: RuntimeWarning: Mean of empty slice
+  f"{100*np.nanmean(per_target(a,'reaches_certified')):11.1f} "
+
+=== P3  THE LOCAL VQE, window w = 6 residues (4096 configurations), budget 1024 = 0.25x the exhaustive cost ===
+   n = 9 targets, windows averaged within target, seeds averaged within target.
+
+arm                        M       D  readout  set_best  argminRMSD  %certified    used
+base_do_nothing          nan     nan      nan     3.636       3.636         nan       0
+anneal                 3.708   2.348    2.843     1.603       2.971        99.1    1024
+exact_boltz_T0.2       3.314   1.659    2.824     1.824       2.971       100.0    4096
+exact_boltz_T1.0       3.810   2.416    2.925     1.533       2.982        93.5    4096
+exact_boltz_T5.0       3.974   2.489    3.074     1.559       3.140        35.2    4096
+exhaustive             4.016   2.502    3.118     1.466       2.971       100.0    4096
+greedy                 3.717   2.329    2.868     1.642       2.971       100.0    1024
+metro_T0.1             3.662   2.277    2.839     1.694       2.971       100.0    1024
+metro_T0.5             3.778   2.412    2.884     1.555       2.976        95.4    1024
+metro_T2.0             3.961   2.485    3.062     1.586       3.106        44.4    1024
+random                 4.018   2.504    3.118     1.560       3.148        20.4    1024
+vqe_a0.1               3.789   2.356    2.946     1.658       2.969        72.2    1024
+vqe_a0.25              3.775   2.338    2.938     1.675       2.946        68.5    1024
+vqe_a1.0               3.669   2.243    2.873     1.710       3.062        68.5    1024
+
+--- dominance margin of each local-VQE arm against the local classical set
+vqe_a0.1             mean  -0.034 median  -0.006 CI [ -0.096, +0.015] W/L 5/4  eps>0 4/9
+vqe_a0.25            mean  -0.034 median  -0.010 CI [ -0.112, +0.020] W/L 6/3  eps>0 3/9
+vqe_a1.0             mean  -0.044 median  -0.019 CI [ -0.132, +0.022] W/L 6/3  eps>0 3/9
+
+##### REPR
+
+=== ALPHA AS A TEMPERATURE, EXACT (n = 8 targets) ===
+   KL(q_theta || family) in BITS at the best-fit temperature. Small = q_theta IS that law.
+    alpha  H(q) bits  T_eff/Boltz   KL bits  T_eff/p0tilt   KL bits  KL to p0
+     0.02      11.46       0.6683     5.103        0.6780     9.846    11.320
+      0.1       9.57       0.4977     5.989        0.4691    10.245    12.744
+     0.25       7.84       0.3496     5.760        0.3154     8.941    13.532
+      1.0       5.14       0.1900     4.551        0.1610     6.714    15.652
+
+=== P4  IS log q_theta A BETTER RANKER THAN THE OBJECTIVE IT WAS TRAINED ON? ===
+   in-band = the objective's own best 1%, the only band a selector consumes.
+    alpha  rho_ib -E  rho_ib q_th  rho_ib mf  q-E: mean               CI95     W/L |  mf-E mean
+     0.02     -0.077        0.043     -0.040     +0.120 [ +0.028, +0.232]   6/2   |     +0.037
+      0.1     -0.077        0.030     -0.043     +0.108 [ -0.007, +0.238]   5/3   |     +0.035
+     0.25     -0.077        0.029     -0.039     +0.106 [ +0.010, +0.217]   5/3   |     +0.039
+      1.0     -0.077        0.002     -0.033     +0.079 [ -0.033, +0.207]   5/3   |     +0.044
+
+   THE LOAD-BEARING PAIRED TEST for P4: log q_theta MINUS the mean-field control, in-band, per target (positive = the circuit adds ranking skill the zero-correlation classical model does not):
+     0.02 q_theta - meanfield +0.083 [+0.001,+0.179]  median +0.054  W/L 5/3  folds same sign 2/4
+      0.1 q_theta - meanfield +0.073 [-0.025,+0.188]  median +0.039  W/L 4/4  folds same sign 2/4
+     0.25 q_theta - meanfield +0.068 [-0.023,+0.165]  median +0.043  W/L 5/3  folds same sign 2/4
+      1.0 q_theta - meanfield +0.035 [-0.072,+0.148]  median +0.031  W/L 5/3  folds same sign 2/4
+
+   global (not in-band), same three:
+     0.02 -E -0.157  q_theta +0.004  meanfield -0.078  rho(log q, -E) +0.209  rho(log q_mf, -E) +0.950
+      0.1 -E -0.157  q_theta -0.013  meanfield -0.078  rho(log q, -E) +0.219  rho(log q_mf, -E) +0.947
+     0.25 -E -0.157  q_theta -0.006  meanfield -0.078  rho(log q, -E) +0.265  rho(log q_mf, -E) +0.945
+      1.0 -E -0.157  q_theta -0.027  meanfield -0.078  rho(log q, -E) +0.478  rho(log q_mf, -E) +0.943
+
+=== section 24  THE REWEIGHTING READOUT on a fixed 500-candidate pool (picks of 75) ===
+    alpha                  arm       M       D  readout  set_best  argmax RMSD  H(w) bits
+        -     uniform(control)   4.047   2.527    3.135     1.996        3.813       8.96
+     0.02                  vqe   4.054   2.280    3.299     2.120        3.685       3.31
+     0.02            boltzmann   3.472   1.891    2.865     2.140        3.250       3.31
+     0.02            meanfield   3.552   1.954    2.918     2.172        3.245       3.31
+     0.02               p0tilt   3.746   1.996    3.127     2.296        3.561       3.31
+     0.02       random_matched   3.952   2.127    3.287     2.451        3.725       3.31
+     0.02        vqe_priorpool   3.951   2.143    3.250     2.201        3.776       3.60
+     0.02  boltzmann_priorpool   3.359   1.852    2.737     1.953        3.166       3.60
+     0.02  meanfield_priorpool   3.378   1.938    2.717     1.948        3.253       3.60
+     0.02 random_matched_priorpool   4.016   2.179    3.293     2.341        4.117       3.60
+      0.1                  vqe   3.908   2.217    3.169     2.298        3.458       3.13
+      0.1            boltzmann   3.481   1.853    2.896     2.139        3.250       3.13
+      0.1            meanfield   3.550   1.885    2.963     2.179        3.245       3.13
+      0.1               p0tilt   3.659   2.013    3.029     2.255        3.420       3.13
+      0.1       random_matched   3.877   2.137    3.194     2.452        3.536       3.13
+      0.1        vqe_priorpool   3.796   1.851    3.241     2.489        3.574       2.57
+      0.1  boltzmann_priorpool   3.294   1.606    2.807     2.105        3.166       2.57
+      0.1  meanfield_priorpool   3.355   1.678    2.835     2.090        3.253       2.57
+      0.1 random_matched_priorpool   3.965   1.839    3.456     2.541        3.817       2.57
+     0.25                  vqe   3.982   2.152    3.306     2.280        3.711       3.02
+     0.25            boltzmann   3.488   1.848    2.905     2.133        3.250       3.02
+     0.25            meanfield   3.561   1.898    2.960     2.212        3.383       3.02
+     0.25               p0tilt   3.498   1.930    2.887     2.226        3.253       3.02
+     0.25       random_matched   4.172   2.083    3.588     2.363        4.197       3.02
+     0.25        vqe_priorpool   3.922   1.853    3.398     2.466        3.730       2.61
+     0.25  boltzmann_priorpool   3.315   1.636    2.807     2.120        3.166       2.61
+     0.25  meanfield_priorpool   3.363   1.677    2.836     2.121        3.253       2.61
+     0.25 random_matched_priorpool   3.966   1.909    3.391     2.514        3.842       2.61
+      1.0                  vqe   3.621   1.699    3.101     2.478        3.148       1.95
+      1.0            boltzmann   3.405   1.509    2.993     2.408        3.250       1.95
+      1.0            meanfield   3.482   1.544    3.058     2.444        3.383       1.95
+      1.0               p0tilt   3.328   1.479    2.922     2.355        3.202       1.95
+      1.0       random_matched   4.047   1.772    3.598     2.670        3.872       1.95
+      1.0        vqe_priorpool   3.789   1.776    3.262     2.176        3.618       2.08
+      1.0  boltzmann_priorpool   3.270   1.470    2.852     2.190        3.166       2.08
+      1.0  meanfield_priorpool   3.383   1.522    2.957     2.209        3.253       2.08
+      1.0 random_matched_priorpool   4.188   1.802    3.713     2.639        4.165       2.08
+
+##### THEORY
+
+=== P6.4  REPRESENTABILITY (EXACT) ===
+   mps2f reaches a computational basis state exactly: min max-prob = 1.000000000000; distinct basis states reached in 64 tries = 64/64; PASS = True
+   => the unbudgeted variational optimum of CVaR_alpha at ANY alpha is a DELTA on the objective's certified argmin (D = 0).
+
+=== P6.1  WALSH (PAULI-Z) SPECTRUM, n = 19 targets ===
+   hamil_uniformised            mean Pauli weight  1.54   cumulative variance fraction by weight <= 1..8: 0.613 0.930 0.955 0.979 0.991 0.996 0.998 0.999
+   hamil_raw                    mean Pauli weight  1.44   cumulative variance fraction by weight <= 1..8: 0.637 0.962 0.978 0.990 0.995 0.998 0.999 1.000
+   prior_uniformised            mean Pauli weight  1.41   cumulative variance fraction by weight <= 1..8: 0.661 0.963 0.980 0.988 0.995 0.999 0.999 1.000
+   legacy_uniformised           mean Pauli weight  3.42   cumulative variance fraction by weight <= 1..8: 0.212 0.410 0.581 0.730 0.838 0.909 0.950 0.975
+   TRUTH_uniformised_ORACLE     mean Pauli weight  3.72   cumulative variance fraction by weight <= 1..8: 0.136 0.314 0.500 0.685 0.819 0.903 0.955 0.981
+
+=== P6.2  DEGREE TRUNCATION of the uniformised deployed objective ===
+   (what a weight-<=d approximation retains; ORACLE columns are post-hoc)
+     d  rho w/ full  rho in-band  rho w/ RMSD  argmin RMSD  argmin pct
+     1        0.783        0.432        0.153        2.411       0.177
+     2        0.978        0.752        0.192        2.725       0.310
+     3        0.986        0.288        0.220        3.324       0.325
+     4        0.993       -0.220        0.243        3.414       0.348
+     6        0.998       -0.195        0.260        3.117       0.307
+     8        1.000        0.372        0.263        3.059       0.311
+   full  certified argmin RMSD 2.661   space best 1.030
+
+=== P6.1b  WHERE THE WEIGHT-2 WALSH MASS SITS (qubit separation), n = 9 targets ===
+   2 qubits encode one residue, so separation 1 is INTRA-RESIDUE.
+   hamil_uniformised            mean separation 1.11 qubits   frac at separation <= 1 (intra-residue) 0.957   <= 2 0.978
+   TRUTH_uniformised_ORACLE     mean separation 1.80 qubits   frac at separation <= 1 (intra-residue) 0.497   <= 2 0.812
+
+=== P6.3  HOW CHEAP IS THIS SEARCH PROBLEM? n = 19 targets, 8 seeds, fraction reaching the CERTIFIED GLOBAL OPTIMUM ===
+     budget  greedy %cert  greedy RMSD  metro %cert  targets at 100%
+         20           0.0        3.295          0.7      0/19       
+         36          62.5        2.759          5.3      7/19       
+         64          82.2        2.775         28.9     12/19       
+        128          87.5        2.763         43.4     14/19       
+        256          92.8        2.728         75.7     15/19       
+        512          99.3        2.665         85.5     18/19       
+       1024         100.0        2.661        100.0     19/19       
+       2048         100.0        2.661        100.0     19/19       
+       8192         100.0        2.661        100.0     19/19       
+   one-pass coordinate-descent cost n(k-1)+1 = 30 evaluations; the CVaR-VQE budget used throughout Sprints 15-17 is 8,192.
+
+##### NOVELTY
+
+=== P5  MIXTURES: does the VQE contribute UNIQUE high-quality structures? n = 10 targets ===
+   'elite' = the ORACLE true top 0.1% of the register. Support sets are the arms' visited configurations.
+
+   n_elite                              mean    328.000   median    272.000   total       4592
+   elite_found_by_quantum_union         mean     63.929   median     36.000   total        895
+   elite_found_by_classical_union       mean    132.500   median    118.500   total       1855
+   elite_only_quantum                   mean     17.286   median     10.000   total        242
+   elite_only_classical                 mean     85.857   median     77.000   total       1202
+   n_quantum_union                      mean  17712.286   median  17376.000   total     247972
+   n_classical_union                    mean  73960.714   median  73106.500   total    1035450
+   frac_quantum_support_novel           mean      0.576   median      0.573   total          8
+
+   LEAVE-ONE-OUT novelty (symmetric across arms): elite configurations found by an arm and by NO other arm
+   classical metro_T0.4             elite hits    45.07   unique(LOO)  5.643
+   classical metro_T0.2             elite hits    40.79   unique(LOO)  1.571
+   classical metro1opt_T0.2         elite hits    34.29   unique(LOO)  1.500
+   classical anneal                 elite hits    31.93   unique(LOO)  1.929
+   classical metro_T0.1             elite hits    27.50   unique(LOO)  0.429
+   classical metro_T0.8             elite hits    24.79   unique(LOO)  5.357
+   classical metro1opt_T0.8         elite hits    22.57   unique(LOO)  3.143
+   classical greedy                 elite hits    22.07   unique(LOO)  1.714
+   QUANTUM  vqe_a0.02              elite hits    19.86   unique(LOO)  2.071
+   QUANTUM  vqe_a0.10              elite hits    19.50   unique(LOO)  1.429
+   classical metro1opt_T0.05        elite hits    18.93   unique(LOO)  0.857
+   QUANTUM  vqe_sched_hi_lo        elite hits    18.14   unique(LOO)  0.500
+   QUANTUM  vqe_warm_prior         elite hits    18.00   unique(LOO)  1.929
+   QUANTUM  vqe_a0.25              elite hits    17.71   unique(LOO)  0.571
+   QUANTUM  vqe_a0.05              elite hits    17.50   unique(LOO)  0.571
+   QUANTUM  vqe_sched_lo_hi        elite hits    16.86   unique(LOO)  0.429
+   QUANTUM  vqe_a0.50              elite hits    16.14   unique(LOO)  0.143
+   classical metro_T1.6             elite hits    15.71   unique(LOO)  4.143
+   QUANTUM  vqe_a1.00              elite hits    15.64   unique(LOO)  0.500
+   circuit   tilt_exact             elite hits    15.43   unique(LOO)  1.786
+   classical metro_T0.05            elite hits    15.21   unique(LOO)  0.143
+   classical anneal_q               elite hits    14.93   unique(LOO)  0.714
+   QUANTUM  vqe_deep_mps3f         elite hits    14.00   unique(LOO)  1.071
+   classical retrieval_T1.0         elite hits    11.43   unique(LOO)  3.786
+   classical metro_T3.2             elite hits    10.21   unique(LOO)  4.429
+   classical retrieval_T30.0        elite hits     9.21   unique(LOO)  4.500
+   classical metro_T0.02            elite hits     8.21   unique(LOO)  0.000
+   classical retrieval_T3.0         elite hits     8.14   unique(LOO)  4.500
+   classical metro_T12.8            elite hits     7.57   unique(LOO)  3.500
+   classical random                 elite hits     7.50   unique(LOO)  3.714
+   classical retrieval_T0.3         elite hits     7.14   unique(LOO)  2.000
+   circuit   untrained              elite hits     4.43   unique(LOO)  0.286
+   circuit   tilt_samples           elite hits     3.71   unique(LOO)  0.000
+   classical retrieval_T0.1         elite hits     0.79   unique(LOO)  0.000

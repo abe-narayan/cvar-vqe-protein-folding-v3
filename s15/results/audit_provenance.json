@@ -1,0 +1,528 @@
+{
+ "generated": "2026-09-05 21:41:51",
+ "root": "C:\\Users\\abena\\Protein-Folding-Algorithm",
+ "nodes": [
+  {
+   "node": "pdbs/*.pdb",
+   "kind": "PRIMARY INPUT",
+   "pattern": "pdbs/*.pdb",
+   "written_by": "-- deposited coordinates --",
+   "config_keyed": false,
+   "atomic_write": true,
+   "feeds_pinned_constants": [
+    "shipped",
+    "pool_best",
+    "top75_best",
+    "synthesis_fit",
+    "n_zero_recall"
+   ],
+   "n_files": 61,
+   "total_bytes": 30974137,
+   "mtime_min": "2026-07-22",
+   "mtime_max": "2026-08-18",
+   "sample_sha256_16": {
+    "pdbs/1B03.pdb": "c1f14473b9d18b2d",
+    "pdbs/1BTT.pdb": "9853d26ae5f930a4",
+    "pdbs/1C9A.pdb": "7a99414dfc48f56b",
+    "pdbs/1D9L.pdb": "6c54219826d7f696",
+    "pdbs/2L9G.pdb": "8be84c698de32df0",
+    "pdbs/2LD0.pdb": "88cdd717031b64d4",
+    "pdbs/5AWL.pdb": "a7ca2d14d01d2973",
+    "pdbs/7OFG.pdb": "a5ccc00a1f4343f0"
+   }
+  },
+  {
+   "node": "pdbs_ext/*.pdb",
+   "kind": "PRIMARY INPUT",
+   "pattern": "pdbs_ext/*.pdb",
+   "written_by": "-- deposited coordinates --",
+   "config_keyed": false,
+   "atomic_write": true,
+   "feeds_pinned_constants": [
+    "shipped",
+    "pool_best",
+    "top75_best",
+    "synthesis_fit",
+    "n_zero_recall"
+   ],
+   "n_files": 1463,
+   "total_bytes": 578154186,
+   "mtime_min": "2026-08-31",
+   "mtime_max": "2026-08-31",
+   "sample_sha256_16": {
+    "pdbs_ext/1A11.pdb": "f7f101fba570ef68",
+    "pdbs_ext/1A13.pdb": "c53ef32978d35f39",
+    "pdbs_ext/1A1P.pdb": "240f754ec690e543",
+    "pdbs_ext/1AD7.pdb": "4e6635b3f4a6055f",
+    "pdbs_ext/9WGI.pdb": "57661308181d76d4",
+    "pdbs_ext/9WXK.pdb": "9918e0de70fac27c",
+    "pdbs_ext/9XAO.pdb": "8186b10a3acca3c1",
+    "pdbs_ext/9Z8J.pdb": "f4d9d055bdd4bd31"
+   }
+  },
+  {
+   "node": "prots/*.pdb",
+   "kind": "PRIMARY INPUT (fragment library source)",
+   "pattern": "prots/*.pdb",
+   "written_by": "-- deposited coordinates --",
+   "config_keyed": false,
+   "atomic_write": true,
+   "feeds_pinned_constants": [
+    "shipped",
+    "pool_best",
+    "top75_best",
+    "synthesis_fit",
+    "n_zero_recall"
+   ],
+   "n_files": 13751,
+   "total_bytes": 5842910538,
+   "mtime_min": "2026-09-01",
+   "mtime_max": "2026-09-01",
+   "sample_sha256_16": {
+    "prots/102L.pdb": "e96bc55c95c60864",
+    "prots/104M.pdb": "f9f5ec31160bf35e",
+    "prots/10AF.pdb": "d69a2a8265ebbcdd",
+    "prots/10CW.pdb": "1d84c3a16e261d3a",
+    "prots/9ZOG.pdb": "1539ba3f6395f6e0",
+    "prots/9ZRA.pdb": "5f3dcc2881299f4b",
+    "prots/9ZRC.pdb": "4cf864aae8793ce4",
+    "prots/9ZRE.pdb": "66479d6de51c3404"
+   }
+  },
+  {
+   "node": "peptide_db.npz",
+   "kind": "DERIVED CACHE",
+   "pattern": "peptide_db.npz",
+   "written_by": "peptide_db.build() / core.data; scan of DIRS",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [
+    "shipped",
+    "pool_best",
+    "top75_best",
+    "synthesis_fit",
+    "n_zero_recall"
+   ],
+   "n_files": 1,
+   "total_bytes": 406080,
+   "mtime_min": "2026-08-31",
+   "mtime_max": "2026-08-31",
+   "sample_sha256_16": {
+    "peptide_db.npz": "3e0b447284e73d1b"
+   }
+  },
+  {
+   "node": "peptide_clusters.json",
+   "kind": "PINNED ARTEFACT",
+   "pattern": "peptide_clusters.json",
+   "written_by": "peptide_db.clusters(); PINNED by BRIEF",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [
+    "shipped",
+    "pool_best",
+    "top75_best",
+    "synthesis_fit",
+    "n_zero_recall"
+   ],
+   "n_files": 1,
+   "total_bytes": 20217,
+   "mtime_min": "2026-09-01",
+   "mtime_max": "2026-09-01",
+   "sample_sha256_16": {
+    "peptide_clusters.json": "9ae3d8f3afc281df"
+   }
+  },
+  {
+   "node": "peptide_folds.json",
+   "kind": "PINNED ARTEFACT",
+   "pattern": "peptide_folds.json",
+   "written_by": "peptide_db.folds(); PINNED by BRIEF",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [
+    "shipped",
+    "pool_best",
+    "top75_best",
+    "synthesis_fit",
+    "n_zero_recall"
+   ],
+   "n_files": 1,
+   "total_bytes": 18956,
+   "mtime_min": "2026-09-01",
+   "mtime_max": "2026-09-01",
+   "sample_sha256_16": {
+    "peptide_folds.json": "89bc58edc59c6d79"
+   }
+  },
+  {
+   "node": "results/benchmark_manifest.json",
+   "kind": "PINNED ARTEFACT",
+   "pattern": "results/benchmark_manifest.json",
+   "written_by": "PINNED by BRIEF; benchmark, not touched here",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [],
+   "n_files": 1,
+   "total_bytes": 8002,
+   "mtime_min": "2026-09-01",
+   "mtime_max": "2026-09-01",
+   "sample_sha256_16": {
+    "results/benchmark_manifest.json": "a40581ad01cfd2b7"
+   }
+  },
+  {
+   "node": "s8/generate_univ/*.npz",
+   "kind": "DERIVED CACHE",
+   "pattern": "s8/generate_univ/*.npz",
+   "written_by": "s8.generate.stage_univ",
+   "config_keyed": false,
+   "atomic_write": true,
+   "feeds_pinned_constants": [
+    "pool_best",
+    "top75_best",
+    "n_zero_recall",
+    "shipped",
+    "synthesis_fit"
+   ],
+   "n_files": 126,
+   "total_bytes": 117402802,
+   "mtime_min": "2026-09-03",
+   "mtime_max": "2026-09-03",
+   "sample_sha256_16": {
+    "s8/generate_univ/1A13.npz": "49738bf2445829e3",
+    "s8/generate_univ/1A1P.npz": "4b9275fbff5c66c3",
+    "s8/generate_univ/1CB3.npz": "ed5098264a6b8751",
+    "s8/generate_univ/1CEK.npz": "9c889f7a7679f7c0",
+    "s8/generate_univ/9L1M.npz": "8d90b8c31a71d214",
+    "s8/generate_univ/9S5G.npz": "8242dc6316df1bda",
+    "s8/generate_univ/9UV5.npz": "b522b01a53f88cc4",
+    "s8/generate_univ/9WXK.npz": "5c54e49c4112b655"
+   }
+  },
+  {
+   "node": "s8/generate_rama.npz",
+   "kind": "DERIVED CACHE",
+   "pattern": "s8/generate_rama.npz",
+   "written_by": "s8.generate.stage_univ",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [],
+   "n_files": 1,
+   "total_bytes": 51988,
+   "mtime_min": "2026-09-03",
+   "mtime_max": "2026-09-03",
+   "sample_sha256_16": {
+    "s8/generate_rama.npz": "f218e6669ceae189"
+   }
+  },
+  {
+   "node": "s8/project_prior.json",
+   "kind": "TRAINED DATA",
+   "pattern": "s8/project_prior.json",
+   "written_by": "s8.project.stage_prior (fold-disciplined counts)",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [
+    "synthesis_fit"
+   ],
+   "n_files": 1,
+   "total_bytes": 488644,
+   "mtime_min": "2026-09-03",
+   "mtime_max": "2026-09-03",
+   "sample_sha256_16": {
+    "s8/project_prior.json": "8a09c6edf095d20a"
+   }
+  },
+  {
+   "node": "distogram_models",
+   "kind": "TRAINED MODEL",
+   "pattern": "distogram_models/*",
+   "written_by": "training pipeline (out of scope here)",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [
+    "shipped"
+   ],
+   "n_files": 30,
+   "total_bytes": 44708852,
+   "mtime_min": "2026-09-01",
+   "mtime_max": "2026-09-03",
+   "sample_sha256_16": {
+    "distogram_models/fold0_esm.pt": "f6545a90240806b6",
+    "distogram_models/fold0_esm_frag.pt": "0ce6625ef3fd541b",
+    "distogram_models/fold0_esm_frag.pt.d20": "ac3bb92f9144bc9c",
+    "distogram_models/fold0_esm_frag_s1.pt.d20": "898e5a63ff2f5155",
+    "distogram_models/fold4_esm_frag.pt.d20": "ebaeb06d819aaf9e",
+    "distogram_models/fold4_esm_frag_s1.pt.d20": "39367cacf99f3e35",
+    "distogram_models/fold4_esm_frag_sw-lin.pt": "5fb3adaa1271a40c",
+    "distogram_models/fold4_esm_frag_sw-none.pt": "85ef33e4d4213cc9"
+   }
+  },
+  {
+   "node": "s12/cache/disto_*.npz",
+   "kind": "DERIVED CACHE",
+   "pattern": "s12/cache/disto_*.npz",
+   "written_by": "s12.instrument.distogram",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [
+    "shipped"
+   ],
+   "n_files": 126,
+   "total_bytes": 24511246,
+   "mtime_min": "2026-09-05",
+   "mtime_max": "2026-09-05",
+   "sample_sha256_16": {
+    "s12/cache/disto_1A13.npz": "9ba33632ea134ac8",
+    "s12/cache/disto_1A1P.npz": "b9b5d96f661ca907",
+    "s12/cache/disto_1CB3.npz": "31c0c0be6b5ec717",
+    "s12/cache/disto_1CEK.npz": "3796a45091b38a6a",
+    "s12/cache/disto_9L1M.npz": "f58f85734ad4adf9",
+    "s12/cache/disto_9S5G.npz": "1d17a8f542298138",
+    "s12/cache/disto_9UV5.npz": "7a9cfe677ea85c6c",
+    "s12/cache/disto_9WXK.npz": "45c6354d9f4fe0d7"
+   }
+  },
+  {
+   "node": "bench_results/cache/<cfg_key>/*.json",
+   "kind": "DERIVED CACHE, CONFIG-KEYED",
+   "pattern": "bench_results/cache/1fc9f2dcf489e2fb/*.json",
+   "written_by": "core.pipeline._worker_run -> _atomic_write_json",
+   "config_keyed": true,
+   "atomic_write": true,
+   "feeds_pinned_constants": [
+    "top75_best",
+    "synthesis_fit",
+    "n_zero_recall"
+   ],
+   "n_files": 126,
+   "total_bytes": 715001,
+   "mtime_min": "2026-09-04",
+   "mtime_max": "2026-09-04",
+   "sample_sha256_16": {
+    "bench_results/cache/1fc9f2dcf489e2fb/1A13.json": "ae7ea39b4872fa86",
+    "bench_results/cache/1fc9f2dcf489e2fb/1A1P.json": "d55fe4d395ba2aa7",
+    "bench_results/cache/1fc9f2dcf489e2fb/1CB3.json": "87a036c96932ffb4",
+    "bench_results/cache/1fc9f2dcf489e2fb/1CEK.json": "aa8b5fa935e281b8",
+    "bench_results/cache/1fc9f2dcf489e2fb/9L1M.json": "388efb09784f459c",
+    "bench_results/cache/1fc9f2dcf489e2fb/9S5G.json": "dab5a435ea5d6463",
+    "bench_results/cache/1fc9f2dcf489e2fb/9UV5.json": "4524f24ed78e7af7",
+    "bench_results/cache/1fc9f2dcf489e2fb/9WXK.json": "983cd424e424bd34"
+   }
+  },
+  {
+   "node": "s13/results/qarch_enum_*.npz",
+   "kind": "DERIVED CACHE",
+   "pattern": "s13/results/qarch_enum_*.npz",
+   "written_by": "s13.qarch_enum.enumerate_target",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [],
+   "n_files": 9,
+   "total_bytes": 33976021,
+   "mtime_min": "2026-09-05",
+   "mtime_max": "2026-09-05",
+   "sample_sha256_16": {
+    "s13/results/qarch_enum_1CS9.npz": "ddd42a442a4427d6",
+    "s13/results/qarch_enum_2MK7.npz": "de65f2307e1f4c0e",
+    "s13/results/qarch_enum_2P5H.npz": "5497ee5ea2867b25",
+    "s13/results/qarch_enum_6EY3.npz": "0b79d78635f09a24",
+    "s13/results/qarch_enum_6S0N.npz": "3c37998b8598498b",
+    "s13/results/qarch_enum_7N2I.npz": "b75bd8dde8642b64",
+    "s13/results/qarch_enum_8IS3.npz": "a3ba54cfb2e852d0",
+    "s13/results/qarch_enum_9UV5.npz": "4daff716bbde00f0"
+   }
+  },
+  {
+   "node": "s14/cache/obj_enum_*.npz",
+   "kind": "DERIVED CACHE",
+   "pattern": "s14/cache/obj_enum_*.npz",
+   "written_by": "s14.obj_enum",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [],
+   "n_files": 10,
+   "total_bytes": 587874451,
+   "mtime_min": "2026-09-05",
+   "mtime_max": "2026-09-05",
+   "sample_sha256_16": {
+    "s14/cache/obj_enum_1N9U.npz": "7e7aa60849090bd9",
+    "s14/cache/obj_enum_1TOR.npz": "f441c0502c814a6f",
+    "s14/cache/obj_enum_2BAO.npz": "98fbb39ac02c4e93",
+    "s14/cache/obj_enum_2MD2.npz": "b6e384337b634315",
+    "s14/cache/obj_enum_6B9K.npz": "eebbd31643718f5b",
+    "s14/cache/obj_enum_7T3H.npz": "59b90f787d87ab0a",
+    "s14/cache/obj_enum_7VI4.npz": "c9ba9cb535a535db",
+    "s14/cache/obj_enum_8HVS.npz": "45b0aa2364c0e379"
+   }
+  },
+  {
+   "node": "s14/cache/ener_norm.json",
+   "kind": "FITTED CONSTANT",
+   "pattern": "s14/cache/ener_norm.json",
+   "written_by": "s14.ener_norm",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [],
+   "n_files": 1,
+   "total_bytes": 68995,
+   "mtime_min": "2026-09-05",
+   "mtime_max": "2026-09-05",
+   "sample_sha256_16": {
+    "s14/cache/ener_norm.json": "95208e1c5471e50e"
+   }
+  },
+  {
+   "node": "s12/results/*.json",
+   "kind": "RESULT",
+   "pattern": "s12/results/*.json",
+   "written_by": "s12.instrument.write -- NO CONFIG KEY (documented hazard)",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [],
+   "n_files": 226,
+   "total_bytes": 48987224,
+   "mtime_min": "2026-09-05",
+   "mtime_max": "2026-09-05",
+   "sample_sha256_16": {
+    "s12/results/adv_asmnull.json": "ae494083f8161516",
+    "s12/results/adv_asmoracle.json": "034205ea5139a13d",
+    "s12/results/adv_bigm.json": "7577146d304a028a",
+    "s12/results/adv_decode.json": "433c454c7ed43beb",
+    "s12/results/vq_stage2_A2_64.json": "66a968e2f2132f96",
+    "s12/results/vq_stage3_A2_64.json": "31879db1eebf59fd",
+    "s12/results/vq_stage3_A2_8.json": "56f3c6a19c288c7e",
+    "s12/results/vq_stage3_B.json": "6e9ee07d6cf3dc1d"
+   }
+  },
+  {
+   "node": "s13/results/*.json",
+   "kind": "RESULT",
+   "pattern": "s13/results/*.json",
+   "written_by": "s13.qarch_lib.write -- NO CONFIG KEY, NO completeness flag",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [],
+   "n_files": 59,
+   "total_bytes": 9577955,
+   "mtime_min": "2026-09-05",
+   "mtime_max": "2026-09-05",
+   "sample_sha256_16": {
+    "s13/results/adv_ceiling_k4.json": "12a02f79f03b3049",
+    "s13/results/adv_ceiling_k4_report.json": "d3a6b73a779ad82b",
+    "s13/results/adv_encoding.json": "f3826c1b3bc830d7",
+    "s13/results/adv_instrument.json": "681a310ffc5ffef0",
+    "s13/results/walsh_legacy_k4_m18_6t.json": "030957bcf9bfb494",
+    "s13/results/walsh_predict.json": "2c30f2794a5809be",
+    "s13/results/walsh_verify.json": "dd5b4eb113c2ea02",
+    "s13/results/walsh_xval.json": "a8abb6f8cecc078e"
+   }
+  },
+  {
+   "node": "s14/results/*.json",
+   "kind": "RESULT",
+   "pattern": "s14/results/*.json",
+   "written_by": "various -- check each",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [],
+   "n_files": 51,
+   "total_bytes": 24329376,
+   "mtime_min": "2026-09-05",
+   "mtime_max": "2026-09-05",
+   "sample_sha256_16": {
+    "s14/results/avgspace.json": "4564af9336c35a2c",
+    "s14/results/budgetcurve.json": "a68cc11dc61533fd",
+    "s14/results/coherence.json": "1f8c0e5e4d0ae1e9",
+    "s14/results/consensus.json": "648ec7eade8f2a25",
+    "s14/results/vqe_signal_hamil.json": "62d68a2be6f93828",
+    "s14/results/vqe_signal_legacy.json": "77e13c07b3fb60b7",
+    "s14/results/vqe_tailacc.json": "813afd4cc6116b71",
+    "s14/results/vqe_wsweep.json": "52ee34b2f4d6e193"
+   }
+  },
+  {
+   "node": "esm_cache.npz / s12/esm_bank.py",
+   "kind": "DERIVED CACHE",
+   "pattern": "esm_cache.npz",
+   "written_by": "ESM embedding cache; 1.5 GB, do not load (BRIEF s3)",
+   "config_keyed": false,
+   "atomic_write": false,
+   "feeds_pinned_constants": [
+    "shipped"
+   ],
+   "n_files": 1,
+   "total_bytes": 1509204583,
+   "mtime_min": "2026-09-01",
+   "mtime_max": "2026-09-01",
+   "sample_sha256_16": {
+    "esm_cache.npz": "bd5a05cafde362ca"
+   }
+  }
+ ],
+ "constant_dependencies": {
+  "pool_best": {
+   "value": 1.7108244199364904,
+   "computed_as": "mean over 126 targets of min(rr[order[:500]])",
+   "reads": [
+    "s8/generate_univ/<pdb>.npz:rr",
+    "s8/generate_univ/<pdb>.npz:order"
+   ],
+   "recomputed_by_instrument": false,
+   "reproduced_from_primary": true,
+   "reproduction_evidence": "s15/results/audit_repro_univ.json -- 126/126 universes rebuilt bit-identically from pdbs/ + pdbs_ext/ + prots/, mean 1.7108244199364904",
+   "oracle": true,
+   "oracle_note": "rr is a NATIVE-derived label; pool_best is an ORACLE CEILING, not a predictive number"
+  },
+  "top75_best": {
+   "value": 2.3061526409453816,
+   "computed_as": "mean over 126 of min(rr[pool][sub]) with sub from the production cache",
+   "reads": [
+    "s8/generate_univ/<pdb>.npz:rr",
+    "bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json:sub"
+   ],
+   "recomputed_by_instrument": false,
+   "reproduced_from_primary": "PARTIAL -- 3/126 targets rerun through core.pipeline.run_target, sub bit-identical",
+   "oracle": true
+  },
+  "shipped": {
+   "value": 3.4540004952559396,
+   "computed_as": "mean over 126 of rr[argmin(shipped_score(distogram, D))]",
+   "reads": [
+    "s12/cache/disto_<pdb>.npz:risk",
+    "s8/generate_univ/<pdb>.npz:W",
+    "s8/generate_univ/<pdb>.npz:rr",
+    "distogram_models (via ESM)"
+   ],
+   "recomputed_by_instrument": "SCORE ONLY -- the distogram is a cache read",
+   "reproduced_from_primary": true,
+   "reproduction_evidence": "s15/results/audit_determinism_t{1,2,8}.json -- distogram recomputed for all 126 at three torch thread counts; 0 argmin flips; value identical",
+   "oracle": false,
+   "caveat": "the distogram tensor is NOT bit-stable across torch thread counts (prob up to 2.0e-6, risk up to 1.3e-4); the constant is."
+  },
+  "synthesis_fit": {
+   "value": 3.2040761603809194,
+   "computed_as": "mean over 126 of CA-RMSD(fit_ca, nat_ca)",
+   "reads": [
+    "bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json:fit_ca",
+    "s8/generate_univ/<pdb>.npz:nat_ca"
+   ],
+   "recomputed_by_instrument": "KABSCH ONLY -- fit_ca is a cache read",
+   "reproduced_from_primary": "PARTIAL -- 3/126 targets rerun end to end through core.pipeline.run_target at PROD config; fit_ca BIT-IDENTICAL, cfg_key matches Config().key()",
+   "oracle": false
+  },
+  "n_zero_recall": {
+   "value": 18,
+   "computed_as": "count of targets where no pool member within pool_best+BAND (BAND=1.5 A) survives into sub",
+   "reads": [
+    "s8/generate_univ/<pdb>.npz:rr",
+    "bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json:sub"
+   ],
+   "recomputed_by_instrument": true,
+   "reproduced_from_primary": "PARTIAL (same as top75_best)",
+   "oracle": true,
+   "caveat": "BAND = 1.5 A is an ARBITRARY constant; the count 18 is a function of it (see s12/adv_fail18.py BANDS sweep)."
+  }
+ }
+}

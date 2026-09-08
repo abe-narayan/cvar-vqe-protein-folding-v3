@@ -1,0 +1,26 @@
+====================================================================================================
+Q1 EXTENSION -- SCORE-FREE DIVERSITY MANIPULATION.  Declared extension, n = 126.
+   Every arm below contains NO score, NO physics and NO sequence information.
+====================================================================================================
+
+   arm             readout    E_mem        D  err_cos  shared      vs matched-random of the same count
+   rand_lowD         3.066    3.627    1.723    0.720   0.712      +0.0029 [-0.0034,+0.0128] 53W/73L
+   rand_highD        3.058    3.813    2.084    0.651   0.643      -0.0046 [-0.0295,+0.0177] 60W/66L
+   medoid            3.106    3.515    1.419    0.784   0.780      +0.0430 [+0.0131,+0.0762] 48W/78L
+   fps               3.063    3.774    2.019    0.661   0.656      -0.0003 [-0.0130,+0.0164] 71W/55L
+   legacy            3.126    3.678    1.723    0.732   0.724      +0.0631 [+0.0097,+0.1236] 52W/74L
+   legacy_clust      3.060    3.765    2.009    0.663   0.658      -0.0033 [-0.0198,+0.0112] 66W/60L
+   helix             3.188    3.658    1.573    0.769   0.766      +0.1253 [+0.0563,+0.1819] 48W/78L
+   rand              3.063    3.720    1.913    0.685   0.675      --
+   none              3.050    3.720    1.930    0.684   0.669      -0.0132 [-0.0151,-0.0116] 88W/38L
+
+   THE DECISIVE CONTRAST (both arms are random subsets; only D differs):
+      rand_lowD - rand_highD = +0.0075 [-0.0128, +0.0279]  med +0.0040  58W/68L
+      D:  lowD 1.723   highD 2.084   legacy 1.723   rand 1.913
+      E_mem: lowD 3.627   highD 3.813     (if these differ, the contrast is NOT diversity alone -- reported, not hidden)
+
+   THE ONE-PARAMETER LAW, pooled over every arm and target (readout^2 = E_mem^2 - D^2 is EXACT; what is measured is how much E_mem^2 MOVES):
+      n = 1638 (arm, target) pairs over 13 arms
+      corr(Delta readout^2,  -Delta D^2 )   = +0.1736
+      corr(Delta readout^2, Delta E_mem^2)  = +0.8621
+      sd(-Delta D^2) 1.0440   sd(Delta E_mem^2) 2.0291   sd(Delta readout^2) 1.9306

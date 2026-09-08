@@ -1,0 +1,78 @@
+{
+ "9": {
+  "frag_containment": [
+   0.62,
+   0.556,
+   0.778
+  ],
+  "frag_identity": [
+   0.429,
+   0.667
+  ],
+  "pep_containment": [
+   0.546,
+   0.667
+  ],
+  "pep_identity": [
+   0.268,
+   0.385
+  ]
+ },
+ "11": {
+  "frag_containment": [
+   0.583,
+   0.455,
+   0.667
+  ],
+  "frag_identity": [
+   0.443,
+   0.545
+  ],
+  "pep_containment": [
+   0.538,
+   0.636
+  ],
+  "pep_identity": [
+   0.349,
+   0.417
+  ]
+ },
+ "13": {
+  "frag_containment": [
+   0.562,
+   0.5,
+   0.6
+  ],
+  "frag_identity": [
+   0.447,
+   0.467
+  ],
+  "pep_containment": [
+   0.524,
+   0.692
+  ],
+  "pep_identity": [
+   0.349,
+   0.462
+  ]
+ },
+ "16": {
+  "frag_containment": [
+   0.626,
+   0.5,
+   0.8
+  ],
+  "frag_identity": [
+   0.407,
+   0.5
+  ],
+  "pep_containment": [
+   0.451,
+   0.667
+  ],
+  "pep_identity": [
+   0.322,
+   0.438
+  ]
+ }
+}

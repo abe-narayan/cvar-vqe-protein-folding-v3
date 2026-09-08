@@ -1,0 +1,367 @@
+{
+ "what": "provenance and distortion of the cached AMBER subset",
+ "rule": "kind==0 (uniform, ~1194/target) is the ONLY unconditioned AMBER stratum. kind==2 is selected by TRUE RMSD and is an ORACLE population.",
+ "pooled": {
+  "subset_minus_full": -0.40086622525975973,
+  "uniform_minus_full": 0.008188691614447475,
+  "ks_all": 0.20569429755058094,
+  "ks_uniform": 0.026220332776943245,
+  "band_pop_frac": 0.010009765625
+ },
+ "per_target": [
+  {
+   "pdb": "1CS9",
+   "n_subset": 2955,
+   "n_full": 262144,
+   "frac": 0.011272430419921875,
+   "full_rmsd_mean": 4.063651250755356,
+   "subset_rmsd_mean": 3.5733877108181793,
+   "subset_minus_full": -0.49026353993717686,
+   "uniform_rmsd_mean": 4.061351767729434,
+   "uniform_minus_full": -0.0022994830259222,
+   "band_threshold_rmsd": 1.9638112783432007,
+   "band_pop_frac": 0.010009765625,
+   "strata": {
+    "uniform": {
+     "n": 1193,
+     "rmsd_mean": 4.061351767729434,
+     "rmsd_min": 1.7468831539154053,
+     "rmsd_max": 6.3182148933410645,
+     "pctile_mean": 0.5133218383789062
+    },
+    "prior": {
+     "n": 1162,
+     "rmsd_mean": 3.9982674952833666,
+     "rmsd_min": 1.6580168008804321,
+     "rmsd_max": 5.887680530548096,
+     "pctile_mean": 0.44592620849609377
+    },
+    "oracle_band": {
+     "n": 600,
+     "rmsd_mean": 1.7803019950787227,
+     "rmsd_min": 1.269783616065979,
+     "rmsd_max": 1.9638112783432007,
+     "pctile_mean": 0.005205078125
+    }
+   },
+   "ks_uniform": 0.024308517213039615,
+   "ks_all": 0.1977126171544522,
+   "ks_prior": 0.054634868996073616
+  },
+  {
+   "pdb": "2MK7",
+   "n_subset": 2966,
+   "n_full": 262144,
+   "frac": 0.01131439208984375,
+   "full_rmsd_mean": 4.8688204913523805,
+   "subset_rmsd_mean": 4.40219755833485,
+   "subset_minus_full": -0.4666229330175309,
+   "uniform_rmsd_mean": 4.902004019585614,
+   "uniform_minus_full": 0.03318352823323334,
+   "band_threshold_rmsd": 2.427241802215576,
+   "band_pop_frac": 0.010009765625,
+   "strata": {
+    "uniform": {
+     "n": 1195,
+     "rmsd_mean": 4.902004019585614,
+     "rmsd_min": 0.9438596963882446,
+     "rmsd_max": 8.629304885864258,
+     "pctile_mean": 0.5176136779785157
+    },
+    "prior": {
+     "n": 1171,
+     "rmsd_mean": 5.082671466289067,
+     "rmsd_min": 1.7630703449249268,
+     "rmsd_max": 8.17557144165039,
+     "pctile_mean": 0.5740904235839843
+    },
+    "oracle_band": {
+     "n": 600,
+     "rmsd_mean": 2.0786914459864296,
+     "rmsd_min": 0.6754734516143799,
+     "rmsd_max": 2.427241802215576,
+     "pctile_mean": 0.005254364013671875
+    }
+   },
+   "ks_uniform": 0.033989329318122374,
+   "ks_all": 0.19829062875347692,
+   "ks_prior": 0.0964536332961945
+  },
+  {
+   "pdb": "2P5H",
+   "n_subset": 2933,
+   "n_full": 262144,
+   "frac": 0.011188507080078125,
+   "full_rmsd_mean": 3.7884089857543586,
+   "subset_rmsd_mean": 3.463747151223946,
+   "subset_minus_full": -0.32466183453041264,
+   "uniform_rmsd_mean": 3.7984833020461064,
+   "uniform_minus_full": 0.01007431629174782,
+   "band_threshold_rmsd": 2.076672077178955,
+   "band_pop_frac": 0.010009765625,
+   "strata": {
+    "uniform": {
+     "n": 1194,
+     "rmsd_mean": 3.7984833020461064,
+     "rmsd_min": 1.5793386697769165,
+     "rmsd_max": 7.047306537628174,
+     "pctile_mean": 0.4856614685058594
+    },
+    "prior": {
+     "n": 1139,
+     "rmsd_mean": 3.9199790584088627,
+     "rmsd_min": 2.079288959503174,
+     "rmsd_max": 6.146432399749756,
+     "pctile_mean": 0.5600148010253906
+    },
+    "oracle_band": {
+     "n": 600,
+     "rmsd_mean": 1.9315419739484787,
+     "rmsd_min": 1.4611260890960693,
+     "rmsd_max": 2.076672077178955,
+     "pctile_mean": 0.00499847412109375
+    }
+   },
+   "ks_uniform": 0.02343054792190119,
+   "ks_all": 0.19881441550087367,
+   "ks_prior": 0.09224368020879062
+  },
+  {
+   "pdb": "6EY3",
+   "n_subset": 2901,
+   "n_full": 262144,
+   "frac": 0.011066436767578125,
+   "full_rmsd_mean": 3.696214820189198,
+   "subset_rmsd_mean": 3.2057301110540823,
+   "subset_minus_full": -0.49048470913511544,
+   "uniform_rmsd_mean": 3.7229242013588113,
+   "uniform_minus_full": 0.026709381169613522,
+   "band_threshold_rmsd": 1.937143087387085,
+   "band_pop_frac": 0.010009765625,
+   "strata": {
+    "uniform": {
+     "n": 1195,
+     "rmsd_mean": 3.7229242013588113,
+     "rmsd_min": 1.2213711738586426,
+     "rmsd_max": 6.446105480194092,
+     "pctile_mean": 0.5116641235351562
+    },
+    "prior": {
+     "n": 1106,
+     "rmsd_mean": 3.4701500510220935,
+     "rmsd_min": 1.104391098022461,
+     "rmsd_max": 5.993402481079102,
+     "pctile_mean": 0.41799484252929686
+    },
+    "oracle_band": {
+     "n": 600,
+     "rmsd_mean": 1.68823779185613,
+     "rmsd_min": 0.9889189600944519,
+     "rmsd_max": 1.937143087387085,
+     "pctile_mean": 0.0050537109375
+    }
+   },
+   "ks_uniform": 0.02787856097999475,
+   "ks_all": 0.20910192185210918,
+   "ks_prior": 0.1396169817684787
+  },
+  {
+   "pdb": "6F3V",
+   "n_subset": 2946,
+   "n_full": 262144,
+   "frac": 0.01123809814453125,
+   "full_rmsd_mean": 3.5680500354865217,
+   "subset_rmsd_mean": 3.104870066198458,
+   "subset_minus_full": -0.4631799692880638,
+   "uniform_rmsd_mean": 3.571502318918305,
+   "uniform_minus_full": 0.003452283431783165,
+   "band_threshold_rmsd": 1.7762006521224976,
+   "band_pop_frac": 0.010009765625,
+   "strata": {
+    "uniform": {
+     "n": 1192,
+     "rmsd_mean": 3.571502318918305,
+     "rmsd_min": 1.2200042009353638,
+     "rmsd_max": 5.092612266540527,
+     "pctile_mean": 0.48186553955078126
+    },
+    "prior": {
+     "n": 1154,
+     "rmsd_mean": 3.4475006229232874,
+     "rmsd_min": 0.8279134631156921,
+     "rmsd_max": 5.1808977127075195,
+     "pctile_mean": 0.4633775329589844
+    },
+    "oracle_band": {
+     "n": 600,
+     "rmsd_mean": 1.518834553360939,
+     "rmsd_min": 0.8279134631156921,
+     "rmsd_max": 1.7762006521224976,
+     "pctile_mean": 0.0051556396484375
+    }
+   },
+   "ks_uniform": 0.017112373505662748,
+   "ks_all": 0.20547570295262643,
+   "ks_prior": 0.08853038344887348
+  },
+  {
+   "pdb": "6S0N",
+   "n_subset": 2805,
+   "n_full": 262144,
+   "frac": 0.010700225830078125,
+   "full_rmsd_mean": 3.2926315219337994,
+   "subset_rmsd_mean": 2.9174259348561633,
+   "subset_minus_full": -0.37520558707763607,
+   "uniform_rmsd_mean": 3.3029671793320317,
+   "uniform_minus_full": 0.010335657398232279,
+   "band_threshold_rmsd": 1.778691291809082,
+   "band_pop_frac": 0.010009765625,
+   "strata": {
+    "uniform": {
+     "n": 1191,
+     "rmsd_mean": 3.3029671793320317,
+     "rmsd_min": 1.2404245138168335,
+     "rmsd_max": 5.746631622314453,
+     "pctile_mean": 0.48483306884765626
+    },
+    "prior": {
+     "n": 1014,
+     "rmsd_mean": 3.264918948301432,
+     "rmsd_min": 1.1173503398895264,
+     "rmsd_max": 5.571483612060547,
+     "pctile_mean": 0.5016708374023438
+    },
+    "oracle_band": {
+     "n": 600,
+     "rmsd_mean": 1.56486337184906,
+     "rmsd_min": 0.8871535658836365,
+     "rmsd_max": 1.778691291809082,
+     "pctile_mean": 0.005060272216796875
+    }
+   },
+   "ks_uniform": 0.017988305848551656,
+   "ks_all": 0.22270707999108735,
+   "ks_prior": 0.0811201768984221
+  },
+  {
+   "pdb": "7N2I",
+   "n_subset": 2923,
+   "n_full": 262144,
+   "frac": 0.011150360107421875,
+   "full_rmsd_mean": 4.157245148031507,
+   "subset_rmsd_mean": 3.817312581670476,
+   "subset_minus_full": -0.33993256636103064,
+   "uniform_rmsd_mean": 4.189197986919345,
+   "uniform_minus_full": 0.03195283888783873,
+   "band_threshold_rmsd": 1.756933569908142,
+   "band_pop_frac": 0.010009765625,
+   "strata": {
+    "uniform": {
+     "n": 1196,
+     "rmsd_mean": 4.189197986919345,
+     "rmsd_min": 1.3938140869140625,
+     "rmsd_max": 7.414422988891602,
+     "pctile_mean": 0.5077275085449219
+    },
+    "prior": {
+     "n": 1127,
+     "rmsd_mean": 4.623574508008644,
+     "rmsd_min": 1.3002160787582397,
+     "rmsd_max": 7.373492240905762,
+     "pctile_mean": 0.62738525390625
+    },
+    "oracle_band": {
+     "n": 600,
+     "rmsd_mean": 1.5615923555692037,
+     "rmsd_min": 1.0274958610534668,
+     "rmsd_max": 1.756933569908142,
+     "pctile_mean": 0.005247344970703125
+    }
+   },
+   "ks_uniform": 0.033985558959552686,
+   "ks_all": 0.20238215850715233,
+   "ks_prior": 0.20781078863270852
+  },
+  {
+   "pdb": "8IS3",
+   "n_subset": 2874,
+   "n_full": 262144,
+   "frac": 0.01096343994140625,
+   "full_rmsd_mean": 3.080389843449666,
+   "subset_rmsd_mean": 2.8004279764227844,
+   "subset_minus_full": -0.27996186702688153,
+   "uniform_rmsd_mean": 3.057831660361593,
+   "uniform_minus_full": -0.02255818308807278,
+   "band_threshold_rmsd": 1.763143539428711,
+   "band_pop_frac": 0.010009765625,
+   "strata": {
+    "uniform": {
+     "n": 1196,
+     "rmsd_mean": 3.057831660361593,
+     "rmsd_min": 1.0086721181869507,
+     "rmsd_max": 5.885783672332764,
+     "pctile_mean": 0.4915765380859375
+    },
+    "prior": {
+     "n": 1078,
+     "rmsd_mean": 3.2233728301989566,
+     "rmsd_min": 0.7269909381866455,
+     "rmsd_max": 5.885783672332764,
+     "pctile_mean": 0.6070149230957032
+    },
+    "oracle_band": {
+     "n": 600,
+     "rmsd_mean": 1.527445712486903,
+     "rmsd_min": 0.5491545796394348,
+     "rmsd_max": 1.763143539428711,
+     "pctile_mean": 0.005213165283203125
+    }
+   },
+   "ks_uniform": 0.028982921587583643,
+   "ks_all": 0.20670025001902836,
+   "ks_prior": 0.14340555336125926
+  },
+  {
+   "pdb": "9UV5",
+   "n_subset": 2821,
+   "n_full": 262144,
+   "frac": 0.010761260986328125,
+   "full_rmsd_mean": 3.51259752354963,
+   "subset_rmsd_mean": 3.13511450258564,
+   "subset_minus_full": -0.3774830209639899,
+   "uniform_rmsd_mean": 3.4954454087812032,
+   "uniform_minus_full": -0.017152114768426596,
+   "band_threshold_rmsd": 1.8499315977096558,
+   "band_pop_frac": 0.010009765625,
+   "strata": {
+    "uniform": {
+     "n": 1195,
+     "rmsd_mean": 3.4954454087812032,
+     "rmsd_min": 1.2985270023345947,
+     "rmsd_max": 5.821794509887695,
+     "pctile_mean": 0.47691940307617187
+    },
+    "prior": {
+     "n": 1026,
+     "rmsd_mean": 3.5689256236567135,
+     "rmsd_min": 1.5789326429367065,
+     "rmsd_max": 5.6670098304748535,
+     "pctile_mean": 0.5234837341308594
+    },
+    "oracle_band": {
+     "n": 600,
+     "rmsd_mean": 1.6756384307146073,
+     "rmsd_min": 1.0328586101531982,
+     "rmsd_max": 1.8499315977096558,
+     "pctile_mean": 0.005268096923828125
+    }
+   },
+   "ks_uniform": 0.02830687965808054,
+   "ks_all": 0.21006390322442176,
+   "ks_prior": 0.08943863361202486
+  }
+ ],
+ "n_rows": 9,
+ "n_expected": 9,
+ "complete": true
+}

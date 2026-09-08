@@ -1,0 +1,110 @@
+{
+ "generated": "2026-09-05 21:35:49",
+ "python": "3.13.13 | packaged by conda-forge | (main, Apr  8 2026, 01:56:49) [MSC v.1944 64 bit (AMD64)]",
+ "python_short": "3.13.13",
+ "platform": "Windows-11-10.0.26200-SP0",
+ "machine": "AMD64",
+ "processor": "Intel64 Family 6 Model 189 Stepping 1, GenuineIntel",
+ "cpu_count": 8,
+ "packages": {
+  "numpy": "2.5.1",
+  "scipy": "1.18.0",
+  "torch": "2.13.0+cpu",
+  "openmm": "8.5.2",
+  "sklearn": "1.9.0",
+  "matplotlib": "3.11.1",
+  "pennylane": "0.45.1",
+  "Bio": "1.87",
+  "pandas": null,
+  "qiskit": null
+ },
+ "numpy_blas": {
+  "name": "scipy-openblas",
+  "found": true,
+  "version": "0.3.33.112.0",
+  "detection method": "pkgconfig",
+  "include directory": "C:/Users/runneradmin/AppData/Local/Temp/cibw-run-h1i__5an/cp313-win_amd64/build/venv/Lib/site-packages/scipy_openblas64/include",
+  "lib directory": "C:/Users/runneradmin/AppData/Local/Temp/cibw-run-h1i__5an/cp313-win_amd64/build/venv/Lib/site-packages/scipy_openblas64/lib",
+  "openblas configuration": "OpenBLAS 0.3.33.112.0  USE64BITINT DYNAMIC_ARCH NO_AFFINITY Haswell MAX_THREADS=24",
+  "pc file directory": "D:/a/numpy-release/numpy-release/.openblas"
+ },
+ "numpy_lapack": {
+  "name": "scipy-openblas",
+  "found": true,
+  "version": "0.3.33.112.0",
+  "detection method": "pkgconfig",
+  "include directory": "C:/Users/runneradmin/AppData/Local/Temp/cibw-run-h1i__5an/cp313-win_amd64/build/venv/Lib/site-packages/scipy_openblas64/include",
+  "lib directory": "C:/Users/runneradmin/AppData/Local/Temp/cibw-run-h1i__5an/cp313-win_amd64/build/venv/Lib/site-packages/scipy_openblas64/lib",
+  "openblas configuration": "OpenBLAS 0.3.33.112.0  USE64BITINT DYNAMIC_ARCH NO_AFFINITY Haswell MAX_THREADS=24",
+  "pc file directory": "D:/a/numpy-release/numpy-release/.openblas"
+ },
+ "numpy_compilers": {
+  "c": "19.44.35228",
+  "cython": "3.2.8",
+  "c++": "19.44.35228"
+ },
+ "torch_default_threads": 8,
+ "torch_interop": 8,
+ "torch_config": "ATen/Parallel:\n\tat::get_num_threads() : 8\n\tat::get_num_interop_threads() : 8\nOpenMP 2019\n\tomp_get_max_threads() : 8\nIntel(R) oneAPI Math Kernel Library Version 2026.1-Product Build 20260612 for Intel(R) 64 architecture applications\n\tmkl_get_max_threads() : 8\nIntel(R) MKL-DNN v3.12.0 (Git Hash 80afa71049cd69a3df32adcccb623b12cd7baa22)\nstd::thread::hardware_concurrency() : 8\nEnvironment variables:\n\tOMP_NUM_THREADS : [not set]\n\tMKL_NUM_THREADS : [not set]\nATen parallel backend: OpenMP\n",
+ "openmm_version_full": "8.5.2.dev-36a30cb",
+ "openmm_platforms": [
+  "Reference",
+  "CPU",
+  "OpenCL"
+ ],
+ "env_vars": {
+  "OMP_NUM_THREADS": null,
+  "MKL_NUM_THREADS": null,
+  "OPENBLAS_NUM_THREADS": null,
+  "OPENMM_CPU_THREADS": null,
+  "PYTHONHASHSEED": null,
+  "PYTHONIOENCODING": "utf-8"
+ },
+ "prod_cfg_key": "1fc9f2dcf489e2fb",
+ "prod_science": {
+  "k": 500,
+  "m": 75,
+  "penalty": "ramah",
+  "lam": 0.3,
+  "amber_k": 10.0,
+  "amber_steps": 0,
+  "amber": true,
+  "n_folds": 5,
+  "min_sep": 2,
+  "maxiter": 300,
+  "multi_start": true,
+  "project_grad": "exact",
+  "tie_break": "stable",
+  "torsion_window": 8,
+  "reference_precision": true,
+  "report_single_start_fit": false,
+  "quantum": false,
+  "legacy": false,
+  "vqe_qubits": 7,
+  "vqe_layers": 3,
+  "vqe_iters": 50,
+  "vqe_seed": 0,
+  "legacy_top": 5,
+  "dev_mode": ""
+ },
+ "backends": {
+  "amber": "core.amber",
+  "data": "core.data",
+  "energy": "core.energy",
+  "geometry": "core.geometry",
+  "legacy": "core.energy",
+  "numerics": "core.geometry",
+  "predict": "core.predict",
+  "project": "core.project",
+  "quantum": "core.quantum"
+ },
+ "determinism_notes": {
+  "numpy_blas_kabsch": "bit-identical at every thread count tested",
+  "openmm_amber_threads1": "bit-identical single point and converged minimisation",
+  "openmm_amber_threadsN": "NOT bit-identical; core/amber.py documents 3.0e-4 relative on a converged run",
+  "torch_distogram": "NOT bit-identical across torch.set_num_threads; prob up to 2.0e-6, risk up to 1.3e-4 over 126 targets; the committed s12/cache/disto_*.npz were written at the default 8 threads",
+  "pinned_constants": "all five reproduce identically at torch threads 1, 2 and 8"
+ },
+ "git_head": "a5382c26432b2cfd7a1eca3f17d43697713d6136",
+ "git_status_clean": false
+}

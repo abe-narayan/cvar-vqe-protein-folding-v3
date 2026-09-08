@@ -1,0 +1,71 @@
+{
+ "n_targets": 20,
+ "variants": {
+  "legacy": {
+   "rho_all": 0.19779811404508124,
+   "rho_low_decile": 0.04335664335664335,
+   "log10_range": 2.144811708661877,
+   "native_percentile": 0.3191666666666667,
+   "descent_percentile": 0.30791666666666667,
+   "argmin_rmsd": 4.119584047897156,
+   "rmsd_low_decile_mean": 4.456240663966615,
+   "rho_all_frac_positive": 0.8,
+   "n_targets_with_data": 20
+  },
+  "raw": {
+   "rho_all": -0.035641855395641055,
+   "rho_low_decile": -0.08811188811188811,
+   "log10_range": 16.058772939569103,
+   "native_percentile": 0.3820833333333333,
+   "descent_percentile": 0.4845833333333333,
+   "argmin_rmsd": 5.201876785462728,
+   "rmsd_low_decile_mean": 4.963897322499578,
+   "rho_all_frac_positive": 0.45,
+   "n_targets_with_data": 20
+  },
+  "capped": {
+   "rho_all": -0.035755365144635655,
+   "rho_low_decile": -0.08811188811188811,
+   "log10_range": 10.677024788853585,
+   "native_percentile": 0.3754166666666666,
+   "descent_percentile": 0.47958333333333336,
+   "argmin_rmsd": 5.201876785462728,
+   "rmsd_low_decile_mean": 4.963897322499578,
+   "rho_all_frac_positive": 0.45,
+   "n_targets_with_data": 20
+  },
+  "softcore": {
+   "rho_all": -0.035641855395641055,
+   "rho_low_decile": -0.08811188811188811,
+   "log10_range": 1.8051939914236423,
+   "native_percentile": 0.3820833333333333,
+   "descent_percentile": 0.4845833333333333,
+   "argmin_rmsd": 5.201876785462728,
+   "rmsd_low_decile_mean": 4.963897322499578,
+   "rho_all_frac_positive": 0.45,
+   "n_targets_with_data": 20
+  },
+  "nonclash": {
+   "rho_all": 0.01500714717717743,
+   "rho_low_decile": 0.026923076923076918,
+   "log10_range": 2.4166433892026746,
+   "native_percentile": 0.39875,
+   "descent_percentile": 0.4833333333333333,
+   "argmin_rmsd": 4.7814666340295835,
+   "rmsd_low_decile_mean": 4.715058453439508,
+   "rho_all_frac_positive": 0.6,
+   "n_targets_with_data": 20
+  },
+  "minimised": {
+   "rho_all": 0.10339130434782606,
+   "rho_low_decile": NaN,
+   "log10_range": 2.827545145982284,
+   "native_percentile": NaN,
+   "descent_percentile": NaN,
+   "argmin_rmsd": 4.505616630804508,
+   "rmsd_low_decile_mean": NaN,
+   "rho_all_frac_positive": 0.6,
+   "n_targets_with_data": 20
+  }
+ }
+}

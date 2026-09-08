@@ -1,0 +1,39 @@
+{
+ "openmm_version": "8.5.2.dev-36a30cb",
+ "platforms": [
+  "Reference",
+  "CPU",
+  "OpenCL"
+ ],
+ "forcefield_xml_in_source": [
+  "amber14/protein.ff14SB.xml",
+  "implicit/gbn2.xml"
+ ],
+ "K_MODERATE": 10.0,
+ "K_STRONG": 100.0,
+ "K_WEAK": 1.0,
+ "MEMO_SIZE": 512,
+ "AMBER_TERMS": [
+  "bond",
+  "angle",
+  "torsion",
+  "nonbonded",
+  "solvation"
+ ],
+ "builder_class": "AmberHamiltonian",
+ "system_attr": "system",
+ "forces_in_system": [
+  "HarmonicBondForce",
+  "PeriodicTorsionForce",
+  "NonbondedForce",
+  "HarmonicAngleForce",
+  "CustomGBForce",
+  "CustomExternalForce"
+ ],
+ "n_particles": 237,
+ "has_CustomGBForce_GBn2": true,
+ "has_NonbondedForce": true,
+ "nonbonded_method": 0,
+ "nonbonded_cutoff_nm": 1.0,
+ "total_charge": 3.0
+}

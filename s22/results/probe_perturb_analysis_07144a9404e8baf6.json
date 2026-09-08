@@ -1,0 +1,50 @@
+{
+ "source": "probe_perturb_07144a9404e8baf6.json",
+ "n_targets": 30,
+ "n_trials": 3780,
+ "sensitivity": {
+  "A_random": {
+   "n": 1080,
+   "spearman_legacy": 0.2713632840352878,
+   "spearman_amber": 0.14893066116832596
+  },
+  "B_compactness": {
+   "n": 540,
+   "spearman_legacy": 0.45429442487800026,
+   "spearman_amber": -0.4441944054830245
+  },
+  "C_contact_local": {
+   "n": 540,
+   "spearman_legacy": 0.11811776764725891,
+   "spearman_amber": 0.2030932599147136
+  },
+  "D_steric_pair": {
+   "n": 540,
+   "spearman_legacy": -0.2143746111002515,
+   "spearman_amber": -0.19052039120695052
+  },
+  "E_local_residue": {
+   "n": 1080,
+   "spearman_legacy": 0.3792931299991186,
+   "spearman_amber": 0.15727280546966016
+  }
+ },
+ "F_B1": {
+  "R_legacy": 1.337809060569681,
+  "R_amber": 0.25713032249449935,
+  "ratio": 0.19220255720573845,
+  "ci95": [
+   0.041426388995528064,
+   0.5141494231835316
+  ],
+  "verdict": "REFUTED"
+ },
+ "F_B2": {
+  "point": 0.010100019394975734,
+  "ci95": [
+   -0.1864578702060607,
+   0.19702224156354825
+  ],
+  "verdict": "NOT_MEASURED"
+ }
+}

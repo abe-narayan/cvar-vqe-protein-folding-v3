@@ -1,0 +1,41 @@
+{
+ "rows": [
+  {
+   "pdb": "2MK7",
+   "n": 9,
+   "atoms": 145,
+   "ms_distinct": 10.77
+  },
+  {
+   "pdb": "1CS9",
+   "n": 9,
+   "atoms": 127,
+   "ms_distinct": 8.33
+  },
+  {
+   "pdb": "9UV5",
+   "n": 9,
+   "atoms": 136,
+   "ms_distinct": 9.72
+  },
+  {
+   "pdb": "1A13",
+   "n": 14,
+   "atoms": 237,
+   "ms_distinct": 23.29
+  },
+  {
+   "pdb": "1N9U",
+   "n": 10,
+   "atoms": 182,
+   "ms_distinct": 14.05
+  },
+  {
+   "pdb": "8HVS",
+   "n": 10,
+   "atoms": 213,
+   "ms_distinct": 19.71
+  }
+ ],
+ "note": "ff14SB/GBn2 single point, memo miss, threads=1, CPU platform"
+}

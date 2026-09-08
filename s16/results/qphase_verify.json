@@ -1,0 +1,31 @@
+{
+ "checks": {
+  "blend_hoist_max_abs_diff": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "noise_hoist_max_abs_diff": 0.0,
+  "rho_blend0_vs_base": 1.0,
+  "rho_blend1_vs_truth": 1.0,
+  "ca_rebuild_max_abs_err": 3.4006348048620794e-07,
+  "tilt_samples_argmin_equals_untrained": true,
+  "tilt_samples_subset_of_untrained": true,
+  "p0_vs_empirical_l1": 0.9196999959301548,
+  "p0_sum": 1.0,
+  "p0_entropy_bits": 12.987459427001813,
+  "expected_distinct_closed_form": 1526.4096463036467,
+  "expected_distinct_simulated": 1532.25,
+  "hamil_argmin_ties_1CS9": 2,
+  "stable_seed_check": 956539662,
+  "instrument": "not re-derived here (cache read); see s15 verify"
+ },
+ "_written": "2026-09-06 06:03:59",
+ "instrument_selfcheck": {
+  "shipped": 3.4540004952559396,
+  "pool_best": 1.7108244199364904,
+  "top75_best": 2.3061526409453816,
+  "synthesis_fit": 3.2040761603809194,
+  "n_zero_recall": 18
+ }
+}

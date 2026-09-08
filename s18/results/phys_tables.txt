@@ -1,0 +1,266 @@
+====================================================================================================
+PHASE 6 -- `leg_contact` AS A TERM IN THE OBJECTIVE.   n = 126
+====================================================================================================
+  degree-1 object      : s18.exp_anova(provisional)  cfg 286331752002a94d
+  normalisation        : s = sd_pool(E_le1)/sd_pool(E_contact) over the K=500 retrieval pool
+  ladder (PRE-REGISTERED, not extended): [-1.0, -0.5, 0.0, 0.5, 1.0, 2.0]   PRIMARY lam_c = 1.0
+
+  THE SCALE (native-free, K=500 ranker-neutral pool).  s = sd(E_le1)/sd(E_contact)
+    sd(E_le1)     median 432.6   sd(E_contact) median 0.8426
+    s             median 496.8   IQR [170.4, 1048]   degenerate 0
+    SENSITIVITY: the same scale on the shipped top-75 is median 151.2  (ratio to pool 0.687)
+
+  CROSS-INSTRUMENT CHECK (gate G2b).  My `full` arm and the coordinator's alpha = 0 arm
+  are the SAME objective, the SAME dhat and the SAME start, optimised by different code.
+    n = 126   mine 3.606   objceil 3.610   mean |diff| 0.0066   max |diff| 0.6277
+    start (projection): mine 3.2126  objceil 3.2126  max |diff| 0.00e+00
+
+----------------------------------------------------------------------------------------------------
+  6a  OBJECTIVE ALIGNMENT -- no optimisation.  K = 500 ranker-neutral pool.
+      `sel` is `argmin_tied` (the tie set is AVERAGED, never read in cache order).
+----------------------------------------------------------------------------------------------------
+  objective                   rho glob  rho band  sel glob  sel band    band sel vs MATCHED RANDOM [95% fold CI]      W/L
+  full                           0.556     0.128     3.510     2.643      +0.0528 [-0.0373,+0.1569]    56/67
+  le1                            0.351     0.063     3.974     2.703      +0.1131 [+0.0048,+0.2217]    53/69
+  lc-100                         0.290    -0.039     4.364     2.752      +0.1626 [+0.1056,+0.2284]    45/79
+  lc-050                         0.323    -0.009     4.408     2.776      +0.1859 [+0.1450,+0.2201]    43/80
+  lc+000                         0.351     0.063     3.974     2.703      +0.1131 [+0.0048,+0.2217]    53/69
+  lc+050                         0.282     0.029     4.127     2.703      +0.1130 [+0.0248,+0.2085]    52/72
+  lc+100                         0.124     0.039     4.530     2.741      +0.1514 [+0.0746,+0.2288]    44/79
+  lc+200                        -0.060     0.051     4.906     2.715      +0.1250 [+0.0492,+0.1951]    48/75
+  contact                       -0.176     0.071     5.634     2.719      +0.1298 [+0.0164,+0.2339]    51/71
+  nulllc+100                     0.093    -0.012     4.635     2.810      +0.2206 [+0.1696,+0.2795]    38/82  [CONTROL]
+  rand                          -0.000     0.009     4.235     2.590      +0.0000 [+0.0000,+0.0000]     0/0  [CONTROL]
+
+----------------------------------------------------------------------------------------------------
+  6b  LOCAL REFINEMENT AND FINAL RMSD -- identical start (the projected coordinate
+      average).  Baseline column is lam_c = 0, i.e. DEGREE-1 DISTANCE ONLY.
+----------------------------------------------------------------------------------------------------
+      reference scale (coordinator, n=126):  coordinate average (start)             3.048
+      reference scale (coordinator, n=126):  alpha=0 (deployed distogram)           3.610
+      reference scale (coordinator, n=126):  shuffled (direction destroyed)         2.609
+      reference scale (coordinator, n=126):  isotropic (matched noise)              2.573
+      reference scale (coordinator, n=126):  alpha=0.5                              2.448
+      reference scale (coordinator, n=126):  alpha=1 (perfect distances)            1.152
+
+  arm                           RMSD   median   vs lam_c = 0 [95% fold CI]       W/L     objLE1    objFULL     objCON    disp   share
+  coordinate average           3.048    2.837   (the structure the pipeline builds)
+  start (projection)           3.213    2.966   -1.341 [-1.463,-1.154]   100/26
+  lc-100                       5.868    5.731   +1.314 [+0.958,+1.728]    27/99     -838.4     1143.3      10.39    5.67    0.94
+  lc-050                       5.623    5.492   +1.069 [+0.713,+1.361]    34/92    -1000.0     1081.0       9.66    5.31    0.88
+  lc+000                       4.554    4.310   +0.000 [+0.000,+0.000]     0/0    -1408.2      931.3       1.85    4.62
+  lc+050                       4.603    4.319   +0.049 [-0.105,+0.208]    55/71    -1204.7      860.8      -1.32    5.56    0.66
+  lc+100                       4.662    4.276   +0.108 [-0.166,+0.377]    56/70    -1119.0      854.6      -1.60    5.69    0.85  <-- PRIMARY
+  lc+200                       4.773    4.519   +0.219 [-0.175,+0.597]    57/69    -1034.8      933.9      -1.68    5.90    0.91
+  full                         3.606    3.400   -0.948 [-1.160,-0.753]    88/38     -253.4       56.9       1.13    5.05
+  nulllc+100                   4.778    4.498   +0.224 [-0.085,+0.468]    47/79    -1110.9     1031.8       0.79    5.86  [CONTROL]
+  rand_move                    4.830    4.623   +0.276 [+0.083,+0.494]    46/80      -15.2      942.1       1.19    5.56  [CONTROL]
+
+  KEY CONTRASTS (negative = the first arm is better)
+    lc+100       vs lc+000         4.662 vs 4.554   +0.108 [-0.166,+0.377]  med +0.199   56W/70L   PRIMARY vs degree-1 only -- THE PRE-REGISTERED TEST
+    lc+100       vs nulllc+100     4.662 vs 4.778   -0.116 [-0.455,+0.164]  med -0.041   67W/59L   PRIMARY vs its ZERO-INFORMATION control (shuffled MJ): does the SEQUENCE information in MJ do anything?
+    lc+100       vs rand_move      4.662 vs 4.830   -0.167 [-0.390,+0.038]  med -0.185   72W/54L   PRIMARY vs a MATCHED-RANDOM move of its own magnitude
+    full         vs lc+000         3.606 vs 4.554   -0.948 [-1.160,-0.753]  med -0.668   88W/38L   full distance vs degree-1 only
+    full         vs start          3.606 vs 3.213   +0.394 [+0.255,+0.523]  med +0.270   40W/86L   full distance vs the START (L30's question, reproduced)
+    lc+000       vs start          4.554 vs 3.213   +1.341 [+1.154,+1.463]  med +1.182   26W/100L   degree-1 only vs the START
+
+----------------------------------------------------------------------------------------------------
+  6c  CANDIDATE GENERATION, COVERAGE AND ENSEMBLE DIVERSITY.
+      m = 8 starts, the first top-75 windows in RETRIEVAL order (native-free,
+      identical across arms).  `ens` = RMSD of the ensemble's coordinate average.
+----------------------------------------------------------------------------------------------------
+  arm                         set mean  set best   n<2A  diversity  ens RMSD   median   ens vs le1 [fold CI]           W/L
+  starts                         3.481     2.904   1.76      1.997     3.177    2.935   -1.251 [-1.337,-1.146]  102/24
+  le1                            4.558     4.226   0.33      1.053     4.427    4.124   +0.000 [+0.000,+0.000]    0/0
+  lc+100                         4.782     4.013   0.13      2.372     4.468    4.235   +0.041 [-0.339,+0.270]   64/62
+  full                           3.654     3.428   1.21      1.246     3.508    3.300   -0.919 [-1.101,-0.722]   91/35
+  nulllc+100                     4.797     3.973   0.07      2.452     4.489    4.182   +0.062 [-0.163,+0.182]   56/70  [CONTROL]
+
+====================================================================================================
+PHASE 6 (DECLARED EXTENSION) -- `leg_contact` ON THE DEPLOYED OBJECTIVE AND ON THE
+RESIDUE-ADDITIVE ANOVA.  n = 126.  Same term, same sign, same native-free pool-sd
+normalisation recomputed against each base's own pool sd; ladder cut to {0, +1}.
+====================================================================================================
+
+  base = E_full  (the DEPLOYED objective)
+    pool scale s median 926.6
+  arm                           RMSD   median   vs lam_c = 0 [95% fold CI]       W/L    objBASE     objCON    disp   share
+  full_lc+000                  3.606    3.400   +0.000 [+0.000,+0.000]     0/0       56.9       1.13    5.05
+  full_lc+100                  4.329    4.136   +0.722 [+0.541,+0.893]    38/88      301.5      -1.74    6.86    0.94  <-- PRIMARY
+  full_nulllc+100              4.361    4.073   +0.755 [+0.620,+0.854]    39/87      301.9       0.89    6.87    0.85  [CONTROL]
+
+  base = E_res   (MATH's residue-additive ANOVA -- the BRIEF's object)
+    pool scale s median 495.2
+  arm                           RMSD   median   vs lam_c = 0 [95% fold CI]       W/L    objBASE     objCON    disp   share
+  res_lc+000                   4.265    3.931   +0.000 [+0.000,+0.000]     0/0    -1184.8       1.62    4.62
+  res_lc+100                   4.808    4.515   +0.543 [+0.125,+0.835]    48/78     -940.4      -1.67    6.02    0.91  <-- PRIMARY
+  res_nulllc+100               4.647    4.211   +0.382 [+0.099,+0.595]    46/80     -944.2       0.83    5.93    0.80  [CONTROL]
+
+  (for MATH/EXPERIMENT, not a PHYSICS claim)  E_res vs E_full, same start, same optimiser:
+    4.265 vs 3.606   +0.658 [+0.483,+0.828]  38W/88L
+
+====================================================================================================
+PHASE 8 -- THE CAUSAL DOWNSTREAM COMPARISON, on IDENTICAL structures.  n = 126
+====================================================================================================
+  Every filter sees the SAME shipped top-75 windows and drops the worst 50% by its
+  own score; the survivors go through the SAME averaging operator.  `rand` is the
+  matched-random gate of the same COUNT (3 stable_rng draws); `helix` is the
+  zero-information score (Ca-RMSD to a constant ideal alpha-helix).
+
+  -- ENSEMBLE / OUTPUT RMSD (the answer the pipeline emits) ------------------------
+  filter                         avg   median   vs NO FILTER [95% fold CI]       W/L     proj     m  setMean  setBest     div
+  none                         3.050    2.822   +0.000 [+0.000,+0.000]     0/0    3.213    75    3.551    2.306   2.486
+  leg_torsion@0.50             3.105    2.902   +0.055 [+0.026,+0.081]    46/80    3.255    38    3.523    2.501   2.214
+  leg_contact@0.50             3.116    2.862   +0.067 [+0.014,+0.119]    54/72    3.275    38    3.589    2.468   2.489
+  legacy@0.50                  3.126    2.954   +0.076 [+0.021,+0.138]    49/77    3.276    38    3.527    2.561   2.213
+  amber_sp@0.50                3.099    2.922   +0.050 [+0.011,+0.081]    53/73    3.252    38    3.553    2.444   2.394
+  rand@0.50                    3.063    2.855   +0.013 [+0.003,+0.024]    56/70    3.220    38    3.554    2.422   2.484  [CONTROL]
+  helix@0.50                   3.188    3.131   +0.139 [+0.069,+0.193]    48/78    3.329    38    3.538    2.749   2.036  [CONTROL]
+
+  -- the same arms on the PROJECTED output (the incumbent's emitted structure) ------
+  none                         3.213    2.966   +0.000 [+0.000,+0.000]     0/0
+  leg_torsion@0.50             3.255    2.998   +0.043 [-0.004,+0.085]    52/74
+  leg_contact@0.50             3.275    3.069   +0.062 [+0.001,+0.129]    58/68
+  legacy@0.50                  3.276    3.144   +0.063 [+0.029,+0.097]    50/76
+  amber_sp@0.50                3.252    3.063   +0.040 [-0.013,+0.085]    53/73
+  rand@0.50                    3.220    3.023   +0.007 [-0.008,+0.021]    53/73  [CONTROL]
+  helix@0.50                   3.329    3.180   +0.116 [+0.029,+0.190]    48/78  [CONTROL]
+
+  -- NEAR-NATIVE RECALL (sub-2.0 A members kept), n = 55 targets that HAVE one; ONE denominator
+  filter                       recall   random   recall - random [fold CI]        W/L
+  leg_torsion@0.50              0.568    0.485   +0.083 [+0.019,+0.135]    11/31
+  leg_contact@0.50              0.476    0.485   -0.009 [-0.064,+0.054]    23/16
+  legacy@0.50                   0.509    0.485   +0.024 [-0.000,+0.054]    15/26
+  amber_sp@0.50                 0.547    0.485   +0.062 [+0.032,+0.098]    12/29
+  rand@0.50                     0.485    0.485   +0.000 [+0.000,+0.000]     0/0
+  helix@0.50                    0.493    0.485   +0.008 [-0.072,+0.106]    15/28
+
+  -- AMBER RESTRAINED REPAIR, k = 30, N/CA/C (the incumbent protocol) ---------------
+     THE CONVERGENCE GATE was declared before use: final energy finite and <= 1000
+     kcal/mol.  Every arm is compared to ITS OWN GATED INPUT, never to the ungated
+     instrument-wide input.  RMSD and validity are printed together, on the SAME
+     structures, because neither is admissible alone.
+
+  arm                       excl    RMSD   input  vs its OWN gated input [fold CI]     W/L  CaDisp
+  none                         3   3.183   3.049   +0.133 [+0.112,+0.165]      24/99   0.713
+      excluded: 1D6X 2NB7 7BX2
+  leg_torsion@0.50             3   3.218   3.097   +0.121 [+0.099,+0.150]      19/104   0.638
+      excluded: 1D6X 2NB7 6QAX
+  leg_contact@0.50             1   3.210   3.086   +0.124 [+0.108,+0.151]      22/103   0.700
+      excluded: 9KAR
+  legacy@0.50                  1   3.260   3.127   +0.133 [+0.100,+0.173]      19/106   0.653
+      excluded: 8TXS
+  rand@0.50                    2   3.211   3.070   +0.141 [+0.107,+0.185]      23/101   0.718
+      excluded: 1G89 1MF6
+
+  -- VALIDITY on the SAME structures, each AMBER arm above ITS OWN GATED INPUT -----
+  structure                         ramaFav    ramaOut    clash<2  clash<2.6   minHeavy        cis       wdev
+  none  (amb30)                       0.875      0.041       0.00       0.03      2.809      0.074       21.5
+    ^ its own gated input             0.837      0.080       5.39      15.28      2.116      0.000        0.0
+  leg_torsion@0.50  (amb30)           0.894      0.037       0.00       0.00      2.833      0.056       18.7
+    ^ its own gated input             0.853      0.065       5.51      14.89      2.135      0.000        0.0
+  leg_contact@0.50  (amb30)           0.864      0.047       0.00       0.01      2.828      0.067       21.0
+    ^ its own gated input             0.844      0.075       4.74      13.69      2.160      0.000        0.0
+  legacy@0.50  (amb30)                0.890      0.045       0.00       0.01      2.805      0.051       17.7
+    ^ its own gated input             0.873      0.059       6.79      17.81      2.062      0.000        0.0
+  rand@0.50  (amb30)                  0.887      0.037       0.00       0.02      2.795      0.077       23.2
+    ^ its own gated input             0.846      0.080       5.71      16.47      2.050      0.000        0.0
+
+  -- VALIDITY of the un-repaired coordinate average of each filter's survivors -----
+  structure                         ramaFav    ramaOut    clash<2  clash<2.6   minHeavy        cis       wdev   spacing
+  none  (avg)                         0.836      0.081       5.61      15.88      2.096      0.000        0.0     2.949
+  leg_torsion@0.50  (avg)             0.851      0.066       5.62      15.18      2.115      0.000        0.0     3.058
+  leg_contact@0.50  (avg)             0.842      0.076       4.77      13.87      2.151      0.000        0.0     2.985
+  legacy@0.50  (avg)                  0.871      0.059       6.76      17.79      2.057      0.000        0.0     3.033
+  amber_sp@0.50  (avg)                0.857      0.074       4.92      14.71      2.147      0.000        0.0     3.008
+  rand@0.50  (avg)                    0.849      0.078       5.63      16.25      2.051      0.000        0.0     2.964
+  helix@0.50  (avg)                   0.879      0.062       6.46      16.74      2.148      0.000        0.0     3.060
+
+
+  ###### SHAPE ONLY: the same filters at f = 0.25 (no projection, no AMBER).
+  ###### The PRE-REGISTERED PRIMARY is f = 0.50 above and nothing here may be promoted over it. ######
+
+====================================================================================================
+PHASE 8 -- THE CAUSAL DOWNSTREAM COMPARISON, on IDENTICAL structures.  n = 126
+====================================================================================================
+  Every filter sees the SAME shipped top-75 windows and drops the worst 25% by its
+  own score; the survivors go through the SAME averaging operator.  `rand` is the
+  matched-random gate of the same COUNT (3 stable_rng draws); `helix` is theC:\Users\abena\Protein-Folding-Algorithm\s18\phys_report.py:314: RuntimeWarning: Mean of empty slice
+  pj = np.nanmean(_g(rows, ("arms", a, "proj_rmsd")))
+
+  zero-information score (Ca-RMSD to a constant ideal alpha-helix).
+
+  -- ENSEMBLE / OUTPUT RMSD (the answer the pipeline emits) ------------------------
+  filter                         avg   median   vs NO FILTER [95% fold CI]       W/L     proj     m  setMean  setBest     div
+  none                         3.050    2.822   +0.000 [+0.000,+0.000]     0/0    3.213    75    3.551    2.306   2.486
+  leg_torsion@0.25             3.092    2.855   +0.042 [+0.030,+0.050]    44/82      nan    56    3.541    2.400   2.345
+  leg_contact@0.25             3.079    2.823   +0.029 [+0.002,+0.054]    51/75      nan    56    3.563    2.387   2.480
+  legacy@0.25                  3.078    2.862   +0.028 [+0.000,+0.065]    60/66      nan    56    3.531    2.416   2.349
+  amber_sp@0.25                3.079    2.874   +0.029 [+0.009,+0.050]    54/72      nan    56    3.552    2.362   2.435
+  rand@0.25                    3.052    2.827   +0.002 [-0.001,+0.005]    65/61      nan    56    3.547    2.340   2.487  [CONTROL]
+  helix@0.25                   3.118    2.938   +0.068 [+0.033,+0.100]    45/81      nan    56    3.535    2.523   2.242  [CONTROL]
+
+  -- the same arms on the PROJECTED output (the incumbent's emitted structure) ------
+  none                         3.213    2.966   +0.000 [+0.000,+0.000]     0/0
+
+  -- NEAR-NATIVE RECALL (sub-2.0 A members kept), n = 55 targets that HAVE one; ONE denominator
+  filter                       recall   random   recall - random [fold CI]        W/L
+  leg_torsion@0.25              0.754    0.757   -0.003 [-0.057,+0.054]    12/25
+  leg_contact@0.25              0.750    0.757   -0.007 [-0.051,+0.025]    22/19
+  legacy@0.25                   0.752    0.757   -0.005 [-0.053,+0.045]    14/28
+  amber_sp@0.25                 0.770    0.757   +0.013 [-0.025,+0.040]    12/27
+  rand@0.25                     0.757    0.757   +0.000 [+0.000,+0.000]     0/0
+  helix@0.25                    0.692    0.757   -0.065 [-0.117,-0.018]    15/27
+
+  -- AMBER RESTRAINED REPAIR, k = 30, N/CA/C (the incumbent protocol) ---------------
+     THE CONVERGENCE GATE was declared before use: final energy finite and <= 1000
+     kcal/mol.  Every arm is compared to ITS OWN GATED INPUT, never to the ungated
+     instrument-wide input.  RMSD and validity are printed together, on the SAME
+     structures, because neither is admissible alone.
+
+  arm                       excl    RMSD   input  vs its OWN gated input [fold CI]     W/L  CaDisp
+  none                         3   3.183   3.049   +0.133 [+0.112,+0.165]      24/99   0.713
+      excluded: 1D6X 2NB7 7BX2
+
+  -- VALIDITY on the SAME structures, each AMBER arm above ITS OWN GATED INPUT -----
+  structure                         ramaFav    ramaOut    clash<2  clash<2.6   minHeavy        cis       wdev
+  none  (amb30)                       0.875      0.041       0.00       0.03      2.809      0.074       21.5
+    ^ its own gated input             0.837      0.080       5.39      15.28      2.116      0.000        0.0
+
+  -- VALIDITY of the un-repaired coordinate average of each filter's survivors -----
+  structure                         ramaFav    ramaOut    clash<2  clash<2.6   minHeavy        cis       wdev   spacing
+  none  (avg)                         0.836      0.081       5.61      15.88      2.096      0.000        0.0     2.949
+  leg_torsion@0.25  (avg)             0.860      0.069       5.91      16.14      2.087      0.000        0.0     3.004
+  leg_contact@0.25  (avg)             0.844      0.073       4.68      14.20      2.147      0.000        0.0     2.973
+  legacy@0.25  (avg)                  0.857      0.072       6.37      16.92      2.067      0.000        0.0     2.988
+  amber_sp@0.25  (avg)                0.848      0.068       5.49      15.49      2.102      0.000        0.0     2.978
+  rand@0.25  (avg)                    0.838      0.083       5.44      15.60      2.111      0.000        0.0     2.955
+  helix@0.25  (avg)                   0.872      0.060       6.80      17.40      2.098      0.000        0.0     2.998
+
+====================================================================================================
+PHASE 10 (SECONDARY) -- CHEAPER SPACING RESTORATION.  n = 126
+====================================================================================================
+  The averaging operator contracts Ca-Ca spacing to 2.949 A against an ideal 3.80 A
+  (L28), Spearman(spacing, cis) = -0.949, and the incumbent projection costs +0.164 A
+  to fix it.  The question is whether anything cheaper restores the spacing.
+
+  arm                           RMSD   median   vs the AVERAGE [fold CI]         W/L  spacing    disp   vs its MATCHED RANDOM
+  none                         3.050    2.822   +0.000 [+0.000,+0.000]     0/0    2.949   0.000
+  scale_uniform                4.090    3.719   +1.040 [+0.871,+1.180]    26/100    3.800   2.194   +0.175 [+0.015,+0.347]
+  bond_norm                    3.921    3.765   +0.871 [+0.715,+1.006]    26/100    3.800   2.004   +0.137 [-0.020,+0.308]
+  segment                      3.919    3.716   +0.869 [+0.724,+1.002]    28/98    3.791   1.997   +0.078 [-0.107,+0.298]
+  minproj                      3.236    2.993   +0.186 [+0.161,+0.222]     9/117    3.800   0.801   +0.038 [+0.022,+0.050]
+  torsion_rebuild              3.835    3.673   +0.785 [+0.699,+0.871]    34/92    3.804   2.174   -0.154 [-0.209,-0.111]
+  proj                         3.213    2.966   +0.163 [+0.132,+0.205]    24/102    3.804   0.840   +0.009 [-0.014,+0.033]
+  proj_fit                     3.205    2.966   +0.155 [+0.137,+0.184]    27/99    3.804   0.813
+  helix                        4.070    4.243   +1.020 [+0.773,+1.227]    32/94    3.804   2.551  [ZERO-INFO CONTROL]
+
+  -- against the INCUMBENT PROJECTION (the +0.164 A reference) ----------------------
+  none                         3.050    2.822   -0.163 [-0.205,-0.132]   102/24
+  scale_uniform                4.090    3.719   +0.877 [+0.700,+1.040]    34/92
+  bond_norm                    3.921    3.765   +0.709 [+0.547,+0.867]    35/91
+  segment                      3.919    3.716   +0.706 [+0.555,+0.858]    34/92
+  minproj                      3.236    2.993   +0.023 [+0.006,+0.037]    55/71
+  torsion_rebuild              3.835    3.673   +0.622 [+0.560,+0.716]    43/83
+  proj_fit                     3.205    2.966   -0.007 [-0.024,+0.007]    67/59
+  helix                        4.070    4.243   +0.857 [+0.624,+1.066]    35/91

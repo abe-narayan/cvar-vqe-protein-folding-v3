@@ -1,0 +1,1 @@
+{"complete": true, "n_rows": 16, "required_keys": ["pdb", "n_qubits", "R_score_argmin", "R_score_tailavg", "canon_mean", "canon_sd", "gate1_checks", "gate1_fired", "gate2_checks", "gate2_fired", "perm_rows", "random_control", "sa_control", "untrained_argmin_rr", "untrained_tailavg_rr"], "time": "2026-09-07 23:09:02"}

@@ -1,0 +1,201 @@
+{
+ "rows": [
+  {
+   "pdb": "1A13",
+   "fold": 4,
+   "seconds": 1.4,
+   "sha256_16": "9ba33632ea134ac8",
+   "prob": {
+    "bit": false,
+    "max_abs_diff": 7.450580596923828e-07,
+    "n_elem_diff": 102
+   },
+   "i": {
+    "bit": true,
+    "max_abs_diff": 0.0,
+    "n_elem_diff": 0
+   },
+   "j": {
+    "bit": true,
+    "max_abs_diff": 0.0,
+    "n_elem_diff": 0
+   },
+   "expected": {
+    "bit": false,
+    "max_abs_diff": 3.814697265625e-06,
+    "n_elem_diff": 5
+   },
+   "sd": {
+    "bit": false,
+    "max_abs_diff": 5.364418029785156e-07,
+    "n_elem_diff": 6
+   },
+   "risk": {
+    "bit": false,
+    "max_abs_diff": 1.1444091796875e-05,
+    "n_elem_diff": 10809
+   },
+   "shipped_rmsd_cached": 2.8480167388916016,
+   "shipped_rmsd_recomputed": 2.8480167388916016,
+   "argmin_same": true
+  },
+  {
+   "pdb": "1A1P",
+   "fold": 1,
+   "seconds": 0.0,
+   "sha256_16": "b9b5d96f661ca907",
+   "prob": {
+    "bit": false,
+    "max_abs_diff": 8.940696716308594e-07,
+    "n_elem_diff": 430
+   },
+   "i": {
+    "bit": true,
+    "max_abs_diff": 0.0,
+    "n_elem_diff": 0
+   },
+   "j": {
+    "bit": true,
+    "max_abs_diff": 0.0,
+    "n_elem_diff": 0
+   },
+   "expected": {
+    "bit": false,
+    "max_abs_diff": 2.384185791015625e-06,
+    "n_elem_diff": 19
+   },
+   "sd": {
+    "bit": false,
+    "max_abs_diff": 8.344650268554688e-07,
+    "n_elem_diff": 21
+   },
+   "risk": {
+    "bit": false,
+    "max_abs_diff": 1.9073486328125e-05,
+    "n_elem_diff": 19025
+   },
+   "shipped_rmsd_cached": 3.5196731090545654,
+   "shipped_rmsd_recomputed": 3.5196731090545654,
+   "argmin_same": true
+  },
+  {
+   "pdb": "1CB3",
+   "fold": 2,
+   "seconds": 0.0,
+   "sha256_16": "31c0c0be6b5ec717",
+   "prob": {
+    "bit": false,
+    "max_abs_diff": 6.556510925292969e-07,
+    "n_elem_diff": 51
+   },
+   "i": {
+    "bit": true,
+    "max_abs_diff": 0.0,
+    "n_elem_diff": 0
+   },
+   "j": {
+    "bit": true,
+    "max_abs_diff": 0.0,
+    "n_elem_diff": 0
+   },
+   "expected": {
+    "bit": false,
+    "max_abs_diff": 1.430511474609375e-06,
+    "n_elem_diff": 3
+   },
+   "sd": {
+    "bit": false,
+    "max_abs_diff": 4.76837158203125e-07,
+    "n_elem_diff": 3
+   },
+   "risk": {
+    "bit": false,
+    "max_abs_diff": 1.1444091796875e-05,
+    "n_elem_diff": 2643
+   },
+   "shipped_rmsd_cached": 2.6669931411743164,
+   "shipped_rmsd_recomputed": 2.6669931411743164,
+   "argmin_same": true
+  },
+  {
+   "pdb": "2MK7",
+   "fold": 4,
+   "seconds": 0.0,
+   "sha256_16": "015332d514ccf4fa",
+   "prob": {
+    "bit": false,
+    "max_abs_diff": 7.152557373046875e-07,
+    "n_elem_diff": 67
+   },
+   "i": {
+    "bit": true,
+    "max_abs_diff": 0.0,
+    "n_elem_diff": 0
+   },
+   "j": {
+    "bit": true,
+    "max_abs_diff": 0.0,
+    "n_elem_diff": 0
+   },
+   "expected": {
+    "bit": false,
+    "max_abs_diff": 1.430511474609375e-06,
+    "n_elem_diff": 2
+   },
+   "sd": {
+    "bit": false,
+    "max_abs_diff": 2.384185791015625e-07,
+    "n_elem_diff": 3
+   },
+   "risk": {
+    "bit": false,
+    "max_abs_diff": 7.62939453125e-06,
+    "n_elem_diff": 3563
+   },
+   "shipped_rmsd_cached": 3.9210965633392334,
+   "shipped_rmsd_recomputed": 3.9210965633392334,
+   "argmin_same": true
+  },
+  {
+   "pdb": "1I6Y",
+   "fold": 2,
+   "seconds": 0.1,
+   "sha256_16": "422774fe4e6f8c07",
+   "prob": {
+    "bit": false,
+    "max_abs_diff": 8.791685104370117e-07,
+    "n_elem_diff": 51
+   },
+   "i": {
+    "bit": true,
+    "max_abs_diff": 0.0,
+    "n_elem_diff": 0
+   },
+   "j": {
+    "bit": true,
+    "max_abs_diff": 0.0,
+    "n_elem_diff": 0
+   },
+   "expected": {
+    "bit": false,
+    "max_abs_diff": 7.152557373046875e-06,
+    "n_elem_diff": 3
+   },
+   "sd": {
+    "bit": false,
+    "max_abs_diff": 2.384185791015625e-07,
+    "n_elem_diff": 3
+   },
+   "risk": {
+    "bit": false,
+    "max_abs_diff": 1.52587890625e-05,
+    "n_elem_diff": 3522
+   },
+   "shipped_rmsd_cached": 3.4788007736206055,
+   "shipped_rmsd_recomputed": 3.4788007736206055,
+   "argmin_same": true
+  }
+ ],
+ "n_expected": 5,
+ "complete": true
+}

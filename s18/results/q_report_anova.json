@@ -1,0 +1,57 @@
+{
+ "summaries": {
+  "W1": {
+   "name": "W1 - full  (certified argmin RMSD)",
+   "n": 19,
+   "mean": -0.2492410697435078,
+   "median": 0.0,
+   "sd": 0.8373350578433415,
+   "ci_lo": -0.6669978404328937,
+   "ci_hi": 0.1467336357404022,
+   "W": 7,
+   "L": 5,
+   "ties": 7,
+   "folds_same_sign": "4/5"
+  },
+  "RA": {
+   "name": "RA - full  (certified argmin RMSD)",
+   "n": 19,
+   "mean": -0.004042512492129677,
+   "median": 0.0,
+   "sd": 0.777496334009343,
+   "ci_lo": -0.39314438300908255,
+   "ci_hi": 0.31677787035703525,
+   "W": 3,
+   "L": 5,
+   "ties": 11,
+   "folds_same_sign": "1/5"
+  },
+  "RA_walsh": {
+   "name": "RA_walsh - full  (certified argmin RMSD)",
+   "n": 19,
+   "mean": -0.004042512492129677,
+   "median": 0.0,
+   "sd": 0.777496334009343,
+   "ci_lo": -0.39314438300908255,
+   "ci_hi": 0.31677787035703525,
+   "W": 3,
+   "L": 5,
+   "ties": 11,
+   "folds_same_sign": "1/5"
+  },
+  "W2": {
+   "name": "W2 - full  (certified argmin RMSD)",
+   "n": 19,
+   "mean": 0.06455353686684057,
+   "median": 0.0,
+   "sd": 0.9240082768779833,
+   "ci_lo": -0.3331028660138448,
+   "ci_hi": 0.4877146405606037,
+   "W": 3,
+   "L": 4,
+   "ties": 12,
+   "folds_same_sign": "3/5"
+  }
+ },
+ "_complete": true
+}

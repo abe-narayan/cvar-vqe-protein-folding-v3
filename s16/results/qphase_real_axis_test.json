@@ -1,0 +1,26 @@
+{
+ "all": {
+  "n_cells": 95,
+  "rho_global": {
+   "spearman": -0.03776595744680851,
+   "pearson": 0.06659513528304874
+  },
+  "rho_tail": {
+   "spearman": -0.2541293393057111,
+   "pearson": -0.22643789993524244
+  },
+  "argmin_pct": {
+   "spearman": 0.5188633419053561,
+   "pearson": 0.38809604507260803
+  },
+  "argmin_rmsd": {
+   "spearman": 0.5457173601962827,
+   "pearson": 0.5418239849373484
+  },
+  "argmin_rmsd_minus_control": {
+   "spearman": 0.8666913962376064,
+   "pearson": 0.9110339459886257
+  }
+ },
+ "_written": "2026-09-06 07:53:56"
+}

@@ -1,0 +1,291 @@
+{
+ "missing_pdbs": [],
+ "label_diffs_vs_forensics": [
+  [
+   "1A1P",
+   "bound",
+   false,
+   true
+  ],
+  [
+   "1D0W",
+   "membrane",
+   true,
+   false
+  ],
+  [
+   "1KZ2",
+   "membrane",
+   true,
+   false
+  ],
+  [
+   "1LB7",
+   "bound",
+   false,
+   true
+  ],
+  [
+   "1U62",
+   "bound",
+   true,
+   false
+  ],
+  [
+   "2BP4",
+   "membrane",
+   true,
+   false
+  ],
+  [
+   "2MP9",
+   "membrane",
+   true,
+   false
+  ],
+  [
+   "2MSA",
+   "membrane",
+   true,
+   false
+  ],
+  [
+   "2P5H",
+   "bound",
+   false,
+   true
+  ],
+  [
+   "2XL1",
+   "membrane",
+   true,
+   false
+  ],
+  [
+   "5H1H",
+   "bound",
+   false,
+   true
+  ],
+  [
+   "5MML",
+   "membrane",
+   true,
+   false
+  ],
+  [
+   "6A5J",
+   "membrane",
+   true,
+   false
+  ],
+  [
+   "6CEJ",
+   "bound",
+   false,
+   true
+  ],
+  [
+   "7JGX",
+   "membrane",
+   true,
+   false
+  ],
+  [
+   "8UN8",
+   "membrane",
+   true,
+   false
+  ]
+ ],
+ "reported": {
+  "p": 1.2240878293305138e-06,
+  "n_fail_flagged": 10,
+  "n_other_flagged": 6
+ },
+ "family_size": 66,
+ "family_top": [
+  [
+   "fibril|lasso",
+   1.2240878293305138e-06,
+   10,
+   6
+  ],
+  [
+   "fibril",
+   0.0005514527444334973,
+   6,
+   4
+  ],
+  [
+   "lasso|xray",
+   0.0012168447023252953,
+   7,
+   8
+  ],
+  [
+   "fibril|xray",
+   0.002019268652529876,
+   6,
+   6
+  ],
+  [
+   "fibril|cyclic",
+   0.0030782684890556656,
+   7,
+   10
+  ],
+  [
+   "fibril|designed",
+   0.0035377923042599125,
+   8,
+   14
+  ],
+  [
+   "lasso",
+   0.003781521858255974,
+   4,
+   2
+  ],
+  [
+   "fibril|bound",
+   0.006843154499435944,
+   8,
+   16
+  ],
+  [
+   "lasso|bound",
+   0.012810150284403118,
+   7,
+   14
+  ],
+  [
+   "lasso|cyclic",
+   0.02108396396454366,
+   5,
+   8
+  ],
+  [
+   "lasso|designed",
+   0.030705472379058917,
+   6,
+   13
+  ],
+  [
+   "fibril|cosolvent",
+   0.036813723290328226,
+   8,
+   22
+  ]
+ ],
+ "bonferroni_p_over_family": 8.078979673581391e-05,
+ "bonferroni_p_over_11_singles": 1.3464966122635652e-05,
+ "maxstat_permutation_p": 0.0,
+ "n_perm": 4000,
+ "loo_worst": {
+  "dropped": "2BFI",
+  "p": 5.378377241364695e-06
+ },
+ "loo_all_p_max": 5.378377241364695e-06,
+ "drop_each_flagged_fail": [
+  [
+   "2BFI",
+   5.378377241364695e-06
+  ],
+  [
+   "2BP4",
+   5.378377241364695e-06
+  ],
+  [
+   "2JN5",
+   5.378377241364695e-06
+  ],
+  [
+   "2N5C",
+   5.378377241364695e-06
+  ],
+  [
+   "3SGO",
+   5.378377241364695e-06
+  ],
+  [
+   "5W52",
+   5.378377241364695e-06
+  ],
+  [
+   "7JS6",
+   5.378377241364695e-06
+  ],
+  [
+   "7LCW",
+   5.378377241364695e-06
+  ],
+  [
+   "9KAR",
+   5.378377241364695e-06
+  ],
+  [
+   "9L1M",
+   5.378377241364695e-06
+  ]
+ ],
+ "singles_p": {
+  "fibril": 0.0005514527444334973,
+  "lasso": 0.003781521858255974,
+  "cyclic": 1.0,
+  "membrane": 0.42236169901667686,
+  "cosolvent": 1.0,
+  "bound": 0.4493561375556471,
+  "designed": 1.0,
+  "xray": 0.11857153886973287,
+  "covalent": 0.3153663062599226,
+  "nonaqueous": 1.0,
+  "any_flag": 0.46611471989401365
+ },
+ "singles_counts": {
+  "fibril": [
+   6,
+   4
+  ],
+  "lasso": [
+   4,
+   2
+  ],
+  "cyclic": [
+   1,
+   6
+  ],
+  "membrane": [
+   4,
+   36
+  ],
+  "cosolvent": [
+   3,
+   18
+  ],
+  "bound": [
+   3,
+   12
+  ],
+  "designed": [
+   2,
+   11
+  ],
+  "xray": [
+   3,
+   6
+  ],
+  "covalent": [
+   6,
+   51
+  ],
+  "nonaqueous": [
+   3,
+   18
+  ],
+  "any_flag": [
+   17,
+   91
+  ]
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "1CS9": {
+  "m": 75,
+  "prior_ties": 30,
+  "legacy_ties": 0,
+  "amber_ties": 0,
+  "rho_idxrank_rmsd": 0.060312944523470836
+ },
+ "6F3V": {
+  "m": 75,
+  "prior_ties": 5,
+  "legacy_ties": 0,
+  "amber_ties": 0,
+  "rho_idxrank_rmsd": 0.24082503556187765
+ },
+ "9UV5": {
+  "m": 75,
+  "prior_ties": 22,
+  "legacy_ties": 0,
+  "amber_ties": 0,
+  "rho_idxrank_rmsd": -0.13399715504978663
+ }
+}

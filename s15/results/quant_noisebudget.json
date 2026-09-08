@@ -1,0 +1,39 @@
+{
+ "bands": {
+  "short_2_5": {
+   "n": 4768,
+   "mean_bin_width": 0.7841862416107382,
+   "quant_sd": 0.25855740084205936,
+   "distogram_rmse": 2.260305787948515,
+   "quant_share_of_error_variance": 0.013085175518927742
+  },
+  "mid_6_7": {
+   "n": 1628,
+   "mean_bin_width": 1.4281326781326782,
+   "quant_sd": 0.48283920914078826,
+   "distogram_rmse": 4.001,
+   "quant_share_of_error_variance": 0.014563573670672672
+  },
+  "long_8plus": {
+   "n": 2153,
+   "mean_bin_width": 1.8562470970738505,
+   "quant_sd": 0.624738682016869,
+   "distogram_rmse": 5.57353505228943,
+   "quant_share_of_error_variance": 0.012564213873168783
+  },
+  "ALL": {
+   "n": 8549,
+   "mean_bin_width": 1.176804304597029,
+   "quant_sd": 0.4242343142444537,
+   "distogram_rmse": 3.7042065064041445,
+   "quant_share_of_error_variance": 0.01311659794697512
+  }
+ },
+ "by_sep_bin": [],
+ "ref_rmse_source": "s15/distacc.py, 126 targets, coord_FINDINGS K2",
+ "_unused": {
+  "short_2_5": null,
+  "mid_6_7": 4.001,
+  "long_8plus": null
+ }
+}

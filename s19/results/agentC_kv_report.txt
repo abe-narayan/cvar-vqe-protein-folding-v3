@@ -1,0 +1,116 @@
+====================================================================================================
+Q1  THE AMBIGUITY DECOMPOSITION OF GATE DAMAGE     n = 126, m = 38 of K = 75
+    pre-registration: s19/PREREG_C.md section 3;  identity verified in gate GC0
+====================================================================================================
+
+-- A.  THE IDENTITY HOLDS ON EVERY ARM (EXACT, not a finding)
+   max |readout^2 - (E_mem^2 - D^2)| over 10 arms x 126 targets = 8.527e-14 A^2
+
+-- B.  THE LEVELS.  readout = the emitted coordinate average's Ca-RMSD (the metric).
+   arm               readout    E_mem        D    FRAME  <d_reb>  d_win_mean d_win_best  err_cos  shared
+   none                3.050    3.720    1.930    0.725    3.564       3.551      2.306    0.684   0.669
+   legacy              3.126    3.678    1.723    0.690    3.542       3.527      2.561    0.732   0.724
+   leg_torsion         3.105    3.670    1.730    0.652    3.539       3.523      2.501    0.728   0.718
+   leg_contact         3.116    3.759    1.917    0.735    3.603       3.589      2.468    0.691   0.683
+   leg_steric          3.086    3.687    1.819    0.668    3.554       3.541      2.464    0.706   0.696
+   amber_sp            3.099    3.711    1.845    0.685    3.566       3.553      2.444    0.706   0.695
+   helix               3.188    3.658    1.573    0.649    3.549       3.538      2.749    0.769   0.766
+   rand                3.063    3.720    1.913    0.731    3.564       3.550      2.413    0.685   0.675
+   legacy_spread       3.065    3.774    2.018    0.783    3.608       3.601      2.381    0.662   0.657
+   legacy_clust        3.060    3.765    2.009    0.772    3.602       3.592      2.357    0.663   0.658
+
+-- C.  THE SPRINT-18 RESULT REPRODUCES (readout, gate vs MATCHED-RANDOM, same count)
+   legacy           vs rand   +0.0631 [+0.0097, +0.1236]  med +0.0258  52W/74L  n=126
+   leg_torsion      vs rand   +0.0415 [+0.0112, +0.0695]  med +0.0086  51W/75L  n=126
+   leg_contact      vs rand   +0.0534 [+0.0009, +0.1065]  med +0.0147  58W/68L  n=126
+   leg_steric       vs rand   +0.0227 [+0.0050, +0.0385]  med +0.0142  55W/71L  n=126
+   amber_sp         vs rand   +0.0363 [-0.0026, +0.0683]  med +0.0081  54W/72L  n=126
+   helix            vs rand   +0.1253 [+0.0563, +0.1819]  med +0.0692  48W/78L  n=126
+   legacy_spread    vs rand   +0.0021 [-0.0089, +0.0124]  med -0.0077  69W/57L  n=126
+   legacy_clust     vs rand   -0.0033 [-0.0198, +0.0112]  med -0.0046  66W/60L  n=126
+   rand             vs none   +0.0132 [+0.0116, +0.0151]  med +0.0066  38W/88L  n=126      <- the cost of halving alone
+
+-- D.  THE PRE-REGISTERED PRIMARY: the three channels, gate vs matched-random.
+       Delta(readout^2) = Delta(E_mem^2) - Delta(D^2)   is EXACT, term by term.
+   arm               D(readout^2)   D(E_mem^2)    -D(D^2)  D(<d_reb^2>)   D(FRAME^2)     S_D     S_F     S_q
+   legacy                  0.4671      -0.2250     0.6922       -0.1468      -0.0782    1.48   -0.17   -0.31
+   leg_torsion             0.4297      -0.1612     0.5908       -0.0122      -0.1489    1.38   -0.35   -0.03
+   leg_contact             0.4139       0.4047     0.0091        0.3983       0.0065    0.02    0.02    0.96
+   leg_steric              0.1133      -0.3109     0.4242       -0.1587      -0.1522    3.74   -1.34   -1.40
+   amber_sp                0.2654      -0.0122     0.2776        0.0989      -0.1112    1.05   -0.42    0.37
+   helix                   0.9559      -0.1847     1.1405       -0.0377      -0.1470    1.19   -0.15   -0.04
+   legacy_spread          -0.1177       0.3236    -0.4413        0.2119       0.1117    3.75   -0.95   -1.80
+   legacy_clust           -0.1553       0.2374    -0.3927        0.1526       0.0848    2.53   -0.55   -0.98
+       S_D = share of the damage carried by DIVERSITY LOSS, S_F by FRAME, S_q by member quality.
+
+-- E.  EACH CHANNEL WITH ITS OWN CI (paired, fold-clustered).  ZERO is the null.
+   legacy
+      Delta(readout^2)                +0.4671 [-0.0308, +1.1057]  med +0.1026  53W/73L  n=126
+      -Delta(D^2)   [diversity lost]  +0.6922 [+0.5808, +0.8426]  med +0.4646  14W/112L  n=126
+      Delta(E_mem^2)                  -0.2250 [-0.8023, +0.4202]  med -0.1542  84W/42L  n=126
+      Delta(FRAME^2)                  -0.0782 [-0.2416, +0.1157]  med -0.0276  91W/35L  n=126
+      Delta(<d_reb^2>)                -0.1468 [-0.5607, +0.3331]  med -0.1503  79W/47L  n=126
+   leg_torsion
+      Delta(readout^2)                +0.4297 [+0.2036, +0.6246]  med +0.0228  52W/74L  n=126
+      -Delta(D^2)   [diversity lost]  +0.5908 [+0.5337, +0.6451]  med +0.3978  10W/116L  n=126
+      Delta(E_mem^2)                  -0.1612 [-0.3881, +0.0381]  med -0.1662  85W/41L  n=126
+      Delta(FRAME^2)                  -0.1489 [-0.2479, +0.0075]  med -0.0301  93W/33L  n=126
+      Delta(<d_reb^2>)                -0.0122 [-0.2337, +0.1925]  med -0.0872  75W/51L  n=126
+   leg_contact
+      Delta(readout^2)                +0.4139 [-0.0240, +0.8183]  med +0.0505  59W/67L  n=126
+      -Delta(D^2)   [diversity lost]  +0.0091 [-0.1470, +0.1274]  med +0.0043  61W/65L  n=126
+      Delta(E_mem^2)                  +0.4047 [+0.0251, +0.7553]  med +0.0423  58W/68L  n=126
+      Delta(FRAME^2)                  +0.0065 [-0.0691, +0.0813]  med -0.0034  73W/53L  n=126
+      Delta(<d_reb^2>)                +0.3983 [+0.0514, +0.7186]  med +0.0658  54W/72L  n=126
+   leg_steric
+      Delta(readout^2)                +0.1133 [-0.0076, +0.2120]  med +0.0540  55W/71L  n=126
+      -Delta(D^2)   [diversity lost]  +0.4242 [+0.3200, +0.4906]  med +0.2657  32W/94L  n=126
+      Delta(E_mem^2)                  -0.3109 [-0.4950, -0.1370]  med -0.0794  78W/48L  n=126
+      Delta(FRAME^2)                  -0.1522 [-0.2087, -0.0650]  med -0.0427  95W/31L  n=126
+      Delta(<d_reb^2>)                -0.1587 [-0.2892, -0.0478]  med -0.0267  73W/53L  n=126
+   amber_sp
+      Delta(readout^2)                +0.2654 [-0.0058, +0.5588]  med +0.0269  55W/71L  n=126
+      -Delta(D^2)   [diversity lost]  +0.2776 [+0.2080, +0.3472]  med +0.1931  35W/91L  n=126
+      Delta(E_mem^2)                  -0.0122 [-0.3363, +0.2777]  med -0.0645  73W/53L  n=126
+      Delta(FRAME^2)                  -0.1112 [-0.2142, -0.0102]  med -0.0233  88W/38L  n=126
+      Delta(<d_reb^2>)                +0.0989 [-0.2353, +0.3901]  med -0.0223  67W/59L  n=126
+   helix
+      Delta(readout^2)                +0.9559 [+0.4603, +1.4136]  med +0.2525  48W/78L  n=126
+      -Delta(D^2)   [diversity lost]  +1.1405 [+0.9429, +1.3501]  med +0.6545  13W/113L  n=126
+      Delta(E_mem^2)                  -0.1847 [-0.8121, +0.3949]  med -0.0405  70W/56L  n=126
+      Delta(FRAME^2)                  -0.1470 [-0.2417, -0.0538]  med -0.0215  90W/36L  n=126
+      Delta(<d_reb^2>)                -0.0377 [-0.6565, +0.5339]  med -0.0179  66W/60L  n=126
+   legacy_spread
+      Delta(readout^2)                -0.1177 [-0.2252, -0.0024]  med -0.0212  70W/56L  n=126
+      -Delta(D^2)   [diversity lost]  -0.4413 [-0.4903, -0.3835]  med -0.2907  108W/18L  n=126
+      Delta(E_mem^2)                  +0.3236 [+0.1800, +0.4311]  med +0.1399  47W/79L  n=126
+      Delta(FRAME^2)                  +0.1117 [+0.0310, +0.1814]  med +0.0039  47W/79L  n=126
+      Delta(<d_reb^2>)                +0.2119 [+0.1047, +0.2985]  med +0.0989  51W/75L  n=126
+   legacy_clust
+      Delta(readout^2)                -0.1553 [-0.3131, +0.0027]  med -0.0121  68W/58L  n=126
+      -Delta(D^2)   [diversity lost]  -0.3927 [-0.4479, -0.3290]  med -0.2510  105W/21L  n=126
+      Delta(E_mem^2)                  +0.2374 [+0.0452, +0.3884]  med +0.1349  48W/78L  n=126
+      Delta(FRAME^2)                  +0.0848 [-0.0111, +0.1689]  med +0.0044  50W/76L  n=126
+      Delta(<d_reb^2>)                +0.1526 [+0.0318, +0.2654]  med +0.1302  50W/76L  n=126
+
+-- F.  THE OPERATOR LAW, RECOMPUTED ON MY OWN ARMS (not imported).
+       law: d_out = 1.16 * d_set_mean + 0.04 * d_set_best   (the ledger's fit)
+   legacy           predicts -0.0173   observes +0.0763   miss +0.0937 [+0.0629, +0.1317]  med +0.0493  33W/93L  n=126
+   leg_torsion      predicts -0.0243   observes +0.0547   miss +0.0790 [+0.0601, +0.0983]  med +0.0501  26W/100L  n=126
+   leg_contact      predicts +0.0509   observes +0.0667   miss +0.0157 [-0.0012, +0.0330]  med +0.0039  57W/69L  n=126
+   leg_steric       predicts -0.0055   observes +0.0359   miss +0.0414 [+0.0283, +0.0512]  med +0.0241  39W/87L  n=126
+   amber_sp         predicts +0.0085   observes +0.0496   miss +0.0411 [+0.0236, +0.0612]  med +0.0187  43W/83L  n=126
+   helix            predicts +0.0031   observes +0.1385   miss +0.1354 [+0.1048, +0.1643]  med +0.0657  28W/98L  n=126
+   rand             predicts +0.0034   observes +0.0132   miss +0.0098 [+0.0071, +0.0132]  med +0.0032  46W/80L  n=126
+   legacy_spread    predicts +0.0609   observes +0.0153   miss -0.0456 [-0.0641, -0.0306]  med -0.0289  93W/33L  n=126
+   legacy_clust     predicts +0.0504   observes +0.0100   miss -0.0404 [-0.0599, -0.0231]  med -0.0293  90W/36L  n=126
+
+-- G.  SECTION 3.5: THE DIVERSITY-PRESERVING GATES (H-C2).
+   legacy_spread    vs legacy   -0.0610 [-0.1304, -0.0012]  med -0.0371  72W/54L  n=126
+   legacy_spread    vs rand     +0.0021 [-0.0089, +0.0124]  med -0.0077  69W/57L  n=126
+   legacy_spread    vs none     +0.0153 [+0.0050, +0.0250]  med -0.0052  67W/59L  n=126
+      D: 2.018  vs legacy 1.723  vs rand 1.913   |  E_mem: 3.774 vs 3.678 / 3.720
+   legacy_clust     vs legacy   -0.0664 [-0.1392, -0.0087]  med -0.0306  75W/51L  n=126
+   legacy_clust     vs rand     -0.0033 [-0.0198, +0.0112]  med -0.0046  66W/60L  n=126
+   legacy_clust     vs none     +0.0100 [-0.0060, +0.0242]  med -0.0008  64W/62L  n=126
+      D: 2.009  vs legacy 1.723  vs rand 1.913   |  E_mem: 3.765 vs 3.678 / 3.720

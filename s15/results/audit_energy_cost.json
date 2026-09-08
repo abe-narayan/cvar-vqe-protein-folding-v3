@@ -1,0 +1,16 @@
+{
+ "pdb": "2MK7",
+ "n": 9,
+ "n_calls": 30,
+ "recorded_in_brief_ms": 28.0,
+ "recorded_in_qarch_lib_docstring_ms": 6.0,
+ "ms_per_call_distinct_inputs": 10.8555066670912,
+ "memo_hits_during_distinct": 1,
+ "memo_misses_during_distinct": 29,
+ "ms_per_call_repeated_input": 0.32973666675388813,
+ "memo_hits_during_repeat": 30,
+ "speedup_from_memo": 32.92174562798511,
+ "single_point_deterministic_after_cache_reset": true,
+ "single_point_value": 1754.29167348845,
+ "single_point_value_after_reset": 1754.29167348845
+}

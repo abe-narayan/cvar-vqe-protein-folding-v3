@@ -1,0 +1,4255 @@
+{
+ "family": "A2_8",
+ "cfg": {
+  "k": 2,
+  "m": 8,
+  "n_ret": 200,
+  "minlen": 4
+ },
+ "alpha": 0.25,
+ "shots": 16,
+ "layers": 3,
+ "restarts": 1,
+ "rows": [
+  {
+   "pdb": "1ID6",
+   "n": 15,
+   "fold": 3,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.0887245539125505,
+   "exact_opt_rmsd": 5.549286596566716,
+   "oracle_best_rmsd": 5.249778312651047,
+   "anchor_rmsd": 5.577287331250852,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 2.2244659550897374,
+      "readout_energy": 10.303475660937174,
+      "modal_energy": NaN,
+      "entropy_bits": 12.271115765210245,
+      "top1": 0.009805845045679582,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 3.0198550999630243
+     },
+     "random": {
+      "best_energy": 1.9187590034453432,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0037962999776937068
+     },
+     "anneal": {
+      "best_energy": 1.0887245539125505,
+      "best_bitstring": "0001000000010000",
+      "n_energy_evaluations": 752,
+      "wall": 0.08132639998802915
+     },
+     "greedy_ls": {
+      "best_energy": 1.3874602104936322,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.012628700002096593
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.6190590409787156,
+      "readout_energy": 7.456143616647511,
+      "modal_energy": 203.0417473745216,
+      "entropy_bits": 12.798486596381506,
+      "top1": 0.0030532167586224675,
+      "spsa_iters": 136,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.711862199997995
+     },
+     "random": {
+      "best_energy": 1.3874602104936322,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.012453700008336455
+     },
+     "anneal": {
+      "best_energy": 1.0887245539125505,
+      "best_bitstring": "0001000000010000",
+      "n_energy_evaluations": 2553,
+      "wall": 0.33641699998406693
+     },
+     "greedy_ls": {
+      "best_energy": 1.0887245539125505,
+      "best_bitstring": "0001000000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.08467700000619516
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.274463318533952,
+      "readout_energy": 1.89820503304293,
+      "modal_energy": 82.8724099924931,
+      "entropy_bits": 12.288697503347619,
+      "top1": 0.0036757192464298306,
+      "spsa_iters": 603,
+      "n_energy_evaluations": 16381,
+      "terminated_by": "budget",
+      "wall": 7.555966300016735
+     },
+     "random": {
+      "best_energy": 1.0887245539125505,
+      "best_bitstring": "0001000000010000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05643900000723079
+     },
+     "anneal": {
+      "best_energy": 1.0887245539125505,
+      "best_bitstring": "0001000000010000",
+      "n_energy_evaluations": 8138,
+      "wall": 1.1817409000359476
+     },
+     "greedy_ls": {
+      "best_energy": 1.0887245539125505,
+      "best_bitstring": "0001000000010000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.656053000013344
+     }
+    }
+   }
+  },
+  {
+   "pdb": "2BFI",
+   "n": 12,
+   "fold": 2,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.6207142510197396,
+   "exact_opt_rmsd": 7.035986406987518,
+   "oracle_best_rmsd": 6.024060040776337,
+   "anchor_rmsd": 7.030099463548458,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 2.8672441341660235,
+      "readout_energy": 9.239644927870144,
+      "modal_energy": NaN,
+      "entropy_bits": 12.339807124835058,
+      "top1": 0.006307130732692198,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4556734000216238
+     },
+     "random": {
+      "best_energy": 1.2290716469287872,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.003370199992787093
+     },
+     "anneal": {
+      "best_energy": 0.6207142510197396,
+      "best_bitstring": "1000000000000010",
+      "n_energy_evaluations": 687,
+      "wall": 0.047100899973884225
+     },
+     "greedy_ls": {
+      "best_energy": 0.6207142510197396,
+      "best_bitstring": "1000000000000010",
+      "n_energy_evaluations": 1024,
+      "wall": 0.011621899961028248
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.0832621335983266,
+      "readout_energy": 5.281270336021077,
+      "modal_energy": 54.07209031040019,
+      "entropy_bits": 11.249744920853868,
+      "top1": 0.015725887701230536,
+      "spsa_iters": 135,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 2.075321599957533
+     },
+     "random": {
+      "best_energy": 1.2290716469287872,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.013844999950379133
+     },
+     "anneal": {
+      "best_energy": 0.6207142510197396,
+      "best_bitstring": "1000000000000010",
+      "n_energy_evaluations": 2599,
+      "wall": 0.3126654999796301
+     },
+     "greedy_ls": {
+      "best_energy": 0.6207142510197396,
+      "best_bitstring": "1000000000000010",
+      "n_energy_evaluations": 4096,
+      "wall": 0.07878229999914765
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.0832621335983266,
+      "readout_energy": 7.890349970622497,
+      "modal_energy": 51.949815354022114,
+      "entropy_bits": 12.92459745191892,
+      "top1": 0.002705935580742193,
+      "spsa_iters": 605,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.967097699991427
+     },
+     "random": {
+      "best_energy": 0.6207142510197396,
+      "best_bitstring": "1000000000000010",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05747100000735372
+     },
+     "anneal": {
+      "best_energy": 0.6207142510197396,
+      "best_bitstring": "1000000000000010",
+      "n_energy_evaluations": 8204,
+      "wall": 1.2554098999826238
+     },
+     "greedy_ls": {
+      "best_energy": 0.6207142510197396,
+      "best_bitstring": "1000000000000010",
+      "n_energy_evaluations": 16384,
+      "wall": 0.5746915999916382
+     }
+    }
+   }
+  },
+  {
+   "pdb": "2MQ2",
+   "n": 14,
+   "fold": 4,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.94318385842519,
+   "exact_opt_rmsd": 8.304404482273362,
+   "oracle_best_rmsd": 7.904603745658731,
+   "anchor_rmsd": 8.243716284448015,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 7.411648352176715,
+      "readout_energy": 8.2226994767403,
+      "modal_energy": NaN,
+      "entropy_bits": 12.098866598076203,
+      "top1": 0.008854844983716036,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4368051999481395
+     },
+     "random": {
+      "best_energy": 2.6592315580600348,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.003231300041079521
+     },
+     "anneal": {
+      "best_energy": 1.987944759619542,
+      "best_bitstring": "0000001000000010",
+      "n_energy_evaluations": 799,
+      "wall": 0.06360970000969246
+     },
+     "greedy_ls": {
+      "best_energy": 1.94318385842519,
+      "best_bitstring": "0100000000000010",
+      "n_energy_evaluations": 1024,
+      "wall": 0.052837800001725554
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 2.5096132184068365,
+      "readout_energy": 7.277094866220767,
+      "modal_energy": 179.147756364483,
+      "entropy_bits": 11.653376993521897,
+      "top1": 0.019011312166475895,
+      "spsa_iters": 139,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 2.10790459997952
+     },
+     "random": {
+      "best_energy": 2.3394057483245168,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 4096,
+      "wall": 0.01361740002175793
+     },
+     "anneal": {
+      "best_energy": 1.94318385842519,
+      "best_bitstring": "0100000000000010",
+      "n_energy_evaluations": 2520,
+      "wall": 0.3430162000004202
+     },
+     "greedy_ls": {
+      "best_energy": 1.94318385842519,
+      "best_bitstring": "0100000000000010",
+      "n_energy_evaluations": 4096,
+      "wall": 0.10837869998067617
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.961996264946766,
+      "readout_energy": 2.195118948435172,
+      "modal_energy": 260.6644006421168,
+      "entropy_bits": 11.726247445167214,
+      "top1": 0.011638353309151231,
+      "spsa_iters": 620,
+      "n_energy_evaluations": 16368,
+      "terminated_by": "budget",
+      "wall": 7.979052199982107
+     },
+     "random": {
+      "best_energy": 1.9766056071489286,
+      "best_bitstring": "0100000010000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.055780099995899945
+     },
+     "anneal": {
+      "best_energy": 1.94318385842519,
+      "best_bitstring": "0100000000000010",
+      "n_energy_evaluations": 7944,
+      "wall": 1.2067837999784388
+     },
+     "greedy_ls": {
+      "best_energy": 1.94318385842519,
+      "best_bitstring": "0100000000000010",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7157592999865301
+     }
+    }
+   }
+  },
+  {
+   "pdb": "3BTB",
+   "n": 15,
+   "fold": 3,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.8733471890727245,
+   "exact_opt_rmsd": 4.954717374451957,
+   "oracle_best_rmsd": 4.343809473570433,
+   "anchor_rmsd": 4.964776045155876,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 1.412337265826844,
+      "readout_energy": 11.61805651672594,
+      "modal_energy": 182.5125196363244,
+      "entropy_bits": 12.557575965057659,
+      "top1": 0.003639112346624402,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.39942299999529496
+     },
+     "random": {
+      "best_energy": 1.5030213060614823,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0026026000268757343
+     },
+     "anneal": {
+      "best_energy": 0.9907453387648193,
+      "best_bitstring": "0001000000010000",
+      "n_energy_evaluations": 699,
+      "wall": 0.05595089995767921
+     },
+     "greedy_ls": {
+      "best_energy": 0.8733471890727245,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.012352599995210767
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.2303874371470993,
+      "readout_energy": 9.331194166626247,
+      "modal_energy": 522.4841500651706,
+      "entropy_bits": 11.859789165389554,
+      "top1": 0.010081205562261344,
+      "spsa_iters": 135,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.7282606000080705
+     },
+     "random": {
+      "best_energy": 0.8733471890727245,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.013329199980944395
+     },
+     "anneal": {
+      "best_energy": 0.8733471890727245,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 2585,
+      "wall": 0.38147129997378215
+     },
+     "greedy_ls": {
+      "best_energy": 0.8733471890727245,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.0728806999977678
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 0.8733471890727245,
+      "readout_energy": 1.9851319529525533,
+      "modal_energy": 64.29662367079284,
+      "entropy_bits": 12.142136797991139,
+      "top1": 0.00980034504111142,
+      "spsa_iters": 598,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 8.085541500011459
+     },
+     "random": {
+      "best_energy": 0.8733471890727245,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.0650552999577485
+     },
+     "anneal": {
+      "best_energy": 0.8733471890727245,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 8184,
+      "wall": 1.3033994999714196
+     },
+     "greedy_ls": {
+      "best_energy": 0.8733471890727245,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.5074558000196703
+     }
+    }
+   }
+  },
+  {
+   "pdb": "7JS6",
+   "n": 15,
+   "fold": 4,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 2.115949949720404,
+   "exact_opt_rmsd": 6.951247901632836,
+   "oracle_best_rmsd": 6.610714288991922,
+   "anchor_rmsd": 6.95695626826709,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 5.488011561252258,
+      "readout_energy": 12.970422484062528,
+      "modal_energy": NaN,
+      "entropy_bits": 12.251302963792797,
+      "top1": 0.005050178393298376,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.44150219997391105
+     },
+     "random": {
+      "best_energy": 2.301961161933103,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0035540999961085618
+     },
+     "anneal": {
+      "best_energy": 2.115949949720404,
+      "best_bitstring": "0000000101000000",
+      "n_energy_evaluations": 887,
+      "wall": 0.09283450001385063
+     },
+     "greedy_ls": {
+      "best_energy": 2.301961161933103,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.020626399957109243
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 2.2629315447021314,
+      "readout_energy": 2.1283325873888463,
+      "modal_energy": 12.198386680293869,
+      "entropy_bits": 12.146271877626305,
+      "top1": 0.00638710982502661,
+      "spsa_iters": 137,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.975496600032784
+     },
+     "random": {
+      "best_energy": 2.2629315447021314,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.02022120001493022
+     },
+     "anneal": {
+      "best_energy": 2.115949949720404,
+      "best_bitstring": "0000000101000000",
+      "n_energy_evaluations": 2477,
+      "wall": 0.41423029999714345
+     },
+     "greedy_ls": {
+      "best_energy": 2.1283325873888463,
+      "best_bitstring": "0000000100010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.1295793000026606
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 2.3111337338175093,
+      "readout_energy": 2.3151723382237193,
+      "modal_energy": 222.47928614668797,
+      "entropy_bits": 12.643389788878114,
+      "top1": 0.003952812791608708,
+      "spsa_iters": 621,
+      "n_energy_evaluations": 16367,
+      "terminated_by": "budget",
+      "wall": 8.234748300048523
+     },
+     "random": {
+      "best_energy": 2.115949949720404,
+      "best_bitstring": "0000000101000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05627610004739836
+     },
+     "anneal": {
+      "best_energy": 2.115949949720404,
+      "best_bitstring": "0000000101000000",
+      "n_energy_evaluations": 7636,
+      "wall": 0.7577622999669984
+     },
+     "greedy_ls": {
+      "best_energy": 2.115949949720404,
+      "best_bitstring": "0000000101000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7392602000036277
+     }
+    }
+   }
+  },
+  {
+   "pdb": "9L1M",
+   "n": 12,
+   "fold": 1,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.0995751906525006,
+   "exact_opt_rmsd": 4.980863543603447,
+   "oracle_best_rmsd": 4.559258286957447,
+   "anchor_rmsd": 4.968043353614692,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 6.272004780986092,
+      "readout_energy": 5.908880934390155,
+      "modal_energy": NaN,
+      "entropy_bits": 12.243279432813175,
+      "top1": 0.005427167563479658,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4437338000279851
+     },
+     "random": {
+      "best_energy": 2.57248109308156,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0031907999655231833
+     },
+     "anneal": {
+      "best_energy": 1.0995751906525006,
+      "best_bitstring": "0100000001000000",
+      "n_energy_evaluations": 750,
+      "wall": 0.062194099999032915
+     },
+     "greedy_ls": {
+      "best_energy": 1.3809200292283839,
+      "best_bitstring": "0100000000000100",
+      "n_energy_evaluations": 1024,
+      "wall": 0.016480499994941056
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.719377196376974,
+      "readout_energy": 3.5825357182459396,
+      "modal_energy": NaN,
+      "entropy_bits": 12.851159841866922,
+      "top1": 0.003040246256458428,
+      "spsa_iters": 136,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.8142845999682322
+     },
+     "random": {
+      "best_energy": 1.6811162471771244,
+      "best_bitstring": "0000000100100000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.011350999993737787
+     },
+     "anneal": {
+      "best_energy": 1.0995751906525006,
+      "best_bitstring": "0100000001000000",
+      "n_energy_evaluations": 2488,
+      "wall": 0.2302471000002697
+     },
+     "greedy_ls": {
+      "best_energy": 1.3104653255505996,
+      "best_bitstring": "0000010001000000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.09858839999651536
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.2737657546997063,
+      "readout_energy": 6.665628762678664,
+      "modal_energy": 25.643138659542252,
+      "entropy_bits": 10.983855281873957,
+      "top1": 0.01967817401824077,
+      "spsa_iters": 616,
+      "n_energy_evaluations": 16371,
+      "terminated_by": "budget",
+      "wall": 7.775840699963737
+     },
+     "random": {
+      "best_energy": 1.4320580623366626,
+      "best_bitstring": "0000000101000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05730240000411868
+     },
+     "anneal": {
+      "best_energy": 1.0995751906525006,
+      "best_bitstring": "0100000001000000",
+      "n_energy_evaluations": 7995,
+      "wall": 1.2439860999584198
+     },
+     "greedy_ls": {
+      "best_energy": 1.2737657546997063,
+      "best_bitstring": "0100000000000001",
+      "n_energy_evaluations": 16384,
+      "wall": 0.657193599967286
+     }
+    }
+   }
+  },
+  {
+   "pdb": "1A13",
+   "n": 14,
+   "fold": 4,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.8545723931911668,
+   "exact_opt_rmsd": 2.86437911215197,
+   "oracle_best_rmsd": 2.86437911215197,
+   "anchor_rmsd": 2.6401382085110643,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 4.569411511604603,
+      "readout_energy": 2.2812222998875837,
+      "modal_energy": NaN,
+      "entropy_bits": 12.872024326839625,
+      "top1": 0.003952406773993698,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4174807000090368
+     },
+     "random": {
+      "best_energy": 1.7697653396007347,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0027389000169932842
+     },
+     "anneal": {
+      "best_energy": 1.2824663626842012,
+      "best_bitstring": "0001000000000100",
+      "n_energy_evaluations": 692,
+      "wall": 0.05157359997974709
+     },
+     "greedy_ls": {
+      "best_energy": 0.8545723931911668,
+      "best_bitstring": "0000001000000100",
+      "n_energy_evaluations": 1024,
+      "wall": 0.012674500001594424
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.2824663626842012,
+      "readout_energy": 7.355943573591036,
+      "modal_energy": 43.0395311163022,
+      "entropy_bits": 12.527961355598045,
+      "top1": 0.005093265567772007,
+      "spsa_iters": 137,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.7712244999711402
+     },
+     "random": {
+      "best_energy": 1.2824663626842012,
+      "best_bitstring": "0001000000000100",
+      "n_energy_evaluations": 4096,
+      "wall": 0.012351599987596273
+     },
+     "anneal": {
+      "best_energy": 0.8545723931911668,
+      "best_bitstring": "0000001000000100",
+      "n_energy_evaluations": 2534,
+      "wall": 0.3073978999746032
+     },
+     "greedy_ls": {
+      "best_energy": 0.8545723931911668,
+      "best_bitstring": "0000001000000100",
+      "n_energy_evaluations": 4096,
+      "wall": 0.07875260000582784
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.3354142289131108,
+      "readout_energy": 0.8545723931911668,
+      "modal_energy": 206.34444419963253,
+      "entropy_bits": 12.014394529042471,
+      "top1": 0.007507306493590633,
+      "spsa_iters": 610,
+      "n_energy_evaluations": 16380,
+      "terminated_by": "budget",
+      "wall": 7.498467299970798
+     },
+     "random": {
+      "best_energy": 1.2824663626842012,
+      "best_bitstring": "0001000000000100",
+      "n_energy_evaluations": 16384,
+      "wall": 0.0537517000338994
+     },
+     "anneal": {
+      "best_energy": 0.8545723931911668,
+      "best_bitstring": "0000001000000100",
+      "n_energy_evaluations": 8172,
+      "wall": 1.5183170000091195
+     },
+     "greedy_ls": {
+      "best_energy": 0.8545723931911668,
+      "best_bitstring": "0000001000000100",
+      "n_energy_evaluations": 16384,
+      "wall": 0.6328758000163361
+     }
+    }
+   }
+  },
+  {
+   "pdb": "1CEK",
+   "n": 13,
+   "fold": 2,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.8630166022163452,
+   "exact_opt_rmsd": 0.48185234712745734,
+   "oracle_best_rmsd": 0.48185234712745734,
+   "anchor_rmsd": 0.5251418433409641,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 6.030314375505302,
+      "readout_energy": 12.86741012650909,
+      "modal_energy": 161.03000460429618,
+      "entropy_bits": 11.657257118903608,
+      "top1": 0.007909473043908252,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4537741999956779
+     },
+     "random": {
+      "best_energy": 1.982615791486971,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0031006999779492617
+     },
+     "anneal": {
+      "best_energy": 0.8630166022163452,
+      "best_bitstring": "0000100000100000",
+      "n_energy_evaluations": 737,
+      "wall": 0.08346689998870715
+     },
+     "greedy_ls": {
+      "best_energy": 0.9317739556233082,
+      "best_bitstring": "0000100000000100",
+      "n_energy_evaluations": 1024,
+      "wall": 0.013656900031492114
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.9141331757559916,
+      "readout_energy": 13.877154786026843,
+      "modal_energy": NaN,
+      "entropy_bits": 12.627068674890904,
+      "top1": 0.008564003938842534,
+      "spsa_iters": 136,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.6938231000094675
+     },
+     "random": {
+      "best_energy": 1.3770453528021322,
+      "best_bitstring": "0000100000000010",
+      "n_energy_evaluations": 4096,
+      "wall": 0.013904499995987862
+     },
+     "anneal": {
+      "best_energy": 0.8630166022163452,
+      "best_bitstring": "0000100000100000",
+      "n_energy_evaluations": 2520,
+      "wall": 0.21156610001344234
+     },
+     "greedy_ls": {
+      "best_energy": 0.9317739556233082,
+      "best_bitstring": "0000100000000100",
+      "n_energy_evaluations": 4096,
+      "wall": 0.08760099997743964
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.3770453528021322,
+      "readout_energy": 1.6517648967829626,
+      "modal_energy": 6.7004537162455655,
+      "entropy_bits": 12.060340841237993,
+      "top1": 0.00833452284428905,
+      "spsa_iters": 611,
+      "n_energy_evaluations": 16374,
+      "terminated_by": "budget",
+      "wall": 7.756575700012036
+     },
+     "random": {
+      "best_energy": 1.327232561779745,
+      "best_bitstring": "0010000000100000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.06161989999236539
+     },
+     "anneal": {
+      "best_energy": 0.8630166022163452,
+      "best_bitstring": "0000100000100000",
+      "n_energy_evaluations": 8019,
+      "wall": 1.0628435999969952
+     },
+     "greedy_ls": {
+      "best_energy": 0.8630166022163452,
+      "best_bitstring": "0000100000100000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.684633800003212
+     }
+    }
+   }
+  },
+  {
+   "pdb": "1D6X",
+   "n": 13,
+   "fold": 4,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.8987607450196236,
+   "exact_opt_rmsd": 3.040647249426801,
+   "oracle_best_rmsd": 1.8635009556584905,
+   "anchor_rmsd": 1.9033334199928054,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 3.8871151118567493,
+      "readout_energy": 5.5516009971950995,
+      "modal_energy": 91.978302960143,
+      "entropy_bits": 11.648222031860405,
+      "top1": 0.01076694986177849,
+      "spsa_iters": 36,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4735464999685064
+     },
+     "random": {
+      "best_energy": 2.171038369337718,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0027194000431336462
+     },
+     "anneal": {
+      "best_energy": 1.8987607450196236,
+      "best_bitstring": "0000000010000000",
+      "n_energy_evaluations": 883,
+      "wall": 0.13634949998231605
+     },
+     "greedy_ls": {
+      "best_energy": 1.9131132553924213,
+      "best_bitstring": "0000000000000100",
+      "n_energy_evaluations": 1024,
+      "wall": 0.017257299972698092
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.9333128360184755,
+      "readout_energy": 1.9314218244769354,
+      "modal_energy": 9.209987623221945,
+      "entropy_bits": 11.94096784956427,
+      "top1": 0.00978010501839601,
+      "spsa_iters": 137,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.7663823000038974
+     },
+     "random": {
+      "best_energy": 1.9569737965410408,
+      "best_bitstring": "0000100000000010",
+      "n_energy_evaluations": 4096,
+      "wall": 0.013316800002939999
+     },
+     "anneal": {
+      "best_energy": 1.8987607450196236,
+      "best_bitstring": "0000000010000000",
+      "n_energy_evaluations": 2473,
+      "wall": 0.41438669996568933
+     },
+     "greedy_ls": {
+      "best_energy": 1.8987607450196236,
+      "best_bitstring": "0000000010000000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.08478610002202913
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.9131132553924213,
+      "readout_energy": 1.9936780288363949,
+      "modal_energy": NaN,
+      "entropy_bits": 12.992418547035783,
+      "top1": 0.0019403446524298758,
+      "spsa_iters": 647,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 8.234545100014657
+     },
+     "random": {
+      "best_energy": 1.9569737965410408,
+      "best_bitstring": "0000100000000010",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05952599999727681
+     },
+     "anneal": {
+      "best_energy": 1.8987607450196236,
+      "best_bitstring": "0000000010000000",
+      "n_energy_evaluations": 7633,
+      "wall": 0.7609047999721952
+     },
+     "greedy_ls": {
+      "best_energy": 1.8987607450196236,
+      "best_bitstring": "0000000010000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.5916898000286892
+     }
+    }
+   }
+  },
+  {
+   "pdb": "1FUV",
+   "n": 11,
+   "fold": 2,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.3994534108373855,
+   "exact_opt_rmsd": 3.770886883023872,
+   "oracle_best_rmsd": 3.2976611499604602,
+   "anchor_rmsd": 3.668010258029601,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 1.5208858940336438,
+      "readout_energy": 3.8586515916718382,
+      "modal_energy": NaN,
+      "entropy_bits": 12.328445539015682,
+      "top1": 0.006343638846432933,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.42455160000827163
+     },
+     "random": {
+      "best_energy": 1.8534725467363993,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.003107599972281605
+     },
+     "anneal": {
+      "best_energy": 1.3994534108373855,
+      "best_bitstring": "0010000010000000",
+      "n_energy_evaluations": 889,
+      "wall": 0.05638789996737614
+     },
+     "greedy_ls": {
+      "best_energy": 1.5698260558976067,
+      "best_bitstring": "1000000000100000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.022612800006754696
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.5208858940336438,
+      "readout_energy": 1.5579150570763483,
+      "modal_energy": 96.6854206999143,
+      "entropy_bits": 12.761334256701845,
+      "top1": 0.004520648458460361,
+      "spsa_iters": 154,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.9183829999528825
+     },
+     "random": {
+      "best_energy": 1.5579150570763483,
+      "best_bitstring": "0000000100100000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.011230000003706664
+     },
+     "anneal": {
+      "best_energy": 1.3994534108373855,
+      "best_bitstring": "0010000010000000",
+      "n_energy_evaluations": 2535,
+      "wall": 0.5202691999729723
+     },
+     "greedy_ls": {
+      "best_energy": 1.4136653198136222,
+      "best_bitstring": "0000010010000000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.11321800004225224
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.3994534108373855,
+      "readout_energy": 1.6680403206083514,
+      "modal_energy": 1.9207360956403947,
+      "entropy_bits": 11.301301938930987,
+      "top1": 0.014652120688571775,
+      "spsa_iters": 648,
+      "n_energy_evaluations": 16341,
+      "terminated_by": "budget",
+      "wall": 8.491604300041217
+     },
+     "random": {
+      "best_energy": 1.4509827944967482,
+      "best_bitstring": "0010000000100000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.06675660004839301
+     },
+     "anneal": {
+      "best_energy": 1.3994534108373855,
+      "best_bitstring": "0010000010000000",
+      "n_energy_evaluations": 7910,
+      "wall": 1.3798127000336535
+     },
+     "greedy_ls": {
+      "best_energy": 1.4136653198136222,
+      "best_bitstring": "0000010010000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7741097999969497
+     }
+    }
+   }
+  },
+  {
+   "pdb": "1I8E",
+   "n": 11,
+   "fold": 0,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.3925458113352458,
+   "exact_opt_rmsd": 2.8057410704725716,
+   "oracle_best_rmsd": 2.4846103257908925,
+   "anchor_rmsd": 2.3804868771512115,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 2.1341411126984493,
+      "readout_energy": 14.945999329619939,
+      "modal_energy": NaN,
+      "entropy_bits": 12.475365369706372,
+      "top1": 0.004746211360121644,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4820881000487134
+     },
+     "random": {
+      "best_energy": 2.031338437398275,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0033990999800153077
+     },
+     "anneal": {
+      "best_energy": 1.3925458113352458,
+      "best_bitstring": "0100000000000100",
+      "n_energy_evaluations": 766,
+      "wall": 0.059928799979388714
+     },
+     "greedy_ls": {
+      "best_energy": 1.449568401442634,
+      "best_bitstring": "0000000100000100",
+      "n_energy_evaluations": 1024,
+      "wall": 0.01586079999106005
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.4201599465476145,
+      "readout_energy": 5.440329403347439,
+      "modal_energy": 153.65164280070204,
+      "entropy_bits": 12.653507149690716,
+      "top1": 0.0043731638645874175,
+      "spsa_iters": 140,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.800259699986782
+     },
+     "random": {
+      "best_energy": 1.687625520759159,
+      "best_bitstring": "0000000100100000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.011921300028916448
+     },
+     "anneal": {
+      "best_energy": 1.3925458113352458,
+      "best_bitstring": "0100000000000100",
+      "n_energy_evaluations": 2488,
+      "wall": 0.20836690004216507
+     },
+     "greedy_ls": {
+      "best_energy": 1.449568401442634,
+      "best_bitstring": "0000000100000100",
+      "n_energy_evaluations": 4096,
+      "wall": 0.10524820000864565
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.45243210527632,
+      "readout_energy": 1.8822139408853316,
+      "modal_energy": 2.0772001783053082,
+      "entropy_bits": 11.638913649580545,
+      "top1": 0.009455710767066815,
+      "spsa_iters": 622,
+      "n_energy_evaluations": 16361,
+      "terminated_by": "budget",
+      "wall": 7.990759799955413
+     },
+     "random": {
+      "best_energy": 1.4338540077209472,
+      "best_bitstring": "0100000010000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05714589997660369
+     },
+     "anneal": {
+      "best_energy": 1.3925458113352458,
+      "best_bitstring": "0100000000000100",
+      "n_energy_evaluations": 7984,
+      "wall": 1.2635920000029728
+     },
+     "greedy_ls": {
+      "best_energy": 1.449568401442634,
+      "best_bitstring": "0000000100000100",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7085125999874435
+     }
+    }
+   }
+  },
+  {
+   "pdb": "1KWE",
+   "n": 16,
+   "fold": 2,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.6679731420108252,
+   "exact_opt_rmsd": 3.034867494504121,
+   "oracle_best_rmsd": 2.8107312496875423,
+   "anchor_rmsd": 2.459797333616123,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 2.3662661580812365,
+      "readout_energy": 8.348639199279603,
+      "modal_energy": 284.8693194863341,
+      "entropy_bits": 12.506280552801977,
+      "top1": 0.006720633482968639,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.41822810005396605
+     },
+     "random": {
+      "best_energy": 3.0963756918907164,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0025896999868564308
+     },
+     "anneal": {
+      "best_energy": 1.6679731420108252,
+      "best_bitstring": "0100000010000000",
+      "n_energy_evaluations": 756,
+      "wall": 0.05570870003430173
+     },
+     "greedy_ls": {
+      "best_energy": 2.3739223400751746,
+      "best_bitstring": "0000001000000001",
+      "n_energy_evaluations": 1024,
+      "wall": 0.019452699983958155
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 2.019536696161542,
+      "readout_energy": 7.800025450899487,
+      "modal_energy": 123.03793477614725,
+      "entropy_bits": 12.583113308690143,
+      "top1": 0.014144632020610256,
+      "spsa_iters": 137,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 2.0354389999993145
+     },
+     "random": {
+      "best_energy": 2.564699468442371,
+      "best_bitstring": "0001000000000100",
+      "n_energy_evaluations": 4096,
+      "wall": 0.01275080000050366
+     },
+     "anneal": {
+      "best_energy": 1.6679731420108252,
+      "best_bitstring": "0100000010000000",
+      "n_energy_evaluations": 2559,
+      "wall": 0.3467327000107616
+     },
+     "greedy_ls": {
+      "best_energy": 1.8958694599923636,
+      "best_bitstring": "0000010010000000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.10592770000221208
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 2.1202250764483495,
+      "readout_energy": 2.447302332946233,
+      "modal_energy": NaN,
+      "entropy_bits": 13.392374573748233,
+      "top1": 0.0017338517052415336,
+      "spsa_iters": 616,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.977882299979683
+     },
+     "random": {
+      "best_energy": 1.6679731420108252,
+      "best_bitstring": "0100000010000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05552620004164055
+     },
+     "anneal": {
+      "best_energy": 1.6679731420108252,
+      "best_bitstring": "0100000010000000",
+      "n_energy_evaluations": 8007,
+      "wall": 1.175861099967733
+     },
+     "greedy_ls": {
+      "best_energy": 1.8352655808130898,
+      "best_bitstring": "0001000010000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7147211999981664
+     }
+    }
+   }
+  },
+  {
+   "pdb": "1M02",
+   "n": 12,
+   "fold": 0,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.8807537718252703,
+   "exact_opt_rmsd": 3.116108793113223,
+   "oracle_best_rmsd": 2.5137630738953063,
+   "anchor_rmsd": 3.0189713526057025,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 2.1094551628286187,
+      "readout_energy": 3.9136704574931755,
+      "modal_energy": 30.49796323559501,
+      "entropy_bits": 12.68388607711167,
+      "top1": 0.006292058533696346,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.49629350000759587
+     },
+     "random": {
+      "best_energy": 2.1094551628286187,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0026632999652065337
+     },
+     "anneal": {
+      "best_energy": 1.8807537718252703,
+      "best_bitstring": "0000000000100000",
+      "n_energy_evaluations": 909,
+      "wall": 0.15787980001186952
+     },
+     "greedy_ls": {
+      "best_energy": 1.8807537718252703,
+      "best_bitstring": "0000000000100000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.014268199971411377
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.892120257290927,
+      "readout_energy": 1.9182317397811197,
+      "modal_energy": 70.69739961190656,
+      "entropy_bits": 12.665433437791304,
+      "top1": 0.0038220707238385073,
+      "spsa_iters": 146,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.885903700022027
+     },
+     "random": {
+      "best_energy": 2.042964120344682,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 4096,
+      "wall": 0.012416700017638505
+     },
+     "anneal": {
+      "best_energy": 1.8807537718252703,
+      "best_bitstring": "0000000000100000",
+      "n_energy_evaluations": 2484,
+      "wall": 0.278163599956315
+     },
+     "greedy_ls": {
+      "best_energy": 1.8807537718252703,
+      "best_bitstring": "0000000000100000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.08102670003427193
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.8807537718252703,
+      "readout_energy": 2.4732608134096323,
+      "modal_energy": 19.893495720083063,
+      "entropy_bits": 12.612600497695947,
+      "top1": 0.004638471044707804,
+      "spsa_iters": 627,
+      "n_energy_evaluations": 16383,
+      "terminated_by": "budget",
+      "wall": 7.895680199959315
+     },
+     "random": {
+      "best_energy": 1.9073679696429862,
+      "best_bitstring": "0000000000000001",
+      "n_energy_evaluations": 16384,
+      "wall": 0.065528400009498
+     },
+     "anneal": {
+      "best_energy": 1.8807537718252703,
+      "best_bitstring": "0000000000100000",
+      "n_energy_evaluations": 7732,
+      "wall": 1.2379087000153959
+     },
+     "greedy_ls": {
+      "best_energy": 1.8807537718252703,
+      "best_bitstring": "0000000000100000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.5017606999608688
+     }
+    }
+   }
+  },
+  {
+   "pdb": "1N9U",
+   "n": 10,
+   "fold": 4,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.4335417747497559,
+   "exact_opt_rmsd": 3.225821364679915,
+   "oracle_best_rmsd": 2.1929950817424095,
+   "anchor_rmsd": 2.671240888787387,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 1.6244665880997973,
+      "readout_energy": 11.749868649575445,
+      "modal_energy": 39.62562533054086,
+      "entropy_bits": 11.868936057997637,
+      "top1": 0.011055604279800346,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.45540420000907034
+     },
+     "random": {
+      "best_energy": 1.703372362587187,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.003968200006056577
+     },
+     "anneal": {
+      "best_energy": 1.4335417747497559,
+      "best_bitstring": "0000100001000000",
+      "n_energy_evaluations": 894,
+      "wall": 0.09590160002699122
+     },
+     "greedy_ls": {
+      "best_energy": 1.640142235491011,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 1024,
+      "wall": 0.018918199988547713
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.4335417747497559,
+      "readout_energy": 1.4335417747497559,
+      "modal_energy": 9.246569610304302,
+      "entropy_bits": 12.349664010462284,
+      "top1": 0.007594204310946741,
+      "spsa_iters": 146,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.814870600006543
+     },
+     "random": {
+      "best_energy": 1.640142235491011,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 4096,
+      "wall": 0.012053799990098923
+     },
+     "anneal": {
+      "best_energy": 1.4335417747497559,
+      "best_bitstring": "0000100001000000",
+      "n_energy_evaluations": 2515,
+      "wall": 0.3057375000207685
+     },
+     "greedy_ls": {
+      "best_energy": 1.494193635053105,
+      "best_bitstring": "0000001001000000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.1079433000413701
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.5761759413613214,
+      "readout_energy": 1.5761759413613214,
+      "modal_energy": 43.98930347628064,
+      "entropy_bits": 11.997148851194567,
+      "top1": 0.0081638842308353,
+      "spsa_iters": 629,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 8.146318299986888
+     },
+     "random": {
+      "best_energy": 1.5951666600174375,
+      "best_bitstring": "0000100000000001",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05846739996923134
+     },
+     "anneal": {
+      "best_energy": 1.4335417747497559,
+      "best_bitstring": "0000100001000000",
+      "n_energy_evaluations": 7865,
+      "wall": 1.177632500010077
+     },
+     "greedy_ls": {
+      "best_energy": 1.494193635053105,
+      "best_bitstring": "0000001001000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7557065000291914
+     }
+    }
+   }
+  },
+  {
+   "pdb": "1RSW",
+   "n": 12,
+   "fold": 0,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.2745821936564008,
+   "exact_opt_rmsd": 4.6220688550279325,
+   "oracle_best_rmsd": 3.9111533904897233,
+   "anchor_rmsd": 4.238617868277926,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 2.196545493060892,
+      "readout_energy": 10.171718373623762,
+      "modal_energy": 10.171718373623762,
+      "entropy_bits": 12.220451183464636,
+      "top1": 0.005246602806623701,
+      "spsa_iters": 35,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4963919000001624
+     },
+     "random": {
+      "best_energy": 1.4317970861088143,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0029417999903671443
+     },
+     "anneal": {
+      "best_energy": 1.2745821936564008,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 783,
+      "wall": 0.06515540002146736
+     },
+     "greedy_ls": {
+      "best_energy": 1.4317970861088143,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.02123300003586337
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 2.2667155791412696,
+      "readout_energy": 1.6477405369281763,
+      "modal_energy": 94.82095924290743,
+      "entropy_bits": 12.500305051345928,
+      "top1": 0.0062877344553271776,
+      "spsa_iters": 142,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.836795599956531
+     },
+     "random": {
+      "best_energy": 1.2745821936564008,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.01470629998948425
+     },
+     "anneal": {
+      "best_energy": 1.2745821936564008,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 2474,
+      "wall": 0.2260731999995187
+     },
+     "greedy_ls": {
+      "best_energy": 1.2745821936564008,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.10116110002854839
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.3259176899086351,
+      "readout_energy": 1.3259176899086351,
+      "modal_energy": 165.78979241577062,
+      "entropy_bits": 11.664654221699362,
+      "top1": 0.007420711186063791,
+      "spsa_iters": 632,
+      "n_energy_evaluations": 16352,
+      "terminated_by": "budget",
+      "wall": 7.913159700052347
+     },
+     "random": {
+      "best_energy": 1.2745821936564008,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.060076900001149625
+     },
+     "anneal": {
+      "best_energy": 1.2745821936564008,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 7924,
+      "wall": 1.237124799983576
+     },
+     "greedy_ls": {
+      "best_energy": 1.2745821936564008,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7214259000029415
+     }
+    }
+   }
+  },
+  {
+   "pdb": "2BAO",
+   "n": 10,
+   "fold": 2,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.9727916328443422,
+   "exact_opt_rmsd": 1.8954734440636067,
+   "oracle_best_rmsd": 1.4128198060889652,
+   "anchor_rmsd": 1.8626317501842742,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 4.346101490159828,
+      "readout_energy": 2.3187695228391223,
+      "modal_energy": NaN,
+      "entropy_bits": 13.208012908195823,
+      "top1": 0.002330843786953106,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4522786000161432
+     },
+     "random": {
+      "best_energy": 1.5053824683030443,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0033532000379636884
+     },
+     "anneal": {
+      "best_energy": 0.9727916328443422,
+      "best_bitstring": "0010000000001000",
+      "n_energy_evaluations": 775,
+      "wall": 0.0798862999654375
+     },
+     "greedy_ls": {
+      "best_energy": 1.4326824926667743,
+      "best_bitstring": "1000000000001000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.019142999954055995
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.1453193782104387,
+      "readout_energy": 4.487995218899515,
+      "modal_energy": NaN,
+      "entropy_bits": 12.942583590379297,
+      "top1": 0.002774988581766845,
+      "spsa_iters": 140,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.7600980999995954
+     },
+     "random": {
+      "best_energy": 1.4590829859177274,
+      "best_bitstring": "0001000000000100",
+      "n_energy_evaluations": 4096,
+      "wall": 0.01251069997670129
+     },
+     "anneal": {
+      "best_energy": 0.9727916328443422,
+      "best_bitstring": "0010000000001000",
+      "n_energy_evaluations": 2494,
+      "wall": 0.1970833000377752
+     },
+     "greedy_ls": {
+      "best_energy": 0.9727916328443422,
+      "best_bitstring": "0010000000001000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.10994400002527982
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.0087320423788495,
+      "readout_energy": 1.4590829859177274,
+      "modal_energy": 30.819900742835472,
+      "entropy_bits": 12.685215583533033,
+      "top1": 0.002970422396254745,
+      "spsa_iters": 649,
+      "n_energy_evaluations": 16378,
+      "terminated_by": "budget",
+      "wall": 8.431265699968208
+     },
+     "random": {
+      "best_energy": 1.0087320423788495,
+      "best_bitstring": "0001000000001000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05023639998398721
+     },
+     "anneal": {
+      "best_energy": 0.9727916328443422,
+      "best_bitstring": "0010000000001000",
+      "n_energy_evaluations": 8009,
+      "wall": 1.2199666000087745
+     },
+     "greedy_ls": {
+      "best_energy": 0.9727916328443422,
+      "best_bitstring": "0010000000001000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7398550999932922
+     }
+    }
+   }
+  },
+  {
+   "pdb": "2FBU",
+   "n": 12,
+   "fold": 4,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.9285688161849972,
+   "exact_opt_rmsd": 2.984998299768076,
+   "oracle_best_rmsd": 2.688284676467891,
+   "anchor_rmsd": 2.997690422818748,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 5.514916981892153,
+      "readout_energy": 1.7241176919503642,
+      "modal_energy": NaN,
+      "entropy_bits": 12.838765664242787,
+      "top1": 0.003434100684419951,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.45990210003219545
+     },
+     "random": {
+      "best_energy": 2.051475579630245,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0036971000372432172
+     },
+     "anneal": {
+      "best_energy": 0.9285688161849972,
+      "best_bitstring": "0100000000000001",
+      "n_energy_evaluations": 677,
+      "wall": 0.04177120001986623
+     },
+     "greedy_ls": {
+      "best_energy": 1.4024905551563611,
+      "best_bitstring": "0000001000000001",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0148678999976255
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 0.9285688161849972,
+      "readout_energy": 1.4495059268041093,
+      "modal_energy": 180.3707466038789,
+      "entropy_bits": 11.811885018500224,
+      "top1": 0.004313962473841045,
+      "spsa_iters": 139,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.8177031999803148
+     },
+     "random": {
+      "best_energy": 1.5516011552377185,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 4096,
+      "wall": 0.012425899971276522
+     },
+     "anneal": {
+      "best_energy": 0.9285688161849972,
+      "best_bitstring": "0100000000000001",
+      "n_energy_evaluations": 2500,
+      "wall": 0.19911069999216124
+     },
+     "greedy_ls": {
+      "best_energy": 0.9285688161849972,
+      "best_bitstring": "0100000000000001",
+      "n_energy_evaluations": 4096,
+      "wall": 0.11774999997578561
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 0.9285688161849972,
+      "readout_energy": 1.735122428157113,
+      "modal_energy": 203.88076674125386,
+      "entropy_bits": 13.12934705860095,
+      "top1": 0.0023526296451601017,
+      "spsa_iters": 612,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.813393399992492
+     },
+     "random": {
+      "best_energy": 1.1917859836058184,
+      "best_bitstring": "0100000010000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.061362800013739616
+     },
+     "anneal": {
+      "best_energy": 0.9285688161849972,
+      "best_bitstring": "0100000000000001",
+      "n_energy_evaluations": 8048,
+      "wall": 1.3139985000016168
+     },
+     "greedy_ls": {
+      "best_energy": 0.9285688161849972,
+      "best_bitstring": "0100000000000001",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7373942999984138
+     }
+    }
+   }
+  },
+  {
+   "pdb": "2LM8",
+   "n": 13,
+   "fold": 0,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 2.006630887587865,
+   "exact_opt_rmsd": 5.685957149722962,
+   "oracle_best_rmsd": 4.819726481106035,
+   "anchor_rmsd": 5.2622893968690265,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 2.5050778524442157,
+      "readout_energy": 23.799848889762693,
+      "modal_energy": 177.2999583726581,
+      "entropy_bits": 12.791808161235895,
+      "top1": 0.004964364191673791,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4421949999523349
+     },
+     "random": {
+      "best_energy": 2.771496854045174,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.002568800002336502
+     },
+     "anneal": {
+      "best_energy": 2.006630887587865,
+      "best_bitstring": "0010000010000000",
+      "n_energy_evaluations": 880,
+      "wall": 0.11842579999938607
+     },
+     "greedy_ls": {
+      "best_energy": 2.2198221240982865,
+      "best_bitstring": "0010000000000010",
+      "n_energy_evaluations": 1024,
+      "wall": 0.021207400015555322
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 2.517919119560357,
+      "readout_energy": 6.741592877742015,
+      "modal_energy": 69.31481479966277,
+      "entropy_bits": 12.680399926626077,
+      "top1": 0.005172045866168818,
+      "spsa_iters": 138,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.7493334999890067
+     },
+     "random": {
+      "best_energy": 2.327245883869402,
+      "best_bitstring": "0000000100100000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.01291509997099638
+     },
+     "anneal": {
+      "best_energy": 2.006630887587865,
+      "best_bitstring": "0010000010000000",
+      "n_energy_evaluations": 2505,
+      "wall": 0.3598257999983616
+     },
+     "greedy_ls": {
+      "best_energy": 2.104834333513722,
+      "best_bitstring": "0000000110000000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.10084949998417869
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 2.006630887587865,
+      "readout_energy": 5.491691701339952,
+      "modal_energy": 212.49707405675562,
+      "entropy_bits": 12.752286983248226,
+      "top1": 0.004393112578853394,
+      "spsa_iters": 625,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.826888200012036
+     },
+     "random": {
+      "best_energy": 2.104834333513722,
+      "best_bitstring": "0000000110000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.06174900004407391
+     },
+     "anneal": {
+      "best_energy": 2.006630887587865,
+      "best_bitstring": "0010000010000000",
+      "n_energy_evaluations": 7879,
+      "wall": 1.2409486999968067
+     },
+     "greedy_ls": {
+      "best_energy": 2.104834333513722,
+      "best_bitstring": "0000000110000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7569620999856852
+     }
+    }
+   }
+  },
+  {
+   "pdb": "2LWS",
+   "n": 12,
+   "fold": 4,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.7230524539947512,
+   "exact_opt_rmsd": 4.484130155405632,
+   "oracle_best_rmsd": 4.445253101648865,
+   "anchor_rmsd": 4.525051880211583,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 2.352332963726738,
+      "readout_energy": 2.323805179379203,
+      "modal_energy": NaN,
+      "entropy_bits": 13.17429246348461,
+      "top1": 0.002900537906441516,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.5110850000055507
+     },
+     "random": {
+      "best_energy": 2.160087780518965,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.004181700001936406
+     },
+     "anneal": {
+      "best_energy": 1.7230524539947512,
+      "best_bitstring": "0010000010000000",
+      "n_energy_evaluations": 844,
+      "wall": 0.10001470003044233
+     },
+     "greedy_ls": {
+      "best_energy": 2.160087780518965,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.01740900002187118
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 2.267199008031325,
+      "readout_energy": 2.4301610990004106,
+      "modal_energy": 134.37466103055263,
+      "entropy_bits": 12.367545899098825,
+      "top1": 0.0026956230017526096,
+      "spsa_iters": 143,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 2.0007507000118494
+     },
+     "random": {
+      "best_energy": 2.160087780518965,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.015370599983725697
+     },
+     "anneal": {
+      "best_energy": 1.7230524539947512,
+      "best_bitstring": "0010000010000000",
+      "n_energy_evaluations": 2513,
+      "wall": 0.31189210002776235
+     },
+     "greedy_ls": {
+      "best_energy": 1.9618810967965565,
+      "best_bitstring": "0000010010000000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.11144449998391792
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.8930853789502926,
+      "readout_energy": 2.783446989276192,
+      "modal_energy": 38.83192436153239,
+      "entropy_bits": 13.539065707966941,
+      "top1": 0.0023547752593929268,
+      "spsa_iters": 627,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.8342137999716215
+     },
+     "random": {
+      "best_energy": 1.7953633514317602,
+      "best_bitstring": "0100000010000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.0529120999854058
+     },
+     "anneal": {
+      "best_energy": 1.7230524539947512,
+      "best_bitstring": "0010000010000000",
+      "n_energy_evaluations": 8014,
+      "wall": 1.7215455999830738
+     },
+     "greedy_ls": {
+      "best_energy": 1.8949486895041034,
+      "best_bitstring": "0010000000001000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7179308999911882
+     }
+    }
+   }
+  },
+  {
+   "pdb": "2MD2",
+   "n": 10,
+   "fold": 3,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.7301263337334003,
+   "exact_opt_rmsd": 1.271209359036695,
+   "oracle_best_rmsd": 1.271209359036695,
+   "anchor_rmsd": 1.266184280425114,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 1.270651821460989,
+      "readout_energy": 13.922019062770739,
+      "modal_energy": NaN,
+      "entropy_bits": 12.780725239132058,
+      "top1": 0.004063062912571964,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4407107000006363
+     },
+     "random": {
+      "best_energy": 2.1793977593382197,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.004211500054225326
+     },
+     "anneal": {
+      "best_energy": 1.0428938037819329,
+      "best_bitstring": "1000000000100000",
+      "n_energy_evaluations": 740,
+      "wall": 0.095411799964495
+     },
+     "greedy_ls": {
+      "best_energy": 1.2789977540572481,
+      "best_bitstring": "1000000000001000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.012277200003154576
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.300923807753457,
+      "readout_energy": 6.1964532476332455,
+      "modal_energy": 5.8679391650689965,
+      "entropy_bits": 13.052054713729063,
+      "top1": 0.003347580578643946,
+      "spsa_iters": 140,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.8735852999961935
+     },
+     "random": {
+      "best_energy": 1.3205535295936794,
+      "best_bitstring": "0000000100100000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.012634799990337342
+     },
+     "anneal": {
+      "best_energy": 0.7301263337334003,
+      "best_bitstring": "0000010000100000",
+      "n_energy_evaluations": 2549,
+      "wall": 0.3096849999856204
+     },
+     "greedy_ls": {
+      "best_energy": 1.1251658408178233,
+      "best_bitstring": "0000010000001000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.09633510001003742
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.0999486396710072,
+      "readout_energy": 6.51188810997539,
+      "modal_energy": 119.59806679354767,
+      "entropy_bits": 11.69628190760983,
+      "top1": 0.012331027718514725,
+      "spsa_iters": 622,
+      "n_energy_evaluations": 16368,
+      "terminated_by": "budget",
+      "wall": 8.009391299972776
+     },
+     "random": {
+      "best_energy": 1.0428938037819329,
+      "best_bitstring": "1000000000100000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.06023000000277534
+     },
+     "anneal": {
+      "best_energy": 0.7301263337334003,
+      "best_bitstring": "0000010000100000",
+      "n_energy_evaluations": 8107,
+      "wall": 1.3567628000164405
+     },
+     "greedy_ls": {
+      "best_energy": 0.7301263337334003,
+      "best_bitstring": "0000010000100000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.6294695000397041
+     }
+    }
+   }
+  },
+  {
+   "pdb": "2MIG",
+   "n": 12,
+   "fold": 0,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.396924822438847,
+   "exact_opt_rmsd": 3.406712844686226,
+   "oracle_best_rmsd": 3.2350049177024403,
+   "anchor_rmsd": 3.479309713269394,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 1.592795993523164,
+      "readout_energy": 2.735940701311285,
+      "modal_energy": 79.17296397144143,
+      "entropy_bits": 12.718447427617967,
+      "top1": 0.004066900868255634,
+      "spsa_iters": 35,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.42561499995645136
+     },
+     "random": {
+      "best_energy": 1.8370542748407885,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0040191999869421124
+     },
+     "anneal": {
+      "best_energy": 1.396924822438847,
+      "best_bitstring": "0000001001000000",
+      "n_energy_evaluations": 852,
+      "wall": 0.08462540002074093
+     },
+     "greedy_ls": {
+      "best_energy": 1.7800389712507076,
+      "best_bitstring": "1000000000100000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.01830950001021847
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.4322359946641057,
+      "readout_energy": 1.4327933869578624,
+      "modal_energy": 61.82718285322189,
+      "entropy_bits": 11.329221531141325,
+      "top1": 0.0236228245514679,
+      "spsa_iters": 142,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.6766579000395723
+     },
+     "random": {
+      "best_energy": 1.7406782269477845,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.012488599983043969
+     },
+     "anneal": {
+      "best_energy": 1.396924822438847,
+      "best_bitstring": "0000001001000000",
+      "n_energy_evaluations": 2508,
+      "wall": 0.2423669000272639
+     },
+     "greedy_ls": {
+      "best_energy": 1.396924822438847,
+      "best_bitstring": "0000001001000000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.11897930002305657
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.570978072014722,
+      "readout_energy": 1.7406782269477845,
+      "modal_energy": 86.24075332283972,
+      "entropy_bits": 11.068383743463006,
+      "top1": 0.018968093607558772,
+      "spsa_iters": 628,
+      "n_energy_evaluations": 16355,
+      "terminated_by": "budget",
+      "wall": 7.7288914999808185
+     },
+     "random": {
+      "best_energy": 1.4959636482325465,
+      "best_bitstring": "0000001010000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.04914940003072843
+     },
+     "anneal": {
+      "best_energy": 1.396924822438847,
+      "best_bitstring": "0000001001000000",
+      "n_energy_evaluations": 7797,
+      "wall": 0.8431812000344507
+     },
+     "greedy_ls": {
+      "best_energy": 1.396924822438847,
+      "best_bitstring": "0000001001000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7371998999733478
+     }
+    }
+   }
+  },
+  {
+   "pdb": "2MLQ",
+   "n": 16,
+   "fold": 4,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.0370109447411142,
+   "exact_opt_rmsd": 2.5044296215908473,
+   "oracle_best_rmsd": 2.5044296215908473,
+   "anchor_rmsd": 2.4636786388024268,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 8.055230954147522,
+      "readout_energy": 11.654702730405898,
+      "modal_energy": 176.08248685456456,
+      "entropy_bits": 12.469645561430514,
+      "top1": 0.004672801040242736,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4207181000383571
+     },
+     "random": {
+      "best_energy": 1.4115741360755187,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.002707799954805523
+     },
+     "anneal": {
+      "best_energy": 1.0370109447411142,
+      "best_bitstring": "0000100000100000",
+      "n_energy_evaluations": 709,
+      "wall": 0.066923999984283
+     },
+     "greedy_ls": {
+      "best_energy": 1.2134971970603594,
+      "best_bitstring": "0000100000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.011259299993980676
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 2.0714384093171088,
+      "readout_energy": 5.503302148410252,
+      "modal_energy": NaN,
+      "entropy_bits": 12.87576900865717,
+      "top1": 0.0024796887570884907,
+      "spsa_iters": 135,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.7376840999932028
+     },
+     "random": {
+      "best_energy": 1.4115741360755187,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.01147949998266995
+     },
+     "anneal": {
+      "best_energy": 1.0370109447411142,
+      "best_bitstring": "0000100000100000",
+      "n_energy_evaluations": 2521,
+      "wall": 0.17048829997656867
+     },
+     "greedy_ls": {
+      "best_energy": 1.2134971970603594,
+      "best_bitstring": "0000100000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.0773170999600552
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.0370109447411142,
+      "readout_energy": 5.730016744704473,
+      "modal_energy": NaN,
+      "entropy_bits": 12.91385107890845,
+      "top1": 0.0032102482782638752,
+      "spsa_iters": 608,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.511431799968705
+     },
+     "random": {
+      "best_energy": 1.2850581966695334,
+      "best_bitstring": "1000000000100000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05520109995268285
+     },
+     "anneal": {
+      "best_energy": 1.0370109447411142,
+      "best_bitstring": "0000100000100000",
+      "n_energy_evaluations": 8224,
+      "wall": 1.6625933999894187
+     },
+     "greedy_ls": {
+      "best_energy": 1.0370109447411142,
+      "best_bitstring": "0000100000100000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.571914599975571
+     }
+    }
+   }
+  },
+  {
+   "pdb": "2N9A",
+   "n": 11,
+   "fold": 4,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.5217573470539527,
+   "exact_opt_rmsd": 1.1666636471912348,
+   "oracle_best_rmsd": 1.1666636471912348,
+   "anchor_rmsd": 1.1637029550600002,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 6.43878968225585,
+      "readout_energy": 5.396465969747968,
+      "modal_energy": 209.40281544559517,
+      "entropy_bits": 11.76578596710676,
+      "top1": 0.01179349601760512,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4036536000203341
+     },
+     "random": {
+      "best_energy": 2.1128172000249226,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0027677000034600496
+     },
+     "anneal": {
+      "best_energy": 0.5217573470539527,
+      "best_bitstring": "0000010000100000",
+      "n_energy_evaluations": 722,
+      "wall": 0.0800364000024274
+     },
+     "greedy_ls": {
+      "best_energy": 0.7586605979336634,
+      "best_bitstring": "0000010000000001",
+      "n_energy_evaluations": 1024,
+      "wall": 0.01248999999370426
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.7893887301286062,
+      "readout_energy": 8.996011032660801,
+      "modal_energy": 102.62974922524552,
+      "entropy_bits": 12.639014327110873,
+      "top1": 0.004304200228283934,
+      "spsa_iters": 136,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.6951981000020169
+     },
+     "random": {
+      "best_energy": 1.568078159623676,
+      "best_bitstring": "0000000100100000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.013017999997828156
+     },
+     "anneal": {
+      "best_energy": 0.5217573470539527,
+      "best_bitstring": "0000010000100000",
+      "n_energy_evaluations": 2563,
+      "wall": 0.24906080000801012
+     },
+     "greedy_ls": {
+      "best_energy": 0.7586605979336634,
+      "best_bitstring": "0000010000000001",
+      "n_energy_evaluations": 4096,
+      "wall": 0.08249689999502152
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 0.5217573470539527,
+      "readout_energy": 1.8467446890142227,
+      "modal_energy": 43.78566211925614,
+      "entropy_bits": 13.122780070918147,
+      "top1": 0.0029362928875856526,
+      "spsa_iters": 608,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.546052500023507
+     },
+     "random": {
+      "best_energy": 1.568078159623676,
+      "best_bitstring": "0000000100100000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05819089995929971
+     },
+     "anneal": {
+      "best_energy": 0.5217573470539527,
+      "best_bitstring": "0000010000100000",
+      "n_energy_evaluations": 8199,
+      "wall": 1.7659778000088409
+     },
+     "greedy_ls": {
+      "best_energy": 0.5217573470539527,
+      "best_bitstring": "0000010000100000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.6388732999912463
+     }
+    }
+   }
+  },
+  {
+   "pdb": "2O0S",
+   "n": 12,
+   "fold": 2,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.9927196611057623,
+   "exact_opt_rmsd": 4.041412679526657,
+   "oracle_best_rmsd": 3.511418151619882,
+   "anchor_rmsd": 3.8442437632548536,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 2.4193242235617203,
+      "readout_energy": 2.4193242235617203,
+      "modal_energy": NaN,
+      "entropy_bits": 12.954961606463797,
+      "top1": 0.002729186791337598,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4689330999972299
+     },
+     "random": {
+      "best_energy": 2.4880603833632033,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.004227900004480034
+     },
+     "anneal": {
+      "best_energy": 1.9927196611057623,
+      "best_bitstring": "0000000110000000",
+      "n_energy_evaluations": 885,
+      "wall": 0.128050799947232
+     },
+     "greedy_ls": {
+      "best_energy": 2.4193242235617203,
+      "best_bitstring": "0100000000000010",
+      "n_energy_evaluations": 1024,
+      "wall": 0.02174679999006912
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 2.407620878653093,
+      "readout_energy": 2.7392939307472917,
+      "modal_energy": 177.33069018125533,
+      "entropy_bits": 10.718814966782537,
+      "top1": 0.016006853591570055,
+      "spsa_iters": 140,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.8447898000013083
+     },
+     "random": {
+      "best_energy": 2.1149805903434755,
+      "best_bitstring": "0000000100100000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.013093899993691593
+     },
+     "anneal": {
+      "best_energy": 1.9927196611057623,
+      "best_bitstring": "0000000110000000",
+      "n_energy_evaluations": 2470,
+      "wall": 0.19586290000006557
+     },
+     "greedy_ls": {
+      "best_energy": 1.9927196611057623,
+      "best_bitstring": "0000000110000000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.10306039999704808
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.9927196611057623,
+      "readout_energy": 2.0628138119524166,
+      "modal_energy": 23.256213123148136,
+      "entropy_bits": 12.611093981278987,
+      "top1": 0.010526510128001095,
+      "spsa_iters": 627,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 8.039030799991451
+     },
+     "random": {
+      "best_energy": 1.9927196611057623,
+      "best_bitstring": "0000000110000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05722960003186017
+     },
+     "anneal": {
+      "best_energy": 1.9927196611057623,
+      "best_bitstring": "0000000110000000",
+      "n_energy_evaluations": 7837,
+      "wall": 0.9723793999874033
+     },
+     "greedy_ls": {
+      "best_energy": 1.9927196611057623,
+      "best_bitstring": "0000000110000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7510183000122197
+     }
+    }
+   }
+  },
+  {
+   "pdb": "2XL1",
+   "n": 15,
+   "fold": 2,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.9304097943253566,
+   "exact_opt_rmsd": 0.5115839468308793,
+   "oracle_best_rmsd": 0.5115839468308793,
+   "anchor_rmsd": 0.515484299417643,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 2.062587798296752,
+      "readout_energy": 9.178194491745353,
+      "modal_energy": 206.99302673241593,
+      "entropy_bits": 12.080499690264425,
+      "top1": 0.009455563576457993,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4310284999664873
+     },
+     "random": {
+      "best_energy": 1.479396899977882,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0024833999923430383
+     },
+     "anneal": {
+      "best_energy": 0.9304097943253566,
+      "best_bitstring": "0000001001000000",
+      "n_energy_evaluations": 749,
+      "wall": 0.12049029994523153
+     },
+     "greedy_ls": {
+      "best_energy": 1.2769757709005365,
+      "best_bitstring": "0000001000000001",
+      "n_energy_evaluations": 1024,
+      "wall": 0.012396199977956712
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.302758151358299,
+      "readout_energy": 1.302758151358299,
+      "modal_energy": 53.47911198388089,
+      "entropy_bits": 12.583295445369732,
+      "top1": 0.005653216173517952,
+      "spsa_iters": 135,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.8226885999902152
+     },
+     "random": {
+      "best_energy": 1.3676844006711288,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.01651209994452074
+     },
+     "anneal": {
+      "best_energy": 0.9304097943253566,
+      "best_bitstring": "0000001001000000",
+      "n_energy_evaluations": 2526,
+      "wall": 0.20886650000466034
+     },
+     "greedy_ls": {
+      "best_energy": 0.9304097943253566,
+      "best_bitstring": "0000001001000000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.08231530000921339
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.0806911685964575,
+      "readout_energy": 8.485000536009505,
+      "modal_energy": 8.963193077962476,
+      "entropy_bits": 12.90713980358404,
+      "top1": 0.005552930628859893,
+      "spsa_iters": 602,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 8.39244600001257
+     },
+     "random": {
+      "best_energy": 1.3676844006711288,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.059787800011690706
+     },
+     "anneal": {
+      "best_energy": 0.9304097943253566,
+      "best_bitstring": "0000001001000000",
+      "n_energy_evaluations": 8137,
+      "wall": 1.3380861000041477
+     },
+     "greedy_ls": {
+      "best_energy": 0.9304097943253566,
+      "best_bitstring": "0000001001000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.6047591000096872
+     }
+    }
+   }
+  },
+  {
+   "pdb": "5MXS",
+   "n": 14,
+   "fold": 3,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.8137436417432928,
+   "exact_opt_rmsd": 3.0007783215021657,
+   "oracle_best_rmsd": 1.2753763479247944,
+   "anchor_rmsd": 1.4148737681206673,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 7.291326543459524,
+      "readout_energy": 14.380954259481182,
+      "modal_energy": 19.69290410631742,
+      "entropy_bits": 12.73878691463629,
+      "top1": 0.0055614742919263115,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.48218270001234487
+     },
+     "random": {
+      "best_energy": 2.6886603839886503,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0026486999704502523
+     },
+     "anneal": {
+      "best_energy": 1.8137436417432928,
+      "best_bitstring": "0000010000001000",
+      "n_energy_evaluations": 789,
+      "wall": 0.08068330003879964
+     },
+     "greedy_ls": {
+      "best_energy": 1.8742743883377466,
+      "best_bitstring": "1000000000001000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.018661499954760075
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 2.1331119048289757,
+      "readout_energy": 7.3520196706820755,
+      "modal_energy": 81.03907781686542,
+      "entropy_bits": 10.406732032374707,
+      "top1": 0.018955762577633078,
+      "spsa_iters": 138,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.8612674999749288
+     },
+     "random": {
+      "best_energy": 2.1331119048289757,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 4096,
+      "wall": 0.01281879999442026
+     },
+     "anneal": {
+      "best_energy": 1.8137436417432928,
+      "best_bitstring": "0000010000001000",
+      "n_energy_evaluations": 2486,
+      "wall": 0.1922715000109747
+     },
+     "greedy_ls": {
+      "best_energy": 1.8137436417432928,
+      "best_bitstring": "0000010000001000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.11908620002213866
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.8519731110487223,
+      "readout_energy": 2.420691327406809,
+      "modal_energy": 249.5392182247762,
+      "entropy_bits": 13.36543268243092,
+      "top1": 0.0028118874589672894,
+      "spsa_iters": 615,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.7624167000176385
+     },
+     "random": {
+      "best_energy": 1.8742743883377466,
+      "best_bitstring": "1000000000001000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05642809998244047
+     },
+     "anneal": {
+      "best_energy": 1.8137436417432928,
+      "best_bitstring": "0000010000001000",
+      "n_energy_evaluations": 8036,
+      "wall": 1.1455851000500843
+     },
+     "greedy_ls": {
+      "best_energy": 1.8137436417432928,
+      "best_bitstring": "0000010000001000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.6767944000312127
+     }
+    }
+   }
+  },
+  {
+   "pdb": "5Z5W",
+   "n": 12,
+   "fold": 3,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.7205741156231262,
+   "exact_opt_rmsd": 2.360082893935066,
+   "oracle_best_rmsd": 2.2831807630862975,
+   "anchor_rmsd": 2.3569694303192583,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 6.907159069451419,
+      "readout_energy": 31.1717707363042,
+      "modal_energy": NaN,
+      "entropy_bits": 12.976619290399194,
+      "top1": 0.0024622915108905388,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4141360999783501
+     },
+     "random": {
+      "best_energy": 1.9256185997616164,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.002543600043281913
+     },
+     "anneal": {
+      "best_energy": 1.082060830701483,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 710,
+      "wall": 0.0606374999624677
+     },
+     "greedy_ls": {
+      "best_energy": 1.0523227789185263,
+      "best_bitstring": "0000100000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.011718900001142174
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.0877022152597249,
+      "readout_energy": 2.213326704502106,
+      "modal_energy": NaN,
+      "entropy_bits": 12.743565045890762,
+      "top1": 0.005629606422073303,
+      "spsa_iters": 136,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.8341358000179753
+     },
+     "random": {
+      "best_energy": 1.082060830701483,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.013388400024268776
+     },
+     "anneal": {
+      "best_energy": 0.7205741156231262,
+      "best_bitstring": "0010000000010000",
+      "n_energy_evaluations": 2573,
+      "wall": 0.29743830004008487
+     },
+     "greedy_ls": {
+      "best_energy": 0.7205741156231262,
+      "best_bitstring": "0010000000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.09320649999426678
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.2787105527791098,
+      "readout_energy": 1.2706050162965603,
+      "modal_energy": 159.0165180320089,
+      "entropy_bits": 12.682845746588907,
+      "top1": 0.00312309338036126,
+      "spsa_iters": 614,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.603289299993776
+     },
+     "random": {
+      "best_energy": 1.082060830701483,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.0693053999566473
+     },
+     "anneal": {
+      "best_energy": 0.7205741156231262,
+      "best_bitstring": "0010000000010000",
+      "n_energy_evaluations": 8132,
+      "wall": 1.3402186000021175
+     },
+     "greedy_ls": {
+      "best_energy": 0.7205741156231262,
+      "best_bitstring": "0010000000010000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.627938500023447
+     }
+    }
+   }
+  },
+  {
+   "pdb": "6BX9",
+   "n": 15,
+   "fold": 4,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.677894838563688,
+   "exact_opt_rmsd": 4.317228979750536,
+   "oracle_best_rmsd": 3.9961617425213554,
+   "anchor_rmsd": 4.450670713450507,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 6.281754905705924,
+      "readout_energy": 12.085097803191825,
+      "modal_energy": 130.10128035584654,
+      "entropy_bits": 12.370359642052323,
+      "top1": 0.004572737936294706,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4485374999931082
+     },
+     "random": {
+      "best_energy": 1.977516757262932,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.002528599987272173
+     },
+     "anneal": {
+      "best_energy": 1.677894838563688,
+      "best_bitstring": "0001000001000000",
+      "n_energy_evaluations": 811,
+      "wall": 0.11499490001006052
+     },
+     "greedy_ls": {
+      "best_energy": 1.8618396546814475,
+      "best_bitstring": "0100000000000010",
+      "n_energy_evaluations": 1024,
+      "wall": 0.017242000030819327
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.9827070432704885,
+      "readout_energy": 3.340556995554285,
+      "modal_energy": 166.1612670863724,
+      "entropy_bits": 11.54913661636941,
+      "top1": 0.017122563271177976,
+      "spsa_iters": 146,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.884297099953983
+     },
+     "random": {
+      "best_energy": 1.8043016110147745,
+      "best_bitstring": "0001000000000100",
+      "n_energy_evaluations": 4096,
+      "wall": 0.0125654999865219
+     },
+     "anneal": {
+      "best_energy": 1.677894838563688,
+      "best_bitstring": "0001000001000000",
+      "n_energy_evaluations": 2555,
+      "wall": 0.2962728000129573
+     },
+     "greedy_ls": {
+      "best_energy": 1.7843259500933222,
+      "best_bitstring": "0001000000000010",
+      "n_energy_evaluations": 4096,
+      "wall": 0.09885420004138723
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.677894838563688,
+      "readout_energy": 3.302510631608439,
+      "modal_energy": 12.47773312343346,
+      "entropy_bits": 12.991897289423179,
+      "top1": 0.0025430025606945953,
+      "spsa_iters": 615,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.554779099998996
+     },
+     "random": {
+      "best_energy": 1.7883529984034023,
+      "best_bitstring": "0000000101000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.052375499974004924
+     },
+     "anneal": {
+      "best_energy": 1.677894838563688,
+      "best_bitstring": "0001000001000000",
+      "n_energy_evaluations": 8025,
+      "wall": 1.4017338000121526
+     },
+     "greedy_ls": {
+      "best_energy": 1.700683718199259,
+      "best_bitstring": "0001000000100000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7073564000311308
+     }
+    }
+   }
+  },
+  {
+   "pdb": "6F3V",
+   "n": 9,
+   "fold": 0,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.3321807192904607,
+   "exact_opt_rmsd": 4.516452033559092,
+   "oracle_best_rmsd": 3.9258937794389537,
+   "anchor_rmsd": 4.390882021100762,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 4.696569630077907,
+      "readout_energy": 26.82637238715376,
+      "modal_energy": 125.58216348077576,
+      "entropy_bits": 12.693871926862588,
+      "top1": 0.004124085864394017,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.46653859998332337
+     },
+     "random": {
+      "best_energy": 1.4146360137632916,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0029010999714955688
+     },
+     "anneal": {
+      "best_energy": 1.3340256852763042,
+      "best_bitstring": "0001000001000000",
+      "n_energy_evaluations": 823,
+      "wall": 0.12608259997796267
+     },
+     "greedy_ls": {
+      "best_energy": 1.4146360137632916,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.01786659995559603
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.5191317328384946,
+      "readout_energy": 4.678323083690234,
+      "modal_energy": 134.05617750968256,
+      "entropy_bits": 12.022727282731378,
+      "top1": 0.007011618754497852,
+      "spsa_iters": 139,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.7282980000018142
+     },
+     "random": {
+      "best_energy": 1.3854593336582184,
+      "best_bitstring": "0001000000000100",
+      "n_energy_evaluations": 4096,
+      "wall": 0.013664099969901145
+     },
+     "anneal": {
+      "best_energy": 1.3321807192904607,
+      "best_bitstring": "0001000000010000",
+      "n_energy_evaluations": 2503,
+      "wall": 0.2004331000498496
+     },
+     "greedy_ls": {
+      "best_energy": 1.4146360137632916,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.0992532999953255
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.3321807192904607,
+      "readout_energy": 1.6939644643238614,
+      "modal_energy": 188.91047787453454,
+      "entropy_bits": 11.963199087192283,
+      "top1": 0.008930237698330384,
+      "spsa_iters": 631,
+      "n_energy_evaluations": 16374,
+      "terminated_by": "budget",
+      "wall": 7.841510199999902
+     },
+     "random": {
+      "best_energy": 1.3321807192904607,
+      "best_bitstring": "0001000000010000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.058744699985254556
+     },
+     "anneal": {
+      "best_energy": 1.3321807192904607,
+      "best_bitstring": "0001000000010000",
+      "n_energy_evaluations": 7875,
+      "wall": 0.8441874000127427
+     },
+     "greedy_ls": {
+      "best_energy": 1.3321807192904607,
+      "best_bitstring": "0001000000010000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7543972000130452
+     }
+    }
+   }
+  },
+  {
+   "pdb": "6J9P",
+   "n": 12,
+   "fold": 4,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.7403607623143627,
+   "exact_opt_rmsd": 1.135588186212556,
+   "oracle_best_rmsd": 0.9418836692325968,
+   "anchor_rmsd": 1.0882814790370992,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 3.9017689195546237,
+      "readout_energy": 66.46415669159455,
+      "modal_energy": NaN,
+      "entropy_bits": 12.13387650403551,
+      "top1": 0.004469167133936303,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.45767269999487326
+     },
+     "random": {
+      "best_energy": 1.7849255800247192,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0032341000041924417
+     },
+     "anneal": {
+      "best_energy": 1.0196319981054822,
+      "best_bitstring": "0001000010000000",
+      "n_energy_evaluations": 729,
+      "wall": 0.06276709999656305
+     },
+     "greedy_ls": {
+      "best_energy": 1.2750761465592815,
+      "best_bitstring": "0000000100000001",
+      "n_energy_evaluations": 1024,
+      "wall": 0.013976500020362437
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.0196319981054822,
+      "readout_energy": 2.4000265327366908,
+      "modal_energy": 2.187264912236821,
+      "entropy_bits": 12.707854519139397,
+      "top1": 0.006275299208868805,
+      "spsa_iters": 138,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.708832899981644
+     },
+     "random": {
+      "best_energy": 1.3447248783978552,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 4096,
+      "wall": 0.015410899999551475
+     },
+     "anneal": {
+      "best_energy": 0.7403607623143627,
+      "best_bitstring": "0010000010000000",
+      "n_energy_evaluations": 2539,
+      "wall": 0.3204546999768354
+     },
+     "greedy_ls": {
+      "best_energy": 0.8660190419717271,
+      "best_bitstring": "0000010010000000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.09192330000223592
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 0.7403607623143627,
+      "readout_energy": 1.1624206781387336,
+      "modal_energy": 186.84680812521424,
+      "entropy_bits": 11.410737469143225,
+      "top1": 0.021308345501188066,
+      "spsa_iters": 612,
+      "n_energy_evaluations": 16370,
+      "terminated_by": "budget",
+      "wall": 7.79904189996887
+     },
+     "random": {
+      "best_energy": 0.9462391008030284,
+      "best_bitstring": "0000000110000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.059639699989929795
+     },
+     "anneal": {
+      "best_energy": 0.7403607623143627,
+      "best_bitstring": "0010000010000000",
+      "n_energy_evaluations": 7951,
+      "wall": 0.710413700027857
+     },
+     "greedy_ls": {
+      "best_energy": 0.8660190419717271,
+      "best_bitstring": "0000010010000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.6343038000050001
+     }
+    }
+   }
+  },
+  {
+   "pdb": "6OQP",
+   "n": 13,
+   "fold": 0,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.7756293108969026,
+   "exact_opt_rmsd": 3.1529919409098865,
+   "oracle_best_rmsd": 2.757849914024246,
+   "anchor_rmsd": 3.1149695275182783,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 4.0276778078440465,
+      "readout_energy": 29.026602773052275,
+      "modal_energy": 40.048214840166494,
+      "entropy_bits": 12.218099236953734,
+      "top1": 0.003155331193860133,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.44342139997752383
+     },
+     "random": {
+      "best_energy": 2.0235249869751213,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.002781999995931983
+     },
+     "anneal": {
+      "best_energy": 1.7756293108969026,
+      "best_bitstring": "0000000000100000",
+      "n_energy_evaluations": 908,
+      "wall": 0.1460790999699384
+     },
+     "greedy_ls": {
+      "best_energy": 1.7756293108969026,
+      "best_bitstring": "0000000000100000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.015175500011537224
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 2.156718732732715,
+      "readout_energy": 5.078121335217446,
+      "modal_energy": 11.814452944379866,
+      "entropy_bits": 12.82486832550809,
+      "top1": 0.004294935817870819,
+      "spsa_iters": 143,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.7924390999833122
+     },
+     "random": {
+      "best_energy": 1.9015081208763702,
+      "best_bitstring": "0000001000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.015294199984055012
+     },
+     "anneal": {
+      "best_energy": 1.7756293108969026,
+      "best_bitstring": "0000000000100000",
+      "n_energy_evaluations": 2435,
+      "wall": 0.20140819996595383
+     },
+     "greedy_ls": {
+      "best_energy": 1.7756293108969026,
+      "best_bitstring": "0000000000100000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.077932599990163
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.7756293108969026,
+      "readout_energy": 2.101278546181592,
+      "modal_energy": 2.101278546181592,
+      "entropy_bits": 12.846177549592502,
+      "top1": 0.0044779002074499365,
+      "spsa_iters": 643,
+      "n_energy_evaluations": 16383,
+      "terminated_by": "budget",
+      "wall": 7.866668800008483
+     },
+     "random": {
+      "best_energy": 1.8536780494632146,
+      "best_bitstring": "0000000000010000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.058174700010567904
+     },
+     "anneal": {
+      "best_energy": 1.7756293108969026,
+      "best_bitstring": "0000000000100000",
+      "n_energy_evaluations": 7537,
+      "wall": 0.6040294000413269
+     },
+     "greedy_ls": {
+      "best_energy": 1.7756293108969026,
+      "best_bitstring": "0000000000100000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.5514703000080772
+     }
+    }
+   }
+  },
+  {
+   "pdb": "6RRO",
+   "n": 11,
+   "fold": 3,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.8318344910939532,
+   "exact_opt_rmsd": 2.3950645060986115,
+   "oracle_best_rmsd": 1.4631266822927687,
+   "anchor_rmsd": 2.042507568054496,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 2.3681708309385505,
+      "readout_energy": 7.021777791447109,
+      "modal_energy": 106.65810337464018,
+      "entropy_bits": 12.420240345754394,
+      "top1": 0.0073070712485001,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.42483789997640997
+     },
+     "random": {
+      "best_energy": 2.7433158808284333,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0025439999881200492
+     },
+     "anneal": {
+      "best_energy": 1.9115370061662458,
+      "best_bitstring": "0000100001000000",
+      "n_energy_evaluations": 858,
+      "wall": 0.08085249998839572
+     },
+     "greedy_ls": {
+      "best_energy": 2.176894305811987,
+      "best_bitstring": "0100000000000010",
+      "n_energy_evaluations": 1024,
+      "wall": 0.015674599970225245
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.9115370061662458,
+      "readout_energy": 5.659123002158271,
+      "modal_energy": NaN,
+      "entropy_bits": 12.24295747082017,
+      "top1": 0.006615363965267103,
+      "spsa_iters": 138,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.8242307000327855
+     },
+     "random": {
+      "best_energy": 2.0412794563505385,
+      "best_bitstring": "0000000100100000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.01172979996772483
+     },
+     "anneal": {
+      "best_energy": 1.8318344910939532,
+      "best_bitstring": "0100000001000000",
+      "n_energy_evaluations": 2527,
+      "wall": 0.3642536000115797
+     },
+     "greedy_ls": {
+      "best_energy": 2.1176038622856135,
+      "best_bitstring": "0000000110000000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.10526159999426454
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.9115370061662458,
+      "readout_energy": 2.3178606775071886,
+      "modal_energy": 54.845669897397364,
+      "entropy_bits": 12.204558683151614,
+      "top1": 0.005666386121321435,
+      "spsa_iters": 627,
+      "n_energy_evaluations": 16376,
+      "terminated_by": "budget",
+      "wall": 7.731138600036502
+     },
+     "random": {
+      "best_energy": 1.920009152094524,
+      "best_bitstring": "0100000010000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05515609995927662
+     },
+     "anneal": {
+      "best_energy": 1.8318344910939532,
+      "best_bitstring": "0100000001000000",
+      "n_energy_evaluations": 7780,
+      "wall": 0.9332275000051595
+     },
+     "greedy_ls": {
+      "best_energy": 2.0412794563505385,
+      "best_bitstring": "0000000100100000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7117048000218347
+     }
+    }
+   }
+  },
+  {
+   "pdb": "6WPB",
+   "n": 14,
+   "fold": 0,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.6938152129833508,
+   "exact_opt_rmsd": 0.330256894147322,
+   "oracle_best_rmsd": 0.330256894147322,
+   "anchor_rmsd": 0.4193838888955483,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 1.808773919557913,
+      "readout_energy": 15.5168333110901,
+      "modal_energy": NaN,
+      "entropy_bits": 11.760177049558855,
+      "top1": 0.007731983173882072,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.40072969999164343
+     },
+     "random": {
+      "best_energy": 2.2366209626197797,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.004880900029093027
+     },
+     "anneal": {
+      "best_energy": 0.6938152129833508,
+      "best_bitstring": "0000000101000000",
+      "n_energy_evaluations": 703,
+      "wall": 0.05871329997899011
+     },
+     "greedy_ls": {
+      "best_energy": 1.2553687531214504,
+      "best_bitstring": "0000000100010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.014049799996428192
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.430500763731125,
+      "readout_energy": 2.898935930469097,
+      "modal_energy": NaN,
+      "entropy_bits": 12.80235382549657,
+      "top1": 0.004528871109977757,
+      "spsa_iters": 136,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.6996809000265785
+     },
+     "random": {
+      "best_energy": 1.517870518259512,
+      "best_bitstring": "0000000100100000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.012361900007817894
+     },
+     "anneal": {
+      "best_energy": 0.6938152129833508,
+      "best_bitstring": "0000000101000000",
+      "n_energy_evaluations": 2557,
+      "wall": 0.29734549997374415
+     },
+     "greedy_ls": {
+      "best_energy": 0.6938152129833508,
+      "best_bitstring": "0000000101000000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.0757801000145264
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.2553687531214504,
+      "readout_energy": 7.820531252867134,
+      "modal_energy": 103.32427448913073,
+      "entropy_bits": 12.429250242671932,
+      "top1": 0.003990433393809605,
+      "spsa_iters": 605,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.201228499994613
+     },
+     "random": {
+      "best_energy": 0.6938152129833508,
+      "best_bitstring": "0000000101000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.054116400016937405
+     },
+     "anneal": {
+      "best_energy": 0.6938152129833508,
+      "best_bitstring": "0000000101000000",
+      "n_energy_evaluations": 8082,
+      "wall": 0.8965074999723583
+     },
+     "greedy_ls": {
+      "best_energy": 0.6938152129833508,
+      "best_bitstring": "0000000101000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.5037004000041634
+     }
+    }
+   }
+  },
+  {
+   "pdb": "7N2I",
+   "n": 9,
+   "fold": 1,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.0232376275318007,
+   "exact_opt_rmsd": 1.6339859351275572,
+   "oracle_best_rmsd": 1.257561154597241,
+   "anchor_rmsd": 1.2459150404987722,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 1.1309022946017127,
+      "readout_energy": 5.396344108240945,
+      "modal_energy": 37.860650200928966,
+      "entropy_bits": 12.230143636152668,
+      "top1": 0.006643104527703767,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.41727260005427524
+     },
+     "random": {
+      "best_energy": 1.311332955956459,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0029038000502623618
+     },
+     "anneal": {
+      "best_energy": 1.0833416304418018,
+      "best_bitstring": "0001000000001000",
+      "n_energy_evaluations": 747,
+      "wall": 0.04211300000315532
+     },
+     "greedy_ls": {
+      "best_energy": 1.0232376275318007,
+      "best_bitstring": "0001000000000100",
+      "n_energy_evaluations": 1024,
+      "wall": 0.016672900004778057
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.100526497832366,
+      "readout_energy": 2.879247933626175,
+      "modal_energy": 157.31474108355383,
+      "entropy_bits": 12.80608176583042,
+      "top1": 0.006556456302060308,
+      "spsa_iters": 141,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.7332389999646693
+     },
+     "random": {
+      "best_energy": 1.0232376275318007,
+      "best_bitstring": "0001000000000100",
+      "n_energy_evaluations": 4096,
+      "wall": 0.018310300016310066
+     },
+     "anneal": {
+      "best_energy": 1.0232376275318007,
+      "best_bitstring": "0001000000000100",
+      "n_energy_evaluations": 2535,
+      "wall": 0.341258900007233
+     },
+     "greedy_ls": {
+      "best_energy": 1.0232376275318007,
+      "best_bitstring": "0001000000000100",
+      "n_energy_evaluations": 4096,
+      "wall": 0.1050556999980472
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.0232376275318007,
+      "readout_energy": 1.2836284020117343,
+      "modal_energy": 147.69010868668562,
+      "entropy_bits": 11.916777732278607,
+      "top1": 0.008051281562279166,
+      "spsa_iters": 623,
+      "n_energy_evaluations": 16357,
+      "terminated_by": "budget",
+      "wall": 7.671679400024004
+     },
+     "random": {
+      "best_energy": 1.0232376275318007,
+      "best_bitstring": "0001000000000100",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05967909999890253
+     },
+     "anneal": {
+      "best_energy": 1.0232376275318007,
+      "best_bitstring": "0001000000000100",
+      "n_energy_evaluations": 8082,
+      "wall": 1.2014518000069074
+     },
+     "greedy_ls": {
+      "best_energy": 1.0232376275318007,
+      "best_bitstring": "0001000000000100",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7127469000406563
+     }
+    }
+   }
+  },
+  {
+   "pdb": "7S3O",
+   "n": 13,
+   "fold": 3,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 1.7985097648519455,
+   "exact_opt_rmsd": 4.571864826099453,
+   "oracle_best_rmsd": 4.352564084718779,
+   "anchor_rmsd": 4.8303264110073005,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 2.5063152764782757,
+      "readout_energy": 31.869903978976332,
+      "modal_energy": 42.512958063320674,
+      "entropy_bits": 12.65153073718796,
+      "top1": 0.00747894869729389,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4272371999686584
+     },
+     "random": {
+      "best_energy": 1.9159657738425517,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.00550849997671321
+     },
+     "anneal": {
+      "best_energy": 1.7985097648519455,
+      "best_bitstring": "0000100000010000",
+      "n_energy_evaluations": 804,
+      "wall": 0.07791069999802858
+     },
+     "greedy_ls": {
+      "best_energy": 1.9159657738425517,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.01967569999396801
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.8780679540200662,
+      "readout_energy": 2.031710838729685,
+      "modal_energy": 172.39598048907342,
+      "entropy_bits": 11.771250806587432,
+      "top1": 0.007388927142111076,
+      "spsa_iters": 137,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.721694200008642
+     },
+     "random": {
+      "best_energy": 1.9159657738425517,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.011545900022611022
+     },
+     "anneal": {
+      "best_energy": 1.7985097648519455,
+      "best_bitstring": "0000100000010000",
+      "n_energy_evaluations": 2503,
+      "wall": 0.30314080003881827
+     },
+     "greedy_ls": {
+      "best_energy": 1.8663127937100148,
+      "best_bitstring": "0000000100010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.10451979999197647
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.9905333789912136,
+      "readout_energy": 2.282896920587077,
+      "modal_energy": 7.468777346791644,
+      "entropy_bits": 12.662447645495483,
+      "top1": 0.0049416572511276485,
+      "spsa_iters": 621,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.487770500010811
+     },
+     "random": {
+      "best_energy": 1.8780679540200662,
+      "best_bitstring": "0000100000001000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.060662199975922704
+     },
+     "anneal": {
+      "best_energy": 1.7985097648519455,
+      "best_bitstring": "0000100000010000",
+      "n_energy_evaluations": 7836,
+      "wall": 1.0015256999759004
+     },
+     "greedy_ls": {
+      "best_energy": 1.8663127937100148,
+      "best_bitstring": "0000000100010000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.690431599970907
+     }
+    }
+   }
+  },
+  {
+   "pdb": "8FLP",
+   "n": 13,
+   "fold": 4,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.9910885560693163,
+   "exact_opt_rmsd": 1.5072785076626425,
+   "oracle_best_rmsd": 1.5072785076626425,
+   "anchor_rmsd": 1.5934803154692285,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 6.4035258071892205,
+      "readout_energy": 4.1742719258322865,
+      "modal_energy": NaN,
+      "entropy_bits": 12.066593295747651,
+      "top1": 0.0077258907652317,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.42055809998419136
+     },
+     "random": {
+      "best_energy": 1.418976859161348,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0033022999996319413
+     },
+     "anneal": {
+      "best_energy": 0.9910885560693163,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 744,
+      "wall": 0.08741670002928004
+     },
+     "greedy_ls": {
+      "best_energy": 0.9910885560693163,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 1024,
+      "wall": 0.014402500004507601
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.9332319010387762,
+      "readout_energy": 4.1742719258322865,
+      "modal_energy": 295.7654793546956,
+      "entropy_bits": 12.145218922527103,
+      "top1": 0.009197384375598434,
+      "spsa_iters": 136,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.7241039000218734
+     },
+     "random": {
+      "best_energy": 0.9910885560693163,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 4096,
+      "wall": 0.011137900000903755
+     },
+     "anneal": {
+      "best_energy": 0.9910885560693163,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 2532,
+      "wall": 0.19540880003478378
+     },
+     "greedy_ls": {
+      "best_energy": 0.9910885560693163,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 4096,
+      "wall": 0.10371000005397946
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 1.5870257331566382,
+      "readout_energy": 8.166224800276035,
+      "modal_energy": 50.905496126774594,
+      "entropy_bits": 13.410198625088467,
+      "top1": 0.002476497516078892,
+      "spsa_iters": 606,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.488972199964337
+     },
+     "random": {
+      "best_energy": 0.9910885560693163,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05572580004809424
+     },
+     "anneal": {
+      "best_energy": 0.9910885560693163,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 8096,
+      "wall": 1.193223400041461
+     },
+     "greedy_ls": {
+      "best_energy": 0.9910885560693163,
+      "best_bitstring": "1000000000000001",
+      "n_energy_evaluations": 16384,
+      "wall": 0.6143453999538906
+     }
+    }
+   }
+  },
+  {
+   "pdb": "8IS3",
+   "n": 9,
+   "fold": 0,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.8110007813998629,
+   "exact_opt_rmsd": 2.575283956267689,
+   "oracle_best_rmsd": 2.296454187788248,
+   "anchor_rmsd": 2.8851045984266688,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 1.556667040501322,
+      "readout_energy": 4.1650347241333545,
+      "modal_energy": NaN,
+      "entropy_bits": 13.02618934565901,
+      "top1": 0.002819387866416466,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.42462970002088696
+     },
+     "random": {
+      "best_energy": 1.7819870263338091,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0026739000459201634
+     },
+     "anneal": {
+      "best_energy": 0.8110007813998629,
+      "best_bitstring": "0000000000000001",
+      "n_energy_evaluations": 778,
+      "wall": 0.08403739996720105
+     },
+     "greedy_ls": {
+      "best_energy": 0.8110007813998629,
+      "best_bitstring": "0000000000000001",
+      "n_energy_evaluations": 1024,
+      "wall": 0.013673400040715933
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 0.8440445895705903,
+      "readout_energy": 0.8440445895705903,
+      "modal_energy": 12.26258932692664,
+      "entropy_bits": 10.954451794010398,
+      "top1": 0.029425450589201,
+      "spsa_iters": 178,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 2.1829688000143506
+     },
+     "random": {
+      "best_energy": 1.556667040501322,
+      "best_bitstring": "0000000100100000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.011483600013889372
+     },
+     "anneal": {
+      "best_energy": 0.8110007813998629,
+      "best_bitstring": "0000000000000001",
+      "n_energy_evaluations": 2354,
+      "wall": 0.19975390000035986
+     },
+     "greedy_ls": {
+      "best_energy": 0.8110007813998629,
+      "best_bitstring": "0000000000000001",
+      "n_energy_evaluations": 4096,
+      "wall": 0.07558359997346997
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 0.8432565288884297,
+      "readout_energy": 1.7204894721508026,
+      "modal_energy": 34.843107538563864,
+      "entropy_bits": 12.494850671118336,
+      "top1": 0.006263673584543634,
+      "spsa_iters": 755,
+      "n_energy_evaluations": 16368,
+      "terminated_by": "budget",
+      "wall": 9.29263219999848
+     },
+     "random": {
+      "best_energy": 0.8110007813998629,
+      "best_bitstring": "0000000000000001",
+      "n_energy_evaluations": 16384,
+      "wall": 0.05917530000442639
+     },
+     "anneal": {
+      "best_energy": 0.8110007813998629,
+      "best_bitstring": "0000000000000001",
+      "n_energy_evaluations": 7568,
+      "wall": 1.0137202000478283
+     },
+     "greedy_ls": {
+      "best_energy": 0.8110007813998629,
+      "best_bitstring": "0000000000000001",
+      "n_energy_evaluations": 16384,
+      "wall": 0.5022676000371575
+     }
+    }
+   }
+  },
+  {
+   "pdb": "8TXS",
+   "n": 16,
+   "fold": 4,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 2.0809309133461547,
+   "exact_opt_rmsd": 2.94259597627681,
+   "oracle_best_rmsd": 2.94259597627681,
+   "anchor_rmsd": 2.6040678239715653,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 3.6968033977917254,
+      "readout_energy": 7.414666574341911,
+      "modal_energy": 194.36142655128518,
+      "entropy_bits": 12.42041933175948,
+      "top1": 0.010051053736881175,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4339122999808751
+     },
+     "random": {
+      "best_energy": 3.4211767236391704,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0033257000031881034
+     },
+     "anneal": {
+      "best_energy": 2.117175616820653,
+      "best_bitstring": "0100000000001000",
+      "n_energy_evaluations": 791,
+      "wall": 0.056210000009741634
+     },
+     "greedy_ls": {
+      "best_energy": 2.0809309133461547,
+      "best_bitstring": "0100000000000010",
+      "n_energy_evaluations": 1024,
+      "wall": 0.018773899995721877
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 3.128533797604697,
+      "readout_energy": 4.50522930451802,
+      "modal_energy": NaN,
+      "entropy_bits": 13.544422699056772,
+      "top1": 0.002399676513942235,
+      "spsa_iters": 135,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.7085609000059776
+     },
+     "random": {
+      "best_energy": 2.589016001565116,
+      "best_bitstring": "0000100000000010",
+      "n_energy_evaluations": 4096,
+      "wall": 0.011145199998281896
+     },
+     "anneal": {
+      "best_energy": 2.0809309133461547,
+      "best_bitstring": "0100000000000010",
+      "n_energy_evaluations": 2530,
+      "wall": 0.3302884000004269
+     },
+     "greedy_ls": {
+      "best_energy": 2.0809309133461547,
+      "best_bitstring": "0100000000000010",
+      "n_energy_evaluations": 4096,
+      "wall": 0.10259940003743395
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 2.3626702833743325,
+      "readout_energy": 3.128533797604697,
+      "modal_energy": 174.94526807126542,
+      "entropy_bits": 11.044371191015578,
+      "top1": 0.03167626324456944,
+      "spsa_iters": 607,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.501799399964511
+     },
+     "random": {
+      "best_energy": 2.589016001565116,
+      "best_bitstring": "0000100000000010",
+      "n_energy_evaluations": 16384,
+      "wall": 0.07164679997367784
+     },
+     "anneal": {
+      "best_energy": 2.0809309133461547,
+      "best_bitstring": "0100000000000010",
+      "n_energy_evaluations": 7718,
+      "wall": 0.6145428000018001
+     },
+     "greedy_ls": {
+      "best_energy": 2.0809309133461547,
+      "best_bitstring": "0100000000000010",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7087596000055782
+     }
+    }
+   }
+  },
+  {
+   "pdb": "9BAF",
+   "n": 16,
+   "fold": 2,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 2.063395509265718,
+   "exact_opt_rmsd": 2.5981187468852243,
+   "oracle_best_rmsd": 2.1853520964165494,
+   "anchor_rmsd": 1.5514058351068885,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 2.341878376120613,
+      "readout_energy": 4.5702562320800055,
+      "modal_energy": NaN,
+      "entropy_bits": 12.949067248138334,
+      "top1": 0.00524595895121666,
+      "spsa_iters": 34,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.4170577999902889
+     },
+     "random": {
+      "best_energy": 2.6090480293546405,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0028315999661572278
+     },
+     "anneal": {
+      "best_energy": 2.063395509265718,
+      "best_bitstring": "0100000000100000",
+      "n_energy_evaluations": 906,
+      "wall": 0.21879750001244247
+     },
+     "greedy_ls": {
+      "best_energy": 2.1065408326330646,
+      "best_bitstring": "0100000000000001",
+      "n_energy_evaluations": 1024,
+      "wall": 0.019571200013160706
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 2.554547670341673,
+      "readout_energy": 4.5702562320800055,
+      "modal_energy": 6.551616581281026,
+      "entropy_bits": 11.807740403608001,
+      "top1": 0.017804035091691258,
+      "spsa_iters": 140,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.7552915000123903
+     },
+     "random": {
+      "best_energy": 2.376076583635239,
+      "best_bitstring": "0000100000000010",
+      "n_energy_evaluations": 4096,
+      "wall": 0.010943899978883564
+     },
+     "anneal": {
+      "best_energy": 2.063395509265718,
+      "best_bitstring": "0100000000100000",
+      "n_energy_evaluations": 2488,
+      "wall": 0.32159130001673475
+     },
+     "greedy_ls": {
+      "best_energy": 2.1065408326330646,
+      "best_bitstring": "0100000000000001",
+      "n_energy_evaluations": 4096,
+      "wall": 0.10422169999219477
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 2.164092336949848,
+      "readout_energy": 4.741244121392568,
+      "modal_energy": NaN,
+      "entropy_bits": 13.451453666626746,
+      "top1": 0.0028970377323098272,
+      "spsa_iters": 618,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.609371100028511
+     },
+     "random": {
+      "best_energy": 2.274842267377036,
+      "best_bitstring": "0000000000000001",
+      "n_energy_evaluations": 16384,
+      "wall": 0.06013189995428547
+     },
+     "anneal": {
+      "best_energy": 2.063395509265718,
+      "best_bitstring": "0100000000100000",
+      "n_energy_evaluations": 7862,
+      "wall": 1.4464507999946363
+     },
+     "greedy_ls": {
+      "best_energy": 2.1065408326330646,
+      "best_bitstring": "0100000000000001",
+      "n_energy_evaluations": 16384,
+      "wall": 0.7139763999730349
+     }
+    }
+   }
+  },
+  {
+   "pdb": "9WXK",
+   "n": 13,
+   "fold": 2,
+   "n_qubits": 16,
+   "dim": 65536,
+   "opt": 0.8116640412446223,
+   "exact_opt_rmsd": 1.8023202900770652,
+   "oracle_best_rmsd": 1.8023202900770652,
+   "anchor_rmsd": 1.7978966227444604,
+   "budgets": {
+    "1024": {
+     "vqe": {
+      "best_energy": 1.6186682356126383,
+      "readout_energy": 1.7010146460749889,
+      "modal_energy": 7.722593714793524,
+      "entropy_bits": 11.735874504305603,
+      "top1": 0.012519707618682752,
+      "spsa_iters": 33,
+      "n_energy_evaluations": 1024,
+      "terminated_by": "budget",
+      "wall": 0.40614239999558777
+     },
+     "random": {
+      "best_energy": 1.5824699442494987,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 1024,
+      "wall": 0.0037825999897904694
+     },
+     "anneal": {
+      "best_energy": 0.8116640412446223,
+      "best_bitstring": "0000010000000100",
+      "n_energy_evaluations": 744,
+      "wall": 0.10078660002909601
+     },
+     "greedy_ls": {
+      "best_energy": 0.8116640412446223,
+      "best_bitstring": "0000010000000100",
+      "n_energy_evaluations": 1024,
+      "wall": 0.012826699996367097
+     }
+    },
+    "4096": {
+     "vqe": {
+      "best_energy": 1.1920330628301166,
+      "readout_energy": 9.11448270488869,
+      "modal_energy": NaN,
+      "entropy_bits": 12.474904428448756,
+      "top1": 0.0055948417872270974,
+      "spsa_iters": 134,
+      "n_energy_evaluations": 4096,
+      "terminated_by": "budget",
+      "wall": 1.6444050999707542
+     },
+     "random": {
+      "best_energy": 1.5824699442494987,
+      "best_bitstring": "1000000000010000",
+      "n_energy_evaluations": 4096,
+      "wall": 0.011854499985929579
+     },
+     "anneal": {
+      "best_energy": 0.8116640412446223,
+      "best_bitstring": "0000010000000100",
+      "n_energy_evaluations": 2537,
+      "wall": 0.1843294999562204
+     },
+     "greedy_ls": {
+      "best_energy": 0.8116640412446223,
+      "best_bitstring": "0000010000000100",
+      "n_energy_evaluations": 4096,
+      "wall": 0.08366689999820665
+     }
+    },
+    "16384": {
+     "vqe": {
+      "best_energy": 0.8116640412446223,
+      "readout_energy": 1.9242828641877026,
+      "modal_energy": 7.20057040182027,
+      "entropy_bits": 11.725697919145578,
+      "top1": 0.010761380141176842,
+      "spsa_iters": 611,
+      "n_energy_evaluations": 16384,
+      "terminated_by": "budget",
+      "wall": 7.456415499967989
+     },
+     "random": {
+      "best_energy": 1.5477548891847785,
+      "best_bitstring": "0100000010000000",
+      "n_energy_evaluations": 16384,
+      "wall": 0.054017200018279254
+     },
+     "anneal": {
+      "best_energy": 0.8116640412446223,
+      "best_bitstring": "0000010000000100",
+      "n_energy_evaluations": 8169,
+      "wall": 1.3812472999561578
+     },
+     "greedy_ls": {
+      "best_energy": 0.8116640412446223,
+      "best_bitstring": "0000010000000100",
+      "n_energy_evaluations": 16384,
+      "wall": 0.590944399998989
+     }
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,34 @@
+==========================================================================================================
+Q1c  TESTING SPRINT 19's Z7 DIRECTLY:  does a compactness-preferring score select TOWARD the pool's own error?   n = 126
+     align_i = <e_i, b_pool>/(||b_pool|| sqrt(n))  in the deployed operator's common frame.  ORACLE.
+     A score whose LOW end (the end a gate keeps) has HIGH align is harmful.
+==========================================================================================================
+
+score            rho(score, align)                    CI95   median       W/L  perm sd  rho(score, ORACLE d)
+rg                         +0.0250  [  -0.0650,  +0.1038]  +0.0344   61/65     0.1139               +0.0402
+leg_compact                +0.0530  [  -0.0607,  +0.1584]  +0.0945   53/73     0.1143               +0.0659
+z_leg                      -0.0197  [  -0.0760,  +0.0290]  -0.0278   68/58     0.1126               +0.0479
+z_amb                      -0.0285  [  -0.0768,  +0.0253]  -0.0181   69/57     0.1141               +0.0048
+e_disto                    +0.0145  [  -0.0269,  +0.0616]  -0.0103   64/62     0.1129               +0.0901
+helix_d                    -0.0686  [  -0.1504,  -0.0051]  -0.1454   72/54     0.1162               +0.0383  *
+min_heavy                  +0.0107  [  -0.0462,  +0.0599]  +0.0313   56/70     0.1149               -0.0182
+
+  THE EXACT SET-LEVEL QUANTITY -- s19's ALIGN itself, not a rank proxy.
+  ALIGN_S = <b_S - b_pool, u>/sqrt(n) = mean_S align - mean_K align   (s19 kv3 units), m = 38 of 75.
+  POSITIVE = the gate pushed the emitted mean ALONG the pool's own error.
+
+score            ALIGN_S (A)    excess over matched-random   median       W/L
+rg                   -0.0081       -0.0081  [-0.0714,+0.0626]  -0.0226   67/59  
+leg_compact          -0.0168       -0.0168  [-0.0844,+0.0589]  -0.0269   73/53  
+z_leg                +0.0256       +0.0256  [-0.0147,+0.0740]  +0.0132   60/66  
+z_amb                +0.0258       +0.0258  [-0.0077,+0.0557]  +0.0032   61/65  
+e_disto              -0.0000       -0.0000  [-0.0305,+0.0341]  +0.0084   58/68  
+helix_d              +0.0482       +0.0482  [-0.0145,+0.1061]  +0.0229   53/73  
+min_heavy            -0.0183       -0.0183  [-0.0458,+0.0095]  -0.0083   68/58  
+matched-random       +0.0000   (200 draws per target)
+
+    reference: rho(align, ORACLE d_reb) = +0.8722 [+0.8485, +0.8948] -- how much 'being aligned with the pool's error' is just 'being a bad candidate'
+
+    READ THE SIGNS.  A gate keeps the LOWEST scores.  So a score is harmful when a
+    LOW score goes with a HIGH align, i.e. when rho(score, align) is NEGATIVE.
+==========================================================================================================

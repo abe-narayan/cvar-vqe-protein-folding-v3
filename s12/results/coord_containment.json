@@ -1,0 +1,5260 @@
+{
+ "what": "TRAINING-SET containment leak into the leave-fold-out distogram, 126 tuning targets",
+ "metric": "Needleman-Wunsch match count / len(shorter)  (core.data.containment); the production fold split uses /len(longer), which is the hazard",
+ "n_targets": 126,
+ "n_targets_with_any_training_containment_ge_0.6": 74,
+ "n_targets_with_verbatim_copy_in_training_set": 4,
+ "note": "in_distogram_training_set is True when the library member's fold differs from the target's fold, i.e. it was used to fit the model that scores it",
+ "per_target": [
+  {
+   "pdb": "1A13",
+   "seq": "INWKGIAAMAKKLL",
+   "n": 14,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 2,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "6DUL",
+      "seq": "INLKALAALAKKIL",
+      "containment": 0.6429,
+      "identity": 0.6429,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6DUU",
+      "seq": "FLPIIINLKALAALAKKIL",
+      "containment": 0.6429,
+      "identity": 0.4737,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1QJC_146",
+      "seq": "NVHQALMAKL",
+      "containment": 0.6,
+      "identity": 0.4286,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1A1P",
+   "seq": "ICVVQDWGHHRCT",
+   "n": 13,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1CB3",
+   "seq": "IDYWLAHKALA",
+   "n": 11,
+   "fold": 2,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 2,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2DX4",
+      "seq": "INYWLAHAKAGYIVHWTA",
+      "containment": 0.8182,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1SEN_31",
+      "seq": "IHKSWCGACKALKPKFA",
+      "containment": 0.6364,
+      "identity": 0.4118,
+      "verbatim": false
+     },
+     {
+      "pdb": "1J3W_26",
+      "seq": "ALLIDRKGFVLAHKEA",
+      "containment": 0.6364,
+      "identity": 0.4375,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1CEK",
+   "seq": "AISVLLAQAVFLL",
+   "n": 13,
+   "fold": 2,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 1,
+   "verbatim_in_training": true,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1A11",
+      "seq": "GSEKMSTAISVLLAQAVFLLLTSQR",
+      "containment": 1.0,
+      "identity": 0.52,
+      "verbatim": true,
+      "fold": 3,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1UPQ_46",
+      "seq": "ESVLGSVLL",
+      "containment": 0.6667,
+      "identity": 0.4615,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1CS9",
+   "seq": "CGGIRGERA",
+   "n": 9,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 2,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "1CT6",
+      "seq": "CGGIRGERG",
+      "containment": 0.8889,
+      "identity": 0.8889,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1I54_81",
+      "seq": "FAGIKKKGERQDLVA",
+      "containment": 0.6667,
+      "identity": 0.4,
+      "verbatim": false
+     },
+     {
+      "pdb": "1FKJ_46",
+      "seq": "KFMLGKQEVIRGWEEGVAQ",
+      "containment": 0.6667,
+      "identity": 0.3158,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1D0W",
+   "seq": "RHYKNLLERQRY",
+   "n": 12,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 3,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "1D1E",
+      "seq": "RHYKNLIERQRY",
+      "containment": 0.9167,
+      "identity": 0.9167,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "1D1F",
+      "seq": "ARHYKNLIERQRY",
+      "containment": 0.9167,
+      "identity": 0.8462,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "1QFA",
+      "seq": "LRHYLNLLTRQRY",
+      "containment": 0.8333,
+      "identity": 0.7692,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1D6X",
+   "seq": "VRRFPWWWPFLRR",
+   "n": 13,
+   "fold": 4,
+   "n_peptide_train": 2,
+   "n_peptide_heldout": 5,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "6NM3",
+      "seq": "RKIWWWWL",
+      "containment": 0.625,
+      "identity": 0.3846,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "8IS3",
+      "seq": "FRFPFKFRR",
+      "containment": 0.6667,
+      "identity": 0.4615,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "2I1E",
+      "seq": "VKKFPWWWPFLKK",
+      "containment": 0.6923,
+      "identity": 0.6923,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2I1F",
+      "seq": "VRRFAWWWAFLRR",
+      "containment": 0.8462,
+      "identity": 0.8462,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2I1G",
+      "seq": "VRRYPWWWPYLRR",
+      "containment": 0.8462,
+      "identity": 0.8462,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2I1H",
+      "seq": "VRRFAWWWPFLRR",
+      "containment": 0.9231,
+      "identity": 0.9231,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2I1I",
+      "seq": "VRRFPWWWAFLRR",
+      "containment": 0.9231,
+      "identity": 0.9231,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1DEP",
+   "seq": "RSPDFRKAFKRLLCF",
+   "n": 15,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1MG4_21",
+      "seq": "AISPDRFRSF",
+      "containment": 0.7,
+      "identity": 0.4667,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1DJF",
+   "seq": "QAPAYKKAAKKLAES",
+   "n": 15,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "1DNG",
+      "seq": "QAPAYEEAAEELAKS",
+      "containment": 0.6667,
+      "identity": 0.6667,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1L2P_1",
+      "seq": "DQLKKAKAEA",
+      "containment": 0.6,
+      "identity": 0.4,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1FUV",
+   "seq": "ACDCRGDCFCG",
+   "n": 11,
+   "fold": 2,
+   "n_peptide_train": 6,
+   "n_peptide_heldout": 2,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1T2Y",
+      "seq": "GDCGCSGASSCNCGSGCSCSNCGSK",
+      "containment": 0.6364,
+      "identity": 0.28,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2LS1",
+      "seq": "CVWGGDCTDFLGCGTAWICV",
+      "containment": 0.6364,
+      "identity": 0.35,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6PIN",
+      "seq": "KWCFRVCYRGICYRRCRG",
+      "containment": 0.6364,
+      "identity": 0.3889,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6PIO",
+      "seq": "RWCFRVCYRGICYRKCRG",
+      "containment": 0.6364,
+      "identity": 0.3889,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6PIP",
+      "seq": "KWCFRVCYRGICYRKCRG",
+      "containment": 0.6364,
+      "identity": 0.3889,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6QKF",
+      "seq": "RGGRLCYCRGWICFCVGR",
+      "containment": 0.7273,
+      "identity": 0.4444,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "2M78",
+      "seq": "GFCRCLCRRGDCRCICTR",
+      "containment": 0.6364,
+      "identity": 0.3889,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2M79",
+      "seq": "GDCRCLCRRGDCRCICTR",
+      "containment": 0.6364,
+      "identity": 0.3889,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1LN8_86",
+      "seq": "ASVCDCDRLAAICFAGA",
+      "containment": 0.7273,
+      "identity": 0.4706,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1G89",
+   "seq": "ILPWKWPWWPWRR",
+   "n": 13,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 5,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "1HR1",
+      "seq": "ILAWKWAWWAWRR",
+      "containment": 0.7692,
+      "identity": 0.7692,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "1QX9",
+      "seq": "ICLKKWPWWPWRRCK",
+      "containment": 0.7692,
+      "identity": 0.6667,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "1QXQ",
+      "seq": "ILKKWPWWPWRRK",
+      "containment": 0.8462,
+      "identity": 0.8462,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "5ZVF",
+      "seq": "ILPWKWKWTPWRR",
+      "containment": 0.8462,
+      "identity": 0.8462,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "7OB2",
+      "seq": "RLKWVRIWRR",
+      "containment": 0.6,
+      "identity": 0.4615,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1I6Y",
+   "seq": "CRVVRGDYLDC",
+   "n": 11,
+   "fold": 2,
+   "n_peptide_train": 2,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2JSB",
+      "seq": "RWCVYAYVRVRGVLVRYRRCW",
+      "containment": 0.6364,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "5M9U",
+      "seq": "RWCVYAYRRVRGVLVRYRRCW",
+      "containment": 0.6364,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1I8E",
+   "seq": "CYCSLRGDCYC",
+   "n": 11,
+   "fold": 0,
+   "n_peptide_train": 3,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2M78",
+      "seq": "GFCRCLCRRGDCRCICTR",
+      "containment": 0.6364,
+      "identity": 0.3889,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2M79",
+      "seq": "GDCRCLCRRGDCRCICTR",
+      "containment": 0.6364,
+      "identity": 0.3889,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "8WGJ",
+      "seq": "GCCPPCARSPNNECSEWLLLWCYC",
+      "containment": 0.6364,
+      "identity": 0.2917,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1EN2_61",
+      "seq": "CCSVHGWCGGGNDYCS",
+      "containment": 0.6364,
+      "identity": 0.4375,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1I93",
+   "seq": "CHWLRGDMRRC",
+   "n": 11,
+   "fold": 3,
+   "n_peptide_train": 2,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2M78",
+      "seq": "GFCRCLCRRGDCRCICTR",
+      "containment": 0.6364,
+      "identity": 0.3889,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2M79",
+      "seq": "GDCRCLCRRGDCRCICTR",
+      "containment": 0.6364,
+      "identity": 0.3889,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "1I98",
+      "seq": "CRWLRGDWRQC",
+      "containment": 0.7273,
+      "identity": 0.7273,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1ID6",
+   "seq": "SVQARWEAAFDLDLY",
+   "n": 15,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "1ID7",
+      "seq": "VQARWEAAFDLD",
+      "containment": 1.0,
+      "identity": 0.8,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1OR3_1",
+      "seq": "GQRWELALG",
+      "containment": 0.6667,
+      "identity": 0.4,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1IM7",
+   "seq": "IWGCSGKLICTTA",
+   "n": 13,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1JBF",
+   "seq": "NLPRCTEGPWGWVCM",
+   "n": 15,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1KMR",
+   "seq": "CRALIKRIQAMIPKG",
+   "n": 15,
+   "fold": 2,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "9M87",
+      "seq": "CFIRNCPKG",
+      "containment": 0.6667,
+      "identity": 0.4,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "1DFW",
+      "seq": "FPIPLPYCWLCRALIKRIQAMIPKG",
+      "containment": 1.0,
+      "identity": 0.6,
+      "verbatim": true,
+      "fold": 2,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1KWE",
+   "seq": "PCSICSNNPTCWAICK",
+   "n": 16,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1KYC",
+   "seq": "EELRRRIEELERRIR",
+   "n": 15,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "1S9Z",
+      "seq": "SIRELEARIRELELRI",
+      "containment": 0.6,
+      "identity": 0.5625,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1KZ2",
+   "seq": "RQIKIFFQNRRMKFKK",
+   "n": 16,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 3,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "1KZ5",
+      "seq": "RQIKIWFRKWKK",
+      "containment": 0.8333,
+      "identity": 0.625,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "1OMQ",
+      "seq": "RQIKIWFQNRRMKWKK",
+      "containment": 0.875,
+      "identity": 0.875,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2ND6",
+      "seq": "DRQIKIWFQNRRMKWKK",
+      "containment": 0.875,
+      "identity": 0.8235,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1LB7",
+   "seq": "RNCFESVAALRRCMYG",
+   "n": 16,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1M02",
+   "seq": "HPLKQYWWRPSI",
+   "n": 12,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1M23",
+   "seq": "YLRRFFKAKKLIE",
+   "n": 13,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1O6D_21",
+      "seq": "YEKFLRRFCKPEVLEIKRVH",
+      "containment": 0.6154,
+      "identity": 0.4,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1MF6",
+   "seq": "DKNPFKELKGGC",
+   "n": 12,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1N9U",
+   "seq": "DRVYIHPFHL",
+   "n": 10,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 4,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1SOK_61",
+      "seq": "VEIDTKSYWKALGISPFH",
+      "containment": 0.6,
+      "identity": 0.3333,
+      "verbatim": false
+     },
+     {
+      "pdb": "1UFI_26",
+      "seq": "DDRVQSHILHLEHDLVHVTR",
+      "containment": 0.7,
+      "identity": 0.35,
+      "verbatim": false
+     },
+     {
+      "pdb": "1UFI_26",
+      "seq": "DDRVQSHILHLEHDLVHV",
+      "containment": 0.7,
+      "identity": 0.3889,
+      "verbatim": false
+     },
+     {
+      "pdb": "1F41_61",
+      "seq": "VEIDTKSYWKALGISPFHEH",
+      "containment": 0.6,
+      "identity": 0.3,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1NIZ",
+   "seq": "KRIHIGPGRAFYTT",
+   "n": 14,
+   "fold": 0,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 3,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1U6V",
+      "seq": "KSIRIQRGPGRAFVTIG",
+      "containment": 0.7143,
+      "identity": 0.5882,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "1NJ0",
+      "seq": "RKRIHIGPGRAFYTTK",
+      "containment": 1.0,
+      "identity": 0.875,
+      "verbatim": true,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2ESZ",
+      "seq": "TRKSIHIGPGRAFYTTGEI",
+      "containment": 0.9286,
+      "identity": 0.6842,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6B9K",
+      "seq": "RGPGRAFVTI",
+      "containment": 0.8,
+      "identity": 0.5714,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "1RG4",
+   "seq": "GRMLPQLVCRLVLRCS",
+   "n": 16,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 2,
+   "n_fragment_train": 2,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "2M0H",
+      "seq": "DTLLGRMLPQLVCRLVLRCSMD",
+      "containment": 1.0,
+      "identity": 0.7273,
+      "verbatim": true,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2M1T",
+      "seq": "DTLLGRILPQLVCRLVLRCSID",
+      "containment": 0.9375,
+      "identity": 0.6818,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "13TB_46",
+      "seq": "QLQSCPVCRS",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false
+     },
+     {
+      "pdb": "1M2A_91",
+      "seq": "GGEPVERLV",
+      "containment": 0.6667,
+      "identity": 0.375,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1RSW",
+   "seq": "DKNGDGEVSFEE",
+   "n": 12,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 4,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1IRQ_21",
+      "seq": "AKNGGNVKE",
+      "containment": 0.6667,
+      "identity": 0.5,
+      "verbatim": false
+     },
+     {
+      "pdb": "1HT9_56",
+      "seq": "NGDGEVSFEEF",
+      "containment": 0.9091,
+      "identity": 0.8333,
+      "verbatim": false
+     },
+     {
+      "pdb": "1O6D_66",
+      "seq": "MVMDKRGEEVSSEEFADF",
+      "containment": 0.6667,
+      "identity": 0.4444,
+      "verbatim": false
+     },
+     {
+      "pdb": "1QX2_51",
+      "seq": "EVDKNGDGEV",
+      "containment": 0.8,
+      "identity": 0.6667,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1S9Z",
+   "seq": "SIRELEARIRELELRI",
+   "n": 16,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 3,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "1KYC",
+      "seq": "EELRRRIEELERRIR",
+      "containment": 0.6,
+      "identity": 0.5625,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "173L_6",
+      "seq": "LRIDEGLRL",
+      "containment": 0.6667,
+      "identity": 0.375,
+      "verbatim": false
+     },
+     {
+      "pdb": "1HTW_86",
+      "seq": "YRLADPEELE",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false
+     },
+     {
+      "pdb": "1NRZ_1",
+      "seq": "QITLARIDDR",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1TOR",
+   "seq": "WNPADYGGIK",
+   "n": 10,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 2,
+   "n_fragment_train": 5,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "1TOS",
+      "seq": "WNPADYGGIA",
+      "containment": 0.9,
+      "identity": 0.9,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6OTB",
+      "seq": "GCCCNPACGPNYGCGTSCS",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1RDG_11",
+      "seq": "EYDPAKGDPDSGIKPGT",
+      "containment": 0.6,
+      "identity": 0.3529,
+      "verbatim": false
+     },
+     {
+      "pdb": "1SDV_41",
+      "seq": "WKPKMIGGIGGFIKVRQ",
+      "containment": 0.6,
+      "identity": 0.3529,
+      "verbatim": false
+     },
+     {
+      "pdb": "1KZK_41",
+      "seq": "WKPKMIGGIGGFIK",
+      "containment": 0.6,
+      "identity": 0.4286,
+      "verbatim": false
+     },
+     {
+      "pdb": "1B7D_16",
+      "seq": "IRPSGYCGRECGIKKGSSG",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false
+     },
+     {
+      "pdb": "1B7D_16",
+      "seq": "IRPSGYCGRECGIKKG",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "1U62",
+   "seq": "FQWQRNIRKVR",
+   "n": 11,
+   "fold": 1,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "5ID5",
+      "seq": "SKCRQWQSKIRRTNPIFCIRRASPT",
+      "containment": 0.6364,
+      "identity": 0.28,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2BAO",
+   "seq": "GKVLSKIFGN",
+   "n": 10,
+   "fold": 2,
+   "n_peptide_train": 9,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 6,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1OT0",
+      "seq": "AKKVFKRLEKLFSKIQNWK",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "1P0G",
+      "seq": "AKKVFKRLEKLFSKIQNDK",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "1P0L",
+      "seq": "AKKVFKRLEKLFSKIWNDK",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "1P0O",
+      "seq": "AKKVFKRLEKLFSKIWNWK",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "1P5K",
+      "seq": "AKKVFKRLEKSFSKIQNDK",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "1P5L",
+      "seq": "AKKVSKRLEKLFSKIQNDK",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2K98",
+      "seq": "GIGKFLKKAKKGIGAVLKVLTTGL",
+      "containment": 0.6,
+      "identity": 0.25,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2L36",
+      "seq": "GIGKALKKAKKGIGAVLKVLTTGL",
+      "containment": 0.6,
+      "identity": 0.25,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2MD1",
+      "seq": "WKLLSKAQEKFGKNKSR",
+      "containment": 0.7,
+      "identity": 0.4118,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1JF3_16",
+      "seq": "IAGADNGAGVGKECLSKFIS",
+      "containment": 0.6,
+      "identity": 0.3,
+      "verbatim": false
+     },
+     {
+      "pdb": "1UTG_36",
+      "seq": "AGMQMKKVLDSLPQTTREN",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false
+     },
+     {
+      "pdb": "1Q0N_86",
+      "seq": "ERWGPRTLDLDIMLFGNEV",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false
+     },
+     {
+      "pdb": "1UXX_36",
+      "seq": "VFNKINFGNGA",
+      "containment": 0.6,
+      "identity": 0.5455,
+      "verbatim": false
+     },
+     {
+      "pdb": "1TO4_126",
+      "seq": "DLGRGGHELSKVTGNAGG",
+      "containment": 0.6,
+      "identity": 0.3333,
+      "verbatim": false
+     },
+     {
+      "pdb": "1TO4_131",
+      "seq": "GHELSKVTGN",
+      "containment": 0.6,
+      "identity": 0.6,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "2BFI",
+   "seq": "KFFEAAAKKFFE",
+   "n": 12,
+   "fold": 2,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "4MGP",
+      "seq": "GIGKFLHAAKKFAKAFVAEIMN",
+      "containment": 0.6667,
+      "identity": 0.3636,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2BP4",
+   "seq": "DAEFRHDSGYEVHHQK",
+   "n": 16,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2EFZ",
+   "seq": "VCCPFGGCHELCYCCD",
+   "n": 16,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2F3A",
+   "seq": "RLFDKIRQVIRKF",
+   "n": 13,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "2NAL",
+      "seq": "RLFDKIRQVIRK",
+      "containment": 1.0,
+      "identity": 0.9231,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2FBU",
+   "seq": "LLGDFFRKSKEK",
+   "n": 12,
+   "fold": 4,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 1,
+   "verbatim_in_training": true,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2LMF",
+      "seq": "LLGDFFRKSKEKIGKEFKRIVQR",
+      "containment": 1.0,
+      "identity": 0.5217,
+      "verbatim": true,
+      "fold": 0,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1URR_16",
+      "seq": "QGVFFRKHTSHEAKR",
+      "containment": 0.6667,
+      "identity": 0.5333,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "2JN5",
+   "seq": "MDVFMKGLSKAK",
+   "n": 12,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "8OL8",
+      "seq": "DVFMKKLSKDK",
+      "containment": 0.8182,
+      "identity": 0.75,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2L7T",
+   "seq": "EELPWDELDLG",
+   "n": 11,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 3,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1SD8_31",
+      "seq": "YLENPPSRDELVKLIADMGI",
+      "containment": 0.6364,
+      "identity": 0.35,
+      "verbatim": false
+     },
+     {
+      "pdb": "13TW_71",
+      "seq": "EELPDEFVVV",
+      "containment": 0.6,
+      "identity": 0.5455,
+      "verbatim": false
+     },
+     {
+      "pdb": "13TS_71",
+      "seq": "EELPDEFVV",
+      "containment": 0.6667,
+      "identity": 0.5455,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "2LER",
+   "seq": "SCSCKRNFLCC",
+   "n": 11,
+   "fold": 0,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2NBC",
+      "seq": "WCASGCRKKRHGGCSC",
+      "containment": 0.6364,
+      "identity": 0.4375,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2LM8",
+   "seq": "KWFRVYRGIYRRR",
+   "n": 13,
+   "fold": 0,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 9,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "5V0Y",
+      "seq": "GFCWYVCVYRNGVRVCYRRCN",
+      "containment": 0.6154,
+      "identity": 0.381,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "1MA6",
+      "seq": "KWYFRVYYRGIYYRRYR",
+      "containment": 1.0,
+      "identity": 0.7647,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "1RKK",
+      "seq": "RRWCFRVCYRGFCYRKCR",
+      "containment": 0.7692,
+      "identity": 0.5556,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "1X7K",
+      "seq": "RRWCFRVCYRGRFCYRKCR",
+      "containment": 0.7692,
+      "identity": 0.5263,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2MDB",
+      "seq": "KWCFRVCYRGICYRRCR",
+      "containment": 1.0,
+      "identity": 0.7647,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6PI2",
+      "seq": "RWCFRVCYRGICYRKCR",
+      "containment": 0.8462,
+      "identity": 0.6471,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6PI3",
+      "seq": "KWCFRVCYRGICYRKCR",
+      "containment": 0.9231,
+      "identity": 0.7059,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6PIN",
+      "seq": "KWCFRVCYRGICYRRCRG",
+      "containment": 1.0,
+      "identity": 0.7222,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6PIO",
+      "seq": "RWCFRVCYRGICYRKCRG",
+      "containment": 0.8462,
+      "identity": 0.6111,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6PIP",
+      "seq": "KWCFRVCYRGICYRKCRG",
+      "containment": 0.9231,
+      "identity": 0.6667,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2LNG",
+   "seq": "ELYENKPRRPYIL",
+   "n": 13,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "2OYW",
+      "seq": "LYENKPRRPYIL",
+      "containment": 1.0,
+      "identity": 0.9231,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2LU6",
+   "seq": "CNCSRWARDHSRCC",
+   "n": 14,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 5,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "1Q2J",
+      "seq": "RCCNGRRGCSSRWCRDHSRCC",
+      "containment": 0.9286,
+      "identity": 0.619,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2LO9",
+      "seq": "VGERCCKNGKRGCGRWCRDHSRCC",
+      "containment": 0.8571,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2YEN",
+      "seq": "GCCNGPKGCSSKWCRDHARCC",
+      "containment": 0.7857,
+      "identity": 0.5238,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6X8R",
+      "seq": "RGCCNGRGGCSSRWCRDHARCC",
+      "containment": 0.8571,
+      "identity": 0.5455,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "7SAW",
+      "seq": "CCNCSSKWCRDHSRCC",
+      "containment": 0.8571,
+      "identity": 0.75,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2LWS",
+   "seq": "GSCFGAFCFRRD",
+   "n": 12,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2LWU",
+   "seq": "GHCIPTTSGPICLRD",
+   "n": 15,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2MAA",
+   "seq": "FLPLIGRVLSGIL",
+   "n": 13,
+   "fold": 1,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1G92",
+      "seq": "FLPLLILGSLLMTPPVIQAIHDAQR",
+      "containment": 0.6154,
+      "identity": 0.32,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1TMI_46",
+      "seq": "RFLPYGVSG",
+      "containment": 0.7778,
+      "identity": 0.5385,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "2MAI",
+   "seq": "LRRLFANQLVGRRN",
+   "n": 14,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 2,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1USM_21",
+      "seq": "LDFANRVGAL",
+      "containment": 0.6,
+      "identity": 0.4286,
+      "verbatim": false
+     },
+     {
+      "pdb": "1FW9_131",
+      "seq": "GRDAGLWGRR",
+      "containment": 0.6,
+      "identity": 0.4286,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "2MD2",
+   "seq": "WKLLSKAQEK",
+   "n": 10,
+   "fold": 3,
+   "n_peptide_train": 4,
+   "n_peptide_heldout": 2,
+   "n_fragment_train": 3,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2JMY",
+      "seq": "KWKLFKKIGAVLKVL",
+      "containment": 0.6,
+      "identity": 0.4,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6COR",
+      "seq": "EMRLSKFFRDAILQRKK",
+      "containment": 0.6,
+      "identity": 0.3529,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6CSK",
+      "seq": "PMKLLKRLGKKIRLAAAFK",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6CSZ",
+      "seq": "PMAKLLPRIKKKILAAAFK",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "2MD1",
+      "seq": "WKLLSKAQEKFGKNKSR",
+      "containment": 1.0,
+      "identity": 0.5882,
+      "verbatim": true,
+      "fold": 3,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2MD4",
+      "seq": "WKLLSKAQEKFG",
+      "containment": 1.0,
+      "identity": 0.8333,
+      "verbatim": true,
+      "fold": 3,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "10WY_41",
+      "seq": "YAQGFALLSVPSPLAQEAI",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false
+     },
+     {
+      "pdb": "1JYA_56",
+      "seq": "EKETLLSHNIFSQDILKPIL",
+      "containment": 0.6,
+      "identity": 0.3,
+      "verbatim": false
+     },
+     {
+      "pdb": "10XA_46",
+      "seq": "FALLSVPSSLAQEA",
+      "containment": 0.6,
+      "identity": 0.4286,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "2MFV",
+   "seq": "GGPLAGEEMGGITT",
+   "n": 14,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1OW4_11",
+      "seq": "GPLVRECMGS",
+      "containment": 0.6,
+      "identity": 0.4286,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "2MID",
+   "seq": "RLVPSGPNPLHN",
+   "n": 12,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 3,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "2MIE",
+      "seq": "HEVPSGPNPISN",
+      "containment": 0.6667,
+      "identity": 0.6667,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2MIF",
+      "seq": "HEVPSGPNPSSN",
+      "containment": 0.6667,
+      "identity": 0.6667,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2MIH",
+      "seq": "HQVPSGPNPLHNKK",
+      "containment": 0.8333,
+      "identity": 0.7143,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2MIG",
+   "seq": "RKVPTGSNPQKN",
+   "n": 12,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2MJQ",
+   "seq": "GLLKRIKTLL",
+   "n": 10,
+   "fold": 4,
+   "n_peptide_train": 6,
+   "n_peptide_heldout": 6,
+   "n_fragment_train": 13,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1PEF",
+      "seq": "EQLLKALEFLLKELLEKL",
+      "containment": 0.6,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2FCG",
+      "seq": "IGKEFKRIVQRIKDFLRNLVPRTES",
+      "containment": 0.7,
+      "identity": 0.28,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2L5M",
+      "seq": "GFKRIVQRIKDFLRNLV",
+      "containment": 0.6,
+      "identity": 0.3529,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2M1T",
+      "seq": "DTLLGRILPQLVCRLVLRCSID",
+      "containment": 0.6,
+      "identity": 0.2727,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6CSK",
+      "seq": "PMKLLKRLGKKIRLAAAFK",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6CSZ",
+      "seq": "PMAKLLPRIKKKILAAAFK",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "1ZRV",
+      "seq": "HVDKKVADKVLLLKQLRIMRLLTRL",
+      "containment": 0.7,
+      "identity": 0.28,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2MJR",
+      "seq": "GLLKWIKTLL",
+      "containment": 0.9,
+      "identity": 0.9,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2MJS",
+      "seq": "GLLKKIKWLL",
+      "containment": 0.8,
+      "identity": 0.8,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2MJT",
+      "seq": "GLLKFIKWLL",
+      "containment": 0.8,
+      "identity": 0.8,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6HNG",
+      "seq": "KLLKLLKKLLKLLK",
+      "containment": 0.6,
+      "identity": 0.4286,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "8EP5",
+      "seq": "KILKRLAAKIKKIL",
+      "containment": 0.6,
+      "identity": 0.4286,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1DZK_106",
+      "seq": "GLLGKGTDIEDQDL",
+      "containment": 0.6,
+      "identity": 0.4286,
+      "verbatim": false
+     },
+     {
+      "pdb": "13TW_36",
+      "seq": "SPLSLNMARKTLNSLED",
+      "containment": 0.6,
+      "identity": 0.3529,
+      "verbatim": false
+     },
+     {
+      "pdb": "13TX_36",
+      "seq": "SPLSLNMARKTLNSLE",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false
+     },
+     {
+      "pdb": "13TX_36",
+      "seq": "SPLSLNMARKTLNSLEDK",
+      "containment": 0.6,
+      "identity": 0.3333,
+      "verbatim": false
+     },
+     {
+      "pdb": "13UC_36",
+      "seq": "SPLSLNMARKTLNSLEDKA",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false
+     },
+     {
+      "pdb": "1MYT_66",
+      "seq": "LGELLKAKGSHAAILKPLA",
+      "containment": 0.7,
+      "identity": 0.3684,
+      "verbatim": false
+     },
+     {
+      "pdb": "13UF_36",
+      "seq": "SPLSLNMARKTLNSLEDKAF",
+      "containment": 0.6,
+      "identity": 0.3,
+      "verbatim": false
+     },
+     {
+      "pdb": "1QX2_31",
+      "seq": "MQTLGPSLLKGMSTL",
+      "containment": 0.6,
+      "identity": 0.4,
+      "verbatim": false
+     },
+     {
+      "pdb": "13UJ_36",
+      "seq": "SPLSLNMARKTLNSL",
+      "containment": 0.6,
+      "identity": 0.4,
+      "verbatim": false
+     },
+     {
+      "pdb": "1OI0_6",
+      "seq": "SRGLLKTILEAAKSAH",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false
+     },
+     {
+      "pdb": "1CHN_61",
+      "seq": "GLELLKTIRADGAMSALPV",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false
+     },
+     {
+      "pdb": "1M4J_16",
+      "seq": "GKYRLLKISIENEQLVVGSC",
+      "containment": 0.6,
+      "identity": 0.3,
+      "verbatim": false
+     },
+     {
+      "pdb": "1UMJ_61",
+      "seq": "WEELKERIKELHPY",
+      "containment": 0.6,
+      "identity": 0.4286,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "2MK7",
+   "seq": "PPTTTTKKP",
+   "n": 9,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2MLQ",
+   "seq": "EKFRRYLSVFFRKHIT",
+   "n": 16,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 2,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1DXC_41",
+      "seq": "EKFDRFKHLK",
+      "containment": 0.7,
+      "identity": 0.4375,
+      "verbatim": false
+     },
+     {
+      "pdb": "1MFM_61",
+      "seq": "PHFNPLSRKH",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "2MP9",
+   "seq": "SRSELIVHQRLF",
+   "n": 12,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 2,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "6CTG",
+      "seq": "SRSELIVHQR",
+      "containment": 1.0,
+      "identity": 0.8333,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6D2H",
+      "seq": "SRFELIVHQR",
+      "containment": 0.9,
+      "identity": 0.75,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2MQ2",
+   "seq": "RGGRLYRRRFVVGR",
+   "n": 14,
+   "fold": 4,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 4,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2JQS",
+      "seq": "DRLYSFGL",
+      "containment": 0.625,
+      "identity": 0.3571,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "2MQ4",
+      "seq": "RLYRRRFVVGR",
+      "containment": 1.0,
+      "identity": 0.7857,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2MQ5",
+      "seq": "LYRRRFVVGR",
+      "containment": 1.0,
+      "identity": 0.7143,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2MUH",
+      "seq": "RGGRLCYCRRRFCVCV",
+      "containment": 0.7857,
+      "identity": 0.6875,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6QKF",
+      "seq": "RGGRLCYCRGWICFCVGR",
+      "containment": 0.7857,
+      "identity": 0.6111,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1OF4_121",
+      "seq": "FGGKEYRRFHV",
+      "containment": 0.6364,
+      "identity": 0.5,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "2MSA",
+   "seq": "KNSFSLGENPNANP",
+   "n": 14,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1Q1F_116",
+      "seq": "KSLGPDFTP",
+      "containment": 0.6667,
+      "identity": 0.4286,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "2N5C",
+   "seq": "GFGSKPLDSFGLNFF",
+   "n": 15,
+   "fold": 4,
+   "n_peptide_train": 3,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2JQS",
+      "seq": "DRLYSFGL",
+      "containment": 0.625,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2JQU",
+      "seq": "GGSLYSFGL",
+      "containment": 0.8889,
+      "identity": 0.5333,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "5ZGD",
+      "seq": "GFGGNDNFG",
+      "containment": 0.6667,
+      "identity": 0.4,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2N9A",
+   "seq": "SLLSLIRKLIT",
+   "n": 11,
+   "fold": 4,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 11,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "6MK8",
+      "seq": "GLSLLLSLGLKLL",
+      "containment": 0.6364,
+      "identity": 0.5385,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "1Z2T",
+      "seq": "SLKGFRLVLFVKRYVRKMRKLKL",
+      "containment": 0.6364,
+      "identity": 0.3043,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1GOU_6",
+      "seq": "DGVADYLIRYKRLPNDYIT",
+      "containment": 0.6364,
+      "identity": 0.3684,
+      "verbatim": false
+     },
+     {
+      "pdb": "1HMR_101",
+      "seq": "TTLVRELIDGKLILT",
+      "containment": 0.6364,
+      "identity": 0.4667,
+      "verbatim": false
+     },
+     {
+      "pdb": "13UA_36",
+      "seq": "SPLSLNMARKTLNS",
+      "containment": 0.6364,
+      "identity": 0.5,
+      "verbatim": false
+     },
+     {
+      "pdb": "13TW_36",
+      "seq": "SPLSLNMARKTLNSLED",
+      "containment": 0.6364,
+      "identity": 0.4118,
+      "verbatim": false
+     },
+     {
+      "pdb": "13TX_36",
+      "seq": "SPLSLNMARKTLNSLE",
+      "containment": 0.6364,
+      "identity": 0.4375,
+      "verbatim": false
+     },
+     {
+      "pdb": "13TX_36",
+      "seq": "SPLSLNMARKTLNSLEDK",
+      "containment": 0.6364,
+      "identity": 0.3889,
+      "verbatim": false
+     },
+     {
+      "pdb": "13UC_36",
+      "seq": "SPLSLNMARKTLNSLEDKA",
+      "containment": 0.6364,
+      "identity": 0.3684,
+      "verbatim": false
+     },
+     {
+      "pdb": "13UF_36",
+      "seq": "SPLSLNMARKTLNSLEDKAF",
+      "containment": 0.6364,
+      "identity": 0.35,
+      "verbatim": false
+     },
+     {
+      "pdb": "13UJ_36",
+      "seq": "SPLSLNMARKTLNSL",
+      "containment": 0.6364,
+      "identity": 0.4667,
+      "verbatim": false
+     },
+     {
+      "pdb": "1OI0_66",
+      "seq": "SEEDLSLFTRFGKYHIIVCY",
+      "containment": 0.6364,
+      "identity": 0.35,
+      "verbatim": false
+     },
+     {
+      "pdb": "1Q1F_56",
+      "seq": "PEFLDHIRKVMLVIDAAVTN",
+      "containment": 0.6364,
+      "identity": 0.35,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "2N9M",
+   "seq": "VARGWKRKCPLFGKGG",
+   "n": 16,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 3,
+   "n_fragment_train": 3,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "5WRX",
+      "seq": "VARGWGRKCPLFG",
+      "containment": 0.9231,
+      "identity": 0.75,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "5Z31",
+      "seq": "KNKSRVARGWGRKCPLFG",
+      "containment": 0.75,
+      "identity": 0.6667,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "9LIB",
+      "seq": "VARGWGRKCPLFGKNKSR",
+      "containment": 0.8125,
+      "identity": 0.7222,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1D1Q_106",
+      "seq": "GSKAKVCLFG",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false
+     },
+     {
+      "pdb": "1LLM_76",
+      "seq": "EVARLKKLVG",
+      "containment": 0.7,
+      "identity": 0.4375,
+      "verbatim": false
+     },
+     {
+      "pdb": "1IRO_36",
+      "seq": "WVCPLCGVGK",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "2NB7",
+   "seq": "MENTSITIEFSSKF",
+   "n": 14,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2NBC",
+   "seq": "WCASGCRKKRHGGCSC",
+   "n": 16,
+   "fold": 3,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2LER",
+      "seq": "SCSCKRNFLCC",
+      "containment": 0.6364,
+      "identity": 0.4375,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2NDM",
+   "seq": "GRPCYTLQSCFPD",
+   "n": 13,
+   "fold": 4,
+   "n_peptide_train": 6,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1HVW",
+      "seq": "CIPSGQPCPYNENCCSQSCTGGRCD",
+      "containment": 0.6154,
+      "identity": 0.32,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6EE9",
+      "seq": "FGVRVGTCPSGYVRRGTFCFPDDDY",
+      "containment": 0.6154,
+      "identity": 0.32,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "7P5G",
+      "seq": "GVEGFNCYFPLQSYGFQPTNGVGYQ",
+      "containment": 0.6154,
+      "identity": 0.32,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "7P5Q",
+      "seq": "GVEGFNCYFPLQSYGFQPTYGVGYQ",
+      "containment": 0.6154,
+      "identity": 0.32,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "7P5S",
+      "seq": "GVKGFNCYFPLQSYGFQPTYGVGYQ",
+      "containment": 0.6154,
+      "identity": 0.32,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "7W8K",
+      "seq": "CPPCHGRPTCDSFTNCWELLTCPPC",
+      "containment": 0.6154,
+      "identity": 0.32,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2NDN",
+   "seq": "GICFKDPFGSTLCAPD",
+   "n": 16,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1OKH_31",
+      "seq": "CKIISGSTCP",
+      "containment": 0.7,
+      "identity": 0.4375,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "2O0S",
+   "seq": "YVLWKRKRMIFI",
+   "n": 12,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2P5H",
+   "seq": "VDIHVWDGV",
+   "n": 9,
+   "fold": 4,
+   "n_peptide_train": 3,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": true,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2P5J",
+      "seq": "LGRVDIHVWDGVYIRGR",
+      "containment": 1.0,
+      "identity": 0.5294,
+      "verbatim": true,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "5U9Q",
+      "seq": "GVVDILKGAAKDIAGHLASKVM",
+      "containment": 0.6667,
+      "identity": 0.2727,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "5U9X",
+      "seq": "GVVDILKGAAKDIAGHLASKVMN",
+      "containment": 0.6667,
+      "identity": 0.2609,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2RUO",
+   "seq": "GAALQIPFAMQMAYRF",
+   "n": 16,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "2XL1",
+   "seq": "SQDYLSDHLWRALNA",
+   "n": 15,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "3BTB",
+   "seq": "MEELQDDYEDMMEEN",
+   "n": 15,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1PRW_46",
+      "seq": "ELQDMINEV",
+      "containment": 0.6667,
+      "identity": 0.4,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "3SGO",
+   "seq": "KVKVLGDVIEV",
+   "n": 11,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 5,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1UGU_101",
+      "seq": "VKVHMKKALSGDSYWVFVKR",
+      "containment": 0.6364,
+      "identity": 0.35,
+      "verbatim": false
+     },
+     {
+      "pdb": "1USE_16",
+      "seq": "EVKKELQKVKEEIIEAFVQE",
+      "containment": 0.6364,
+      "identity": 0.35,
+      "verbatim": false
+     },
+     {
+      "pdb": "1U07_26",
+      "seq": "VKVKFDVTPDGRVDNVQ",
+      "containment": 0.6364,
+      "identity": 0.4118,
+      "verbatim": false
+     },
+     {
+      "pdb": "1ECO_11",
+      "seq": "SFDKVKGDPVGILYAVF",
+      "containment": 0.6364,
+      "identity": 0.4118,
+      "verbatim": false
+     },
+     {
+      "pdb": "1FKL_41",
+      "seq": "RNKPFKFVLGKQEV",
+      "containment": 0.6364,
+      "identity": 0.5,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "5H1H",
+   "seq": "CFPDGRCKRPPGFSPL",
+   "n": 16,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 2,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "6F3V",
+      "seq": "RPPGFSPFR",
+      "containment": 0.7778,
+      "identity": 0.4375,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6F3Y",
+      "seq": "KRPPGFSPF",
+      "containment": 0.8889,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "5MML",
+   "seq": "GILSSLWKKLKKIIAK",
+   "n": 16,
+   "fold": 1,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 3,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2MJS",
+      "seq": "GLLKKIKWLL",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "119L_76",
+      "seq": "GILRNAKLK",
+      "containment": 0.6667,
+      "identity": 0.375,
+      "verbatim": false
+     },
+     {
+      "pdb": "1TGX_41",
+      "seq": "CPKSSLLIK",
+      "containment": 0.6667,
+      "identity": 0.375,
+      "verbatim": false
+     },
+     {
+      "pdb": "1L62_76",
+      "seq": "GILRNAKLKP",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "5MXS",
+   "seq": "WYHRLSHLHSRLQD",
+   "n": 14,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "5MXT",
+      "seq": "WYHRLSHIHSRLQD",
+      "containment": 0.9286,
+      "identity": 0.9286,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "5NVB",
+   "seq": "KNVKSKIGSTENLKH",
+   "n": 15,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 2,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1O49_51",
+      "seq": "NAKGLNVKHY",
+      "containment": 0.6,
+      "identity": 0.4,
+      "verbatim": false
+     },
+     {
+      "pdb": "1O4J_51",
+      "seq": "NAKGLNVKH",
+      "containment": 0.6667,
+      "identity": 0.4,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "5V5B",
+   "seq": "KVQIINKKLD",
+   "n": 10,
+   "fold": 1,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "9IO2",
+      "seq": "KKCIAKAILKKAKKLLKKLVNP",
+      "containment": 0.6,
+      "identity": 0.2727,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "6NK4",
+      "seq": "KVQIINKKL",
+      "containment": 1.0,
+      "identity": 0.9,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1UNE_41",
+      "seq": "DRCCQTHDNCYKQAKKLDSC",
+      "containment": 0.6,
+      "identity": 0.3,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "5W52",
+   "seq": "DLIIKGISVHI",
+   "n": 11,
+   "fold": 1,
+   "n_peptide_train": 2,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "6RZ1",
+      "seq": "FLGALIKGAIHGGRFIHGMIQNHH",
+      "containment": 0.6364,
+      "identity": 0.2917,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "7S3E",
+      "seq": "GVGDLIRKAVSVIKNIV",
+      "containment": 0.6364,
+      "identity": 0.4118,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "2L5R",
+      "seq": "GLKEIFKAGLGSLVKGIAAHVAS",
+      "containment": 0.6364,
+      "identity": 0.3043,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "5Z5W",
+   "seq": "VFRLKKWIQKVI",
+   "n": 12,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "5Z5X",
+      "seq": "HVFRLKKWIQKVIDQFGE",
+      "containment": 1.0,
+      "identity": 0.6667,
+      "verbatim": true,
+      "fold": 3,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1LLM_76",
+      "seq": "EVARLKKLVG",
+      "containment": 0.6,
+      "identity": 0.5,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "6A5J",
+   "seq": "IKKILSKIKKLLK",
+   "n": 13,
+   "fold": 4,
+   "n_peptide_train": 4,
+   "n_peptide_heldout": 3,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2L99",
+      "seq": "KKLKLALAKPALLWKALALKLKKA",
+      "containment": 0.6154,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2L9A",
+      "seq": "KKLKLALAKLAPLWKALALKLKKA",
+      "containment": 0.6154,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2N6M",
+      "seq": "GIFSKLAGKKIKNLLISGLKG",
+      "containment": 0.6154,
+      "identity": 0.381,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2N9R",
+      "seq": "PKILNKILGKILRLAAAFK",
+      "containment": 0.6154,
+      "identity": 0.4211,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "2MJS",
+      "seq": "GLLKKIKWLL",
+      "containment": 0.6,
+      "identity": 0.4615,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "8EP5",
+      "seq": "KILKRLAAKIKKIL",
+      "containment": 0.6154,
+      "identity": 0.5714,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "9IO2",
+      "seq": "KKCIAKAILKKAKKLLKKLVNP",
+      "containment": 0.7692,
+      "identity": 0.4545,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1DWK_16",
+      "seq": "ILLSKAKKDLS",
+      "containment": 0.6364,
+      "identity": 0.5385,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "6B9K",
+   "seq": "RGPGRAFVTI",
+   "n": 10,
+   "fold": 0,
+   "n_peptide_train": 7,
+   "n_peptide_heldout": 3,
+   "n_fragment_train": 1,
+   "verbatim_in_training": true,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1U6V",
+      "seq": "KSIRIQRGPGRAFVTIG",
+      "containment": 1.0,
+      "identity": 0.5882,
+      "verbatim": true,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2LKW",
+      "seq": "GQRHSIVQPPAPPPNAFVEI",
+      "containment": 0.6,
+      "identity": 0.3,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2LSA",
+      "seq": "GIGKFLHSAKKFGKAFVGEIMNS",
+      "containment": 0.6,
+      "identity": 0.2609,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2LX5",
+      "seq": "DPRIAARGRARLRAVGAI",
+      "containment": 0.6,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6RSF",
+      "seq": "GWGSFFRRAAHVGRHVGRAALTHYL",
+      "containment": 0.6,
+      "identity": 0.24,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "8XTO",
+      "seq": "LGGGSVRFGPGVAFRAPSIHG",
+      "containment": 0.7,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "9HVN",
+      "seq": "GIGKFLHSAKKFGKAFVGEIMN",
+      "containment": 0.6,
+      "identity": 0.2727,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "1NIZ",
+      "seq": "KRIHIGPGRAFYTT",
+      "containment": 0.8,
+      "identity": 0.5714,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "1NJ0",
+      "seq": "RKRIHIGPGRAFYTTK",
+      "containment": 0.8,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2ESZ",
+      "seq": "TRKSIHIGPGRAFYTTGEI",
+      "containment": 0.9,
+      "identity": 0.4737,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1JKC_96",
+      "seq": "KRVVRDPQGIRAFV",
+      "containment": 0.7,
+      "identity": 0.5,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "6BJF",
+   "seq": "GLTWFINKFRIVK",
+   "n": 13,
+   "fold": 1,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2LMF",
+      "seq": "LLGDFFRKSKEKIGKEFKRIVQR",
+      "containment": 0.6154,
+      "identity": 0.3478,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "6BX9",
+   "seq": "CCTALCSRYHCLPCC",
+   "n": 15,
+   "fold": 4,
+   "n_peptide_train": 2,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2KM9",
+      "seq": "CKGTGKSCSRIAYNCCTGSCRSGKC",
+      "containment": 0.6,
+      "identity": 0.36,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "9KFP",
+      "seq": "CKPKGAPCSPLMYPCCTGPCRSGKC",
+      "containment": 0.6,
+      "identity": 0.36,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1N6K_61",
+      "seq": "TAGQERYHSL",
+      "containment": 0.6,
+      "identity": 0.4,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "6CEJ",
+   "seq": "GRKRRQTSMTDFYH",
+   "n": 14,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "6CIX",
+      "seq": "GRKRRQKSMTEFYH",
+      "containment": 0.8571,
+      "identity": 0.8571,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "6EY3",
+   "seq": "CRPLWTACG",
+   "n": 9,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 4,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "5UJG",
+      "seq": "CPDPVYTCRPGQTCCRGLHGYGCC",
+      "containment": 0.6667,
+      "identity": 0.25,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "5UJH",
+      "seq": "CPDPVYTCRPGQTCARGLHGYGC",
+      "containment": 0.6667,
+      "identity": 0.2609,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "9MXE",
+      "seq": "CPDAVYTCRPGQTCCRGLHGYGCC",
+      "containment": 0.6667,
+      "identity": 0.25,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "9MXG",
+      "seq": "CGDAVYTCRPGQTCCRGLHGYGCC",
+      "containment": 0.6667,
+      "identity": 0.25,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "6F3V",
+   "seq": "RPPGFSPFR",
+   "n": 9,
+   "fold": 0,
+   "n_peptide_train": 2,
+   "n_peptide_heldout": 3,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1Y32",
+      "seq": "MAPRGFSCLLLLTSEIDLPVKRRA",
+      "containment": 0.6667,
+      "identity": 0.25,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2GD3",
+      "seq": "MAPRGFSCLLLLTGEIDLPVKRRA",
+      "containment": 0.6667,
+      "identity": 0.25,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "5H1H",
+      "seq": "CFPDGRCKRPPGFSPL",
+      "containment": 0.7778,
+      "identity": 0.4375,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6F3Y",
+      "seq": "KRPPGFSPF",
+      "containment": 0.8889,
+      "identity": 0.8889,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "8DYN",
+      "seq": "GHSVDRIPEYFGPPGLPGPVLFYS",
+      "containment": 0.6667,
+      "identity": 0.25,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "6GIJ",
+   "seq": "KKLLPIVANLLKSLL",
+   "n": 15,
+   "fold": 4,
+   "n_peptide_train": 3,
+   "n_peptide_heldout": 2,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2L96",
+      "seq": "KKLKLAPAKLALLWKALALKLKKA",
+      "containment": 0.6667,
+      "identity": 0.4167,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2L99",
+      "seq": "KKLKLALAKPALLWKALALKLKKA",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2L9A",
+      "seq": "KKLKLALAKLAPLWKALALKLKKA",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "6GIK",
+      "seq": "FLPIVGLLKSLLK",
+      "containment": 0.7692,
+      "identity": 0.6667,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6GIL",
+      "seq": "LLPIVGNLLKSLL",
+      "containment": 0.9231,
+      "identity": 0.8,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1FKF_96",
+      "seq": "LVFDVELLKL",
+      "containment": 0.6,
+      "identity": 0.4,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "6HVK",
+   "seq": "RPLDTVQRPKGY",
+   "n": 12,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "6J9P",
+   "seq": "RRLIRLILRLLR",
+   "n": 12,
+   "fold": 4,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "6R2X",
+      "seq": "FETLRGDERILSILRHQNLLKELQD",
+      "containment": 0.6667,
+      "identity": 0.32,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "6MBM",
+   "seq": "KWAVRIIRKFIKGFIS",
+   "n": 16,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "8EB1",
+      "seq": "KWAVKIIRKFIKGFISGGKRWKYM",
+      "containment": 0.9375,
+      "identity": 0.625,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "6MK8",
+   "seq": "GLSLLLSLGLKLL",
+   "n": 13,
+   "fold": 1,
+   "n_peptide_train": 7,
+   "n_peptide_heldout": 2,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2AP7",
+      "seq": "IIGPVLGLVGSALGGLLKKI",
+      "containment": 0.6154,
+      "identity": 0.4,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2L96",
+      "seq": "KKLKLAPAKLALLWKALALKLKKA",
+      "containment": 0.6154,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2L99",
+      "seq": "KKLKLALAKPALLWKALALKLKKA",
+      "containment": 0.6154,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2L9A",
+      "seq": "KKLKLALAKLAPLWKALALKLKKA",
+      "containment": 0.6154,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2LQ1",
+      "seq": "TGNVGLSPGLSTALTGFTLVPVEDH",
+      "containment": 0.6154,
+      "identity": 0.32,
+      "verbatim": false,
+      "fold": 0,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2N6M",
+      "seq": "GIFSKLAGKKIKNLLISGLKG",
+      "containment": 0.6154,
+      "identity": 0.381,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2N9A",
+      "seq": "SLLSLIRKLIT",
+      "containment": 0.6364,
+      "identity": 0.5385,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "1Y32",
+      "seq": "MAPRGFSCLLLLTSEIDLPVKRRA",
+      "containment": 0.6154,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2GD3",
+      "seq": "MAPRGFSCLLLLTGEIDLPVKRRA",
+      "containment": 0.6154,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1GMU_46",
+      "seq": "GLLLRGGDVL",
+      "containment": 0.6,
+      "identity": 0.4615,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "6OQP",
+   "seq": "SKWICANRSVCPI",
+   "n": 13,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "6Q08",
+   "seq": "INWLKLGKKIIASL",
+   "n": 14,
+   "fold": 0,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2MJS",
+      "seq": "GLLKKIKWLL",
+      "containment": 0.6,
+      "identity": 0.4286,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "6QAX",
+   "seq": "LGQQQPFPPQQPY",
+   "n": 13,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 2,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "6QB0",
+      "seq": "LGQQQAFPPQQPY",
+      "containment": 0.9231,
+      "identity": 0.9231,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6QB1",
+      "seq": "LGQQQPAPPQQPY",
+      "containment": 0.9231,
+      "identity": 0.9231,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "6RRL",
+   "seq": "FRIMRILRVLKL",
+   "n": 12,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 2,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "5X3L",
+      "seq": "GLGSVFGRLARILGRVIPKV",
+      "containment": 0.6667,
+      "identity": 0.4,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6R2X",
+      "seq": "FETLRGDERILSILRHQNLLKELQD",
+      "containment": 0.75,
+      "identity": 0.36,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "6RRO",
+   "seq": "GFIVKRFKILV",
+   "n": 11,
+   "fold": 3,
+   "n_peptide_train": 2,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1Z2T",
+      "seq": "SLKGFRLVLFVKRYVRKMRKLKL",
+      "containment": 0.6364,
+      "identity": 0.3043,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6HNE",
+      "seq": "GLFDIVKKVLKLLK",
+      "containment": 0.6364,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "6S0N",
+   "seq": "QDVNTAVAW",
+   "n": 9,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 17,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1H6M_96",
+      "seq": "KIVSDGNGMNAWVAWR",
+      "containment": 0.6667,
+      "identity": 0.375,
+      "verbatim": false
+     },
+     {
+      "pdb": "165L_66",
+      "seq": "FNQDVDAAVRGILRNAKLK",
+      "containment": 0.6667,
+      "identity": 0.3158,
+      "verbatim": false
+     },
+     {
+      "pdb": "1AFL_36",
+      "seq": "KDRCKPVNTFVHESLADVQA",
+      "containment": 0.6667,
+      "identity": 0.3,
+      "verbatim": false
+     },
+     {
+      "pdb": "1EXQ_101",
+      "seq": "QVRDQAEHLKTAVQMAVF",
+      "containment": 0.6667,
+      "identity": 0.3333,
+      "verbatim": false
+     },
+     {
+      "pdb": "1L68_66",
+      "seq": "FNQDVDAAVRGILRNAKLKP",
+      "containment": 0.6667,
+      "identity": 0.3,
+      "verbatim": false
+     },
+     {
+      "pdb": "1LSE_106",
+      "seq": "AWVAWRNRCKGTDVQAWIRG",
+      "containment": 0.6667,
+      "identity": 0.3,
+      "verbatim": false
+     },
+     {
+      "pdb": "1IM6_41",
+      "seq": "TPPLGPQDQPDYLNAAVA",
+      "containment": 0.6667,
+      "identity": 0.3333,
+      "verbatim": false
+     },
+     {
+      "pdb": "1P46_66",
+      "seq": "FNQDVDAAVRGILRNAKL",
+      "containment": 0.6667,
+      "identity": 0.3333,
+      "verbatim": false
+     },
+     {
+      "pdb": "1L32_66",
+      "seq": "FNQDVDAAVRGILRNAK",
+      "containment": 0.6667,
+      "identity": 0.3529,
+      "verbatim": false
+     },
+     {
+      "pdb": "1ECO_76",
+      "seq": "EADVNTFVASHKPRG",
+      "containment": 0.6667,
+      "identity": 0.4,
+      "verbatim": false
+     },
+     {
+      "pdb": "1G4C_46",
+      "seq": "PQDQPDYLNAAVALET",
+      "containment": 0.6667,
+      "identity": 0.375,
+      "verbatim": false
+     },
+     {
+      "pdb": "1RHB_36",
+      "seq": "KDRCKPVNTFVHESLADVQ",
+      "containment": 0.6667,
+      "identity": 0.3158,
+      "verbatim": false
+     },
+     {
+      "pdb": "193L_96",
+      "seq": "KIVSDGNGMNAWVAWRN",
+      "containment": 0.6667,
+      "identity": 0.3529,
+      "verbatim": false
+     },
+     {
+      "pdb": "1AKI_96",
+      "seq": "KIVSDGNGMNAWVAWRNR",
+      "containment": 0.6667,
+      "identity": 0.3333,
+      "verbatim": false
+     },
+     {
+      "pdb": "1ECA_76",
+      "seq": "EADVNTFVASH",
+      "containment": 0.6667,
+      "identity": 0.5455,
+      "verbatim": false
+     },
+     {
+      "pdb": "1ECA_76",
+      "seq": "EADVNTFVASHKPRGVTH",
+      "containment": 0.6667,
+      "identity": 0.3333,
+      "verbatim": false
+     },
+     {
+      "pdb": "1MEP_46",
+      "seq": "SAPATDGSGTALGWTVAWKN",
+      "containment": 0.6667,
+      "identity": 0.3,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "6TWG",
+   "seq": "FLPKILRKIVRAL",
+   "n": 13,
+   "fold": 0,
+   "n_peptide_train": 3,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1DFW",
+      "seq": "FPIPLPYCWLCRALIKRIQAMIPKG",
+      "containment": 0.6154,
+      "identity": 0.32,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2N8D",
+      "seq": "WDPYFAGVKKLTKAILAVRA",
+      "containment": 0.6154,
+      "identity": 0.4,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2N9R",
+      "seq": "PKILNKILGKILRLAAAFK",
+      "containment": 0.6154,
+      "identity": 0.4211,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "6WPB",
+   "seq": "GILDAIKAIAKAAG",
+   "n": 14,
+   "fold": 0,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "4MGP",
+      "seq": "GIGKFLHAAKKFAKAFVAEIMN",
+      "containment": 0.6429,
+      "identity": 0.4091,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "7BX2",
+   "seq": "VKWVKKVVKWVKKV",
+   "n": 14,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "7JGX",
+   "seq": "IFWLFRGKADVAL",
+   "n": 13,
+   "fold": 0,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1J1Y_46",
+      "seq": "DSAFALASNTRGPAVALSC",
+      "containment": 0.6154,
+      "identity": 0.4211,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "7JS6",
+   "seq": "LLGRSGNDRLILSKN",
+   "n": 15,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "7LCW",
+   "seq": "GSKYSDTADESSYRW",
+   "n": 15,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "7N2I",
+   "seq": "GSTVYAPFT",
+   "n": 9,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1MWQ_56",
+      "seq": "TGSTVIAQFENLQ",
+      "containment": 0.6667,
+      "identity": 0.4615,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "7P3M",
+   "seq": "EDPAVDLLKNYMQ",
+   "n": 13,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "7QZV",
+   "seq": "EKRWRRLIFNYF",
+   "n": 12,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "7S3O",
+   "seq": "WTLNSAGYLLGKK",
+   "n": 13,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 2,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "7S3Q",
+      "seq": "GWTLNSAGYLLGKK",
+      "containment": 1.0,
+      "identity": 0.9286,
+      "verbatim": true,
+      "fold": 3,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "7S3R",
+      "seq": "GWTLNSAGYLLGPHAVGK",
+      "containment": 0.9231,
+      "identity": 0.6667,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "13UA_46",
+      "seq": "TLNSLEDKA",
+      "containment": 0.6667,
+      "identity": 0.4615,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "7T3H",
+   "seq": "WNSNVHSYRF",
+   "n": 10,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "7VI4",
+   "seq": "GYRVTGYETQ",
+   "n": 10,
+   "fold": 4,
+   "n_peptide_train": 1,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 8,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2LS4",
+      "seq": "YNGYLCIAVAAGAGTGYFLFSWKK",
+      "containment": 0.6,
+      "identity": 0.25,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "7VI5",
+      "seq": "GYRVAGYETQ",
+      "containment": 0.9,
+      "identity": 0.9,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1KUH_66",
+      "seq": "LDYQQNQQYDSTRVTAHET",
+      "containment": 0.6,
+      "identity": 0.3158,
+      "verbatim": false
+     },
+     {
+      "pdb": "1KP4_81",
+      "seq": "SRIDSAFYEDMKRVCTGYTG",
+      "containment": 0.7,
+      "identity": 0.35,
+      "verbatim": false
+     },
+     {
+      "pdb": "1KP4_86",
+      "seq": "AFYEDMKRVCTGYTGE",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false
+     },
+     {
+      "pdb": "1E5P_56",
+      "seq": "TTVIGYLKGNGTYETQFE",
+      "containment": 0.7,
+      "identity": 0.3889,
+      "verbatim": false
+     },
+     {
+      "pdb": "1E5P_56",
+      "seq": "TTVIGYLKGNGTYETQ",
+      "containment": 0.7,
+      "identity": 0.4375,
+      "verbatim": false
+     },
+     {
+      "pdb": "1PYL_66",
+      "seq": "TRRVVTGGYGEQYWSPDHYA",
+      "containment": 0.6,
+      "identity": 0.3,
+      "verbatim": false
+     },
+     {
+      "pdb": "1PYL_66",
+      "seq": "TRRVVTGGYGEQYWS",
+      "containment": 0.6,
+      "identity": 0.4,
+      "verbatim": false
+     },
+     {
+      "pdb": "1PYL_66",
+      "seq": "TRRVVTGGYGEQYWSPD",
+      "containment": 0.6,
+      "identity": 0.3529,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "7YFS",
+   "seq": "APSNVLSTLLHGRACV",
+   "n": 16,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "8FLP",
+   "seq": "GCCANPVCNGKHC",
+   "n": 13,
+   "fold": 4,
+   "n_peptide_train": 12,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1MII",
+      "seq": "GCCSNPVCHLEHSNLC",
+      "containment": 0.6923,
+      "identity": 0.5625,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "1UL2",
+      "seq": "GCCSHPACAGNNQHIC",
+      "containment": 0.6154,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "1ZLC",
+      "seq": "RDPCCSNPVCTVHNPQIC",
+      "containment": 0.6154,
+      "identity": 0.4444,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2AJW",
+      "seq": "GCCSNPVCHLEHSNLCGGAAGG",
+      "containment": 0.6923,
+      "identity": 0.4091,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2AK0",
+      "seq": "GCCSNPVCHLEHSNLCGAGGAAG",
+      "containment": 0.6923,
+      "identity": 0.3913,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2GCZ",
+      "seq": "GCCSHPACNVNNPHICG",
+      "containment": 0.6154,
+      "identity": 0.4706,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2H8S",
+      "seq": "GCCSDPRCNYDHPEIC",
+      "containment": 0.6154,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2LZ5",
+      "seq": "GCCSDPPCRNKHPDLC",
+      "containment": 0.6154,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2MDQ",
+      "seq": "GCCSHPACNVDHPEIC",
+      "containment": 0.6154,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "4TTL",
+      "seq": "GCCSDPRCNYDHPEICGGAAGG",
+      "containment": 0.6154,
+      "identity": 0.3636,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6CGX",
+      "seq": "GCCSDPRCNYAHPAICGGAAGG",
+      "containment": 0.6154,
+      "identity": 0.3636,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6OTB",
+      "seq": "GCCCNPACGPNYGCGTSCS",
+      "containment": 0.6923,
+      "identity": 0.4737,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "2YEN",
+      "seq": "GCCNGPKGCSSKWCRDHARCC",
+      "containment": 0.6154,
+      "identity": 0.381,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "8HVS",
+   "seq": "RFLRRIFFFF",
+   "n": 10,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "8IL1",
+   "seq": "IIYCNRRTGKCQRM",
+   "n": 14,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 5,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "5XO4",
+      "seq": "GSKKPVPIIYCNRRTGKCQRM",
+      "containment": 1.0,
+      "identity": 0.6667,
+      "verbatim": true,
+      "fold": 3,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "5XO5",
+      "seq": "GSKKPVPIIACNRRTGKCQRA",
+      "containment": 0.8571,
+      "identity": 0.5714,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6AFQ",
+      "seq": "GSKKPVPIIYCNRRTGKCQRF",
+      "containment": 0.9286,
+      "identity": 0.619,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "8IL2",
+      "seq": "PIIYCNRRTGKCQRM",
+      "containment": 1.0,
+      "identity": 0.9333,
+      "verbatim": true,
+      "fold": 3,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "8XTH",
+      "seq": "YIIYCNRRTGKCQRM",
+      "containment": 1.0,
+      "identity": 0.9333,
+      "verbatim": true,
+      "fold": 3,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "8IS3",
+   "seq": "FRFPFKFRR",
+   "n": 9,
+   "fold": 0,
+   "n_peptide_train": 2,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1D6X",
+      "seq": "VRRFPWWWPFLRR",
+      "containment": 0.6667,
+      "identity": 0.4615,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2I1I",
+      "seq": "VRRFPWWWAFLRR",
+      "containment": 0.6667,
+      "identity": 0.4615,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "8T61",
+   "seq": "RHYYKFNSTGRHYHYY",
+   "n": 16,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 1,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1SWH_31",
+      "seq": "RYVLTGRYDS",
+      "containment": 0.6,
+      "identity": 0.375,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "8T62",
+   "seq": "TMIEDPEAGHFHTSSA",
+   "n": 16,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "8T63",
+   "seq": "WHMWNTVPNAKQVIAA",
+   "n": 16,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "8TXS",
+   "seq": "RGVTVPHNGESKDYSV",
+   "n": 16,
+   "fold": 4,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "8UN8",
+   "seq": "LDAALLAAAKAW",
+   "n": 12,
+   "fold": 3,
+   "n_peptide_train": 4,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 5,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1WNN",
+      "seq": "ETPAQRQARLLRMSAYAAKRQAS",
+      "containment": 0.75,
+      "identity": 0.3913,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2L96",
+      "seq": "KKLKLAPAKLALLWKALALKLKKA",
+      "containment": 0.6667,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2L99",
+      "seq": "KKLKLALAKPALLWKALALKLKKA",
+      "containment": 0.6667,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6CT4",
+      "seq": "PMKKLKLALRLAAKIAPVW",
+      "containment": 0.6667,
+      "identity": 0.4211,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "8UTX",
+      "seq": "WCDAACCAAAKA",
+      "containment": 0.6667,
+      "identity": 0.6667,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1HXI_96",
+      "seq": "NAALASLRAW",
+      "containment": 0.6,
+      "identity": 0.5,
+      "verbatim": false
+     },
+     {
+      "pdb": "10XL_36",
+      "seq": "DGTALLAAPSDFAKDAI",
+      "containment": 0.6667,
+      "identity": 0.4706,
+      "verbatim": false
+     },
+     {
+      "pdb": "10XL_36",
+      "seq": "DGTALLAAPSDFAKDAIER",
+      "containment": 0.6667,
+      "identity": 0.4211,
+      "verbatim": false
+     },
+     {
+      "pdb": "10XL_36",
+      "seq": "DGTALLAAPSDFAKDAIE",
+      "containment": 0.6667,
+      "identity": 0.4444,
+      "verbatim": false
+     },
+     {
+      "pdb": "1QCZ_116",
+      "seq": "ANAALLAAQI",
+      "containment": 0.6,
+      "identity": 0.5,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "8ZG2",
+   "seq": "YRQSSATSSFG",
+   "n": 11,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 2,
+   "n_fragment_train": 2,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "8ZG4",
+      "seq": "YRQSEATSSFG",
+      "containment": 0.9091,
+      "identity": 0.9091,
+      "verbatim": false,
+      "fold": 1,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "8ZUG",
+      "seq": "YRQSSATSSFGGLGGGSVRFGPG",
+      "containment": 1.0,
+      "identity": 0.4783,
+      "verbatim": true,
+      "fold": 1,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1RXJ_61",
+      "seq": "NYRNAHSATTWSGQYVGGAE",
+      "containment": 0.6364,
+      "identity": 0.35,
+      "verbatim": false
+     },
+     {
+      "pdb": "1LUQ_66",
+      "seq": "NYRNAHSATTWSGQYVGGA",
+      "containment": 0.6364,
+      "identity": 0.3684,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "9BAF",
+   "seq": "GCCSHPACSRRRARSC",
+   "n": 16,
+   "fold": 2,
+   "n_peptide_train": 3,
+   "n_peptide_heldout": 10,
+   "n_fragment_train": 3,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "1XGA",
+      "seq": "ECCNPACGRHYSC",
+      "containment": 0.6154,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2YEN",
+      "seq": "GCCNGPKGCSSKWCRDHARCC",
+      "containment": 0.625,
+      "identity": 0.4762,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "6X8R",
+      "seq": "RGCCNGRGGCSSRWCRDHARCC",
+      "containment": 0.625,
+      "identity": 0.4545,
+      "verbatim": false,
+      "fold": 4,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "1E74",
+      "seq": "GCCSDPRCAWEC",
+      "containment": 0.6667,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "1E75",
+      "seq": "GCCSDPLCAWRC",
+      "containment": 0.6667,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "1E76",
+      "seq": "GCCSNPRCAWRC",
+      "containment": 0.6667,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "1IMI",
+      "seq": "GCCSDPRCAWRC",
+      "containment": 0.6667,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2IFI",
+      "seq": "GCCSDARCAWRC",
+      "containment": 0.6667,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2JUQ",
+      "seq": "GCCSDVRCRYRCR",
+      "containment": 0.6154,
+      "identity": 0.5,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2JUR",
+      "seq": "GCCSEPRCRYRCR",
+      "containment": 0.6923,
+      "identity": 0.5625,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2JUS",
+      "seq": "GCCSDPRCRWRCR",
+      "containment": 0.6923,
+      "identity": 0.5625,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2JUT",
+      "seq": "GCCSDPRCRYRCR",
+      "containment": 0.6923,
+      "identity": 0.5625,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "2M3I",
+      "seq": "GCCSHPVCSAMSPIC",
+      "containment": 0.6,
+      "identity": 0.5625,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "1FK5_21",
+      "seq": "GSGPSAGCC",
+      "containment": 0.6667,
+      "identity": 0.375,
+      "verbatim": false
+     },
+     {
+      "pdb": "1CRN_1",
+      "seq": "TCCPSIVARS",
+      "containment": 0.7,
+      "identity": 0.4375,
+      "verbatim": false
+     },
+     {
+      "pdb": "1CRN_1",
+      "seq": "TCCPSIVARSN",
+      "containment": 0.6364,
+      "identity": 0.4375,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "9BFL",
+   "seq": "HCTPNSNHCW",
+   "n": 10,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "9KAR",
+   "seq": "GGWGTVPDWFFNMNW",
+   "n": 15,
+   "fold": 3,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "9L1M",
+   "seq": "MMMKPDMMMKPD",
+   "n": 12,
+   "fold": 1,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": []
+   }
+  },
+  {
+   "pdb": "9S5G",
+   "seq": "FLPLWLWLWRKLK",
+   "n": 13,
+   "fold": 3,
+   "n_peptide_train": 3,
+   "n_peptide_heldout": 1,
+   "n_fragment_train": 2,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [
+     {
+      "pdb": "2L96",
+      "seq": "KKLKLAPAKLALLWKALALKLKKA",
+      "containment": 0.6923,
+      "identity": 0.375,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2L99",
+      "seq": "KKLKLALAKPALLWKALALKLKKA",
+      "containment": 0.6154,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     },
+     {
+      "pdb": "2L9A",
+      "seq": "KKLKLALAKLAPLWKALALKLKKA",
+      "containment": 0.6154,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": true
+     }
+    ],
+    "peptide_heldout": [
+     {
+      "pdb": "6G4K",
+      "seq": "FLPILASLAAKFGPKLFCLVTKKC",
+      "containment": 0.6154,
+      "identity": 0.3333,
+      "verbatim": false,
+      "fold": 3,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": [
+     {
+      "pdb": "13TB_6",
+      "seq": "LQEKLRKLKE",
+      "containment": 0.6,
+      "identity": 0.4615,
+      "verbatim": false
+     },
+     {
+      "pdb": "13SK_6",
+      "seq": "LQEKLRKLK",
+      "containment": 0.6667,
+      "identity": 0.4615,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "9UV5",
+   "seq": "PDHEGTYDY",
+   "n": 9,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 0,
+   "n_fragment_train": 2,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [],
+    "fragment_train": [
+     {
+      "pdb": "1SFH_76",
+      "seq": "AYSLTFTEAGTYDYHCTFH",
+      "containment": 0.6667,
+      "identity": 0.3158,
+      "verbatim": false
+     },
+     {
+      "pdb": "1JKE_96",
+      "seq": "ASPDRAEALYDYFVER",
+      "containment": 0.6667,
+      "identity": 0.375,
+      "verbatim": false
+     }
+    ]
+   }
+  },
+  {
+   "pdb": "9WXK",
+   "seq": "IWLSLMKFAGKHL",
+   "n": 13,
+   "fold": 2,
+   "n_peptide_train": 0,
+   "n_peptide_heldout": 2,
+   "n_fragment_train": 0,
+   "verbatim_in_training": false,
+   "hits": {
+    "peptide_train": [],
+    "peptide_heldout": [
+     {
+      "pdb": "2LS9",
+      "seq": "GWGSFFKKAAHVGKHVGKAALTHYL",
+      "containment": 0.6154,
+      "identity": 0.32,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     },
+     {
+      "pdb": "6RSG",
+      "seq": "GWGSFFKKAAHAGKHAGKAALTHYL",
+      "containment": 0.6154,
+      "identity": 0.32,
+      "verbatim": false,
+      "fold": 2,
+      "in_distogram_training_set": false
+     }
+    ],
+    "fragment_train": []
+   }
+  }
+ ]
+}

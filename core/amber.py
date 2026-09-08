@@ -205,6 +205,7 @@ __all__ = [
     "refine", "refine_coords", "refine_ca", "single_point", "refine_many",
     "builder_for", "clear_cache", "cache_stats",
     "K_WEAK", "K_MODERATE", "K_STRONG", "BACKBONE_ATOMS",
+    "CONVERGE_MAX_KCAL", "convergence_flags",
     # hamiltonian
     "AmberHamiltonian", "AMBER_TERMS", "KJ_PER_KCAL", "KCAL_PER_KJ",
     # sidechains
@@ -1290,6 +1291,41 @@ BACKBONE_ATOMS = ("N", "CA", "C")
 #: kcal/mol/A^2 -> kJ/mol/nm^2
 _K_SCALE = KJ_PER_KCAL * 100.0
 
+# ---------------------------------------------------------------- convergence gate
+#: SPRINT 16.  `LocalEnergyMinimizer.minimize` is asked to run to convergence and NEVER
+#: told whether it got there.  On the 126-target tuning instrument four targets (1D6X,
+#: 1MF6, 2NB7, 7BX2) end minimisation above 1000 kcal/mol -- 1MF6 at 8.9e8 -- and were
+#: silently scored into every published mean.  Those four alone move the exact rotated-
+#: frame null (which is ZERO by construction) from -0.0005 to +0.0117 kcal-free angstrom.
+#:
+#: THE RULE, DECLARED BEFORE IT WAS APPLIED (s16/energy_gate.py records the declaration
+#: and its timestamp).  A minimisation is CONVERGED iff, with the restraint switched off:
+#:
+#:     final potential energy <= CONVERGE_MAX_KCAL      (default 1000.0 kcal/mol)
+#:
+#: One threshold, no target-specific tuning, no native-derived quantity, and the same
+#: 1000 kcal/mol number the codebase already uses for its bond+angle strain gate. It is
+#: reported, never silently applied: `refine_coords` always returns the structure, and
+#: sets `converged` / `converge_reason` so the CONSUMER decides.  Any statistic quoted
+#: from a gated set must print the excluded count.
+CONVERGE_MAX_KCAL = 1000.0
+
+
+def convergence_flags(energy: float, energy_initial: float,
+                      max_kcal: float = CONVERGE_MAX_KCAL) -> Dict[str, object]:
+    """The pre-declared gate.  Pure function of the returned energies."""
+    e = float(energy)
+    ok = np.isfinite(e) and e <= float(max_kcal)
+    if not np.isfinite(e):
+        why = "non-finite final energy"
+    elif e > float(max_kcal):
+        why = "final energy %.4g > %.4g kcal/mol" % (e, max_kcal)
+    else:
+        why = ""
+    return {"converged": bool(ok), "converge_reason": why,
+            "converge_max_kcal": float(max_kcal),
+            "energy_drop": float(energy_initial) - e}
+
 
 # ---------------------------------------------------------------- builder LRU
 #: Bounded, unlike the original dict. A 126-target sweep used to retain 126 live OpenMM
@@ -1449,6 +1485,9 @@ def _run(H: "AmberHamiltonian", heavy_nm: np.ndarray, k_restraint: float,
     d = (out_nm[ridx] - pos[ridx]) * 10.0
     out["restraint_rmsd"] = float(np.sqrt((d ** 2).sum(1).mean()))
     out["restraint_max"] = float(np.sqrt((d ** 2).sum(1)).max())
+    # SPRINT 16 convergence gate.  Reported, never silently applied; adds no arithmetic
+    # to the minimisation itself, so every prior number reproduces bit-for-bit.
+    out.update(convergence_flags(energy, e0))
     if components:
         out["components"] = {
             t: ctx.getState(getEnergy=True, groups={_TERM_GROUP[t]})

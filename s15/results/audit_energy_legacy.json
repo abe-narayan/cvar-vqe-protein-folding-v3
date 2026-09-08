@@ -1,0 +1,200 @@
+{
+ "rows": [
+  {
+   "pdb": "1CS9",
+   "n_terms": 11,
+   "terms": [
+    "aromatic",
+    "compactness",
+    "contact",
+    "coop_helix",
+    "coop_sheet",
+    "electrostatic",
+    "hbond_local",
+    "hbond_longrange",
+    "solvation",
+    "steric",
+    "torsion"
+   ],
+   "max_abs_diff_total_vs_sum": 167.38797616391093,
+   "mean_abs_diff": 6.0194106933217455,
+   "total_sd": 20.070299188576904,
+   "plain_sum_reproduces_total": false
+  },
+  {
+   "pdb": "2MK7",
+   "n_terms": 11,
+   "terms": [
+    "aromatic",
+    "compactness",
+    "contact",
+    "coop_helix",
+    "coop_sheet",
+    "electrostatic",
+    "hbond_local",
+    "hbond_longrange",
+    "solvation",
+    "steric",
+    "torsion"
+   ],
+   "max_abs_diff_total_vs_sum": 190.3633975982666,
+   "mean_abs_diff": 2.676844283560594,
+   "total_sd": 11.21328698359006,
+   "plain_sum_reproduces_total": false
+  },
+  {
+   "pdb": "2P5H",
+   "n_terms": 11,
+   "terms": [
+    "aromatic",
+    "compactness",
+    "contact",
+    "coop_helix",
+    "coop_sheet",
+    "electrostatic",
+    "hbond_local",
+    "hbond_longrange",
+    "solvation",
+    "steric",
+    "torsion"
+   ],
+   "max_abs_diff_total_vs_sum": 166.19762367010117,
+   "mean_abs_diff": 7.40213537463455,
+   "total_sd": 14.226627523980056,
+   "plain_sum_reproduces_total": false
+  },
+  {
+   "pdb": "6EY3",
+   "n_terms": 11,
+   "terms": [
+    "aromatic",
+    "compactness",
+    "contact",
+    "coop_helix",
+    "coop_sheet",
+    "electrostatic",
+    "hbond_local",
+    "hbond_longrange",
+    "solvation",
+    "steric",
+    "torsion"
+   ],
+   "max_abs_diff_total_vs_sum": 149.1510887145996,
+   "mean_abs_diff": 6.581867242641538,
+   "total_sd": 11.665075071043528,
+   "plain_sum_reproduces_total": false
+  },
+  {
+   "pdb": "6F3V",
+   "n_terms": 11,
+   "terms": [
+    "aromatic",
+    "compactness",
+    "contact",
+    "coop_helix",
+    "coop_sheet",
+    "electrostatic",
+    "hbond_local",
+    "hbond_longrange",
+    "solvation",
+    "steric",
+    "torsion"
+   ],
+   "max_abs_diff_total_vs_sum": 166.14000371098518,
+   "mean_abs_diff": 3.6924708701279703,
+   "total_sd": 10.348992981935835,
+   "plain_sum_reproduces_total": false
+  },
+  {
+   "pdb": "6S0N",
+   "n_terms": 11,
+   "terms": [
+    "aromatic",
+    "compactness",
+    "contact",
+    "coop_helix",
+    "coop_sheet",
+    "electrostatic",
+    "hbond_local",
+    "hbond_longrange",
+    "solvation",
+    "steric",
+    "torsion"
+   ],
+   "max_abs_diff_total_vs_sum": 185.59200024604797,
+   "mean_abs_diff": 3.3381748222612284,
+   "total_sd": 10.684155160518714,
+   "plain_sum_reproduces_total": false
+  },
+  {
+   "pdb": "7N2I",
+   "n_terms": 11,
+   "terms": [
+    "aromatic",
+    "compactness",
+    "contact",
+    "coop_helix",
+    "coop_sheet",
+    "electrostatic",
+    "hbond_local",
+    "hbond_longrange",
+    "solvation",
+    "steric",
+    "torsion"
+   ],
+   "max_abs_diff_total_vs_sum": 111.58812960433283,
+   "mean_abs_diff": 4.198381112018241,
+   "total_sd": 6.316775043189246,
+   "plain_sum_reproduces_total": false
+  },
+  {
+   "pdb": "8IS3",
+   "n_terms": 11,
+   "terms": [
+    "aromatic",
+    "compactness",
+    "contact",
+    "coop_helix",
+    "coop_sheet",
+    "electrostatic",
+    "hbond_local",
+    "hbond_longrange",
+    "solvation",
+    "steric",
+    "torsion"
+   ],
+   "max_abs_diff_total_vs_sum": 173.64200299978256,
+   "mean_abs_diff": 4.4666004149578145,
+   "total_sd": 11.858652737569994,
+   "plain_sum_reproduces_total": false
+  },
+  {
+   "pdb": "9UV5",
+   "n_terms": 11,
+   "terms": [
+    "aromatic",
+    "compactness",
+    "contact",
+    "coop_helix",
+    "coop_sheet",
+    "electrostatic",
+    "hbond_local",
+    "hbond_longrange",
+    "solvation",
+    "steric",
+    "torsion"
+   ],
+   "max_abs_diff_total_vs_sum": 266.40729320049286,
+   "mean_abs_diff": 4.323088068091261,
+   "total_sd": 18.67341948987524,
+   "plain_sum_reproduces_total": false
+  }
+ ],
+ "recompute_check": {
+  "pdb": "2MK7",
+  "n_checked": 64,
+  "max_abs_diff_recomputed_vs_stored": 3.9461285261666035e-07,
+  "bit": true
+ },
+ "complete": true
+}

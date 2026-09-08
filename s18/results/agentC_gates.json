@@ -1,0 +1,1 @@
+{"GC0": {"n_targets": 6, "max_abs_mean_delta_A": 0.0, "max_readout_vs_metric_A": 8.104628079763643e-15, "max_kv_residual_A2": 3.375077994860476e-14, "min_FRAME2_A2": 0.0005186697879250302, "passed": true}, "GC1": {"n_targets": 8, "max_abs_leg_term_delta": 0.0, "max_abs_oracle_d_delta_A": 0.0, "passed": true}, "passed": true, "n_rows": 0, "complete": true}

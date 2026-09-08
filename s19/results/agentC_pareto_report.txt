@@ -1,0 +1,114 @@
+====================================================================================================
+Q2  AMBER AS A CONSTRAINED TERMINAL OPERATOR -- TWO AXES, NEVER ONE SCALAR
+    pre-registration: s19/PREREG_C.md section 4.  n = 126
+====================================================================================================
+
+-- CONVERGENCE GATE (declared in PREREG_C.md section 2, before use): finite E <= 1000 kcal/mol, restraint off.
+   k1                 excluded  3  1D6X 2NB7 7BX2
+   k3                 excluded  3  1D6X 2NB7 7BX2
+   k10                excluded  3  1D6X 2NB7 7BX2
+   k30                excluded  3  1D6X 2NB7 7BX2
+   k100               excluded  3  1D6X 2NB7 7BX2
+   k300               excluded 24  1D6X 1JBF 1KWE 1M02 2BP4 2EFZ 2LWU 2MFV 2MSA 2N5C 2N9M 2NB7 2NBC 2NDN 5H1H 6BX9 6OQP 7BX2 7LCW 8T61 8T62 8T63 9BAF 9KAR
+   k1000              excluded 64  1A1P 1CS9 1D6X 1FUV 1I93 1IM7 1JBF 1KWE 1M02 1N9U 1NIZ 1RSW 1TOR 2BP4 2EFZ 2LER 2LM8 2LNG 2LU6 2LWS 2LWU 2MFV 2MID 2MIG 2MK7 2MQ2 2MSA 2N5C 2N9M 2NB7 2NBC 2NDN 2O0S 3SGO 5H1H 5NVB 5V5B 5W52 6BX9 6EY3 6HVK 6OQP 6QAX 7BX2 7JGX 7JS6 7LCW 7S3O 7T3H 7VI4 7YFS 8FLP 8HVS 8IL1 8IS3 8T61 8T62 8T63 8TXS 8ZG2 9BAF 9BFL 9KAR 9UV5
+   stage_300_30       excluded  2  1D6X 7BX2
+   pullback_30_1000   excluded 63  1A1P 1CS9 1D6X 1FUV 1I93 1IM7 1JBF 1KWE 1M02 1N9U 1NIZ 1RSW 1TOR 2BP4 2EFZ 2LER 2LM8 2LNG 2LU6 2LWS 2LWU 2MFV 2MID 2MIG 2MK7 2MQ2 2MSA 2N5C 2N9M 2NB7 2NBC 2NDN 2O0S 3SGO 5H1H 5NVB 5V5B 5W52 6BX9 6EY3 6HVK 6OQP 6QAX 7BX2 7JGX 7JS6 7LCW 7S3O 7T3H 7YFS 8FLP 8HVS 8IL1 8IS3 8T61 8T62 8T63 8TXS 8ZG2 9BAF 9BFL 9KAR 9UV5
+   caonly_k30         excluded  3  1D6X 2NB7 7BX2
+   caonly_k100        excluded  3  1D6X 2NB7 7BX2
+   caonly_k300        excluded  3  1D6X 2NB7 7BX2
+   bbo_k30            excluded  2  1D6X 7BX2
+   blend25            excluded  3  1D6X 2NB7 7BX2
+   blend50            excluded  3  1D6X 2NB7 7BX2
+   blend75            excluded  3  1D6X 2NB7 7BX2
+   ALL-ARM GATE       excluded 64  1A1P 1CS9 1D6X 1FUV 1I93 1IM7 1JBF 1KWE 1M02 1N9U 1NIZ 1RSW 1TOR 2BP4 2EFZ 2LER 2LM8 2LNG 2LU6 2LWS 2LWU 2MFV 2MID 2MIG 2MK7 2MQ2 2MSA 2N5C 2N9M 2NB7 2NBC 2NDN 2O0S 3SGO 5H1H 5NVB 5V5B 5W52 6BX9 6EY3 6HVK 6OQP 6QAX 7BX2 7JGX 7JS6 7LCW 7S3O 7T3H 7VI4 7YFS 8FLP 8HVS 8IL1 8IS3 8T61 8T62 8T63 8TXS 8ZG2 9BAF 9BFL 9KAR 9UV5
+
+-- INPUT (identical for every arm): mean Ca-RMSD 3.0498 A, gated 2.4350 A
+   input validity: n_clash_2A=0.177  n_clash_2p6A=1.113  min_heavy=2.752  bond_strain=0.131  angle_strain=0.059  rama_favoured=0.974  rama_outlier=0.011  cis_frac=0.000  chirality_L_frac=1.000
+
+-- AXIS 1: ACCURACY.  Every arm against ITS OWN GATED INPUT, all-arm gate.
+   arm                 Ca-RMSD                    delta vs input (fold CI)  ca_disp
+   k1                    2.548   +0.1132 [+0.0792, +0.1702]  med +0.0715  22W/40L  n=62    0.497
+   k3                    2.523   +0.0880 [+0.0567, +0.1383]  med +0.0518  17W/45L  n=62    0.420
+   k10                   2.509   +0.0736 [+0.0516, +0.1136]  med +0.0446  17W/45L  n=62    0.352
+   k30                   2.497   +0.0619 [+0.0434, +0.0956]  med +0.0333  14W/48L  n=62    0.302
+   k100                  2.479   +0.0438 [+0.0297, +0.0724]  med +0.0193  17W/45L  n=62    0.237
+   k300                  2.460   +0.0247 [+0.0149, +0.0445]  med +0.0136  18W/44L  n=62    0.169
+   k1000                 2.448   +0.0127 [+0.0042, +0.0288]  med +0.0081  20W/42L  n=62    0.098
+   stage_300_30          2.499   +0.0640 [+0.0445, +0.0999]  med +0.0345  14W/48L  n=62    0.312
+   pullback_30_1000      2.447   +0.0118 [+0.0071, +0.0214]  med +0.0065  20W/42L  n=62    0.098
+   caonly_k30            2.501   +0.0656 [+0.0442, +0.1048]  med +0.0254  10W/52L  n=62    0.313
+   caonly_k100           2.472   +0.0374 [+0.0234, +0.0575]  med +0.0192  9W/53L  n=62    0.199
+   caonly_k300           2.452   +0.0172 [+0.0118, +0.0222]  med +0.0103  8W/54L  n=62    0.109
+   bbo_k30               2.497   +0.0624 [+0.0395, +0.1012]  med +0.0407  16W/46L  n=62    0.311
+   blend25               2.476   +0.0408 [+0.0284, +0.0648]  med +0.0233  19W/43L  n=62    0.227
+   blend50               2.458   +0.0234 [+0.0163, +0.0380]  med +0.0128  19W/43L  n=62    0.151
+   blend75               2.445   +0.0098 [+0.0062, +0.0168]  med +0.0051  20W/42L  n=62    0.075
+
+-- AXIS 2: PHYSICAL VALIDITY.  Same structures, same gate.  Never fused into a scalar.
+   arm                 n_clash_2A n_clash_2p6   min_heavy bond_strain angle_strai rama_favour rama_outlie    cis_frac chirality_L
+   INPUT                    0.177       1.113       2.752       0.131       0.059       0.974       0.011       0.000       1.000
+C:\Users\abena\Protein-Folding-Algorithm\s19\agentC_report.py:256: RuntimeWarning: Mean of empty slice
+  print(f"   {a:<18}" + "".join(f"{np.nanmean(vcol(a,k)[g]):>12.3f}" for k in VAL))
+   k1                       0.000       0.000       2.868       0.012       0.022       0.958       0.032       0.006         nan
+   k3                       0.000       0.000       2.875       0.011       0.021       0.962       0.025       0.002         nan
+   k10                      0.000       0.000       2.882       0.010       0.019       0.982       0.008       0.002         nan
+   k30                      0.000       0.000       2.886       0.011       0.018       0.975       0.009       0.004         nan
+   k100                     0.000       0.016       2.891       0.018       0.020       0.977       0.014       0.000         nan
+   k300                     0.000       0.113       2.881       0.033       0.023       0.971       0.018       0.001         nan
+   k1000                    0.000       0.242       2.861       0.058       0.025       0.967       0.020       0.000         nan
+   stage_300_30             0.000       0.000       2.889       0.010       0.019       0.971       0.013       0.004         nan
+   pullback_30_1000         0.000       0.226       2.866       0.058       0.025       0.974       0.015       0.000         nan
+   caonly_k30               0.000       0.000       2.890       0.012       0.021       0.951       0.035       0.010         nan
+   caonly_k100              0.000       0.000       2.890       0.021       0.024       0.927       0.058       0.051         nan
+   caonly_k300              0.000       0.000       2.889       0.030       0.028       0.894       0.092       0.101         nan
+   bbo_k30                  0.000       0.000       2.874       0.010       0.018       0.990       0.004       0.000         nan
+   blend25                  0.000       0.081       2.882       0.039       0.021       0.979       0.010       0.001       0.966
+   blend50                  0.000       0.339       2.846       0.072       0.030       0.980       0.010       0.001       0.974
+   blend75                  0.016       0.694       2.804       0.103       0.042       0.980       0.006       0.001       0.992
+
+-- THE ITERATION BOUND: how many times it actually FIRED (the vacuity rule).
+   An inertness certificate means nothing unless the bound was exercised; a capped arm
+   is a DIFFERENT OPERATOR ('N iterations of restrained relaxation') and is labelled.
+   `steps = 0`: NO BOUND IS CONFIGURED.  This run is the deployed unbounded protocol,
+   so there is nothing to fire and nothing to certify.  The bound was WITHDRAWN after
+   the defect that motivated it was refuted -- see agentC_FINDINGS.md section 4.8.
+
+-- THE PARETO TEST (pre-registered): vs the incumbent k30, on BOTH axes.
+   PAIRWISE gating: each arm against k30 on the targets where BOTH converge, which is
+   the brief's 'a gated arm against its own gated input'.  The all-arm gate above costs
+   64 of 126 targets to ONE divergent arm and shifts the input mean from 3.050 to 2.435 A, so it is reported but not used here.
+   k1                 Ca +0.0903 [+0.0574, +0.1293]  med +0.0696  36W/87L  n=123
+                      n_clash_2 -0.0325[-0.0588,-0.0079]*  bond_stra -0.0066[-0.0079,-0.0053]*  rama_favo +0.0010[-0.0226,+0.0241]   rama_outl +0.0340[+0.0170,+0.0517]*  cis_frac -0.0084[-0.0146,-0.0029]*
+   k3                 Ca +0.0540 [+0.0325, +0.0734]  med +0.0352  34W/89L  n=123
+                      n_clash_2 -0.0325[-0.0588,-0.0079]*  bond_stra -0.0074[-0.0084,-0.0065]*  rama_favo -0.0127[-0.0339,+0.0073]   rama_outl +0.0273[+0.0134,+0.0428]*  cis_frac -0.0108[-0.0201,-0.0042]*
+   k10                Ca +0.0238 [+0.0135, +0.0372]  med +0.0121  35W/88L  n=123
+                      n_clash_2 -0.0325[-0.0588,-0.0079]*  bond_stra -0.0071[-0.0087,-0.0056]*  rama_favo -0.0126[-0.0240,-0.0005]*  rama_outl +0.0099[+0.0029,+0.0180]*  cis_frac -0.0108[-0.0215,+0.0002] 
+   k100               Ca -0.0386 [-0.0448, -0.0344]  med -0.0223  99W/24L  n=123
+                      n_clash_2 +0.5610[+0.4711,+0.6587]*  bond_stra +0.0240[+0.0211,+0.0271]*  rama_favo +0.0062[-0.0199,+0.0290]   rama_outl +0.0149[+0.0063,+0.0261]*  cis_frac -0.0045[-0.0089,-0.0009]*
+   k300               Ca -0.0737 [-0.0913, -0.0534]  med -0.0336  88W/14L  n=102
+                      n_clash_2 +0.9706[+0.7835,+1.0900]*  bond_stra +0.0522[+0.0472,+0.0607]*  rama_favo -0.0043[-0.0319,+0.0164]   rama_outl +0.0409[+0.0291,+0.0594]*  cis_frac -0.0272[-0.0345,-0.0212]*
+   k1000              Ca -0.0493 [-0.0682, -0.0368]  med -0.0194  52W/10L  n=62
+                      n_clash_2 +0.2419[+0.0656,+0.4561]*  bond_stra +0.0479[+0.0362,+0.0651]*  rama_favo -0.0085[-0.0222,+0.0050]   rama_outl +0.0114[-0.0040,+0.0264]   cis_frac -0.0045[-0.0146,+0.0000] 
+   stage_300_30       Ca +0.0078 [+0.0011, +0.0133]  med +0.0013  45W/78L  n=123
+                      n_clash_2 +0.0000[-0.0244,+0.0248]   bond_stra -0.0037[-0.0043,-0.0031]*  rama_favo -0.0228[-0.0531,+0.0007]   rama_outl +0.0179[+0.0043,+0.0341]*  cis_frac -0.0107[-0.0167,-0.0055]*
+   pullback_30_1000   Ca -0.0506 [-0.0744, -0.0378]  med -0.0208  53W/10L  n=63
+                      n_clash_2 +0.2222[+0.0635,+0.4035]*  bond_stra +0.0494[+0.0396,+0.0650]*  rama_favo -0.0055[-0.0102,-0.0009]*  rama_outl +0.0101[+0.0029,+0.0185]*  cis_frac -0.0079[-0.0167,+0.0000] 
+   caonly_k30         Ca -0.0054 [-0.0107, +0.0008]  med -0.0002  63W/60L  n=123
+                      n_clash_2 -0.0325[-0.0588,-0.0079]*  bond_stra +0.0066[+0.0054,+0.0077]*  rama_favo -0.0442[-0.0719,-0.0200]*  rama_outl +0.0747[+0.0589,+0.0925]*  cis_frac +0.0780[+0.0642,+0.0920]*
+   caonly_k100        Ca -0.0776 [-0.0925, -0.0666]  med -0.0490  93W/30L  n=123
+                      n_clash_2 -0.0325[-0.0588,-0.0079]*  bond_stra +0.0335[+0.0296,+0.0377]*  rama_favo -0.1135[-0.1539,-0.0820]*  rama_outl +0.1379[+0.1192,+0.1612]*  cis_frac +0.3152[+0.2695,+0.3476]*
+   caonly_k300        Ca -0.1100 [-0.1355, -0.0924]  med -0.0804  95W/28L  n=123
+                      n_clash_2 -0.0081[-0.0504,+0.0315]   bond_stra +0.0519[+0.0459,+0.0593]*  rama_favo -0.1865[-0.2078,-0.1569]*  rama_outl +0.2015[+0.1737,+0.2312]*  cis_frac +0.4242[+0.3799,+0.4732]*
+   bbo_k30            Ca +0.0106 [-0.0024, +0.0286]  med +0.0015  56W/67L  n=123
+                      n_clash_2 +0.4390[+0.3554,+0.4959]*  bond_stra -0.0036[-0.0042,-0.0030]*  rama_favo +0.0467[+0.0073,+0.0812]*  rama_outl -0.0052[-0.0185,+0.0071]   cis_frac -0.0522[-0.0601,-0.0428]*
+   blend25            Ca -0.0523 [-0.0625, -0.0452]  med -0.0435  112W/11L  n=123
+                      n_clash_2 +3.3902[+2.5641,+4.3306]*  bond_stra +0.0747[+0.0669,+0.0833]*  rama_favo +0.0055[-0.0003,+0.0117]   rama_outl -0.0017[-0.0029,-0.0005]*  cis_frac -0.0098[-0.0133,-0.0064]*
+   blend50            Ca -0.0922 [-0.1115, -0.0793]  med -0.0710  107W/16L  n=123
+                      n_clash_2 +7.4878[+6.1282,+9.3419]*  bond_stra +0.1563[+0.1404,+0.1733]*  rama_favo +0.0067[-0.0015,+0.0139]   rama_outl -0.0006[-0.0069,+0.0063]   cis_frac -0.0240[-0.0335,-0.0151]*
+   blend75            Ca -0.1193 [-0.1458, -0.1018]  med -0.0893  103W/20L  n=123
+                      n_clash_2 +11.6341[+9.6693,+14.5128]*  bond_stra +0.2292[+0.2065,+0.2539]*  rama_favo +0.0022[-0.0205,+0.0221]   rama_outl +0.0001[-0.0076,+0.0066]   cis_frac -0.0576[-0.0711,-0.0447]*
+   * = fold-clustered CI excludes zero.  For n_clash/bond_strain/rama_outlier/cis a
+     POSITIVE value is WORSE than k30; for rama_favoured a positive value is BETTER.
+
+-- THE ROTATED-FRAME NULL (exactly zero by construction), reported with its MAXIMUM, per BRIEF section 7:
+   n = 15  MAX |delta Ca-RMSD| = 0.014192 A   mean 0.001726 A   max |delta energy| 4.7691 kcal/mol

@@ -1,0 +1,8 @@
+--- worst local hole per target (max over segments), by m ---
+m=4  mean-of-worst 0.070  mean-of-mean 0.036  max 0.275  frac targets with a hole >0.5A 0.00   FAIL18 mean-of-worst 0.080
+m=5  mean-of-worst 0.224  mean-of-mean 0.130  max 0.456  frac targets with a hole >0.5A 0.00   FAIL18 mean-of-worst 0.259
+m=6  mean-of-worst 0.393  mean-of-mean 0.258  max 0.869  frac targets with a hole >0.5A 0.33   FAIL18 mean-of-worst 0.482
+m=7  mean-of-worst 0.539  mean-of-mean 0.394  max 1.144  frac targets with a hole >0.5A 0.55   FAIL18 mean-of-worst 0.666
+m=8  mean-of-worst 0.696  mean-of-mean 0.539  max 1.471  frac targets with a hole >0.5A 0.64   FAIL18 mean-of-worst 0.873
+
+--- coverage by native SS of the segment (m=6) ---

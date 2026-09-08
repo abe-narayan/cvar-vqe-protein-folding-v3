@@ -1,0 +1,57 @@
+{
+ "checks": {
+  "locality": {
+   "n": 9,
+   "PASS_locality_exact": true,
+   "terminal_residues_have_zero_support": true,
+   "n_free_residues": 7
+  },
+  "locality12": {
+   "n": 12,
+   "PASS_locality_exact": true,
+   "terminal_residues_have_zero_support": true,
+   "n_free_residues": 10
+  },
+  "control_D": {
+   "n": 10,
+   "S": 512,
+   "grid": 24,
+   "bandwidth": 3,
+   "E0_abs_err": 1.0799910005282194,
+   "E0_rel_err": 0.8746280555035731,
+   "field_max_abs_err": 7.105427357601002e-15,
+   "field_rel_err": 3.269544114949026e-16,
+   "offmesh_E_le1_max_abs_err": 1.0799910005282953,
+   "offmesh_E_le1_rel_err": 0.022490028878370812,
+   "offmesh_E_ge2_max_abs": 1.0799910005282953,
+   "PASS_machine_precision": false
+  },
+  "control_D_bigS": {
+   "n": 10,
+   "S": 2048,
+   "grid": 24,
+   "bandwidth": 3,
+   "E0_abs_err": 1.318913596701296,
+   "E0_rel_err": 0.9051906534874613,
+   "field_max_abs_err": 7.105427357601002e-15,
+   "field_rel_err": 2.611165234204462e-16,
+   "offmesh_E_le1_max_abs_err": 1.31891359670138,
+   "offmesh_E_le1_rel_err": 0.02502689841169173,
+   "offmesh_E_ge2_max_abs": 1.31891359670138,
+   "PASS_machine_precision": false
+  }
+ },
+ "_written": "2026-09-06 15:27:45",
+ "_complete": true,
+ "_config": {
+  "module": "s18/math_anova.py",
+  "grid": 24,
+  "nsamp": 2048,
+  "mu_default": "pool",
+  "salt": "s18math",
+  "min_sep": 2,
+  "objective": "sum_p ((d_p - dhat_p)/sd_p)^2, dhat debiased leave-fold-out"
+ },
+ "_config_hash": "9d4a5fd3cded2715",
+ "_sealed": "2026-09-06 15:27:45"
+}

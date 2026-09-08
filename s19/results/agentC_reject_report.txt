@@ -1,0 +1,87 @@
+====================================================================================================
+Q3  HARD REJECTION -- can Legacy reject a class of IMPOSSIBLE candidate?
+    pre-registration: s19/PREREG_C.md section 5.  PRIMARY r = 10.
+====================================================================================================
+
+-- r = 2
+   steric       vs rand      +0.0041 [+0.0014, +0.0061]  med +0.0001  59W/67L  n=126
+   steric       vs divkeep   +0.0030 [-0.0048, +0.0086]  med +0.0029  52W/73L  n=126
+   steric       vs none      +0.0041 [+0.0005, +0.0075]  med +0.0009  57W/69L  n=126
+   minheavy     vs rand      +0.0030 [+0.0007, +0.0053]  med +0.0010  57W/69L  n=126
+   minheavy     vs divkeep   +0.0020 [-0.0083, +0.0113]  med +0.0032  55W/71L  n=126
+   minheavy     vs none      +0.0030 [-0.0005, +0.0058]  med +0.0029  56W/70L  n=126
+   legacy       vs rand      +0.0049 [-0.0012, +0.0104]  med +0.0011  58W/68L  n=126
+   legacy       vs divkeep   +0.0039 [-0.0040, +0.0118]  med +0.0029  55W/71L  n=126
+   legacy       vs none      +0.0049 [-0.0009, +0.0103]  med +0.0009  57W/69L  n=126
+   amber        vs rand      +0.0039 [-0.0001, +0.0077]  med -0.0002  66W/60L  n=126
+   amber        vs divkeep   +0.0029 [-0.0027, +0.0079]  med +0.0014  56W/70L  n=126
+   amber        vs none      +0.0039 [-0.0002, +0.0086]  med -0.0004  68W/58L  n=126
+   divkeep      vs none      +0.0010 [-0.0062, +0.0086]  med -0.0013  74W/52L  n=126   [CONTROL, score-free]
+   rand         vs none      -0.0000 [-0.0016, +0.0014]  med +0.0002  61W/65L  n=126   [CONTROL, score-free]
+   levels       none=3.050  steric@2=3.054  minheavy@2=3.053  legacy@2=3.055  amber@2=3.054  divkeep@2=3.051  rand@2=3.050
+
+-- r = 5
+   steric       vs rand      +0.0118 [+0.0049, +0.0209]  med +0.0008  61W/65L  n=126
+   steric       vs divkeep   +0.0175 [+0.0113, +0.0241]  med +0.0055  54W/72L  n=126
+   steric       vs none      +0.0136 [+0.0059, +0.0229]  med +0.0008  62W/64L  n=126
+   minheavy     vs rand      +0.0083 [+0.0032, +0.0122]  med +0.0015  60W/66L  n=126
+   minheavy     vs divkeep   +0.0140 [+0.0086, +0.0216]  med +0.0040  52W/74L  n=126
+   minheavy     vs none      +0.0101 [+0.0031, +0.0162]  med +0.0020  58W/68L  n=126
+   legacy       vs rand      +0.0064 [-0.0099, +0.0190]  med +0.0012  59W/67L  n=126
+   legacy       vs divkeep   +0.0121 [-0.0026, +0.0266]  med +0.0055  58W/68L  n=126
+   legacy       vs none      +0.0082 [-0.0094, +0.0202]  med +0.0011  59W/67L  n=126
+   amber        vs rand      +0.0065 [-0.0001, +0.0138]  med +0.0002  63W/63L  n=126
+   amber        vs divkeep   +0.0122 [+0.0061, +0.0177]  med +0.0029  52W/74L  n=126
+   amber        vs none      +0.0083 [-0.0004, +0.0187]  med +0.0016  60W/66L  n=126
+   divkeep      vs none      -0.0039 [-0.0133, +0.0045]  med -0.0028  78W/48L  n=126   [CONTROL, score-free]
+   rand         vs none      +0.0018 [-0.0006, +0.0048]  med +0.0008  48W/78L  n=126   [CONTROL, score-free]
+   levels       none=3.050  steric@5=3.063  minheavy@5=3.060  legacy@5=3.058  amber@5=3.058  divkeep@5=3.046  rand@5=3.052
+
+-- r = 10  <-- PRE-REGISTERED PRIMARY
+   steric       vs rand      +0.0175 [+0.0048, +0.0348]  med +0.0014  61W/65L  n=126
+   steric       vs divkeep   +0.0170 [+0.0091, +0.0286]  med +0.0064  52W/74L  n=126
+   steric       vs none      +0.0204 [+0.0081, +0.0376]  med +0.0042  52W/74L  n=126
+   minheavy     vs rand      +0.0139 [+0.0025, +0.0238]  med +0.0040  58W/68L  n=126
+   minheavy     vs divkeep   +0.0133 [-0.0015, +0.0294]  med +0.0065  53W/73L  n=126
+   minheavy     vs none      +0.0168 [+0.0044, +0.0278]  med +0.0056  57W/69L  n=126
+   legacy       vs rand      +0.0182 [-0.0036, +0.0390]  med +0.0056  56W/70L  n=126
+   legacy       vs divkeep   +0.0176 [-0.0036, +0.0417]  med +0.0100  54W/72L  n=126
+   legacy       vs none      +0.0211 [-0.0033, +0.0426]  med +0.0058  55W/71L  n=126
+   amber        vs rand      +0.0109 [-0.0049, +0.0285]  med -0.0021  67W/59L  n=126
+   amber        vs divkeep   +0.0103 [-0.0112, +0.0291]  med +0.0032  57W/69L  n=126
+   amber        vs none      +0.0138 [-0.0022, +0.0331]  med +0.0013  58W/68L  n=126
+   divkeep      vs none      +0.0035 [-0.0138, +0.0221]  med -0.0029  73W/53L  n=126   [CONTROL, score-free]
+   rand         vs none      +0.0029 [+0.0006, +0.0050]  med +0.0015  43W/83L  n=126   [CONTROL, score-free]
+   levels       none=3.050  steric@10=3.070  minheavy@10=3.067  legacy@10=3.071  amber@10=3.064  divkeep@10=3.053  rand@10=3.053
+
+-- r = 19
+   steric       vs rand      +0.0218 [+0.0028, +0.0467]  med +0.0048  58W/68L  n=126
+   steric       vs divkeep   +0.0304 [+0.0033, +0.0592]  med +0.0118  56W/70L  n=126
+   steric       vs none      +0.0270 [+0.0070, +0.0526]  med +0.0056  55W/71L  n=126
+   minheavy     vs rand      +0.0248 [+0.0012, +0.0487]  med +0.0103  56W/70L  n=126
+   minheavy     vs divkeep   +0.0334 [+0.0189, +0.0452]  med +0.0099  50W/76L  n=126
+   minheavy     vs none      +0.0300 [+0.0066, +0.0534]  med +0.0097  53W/73L  n=126
+   legacy       vs rand      +0.0230 [-0.0038, +0.0597]  med +0.0017  62W/64L  n=126
+   legacy       vs divkeep   +0.0316 [-0.0031, +0.0758]  med +0.0158  55W/71L  n=126
+   legacy       vs none      +0.0282 [+0.0005, +0.0664]  med +0.0036  60W/66L  n=126
+   amber        vs rand      +0.0241 [+0.0037, +0.0449]  med +0.0026  58W/68L  n=126
+   amber        vs divkeep   +0.0326 [+0.0161, +0.0439]  med +0.0120  49W/77L  n=126
+   amber        vs none      +0.0293 [+0.0092, +0.0497]  med +0.0052  54W/72L  n=126
+   divkeep      vs none      -0.0034 [-0.0252, +0.0174]  med -0.0065  70W/56L  n=126   [CONTROL, score-free]
+   rand         vs none      +0.0052 [+0.0039, +0.0066]  med +0.0019  45W/81L  n=126   [CONTROL, score-free]
+   levels       none=3.050  steric@19=3.077  minheavy@19=3.080  legacy@19=3.078  amber@19=3.079  divkeep@19=3.046  rand@19=3.055
+
+-- DOSE-RESPONSE: the cost of rejecting r, by rule (mean Ca-RMSD, n = 126)
+   rule               r=2       r=5      r=10      r=19
+   none            3.0498    3.0498    3.0498    3.0498
+   amber           3.0537    3.0581    3.0636    3.0791
+   divkeep         3.0509    3.0459    3.0533    3.0464
+   legacy          3.0547    3.0580    3.0709    3.0780
+   minheavy        3.0528    3.0599    3.0666    3.0798
+   rand            3.0498    3.0516    3.0527    3.0550
+   steric          3.0539    3.0634    3.0702    3.0768
+
+-- HOW MANY CANDIDATES ARE ACTUALLY IMPOSSIBLE?  (min heavy-atom distance, ideal-geometry rebuild)
+   candidates per 75 with min_heavy < 2.0 A: mean 2.66  median 1.0  max 18  targets with none 57/126
+   candidates per 75 with min_heavy < 2.6 A: mean 20.07  median 19.0  max 55  targets with none 1/126
+   worst min_heavy in the pool: mean 1.791 A, min 0.104 A

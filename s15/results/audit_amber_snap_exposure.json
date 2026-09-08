@@ -1,0 +1,174 @@
+[
+ {
+  "pdb": "1CS9",
+  "snap_in_kind0": true,
+  "n_uniform": 1193,
+  "snap_amber_pctile": 36.88,
+  "snap_rmsd_pctile": 93.55,
+  "snap_in_amber_lowest_0p2pct": false,
+  "snap_in_amber_lowest_1pct": false,
+  "snap_in_rmsd_lowest_1pct": false
+ },
+ {
+  "pdb": "2MK7",
+  "snap_in_kind0": true,
+  "n_uniform": 1195,
+  "snap_amber_pctile": 0.08,
+  "snap_rmsd_pctile": 0.0,
+  "snap_in_amber_lowest_0p2pct": true,
+  "snap_in_amber_lowest_1pct": true,
+  "snap_in_rmsd_lowest_1pct": true
+ },
+ {
+  "pdb": "2P5H",
+  "snap_in_kind0": true,
+  "n_uniform": 1194,
+  "snap_amber_pctile": 0.34,
+  "snap_rmsd_pctile": 1.42,
+  "snap_in_amber_lowest_0p2pct": false,
+  "snap_in_amber_lowest_1pct": true,
+  "snap_in_rmsd_lowest_1pct": false
+ },
+ {
+  "pdb": "6EY3",
+  "snap_in_kind0": true,
+  "n_uniform": 1195,
+  "snap_amber_pctile": 59.92,
+  "snap_rmsd_pctile": 13.81,
+  "snap_in_amber_lowest_0p2pct": false,
+  "snap_in_amber_lowest_1pct": false,
+  "snap_in_rmsd_lowest_1pct": false
+ },
+ {
+  "pdb": "6F3V",
+  "snap_in_kind0": false
+ },
+ {
+  "pdb": "6S0N",
+  "snap_in_kind0": true,
+  "n_uniform": 1191,
+  "snap_amber_pctile": 56.76,
+  "snap_rmsd_pctile": 0.0,
+  "snap_in_amber_lowest_0p2pct": false,
+  "snap_in_amber_lowest_1pct": false,
+  "snap_in_rmsd_lowest_1pct": true
+ },
+ {
+  "pdb": "7N2I",
+  "snap_in_kind0": true,
+  "n_uniform": 1196,
+  "snap_amber_pctile": 29.1,
+  "snap_rmsd_pctile": 0.33,
+  "snap_in_amber_lowest_0p2pct": false,
+  "snap_in_amber_lowest_1pct": false,
+  "snap_in_rmsd_lowest_1pct": true
+ },
+ {
+  "pdb": "8IS3",
+  "snap_in_kind0": true,
+  "n_uniform": 1196,
+  "snap_amber_pctile": 63.8,
+  "snap_rmsd_pctile": 0.0,
+  "snap_in_amber_lowest_0p2pct": false,
+  "snap_in_amber_lowest_1pct": false,
+  "snap_in_rmsd_lowest_1pct": true
+ },
+ {
+  "pdb": "9UV5",
+  "snap_in_kind0": true,
+  "n_uniform": 1195,
+  "snap_amber_pctile": 81.26,
+  "snap_rmsd_pctile": 0.08,
+  "snap_in_amber_lowest_0p2pct": false,
+  "snap_in_amber_lowest_1pct": false,
+  "snap_in_rmsd_lowest_1pct": true
+ },
+ {
+  "pdb": "1N9U",
+  "snap_in_kind0": true,
+  "n_uniform": 701,
+  "snap_amber_pctile": 0.0,
+  "snap_rmsd_pctile": 2.28,
+  "snap_in_amber_lowest_0p2pct": true,
+  "snap_in_amber_lowest_1pct": true,
+  "snap_in_rmsd_lowest_1pct": false
+ },
+ {
+  "pdb": "1TOR",
+  "snap_in_kind0": false
+ },
+ {
+  "pdb": "2BAO",
+  "snap_in_kind0": true,
+  "n_uniform": 701,
+  "snap_amber_pctile": 74.04,
+  "snap_rmsd_pctile": 3.0,
+  "snap_in_amber_lowest_0p2pct": false,
+  "snap_in_amber_lowest_1pct": false,
+  "snap_in_rmsd_lowest_1pct": false
+ },
+ {
+  "pdb": "2MD2",
+  "snap_in_kind0": false
+ },
+ {
+  "pdb": "2MJQ",
+  "snap_in_kind0": true,
+  "n_uniform": 699,
+  "snap_amber_pctile": 14.74,
+  "snap_rmsd_pctile": 0.0,
+  "snap_in_amber_lowest_0p2pct": false,
+  "snap_in_amber_lowest_1pct": false,
+  "snap_in_rmsd_lowest_1pct": true
+ },
+ {
+  "pdb": "5V5B",
+  "snap_in_kind0": true,
+  "n_uniform": 701,
+  "snap_amber_pctile": 10.13,
+  "snap_rmsd_pctile": 0.14,
+  "snap_in_amber_lowest_0p2pct": false,
+  "snap_in_amber_lowest_1pct": false,
+  "snap_in_rmsd_lowest_1pct": true
+ },
+ {
+  "pdb": "6B9K",
+  "snap_in_kind0": true,
+  "n_uniform": 701,
+  "snap_amber_pctile": 66.19,
+  "snap_rmsd_pctile": 21.4,
+  "snap_in_amber_lowest_0p2pct": false,
+  "snap_in_amber_lowest_1pct": false,
+  "snap_in_rmsd_lowest_1pct": false
+ },
+ {
+  "pdb": "7T3H",
+  "snap_in_kind0": true,
+  "n_uniform": 700,
+  "snap_amber_pctile": 66.71,
+  "snap_rmsd_pctile": 0.14,
+  "snap_in_amber_lowest_0p2pct": false,
+  "snap_in_amber_lowest_1pct": false,
+  "snap_in_rmsd_lowest_1pct": true
+ },
+ {
+  "pdb": "7VI4",
+  "snap_in_kind0": true,
+  "n_uniform": 701,
+  "snap_amber_pctile": 0.43,
+  "snap_rmsd_pctile": 0.0,
+  "snap_in_amber_lowest_0p2pct": false,
+  "snap_in_amber_lowest_1pct": true,
+  "snap_in_rmsd_lowest_1pct": true
+ },
+ {
+  "pdb": "8HVS",
+  "snap_in_kind0": true,
+  "n_uniform": 701,
+  "snap_amber_pctile": 63.05,
+  "snap_rmsd_pctile": 0.0,
+  "snap_in_amber_lowest_0p2pct": false,
+  "snap_in_amber_lowest_1pct": false,
+  "snap_in_rmsd_lowest_1pct": true
+ }
+]

@@ -1,0 +1,876 @@
+{
+ "edge_cases": [
+  {
+   "case": "identity",
+   "note": "same coordinates",
+   "horn": 0.0,
+   "instr": 0.0,
+   "expect": 0.0
+  },
+  {
+   "case": "rigid_motion",
+   "note": "rotated + translated copy must be 0",
+   "horn": 0.0,
+   "instr": 0.0,
+   "expect": 0.0
+  },
+  {
+   "case": "mirror_image",
+   "note": "z-reflected copy; proper-rotation RMSD must be LARGE",
+   "horn": 2.9601965330100635,
+   "instr": 2.96019653301007,
+   "naive_svd_no_sign_fix": 0.0,
+   "expect": "horn == instr >> 0, naive ~ 0"
+  },
+  {
+   "case": "point_inversion",
+   "note": "x -> -x",
+   "horn": 2.9601965330100635,
+   "instr": 2.96019653301007,
+   "naive_svd_no_sign_fix": 0.0,
+   "expect": "large"
+  },
+  {
+   "case": "n_equals_1",
+   "note": "single residue: any translation fits exactly",
+   "horn": 0.0,
+   "instr": 0.0,
+   "expect": 0.0
+  },
+  {
+   "case": "n_equals_2",
+   "note": "two residues, equal bond length: exact fit",
+   "horn": 0.0,
+   "instr": 0.0,
+   "expect": 0.0
+  },
+  {
+   "case": "collinear",
+   "note": "degenerate rank-1 geometry (rotation is not unique)",
+   "horn": 0.0,
+   "instr": 0.0,
+   "expect": 0.0
+  },
+  {
+   "case": "coincident",
+   "note": "every atom at the origin",
+   "horn": 0.0,
+   "instr": 0.0,
+   "expect": 0.0
+  },
+  {
+   "case": "terminal_residues",
+   "note": "same interior, wrecked termini: full vs [1:-1]",
+   "full_horn": 3.44205711359122,
+   "full_instr": 3.4420571135912343,
+   "trimmed_horn": 1.025681229718228,
+   "trimmed_instr": 1.0256812297182096,
+   "expect": "trimmed MUCH lower -- this is the definition the preprint left unstated"
+  },
+  {
+   "case": "missing_atom_nan",
+   "note": "a NaN coordinate must NOT silently produce a finite number",
+   "horn": "LinAlgError",
+   "instr": "LinAlgError",
+   "expect": "nan or raise, never a plausible float"
+  },
+  {
+   "case": "length_mismatch",
+   "note": "10 vs 14 residues",
+   "horn": "ValueError",
+   "instr": "ValueError",
+   "expect": "raise"
+  },
+  {
+   "case": "chain_break",
+   "note": "a 25 A discontinuity mid-chain is scored, not rejected",
+   "horn": 20.328142422090835,
+   "instr": 20.328142422090835,
+   "expect": "finite, large"
+  },
+  {
+   "case": "scale_2x",
+   "note": "RMSD is in the coordinate unit (Angstrom); it is NOT scale invariant",
+   "horn": 10.269034617533459,
+   "instr": 10.269034617533459
+  },
+  {
+   "case": "atom_order_swap",
+   "note": "swapping two residues changes the value: correspondence is by INDEX, never by nearest neighbour",
+   "horn": 1.4362649974350437,
+   "instr": 1.436264997435055
+  },
+  {
+   "case": "float32_input",
+   "note": "the universes store W as float32",
+   "horn64": 3.44205711359122,
+   "horn32": 3.4420571942893594
+  }
+ ],
+ "agreement": {
+  "n_targets": 126,
+  "n_structures": 63000,
+  "max_abs_diff_horn_vs_instrument": 2.0422552537979755e-13,
+  "at": "1S9Z",
+  "max_abs_diff_horn_vs_stored_rr": 4.7681794512755005e-07,
+  "note_stored_rr": "s8/generate_univ stores rr as float32; ~1e-7 relative is expected",
+  "rows": [
+   {
+    "pdb": "1A13",
+    "n": 14,
+    "max_abs_diff_horn_vs_instr": 1.509903313490213e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3701750784255182e-07
+   },
+   {
+    "pdb": "1A1P",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 1.509903313490213e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.652483287514997e-07
+   },
+   {
+    "pdb": "1CB3",
+    "n": 11,
+    "max_abs_diff_horn_vs_instr": 2.042810365310288e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3681896887950415e-07
+   },
+   {
+    "pdb": "1CEK",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 9.414691248821327e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3567290252657358e-07
+   },
+   {
+    "pdb": "1CS9",
+    "n": 9,
+    "max_abs_diff_horn_vs_instr": 1.199040866595169e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.378124257518266e-07
+   },
+   {
+    "pdb": "1D0W",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 2.4868995751603507e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3642612934082763e-07
+   },
+   {
+    "pdb": "1D6X",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 1.9095836023552692e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3794988379677307e-07
+   },
+   {
+    "pdb": "1DEP",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 6.59472476627343e-14,
+    "max_abs_diff_horn_vs_stored_rr": 3.5421790833822797e-07
+   },
+   {
+    "pdb": "1DJF",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 2.7977620220553945e-14,
+    "max_abs_diff_horn_vs_stored_rr": 3.5766801609327104e-07
+   },
+   {
+    "pdb": "1FUV",
+    "n": 11,
+    "max_abs_diff_horn_vs_instr": 8.43769498715119e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.093068479704698e-07
+   },
+   {
+    "pdb": "1G89",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 2.0872192862952943e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.377451684409948e-07
+   },
+   {
+    "pdb": "1I6Y",
+    "n": 11,
+    "max_abs_diff_horn_vs_instr": 1.2434497875801753e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.3916926983911253e-07
+   },
+   {
+    "pdb": "1I8E",
+    "n": 11,
+    "max_abs_diff_horn_vs_instr": 1.1546319456101628e-14,
+    "max_abs_diff_horn_vs_stored_rr": 3.613151005055215e-07
+   },
+   {
+    "pdb": "1I93",
+    "n": 11,
+    "max_abs_diff_horn_vs_instr": 1.3322676295501878e-14,
+    "max_abs_diff_horn_vs_stored_rr": 3.6768885181004407e-07
+   },
+   {
+    "pdb": "1ID6",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 7.105427357601002e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.7315645623768887e-07
+   },
+   {
+    "pdb": "1IM7",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 1.687538997430238e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.3255448467505175e-07
+   },
+   {
+    "pdb": "1JBF",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 1.9095836023552692e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.7550109094629534e-07
+   },
+   {
+    "pdb": "1KMR",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 1.3322676295501878e-14,
+    "max_abs_diff_horn_vs_stored_rr": 3.2067001143332163e-07
+   },
+   {
+    "pdb": "1KWE",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 1.2434497875801753e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.2718317594392374e-07
+   },
+   {
+    "pdb": "1KYC",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 7.038813976123492e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.369549250147429e-07
+   },
+   {
+    "pdb": "1KZ2",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 4.263256414560601e-14,
+    "max_abs_diff_horn_vs_stored_rr": 3.9396426565474485e-07
+   },
+   {
+    "pdb": "1LB7",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 1.2878587085651816e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.7313614004451665e-07
+   },
+   {
+    "pdb": "1M02",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 1.1102230246251565e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3808604421304835e-07
+   },
+   {
+    "pdb": "1M23",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 3.219646771412954e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3700130657999807e-07
+   },
+   {
+    "pdb": "1MF6",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 5.362377208939506e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.379696146803667e-07
+   },
+   {
+    "pdb": "1N9U",
+    "n": 10,
+    "max_abs_diff_horn_vs_instr": 2.531308496145357e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3587425346249802e-07
+   },
+   {
+    "pdb": "1NIZ",
+    "n": 14,
+    "max_abs_diff_horn_vs_instr": 1.199040866595169e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.7035106831572193e-07
+   },
+   {
+    "pdb": "1RG4",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 2.042810365310288e-14,
+    "max_abs_diff_horn_vs_stored_rr": 3.3418196565548897e-07
+   },
+   {
+    "pdb": "1RSW",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 4.884981308350689e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.5845645679776226e-07
+   },
+   {
+    "pdb": "1S9Z",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 2.0422552537979755e-13,
+    "max_abs_diff_horn_vs_stored_rr": 4.431114710712336e-07
+   },
+   {
+    "pdb": "1TOR",
+    "n": 10,
+    "max_abs_diff_horn_vs_instr": 1.1102230246251565e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.382093891029058e-07
+   },
+   {
+    "pdb": "1U62",
+    "n": 11,
+    "max_abs_diff_horn_vs_instr": 1.0658141036401503e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.38022205500954e-07
+   },
+   {
+    "pdb": "2BAO",
+    "n": 10,
+    "max_abs_diff_horn_vs_instr": 1.7985612998927536e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.378878081188418e-07
+   },
+   {
+    "pdb": "2BFI",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 4.085620730620576e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.637053425682325e-07
+   },
+   {
+    "pdb": "2BP4",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 5.551115123125783e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.621901474877177e-07
+   },
+   {
+    "pdb": "2EFZ",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 8.43769498715119e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.7681794512755005e-07
+   },
+   {
+    "pdb": "2F3A",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 3.7969627442180354e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3730783293984814e-07
+   },
+   {
+    "pdb": "2FBU",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 1.3766765505351941e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3519666569882247e-07
+   },
+   {
+    "pdb": "2JN5",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 8.881784197001252e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.5498228118390216e-07
+   },
+   {
+    "pdb": "2L7T",
+    "n": 11,
+    "max_abs_diff_horn_vs_instr": 1.5987211554602254e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3755470035524695e-07
+   },
+   {
+    "pdb": "2LER",
+    "n": 11,
+    "max_abs_diff_horn_vs_instr": 1.021405182655144e-14,
+    "max_abs_diff_horn_vs_stored_rr": 3.849252063758968e-07
+   },
+   {
+    "pdb": "2LM8",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 1.3322676295501878e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.019027617374604e-07
+   },
+   {
+    "pdb": "2LNG",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 1.687538997430238e-14,
+    "max_abs_diff_horn_vs_stored_rr": 3.369589229862413e-07
+   },
+   {
+    "pdb": "2LU6",
+    "n": 14,
+    "max_abs_diff_horn_vs_instr": 1.1102230246251565e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.553075605429058e-07
+   },
+   {
+    "pdb": "2LWS",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 1.1102230246251565e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.7407473502403263e-07
+   },
+   {
+    "pdb": "2LWU",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 1.9984014443252818e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.6952781396214505e-07
+   },
+   {
+    "pdb": "2MAA",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 2.5757174171303632e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3686879302431407e-07
+   },
+   {
+    "pdb": "2MAI",
+    "n": 14,
+    "max_abs_diff_horn_vs_instr": 1.1546319456101628e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.70660470597295e-07
+   },
+   {
+    "pdb": "2MD2",
+    "n": 10,
+    "max_abs_diff_horn_vs_instr": 2.353672812205332e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3717067154649385e-07
+   },
+   {
+    "pdb": "2MFV",
+    "n": 14,
+    "max_abs_diff_horn_vs_instr": 5.329070518200751e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.747261339588249e-07
+   },
+   {
+    "pdb": "2MID",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 7.105427357601002e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.0295085668162756e-07
+   },
+   {
+    "pdb": "2MIG",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 7.993605777301127e-15,
+    "max_abs_diff_horn_vs_stored_rr": 3.510388140171017e-07
+   },
+   {
+    "pdb": "2MJQ",
+    "n": 10,
+    "max_abs_diff_horn_vs_instr": 7.610578833805448e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.372769341008052e-07
+   },
+   {
+    "pdb": "2MK7",
+    "n": 9,
+    "max_abs_diff_horn_vs_instr": 4.907185768843192e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3795788006708563e-07
+   },
+   {
+    "pdb": "2MLQ",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 2.6645352591003757e-14,
+    "max_abs_diff_horn_vs_stored_rr": 3.5291990307939614e-07
+   },
+   {
+    "pdb": "2MP9",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 3.1530333899354446e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3798693060683718e-07
+   },
+   {
+    "pdb": "2MQ2",
+    "n": 14,
+    "max_abs_diff_horn_vs_instr": 6.217248937900877e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.559350479382829e-07
+   },
+   {
+    "pdb": "2MSA",
+    "n": 14,
+    "max_abs_diff_horn_vs_instr": 4.218847493575595e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.74810139650117e-07
+   },
+   {
+    "pdb": "2N5C",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 4.440892098500626e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.7626385146770644e-07
+   },
+   {
+    "pdb": "2N9A",
+    "n": 11,
+    "max_abs_diff_horn_vs_instr": 3.730349362740526e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3616435296247573e-07
+   },
+   {
+    "pdb": "2N9M",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 2.1760371282653068e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.5813083993095916e-07
+   },
+   {
+    "pdb": "2NB7",
+    "n": 14,
+    "max_abs_diff_horn_vs_instr": 2.8199664825478976e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3784266378612529e-07
+   },
+   {
+    "pdb": "2NBC",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 1.6431300764452317e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.7286934901080713e-07
+   },
+   {
+    "pdb": "2NDM",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 9.325873406851315e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.6025627398194047e-07
+   },
+   {
+    "pdb": "2NDN",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 2.6201263381153694e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.761524312613119e-07
+   },
+   {
+    "pdb": "2O0S",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 1.4210854715202004e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3793476700006977e-07
+   },
+   {
+    "pdb": "2P5H",
+    "n": 9,
+    "max_abs_diff_horn_vs_instr": 3.197442310920451e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.379993384593604e-07
+   },
+   {
+    "pdb": "2RUO",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 5.873079800267078e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.376092181956892e-07
+   },
+   {
+    "pdb": "2XL1",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 1.0869083411080283e-13,
+    "max_abs_diff_horn_vs_stored_rr": 2.3831242046412626e-07
+   },
+   {
+    "pdb": "3BTB",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 1.4210854715202004e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3835980833553094e-07
+   },
+   {
+    "pdb": "3SGO",
+    "n": 11,
+    "max_abs_diff_horn_vs_instr": 3.863576125695545e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.5608698329147046e-07
+   },
+   {
+    "pdb": "5H1H",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 1.4210854715202004e-14,
+    "max_abs_diff_horn_vs_stored_rr": 3.836548447821997e-07
+   },
+   {
+    "pdb": "5MML",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 6.672440377997191e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.321267876861157e-07
+   },
+   {
+    "pdb": "5MXS",
+    "n": 14,
+    "max_abs_diff_horn_vs_instr": 2.90878432451791e-14,
+    "max_abs_diff_horn_vs_stored_rr": 3.2446039099909285e-07
+   },
+   {
+    "pdb": "5NVB",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 2.7533531010703882e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.7031832295374443e-07
+   },
+   {
+    "pdb": "5V5B",
+    "n": 10,
+    "max_abs_diff_horn_vs_instr": 6.017408793468348e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.031003779658704e-07
+   },
+   {
+    "pdb": "5W52",
+    "n": 11,
+    "max_abs_diff_horn_vs_instr": 3.9968028886505635e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.611646051699836e-07
+   },
+   {
+    "pdb": "5Z5W",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 1.9539925233402755e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3514376668032355e-07
+   },
+   {
+    "pdb": "6A5J",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 1.509903313490213e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3561531925508916e-07
+   },
+   {
+    "pdb": "6B9K",
+    "n": 10,
+    "max_abs_diff_horn_vs_instr": 2.1760371282653068e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3635148416190077e-07
+   },
+   {
+    "pdb": "6BJF",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 9.758860386455126e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3677620575313085e-07
+   },
+   {
+    "pdb": "6BX9",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 8.881784197001252e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.755646454412954e-07
+   },
+   {
+    "pdb": "6CEJ",
+    "n": 14,
+    "max_abs_diff_horn_vs_instr": 3.3306690738754696e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3799753368081156e-07
+   },
+   {
+    "pdb": "6EY3",
+    "n": 9,
+    "max_abs_diff_horn_vs_instr": 8.881784197001252e-15,
+    "max_abs_diff_horn_vs_stored_rr": 2.3777880020503517e-07
+   },
+   {
+    "pdb": "6F3V",
+    "n": 9,
+    "max_abs_diff_horn_vs_instr": 1.021405182655144e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3730761711249215e-07
+   },
+   {
+    "pdb": "6GIJ",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 1.9984014443252818e-14,
+    "max_abs_diff_horn_vs_stored_rr": 3.630582625646639e-07
+   },
+   {
+    "pdb": "6HVK",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 1.2434497875801753e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3827499973094746e-07
+   },
+   {
+    "pdb": "6J9P",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 3.907985046680551e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3746767219279263e-07
+   },
+   {
+    "pdb": "6MBM",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 4.707345624410664e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.6439172685097674e-07
+   },
+   {
+    "pdb": "6MK8",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 3.9968028886505635e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3641479618419226e-07
+   },
+   {
+    "pdb": "6OQP",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 1.6431300764452317e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3791365233449824e-07
+   },
+   {
+    "pdb": "6Q08",
+    "n": 14,
+    "max_abs_diff_horn_vs_instr": 2.6645352591003757e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.371692442437734e-07
+   },
+   {
+    "pdb": "6QAX",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 2.3092638912203256e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.072634158802657e-07
+   },
+   {
+    "pdb": "6RRL",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 3.064215547965432e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3183731201470437e-07
+   },
+   {
+    "pdb": "6RRO",
+    "n": 11,
+    "max_abs_diff_horn_vs_instr": 6.938893903907228e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3826936690340972e-07
+   },
+   {
+    "pdb": "6S0N",
+    "n": 9,
+    "max_abs_diff_horn_vs_instr": 1.3766765505351941e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3664386183952502e-07
+   },
+   {
+    "pdb": "6TWG",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 5.928590951498336e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3653941383372512e-07
+   },
+   {
+    "pdb": "6WPB",
+    "n": 14,
+    "max_abs_diff_horn_vs_instr": 1.6275869541004795e-13,
+    "max_abs_diff_horn_vs_stored_rr": 2.3702377127676755e-07
+   },
+   {
+    "pdb": "7BX2",
+    "n": 14,
+    "max_abs_diff_horn_vs_instr": 4.3520742565306136e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3822506367565666e-07
+   },
+   {
+    "pdb": "7JGX",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 4.463096558993129e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3769390544714497e-07
+   },
+   {
+    "pdb": "7JS6",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 7.993605777301127e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.723537472273165e-07
+   },
+   {
+    "pdb": "7LCW",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 5.329070518200751e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.7470975239605195e-07
+   },
+   {
+    "pdb": "7N2I",
+    "n": 9,
+    "max_abs_diff_horn_vs_instr": 5.129230373768223e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.380922996536583e-07
+   },
+   {
+    "pdb": "7P3M",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 3.574918139293004e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.382657102728558e-07
+   },
+   {
+    "pdb": "7QZV",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 2.531308496145357e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.366162465960997e-07
+   },
+   {
+    "pdb": "7S3O",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 1.4210854715202004e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3784332370269112e-07
+   },
+   {
+    "pdb": "7T3H",
+    "n": 10,
+    "max_abs_diff_horn_vs_instr": 4.263256414560601e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3537525351002841e-07
+   },
+   {
+    "pdb": "7VI4",
+    "n": 10,
+    "max_abs_diff_horn_vs_instr": 4.9960036108132044e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.6947884690951014e-07
+   },
+   {
+    "pdb": "7YFS",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 7.993605777301127e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.3050558673485284e-07
+   },
+   {
+    "pdb": "8FLP",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 1.532107773982716e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.537101894186435e-07
+   },
+   {
+    "pdb": "8HVS",
+    "n": 10,
+    "max_abs_diff_horn_vs_instr": 2.9531932455029164e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3429997408896952e-07
+   },
+   {
+    "pdb": "8IL1",
+    "n": 14,
+    "max_abs_diff_horn_vs_instr": 1.3322676295501878e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.669498210319034e-07
+   },
+   {
+    "pdb": "8IS3",
+    "n": 9,
+    "max_abs_diff_horn_vs_instr": 1.8207657603852567e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3790784897670392e-07
+   },
+   {
+    "pdb": "8T61",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 1.6431300764452317e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.756883846823712e-07
+   },
+   {
+    "pdb": "8T62",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 1.021405182655144e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.7621693610722104e-07
+   },
+   {
+    "pdb": "8T63",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 2.6645352591003757e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.7605285935503616e-07
+   },
+   {
+    "pdb": "8TXS",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 2.708944180085382e-14,
+    "max_abs_diff_horn_vs_stored_rr": 4.7381456802497723e-07
+   },
+   {
+    "pdb": "8UN8",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 3.5860203695392556e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3818589323099104e-07
+   },
+   {
+    "pdb": "8ZG2",
+    "n": 11,
+    "max_abs_diff_horn_vs_instr": 1.865174681370263e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3800231563342322e-07
+   },
+   {
+    "pdb": "9BAF",
+    "n": 16,
+    "max_abs_diff_horn_vs_instr": 1.5210055437364645e-14,
+    "max_abs_diff_horn_vs_stored_rr": 3.980455343111089e-07
+   },
+   {
+    "pdb": "9BFL",
+    "n": 10,
+    "max_abs_diff_horn_vs_instr": 1.2434497875801753e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.378481607223648e-07
+   },
+   {
+    "pdb": "9KAR",
+    "n": 15,
+    "max_abs_diff_horn_vs_instr": 3.1086244689504383e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.75457614612651e-07
+   },
+   {
+    "pdb": "9L1M",
+    "n": 12,
+    "max_abs_diff_horn_vs_instr": 9.769962616701378e-15,
+    "max_abs_diff_horn_vs_stored_rr": 4.2689649504268345e-07
+   },
+   {
+    "pdb": "9S5G",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 1.9095836023552692e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3527934711609078e-07
+   },
+   {
+    "pdb": "9UV5",
+    "n": 9,
+    "max_abs_diff_horn_vs_instr": 1.687538997430238e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3728968212566315e-07
+   },
+   {
+    "pdb": "9WXK",
+    "n": 13,
+    "max_abs_diff_horn_vs_instr": 2.7755575615628914e-14,
+    "max_abs_diff_horn_vs_stored_rr": 2.3429966944377156e-07
+   }
+  ]
+ }
+}

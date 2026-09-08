@@ -1,0 +1,771 @@
+{
+ "what": "encoding study: qubits, feasibility, move locality, exact product-ansatz expressivity, real-ansatz multimodal fit",
+ "rows": [
+  {
+   "pdb": "1CS9",
+   "n": 9,
+   "k": 4,
+   "book": {
+    "binary": {
+     "qubits": 18,
+     "configs": 262144.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "gray": {
+     "qubits": 18,
+     "configs": 262144.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "gray_sorted": {
+     "qubits": 18,
+     "configs": 262144.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "hierarchical": {
+     "qubits": 18,
+     "configs": 262144.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "onehot": {
+     "qubits": 36,
+     "configs": 262144.0,
+     "feasible_frac": 3.814697265625e-06,
+     "penalty_needed": true,
+     "flips_per_state_change": "2"
+    }
+   },
+   "product_ansatz_min_KL": {
+    "empirical_prior": {
+     "binary": {
+      "mean_KL_nats": 0.013571797707399781,
+      "max_KL_nats": 0.016539670629729185,
+      "exact": true
+     },
+     "gray": {
+      "mean_KL_nats": 0.031250516918400396,
+      "max_KL_nats": 0.07016839289384807,
+      "exact": true
+     },
+     "gray_sorted": {
+      "mean_KL_nats": 0.07912167602012404,
+      "max_KL_nats": 0.11849704239752244,
+      "exact": true
+     },
+     "hierarchical": {
+      "mean_KL_nats": 0.10238749256296432,
+      "max_KL_nats": 0.11849704239752243,
+      "exact": true
+     },
+     "onehot": {
+      "mean_KL_nats": 0.0,
+      "max_KL_nats": 0.0,
+      "exact": true,
+      "note": "post-selected product Bernoulli is full-rank on the feasible subspace"
+     }
+    },
+    "ORACLE_prior_q0.8": {
+     "binary": {
+      "mean_KL_nats": 0.06522405318329447,
+      "max_KL_nats": 0.06522405318329447,
+      "exact": true
+     },
+     "gray": {
+      "mean_KL_nats": 0.06522405318329447,
+      "max_KL_nats": 0.06522405318329447,
+      "exact": true
+     },
+     "gray_sorted": {
+      "mean_KL_nats": 0.06522405318329447,
+      "max_KL_nats": 0.06522405318329447,
+      "exact": true
+     },
+     "hierarchical": {
+      "mean_KL_nats": 0.06522405318329447,
+      "max_KL_nats": 0.06522405318329447,
+      "exact": true
+     },
+     "onehot": {
+      "mean_KL_nats": 0.0,
+      "max_KL_nats": 0.0,
+      "exact": true,
+      "note": "post-selected product Bernoulli is full-rank on the feasible subspace"
+     }
+    },
+    "bimodal_alpha_beta": {
+     "binary": {
+      "mean_KL_nats": -1.4802973661668758e-16,
+      "max_KL_nats": 0.0,
+      "exact": true
+     },
+     "gray": {
+      "mean_KL_nats": -1.4802973661668758e-16,
+      "max_KL_nats": 0.0,
+      "exact": true
+     },
+     "gray_sorted": {
+      "mean_KL_nats": 0.6787447705151919,
+      "max_KL_nats": 0.6787447705151919,
+      "exact": true
+     },
+     "hierarchical": {
+      "mean_KL_nats": 0.45249651367679455,
+      "max_KL_nats": 0.6787447705151918,
+      "exact": true
+     },
+     "onehot": {
+      "mean_KL_nats": 0.0,
+      "max_KL_nats": 0.0,
+      "exact": true,
+      "note": "post-selected product Bernoulli is full-rank on the feasible subspace"
+     }
+    }
+   },
+   "move_locality": {
+    "binary": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 194.53414095883295,
+     "structure_move_rmsd_A": 1.7302874833010398,
+     "abs_dE_legacy": 0.6267590657839763,
+     "abs_dE_prior": 0.39649643812540525,
+     "mean_index_hamming_for_state_change": 1.3333333333333333
+    },
+    "gray": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 122.74671635178859,
+     "structure_move_rmsd_A": 1.896932563324329,
+     "abs_dE_legacy": 0.7129733194871195,
+     "abs_dE_prior": 0.7242147679328061,
+     "mean_index_hamming_for_state_change": 1.3333333333333333
+    },
+    "gray_sorted": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 189.98393861839446,
+     "structure_move_rmsd_A": 1.7302874833010398,
+     "abs_dE_legacy": 0.5856357716801267,
+     "abs_dE_prior": 0.724214767932807,
+     "mean_index_hamming_for_state_change": 1.3333333333333333
+    },
+    "hierarchical": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 189.98393861839446,
+     "structure_move_rmsd_A": 1.7551901406401411,
+     "abs_dE_legacy": 0.5856357716801267,
+     "abs_dE_prior": 0.7283771751017079,
+     "mean_index_hamming_for_state_change": 1.3333333333333333
+    },
+    "onehot": {
+     "qubit_flips": 2.0,
+     "torsion_move_deg": 189.98393861839446,
+     "structure_move_rmsd_A": 1.7220909549718275,
+     "abs_dE_legacy": 0.5977346247230135,
+     "abs_dE_prior": 0.7283771751017056,
+     "mean_index_hamming_for_state_change": 1.3333333333333333
+    }
+   }
+  },
+  {
+   "pdb": "1CS9",
+   "n": 9,
+   "k": 8,
+   "book": {
+    "binary": {
+     "qubits": 27,
+     "configs": 134217728.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "gray": {
+     "qubits": 27,
+     "configs": 134217728.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "gray_sorted": {
+     "qubits": 27,
+     "configs": 134217728.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "hierarchical": {
+     "qubits": 27,
+     "configs": 134217728.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "onehot": {
+     "qubits": 72,
+     "configs": 134217728.0,
+     "feasible_frac": 2.842170943040401e-14,
+     "penalty_needed": true,
+     "flips_per_state_change": "2"
+    }
+   },
+   "product_ansatz_min_KL": {
+    "empirical_prior": {
+     "binary": {
+      "mean_KL_nats": 0.07069666416065842,
+      "max_KL_nats": 0.0781138625816289,
+      "exact": true
+     },
+     "gray": {
+      "mean_KL_nats": 0.12268975630356833,
+      "max_KL_nats": 0.1430217888820982,
+      "exact": true
+     },
+     "gray_sorted": {
+      "mean_KL_nats": 0.1071341015314113,
+      "max_KL_nats": 0.12054830341286238,
+      "exact": true
+     },
+     "hierarchical": {
+      "mean_KL_nats": 0.13686080112228874,
+      "max_KL_nats": 0.17188020058365522,
+      "exact": true
+     },
+     "onehot": {
+      "mean_KL_nats": 0.0,
+      "max_KL_nats": 0.0,
+      "exact": true,
+      "note": "post-selected product Bernoulli is full-rank on the feasible subspace"
+     }
+    },
+    "ORACLE_prior_q0.8": {
+     "binary": {
+      "mean_KL_nats": 0.17656423538878221,
+      "max_KL_nats": 0.17656423538878235,
+      "exact": true
+     },
+     "gray": {
+      "mean_KL_nats": 0.17656423538878224,
+      "max_KL_nats": 0.17656423538878235,
+      "exact": true
+     },
+     "gray_sorted": {
+      "mean_KL_nats": 0.1765642353887822,
+      "max_KL_nats": 0.1765642353887822,
+      "exact": true
+     },
+     "hierarchical": {
+      "mean_KL_nats": 0.17656423538878224,
+      "max_KL_nats": 0.17656423538878235,
+      "exact": true
+     },
+     "onehot": {
+      "mean_KL_nats": 0.0,
+      "max_KL_nats": 0.0,
+      "exact": true,
+      "note": "post-selected product Bernoulli is full-rank on the feasible subspace"
+     }
+    },
+    "bimodal_alpha_beta": {
+     "binary": {
+      "mean_KL_nats": 0.6760459841513144,
+      "max_KL_nats": 0.6760459841513144,
+      "exact": true
+     },
+     "gray": {
+      "mean_KL_nats": 0.8984463335655762,
+      "max_KL_nats": 1.3432470323940995,
+      "exact": true
+     },
+     "gray_sorted": {
+      "mean_KL_nats": 0.6760459841513144,
+      "max_KL_nats": 0.6760459841513146,
+      "exact": true
+     },
+     "hierarchical": {
+      "mean_KL_nats": 0.2312452853227912,
+      "max_KL_nats": 0.6760459841513144,
+      "exact": true
+     },
+     "onehot": {
+      "mean_KL_nats": 0.0,
+      "max_KL_nats": 0.0,
+      "exact": true,
+      "note": "post-selected product Bernoulli is full-rank on the feasible subspace"
+     }
+    }
+   },
+   "move_locality": {
+    "binary": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 195.72503875082631,
+     "structure_move_rmsd_A": 2.233582499351206,
+     "abs_dE_legacy": 0.6956982139982104,
+     "abs_dE_prior": 0.8905554401052633,
+     "mean_index_hamming_for_state_change": 1.7142857142857142
+    },
+    "gray": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 173.34953112891318,
+     "structure_move_rmsd_A": 2.163631294636512,
+     "abs_dE_legacy": 0.6956982139982104,
+     "abs_dE_prior": 0.8583967534552528,
+     "mean_index_hamming_for_state_change": 1.7142857142857142
+    },
+    "gray_sorted": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 169.1840667372171,
+     "structure_move_rmsd_A": 1.6482070232144228,
+     "abs_dE_legacy": 0.6328416512990971,
+     "abs_dE_prior": 0.5346088017318813,
+     "mean_index_hamming_for_state_change": 1.7142857142857142
+    },
+    "hierarchical": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 153.07634920452494,
+     "structure_move_rmsd_A": 2.1815395419360755,
+     "abs_dE_legacy": 0.707347911101835,
+     "abs_dE_prior": 0.8039615469002364,
+     "mean_index_hamming_for_state_change": 1.7142857142857142
+    },
+    "onehot": {
+     "qubit_flips": 2.0,
+     "torsion_move_deg": 180.99579636070013,
+     "structure_move_rmsd_A": 1.8723128302008085,
+     "abs_dE_legacy": 0.6033250516753703,
+     "abs_dE_prior": 0.8483629719298484,
+     "mean_index_hamming_for_state_change": 1.7142857142857142
+    }
+   }
+  },
+  {
+   "pdb": "1A13",
+   "n": 14,
+   "k": 4,
+   "book": {
+    "binary": {
+     "qubits": 28,
+     "configs": 268435456.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "gray": {
+     "qubits": 28,
+     "configs": 268435456.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "gray_sorted": {
+     "qubits": 28,
+     "configs": 268435456.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "hierarchical": {
+     "qubits": 28,
+     "configs": 268435456.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "onehot": {
+     "qubits": 56,
+     "configs": 268435456.0,
+     "feasible_frac": 3.725290298461914e-09,
+     "penalty_needed": true,
+     "flips_per_state_change": "2"
+    }
+   },
+   "product_ansatz_min_KL": {
+    "empirical_prior": {
+     "binary": {
+      "mean_KL_nats": 0.11098640739094259,
+      "max_KL_nats": 0.11743987728082611,
+      "exact": true
+     },
+     "gray": {
+      "mean_KL_nats": 0.09496940524530788,
+      "max_KL_nats": 0.10182996168436761,
+      "exact": true
+     },
+     "gray_sorted": {
+      "mean_KL_nats": 0.09540233567938632,
+      "max_KL_nats": 0.10182996168436761,
+      "exact": true
+     },
+     "hierarchical": {
+      "mean_KL_nats": 0.10946432687059074,
+      "max_KL_nats": 0.11743987728082611,
+      "exact": true
+     },
+     "onehot": {
+      "mean_KL_nats": 0.0,
+      "max_KL_nats": 0.0,
+      "exact": true,
+      "note": "post-selected product Bernoulli is full-rank on the feasible subspace"
+     }
+    },
+    "ORACLE_prior_q0.8": {
+     "binary": {
+      "mean_KL_nats": 0.06522405318329448,
+      "max_KL_nats": 0.06522405318329447,
+      "exact": true
+     },
+     "gray": {
+      "mean_KL_nats": 0.06522405318329448,
+      "max_KL_nats": 0.06522405318329447,
+      "exact": true
+     },
+     "gray_sorted": {
+      "mean_KL_nats": 0.06522405318329448,
+      "max_KL_nats": 0.06522405318329447,
+      "exact": true
+     },
+     "hierarchical": {
+      "mean_KL_nats": 0.06522405318329448,
+      "max_KL_nats": 0.06522405318329447,
+      "exact": true
+     },
+     "onehot": {
+      "mean_KL_nats": 0.0,
+      "max_KL_nats": 0.0,
+      "exact": true,
+      "note": "post-selected product Bernoulli is full-rank on the feasible subspace"
+     }
+    },
+    "bimodal_alpha_beta": {
+     "binary": {
+      "mean_KL_nats": 0.6302630011926782,
+      "max_KL_nats": 0.6787447705151919,
+      "exact": true
+     },
+     "gray": {
+      "mean_KL_nats": 0.048481769322513704,
+      "max_KL_nats": 0.6787447705151919,
+      "exact": true
+     },
+     "gray_sorted": {
+      "mean_KL_nats": 0.0,
+      "max_KL_nats": 0.0,
+      "exact": true
+     },
+     "hierarchical": {
+      "mean_KL_nats": 0.6787447705151919,
+      "max_KL_nats": 0.6787447705151919,
+      "exact": true
+     },
+     "onehot": {
+      "mean_KL_nats": 0.0,
+      "max_KL_nats": 0.0,
+      "exact": true,
+      "note": "post-selected product Bernoulli is full-rank on the feasible subspace"
+     }
+    }
+   },
+   "move_locality": {
+    "binary": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 217.2833259048542,
+     "structure_move_rmsd_A": 2.6849227269797398,
+     "abs_dE_legacy": 1.641348258910455,
+     "abs_dE_prior": 1.0765312055928575,
+     "mean_index_hamming_for_state_change": 1.3333333333333333
+    },
+    "gray": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 166.9940312895671,
+     "structure_move_rmsd_A": 2.6849227269797398,
+     "abs_dE_legacy": 1.6363680773211913,
+     "abs_dE_prior": 1.0002514834225735,
+     "mean_index_hamming_for_state_change": 1.3333333333333333
+    },
+    "gray_sorted": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 166.9940312895671,
+     "structure_move_rmsd_A": 2.6849227269797398,
+     "abs_dE_legacy": 1.6363680773211913,
+     "abs_dE_prior": 1.0002514834225735,
+     "mean_index_hamming_for_state_change": 1.3333333333333333
+    },
+    "hierarchical": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 208.56233666358025,
+     "structure_move_rmsd_A": 2.6849227269797398,
+     "abs_dE_legacy": 1.6128092790585282,
+     "abs_dE_prior": 1.0765312055928575,
+     "mean_index_hamming_for_state_change": 1.3333333333333333
+    },
+    "onehot": {
+     "qubit_flips": 2.0,
+     "torsion_move_deg": 217.2833259048542,
+     "structure_move_rmsd_A": 2.6602986656630776,
+     "abs_dE_legacy": 1.58642490629037,
+     "abs_dE_prior": 1.076531205592854,
+     "mean_index_hamming_for_state_change": 1.3333333333333333
+    }
+   }
+  },
+  {
+   "pdb": "1A13",
+   "n": 14,
+   "k": 8,
+   "book": {
+    "binary": {
+     "qubits": 42,
+     "configs": 4398046511104.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "gray": {
+     "qubits": 42,
+     "configs": 4398046511104.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "gray_sorted": {
+     "qubits": 42,
+     "configs": 4398046511104.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "hierarchical": {
+     "qubits": 42,
+     "configs": 4398046511104.0,
+     "feasible_frac": 1.0,
+     "penalty_needed": false,
+     "flips_per_state_change": "1..log2(k)"
+    },
+    "onehot": {
+     "qubits": 112,
+     "configs": 4398046511104.0,
+     "feasible_frac": 8.470329472543003e-22,
+     "penalty_needed": true,
+     "flips_per_state_change": "2"
+    }
+   },
+   "product_ansatz_min_KL": {
+    "empirical_prior": {
+     "binary": {
+      "mean_KL_nats": 0.07564612497044625,
+      "max_KL_nats": 0.08065435174664631,
+      "exact": true
+     },
+     "gray": {
+      "mean_KL_nats": 0.08536916615058657,
+      "max_KL_nats": 0.08690894638810936,
+      "exact": true
+     },
+     "gray_sorted": {
+      "mean_KL_nats": 0.04417101833850242,
+      "max_KL_nats": 0.07769421819357213,
+      "exact": true
+     },
+     "hierarchical": {
+      "mean_KL_nats": 0.13640195993760865,
+      "max_KL_nats": 0.1413968999807398,
+      "exact": true
+     },
+     "onehot": {
+      "mean_KL_nats": 0.0,
+      "max_KL_nats": 0.0,
+      "exact": true,
+      "note": "post-selected product Bernoulli is full-rank on the feasible subspace"
+     }
+    },
+    "ORACLE_prior_q0.8": {
+     "binary": {
+      "mean_KL_nats": 0.17656423538878221,
+      "max_KL_nats": 0.17656423538878233,
+      "exact": true
+     },
+     "gray": {
+      "mean_KL_nats": 0.17656423538878224,
+      "max_KL_nats": 0.17656423538878235,
+      "exact": true
+     },
+     "gray_sorted": {
+      "mean_KL_nats": 0.17656423538878224,
+      "max_KL_nats": 0.17656423538878235,
+      "exact": true
+     },
+     "hierarchical": {
+      "mean_KL_nats": 0.1765642353887822,
+      "max_KL_nats": 0.17656423538878235,
+      "exact": true
+     },
+     "onehot": {
+      "mean_KL_nats": 0.0,
+      "max_KL_nats": 0.0,
+      "exact": true,
+      "note": "post-selected product Bernoulli is full-rank on the feasible subspace"
+     }
+    },
+    "bimodal_alpha_beta": {
+     "binary": {
+      "mean_KL_nats": 1.295589814662472,
+      "max_KL_nats": 1.3432470323940995,
+      "exact": true
+     },
+     "gray": {
+      "mean_KL_nats": 0.05650215364015702,
+      "max_KL_nats": 0.6760459841513144,
+      "exact": true
+     },
+     "gray_sorted": {
+      "mean_KL_nats": 0.056502153640157024,
+      "max_KL_nats": 0.6760459841513146,
+      "exact": true
+     },
+     "hierarchical": {
+      "mean_KL_nats": 0.6283887664196871,
+      "max_KL_nats": 0.6760459841513144,
+      "exact": true
+     },
+     "onehot": {
+      "mean_KL_nats": 0.0,
+      "max_KL_nats": 0.0,
+      "exact": true,
+      "note": "post-selected product Bernoulli is full-rank on the feasible subspace"
+     }
+    }
+   },
+   "move_locality": {
+    "binary": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 168.8423293412313,
+     "structure_move_rmsd_A": 2.0979801844723474,
+     "abs_dE_legacy": 1.488031124593574,
+     "abs_dE_prior": 0.7400715143178402,
+     "mean_index_hamming_for_state_change": 1.7142857142857142
+    },
+    "gray": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 151.38713119787877,
+     "structure_move_rmsd_A": 2.389853766258967,
+     "abs_dE_legacy": 1.8179994642279325,
+     "abs_dE_prior": 0.5921993223896553,
+     "mean_index_hamming_for_state_change": 1.7142857142857142
+    },
+    "gray_sorted": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 146.26413832464266,
+     "structure_move_rmsd_A": 2.1093257226563296,
+     "abs_dE_legacy": 1.507607358144461,
+     "abs_dE_prior": 0.38871830524160345,
+     "mean_index_hamming_for_state_change": 1.7142857142857142
+    },
+    "hierarchical": {
+     "qubit_flips": 1.0,
+     "torsion_move_deg": 115.72895737046154,
+     "structure_move_rmsd_A": 2.2685455995685557,
+     "abs_dE_legacy": 1.6380656120953816,
+     "abs_dE_prior": 0.7400715143178402,
+     "mean_index_hamming_for_state_change": 1.7142857142857142
+    },
+    "onehot": {
+     "qubit_flips": 2.0,
+     "torsion_move_deg": 173.14613877011553,
+     "structure_move_rmsd_A": 2.2835463167539736,
+     "abs_dE_legacy": 1.498969214612199,
+     "abs_dE_prior": 0.4919315890880682,
+     "mean_index_hamming_for_state_change": 1.7142857142857142
+    }
+   }
+  }
+ ],
+ "multimodal_expressivity": {
+  "pdb": "1CS9",
+  "k": 4,
+  "n_res": 6,
+  "n_qubits": 12,
+  "n_modes": 8,
+  "mode_rmsd": [
+   2.4795287484835,
+   2.479528748483501,
+   2.479528748483504,
+   2.479528748483504,
+   2.58895094509099,
+   2.5889509450909927,
+   2.5889509450909927,
+   2.5889509450909927
+  ],
+  "fits": {
+   "binary": {
+    "1": {
+     "KL_nats": 1.3862943611318876,
+     "n_params": 12
+    },
+    "2": {
+     "KL_nats": 0.6941894822984811,
+     "n_params": 24
+    },
+    "3": {
+     "KL_nats": 0.6931471805914814,
+     "n_params": 36
+    },
+    "4": {
+     "KL_nats": 1.2416810425174177e-06,
+     "n_params": 48
+    },
+    "6": {
+     "KL_nats": 0.31645202793441807,
+     "n_params": 72
+    }
+   },
+   "gray_sorted": {
+    "1": {
+     "KL_nats": 0.6931471805683646,
+     "n_params": 12
+    },
+    "2": {
+     "KL_nats": 1.3862943611689453,
+     "n_params": 24
+    },
+    "3": {
+     "KL_nats": 0.6931497190005623,
+     "n_params": 36
+    },
+    "4": {
+     "KL_nats": 0.6649859968218723,
+     "n_params": 48
+    },
+    "6": {
+     "KL_nats": 0.6957063419198458,
+     "n_params": 72
+    }
+   },
+   "hierarchical": {
+    "1": {
+     "KL_nats": 0.6931471805735687,
+     "n_params": 12
+    },
+    "2": {
+     "KL_nats": 0.6931472448482613,
+     "n_params": 24
+    },
+    "3": {
+     "KL_nats": 1.1888012761815885e-09,
+     "n_params": 36
+    },
+    "4": {
+     "KL_nats": 1.4304159255198332,
+     "n_params": 48
+    },
+    "6": {
+     "KL_nats": 1.2022751779957928e-08,
+     "n_params": 72
+    }
+   }
+  },
+  "onehot_note": "one-hot needs 24 qubits (dim 2^24); the exact statevector fit is not affordable, so only the analytic one-layer result is reported for it"
+ }
+}

@@ -1,0 +1,7 @@
+{
+ "n_peptides": 787,
+ "n_pairs": 103876,
+ "val_max_abs_dexp_mean": 2.761919955527255e-06,
+ "val_max_abs_dexp_max": 1.779423462089369e-05,
+ "n_validated": 126
+}

@@ -1,0 +1,72 @@
+{
+ "n_residues": 39061,
+ "n_proteins": 400,
+ "n_heldout_proteins": 80,
+ "rows": [
+  {
+   "tag": "ALL SIX  H+N+HA+CA+CB+C",
+   "n_test": 7793,
+   "sigma": 50.909342851364876,
+   "mae_phi": 25.710391689454223,
+   "mae_psi": 33.48252841881512,
+   "gross_rate": 0.23508276658539715,
+   "cell_acc": 0.16720133453098934
+  },
+  {
+   "tag": "H+N+HA+CA+CB  (no C-prime)",
+   "n_test": 7793,
+   "sigma": 48.93750018041284,
+   "mae_phi": 24.58016566761028,
+   "mae_psi": 31.826860857828496,
+   "gross_rate": 0.2199409726677788,
+   "cell_acc": 0.1743872706274862
+  },
+  {
+   "tag": "H+HA+CA+CB    (no N, no C)",
+   "n_test": 7793,
+   "sigma": 49.65598197658231,
+   "mae_phi": 24.532338212201907,
+   "mae_psi": 32.66171571558441,
+   "gross_rate": 0.22520210445271396,
+   "cell_acc": 0.17207750545361222
+  },
+  {
+   "tag": "N+CA+CB+C     (no 1H)",
+   "n_test": 7793,
+   "sigma": 51.240638290159296,
+   "mae_phi": 25.267183550941038,
+   "mae_psi": 34.03303878342312,
+   "gross_rate": 0.23482612601052227,
+   "cell_acc": 0.16450660849480303
+  },
+  {
+   "tag": "CA+CB only",
+   "n_test": 7793,
+   "sigma": 51.931207658948324,
+   "mae_phi": 24.96125293447646,
+   "mae_psi": 35.23019802835329,
+   "gross_rate": 0.24188374181958167,
+   "cell_acc": 0.169126138842551
+  },
+  {
+   "tag": "CA only",
+   "n_test": 7793,
+   "sigma": 55.65101149940818,
+   "mae_phi": 26.78384730001959,
+   "mae_psi": 39.013250842392026,
+   "gross_rate": 0.2687026818940074,
+   "cell_acc": 0.15616578981136917
+  },
+  {
+   "tag": "NONE (sequence only)",
+   "n_test": 7793,
+   "sigma": 77.48415093398701,
+   "mae_phi": 33.261341282720785,
+   "mae_psi": 68.91331482657368,
+   "gross_rate": 0.46926729115873217,
+   "cell_acc": 0.12703708456306942
+  }
+ ],
+ "what": "Held-out-PROTEIN accuracy of the same shift->torsion model that s14/shift_model.py applies to the 9-16-mers. The gap between these numbers and the peptide number is DOMAIN SHIFT.",
+ "secs": 1051.1
+}

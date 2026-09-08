@@ -1,0 +1,918 @@
+{
+ "name": "benchN",
+ "built": "2026-09-05",
+ "provenance": "RCSB single-protein-entity, no nucleic acid, 9-16 residues, ABSENT from pdbs/ and pdbs_ext/ at the time of the sprint-12 audit. Never parsed into peptide_db, never clustered, never in a fold, never in any distogram training set, never in the fragment library, never in a retrieval pool, never scored by any arm of this project.",
+ "gates": {
+  "length": [
+   9,
+   16
+  ],
+  "rebuild_tol": 1.5,
+  "ca_step": [
+   3.5,
+   4.1
+  ],
+  "finite_torsions": true,
+  "dedup": "exact sequence, best rebuild",
+  "leakage": "rejected if the sequence appears VERBATIM in any of the 787 corpus peptides or 6003 library fragments, OR identity >= 0.6 to any of them, OR containment >= 0.85 -- three rules each clear of the measured null",
+  "self_cluster": "one representative per identity>=0.6 or substring cluster among the survivors"
+ },
+ "counts": {
+  "downloaded": 133,
+  "passed_gates": 40,
+  "unique_sequences": 30,
+  "clean_of_leakage": 19,
+  "leaked_and_dropped": 11,
+  "final": 16
+ },
+ "experiment_classes": {
+  "fibril/amyloid": 10,
+  "X-ray/other": 4,
+  "solution NMR, other": 2
+ },
+ "null_for_the_screen": "s12/results/coord_containment_null.json -- random composition-matched sequences score max-containment 0.56-0.63 against the fragment bank, so a containment threshold at 0.6 is at the null and was not used",
+ "reference": "deposited coordinates, model 1 (the project's declared endpoint)",
+ "adequately_powered": false,
+ "targets": [
+  {
+   "pdb": "10SG",
+   "seq": "HYPIVIGGS",
+   "n": 9,
+   "rebuild": 0.414,
+   "expdta": "ELECTRON MICROSCOPY",
+   "nummdl": null,
+   "resolution": 2.0,
+   "title": "THE CRYOEM STRUCTURE OF T12 TYPE1 NANOFIBER",
+   "screen": {
+    "max_identity_peptide": 0.3333,
+    "max_containment_peptide": 0.5556,
+    "nearest_peptide": "9EFO",
+    "max_identity_fragment": 0.5,
+    "max_containment_fragment": 0.6667,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "1PYZ",
+   "seq": "ESQLHSNKR",
+   "n": 9,
+   "rebuild": 0.146,
+   "expdta": "X-RAY DIFFRACTION",
+   "nummdl": null,
+   "resolution": 2.0,
+   "title": "CRYSTALLOGRAPHIC STRUCTURE OF MIMOCHROME IV",
+   "screen": {
+    "max_identity_peptide": 0.3125,
+    "max_containment_peptide": 0.5556,
+    "nearest_peptide": "1MII",
+    "max_identity_fragment": 0.3333,
+    "max_containment_fragment": 0.6667,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "4WG0",
+   "seq": "EKNALLRYLLDKD",
+   "n": 13,
+   "rebuild": 0.244,
+   "expdta": "X-RAY DIFFRACTION",
+   "nummdl": null,
+   "resolution": 2.0,
+   "title": "CRYSTAL STRUCTURE OF A TRIDECAMERIC SUPERHELIX",
+   "screen": {
+    "max_identity_peptide": 0.3077,
+    "max_containment_peptide": 0.5385,
+    "nearest_peptide": "7S3O",
+    "max_identity_fragment": 0.4615,
+    "max_containment_fragment": 0.5455,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "5KO0",
+   "seq": "FLVHSSNNFGA",
+   "n": 11,
+   "rebuild": 0.445,
+   "expdta": "ELECTRON CRYSTALLOGRAPHY",
+   "nummdl": null,
+   "resolution": 2.0,
+   "title": "HUMAN ISLET AMYLOID POLYPEPTIDE SEGMENT 15-FLVHSSNNFGA-25 DETERMINED BY MICROED",
+   "screen": {
+    "max_identity_peptide": 0.2727,
+    "max_containment_peptide": 0.4545,
+    "nearest_peptide": "5ZGD",
+    "max_identity_fragment": 0.5455,
+    "max_containment_fragment": 0.6667,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "5W96",
+   "seq": "LPSDDLEFWCHVMY",
+   "n": 14,
+   "rebuild": 0.025,
+   "expdta": "SOLUTION NMR",
+   "nummdl": 20,
+   "resolution": 2.0,
+   "title": "SOLUTION STRUCTURE OF PHAGE DERIVED PEPTIDE INHIBITOR OF FRIZZLED 7 RECEPTOR",
+   "screen": {
+    "max_identity_peptide": 0.28,
+    "max_containment_peptide": 0.5,
+    "nearest_peptide": "2LDE",
+    "max_identity_fragment": 0.3889,
+    "max_containment_fragment": 0.5,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "6CFH",
+   "seq": "SWGMMGMLASQ",
+   "n": 11,
+   "rebuild": 0.261,
+   "expdta": "ELECTRON CRYSTALLOGRAPHY",
+   "nummdl": null,
+   "resolution": 2.0,
+   "title": "SWGMMGMLASQ SEGMENT FROM THE LOW COMPLEXITY DOMAIN OF TDP-43",
+   "screen": {
+    "max_identity_peptide": 0.28,
+    "max_containment_peptide": 0.6364,
+    "nearest_peptide": "2MPJ",
+    "max_identity_fragment": 0.3636,
+    "max_containment_fragment": 0.5455,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "6O4J",
+   "seq": "KLVFFAENVGS",
+   "n": 11,
+   "rebuild": 0.498,
+   "expdta": "ELECTRON CRYSTALLOGRAPHY",
+   "nummdl": null,
+   "resolution": 2.0,
+   "title": "AMYLOID BETA KLVFFAENVGS 16-26 D23N IOWA MUTATION",
+   "screen": {
+    "max_identity_peptide": 0.5,
+    "max_containment_peptide": 0.8182,
+    "nearest_peptide": "2MJ1",
+    "max_identity_fragment": 0.4545,
+    "max_containment_fragment": 0.6364,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "6Y14",
+   "seq": "KKLLKCLKCLL",
+   "n": 11,
+   "rebuild": 0.38,
+   "expdta": "X-RAY DIFFRACTION",
+   "nummdl": null,
+   "resolution": 2.0,
+   "title": "BICYCLIC PEPTIDE BP65 CRYSTALLIZED AS RACEMIC MIXTURE AT 0.9 ANGSTROM RESOLUTION",
+   "screen": {
+    "max_identity_peptide": 0.5714,
+    "max_containment_peptide": 0.8182,
+    "nearest_peptide": "6HNG",
+    "max_identity_fragment": 0.4,
+    "max_containment_fragment": 0.5455,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "7ACE",
+   "seq": "RICQFVLIRVCR",
+   "n": 12,
+   "rebuild": 0.017,
+   "expdta": "SOLUTION NMR",
+   "nummdl": 20,
+   "resolution": 2.0,
+   "title": "COVALENT DIMER OF CAPRA HIRCUS CATHELICIDIN-1 IN WATER",
+   "screen": {
+    "max_identity_peptide": 0.4118,
+    "max_containment_peptide": 0.5833,
+    "nearest_peptide": "6PI2",
+    "max_identity_fragment": 0.4167,
+    "max_containment_fragment": 0.5833,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "8GZ9",
+   "seq": "GPLGMLGGVVIA",
+   "n": 12,
+   "rebuild": 0.198,
+   "expdta": "ELECTRON MICROSCOPY",
+   "nummdl": null,
+   "resolution": 2.0,
+   "title": "CRYO-EM STRUCTURE OF ABETA2 FIBRIL POLYMORPH2",
+   "screen": {
+    "max_identity_peptide": 0.3571,
+    "max_containment_peptide": 0.5833,
+    "nearest_peptide": "2MFV",
+    "max_identity_fragment": 0.5,
+    "max_containment_fragment": 0.6667,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "8OI0",
+   "seq": "VQSKIGSLDNITH",
+   "n": 13,
+   "rebuild": 0.396,
+   "expdta": "ELECTRON MICROSCOPY",
+   "nummdl": null,
+   "resolution": 2.0,
+   "title": "STRUCTURE OF THE FMOC-TAU-PAM4 TYPE 4 AMYLOID FIBRIL",
+   "screen": {
+    "max_identity_peptide": 0.5333,
+    "max_containment_peptide": 0.6154,
+    "nearest_peptide": "5NVB",
+    "max_identity_fragment": 0.4,
+    "max_containment_fragment": 0.5556,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "9J7T",
+   "seq": "LKKLCKLLKKLCKL",
+   "n": 14,
+   "rebuild": 0.294,
+   "expdta": "X-RAY DIFFRACTION",
+   "nummdl": null,
+   "resolution": 2.0,
+   "title": "DE NOVO DESIGNED CELL-PENETRATING PEPTIDE SELF-ASSEMBLY FEATURING DISTINCTIVE TERTIARY STRUCTURE",
+   "screen": {
+    "max_identity_peptide": 0.5714,
+    "max_containment_peptide": 0.7273,
+    "nearest_peptide": "6HNG",
+    "max_identity_fragment": 0.4286,
+    "max_containment_fragment": 0.5556,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "9PEJ",
+   "seq": "SEFKFSFEFKS",
+   "n": 11,
+   "rebuild": 0.94,
+   "expdta": "ELECTRON MICROSCOPY",
+   "nummdl": null,
+   "resolution": 2.0,
+   "title": "SFX11 PEPTIDE NANOFIBRIL",
+   "screen": {
+    "max_identity_peptide": 0.3636,
+    "max_containment_peptide": 0.5455,
+    "nearest_peptide": "8IS3",
+    "max_identity_fragment": 0.4545,
+    "max_containment_fragment": 0.5455,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "9QFM",
+   "seq": "LVIIALLDIANY",
+   "n": 12,
+   "rebuild": 0.625,
+   "expdta": "ELECTRON MICROSCOPY",
+   "nummdl": null,
+   "resolution": 2.0,
+   "title": "LY12 MAIN MORPHOLOGY",
+   "screen": {
+    "max_identity_peptide": 0.4167,
+    "max_containment_peptide": 0.6667,
+    "nearest_peptide": "8UN8",
+    "max_identity_fragment": 0.4167,
+    "max_containment_fragment": 0.5833,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "9R7E",
+   "seq": "PKFKFKFKFKFKP",
+   "n": 13,
+   "rebuild": 0.342,
+   "expdta": "ELECTRON MICROSCOPY",
+   "nummdl": null,
+   "resolution": 2.0,
+   "title": "CRYO-EM STRUCTURE OF CATALYTIC AMYLOIDS",
+   "screen": {
+    "max_identity_peptide": 0.3846,
+    "max_containment_peptide": 0.6923,
+    "nearest_peptide": "6RSM",
+    "max_identity_fragment": 0.4615,
+    "max_containment_fragment": 0.5455,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  },
+  {
+   "pdb": "9S7P",
+   "seq": "FFGSIIGALAK",
+   "n": 11,
+   "rebuild": 0.708,
+   "expdta": "ELECTRON MICROSCOPY",
+   "nummdl": null,
+   "resolution": 2.0,
+   "title": "CRYO-EM STRUCTURE OF AMYLOIDOGENIC ANTIMICROBIAL PEPTIDE BREVININ-1OKC POLYMORPH 1 IN PBS PH 6.5",
+   "screen": {
+    "max_identity_peptide": 0.4545,
+    "max_containment_peptide": 0.6364,
+    "nearest_peptide": "1QWP",
+    "max_identity_fragment": 0.4667,
+    "max_containment_fragment": 0.6364,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": []
+   }
+  }
+ ],
+ "dropped_for_leakage": [
+  {
+   "pdb": "1HQJ",
+   "seq": "ELERRIRELEARIK",
+   "screen": {
+    "max_identity_peptide": 0.6875,
+    "max_containment_peptide": 0.7857,
+    "nearest_peptide": "1S9Z",
+    "max_identity_fragment": 0.4375,
+    "max_containment_fragment": 0.5714,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": [
+     "identity 0.69 >= 0.6"
+    ]
+   }
+  },
+  {
+   "pdb": "1P23",
+   "seq": "CYLRRFFKAKKLIE",
+   "screen": {
+    "max_identity_peptide": 0.9286,
+    "max_containment_peptide": 1.0,
+    "nearest_peptide": "1M23",
+    "max_identity_fragment": 0.375,
+    "max_containment_fragment": 0.5,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": [
+     "identity 0.93 >= 0.6",
+     "containment 1.00 >= 0.85"
+    ]
+   }
+  },
+  {
+   "pdb": "3SGP",
+   "seq": "KLKVLGDVIEV",
+   "screen": {
+    "max_identity_peptide": 0.9091,
+    "max_containment_peptide": 0.9091,
+    "nearest_peptide": "3SGO",
+    "max_identity_fragment": 0.5,
+    "max_containment_fragment": 0.6364,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": [
+     "identity 0.91 >= 0.6",
+     "containment 0.91 >= 0.85"
+    ]
+   }
+  },
+  {
+   "pdb": "5IIW",
+   "seq": "KVKVWGSIKGL",
+   "screen": {
+    "max_identity_peptide": 0.4545,
+    "max_containment_peptide": 0.5455,
+    "nearest_peptide": "3SGO",
+    "max_identity_fragment": 0.7692,
+    "max_containment_fragment": 0.9091,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": [
+     "identity 0.77 >= 0.6",
+     "containment 0.91 >= 0.85"
+    ]
+   }
+  },
+  {
+   "pdb": "5LFY",
+   "seq": "DAEFRHHSGY",
+   "screen": {
+    "max_identity_peptide": 0.5625,
+    "max_containment_peptide": 0.9,
+    "nearest_peptide": "2BP4",
+    "max_identity_fragment": 0.6,
+    "max_containment_fragment": 0.6667,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": [
+     "identity 0.60 >= 0.6",
+     "containment 0.90 >= 0.85"
+    ]
+   }
+  },
+  {
+   "pdb": "5WOR",
+   "seq": "KVKVWGSIKRL",
+   "screen": {
+    "max_identity_peptide": 0.4545,
+    "max_containment_peptide": 0.5455,
+    "nearest_peptide": "3SGO",
+    "max_identity_fragment": 0.6923,
+    "max_containment_fragment": 0.8182,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": [
+     "identity 0.69 >= 0.6"
+    ]
+   }
+  },
+  {
+   "pdb": "6S6N",
+   "seq": "SKRIVQRIKDFLR",
+   "screen": {
+    "max_identity_peptide": 0.9231,
+    "max_containment_peptide": 1.0,
+    "nearest_peptide": "2FBS",
+    "max_identity_fragment": 0.3846,
+    "max_containment_fragment": 0.4615,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": [
+     "identity 0.92 >= 0.6",
+     "containment 1.00 >= 0.85"
+    ]
+   }
+  },
+  {
+   "pdb": "7NPQ",
+   "seq": "FKRIVQRCKDFLR",
+   "screen": {
+    "max_identity_peptide": 0.9231,
+    "max_containment_peptide": 0.9231,
+    "nearest_peptide": "2FBS",
+    "max_identity_fragment": 0.4615,
+    "max_containment_fragment": 0.6,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": [
+     "identity 0.92 >= 0.6",
+     "containment 0.92 >= 0.85"
+    ]
+   }
+  },
+  {
+   "pdb": "7ROJ",
+   "seq": "KVKVLWDVIEV",
+   "screen": {
+    "max_identity_peptide": 0.9091,
+    "max_containment_peptide": 0.9091,
+    "nearest_peptide": "3SGO",
+    "max_identity_fragment": 0.4545,
+    "max_containment_fragment": 0.6364,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": [
+     "identity 0.91 >= 0.6",
+     "containment 0.91 >= 0.85"
+    ]
+   }
+  },
+  {
+   "pdb": "9BNH",
+   "seq": "SWHWHNGKWHWH",
+   "screen": {
+    "max_identity_peptide": 0.8333,
+    "max_containment_peptide": 0.8333,
+    "nearest_peptide": "9BNI",
+    "max_identity_fragment": 0.3333,
+    "max_containment_fragment": 0.4167,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": [
+     "identity 0.83 >= 0.6"
+    ]
+   }
+  },
+  {
+   "pdb": "9MIL",
+   "seq": "PVKVWGSIKRLT",
+   "screen": {
+    "max_identity_peptide": 0.3333,
+    "max_containment_peptide": 0.5,
+    "nearest_peptide": "3SGO",
+    "max_identity_fragment": 0.8462,
+    "max_containment_fragment": 0.9167,
+    "verbatim_in_peptides": false,
+    "verbatim_in_fragments": false,
+    "reject_reasons": [
+     "identity 0.85 >= 0.6",
+     "containment 0.92 >= 0.85"
+    ]
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "pdb": "1A7Y",
+   "why": "length 4"
+  },
+  {
+   "pdb": "1A7Z",
+   "why": "length 1"
+  },
+  {
+   "pdb": "1BYZ",
+   "why": "sequence already in corpus"
+  },
+  {
+   "pdb": "1QFI",
+   "why": "length 3"
+  },
+  {
+   "pdb": "1S4A",
+   "why": "parse: ValueError"
+  },
+  {
+   "pdb": "1W3M",
+   "why": "length 7"
+  },
+  {
+   "pdb": "1W7Q",
+   "why": "length 4"
+  },
+  {
+   "pdb": "1W7R",
+   "why": "length 4"
+  },
+  {
+   "pdb": "1XY1",
+   "why": "length 8"
+  },
+  {
+   "pdb": "2M5K",
+   "why": "sequence already in corpus"
+  },
+  {
+   "pdb": "2M5M",
+   "why": "sequence already in corpus"
+  },
+  {
+   "pdb": "2M5N",
+   "why": "sequence already in corpus"
+  },
+  {
+   "pdb": "2XJH",
+   "why": "length 8"
+  },
+  {
+   "pdb": "2XJI",
+   "why": "length 7"
+  },
+  {
+   "pdb": "3AL1",
+   "why": "sequence already in corpus"
+  },
+  {
+   "pdb": "3MBU",
+   "why": "length 1"
+  },
+  {
+   "pdb": "3NI3",
+   "why": "length 7"
+  },
+  {
+   "pdb": "3Q9H",
+   "why": "length 7"
+  },
+  {
+   "pdb": "3Q9I",
+   "why": "length 6"
+  },
+  {
+   "pdb": "3Q9J",
+   "why": "length 7"
+  },
+  {
+   "pdb": "3SBN",
+   "why": "length 8"
+  },
+  {
+   "pdb": "3SGM",
+   "why": "CA step 3.77-6.09"
+  },
+  {
+   "pdb": "3SGN",
+   "why": "CA step 3.76-6.17"
+  },
+  {
+   "pdb": "3T4G",
+   "why": "CA step 3.76-16.58"
+  },
+  {
+   "pdb": "3ZPK",
+   "why": "sequence already in corpus"
+  },
+  {
+   "pdb": "4D5M",
+   "why": "length 8"
+  },
+  {
+   "pdb": "4E0L",
+   "why": "CA step 3.79-13.92"
+  },
+  {
+   "pdb": "4E0M",
+   "why": "CA step 3.79-16.07"
+  },
+  {
+   "pdb": "4E0N",
+   "why": "CA step 3.81-15.61"
+  },
+  {
+   "pdb": "4E0O",
+   "why": "CA step 3.80-15.91"
+  },
+  {
+   "pdb": "4OZ7",
+   "why": "length 8"
+  },
+  {
+   "pdb": "5I6A",
+   "why": "CA step 3.78-5.53"
+  },
+  {
+   "pdb": "5O0Z",
+   "why": "length 8"
+  },
+  {
+   "pdb": "5UHR",
+   "why": "CA step 3.78-14.24"
+  },
+  {
+   "pdb": "5W7V",
+   "why": "sequence already in corpus"
+  },
+  {
+   "pdb": "6B17",
+   "why": "CA step 3.80-5.59"
+  },
+  {
+   "pdb": "6B79",
+   "why": "CA step 3.78-6.98"
+  },
+  {
+   "pdb": "6E00",
+   "why": "length 7"
+  },
+  {
+   "pdb": "6S6M",
+   "why": "sequence already in corpus"
+  },
+  {
+   "pdb": "6UF4",
+   "why": "length 2"
+  },
+  {
+   "pdb": "6UG3",
+   "why": "CA step 3.79-6.32"
+  },
+  {
+   "pdb": "6UG6",
+   "why": "CA step 3.78-6.37"
+  },
+  {
+   "pdb": "7ANY",
+   "why": "length 8"
+  },
+  {
+   "pdb": "7ROL",
+   "why": "CA step 3.82-6.71"
+  },
+  {
+   "pdb": "7SMU",
+   "why": "CA step 3.73-6.21"
+  },
+  {
+   "pdb": "7TM1",
+   "why": "length 5"
+  },
+  {
+   "pdb": "7TMK",
+   "why": "length 6"
+  },
+  {
+   "pdb": "8DPY",
+   "why": "length 8"
+  },
+  {
+   "pdb": "8GBI",
+   "why": "length 7"
+  },
+  {
+   "pdb": "8GD8",
+   "why": "length 6"
+  },
+  {
+   "pdb": "8GIV",
+   "why": "length 6"
+  },
+  {
+   "pdb": "8GJ7",
+   "why": "length 6"
+  },
+  {
+   "pdb": "8GJC",
+   "why": "CA step 3.77-6.67"
+  },
+  {
+   "pdb": "8GK9",
+   "why": "length 6"
+  },
+  {
+   "pdb": "8GKX",
+   "why": "length 6"
+  },
+  {
+   "pdb": "8GL0",
+   "why": "length 7"
+  },
+  {
+   "pdb": "8U78",
+   "why": "length 7"
+  },
+  {
+   "pdb": "8V56",
+   "why": "length 6"
+  },
+  {
+   "pdb": "8V59",
+   "why": "length 6"
+  },
+  {
+   "pdb": "8V5W",
+   "why": "length 6"
+  },
+  {
+   "pdb": "8V5X",
+   "why": "length 5"
+  },
+  {
+   "pdb": "8V61",
+   "why": "length 5"
+  },
+  {
+   "pdb": "8VOG",
+   "why": "length 6"
+  },
+  {
+   "pdb": "8VP7",
+   "why": "length 6"
+  },
+  {
+   "pdb": "8VPC",
+   "why": "length 7"
+  },
+  {
+   "pdb": "8VPE",
+   "why": "length 5"
+  },
+  {
+   "pdb": "8VPX",
+   "why": "length 5"
+  },
+  {
+   "pdb": "8VT8",
+   "why": "length 6"
+  },
+  {
+   "pdb": "8VW7",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9EFY",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9EH3",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9EHN",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9EHP",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9EJU",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9EJV",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9MDG",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9MEO",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9MEP",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9MEQ",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9MFI",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9MFJ",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9MFK",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9MKJ",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9ML0",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9MNV",
+   "why": "length 6"
+  },
+  {
+   "pdb": "9OXP",
+   "why": "length 8"
+  },
+  {
+   "pdb": "9PD7",
+   "why": "length 8"
+  },
+  {
+   "pdb": "9PDS",
+   "why": "length 8"
+  },
+  {
+   "pdb": "9PEF",
+   "why": "length 8"
+  },
+  {
+   "pdb": "9PEG",
+   "why": "length 8"
+  },
+  {
+   "pdb": "9PEH",
+   "why": "length 8"
+  },
+  {
+   "pdb": "9PEI",
+   "why": "length 8"
+  },
+  {
+   "pdb": "9RD7",
+   "why": "rebuild 2.67"
+  }
+ ]
+}

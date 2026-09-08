@@ -1,0 +1,62 @@
+[
+ {
+  "pdb": "1CEK",
+  "n": 13,
+  "seq": "AISVLLAQAVFLL",
+  "n_exact_seq_windows": 1,
+  "rr_of_exact": [
+   0.5945
+  ],
+  "any_in_pool500": true,
+  "blosum_rank_of_best": [
+   0
+  ],
+  "pool_best": 0.3419731855392456,
+  "pool_best_excluding_exact": 0.3419731855392456
+ },
+ {
+  "pdb": "2FBU",
+  "n": 12,
+  "seq": "LLGDFFRKSKEK",
+  "n_exact_seq_windows": 1,
+  "rr_of_exact": [
+   3.2785
+  ],
+  "any_in_pool500": true,
+  "blosum_rank_of_best": [
+   0
+  ],
+  "pool_best": 2.2431859970092773,
+  "pool_best_excluding_exact": 2.2431859970092773
+ },
+ {
+  "pdb": "2P5H",
+  "n": 9,
+  "seq": "VDIHVWDGV",
+  "n_exact_seq_windows": 1,
+  "rr_of_exact": [
+   2.3343
+  ],
+  "any_in_pool500": true,
+  "blosum_rank_of_best": [
+   0
+  ],
+  "pool_best": 1.839739441871643,
+  "pool_best_excluding_exact": 1.839739441871643
+ },
+ {
+  "pdb": "6B9K",
+  "n": 10,
+  "seq": "RGPGRAFVTI",
+  "n_exact_seq_windows": 1,
+  "rr_of_exact": [
+   4.1257
+  ],
+  "any_in_pool500": true,
+  "blosum_rank_of_best": [
+   0
+  ],
+  "pool_best": 2.07733416557312,
+  "pool_best_excluding_exact": 2.07733416557312
+ }
+]

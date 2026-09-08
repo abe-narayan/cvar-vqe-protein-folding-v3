@@ -1,0 +1,1 @@
+{"complete": true, "n_rows": 16, "required_keys": ["pdb", "n_qubits", "R_score_argmin", "R_score_tailavg", "cells"], "time": "2026-09-07 23:33:01"}

@@ -1,0 +1,305 @@
+ARTEFACT complete=True  n_rows=12  n_expected=12  n_complete_rows=12  cfg=bd59b38620012528
+CONFIG budget=512 candidate evaluations/arm  shots=32  alpha=0.25  seeds=[0, 1, 2, 3]  norm=signedlog_robustz
+n = 12 targets.  BASIS: BUILT CHAIN (single structure from continuous torsions via build_ca_exact).
+MDE IS PER COMPARISON: every line prints its own SE and its own 2.8016 x SE minimum
+detectable effect.  The project's pooled 0.084 A constant is NOT used as a threshold
+here -- it is wrong by up to 84x in both directions on an individual contrast.
+POWER WARNING: n=12 is a COMPUTE cut (52 ms/AMBER point under contention vs a
+6 ms nominal).  Per-cell configuration is intact; only power is reduced.  Read
+every zero-spanning interval here as NOT MEASURED, never as 'matched'.
+
+ORACLE references (never achieved): retrieval pool mean 4.919, pool best member 1.535
+
+====================================================================================================
+1.  FINAL Ca-RMSD -- THE ENDPOINT.  Mean and median over targets, per Hamiltonian x arm.
+    Readout = argmin of the TRAINING Hamiltonian over everything seen (single structure, the pillar's own operator).
+====================================================================================================
+  Hamiltonian                 vqe    vqe_untrained        best_of_N            metro            helix
+  Legacy            4.767/4.775      4.817/4.591      4.856/4.808      4.832/4.548      5.176/5.026  
+  AMBER             5.316/5.161      5.524/5.458      5.687/5.301      5.378/4.577      5.185/5.162  
+  Leg+Amb           4.789/4.504      4.721/4.259      4.703/4.652      4.918/4.621      5.181/5.086  
+  Distance          3.845/3.686      4.079/4.141      3.890/3.802      3.751/3.643      4.295/4.333  
+  Dist+Leg          4.119/3.790      4.480/4.290      4.301/4.735      4.095/3.712      4.956/4.736  
+  Dist+Amb          4.118/4.067      4.238/4.163      4.252/4.132      3.924/3.646      4.496/4.518  
+  Dist+Leg+Amb      4.406/4.265      4.298/4.081      4.257/4.191      4.269/4.232      5.089/4.513  
+  (mean / median.  Variational arms ('vqe', 'vqe_untrained') are the mean over 4 ansatz seeds; non-variational controls over 2 -- they carry no ansatz seed, a DECLARED reduction.)
+
+====================================================================================================
+2.  TARGET-LEVEL PAIRED DIFFERENCES, CI, W/L, FOLDS -- in that order, before any diagnostic.
+====================================================================================================
+
+  2a.  Every Hamiltonian's VQE arm minus the STRUCTURAL-ONLY reference (Distance, VQE).  Negative = physics helps.
+    Legacy        +0.922 med +0.949 se 0.396 (MDE 1.110)  iid[+0.180,+1.642]  fold[+0.010,+1.834]  4W/8L   -> below its own MDE
+    AMBER         +1.471 med +1.616 se 0.630 (MDE 1.764)  iid[+0.266,+2.625]  fold[+0.378,+2.601]  2W/10L   -> below its own MDE
+    Leg+Amb       +0.944 med +0.859 se 0.528 (MDE 1.478)  iid[-0.026,+1.951]  fold[-0.249,+1.969]  4W/8L   -> matched
+    Dist+Leg      +0.274 med +0.179 se 0.253 (MDE 0.708)  iid[-0.190,+0.748]  fold[-0.379,+0.854]  5W/7L   -> matched
+    Dist+Amb      +0.273 med +0.149 se 0.140 (MDE 0.391)  iid[+0.021,+0.552]  fold[-0.021,+0.561]  2W/10L   -> below its own MDE
+    Dist+Leg+Amb  +0.561 med +0.313 se 0.292 (MDE 0.819)  iid[+0.013,+1.114]  fold[-0.144,+1.278]  3W/9L   -> below its own MDE
+
+  2b.  MANDATORY CONTROL -- VQE minus BEST-OF-N FROM THE UNTRAINED CIRCUIT, matched shots and budget.
+       (theta never stepped.  This is NOT an initialisation mean.)
+    Legacy        -0.050 med -0.018 se 0.118 (MDE 0.331)  iid[-0.273,+0.164]  fold[-0.289,+0.124]  6W/6L   -> matched
+    AMBER         -0.208 med -0.181 se 0.186 (MDE 0.522)  iid[-0.557,+0.130]  fold[-0.655,+0.112]  9W/3L   -> matched
+    Leg+Amb       +0.068 med +0.090 se 0.165 (MDE 0.463)  iid[-0.242,+0.371]  fold[-0.210,+0.344]  6W/6L   -> matched
+    Distance      -0.234 med -0.185 se 0.145 (MDE 0.407)  iid[-0.512,+0.033]  fold[-0.591,+0.090]  9W/3L   -> matched
+    Dist+Leg      -0.361 med -0.342 se 0.151 (MDE 0.423)  iid[-0.663,-0.093]  fold[-0.564,-0.158]  9W/3L   -> below its own MDE
+    Dist+Amb      -0.120 med -0.115 se 0.081 (MDE 0.228)  iid[-0.273,+0.027]  fold[-0.215,-0.024]  7W/5L   -> matched
+    Dist+Leg+Amb  +0.108 med +0.057 se 0.152 (MDE 0.426)  iid[-0.179,+0.395]  fold[-0.220,+0.441]  5W/7L   -> matched
+
+  2c.  MATCHED CLASSICAL CONTROLS at identical budget, per Hamiltonian.
+    VQE minus best_of_N:
+      Legacy        -0.089 med -0.172 se 0.181 (MDE 0.508)  iid[-0.421,+0.247]  fold[-0.343,+0.128]  7W/5L   -> matched
+      AMBER         -0.371 med -0.289 se 0.226 (MDE 0.634)  iid[-0.803,+0.041]  fold[-0.573,-0.183]  8W/4L   -> matched
+      Leg+Amb       +0.086 med +0.102 se 0.276 (MDE 0.774)  iid[-0.430,+0.613]  fold[-0.208,+0.376]  6W/6L   -> matched
+      Distance      -0.045 med +0.152 se 0.178 (MDE 0.497)  iid[-0.394,+0.265]  fold[-0.552,+0.351]  4W/8L   -> matched
+      Dist+Leg      -0.182 med -0.265 se 0.224 (MDE 0.627)  iid[-0.600,+0.258]  fold[-0.645,+0.101]  7W/5L   -> matched
+      Dist+Amb      -0.134 med -0.260 se 0.139 (MDE 0.388)  iid[-0.374,+0.128]  fold[-0.340,+0.095]  7W/5L   -> matched
+      Dist+Leg+Amb  +0.148 med +0.063 se 0.210 (MDE 0.588)  iid[-0.212,+0.566]  fold[-0.244,+0.674]  5W/7L   -> matched
+    VQE minus metro:
+      Legacy        -0.065 med -0.005 se 0.285 (MDE 0.798)  iid[-0.605,+0.472]  fold[-0.786,+0.485]  6W/6L   -> matched
+      AMBER         -0.062 med -0.286 se 0.246 (MDE 0.689)  iid[-0.498,+0.432]  fold[-0.399,+0.244]  7W/5L   -> matched
+      Leg+Amb       -0.129 med -0.124 se 0.126 (MDE 0.354)  iid[-0.365,+0.104]  fold[-0.278,+0.088]  8W/4L   -> matched
+      Distance      +0.094 med -0.001 se 0.168 (MDE 0.472)  iid[-0.205,+0.422]  fold[-0.122,+0.350]  6W/6L   -> matched
+      Dist+Leg      +0.024 med -0.171 se 0.229 (MDE 0.642)  iid[-0.379,+0.477]  fold[-0.533,+0.669]  8W/4L   -> matched
+      Dist+Amb      +0.194 med +0.085 se 0.175 (MDE 0.492)  iid[-0.124,+0.530]  fold[-0.082,+0.547]  4W/8L   -> matched
+      Dist+Leg+Amb  +0.137 med -0.012 se 0.245 (MDE 0.687)  iid[-0.281,+0.647]  fold[-0.247,+0.735]  6W/6L   -> matched
+
+  2d.  ZERO-INFORMATION reference (constant alpha-helix + matched torsion noise, same Hamiltonian, same budget).
+       As a REFERENCE this is a null; as a GATE it is the worst arm measured (BRIEF section 7 rule 4).
+    Legacy        -0.409 med -0.699 se 0.381 (MDE 1.068)  iid[-1.108,+0.338]  fold[-1.095,+0.317]  9W/3L   -> matched
+    AMBER         +0.131 med +0.041 se 0.457 (MDE 1.279)  iid[-0.681,+1.035]  fold[-0.359,+0.524]  6W/6L   -> matched
+    Leg+Amb       -0.391 med -0.425 se 0.275 (MDE 0.770)  iid[-0.868,+0.152]  fold[-0.681,+0.130]  9W/3L   -> matched
+    Distance      -0.450 med -0.428 se 0.375 (MDE 1.050)  iid[-1.151,+0.239]  fold[-1.313,+0.403]  7W/5L   -> matched
+    Dist+Leg      -0.837 med -0.891 se 0.303 (MDE 0.849)  iid[-1.424,-0.272]  fold[-1.200,-0.402]  9W/3L   -> below its own MDE
+    Dist+Amb      -0.378 med -0.576 se 0.379 (MDE 1.063)  iid[-1.091,+0.345]  fold[-1.008,+0.237]  8W/4L   -> matched
+    Dist+Leg+Amb  -0.683 med -0.402 se 0.488 (MDE 1.366)  iid[-1.672,+0.200]  fold[-1.506,+0.141]  8W/4L   -> matched
+
+  2e.  PER-FOLD means of the primary contrast (each Hamiltonian's VQE vs Distance VQE):
+    Legacy        f0:+1.954  f1:+2.290  f2:+0.252  f3:-0.336  f4:+0.565
+    AMBER         f0:+3.132  f1:+1.248  f2:+1.684  f3:-0.140  f4:+1.407
+    Leg+Amb       f0:+2.063  f1:+1.951  f2:+0.139  f3:-0.827  f4:+1.722
+    Dist+Leg      f0:+0.838  f1:+0.894  f2:-0.312  f3:-0.677  f4:+0.821
+    Dist+Amb      f0:+0.551  f1:+0.371  f2:+0.004  f3:-0.167  f4:+0.688
+    Dist+Leg+Amb  f0:+1.271  f1:+1.727  f2:-0.059  f3:-0.358  f4:+0.329
+
+====================================================================================================
+3.  ANSATZ-SEED SENSITIVITY -- the reason 4 seeds is the minimum.
+====================================================================================================
+  Legacy        within-target seed sd 0.649 A (untrained 0.630); best-of-4-seeds 3.873 vs mean 4.767
+  AMBER         within-target seed sd 1.062 A (untrained 1.147); best-of-4-seeds 3.952 vs mean 5.316
+  Leg+Amb       within-target seed sd 0.668 A (untrained 0.753); best-of-4-seeds 3.833 vs mean 4.789
+  Distance      within-target seed sd 0.539 A (untrained 0.460); best-of-4-seeds 3.192 vs mean 3.845
+  Dist+Leg      within-target seed sd 0.635 A (untrained 0.550); best-of-4-seeds 3.307 vs mean 4.119
+  Dist+Amb      within-target seed sd 0.565 A (untrained 0.514); best-of-4-seeds 3.367 vs mean 4.118
+  Dist+Leg+Amb  within-target seed sd 0.511 A (untrained 0.571); best-of-4-seeds 3.698 vs mean 4.406
+
+====================================================================================================
+4.  THE READOUT COLUMN.  *** A HAMILTONIAN'S SIGN DEPENDS ON THE READOUT. ***
+    Coordinator, n=126 pool-restricted: Legacy BEATS its matched control at
+    tail_member (-0.41 [-0.56,-0.26]) and LOSES to it at tail_medoid (+0.30) and
+    tail_avg (+0.33).  Both are true.  So no row is quoted without its readout, and
+    'which Hamiltonian is best' is reported PER READOUT, never unqualified.
+    Mechanism is ERROR COHERENCE, not diversity: averaging cancels i.i.d. error and
+    PRESERVES systematic error, and Legacy's tail carries a coherent compactness
+    bias (Sprint 20 L2c).  The diversity account was refuted by its own sign control.
+====================================================================================================
+
+  alpha = 0.05   (mean Ca-RMSD, A; every cell is the 4-seed mean of the VQE arm)
+    Hamiltonian       tail_min tail_member tail_medoid    tail_avg   |  rand_member  rand_medoid     rand_avg
+    Legacy               4.767       4.869       4.601       4.216   |        5.264        4.912        4.343
+    AMBER                5.316       5.428       5.308       4.815   |        5.371        5.056        4.416
+    Leg+Amb              4.789       4.954       4.541       4.130   |        5.180        4.928        4.323
+    Distance             3.845       4.142       3.808       3.417   |        5.092        4.717        4.130
+    Dist+Leg             4.119       4.462       4.124       3.723   |        5.106        4.798        4.238
+    Dist+Amb             4.118       4.461       4.101       3.569   |        5.175        4.751        4.191
+    Dist+Leg+Amb         4.406       4.529       4.179       3.718   |        5.185        4.812        4.211
+
+    PAIRED vs the MATCHED-COUNT RANDOM control of the SAME readout (negative = the Hamiltonian's tail carries information over chance):
+      readout = member (single structure)
+        Legacy        -0.394 med -0.446 se 0.122 (MDE 0.340)  iid[-0.634,-0.163]  fold[-0.538,-0.322]  9W/3L   -> BETTER
+        AMBER         +0.057 med +0.086 se 0.185 (MDE 0.517)  iid[-0.309,+0.394]  fold[-0.199,+0.296]  5W/7L   -> matched
+        Leg+Amb       -0.226 med -0.164 se 0.109 (MDE 0.305)  iid[-0.438,-0.025]  fold[-0.350,-0.072]  7W/5L   -> below its own MDE
+        Distance      -0.950 med -0.952 se 0.295 (MDE 0.828)  iid[-1.478,-0.388]  fold[-1.460,-0.487]  11W/1L   -> BETTER
+        Dist+Leg      -0.644 med -0.763 se 0.234 (MDE 0.654)  iid[-1.067,-0.182]  fold[-0.940,-0.362]  10W/2L   -> below its own MDE
+        Dist+Amb      -0.713 med -0.713 se 0.195 (MDE 0.546)  iid[-1.096,-0.355]  fold[-0.993,-0.404]  10W/2L   -> BETTER
+        Dist+Leg+Amb  -0.656 med -0.690 se 0.195 (MDE 0.546)  iid[-1.026,-0.289]  fold[-0.788,-0.520]  11W/1L   -> BETTER
+      readout = medoid (single structure)
+        Legacy        -0.312 med -0.250 se 0.124 (MDE 0.348)  iid[-0.557,-0.098]  fold[-0.546,-0.083]  10W/2L   -> below its own MDE
+        AMBER         +0.252 med +0.303 se 0.203 (MDE 0.568)  iid[-0.131,+0.636]  fold[-0.063,+0.567]  4W/8L   -> matched
+        Leg+Amb       -0.387 med -0.187 se 0.154 (MDE 0.433)  iid[-0.691,-0.110]  fold[-0.602,-0.158]  10W/2L   -> below its own MDE
+        Distance      -0.910 med -0.672 se 0.383 (MDE 1.072)  iid[-1.628,-0.218]  fold[-1.525,-0.285]  10W/2L   -> below its own MDE
+        Dist+Leg      -0.675 med -0.805 se 0.294 (MDE 0.824)  iid[-1.225,-0.119]  fold[-1.067,-0.293]  9W/3L   -> below its own MDE
+        Dist+Amb      -0.650 med -0.551 se 0.205 (MDE 0.575)  iid[-1.031,-0.267]  fold[-0.845,-0.463]  11W/1L   -> BETTER
+        Dist+Leg+Amb  -0.634 med -0.431 se 0.237 (MDE 0.664)  iid[-1.099,-0.208]  fold[-0.845,-0.422]  10W/2L   -> below its own MDE
+      readout = AVERAGED (point cloud)
+        Legacy        -0.127 med -0.046 se 0.118 (MDE 0.332)  iid[-0.364,+0.086]  fold[-0.349,+0.073]  8W/4L   -> matched
+        AMBER         +0.398 med +0.551 se 0.250 (MDE 0.701)  iid[-0.086,+0.856]  fold[-0.005,+0.802]  3W/9L   -> matched
+        Leg+Amb       -0.193 med -0.265 se 0.099 (MDE 0.278)  iid[-0.375,-0.001]  fold[-0.350,+0.034]  9W/3L   -> below its own MDE
+        Distance      -0.713 med -0.516 se 0.360 (MDE 1.008)  iid[-1.388,-0.055]  fold[-1.316,-0.085]  9W/3L   -> below its own MDE
+        Dist+Leg      -0.515 med -0.494 se 0.266 (MDE 0.745)  iid[-1.010,-0.017]  fold[-0.864,-0.165]  9W/3L   -> below its own MDE
+        Dist+Amb      -0.622 med -0.543 se 0.208 (MDE 0.583)  iid[-0.999,-0.229]  fold[-0.854,-0.389]  10W/2L   -> BETTER
+        Dist+Leg+Amb  -0.493 med -0.357 se 0.199 (MDE 0.558)  iid[-0.870,-0.123]  fold[-0.670,-0.311]  8W/4L   -> below its own MDE
+
+  alpha = 0.15   (mean Ca-RMSD, A; every cell is the 4-seed mean of the VQE arm)
+    Hamiltonian       tail_min tail_member tail_medoid    tail_avg   |  rand_member  rand_medoid     rand_avg
+    Legacy               4.767       4.906       4.497       4.146   |        5.274        4.818        4.279
+    AMBER                5.316       5.422       5.288       4.734   |        5.336        4.952        4.366
+    Leg+Amb              4.789       4.960       4.750       4.189   |        5.204        4.790        4.241
+    Distance             3.845       4.332       3.965       3.509   |        5.125        4.582        4.092
+    Dist+Leg             4.119       4.580       4.270       3.780   |        5.209        4.780        4.191
+    Dist+Amb             4.118       4.475       4.120       3.564   |        5.152        4.622        4.120
+    Dist+Leg+Amb         4.406       4.607       4.218       3.769   |        5.164        4.737        4.179
+
+    PAIRED vs the MATCHED-COUNT RANDOM control of the SAME readout (negative = the Hamiltonian's tail carries information over chance):
+      readout = member (single structure)
+        Legacy        -0.368 med -0.301 se 0.094 (MDE 0.264)  iid[-0.554,-0.196]  fold[-0.526,-0.195]  11W/1L   -> BETTER
+        AMBER         +0.087 med +0.272 se 0.184 (MDE 0.516)  iid[-0.279,+0.420]  fold[-0.186,+0.343]  3W/9L   -> matched
+        Leg+Amb       -0.244 med -0.276 se 0.109 (MDE 0.305)  iid[-0.448,-0.051]  fold[-0.505,+0.036]  7W/5L   -> below its own MDE
+        Distance      -0.794 med -0.873 se 0.271 (MDE 0.758)  iid[-1.292,-0.247]  fold[-1.172,-0.415]  10W/2L   -> BETTER
+        Dist+Leg      -0.628 med -0.642 se 0.145 (MDE 0.405)  iid[-0.893,-0.349]  fold[-0.768,-0.490]  9W/3L   -> BETTER
+        Dist+Amb      -0.677 med -0.660 se 0.145 (MDE 0.407)  iid[-0.951,-0.411]  fold[-0.911,-0.443]  11W/1L   -> BETTER
+        Dist+Leg+Amb  -0.558 med -0.400 se 0.162 (MDE 0.454)  iid[-0.880,-0.270]  fold[-0.723,-0.390]  10W/2L   -> BETTER
+      readout = medoid (single structure)
+        Legacy        -0.321 med -0.295 se 0.127 (MDE 0.355)  iid[-0.571,-0.091]  fold[-0.529,-0.112]  9W/3L   -> below its own MDE
+        AMBER         +0.335 med +0.507 se 0.187 (MDE 0.525)  iid[-0.034,+0.675]  fold[+0.023,+0.626]  4W/8L   -> matched
+        Leg+Amb       -0.041 med +0.001 se 0.072 (MDE 0.203)  iid[-0.178,+0.093]  fold[-0.208,+0.136]  6W/6L   -> matched
+        Distance      -0.618 med -0.668 se 0.251 (MDE 0.705)  iid[-1.082,-0.142]  fold[-1.051,-0.171]  9W/3L   -> below its own MDE
+        Dist+Leg      -0.509 med -0.598 se 0.215 (MDE 0.602)  iid[-0.904,-0.102]  fold[-0.785,-0.296]  10W/2L   -> below its own MDE
+        Dist+Amb      -0.502 med -0.439 se 0.162 (MDE 0.454)  iid[-0.810,-0.205]  fold[-0.739,-0.264]  9W/3L   -> BETTER
+        Dist+Leg+Amb  -0.518 med -0.331 se 0.172 (MDE 0.482)  iid[-0.852,-0.206]  fold[-0.707,-0.298]  10W/2L   -> BETTER
+      readout = AVERAGED (point cloud)
+        Legacy        -0.133 med -0.047 se 0.095 (MDE 0.265)  iid[-0.326,+0.038]  fold[-0.284,+0.023]  7W/5L   -> matched
+        AMBER         +0.368 med +0.529 se 0.219 (MDE 0.613)  iid[-0.059,+0.762]  fold[+0.014,+0.722]  3W/9L   -> matched
+        Leg+Amb       -0.052 med -0.022 se 0.056 (MDE 0.158)  iid[-0.161,+0.052]  fold[-0.148,+0.082]  8W/4L   -> matched
+        Distance      -0.582 med -0.501 se 0.296 (MDE 0.830)  iid[-1.149,-0.036]  fold[-1.073,-0.061]  8W/4L   -> below its own MDE
+        Dist+Leg      -0.411 med -0.440 se 0.189 (MDE 0.528)  iid[-0.759,-0.051]  fold[-0.666,-0.210]  9W/3L   -> below its own MDE
+        Dist+Amb      -0.556 med -0.514 se 0.184 (MDE 0.515)  iid[-0.898,-0.212]  fold[-0.789,-0.309]  9W/3L   -> BETTER
+        Dist+Leg+Amb  -0.410 med -0.336 se 0.156 (MDE 0.438)  iid[-0.710,-0.120]  fold[-0.575,-0.244]  8W/4L   -> below its own MDE
+
+  alpha = 0.3   (mean Ca-RMSD, A; every cell is the 4-seed mean of the VQE arm)
+    Hamiltonian       tail_min tail_member tail_medoid    tail_avg   |  rand_member  rand_medoid     rand_avg
+    Legacy               4.767       4.959       4.619       4.197   |        5.200        4.776        4.273
+    AMBER                5.316       5.485       5.168       4.638   |        5.350        4.912        4.352
+    Leg+Amb              4.789       5.160       4.808       4.320   |        5.233        4.758        4.239
+    Distance             3.845       4.490       3.967       3.563   |        4.989        4.525        4.064
+    Dist+Leg             4.119       4.703       4.284       3.863   |        5.074        4.693        4.184
+    Dist+Amb             4.118       4.665       4.109       3.610   |        4.985        4.659        4.133
+    Dist+Leg+Amb         4.406       4.710       4.298       3.837   |        5.230        4.697        4.160
+
+    PAIRED vs the MATCHED-COUNT RANDOM control of the SAME readout (negative = the Hamiltonian's tail carries information over chance):
+      readout = member (single structure)
+        Legacy        -0.241 med -0.211 se 0.097 (MDE 0.271)  iid[-0.423,-0.069]  fold[-0.475,-0.049]  10W/2L   -> below its own MDE
+        AMBER         +0.135 med +0.167 se 0.201 (MDE 0.564)  iid[-0.256,+0.503]  fold[-0.195,+0.466]  4W/8L   -> matched
+        Leg+Amb       -0.073 med -0.056 se 0.105 (MDE 0.295)  iid[-0.267,+0.134]  fold[-0.146,+0.034]  7W/5L   -> matched
+        Distance      -0.498 med -0.568 se 0.221 (MDE 0.620)  iid[-0.894,-0.051]  fold[-0.846,-0.154]  9W/3L   -> below its own MDE
+        Dist+Leg      -0.371 med -0.419 se 0.117 (MDE 0.329)  iid[-0.593,-0.150]  fold[-0.564,-0.193]  10W/2L   -> BETTER
+        Dist+Amb      -0.320 med -0.271 se 0.125 (MDE 0.349)  iid[-0.557,-0.084]  fold[-0.586,-0.054]  9W/3L   -> below its own MDE
+        Dist+Leg+Amb  -0.520 med -0.508 se 0.125 (MDE 0.350)  iid[-0.749,-0.281]  fold[-0.753,-0.340]  11W/1L   -> BETTER
+      readout = medoid (single structure)
+        Legacy        -0.158 med -0.121 se 0.058 (MDE 0.164)  iid[-0.282,-0.061]  fold[-0.275,-0.040]  10W/2L   -> below its own MDE
+        AMBER         +0.256 med +0.422 se 0.131 (MDE 0.367)  iid[-0.002,+0.486]  fold[+0.038,+0.454]  3W/9L   -> matched
+        Leg+Amb       +0.050 med +0.090 se 0.092 (MDE 0.258)  iid[-0.128,+0.223]  fold[-0.084,+0.193]  4W/8L   -> matched
+        Distance      -0.558 med -0.530 se 0.238 (MDE 0.667)  iid[-0.999,-0.104]  fold[-0.912,-0.106]  10W/2L   -> below its own MDE
+        Dist+Leg      -0.409 med -0.602 se 0.175 (MDE 0.491)  iid[-0.721,-0.071]  fold[-0.640,-0.198]  8W/4L   -> below its own MDE
+        Dist+Amb      -0.550 med -0.470 se 0.160 (MDE 0.447)  iid[-0.855,-0.259]  fold[-0.762,-0.307]  10W/2L   -> BETTER
+        Dist+Leg+Amb  -0.399 med -0.329 se 0.111 (MDE 0.311)  iid[-0.616,-0.197]  fold[-0.550,-0.261]  11W/1L   -> BETTER
+      readout = AVERAGED (point cloud)
+        Legacy        -0.075 med -0.086 se 0.055 (MDE 0.155)  iid[-0.188,+0.026]  fold[-0.180,+0.034]  8W/4L   -> matched
+        AMBER         +0.286 med +0.448 se 0.178 (MDE 0.498)  iid[-0.061,+0.606]  fold[-0.007,+0.579]  3W/9L   -> matched
+        Leg+Amb       +0.081 med +0.147 se 0.102 (MDE 0.285)  iid[-0.116,+0.267]  fold[-0.075,+0.237]  4W/8L   -> matched
+        Distance      -0.501 med -0.399 se 0.252 (MDE 0.706)  iid[-0.973,-0.036]  fold[-0.865,-0.074]  9W/3L   -> below its own MDE
+        Dist+Leg      -0.322 med -0.436 se 0.127 (MDE 0.355)  iid[-0.550,-0.073]  fold[-0.474,-0.217]  9W/3L   -> below its own MDE
+        Dist+Amb      -0.523 med -0.458 se 0.173 (MDE 0.485)  iid[-0.847,-0.208]  fold[-0.780,-0.237]  9W/3L   -> BETTER
+        Dist+Leg+Amb  -0.323 med -0.306 se 0.103 (MDE 0.289)  iid[-0.518,-0.125]  fold[-0.472,-0.178]  10W/2L   -> BETTER
+
+  IDENTITY CHECK (a check, never a discovery): tail_min == argmin over everything
+  seen, because the alpha-tail of the TRAINING H contains that H's own minimum.
+    max |tail_min - argmin| = 0.000e+00 over 336 cells
+
+====================================================================================================
+5.  CROSS-READOUT, all 4 variational seeds.  rows = TRAINING H (defines the candidate set), cols = READOUT H (argmin inside it).  Single structure.
+    COORDINATOR PRIORITY: the pool-restricted, same-H, order-based case is closed
+    analytically and verified at tail_min == argmin, max difference exactly 0, so the
+    only cells that can be informative are those breaking that scope -- readout H
+    DIFFERENT from training H.  The diagonal is the argmin of the training H.
+====================================================================================================
+  train|read           Legacy        AMBER      Leg+Amb     Distance     Dist+Leg     Dist+Amb  Dist+Leg+Am   argmin(tr)
+  Legacy                4.767        5.385        4.869        4.070        4.369        4.036        4.354        4.767
+  AMBER                 5.073        5.316        4.924        4.202        4.403        4.213        4.229        5.316
+  Leg+Amb               4.916        5.504        4.789        4.198        4.326        4.121        4.115        4.789
+  Distance              4.918        5.118        4.841        3.845        4.239        3.922        4.248        3.845
+  Dist+Leg              4.761        5.120        4.930        4.049        4.119        3.942        4.226        4.119
+  Dist+Amb              4.966        5.256        4.786        4.045        4.243        4.118        4.297        4.118
+  Dist+Leg+Amb          4.851        5.359        4.849        4.031        4.371        3.989        4.406        4.406
+  IDENTITY CHECK (a check, not a discovery): max |diag - argmin(train)| = 0.000e+00
+
+  BEST OFF-DIAGONAL vs BEST DIAGONAL, paired over targets.  Both cells are chosen
+  ON this instrument -- a max over 42 and 7 cells -- so this is a CEILING, not a method.
+    Distance>Dist+Amb vs Distance>Distance: +0.077 med +0.097 se 0.145 (MDE 0.407)  iid[-0.187,+0.348]  fold[-0.294,+0.392]  5W/7L   -> matched
+  ORACLE ceilings on the Distance VQE's OWN generated set (never achieved): best 2.224, mean 5.085
+
+  ORACLE MARGINAL rank skill of each component against true RMSD, on the VQE's own
+  generated candidates.  POSITIVE = lower energy goes with lower RMSD = correct order.
+  A MARGINAL IS NOT A CONTRIBUTION: Legacy is strongly rank-correlated with the
+  deployed distogram, and its PARTIAL given that distogram is -0.008 fold[-0.062,
+  +0.068], 25/42 negative (findings S1.3).  Read the Legacy row as a marginal ONLY.
+    DIST  +0.4609 (median +0.6191, 10/12 positive)
+    LEG   +0.1073 (median +0.2198, 9/12 positive)
+    AMB   -0.0144 (median -0.1106, 5/12 positive)
+
+====================================================================================================
+6.  EXPLANATION ONLY -- objective convergence, gradient geometry, CVaR behaviour.
+====================================================================================================
+  Hamiltonian     cvar_first   cvar_last    d_cvar     |grad|   grad sd  ESS/shots  cos(g,g_a1)  |dtheta|
+  Legacy               0.535       0.295    -0.240     0.5811    0.3003      0.413        0.208     4.607
+  AMBER               -0.377      -0.526    -0.149     0.2620    0.4166      0.597        0.641     4.523
+  Leg+Amb              0.452       0.267    -0.186     0.9059    0.4769      0.473        0.299     4.321
+  Distance            -0.561      -0.937    -0.375     0.5219    0.2613      0.471        0.532     4.639
+  Dist+Leg             0.300      -0.112    -0.412     1.0512    0.4816      0.449        0.303     4.503
+  Dist+Amb            -0.229      -0.566    -0.337     1.0821    0.5656      0.451        0.598     4.640
+  Dist+Leg+Amb         0.494       0.148    -0.346     1.4701    0.6809      0.456        0.364     4.438
+  d_cvar < 0 means the objective FELL.  Read it against column 1 of section 1:
+  'optimised the objective' and 'got a better structure' are different claims.
+
+  OBJECTIVE-vs-STRUCTURE: paired (objective gained) vs (RMSD gained), trained minus untrained:
+    Legacy        rho(objective gained, RMSD gained) = +0.182  (n=12)
+    AMBER         rho(objective gained, RMSD gained) = +0.762  (n=12)
+    Leg+Amb       rho(objective gained, RMSD gained) = +0.441  (n=12)
+    Distance      rho(objective gained, RMSD gained) = +0.035  (n=12)
+    Dist+Leg      rho(objective gained, RMSD gained) = +0.413  (n=12)
+    Dist+Amb      rho(objective gained, RMSD gained) = -0.476  (n=12)
+    Dist+Leg+Amb  rho(objective gained, RMSD gained) = -0.112  (n=12)
+
+  NON-FINITE / SENTINEL COUNTS -- a guard that never fires is not evidence:
+    Legacy        0 sentinel substitutions over 24576 evaluations (0.00%)
+    AMBER         0 sentinel substitutions over 24576 evaluations (0.00%)
+    Leg+Amb       0 sentinel substitutions over 24576 evaluations (0.00%)
+    Distance      0 sentinel substitutions over 24576 evaluations (0.00%)
+    Dist+Leg      0 sentinel substitutions over 24576 evaluations (0.00%)
+    Dist+Amb      0 sentinel substitutions over 24576 evaluations (0.00%)
+    Dist+Leg+Amb  0 sentinel substitutions over 24576 evaluations (0.00%)
+
+====================================================================================================
+7.  NORMALISATION AUDIT -- the two forms that were NOT declared, on the HYBRID cells (seed 0).
+    Single-component cells are EXACTLY invariant (gate G-A3), so only hybrids can move.
+====================================================================================================
+  Hamiltonian     declared@s0   robustz@s0      rank@s0        WINNER  | declared 4-seed
+  Leg+Amb               4.757        4.880        5.194      declared              4.789
+  Dist+Leg              3.866        4.151        4.494      declared              4.119
+  Dist+Amb              4.080        4.086        4.198      declared              4.118
+  Dist+Leg+Amb          4.363        4.503        4.224          rank              4.406
+  If a non-declared form wins, the declared choice is recorded as WRONG on that cell.
+
+  THE FORK IS NOT LOAD-BEARING, and this is the strong form of the answer:
+    best normalisation PER CELL = [4.757, 3.866, 4.08, 4.224], min 3.866
+    Distance-only at the same seed  = 3.807  (it carries NO normalisation at all)
+    margin +0.059 A -- Distance still wins, but by far less than an
+    unmatched table would have suggested, and the margin is deep inside the
+    0.51-1.06 A seed noise, so it is NOT MEASURED in either direction.
+
+====================================================================================================
+8.  GATES -- how many times each FIRED (a gate that never fires passed vacuously).
+====================================================================================================
+  G-A1 AmberSP bit-exact vs core.amber.refine_coords(k=0, steps=-1): max rel 0.000e+00 over 36 comparisons (FIRED 36x)
+  G-A2 conditioning order-preserving: 0 breaks over 576 ranks (FIRED 576x)
+  G-A3 single-component argmin invariant to normalisation: 0 breaks over 27 checks

@@ -1,0 +1,2004 @@
+HEADER    PROTEIN FIBRIL                          03-JUL-19   6S6N              
+TITLE     CRYSTAL STRUCTURE OF THE GORILLA LL37(17-29) ANTIMICROBIAL PEPTIDE    
+COMPND    MOL_ID: 1;                                                            
+COMPND   2 MOLECULE: CATHELICIDIN ANTIMICROBIAL PEPTIDE;                        
+COMPND   3 CHAIN: A, B;                                                         
+COMPND   4 FRAGMENT: ANTIMICROBIAL CORE SEGMENT OF GORILLA LL37 (RESIDUES 17-   
+COMPND   5 29);                                                                 
+COMPND   6 ENGINEERED: YES                                                      
+SOURCE    MOL_ID: 1;                                                            
+SOURCE   2 SYNTHETIC: YES;                                                      
+SOURCE   3 ORGANISM_SCIENTIFIC: GORILLA GORILLA GORILLA;                        
+SOURCE   4 ORGANISM_COMMON: WESTERN LOWLAND GORILLA;                            
+SOURCE   5 ORGANISM_TAXID: 9595;                                                
+SOURCE   6 OTHER_DETAILS: GORILLA LL37(17-29), SYNTHESIZED                      
+KEYWDS    HELICAL AND TUBULAR FIBRIL STRUCTURE OF A GORILLA DERIVED             
+KEYWDS   2 ANTIMICROBIAL PEPTIDE, PROTEIN FIBRIL                                
+EXPDTA    X-RAY DIFFRACTION                                                     
+AUTHOR    M.LANDAU,Y.ENGELBERG                                                  
+REVDAT   2   01-MAY-24 6S6N    1       REMARK                                   
+REVDAT   1   19-AUG-20 6S6N    0                                                
+JRNL        AUTH   Y.ENGELBERG,M.LANDAU                                         
+JRNL        TITL   THE HUMAN LL-37(17-29) ANTIMICROBIAL PEPTIDE REVEALS A       
+JRNL        TITL 2 FUNCTIONAL SUPRAMOLECULAR STRUCTURE.                         
+JRNL        REF    NAT COMMUN                    V.  11  3894 2020              
+JRNL        REFN                   ESSN 2041-1723                               
+JRNL        PMID   32753597                                                     
+JRNL        DOI    10.1038/S41467-020-17736-X                                   
+REMARK   2                                                                      
+REMARK   2 RESOLUTION.    1.10 ANGSTROMS.                                       
+REMARK   3                                                                      
+REMARK   3 REFINEMENT.                                                          
+REMARK   3   PROGRAM     : REFMAC 5.8.0253                                      
+REMARK   3   AUTHORS     : MURSHUDOV,SKUBAK,LEBEDEV,PANNU,STEINER,              
+REMARK   3               : NICHOLLS,WINN,LONG,VAGIN                             
+REMARK   3                                                                      
+REMARK   3    REFINEMENT TARGET : NULL                                          
+REMARK   3                                                                      
+REMARK   3  DATA USED IN REFINEMENT.                                            
+REMARK   3   RESOLUTION RANGE HIGH (ANGSTROMS) : 1.10                           
+REMARK   3   RESOLUTION RANGE LOW  (ANGSTROMS) : 35.64                          
+REMARK   3   DATA CUTOFF            (SIGMA(F)) : 0.000                          
+REMARK   3   COMPLETENESS FOR RANGE        (%) : 99.4                           
+REMARK   3   NUMBER OF REFLECTIONS             : 10967                          
+REMARK   3                                                                      
+REMARK   3  FIT TO DATA USED IN REFINEMENT.                                     
+REMARK   3   CROSS-VALIDATION METHOD          : THROUGHOUT                      
+REMARK   3   FREE R VALUE TEST SET SELECTION  : RANDOM                          
+REMARK   3   R VALUE     (WORKING + TEST SET) : 0.161                           
+REMARK   3   R VALUE            (WORKING SET) : 0.160                           
+REMARK   3   FREE R VALUE                     : 0.179                           
+REMARK   3   FREE R VALUE TEST SET SIZE   (%) : 10.000                          
+REMARK   3   FREE R VALUE TEST SET COUNT      : 1219                            
+REMARK   3                                                                      
+REMARK   3  FIT IN THE HIGHEST RESOLUTION BIN.                                  
+REMARK   3   TOTAL NUMBER OF BINS USED           : NULL                         
+REMARK   3   BIN RESOLUTION RANGE HIGH       (A) : 1.10                         
+REMARK   3   BIN RESOLUTION RANGE LOW        (A) : 1.13                         
+REMARK   3   REFLECTION IN BIN     (WORKING SET) : 727                          
+REMARK   3   BIN COMPLETENESS (WORKING+TEST) (%) : 92.13                        
+REMARK   3   BIN R VALUE           (WORKING SET) : 0.4780                       
+REMARK   3   BIN FREE R VALUE SET COUNT          : 81                           
+REMARK   3   BIN FREE R VALUE                    : 0.5590                       
+REMARK   3                                                                      
+REMARK   3  NUMBER OF NON-HYDROGEN ATOMS USED IN REFINEMENT.                    
+REMARK   3   PROTEIN ATOMS            : 234                                     
+REMARK   3   NUCLEIC ACID ATOMS       : 0                                       
+REMARK   3   HETEROGEN ATOMS          : 0                                       
+REMARK   3   SOLVENT ATOMS            : 56                                      
+REMARK   3                                                                      
+REMARK   3  B VALUES.                                                           
+REMARK   3   FROM WILSON PLOT           (A**2) : 14.00                          
+REMARK   3   MEAN B VALUE      (OVERALL, A**2) : 12.51                          
+REMARK   3   OVERALL ANISOTROPIC B VALUE.                                       
+REMARK   3    B11 (A**2) : 0.15000                                              
+REMARK   3    B22 (A**2) : 0.15000                                              
+REMARK   3    B33 (A**2) : -0.47000                                             
+REMARK   3    B12 (A**2) : 0.07000                                              
+REMARK   3    B13 (A**2) : 0.00000                                              
+REMARK   3    B23 (A**2) : 0.00000                                              
+REMARK   3                                                                      
+REMARK   3  ESTIMATED OVERALL COORDINATE ERROR.                                 
+REMARK   3   ESU BASED ON R VALUE                            (A): 0.035         
+REMARK   3   ESU BASED ON FREE R VALUE                       (A): 0.034         
+REMARK   3   ESU BASED ON MAXIMUM LIKELIHOOD                 (A): 0.017         
+REMARK   3   ESU FOR B VALUES BASED ON MAXIMUM LIKELIHOOD (A**2): 0.759         
+REMARK   3                                                                      
+REMARK   3 CORRELATION COEFFICIENTS.                                            
+REMARK   3   CORRELATION COEFFICIENT FO-FC      : 0.967                         
+REMARK   3   CORRELATION COEFFICIENT FO-FC FREE : 0.959                         
+REMARK   3                                                                      
+REMARK   3  RMS DEVIATIONS FROM IDEAL VALUES        COUNT    RMS    WEIGHT      
+REMARK   3   BOND LENGTHS REFINED ATOMS        (A):   254 ; 0.014 ; 0.013       
+REMARK   3   BOND LENGTHS OTHERS               (A):   284 ; 0.002 ; 0.018       
+REMARK   3   BOND ANGLES REFINED ATOMS   (DEGREES):   337 ; 1.708 ; 1.689       
+REMARK   3   BOND ANGLES OTHERS          (DEGREES):   653 ; 1.528 ; 1.638       
+REMARK   3   TORSION ANGLES, PERIOD 1    (DEGREES):    30 ; 3.214 ; 5.000       
+REMARK   3   TORSION ANGLES, PERIOD 2    (DEGREES):    20 ;28.577 ;17.000       
+REMARK   3   TORSION ANGLES, PERIOD 3    (DEGREES):    65 ;11.929 ;15.000       
+REMARK   3   TORSION ANGLES, PERIOD 4    (DEGREES):     6 ; 6.917 ;15.000       
+REMARK   3   CHIRAL-CENTER RESTRAINTS       (A**3):    33 ; 0.099 ; 0.200       
+REMARK   3   GENERAL PLANES REFINED ATOMS      (A):   279 ; 0.007 ; 0.020       
+REMARK   3   GENERAL PLANES OTHERS             (A):    67 ; 0.001 ; 0.020       
+REMARK   3   NON-BONDED CONTACTS REFINED ATOMS (A):  NULL ;  NULL ;  NULL       
+REMARK   3   NON-BONDED CONTACTS OTHERS        (A):  NULL ;  NULL ;  NULL       
+REMARK   3   NON-BONDED TORSION REFINED ATOMS  (A):  NULL ;  NULL ;  NULL       
+REMARK   3   NON-BONDED TORSION OTHERS         (A):  NULL ;  NULL ;  NULL       
+REMARK   3   H-BOND (X...Y) REFINED ATOMS      (A):  NULL ;  NULL ;  NULL       
+REMARK   3   H-BOND (X...Y) OTHERS             (A):  NULL ;  NULL ;  NULL       
+REMARK   3   POTENTIAL METAL-ION REFINED ATOMS (A):  NULL ;  NULL ;  NULL       
+REMARK   3   POTENTIAL METAL-ION OTHERS        (A):  NULL ;  NULL ;  NULL       
+REMARK   3   SYMMETRY VDW REFINED ATOMS        (A):  NULL ;  NULL ;  NULL       
+REMARK   3   SYMMETRY VDW OTHERS               (A):  NULL ;  NULL ;  NULL       
+REMARK   3   SYMMETRY H-BOND REFINED ATOMS     (A):  NULL ;  NULL ;  NULL       
+REMARK   3   SYMMETRY H-BOND OTHERS            (A):  NULL ;  NULL ;  NULL       
+REMARK   3   SYMMETRY METAL-ION REFINED ATOMS  (A):  NULL ;  NULL ;  NULL       
+REMARK   3   SYMMETRY METAL-ION OTHERS         (A):  NULL ;  NULL ;  NULL       
+REMARK   3                                                                      
+REMARK   3  ISOTROPIC THERMAL FACTOR RESTRAINTS.     COUNT   RMS    WEIGHT      
+REMARK   3   MAIN-CHAIN BOND REFINED ATOMS  (A**2):  NULL ;  NULL ;  NULL       
+REMARK   3   MAIN-CHAIN BOND OTHER ATOMS    (A**2):  NULL ;  NULL ;  NULL       
+REMARK   3   MAIN-CHAIN ANGLE REFINED ATOMS (A**2):  NULL ;  NULL ;  NULL       
+REMARK   3   MAIN-CHAIN ANGLE OTHER ATOMS   (A**2):  NULL ;  NULL ;  NULL       
+REMARK   3   SIDE-CHAIN BOND REFINED ATOMS  (A**2):  NULL ;  NULL ;  NULL       
+REMARK   3   SIDE-CHAIN BOND OTHER ATOMS    (A**2):  NULL ;  NULL ;  NULL       
+REMARK   3   SIDE-CHAIN ANGLE REFINED ATOMS (A**2):  NULL ;  NULL ;  NULL       
+REMARK   3   SIDE-CHAIN ANGLE OTHER ATOMS   (A**2):  NULL ;  NULL ;  NULL       
+REMARK   3   LONG RANGE B REFINED ATOMS     (A**2):  NULL ;  NULL ;  NULL       
+REMARK   3   LONG RANGE B OTHER ATOMS       (A**2):  NULL ;  NULL ;  NULL       
+REMARK   3                                                                      
+REMARK   3 ANISOTROPIC THERMAL FACTOR RESTRAINTS.    COUNT   RMS   WEIGHT       
+REMARK   3   RIGID-BOND RESTRAINTS          (A**2):   538 ; 1.731 ; 3.000       
+REMARK   3   SPHERICITY; FREE ATOMS         (A**2):  NULL ;  NULL ;  NULL       
+REMARK   3   SPHERICITY; BONDED ATOMS       (A**2):  NULL ;  NULL ;  NULL       
+REMARK   3                                                                      
+REMARK   3  NCS RESTRAINTS STATISTICS                                           
+REMARK   3   NUMBER OF DIFFERENT NCS GROUPS : NULL                              
+REMARK   3                                                                      
+REMARK   3  TLS DETAILS                                                         
+REMARK   3   NUMBER OF TLS GROUPS  : NULL                                       
+REMARK   3                                                                      
+REMARK   3  BULK SOLVENT MODELLING.                                             
+REMARK   3   METHOD USED : NULL                                                 
+REMARK   3   PARAMETERS FOR MASK CALCULATION                                    
+REMARK   3   VDW PROBE RADIUS   : 1.20                                          
+REMARK   3   ION PROBE RADIUS   : 0.80                                          
+REMARK   3   SHRINKAGE RADIUS   : 0.80                                          
+REMARK   3                                                                      
+REMARK   3  OTHER REFINEMENT REMARKS: HYDROGENS HAVE BEEN ADDED IN THE RIDING   
+REMARK   3  POSITIONS U VALUES : REFINED INDIVIDUALLY                           
+REMARK   4                                                                      
+REMARK   4 6S6N COMPLIES WITH FORMAT V. 3.30, 13-JUL-11                         
+REMARK 100                                                                      
+REMARK 100 THIS ENTRY HAS BEEN PROCESSED BY PDBE ON 03-JUL-19.                  
+REMARK 100 THE DEPOSITION ID IS D_1292103170.                                   
+REMARK 200                                                                      
+REMARK 200 EXPERIMENTAL DETAILS                                                 
+REMARK 200  EXPERIMENT TYPE                : X-RAY DIFFRACTION                  
+REMARK 200  DATE OF DATA COLLECTION        : 12-MAY-18                          
+REMARK 200  TEMPERATURE           (KELVIN) : 100                                
+REMARK 200  PH                             : NULL                               
+REMARK 200  NUMBER OF CRYSTALS USED        : 1                                  
+REMARK 200                                                                      
+REMARK 200  SYNCHROTRON              (Y/N) : Y                                  
+REMARK 200  RADIATION SOURCE               : ESRF                               
+REMARK 200  BEAMLINE                       : ID23-2                             
+REMARK 200  X-RAY GENERATOR MODEL          : NULL                               
+REMARK 200  MONOCHROMATIC OR LAUE    (M/L) : M                                  
+REMARK 200  WAVELENGTH OR RANGE        (A) : 0.873                              
+REMARK 200  MONOCHROMATOR                  : NULL                               
+REMARK 200  OPTICS                         : NULL                               
+REMARK 200                                                                      
+REMARK 200  DETECTOR TYPE                  : PIXEL                              
+REMARK 200  DETECTOR MANUFACTURER          : DECTRIS PILATUS3 2M                
+REMARK 200  INTENSITY-INTEGRATION SOFTWARE : XDS                                
+REMARK 200  DATA SCALING SOFTWARE          : XSCALE                             
+REMARK 200                                                                      
+REMARK 200  NUMBER OF UNIQUE REFLECTIONS   : 12186                              
+REMARK 200  RESOLUTION RANGE HIGH      (A) : 1.100                              
+REMARK 200  RESOLUTION RANGE LOW       (A) : 35.640                             
+REMARK 200  REJECTION CRITERIA  (SIGMA(I)) : NULL                               
+REMARK 200                                                                      
+REMARK 200 OVERALL.                                                             
+REMARK 200  COMPLETENESS FOR RANGE     (%) : 99.4                               
+REMARK 200  DATA REDUNDANCY                : 18.24                              
+REMARK 200  R MERGE                    (I) : 0.05600                            
+REMARK 200  R SYM                      (I) : NULL                               
+REMARK 200  <I/SIGMA(I)> FOR THE DATA SET  : 31.1200                            
+REMARK 200                                                                      
+REMARK 200 IN THE HIGHEST RESOLUTION SHELL.                                     
+REMARK 200  HIGHEST RESOLUTION SHELL, RANGE HIGH (A) : 1.10                     
+REMARK 200  HIGHEST RESOLUTION SHELL, RANGE LOW  (A) : 1.13                     
+REMARK 200  COMPLETENESS FOR SHELL     (%) : 92.1                               
+REMARK 200  DATA REDUNDANCY IN SHELL       : 6.43                               
+REMARK 200  R MERGE FOR SHELL          (I) : 0.55200                            
+REMARK 200  R SYM FOR SHELL            (I) : NULL                               
+REMARK 200  <I/SIGMA(I)> FOR SHELL         : 3.140                              
+REMARK 200                                                                      
+REMARK 200 DIFFRACTION PROTOCOL: SINGLE WAVELENGTH                              
+REMARK 200 METHOD USED TO DETERMINE THE STRUCTURE: MOLECULAR REPLACEMENT        
+REMARK 200 SOFTWARE USED: PHASER                                                
+REMARK 200 STARTING MODEL: POLY ALA ALPHA-HELIX                                 
+REMARK 200                                                                      
+REMARK 200 REMARK: NULL                                                         
+REMARK 280                                                                      
+REMARK 280 CRYSTAL                                                              
+REMARK 280 SOLVENT CONTENT, VS   (%): 41.52                                     
+REMARK 280 MATTHEWS COEFFICIENT, VM (ANGSTROMS**3/DA): 2.10                     
+REMARK 280                                                                      
+REMARK 280 CRYSTALLIZATION CONDITIONS: RESERVOIR CONTAINED 0.1 M HEPES PH       
+REMARK 280  7.5, 1.4 M SODIUM CITRATE, VAPOR DIFFUSION, HANGING DROP,           
+REMARK 280  TEMPERATURE 293K                                                    
+REMARK 290                                                                      
+REMARK 290 CRYSTALLOGRAPHIC SYMMETRY                                            
+REMARK 290 SYMMETRY OPERATORS FOR SPACE GROUP: P 61 2 2                         
+REMARK 290                                                                      
+REMARK 290      SYMOP   SYMMETRY                                                
+REMARK 290     NNNMMM   OPERATOR                                                
+REMARK 290       1555   X,Y,Z                                                   
+REMARK 290       2555   -Y,X-Y,Z+1/3                                            
+REMARK 290       3555   -X+Y,-X,Z+2/3                                           
+REMARK 290       4555   -X,-Y,Z+1/2                                             
+REMARK 290       5555   Y,-X+Y,Z+5/6                                            
+REMARK 290       6555   X-Y,X,Z+1/6                                             
+REMARK 290       7555   Y,X,-Z+1/3                                              
+REMARK 290       8555   X-Y,-Y,-Z                                               
+REMARK 290       9555   -X,-X+Y,-Z+2/3                                          
+REMARK 290      10555   -Y,-X,-Z+5/6                                            
+REMARK 290      11555   -X+Y,Y,-Z+1/2                                           
+REMARK 290      12555   X,X-Y,-Z+1/6                                            
+REMARK 290                                                                      
+REMARK 290     WHERE NNN -> OPERATOR NUMBER                                     
+REMARK 290           MMM -> TRANSLATION VECTOR                                  
+REMARK 290                                                                      
+REMARK 290 CRYSTALLOGRAPHIC SYMMETRY TRANSFORMATIONS                            
+REMARK 290 THE FOLLOWING TRANSFORMATIONS OPERATE ON THE ATOM/HETATM             
+REMARK 290 RECORDS IN THIS ENTRY TO PRODUCE CRYSTALLOGRAPHICALLY                
+REMARK 290 RELATED MOLECULES.                                                   
+REMARK 290   SMTRY1   1  1.000000  0.000000  0.000000        0.00000            
+REMARK 290   SMTRY2   1  0.000000  1.000000  0.000000        0.00000            
+REMARK 290   SMTRY3   1  0.000000  0.000000  1.000000        0.00000            
+REMARK 290   SMTRY1   2 -0.500000 -0.866025  0.000000        0.00000            
+REMARK 290   SMTRY2   2  0.866025 -0.500000  0.000000        0.00000            
+REMARK 290   SMTRY3   2  0.000000  0.000000  1.000000       19.09333            
+REMARK 290   SMTRY1   3 -0.500000  0.866025  0.000000        0.00000            
+REMARK 290   SMTRY2   3 -0.866025 -0.500000  0.000000        0.00000            
+REMARK 290   SMTRY3   3  0.000000  0.000000  1.000000       38.18667            
+REMARK 290   SMTRY1   4 -1.000000  0.000000  0.000000        0.00000            
+REMARK 290   SMTRY2   4  0.000000 -1.000000  0.000000        0.00000            
+REMARK 290   SMTRY3   4  0.000000  0.000000  1.000000       28.64000            
+REMARK 290   SMTRY1   5  0.500000  0.866025  0.000000        0.00000            
+REMARK 290   SMTRY2   5 -0.866025  0.500000  0.000000        0.00000            
+REMARK 290   SMTRY3   5  0.000000  0.000000  1.000000       47.73333            
+REMARK 290   SMTRY1   6  0.500000 -0.866025  0.000000        0.00000            
+REMARK 290   SMTRY2   6  0.866025  0.500000  0.000000        0.00000            
+REMARK 290   SMTRY3   6  0.000000  0.000000  1.000000        9.54667            
+REMARK 290   SMTRY1   7 -0.500000  0.866025  0.000000        0.00000            
+REMARK 290   SMTRY2   7  0.866025  0.500000  0.000000        0.00000            
+REMARK 290   SMTRY3   7  0.000000  0.000000 -1.000000       19.09333            
+REMARK 290   SMTRY1   8  1.000000  0.000000  0.000000        0.00000            
+REMARK 290   SMTRY2   8  0.000000 -1.000000  0.000000        0.00000            
+REMARK 290   SMTRY3   8  0.000000  0.000000 -1.000000        0.00000            
+REMARK 290   SMTRY1   9 -0.500000 -0.866025  0.000000        0.00000            
+REMARK 290   SMTRY2   9 -0.866025  0.500000  0.000000        0.00000            
+REMARK 290   SMTRY3   9  0.000000  0.000000 -1.000000       38.18667            
+REMARK 290   SMTRY1  10  0.500000 -0.866025  0.000000        0.00000            
+REMARK 290   SMTRY2  10 -0.866025 -0.500000  0.000000        0.00000            
+REMARK 290   SMTRY3  10  0.000000  0.000000 -1.000000       47.73333            
+REMARK 290   SMTRY1  11 -1.000000  0.000000  0.000000        0.00000            
+REMARK 290   SMTRY2  11  0.000000  1.000000  0.000000        0.00000            
+REMARK 290   SMTRY3  11  0.000000  0.000000 -1.000000       28.64000            
+REMARK 290   SMTRY1  12  0.500000  0.866025  0.000000        0.00000            
+REMARK 290   SMTRY2  12  0.866025 -0.500000  0.000000        0.00000            
+REMARK 290   SMTRY3  12  0.000000  0.000000 -1.000000        9.54667            
+REMARK 290                                                                      
+REMARK 290 REMARK: NULL                                                         
+REMARK 300                                                                      
+REMARK 300 BIOMOLECULE: 1                                                       
+REMARK 300 SEE REMARK 350 FOR THE AUTHOR PROVIDED AND/OR PROGRAM                
+REMARK 300 GENERATED ASSEMBLY INFORMATION FOR THE STRUCTURE IN                  
+REMARK 300 THIS ENTRY. THE REMARK MAY ALSO PROVIDE INFORMATION ON               
+REMARK 300 BURIED SURFACE AREA.                                                 
+REMARK 350                                                                      
+REMARK 350 COORDINATES FOR A COMPLETE MULTIMER REPRESENTING THE KNOWN           
+REMARK 350 BIOLOGICALLY SIGNIFICANT OLIGOMERIZATION STATE OF THE                
+REMARK 350 MOLECULE CAN BE GENERATED BY APPLYING BIOMT TRANSFORMATIONS          
+REMARK 350 GIVEN BELOW.  BOTH NON-CRYSTALLOGRAPHIC AND                          
+REMARK 350 CRYSTALLOGRAPHIC OPERATIONS ARE GIVEN.                               
+REMARK 350                                                                      
+REMARK 350 BIOMOLECULE: 1                                                       
+REMARK 350 AUTHOR DETERMINED BIOLOGICAL UNIT: 360-MERIC                         
+REMARK 350 APPLY THE FOLLOWING TO CHAINS: A                                     
+REMARK 350   BIOMT1   1  1.000000  0.000000  0.000000        0.00000            
+REMARK 350   BIOMT2   1  0.000000  1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3   1  0.000000  0.000000  1.000000        0.00000            
+REMARK 350   BIOMT1   2  1.000000  0.000000  0.000000        0.00000            
+REMARK 350   BIOMT2   2  0.000000  1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3   2  0.000000  0.000000  1.000000      -57.28000            
+REMARK 350   BIOMT1   3  1.000000  0.000000  0.000000        0.00000            
+REMARK 350   BIOMT2   3  0.000000  1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3   3  0.000000  0.000000  1.000000     -114.56000            
+REMARK 350   BIOMT1   4  1.000000  0.000000  0.000000        0.00000            
+REMARK 350   BIOMT2   4  0.000000  1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3   4  0.000000  0.000000  1.000000     -171.84000            
+REMARK 350   BIOMT1   5  1.000000  0.000000  0.000000        0.00000            
+REMARK 350   BIOMT2   5  0.000000  1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3   5  0.000000  0.000000  1.000000     -229.12000            
+REMARK 350   BIOMT1   6  1.000000  0.000000  0.000000       20.57500            
+REMARK 350   BIOMT2   6  0.000000  1.000000  0.000000       35.63695            
+REMARK 350   BIOMT3   6  0.000000  0.000000  1.000000        0.00000            
+REMARK 350   BIOMT1   7  1.000000  0.000000  0.000000       20.57500            
+REMARK 350   BIOMT2   7  0.000000  1.000000  0.000000       35.63695            
+REMARK 350   BIOMT3   7  0.000000  0.000000  1.000000      -57.28000            
+REMARK 350   BIOMT1   8  1.000000  0.000000  0.000000       20.57500            
+REMARK 350   BIOMT2   8  0.000000  1.000000  0.000000       35.63695            
+REMARK 350   BIOMT3   8  0.000000  0.000000  1.000000     -114.56000            
+REMARK 350   BIOMT1   9  1.000000  0.000000  0.000000       20.57500            
+REMARK 350   BIOMT2   9  0.000000  1.000000  0.000000       35.63695            
+REMARK 350   BIOMT3   9  0.000000  0.000000  1.000000     -171.84000            
+REMARK 350   BIOMT1  10  1.000000  0.000000  0.000000       20.57500            
+REMARK 350   BIOMT2  10  0.000000  1.000000  0.000000       35.63695            
+REMARK 350   BIOMT3  10  0.000000  0.000000  1.000000     -229.12000            
+REMARK 350   BIOMT1  11  1.000000  0.000000  0.000000       41.15000            
+REMARK 350   BIOMT2  11  0.000000  1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  11  0.000000  0.000000  1.000000        0.00000            
+REMARK 350   BIOMT1  12  1.000000  0.000000  0.000000       41.15000            
+REMARK 350   BIOMT2  12  0.000000  1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  12  0.000000  0.000000  1.000000      -57.28000            
+REMARK 350   BIOMT1  13  1.000000  0.000000  0.000000       41.15000            
+REMARK 350   BIOMT2  13  0.000000  1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  13  0.000000  0.000000  1.000000     -114.56000            
+REMARK 350   BIOMT1  14  1.000000  0.000000  0.000000       41.15000            
+REMARK 350   BIOMT2  14  0.000000  1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  14  0.000000  0.000000  1.000000     -171.84000            
+REMARK 350   BIOMT1  15  1.000000  0.000000  0.000000       41.15000            
+REMARK 350   BIOMT2  15  0.000000  1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  15  0.000000  0.000000  1.000000     -229.12000            
+REMARK 350   BIOMT1  16 -0.500000 -0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  16  0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  16  0.000000  0.000000  1.000000       19.09333            
+REMARK 350   BIOMT1  17 -0.500000 -0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  17  0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  17  0.000000  0.000000  1.000000      -38.18667            
+REMARK 350   BIOMT1  18 -0.500000 -0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  18  0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  18  0.000000  0.000000  1.000000      -95.46667            
+REMARK 350   BIOMT1  19 -0.500000 -0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  19  0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  19  0.000000  0.000000  1.000000     -152.74667            
+REMARK 350   BIOMT1  20 -0.500000 -0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  20  0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  20  0.000000  0.000000  1.000000     -210.02667            
+REMARK 350   BIOMT1  21 -0.500000 -0.866025  0.000000      -41.15000            
+REMARK 350   BIOMT2  21  0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  21  0.000000  0.000000  1.000000       19.09333            
+REMARK 350   BIOMT1  22 -0.500000 -0.866025  0.000000      -41.15000            
+REMARK 350   BIOMT2  22  0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  22  0.000000  0.000000  1.000000      -38.18667            
+REMARK 350   BIOMT1  23 -0.500000 -0.866025  0.000000      -41.15000            
+REMARK 350   BIOMT2  23  0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  23  0.000000  0.000000  1.000000      -95.46667            
+REMARK 350   BIOMT1  24 -0.500000 -0.866025  0.000000      -41.15000            
+REMARK 350   BIOMT2  24  0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  24  0.000000  0.000000  1.000000     -152.74667            
+REMARK 350   BIOMT1  25 -0.500000 -0.866025  0.000000      -41.15000            
+REMARK 350   BIOMT2  25  0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  25  0.000000  0.000000  1.000000     -210.02667            
+REMARK 350   BIOMT1  26 -0.500000 -0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  26  0.866025 -0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  26  0.000000  0.000000  1.000000       19.09333            
+REMARK 350   BIOMT1  27 -0.500000 -0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  27  0.866025 -0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  27  0.000000  0.000000  1.000000      -38.18667            
+REMARK 350   BIOMT1  28 -0.500000 -0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  28  0.866025 -0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  28  0.000000  0.000000  1.000000      -95.46667            
+REMARK 350   BIOMT1  29 -0.500000 -0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  29  0.866025 -0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  29  0.000000  0.000000  1.000000     -152.74667            
+REMARK 350   BIOMT1  30 -0.500000 -0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  30  0.866025 -0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  30  0.000000  0.000000  1.000000     -210.02667            
+REMARK 350   BIOMT1  31 -0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  31 -0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  31  0.000000  0.000000  1.000000       38.18667            
+REMARK 350   BIOMT1  32 -0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  32 -0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  32  0.000000  0.000000  1.000000      -19.09333            
+REMARK 350   BIOMT1  33 -0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  33 -0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  33  0.000000  0.000000  1.000000      -76.37333            
+REMARK 350   BIOMT1  34 -0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  34 -0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  34  0.000000  0.000000  1.000000     -133.65333            
+REMARK 350   BIOMT1  35 -0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  35 -0.866025 -0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  35  0.000000  0.000000  1.000000     -190.93333            
+REMARK 350   BIOMT1  36 -0.500000  0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  36 -0.866025 -0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  36  0.000000  0.000000  1.000000       38.18667            
+REMARK 350   BIOMT1  37 -0.500000  0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  37 -0.866025 -0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  37  0.000000  0.000000  1.000000      -19.09333            
+REMARK 350   BIOMT1  38 -0.500000  0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  38 -0.866025 -0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  38  0.000000  0.000000  1.000000      -76.37333            
+REMARK 350   BIOMT1  39 -0.500000  0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  39 -0.866025 -0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  39  0.000000  0.000000  1.000000     -133.65333            
+REMARK 350   BIOMT1  40 -0.500000  0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  40 -0.866025 -0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  40  0.000000  0.000000  1.000000     -190.93333            
+REMARK 350   BIOMT1  41 -0.500000  0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  41 -0.866025 -0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  41  0.000000  0.000000  1.000000       38.18667            
+REMARK 350   BIOMT1  42 -0.500000  0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  42 -0.866025 -0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  42  0.000000  0.000000  1.000000      -19.09333            
+REMARK 350   BIOMT1  43 -0.500000  0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  43 -0.866025 -0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  43  0.000000  0.000000  1.000000      -76.37333            
+REMARK 350   BIOMT1  44 -0.500000  0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  44 -0.866025 -0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  44  0.000000  0.000000  1.000000     -133.65333            
+REMARK 350   BIOMT1  45 -0.500000  0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  45 -0.866025 -0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  45  0.000000  0.000000  1.000000     -190.93333            
+REMARK 350   BIOMT1  46 -1.000000  0.000000  0.000000        0.00000            
+REMARK 350   BIOMT2  46  0.000000 -1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  46  0.000000  0.000000  1.000000       28.64000            
+REMARK 350   BIOMT1  47 -1.000000  0.000000  0.000000        0.00000            
+REMARK 350   BIOMT2  47  0.000000 -1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  47  0.000000  0.000000  1.000000      -28.64000            
+REMARK 350   BIOMT1  48 -1.000000  0.000000  0.000000        0.00000            
+REMARK 350   BIOMT2  48  0.000000 -1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  48  0.000000  0.000000  1.000000      -85.92000            
+REMARK 350   BIOMT1  49 -1.000000  0.000000  0.000000        0.00000            
+REMARK 350   BIOMT2  49  0.000000 -1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  49  0.000000  0.000000  1.000000     -143.20000            
+REMARK 350   BIOMT1  50 -1.000000  0.000000  0.000000        0.00000            
+REMARK 350   BIOMT2  50  0.000000 -1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  50  0.000000  0.000000  1.000000     -200.48000            
+REMARK 350   BIOMT1  51 -1.000000  0.000000  0.000000      -20.57500            
+REMARK 350   BIOMT2  51  0.000000 -1.000000  0.000000      -35.63695            
+REMARK 350   BIOMT3  51  0.000000  0.000000  1.000000       28.64000            
+REMARK 350   BIOMT1  52 -1.000000  0.000000  0.000000      -20.57500            
+REMARK 350   BIOMT2  52  0.000000 -1.000000  0.000000      -35.63695            
+REMARK 350   BIOMT3  52  0.000000  0.000000  1.000000      -28.64000            
+REMARK 350   BIOMT1  53 -1.000000  0.000000  0.000000      -20.57500            
+REMARK 350   BIOMT2  53  0.000000 -1.000000  0.000000      -35.63695            
+REMARK 350   BIOMT3  53  0.000000  0.000000  1.000000      -85.92000            
+REMARK 350   BIOMT1  54 -1.000000  0.000000  0.000000      -20.57500            
+REMARK 350   BIOMT2  54  0.000000 -1.000000  0.000000      -35.63695            
+REMARK 350   BIOMT3  54  0.000000  0.000000  1.000000     -143.20000            
+REMARK 350   BIOMT1  55 -1.000000  0.000000  0.000000      -20.57500            
+REMARK 350   BIOMT2  55  0.000000 -1.000000  0.000000      -35.63695            
+REMARK 350   BIOMT3  55  0.000000  0.000000  1.000000     -200.48000            
+REMARK 350   BIOMT1  56 -1.000000  0.000000  0.000000      -41.15000            
+REMARK 350   BIOMT2  56  0.000000 -1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  56  0.000000  0.000000  1.000000       28.64000            
+REMARK 350   BIOMT1  57 -1.000000  0.000000  0.000000      -41.15000            
+REMARK 350   BIOMT2  57  0.000000 -1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  57  0.000000  0.000000  1.000000      -28.64000            
+REMARK 350   BIOMT1  58 -1.000000  0.000000  0.000000      -41.15000            
+REMARK 350   BIOMT2  58  0.000000 -1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  58  0.000000  0.000000  1.000000      -85.92000            
+REMARK 350   BIOMT1  59 -1.000000  0.000000  0.000000      -41.15000            
+REMARK 350   BIOMT2  59  0.000000 -1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  59  0.000000  0.000000  1.000000     -143.20000            
+REMARK 350   BIOMT1  60 -1.000000  0.000000  0.000000      -41.15000            
+REMARK 350   BIOMT2  60  0.000000 -1.000000  0.000000        0.00000            
+REMARK 350   BIOMT3  60  0.000000  0.000000  1.000000     -200.48000            
+REMARK 350   BIOMT1  61  0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  61 -0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  61  0.000000  0.000000  1.000000       47.73333            
+REMARK 350   BIOMT1  62  0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  62 -0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  62  0.000000  0.000000  1.000000       -9.54667            
+REMARK 350   BIOMT1  63  0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  63 -0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  63  0.000000  0.000000  1.000000      -66.82667            
+REMARK 350   BIOMT1  64  0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  64 -0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  64  0.000000  0.000000  1.000000     -124.10667            
+REMARK 350   BIOMT1  65  0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  65 -0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  65  0.000000  0.000000  1.000000     -181.38667            
+REMARK 350   BIOMT1  66  0.500000  0.866025  0.000000       41.15000            
+REMARK 350   BIOMT2  66 -0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  66  0.000000  0.000000  1.000000       47.73333            
+REMARK 350   BIOMT1  67  0.500000  0.866025  0.000000       41.15000            
+REMARK 350   BIOMT2  67 -0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  67  0.000000  0.000000  1.000000       -9.54667            
+REMARK 350   BIOMT1  68  0.500000  0.866025  0.000000       41.15000            
+REMARK 350   BIOMT2  68 -0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  68  0.000000  0.000000  1.000000      -66.82667            
+REMARK 350   BIOMT1  69  0.500000  0.866025  0.000000       41.15000            
+REMARK 350   BIOMT2  69 -0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  69  0.000000  0.000000  1.000000     -124.10667            
+REMARK 350   BIOMT1  70  0.500000  0.866025  0.000000       41.15000            
+REMARK 350   BIOMT2  70 -0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  70  0.000000  0.000000  1.000000     -181.38667            
+REMARK 350   BIOMT1  71  0.500000  0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  71 -0.866025  0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  71  0.000000  0.000000  1.000000       47.73333            
+REMARK 350   BIOMT1  72  0.500000  0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  72 -0.866025  0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  72  0.000000  0.000000  1.000000       -9.54667            
+REMARK 350   BIOMT1  73  0.500000  0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  73 -0.866025  0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  73  0.000000  0.000000  1.000000      -66.82667            
+REMARK 350   BIOMT1  74  0.500000  0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  74 -0.866025  0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  74  0.000000  0.000000  1.000000     -124.10667            
+REMARK 350   BIOMT1  75  0.500000  0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  75 -0.866025  0.500000  0.000000      -35.63695            
+REMARK 350   BIOMT3  75  0.000000  0.000000  1.000000     -181.38667            
+REMARK 350   BIOMT1  76  0.500000 -0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  76  0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  76  0.000000  0.000000  1.000000        9.54667            
+REMARK 350   BIOMT1  77  0.500000 -0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  77  0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  77  0.000000  0.000000  1.000000      -47.73333            
+REMARK 350   BIOMT1  78  0.500000 -0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  78  0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  78  0.000000  0.000000  1.000000     -105.01333            
+REMARK 350   BIOMT1  79  0.500000 -0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  79  0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  79  0.000000  0.000000  1.000000     -162.29333            
+REMARK 350   BIOMT1  80  0.500000 -0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  80  0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  80  0.000000  0.000000  1.000000     -219.57333            
+REMARK 350   BIOMT1  81  0.500000 -0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  81  0.866025  0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  81  0.000000  0.000000  1.000000        9.54667            
+REMARK 350   BIOMT1  82  0.500000 -0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  82  0.866025  0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  82  0.000000  0.000000  1.000000      -47.73333            
+REMARK 350   BIOMT1  83  0.500000 -0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  83  0.866025  0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  83  0.000000  0.000000  1.000000     -105.01333            
+REMARK 350   BIOMT1  84  0.500000 -0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  84  0.866025  0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  84  0.000000  0.000000  1.000000     -162.29333            
+REMARK 350   BIOMT1  85  0.500000 -0.866025  0.000000      -20.57500            
+REMARK 350   BIOMT2  85  0.866025  0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  85  0.000000  0.000000  1.000000     -219.57333            
+REMARK 350   BIOMT1  86  0.500000 -0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  86  0.866025  0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  86  0.000000  0.000000  1.000000        9.54667            
+REMARK 350   BIOMT1  87  0.500000 -0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  87  0.866025  0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  87  0.000000  0.000000  1.000000      -47.73333            
+REMARK 350   BIOMT1  88  0.500000 -0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  88  0.866025  0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  88  0.000000  0.000000  1.000000     -105.01333            
+REMARK 350   BIOMT1  89  0.500000 -0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  89  0.866025  0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  89  0.000000  0.000000  1.000000     -162.29333            
+REMARK 350   BIOMT1  90  0.500000 -0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  90  0.866025  0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  90  0.000000  0.000000  1.000000     -219.57333            
+REMARK 350   BIOMT1  91 -0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  91  0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  91  0.000000  0.000000 -1.000000       19.09333            
+REMARK 350   BIOMT1  92 -0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  92  0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  92  0.000000  0.000000 -1.000000      -38.18667            
+REMARK 350   BIOMT1  93 -0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  93  0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  93  0.000000  0.000000 -1.000000      -95.46667            
+REMARK 350   BIOMT1  94 -0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  94  0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  94  0.000000  0.000000 -1.000000     -152.74667            
+REMARK 350   BIOMT1  95 -0.500000  0.866025  0.000000        0.00000            
+REMARK 350   BIOMT2  95  0.866025  0.500000  0.000000        0.00000            
+REMARK 350   BIOMT3  95  0.000000  0.000000 -1.000000     -210.02667            
+REMARK 350   BIOMT1  96 -0.500000  0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  96  0.866025  0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  96  0.000000  0.000000 -1.000000       19.09333            
+REMARK 350   BIOMT1  97 -0.500000  0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  97  0.866025  0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  97  0.000000  0.000000 -1.000000      -38.18667            
+REMARK 350   BIOMT1  98 -0.500000  0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  98  0.866025  0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  98  0.000000  0.000000 -1.000000      -95.46667            
+REMARK 350   BIOMT1  99 -0.500000  0.866025  0.000000       20.57500            
+REMARK 350   BIOMT2  99  0.866025  0.500000  0.000000       35.63695            
+REMARK 350   BIOMT3  99  0.000000  0.000000 -1.000000     -152.74667            
+REMARK 350   BIOMT1  100 -0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  100  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  100  0.000000  0.000000 -1.000000     -210.02667           
+REMARK 350   BIOMT1  101 -0.500000  0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  101  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  101  0.000000  0.000000 -1.000000       19.09333           
+REMARK 350   BIOMT1  102 -0.500000  0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  102  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  102  0.000000  0.000000 -1.000000      -38.18667           
+REMARK 350   BIOMT1  103 -0.500000  0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  103  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  103  0.000000  0.000000 -1.000000      -95.46667           
+REMARK 350   BIOMT1  104 -0.500000  0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  104  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  104  0.000000  0.000000 -1.000000     -152.74667           
+REMARK 350   BIOMT1  105 -0.500000  0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  105  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  105  0.000000  0.000000 -1.000000     -210.02667           
+REMARK 350   BIOMT1  106  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  106  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  106  0.000000  0.000000 -1.000000        0.00000           
+REMARK 350   BIOMT1  107  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  107  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  107  0.000000  0.000000 -1.000000      -57.28000           
+REMARK 350   BIOMT1  108  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  108  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  108  0.000000  0.000000 -1.000000     -114.56000           
+REMARK 350   BIOMT1  109  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  109  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  109  0.000000  0.000000 -1.000000     -171.84000           
+REMARK 350   BIOMT1  110  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  110  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  110  0.000000  0.000000 -1.000000     -229.12000           
+REMARK 350   BIOMT1  111  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  111  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  111  0.000000  0.000000 -1.000000        0.00000           
+REMARK 350   BIOMT1  112  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  112  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  112  0.000000  0.000000 -1.000000      -57.28000           
+REMARK 350   BIOMT1  113  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  113  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  113  0.000000  0.000000 -1.000000     -114.56000           
+REMARK 350   BIOMT1  114  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  114  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  114  0.000000  0.000000 -1.000000     -171.84000           
+REMARK 350   BIOMT1  115  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  115  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  115  0.000000  0.000000 -1.000000     -229.12000           
+REMARK 350   BIOMT1  116  1.000000  0.000000  0.000000       41.15000           
+REMARK 350   BIOMT2  116  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  116  0.000000  0.000000 -1.000000        0.00000           
+REMARK 350   BIOMT1  117  1.000000  0.000000  0.000000       41.15000           
+REMARK 350   BIOMT2  117  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  117  0.000000  0.000000 -1.000000      -57.28000           
+REMARK 350   BIOMT1  118  1.000000  0.000000  0.000000       41.15000           
+REMARK 350   BIOMT2  118  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  118  0.000000  0.000000 -1.000000     -114.56000           
+REMARK 350   BIOMT1  119  1.000000  0.000000  0.000000       41.15000           
+REMARK 350   BIOMT2  119  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  119  0.000000  0.000000 -1.000000     -171.84000           
+REMARK 350   BIOMT1  120  1.000000  0.000000  0.000000       41.15000           
+REMARK 350   BIOMT2  120  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  120  0.000000  0.000000 -1.000000     -229.12000           
+REMARK 350   BIOMT1  121 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  121 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  121  0.000000  0.000000 -1.000000       38.18667           
+REMARK 350   BIOMT1  122 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  122 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  122  0.000000  0.000000 -1.000000      -19.09333           
+REMARK 350   BIOMT1  123 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  123 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  123  0.000000  0.000000 -1.000000      -76.37333           
+REMARK 350   BIOMT1  124 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  124 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  124  0.000000  0.000000 -1.000000     -133.65333           
+REMARK 350   BIOMT1  125 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  125 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  125  0.000000  0.000000 -1.000000     -190.93333           
+REMARK 350   BIOMT1  126 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  126 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  126  0.000000  0.000000 -1.000000       38.18667           
+REMARK 350   BIOMT1  127 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  127 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  127  0.000000  0.000000 -1.000000      -19.09333           
+REMARK 350   BIOMT1  128 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  128 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  128  0.000000  0.000000 -1.000000      -76.37333           
+REMARK 350   BIOMT1  129 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  129 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  129  0.000000  0.000000 -1.000000     -133.65333           
+REMARK 350   BIOMT1  130 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  130 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  130  0.000000  0.000000 -1.000000     -190.93333           
+REMARK 350   BIOMT1  131 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  131 -0.866025  0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  131  0.000000  0.000000 -1.000000       38.18667           
+REMARK 350   BIOMT1  132 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  132 -0.866025  0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  132  0.000000  0.000000 -1.000000      -19.09333           
+REMARK 350   BIOMT1  133 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  133 -0.866025  0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  133  0.000000  0.000000 -1.000000      -76.37333           
+REMARK 350   BIOMT1  134 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  134 -0.866025  0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  134  0.000000  0.000000 -1.000000     -133.65333           
+REMARK 350   BIOMT1  135 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  135 -0.866025  0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  135  0.000000  0.000000 -1.000000     -190.93333           
+REMARK 350   BIOMT1  136  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  136 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  136  0.000000  0.000000 -1.000000       47.73333           
+REMARK 350   BIOMT1  137  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  137 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  137  0.000000  0.000000 -1.000000       -9.54667           
+REMARK 350   BIOMT1  138  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  138 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  138  0.000000  0.000000 -1.000000      -66.82667           
+REMARK 350   BIOMT1  139  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  139 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  139  0.000000  0.000000 -1.000000     -124.10667           
+REMARK 350   BIOMT1  140  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  140 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  140  0.000000  0.000000 -1.000000     -181.38667           
+REMARK 350   BIOMT1  141  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  141 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  141  0.000000  0.000000 -1.000000       47.73333           
+REMARK 350   BIOMT1  142  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  142 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  142  0.000000  0.000000 -1.000000       -9.54667           
+REMARK 350   BIOMT1  143  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  143 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  143  0.000000  0.000000 -1.000000      -66.82667           
+REMARK 350   BIOMT1  144  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  144 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  144  0.000000  0.000000 -1.000000     -124.10667           
+REMARK 350   BIOMT1  145  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  145 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  145  0.000000  0.000000 -1.000000     -181.38667           
+REMARK 350   BIOMT1  146  0.500000 -0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  146 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  146  0.000000  0.000000 -1.000000       47.73333           
+REMARK 350   BIOMT1  147  0.500000 -0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  147 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  147  0.000000  0.000000 -1.000000       -9.54667           
+REMARK 350   BIOMT1  148  0.500000 -0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  148 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  148  0.000000  0.000000 -1.000000      -66.82667           
+REMARK 350   BIOMT1  149  0.500000 -0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  149 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  149  0.000000  0.000000 -1.000000     -124.10667           
+REMARK 350   BIOMT1  150  0.500000 -0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  150 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  150  0.000000  0.000000 -1.000000     -181.38667           
+REMARK 350   BIOMT1  151 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  151  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  151  0.000000  0.000000 -1.000000       28.64000           
+REMARK 350   BIOMT1  152 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  152  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  152  0.000000  0.000000 -1.000000      -28.64000           
+REMARK 350   BIOMT1  153 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  153  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  153  0.000000  0.000000 -1.000000      -85.92000           
+REMARK 350   BIOMT1  154 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  154  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  154  0.000000  0.000000 -1.000000     -143.20000           
+REMARK 350   BIOMT1  155 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  155  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  155  0.000000  0.000000 -1.000000     -200.48000           
+REMARK 350   BIOMT1  156 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  156  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  156  0.000000  0.000000 -1.000000       28.64000           
+REMARK 350   BIOMT1  157 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  157  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  157  0.000000  0.000000 -1.000000      -28.64000           
+REMARK 350   BIOMT1  158 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  158  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  158  0.000000  0.000000 -1.000000      -85.92000           
+REMARK 350   BIOMT1  159 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  159  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  159  0.000000  0.000000 -1.000000     -143.20000           
+REMARK 350   BIOMT1  160 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  160  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  160  0.000000  0.000000 -1.000000     -200.48000           
+REMARK 350   BIOMT1  161 -1.000000  0.000000  0.000000      -41.15000           
+REMARK 350   BIOMT2  161  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  161  0.000000  0.000000 -1.000000       28.64000           
+REMARK 350   BIOMT1  162 -1.000000  0.000000  0.000000      -41.15000           
+REMARK 350   BIOMT2  162  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  162  0.000000  0.000000 -1.000000      -28.64000           
+REMARK 350   BIOMT1  163 -1.000000  0.000000  0.000000      -41.15000           
+REMARK 350   BIOMT2  163  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  163  0.000000  0.000000 -1.000000      -85.92000           
+REMARK 350   BIOMT1  164 -1.000000  0.000000  0.000000      -41.15000           
+REMARK 350   BIOMT2  164  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  164  0.000000  0.000000 -1.000000     -143.20000           
+REMARK 350   BIOMT1  165 -1.000000  0.000000  0.000000      -41.15000           
+REMARK 350   BIOMT2  165  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  165  0.000000  0.000000 -1.000000     -200.48000           
+REMARK 350   BIOMT1  166  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  166  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  166  0.000000  0.000000 -1.000000        9.54667           
+REMARK 350   BIOMT1  167  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  167  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  167  0.000000  0.000000 -1.000000      -47.73333           
+REMARK 350   BIOMT1  168  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  168  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  168  0.000000  0.000000 -1.000000     -105.01333           
+REMARK 350   BIOMT1  169  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  169  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  169  0.000000  0.000000 -1.000000     -162.29333           
+REMARK 350   BIOMT1  170  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  170  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  170  0.000000  0.000000 -1.000000     -219.57333           
+REMARK 350   BIOMT1  171  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  171  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  171  0.000000  0.000000 -1.000000        9.54667           
+REMARK 350   BIOMT1  172  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  172  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  172  0.000000  0.000000 -1.000000      -47.73333           
+REMARK 350   BIOMT1  173  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  173  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  173  0.000000  0.000000 -1.000000     -105.01333           
+REMARK 350   BIOMT1  174  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  174  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  174  0.000000  0.000000 -1.000000     -162.29333           
+REMARK 350   BIOMT1  175  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  175  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  175  0.000000  0.000000 -1.000000     -219.57333           
+REMARK 350   BIOMT1  176  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  176  0.866025 -0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  176  0.000000  0.000000 -1.000000        9.54667           
+REMARK 350   BIOMT1  177  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  177  0.866025 -0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  177  0.000000  0.000000 -1.000000      -47.73333           
+REMARK 350   BIOMT1  178  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  178  0.866025 -0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  178  0.000000  0.000000 -1.000000     -105.01333           
+REMARK 350   BIOMT1  179  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  179  0.866025 -0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  179  0.000000  0.000000 -1.000000     -162.29333           
+REMARK 350   BIOMT1  180  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  180  0.866025 -0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  180  0.000000  0.000000 -1.000000     -219.57333           
+REMARK 350 APPLY THE FOLLOWING TO CHAINS: B                                     
+REMARK 350   BIOMT1  181  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  181  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  181  0.000000  0.000000  1.000000        0.00000           
+REMARK 350   BIOMT1  182  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  182  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  182  0.000000  0.000000  1.000000      -57.28000           
+REMARK 350   BIOMT1  183  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  183  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  183  0.000000  0.000000  1.000000     -114.56000           
+REMARK 350   BIOMT1  184  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  184  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  184  0.000000  0.000000  1.000000     -171.84000           
+REMARK 350   BIOMT1  185  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  185  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  185  0.000000  0.000000  1.000000     -229.12000           
+REMARK 350   BIOMT1  186  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  186  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  186  0.000000  0.000000  1.000000        0.00000           
+REMARK 350   BIOMT1  187  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  187  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  187  0.000000  0.000000  1.000000      -57.28000           
+REMARK 350   BIOMT1  188  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  188  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  188  0.000000  0.000000  1.000000     -114.56000           
+REMARK 350   BIOMT1  189  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  189  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  189  0.000000  0.000000  1.000000     -171.84000           
+REMARK 350   BIOMT1  190  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  190  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  190  0.000000  0.000000  1.000000     -229.12000           
+REMARK 350   BIOMT1  191  1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  191  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  191  0.000000  0.000000  1.000000        0.00000           
+REMARK 350   BIOMT1  192  1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  192  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  192  0.000000  0.000000  1.000000      -57.28000           
+REMARK 350   BIOMT1  193  1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  193  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  193  0.000000  0.000000  1.000000     -114.56000           
+REMARK 350   BIOMT1  194  1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  194  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  194  0.000000  0.000000  1.000000     -171.84000           
+REMARK 350   BIOMT1  195  1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  195  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  195  0.000000  0.000000  1.000000     -229.12000           
+REMARK 350   BIOMT1  196 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  196  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  196  0.000000  0.000000  1.000000       19.09333           
+REMARK 350   BIOMT1  197 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  197  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  197  0.000000  0.000000  1.000000      -38.18667           
+REMARK 350   BIOMT1  198 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  198  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  198  0.000000  0.000000  1.000000      -95.46667           
+REMARK 350   BIOMT1  199 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  199  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  199  0.000000  0.000000  1.000000     -152.74667           
+REMARK 350   BIOMT1  200 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  200  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  200  0.000000  0.000000  1.000000     -210.02667           
+REMARK 350   BIOMT1  201 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  201  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  201  0.000000  0.000000  1.000000       19.09333           
+REMARK 350   BIOMT1  202 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  202  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  202  0.000000  0.000000  1.000000      -38.18667           
+REMARK 350   BIOMT1  203 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  203  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  203  0.000000  0.000000  1.000000      -95.46667           
+REMARK 350   BIOMT1  204 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  204  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  204  0.000000  0.000000  1.000000     -152.74667           
+REMARK 350   BIOMT1  205 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  205  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  205  0.000000  0.000000  1.000000     -210.02667           
+REMARK 350   BIOMT1  206 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  206  0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  206  0.000000  0.000000  1.000000       19.09333           
+REMARK 350   BIOMT1  207 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  207  0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  207  0.000000  0.000000  1.000000      -38.18667           
+REMARK 350   BIOMT1  208 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  208  0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  208  0.000000  0.000000  1.000000      -95.46667           
+REMARK 350   BIOMT1  209 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  209  0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  209  0.000000  0.000000  1.000000     -152.74667           
+REMARK 350   BIOMT1  210 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  210  0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  210  0.000000  0.000000  1.000000     -210.02667           
+REMARK 350   BIOMT1  211 -0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  211 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  211  0.000000  0.000000  1.000000       38.18667           
+REMARK 350   BIOMT1  212 -0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  212 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  212  0.000000  0.000000  1.000000      -19.09333           
+REMARK 350   BIOMT1  213 -0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  213 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  213  0.000000  0.000000  1.000000      -76.37333           
+REMARK 350   BIOMT1  214 -0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  214 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  214  0.000000  0.000000  1.000000     -133.65333           
+REMARK 350   BIOMT1  215 -0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  215 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  215  0.000000  0.000000  1.000000     -190.93333           
+REMARK 350   BIOMT1  216 -0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  216 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  216  0.000000  0.000000  1.000000       38.18667           
+REMARK 350   BIOMT1  217 -0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  217 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  217  0.000000  0.000000  1.000000      -19.09333           
+REMARK 350   BIOMT1  218 -0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  218 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  218  0.000000  0.000000  1.000000      -76.37333           
+REMARK 350   BIOMT1  219 -0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  219 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  219  0.000000  0.000000  1.000000     -133.65333           
+REMARK 350   BIOMT1  220 -0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  220 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  220  0.000000  0.000000  1.000000     -190.93333           
+REMARK 350   BIOMT1  221 -0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  221 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  221  0.000000  0.000000  1.000000       38.18667           
+REMARK 350   BIOMT1  222 -0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  222 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  222  0.000000  0.000000  1.000000      -19.09333           
+REMARK 350   BIOMT1  223 -0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  223 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  223  0.000000  0.000000  1.000000      -76.37333           
+REMARK 350   BIOMT1  224 -0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  224 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  224  0.000000  0.000000  1.000000     -133.65333           
+REMARK 350   BIOMT1  225 -0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  225 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  225  0.000000  0.000000  1.000000     -190.93333           
+REMARK 350   BIOMT1  226 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  226  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  226  0.000000  0.000000  1.000000       28.64000           
+REMARK 350   BIOMT1  227 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  227  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  227  0.000000  0.000000  1.000000      -28.64000           
+REMARK 350   BIOMT1  228 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  228  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  228  0.000000  0.000000  1.000000      -85.92000           
+REMARK 350   BIOMT1  229 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  229  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  229  0.000000  0.000000  1.000000     -143.20000           
+REMARK 350   BIOMT1  230 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  230  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  230  0.000000  0.000000  1.000000     -200.48000           
+REMARK 350   BIOMT1  231 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  231  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  231  0.000000  0.000000  1.000000       28.64000           
+REMARK 350   BIOMT1  232 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  232  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  232  0.000000  0.000000  1.000000      -28.64000           
+REMARK 350   BIOMT1  233 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  233  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  233  0.000000  0.000000  1.000000      -85.92000           
+REMARK 350   BIOMT1  234 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  234  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  234  0.000000  0.000000  1.000000     -143.20000           
+REMARK 350   BIOMT1  235 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  235  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  235  0.000000  0.000000  1.000000     -200.48000           
+REMARK 350   BIOMT1  236 -1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  236  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  236  0.000000  0.000000  1.000000       28.64000           
+REMARK 350   BIOMT1  237 -1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  237  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  237  0.000000  0.000000  1.000000      -28.64000           
+REMARK 350   BIOMT1  238 -1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  238  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  238  0.000000  0.000000  1.000000      -85.92000           
+REMARK 350   BIOMT1  239 -1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  239  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  239  0.000000  0.000000  1.000000     -143.20000           
+REMARK 350   BIOMT1  240 -1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  240  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  240  0.000000  0.000000  1.000000     -200.48000           
+REMARK 350   BIOMT1  241  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  241 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  241  0.000000  0.000000  1.000000       47.73333           
+REMARK 350   BIOMT1  242  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  242 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  242  0.000000  0.000000  1.000000       -9.54667           
+REMARK 350   BIOMT1  243  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  243 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  243  0.000000  0.000000  1.000000      -66.82667           
+REMARK 350   BIOMT1  244  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  244 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  244  0.000000  0.000000  1.000000     -124.10667           
+REMARK 350   BIOMT1  245  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  245 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  245  0.000000  0.000000  1.000000     -181.38667           
+REMARK 350   BIOMT1  246  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  246 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  246  0.000000  0.000000  1.000000       47.73333           
+REMARK 350   BIOMT1  247  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  247 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  247  0.000000  0.000000  1.000000       -9.54667           
+REMARK 350   BIOMT1  248  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  248 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  248  0.000000  0.000000  1.000000      -66.82667           
+REMARK 350   BIOMT1  249  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  249 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  249  0.000000  0.000000  1.000000     -124.10667           
+REMARK 350   BIOMT1  250  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  250 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  250  0.000000  0.000000  1.000000     -181.38667           
+REMARK 350   BIOMT1  251  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  251 -0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  251  0.000000  0.000000  1.000000       47.73333           
+REMARK 350   BIOMT1  252  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  252 -0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  252  0.000000  0.000000  1.000000       -9.54667           
+REMARK 350   BIOMT1  253  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  253 -0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  253  0.000000  0.000000  1.000000      -66.82667           
+REMARK 350   BIOMT1  254  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  254 -0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  254  0.000000  0.000000  1.000000     -124.10667           
+REMARK 350   BIOMT1  255  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  255 -0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  255  0.000000  0.000000  1.000000     -181.38667           
+REMARK 350   BIOMT1  256  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  256  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  256  0.000000  0.000000  1.000000        9.54667           
+REMARK 350   BIOMT1  257  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  257  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  257  0.000000  0.000000  1.000000      -47.73333           
+REMARK 350   BIOMT1  258  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  258  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  258  0.000000  0.000000  1.000000     -105.01333           
+REMARK 350   BIOMT1  259  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  259  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  259  0.000000  0.000000  1.000000     -162.29333           
+REMARK 350   BIOMT1  260  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  260  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  260  0.000000  0.000000  1.000000     -219.57333           
+REMARK 350   BIOMT1  261  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  261  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  261  0.000000  0.000000  1.000000        9.54667           
+REMARK 350   BIOMT1  262  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  262  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  262  0.000000  0.000000  1.000000      -47.73333           
+REMARK 350   BIOMT1  263  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  263  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  263  0.000000  0.000000  1.000000     -105.01333           
+REMARK 350   BIOMT1  264  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  264  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  264  0.000000  0.000000  1.000000     -162.29333           
+REMARK 350   BIOMT1  265  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  265  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  265  0.000000  0.000000  1.000000     -219.57333           
+REMARK 350   BIOMT1  266  0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  266  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  266  0.000000  0.000000  1.000000        9.54667           
+REMARK 350   BIOMT1  267  0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  267  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  267  0.000000  0.000000  1.000000      -47.73333           
+REMARK 350   BIOMT1  268  0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  268  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  268  0.000000  0.000000  1.000000     -105.01333           
+REMARK 350   BIOMT1  269  0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  269  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  269  0.000000  0.000000  1.000000     -162.29333           
+REMARK 350   BIOMT1  270  0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  270  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  270  0.000000  0.000000  1.000000     -219.57333           
+REMARK 350   BIOMT1  271 -0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  271  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  271  0.000000  0.000000 -1.000000       19.09333           
+REMARK 350   BIOMT1  272 -0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  272  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  272  0.000000  0.000000 -1.000000      -38.18667           
+REMARK 350   BIOMT1  273 -0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  273  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  273  0.000000  0.000000 -1.000000      -95.46667           
+REMARK 350   BIOMT1  274 -0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  274  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  274  0.000000  0.000000 -1.000000     -152.74667           
+REMARK 350   BIOMT1  275 -0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  275  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  275  0.000000  0.000000 -1.000000     -210.02667           
+REMARK 350   BIOMT1  276 -0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  276  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  276  0.000000  0.000000 -1.000000       19.09333           
+REMARK 350   BIOMT1  277 -0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  277  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  277  0.000000  0.000000 -1.000000      -38.18667           
+REMARK 350   BIOMT1  278 -0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  278  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  278  0.000000  0.000000 -1.000000      -95.46667           
+REMARK 350   BIOMT1  279 -0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  279  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  279  0.000000  0.000000 -1.000000     -152.74667           
+REMARK 350   BIOMT1  280 -0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  280  0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  280  0.000000  0.000000 -1.000000     -210.02667           
+REMARK 350   BIOMT1  281 -0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  281  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  281  0.000000  0.000000 -1.000000       19.09333           
+REMARK 350   BIOMT1  282 -0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  282  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  282  0.000000  0.000000 -1.000000      -38.18667           
+REMARK 350   BIOMT1  283 -0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  283  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  283  0.000000  0.000000 -1.000000      -95.46667           
+REMARK 350   BIOMT1  284 -0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  284  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  284  0.000000  0.000000 -1.000000     -152.74667           
+REMARK 350   BIOMT1  285 -0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  285  0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  285  0.000000  0.000000 -1.000000     -210.02667           
+REMARK 350   BIOMT1  286  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  286  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  286  0.000000  0.000000 -1.000000        0.00000           
+REMARK 350   BIOMT1  287  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  287  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  287  0.000000  0.000000 -1.000000      -57.28000           
+REMARK 350   BIOMT1  288  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  288  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  288  0.000000  0.000000 -1.000000     -114.56000           
+REMARK 350   BIOMT1  289  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  289  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  289  0.000000  0.000000 -1.000000     -171.84000           
+REMARK 350   BIOMT1  290  1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  290  0.000000 -1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  290  0.000000  0.000000 -1.000000     -229.12000           
+REMARK 350   BIOMT1  291  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  291  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  291  0.000000  0.000000 -1.000000        0.00000           
+REMARK 350   BIOMT1  292  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  292  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  292  0.000000  0.000000 -1.000000      -57.28000           
+REMARK 350   BIOMT1  293  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  293  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  293  0.000000  0.000000 -1.000000     -114.56000           
+REMARK 350   BIOMT1  294  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  294  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  294  0.000000  0.000000 -1.000000     -171.84000           
+REMARK 350   BIOMT1  295  1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  295  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  295  0.000000  0.000000 -1.000000     -229.12000           
+REMARK 350   BIOMT1  296  1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  296  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  296  0.000000  0.000000 -1.000000        0.00000           
+REMARK 350   BIOMT1  297  1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  297  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  297  0.000000  0.000000 -1.000000      -57.28000           
+REMARK 350   BIOMT1  298  1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  298  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  298  0.000000  0.000000 -1.000000     -114.56000           
+REMARK 350   BIOMT1  299  1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  299  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  299  0.000000  0.000000 -1.000000     -171.84000           
+REMARK 350   BIOMT1  300  1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  300  0.000000 -1.000000  0.000000      -35.63695           
+REMARK 350   BIOMT3  300  0.000000  0.000000 -1.000000     -229.12000           
+REMARK 350   BIOMT1  301 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  301 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  301  0.000000  0.000000 -1.000000       38.18667           
+REMARK 350   BIOMT1  302 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  302 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  302  0.000000  0.000000 -1.000000      -19.09333           
+REMARK 350   BIOMT1  303 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  303 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  303  0.000000  0.000000 -1.000000      -76.37333           
+REMARK 350   BIOMT1  304 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  304 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  304  0.000000  0.000000 -1.000000     -133.65333           
+REMARK 350   BIOMT1  305 -0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  305 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  305  0.000000  0.000000 -1.000000     -190.93333           
+REMARK 350   BIOMT1  306 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  306 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  306  0.000000  0.000000 -1.000000       38.18667           
+REMARK 350   BIOMT1  307 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  307 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  307  0.000000  0.000000 -1.000000      -19.09333           
+REMARK 350   BIOMT1  308 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  308 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  308  0.000000  0.000000 -1.000000      -76.37333           
+REMARK 350   BIOMT1  309 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  309 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  309  0.000000  0.000000 -1.000000     -133.65333           
+REMARK 350   BIOMT1  310 -0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  310 -0.866025  0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  310  0.000000  0.000000 -1.000000     -190.93333           
+REMARK 350   BIOMT1  311 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  311 -0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  311  0.000000  0.000000 -1.000000       38.18667           
+REMARK 350   BIOMT1  312 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  312 -0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  312  0.000000  0.000000 -1.000000      -19.09333           
+REMARK 350   BIOMT1  313 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  313 -0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  313  0.000000  0.000000 -1.000000      -76.37333           
+REMARK 350   BIOMT1  314 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  314 -0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  314  0.000000  0.000000 -1.000000     -133.65333           
+REMARK 350   BIOMT1  315 -0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  315 -0.866025  0.500000  0.000000       35.63695           
+REMARK 350   BIOMT3  315  0.000000  0.000000 -1.000000     -190.93333           
+REMARK 350   BIOMT1  316  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  316 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  316  0.000000  0.000000 -1.000000       47.73333           
+REMARK 350   BIOMT1  317  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  317 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  317  0.000000  0.000000 -1.000000       -9.54667           
+REMARK 350   BIOMT1  318  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  318 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  318  0.000000  0.000000 -1.000000      -66.82667           
+REMARK 350   BIOMT1  319  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  319 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  319  0.000000  0.000000 -1.000000     -124.10667           
+REMARK 350   BIOMT1  320  0.500000 -0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  320 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  320  0.000000  0.000000 -1.000000     -181.38667           
+REMARK 350   BIOMT1  321  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  321 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  321  0.000000  0.000000 -1.000000       47.73333           
+REMARK 350   BIOMT1  322  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  322 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  322  0.000000  0.000000 -1.000000       -9.54667           
+REMARK 350   BIOMT1  323  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  323 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  323  0.000000  0.000000 -1.000000      -66.82667           
+REMARK 350   BIOMT1  324  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  324 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  324  0.000000  0.000000 -1.000000     -124.10667           
+REMARK 350   BIOMT1  325  0.500000 -0.866025  0.000000      -20.57500           
+REMARK 350   BIOMT2  325 -0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  325  0.000000  0.000000 -1.000000     -181.38667           
+REMARK 350   BIOMT1  326  0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  326 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  326  0.000000  0.000000 -1.000000       47.73333           
+REMARK 350   BIOMT1  327  0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  327 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  327  0.000000  0.000000 -1.000000       -9.54667           
+REMARK 350   BIOMT1  328  0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  328 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  328  0.000000  0.000000 -1.000000      -66.82667           
+REMARK 350   BIOMT1  329  0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  329 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  329  0.000000  0.000000 -1.000000     -124.10667           
+REMARK 350   BIOMT1  330  0.500000 -0.866025  0.000000      -41.15000           
+REMARK 350   BIOMT2  330 -0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  330  0.000000  0.000000 -1.000000     -181.38667           
+REMARK 350   BIOMT1  331 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  331  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  331  0.000000  0.000000 -1.000000       28.64000           
+REMARK 350   BIOMT1  332 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  332  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  332  0.000000  0.000000 -1.000000      -28.64000           
+REMARK 350   BIOMT1  333 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  333  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  333  0.000000  0.000000 -1.000000      -85.92000           
+REMARK 350   BIOMT1  334 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  334  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  334  0.000000  0.000000 -1.000000     -143.20000           
+REMARK 350   BIOMT1  335 -1.000000  0.000000  0.000000        0.00000           
+REMARK 350   BIOMT2  335  0.000000  1.000000  0.000000        0.00000           
+REMARK 350   BIOMT3  335  0.000000  0.000000 -1.000000     -200.48000           
+REMARK 350   BIOMT1  336 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  336  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  336  0.000000  0.000000 -1.000000       28.64000           
+REMARK 350   BIOMT1  337 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  337  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  337  0.000000  0.000000 -1.000000      -28.64000           
+REMARK 350   BIOMT1  338 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  338  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  338  0.000000  0.000000 -1.000000      -85.92000           
+REMARK 350   BIOMT1  339 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  339  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  339  0.000000  0.000000 -1.000000     -143.20000           
+REMARK 350   BIOMT1  340 -1.000000  0.000000  0.000000      -20.57500           
+REMARK 350   BIOMT2  340  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  340  0.000000  0.000000 -1.000000     -200.48000           
+REMARK 350   BIOMT1  341 -1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  341  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  341  0.000000  0.000000 -1.000000       28.64000           
+REMARK 350   BIOMT1  342 -1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  342  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  342  0.000000  0.000000 -1.000000      -28.64000           
+REMARK 350   BIOMT1  343 -1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  343  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  343  0.000000  0.000000 -1.000000      -85.92000           
+REMARK 350   BIOMT1  344 -1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  344  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  344  0.000000  0.000000 -1.000000     -143.20000           
+REMARK 350   BIOMT1  345 -1.000000  0.000000  0.000000       20.57500           
+REMARK 350   BIOMT2  345  0.000000  1.000000  0.000000       35.63695           
+REMARK 350   BIOMT3  345  0.000000  0.000000 -1.000000     -200.48000           
+REMARK 350   BIOMT1  346  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  346  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  346  0.000000  0.000000 -1.000000        9.54667           
+REMARK 350   BIOMT1  347  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  347  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  347  0.000000  0.000000 -1.000000      -47.73333           
+REMARK 350   BIOMT1  348  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  348  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  348  0.000000  0.000000 -1.000000     -105.01333           
+REMARK 350   BIOMT1  349  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  349  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  349  0.000000  0.000000 -1.000000     -162.29333           
+REMARK 350   BIOMT1  350  0.500000  0.866025  0.000000        0.00000           
+REMARK 350   BIOMT2  350  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  350  0.000000  0.000000 -1.000000     -219.57333           
+REMARK 350   BIOMT1  351  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  351  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  351  0.000000  0.000000 -1.000000        9.54667           
+REMARK 350   BIOMT1  352  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  352  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  352  0.000000  0.000000 -1.000000      -47.73333           
+REMARK 350   BIOMT1  353  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  353  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  353  0.000000  0.000000 -1.000000     -105.01333           
+REMARK 350   BIOMT1  354  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  354  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  354  0.000000  0.000000 -1.000000     -162.29333           
+REMARK 350   BIOMT1  355  0.500000  0.866025  0.000000       41.15000           
+REMARK 350   BIOMT2  355  0.866025 -0.500000  0.000000        0.00000           
+REMARK 350   BIOMT3  355  0.000000  0.000000 -1.000000     -219.57333           
+REMARK 350   BIOMT1  356  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  356  0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  356  0.000000  0.000000 -1.000000        9.54667           
+REMARK 350   BIOMT1  357  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  357  0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  357  0.000000  0.000000 -1.000000      -47.73333           
+REMARK 350   BIOMT1  358  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  358  0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  358  0.000000  0.000000 -1.000000     -105.01333           
+REMARK 350   BIOMT1  359  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  359  0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  359  0.000000  0.000000 -1.000000     -162.29333           
+REMARK 350   BIOMT1  360  0.500000  0.866025  0.000000       20.57500           
+REMARK 350   BIOMT2  360  0.866025 -0.500000  0.000000      -35.63695           
+REMARK 350   BIOMT3  360  0.000000  0.000000 -1.000000     -219.57333           
+DBREF  6S6N A    1    13  UNP    Q1KLY3   CAMP_GORGO     150    162             
+DBREF  6S6N B    1    13  UNP    Q1KLY3   CAMP_GORGO     150    162             
+SEQRES   1 A   13  SER LYS ARG ILE VAL GLN ARG ILE LYS ASP PHE LEU ARG          
+SEQRES   1 B   13  SER LYS ARG ILE VAL GLN ARG ILE LYS ASP PHE LEU ARG          
+FORMUL   3  HOH   *56(H2 O)                                                     
+HELIX    1 AA1 SER A    1  ARG A   13  1                                  13    
+HELIX    2 AA2 LYS B    2  ARG B   13  1                                  12    
+CRYST1   41.150   41.150   57.280  90.00  90.00 120.00 P 61 2 2     24          
+ORIGX1      1.000000  0.000000  0.000000        0.00000                         
+ORIGX2      0.000000  1.000000  0.000000        0.00000                         
+ORIGX3      0.000000  0.000000  1.000000        0.00000                         
+SCALE1      0.024301  0.014030  0.000000        0.00000                         
+SCALE2      0.000000  0.028061  0.000000        0.00000                         
+SCALE3      0.000000  0.000000  0.017458        0.00000                         
+ATOM      1  N   SER A   1      -4.889  -7.294  -6.679  1.00 17.15           N  
+ANISOU    1  N   SER A   1     1786   2161   2567    -55   -146    275       N  
+ATOM      2  CA  SER A   1      -5.911  -6.423  -6.010  1.00 14.29           C  
+ANISOU    2  CA  SER A   1     1290   1398   2739   -320   -137    653       C  
+ATOM      3  C   SER A   1      -6.158  -6.885  -4.575  1.00 11.85           C  
+ANISOU    3  C   SER A   1      896   1093   2512   -105   -271    274       C  
+ATOM      4  O   SER A   1      -6.639  -8.026  -4.376  1.00 11.71           O  
+ANISOU    4  O   SER A   1     1047    999   2404   -154   -116     46       O  
+ATOM      5  CB  SER A   1      -7.204  -6.466  -6.778  1.00 15.18           C  
+ANISOU    5  CB  SER A   1     1506   1921   2341   -266   -149    408       C  
+ATOM      6  OG  SER A   1      -8.282  -5.954  -6.000  1.00 14.17           O  
+ANISOU    6  OG  SER A   1     1227   1562   2593   -227   -155    363       O  
+ATOM      7  N   LYS A   2      -5.927  -6.022  -3.595  1.00 12.49           N  
+ANISOU    7  N   LYS A   2     1017    932   2796   -250   -385    204       N  
+ATOM      8  CA ALYS A   2      -6.232  -6.360  -2.191  0.50 12.39           C  
+ANISOU    8  CA ALYS A   2      923   1136   2649   -164   -465    112       C  
+ATOM      9  CA BLYS A   2      -6.232  -6.359  -2.190  0.50 12.52           C  
+ANISOU    9  CA BLYS A   2      952   1155   2649   -259   -487     70       C  
+ATOM     10  C   LYS A   2      -7.732  -6.613  -2.039  1.00 10.32           C  
+ANISOU   10  C   LYS A   2      952    819   2146   -151   -405     44       C  
+ATOM     11  O   LYS A   2      -8.128  -7.543  -1.334  1.00 10.97           O  
+ANISOU   11  O   LYS A   2     1212    873   2081   -163   -486    191       O  
+ATOM     12  CB ALYS A   2      -5.786  -5.231  -1.266  0.50 14.87           C  
+ANISOU   12  CB ALYS A   2     1357   1578   2714   -429   -659    -66       C  
+ATOM     13  CB BLYS A   2      -5.818  -5.227  -1.253  0.50 16.32           C  
+ANISOU   13  CB BLYS A   2     1417   1814   2969   -717   -792   -244       C  
+ATOM     14  CG ALYS A   2      -4.282  -5.031  -1.177  0.50 17.45           C  
+ANISOU   14  CG ALYS A   2     1364   2154   3110   -623   -461    112       C  
+ATOM     15  CG BLYS A   2      -6.274  -5.404   0.189  0.50 19.52           C  
+ANISOU   15  CG BLYS A   2     2085   2315   3015  -1142   -650   -579       C  
+ATOM     16  CD ALYS A   2      -3.892  -3.924  -0.210  0.50 22.88           C  
+ANISOU   16  CD ALYS A   2     2664   2538   3489   -769   -297   -316       C  
+ATOM     17  CD BLYS A   2      -5.177  -5.827   1.130  0.50 24.35           C  
+ANISOU   17  CD BLYS A   2     2398   3169   3683   -557   -572    -38       C  
+ATOM     18  CE ALYS A   2      -2.394  -3.738  -0.094  0.50 26.51           C  
+ANISOU   18  CE ALYS A   2     2630   3094   4348   -570   -163   -203       C  
+ATOM     19  CE BLYS A   2      -5.724  -6.390   2.423  0.50 25.60           C  
+ANISOU   19  CE BLYS A   2     2376   3276   4073   -982   -235     20       C  
+ATOM     20  NZ ALYS A   2      -1.795  -4.754   0.802  0.50 28.52           N  
+ANISOU   20  NZ ALYS A   2     3389   2789   4659   -222   -127   -389       N  
+ATOM     21  NZ BLYS A   2      -6.896  -5.613   2.882  0.50 26.40           N  
+ANISOU   21  NZ BLYS A   2     2128   3836   4066   -766   -387    414       N  
+ATOM     22  N   ARG A   3      -8.554  -5.785  -2.662  1.00  9.56           N  
+ANISOU   22  N   ARG A   3     1032    660   1938   -185   -300    143       N  
+ATOM     23  CA  ARG A   3     -10.004  -5.957  -2.560  1.00  9.03           C  
+ANISOU   23  CA  ARG A   3      983    702   1743   -112   -212    100       C  
+ATOM     24  C   ARG A   3     -10.399  -7.343  -3.035  1.00  8.40           C  
+ANISOU   24  C   ARG A   3      963    659   1568    -80   -291    187       C  
+ATOM     25  O   ARG A   3     -11.229  -8.000  -2.389  1.00  8.71           O  
+ANISOU   25  O   ARG A   3     1000    690   1617    -74   -216     76       O  
+ATOM     26  CB  ARG A   3     -10.700  -4.896  -3.409  1.00  9.50           C  
+ANISOU   26  CB  ARG A   3     1133    757   1717     10   -257      8       C  
+ATOM     27  CG  ARG A   3     -12.214  -5.035  -3.411  1.00  8.64           C  
+ANISOU   27  CG  ARG A   3     1065    803   1413     32    -90     67       C  
+ATOM     28  CD  ARG A   3     -12.880  -4.027  -4.314  1.00  8.95           C  
+ANISOU   28  CD  ARG A   3     1199    734   1467    121   -188    -68       C  
+ATOM     29  NE  ARG A   3     -12.580  -4.277  -5.709  1.00  9.28           N  
+ANISOU   29  NE  ARG A   3     1164    908   1455   -196    -57     15       N  
+ATOM     30  CZ  ARG A   3     -13.246  -5.085  -6.521  1.00  8.54           C  
+ANISOU   30  CZ  ARG A   3     1144    721   1378    -30   -119     95       C  
+ATOM     31  NH1 ARG A   3     -14.300  -5.762  -6.105  1.00  8.50           N  
+ANISOU   31  NH1 ARG A   3     1092    829   1307    -73    -87     48       N  
+ATOM     32  NH2 ARG A   3     -12.870  -5.177  -7.784  1.00 10.56           N  
+ANISOU   32  NH2 ARG A   3     1313   1292   1406   -347    -24     11       N  
+ATOM     33  N   ILE A   4      -9.875  -7.768  -4.174  1.00  8.47           N  
+ANISOU   33  N   ILE A   4      819    717   1679   -134   -200     99       N  
+ATOM     34  CA  ILE A   4     -10.269  -9.073  -4.745  1.00  8.82           C  
+ANISOU   34  CA  ILE A   4      838    730   1780   -154   -239     20       C  
+ATOM     35  C   ILE A   4      -9.842 -10.188  -3.809  1.00  8.23           C  
+ANISOU   35  C   ILE A   4      821    638   1666    -60   -119    -53       C  
+ATOM     36  O   ILE A   4     -10.616 -11.130  -3.582  1.00  9.03           O  
+ANISOU   36  O   ILE A   4      935    673   1821    -90    -30    -20       O  
+ATOM     37  CB  ILE A   4      -9.732  -9.218  -6.169  1.00 10.43           C  
+ANISOU   37  CB  ILE A   4     1028   1140   1792   -202   -213   -175       C  
+ATOM     38  CG1 ILE A   4     -10.485  -8.250  -7.084  1.00 12.31           C  
+ANISOU   38  CG1 ILE A   4     1658   1270   1747   -244   -321    -14       C  
+ATOM     39  CG2 ILE A   4      -9.827 -10.650  -6.649  1.00 10.13           C  
+ANISOU   39  CG2 ILE A   4      968   1185   1697     69   -117   -319       C  
+ATOM     40  CD1 ILE A   4      -9.972  -8.217  -8.491  1.00 14.19           C  
+ANISOU   40  CD1 ILE A   4     1609   1918   1862   -317   -139    204       C  
+ATOM     41  N   VAL A   5      -8.628 -10.116  -3.303  1.00  8.56           N  
+ANISOU   41  N   VAL A   5      800    774   1676    -94   -125     40       N  
+ATOM     42  CA  VAL A   5      -8.181 -11.142  -2.349  1.00  8.60           C  
+ANISOU   42  CA  VAL A   5      814    614   1838      2      6     55       C  
+ATOM     43  C   VAL A   5      -9.113 -11.191  -1.146  1.00  8.26           C  
+ANISOU   43  C   VAL A   5      783    710   1644    -17   -193    189       C  
+ATOM     44  O   VAL A   5      -9.523 -12.281  -0.727  1.00  8.89           O  
+ANISOU   44  O   VAL A   5      768    728   1879    -19    -88    196       O  
+ATOM     45  CB  VAL A   5      -6.731 -10.900  -1.931  1.00  9.58           C  
+ANISOU   45  CB  VAL A   5      815    824   1997    -18    -33    166       C  
+ATOM     46  CG1 VAL A   5      -6.354 -11.878  -0.821  1.00 12.09           C  
+ANISOU   46  CG1 VAL A   5      919   1218   2453      1   -135    514       C  
+ATOM     47  CG2 VAL A   5      -5.806 -11.040  -3.135  1.00 11.12           C  
+ANISOU   47  CG2 VAL A   5      995    990   2240    110     78    -52       C  
+ATOM     48  N   GLN A   6      -9.449 -10.036  -0.596  1.00  8.53           N  
+ANISOU   48  N   GLN A   6      796    698   1746    -18   -205     97       N  
+ATOM     49  CA  GLN A   6     -10.305 -10.010   0.597  1.00  9.04           C  
+ANISOU   49  CA  GLN A   6      883    881   1671    -62   -175      0       C  
+ATOM     50  C   GLN A   6     -11.709 -10.521   0.263  1.00  8.04           C  
+ANISOU   50  C   GLN A   6      846    649   1558      9    -65   -134       C  
+ATOM     51  O   GLN A   6     -12.337 -11.154   1.110  1.00  8.87           O  
+ANISOU   51  O   GLN A   6     1033    802   1534     38    -43    -17       O  
+ATOM     52  CB  GLN A   6     -10.385  -8.605   1.175  1.00 11.46           C  
+ANISOU   52  CB  GLN A   6     1267   1113   1972   -198    -36   -295       C  
+ATOM     53  CG  GLN A   6      -9.089  -8.160   1.831  0.70 14.22           C  
+ANISOU   53  CG  GLN A   6     1692   1608   2101   -623   -165   -370       C  
+ATOM     54  CD  GLN A   6      -8.605  -9.168   2.851  0.70 18.05           C  
+ANISOU   54  CD  GLN A   6     2053   2768   2036   -324   -367    -24       C  
+ATOM     55  OE1 GLN A   6      -9.310  -9.516   3.797  0.70 21.23           O  
+ANISOU   55  OE1 GLN A   6     2357   3490   2216   -809   -305    107       O  
+ATOM     56  NE2 GLN A   6      -7.409  -9.699   2.644  0.70 22.51           N  
+ANISOU   56  NE2 GLN A   6     1988   4071   2492    -10   -337    639       N  
+ATOM     57  N   ARG A   7     -12.203 -10.250  -0.937  1.00  8.05           N  
+ANISOU   57  N   ARG A   7      728    713   1614    -62    -18     15       N  
+ATOM     58  CA  ARG A   7     -13.513 -10.777  -1.362  1.00  7.75           C  
+ANISOU   58  CA  ARG A   7      612    705   1628     38     46    -40       C  
+ATOM     59  C   ARG A   7     -13.477 -12.292  -1.340  1.00  7.76           C  
+ANISOU   59  C   ARG A   7      562    736   1648     27   -118    -19       C  
+ATOM     60  O   ARG A   7     -14.444 -12.926  -0.880  1.00  8.50           O  
+ANISOU   60  O   ARG A   7      610    682   1935     50     -9      3       O  
+ATOM     61  CB  ARG A   7     -13.880 -10.258  -2.758  1.00  8.17           C  
+ANISOU   61  CB  ARG A   7      699    809   1593     31    -40    -44       C  
+ATOM     62  CG  ARG A   7     -14.336  -8.802  -2.839  1.00  8.77           C  
+ANISOU   62  CG  ARG A   7      882    860   1589     57    -90     92       C  
+ATOM     63  CD  ARG A   7     -15.707  -8.573  -2.268  1.00  9.08           C  
+ANISOU   63  CD  ARG A   7     1031    862   1555    139      9    123       C  
+ATOM     64  NE  ARG A   7     -16.702  -9.359  -3.004  1.00  9.61           N  
+ANISOU   64  NE  ARG A   7      866   1085   1698    131    -82    180       N  
+ATOM     65  CZ  ARG A   7     -17.262  -9.018  -4.177  1.00  9.06           C  
+ANISOU   65  CZ  ARG A   7      924    948   1571    220     11    -90       C  
+ATOM     66  NH1 ARG A   7     -16.955  -7.888  -4.784  1.00  9.05           N  
+ANISOU   66  NH1 ARG A   7      966   1110   1359    260   -137     85       N  
+ATOM     67  NH2 ARG A   7     -18.107  -9.853  -4.734  1.00 11.14           N  
+ANISOU   67  NH2 ARG A   7     1053   1192   1987    110   -404     41       N  
+ATOM     68  N   ILE A   8     -12.443 -12.894  -1.889  1.00  7.25           N  
+ANISOU   68  N   ILE A   8      617    635   1503      3    -83     -9       N  
+ATOM     69  CA  ILE A   8     -12.387 -14.365  -1.942  1.00  7.51           C  
+ANISOU   69  CA  ILE A   8      664    598   1590    -31   -101    -40       C  
+ATOM     70  C   ILE A   8     -12.245 -14.906  -0.537  1.00  7.44           C  
+ANISOU   70  C   ILE A   8      666    609   1552    -18     19    -52       C  
+ATOM     71  O   ILE A   8     -12.945 -15.860  -0.178  1.00  7.77           O  
+ANISOU   71  O   ILE A   8      627    681   1641    -22      3     10       O  
+ATOM     72  CB  ILE A   8     -11.244 -14.801  -2.850  1.00  8.15           C  
+ANISOU   72  CB  ILE A   8      803    646   1644     -8    -33   -141       C  
+ATOM     73  CG1 ILE A   8     -11.522 -14.371  -4.284  1.00  9.66           C  
+ANISOU   73  CG1 ILE A   8     1347    647   1676    181     69    -95       C  
+ATOM     74  CG2 ILE A   8     -11.084 -16.301  -2.751  1.00  7.77           C  
+ANISOU   74  CG2 ILE A   8      791    658   1503     17    -17   -214       C  
+ATOM     75  CD1 ILE A   8     -10.392 -14.514  -5.217  1.00 11.59           C  
+ANISOU   75  CD1 ILE A   8     1619    937   1844     16    253    -37       C  
+ATOM     76  N   LYS A   9     -11.375 -14.318   0.265  1.00  7.74           N  
+ANISOU   76  N   LYS A   9      579    720   1642    -44    -15    -34       N  
+ATOM     77  CA  LYS A   9     -11.194 -14.766   1.646  1.00  8.58           C  
+ANISOU   77  CA  LYS A   9      613    903   1744     26   -184     69       C  
+ATOM     78  C   LYS A   9     -12.513 -14.710   2.407  1.00  7.92           C  
+ANISOU   78  C   LYS A   9      752    838   1419     -3   -215    103       C  
+ATOM     79  O   LYS A   9     -12.873 -15.651   3.119  1.00  8.47           O  
+ANISOU   79  O   LYS A   9      709    909   1601    -71   -220    201       O  
+ATOM     80  CB  LYS A   9     -10.122 -13.918   2.281  1.00  9.18           C  
+ANISOU   80  CB  LYS A   9      734    943   1810    -46   -227     15       C  
+ATOM     81  CG  LYS A   9      -9.726 -14.402   3.643  1.00 10.15           C  
+ANISOU   81  CG  LYS A   9      982   1158   1715     39    -87    -48       C  
+ATOM     82  CD  LYS A   9      -8.523 -13.669   4.134  1.00 12.48           C  
+ANISOU   82  CD  LYS A   9     1263   1371   2105    -61   -389     -3       C  
+ATOM     83  CE  LYS A   9      -8.077 -14.139   5.485  1.00 13.90           C  
+ANISOU   83  CE  LYS A   9     1463   1673   2144    264   -517   -254       C  
+ATOM     84  NZ  LYS A   9      -6.704 -13.669   5.721  1.00 17.14           N  
+ANISOU   84  NZ  LYS A   9     1341   2424   2746    294   -412   -552       N  
+ATOM     85  N   ASP A  10     -13.227 -13.602   2.252  1.00  8.27           N  
+ANISOU   85  N   ASP A  10      693    840   1608    -20    -79     43       N  
+ATOM     86  CA  ASP A  10     -14.496 -13.461   2.973  1.00  8.21           C  
+ANISOU   86  CA  ASP A  10      907    831   1379     22    -32    -28       C  
+ATOM     87  C   ASP A  10     -15.530 -14.474   2.469  1.00  8.19           C  
+ANISOU   87  C   ASP A  10      863    786   1460     22     50      7       C  
+ATOM     88  O   ASP A  10     -16.337 -14.960   3.248  1.00  9.22           O  
+ANISOU   88  O   ASP A  10      986   1116   1400   -116     17     26       O  
+ATOM     89  CB  ASP A  10     -15.019 -12.049   2.817  1.00  8.82           C  
+ANISOU   89  CB  ASP A  10      950    844   1555     33   -108   -145       C  
+ATOM     90  CG  ASP A  10     -16.265 -11.854   3.653  1.00 10.18           C  
+ANISOU   90  CG  ASP A  10     1242    963   1662     60     80    -71       C  
+ATOM     91  OD1 ASP A  10     -16.153 -11.906   4.897  1.00 12.41           O  
+ANISOU   91  OD1 ASP A  10     1549   1547   1617     56    205   -102       O  
+ATOM     92  OD2 ASP A  10     -17.342 -11.699   3.058  1.00 12.39           O  
+ANISOU   92  OD2 ASP A  10     1258   1683   1764    399    170    104       O  
+ATOM     93  N   PHE A  11     -15.548 -14.775   1.189  1.00  7.72           N  
+ANISOU   93  N   PHE A  11      698    775   1459    -80     30    -68       N  
+ATOM     94  CA  PHE A  11     -16.525 -15.738   0.672  1.00  7.60           C  
+ANISOU   94  CA  PHE A  11      665    815   1407    -70     18    -65       C  
+ATOM     95  C   PHE A  11     -16.270 -17.116   1.300  1.00  7.20           C  
+ANISOU   95  C   PHE A  11      537    834   1365    -39    122    -70       C  
+ATOM     96  O   PHE A  11     -17.217 -17.854   1.533  1.00  8.04           O  
+ANISOU   96  O   PHE A  11      670    894   1490   -148     44     54       O  
+ATOM     97  CB  PHE A  11     -16.390 -15.792  -0.835  1.00  7.54           C  
+ANISOU   97  CB  PHE A  11      738    769   1355    -26      4    -50       C  
+ATOM     98  CG  PHE A  11     -17.416 -16.624  -1.530  1.00  7.54           C  
+ANISOU   98  CG  PHE A  11      689    869   1306    -14    -92     76       C  
+ATOM     99  CD1 PHE A  11     -18.755 -16.353  -1.377  1.00  8.12           C  
+ANISOU   99  CD1 PHE A  11      720   1054   1310     46    -60    -58       C  
+ATOM    100  CD2 PHE A  11     -17.057 -17.634  -2.392  1.00  8.28           C  
+ANISOU  100  CD2 PHE A  11      760    835   1549     15    -12     34       C  
+ATOM    101  CE1 PHE A  11     -19.713 -17.096  -2.037  1.00  9.54           C  
+ANISOU  101  CE1 PHE A  11      773   1406   1443   -194   -102     68       C  
+ATOM    102  CE2 PHE A  11     -18.013 -18.363  -3.066  1.00  9.37           C  
+ANISOU  102  CE2 PHE A  11     1102    865   1591    -52   -207     14       C  
+ATOM    103  CZ  PHE A  11     -19.338 -18.103  -2.879  1.00  9.10           C  
+ANISOU  103  CZ  PHE A  11      968   1088   1398   -304   -289    150       C  
+ATOM    104  N   LEU A  12     -15.013 -17.452   1.567  1.00  7.64           N  
+ANISOU  104  N   LEU A  12      571    753   1578     -1     83    -71       N  
+ATOM    105  CA  LEU A  12     -14.637 -18.798   2.064  1.00  8.04           C  
+ANISOU  105  CA  LEU A  12      630    730   1691    -41    125    -55       C  
+ATOM    106  C   LEU A  12     -14.619 -18.907   3.578  1.00  8.73           C  
+ANISOU  106  C   LEU A  12      590    989   1738     50    254    123       C  
+ATOM    107  O   LEU A  12     -14.517 -20.025   4.062  1.00 10.42           O  
+ANISOU  107  O   LEU A  12     1030   1010   1917     43    245    144       O  
+ATOM    108  CB  LEU A  12     -13.273 -19.164   1.516  1.00  7.98           C  
+ANISOU  108  CB  LEU A  12      719    674   1638     68    192     56       C  
+ATOM    109  CG  LEU A  12     -13.218 -19.255   0.007  1.00  8.44           C  
+ANISOU  109  CG  LEU A  12      766    798   1643     37    124    -78       C  
+ATOM    110  CD1 LEU A  12     -11.858 -19.763  -0.427  1.00  9.59           C  
+ANISOU  110  CD1 LEU A  12      937   1023   1681    214    193    -69       C  
+ATOM    111  CD2 LEU A  12     -14.339 -20.120  -0.543  1.00  9.88           C  
+ANISOU  111  CD2 LEU A  12     1051   1004   1697    -76    156   -128       C  
+ATOM    112  N   ARG A  13     -14.750 -17.792   4.296  1.00  9.38           N  
+ANISOU  112  N   ARG A  13      852   1031   1681     32     12     67       N  
+ATOM    113  CA  ARG A  13     -14.603 -17.849   5.756  1.00 10.71           C  
+ANISOU  113  CA  ARG A  13     1060   1375   1634   -125     64     33       C  
+ATOM    114  C   ARG A  13     -15.721 -18.670   6.390  1.00 13.08           C  
+ANISOU  114  C   ARG A  13     1441   1869   1658   -542     10     45       C  
+ATOM    115  O   ARG A  13     -15.418 -19.216   7.456  1.00 19.22           O  
+ANISOU  115  O   ARG A  13     1924   3037   2338  -1072   -384    965       O  
+ATOM    116  CB  ARG A  13     -14.533 -16.454   6.351  1.00 12.06           C  
+ANISOU  116  CB  ARG A  13     1325   1417   1839   -326    162   -118       C  
+ATOM    117  CG  ARG A  13     -15.854 -15.737   6.408  1.00 13.96           C  
+ANISOU  117  CG  ARG A  13     1678   1405   2220   -122     24   -248       C  
+ATOM    118  CD  ARG A  13     -15.685 -14.486   7.205  1.00 15.27           C  
+ANISOU  118  CD  ARG A  13     2321   1476   2005   -210    472   -305       C  
+ATOM    119  NE  ARG A  13     -16.867 -13.716   6.980  1.00 14.97           N  
+ANISOU  119  NE  ARG A  13     2601   1515   1569     -5    405   -159       N  
+ATOM    120  CZ  ARG A  13     -18.004 -13.840   7.599  1.00 14.92           C  
+ANISOU  120  CZ  ARG A  13     2263   1829   1575     54    190   -341       C  
+ATOM    121  NH1 ARG A  13     -18.994 -13.020   7.285  1.00 20.87           N  
+ANISOU  121  NH1 ARG A  13     2954   2321   2651    645    -46   -333       N  
+ATOM    122  NH2 ARG A  13     -18.151 -14.706   8.582  1.00 16.30           N  
+ANISOU  122  NH2 ARG A  13     2401   1948   1843   -259    603   -263       N  
+ATOM    123  OXT ARG A  13     -16.847 -18.792   5.881  1.00 12.40           O  
+ANISOU  123  OXT ARG A  13     1211   1777   1721   -412    209   -195       O  
+TER     124      ARG A  13                                                      
+ATOM    125  N   SER B   1      -3.269  -8.265  -3.742  1.00 15.49           N  
+ANISOU  125  N   SER B   1     1810   1899   2175    118   -286    -30       N  
+ATOM    126  CA  SER B   1      -2.020  -8.753  -4.379  1.00 12.75           C  
+ANISOU  126  CA  SER B   1     1623    856   2365     98   -332   -222       C  
+ATOM    127  C   SER B   1      -2.263  -9.287  -5.798  1.00 10.90           C  
+ANISOU  127  C   SER B   1     1219    715   2205    -74   -104    112       C  
+ATOM    128  O   SER B   1      -3.023 -10.270  -5.943  1.00 10.43           O  
+ANISOU  128  O   SER B   1     1114    873   1976   -127   -128     88       O  
+ATOM    129  CB  SER B   1      -1.456  -9.843  -3.499  1.00 13.82           C  
+ANISOU  129  CB  SER B   1     1798   1266   2184    177   -263   -111       C  
+ATOM    130  OG  SER B   1      -0.471 -10.569  -4.202  1.00 11.15           O  
+ANISOU  130  OG  SER B   1     1373   1034   1829    -93   -195     33       O  
+ATOM    131  N   LYS B   2      -1.641  -8.702  -6.819  1.00 11.52           N  
+ANISOU  131  N   LYS B   2     1287    809   2279   -166   -188    300       N  
+ATOM    132  CA  LYS B   2      -1.784  -9.234  -8.191  1.00 11.99           C  
+ANISOU  132  CA  LYS B   2     1340   1083   2132   -212   -221    522       C  
+ATOM    133  C   LYS B   2      -1.251 -10.661  -8.255  1.00 10.07           C  
+ANISOU  133  C   LYS B   2     1076   1119   1631   -214   -193    337       C  
+ATOM    134  O   LYS B   2      -1.833 -11.512  -8.948  1.00 10.28           O  
+ANISOU  134  O   LYS B   2     1047   1180   1679   -218   -152    191       O  
+ATOM    135  CB  LYS B   2      -1.088  -8.334  -9.204  1.00 16.39           C  
+ANISOU  135  CB  LYS B   2     1897   1522   2806   -341     67    897       C  
+ATOM    136  CG  LYS B   2      -1.735  -6.976  -9.395  1.00 23.26           C  
+ANISOU  136  CG  LYS B   2     2922   1592   4324    -76    294   1145       C  
+ATOM    137  CD  LYS B   2      -1.063  -6.198 -10.501  1.00 28.67           C  
+ANISOU  137  CD  LYS B   2     3651   2720   4522    137    659   1676       C  
+ATOM    138  CE  LYS B   2      -1.653  -4.811 -10.699  1.00 35.59           C  
+ANISOU  138  CE  LYS B   2     5023   2583   5915    139    691   1835       C  
+ATOM    139  NZ  LYS B   2      -1.168  -4.185 -11.955  1.00 43.53           N  
+ANISOU  139  NZ  LYS B   2     6282   4374   5883   -449    737   1930       N  
+ATOM    140  N   ARG B   3      -0.142 -10.913  -7.576  1.00  9.27           N  
+ANISOU  140  N   ARG B   3      908    928   1685   -356   -170    216       N  
+ATOM    141  CA  ARG B   3       0.456 -12.255  -7.575  1.00  8.84           C  
+ANISOU  141  CA  ARG B   3      796   1002   1558   -243     14    216       C  
+ATOM    142  C   ARG B   3      -0.552 -13.271  -7.077  1.00  7.53           C  
+ANISOU  142  C   ARG B   3      681    813   1365   -114    -28     91       C  
+ATOM    143  O   ARG B   3      -0.707 -14.346  -7.672  1.00  8.49           O  
+ANISOU  143  O   ARG B   3      873    930   1422   -201    117     19       O  
+ATOM    144  CB  ARG B   3       1.680 -12.239  -6.672  1.00  9.61           C  
+ANISOU  144  CB  ARG B   3      747   1276   1626   -217     31    248       C  
+ATOM    145  CG  ARG B   3       2.329 -13.600  -6.512  1.00  9.67           C  
+ANISOU  145  CG  ARG B   3      725   1332   1615   -107     85     68       C  
+ATOM    146  CD  ARG B   3       3.500 -13.561  -5.561  1.00 10.21           C  
+ANISOU  146  CD  ARG B   3      893   1293   1691    -95      2     41       C  
+ATOM    147  NE  ARG B   3       3.087 -13.290  -4.198  1.00 10.55           N  
+ANISOU  147  NE  ARG B   3     1364   1090   1552    -55   -129    120       N  
+ATOM    148  CZ  ARG B   3       2.767 -14.218  -3.291  1.00 10.03           C  
+ANISOU  148  CZ  ARG B   3      963   1253   1594    -99    -79    154       C  
+ATOM    149  NH1 ARG B   3       2.768 -15.506  -3.595  1.00  9.86           N  
+ANISOU  149  NH1 ARG B   3      993   1258   1493    -69    -32    152       N  
+ATOM    150  NH2 ARG B   3       2.423 -13.844  -2.071  1.00 11.65           N  
+ANISOU  150  NH2 ARG B   3     1600   1207   1620   -338    -30     42       N  
+ATOM    151  N   ILE B   4      -1.183 -12.979  -5.965  1.00  7.66           N  
+ANISOU  151  N   ILE B   4      831    703   1376   -145     49     44       N  
+ATOM    152  CA  ILE B   4      -2.125 -13.930  -5.357  1.00  7.86           C  
+ANISOU  152  CA  ILE B   4      848    730   1406   -176    115     23       C  
+ATOM    153  C   ILE B   4      -3.324 -14.133  -6.276  1.00  7.44           C  
+ANISOU  153  C   ILE B   4      757    670   1399   -121    179     35       C  
+ATOM    154  O   ILE B   4      -3.741 -15.276  -6.486  1.00  8.21           O  
+ANISOU  154  O   ILE B   4      752    738   1626   -158     71     10       O  
+ATOM    155  CB  ILE B   4      -2.520 -13.449  -3.960  1.00  9.07           C  
+ANISOU  155  CB  ILE B   4     1171    898   1376    -84     71     38       C  
+ATOM    156  CG1 ILE B   4      -1.340 -13.592  -3.007  1.00  9.97           C  
+ANISOU  156  CG1 ILE B   4     1249   1073   1463   -164    -54     29       C  
+ATOM    157  CG2 ILE B   4      -3.752 -14.186  -3.465  1.00  9.36           C  
+ANISOU  157  CG2 ILE B   4     1202    820   1531     54    241    154       C  
+ATOM    158  CD1 ILE B   4      -1.580 -13.016  -1.639  1.00 12.18           C  
+ANISOU  158  CD1 ILE B   4     1815   1347   1463     94   -131     -8       C  
+ATOM    159  N   VAL B   5      -3.871 -13.055  -6.803  1.00  8.01           N  
+ANISOU  159  N   VAL B   5      800    708   1534   -159     47      4       N  
+ATOM    160  CA  VAL B   5      -5.035 -13.228  -7.687  1.00  8.57           C  
+ANISOU  160  CA  VAL B   5      797    782   1677   -108     31   -116       C  
+ATOM    161  C   VAL B   5      -4.668 -14.095  -8.883  1.00  7.93           C  
+ANISOU  161  C   VAL B   5      704    728   1580    -43     32    -22       C  
+ATOM    162  O   VAL B   5      -5.434 -14.978  -9.266  1.00  8.50           O  
+ANISOU  162  O   VAL B   5      721    747   1761    -37    -56    -44       O  
+ATOM    163  CB  VAL B   5      -5.557 -11.858  -8.109  1.00 10.00           C  
+ANISOU  163  CB  VAL B   5      736    937   2126    118    -68   -240       C  
+ATOM    164  CG1 VAL B   5      -6.636 -11.990  -9.154  1.00 12.46           C  
+ANISOU  164  CG1 VAL B   5     1026   1173   2532    236   -397   -398       C  
+ATOM    165  CG2 VAL B   5      -6.102 -11.105  -6.926  1.00 10.85           C  
+ANISOU  165  CG2 VAL B   5      851   1033   2236     43     31   -333       C  
+ATOM    166  N   GLN B   6      -3.537 -13.805  -9.501  1.00  7.69           N  
+ANISOU  166  N   GLN B   6      673    752   1496    -45     -4    -63       N  
+ATOM    167  CA AGLN B   6      -3.151 -14.557 -10.717  0.50  8.51           C  
+ANISOU  167  CA AGLN B   6      943    890   1400     21    -65    -80       C  
+ATOM    168  CA BGLN B   6      -3.153 -14.557 -10.714  0.50  8.00           C  
+ANISOU  168  CA BGLN B   6      785    869   1384    -65    -18    -54       C  
+ATOM    169  C   GLN B   6      -2.913 -16.031 -10.369  1.00  7.59           C  
+ANISOU  169  C   GLN B   6      575    848   1459    -73     90   -117       C  
+ATOM    170  O   GLN B   6      -3.227 -16.903 -11.189  1.00  8.40           O  
+ANISOU  170  O   GLN B   6      809    848   1531    -61     34   -162       O  
+ATOM    171  CB AGLN B   6      -1.935 -13.925 -11.376  0.50  9.29           C  
+ANISOU  171  CB AGLN B   6     1102    912   1515     20     42      2       C  
+ATOM    172  CB BGLN B   6      -1.937 -13.907 -11.348  0.50  8.45           C  
+ANISOU  172  CB BGLN B   6      889    833   1488    -61     64     10       C  
+ATOM    173  CG AGLN B   6      -1.535 -14.604 -12.677  0.50 10.77           C  
+ANISOU  173  CG AGLN B   6     1315   1187   1588     47    128    -66       C  
+ATOM    174  CG BGLN B   6      -1.600 -14.450 -12.726  0.50  9.27           C  
+ANISOU  174  CG BGLN B   6      956   1002   1564   -133    190    -21       C  
+ATOM    175  CD AGLN B   6      -2.625 -14.507 -13.718  0.50 11.67           C  
+ANISOU  175  CD AGLN B   6     1490   1312   1632    433     36      5       C  
+ATOM    176  CD BGLN B   6      -0.728 -15.682 -12.716  0.50  8.62           C  
+ANISOU  176  CD BGLN B   6      862   1082   1330    -74    116     44       C  
+ATOM    177  OE1AGLN B   6      -3.365 -13.527 -13.794  0.50 14.15           O  
+ANISOU  177  OE1AGLN B   6     1828   1520   2025    703     81     -2       O  
+ATOM    178  OE1BGLN B   6      -0.091 -16.037 -11.718  0.50  9.47           O  
+ANISOU  178  OE1BGLN B   6     1014   1243   1338    130    161    -23       O  
+ATOM    179  NE2AGLN B   6      -2.764 -15.559 -14.510  0.50 11.31           N  
+ANISOU  179  NE2AGLN B   6     1438   1356   1503    194     97     73       N  
+ATOM    180  NE2BGLN B   6      -0.728 -16.366 -13.853  0.50 10.03           N  
+ANISOU  180  NE2BGLN B   6     1029   1362   1418    -54    207   -105       N  
+ATOM    181  N   ARG B   7      -2.363 -16.303  -9.206  1.00  7.62           N  
+ANISOU  181  N   ARG B   7      616    778   1502    -94     10   -107       N  
+ATOM    182  CA  ARG B   7      -2.151 -17.711  -8.810  1.00  8.03           C  
+ANISOU  182  CA  ARG B   7      528    841   1681     91     40   -124       C  
+ATOM    183  C   ARG B   7      -3.468 -18.441  -8.683  1.00  6.92           C  
+ANISOU  183  C   ARG B   7      595    689   1346     65    -60     20       C  
+ATOM    184  O   ARG B   7      -3.565 -19.587  -9.118  1.00  7.97           O  
+ANISOU  184  O   ARG B   7      733    711   1583     62    -21    -64       O  
+ATOM    185  CB  ARG B   7      -1.442 -17.767  -7.479  1.00  9.99           C  
+ANISOU  185  CB  ARG B   7      912    911   1973    -14   -308     40       C  
+ATOM    186  CG  ARG B   7       0.042 -17.627  -7.697  1.00 15.35           C  
+ANISOU  186  CG  ARG B   7     1076   1986   2768   -172    -97    226       C  
+ATOM    187  CD  ARG B   7       0.847 -17.883  -6.487  1.00 17.44           C  
+ANISOU  187  CD  ARG B   7     1632   2102   2891   -632   -272    514       C  
+ATOM    188  NE  ARG B   7       0.610 -19.165  -5.900  1.00 15.36           N  
+ANISOU  188  NE  ARG B   7     1602   1793   2440   -416   -333    245       N  
+ATOM    189  CZ  ARG B   7       1.331 -19.632  -4.883  1.00 14.94           C  
+ANISOU  189  CZ  ARG B   7     1334   2382   1959    421     -8   -292       C  
+ATOM    190  NH1 ARG B   7       2.335 -18.935  -4.422  1.00 13.67           N  
+ANISOU  190  NH1 ARG B   7      992   2313   1886    645   -127     98       N  
+ATOM    191  NH2 ARG B   7       1.058 -20.778  -4.305  1.00 14.28           N  
+ANISOU  191  NH2 ARG B   7     1164   2274   1987    364   -158   -438       N  
+ATOM    192  N   ILE B   8      -4.459 -17.804  -8.089  1.00  6.78           N  
+ANISOU  192  N   ILE B   8      656    610   1308     36    -32     11       N  
+ATOM    193  CA  ILE B   8      -5.766 -18.460  -7.951  1.00  6.87           C  
+ANISOU  193  CA  ILE B   8      696    555   1358    -26     15     60       C  
+ATOM    194  C   ILE B   8      -6.361 -18.674  -9.330  1.00  6.91           C  
+ANISOU  194  C   ILE B   8      735    558   1332     17     46     22       C  
+ATOM    195  O   ILE B   8      -6.875 -19.740  -9.636  1.00  7.14           O  
+ANISOU  195  O   ILE B   8      728    645   1337    -32     -3     15       O  
+ATOM    196  CB  ILE B   8      -6.676 -17.674  -7.024  1.00  7.44           C  
+ANISOU  196  CB  ILE B   8      780    697   1350    -20     80     35       C  
+ATOM    197  CG1 ILE B   8      -6.082 -17.631  -5.615  1.00  8.46           C  
+ANISOU  197  CG1 ILE B   8      964    899   1348   -132    114     23       C  
+ATOM    198  CG2 ILE B   8      -8.066 -18.298  -7.007  1.00  7.81           C  
+ANISOU  198  CG2 ILE B   8      710    775   1481     32     73    105       C  
+ATOM    199  CD1 ILE B   8      -6.770 -16.662  -4.687  1.00  9.44           C  
+ANISOU  199  CD1 ILE B   8     1089    945   1553   -221    146   -109       C  
+ATOM    200  N   LYS B   9      -6.310 -17.638 -10.154  1.00  6.99           N  
+ANISOU  200  N   LYS B   9      720    648   1285     -2      1     48       N  
+ATOM    201  CA  LYS B   9      -6.866 -17.753 -11.504  1.00  7.32           C  
+ANISOU  201  CA  LYS B   9      765    670   1346    -24   -115     53       C  
+ATOM    202  C   LYS B   9      -6.193 -18.895 -12.263  1.00  6.99           C  
+ANISOU  202  C   LYS B   9      749    620   1286     10    -96    129       C  
+ATOM    203  O   LYS B   9      -6.876 -19.691 -12.920  1.00  7.99           O  
+ANISOU  203  O   LYS B   9      888    724   1422    -14   -221     72       O  
+ATOM    204  CB  LYS B   9      -6.693 -16.443 -12.225  1.00  8.64           C  
+ANISOU  204  CB  LYS B   9      967    726   1589      0   -154    183       C  
+ATOM    205  CG  LYS B   9      -7.438 -16.357 -13.518  0.80  9.36           C  
+ANISOU  205  CG  LYS B   9     1008   1015   1531    -28   -168    177       C  
+ATOM    206  CD  LYS B   9      -7.478 -14.935 -14.069  0.80 11.33           C  
+ANISOU  206  CD  LYS B   9     1387   1196   1720   -176    -63    381       C  
+ATOM    207  CE  LYS B   9      -8.188 -14.842 -15.391  0.80 14.31           C  
+ANISOU  207  CE  LYS B   9     1568   2074   1793    478   -103    800       C  
+ATOM    208  NZ  LYS B   9      -8.476 -13.419 -15.673  0.80 17.08           N  
+ANISOU  208  NZ  LYS B   9     1610   2293   2586    542     53   1049       N  
+ATOM    209  N   ASP B  10      -4.893 -18.982 -12.177  1.00  7.07           N  
+ANISOU  209  N   ASP B  10      742    693   1248    -44    -35     31       N  
+ATOM    210  CA AASP B  10      -4.165 -20.052 -12.896  0.50  7.47           C  
+ANISOU  210  CA AASP B  10      856    777   1204    -37    -17    -21       C  
+ATOM    211  CA BASP B  10      -4.144 -20.039 -12.887  0.50  7.94           C  
+ANISOU  211  CA BASP B  10      794    719   1502     12     -8    -13       C  
+ATOM    212  C   ASP B  10      -4.492 -21.415 -12.311  1.00  7.30           C  
+ANISOU  212  C   ASP B  10      734    782   1256     -2      2    -20       C  
+ATOM    213  O   ASP B  10      -4.544 -22.388 -13.054  1.00  8.44           O  
+ANISOU  213  O   ASP B  10     1019    822   1363     13     77    -83       O  
+ATOM    214  CB AASP B  10      -2.666 -19.828 -12.862  0.50  8.16           C  
+ANISOU  214  CB AASP B  10      863    936   1300    -24    174    106       C  
+ATOM    215  CB BASP B  10      -2.655 -19.732 -12.817  0.50  9.36           C  
+ANISOU  215  CB BASP B  10      742    799   2013     98    271    119       C  
+ATOM    216  CG AASP B  10      -2.265 -18.829 -13.911  0.50  9.42           C  
+ANISOU  216  CG AASP B  10     1080   1149   1351   -302     -2    209       C  
+ATOM    217  CG BASP B  10      -1.874 -20.624 -13.746  0.50 11.11           C  
+ANISOU  217  CG BASP B  10      855    878   2488    114    328    -62       C  
+ATOM    218  OD1AASP B  10      -2.906 -18.825 -14.974  0.50 12.57           O  
+ANISOU  218  OD1AASP B  10     1531   1929   1315   -372    -88    565       O  
+ATOM    219  OD1BASP B  10      -2.178 -20.600 -14.961  0.50 12.95           O  
+ANISOU  219  OD1BASP B  10     1518   1035   2364   -240    873   -438       O  
+ATOM    220  OD2AASP B  10      -1.298 -18.082 -13.653  0.50 10.01           O  
+ANISOU  220  OD2AASP B  10      989   1252   1560   -295    103     59       O  
+ATOM    221  OD2BASP B  10      -1.038 -21.389 -13.236  0.50 15.44           O  
+ANISOU  221  OD2BASP B  10      948    954   3964    315    169     87       O  
+ATOM    222  N   PHE B  11      -4.680 -21.503 -11.022  1.00  6.99           N  
+ANISOU  222  N   PHE B  11      810    631   1213     -4    -74    -47       N  
+ATOM    223  CA  PHE B  11      -5.031 -22.807 -10.413  1.00  6.85           C  
+ANISOU  223  CA  PHE B  11      804    512   1284     62     -2    -66       C  
+ATOM    224  C   PHE B  11      -6.376 -23.290 -10.948  1.00  6.80           C  
+ANISOU  224  C   PHE B  11      763    604   1214     62     31    -18       C  
+ATOM    225  O   PHE B  11      -6.538 -24.478 -11.195  1.00  7.46           O  
+ANISOU  225  O   PHE B  11      887    599   1348     79    -49    -49       O  
+ATOM    226  CB  PHE B  11      -5.017 -22.647  -8.899  1.00  7.42           C  
+ANISOU  226  CB  PHE B  11      882    610   1324     64    -38     -9       C  
+ATOM    227  CG  PHE B  11      -5.232 -23.923  -8.134  1.00  7.31           C  
+ANISOU  227  CG  PHE B  11      730    707   1341     18   -190     89       C  
+ATOM    228  CD1 PHE B  11      -4.421 -25.015  -8.363  1.00  8.10           C  
+ANISOU  228  CD1 PHE B  11      872    758   1447     84   -166     74       C  
+ATOM    229  CD2 PHE B  11      -6.209 -24.031  -7.156  1.00  8.36           C  
+ANISOU  229  CD2 PHE B  11      797    828   1550    175    -57     37       C  
+ATOM    230  CE1 PHE B  11      -4.594 -26.188  -7.646  1.00  9.18           C  
+ANISOU  230  CE1 PHE B  11     1143    771   1573     93   -278    129       C  
+ATOM    231  CE2 PHE B  11      -6.343 -25.190  -6.415  1.00  9.28           C  
+ANISOU  231  CE2 PHE B  11      881   1113   1532    -60   -164    201       C  
+ATOM    232  CZ  PHE B  11      -5.551 -26.261  -6.671  1.00  9.74           C  
+ANISOU  232  CZ  PHE B  11     1138    838   1722    -48   -277    271       C  
+ATOM    233  N   LEU B  12      -7.311 -22.364 -11.151  1.00  6.71           N  
+ANISOU  233  N   LEU B  12      715    563   1271     51     14    -49       N  
+ATOM    234  CA  LEU B  12      -8.681 -22.746 -11.513  1.00  7.10           C  
+ANISOU  234  CA  LEU B  12      663    726   1306     27     61     -7       C  
+ATOM    235  C   LEU B  12      -8.909 -22.817 -13.006  1.00  7.29           C  
+ANISOU  235  C   LEU B  12      785    713   1270    101     21    -49       C  
+ATOM    236  O   LEU B  12      -9.969 -23.305 -13.403  1.00  8.47           O  
+ANISOU  236  O   LEU B  12      802    937   1478     65    -79   -176       O  
+ATOM    237  CB  LEU B  12      -9.644 -21.739 -10.910  1.00  7.30           C  
+ANISOU  237  CB  LEU B  12      780    711   1280    103     40      4       C  
+ATOM    238  CG  LEU B  12      -9.627 -21.661  -9.390  1.00  7.23           C  
+ANISOU  238  CG  LEU B  12      634    821   1291    -21     -6     -1       C  
+ATOM    239  CD1 LEU B  12     -10.694 -20.734  -8.895  1.00  8.63           C  
+ANISOU  239  CD1 LEU B  12      841   1063   1372     83    155    -79       C  
+ATOM    240  CD2 LEU B  12      -9.743 -23.031  -8.773  1.00  7.66           C  
+ANISOU  240  CD2 LEU B  12      703    852   1354    -62     73     10       C  
+ATOM    241  N   ARG B  13      -7.969 -22.373 -13.822  1.00  7.72           N  
+ANISOU  241  N   ARG B  13      860    789   1283     98     16     -9       N  
+ATOM    242  CA  ARG B  13      -8.264 -22.299 -15.264  1.00  8.73           C  
+ANISOU  242  CA  ARG B  13     1170    899   1248    204     19    -36       C  
+ATOM    243  C   ARG B  13      -8.396 -23.689 -15.900  1.00  9.74           C  
+ANISOU  243  C   ARG B  13     1335    921   1444     77   -112    -58       C  
+ATOM    244  O   ARG B  13      -7.893 -24.705 -15.412  1.00  9.44           O  
+ANISOU  244  O   ARG B  13     1149    890   1545    199     80   -115       O  
+ATOM    245  CB  ARG B  13      -7.191 -21.488 -15.972  1.00  9.24           C  
+ANISOU  245  CB  ARG B  13     1174   1018   1316    109     74    -99       C  
+ATOM    246  CG  ARG B  13      -5.854 -22.174 -16.117  1.00  9.75           C  
+ANISOU  246  CG  ARG B  13     1281   1033   1388    165      1     60       C  
+ATOM    247  CD  ARG B  13      -4.898 -21.359 -16.946  1.00 10.98           C  
+ANISOU  247  CD  ARG B  13     1316   1156   1701     13    104     26       C  
+ATOM    248  NE  ARG B  13      -3.612 -22.004 -17.036  1.00 12.43           N  
+ANISOU  248  NE  ARG B  13     1357   1591   1775    114    140     37       N  
+ATOM    249  CZ  ARG B  13      -3.306 -23.018 -17.846  1.00 11.37           C  
+ANISOU  249  CZ  ARG B  13     1258   1315   1747    146     61     99       C  
+ATOM    250  NH1 ARG B  13      -4.181 -23.502 -18.713  1.00 11.84           N  
+ANISOU  250  NH1 ARG B  13     1328   1404   1763   -114    242    -32       N  
+ATOM    251  NH2 ARG B  13      -2.082 -23.499 -17.855  1.00 14.03           N  
+ANISOU  251  NH2 ARG B  13     1352   1629   2349    374     40   -109       N  
+ATOM    252  OXT ARG B  13      -9.022 -23.685 -16.982  1.00 16.12           O  
+ANISOU  252  OXT ARG B  13     3136   1075   1911     31   -985   -128       O  
+TER     253      ARG B  13                                                      
+HETATM  254  O   HOH A 101     -19.539 -11.827   5.072  0.50 83.00           O  
+ANISOU  254  O   HOH A 101    13819   5495  12222   -426   7648  -1818       O  
+HETATM  255  O   HOH A 102     -11.572 -10.825   3.770  1.00 24.84           O  
+ANISOU  255  O   HOH A 102     3041   3047   3347   -758    136    202       O  
+HETATM  256  O   HOH A 103     -12.996 -19.006   8.652  1.00 17.08           O  
+ANISOU  256  O   HOH A 103     1986   2194   2308   -162     19      6       O  
+HETATM  257  O   HOH A 104     -16.923 -11.900  -1.514  1.00 12.17           O  
+ANISOU  257  O   HOH A 104      985   1373   2263     89     15    427       O  
+HETATM  258  O   HOH A 105     -17.129  -9.952   0.935  1.00 23.48           O  
+ANISOU  258  O   HOH A 105     3132   3126   2661   1522    595   1220       O  
+HETATM  259  O   HOH A 106     -14.089 -11.175   6.586  1.00 26.94           O  
+ANISOU  259  O   HOH A 106     2558   3014   4663   -301    693    266       O  
+HETATM  260  O   HOH A 107      -6.135  -8.450   0.507  1.00 24.42           O  
+ANISOU  260  O   HOH A 107     2827   2868   3584     14  -1200    199       O  
+HETATM  261  O   HOH A 108     -18.836 -19.714   0.223  1.00 10.42           O  
+ANISOU  261  O   HOH A 108      972    998   1985     45   -323    -60       O  
+HETATM  262  O   HOH A 109     -11.305  -2.989  -8.548  1.00 35.26           O  
+ANISOU  262  O   HOH A 109     5672   4625   3098  -2716   -573    763       O  
+HETATM  263  O   HOH A 110      -4.536  -3.704  -4.331  1.00 24.91           O  
+ANISOU  263  O   HOH A 110     2570   2468   4424   -963   -530    898       O  
+HETATM  264  O   HOH A 111     -11.337 -17.621   4.409  1.00 10.79           O  
+ANISOU  264  O   HOH A 111      787   1181   2131    -74   -131    341       O  
+HETATM  265  O   HOH A 112     -18.977 -13.581   1.716  1.00 18.02           O  
+ANISOU  265  O   HOH A 112     1853   2262   2731    162   -225    256       O  
+HETATM  266  O   HOH A 113      -5.945 -11.026   4.687  1.00 31.92           O  
+ANISOU  266  O   HOH A 113     3084   2415   6629    387  -1060   -631       O  
+HETATM  267  O   HOH A 114      -9.802  -4.790  -8.135  1.00 27.56           O  
+ANISOU  267  O   HOH A 114     2226   2749   5495   -564   -923   1345       O  
+HETATM  268  O   HOH A 115     -14.408 -22.748   3.075  1.00 37.37           O  
+ANISOU  268  O   HOH A 115     3312   3268   7617   -375   2045  -2219       O  
+HETATM  269  O   HOH A 116     -10.381  -2.415  -6.035  1.00 37.02           O  
+ANISOU  269  O   HOH A 116     5402   3979   4684  -3111   -326   2242       O  
+HETATM  270  O   HOH A 117     -16.573 -16.874   9.688  1.00 18.01           O  
+ANISOU  270  O   HOH A 117     2918   1451   2474    -85    310    -73       O  
+HETATM  271  O   HOH A 118      -7.704  -3.175  -3.757  1.00 27.62           O  
+ANISOU  271  O   HOH A 118     2314   1995   6185    -59  -1516    -40       O  
+HETATM  272  O   HOH A 119     -12.878  -6.845  -0.083  1.00 20.00           O  
+ANISOU  272  O   HOH A 119     2701   2355   2542    738   -267    -63       O  
+HETATM  273  O   HOH A 120      -2.714  -5.479  -5.225  1.00 29.51           O  
+ANISOU  273  O   HOH A 120     1877   1584   7748   -191   -369    211       O  
+HETATM  274  O   HOH A 121      -5.573  -8.440  -9.612  1.00 29.75           O  
+ANISOU  274  O   HOH A 121     3007   3025   5270     13   -670   1202       O  
+HETATM  275  O   HOH A 122      -2.047  -6.015   3.974  1.00 39.81           O  
+ANISOU  275  O   HOH A 122     4133   3247   7744   1643  -2561  -1367       O  
+HETATM  276  O   HOH A 123     -15.975 -14.622  -3.688  0.50 10.88           O  
+ANISOU  276  O   HOH A 123     1266   1958    907   -559    -80    507       O  
+HETATM  277  O   HOH A 124     -12.455 -12.897   5.802  1.00 44.20           O  
+ANISOU  277  O   HOH A 124     4525   6060   6209  -1609   1303  -2609       O  
+HETATM  278  O   HOH A 125     -14.865  -8.407   1.547  1.00 28.96           O  
+ANISOU  278  O   HOH A 125     4314   2614   4075    143  -1391     89       O  
+HETATM  279  O   HOH A 126     -18.266 -13.626  -4.638  0.50 53.01           O  
+ANISOU  279  O   HOH A 126     5204   8102   6835  -1787   1926   1424       O  
+HETATM  280  O   HOH A 127     -13.453 -17.339  10.832  1.00 31.79           O  
+ANISOU  280  O   HOH A 127     3252   3387   5437    217    996  -2059       O  
+HETATM  281  O   HOH A 128     -21.456 -12.486   1.908  1.00 25.00           O  
+ANISOU  281  O   HOH A 128     2296   3373   3827   -182   -285    875       O  
+HETATM  282  O   HOH A 129     -11.333 -17.247   7.166  1.00 16.14           O  
+ANISOU  282  O   HOH A 129     1266   2367   2498    117    120   -136       O  
+HETATM  283  O   HOH A 130     -19.204 -12.980  -0.902  1.00 31.69           O  
+ANISOU  283  O   HOH A 130     2255   3086   6699    350   -591  -1499       O  
+HETATM  284  O   HOH A 131     -11.623 -14.632   7.808  1.00 43.05           O  
+ANISOU  284  O   HOH A 131     5149   4544   6663    702     95    263       O  
+HETATM  285  O   HOH A 132     -21.650 -19.673  -0.166  1.00 10.38           O  
+ANISOU  285  O   HOH A 132     1000   1026   1917    -70   -263     68       O  
+HETATM  286  O   HOH B 101      -8.977 -25.334 -18.777  1.00 32.39           O  
+ANISOU  286  O   HOH B 101     7816   1670   2821    683      8    -71       O  
+HETATM  287  O   HOH B 102       1.019 -15.094  -9.743  1.00 16.26           O  
+ANISOU  287  O   HOH B 102     1178   3179   1821    713     85    522       O  
+HETATM  288  O   HOH B 103      -1.601 -18.276 -17.174  0.50 14.02           O  
+ANISOU  288  O   HOH B 103      692   2099   2534   -526    471    -43       O  
+HETATM  289  O   HOH B 104       1.584  -8.936  -4.181  1.00 35.60           O  
+ANISOU  289  O   HOH B 104     6375   2724   4428  -1877    825   -389       O  
+HETATM  290  O   HOH B 105      -5.161 -12.279 -12.279  1.00 23.20           O  
+ANISOU  290  O   HOH B 105     2898   2453   3462    975   -693     90       O  
+HETATM  291  O   HOH B 106     -10.291 -21.494 -17.986  1.00 18.02           O  
+ANISOU  291  O   HOH B 106     2456   1754   2636    549   -363   -325       O  
+HETATM  292  O   HOH B 107      -5.277 -17.632 -15.714  1.00 31.05           O  
+ANISOU  292  O   HOH B 107     2486   5534   3775   1310    587    110       O  
+HETATM  293  O   HOH B 108      -1.511 -21.483  -9.441  1.00 20.82           O  
+ANISOU  293  O   HOH B 108     1814   1700   4394    653    745    -16       O  
+HETATM  294  O   HOH B 109      -0.095  -6.434  -6.183  1.00 30.42           O  
+ANISOU  294  O   HOH B 109     4149   3206   4201  -2395   -631    345       O  
+HETATM  295  O   HOH B 110      -9.491 -19.336 -13.925  1.00 10.80           O  
+ANISOU  295  O   HOH B 110     1093    913   2095    131   -231   -121       O  
+HETATM  296  O   HOH B 111      -6.963 -23.126 -19.275  1.00 18.86           O  
+ANISOU  296  O   HOH B 111     1583   3021   2561   -136   -158     24       O  
+HETATM  297  O   HOH B 112      -3.614 -10.455 -10.938  1.00 21.08           O  
+ANISOU  297  O   HOH B 112     2390   2538   3080     87   -660    421       O  
+HETATM  298  O   HOH B 113       3.497 -10.423  -4.090  1.00 32.52           O  
+ANISOU  298  O   HOH B 113     5537   2538   4279  -1518    844   -622       O  
+HETATM  299  O   HOH B 114       1.409 -11.075  -2.039  1.00 34.18           O  
+ANISOU  299  O   HOH B 114     3235   2299   7453     78  -2098   -245       O  
+HETATM  300  O   HOH B 115       1.608  -8.785  -6.616  1.00 19.85           O  
+ANISOU  300  O   HOH B 115     1620   1923   3999   -503   -317    330       O  
+HETATM  301  O   HOH B 116      -1.746 -23.855 -11.834  1.00 23.77           O  
+ANISOU  301  O   HOH B 116     2626   2240   4164   -642  -1841    582       O  
+HETATM  302  O   HOH B 117      -4.714 -15.157 -16.688  1.00 25.77           O  
+ANISOU  302  O   HOH B 117     1898   4899   2993    316    568   1220       O  
+HETATM  303  O   HOH B 118      -8.830 -11.401 -18.038  1.00 41.67           O  
+ANISOU  303  O   HOH B 118     5403   4514   5913   1197   2008   -564       O  
+HETATM  304  O   HOH B 119      -3.731  -9.035  -0.670  1.00 21.83           O  
+ANISOU  304  O   HOH B 119     2615   2620   3058    204   -518   -640       O  
+HETATM  305  O   HOH B 120      -8.195 -14.216 -18.874  0.50 43.42           O  
+ANISOU  305  O   HOH B 120     3463   7318   5715    956     90    441       O  
+HETATM  306  O   HOH B 121      -0.377 -20.467 -18.112  1.00 16.84           O  
+ANISOU  306  O   HOH B 121     1653   1887   2857     34   -330   -322       O  
+HETATM  307  O   HOH B 122      -2.757 -22.215  -4.987  0.50149.39           O  
+ANISOU  307  O   HOH B 122    19541  25628  11590  13322  -6067  -4420       O  
+HETATM  308  O   HOH B 123      -9.476 -19.192 -16.713  1.00 15.65           O  
+ANISOU  308  O   HOH B 123     2247   1464   2236    607     84     66       O  
+HETATM  309  O   HOH B 124      -4.408 -20.833  -3.785  0.50 12.10           O  
+ANISOU  309  O   HOH B 124     1484   2034   1077   -737    319   -662       O  
+MASTER     1345    0    0    2    0    0    0    6  290    2    0    2          
+END                                                                             

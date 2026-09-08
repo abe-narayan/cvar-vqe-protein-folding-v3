@@ -1,0 +1,730 @@
+{
+ "C6c_conditioning_pointwise": {
+  "1CS9|s0": {
+   "prior_entropy_bits": 9.32290695306226,
+   "haar": {
+    "grad_norm": 0.2172053279967851,
+    "grad_var_components": 0.0018370001393268117,
+    "mean_abs": 0.03279563045669823
+   },
+   "uniform": {
+    "grad_norm": 0.1823455083692035,
+    "grad_var_components": 0.001290135320784008,
+    "mean_abs": 0.03100465208619507
+   },
+   "COND": {
+    "grad_norm": 0.16986932557374873,
+    "grad_var_components": 0.0011242240144810217,
+    "mean_abs": 0.02387142508908527
+   },
+   "scram_state": {
+    "grad_norm": 0.18930523637006422,
+    "grad_var_components": 0.0013107032577059606,
+    "mean_abs": 0.03124272403545773
+   }
+  },
+  "1CS9|s1": {
+   "prior_entropy_bits": 9.32290695306226,
+   "haar": {
+    "grad_norm": 0.2626701218892555,
+    "grad_var_components": 0.002842084554434996,
+    "mean_abs": 0.03610681524145292
+   },
+   "uniform": {
+    "grad_norm": 0.1823455083692035,
+    "grad_var_components": 0.001290135320784008,
+    "mean_abs": 0.03100465208619507
+   },
+   "COND": {
+    "grad_norm": 0.14694622065904253,
+    "grad_var_components": 0.0008197426770783986,
+    "mean_abs": 0.02473027005643223
+   },
+   "scram_state": {
+    "grad_norm": 0.15513605092139462,
+    "grad_var_components": 0.0009562912533609508,
+    "mean_abs": 0.025265199351323053
+   }
+  },
+  "1CS9|s2": {
+   "prior_entropy_bits": 9.32290695306226,
+   "haar": {
+    "grad_norm": 0.14810419488261045,
+    "grad_var_components": 0.0008343945041529788,
+    "mean_abs": 0.024037084108986344
+   },
+   "uniform": {
+    "grad_norm": 0.1823455083692035,
+    "grad_var_components": 0.001290135320784008,
+    "mean_abs": 0.03100465208619507
+   },
+   "COND": {
+    "grad_norm": 0.1638765143594033,
+    "grad_var_components": 0.001067102617597444,
+    "mean_abs": 0.025493036268903337
+   },
+   "scram_state": {
+    "grad_norm": 0.17510228516160503,
+    "grad_var_components": 0.0012328971721455768,
+    "mean_abs": 0.02747870110760109
+   }
+  },
+  "2MK7|s0": {
+   "prior_entropy_bits": 7.464388869644399,
+   "haar": {
+    "grad_norm": 0.14093241599920314,
+    "grad_var_components": 0.0007940646424239505,
+    "mean_abs": 0.021737180120046152
+   },
+   "uniform": {
+    "grad_norm": 0.18857814129594747,
+    "grad_var_components": 0.0013820623449725643,
+    "mean_abs": 0.03349147823024776
+   },
+   "COND": {
+    "grad_norm": 0.17844533460375336,
+    "grad_var_components": 0.0013265003067569146,
+    "mean_abs": 0.032863729602588154
+   },
+   "scram_state": {
+    "grad_norm": 0.20567214800133313,
+    "grad_var_components": 0.0016962526018076947,
+    "mean_abs": 0.03568337733605207
+   }
+  },
+  "2MK7|s1": {
+   "prior_entropy_bits": 7.464388869644399,
+   "haar": {
+    "grad_norm": 0.21857386057921868,
+    "grad_var_components": 0.0019568385142842352,
+    "mean_abs": 0.03196755142095505
+   },
+   "uniform": {
+    "grad_norm": 0.18857814129594747,
+    "grad_var_components": 0.0013820623449725643,
+    "mean_abs": 0.03349147823024776
+   },
+   "COND": {
+    "grad_norm": 0.1857292324391191,
+    "grad_var_components": 0.001257863316871889,
+    "mean_abs": 0.031759508987177
+   },
+   "scram_state": {
+    "grad_norm": 0.18359712133179457,
+    "grad_var_components": 0.0012985019877138281,
+    "mean_abs": 0.026965517007714396
+   }
+  },
+  "2MK7|s2": {
+   "prior_entropy_bits": 7.464388869644399,
+   "haar": {
+    "grad_norm": 0.20759958880655366,
+    "grad_var_components": 0.0017923363849358066,
+    "mean_abs": 0.03165485836242946
+   },
+   "uniform": {
+    "grad_norm": 0.18857814129594747,
+    "grad_var_components": 0.0013820623449725643,
+    "mean_abs": 0.03349147823024776
+   },
+   "COND": {
+    "grad_norm": 0.19302476491145473,
+    "grad_var_components": 0.0015204697626434924,
+    "mean_abs": 0.034338166627942375
+   },
+   "scram_state": {
+    "grad_norm": 0.2442491268454884,
+    "grad_var_components": 0.0024633214928690655,
+    "mean_abs": 0.03707979102508685
+   }
+  },
+  "2P5H|s0": {
+   "prior_entropy_bits": 5.365376687478205,
+   "haar": {
+    "grad_norm": 0.21400201280484552,
+    "grad_var_components": 0.0018544323933163765,
+    "mean_abs": 0.03431506466334691
+   },
+   "uniform": {
+    "grad_norm": 0.1994847379186409,
+    "grad_var_components": 0.000985621036180047,
+    "mean_abs": 0.03548597398695056
+   },
+   "COND": {
+    "grad_norm": 0.16958534480383483,
+    "grad_var_components": 0.0011953850965368384,
+    "mean_abs": 0.027645162500073095
+   },
+   "scram_state": {
+    "grad_norm": 0.33010957462977125,
+    "grad_var_components": 0.00348428059027699,
+    "mean_abs": 0.04808025856148387
+   }
+  },
+  "2P5H|s1": {
+   "prior_entropy_bits": 5.365376687478205,
+   "haar": {
+    "grad_norm": 0.22156397145905823,
+    "grad_var_components": 0.001903502389170664,
+    "mean_abs": 0.030175721697722546
+   },
+   "uniform": {
+    "grad_norm": 0.1994847379186409,
+    "grad_var_components": 0.000985621036180047,
+    "mean_abs": 0.03548597398695056
+   },
+   "COND": {
+    "grad_norm": 0.174132333933328,
+    "grad_var_components": 0.0009930224464677704,
+    "mean_abs": 0.027469488337685144
+   },
+   "scram_state": {
+    "grad_norm": 0.16551998579633892,
+    "grad_var_components": 0.0009670495442874952,
+    "mean_abs": 0.025073414337044037
+   }
+  },
+  "2P5H|s2": {
+   "prior_entropy_bits": 5.365376687478205,
+   "haar": {
+    "grad_norm": 0.18558914034387175,
+    "grad_var_components": 0.0014159926615637279,
+    "mean_abs": 0.02925504410834473
+   },
+   "uniform": {
+    "grad_norm": 0.1994847379186409,
+    "grad_var_components": 0.000985621036180047,
+    "mean_abs": 0.03548597398695056
+   },
+   "COND": {
+    "grad_norm": 0.1491557163496133,
+    "grad_var_components": 0.0009135049739196552,
+    "mean_abs": 0.023987234871246033
+   },
+   "scram_state": {
+    "grad_norm": 0.25173181919422766,
+    "grad_var_components": 0.0026216779785107266,
+    "mean_abs": 0.03246391214225833
+   }
+  },
+  "6EY3|s0": {
+   "prior_entropy_bits": 8.808633644226624,
+   "haar": {
+    "grad_norm": 0.21683743736284797,
+    "grad_var_components": 0.001748463405406132,
+    "mean_abs": 0.030137052415645793
+   },
+   "uniform": {
+    "grad_norm": 0.19983338714511933,
+    "grad_var_components": 0.001662429566833055,
+    "mean_abs": 0.03268653953468409
+   },
+   "COND": {
+    "grad_norm": 0.23245618046038205,
+    "grad_var_components": 0.00222585880395054,
+    "mean_abs": 0.04047203228480618
+   },
+   "scram_state": {
+    "grad_norm": 0.27663784184804696,
+    "grad_var_components": 0.003160585480744395,
+    "mean_abs": 0.044599086718423143
+   }
+  },
+  "6EY3|s1": {
+   "prior_entropy_bits": 8.808633644226624,
+   "haar": {
+    "grad_norm": 0.1392802346313589,
+    "grad_var_components": 0.0008011456619691315,
+    "mean_abs": 0.02286151781665562
+   },
+   "uniform": {
+    "grad_norm": 0.19983338714511933,
+    "grad_var_components": 0.001662429566833055,
+    "mean_abs": 0.03268653953468409
+   },
+   "COND": {
+    "grad_norm": 0.22014840359159613,
+    "grad_var_components": 0.0019238876632406768,
+    "mean_abs": 0.038668802055511486
+   },
+   "scram_state": {
+    "grad_norm": 0.23292748653816292,
+    "grad_var_components": 0.0022518002413865097,
+    "mean_abs": 0.03357631897467892
+   }
+  },
+  "6EY3|s2": {
+   "prior_entropy_bits": 8.808633644226624,
+   "haar": {
+    "grad_norm": 0.19756745834602968,
+    "grad_var_components": 0.0016100089032136842,
+    "mean_abs": 0.03272381414541336
+   },
+   "uniform": {
+    "grad_norm": 0.19983338714511933,
+    "grad_var_components": 0.001662429566833055,
+    "mean_abs": 0.03268653953468409
+   },
+   "COND": {
+    "grad_norm": 0.24065827588715702,
+    "grad_var_components": 0.0024072712580254607,
+    "mean_abs": 0.040769445133291844
+   },
+   "scram_state": {
+    "grad_norm": 0.21899972680529717,
+    "grad_var_components": 0.001984458852653675,
+    "mean_abs": 0.03182374185186024
+   }
+  },
+  "6F3V|s0": {
+   "prior_entropy_bits": 7.834607076392702,
+   "haar": {
+    "grad_norm": 0.23714623656574765,
+    "grad_var_components": 0.0023386947083673826,
+    "mean_abs": 0.03300536244640965
+   },
+   "uniform": {
+    "grad_norm": 0.2135372247514241,
+    "grad_var_components": 0.0015029098126940015,
+    "mean_abs": 0.03411158250025439
+   },
+   "COND": {
+    "grad_norm": 0.2477082450182106,
+    "grad_var_components": 0.0025470393997968255,
+    "mean_abs": 0.03878907845642405
+   },
+   "scram_state": {
+    "grad_norm": 0.20793292030862473,
+    "grad_var_components": 0.0017554232700319127,
+    "mean_abs": 0.034570218327651774
+   }
+  },
+  "6F3V|s1": {
+   "prior_entropy_bits": 7.834607076392702,
+   "haar": {
+    "grad_norm": 0.1546403494276885,
+    "grad_var_components": 0.0009927202434908133,
+    "mean_abs": 0.022537174739586146
+   },
+   "uniform": {
+    "grad_norm": 0.2135372247514241,
+    "grad_var_components": 0.0015029098126940015,
+    "mean_abs": 0.03411158250025439
+   },
+   "COND": {
+    "grad_norm": 0.24802608656012634,
+    "grad_var_components": 0.002439212898675315,
+    "mean_abs": 0.038220011826399426
+   },
+   "scram_state": {
+    "grad_norm": 0.28918789462502587,
+    "grad_var_components": 0.002629574202752769,
+    "mean_abs": 0.036529511730799165
+   }
+  },
+  "6F3V|s2": {
+   "prior_entropy_bits": 7.834607076392702,
+   "haar": {
+    "grad_norm": 0.1530713573455231,
+    "grad_var_components": 0.0009703240976748666,
+    "mean_abs": 0.023827814898571126
+   },
+   "uniform": {
+    "grad_norm": 0.2135372247514241,
+    "grad_var_components": 0.0015029098126940015,
+    "mean_abs": 0.03411158250025439
+   },
+   "COND": {
+    "grad_norm": 0.2315370227637733,
+    "grad_var_components": 0.0022068728939850656,
+    "mean_abs": 0.03544227324005923
+   },
+   "scram_state": {
+    "grad_norm": 0.2513210096008503,
+    "grad_var_components": 0.0026312167048810876,
+    "mean_abs": 0.03833892542629184
+   }
+  },
+  "6S0N|s0": {
+   "prior_entropy_bits": 2.6441257811994405,
+   "haar": {
+    "grad_norm": 0.19448652437827466,
+    "grad_var_components": 0.0015757749262568345,
+    "mean_abs": 0.027899010436911908
+   },
+   "uniform": {
+    "grad_norm": 0.21004460007621845,
+    "grad_var_components": 0.0009640360969645316,
+    "mean_abs": 0.03268543161121288
+   },
+   "COND": {
+    "grad_norm": 0.11856345668241614,
+    "grad_var_components": 0.0005794945615819959,
+    "mean_abs": 0.016969678878929337
+   },
+   "scram_state": {
+    "grad_norm": 0.21480953164438044,
+    "grad_var_components": 0.0018407009131247841,
+    "mean_abs": 0.029296780855356763
+   }
+  },
+  "6S0N|s1": {
+   "prior_entropy_bits": 2.6441257811994405,
+   "haar": {
+    "grad_norm": 0.15180381445955057,
+    "grad_var_components": 0.0009575242637994849,
+    "mean_abs": 0.02439590265575779
+   },
+   "uniform": {
+    "grad_norm": 0.21004460007621845,
+    "grad_var_components": 0.0009640360969645316,
+    "mean_abs": 0.03268543161121288
+   },
+   "COND": {
+    "grad_norm": 0.1262759039125345,
+    "grad_var_components": 0.0006087674639408889,
+    "mean_abs": 0.016883180531712186
+   },
+   "scram_state": {
+    "grad_norm": 0.08745789324308623,
+    "grad_var_components": 0.0002625800621258759,
+    "mean_abs": 0.01126521119448183
+   }
+  },
+  "6S0N|s2": {
+   "prior_entropy_bits": 2.6441257811994405,
+   "haar": {
+    "grad_norm": 0.20362861653549835,
+    "grad_var_components": 0.001718671452182935,
+    "mean_abs": 0.03272286931430697
+   },
+   "uniform": {
+    "grad_norm": 0.21004460007621845,
+    "grad_var_components": 0.0009640360969645316,
+    "mean_abs": 0.03268543161121288
+   },
+   "COND": {
+    "grad_norm": 0.12617622039238532,
+    "grad_var_components": 0.0006096102515723813,
+    "mean_abs": 0.01790430322941158
+   },
+   "scram_state": {
+    "grad_norm": 0.09305915183018391,
+    "grad_var_components": 0.0003606536502222997,
+    "mean_abs": 0.014814241213261295
+   }
+  },
+  "7N2I|s0": {
+   "prior_entropy_bits": 4.507975584364791,
+   "haar": {
+    "grad_norm": 0.2612156039899399,
+    "grad_var_components": 0.002705041154788724,
+    "mean_abs": 0.04266228911849317
+   },
+   "uniform": {
+    "grad_norm": 0.24001940518752504,
+    "grad_var_components": 0.002194650126230589,
+    "mean_abs": 0.03576544395636192
+   },
+   "COND": {
+    "grad_norm": 0.09421056995696454,
+    "grad_var_components": 0.0003401618116427715,
+    "mean_abs": 0.015867774454236983
+   },
+   "scram_state": {
+    "grad_norm": 0.1859364532557693,
+    "grad_var_components": 0.001285013566102301,
+    "mean_abs": 0.0208424132268621
+   }
+  },
+  "7N2I|s1": {
+   "prior_entropy_bits": 4.507975584364791,
+   "haar": {
+    "grad_norm": 0.3126345699226258,
+    "grad_var_components": 0.003942669626189957,
+    "mean_abs": 0.04190211466045657
+   },
+   "uniform": {
+    "grad_norm": 0.24001940518752504,
+    "grad_var_components": 0.002194650126230589,
+    "mean_abs": 0.03576544395636192
+   },
+   "COND": {
+    "grad_norm": 0.10030950592367764,
+    "grad_var_components": 0.000360490785293584,
+    "mean_abs": 0.01621478959634533
+   },
+   "scram_state": {
+    "grad_norm": 0.3021788701726559,
+    "grad_var_components": 0.003779814826577956,
+    "mean_abs": 0.038171057148598156
+   }
+  },
+  "7N2I|s2": {
+   "prior_entropy_bits": 4.507975584364791,
+   "haar": {
+    "grad_norm": 0.18576984309644648,
+    "grad_var_components": 0.0014022116516703067,
+    "mean_abs": 0.02813056923376031
+   },
+   "uniform": {
+    "grad_norm": 0.24001940518752504,
+    "grad_var_components": 0.002194650126230589,
+    "mean_abs": 0.03576544395636192
+   },
+   "COND": {
+    "grad_norm": 0.09602351221226212,
+    "grad_var_components": 0.0003816655492898775,
+    "mean_abs": 0.015575732670241116
+   },
+   "scram_state": {
+    "grad_norm": 0.3708998170230942,
+    "grad_var_components": 0.005587685269325303,
+    "mean_abs": 0.049504160942695524
+   }
+  },
+  "8IS3|s0": {
+   "prior_entropy_bits": 10.34133435749923,
+   "haar": {
+    "grad_norm": 0.2546968718402327,
+    "grad_var_components": 0.002616069652551612,
+    "mean_abs": 0.034187316488186716
+   },
+   "uniform": {
+    "grad_norm": 0.22605422700505837,
+    "grad_var_components": 0.002105514606011625,
+    "mean_abs": 0.040570055938708306
+   },
+   "COND": {
+    "grad_norm": 0.2579465604650503,
+    "grad_var_components": 0.0027699578786577208,
+    "mean_abs": 0.04314760501100368
+   },
+   "scram_state": {
+    "grad_norm": 0.19928605600214647,
+    "grad_var_components": 0.0015359966200875236,
+    "mean_abs": 0.03356432291412173
+   }
+  },
+  "8IS3|s1": {
+   "prior_entropy_bits": 10.34133435749923,
+   "haar": {
+    "grad_norm": 0.1807785647381861,
+    "grad_var_components": 0.0012721213202644855,
+    "mean_abs": 0.029179792707805813
+   },
+   "uniform": {
+    "grad_norm": 0.22605422700505837,
+    "grad_var_components": 0.002105514606011625,
+    "mean_abs": 0.040570055938708306
+   },
+   "COND": {
+    "grad_norm": 0.26360905855546113,
+    "grad_var_components": 0.0027316785000226496,
+    "mean_abs": 0.04452522757364727
+   },
+   "scram_state": {
+    "grad_norm": 0.26860219842330474,
+    "grad_var_components": 0.002872056748001663,
+    "mean_abs": 0.045023800108982805
+   }
+  },
+  "8IS3|s2": {
+   "prior_entropy_bits": 10.34133435749923,
+   "haar": {
+    "grad_norm": 0.274882926038012,
+    "grad_var_components": 0.003045503404097922,
+    "mean_abs": 0.047582339376865644
+   },
+   "uniform": {
+    "grad_norm": 0.22605422700505837,
+    "grad_var_components": 0.002105514606011625,
+    "mean_abs": 0.040570055938708306
+   },
+   "COND": {
+    "grad_norm": 0.23912607080952633,
+    "grad_var_components": 0.00233669400703118,
+    "mean_abs": 0.039708470967458255
+   },
+   "scram_state": {
+    "grad_norm": 0.20511040144999665,
+    "grad_var_components": 0.001730160386601162,
+    "mean_abs": 0.03485328015560352
+   }
+  },
+  "9UV5|s0": {
+   "prior_entropy_bits": 9.774296680578104,
+   "haar": {
+    "grad_norm": 0.20049244371427302,
+    "grad_var_components": 0.0016181077505386542,
+    "mean_abs": 0.02634277017620676
+   },
+   "uniform": {
+    "grad_norm": 0.13890168004745962,
+    "grad_var_components": 0.0005128919949887934,
+    "mean_abs": 0.022449907947954834
+   },
+   "COND": {
+    "grad_norm": 0.17404070538863098,
+    "grad_var_components": 0.001137494653578289,
+    "mean_abs": 0.028720508466343168
+   },
+   "scram_state": {
+    "grad_norm": 0.1596194984754767,
+    "grad_var_components": 0.0010224358597062128,
+    "mean_abs": 0.027823150913350306
+   }
+  },
+  "9UV5|s1": {
+   "prior_entropy_bits": 9.774296680578104,
+   "haar": {
+    "grad_norm": 0.16600253307932622,
+    "grad_var_components": 0.0010523544387177543,
+    "mean_abs": 0.024107233155688777
+   },
+   "uniform": {
+    "grad_norm": 0.13890168004745962,
+    "grad_var_components": 0.0005128919949887934,
+    "mean_abs": 0.022449907947954834
+   },
+   "COND": {
+    "grad_norm": 0.16819355953871307,
+    "grad_var_components": 0.0011593689620212684,
+    "mean_abs": 0.026609447051089436
+   },
+   "scram_state": {
+    "grad_norm": 0.1669257885166026,
+    "grad_var_components": 0.0009697388709140678,
+    "mean_abs": 0.026861798056658292
+   }
+  },
+  "9UV5|s2": {
+   "prior_entropy_bits": 9.774296680578104,
+   "haar": {
+    "grad_norm": 0.26436881542258295,
+    "grad_var_components": 0.002911909631281703,
+    "mean_abs": 0.03648179177735955
+   },
+   "uniform": {
+    "grad_norm": 0.13890168004745962,
+    "grad_var_components": 0.0005128919949887934,
+    "mean_abs": 0.022449907947954834
+   },
+   "COND": {
+    "grad_norm": 0.1789293326408635,
+    "grad_var_components": 0.0013174052350283516,
+    "mean_abs": 0.03064729990411345
+   },
+   "scram_state": {
+    "grad_norm": 0.14925910280643775,
+    "grad_var_components": 0.0009241427029242614,
+    "mean_abs": 0.022360288222370118
+   }
+  }
+ },
+ "_written": "2026-09-06 00:12:28",
+ "C6c_paired|grad_norm|COND-uniform": {
+  "n": 27,
+  "mean": -0.018581232481361527,
+  "median": -0.0028489088568283694,
+  "sd": 0.05970438635610967,
+  "mean_over_sd": -0.3112205587464358,
+  "ci_lo": -0.04160125629814772,
+  "ci_hi": 0.002721244654828286,
+  "win": 14,
+  "loss": 13,
+  "top10pct_abs_share": 0.23270265756316882,
+  "verdict": "NULL"
+ },
+ "C6c_paired|grad_var_components|COND-uniform": {
+  "n": 27,
+  "mean": 1.85183360263193e-05,
+  "median": 0.00013840741767092812,
+  "sd": 0.0007993131823706907,
+  "mean_over_sd": 0.023167810108417813,
+  "ci_lo": -0.00028973033359578135,
+  "ci_hi": 0.000302085189160101,
+  "win": 12,
+  "loss": 15,
+  "top10pct_abs_share": 0.2317840123172824,
+  "verdict": "NULL"
+ },
+ "C6c_paired|grad_norm|COND-haar": {
+  "n": 27,
+  "mean": -0.024845976935648804,
+  "median": -0.026451738325642044,
+  "sd": 0.07356007582763416,
+  "mean_over_sd": -0.3377644280012415,
+  "ci_lo": -0.05323865832317951,
+  "ci_hi": 0.0018549325446461573,
+  "win": 16,
+  "loss": 11,
+  "top10pct_abs_share": 0.23738745912942227,
+  "verdict": "NULL"
+ },
+ "C6c_paired|grad_var_components|COND-haar": {
+  "n": 27,
+  "mean": -0.0003781190624586542,
+  "median": -0.00048061309696036504,
+  "sd": 0.0011798649424355964,
+  "mean_over_sd": -0.32047656376508876,
+  "ci_lo": -0.0008316729159560327,
+  "ci_hi": 4.828458969528024e-05,
+  "win": 16,
+  "loss": 11,
+  "top10pct_abs_share": 0.230882040278358,
+  "verdict": "NULL"
+ },
+ "C6c_paired|grad_norm|COND-scram_state": {
+  "n": 27,
+  "mean": -0.03281005675659747,
+  "median": -0.011225770802201718,
+  "sd": 0.07839571265017073,
+  "mean_over_sd": -0.4185185088246789,
+  "ci_lo": -0.06274842448481135,
+  "ci_hi": -0.0060663651225870445,
+  "win": 16,
+  "loss": 11,
+  "top10pct_abs_share": 0.3287517727666266,
+  "verdict": "SIGNIFICANT"
+ },
+ "C6c_paired|grad_var_components|COND-scram_state": {
+  "n": 27,
+  "mean": -0.0005301580117464363,
+  "median": -0.00016579455454813282,
+  "sd": 0.0013481283247646883,
+  "mean_over_sd": -0.39325485712865926,
+  "ci_lo": -0.0010481156843408824,
+  "ci_hi": -8.58224735974902e-05,
+  "win": 17,
+  "loss": 10,
+  "top10pct_abs_share": 0.37400270310805506,
+  "verdict": "SIGNIFICANT"
+ },
+ "C6c_paired|grad_norm|scram_state-uniform": {
+  "n": 27,
+  "mean": 0.014228824275235941,
+  "median": 0.01709400670538566,
+  "sd": 0.05923307467235384,
+  "mean_over_sd": 0.2402175533507639,
+  "ci_lo": -0.007228316485671619,
+  "ci_hi": 0.035506608347142456,
+  "win": 10,
+  "loss": 17,
+  "top10pct_abs_share": 0.2134879669251781,
+  "verdict": "NULL"
+ },
+ "C6c_paired|grad_var_components|scram_state-uniform": {
+  "n": 27,
+  "mean": 0.0005486763477727556,
+  "median": 0.000411250707935468,
+  "sd": 0.0009932780065990418,
+  "mean_over_sd": 0.552389506389464,
+  "ci_lo": 0.00021083619242095886,
+  "ci_hi": 0.0009283303046652724,
+  "win": 9,
+  "loss": 18,
+  "top10pct_abs_share": 0.26635889558959225,
+  "verdict": "SIGNIFICANT"
+ }
+}

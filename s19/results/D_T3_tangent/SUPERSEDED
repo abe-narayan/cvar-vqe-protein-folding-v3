@@ -1,0 +1,14 @@
+SUPERSEDED by results/D_T3_tangent2/ -- see s19/agentD_FINDINGS.md section 2.1.
+
+DEFECT: s19/d_tangent.py's `frac_in` projected with np.linalg.qr(J_w).  Reduced QR of an
+(npairs x 2n) matrix returns 2n orthonormal columns even when J_w is rank-deficient, and it is:
+rank(J_w) = 2n - 5 exactly (the map (phi,psi) -> CA trace is not injective).  So every in-tangent
+fraction in tangent.json was computed against a 2n-dimensional subspace instead of the true
+column space.  The tell was the EMPIRICAL random-direction null landing at 0.417 ~ 2n/npairs
+rather than rank/npairs = 0.329.
+
+WHAT IS STILL VALID HERE: contrasts against `fin_random`, which shared the inflated subspace,
+and everything in d_tangent_report.py's linearisation table that compares arms to each other.
+NOT VALID: any ABSOLUTE in-tangent fraction.  Use D_T3_tangent2/ for those.
+
+Kept rather than deleted because the supersession is part of the record.

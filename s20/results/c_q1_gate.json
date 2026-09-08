@@ -1,0 +1,52 @@
+{
+ "GC20a": {
+  "n_targets": 8,
+  "rows": [
+   {
+    "pdb": "1A13",
+    "d_terms": 0.0,
+    "d_oracle": 0.0
+   },
+   {
+    "pdb": "1A1P",
+    "d_terms": 0.0,
+    "d_oracle": 0.0
+   },
+   {
+    "pdb": "1CB3",
+    "d_terms": 0.0,
+    "d_oracle": 0.0
+   },
+   {
+    "pdb": "1CEK",
+    "d_terms": 0.0,
+    "d_oracle": 0.0
+   },
+   {
+    "pdb": "1CS9",
+    "d_terms": 0.0,
+    "d_oracle": 0.0
+   },
+   {
+    "pdb": "1D0W",
+    "d_terms": 0.0,
+    "d_oracle": 0.0
+   },
+   {
+    "pdb": "1D6X",
+    "d_terms": 0.0,
+    "d_oracle": 0.0
+   },
+   {
+    "pdb": "1DEP",
+    "d_terms": 0.0,
+    "d_oracle": 0.0
+   }
+  ],
+  "max_d_terms": 0.0,
+  "max_d_oracle_d": 0.0,
+  "passed": true
+ },
+ "complete": true,
+ "passed": true
+}

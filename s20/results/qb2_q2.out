@@ -1,0 +1,59 @@
+[1/20] 1CS9 n=9 52s pool500:4.27 vqe:4.11 vqe_prod:4.12 vqe_untrained:4.42 bestofN:4.14 metro:4.32 helix:4.63
+[2/20] 1ID6 n=15 84s pool500:5.63 vqe:5.53 vqe_prod:5.34 vqe_untrained:5.37 bestofN:5.55 metro:5.28 helix:5.66
+[3/20] 1TOR n=10 50s pool500:2.44 vqe:2.70 vqe_prod:3.77 vqe_untrained:3.55 bestofN:3.64 metro:3.82 helix:2.77
+[4/20] 2JN5 n=12 64s pool500:5.64 vqe:5.07 vqe_prod:5.79 vqe_untrained:5.40 bestofN:5.71 metro:5.66 helix:5.70
+[5/20] 2LU6 n=14 96s pool500:3.53 vqe:3.09 vqe_prod:3.34 vqe_untrained:2.93 bestofN:3.00 metro:2.87 helix:5.44
+[6/20] 2MFV n=14 99s pool500:6.12 vqe:5.84 vqe_prod:6.28 vqe_untrained:5.71 bestofN:5.66 metro:5.59 helix:6.97
+[7/20] 2MIG n=12 75s pool500:3.46 vqe:2.71 vqe_prod:3.01 vqe_untrained:3.02 bestofN:2.90 metro:2.98 helix:4.64
+[8/20] 2MK7 n=9 41s pool500:3.31 vqe:4.69 vqe_prod:4.88 vqe_untrained:3.96 bestofN:3.92 metro:5.24 helix:4.60
+[9/20] 2MSA n=14 94s pool500:5.33 vqe:5.63 vqe_prod:5.61 vqe_untrained:5.22 bestofN:5.21 metro:6.32 helix:5.28
+[10/20] 2O0S n=12 74s pool500:3.79 vqe:4.13 vqe_prod:4.05 vqe_untrained:3.64 bestofN:3.54 metro:4.14 helix:4.35
+[11/20] 5H1H n=16 126s pool500:3.08 vqe:3.23 vqe_prod:3.74 vqe_untrained:3.53 bestofN:3.55 metro:3.91 helix:5.88
+[12/20] 5Z5W n=12 52s pool500:2.35 vqe:2.31 vqe_prod:2.30 vqe_untrained:1.59 bestofN:2.31 metro:2.47 helix:2.37
+[13/20] 6EY3 n=9 42s pool500:3.04 vqe:1.81 vqe_prod:2.98 vqe_untrained:2.07 bestofN:1.94 metro:2.01 helix:3.27
+[14/20] 6J9P n=12 51s pool500:1.09 vqe:1.13 vqe_prod:1.18 vqe_untrained:1.43 bestofN:1.12 metro:1.17 helix:1.15
+[15/20] 6MBM n=16 94s pool500:1.36 vqe:1.38 vqe_prod:1.49 vqe_untrained:1.79 bestofN:1.31 metro:1.63 helix:1.41
+[16/20] 7BX2 n=14 93s pool500:2.55 vqe:4.33 vqe_prod:4.46 vqe_untrained:3.67 bestofN:2.96 metro:4.41 helix:1.66
+[17/20] 7N2I n=9 34s pool500:1.18 vqe:1.85 vqe_prod:1.84 vqe_untrained:1.39 bestofN:1.56 metro:1.75 helix:4.04
+[18/20] 8T63 n=16 93s pool500:6.21 vqe:6.41 vqe_prod:6.40 vqe_untrained:6.58 bestofN:6.17 metro:6.79 helix:6.30
+[19/20] 8TXS n=16 108s pool500:2.87 vqe:3.00 vqe_prod:3.46 vqe_untrained:3.95 bestofN:3.94 metro:3.40 helix:7.62
+[20/20] 9BAF n=16 102s pool500:1.86 vqe:2.99 vqe_prod:2.46 vqe_untrained:2.78 bestofN:2.90 metro:3.78 helix:4.13
+
+=== Q2 DECORRELATION, n = 20 targets ===
+rho of the REALISABLE (coherent) distance error of the BUILT chain, per target,
+against the retrieval pool's own.  Judged against the same-generator ceiling.
+
+--- the CEILING: same generator, two independent seeds ---
+  pool500         +1.000  CI [+1.000, +1.000]
+  vqe             +0.852  CI [+0.754, +0.936]
+  vqe_prod        +0.833  CI [+0.729, +0.921]
+  vqe_untrained   +0.800  CI [+0.716, +0.875]
+  bestofN         +0.917  CI [+0.872, +0.956]
+  metro           +0.897  CI [+0.834, +0.952]
+  helix           +0.994  CI [+0.991, +0.997]
+
+--- vs the RETRIEVAL POOL (the falsifier line is 0.75) ---
+  vqe             +0.777  CI [+0.672, +0.870]   spans 0.75
+  vqe_prod        +0.765  CI [+0.630, +0.879]   spans 0.75
+  vqe_untrained   +0.803  CI [+0.726, +0.873]   spans 0.75
+  bestofN         +0.802  CI [+0.681, +0.902]   spans 0.75
+  metro           +0.728  CI [+0.597, +0.849]   spans 0.75
+  helix           +0.793  CI [+0.658, +0.895]   spans 0.75
+
+--- quality and diversity, reported SEPARATELY from error correlation ---
+  family           built RMSD  cloud RMSD  member mean  member best  geom div
+  pool500               3.456       3.264        3.900        2.559     2.688
+  vqe                   3.597       3.392        3.906        2.812     2.641
+  vqe_prod              3.824       3.631        4.059        3.001     2.510
+  vqe_untrained         3.600       3.354        4.170        2.852     3.439
+  bestofN               3.552       3.360        4.007        2.787     3.087
+  metro                 3.877       3.805        3.950        3.485     1.060
+  helix                 4.393       4.272        4.368        3.460     2.155
+
+--- built-chain RMSD vs pool500, paired (negative = the family wins) ---
+  vqe             +0.141 [-0.142,+0.456] W/L 8/12 sig=0
+  vqe_prod        +0.368 [+0.118,+0.645] W/L 6/14 sig=1
+  vqe_untrained   +0.144 [-0.126,+0.417] W/L 9/11 sig=0
+  bestofN         +0.096 [-0.155,+0.354] W/L 11/9 sig=0
+  metro           +0.421 [+0.067,+0.806] W/L 5/15 sig=1
+  helix           +0.937 [+0.422,+1.560] W/L 2/18 sig=1

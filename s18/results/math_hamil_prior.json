@@ -1,0 +1,222 @@
+{
+ "rows": [
+  {
+   "pdb": "1CS9",
+   "rho_res_vs_prior": 0.9841972744187443,
+   "rho_w1_vs_prior": 0.8065139663854076,
+   "rho_full_vs_prior": 0.9621420397538503,
+   "argmin_prior_ORACLE": 5.363754034042358,
+   "argmin_disto_ORACLE": 4.406233787536621,
+   "argmin_res_ORACLE": 5.471094608306885,
+   "argmin_w1_ORACLE": 3.6549487113952637,
+   "argmin_full_ORACLE": 5.256413459777832
+  },
+  {
+   "pdb": "2MK7",
+   "rho_res_vs_prior": 0.9908222744026277,
+   "rho_w1_vs_prior": 0.8540617697665791,
+   "rho_full_vs_prior": 0.9651736342926239,
+   "argmin_prior_ORACLE": 0.6754734516143799,
+   "argmin_disto_ORACLE": 4.446010589599609,
+   "argmin_res_ORACLE": 0.6754734516143799,
+   "argmin_w1_ORACLE": 0.9435951709747314,
+   "argmin_full_ORACLE": 0.6754734516143799
+  },
+  {
+   "pdb": "2P5H",
+   "rho_res_vs_prior": 0.993087470836548,
+   "rho_w1_vs_prior": 0.7727812298114698,
+   "rho_full_vs_prior": 0.963650634454075,
+   "argmin_prior_ORACLE": 2.1844053268432617,
+   "argmin_disto_ORACLE": 3.4787163734436035,
+   "argmin_res_ORACLE": 2.1844053268432617,
+   "argmin_w1_ORACLE": 2.1844053268432617,
+   "argmin_full_ORACLE": 2.1844053268432617
+  },
+  {
+   "pdb": "6EY3",
+   "rho_res_vs_prior": 0.9808738528582531,
+   "rho_w1_vs_prior": 0.8634918146812189,
+   "rho_full_vs_prior": 0.946096327008923,
+   "argmin_prior_ORACLE": 3.8198583126068115,
+   "argmin_disto_ORACLE": 1.9480500221252441,
+   "argmin_res_ORACLE": 3.8198583126068115,
+   "argmin_w1_ORACLE": 3.8198583126068115,
+   "argmin_full_ORACLE": 3.8198583126068115
+  },
+  {
+   "pdb": "6F3V",
+   "rho_res_vs_prior": 0.9850296962213663,
+   "rho_w1_vs_prior": 0.7229948395255579,
+   "rho_full_vs_prior": 0.9627746501879352,
+   "argmin_prior_ORACLE": 4.537670612335205,
+   "argmin_disto_ORACLE": 4.234289169311523,
+   "argmin_res_ORACLE": 4.537670612335205,
+   "argmin_w1_ORACLE": 4.040825366973877,
+   "argmin_full_ORACLE": 4.537670612335205
+  },
+  {
+   "pdb": "6S0N",
+   "rho_res_vs_prior": 0.9815234134929987,
+   "rho_w1_vs_prior": 0.8062019635179812,
+   "rho_full_vs_prior": 0.9551745347944612,
+   "argmin_prior_ORACLE": 2.8248677253723145,
+   "argmin_disto_ORACLE": 3.1492321491241455,
+   "argmin_res_ORACLE": 2.8248677253723145,
+   "argmin_w1_ORACLE": 2.8248677253723145,
+   "argmin_full_ORACLE": 2.8248677253723145
+  },
+  {
+   "pdb": "7N2I",
+   "rho_res_vs_prior": 0.9899725240107253,
+   "rho_w1_vs_prior": 0.7897409290558369,
+   "rho_full_vs_prior": 0.9691562888420663,
+   "argmin_prior_ORACLE": 1.4653382301330566,
+   "argmin_disto_ORACLE": 1.6872209310531616,
+   "argmin_res_ORACLE": 1.4653382301330566,
+   "argmin_w1_ORACLE": 1.7068229913711548,
+   "argmin_full_ORACLE": 1.4653382301330566
+  },
+  {
+   "pdb": "8IS3",
+   "rho_res_vs_prior": 0.9881925267007452,
+   "rho_w1_vs_prior": 0.8518011679297276,
+   "rho_full_vs_prior": 0.9507084903384005,
+   "argmin_prior_ORACLE": 3.00454044342041,
+   "argmin_disto_ORACLE": 3.2431464195251465,
+   "argmin_res_ORACLE": 3.9219775199890137,
+   "argmin_w1_ORACLE": 2.054755449295044,
+   "argmin_full_ORACLE": 2.9616267681121826
+  },
+  {
+   "pdb": "9UV5",
+   "rho_res_vs_prior": 0.9873550975053521,
+   "rho_w1_vs_prior": 0.8244459190433677,
+   "rho_full_vs_prior": 0.9550337552994204,
+   "argmin_prior_ORACLE": 2.0262420177459717,
+   "argmin_disto_ORACLE": 2.542253255844116,
+   "argmin_res_ORACLE": 2.3393537998199463,
+   "argmin_w1_ORACLE": 2.191359043121338,
+   "argmin_full_ORACLE": 2.3393537998199463
+  },
+  {
+   "pdb": "1N9U",
+   "rho_res_vs_prior": 0.989222209854534,
+   "rho_w1_vs_prior": 0.8387354367273958,
+   "rho_full_vs_prior": 0.9553463469711782,
+   "argmin_prior_ORACLE": 3.8258326053619385,
+   "argmin_disto_ORACLE": 3.4004194736480713,
+   "argmin_res_ORACLE": 4.0782060623168945,
+   "argmin_w1_ORACLE": 3.495079517364502,
+   "argmin_full_ORACLE": 2.781503677368164
+  },
+  {
+   "pdb": "1TOR",
+   "rho_res_vs_prior": 0.9898171702591522,
+   "rho_w1_vs_prior": 0.8416085083488569,
+   "rho_full_vs_prior": 0.9778267143411088,
+   "argmin_prior_ORACLE": 2.392249822616577,
+   "argmin_disto_ORACLE": 3.262601852416992,
+   "argmin_res_ORACLE": 2.392249822616577,
+   "argmin_w1_ORACLE": 1.4679183959960938,
+   "argmin_full_ORACLE": 1.4679183959960938
+  },
+  {
+   "pdb": "2BAO",
+   "rho_res_vs_prior": 0.9823736619918702,
+   "rho_w1_vs_prior": 0.7583222987430932,
+   "rho_full_vs_prior": 0.9601782687997197,
+   "argmin_prior_ORACLE": 1.9405322074890137,
+   "argmin_disto_ORACLE": 2.1012730598449707,
+   "argmin_res_ORACLE": 1.9405322074890137,
+   "argmin_w1_ORACLE": 1.9405322074890137,
+   "argmin_full_ORACLE": 1.9405322074890137
+  },
+  {
+   "pdb": "2MD2",
+   "rho_res_vs_prior": 0.9734750253671314,
+   "rho_w1_vs_prior": 0.7945901779857291,
+   "rho_full_vs_prior": 0.9547504426625866,
+   "argmin_prior_ORACLE": 1.2485524415969849,
+   "argmin_disto_ORACLE": 1.2485524415969849,
+   "argmin_res_ORACLE": 1.2485524415969849,
+   "argmin_w1_ORACLE": 1.2485524415969849,
+   "argmin_full_ORACLE": 1.2485524415969849
+  },
+  {
+   "pdb": "2MJQ",
+   "rho_res_vs_prior": 0.9786576251460924,
+   "rho_w1_vs_prior": 0.8361205705791791,
+   "rho_full_vs_prior": 0.9563708756621577,
+   "argmin_prior_ORACLE": 0.382796972990036,
+   "argmin_disto_ORACLE": 0.382796972990036,
+   "argmin_res_ORACLE": 0.382796972990036,
+   "argmin_w1_ORACLE": 0.382796972990036,
+   "argmin_full_ORACLE": 0.382796972990036
+  },
+  {
+   "pdb": "5V5B",
+   "rho_res_vs_prior": 0.9783683241769172,
+   "rho_w1_vs_prior": 0.8685869095348953,
+   "rho_full_vs_prior": 0.9663589103864567,
+   "argmin_prior_ORACLE": 4.007359981536865,
+   "argmin_disto_ORACLE": 3.673074245452881,
+   "argmin_res_ORACLE": 4.007359981536865,
+   "argmin_w1_ORACLE": 4.398487091064453,
+   "argmin_full_ORACLE": 3.8103220462799072
+  },
+  {
+   "pdb": "6B9K",
+   "rho_res_vs_prior": 0.9914879496158788,
+   "rho_w1_vs_prior": 0.8494101375517309,
+   "rho_full_vs_prior": 0.9599733137604132,
+   "argmin_prior_ORACLE": 3.9386801719665527,
+   "argmin_disto_ORACLE": 4.088559150695801,
+   "argmin_res_ORACLE": 3.9386801719665527,
+   "argmin_w1_ORACLE": 3.5944206714630127,
+   "argmin_full_ORACLE": 3.9386801719665527
+  },
+  {
+   "pdb": "7T3H",
+   "rho_res_vs_prior": 0.9912557771515987,
+   "rho_w1_vs_prior": 0.75528990441824,
+   "rho_full_vs_prior": 0.9545423989631681,
+   "argmin_prior_ORACLE": 3.0357513427734375,
+   "argmin_disto_ORACLE": 4.458847999572754,
+   "argmin_res_ORACLE": 2.236661911010742,
+   "argmin_w1_ORACLE": 1.7913808822631836,
+   "argmin_full_ORACLE": 3.1560025215148926
+  },
+  {
+   "pdb": "7VI4",
+   "rho_res_vs_prior": 0.9909391167788761,
+   "rho_w1_vs_prior": 0.7282119920173501,
+   "rho_full_vs_prior": 0.9604508930331584,
+   "argmin_prior_ORACLE": 1.3962067365646362,
+   "argmin_disto_ORACLE": 3.4200007915496826,
+   "argmin_res_ORACLE": 1.3962067365646362,
+   "argmin_w1_ORACLE": 1.3962067365646362,
+   "argmin_full_ORACLE": 3.9356017112731934
+  },
+  {
+   "pdb": "8HVS",
+   "rho_res_vs_prior": 0.9961458097583828,
+   "rho_w1_vs_prior": 0.6250548638932899,
+   "rho_full_vs_prior": 0.9506927189913352,
+   "argmin_prior_ORACLE": 1.6127715110778809,
+   "argmin_disto_ORACLE": 3.290952205657959,
+   "argmin_res_ORACLE": 1.6127715110778809,
+   "argmin_w1_ORACLE": 2.678471803665161,
+   "argmin_full_ORACLE": 1.8239473104476929
+  }
+ ],
+ "n": 19,
+ "_complete": true,
+ "_config": {
+  "module": "s18/math_FINDINGS.md inline, hamil term decomposition",
+  "objective": "0.75*z(-sum log P_retprior) + 0.25*z(disto Bayes risk)",
+  "targets": "s16.qphase_lib.TARGETS19",
+  "measure": "uniform over k=4 lattice"
+ },
+ "_config_hash": "b1b57b9b3751d0e6"
+}

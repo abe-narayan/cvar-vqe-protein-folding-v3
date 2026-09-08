@@ -1,0 +1,10 @@
+{
+ "median_bonded_fraction_of_magnitude": 0.027818352921876954,
+ "spearman_pooled": 0.21096597267708966,
+ "spearman_per_axis": {
+  "A_random": 0.10639588268427995,
+  "B_compactness": 0.40030042079488054
+ },
+ "verdict": "NOT a defensible surrogate even for ranking (rho <= 0.7)",
+ "n_targets": 30
+}

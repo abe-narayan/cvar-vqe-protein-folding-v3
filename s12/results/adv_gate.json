@@ -1,0 +1,1835 @@
+{
+ "n_rejected": 93,
+ "reasons": {
+  "length": 67,
+  "sequence": 8,
+  "parse:": 1,
+  "CA": 16,
+  "rebuild": 1
+ },
+ "n_length_rejected": 67,
+ "n_length_rejected_with_a_usable_9_16_chain": 0,
+ "n_length_rejected_multichain": 67,
+ "n_length_rejection_matches_first_chain": 67,
+ "n_rescued_chains": 0,
+ "n_rescued_chains_passing_ca_step": 0,
+ "rescued": [],
+ "rows": [
+  {
+   "pdb": "1A7Y",
+   "why": "length 4",
+   "n_chains": 3,
+   "chain_lens": [
+    4,
+    4,
+    4
+   ],
+   "first_len": 4,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "1A7Z",
+   "why": "length 1",
+   "n_chains": 2,
+   "chain_lens": [
+    1,
+    1
+   ],
+   "first_len": 1,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "1BYZ",
+   "why": "sequence already in corpus",
+   "n_chains": 4,
+   "chain_lens": [
+    12,
+    12,
+    12,
+    12
+   ],
+   "first_len": 12,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 12,
+     "seq": "ELLKKLLEELKG"
+    },
+    {
+     "chain": "B",
+     "n": 12,
+     "seq": "ELLKKLLEELKG"
+    },
+    {
+     "chain": "C",
+     "n": 12,
+     "seq": "ELLKKLLEELKG"
+    }
+   ]
+  },
+  {
+   "pdb": "1QFI",
+   "why": "length 3",
+   "n_chains": 3,
+   "chain_lens": [
+    3,
+    3,
+    3
+   ],
+   "first_len": 3,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "1S4A",
+   "why": "parse: ValueError",
+   "n_chains": 0,
+   "chain_lens": [],
+   "first_len": null,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "1W3M",
+   "why": "length 7",
+   "n_chains": 12,
+   "chain_lens": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "first_len": 7,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "1W7Q",
+   "why": "length 4",
+   "n_chains": 6,
+   "chain_lens": [
+    4,
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "first_len": 4,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "1W7R",
+   "why": "length 4",
+   "n_chains": 8,
+   "chain_lens": [
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "first_len": 4,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "1XY1",
+   "why": "length 8",
+   "n_chains": 2,
+   "chain_lens": [
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "2M5K",
+   "why": "sequence already in corpus",
+   "n_chains": 8,
+   "chain_lens": [
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11
+   ],
+   "first_len": 11,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 11,
+     "seq": "YTIAALLSPYS"
+    },
+    {
+     "chain": "B",
+     "n": 11,
+     "seq": "YTIAALLSPYS"
+    },
+    {
+     "chain": "C",
+     "n": 11,
+     "seq": "YTIAALLSPYS"
+    }
+   ]
+  },
+  {
+   "pdb": "2M5M",
+   "why": "sequence already in corpus",
+   "n_chains": 12,
+   "chain_lens": [
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11
+   ],
+   "first_len": 11,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 11,
+     "seq": "YTIAALLSPYS"
+    },
+    {
+     "chain": "B",
+     "n": 11,
+     "seq": "YTIAALLSPYS"
+    },
+    {
+     "chain": "C",
+     "n": 11,
+     "seq": "YTIAALLSPYS"
+    }
+   ]
+  },
+  {
+   "pdb": "2M5N",
+   "why": "sequence already in corpus",
+   "n_chains": 16,
+   "chain_lens": [
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11
+   ],
+   "first_len": 11,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 11,
+     "seq": "YTIAALLSPYS"
+    },
+    {
+     "chain": "B",
+     "n": 11,
+     "seq": "YTIAALLSPYS"
+    },
+    {
+     "chain": "C",
+     "n": 11,
+     "seq": "YTIAALLSPYS"
+    }
+   ]
+  },
+  {
+   "pdb": "2XJH",
+   "why": "length 8",
+   "n_chains": 2,
+   "chain_lens": [
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "2XJI",
+   "why": "length 7",
+   "n_chains": 6,
+   "chain_lens": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "first_len": 7,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "3AL1",
+   "why": "sequence already in corpus",
+   "n_chains": 2,
+   "chain_lens": [
+    12,
+    12
+   ],
+   "first_len": 12,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 12,
+     "seq": "ELLKKLLEELKG"
+    },
+    {
+     "chain": "B",
+     "n": 12,
+     "seq": "ELLKKLLEELKG"
+    }
+   ]
+  },
+  {
+   "pdb": "3MBU",
+   "why": "length 1",
+   "n_chains": 4,
+   "chain_lens": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "first_len": 1,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "3NI3",
+   "why": "length 7",
+   "n_chains": 12,
+   "chain_lens": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "first_len": 7,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "3Q9H",
+   "why": "length 7",
+   "n_chains": 8,
+   "chain_lens": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "first_len": 7,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "3Q9I",
+   "why": "length 6",
+   "n_chains": 8,
+   "chain_lens": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "3Q9J",
+   "why": "length 7",
+   "n_chains": 8,
+   "chain_lens": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "first_len": 7,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "3SBN",
+   "why": "length 8",
+   "n_chains": 2,
+   "chain_lens": [
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "3SGM",
+   "why": "CA step 3.77-6.09",
+   "n_chains": 4,
+   "chain_lens": [
+    10,
+    10,
+    10,
+    10
+   ],
+   "first_len": 10,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 10,
+     "seq": "KKVLGDVIEV"
+    },
+    {
+     "chain": "B",
+     "n": 10,
+     "seq": "KKVLGDVIEV"
+    },
+    {
+     "chain": "C",
+     "n": 10,
+     "seq": "KKVLGDVIEV"
+    }
+   ]
+  },
+  {
+   "pdb": "3SGN",
+   "why": "CA step 3.76-6.17",
+   "n_chains": 2,
+   "chain_lens": [
+    10,
+    10
+   ],
+   "first_len": 10,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 10,
+     "seq": "KVKVLGDIEV"
+    },
+    {
+     "chain": "B",
+     "n": 10,
+     "seq": "KVKVLGDIEV"
+    }
+   ]
+  },
+  {
+   "pdb": "3T4G",
+   "why": "CA step 3.76-16.58",
+   "n_chains": 2,
+   "chain_lens": [
+    10,
+    10
+   ],
+   "first_len": 10,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 10,
+     "seq": "AIIGLMVKFK"
+    },
+    {
+     "chain": "B",
+     "n": 10,
+     "seq": "AIIGLMVKFK"
+    }
+   ]
+  },
+  {
+   "pdb": "3ZPK",
+   "why": "sequence already in corpus",
+   "n_chains": 16,
+   "chain_lens": [
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11
+   ],
+   "first_len": 11,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 11,
+     "seq": "YTIAALLSPYS"
+    },
+    {
+     "chain": "B",
+     "n": 11,
+     "seq": "YTIAALLSPYS"
+    },
+    {
+     "chain": "C",
+     "n": 11,
+     "seq": "YTIAALLSPYS"
+    }
+   ]
+  },
+  {
+   "pdb": "4D5M",
+   "why": "length 8",
+   "n_chains": 4,
+   "chain_lens": [
+    8,
+    8,
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "4E0L",
+   "why": "CA step 3.79-13.92",
+   "n_chains": 4,
+   "chain_lens": [
+    11,
+    11,
+    11,
+    11
+   ],
+   "first_len": 11,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 11,
+     "seq": "FYLLYYTKNSA"
+    },
+    {
+     "chain": "B",
+     "n": 11,
+     "seq": "FYLLYYTKNSA"
+    },
+    {
+     "chain": "C",
+     "n": 11,
+     "seq": "FYLLYYTKNSA"
+    }
+   ]
+  },
+  {
+   "pdb": "4E0M",
+   "why": "CA step 3.79-16.07",
+   "n_chains": 4,
+   "chain_lens": [
+    10,
+    10,
+    10,
+    10
+   ],
+   "first_len": 10,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 10,
+     "seq": "SVQIVYKEFK"
+    },
+    {
+     "chain": "B",
+     "n": 10,
+     "seq": "SVQIVYKEFK"
+    },
+    {
+     "chain": "C",
+     "n": 10,
+     "seq": "SVQIVYKEFK"
+    }
+   ]
+  },
+  {
+   "pdb": "4E0N",
+   "why": "CA step 3.81-15.61",
+   "n_chains": 4,
+   "chain_lens": [
+    10,
+    10,
+    10,
+    10
+   ],
+   "first_len": 10,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 10,
+     "seq": "SVQIVYKEFK"
+    },
+    {
+     "chain": "B",
+     "n": 10,
+     "seq": "SVQIVYKEFK"
+    },
+    {
+     "chain": "C",
+     "n": 10,
+     "seq": "SVQIVYKEFK"
+    }
+   ]
+  },
+  {
+   "pdb": "4E0O",
+   "why": "CA step 3.80-15.91",
+   "n_chains": 4,
+   "chain_lens": [
+    10,
+    9,
+    10,
+    10
+   ],
+   "first_len": 10,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 10,
+     "seq": "SVQIVYKEFK"
+    },
+    {
+     "chain": "B",
+     "n": 9,
+     "seq": "SQIVYKEFK"
+    },
+    {
+     "chain": "C",
+     "n": 10,
+     "seq": "SVQIVYKEFK"
+    }
+   ]
+  },
+  {
+   "pdb": "4OZ7",
+   "why": "length 8",
+   "n_chains": 2,
+   "chain_lens": [
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "5I6A",
+   "why": "CA step 3.78-5.53",
+   "n_chains": 2,
+   "chain_lens": [
+    9,
+    9
+   ],
+   "first_len": 9,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 9,
+     "seq": "AFGVFPQAG"
+    },
+    {
+     "chain": "B",
+     "n": 9,
+     "seq": "AFGVFPQAG"
+    }
+   ]
+  },
+  {
+   "pdb": "5O0Z",
+   "why": "length 8",
+   "n_chains": 2,
+   "chain_lens": [
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "5UHR",
+   "why": "CA step 3.78-14.24",
+   "n_chains": 4,
+   "chain_lens": [
+    9,
+    9,
+    9,
+    9
+   ],
+   "first_len": 9,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 9,
+     "seq": "LANFLVIKK"
+    },
+    {
+     "chain": "B",
+     "n": 9,
+     "seq": "LANFLVIKK"
+    },
+    {
+     "chain": "C",
+     "n": 9,
+     "seq": "LANFLVIKK"
+    }
+   ]
+  },
+  {
+   "pdb": "5W7V",
+   "why": "sequence already in corpus",
+   "n_chains": 9,
+   "chain_lens": [
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    6,
+    5
+   ],
+   "first_len": 11,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "1",
+     "n": 11,
+     "seq": "DLIIKGISVHI"
+    },
+    {
+     "chain": "3",
+     "n": 11,
+     "seq": "DLIIKGISVHI"
+    },
+    {
+     "chain": "2",
+     "n": 11,
+     "seq": "DLIIKGISVHI"
+    }
+   ]
+  },
+  {
+   "pdb": "6B17",
+   "why": "CA step 3.80-5.59",
+   "n_chains": 6,
+   "chain_lens": [
+    12,
+    12,
+    12,
+    12,
+    12,
+    12
+   ],
+   "first_len": 12,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 12,
+     "seq": "TPRQARAARAAC"
+    },
+    {
+     "chain": "B",
+     "n": 12,
+     "seq": "TPRQARAARAAC"
+    },
+    {
+     "chain": "E",
+     "n": 12,
+     "seq": "TPRQARAARAAC"
+    }
+   ]
+  },
+  {
+   "pdb": "6B79",
+   "why": "CA step 3.78-6.98",
+   "n_chains": 2,
+   "chain_lens": [
+    10,
+    10
+   ],
+   "first_len": 10,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 10,
+     "seq": "KKVWGSIKRL"
+    },
+    {
+     "chain": "B",
+     "n": 10,
+     "seq": "KKVWGSIKRL"
+    }
+   ]
+  },
+  {
+   "pdb": "6E00",
+   "why": "length 7",
+   "n_chains": 32,
+   "chain_lens": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "first_len": 7,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "6S6M",
+   "why": "sequence already in corpus",
+   "n_chains": 2,
+   "chain_lens": [
+    13,
+    13
+   ],
+   "first_len": 13,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 13,
+     "seq": "FKRIVQRIKDFLR"
+    },
+    {
+     "chain": "B",
+     "n": 13,
+     "seq": "FKRIVQRIKDFLR"
+    }
+   ]
+  },
+  {
+   "pdb": "6UF4",
+   "why": "length 2",
+   "n_chains": 2,
+   "chain_lens": [
+    2,
+    2
+   ],
+   "first_len": 2,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "6UG3",
+   "why": "CA step 3.79-6.32",
+   "n_chains": 2,
+   "chain_lens": [
+    9,
+    9
+   ],
+   "first_len": 9,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 9,
+     "seq": "PRDPRDPRD"
+    },
+    {
+     "chain": "B",
+     "n": 9,
+     "seq": "PRDPRDPRD"
+    }
+   ]
+  },
+  {
+   "pdb": "6UG6",
+   "why": "CA step 3.78-6.37",
+   "n_chains": 4,
+   "chain_lens": [
+    9,
+    9,
+    9,
+    9
+   ],
+   "first_len": 9,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 9,
+     "seq": "PRDPRDPRD"
+    },
+    {
+     "chain": "B",
+     "n": 9,
+     "seq": "PRDPRDPRD"
+    },
+    {
+     "chain": "C",
+     "n": 9,
+     "seq": "PRDPRDPRD"
+    }
+   ]
+  },
+  {
+   "pdb": "7ANY",
+   "why": "length 8",
+   "n_chains": 12,
+   "chain_lens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "7ROL",
+   "why": "CA step 3.82-6.71",
+   "n_chains": 2,
+   "chain_lens": [
+    10,
+    10
+   ],
+   "first_len": 10,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 10,
+     "seq": "KVKVWDVIEV"
+    },
+    {
+     "chain": "B",
+     "n": 10,
+     "seq": "KVKVWDVIEV"
+    }
+   ]
+  },
+  {
+   "pdb": "7SMU",
+   "why": "CA step 3.73-6.21",
+   "n_chains": 6,
+   "chain_lens": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "first_len": 10,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "D",
+     "n": 10,
+     "seq": "GYKCVKTCMA"
+    },
+    {
+     "chain": "E",
+     "n": 10,
+     "seq": "GYKCVKTCMA"
+    },
+    {
+     "chain": "C",
+     "n": 10,
+     "seq": "GYKCVKTCMA"
+    }
+   ]
+  },
+  {
+   "pdb": "7TM1",
+   "why": "length 5",
+   "n_chains": 3,
+   "chain_lens": [
+    5,
+    5,
+    5
+   ],
+   "first_len": 5,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "7TMK",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8DPY",
+   "why": "length 8",
+   "n_chains": 2,
+   "chain_lens": [
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8GBI",
+   "why": "length 7",
+   "n_chains": 2,
+   "chain_lens": [
+    7,
+    7
+   ],
+   "first_len": 7,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8GD8",
+   "why": "length 6",
+   "n_chains": 4,
+   "chain_lens": [
+    6,
+    6,
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8GIV",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8GJ7",
+   "why": "length 6",
+   "n_chains": 4,
+   "chain_lens": [
+    6,
+    6,
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8GJC",
+   "why": "CA step 3.77-6.67",
+   "n_chains": 2,
+   "chain_lens": [
+    12,
+    12
+   ],
+   "first_len": 12,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "A",
+     "n": 12,
+     "seq": "LVFFAEDGAIGL"
+    },
+    {
+     "chain": "B",
+     "n": 12,
+     "seq": "LVFFAEDGAIGL"
+    }
+   ]
+  },
+  {
+   "pdb": "8GK9",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8GKX",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8GL0",
+   "why": "length 7",
+   "n_chains": 2,
+   "chain_lens": [
+    7,
+    7
+   ],
+   "first_len": 7,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8U78",
+   "why": "length 7",
+   "n_chains": 8,
+   "chain_lens": [
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "first_len": 7,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8V56",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8V59",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8V5W",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8V5X",
+   "why": "length 5",
+   "n_chains": 2,
+   "chain_lens": [
+    5,
+    5
+   ],
+   "first_len": 5,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8V61",
+   "why": "length 5",
+   "n_chains": 4,
+   "chain_lens": [
+    5,
+    5,
+    5,
+    5
+   ],
+   "first_len": 5,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8VOG",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8VP7",
+   "why": "length 6",
+   "n_chains": 4,
+   "chain_lens": [
+    6,
+    6,
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8VPC",
+   "why": "length 7",
+   "n_chains": 4,
+   "chain_lens": [
+    7,
+    7,
+    7,
+    7
+   ],
+   "first_len": 7,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8VPE",
+   "why": "length 5",
+   "n_chains": 2,
+   "chain_lens": [
+    5,
+    5
+   ],
+   "first_len": 5,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8VPX",
+   "why": "length 5",
+   "n_chains": 2,
+   "chain_lens": [
+    5,
+    5
+   ],
+   "first_len": 5,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8VT8",
+   "why": "length 6",
+   "n_chains": 4,
+   "chain_lens": [
+    6,
+    6,
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "8VW7",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9EFY",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9EH3",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9EHN",
+   "why": "length 6",
+   "n_chains": 4,
+   "chain_lens": [
+    6,
+    6,
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9EHP",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9EJU",
+   "why": "length 6",
+   "n_chains": 4,
+   "chain_lens": [
+    6,
+    6,
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9EJV",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9MDG",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9MEO",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9MEP",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9MEQ",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9MFI",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9MFJ",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9MFK",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9MKJ",
+   "why": "length 6",
+   "n_chains": 12,
+   "chain_lens": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9ML0",
+   "why": "length 6",
+   "n_chains": 4,
+   "chain_lens": [
+    6,
+    6,
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9MNV",
+   "why": "length 6",
+   "n_chains": 2,
+   "chain_lens": [
+    6,
+    6
+   ],
+   "first_len": 6,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9OXP",
+   "why": "length 8",
+   "n_chains": 2,
+   "chain_lens": [
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9PD7",
+   "why": "length 8",
+   "n_chains": 31,
+   "chain_lens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9PDS",
+   "why": "length 8",
+   "n_chains": 43,
+   "chain_lens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9PEF",
+   "why": "length 8",
+   "n_chains": 8,
+   "chain_lens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9PEG",
+   "why": "length 8",
+   "n_chains": 14,
+   "chain_lens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9PEH",
+   "why": "length 8",
+   "n_chains": 16,
+   "chain_lens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9PEI",
+   "why": "length 8",
+   "n_chains": 18,
+   "chain_lens": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "first_len": 8,
+   "has_usable_chain": false,
+   "usable": []
+  },
+  {
+   "pdb": "9RD7",
+   "why": "rebuild 2.67",
+   "n_chains": 24,
+   "chain_lens": [
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13
+   ],
+   "first_len": 13,
+   "has_usable_chain": true,
+   "usable": [
+    {
+     "chain": "T",
+     "n": 13,
+     "seq": "GLFDIIKKIAESF"
+    },
+    {
+     "chain": "V",
+     "n": 13,
+     "seq": "GLFDIIKKIAESF"
+    },
+    {
+     "chain": "R",
+     "n": 13,
+     "seq": "GLFDIIKKIAESF"
+    }
+   ]
+  }
+ ]
+}

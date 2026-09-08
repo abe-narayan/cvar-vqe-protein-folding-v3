@@ -1,0 +1,31 @@
+{
+ "md_identity_max_abs_A2": 3.552713678800501e-15,
+ "md_identity_PASS": true,
+ "obj_vs_alignlib_max_abs": 1.4210854715202004e-14,
+ "obj_PASS": true,
+ "distinct_phi_values": 57343,
+ "kappa_max": 29.469946182323245,
+ "kappa_min": 1.0,
+ "full_support_PASS": true,
+ "evals": {
+  "q_a0.05": 8192,
+  "q_a0.25": 8192,
+  "q_a1.00": 8192,
+  "q_anneal": 8192,
+  "q_untrained": 8192,
+  "c_prod0.05": 8192,
+  "c_prod0.25": 8192,
+  "c_chain0.05": 8192,
+  "c_chain0.25": 8192,
+  "c_cem0.05": 8192,
+  "c_metroL": 8192,
+  "c_metroH": 8192,
+  "c_anneal": 8192,
+  "c_lbfgs": 8195,
+  "c_marg": 8192,
+  "c_helix": 8192,
+  "pool500": 0
+ },
+ "budget_PASS": true,
+ "hash_hits": "s19/qb_run.py:185:    print(\"== P0.5  no hash(), no native quantity in any decision ==\")\ns19/qb_run.py:187:    r = subprocess.run([\"grep\", \"-n\", \"hash(\", \"s19/qb_lib.py\", \"s19/qb_arms.py\",\ns19/qb_run.py:191:    print(f\"   grep 'hash(' -> {out['hash_hits'] or 'NONE'}\")"
+}

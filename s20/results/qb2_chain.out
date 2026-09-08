@@ -1,0 +1,15 @@
+
+########## relax on 10 targets ##########
+[1/10] 1CS9 n=9 74s  log10range AMB 11.81 r1 6.69 r50 2.18 LEG 1.41 | rho(r50,sp) +0.529 rho(r50,r1) +0.524 | collapsed r50 0/293
+[2/10] 1ID6 n=15 306s  log10range AMB 13.22 r1 10.17 r50 3.69 LEG 1.66 | rho(r50,sp) +0.867 rho(r50,r1) +0.881 | collapsed r50 8/365
+[3/10] 1TOR n=10 100s  log10range AMB 15.62 r1 10.92 r50 3.23 LEG 1.35 | rho(r50,sp) +0.726 rho(r50,r1) +0.725 | collapsed r50 1/305
+[4/10] 2JN5 n=12 178s  log10range AMB 11.36 r1 8.41 r50 2.61 LEG 1.45 | rho(r50,sp) +0.650 rho(r50,r1) +0.647 | collapsed r50 0/329
+[5/10] 2LU6 n=14 217s  log10range AMB 12.73 r1 10.93 r50 3.52 LEG 1.60 | rho(r50,sp) +0.779 rho(r50,r1) +0.801 | collapsed r50 1/353
+[6/10] 2MFV n=14 150s  log10range AMB 12.65 r1 10.81 r50 2.69 LEG 1.55 | rho(r50,sp) +0.745 rho(r50,r1) +0.748 | collapsed r50 0/353
+[7/10] 2MIG n=12 186s  log10range AMB 15.95 r1 7.97 r50 7.97 LEG 1.44 | rho(r50,sp) +0.838 rho(r50,r1) +0.841 | collapsed r50 7/329
+[8/10] 2MK7 n=9 90s  log10range AMB 7.16 r1 5.90 r50 3.35 LEG 1.25 | rho(r50,sp) +0.625 rho(r50,r1) +0.609 | collapsed r50 0/293
+[9/10] 2MSA n=14 211s  log10range AMB 10.10 r1 8.13 r50 2.39 LEG 1.53 | rho(r50,sp) +0.653 rho(r50,r1) +0.674 | collapsed r50 0/353
+[10/10] 2O0S n=12 266s  log10range AMB 15.72 r1 12.23 r50 4.89 LEG 1.49 | rho(r50,sp) +0.784 rho(r50,r1) +0.749 | collapsed r50 7/329
+########## relax done in 1776s ##########
+
+########## opt on 12 targets ##########

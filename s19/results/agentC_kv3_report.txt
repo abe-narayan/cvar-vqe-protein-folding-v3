@@ -1,0 +1,81 @@
+========================================================================================================
+Q1 EXTENSION 2 -- WHERE THE GATE MOVES THE ENSEMBLE MEAN.  n = 126, m = 38 of K = 75.
+   ALIGN = displacement of the emitted mean along the POOL's own error direction (A).
+   Zero in expectation for ANY score-free gate.  Null measured over 200 draws.
+========================================================================================================
+
+   pool mean-error ||b_pool|| = 3.050 A   (= the ungated readout)   matched-random ALIGN null: mean +0.0008 A, sd 0.0753 A
+
+   arm                ALIGN  |Delta|  rd_fixed rd_deployed     ALIGN vs its matched-random null (paired, fold CI)
+   legacy            0.0256   0.4780     3.117       3.126     +0.0248 [-0.0157, +0.0738] 58W/68L
+   leg_torsion       0.0266   0.3736     3.103       3.105     +0.0257 [-0.0095, +0.0582] 57W/69L
+   leg_steric        0.0136   0.3648     3.089       3.086     +0.0128 [-0.0045, +0.0283] 64W/62L
+   leg_contact       0.0169   0.4602     3.107       3.116     +0.0161 [-0.0320, +0.0681] 61W/65L
+   amber_sp          0.0258   0.3674     3.102       3.099     +0.0250 [-0.0080, +0.0545] 60W/66L
+   helix             0.0476   0.6939     3.182       3.188     +0.0468 [-0.0122, +0.1012] 57W/69L
+   medoid           -0.0065   0.6254     3.119       3.106     -0.0073 [-0.0345, +0.0221] 58W/68L
+   rand_lowD         0.0052   0.3018     3.073       3.066     +0.0043 [-0.0089, +0.0158] 56W/70L
+   rand_highD        0.0007   0.2453     3.062       3.058     -0.0002 [-0.0122, +0.0124] 68W/58L
+   fps              -0.0150   0.3318     3.056       3.063     -0.0159 [-0.0313, -0.0028] 72W/54L
+   legacy_spread    -0.0157   0.3294     3.055       3.065     -0.0166 [-0.0302, -0.0058] 71W/55L
+   legacy_clust     -0.0160   0.3234     3.054       3.060     -0.0169 [-0.0259, -0.0099] 68W/58L
+   rand              0.0008   0.2141     3.060       3.063     -- (the null itself)
+   none              0.0000   0.0000     3.050       3.050     -- (Delta = 0 exactly)
+
+   DOES ALIGN EXPLAIN THE DAMAGE?  Across arms: mean ALIGN vs mean deployed damage.
+      corr over 12 arms = +0.8378
+      helix           ALIGN +0.0476 A    damage vs rand +0.1253 A
+      leg_torsion     ALIGN +0.0266 A    damage vs rand +0.0415 A
+      amber_sp        ALIGN +0.0258 A    damage vs rand +0.0363 A
+      legacy          ALIGN +0.0256 A    damage vs rand +0.0631 A
+      leg_contact     ALIGN +0.0169 A    damage vs rand +0.0534 A
+      leg_steric      ALIGN +0.0136 A    damage vs rand +0.0227 A
+      rand_lowD       ALIGN +0.0052 A    damage vs rand +0.0029 A
+      rand_highD      ALIGN +0.0007 A    damage vs rand -0.0046 A
+      medoid          ALIGN -0.0065 A    damage vs rand +0.0430 A
+      fps             ALIGN -0.0150 A    damage vs rand -0.0003 A
+      legacy_spread   ALIGN -0.0157 A    damage vs rand +0.0021 A
+      legacy_clust    ALIGN -0.0160 A    damage vs rand -0.0033 A
+
+   THE EXACT TWO-TERM DECOMPOSITION OF THE DAMAGE (A^2, per residue):
+       readout^2 = ||b_pool||^2 + 2*||b_pool||*ALIGN + |Delta|^2      (EXACT)
+       so, against matched-random of the same count, the excess splits into an
+       ALIGNMENT term and a MAGNITUDE term, and into nothing else.
+      arm              ALIGN term   MAG term     total  align share     ALIGN term vs its null (fold CI)
+      helix                0.3051     0.6236    0.9286         0.33     +0.3051 [-0.2107, +0.7508]
+      legacy               0.1867     0.2627    0.4494         0.42     +0.1867 [-0.2149, +0.7044]
+      leg_contact          0.1829     0.2248    0.4078         0.45     +0.1829 [-0.2097, +0.5941]
+      leg_torsion          0.3143     0.1216    0.4358         0.72     +0.3143 [+0.0648, +0.5447]
+      medoid               0.1860     0.4786    0.6646         0.28     +0.1860 [-0.1019, +0.3610]
+      amber_sp             0.1881     0.1270    0.3151         0.60     +0.1881 [-0.1222, +0.4657]
+      leg_steric           0.0652     0.1225    0.1877         0.35     +0.0652 [-0.0758, +0.1745]
+      fps                 -0.2203     0.0978   -0.1225         1.80     -0.2203 [-0.3355, -0.1146]
+      legacy_spread       -0.2295     0.0958   -0.1337         1.72     -0.2295 [-0.3124, -0.1278]
+      legacy_clust        -0.2385     0.0899   -0.1485         1.61     -0.2385 [-0.3561, -0.1142]
+      rand_lowD            0.1336     0.0580    0.1916         0.70     +0.1336 [-0.0025, +0.2515]
+      rand_highD          -0.1183     0.0180   -0.1003         1.18     -0.1183 [-0.2377, +0.0109]
+
+   POOLED: the five PHYSICS SCORE gates against the four SCORE-FREE gates.
+      ALIGN excess, score gates (mean of 5)        +0.0209 [+0.0004, +0.0402]  med +0.0074  54W/72L
+      ALIGN excess, score-FREE gates (mean of 4)   -0.0048 [-0.0124, +0.0020]  med +0.0009  63W/63L
+      score-free MINUS score                       -0.0256 [-0.0455, -0.0008]  med -0.0004  63W/63L
+
+   CONCENTRATION CHECK on both pooled statistics (the near-even W/L beside a CI
+   excluding zero is the recorded early warning; drop-top vs a UNIFORM-EFFECT null):
+      ALIGN excess, score gates        mean +0.0209  med +0.0074  sd 0.0790  54W/72L  drop-top5 +0.0112  null pct 0.495  -> not concentrated
+      readout damage, legacy vs rand   mean +0.0631  med +0.0258  sd 0.2882  52W/74L  drop-top5 +0.0298  null pct 0.496  -> not concentrated
+
+   IS THERE A NATIVE-FREE HALF?  |Delta| -- how far the gate moved the emitted mean
+   from the UNGATED mean -- needs no native at all.  ALIGN does.  How much of the
+   damage can be seen without the native?
+      n = 1512 (arm, target) pairs over 12 arms
+      corr(damage, |Delta|^2 excess)  = +0.1691   NATIVE-FREE
+      corr(damage, ALIGN term)        = +0.8296   ORACLE
+      corr(damage, both summed)       = +0.8412   (exact up to the sqrt)
+      per-arm MEANS (the design-time question -- rank the arms without the native):
+         Spearman(mean |Delta|, mean damage) over 12 arms = +0.9301
+
+   AND PER TARGET, WITHIN THE LEGACY ARM (the causal claim at target level):
+      legacy          corr(ALIGN excess, damage) = +0.9514   n=126
+      helix           corr(ALIGN excess, damage) = +0.9670   n=126
+      leg_steric      corr(ALIGN excess, damage) = +0.9548   n=126

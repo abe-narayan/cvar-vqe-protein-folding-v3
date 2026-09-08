@@ -1,0 +1,13 @@
+{
+ "OWN_ratio_legacy": 2.558707411124362,
+ "OWN_ratio_amber": 74.42835593651375,
+ "ratio": 29.08826371195291,
+ "ci95": [
+  4.486982544193596,
+  542.6836255370464
+ ],
+ "verdict": "SUPPORTED",
+ "part_ratio_legacy": 0.4965360010449102,
+ "part_ratio_amber": 0.06683299967526356,
+ "n_targets": 30
+}

@@ -1,0 +1,124 @@
+
+n = 126 targets.  Budget = 8192 objective evaluations for every budgeted arm.
+CONTINUOUS TORSION SPACE.  No lattice, no torsion discretisation.
+Every RMSD column is ORACLE (post-hoc scoring of a native-free decision).
+
+  arm             evals  gen best  sel best  realised     avg       M       D  cov<2.5   obj best
+  -----------------------------------------------------------------------------------------------
+  q_a0.05          8192     1.672     2.681     3.497   3.284   3.886   1.951    360.5      128.8
+  q_a0.25          8192     1.690     2.707     3.499   3.307   3.920   1.977    372.2      131.4
+  q_a1.00          8192     1.745     2.650     3.486   3.283   3.968   2.102    325.8      142.9
+  q_anneal         8192     1.698     2.644     3.511   3.301   3.944   2.046    289.9      138.1
+  q_untrained      8192     1.971     2.755     3.696   3.385   4.315   2.581     69.4      199.6
+  c_prod0.05       8192     1.743     2.688     3.466   3.286   3.849   1.881    450.8      126.9
+  c_prod0.25       8192     1.739     2.684     3.498   3.307   3.863   1.876    486.7      128.8
+  c_chain0.05      8192     1.645     2.639     3.438   3.223   3.935   2.132    228.0      135.0
+  c_chain0.25      8192     1.636     2.622     3.427   3.211   3.912   2.102    244.1      135.7
+  c_cem0.05        8192     1.605     2.621     3.419   3.232   3.849   1.957    555.7      125.6
+  c_metroL         8192     1.688     2.872     3.485   3.330   3.696   1.472   1325.6      102.4
+  c_metroH         8192     1.670     2.682     3.407   3.199   3.824   1.975    647.9      135.6
+  c_anneal         8192     1.649     2.913     3.487   3.363   3.687   1.379   1104.4      101.1
+  c_lbfgs          8193     1.903     3.311     3.658   3.532   3.796   1.231   1132.8       53.1
+  c_marg           8192     1.662     2.491     3.326   3.134   3.918   2.236    291.9      147.2
+  c_helix          8192     1.924     2.623     3.426   3.196   4.068   2.419    164.9      175.4
+  pool500             0     1.721     2.285     3.230   3.064   3.713   1.901     73.5      150.9
+
+  best quantum arm by realised: q_a1.00     best classical: c_metroH
+  best quantum arm by generation: q_a0.05    best classical: c_cem0.05
+
+=== P1 PRIMARY -- REALISED (the frozen terminal operator).  Negative = quantum better. ===
+  q_a1.00 vs best classical c_metroH            +0.079  med  +0.020  [+0.001,+0.163]  W/L  60/ 66  folds 4/5  SIG  <MDE
+  q_a1.00 vs q_untrained (MANDATORY best-of-N)  -0.210  med  -0.037  [-0.339,-0.080]  W/L  69/ 57  folds 5/5  SIG
+  q_a1.00 vs c_marg (zero-information marginals)  +0.160  med  +0.079  [+0.089,+0.241]  W/L  46/ 80  folds 5/5  SIG
+  q_a1.00 vs c_helix (zero-information helix)   +0.060  med  -0.008  [-0.013,+0.138]  W/L  64/ 62  folds 4/5  <MDE
+  q_a1.00 vs c_prod0.25 (CNOTs deleted)         -0.013  med  -0.013  [-0.092,+0.079]  W/L  69/ 57  folds 3/5  <MDE
+  q_a1.00 vs c_chain (classical learned proposal)  +0.059  med  -0.008  [-0.006,+0.134]  W/L  65/ 61  folds 4/5  <MDE
+  q_a1.00 vs pool500 (the incumbent generator)  +0.256  med  +0.119  [+0.135,+0.387]  W/L  49/ 77  folds 5/5  SIG
+
+=== P3 -- GENERATION CEILING (pool best).  Negative = quantum better. ===
+  q_a0.05 vs best classical c_cem0.05           +0.067  med  +0.070  [+0.014,+0.120]  W/L  50/ 76  folds 3/5  SIG  <MDE
+  q_a0.05 vs q_untrained                        -0.299  med  -0.234  [-0.404,-0.195]  W/L  82/ 44  folds 5/5  SIG
+  q_a0.05 vs c_marg (zero-information)          +0.009  med  -0.013  [-0.063,+0.090]  W/L  67/ 59  folds 3/5  <MDE
+  q_a0.05 vs c_helix (zero-information)         -0.252  med  -0.297  [-0.343,-0.160]  W/L  90/ 36  folds 5/5  SIG
+  q_a0.05 vs c_prod0.25 (CNOTs deleted)         -0.068  med  -0.048  [-0.125,-0.009]  W/L  71/ 55  folds 5/5  SIG  <MDE
+  q_a0.05 vs c_chain                            +0.036  med  -0.000  [-0.021,+0.095]  W/L  63/ 63  folds 3/5  <MDE
+  q_a0.05 vs pool500 (the incumbent generator)  -0.050  med  -0.138  [-0.175,+0.086]  W/L  72/ 54  folds 3/5  <MDE
+
+=== P3b -- SELECTION CEILING (best of the frozen native-free top-75) ===
+  q_a0.05 sel vs c_cem0.05                      +0.060  med  +0.034  [-0.003,+0.120]  W/L  55/ 71  folds 3/5  <MDE
+  q_a0.05 sel vs q_untrained                    -0.074  med  +0.079  [-0.189,+0.035]  W/L  59/ 67  folds 4/5  <MDE
+  q_a0.05 sel vs c_marg                         +0.190  med  +0.109  [+0.117,+0.264]  W/L  45/ 81  folds 5/5  SIG
+  q_a0.05 sel vs pool500                        +0.396  med  +0.228  [+0.258,+0.539]  W/L  43/ 83  folds 5/5  SIG
+
+=== P2 -- the (M, D) PARETO plane: additive epsilon-dominance, per target. ===
+    eps > 0 = NO classical point dominates.  The leave-one-out row for each
+    CLASSICAL arm is the null Sprint 17 records: a classical arm scored against
+    its own siblings looked exactly like the VQE.
+
+  arm             mean eps   median                  CI95   eps>0
+  q_a0.05           -0.097   -0.075   [-0.126,-0.070]      33/126
+  q_a0.25           -0.111   -0.067   [-0.142,-0.081]      38/126
+  q_a1.00           -0.066   -0.040   [-0.095,-0.036]      45/126
+  q_anneal          -0.078   -0.058   [-0.105,-0.052]      44/126
+  q_untrained        0.150    0.056   [+0.100,+0.200]      83/126
+  c_prod0.05        -0.098   -0.046   [-0.129,-0.068]      43/126
+  c_prod0.25        -0.102   -0.076   [-0.132,-0.074]      37/126
+  c_chain0.05       -0.044   -0.008   [-0.071,-0.019]      56/126
+  c_chain0.25       -0.052   -0.008   [-0.079,-0.026]      57/126
+  c_cem0.05         -0.076   -0.047   [-0.104,-0.050]      46/126
+  c_metroL          -0.116   -0.033   [-0.170,-0.067]      55/126
+  c_metroH          -0.049   -0.030   [-0.076,-0.022]      48/126
+  c_anneal          -0.161   -0.057   [-0.220,-0.106]      45/126
+  c_lbfgs           -0.243   -0.214   [-0.314,-0.173]      32/126
+  c_marg             0.015    0.038   [-0.008,+0.038]      83/126
+  c_helix            0.157    0.093   [+0.110,+0.203]      88/126
+  pool500            0.204    0.155   [+0.139,+0.270]      91/126
+
+=== The budget-trap control, stated on its own: does TRAINING help? ===
+  q_a0.05 - q_untrained  (realised)             -0.199  med  -0.071  [-0.325,-0.071]  W/L  71/ 55  folds 5/5  SIG
+  q_a0.05 - q_untrained  (generation)           -0.299  med  -0.234  [-0.404,-0.195]  W/L  82/ 44  folds 5/5  SIG
+  q_a0.05 - q_untrained  (diversity)            -0.630  med  -0.486  [-0.707,-0.549]  W/L 123/  3  folds 5/5  SIG
+  q_a0.25 - q_untrained  (realised)             -0.198  med  -0.049  [-0.319,-0.080]  W/L  73/ 53  folds 5/5  SIG
+  q_a0.25 - q_untrained  (generation)           -0.281  med  -0.144  [-0.377,-0.187]  W/L  81/ 40  folds 5/5  SIG
+  q_a0.25 - q_untrained  (diversity)            -0.604  med  -0.464  [-0.684,-0.519]  W/L 121/  5  folds 5/5  SIG
+  q_a1.00 - q_untrained  (realised)             -0.210  med  -0.037  [-0.339,-0.080]  W/L  69/ 57  folds 5/5  SIG
+  q_a1.00 - q_untrained  (generation)           -0.226  med  -0.151  [-0.335,-0.122]  W/L  73/ 53  folds 5/5  SIG
+  q_a1.00 - q_untrained  (diversity)            -0.479  med  -0.356  [-0.557,-0.401]  W/L 115/ 11  folds 5/5  SIG
+  q_anneal - q_untrained  (realised)            -0.185  med  -0.064  [-0.288,-0.083]  W/L  69/ 57  folds 5/5  SIG
+  q_anneal - q_untrained  (generation)          -0.272  med  -0.176  [-0.365,-0.181]  W/L  85/ 38  folds 5/5  SIG
+  q_anneal - q_untrained  (diversity)           -0.535  med  -0.359  [-0.613,-0.455]  W/L 119/  7  folds 5/5  SIG
+
+=== What the CNOTs buy: latent nearest-neighbour mutual information ===
+  q_a0.25        nn_MI +0.0509 bits   entropy  5.783 bits   ESS     26.5
+  c_prod0.25     nn_MI +0.0000 bits   entropy  4.303 bits   ESS     13.3
+  q_untrained    nn_MI +0.0469 bits   entropy  9.687 bits   ESS    545.8
+
+=== T1 -- CVaR INDIFFERENCE, verified.  n = 12 targets, M = 4096 continuous configurations. ===
+   Three laws, all EXACTLY CVaR-optimal at the same alpha, and what they emit.
+
+  alpha = 0.05   worst-case CVaR spread max(A,B,C) - min(A,B,C) over targets = 5.684e-14
+     A_delta          D  0.000   set best  2.836   set mean  2.836   coord-avg  2.836
+     B_uniform_tail   D  3.326   set best  2.292   set mean  4.333   coord-avg  3.155
+     C_worst_tail     D  3.617   set best  2.570   set mean  4.899   coord-avg  3.683
+
+  alpha = 0.25   worst-case CVaR spread max(A,B,C) - min(A,B,C) over targets = 0.000e+00
+     A_delta          D  0.000   set best  2.836   set mean  2.836   coord-avg  2.836
+     B_uniform_tail   D  3.159   set best  2.236   set mean  3.957   coord-avg  2.831
+     C_worst_tail     D  3.538   set best  2.509   set mean  4.436   coord-avg  3.193
+
+  alpha = 0.5   worst-case CVaR spread max(A,B,C) - min(A,B,C) over targets = 0.000e+00
+     A_delta          D  0.000   set best  2.836   set mean  2.836   coord-avg  2.836
+     B_uniform_tail   D  2.792   set best  2.482   set mean  3.643   coord-avg  2.732
+     C_worst_tail     D  3.087   set best  2.598   set mean  3.872   coord-avg  2.859
+
+
+=== Z2^n GAUGE ORBIT, n = 20 targets, 24 random relabellings each ===
+  identity labelling realised   3.037
+  gauge-orbit mean realised     3.019
+  identity - orbit mean         +0.018  med -0.043  [-0.130,+0.170]  W/L 11/9
+  identity's MID-RANK percentile in its own orbit: mean 0.500  median 0.479  below 0.05 on 3/20
+  FIRES (result is encoding-dependent) iff the mean percentile < 0.05.
+
+  d_out = 0.803*d_set_mean + 0.298*d_set_best + -0.350   R2 = 0.960   n = 2142 (arm, target) cells
+  LEDGER (a different instrument): 1.16*mean + 0.04*best, R2 0.89.
+  => one Angstrom of GENERATION ceiling is worth 0.298 A of realised RMSD.

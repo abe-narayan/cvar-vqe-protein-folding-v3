@@ -1,0 +1,12 @@
+s21/a_matrix.py COMPLETE
+n_rows=12 n_expected=12 n_complete_rows=12 cfg_hash=bd59b38620012528
+FULL CONFIGURATION REQUIRED BY THIS FLAG:
+  7 Hamiltonians x 5 arms x declared seeds (4 variational / 2 control)
+  x 4 readouts (tail_min, tail_member, tail_medoid, tail_avg) x 3 alphas
+  + 7x7 cross-readout on all 4 variational seeds
+  + both audit normalisations on all 4 hybrid cells
+  = 106 cells per target, all present on all 12 targets.
+budget=512 shots=32 alpha=0.25 seeds=[0, 1, 2, 3] ctrl_seeds=[0, 1] norm=signedlog_robustz
+GATES: G-A1 0.000e+00 over 36 comparisons; G-A2 0 breaks / 576 ranks;
+       G-A3 0 breaks / 27 checks; identity max|tail_min-argmin| = 0.000e+00.
+AMBER context RELEASED.

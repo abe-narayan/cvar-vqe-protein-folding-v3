@@ -1,0 +1,142 @@
+{
+ "_provenance": "Tables RELAYED from agent workstream findings files, not recomputed by the coordinator. Source files are named per block. Figures built from this file are labelled as relayed.",
+ "channels": {
+  "_source": "s15/info_FINDINGS.md - 126 real pools, in-band = pool_best+1.5, ties averaged",
+  "required_for_2A": 0.638,
+  "chance": 0.5,
+  "rows": [
+   {
+    "name": "distogram Bayes risk, low-sd half",
+    "acc": 0.566,
+    "lo": 0.547,
+    "hi": 0.586,
+    "emit": 3.536
+   },
+   {
+    "name": "distogram L2, low-sd quartile",
+    "acc": 0.56,
+    "lo": null,
+    "hi": null,
+    "emit": 3.65
+   },
+   {
+    "name": "distogram L2, low-sd half",
+    "acc": 0.559,
+    "lo": null,
+    "hi": null,
+    "emit": 3.55
+   },
+   {
+    "name": "distogram L2, 1/sd^2",
+    "acc": 0.548,
+    "lo": null,
+    "hi": null,
+    "emit": 3.52
+   },
+   {
+    "name": "distogram Bayes risk (incumbent)",
+    "acc": 0.545,
+    "lo": 0.522,
+    "hi": 0.567,
+    "emit": 3.501
+   },
+   {
+    "name": "ESM-2 contact map",
+    "acc": 0.513,
+    "lo": 0.494,
+    "hi": 0.531,
+    "emit": 4.384
+   },
+   {
+    "name": "pool-consensus secondary structure",
+    "acc": 0.513,
+    "lo": 0.498,
+    "hi": 0.527,
+    "emit": 4.07
+   },
+   {
+    "name": "radius of gyration",
+    "acc": 0.497,
+    "lo": 0.475,
+    "hi": 0.517,
+    "emit": 4.566
+   },
+   {
+    "name": "pool typicality",
+    "acc": 0.495,
+    "lo": 0.465,
+    "hi": 0.526,
+    "emit": 3.723
+   },
+   {
+    "name": "random null",
+    "acc": 0.498,
+    "lo": 0.49,
+    "hi": 0.507,
+    "emit": 4.492
+   }
+  ],
+  "n_targets": 126
+ },
+ "cvar": {
+  "_source": "s15/qgeom_FINDINGS.md - exact statevector gradients, 12-qubit sub-registers of the nine enumerated targets, 4096 draws, 27 paired cells per alpha. POSITIVE = VQE WORSE.",
+  "alpha": [
+   1.0,
+   0.25,
+   0.05,
+   0.01
+  ],
+  "set_mean": [
+   -0.847,
+   -0.372,
+   -0.191,
+   -0.066
+  ],
+  "set_best": [
+   1.092,
+   0.345,
+   0.155,
+   0.087
+  ],
+  "top75_avg": [
+   0.147,
+   0.392,
+   0.276,
+   0.164
+  ],
+  "distinct": [
+   2.7,
+   149.4,
+   314.9,
+   408.0
+  ],
+  "control_distinct": 510.3,
+  "entropy_bits": [
+   0.73,
+   3.93,
+   5.79,
+   6.58
+  ],
+  "n_draws": 4096,
+  "_note": "The distinct-configuration ladder is out of 4,096 draws, not 2,048; qgeom_cvar.py sets budget=4096 and all 108 cells record n_drawn=4096. The 2,048 figure belongs to a different experiment (E2) whose distinct counts are 2.63 -> 300.9 against a control of 374.",
+  "n_targets": 9,
+  "n_cells": 27
+ },
+ "cascade_gaps": {
+  "_source": "s15/results/cascade_combined.json - 126 targets",
+  "stages": [
+   "G (ORACLE)",
+   "S",
+   "A",
+   "F"
+  ],
+  "values": [
+   2.76,
+   3.511,
+   3.151,
+   3.321
+  ],
+  "incumbent": 3.2040761603809194,
+  "n_targets": 126
+ }
+}

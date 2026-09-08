@@ -1,0 +1,315 @@
+======================================================================================================
+SPRINT 18 -- EXPERIMENT.  n = 126   objective: MATH s18/math_anova.py (mu=pool, S=512, grid=16)
+Start for EVERY arm = the coordinate average of the shipped top-75 (Control A).
+Native read only to score.  MDE at 80% power on this instrument = 0.084 A.
+======================================================================================================
+
+[P0] VALIDITY GATES -- nothing downstream is readable unless these pass
+
+  P0.a  lambda=1 vs s17 refine_full, 126 shared targets
+        RMSD mean|d| 0.00001  max|d| 0.00057   |  objective mean|d| 0.0000
+        Control A identical to s17 to 0.00e+00 A
+        GATE (mean|d| < 0.01 A): PASS
+  P0.b  E_le1 + E_ge2 == E_full to 9.1e-13 through MATH's callables (`python -m s18.exp_obj`).  EXACT by construction.
+  P0.d  analytic gradients vs central differences OF MATH'S OWN functions: relative error 3.3e-10 on both objectives.
+  P0.e  residues the degree-1 object exerts NO force on: 2.00 per target (15.4% of the chain); MATH's theorem says exactly {0, n-1} -- observed on 126/126.
+
+======================================================================================================
+[H2] THE LAMBDA LADDER   E_lam = E_le1 + lam*E_ge2 = (1-lam) E_le1 + lam E_full
+     PRE-REGISTERED lam in {0, 0.25, 0.5, 0.75, 1}.  NOT extended.
+======================================================================================================
+
+  arm                      RMSD  median   vs avg [fold-clustered 95% CI]      W/L    medD
+  avg (Control A)         3.048   2.837   --                               --      --
+  proj                    3.213   2.966   +0.164 [+0.128,+0.212]   15/111   +0.096  the torsion start point
+  lam000                  4.335   4.034   +1.287 [+1.124,+1.473]   18/108   +1.168  lambda = 0.0
+  lam025                  3.742   3.545   +0.694 [+0.536,+0.801]   23/103   +0.637  lambda = 0.25
+  lam050                  3.683   3.518   +0.635 [+0.543,+0.704]   27/99    +0.541  lambda = 0.5
+  lam075                  3.619   3.556   +0.570 [+0.438,+0.689]   32/94    +0.448  lambda = 0.75
+  lam100                  3.610   3.370   +0.561 [+0.408,+0.675]   31/95    +0.443  lambda = 1.0
+
+     lam  meanRMSD  medRMSD  dRMSDvsAvg  E_full red%  E_full end   E_le1 end    disp   nfev  fracImp
+    0.00     4.335    4.034      +1.287       -194.0       605.0      -381.9   4.568     49    0.143
+    0.25     3.742    3.545      +0.694         12.9       151.0      -359.3   4.542     59    0.183
+    0.50     3.683    3.518      +0.635         38.4       109.7      -324.4   4.613     75    0.214
+    0.75     3.619    3.556      +0.570         51.5        83.5      -279.6   4.866    101    0.254
+    1.00     3.610    3.370      +0.561         63.6        56.5       657.4   5.032    230    0.246
+  start: E_full 192.8, E_le1 375.4; MATH's MESH argmin of E_le1 reaches -379.8.
+  No 'fraction of the way to the optimum' is quoted: E_le1 is signed AND its mesh
+  argmin is not its optimum (see [OPT]), so that ratio has no honest denominator.
+
+  SHAPE OF THE CURVE: MONOTONE DECREASING in lambda
+  means ['4.335', '3.742', '3.683', '3.619', '3.610']   best lam = 1.0 (3.610 A)  vs Control A 3.048
+  lam=0 minus lam=1 (degree-1 vs full): +0.726 [+0.605,+0.816]  median +0.663  W/L 34/92
+  best lambda minus Control A:          +0.561 [+0.408,+0.677]
+
+  per-target dRMSD vs Control A -- quantiles across targets:
+       lam     p10     p25     p50     p75     p90   fracImp    worst     best
+      0.00  -0.191  +0.467  +1.168  +1.825  +2.735     0.143   +6.588   -2.004
+      0.25  -0.186  +0.137  +0.637  +1.136  +1.631     0.183   +3.192   -1.045
+      0.50  -0.230  +0.092  +0.541  +1.141  +1.639     0.214   +3.188   -1.238
+      0.75  -0.315  +0.006  +0.448  +1.012  +1.654     0.254   +3.632   -1.946
+      1.00  -0.391  +0.019  +0.443  +1.035  +1.697     0.246   +3.699   -1.966
+
+======================================================================================================
+[H2b] THE COORDINATOR'S AXIS -- what 'not trusting the error direction' buys
+      Same targets, same Control-A start.  alpha>0 arms are ORACLE ceilings.
+======================================================================================================
+      objceil arms available: ['a0.0', 'a0.25', 'a0.5', 'a0.75', 'a1.0', 'avg']
+
+      arm                                   RMSD   median    vs avg
+      Control A (coordinate average)       3.048    2.837    +0.000
+      alpha=0  full objective (s17)        3.610    3.370    +0.561
+      DEGREE-1 refine (lam=0)              4.335    4.034    +1.287
+      DEGREE-1 certified argmin            4.346    4.125    +1.297
+      shuffled residual direction ORACLE   2.609    2.536    -0.439
+      isotropic matched noise ORACLE       2.573    2.533    -0.476
+
+      H2b: lam=0 closes -72.5% of the 1.001 A alpha=0 -> shuffled gap
+           lam=0 - alpha=0: +0.726 [+0.599,+0.820]
+
+      H2b: argmin closes -73.5% of the 1.001 A alpha=0 -> shuffled gap
+           argmin - alpha=0: +0.736 [+0.601,+0.829]
+
+      CAVEAT (the coordinator's own, and it cuts against their result):
+      alpha is a blend TOWARD TRUTH, not a model of how a better predictor
+      would err.  The alpha ladder is a requirement in the 'how much residual
+      must go away' sense, NOT a prediction about any achievable predictor.
+
+======================================================================================================
+[ARMS] every arm against Control A; both mandatory controls present
+======================================================================================================
+
+  arm                      RMSD  median   vs avg [95% CI]                 W/L    medD
+  lam000                  4.335   4.034   +1.287 [+1.120,+1.476]   18/108   +1.168  refine toward DEGREE-1
+  lam100                  3.610   3.370   +0.561 [+0.408,+0.677]   31/95    +0.443  refine toward FULL (= s17)
+  argmin_le1              4.346   4.125   +1.297 [+1.012,+1.500]   17/109   +1.167  EXACT argmin, MATH as shipped
+  argmin_le1_hold         4.346   4.125   +1.297 [+1.012,+1.500]   17/109   +1.167  EXACT argmin, terminals held
+  refine_h1               4.533   4.164   +1.485 [+1.362,+1.610]   16/110   +1.434  harmonic order-1 (angles)
+  argmin_h1               4.600   4.213   +1.552 [+1.413,+1.684]   17/109   +1.509  harmonic order-1 argmin
+  rand_field_le1          5.000   4.634   +1.951 [+1.866,+2.047]   19/107   +2.085  CONTROL random additive field
+  rand_field_argmin       5.047   4.964   +1.999 [+1.799,+2.215]   17/109   +2.149  CONTROL random field, argmin
+  rand_move_le1           4.190   4.124   +1.142 [+0.922,+1.360]   27/99    +0.838  CONTROL matched move (le1)
+  rand_move_full          4.517   4.460   +1.469 [+1.184,+1.775]   20/106   +1.257  CONTROL matched move (full)
+  rand_move_argmin        4.941   4.635   +1.893 [+1.712,+2.084]   12/114   +1.803  CONTROL matched move (argmin)
+
+  terminal-residue patch: MATH's shipped argmin vs terminals-held = +0.000 A (max |d| 2.13e-14, 0/126 targets differ)
+  I FLAGGED THIS AS A HAZARD AND THE MEASUREMENT RETIRES IT (EXACT): the residues
+  the degree-1 object cannot see are EXACTLY the residues the metric cannot see.
+  phi_0 and psi_{n-1} are never read by the builder; psi_0 rotates the chain about
+  an axis THROUGH CA_0, which fixes CA_0 and is therefore a rigid rotation of the
+  whole Ca set; phi_{n-1} moves only atoms placed after CA_{n-1}.  So the terminal
+  patch cannot cost RMSD, and the 'blind to 17% of the chain' worry is void.
+
+======================================================================================================
+[H7] WHAT LIMITS DEGREE-1 -- the distances, or the truncation?
+     Same fields, rebuilt EXACTLY for a different distance vector from MATH's
+     conditional moment tables (`with_dhat`).  ORACLE arms are ceilings, never
+     results, and are never mixed with the realized numbers above.
+======================================================================================================
+
+  distances fed to the objective             E_full    E_le1  argmin_le1         label
+  deployed distogram (REALIZED)               3.610    4.335       4.346   native-free
+  pairs permuted (CONTROL)                    5.309    5.347       5.258   native-free
+  magnitudes kept, direction destroyed        2.648    4.388          --        ORACLE
+  the native distances themselves             1.152    3.769       3.847        ORACLE
+
+  perfect distances buy the FULL objective 2.458 A and DEGREE-1 0.566 A  -> degree-1 retains 23.0% of the gain
+  ORACLE gap: degree-1 minus full at PERFECT distances +2.617 [+2.237,+2.957]  W/L 5/121
+  and against Control A: +0.721 [+0.498,+0.945]  -- if this is positive, NO distogram improvement rescues a degree-1 objective.
+
+======================================================================================================
+[H4] THE FOUR QUANTITIES, SEPARATELY (BRIEF sec 5) -- they dissociate
+======================================================================================================
+
+  (1) OBJECTIVE QUALITY
+      E_full      192.8 ->      56.5  ( 63.6% reduction)
+      E_le1       375.4 ->    -381.9  certified optimum    -379.8
+      L-BFGS on E_le1 ends BELOW MATH's mesh argmin on 85/126 targets, so the
+      mesh argmin is not the objective's optimum and no 'percent of the way there'
+      is quotable.  The true continuous optimum is in [OPT] below.
+
+  (2) STRUCTURAL QUALITY -- the arm table above.
+
+  (3) ALIGNMENT -- four NAMED axes over the same 75 real pool structures
+      objective   Spearman   Pearson  pairwise-ord   in-band Spearman  frac rho>0
+      full           0.063     0.074         0.521              0.001       0.540
+      le1            0.038     0.059         0.512             -0.032       0.516
+      Spearman(full): +0.063 [-0.016,+0.133]  median +0.069
+      Spearman(le1): +0.038 [-0.012,+0.108]  median +0.009
+      Spearman(le1) - Spearman(full): -0.026 [-0.081,+0.038]
+      (Phase 0's 19-target tension was +0.153 for degree-1 vs +0.264 for full.)
+      in-band = within 1.5 A of the pool best; mean band size 49.8/75.  Pool diversity 2.486 A.
+
+  (4) SEARCH QUALITY -- `s18/exp_budget.py` below, and EXACTLY:
+      E_le1 is additive in residues, so its global optimum is the per-residue argmin
+      of a tabulated field: CERTIFIED, not searched.  For degree-1 there is no
+      search problem at any budget.  Whether L-BFGS from Control A reaches it is a
+      separate question, answered in [OPT] below.
+
+======================================================================================================
+[H5] PHASE 9 -- protecting the coordinate average.  Same pool, five routes.
+======================================================================================================
+
+  route                                    RMSD  median   vs avg [95% CI]                 W/L
+  pool -> coordinate average (INCUMBENT)  3.048   2.837   --                               --
+  pool ORACLE best (a ceiling)            2.306   2.262   -0.742 [-0.801,-0.690]  121/5   
+  pool mean == random single pick         3.551   3.582   +0.502 [+0.450,+0.565]    6/120 
+  pool -> select by E_full                3.531   3.466   +0.483 [+0.345,+0.650]   34/92  
+  pool -> select by E_le1                 3.600   3.526   +0.551 [+0.468,+0.648]   27/99  
+  pool -> avg -> refine on E_le1          4.335   4.034   +1.287 [+1.120,+1.476]   18/108 
+  pool -> avg -> refine on E_full         3.610   3.370   +0.561 [+0.408,+0.674]   31/95  
+  pool -> avg -> E_le1 exact argmin       4.346   4.125   +1.297 [+1.012,+1.500]   17/109 
+
+======================================================================================================
+[STRAT] by length and by fold
+======================================================================================================
+  stratum            k     avg    lam0       d    lam1       d   argmin       d
+  n <= 11           33   2.694   3.589  +0.895   3.305  +0.611    3.629  +0.935
+  12 <= n <= 13     42   2.821   3.925  +1.104   3.343  +0.522    3.940  +1.119
+  n >= 14           51   3.465   5.156  +1.692   4.027  +0.562    5.143  +1.678
+
+  fold 0   k=25   avg 2.772   lam0 +1.069   lam1 +0.583   argmin +1.419
+  fold 1   k=23   avg 3.018   lam0 +1.583   lam1 +0.718   argmin +1.554
+  fold 2   k=25   avg 2.979   lam0 +1.388   lam1 +0.652   argmin +1.431
+  fold 3   k=23   avg 3.314   lam0 +1.416   lam1 +0.636   argmin +1.434
+  fold 4   k=30   avg 3.156   lam0 +1.059   lam1 +0.291   argmin +0.782
+
+======================================================================================================
+[CONC] concentration vs a UNIFORM-EFFECT NULL (never a raw drop-top threshold)
+======================================================================================================
+  lam000             drop-top-10 +1.473   uniform-effect null p5 +1.267 p50 +1.467 p95 +1.681  -> percentile 52.2
+  lam100             drop-top-10 +0.691   uniform-effect null p5 +0.555 p50 +0.689 p95 +0.825  -> percentile 50.9
+  argmin_le1_hold    drop-top-10 +1.488   uniform-effect null p5 +1.293 p50 +1.487 p95 +1.687  -> percentile 50.3
+  (a percentile inside [5, 95] means a uniform effect with this much noise already
+   explains the drop-top number: NOT evidence of concentration.)
+
+======================================================================================================
+[FALSIFIERS]
+======================================================================================================
+  F1 degree-1 lands ~3.6 A on the real instrument     FIRED   (lam0 4.335, argmin 4.346)
+  F2 degree-1 no better than full                     not fired   (lam0-lam1 +0.726 [+0.599,+0.821])
+  F3 advantage dies under matched controls            FIRED   (best control 4.190 of ['rand_field_le1', 'rand_move_le1', 'shufobj_le1'])
+  F4 effect exists only on the 19-target instrument   FIRED   (lam0-avg +1.287 [+1.120,+1.476]; argmin-avg +1.297 [+1.008,+1.500])
+  F5 invalid continuous mapping -- MATH owns it.
+
+  ** mu=uniform arm is PARTIAL: 17 rows -- reported as a sensitivity SUBSET, never as a final result **
+
+======================================================================================================
+[H6] mu-SENSITIVITY -- pool marginal vs uniform, 17 shared targets
+======================================================================================================
+  lam000             pool 3.918 (+0.962 [+0.245,+1.687])   uniform 4.465 (+1.509 [+1.233,+1.642])   SAME SIGN
+  argmin_le1_hold    pool 4.023 (+1.068 [+0.353,+1.567])   uniform 4.663 (+1.708 [+1.449,+1.846])   SAME SIGN
+  lam100             pool 4.018 (+1.063 [+0.728,+1.352])   uniform 4.018 (+1.063 [+0.728,+1.362])   SAME SIGN
+
+======================================================================================================
+[OPT] THE HONEST CERTIFIED OPTIMUM OF E_le1, n = 126
+======================================================================================================
+  MATH's `argmin_le1` returns the best MESH point, but `E_le1` is evaluated by
+  trigonometric interpolation and dips BELOW every node between them.  Polished
+  per residue from the 5 lowest cells (additive object -> the
+  per-residue minimiser IS the global minimiser).
+    objective   mesh    -379.81 -> polished    -394.51  (lower on 126/126 targets; 11.0 residues/target sit off-mesh)
+    RMSD        mesh      4.346 -> polished      4.330   Control A 3.048
+    polished minus mesh: -0.016 [-0.060,+0.032]
+    polished minus Control A: +1.282 [+0.991,+1.476]
+    angle-additive polished argmin 4.623
+  READ: reaching the TRUE optimum of the degree-1 objective instead of the mesh
+  optimum lowers the objective on every target and does not help RMSD.  The
+  objective/structure dissociation reappears INSIDE the degree-1 object itself.
+
+======================================================================================================
+[HELIX-MU] the ZERO-INFORMATION reference measure, 30 shared targets
+  mu = every residue at the ideal alpha-helix (-57, -47) with 10 deg jitter:
+  the SAME measure for every residue of every target -- sequence-blind,
+  position-blind, target-blind.  MATH's estimator untouched; only the measure
+  changes.  This is the control the coordinator asked every torsion-channel
+  arm to carry, and it applies here because the SHIPPED mu is itself a
+  conditioned torsion channel sitting inside the objective's definition.
+======================================================================================================
+
+  arm                         pool mu  helix mu         difference [95% CI]
+  lam000                        4.141     4.405   +0.264 [-0.334,+0.708]
+  argmin_le1_hold               4.105     4.551   +0.446 [-0.243,+1.183]
+  helix-mu helix_le1         vs Control A (2.957): +1.448 [+0.899,+2.277]
+  helix-mu helix_argmin      vs Control A (2.957): +1.594 [+0.959,+2.656]
+
+  READ.  If helix-mu matches pool-mu, the degree-1 object's information is
+  GENERIC BACKBONE PLAUSIBILITY, not the pool's target conditioning, and the
+  sentence 'degree-1 beats its zero-information controls therefore it carries
+  real information' collapses.  Either way the falsification is untouched:
+  degree-1 fails against Control A by +1.287 A under the shipped mu.
+
+======================================================================================================
+[CONTROL B] MATCHED BUDGET, n = 85, K = 8 states/residue, budget = 1024 evaluations
+  ACCOUNTING: one evaluation = one objective call at one COMPLETE configuration.
+======================================================================================================
+
+  method                 RMSD  median    objective   calls   vs avg      W/L
+  avg (Control A)       3.136   3.023           --      --       --       --
+  discrete start        3.699   3.682        429.3       1   +0.563
+  -- objective: E_full --------------------------------------------------------------
+  greedy_full           3.620   3.412       119.16     748   +0.483   16/69  
+  greedy4x_full         3.624   3.412       118.60     826   +0.488   16/69  
+  rls_full              3.562   3.343       114.59    1024   +0.426   21/64  
+  anneal_full           3.660   3.647       108.23    1024   +0.524   20/65  
+  bestofN_full          3.769   3.663       143.34    1024   +0.632   19/66  
+  -- objective: E_le1 --------------------------------------------------------------
+  greedy_le1            4.023   3.912       -88.30     815   +0.887   19/66  
+  greedy4x_le1          4.044   3.918       -94.20     897   +0.908   19/66  
+  rls_le1               4.044   3.918       -94.20    1024   +0.908   19/66  
+  anneal_le1            4.009   3.918       -93.99    1024   +0.873   19/66  
+  bestofN_le1           4.089   4.063       150.65    1024   +0.953   20/65  
+  exact_le1 (CERT)      4.044   3.918       -94.20     105   +0.908   19/66  
+
+  greedy on E_full reached a certified 1-opt local optimum on 69/85 targets within budget (mean 748 calls)
+  greedy on E_le1  reached one on 72/85 (mean 815 calls)
+  4x budget on E_full: objective 119.16 -> 118.60 (14/85 improved); RMSD 3.620 -> 3.624
+  4x budget on E_le1: objective -88.30 -> -94.20 (16/85 improved); RMSD 4.023 -> 4.044
+  greedy_le1 vs the CERTIFIED separable optimum: -88.30 vs -94.20 (identical on 69/85)
+
+  ACCOUNTING, both conventions (BRIEF sec 5 'search quality'):
+    method                      obj calls   grad-equivalent
+    L-BFGS on E_full (lam=1)          230              6527
+    L-BFGS on E_le1 (lam=0)            48              1328
+    greedy 1-opt on E_full            748               748
+    exact argmin of E_le1             105               105
+    (a gradient here is analytic and costs ~1 call; by finite differences it
+     would cost 2n+1.  Both are shown so neither reading can be cherry-picked.)
+
+** exp_leverage.json PARTIAL: 88 rows -- NOT final **
+====================================================================================================
+[H8] GEOMETRIC-LEVERAGE RE-WEIGHTING, n = 88.  beta PRE-REGISTERED, not extended.
+     w'_p = w_p * (lev_p / median lev)^(-2 beta).  beta = 0 IS the deployed weighting.
+====================================================================================================
+
+    beta     RMSD   median             vs avg [95% CI]      W/L  permCTRL  randCTRL  vs perm
+    0.00    3.634    3.448   +0.521 [+0.342,+0.692]   23/65       3.634     3.634   +0.000
+    0.25    3.680    3.669   +0.566 [+0.367,+0.766]   23/65       3.650     3.668   +0.029
+    0.50    3.760    3.636   +0.647 [+0.420,+0.852]   21/67       3.731     3.719   +0.030
+    0.75    3.817    3.778   +0.703 [+0.465,+0.960]   17/71       3.772     3.704   +0.044
+    1.00    3.927    3.695   +0.813 [+0.556,+1.058]   13/75       3.713     3.741   +0.214
+
+  VALIDITY GATE: beta = 0 must equal `refine_full`.  mean 3.634
+     vs s17 refine_full on 88 shared: mean|d| 0.00000  -> PASS
+  beta=0.25: vs beta=0 +0.045 [-0.004,+0.088]   vs its PERMUTED control +0.029 [-0.047,+0.092]
+  beta=0.5: vs beta=0 +0.126 [+0.064,+0.207]   vs its PERMUTED control +0.030 [-0.017,+0.091]
+  beta=0.75: vs beta=0 +0.182 [+0.090,+0.286]   vs its PERMUTED control +0.044 [-0.054,+0.109]
+  beta=1.0: vs beta=0 +0.293 [+0.203,+0.399]   vs its PERMUTED control +0.214 [+0.122,+0.308]
+
+  ORACLE DIAGNOSTIC -- is the distogram's error actually where leverage is?
+     rho(leverage, |residual|)      -0.410   median -0.417
+     rho(1/sd^2,   |residual|)      -0.471
+     rho(leverage, separation)      -0.645
+     leverage spread: CV 0.806, max/median 4.7
+
+  CAUTIONS carried from the coordinator, and they are not softened:
+   * Sprint 17 refuted 58 distogram functionals INCLUDING uncertainty weighting --
+     for SELECTION.  This is REFINEMENT.  It inherits neither that refutation nor the
+     alpha ceiling, and is read on its own evidence.
+   * The motivating ceiling (shuf_paired, 2.072 A) has been RETRACTED as confounded:
+     it passed a permuted WEIGHT vector into the fit, so it is not the deployed
+     functional.  This arm outlived its motivation and is reported on its own
+     evidence.  A null here is a clean result.
+   * No native-free rule selects beta.  An interior best is a DIAGNOSTIC, not a
+     deployable result.

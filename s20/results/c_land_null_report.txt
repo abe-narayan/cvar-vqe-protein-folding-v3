@@ -1,0 +1,22 @@
+====================================================================================================
+Q2b  THE MATCHED CONTROL FOR THE TORSION-SPACE MINIMISATION   n = 30 targets
+     Every arm is a move of the SAME per-coordinate RMS torus magnitude from the SAME
+     starts.  Negative d = moved TOWARD the native.  No energy is evaluated here.
+====================================================================================================
+
+potential  |dtheta| (rad)    start  minimised  toward_member  rand_iso
+legacy             0.1037   3.1389     3.2931         3.1434    3.2241
+amber              0.5773   3.1389     3.7587         3.5827    4.1367
+
+comparison                                    mean                    CI95   median       W/L
+legacy: minimised - start                  +0.1541  [  -0.0372,  +0.4977]  +0.0037   14/16  
+legacy: minimised - toward_member          +0.1497  [  -0.0522,  +0.5004]  -0.0042   16/14  
+legacy: minimised - rand_iso               +0.0689  [  -0.0523,  +0.2810]  -0.0232   18/12  
+legacy: toward_member - start              +0.0045  [  -0.0111,  +0.0191]  -0.0042   17/13  
+amber: minimised - start                   +0.6198  [  +0.3213,  +1.0037]  +0.5494    4/26    *
+amber: minimised - toward_member           +0.1761  [  -0.1248,  +0.5741]  +0.0730   12/18  
+amber: minimised - rand_iso                -0.3779  [  -0.7151,  -0.0763]  -0.2683   23/7     *
+amber: toward_member - start               +0.4438  [  +0.3884,  +0.4891]  +0.4611    6/24    *
+
+    Legacy-minimised MINUS AMBER-minimised (identical starts, optimiser, budget; only H changes): -0.4657 [-1.0178, +0.1427] med -0.5499  24W/6L
+====================================================================================================

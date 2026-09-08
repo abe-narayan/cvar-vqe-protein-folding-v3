@@ -1,0 +1,6 @@
+{
+ "delta": 4.0,
+ "predicted_gain_all126": -0.3047978694255946,
+ "acc_head": 0.6865130424611066,
+ "rule": "argmin over the ORACLE gate curve at the head's measured accuracy, chosen before any trained model's emitted RMSD was inspected"
+}

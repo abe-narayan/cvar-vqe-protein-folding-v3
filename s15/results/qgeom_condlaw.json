@@ -1,0 +1,75 @@
+{
+ "B1_blockL2": {
+  "cond": {
+   "spearman_with_H": -0.42179200590635957,
+   "r2_linear_in_H": 0.19172507746061362,
+   "r2_arm_label": 0.48806582943056287,
+   "r2_arm_on_H_residual": 0.2581887013127573,
+   "r2_arm_on_H_residual_excl_uniform": 0.09613218436992654,
+   "r2_arm_on_H_residual_fitted_arms_only": 0.09939226948128488,
+   "n": 189,
+   "n_fitted": 135
+  },
+  "eff_rank_frac": {
+   "spearman_with_H": 0.43542549596389846,
+   "r2_linear_in_H": 0.22739695137770943,
+   "r2_arm_label": 0.4594081901629703,
+   "r2_arm_on_H_residual": 0.20505646270327682,
+   "r2_arm_on_H_residual_excl_uniform": 0.029355937301150714,
+   "r2_arm_on_H_residual_fitted_arms_only": 0.008285508970614197,
+   "n": 189,
+   "n_fitted": 135
+  },
+  "log_pseudo_det": {
+   "spearman_with_H": 0.4384874583483058,
+   "r2_linear_in_H": 0.17993460404881023,
+   "r2_arm_label": 0.36970724323341675,
+   "r2_arm_on_H_residual": 0.17184324298102682,
+   "r2_arm_on_H_residual_excl_uniform": 0.050249376873928386,
+   "r2_arm_on_H_residual_fitted_arms_only": 0.03160130523676752,
+   "n": 189,
+   "n_fitted": 135
+  },
+  "max_dev_from_I4": {
+   "spearman_with_H": 0.5208608447770536,
+   "r2_linear_in_H": 0.16201210814776568,
+   "r2_arm_label": 0.1928568815975168,
+   "r2_arm_on_H_residual": 0.12977027247695772,
+   "r2_arm_on_H_residual_excl_uniform": 0.11792860098177416,
+   "r2_arm_on_H_residual_fitted_arms_only": 0.05187747995904535,
+   "n": 189,
+   "n_fitted": 135
+  },
+  "grad_var": {
+   "spearman_with_H": 0.18374517319216185,
+   "r2_linear_in_H": 0.0032486411581124086,
+   "r2_arm_label": 0.07159613827677203,
+   "r2_arm_on_H_residual": 0.08491112367528275,
+   "r2_arm_on_H_residual_excl_uniform": 0.06522148751125956,
+   "r2_arm_on_H_residual_fitted_arms_only": 0.045376559244029946,
+   "n": 189,
+   "n_fitted": 135
+  },
+  "grad_share_bottom_decile": {
+   "spearman_with_H": 0.2557111795681099,
+   "r2_linear_in_H": 0.033850899492407605,
+   "r2_arm_label": 0.08203250830184661,
+   "r2_arm_on_H_residual": 0.03597269327937902,
+   "r2_arm_on_H_residual_excl_uniform": 0.044491542032974674,
+   "r2_arm_on_H_residual_fitted_arms_only": 0.03829069758097858,
+   "n": 189,
+   "n_fitted": 135
+  },
+  "max_p": {
+   "spearman_with_H": -0.9889897753282871,
+   "r2_linear_in_H": 0.7907726633787173,
+   "r2_arm_label": 0.1408006675716199,
+   "r2_arm_on_H_residual": 0.35629716944340395,
+   "r2_arm_on_H_residual_excl_uniform": 0.16814274002373064,
+   "r2_arm_on_H_residual_fitted_arms_only": 0.05292850203947019,
+   "n": 189,
+   "n_fitted": 135
+  }
+ },
+ "_written": "2026-09-05 23:54:47"
+}

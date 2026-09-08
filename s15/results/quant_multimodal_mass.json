@@ -1,0 +1,34 @@
+{
+ "definition": {
+  "min_gap_bins": 2,
+  "dip_ratio": 0.5,
+  "min_minor_mass": 0.15,
+  "basis": "mass"
+ },
+ "bands": {
+  "short_2_5": {
+   "n": 4768,
+   "frac_two_maxima": 0.8089345637583892,
+   "frac_strict_bimodal": 0.10675335570469799,
+   "mean_n_modes": 2.007760067114094
+  },
+  "mid_6_7": {
+   "n": 1628,
+   "frac_two_maxima": 0.7186732186732187,
+   "frac_strict_bimodal": 0.06818181818181818,
+   "mean_n_modes": 1.9195331695331694
+  },
+  "long_8plus": {
+   "n": 2153,
+   "frac_two_maxima": 0.763585694379935,
+   "frac_strict_bimodal": 0.06270320483046911,
+   "mean_n_modes": 2.040408732001858
+  },
+  "ALL": {
+   "n": 8549,
+   "frac_two_maxima": 0.780325184232074,
+   "frac_strict_bimodal": 0.0883144227395017,
+   "mean_n_modes": 1.9991811907825476
+  }
+ }
+}

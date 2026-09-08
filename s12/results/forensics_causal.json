@@ -1,0 +1,1494 @@
+{
+ "causes": {
+  "o_native_E": {
+   "fail18_mean": 0.4702993765493766,
+   "other_mean": 0.16615187795743352,
+   "mwu_p": 0.00011776030850913649,
+   "spearman_rmsd": 0.4710572226305897,
+   "auc_fail": 0.7420267489711934
+  },
+  "o_native_H": {
+   "fail18_mean": 0.12996031746031747,
+   "other_mean": 0.22941910198854643,
+   "mwu_p": 0.13123872336393508,
+   "spearman_rmsd": -0.530883109130003,
+   "auc_fail": 0.404320987654321
+  },
+  "o_native_C": {
+   "fail18_mean": 0.39974030599030597,
+   "other_mean": 0.6044290200540201,
+   "mwu_p": 0.013986952587073755,
+   "spearman_rmsd": 0.0654185159839885,
+   "auc_fail": 0.32098765432098764
+  },
+  "o_pool_best": {
+   "fail18_mean": 2.2841586106353335,
+   "other_mean": 1.6152687214866832,
+   "mwu_p": 0.004906737742604599,
+   "spearman_rmsd": 0.7493813273340834,
+   "auc_fail": 0.7078189300411523
+  },
+  "o_univ_best": {
+   "fail18_mean": 1.639967992901802,
+   "other_mean": 1.2590266960086647,
+   "mwu_p": 0.03679453179143942,
+   "spearman_rmsd": 0.6836485694024478,
+   "auc_fail": 0.654320987654321
+  },
+  "o_cov20": {
+   "fail18_mean": 1.0728277305604532,
+   "other_mean": 1.9044776414724456,
+   "mwu_p": 0.015484407690105513,
+   "spearman_rmsd": -0.7157085733602837,
+   "auc_fail": 0.32175925925925924
+  },
+  "o_lib_ss_agree_pool": {
+   "fail18_mean": 0.31946109122359123,
+   "other_mean": 0.44267659932659925,
+   "mwu_p": 5.388397075548366e-06,
+   "spearman_rmsd": -0.5389652462423835,
+   "auc_fail": 0.1640946502057613
+  },
+  "o_band_score_pct": {
+   "fail18_mean": 0.6874072034205915,
+   "other_mean": 0.2865831793024552,
+   "mwu_p": 3.428590822498658e-10,
+   "spearman_rmsd": 0.6683734533183353,
+   "auc_fail": 0.963477366255144
+  },
+  "rho_pool": {
+   "fail18_mean": 0.10664656779018379,
+   "other_mean": 0.644607899758879,
+   "mwu_p": 1.3339851239017788e-07,
+   "spearman_rmsd": -0.8000869891263592,
+   "auc_fail": 0.11059670781893004
+  },
+  "meta_lasso_or_fibril": {
+   "fail18_mean": 0.5555555555555556,
+   "other_mean": 0.05555555555555555,
+   "mwu_p": 4.3822914613936695e-09,
+   "spearman_rmsd": 0.35716913698178365,
+   "auc_fail": 0.75
+  },
+  "meta_any_flag": {
+   "fail18_mean": 0.8888888888888888,
+   "other_mean": 0.7685185185185185,
+   "mwu_p": 0.25312919416664936,
+   "spearman_rmsd": -0.04972169068666072,
+   "auc_fail": 0.5601851851851852
+  },
+  "dep_disto_rg": {
+   "fail18_mean": 7.419395552741157,
+   "other_mean": 6.757729627467968,
+   "mwu_p": 0.02833552951062631,
+   "spearman_rmsd": 0.24850993625796777,
+   "auc_fail": 0.6620370370370371
+  },
+  "dep_disto_E": {
+   "fail18_mean": 0.34681221556221553,
+   "other_mean": 0.3210073491323492,
+   "mwu_p": 0.7242147477995311,
+   "spearman_rmsd": 0.4272235921326258,
+   "auc_fail": 0.5257201646090535
+  },
+  "dep_disto_H": {
+   "fail18_mean": 0.29081196581196583,
+   "other_mean": 0.35271283500450157,
+   "mwu_p": 0.47421230286614435,
+   "spearman_rmsd": -0.4489501711372846,
+   "auc_fail": 0.4495884773662551
+  },
+  "dep_pool_nclusters": {
+   "fail18_mean": 159.77777777777777,
+   "other_mean": 119.47222222222223,
+   "mwu_p": 0.011153303899654786,
+   "spearman_rmsd": 0.3137251378151225,
+   "auc_fail": 0.6875
+  },
+  "dep_top75_pair_rmsd": {
+   "fail18_mean": 2.879120678859375,
+   "other_mean": 2.420774648818721,
+   "mwu_p": 0.12767785056526096,
+   "spearman_rmsd": 0.5160944881889764,
+   "auc_fail": 0.6126543209876543
+  },
+  "dep_top75_rg_sd": {
+   "fail18_mean": 0.4639678050806793,
+   "other_mean": 0.35285065535118737,
+   "mwu_p": 0.24857335429569782,
+   "spearman_rmsd": 0.5007064116985378,
+   "auc_fail": 0.5853909465020576
+  },
+  "dep_n": {
+   "fail18_mean": 14.0,
+   "other_mean": 12.787037037037036,
+   "mwu_p": 0.03526433396765615,
+   "spearman_rmsd": 0.1137426411530691,
+   "auc_fail": 0.6540637860082305
+  },
+  "dep_alpha_ll_band": {
+   "fail18_mean": -7.967470401075117,
+   "other_mean": -9.152139673860145,
+   "mwu_p": 0.8973758270848062,
+   "spearman_rmsd": 0.02363404574428197,
+   "auc_fail": 0.5097736625514403
+  },
+  "dep_ss_esm_E": {
+   "fail18_mean": 0.28871637621637625,
+   "other_mean": 0.17891234280123167,
+   "mwu_p": 0.06126316084088823,
+   "spearman_rmsd": 0.37659274866109144,
+   "auc_fail": 0.6306584362139918
+  },
+  "dep_ss_esm_H": {
+   "fail18_mean": 0.2563492063492063,
+   "other_mean": 0.31295626955349176,
+   "mwu_p": 0.6493060893252085,
+   "spearman_rmsd": -0.4153648036000885,
+   "auc_fail": 0.466820987654321
+  }
+ },
+ "strand_vs_meta": {
+  "E_mean_lassofib": 0.4988050144300144,
+  "E_mean_other": 0.16753555787646696,
+  "fail_rate_LF": "10/16",
+  "fail_rate_notLF": "8/110",
+  "fail_rate_highE_notLF": "5/30",
+  "fail_rate_lowE_notLF": "3/80",
+  "fail_rate_highE_LF": "6/10",
+  "fisher_highE_within_notLF": 0.03356883141735944,
+  "rmsd_highE": 4.294635343937179,
+  "rmsd_lowE": 2.7124999496871935,
+  "rmsd_LF": 5.149474360923184,
+  "rmsd_notLF": 2.9333529059619528
+ },
+ "ss_bias": {
+  "top75_E_when_native_E": 0.27620626133126136,
+  "top75_E_when_native_notE": 0.09374064781041526,
+  "top75_H_when_native_E": 0.2566091265216265,
+  "pool_E_frac_when_native_E": 0.20095661109723612,
+  "n_highE": 40,
+  "pool_E_frac_when_native_notE": 0.15211355279087835,
+  "univ_E_frac_when_native_E": 0.18565913627275732,
+  "univ_E_frac_when_native_notE": 0.1861607873683628
+ },
+ "early_warning": {
+  "features": [
+   "dep_disto_rg",
+   "dep_disto_E",
+   "dep_disto_H",
+   "dep_pool_nclusters",
+   "dep_top75_pair_rmsd",
+   "dep_top75_rg_sd",
+   "dep_n",
+   "dep_alpha_ll_band",
+   "dep_ss_esm_E",
+   "dep_ss_esm_H"
+  ],
+  "auc_lfo": 0.5997942386831276,
+  "spearman_with_rmsd": 0.179140607424072,
+  "top18_precision": 0.16666666666666666,
+  "rmsd_top18_flagged": 3.7859129021884064,
+  "rmsd_rest": 3.11957386288143,
+  "null_auc_mean": 0.45635288065843616,
+  "null_auc_p95": 0.6157664609053498
+ },
+ "fail18_detail": [
+  {
+   "pdb": "1ID6",
+   "n": 15,
+   "seq": "SVQARWEAAFDLDLY",
+   "o_native_ss": "CCCCCCCCCCCCCCC",
+   "disto_ss": "EEECHHHHHCCCCCC",
+   "pred_ss_esm": "CCCHHHHHHHCCHCC",
+   "o_pool_best": 3.543567180633545,
+   "o_univ_best": 2.6647064685821533,
+   "shipped": 5.682991027832031,
+   "rmsd_arm": 5.578027933747703,
+   "o_cov20": 0,
+   "o_cov20_pool": 0,
+   "n_band_pool": 112,
+   "band_score_pct": 0.524125,
+   "band_score_pct_min": 0.186,
+   "band_org_frac": 0.23691683569979716,
+   "band_rank_med": 4948.0,
+   "band_in_pool_frac": 0.04543610547667343,
+   "band_ident": 0.05922920892494929,
+   "band_ss_agree": 0.4528735632183908,
+   "lib_ss_agree": 0.3662666666666667,
+   "top75_ss_agree": 0.058666666666666666,
+   "top75_ss_mode": "HHHHHHHHHHHHHHH",
+   "top75_o_rr_min": 5.214883804321289,
+   "top75_in_near_cluster": 75,
+   "pool_nclusters": 176,
+   "rho_pool": 0.36125497582468014,
+   "rg_native": 5.650679531750866,
+   "rg_top75": 6.883419073704484,
+   "disto_rg": 7.210373878479004,
+   "diag": {
+    "query": true,
+    "filter": true,
+    "multimodal": false,
+    "ss_mispred": true,
+    "rg_mismatch": true,
+    "reference": false,
+    "covalent": false
+   },
+   "band_parents": [
+    [
+     "8F04",
+     1,
+     2.6647064685821533,
+     3650
+    ],
+    [
+     "1DPK",
+     5,
+     2.8833088874816895,
+     6615
+    ],
+    [
+     "1T2Y",
+     9,
+     2.8999016284942627,
+     5664
+    ]
+   ],
+   "header": {
+    "lasso": false,
+    "fibril": false,
+    "xray": false,
+    "membrane": false,
+    "cosolvent": false,
+    "bound": false,
+    "designed": false,
+    "ssbond": 0,
+    "expdta": "SOLUTION NMR"
+   }
+  },
+  {
+   "pdb": "1JBF",
+   "n": 15,
+   "seq": "NLPRCTEGPWGWVCM",
+   "o_native_ss": "CCEEEEECCEEEEEC",
+   "disto_ss": "EEECEEECCEEECCC",
+   "pred_ss_esm": "CCCCCCCCCCECCCC",
+   "o_pool_best": 1.6687090396881104,
+   "o_univ_best": 1.6687090396881104,
+   "shipped": 6.032381057739258,
+   "rmsd_arm": 4.9628959361833775,
+   "o_cov20": 9,
+   "o_cov20_pool": 3,
+   "n_band_pool": 24,
+   "band_score_pct": 0.5171666666666667,
+   "band_score_pct_min": 0.232,
+   "band_org_frac": 0.40707964601769914,
+   "band_rank_med": 2611.0,
+   "band_in_pool_frac": 0.21238938053097345,
+   "band_ident": 0.08613569321533925,
+   "band_ss_agree": 0.7091445427728613,
+   "lib_ss_agree": 0.36093333333333333,
+   "top75_ss_agree": 0.4328888888888889,
+   "top75_ss_mode": "CCCCCCCCCCCCCCC",
+   "top75_o_rr_min": 3.48907208442688,
+   "top75_in_near_cluster": 0,
+   "pool_nclusters": 221,
+   "rho_pool": 0.46969176894514947,
+   "rg_native": 7.299518734295473,
+   "rg_top75": 6.399231795957346,
+   "disto_rg": 6.539964199066162,
+   "diag": {
+    "query": false,
+    "filter": true,
+    "multimodal": true,
+    "ss_mispred": false,
+    "rg_mismatch": false,
+    "reference": true,
+    "covalent": true
+   },
+   "band_parents": [
+    [
+     "1SDV_41",
+     0,
+     1.6687090396881104,
+     45
+    ],
+    [
+     "2M79",
+     0,
+     1.7849746942520142,
+     178
+    ],
+    [
+     "5M9U",
+     2,
+     1.8884172439575195,
+     5060
+    ]
+   ],
+   "header": {
+    "lasso": false,
+    "fibril": false,
+    "xray": false,
+    "membrane": false,
+    "cosolvent": false,
+    "bound": true,
+    "designed": false,
+    "ssbond": 1,
+    "expdta": "SOLUTION NMR"
+   }
+  },
+  {
+   "pdb": "1LB7",
+   "n": 16,
+   "seq": "RNCFESVAALRRCMYG",
+   "o_native_ss": "CCCCCHHHHHHHHHHH",
+   "disto_ss": "CCCHHHHHHHHHHHCC",
+   "pred_ss_esm": "CCCHHHHHHHHHHHHC",
+   "o_pool_best": 2.0050759315490723,
+   "o_univ_best": 0.7740028500556946,
+   "shipped": 4.699667453765869,
+   "rmsd_arm": 4.962793702639683,
+   "o_cov20": 6,
+   "o_cov20_pool": 0,
+   "n_band_pool": 53,
+   "band_score_pct": 0.5432830188679245,
+   "band_score_pct_min": 0.33,
+   "band_org_frac": 0.2403560830860534,
+   "band_rank_med": 2749.0,
+   "band_in_pool_frac": 0.1572700296735905,
+   "band_ident": 0.07659495548961424,
+   "band_ss_agree": 0.6869436201780416,
+   "lib_ss_agree": 0.467625,
+   "top75_ss_agree": 0.655,
+   "top75_ss_mode": "HHHHHHHHHHHHHHHH",
+   "top75_o_rr_min": 4.453458309173584,
+   "top75_in_near_cluster": 0,
+   "pool_nclusters": 199,
+   "rho_pool": 0.27451405899965925,
+   "rg_native": 6.063137163340675,
+   "rg_top75": 7.345925428413691,
+   "disto_rg": 7.353543281555176,
+   "diag": {
+    "query": true,
+    "filter": true,
+    "multimodal": true,
+    "ss_mispred": false,
+    "rg_mismatch": true,
+    "reference": false,
+    "covalent": true
+   },
+   "band_parents": [
+    [
+     "2LUF",
+     2,
+     0.7740028500556946,
+     3964
+    ],
+    [
+     "1UNE_31",
+     2,
+     1.6762930154800415,
+     6229
+    ],
+    [
+     "1ERT_26",
+     0,
+     1.918609380722046,
+     5699
+    ]
+   ],
+   "header": {
+    "lasso": false,
+    "fibril": false,
+    "xray": false,
+    "membrane": false,
+    "cosolvent": false,
+    "bound": false,
+    "designed": true,
+    "ssbond": 1,
+    "expdta": "SOLUTION NMR"
+   }
+  },
+  {
+   "pdb": "2BFI",
+   "n": 12,
+   "seq": "KFFEAAAKKFFE",
+   "o_native_ss": "EEEEEEEEEECC",
+   "disto_ss": "HHHHHHHHHHHH",
+   "pred_ss_esm": "CHHHHHHHCCCC",
+   "o_pool_best": 2.215287923812866,
+   "o_univ_best": 1.353434443473816,
+   "shipped": 7.031398296356201,
+   "rmsd_arm": 7.030048363993378,
+   "o_cov20": 121,
+   "o_cov20_pool": 0,
+   "n_band_pool": 9,
+   "band_score_pct": 0.9855555555555555,
+   "band_score_pct_min": 0.974,
+   "band_org_frac": 0.04317958783120707,
+   "band_rank_med": 11624.0,
+   "band_in_pool_frac": 0.008832188420019628,
+   "band_ident": 0.058390578999018644,
+   "band_ss_agree": 0.7367517173699706,
+   "lib_ss_agree": 0.182,
+   "top75_ss_agree": 0.01,
+   "top75_ss_mode": "HHHHHHHHHHHH",
+   "top75_o_rr_min": 6.9211201667785645,
+   "top75_in_near_cluster": 0,
+   "pool_nclusters": 82,
+   "rho_pool": 0.015741490611342727,
+   "rg_native": 11.882511810158805,
+   "rg_top75": 5.681832098894398,
+   "disto_rg": 5.75169563293457,
+   "diag": {
+    "query": true,
+    "filter": true,
+    "multimodal": true,
+    "ss_mispred": true,
+    "rg_mismatch": true,
+    "reference": true,
+    "covalent": false
+   },
+   "band_parents": [
+    [
+     "1DZ0_21",
+     5,
+     1.353434443473816,
+     651
+    ],
+    [
+     "1GNY_101",
+     2,
+     1.4180161952972412,
+     14225
+    ],
+    [
+     "1TSH_111",
+     2,
+     1.4291987419128418,
+     5798
+    ]
+   ],
+   "header": {
+    "lasso": false,
+    "fibril": true,
+    "xray": true,
+    "membrane": false,
+    "cosolvent": false,
+    "bound": false,
+    "designed": true,
+    "ssbond": 0,
+    "expdta": "X-RAY DIFFRACTION"
+   }
+  },
+  {
+   "pdb": "2BP4",
+   "n": 16,
+   "seq": "DAEFRHDSGYEVHHQK",
+   "o_native_ss": "HHHHHHHHHHHHHHHC",
+   "disto_ss": "CCCCEEECEEECCCCC",
+   "pred_ss_esm": "CEEEHCCCHEEEECEC",
+   "o_pool_best": 0.6306326985359192,
+   "o_univ_best": 0.49909937381744385,
+   "shipped": 5.91070032119751,
+   "rmsd_arm": 5.274054620655451,
+   "o_cov20": 1245,
+   "o_cov20_pool": 91,
+   "n_band_pool": 94,
+   "band_score_pct": 0.511276595744681,
+   "band_score_pct_min": 0.234,
+   "band_org_frac": 0.45198170731707316,
+   "band_rank_med": 3227.5,
+   "band_in_pool_frac": 0.07164634146341463,
+   "band_ident": 0.055735518292682924,
+   "band_ss_agree": 0.782155106707317,
+   "lib_ss_agree": 0.427125,
+   "top75_ss_agree": 0.2375,
+   "top75_ss_mode": "CCCCCCCCCCCCCCCC",
+   "top75_o_rr_min": 3.0732855796813965,
+   "top75_in_near_cluster": 0,
+   "pool_nclusters": 228,
+   "rho_pool": 0.0954504961998468,
+   "rg_native": 7.28370984130045,
+   "rg_top75": 7.564347470494823,
+   "disto_rg": 8.510884284973145,
+   "diag": {
+    "query": false,
+    "filter": true,
+    "multimodal": true,
+    "ss_mispred": true,
+    "rg_mismatch": false,
+    "reference": true,
+    "covalent": false
+   },
+   "band_parents": [
+    [
+     "1LTW_21",
+     1,
+     0.49909937381744385,
+     6201
+    ],
+    [
+     "1GY6_6",
+     1,
+     0.5000180602073669,
+     1272
+    ],
+    [
+     "1CO9_21",
+     1,
+     0.5231083631515503,
+     5902
+    ]
+   ],
+   "header": {
+    "lasso": false,
+    "fibril": true,
+    "xray": false,
+    "membrane": false,
+    "cosolvent": true,
+    "bound": false,
+    "designed": false,
+    "ssbond": 0,
+    "expdta": "SOLUTION NMR"
+   }
+  },
+  {
+   "pdb": "2JN5",
+   "n": 12,
+   "seq": "MDVFMKGLSKAK",
+   "o_native_ss": "CCCCCCCCCCCC",
+   "disto_ss": "HHHHHHCCCCCC",
+   "pred_ss_esm": "HHHHCHCCCCCC",
+   "o_pool_best": 2.6896302700042725,
+   "o_univ_best": 1.8381997346878052,
+   "shipped": 5.612368106842041,
+   "rmsd_arm": 5.606004981752246,
+   "o_cov20": 1,
+   "o_cov20_pool": 0,
+   "n_band_pool": 94,
+   "band_score_pct": 0.6651063829787234,
+   "band_score_pct_min": 0.35,
+   "band_org_frac": 0.24187153053132435,
+   "band_rank_med": 11574.0,
+   "band_in_pool_frac": 0.024848004229447527,
+   "band_ident": 0.061304960789496876,
+   "band_ss_agree": 0.5276235791699709,
+   "lib_ss_agree": 0.37066666666666664,
+   "top75_ss_agree": 0.06222222222222222,
+   "top75_ss_mode": "HHHHHHHHHHHH",
+   "top75_o_rr_min": 5.393189907073975,
+   "top75_in_near_cluster": 0,
+   "pool_nclusters": 81,
+   "rho_pool": -0.05516011843401525,
+   "rg_native": 5.335880669200137,
+   "rg_top75": 5.715346107809611,
+   "disto_rg": 6.482921600341797,
+   "diag": {
+    "query": true,
+    "filter": true,
+    "multimodal": true,
+    "ss_mispred": false,
+    "rg_mismatch": true,
+    "reference": true,
+    "covalent": false
+   },
+   "band_parents": [
+    [
+     "2JUS",
+     0,
+     1.8381997346878052,
+     21292
+    ],
+    [
+     "1IJY_101",
+     6,
+     2.0840444564819336,
+     18000
+    ],
+    [
+     "1GMP_36",
+     0,
+     2.201307535171509,
+     9616
+    ]
+   ],
+   "header": {
+    "lasso": false,
+    "fibril": true,
+    "xray": false,
+    "membrane": true,
+    "cosolvent": false,
+    "bound": true,
+    "designed": false,
+    "ssbond": 0,
+    "expdta": "SOLUTION NMR"
+   }
+  },
+  {
+   "pdb": "2MQ2",
+   "n": 14,
+   "seq": "RGGRLYRRRFVVGR",
+   "o_native_ss": "CCCCCCCCEEEEEC",
+   "disto_ss": "EEEEEEEEECEEEC",
+   "pred_ss_esm": "CECEEEEECCCECC",
+   "o_pool_best": 3.403582811355591,
+   "o_univ_best": 2.473813772201538,
+   "shipped": 7.917115211486816,
+   "rmsd_arm": 8.24010323862393,
+   "o_cov20": 0,
+   "o_cov20_pool": 0,
+   "n_band_pool": 72,
+   "band_score_pct": 0.6463333333333333,
+   "band_score_pct_min": 0.21,
+   "band_org_frac": 0.2736691675598428,
+   "band_rank_med": 7200.0,
+   "band_in_pool_frac": 0.02572347266881029,
+   "band_ident": 0.057520543051089675,
+   "band_ss_agree": 0.3894247945694891,
+   "lib_ss_agree": 0.36128571428571427,
+   "top75_ss_agree": 0.4723809523809524,
+   "top75_ss_mode": "CCEEEEEEEEEECC",
+   "top75_o_rr_min": 5.49086856842041,
+   "top75_in_near_cluster": 0,
+   "pool_nclusters": 172,
+   "rho_pool": -0.505387810464925,
+   "rg_native": 5.382038275364181,
+   "rg_top75": 10.281850525229059,
+   "disto_rg": 10.100630760192871,
+   "diag": {
+    "query": true,
+    "filter": true,
+    "multimodal": true,
+    "ss_mispred": true,
+    "rg_mismatch": true,
+    "reference": true,
+    "covalent": false
+   },
+   "band_parents": [
+    [
+     "1M4E",
+     2,
+     2.473813772201538,
+     6151
+    ],
+    [
+     "1BGC_51",
+     1,
+     2.5438036918640137,
+     6569
+    ],
+    [
+     "6OTB",
+     0,
+     2.676024913787842,
+     12509
+    ]
+   ],
+   "header": {
+    "lasso": false,
+    "fibril": false,
+    "xray": false,
+    "membrane": true,
+    "cosolvent": false,
+    "bound": false,
+    "designed": false,
+    "ssbond": 0,
+    "expdta": "SOLUTION NMR"
+   }
+  },
+  {
+   "pdb": "2N5C",
+   "n": 15,
+   "seq": "GFGSKPLDSFGLNFF",
+   "o_native_ss": "CCCCEEEEECEEEEE",
+   "disto_ss": "CCCEEECCCCCCCCC",
+   "pred_ss_esm": "CCEEEHCHHHEEECC",
+   "o_pool_best": 2.4593346118927,
+   "o_univ_best": 1.3997329473495483,
+   "shipped": 5.802670955657959,
+   "rmsd_arm": 6.342947815097202,
+   "o_cov20": 6,
+   "o_cov20_pool": 0,
+   "n_band_pool": 7,
+   "band_score_pct": 0.5434285714285714,
+   "band_score_pct_min": 0.284,
+   "band_org_frac": 0.8627450980392157,
+   "band_rank_med": 2949.0,
+   "band_in_pool_frac": 0.13725490196078433,
+   "band_ident": 0.09411764705882354,
+   "band_ss_agree": 0.5477124183006536,
+   "lib_ss_agree": 0.27426666666666666,
+   "top75_ss_agree": 0.24266666666666667,
+   "top75_ss_mode": "CCCCCCCCCCCCCCC",
+   "top75_o_rr_min": 4.878262519836426,
+   "top75_in_near_cluster": 0,
+   "pool_nclusters": 208,
+   "rho_pool": 0.46513844847354036,
+   "rg_native": 5.329109894853639,
+   "rg_top75": 6.656711105212695,
+   "disto_rg": 7.131365776062012,
+   "diag": {
+    "query": true,
+    "filter": true,
+    "multimodal": false,
+    "ss_mispred": true,
+    "rg_mismatch": true,
+    "reference": true,
+    "covalent": true
+   },
+   "band_parents": [
+    [
+     "9KAR",
+     0,
+     1.3997329473495483,
+     826
+    ],
+    [
+     "7BZ9",
+     0,
+     1.62171471118927,
+     1018
+    ],
+    [
+     "6M19",
+     0,
+     1.6754145622253418,
+     681
+    ]
+   ],
+   "header": {
+    "lasso": true,
+    "fibril": false,
+    "xray": false,
+    "membrane": false,
+    "cosolvent": true,
+    "bound": false,
+    "designed": false,
+    "ssbond": 0,
+    "expdta": "SOLUTION NMR"
+   }
+  },
+  {
+   "pdb": "2NB7",
+   "n": 14,
+   "seq": "MENTSITIEFSSKF",
+   "o_native_ss": "CCCCHHHHHHHHHH",
+   "disto_ss": "CCEEEEEECCCCCC",
+   "pred_ss_esm": "EEHHEEEEEHECCC",
+   "o_pool_best": 1.2827339172363281,
+   "o_univ_best": 1.1194926500320435,
+   "shipped": 4.891531467437744,
+   "rmsd_arm": 4.5779155632591655,
+   "o_cov20": 303,
+   "o_cov20_pool": 34,
+   "n_band_pool": 66,
+   "band_score_pct": 0.6301515151515152,
+   "band_score_pct_min": 0.288,
+   "band_org_frac": 0.26464435146443516,
+   "band_rank_med": 5268.5,
+   "band_in_pool_frac": 0.06903765690376569,
+   "band_ident": 0.05700836820083681,
+   "band_ss_agree": 0.7922145845786013,
+   "lib_ss_agree": 0.446,
+   "top75_ss_agree": 0.1980952380952381,
+   "top75_ss_mode": "CCCEEEEECCCCCC",
+   "top75_o_rr_min": 3.721853494644165,
+   "top75_in_near_cluster": 0,
+   "pool_nclusters": 154,
+   "rho_pool": -0.36627602119154734,
+   "rg_native": 6.328101546583325,
+   "rg_top75": 9.448877540263213,
+   "disto_rg": 9.292126655578613,
+   "diag": {
+    "query": false,
+    "filter": true,
+    "multimodal": true,
+    "ss_mispred": true,
+    "rg_mismatch": true,
+    "reference": true,
+    "covalent": false
+   },
+   "band_parents": [
+    [
+     "1EQX",
+     0,
+     1.1194926500320435,
+     7096
+    ],
+    [
+     "1MB3_1",
+     6,
+     1.1225098371505737,
+     1988
+    ],
+    [
+     "1MK0_61",
+     3,
+     1.1476997137069702,
+     500
+    ]
+   ],
+   "header": {
+    "lasso": false,
+    "fibril": false,
+    "xray": false,
+    "membrane": true,
+    "cosolvent": false,
+    "bound": false,
+    "designed": false,
+    "ssbond": 0,
+    "expdta": "SOLUTION NMR"
+   }
+  },
+  {
+   "pdb": "2NDM",
+   "n": 13,
+   "seq": "GRPCYTLQSCFPD",
+   "o_native_ss": "EEEEECCCEEEEE",
+   "disto_ss": "EEECCCHHHHHCC",
+   "pred_ss_esm": "CECCECCECCCCC",
+   "o_pool_best": 1.649061679840088,
+   "o_univ_best": 1.3883559703826904,
+   "shipped": 4.9165358543396,
+   "rmsd_arm": 6.885037278785359,
+   "o_cov20": 76,
+   "o_cov20_pool": 1,
+   "n_band_pool": 16,
+   "band_score_pct": 0.6287499999999999,
+   "band_score_pct_min": 0.39,
+   "band_org_frac": 0.30484988452655887,
+   "band_rank_med": 9149.0,
+   "band_in_pool_frac": 0.03695150115473441,
+   "band_ident": 0.05009770829632261,
+   "band_ss_agree": 0.6786285308225262,
+   "lib_ss_agree": 0.26276923076923075,
+   "top75_ss_agree": 0.04512820512820513,
+   "top75_ss_mode": "HHHHHHHHHHHHH",
+   "top75_o_rr_min": 3.99658203125,
+   "top75_in_near_cluster": 0,
+   "pool_nclusters": 150,
+   "rho_pool": 0.26492649881312047,
+   "rg_native": 6.4558278755662215,
+   "rg_top75": 6.198565052222931,
+   "disto_rg": 6.930938720703125,
+   "diag": {
+    "query": false,
+    "filter": true,
+    "multimodal": true,
+    "ss_mispred": true,
+    "rg_mismatch": false,
+    "reference": true,
+    "covalent": true
+   },
+   "band_parents": [
+    [
+     "1SDV_41",
+     2,
+     1.3883559703826904,
+     6656
+    ],
+    [
+     "1GUG_11",
+     1,
+     1.4301482439041138,
+     14246
+    ],
+    [
+     "1J3W_76",
+     2,
+     1.4560431241989136,
+     13761
+    ]
+   ],
+   "header": {
+    "lasso": false,
+    "fibril": false,
+    "xray": false,
+    "membrane": false,
+    "cosolvent": false,
+    "bound": false,
+    "designed": false,
+    "ssbond": 1,
+    "expdta": "SOLUTION NMR"
+   }
+  },
+  {
+   "pdb": "3BTB",
+   "n": 15,
+   "seq": "MEELQDDYEDMMEEN",
+   "o_native_ss": "CCEEEEECCEEEEEC",
+   "disto_ss": "CHHHHHHHHHHHHHH",
+   "pred_ss_esm": "HHHHHHHHHHHHHHH",
+   "o_pool_best": 2.9685893058776855,
+   "o_univ_best": 2.765681505203247,
+   "shipped": 5.027052402496338,
+   "rmsd_arm": 4.964543608251532,
+   "o_cov20": 0,
+   "o_cov20_pool": 0,
+   "n_band_pool": 24,
+   "band_score_pct": 0.6575833333333333,
+   "band_score_pct_min": 0.292,
+   "band_org_frac": 0.2358974358974359,
+   "band_rank_med": 4936.0,
+   "band_in_pool_frac": 0.041025641025641026,
+   "band_ident": 0.04524216524216525,
+   "band_ss_agree": 0.3249002849002849,
+   "lib_ss_agree": 0.20973333333333333,
+   "top75_ss_agree": 0.02666666666666667,
+   "top75_ss_mode": "HHHHHHHHHHHHHHH",
+   "top75_o_rr_min": 4.81568717956543,
+   "top75_in_near_cluster": 75,
+   "pool_nclusters": 159,
+   "rho_pool": 0.4426436460062742,
+   "rg_native": 7.566949194238328,
+   "rg_top75": 6.881037128614349,
+   "disto_rg": 6.580832481384277,
+   "diag": {
+    "query": false,
+    "filter": true,
+    "multimodal": false,
+    "ss_mispred": true,
+    "rg_mismatch": true,
+    "reference": true,
+    "covalent": false
+   },
+   "band_parents": [
+    [
+     "1L7L_51",
+     1,
+     2.765681505203247,
+     7717
+    ],
+    [
+     "1L7L_51",
+     1,
+     2.765681505203247,
+     7719
+    ],
+    [
+     "1IR0_26",
+     4,
+     2.8669819831848145,
+     8567
+    ]
+   ],
+   "header": {
+    "lasso": false,
+    "fibril": false,
+    "xray": false,
+    "membrane": true,
+    "cosolvent": false,
+    "bound": true,
+    "designed": false,
+    "ssbond": 0,
+    "expdta": "SOLUTION NMR"
+   }
+  },
+  {
+   "pdb": "3SGO",
+   "n": 11,
+   "seq": "KVKVLGDVIEV",
+   "o_native_ss": "EEEEEEEEEEC",
+   "disto_ss": "EEEEEECCEEE",
+   "pred_ss_esm": "EEEEEEEEEEC",
+   "o_pool_best": 1.6002593040466309,
+   "o_univ_best": 1.0375810861587524,
+   "shipped": 6.618297100067139,
+   "rmsd_arm": 6.295871726164081,
+   "o_cov20": 474,
+   "o_cov20_pool": 6,
+   "n_band_pool": 34,
+   "band_score_pct": 0.8357647058823529,
+   "band_score_pct_min": 0.35,
+   "band_org_frac": 0.04433887569279493,
+   "band_rank_med": 13183.5,
+   "band_in_pool_frac": 0.013460015835312747,
+   "band_ident": 0.06863168502123372,
+   "band_ss_agree": 0.6663427625422875,
+   "lib_ss_agree": 0.236,
+   "top75_ss_agree": 0.47878787878787876,
+   "top75_ss_mode": "EEEEEEEEEEC",
+   "top75_o_rr_min": 3.601043224334717,
+   "top75_in_near_cluster": 3,
+   "pool_nclusters": 55,
+   "rho_pool": -0.200637065198301,
+   "rg_native": 10.040340599424017,
+   "rg_top75": 6.237871153085727,
+   "disto_rg": 6.695877552032471,
+   "diag": {
+    "query": true,
+    "filter": true,
+    "multimodal": true,
+    "ss_mispred": false,
+    "rg_mismatch": true,
+    "reference": true,
+    "covalent": false
+   },
+   "band_parents": [
+    [
+     "10GA_96",
+     2,
+     1.0375810861587524,
+     21377
+    ],
+    [
+     "1N9Y_86",
+     1,
+     1.0426229238510132,
+     11794
+    ],
+    [
+     "1I12_71",
+     1,
+     1.1081401109695435,
+     8293
+    ]
+   ],
+   "header": {
+    "lasso": false,
+    "fibril": true,
+    "xray": true,
+    "membrane": false,
+    "cosolvent": false,
+    "bound": false,
+    "designed": false,
+    "ssbond": 0,
+    "expdta": "X-RAY DIFFRACTION"
+   }
+  },
+  {
+   "pdb": "5W52",
+   "n": 11,
+   "seq": "DLIIKGISVHI",
+   "o_native_ss": "EEEEEEEEEEC",
+   "disto_ss": "CCEEEEEECCC",
+   "pred_ss_esm": "CECEEEEECEE",
+   "o_pool_best": 1.1173932552337646,
+   "o_univ_best": 0.4736907184123993,
+   "shipped": 5.071966171264648,
+   "rmsd_arm": 5.657183238337402,
+   "o_cov20": 385,
+   "o_cov20_pool": 3,
+   "n_band_pool": 7,
+   "band_score_pct": 0.9485714285714286,
+   "band_score_pct_min": 0.88,
+   "band_org_frac": 0.0536480686695279,
+   "band_rank_med": 13241.0,
+   "band_in_pool_frac": 0.0075107296137339056,
+   "band_ident": 0.05423332032774093,
+   "band_ss_agree": 0.7362465860319938,
+   "lib_ss_agree": 0.24363636363636362,
+   "top75_ss_agree": 0.2921212121212121,
+   "top75_ss_mode": "CCCCCCCCCCC",
+   "top75_o_rr_min": 3.461683511734009,
+   "top75_in_near_cluster": 0,
+   "pool_nclusters": 65,
+   "rho_pool": 0.14128875241219693,
+   "rg_native": 10.74743031733012,
+   "rg_top75": 6.772002351413139,
+   "disto_rg": 7.006004810333252,
+   "diag": {
+    "query": true,
+    "filter": true,
+    "multimodal": true,
+    "ss_mispred": false,
+    "rg_mismatch": true,
+    "reference": true,
+    "covalent": false
+   },
+   "band_parents": [
+    [
+     "2BFI",
+     1,
+     0.4736907184123993,
+     18149
+    ],
+    [
+     "2BFI",
+     0,
+     0.48376932740211487,
+     8538
+    ],
+    [
+     "8B4R",
+     0,
+     0.9046424627304077,
+     22015
+    ]
+   ],
+   "header": {
+    "lasso": false,
+    "fibril": true,
+    "xray": true,
+    "membrane": false,
+    "cosolvent": false,
+    "bound": false,
+    "designed": false,
+    "ssbond": 0,
+    "expdta": "ELECTRON CRYSTALLOGRAPHY"
+   }
+  },
+  {
+   "pdb": "7JS6",
+   "n": 15,
+   "seq": "LLGRSGNDRLILSKN",
+   "o_native_ss": "CEEEEECCCCCCCCC",
+   "disto_ss": "CEEECEEECCEEECC",
+   "pred_ss_esm": "CCCECCEEECHCCCC",
+   "o_pool_best": 3.1305882930755615,
+   "o_univ_best": 1.9225126504898071,
+   "shipped": 7.455885410308838,
+   "rmsd_arm": 7.142519913635159,
+   "o_cov20": 1,
+   "o_cov20_pool": 0,
+   "n_band_pool": 11,
+   "band_score_pct": 0.8301818181818184,
+   "band_score_pct_min": 0.294,
+   "band_org_frac": 0.6428571428571429,
+   "band_rank_med": 5724.5,
+   "band_in_pool_frac": 0.07142857142857142,
+   "band_ident": 0.07056277056277056,
+   "band_ss_agree": 0.5294372294372295,
+   "lib_ss_agree": 0.3237333333333333,
+   "top75_ss_agree": 0.4017777777777778,
+   "top75_ss_mode": "CCCCCCEEEEECCCC",
+   "top75_o_rr_min": 5.398571014404297,
+   "top75_in_near_cluster": 0,
+   "pool_nclusters": 191,
+   "rho_pool": -0.1958532960409723,
+   "rg_native": 5.170701450152824,
+   "rg_top75": 8.370618599733664,
+   "disto_rg": 8.666891098022461,
+   "diag": {
+    "query": true,
+    "filter": true,
+    "multimodal": false,
+    "ss_mispred": false,
+    "rg_mismatch": true,
+    "reference": true,
+    "covalent": true
+   },
+   "band_parents": [
+    [
+     "7BZ9",
+     0,
+     1.9225126504898071,
+     4832
+    ],
+    [
+     "7BW5",
+     0,
+     2.0059316158294678,
+     9814
+    ],
+    [
+     "6XTI",
+     0,
+     2.158377170562744,
+     4831
+    ]
+   ],
+   "header": {
+    "lasso": true,
+    "fibril": false,
+    "xray": false,
+    "membrane": false,
+    "cosolvent": false,
+    "bound": false,
+    "designed": false,
+    "ssbond": 0,
+    "expdta": "SOLUTION NMR"
+   }
+  },
+  {
+   "pdb": "7LCW",
+   "n": 15,
+   "seq": "GSKYSDTADESSYRW",
+   "o_native_ss": "CCEEEEECCCEEEEE",
+   "disto_ss": "CCCHHHHHCEEEEEE",
+   "pred_ss_esm": "CCCEHEECCHEEEEC",
+   "o_pool_best": 3.191636562347412,
+   "o_univ_best": 2.3225531578063965,
+   "shipped": 6.17625617980957,
+   "rmsd_arm": 6.5475977572701245,
+   "o_cov20": 0,
+   "o_cov20_pool": 0,
+   "n_band_pool": 13,
+   "band_score_pct": 0.6515384615384614,
+   "band_score_pct_min": 0.22,
+   "band_org_frac": 0.6887417218543046,
+   "band_rank_med": 5298.0,
+   "band_in_pool_frac": 0.08609271523178808,
+   "band_ident": 0.06225165562913908,
+   "band_ss_agree": 0.5205298013245033,
+   "lib_ss_agree": 0.2826666666666667,
+   "top75_ss_agree": 0.25333333333333335,
+   "top75_ss_mode": "CCCCCCCCCCCCCCC",
+   "top75_o_rr_min": 4.8065032958984375,
+   "top75_in_near_cluster": 0,
+   "pool_nclusters": 225,
+   "rho_pool": 0.23499057827372047,
+   "rg_native": 5.1559906338398855,
+   "rg_top75": 7.1931833895693265,
+   "disto_rg": 7.6073317527771,
+   "diag": {
+    "query": true,
+    "filter": true,
+    "multimodal": true,
+    "ss_mispred": false,
+    "rg_mismatch": true,
+    "reference": true,
+    "covalent": true
+   },
+   "band_parents": [
+    [
+     "2MW3",
+     1,
+     2.3225531578063965,
+     9629
+    ],
+    [
+     "7BZ9",
+     0,
+     2.3303489685058594,
+     9024
+    ],
+    [
+     "7BZA",
+     0,
+     2.412344217300415,
+     8741
+    ]
+   ],
+   "header": {
+    "lasso": true,
+    "fibril": false,
+    "xray": false,
+    "membrane": false,
+    "cosolvent": false,
+    "bound": false,
+    "designed": false,
+    "ssbond": 0,
+    "expdta": "SOLUTION NMR"
+   }
+  },
+  {
+   "pdb": "8T63",
+   "n": 16,
+   "seq": "WHMWNTVPNAKQVIAA",
+   "o_native_ss": "EEEEECEEEEEEEEEE",
+   "disto_ss": "EEECCCCHHHHHCCCC",
+   "pred_ss_esm": "CCCECECCCCHHHHHH",
+   "o_pool_best": 3.199414014816284,
+   "o_univ_best": 2.434464693069458,
+   "shipped": 6.9282050132751465,
+   "rmsd_arm": 6.105595757353645,
+   "o_cov20": 0,
+   "o_cov20_pool": 0,
+   "n_band_pool": 27,
+   "band_score_pct": 0.95,
+   "band_score_pct_min": 0.738,
+   "band_org_frac": 0.05620608899297424,
+   "band_rank_med": 3796.0,
+   "band_in_pool_frac": 0.06323185011709602,
+   "band_ident": 0.04844847775175644,
+   "band_ss_agree": 0.484923887587822,
+   "lib_ss_agree": 0.156125,
+   "top75_ss_agree": 0.04583333333333333,
+   "top75_ss_mode": "HHHHHHHHHHHHHHHH",
+   "top75_o_rr_min": 5.642906188964844,
+   "top75_in_near_cluster": 0,
+   "pool_nclusters": 200,
+   "rho_pool": 0.02400194535383571,
+   "rg_native": 12.06333444139098,
+   "rg_top75": 6.914336155321012,
+   "disto_rg": 7.358534336090088,
+   "diag": {
+    "query": true,
+    "filter": true,
+    "multimodal": false,
+    "ss_mispred": true,
+    "rg_mismatch": true,
+    "reference": false,
+    "covalent": false
+   },
+   "band_parents": [
+    [
+     "1T82_66",
+     2,
+     2.434464693069458,
+     960
+    ],
+    [
+     "1OUW_76",
+     0,
+     2.65673828125,
+     1920
+    ],
+    [
+     "1FA8_66",
+     0,
+     2.6604208946228027,
+     3983
+    ]
+   ],
+   "header": {
+    "lasso": false,
+    "fibril": false,
+    "xray": false,
+    "membrane": false,
+    "cosolvent": false,
+    "bound": false,
+    "designed": true,
+    "ssbond": 0,
+    "expdta": "SOLUTION NMR"
+   }
+  },
+  {
+   "pdb": "9KAR",
+   "n": 15,
+   "seq": "GGWGTVPDWFFNMNW",
+   "o_native_ss": "CCCCEEEEECCCCCC",
+   "disto_ss": "EEEEEECCEEEEEEC",
+   "pred_ss_esm": "EEEECCCCCCHCCCC",
+   "o_pool_best": 1.3997329473495483,
+   "o_univ_best": 1.3997329473495483,
+   "shipped": 7.230870246887207,
+   "rmsd_arm": 7.437696305468429,
+   "o_cov20": 7,
+   "o_cov20_pool": 2,
+   "n_band_pool": 5,
+   "band_score_pct": 0.8059999999999998,
+   "band_score_pct_min": 0.638,
+   "band_org_frac": 1.0,
+   "band_rank_med": 980.0,
+   "band_in_pool_frac": 0.3333333333333333,
+   "band_ident": 0.14222222222222222,
+   "band_ss_agree": 0.6222222222222222,
+   "lib_ss_agree": 0.4261333333333333,
+   "top75_ss_agree": 0.39911111111111114,
+   "top75_ss_mode": "CCCCHHHHHHHHHHH",
+   "top75_o_rr_min": 5.343628883361816,
+   "top75_in_near_cluster": 0,
+   "pool_nclusters": 211,
+   "rho_pool": 0.14208410591712825,
+   "rg_native": 5.0761387808486385,
+   "rg_top75": 7.60396853465633,
+   "disto_rg": 8.139184951782227,
+   "diag": {
+    "query": false,
+    "filter": true,
+    "multimodal": false,
+    "ss_mispred": true,
+    "rg_mismatch": true,
+    "reference": true,
+    "covalent": true
+   },
+   "band_parents": [
+    [
+     "2N5C",
+     0,
+     1.3997329473495483,
+     487
+    ],
+    [
+     "7BW5",
+     0,
+     1.5914233922958374,
+     92
+    ],
+    [
+     "7BZ9",
+     0,
+     1.7579350471496582,
+     812
+    ]
+   ],
+   "header": {
+    "lasso": true,
+    "fibril": false,
+    "xray": false,
+    "membrane": false,
+    "cosolvent": true,
+    "bound": false,
+    "designed": false,
+    "ssbond": 0,
+    "expdta": "SOLUTION NMR"
+   }
+  },
+  {
+   "pdb": "9L1M",
+   "n": 12,
+   "seq": "MMMKPDMMMKPD",
+   "o_native_ss": "EEEEECCCCCCC",
+   "disto_ss": "CHHHHHHHHHCC",
+   "pred_ss_esm": "CCCEHCCCCECC",
+   "o_pool_best": 2.959625244140625,
+   "o_univ_best": 1.9836598634719849,
+   "shipped": 5.139667510986328,
+   "rmsd_arm": 4.968067491654659,
+   "o_cov20": 1,
+   "o_cov20_pool": 0,
+   "n_band_pool": 113,
+   "band_score_pct": 0.4985132743362832,
+   "band_score_pct_min": 0.156,
+   "band_org_frac": 0.18035401052463723,
+   "band_rank_med": 12408.0,
+   "band_in_pool_frac": 0.01801945463243502,
+   "band_ident": 0.0365571679158029,
+   "band_ss_agree": 0.45149630574602667,
+   "lib_ss_agree": 0.35333333333333333,
+   "top75_ss_agree": 0.051111111111111114,
+   "top75_ss_mode": "HHHHHHHHHHHH",
+   "top75_o_rr_min": 4.490411281585693,
+   "top75_in_near_cluster": 5,
+   "pool_nclusters": 99,
+   "rho_pool": 0.31122576572257415,
+   "rg_native": 6.1397622782289885,
+   "rg_top75": 5.79690386148479,
+   "disto_rg": 6.190018177032471,
+   "diag": {
+    "query": true,
+    "filter": false,
+    "multimodal": true,
+    "ss_mispred": true,
+    "rg_mismatch": true,
+    "reference": true,
+    "covalent": false
+   },
+   "band_parents": [
+    [
+     "1OI0_26",
+     1,
+     1.9836598634719849,
+     2142
+    ],
+    [
+     "1TMJ_31",
+     8,
+     2.046626091003418,
+     7420
+    ],
+    [
+     "1EJ8_81",
+     0,
+     2.1042070388793945,
+     3880
+    ]
+   ],
+   "header": {
+    "lasso": false,
+    "fibril": true,
+    "xray": false,
+    "membrane": false,
+    "cosolvent": false,
+    "bound": false,
+    "designed": false,
+    "ssbond": 0,
+    "expdta": "SOLUTION NMR"
+   }
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+{
+ "r3": {
+  "per_target_se_of_sel_rand": 0.7632200192995946,
+  "se_of_the_126_target_mean": 0.07099806674964056,
+  "max_per_target_se": 1.2371448566284726
+ },
+ "r4": {
+  "bare_hash": [
+   "s17\\audit_repro.py:22: |delta|.  Grep the s17 tree for bare `hash(` and for benchmark60 access.",
+   "s17\\audit_repro.py:163: print(f\"  bare hash() uses : {len(h['bare_hash'])}\")"
+  ],
+  "benchmark60": [
+   "s17\\audit_ordernull.py:54: DIAGNOSTIC and none of it is predictive.  No benchmark60 target is touched.",
+   "s17\\audit_redundancy.py:37: ORACLE.  rr and nat_ca are labels; every number here is a diagnostic.  benchmark60 is not",
+   "s17\\audit_repro.py:22: |delta|.  Grep the s17 tree for bare `hash(` and for benchmark60 access.",
+   "s17\\audit_repro.py:107: hits = {\"bare_hash\": [], \"benchmark60\": []}",
+   "s17\\audit_repro.py:118: if re.search(r\"benchmark60|bench60|benchmark_60\", line):",
+   "s17\\audit_repro.py:119: hits[\"benchmark60\"].append(f\"{os.path.relpath(p, ROOT)}:{k}: {line.strip()}\")",
+   "s17\\audit_repro.py:166: print(f\"  benchmark60 refs : {len(h['benchmark60'])}\")",
+   "s17\\audit_repro.py:167: for x in h[\"benchmark60\"]:"
+  ]
+ },
+ "r5": {
+  "n": 126,
+  "sd_of_diff": 0.3354343269832329,
+  "se": 0.029882864936532354,
+  "mde_80pct": 0.08371939269560925,
+  "headline_sd": 0.3589984358725902,
+  "headline_se": 0.03198212260530877,
+  "headline_mde_80pct": 0.08960064195048596
+ }
+}

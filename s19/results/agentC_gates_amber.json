@@ -1,0 +1,61 @@
+{
+ "GC2": {
+  "max_dca_runref_vs_run_A": 0.0,
+  "d_energy_kcal": 0.0,
+  "max_dca_run_vs_refine_coords_A": 0.0,
+  "restraint_sizes": [
+   42,
+   14,
+   42
+  ],
+  "module_constant_restored": true,
+  "deployed_leg_run": true,
+  "passed": true
+ },
+ "GC3": {
+  "cap": 2000,
+  "n_targets": 5,
+  "rows": [
+   {
+    "pdb": "1A13",
+    "d_ca_A": 0.0,
+    "d_energy_kcal": 0.0,
+    "wall_uncapped": 7.78,
+    "wall_capped": 8.82
+   },
+   {
+    "pdb": "1A1P",
+    "d_ca_A": 0.0,
+    "d_energy_kcal": 0.0,
+    "wall_uncapped": 9.06,
+    "wall_capped": 8.95
+   },
+   {
+    "pdb": "1CB3",
+    "d_ca_A": 0.0,
+    "d_energy_kcal": 0.0,
+    "wall_uncapped": 3.21,
+    "wall_capped": 3.68
+   },
+   {
+    "pdb": "1CEK",
+    "d_ca_A": 0.0,
+    "d_energy_kcal": 0.0,
+    "wall_uncapped": 4.93,
+    "wall_capped": 4.83
+   },
+   {
+    "pdb": "1CS9",
+    "d_ca_A": 0.0,
+    "d_energy_kcal": 0.0,
+    "wall_uncapped": 5.33,
+    "wall_capped": 5.07
+   }
+  ],
+  "max_d_ca_A": 0.0,
+  "max_d_energy_kcal": 0.0,
+  "passed": true
+ },
+ "complete": true,
+ "passed": true
+}

@@ -1,0 +1,1 @@
+geo agent: s13.geo_build is enumerating genuine AMBER ff14SB/GBn2 single-point energy tables (one OpenMM context, ~0.27 GB RSS). Started Sat, Sep  5, 2026 10:07:51 AM. Remaining cells listed in s13/results/geo_build_log.json. All other geo_* work is statevector/numpy and needs no AMBER.

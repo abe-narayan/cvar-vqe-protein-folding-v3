@@ -1,0 +1,502 @@
+{
+ "rows": [
+  {
+   "pdb": "1A13",
+   "n": 14,
+   "fold": 4,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 6.636962131882364,
+     "sum_marginal_entropy_bits": 8.037585889659484,
+     "total_correlation_bits": 1.4006237577771197,
+     "total_corr_per_residue": 0.10004455412693712,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 4.192029991050182,
+     "sum_marginal_entropy_bits": 4.192029991050176,
+     "total_correlation_bits": -6.217248937900877e-15,
+     "total_corr_per_residue": -4.440892098500626e-16,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 10.30409807198833,
+     "sum_marginal_entropy_bits": 11.864740800234893,
+     "total_correlation_bits": 1.5606427282465631,
+     "total_corr_per_residue": 0.11147448058904022,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1A1P",
+   "n": 13,
+   "fold": 1,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 5.719633643016985,
+     "sum_marginal_entropy_bits": 7.917091344086865,
+     "total_correlation_bits": 2.1974577010698795,
+     "total_corr_per_residue": 0.16903520777460612,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 4.019471461961297,
+     "sum_marginal_entropy_bits": 4.019471461961295,
+     "total_correlation_bits": -1.7763568394002505e-15,
+     "total_corr_per_residue": -1.3664283380001927e-16,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 10.340600702405059,
+     "sum_marginal_entropy_bits": 11.558925841024758,
+     "total_correlation_bits": 1.218325138619699,
+     "total_corr_per_residue": 0.09371731835536146,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1CB3",
+   "n": 11,
+   "fold": 2,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 4.599953804212195,
+     "sum_marginal_entropy_bits": 5.432312384664512,
+     "total_correlation_bits": 0.8323585804523175,
+     "total_corr_per_residue": 0.0756689618593016,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 5.5958822101560415,
+     "sum_marginal_entropy_bits": 5.595882210156045,
+     "total_correlation_bits": 3.552713678800501e-15,
+     "total_corr_per_residue": 3.2297397080004555e-16,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 8.81041068605964,
+     "sum_marginal_entropy_bits": 10.139241213592197,
+     "total_correlation_bits": 1.3288305275325563,
+     "total_corr_per_residue": 0.12080277523023239,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1CEK",
+   "n": 13,
+   "fold": 2,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 4.879718919747269,
+     "sum_marginal_entropy_bits": 5.372144046004529,
+     "total_correlation_bits": 0.49242512625725965,
+     "total_corr_per_residue": 0.03787885586594305,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 4.300510223272261,
+     "sum_marginal_entropy_bits": 4.3005102232722665,
+     "total_correlation_bits": 5.329070518200751e-15,
+     "total_corr_per_residue": 4.099285014000578e-16,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 10.379180646128368,
+     "sum_marginal_entropy_bits": 11.555308683682116,
+     "total_correlation_bits": 1.176128037553747,
+     "total_corr_per_residue": 0.09047138750413439,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1CS9",
+   "n": 9,
+   "fold": 2,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 3.528348035187757,
+     "sum_marginal_entropy_bits": 4.536826185396158,
+     "total_correlation_bits": 1.0084781502084006,
+     "total_corr_per_residue": 0.1120531278009334,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 3.2848137579025316,
+     "sum_marginal_entropy_bits": 3.2848137579025325,
+     "total_correlation_bits": 8.881784197001252e-16,
+     "total_corr_per_residue": 9.868649107779169e-17,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 5.580589736140961,
+     "sum_marginal_entropy_bits": 7.7793352527429835,
+     "total_correlation_bits": 2.198745516602022,
+     "total_corr_per_residue": 0.24430505740022468,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1D0W",
+   "n": 12,
+   "fold": 2,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 5.946807970077597,
+     "sum_marginal_entropy_bits": 6.6494067085734,
+     "total_correlation_bits": 0.7025987384958032,
+     "total_corr_per_residue": 0.05854989487465027,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 3.572741651862189,
+     "sum_marginal_entropy_bits": 3.5727416518621946,
+     "total_correlation_bits": 5.773159728050814e-15,
+     "total_corr_per_residue": 4.810966440042345e-16,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 9.438272171371372,
+     "sum_marginal_entropy_bits": 10.803017391214407,
+     "total_correlation_bits": 1.3647452198430354,
+     "total_corr_per_residue": 0.11372876832025296,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1D6X",
+   "n": 13,
+   "fold": 4,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 4.688138209781003,
+     "sum_marginal_entropy_bits": 5.84869039573903,
+     "total_correlation_bits": 1.1605521859580277,
+     "total_corr_per_residue": 0.08927324507369444,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 2.051384496810211,
+     "sum_marginal_entropy_bits": 2.051384496810208,
+     "total_correlation_bits": -2.6645352591003757e-15,
+     "total_corr_per_residue": -2.049642507000289e-16,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 10.29379482185313,
+     "sum_marginal_entropy_bits": 12.073640507879574,
+     "total_correlation_bits": 1.7798456860264444,
+     "total_corr_per_residue": 0.1369112066174188,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1DEP",
+   "n": 15,
+   "fold": 0,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 7.968188936228966,
+     "sum_marginal_entropy_bits": 10.937419517444924,
+     "total_correlation_bits": 2.9692305812159585,
+     "total_corr_per_residue": 0.19794870541439724,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 4.983738581868347,
+     "sum_marginal_entropy_bits": 4.983738581868364,
+     "total_correlation_bits": 1.687538997430238e-14,
+     "total_corr_per_residue": 1.1250259982868252e-15,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 10.81602043606744,
+     "sum_marginal_entropy_bits": 12.59086172680132,
+     "total_correlation_bits": 1.77484129073388,
+     "total_corr_per_residue": 0.11832275271559199,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1DJF",
+   "n": 15,
+   "fold": 0,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 5.451273868746751,
+     "sum_marginal_entropy_bits": 6.351450115180758,
+     "total_correlation_bits": 0.9001762464340075,
+     "total_corr_per_residue": 0.06001174976226717,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 6.25916139271991,
+     "sum_marginal_entropy_bits": 6.259161392719902,
+     "total_correlation_bits": -7.993605777301127e-15,
+     "total_corr_per_residue": -5.329070518200751e-16,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 11.348704104035841,
+     "sum_marginal_entropy_bits": 13.476059406210672,
+     "total_correlation_bits": 2.1273553021748306,
+     "total_corr_per_residue": 0.1418236868116554,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1FUV",
+   "n": 11,
+   "fold": 2,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 5.932547081051715,
+     "sum_marginal_entropy_bits": 7.065771760849724,
+     "total_correlation_bits": 1.1332246797980092,
+     "total_corr_per_residue": 0.10302042543618266,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 4.305956542875314,
+     "sum_marginal_entropy_bits": 4.305956542875316,
+     "total_correlation_bits": 2.6645352591003757e-15,
+     "total_corr_per_residue": 2.4223047810003414e-16,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 8.151412739939317,
+     "sum_marginal_entropy_bits": 9.261527677607349,
+     "total_correlation_bits": 1.1101149376680315,
+     "total_corr_per_residue": 0.10091953978800286,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1G89",
+   "n": 13,
+   "fold": 2,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 4.796538690077451,
+     "sum_marginal_entropy_bits": 6.230506296518849,
+     "total_correlation_bits": 1.4339676064413975,
+     "total_corr_per_residue": 0.11030520049549211,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 5.059889936844772,
+     "sum_marginal_entropy_bits": 5.059889936844781,
+     "total_correlation_bits": 9.769962616701378e-15,
+     "total_corr_per_residue": 7.51535585900106e-16,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 9.283544022945598,
+     "sum_marginal_entropy_bits": 10.711822554272258,
+     "total_correlation_bits": 1.4282785313266597,
+     "total_corr_per_residue": 0.10986757933281997,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1I6Y",
+   "n": 11,
+   "fold": 2,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 5.601742573094723,
+     "sum_marginal_entropy_bits": 7.097063238267337,
+     "total_correlation_bits": 1.4953206651726143,
+     "total_corr_per_residue": 0.13593824228841947,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 2.748827452249331,
+     "sum_marginal_entropy_bits": 2.748827452249336,
+     "total_correlation_bits": 5.329070518200751e-15,
+     "total_corr_per_residue": 4.844609562000683e-16,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 8.16135229278571,
+     "sum_marginal_entropy_bits": 9.33455893416706,
+     "total_correlation_bits": 1.1732066413813502,
+     "total_corr_per_residue": 0.10665514921648639,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1I8E",
+   "n": 11,
+   "fold": 0,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 5.922458433073532,
+     "sum_marginal_entropy_bits": 7.44853805134257,
+     "total_correlation_bits": 1.526079618269038,
+     "total_corr_per_residue": 0.1387345107517307,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 4.007030249989255,
+     "sum_marginal_entropy_bits": 4.007030249989257,
+     "total_correlation_bits": 1.7763568394002505e-15,
+     "total_corr_per_residue": 1.6148698540002277e-16,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 8.52690418389222,
+     "sum_marginal_entropy_bits": 9.787193238741038,
+     "total_correlation_bits": 1.2602890548488173,
+     "total_corr_per_residue": 0.11457173225898339,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1I93",
+   "n": 11,
+   "fold": 3,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 2.990299100092066,
+     "sum_marginal_entropy_bits": 4.404224358781322,
+     "total_correlation_bits": 1.4139252586892561,
+     "total_corr_per_residue": 0.12853865988084145,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 2.81763989055269,
+     "sum_marginal_entropy_bits": 2.817639890552695,
+     "total_correlation_bits": 4.884981308350689e-15,
+     "total_corr_per_residue": 4.440892098500626e-16,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 7.4680940206440525,
+     "sum_marginal_entropy_bits": 8.563973704279421,
+     "total_correlation_bits": 1.0958796836353688,
+     "total_corr_per_residue": 0.09962542578503353,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1ID6",
+   "n": 15,
+   "fold": 3,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 7.47696156337162,
+     "sum_marginal_entropy_bits": 9.348405335769252,
+     "total_correlation_bits": 1.8714437723976323,
+     "total_corr_per_residue": 0.12476291815984215,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 3.6236211945418093,
+     "sum_marginal_entropy_bits": 3.6236211945418053,
+     "total_correlation_bits": -3.9968028886505635e-15,
+     "total_corr_per_residue": -2.6645352591003756e-16,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 10.805695257317751,
+     "sum_marginal_entropy_bits": 13.176182024155306,
+     "total_correlation_bits": 2.370486766837555,
+     "total_corr_per_residue": 0.15803245112250366,
+     "replay_matches_run_circuit": true
+    }
+   }
+  },
+  {
+   "pdb": "1IM7",
+   "n": 13,
+   "fold": 3,
+   "arms": {
+    "trained_cnot": {
+     "chi": 4,
+     "entropy_bits": 5.115257231063514,
+     "sum_marginal_entropy_bits": 5.819306378848921,
+     "total_correlation_bits": 0.7040491477854074,
+     "total_corr_per_residue": 0.05415762675272365,
+     "replay_matches_run_circuit": true
+    },
+    "trained_nocnot": {
+     "chi": 1,
+     "entropy_bits": 4.932008124620281,
+     "sum_marginal_entropy_bits": 4.932008124620278,
+     "total_correlation_bits": -2.6645352591003757e-15,
+     "total_corr_per_residue": -2.049642507000289e-16,
+     "replay_matches_run_circuit": true
+    },
+    "untrained_cnot": {
+     "chi": 4,
+     "entropy_bits": 9.253309198829172,
+     "sum_marginal_entropy_bits": 10.673866879649186,
+     "total_correlation_bits": 1.4205576808200142,
+     "total_corr_per_residue": 0.1092736677553857,
+     "replay_matches_run_circuit": true
+    }
+   }
+  }
+ ],
+ "complete": true,
+ "n_expected": 16
+}

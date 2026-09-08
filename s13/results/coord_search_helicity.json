@@ -1,0 +1,9 @@
+{
+ "rho_helicity_vs_sa_prior": -0.74428846569865,
+ "rho_helicity_vs_prior_advantage": -0.6461477071222932,
+ "helical_n": 42,
+ "helical_sa_prior": 2.0662515975027334,
+ "nonhelical_n": 70,
+ "nonhelical_sa_prior": 5.217751042058613,
+ "mean_helix_fraction": 0.31531493198159866
+}

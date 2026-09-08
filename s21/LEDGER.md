@@ -2105,3 +2105,281 @@ just been on the receiving end of it.
 
 **Sprint tally, coordinator: six magnitude-or-scope errors, zero mechanism errors.** Every one was a
 quantity carried without deriving its operator; every underlying mechanism has survived.
+
+---
+
+## L33 — WORKSTREAM C COMPLETE: THE CONTINUATION IS REFUTED, AND THE PHYSICS HALF IS WORSE THAN CHANCE AT n=126
+
+All six blocks at full pre-registered configuration; `PREREG_C.md` frozen in git commit `7d07d63`
+**before any Sprint-21 number existed**. Seven artefacts, each with a `complete` flag and `cfg_hash`.
+
+### F-C3 FIRES: staged Legacy→AMBER is WORSE than direct AMBER
+
+    LA_Nt - A_raw   +0.2331 [+0.0673,+0.3950]   12W/18L, n=30
+    move-size corrected   +0.2285 [+0.1140,+0.3647]
+
+**It survives the move-size correction** — so it is *not* the artefact that dissolved Sprint 20's
+headline — and the staged arms spent **more** evaluations (142/172/196 vs 102), so it is **not stage
+starvation** either. Two alternative explanations, both closed.
+
+**And the mechanism was refuted before the endpoint was.** A Legacy minimisation drives AMBER
+**~31× deeper into the steric singularity** (`log₁₀ E_AMBER +1.4947 [+1.1437,+2.0174]`, worse on
+25/30) and ~28× deeper in gradient norm. The reason is structural: **Legacy prefers 0.45 Å more
+compact structures, and compaction is exactly what closes the contacts that ARE the singularity.**
+
+> **LEGACY IS THE WRONG PRECONDITIONER FOR AMBER FOR PRECISELY THE REASON IT IS LEGACY.**
+
+This supersedes L24(c)'s weaker "not supported" with a *causal* account, and it closes the second of
+the user's two named Hamiltonian-design hypotheses with a mechanism rather than a null.
+
+**C's own registered falsifier did NOT fire.** It had attached it to participation ratio, which does
+rise (`+0.0132 [+0.0019,+0.0226]`) but **does not beat its matched-magnitude null**
+(`+0.0089 [−0.0039,+0.0197]`, NOT MEASURED). C records this as a **mis-specified registration** and
+leaves the prereg unedited. Correct: the finding stands on the endpoint and the energy mechanism,
+not on the metric the falsifier happened to name.
+
+### The λ continuation: stronger than L24(b) — a raw ladder never visits an intermediate Hamiltonian
+
+L24 recorded that a uniform λ grid is AMBER-dominated above λ≈2e-5. **C's spectral measurement is
+much stronger than that:**
+
+- the **largest single-step change on the declared uniform grid is 0.9989, and it is in the FIRST
+  interval**;
+- the **Hessian spectrum at λ=0.1 equals the λ=1 spectrum to 4 significant figures on all seven
+  metrics, and stays equal through λ=0.9.**
+
+> **A RAW λ LADDER NEVER VISITS AN INTERMEDIATE HAMILTONIAN AT ALL.** It is `H_Legacy` at λ=0 and
+> `H_AMBER` everywhere else.
+
+Conditioning matters as much: `Nt` (asinh, declared PRIMARY *before* any RMSD was read) maps the
+worst real structure from **5.5e23 to 44.9**, where a robust z-score leaves it at **1.6e19**.
+
+### THE RESULT THE MATRIX NEEDED: the physics half is worse than chance at n=126
+
+A's matrix is n=12, argmin readout, direction-only. **C answers BRIEF §2's standing question — does
+the argmin result transfer to a TAIL selector? — at n=126:**
+
+    matched-count random tail   3.101
+    Legacy                      3.208   (+0.106)
+    AMBER                       3.216   (+0.115)
+    best mixture                3.182   (+0.080 [+0.041,+0.119])
+
+**42/42 arm-rows positive. 42/42 CIs excluding zero.**
+
+**This is the strongest form of the sprint's central negative on the physics energies**: A established
+the direction at n=12 through an argmin with every magnitude unmeasured; **C establishes it at n=126
+through a tail readout with every CI excluding zero.** Two panels, two readouts, same sign — and it
+answers the transfer question the brief opened with. **Both physics Hamiltonians are worse than a
+matched random tail.**
+
+### The Hamiltonian-disagreement channel is DEAD — and the contrast with L27 is the point
+
+I proposed this channel to C directly: *Legacy–AMBER disagreement on the same window is a native-free
+quantity only a lane holding both energies can compute.* **It carries no per-target skill:**
+ρ = +0.046 / −0.042 / +0.058, **all p > 0.5.** And a **perfect ORACLE switch** gains +0.173 Å while
+the **min-of-k selection-bias null supplies +0.175 Å of it** — i.e. the entire oracle gain is the
+selection bias, exactly the D9 lesson applied by C to itself.
+
+> **Two "disagreement" channels were tested this sprint and they came out opposite ways.**
+> **Hamiltonian-vs-Hamiltonian disagreement: DEAD** (no skill, oracle gain is pure min-of-k).
+> **Prediction-vs-pool disagreement (L27/L28): DEMONSTRATED** as a signal.
+>
+> **The distinction is not "disagreement" — it is WHAT disagrees.** Two scorers disagreeing about the
+> same candidates tells you nothing, because both are scoring the same structures with the same
+> blindness. **A PREDICTION disagreeing with what the candidate source can SUPPLY tells you the
+> prediction may be wrong on this target** — which is the one thing a scorer cannot represent about
+> itself (L25). C's null and L27's positive are the same lesson from both sides.
+
+*C's caveat, kept: top-75 pool, not L27's top-512 latent window.*
+
+### Self-caught and reported rather than repaired
+
+C1's code ran **5× over its own registered Hessian budget** (two rows **discarded, not merged**); its
+`hess_check` gate was **mis-specified** — it fired 21/30, and the plateau test showed the *direct FD*,
+not the composition, was off-plateau; an earlier draft said "60 of 60 arms" where it is **42**;
+`memory_guard` fired 9×; and **`git add -A s21` swept other lanes' files into commit `3d7b000`**.
+
+**OPEN, with its experiment named:** `A_Nt` reaches an indistinguishable final AMBER energy in **67 vs
+102** evaluations, but L-BFGS terminates on gradient norm and `Nt` shrinks it — **the settling test is
+a matched-`nfev` arm, and it was not run.**
+
+---
+
+## L34 — THE ANSATZ LADDER ON AMBER: `best_of_N` WINS IT, AND χ ORDERS NOTHING
+
+`qb3_a.json` + `qb3_a_COMPLETE` (**2,328 / 2,328 cells**, 20 targets × 3 Hamiltonians × 10 arms ×
+seeds). Workstream B had closed before this landed, so the coordinator computed it from the artefact.
+Seed-averaged per target, then meaned:
+
+| arm | χ | AMBc | DIST | LEG |
+|---|---|---|---|---|
+| **best_of_N** *(no circuit at all)* | — | **5.053** | 4.064 | 4.801 |
+| sv_ring_L3 | — | 5.088 | **3.736** | **4.428** |
+| prod | 1 | 5.587 | 4.121 | 4.907 |
+| mps_L1 | 2 | 5.353 | 4.008 | 4.755 |
+| mps_L2 | 4 | 5.764 | 4.110 | 4.923 |
+| mps_L2_nofinal | 4 | 5.290 | 4.281 | 4.910 |
+| share_L2 | 4 | 5.696 | 4.081 | 4.686 |
+| untrained_L2 | 4 | 5.313 | 4.099 | 4.785 |
+| mps_L3 | 8 | 5.826 | 4.112 | 4.967 |
+| mps_L4 | 16 | 5.601 | 4.042 | 4.927 |
+| **span** | | **0.773** | 0.544 | 0.539 |
+
+**On AMBER `best_of_N` — running no circuit at all — WINS THE ENTIRE LADDER**, and the best-vs-worst
+gap is **−0.773 Å, SE 0.176, MDE 0.493, 17W/3L**: significant and above its own detection threshold.
+**Every trained ansatz on AMBER is worse than not running one**, which is B9 (+0.523 Å of harm from
+optimising) arriving through the ansatz dimension instead of the optimiser dimension.
+
+**On DIST and LEG the ladder is NOT MEASURED** — best-vs-worst is −0.174 (MDE 0.317) and −0.078
+(MDE 0.345), both **below** their own thresholds despite spans of ~0.54.
+
+**And χ orders nothing anywhere.** On AMBER χ=16 (5.601) beats χ=8 (5.826) and χ=4 (5.764); the best
+MPS arm is χ=4 `mps_L2_nofinal` (5.290). **Bond dimension is not the variable** — which is the same
+conclusion B2 reached from the analytic side (χ reproduces `2^layers` exactly, and the whole range
+buys nothing).
+
+> **ARM-SET NOTE, because spans are not comparable without one.** B reported the ladder as spanning
+> **0.37 Å**. That is the **MPS-only** ladder; the spans above **include `best_of_N` and the ring
+> circuit**, which is why they are larger (0.54–0.77). Excluding the ring, the MPS ladders span 0.27
+> (DIST) / 0.28 (LEG) / 0.54 (AMBc) — consistent with B. **Neither figure is wrong; they are
+> different arm sets, and the set must be stated.** *(Sixth instance of a quantity needing its
+> operator named before two numbers can be compared.)*
+
+**Consequence:** B8's "ansatz half on AMBER" is now **CLOSED, negatively**. The quantum-resource
+question is closed on all three Hamiltonians — and on the one where the landscape is genuinely hard,
+the best available arm is **no circuit**.
+
+---
+
+## L35 — D1's DIRECT REPLICATION, ON THE ORIGINAL SPRINT-20 HAMILTONIANS: CONFIRMED NULL
+
+`qb3_e.json` + `_COMPLETE`, **3,840 / 3,840 cells** — 20 targets × 3 Hamiltonians × 8 gauge charts ×
+2 optimisers × 4 seeds. Workstream B had flagged the gap itself: *"Sprint 20's encoding arms were
+AMB/AMBc/LEG, not the distogram."* This is that replication, and B closed before it landed, so the
+coordinator computed it from the artefact.
+
+    cell             emb_r1      th    effect [CI]                MDE     iters e/t
+    AMBc/spsa         4.875   4.947   -0.071 [-0.253,+0.093]     0.259    256/256
+    AMBc/adam_fd      4.592   4.663   -0.071 [-0.264,+0.122]     0.292      5/10
+    LEG/spsa          4.600   4.607   -0.006 [-0.221,+0.210]     0.313    256/256
+    LEG/adam_fd       4.527   4.534   -0.007 [-0.138,+0.118]     0.186      5/10
+    DIST/spsa         4.117   4.120   -0.003 [-0.052,+0.045]     0.071    256/256
+    DIST/adam_fd      4.200   4.051   +0.149 [+0.012,+0.289] SIG 0.201      5/10
+
+### The Sprint-20 headline cell, at matched iterations and 2× the targets
+
+**`AMBc/spsa` was Sprint 20's largest encoding effect and one of only two distinct significant cells
+there.** Its trajectory across three measurements:
+
+    Sprint 20   -0.649 [-1.205,-0.165]  "sig"   2 seeds, diagnostic ON  (288 vs 144 budget units)
+    D, n=10     -0.295 [-0.636,+0.022]          4 seeds, diagnostic OFF, 256 vs 256
+    HERE, n=20  -0.071 [-0.253,+0.093]          4 seeds, diagnostic OFF, 256 vs 256
+
+**The effect is now ~11% of the originally reported magnitude, with a CI comfortably spanning zero,
+at twice the targets and matched iterations.** `LEG` is deader still: **-0.006 and -0.007**, both
+essentially exactly zero.
+
+**D1 = NOT SUPPORTED is now confirmed on the Hamiltonians the claim was originally made about**, not
+only on the LEG+DIST panel. The disposition needed no revision; the evidence for it is now direct.
+
+### The one significant cell reproduces the confound rather than the lever
+
+`DIST/adam_fd = +0.149 [+0.012,+0.289]` — the **embedding is WORSE**, significantly — and its step
+counts are **5 vs 10, unmatched.** This is L13/L15's sign-flip and step-count confound reproducing
+exactly: **the only significant encoding cell in the whole 3,840-cell sweep is one where the step
+counts differ, and it points the opposite way from Sprint 20's claim.**
+
+`DIST/spsa` at `-0.003 [-0.052,+0.045]` with an own **MDE of 0.071** is **the most powered null in the
+entire study** — well below the programme's old 0.084 bar.
+
+**Sprint 21's verdict on the encoding lever now rests on four independent legs**: a symmetry argument
+(L13), a quantitative step-count prediction accurate to 0.004 Å (L15), the radius≡scale identity
+(L30), and this direct replication on the original Hamiltonians (L35).
+
+---
+
+## L36 — THE MDE CORRECTION APPLIED RETROACTIVELY BY ANOTHER LANE, AND IT CUTS BOTH WAYS
+
+The AMBER-Pareto lane re-derived its own conclusions after the per-comparison MDE rule (L8/M1)
+reached it. **Its per-comparison MDE runs 0.010 → 0.113 Å — an 11× spread within a single lane**,
+independently reproducing the 84× spread measured across the programme.
+
+**The correction was NOT uniformly conservative, which is the part worth recording.**
+
+- **Too STRICT in one place.** Against their own MDEs, **six** arms beat `k30` on Cα, not three —
+  `k100` (−0.0386, MDE 0.016), `k300` (−0.0737, MDE 0.024) and `caonly_k100` (−0.0776, MDE 0.025)
+  join `blend50/75` and `caonly_k300`. The blanket constant had **hidden four genuinely measured
+  arms.** And `k10`, previously filed as "indistinguishable from k30", is at +0.0238 with MDE 0.015 —
+  **a genuine measured degradation**, mis-filed.
+- **Too LOOSE in another.** `legacy_clust` vs matched-random **resolves 0.049 Å**, so its −0.0033
+  excludes any gain above **~0.05 Å**, not the ~0.084 Å previously claimed. *A null with a stated
+  resolution, rather than a "match".*
+
+**No verdict reverses**, and the headline survives intact: **all six arms that beat `k30` on Cα fail
+the validity axis with CIs excluding zero** (clash +0.561 to +11.63, or cis +0.315 to +0.424).
+
+> **NOT ONE ARM BUYS Cα FOR FREE.** `k30`'s standing is unchanged — it was never the Cα optimum, it
+> is the point where Cα gain stops costing geometry.
+
+### The lane's own power audit, which is the most useful thing in it
+
+Most of that lane's **positive** effects sit at **0.7–1.3× their own MDE** — significant by
+fold-clustered CI, **underpowered by design, hence in the Type-M regime where observed magnitudes
+are inflated.** Legacy vs random is 0.88× its MDE; `legacy_clust` vs legacy 0.71×; `steric@10` 0.93×.
+
+**Directions are safe** — they reproduce Sprint 18 to the third decimal, hold across five scores and
+twelve gate designs, and the dose-response is monotone across four doses. **The magnitudes should be
+read as upper bounds.**
+
+> **AND THE POWER IS IN THE RIGHT PLACE.** The one half with power to spare is **the null that
+> refutes the lane's own hypothesis**: `rand_lowD` vs matched-random sits at **0.08×** its MDE and the
+> pure-diversity contrast at **0.14×**. So *"diversity collapse is not the cause"* was established
+> **with power in hand**, while *"the score does something"* is the underpowered half.
+>
+> **A lane whose well-powered result is the one against its own hypothesis has its power distributed
+> the right way round.** That is a better integrity check than any single CI, and it is worth asking
+> of every lane in future sprints.
+
+---
+
+## L37 — THE ENCODING QUESTION CLOSES: BOTH OF SPRINT 20'S "SIGNIFICANT" CELLS ARE NULL
+
+`qb3_en.json` + `_COMPLETE`, **1,920 / 1,920 cells** — the Nelder–Mead gauge grid, completing the
+sweep. With `qb3_e` (L35) this is **5,760 encoding cells** across 3 Hamiltonians × 8 charts ×
+3 optimisers × 20 targets × 4 seeds.
+
+    cell            emb_r1      th    effect [CI]                 MDE
+    AMBc/nelder      4.586   4.675   -0.089 [-0.223,+0.044]      0.199
+    LEG/nelder       4.621   4.677   -0.056 [-0.232,+0.114]      0.255
+    DIST/nelder      4.385   4.065   +0.320 [+0.075,+0.576] SIG  0.372
+
+**Sprint 20 had exactly two distinct significant encoding cells: `AMBc/spsa` and `AMB|nelder`** —
+and Workstream D showed the second is an *identity* (`AMB|nelder ≡ AMBc|nelder`, a comparison-only
+arm on a monotone transform). **Both are now null:**
+
+    AMBc/spsa     Sprint 20  -0.649 [-1.205,-0.165] "sig"   ->   n=20  -0.071 [-0.253,+0.093]
+    AMBc/nelder   Sprint 20         significant             ->   n=20  -0.089 [-0.223,+0.044]
+
+**Across all 5,760 cells, only TWO are significant — `DIST/adam_fd +0.149` and `DIST/nelder +0.320`
+— and BOTH have the embedding WORSE, both on the distogram, neither on a Hamiltonian Sprint 20 made
+a claim about.** The lever is not merely absent; **every surviving significant effect points the
+opposite way from the original claim.**
+
+> **CAVEAT, stated rather than found later.** `DIST/nelder`'s point estimate (+0.320) is **BELOW its
+> own MDE (0.372)** despite a CI excluding zero — the Type-M zone, so its magnitude is not
+> trustworthy. And **Nelder–Mead does not report an iteration count in this artefact** (`iters` is
+> absent), so **I cannot verify step-count matching on any nelder cell.** Given that step count is
+> the established confound (L15/L30), the two nelder nulls are *consistent with* the verdict but
+> cannot be said to control for the mechanism. **The AMBc/spsa replication (L35), where iterations
+> are 256 vs 256 and verified, is the load-bearing one.**
+
+**D1 is closed on five independent legs**: the symmetry argument (L13), the step-count response
+predicting the effect to 0.004 Å (L15), the radius≡scale identity (L30), the direct replication on
+the original Hamiltonians (L35), and the completed Nelder–Mead grid (here).
+
+---
+
+# SPRINT 21 — ALL COMPUTE COMPLETE, 17:27
+
+**Every lane closed. Zero science processes running.** Artefacts: **all complete with
+full-configuration flags**, except `tailprice` at 42/126, which is *deliberately* frozen and labelled.

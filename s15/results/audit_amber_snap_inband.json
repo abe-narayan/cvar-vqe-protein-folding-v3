@@ -1,0 +1,135 @@
+[
+ {
+  "pdb": "1CS9",
+  "n_uniform": 1193,
+  "n_band_lt15": 201,
+  "snap_in_band": false,
+  "frac_pairs_touching_snap": 0.01
+ },
+ {
+  "pdb": "2MK7",
+  "n_uniform": 1195,
+  "n_band_lt15": 12,
+  "snap_in_band": true,
+  "frac_pairs_touching_snap": 0.1667
+ },
+ {
+  "pdb": "2P5H",
+  "n_uniform": 1194,
+  "n_band_lt15": 245,
+  "snap_in_band": true,
+  "frac_pairs_touching_snap": 0.0082
+ },
+ {
+  "pdb": "6EY3",
+  "n_uniform": 1195,
+  "n_band_lt15": 116,
+  "snap_in_band": false,
+  "frac_pairs_touching_snap": 0.0172
+ },
+ {
+  "pdb": "6F3V",
+  "n_uniform": 1192,
+  "n_band_lt15": 108,
+  "snap_in_band": false,
+  "frac_pairs_touching_snap": 0.0185
+ },
+ {
+  "pdb": "6S0N",
+  "n_uniform": 1191,
+  "n_band_lt15": 242,
+  "snap_in_band": true,
+  "frac_pairs_touching_snap": 0.0083
+ },
+ {
+  "pdb": "7N2I",
+  "n_uniform": 1196,
+  "n_band_lt15": 139,
+  "snap_in_band": true,
+  "frac_pairs_touching_snap": 0.0144
+ },
+ {
+  "pdb": "8IS3",
+  "n_uniform": 1196,
+  "n_band_lt15": 215,
+  "snap_in_band": true,
+  "frac_pairs_touching_snap": 0.0093
+ },
+ {
+  "pdb": "9UV5",
+  "n_uniform": 1195,
+  "n_band_lt15": 214,
+  "snap_in_band": true,
+  "frac_pairs_touching_snap": 0.0093
+ },
+ {
+  "pdb": "1N9U",
+  "n_uniform": 701,
+  "n_band_lt15": 251,
+  "snap_in_band": true,
+  "frac_pairs_touching_snap": 0.008
+ },
+ {
+  "pdb": "1TOR",
+  "n_uniform": 700,
+  "n_band_lt15": 53,
+  "snap_in_band": false,
+  "frac_pairs_touching_snap": 0.0377
+ },
+ {
+  "pdb": "2BAO",
+  "n_uniform": 701,
+  "n_band_lt15": 157,
+  "snap_in_band": true,
+  "frac_pairs_touching_snap": 0.0127
+ },
+ {
+  "pdb": "2MD2",
+  "n_uniform": 699,
+  "n_band_lt15": 137,
+  "snap_in_band": false,
+  "frac_pairs_touching_snap": 0.0146
+ },
+ {
+  "pdb": "2MJQ",
+  "n_uniform": 699,
+  "n_band_lt15": 5,
+  "snap_in_band": true,
+  "frac_pairs_touching_snap": 0.4
+ },
+ {
+  "pdb": "5V5B",
+  "n_uniform": 701,
+  "n_band_lt15": 19,
+  "snap_in_band": true,
+  "frac_pairs_touching_snap": 0.1053
+ },
+ {
+  "pdb": "6B9K",
+  "n_uniform": 701,
+  "n_band_lt15": 233,
+  "snap_in_band": true,
+  "frac_pairs_touching_snap": 0.0086
+ },
+ {
+  "pdb": "7T3H",
+  "n_uniform": 700,
+  "n_band_lt15": 41,
+  "snap_in_band": true,
+  "frac_pairs_touching_snap": 0.0488
+ },
+ {
+  "pdb": "7VI4",
+  "n_uniform": 701,
+  "n_band_lt15": 8,
+  "snap_in_band": true,
+  "frac_pairs_touching_snap": 0.25
+ },
+ {
+  "pdb": "8HVS",
+  "n_uniform": 701,
+  "n_band_lt15": 13,
+  "snap_in_band": true,
+  "frac_pairs_touching_snap": 0.1538
+ }
+]

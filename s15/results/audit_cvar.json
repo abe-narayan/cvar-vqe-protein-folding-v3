@@ -1,0 +1,14 @@
+{
+ "n_trials": 400,
+ "max_abs_value_error_vs_Rockafellar_Uryasev": 4.1744385725905886e-14,
+ "worst_case": {
+  "n": 28,
+  "alpha": 1.0,
+  "v": 6.199977713779133,
+  "ref": 6.1999777137790915
+ },
+ "recorded_in_brief": "value estimator correct to 1.7e-15",
+ "n_gradient_checks": 398,
+ "median_abs_grad_error_fd_vs_envelope": 0.0,
+ "p95_abs_grad_error": 5.849555009262981e-08
+}

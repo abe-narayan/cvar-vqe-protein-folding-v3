@@ -1,0 +1,21 @@
+{
+ "GC2": {
+  "max_dca_runref_vs_run_A": 0.0,
+  "d_energy_kcal": 0.0,
+  "max_dca_run_vs_refine_coords_A": 0.0,
+  "restraint_sizes": [
+   42,
+   14,
+   42
+  ],
+  "module_constant_restored": true,
+  "deployed_leg_run": true,
+  "passed": true
+ },
+ "GC3": {
+  "status": "INAPPLICABLE",
+  "reason": "STEPS=0 (unbounded, deployed protocol): no bound exists to certify; a cap=0 GC3 would pass with zero firings, which s19 Z6 forbids quoting"
+ },
+ "complete": true,
+ "passed": true
+}

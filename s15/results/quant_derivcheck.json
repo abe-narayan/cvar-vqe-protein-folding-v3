@@ -1,0 +1,65 @@
+{
+ "LogPGrid_mass": {
+  "cosine": 1.0,
+  "max_abs_err": 2.2501556173892823e-10,
+  "n": 78
+ },
+ "LogPGrid_density": {
+  "cosine": 0.9999999999999999,
+  "max_abs_err": 2.3656188119502986e-10,
+  "n": 78
+ },
+ "KDE_alpha0.5": {
+  "cosine": 0.9999999999999998,
+  "max_abs_err": 1.5120518170874675e-09,
+  "n": 78
+ },
+ "KDE_alpha1.0": {
+  "cosine": 1.0,
+  "max_abs_err": 1.6580203876515043e-10,
+  "n": 78
+ },
+ "KDE_alpha2.0": {
+  "cosine": 0.9999999999999998,
+  "max_abs_err": 2.0288970503656856e-10,
+  "n": 78
+ },
+ "Pchip": {
+  "cosine": 0.9999999999999999,
+  "max_abs_err": 1.8755127584313414e-07,
+  "n": 78
+ },
+ "GMM_K2": {
+  "cosine": 1.0,
+  "max_abs_err": 8.639204907012754e-10,
+  "n": 78
+ },
+ "GMM_K3": {
+  "cosine": 1.0,
+  "max_abs_err": 6.960696463664817e-10,
+  "n": 78
+ },
+ "Gauss": {
+  "cosine": 1.0000000000000002,
+  "max_abs_err": 8.7015052940842e-09,
+  "n": 78
+ },
+ "distml.LogPTable_FIXED": {
+  "cosine": 1.0,
+  "max_abs_err": 2.2501556173892823e-10,
+  "n": 78
+ },
+ "LogPTableUniformBUG_frozen": {
+  "cosine": 0.809904173075163,
+  "max_abs_err": 6.154396106212142,
+  "n": 78
+ },
+ "independent_replication_LogPGrid_vs_distml": {
+  "max_abs_logp_diff": 0.0,
+  "max_abs_grad_diff": 0.0
+ },
+ "torsion_gradient_KDE_alpha1.0": {
+  "cosine": 0.9999999999999999,
+  "n": 25
+ }
+}

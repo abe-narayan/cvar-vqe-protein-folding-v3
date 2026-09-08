@@ -1,0 +1,55 @@
+========================================================================================================
+Q1d  THE TWO POTENTIALS THROUGH A SHARED OPERATOR   n = 40 targets x 75 candidates
+     coordinator LEDGER L6 re-specification.  Relax = core.amber at k = 10.0 (the DEPLOYED constant),
+     steps in {1, 50}; Legacy re-scored at the SAME relaxed coordinates so the operator cancels.
+========================================================================================================
+
+0.  THE COLLAPSE CENSUS ON THIS DOMAIN  (unrelaxed AMBER single point, kcal/mol)
+    candidates above     1000 kcal/mol:   2157 / 3000 ( 71.9%)
+    candidates above    10000 kcal/mol:   1620 / 3000 ( 54.0%)
+    candidates above    1e+06 kcal/mol:    959 / 3000 ( 32.0%)
+    DECLARED collapsed (> 10000): mean 40.5 of 75 per target; 1/40 targets with none; 10/40 targets with 60+
+    THE 50-ITERATION CAP FIRED on 318/320 probe calls (|dE| > 1e-3 kcal/mol between 50 and 100 iterations) -- s19 Z6: a cap that never fires certifies nothing, and this one fires.
+
+1.  LEVELS -- what the relaxation actually does (medians over candidates, then over targets)
+    e_amb0_median      median over targets       18246.0720   mean   200870827.2416
+    e_amb1_median      median over targets        5397.7262   mean     1291046.6726
+    e_amb50_median     median over targets        -434.6138   mean        -492.9106
+    e_leg0_mean        median over targets         -15.1000   mean         -14.7453
+    e_leg50_mean       median over targets         -13.7133   mean         -15.3030
+    d_reb0_mean        median over targets           3.4228   mean           3.5056
+    d_reb1_mean        median over targets           3.4406   mean           3.5114
+    d_reb50_mean       median over targets           3.4523   mean           3.5432
+    wall1_mean         median over targets           0.0522   mean           0.0526
+    wall50_mean        median over targets           0.5378   mean           0.5261
+    wall50_max         median over targets           0.6568   mean           0.6345
+
+2.  *** THE RE-SPECIFIED PRIMARY ***  per-target Spearman over the 75 candidates
+comparison                     mean                    CI95   median     >0  |rho|>0.8
+E_leg  vs E_amb  (raw)      -0.0256  [  -0.1514,  +0.1253]  -0.0326   0.45       0.00
+E_leg  vs A o R1   MIXED    -0.0143  [  -0.1309,  +0.1313]  +0.0198   0.53       0.00
+E_leg  vs A o R50  MIXED    +0.1348  [  +0.0109,  +0.2893]  +0.1188   0.75       0.00
+L o R1  vs A o R1  SHARED   -0.0055  [  -0.0959,  +0.1235]  -0.0137   0.45       0.00
+L o R50 vs A o R50 SHARED   +0.1533  [  +0.0505,  +0.2855]  +0.1452   0.70       0.00
+AMBER: raw vs R50           +0.6648  [  +0.6334,  +0.6892]  +0.7058   1.00       0.20
+AMBER: R1 vs R50            +0.6753  [  +0.6423,  +0.6998]  +0.7053   1.00       0.30
+Legacy: raw vs R50          +0.7118  [  +0.6770,  +0.7426]  +0.7449   1.00       0.33
+E_leg  vs ORACLE d          +0.1261  [  +0.0240,  +0.2131]  +0.1602   0.65       0.00
+L o R50 vs ORACLE d         +0.1730  [  +0.0549,  +0.2608]  +0.1995   0.68       0.03
+E_amb  vs ORACLE d          -0.0540  [  -0.1207,  -0.0036]  -0.0174   0.47       0.00
+A o R50 vs ORACLE d         +0.0068  [  -0.0405,  +0.0417]  -0.0112   0.50       0.00
+
+    SHARED(R50) minus RAW:   +0.1790 [+0.1326, +0.2349]  med +0.1321  8W/32L
+    SHARED(R50) minus MIXED: +0.0186 [-0.0066, +0.0457]  med +0.0257  18W/22L    <- how much of the 'disagreement' was the OPERATOR, not the potential
+
+3.  DIAGNOSTIC (a) -- restricted to the PHYSICAL subset (unrelaxed AMBER <= 10000 kcal/mol).
+    THE RESTRICTION IS PART OF THE OPERATOR: mean 41.5 of 75 candidates survive it, on 33/40 targets with >= 8 survivors.
+comparison                     mean                    CI95   median
+E_leg  vs E_amb  (raw)      -0.1464  [  -0.2739,  +0.0061]  -0.1278
+E_leg  vs A o R1   MIXED    -0.1106  [  -0.2047,  +0.0097]  -0.1147
+E_leg  vs A o R50  MIXED    +0.1712  [  +0.0196,  +0.3912]  +0.1644
+L o R50 vs A o R50 SHARED   +0.1819  [  +0.0576,  +0.3756]  +0.2245
+AMBER: R1 vs R50            +0.3231  [  +0.2063,  +0.4064]  +0.4081
+
+    THE RELAXATION'S OWN EFFECT, physics held fixed (R50 - R1 on the common domain): +0.2818 [+0.1676, +0.4410]  med +0.1958  7W/26L
+========================================================================================================

@@ -1,0 +1,41 @@
+{
+ "A2_5": {
+  "n": 20,
+  "N": 10,
+  "dim": 1024,
+  "feasible": 25,
+  "feas_frac": 0.0244140625,
+  "nonzero_couplings": 45.0,
+  "penalty": 2.9553277236824966,
+  "energy_span": 1.4776638618412483,
+  "mean_problem_coupling": 0.3241994153383376,
+  "mean_penalty_coupling": 1.4776638618412483,
+  "penalty_over_problem": 4.784675873807715
+ },
+ "A2_8": {
+  "n": 20,
+  "N": 16,
+  "dim": 65536,
+  "feasible": 64,
+  "feas_frac": 0.0009765625,
+  "nonzero_couplings": 120.0,
+  "penalty": 3.1677584310275413,
+  "energy_span": 1.5838792155137706,
+  "mean_problem_coupling": 0.3249638457930881,
+  "mean_penalty_coupling": 1.5838792155137706,
+  "penalty_over_problem": 5.063289268953039
+ },
+ "A3_5": {
+  "n": 14,
+  "N": 15,
+  "dim": 32768,
+  "feasible": 125,
+  "feas_frac": 0.003814697265625,
+  "nonzero_couplings": 105.0,
+  "penalty": 2.403011420367305,
+  "energy_span": 1.2015057101836526,
+  "mean_problem_coupling": 0.1254119198483316,
+  "mean_penalty_coupling": 1.2015057101836528,
+  "penalty_over_problem": 10.133762148024575
+ }
+}

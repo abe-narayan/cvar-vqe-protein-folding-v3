@@ -1,0 +1,790 @@
+{
+ "1A13": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "1999-01-13"
+ },
+ "1A1P": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "1998-04-08"
+ },
+ "1CB3": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "1999-06-08"
+ },
+ "1CEK": {
+  "bmrb": [],
+  "method": "SOLID-STATE NMR",
+  "depdate": "1999-03-11"
+ },
+ "1CS9": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "1999-09-02"
+ },
+ "1D0W": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2000-06-16"
+ },
+ "1D6X": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2000-01-03"
+ },
+ "1DEP": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "1996-10-14"
+ },
+ "1DJF": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "1999-12-10"
+ },
+ "1FUV": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2001-05-16"
+ },
+ "1G89": {
+  "bmrb": [
+   "4552"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2000-11-29"
+ },
+ "1I6Y": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2002-07-10"
+ },
+ "1I8E": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2002-07-10"
+ },
+ "1I93": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2002-07-10"
+ },
+ "1ID6": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2002-04-10"
+ },
+ "1IM7": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2002-10-23"
+ },
+ "1JBF": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2001-08-22"
+ },
+ "1KMR": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2002-08-07"
+ },
+ "1KWE": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2003-06-17"
+ },
+ "1KYC": {
+  "bmrb": [],
+  "method": "X-RAY DIFFRACTION",
+  "depdate": "2002-08-07"
+ },
+ "1KZ2": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2002-02-20"
+ },
+ "1LB7": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2002-06-19"
+ },
+ "1M02": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2002-08-14"
+ },
+ "1M23": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "1999-09-29"
+ },
+ "1MF6": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2003-04-15"
+ },
+ "1N9U": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2003-07-29"
+ },
+ "1NIZ": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2003-02-25"
+ },
+ "1RG4": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2004-09-28"
+ },
+ "1RSW": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2005-07-26"
+ },
+ "1S9Z": {
+  "bmrb": [],
+  "method": "X-RAY DIFFRACTION",
+  "depdate": "2004-04-06"
+ },
+ "1TOR": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "1996-03-08"
+ },
+ "1U62": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2005-03-22"
+ },
+ "2BAO": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2006-07-25"
+ },
+ "2BFI": {
+  "bmrb": [],
+  "method": "X-RAY DIFFRACTION",
+  "depdate": "2005-01-06"
+ },
+ "2BP4": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2005-04-21"
+ },
+ "2EFZ": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2007-05-08"
+ },
+ "2F3A": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2006-10-17"
+ },
+ "2FBU": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2006-05-23"
+ },
+ "2JN5": {
+  "bmrb": [
+   "15095"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2008-01-22"
+ },
+ "2L7T": {
+  "bmrb": [
+   "17377"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2011-03-02"
+ },
+ "2LER": {
+  "bmrb": [
+   "17726"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2012-04-11"
+ },
+ "2LM8": {
+  "bmrb": [
+   "18102"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2012-04-25"
+ },
+ "2LNG": {
+  "bmrb": [
+   "18164"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2012-11-14"
+ },
+ "2LU6": {
+  "bmrb": [
+   "18510"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2012-06-27"
+ },
+ "2LWS": {
+  "bmrb": [
+   "18643"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2013-08-21"
+ },
+ "2LWU": {
+  "bmrb": [
+   "18645"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2013-08-21"
+ },
+ "2MAA": {
+  "bmrb": [
+   "19334"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2013-08-21"
+ },
+ "2MAI": {
+  "bmrb": [
+   "19355"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2014-05-07"
+ },
+ "2MD2": {
+  "bmrb": [
+   "19469"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2013-09-25"
+ },
+ "2MFV": {
+  "bmrb": [
+   "19573"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2014-10-29"
+ },
+ "2MID": {
+  "bmrb": [
+   "19674"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2015-01-14"
+ },
+ "2MIG": {
+  "bmrb": [
+   "19678"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2014-12-24"
+ },
+ "2MJQ": {
+  "bmrb": [
+   "11551"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2014-12-03"
+ },
+ "2MK7": {
+  "bmrb": [
+   "19759"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2015-02-04"
+ },
+ "2MLQ": {
+  "bmrb": [
+   "19829"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2014-10-08"
+ },
+ "2MP9": {
+  "bmrb": [
+   "19973"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2015-08-12"
+ },
+ "2MQ2": {
+  "bmrb": [
+   "25009"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2014-07-30"
+ },
+ "2MSA": {
+  "bmrb": [
+   "25112"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2014-09-03"
+ },
+ "2N5C": {
+  "bmrb": [
+   "25704"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2015-10-07"
+ },
+ "2N9A": {
+  "bmrb": [
+   "25898"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2016-11-16"
+ },
+ "2N9M": {
+  "bmrb": [
+   "25911"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2016-10-12"
+ },
+ "2NB7": {
+  "bmrb": [
+   "25965"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2016-02-17"
+ },
+ "2NBC": {
+  "bmrb": [
+   "25971"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2017-01-11"
+ },
+ "2NDM": {
+  "bmrb": [
+   "26065"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2016-08-24"
+ },
+ "2NDN": {
+  "bmrb": [
+   "26066"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2016-08-24"
+ },
+ "2O0S": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2007-05-15"
+ },
+ "2P5H": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2007-11-13"
+ },
+ "2RUO": {
+  "bmrb": [
+   "11582"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2014-11-26"
+ },
+ "2XL1": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "2010-10-20"
+ },
+ "3BTB": {
+  "bmrb": [],
+  "method": "SOLUTION NMR",
+  "depdate": "1998-01-28"
+ },
+ "3SGO": {
+  "bmrb": [],
+  "method": "X-RAY DIFFRACTION",
+  "depdate": "2012-03-21"
+ },
+ "5H1H": {
+  "bmrb": [
+   "36023"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2017-04-19"
+ },
+ "5MML": {
+  "bmrb": [
+   "34075"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2017-09-06"
+ },
+ "5MXS": {
+  "bmrb": [
+   "34091"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2017-02-22"
+ },
+ "5NVB": {
+  "bmrb": [
+   "34129"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2018-03-14"
+ },
+ "5V5B": {
+  "bmrb": [],
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "depdate": "2018-02-07"
+ },
+ "5W52": {
+  "bmrb": [],
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "depdate": "2018-02-21"
+ },
+ "5Z5W": {
+  "bmrb": [
+   "21080"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2018-03-07"
+ },
+ "6A5J": {
+  "bmrb": [
+   "36198"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2019-07-24"
+ },
+ "6B9K": {
+  "bmrb": [
+   "30350"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2018-07-25"
+ },
+ "6BJF": {
+  "bmrb": [
+   "30371"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2018-11-14"
+ },
+ "6BX9": {
+  "bmrb": [
+   "30385"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2018-01-24"
+ },
+ "6CEJ": {
+  "bmrb": [
+   "30407"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2018-07-04"
+ },
+ "6EY3": {
+  "bmrb": [
+   "34198"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2018-01-17"
+ },
+ "6F3V": {
+  "bmrb": [
+   "34206"
+  ],
+  "method": "SOLID-STATE NMR",
+  "depdate": "2018-01-10"
+ },
+ "6GIJ": {
+  "bmrb": [
+   "34272"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2018-06-13"
+ },
+ "6HVK": {
+  "bmrb": [
+   "34320"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2019-10-30"
+ },
+ "6J9P": {
+  "bmrb": [
+   "36235"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2020-01-29"
+ },
+ "6MBM": {
+  "bmrb": [
+   "30509"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2019-08-14"
+ },
+ "6MK8": {
+  "bmrb": [
+   "30524"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2019-06-19"
+ },
+ "6OQP": {
+  "bmrb": [
+   "30607"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2019-07-31"
+ },
+ "6Q08": {
+  "bmrb": [
+   "30650"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2020-08-05"
+ },
+ "6QAX": {
+  "bmrb": [
+   "34340"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2019-02-27"
+ },
+ "6RRL": {
+  "bmrb": [
+   "34401"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2019-07-24"
+ },
+ "6RRO": {
+  "bmrb": [
+   "34402"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2019-07-24"
+ },
+ "6S0N": {
+  "bmrb": [
+   "34414"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2019-11-06"
+ },
+ "6TWG": {
+  "bmrb": [
+   "34476"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2020-07-22"
+ },
+ "6WPB": {
+  "bmrb": [
+   "30744"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2020-09-02"
+ },
+ "7BX2": {
+  "bmrb": [
+   "36347"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2021-04-21"
+ },
+ "7JGX": {
+  "bmrb": [
+   "30775"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2020-12-16"
+ },
+ "7JS6": {
+  "bmrb": [
+   "30787"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2020-12-16"
+ },
+ "7LCW": {
+  "bmrb": [
+   "30843"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2021-07-28"
+ },
+ "7N2I": {
+  "bmrb": [],
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "depdate": "2022-06-01"
+ },
+ "7P3M": {
+  "bmrb": [
+   "34645"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2023-01-18"
+ },
+ "7QZV": {
+  "bmrb": [
+   "34705"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2022-11-23"
+ },
+ "7S3O": {
+  "bmrb": [
+   "30946"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2022-05-25"
+ },
+ "7T3H": {
+  "bmrb": [],
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "depdate": "2022-10-19"
+ },
+ "7VI4": {
+  "bmrb": [],
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "depdate": "2022-09-28"
+ },
+ "7YFS": {
+  "bmrb": [
+   "36496"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2023-05-31"
+ },
+ "8FLP": {
+  "bmrb": [
+   "31066"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2023-02-08"
+ },
+ "8HVS": {
+  "bmrb": [
+   "36534"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2023-10-25"
+ },
+ "8IL1": {
+  "bmrb": [
+   "36552"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2024-03-06"
+ },
+ "8IS3": {
+  "bmrb": [
+   "36557"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2024-03-20"
+ },
+ "8T61": {
+  "bmrb": [
+   "31094"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2023-06-28"
+ },
+ "8T62": {
+  "bmrb": [
+   "31095"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2023-06-28"
+ },
+ "8T63": {
+  "bmrb": [
+   "31096"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2023-06-28"
+ },
+ "8TXS": {
+  "bmrb": [
+   "31101"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2023-09-06"
+ },
+ "8UN8": {
+  "bmrb": [
+   "31119"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2024-06-05"
+ },
+ "8ZG2": {
+  "bmrb": [
+   "36665"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2025-05-14"
+ },
+ "9BAF": {
+  "bmrb": [
+   "31156"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2024-07-03"
+ },
+ "9BFL": {
+  "bmrb": [
+   "31169"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2024-06-05"
+ },
+ "9KAR": {
+  "bmrb": [
+   "36701"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2025-04-16"
+ },
+ "9L1M": {
+  "bmrb": [
+   "36720"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2025-01-22"
+ },
+ "9S5G": {
+  "bmrb": [
+   "35009"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2025-09-17"
+ },
+ "9UV5": {
+  "bmrb": [
+   "36758"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2025-05-28"
+ },
+ "9WXK": {
+  "bmrb": [
+   "36788"
+  ],
+  "method": "SOLUTION NMR",
+  "depdate": "2026-01-21"
+ }
+}
