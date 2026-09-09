@@ -116,7 +116,6 @@ def raw(sequence: str) -> Tuple[np.ndarray, np.ndarray]:
         cache = _load_cache()
     return cache[sequence]
 
-
 # ------------------------------------------------------------------ projection
 _PCA: Optional[Tuple[np.ndarray, np.ndarray]] = None
 _PCA_PATH = os.path.join(BASE, "esm_pca.npz")

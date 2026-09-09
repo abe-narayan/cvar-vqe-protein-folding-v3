@@ -1,4 +1,4 @@
-"""SPRINT 14, ENER-6 -- ADVERSARIAL AUDIT OF THE BACKBONE THE ENERGIES SEE.
+"""SPRINT 14, ENER-6 -- adversarial audit of the backbone the energies see.
 
 The optimiser must not be able to win by exploiting a geometric artefact.  If the builder
 can emit a chain with an inverted CA, a broken peptide bond or an interpenetrating pair,

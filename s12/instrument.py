@@ -36,6 +36,7 @@ M = 75
 BAND = 1.5
 ALPHABET = "ARNDCQEGHILKMFPSTWYV"
 
+
 # ----------------------------------------------------------------------------- targets
 def targets():
     """The 126 tuning targets in pinned (pdb-sorted) order: dicts pdb,n,fold,seq."""
@@ -48,6 +49,7 @@ def targets():
 FAIL18 = ["1ID6", "1JBF", "1LB7", "2BFI", "2BP4", "2JN5", "2MQ2", "2N5C", "2NB7", "2NDM",
           "3BTB", "3SGO", "5W52", "7JS6", "7LCW", "8T63", "9KAR", "9L1M"]
 
+
 def load_univ(pdb):
     z = np.load(os.path.join(UNIV, f"{pdb}.npz"), allow_pickle=True)
     u = {k: z[k] for k in z.files}
@@ -57,17 +59,21 @@ def load_univ(pdb):
     u["rr"] = np.asarray(u["rr"], np.float64); u["nat_ca"] = np.asarray(u["nat_ca"], np.float64)
     return u
 
+
 def pool_idx(u, k=K):
     """Indices (into the universe) of the shipped K=500 BLOSUM pool."""
     return np.asarray(u["order"][:k], int)
 
+
 def shipped_record(pdb):
-    """The production pipeline's per-target record (sub = top-75 indices INTO THE POOL)."""
+    """The production pipeline's per-target record (sub = top-75 indices into the pool)."""
     with open(os.path.join(ROOT, "bench_results", "cache", PROD_KEY, f"{pdb}.json")) as fh:
         return json.load(fh)
 
+
 def decode(codes):
     return "".join(ALPHABET[int(c)] for c in np.asarray(codes).ravel())
+
 
 # ----------------------------------------------------------------------------- geometry
 def kabsch_rmsd_batch(W, T):
@@ -81,8 +87,10 @@ def kabsch_rmsd_batch(W, T):
     num = (W ** 2).sum((1, 2)) + (T ** 2).sum() - 2.0 * S.sum(1)
     return np.sqrt(np.maximum(num, 0.0) / W.shape[1])
 
+
 def ca_rmsd(a, b):
     return float(kabsch_rmsd_batch(np.asarray(a, float)[None], b)[0])
+
 
 def superpose_batch(W, T):
     """Superpose each member of W (b,n,3) onto T (n,3); returns the moved copies."""
@@ -95,6 +103,7 @@ def superpose_batch(W, T):
     R = np.einsum("bij,bjk,bkl->bil", Vt.transpose(0, 2, 1), D, U.transpose(0, 2, 1))
     return np.einsum("bij,bnj->bni", R, Wc) + T.mean(0)
 
+
 def pairwise_rmsd(W):
     W = np.asarray(W, float); b = len(W)
     P = np.zeros((b, b))
@@ -102,8 +111,10 @@ def pairwise_rmsd(W):
         P[a] = kabsch_rmsd_batch(W, W[a])
     return P
 
+
 def medoid(P):
     return int(np.argmin(np.asarray(P, float).mean(1)))
+
 
 def coordinate_average(W, P=None):
     """S8-11's operator: superpose on the medoid, mean.  Returns (C, medoid_index)."""
@@ -113,13 +124,16 @@ def coordinate_average(W, P=None):
     b = medoid(P)
     return superpose_batch(W, W[b]).mean(0), b
 
+
 def pair_index(n, min_sep=2):
     i, j = np.triu_indices(n, k=min_sep)
     return i, j
 
+
 def pair_dists(W, i, j):
     W = np.asarray(W, float)
     return np.linalg.norm(W[..., i, :] - W[..., j, :], axis=-1)
+
 
 # ----------------------------------------------------------------------------- projection
 def project(C, seq, fold, lam=0.3, multi=True, maxiter=300):
@@ -131,6 +145,7 @@ def project(C, seq, fold, lam=0.3, multi=True, maxiter=300):
     fit, arm = path[0.0], path[lam]
     return {"ca": np.asarray(arm[0], float), "phi": np.asarray(arm[1], float), "psi": np.asarray(arm[2], float),
             "fit_ca": np.asarray(fit[0], float)}
+
 
 def build_ca(phi, psi):
     """Ideal-geometry CA trace. Accepts (n,) or (B,n); returns (n,3) or (B,n,3).
@@ -146,15 +161,18 @@ def build_ca(phi, psi):
     out = np.asarray(pj.build_ca_exact(phi, psi), float)
     return out[0] if single else out
 
+
 def build_backbone(phi, psi):
     from core import geometry as geo
     return geo.build_backbone(np.asarray(phi, float), np.asarray(psi, float))
+
 
 def ss_of(phi, psi):
     """Simplified-DSSP H/E/C string from torsions (ideal-geometry backbone)."""
     from core import geometry as geo
     bb = build_backbone(phi, psi)
     return geo.assign_secondary_structure(bb)
+
 
 # ----------------------------------------------------------------------------- distogram
 def distogram(pdb, seq=None, fold=None):
@@ -178,11 +196,13 @@ def distogram(pdb, seq=None, fold=None):
     np.savez_compressed(path, **out)
     return out
 
+
 def shipped_score(dg, D):
     """The shipped Bayes-risk score for pair-distance rows D (b, npairs) -- lower is better."""
     grid = dg["grid"]; risk = dg["risk"]
     g = np.clip(((np.asarray(D, float) - grid[0]) / 0.05).astype(np.int32), 0, len(grid) - 1)
     return risk[np.arange(risk.shape[0])[None, :], g].mean(1)
+
 
 # ----------------------------------------------------------------------------- statistics
 def paired(a, b, n_boot=4000, seed=0, folds=None, names=None):
@@ -204,15 +224,17 @@ def paired(a, b, n_boot=4000, seed=0, folds=None, names=None):
         out["top10_targets"] = [(str(names[k]), float(d[k])) for k in order[:10]]
     return out
 
+
 def summary(x):
     x = np.asarray(x, float)
     return {"n": int(len(x)), "mean": float(x.mean()), "median": float(np.median(x)), "sd": float(x.std()),
             "min": float(x.min()), "max": float(x.max()), "frac_under_2.0": float((x < 2.0).mean())}
 
+
 def write(name, obj, n_expected=None):
     """Write a result JSON to `s12/results/`.
 
-    HAZARD, found by the sprint-12 adversarial audit: this writer has NO CONFIG KEY, unlike
+    HAZARD, found by the sprint-12 adversarial audit: this writer has no config key, unlike
     `core/pipeline.py`'s cache, so a PARTIAL run silently overwrites a COMPLETE one of the
     same name.  Pass `n_expected` and the number of rows actually present, and the file is
     written with an explicit `complete` flag and a row count, so a reader can tell a finished
@@ -227,6 +249,7 @@ def write(name, obj, n_expected=None):
         json.dump(obj, fh, indent=1, default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
     return path
 
+
 def free_gb():
     import ctypes
     class MS(ctypes.Structure):
@@ -237,6 +260,7 @@ def free_gb():
     st = MS(); st.dwLength = ctypes.sizeof(MS)
     ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(st))
     return st.ullAvailPhys / 2 ** 30
+
 
 # ----------------------------------------------------------------------------- selfcheck
 def selfcheck(verbose=True):

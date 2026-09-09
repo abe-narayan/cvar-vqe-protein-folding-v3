@@ -97,6 +97,5 @@ def main(base_key=None, opt_key=None):
         json.dump(out, fh, indent=2, sort_keys=True, default=float)
     return out
 
-
 if __name__ == "__main__":
     main()

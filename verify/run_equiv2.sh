@@ -1,4 +1,10 @@
 #!/bin/sh
+# STALE as of the cache-key fix: PROJECT_GRAD is no longer read from the environment.
+# `core/project.py` pins GRAD = "exact" and the mode now travels as
+# `core.pipeline.Config.project_grad` so that it reaches the cache key (see that module's
+# docstring, and verify/grad_key_collision.py for the collision it fixed). Running this as
+# written gives three arms in the SAME mode. Kept as the record of how the three-arm
+# comparison was originally driven; set Config.project_grad to reproduce it.
 # Round 2, with `core.project` live. The projection is the stage where the consolidated
 # module ships an ANALYTIC gradient in place of the reference's finite differences, so
 # three arms are needed to separate "the consolidation is faithful" from "the analytic

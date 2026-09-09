@@ -71,7 +71,9 @@ RULE 0 -- THE SIX OPERATOR FORKS, EACH NAMING THE ALTERNATIVE NOT TAKEN
    seeded displacement) in a SANDBOX, under `_`-prefixed fixture labels, writing to the
    system temp directory.  NOT TAKEN: the earlier proof build, which registered synthetic
    arms under six of the seven REAL configuration names and wrote 1,134 PDBs into
-   `results/structures/` whose headers said nothing about it -- now quarantined as evidence.
+   `results/structures/` whose headers said nothing about it.  The 1,134 files were removed in
+   the 2026-09-09 clean; the post-mortem that makes them citable is
+   `docs/quarantine-synthetic-proofbuild.md`.
 6. THE LABEL.  A configuration's name in this package is exactly the string the caller
    registered; nothing here decides what "production" means.  NOT TAKEN: hard-coding the
    current best pipeline as `production`, which is the mistake the sequencing rule for

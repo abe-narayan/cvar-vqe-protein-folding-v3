@@ -1,7 +1,6 @@
 """Is POOL CONSTRUCTION a lever, when the selector is nearly powerless?
 
 THE HYPOTHESIS
---------------
 Candidates are retrieved into a pool, then one is picked by ranking with the learned
 distogram. On the 126-target instrument the pool BEST is ~1.5 A and the SELECTED
 candidate is ~3.45 A. `s7.debias` measured why: the predictor's deviations correlate
@@ -24,8 +23,7 @@ If the second is what happens, the lever is pool CONSTRUCTION, not pool ranking:
 smaller, higher-precision pool with a good MEAN and accept a weak selector. That needs no
 fix to the predictor and no new model.
 
-WHAT IS MEASURED
-----------------
+What is measured
 1. `kcurve` selected RMSD vs K in {25 .. 2000} under the REAL shipped predictor, with
    pool best, pool mean, the oracle-ranked selection, and the ranker's percentile skill
    (where in the pool's own RMSD distribution the selected candidate lands; 50 = a coin).
@@ -37,7 +35,6 @@ WHAT IS MEASURED
    same window universe. This tests the recorded claim that random beats retrieval.
 
 DEPLOYABLE vs DIAGNOSTIC -- the split is structural
----------------------------------------------------
 `select()` and every `prune_*` function take only (pool distances, retrieval score,
 predicted distribution). No native coordinate, distance, contact, torsion or RMSD can
 reach them; `test_poolsize.py` asserts it by NaN-poisoning `Dnat` and checking the
@@ -49,7 +46,6 @@ in this file that takes `Dnat`, is never called from a pruning or selection path
 labelled as an upper bound wherever it is printed.
 
 PROTOCOL
---------
 Everything is swept on the 126-target instrument built by `s7.debias` (cluster
 representatives, length 9-16, identity-cluster-disjoint from BOTH the 24-target dev set
 and the 60-target benchmark; SE 0.147 A against dev's 0.354 A). The 24-target dev set is
@@ -327,7 +323,7 @@ PRUNERS = ("none", "sim", "typ", "atyp", "medoid", "fps", "conf",
 # into pool construction or ranking; it exists to draw the upper bound the real curve is
 # compared against, and to report RMSD after a choice has already been made.
 def _oracle_select(D, Dnat):
-    """DIAGNOSTIC UPPER BOUND. Rank by agreement with the native distance matrix."""
+    """Diagnostic upper bound. Rank by agreement with the native distance matrix."""
     return int(np.argmin(np.abs(D - Dnat[None, :]).mean(1)))
 
 

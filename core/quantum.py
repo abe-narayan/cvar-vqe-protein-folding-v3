@@ -1,119 +1,75 @@
-"""The VQE/CVaR subsystem: one module.
+"""The VQE/CVaR subsystem.
 
-CONSOLIDATED FROM
-=================
-``qansatz.py`` (324)     CVaR, the RY/CNOT ansatz families, Adam, the CVaR gradient
-``vqe.py`` (570)         the PennyLane global CVaR-VQE, SPSA, the shared-budget driver
-``foldvqe.py`` (683)     warm start, reservoir, refinement, basin selection, ``fold``
-``objective.py`` (150)   ``FoldObjective`` -- the batched composite folding score
-``hamiltonian.py`` (134) ``FoldingHamiltonian`` -- the knowledge-based bitstring energy
+Consolidated from ``qansatz.py`` (CVaR, the RY/CNOT ansatz families, Adam), ``vqe.py``
+(the PennyLane global driver, SPSA), ``foldvqe.py`` (warm start, reservoir, refinement,
+basin selection), ``objective.py`` (``FoldObjective``) and ``hamiltonian.py``
+(``FoldingHamiltonian``).  Those five are still on disk and ``tests/test_quantum.py``
+uses them as the equivalence oracle for everything rewritten here, so they are the
+reference rather than dead code.
 
-Nothing here is a re-export: the five modules are still on disk and
-``tests/test_quantum.py`` uses them as the equivalence oracle for every routine that was
-rewritten.  They are the reference, not the implementation.
-
-
-WHAT IS GENUINE HERE, AND WHY THAT MATTERS
-==========================================
-This is a real variational quantum eigensolver, not enumeration wearing its name:
-
-* a **parameterised circuit** -- ``layers x (RY on every wire, CNOT chain, optional ring
-  closure)`` on ``|0...0>`` -- in three simulators that are each exact for their regime:
-  PennyLane ``lightning.qubit`` (``build_global_circuit``, n <= 30), a batched statevector
-  (``StatevectorCircuit``, n <= ~20), and an exact matrix-product state (``MPSAnsatz``,
-  no qubit ceiling; the chain topology caps the bond dimension at ``2 ** layers``, so
-  *nothing is truncated* -- there is no approximation to trade off).
-* **real expectation values**: probabilities come out of the simulated state, bitstrings
-  are drawn from that distribution, and the objective is evaluated on what was drawn.
-* **genuine CVaR** -- the conditional value at risk of the objective distribution over the
-  measured bitstrings, i.e. the mean of its lower ``alpha`` tail, not the mean.
+This is a real VQE, not enumeration wearing the name.  The circuit is
+``layers x (RY on every wire, CNOT chain, optional ring closure)`` on ``|0...0>``, in
+three simulators that are each exact for their regime: PennyLane ``lightning.qubit``
+(n <= 30), a batched statevector (``StatevectorCircuit``, n <= ~20), and a matrix-product
+state (``MPSAnsatz``, no qubit ceiling).  The MPS is exact: the chain topology caps the
+bond dimension at ``2 ** layers``, so nothing is truncated and there is no approximation
+to trade off.  Probabilities come out of the simulated state, bitstrings are drawn from
+that distribution, and the objective is evaluated on what was drawn.  ``cvar`` is the
+conditional value at risk of that distribution -- the mean of its lower ``alpha`` tail,
+not the mean.
 
 ``all_bitstrings`` / ``cvar_gradient_exact`` / ``grad_cvar_fd`` enumerate the register.
-They are **verification instruments**, they are named so, and they are never the search.
+They are verification instruments and are never the search.
 
-A measured fact worth knowing that is NOT licence to weaken any of this: at these problem
-sizes the VQE ties uniform random sampling and loses to annealing (s9 ``stage_search``).
-The component is mandatory and stays genuine; the honest number is reported rather than
-engineered away.
+A measured fact that is not licence to weaken any of the above: at these problem sizes
+the VQE ties uniform random sampling and loses to annealing (s9 ``stage_search``).
 
+THE CVaR GRADIENT DEFECT, which must not come back
+At the optimal ``t`` the envelope theorem leaves the score-function form
 
-THE CVaR GRADIENT, AND THE DEFECT THAT MUST NOT COME BACK
-=========================================================
-The objective is written down and differentiated:
+    grad CVaR = E_p[ f(x) grad log p_theta(x) ],   f(x) = -(q - E(x))_+ / alpha
 
-    CVaR_alpha(theta) = max_t  t - (1/alpha) E_{x~p_theta} (t - E(x))_+
-
-At the optimal ``t`` (the alpha-quantile ``q``) the envelope theorem kills the ``t``
-dependence and leaves the score-function form
-
-    grad CVaR = -(1/alpha) E_p[ (q - E(x))_+ grad log p_theta(x) ]
-              =  E_p[ f(x) grad log p_theta(x) ],   f(x) = -(q - E(x))_+ / alpha .
-
-A baseline ``b`` may be subtracted from ``f`` **if and only if it is constant in x**,
-because the correction term is ``b * E_p[grad log p] = 0``.  The shipped
-``qansatz.cvar_gradient`` subtracts the TAIL MEAN from the tail entries and leaves the
-non-tail entries at zero -- that is ``b(x) = m * 1[x in tail]``, a *function of x*, and
-the identity it relies on does not hold on a data-dependent subset.  It is a bias, not
-extra variance.
-
-Priced against an exact classical reference (36 checks at 10 qubits, i.e. 1024 amplitudes
-enumerated exactly -- ``s9/refine.stage_grad``):
+A baseline may be subtracted from ``f`` only if it is constant in ``x``, because the
+correction term is ``b * E_p[grad log p] = 0``.  The shipped ``qansatz.cvar_gradient``
+subtracted the TAIL MEAN from the tail entries and left the rest at zero -- a function of
+``x``, on a data-dependent subset where that identity does not hold.  That is bias, not
+extra variance.  Priced against an exact classical reference (36 checks at 10 qubits,
+``s9/refine.stage_grad``); the exact-expectation rows carry zero sampling noise, which is
+what proves it:
 
     estimator                                    cos with exact grad   |g| / |g_exact|
-    -------------------------------------------  --------------------  ---------------
     exact expectation, CONSTANT baseline               +1.000000            1.000
     exact expectation, shipped TAIL-ONLY baseline      +0.655634            0.758
     sampled, constant baseline                         +0.994               ~1
     parameter-shift vs exact finite differences        +1.000000            1.000
 
-The exact-expectation rows carry *zero sampling noise*, which is what proves the tail-only
-number is bias.  ``cvar_gradient`` here defaults to ``baseline="const"`` -- the fix -- and
-``baseline="tail"`` reproduces the shipped defect verbatim (to 5.6e-17), so the comparison
-stays runnable and so ``tests/test_quantum.py`` can assert the defect is gone by
-*measuring* it rather than by reading the source.  That regression test is the single most
+``cvar_gradient`` defaults to ``baseline="const"``; ``baseline="tail"`` reproduces the
+defect verbatim (to 5.6e-17) so ``tests/test_quantum.py`` can assert it is gone by
+measuring it rather than by reading the source.  That regression test is the single most
 important thing in the test file.
 
-
-WHAT WAS MADE FAST, AND WHAT WAS NOT TOUCHED
-============================================
+What was made fast, and why it is still the same arithmetic
 Shots, iterations, restarts, the ansatz family, the Hamiltonian, the objective and every
-seed path are unchanged.  The speed came from removing Python/framework overhead, which
-the profile said was ~100% of the cost at these register sizes (a 60-site MPS contraction
-moves 4x4 matrices; the flops are not the problem, the 1,000 framework calls are):
+seed path are unchanged.  The speed came from removing framework overhead, which the
+profile said was ~100% of the cost at these register sizes.  Each claim below is a test
+in ``tests/test_quantum.py``.
 
-* ``cvar`` selects the tail with ``np.argpartition`` (O(N)) instead of ``np.argsort``
-  (O(N log N)).  For a tail fraction alpha the two are *mathematically identical*, ties
-  included -- see ``tail_indices`` for the proof and the tests for the assertion.  Both
-  paths ship: below a measured crossover of ~450 samples the sort's constant factor wins,
-  and above it the selection is 5.9x at 2,048 samples and 12-25x beyond.
-* ``MPSAnsatz`` keeps every site in ONE padded ``(n, chi, 2, chi)`` array instead of a
-  Python list of ragged tensors, so a rotation layer is one ``einsum`` and an entangling
-  layer six array ops -- rather than ``2n`` and ``7n``.  The CNOT chain is applied as the
-  exact bond-dimension-2 MPO it already was.
-* the MPS norm and amplitudes are contracted by a **log-depth matrix-chain reduction**
-  (associativity), so 60 sites take 6 batched matmuls instead of 60 sequential ones.  This
-  is the one place the reduction ORDER changed; measured against the shipped
-  left-to-right contraction the difference is ~1e-13 on log p and ~1e-14 relative on the
-  gradient (``t_mps_logp_matches_legacy``, ``t_mps_grad_logp_matches_legacy``).
-* right environments for sampling come from a Hillis-Steele suffix scan over the transfer
-  matrices: 6 batched matmuls instead of 60 sequential ones, and the autoregressive loop
-  that follows (which is genuinely sequential -- each bit conditions the next) trades two
-  ``np.einsum`` parses per site for two matmuls on contiguous blocks.  Bit-identical bits.
-* ``StatevectorCircuit`` evaluates **all 2P shifted parameter vectors in one batched
-  simulation** instead of re-running the whole stack per shifted parameter, and the
-  entangling layer's basis permutation -- a topology invariant -- is composed once in
-  ``__init__`` rather than rebuilt from ``np.arange`` on every gate of every call.  The
-  arithmetic is elementwise identical, so parameter-shift results are BIT-identical.
-* the PennyLane path builds its tape once and rebinds parameters instead of letting the
-  QNode reconstruct and re-transform the tape on every objective call.  Bit-identical.
-* ``fold`` can run its restarts concurrently -- they are genuinely independent, and their
-  reservoir offers are recorded per restart and replayed in restart order, so the pool is
-  bit-identical to the sequential run.  It is OFF by default, because it was measured and
-  it does not pay: at 60 qubits and 384 shots the inner loop moves kilobyte arrays, so the
-  cost is interpreter dispatch rather than the BLAS calls threads could overlap.  The
-  numbers are in `fold`'s docstring.  A negative result, reported rather than buried.
-
-Every one of those claims is a test in ``tests/test_quantum.py``.
+* ``cvar`` selects the tail with ``np.argpartition`` (O(N)) rather than ``np.argsort``.
+  For a tail fraction the two are mathematically identical, ties included -- see
+  ``tail_indices``.  Both paths ship: the sort wins below ~450 samples, the selection is
+  5.9x at 2,048.
+* ``MPSAnsatz`` keeps every site in one padded ``(n, chi, 2, chi)`` array, so a rotation
+  layer is one ``einsum`` and an entangling layer six array ops.  Norm and amplitudes are
+  contracted by a log-depth matrix-chain reduction, and right environments come from a
+  suffix scan: 6 batched matmuls instead of 60 sequential ones.  The reduction ORDER is
+  the one place the arithmetic is not elementwise identical -- measured difference ~1e-13
+  on log p, ~1e-14 relative on the gradient.
+* ``StatevectorCircuit`` simulates all ``2P`` shifted parameter vectors in one pass and
+  composes the entangling permutation once in ``__init__``.  Bit-identical.
+* The PennyLane path builds its tape once and rebinds parameters.  Bit-identical.
+* ``fold`` can run restarts concurrently and is bit-identical when it does, but it is OFF
+  by default because it was measured and does not pay: at 60 qubits the inner loop moves
+  kilobyte arrays, so the cost is interpreter dispatch, not BLAS.  See ``fold``.
 """
 import ctypes
 import itertools
@@ -203,7 +159,6 @@ def limit_threads(n: int = 2) -> None:
     except Exception:
         pass
 
-
 # ========================================================================== CVaR
 #: Baselines accepted by `cvar_gradient`. "const" is the fix; "tail" is the recorded
 #: defect, kept ONLY so the audit and the regression test can measure it.
@@ -229,8 +184,7 @@ CVAR_SORT_CUTOFF = 448
 def tail_indices(energies: np.ndarray, alpha: float) -> Tuple[int, float, np.ndarray]:
     """``(k, quantile, tail mask)`` for the lower `alpha` tail, in O(N).
 
-    THE SORT/PARTITION EQUIVALENCE
-    ------------------------------
+    The sort/partition equivalence
     The shipped routine took ``order = np.argsort(e, kind="stable")`` and kept
     ``order[:k]``.  CVaR needs a SELECTION, not an ordering, and ``np.argpartition`` does
     selection in O(N) where a sort is O(N log N).  The two give the identical mask, ties
@@ -452,61 +406,40 @@ def entropy_onelayer(ansatz: "OneLayerAnsatz", theta: np.ndarray
     g = np.log((1 - s) / s) * (np.sin(th) / 2.0)
     return H, g
 
-
 _EYE2 = np.eye(2)
 
 
 class MPSAnsatz:
-    """``layers`` repetitions of (RY on every wire, CNOT chain), simulated EXACTLY.
+    """``layers`` repetitions of (RY on every wire, CNOT chain), simulated exactly.
 
-    WHY THIS IS EXACT AND NOT AN APPROXIMATION
-    ------------------------------------------
-    A CNOT is ``|0><0| (x) I + |1><1| (x) X``, an exact bond-dimension-2 MPO, so applying
-    the chain doubles one bond with no truncation and no SVD.  After ``L`` entangling
-    layers every interior bond is exactly ``2 ** L`` (2 or 4 in practice) and the two
-    boundary bonds are 1.  Nothing is discarded, so the 30-qubit statevector wall is gone:
-    cost is O(n chi^3), linear in the number of qubits, and a 64- or 96-qubit register is
-    routine.
+    Why chi is exact rather than truncated.  A CNOT is ``|0><0| (x) I + |1><1| (x) X``, an
+    exact bond-dimension-2 MPO, so applying the nearest-neighbour chain doubles one bond and
+    discards nothing.  After ``L`` entangling layers every interior bond is exactly ``2 ** L``
+    and the two boundary bonds are 1.  There is no SVD, no truncation threshold and no
+    approximation to trade off, so the 30-qubit statevector wall is gone: cost is
+    ``O(n chi^3)``, linear in the number of qubits, and 64- or 96-qubit registers are routine.
 
-    ``final_ry`` appends one more RY layer with no entangler after it, and it is not
-    cosmetic.  The plain chain cannot express an arbitrary set of per-qubit marginals at
-    all: ``b_q`` is the prefix XOR of independent Bernoulli bits, so ``|1 - 2 P(b_q = 1)|``
-    is a running product and must be non-increasing along the wire.  Measured against the
-    torsion prior's own marginals on 12 targets, 53% of chain steps violate that ordering
-    and the best achievable initialisation is 0.13 off per qubit on average (0.29 at
-    worst).  Directly optimising the angles to match a random marginal vector leaves a
-    residual of 0.21 for the chain and 0.000 with one trailing RY layer.
+        amp(x) = e_0^T ( prod_q A[q][:, x_q, :] ) e_0 ,     chi = 2 ** layers
 
-    ``entangler="none"`` drops the CNOTs entirely, giving a product distribution -- free
-    marginals, no correlations.  It is the control that says whether the entanglement is
-    doing anything.
+    with every site held in one padded ``(n, chi, 2, chi)`` array, so a rotation layer is one
+    ``einsum`` and an entangling layer six array ops.  The MPO is applied as a target
+    expansion then a control expansion, in that order, because qubit ``q`` is the target of
+    CNOT(q-1, q) before it is the control of CNOT(q, q+1) and so the control reads the
+    *flipped* value.  Site 0 is never a target and site n-1 is never a control.
+    ``t_mps_padded_build_matches_legacy`` checks the contraction tensor-by-tensor at 0.0.
 
-    The ring closure is not applied here: it is a long-range gate for an open MPS and
-    would cost a swap network for a correlation the chain already carries at depth >= 2.
+    ``final_ry`` appends one RY layer with no entangler after it, and it is not cosmetic: in
+    the plain chain ``b_q`` is the prefix XOR of independent Bernoulli bits, so
+    ``|1 - 2 P(b_q = 1)|`` is a running product and must be non-increasing along the wire.
+    Measured against the torsion prior's own marginals on 12 targets, 53% of chain steps
+    violate that ordering; matching a random marginal vector leaves a residual of 0.21 for the
+    plain chain and 0.000 with one trailing RY layer.
 
-    HOW THE REWRITE WORKS (and why it is the same arithmetic)
-    ---------------------------------------------------------
-    The shipped implementation kept a Python LIST of ragged tensors and touched each site
-    individually: ``2n`` framework calls for a rotation layer and ``7n`` for an entangling
-    layer, then ``n`` sequential einsums for the right environments and ``6n`` more inside
-    the log-probability loop.  At n=60 that is ~1,000 torch operations on 4x4 tensors --
-    entirely dispatch overhead.
+    ``entangler="none"`` drops the CNOTs entirely, giving a product distribution.  It is the
+    control that says whether the entanglement is doing anything.
 
-    Here every site lives in ONE padded array ``A`` of shape ``(n, chi, 2, chi)``:
-
-    * a rotation layer is a single ``einsum("nij,najb->naib", G, A)``;
-    * an entangling layer is the MPO applied to every site at once.  Per site the CNOT
-      chain does a TARGET expansion (new left index ``a*2 + c_in``, carrying the incoming
-      control bit) and then a CONTROL expansion (new right index ``r*2 + c_out``, with
-      ``c_out`` pinned to this wire's post-target physical value).  Target-then-control is
-      the order the sequential loop realises and it is not symmetric: qubit ``q`` is the
-      target of CNOT(q-1,q) before it is the control of CNOT(q,q+1), so the control reads
-      the *flipped* value.  Site 0 is never a target (its ``c_in`` is masked to 0) and
-      site n-1 is never a control (it keeps its unexpanded right bond, zero-padded).
-
-    The index conventions are the shipped ones exactly -- ``c_out`` fast on the right bond,
-    ``c_in`` fast on the left -- so the padded array contracts to the identical state.
-    ``t_mps_padded_build_matches_legacy`` checks tensor-by-tensor contraction to 0.0.
+    The ring closure is not applied here: it is a long-range gate for an open MPS and would
+    cost a swap network for a correlation the chain already carries at depth >= 2.
     """
 
     def __init__(self, n_qubits: int, layers: int = 2, final_ry: bool = False,
@@ -885,31 +818,19 @@ def cvar_gradient_exact(ansatz, theta: np.ndarray, bits_all: np.ndarray,
 class StatevectorCircuit:
     """``layers x (RY on every wire, CNOT chain, ring closure)``, exact real statevector.
 
-    Real-amplitude RY+CNOT is the standard hardware-efficient ansatz and is expressive
-    enough for a multimodal distribution over basis states at depth >= 2, which is what a
-    distribution over 2-3 populated structural hypotheses actually requires.  The circuit
-    is simulated EXACTLY (``2**n`` amplitudes, n <= ~20), so ``p_theta`` and every gradient
-    below are analytic rather than sampled -- which is what makes the gradient audit a real
+    Real-amplitude RY+CNOT is the standard hardware-efficient ansatz and is expressive enough
+    at depth >= 2 for a distribution over the 2-3 populated structural hypotheses this task
+    actually has.  All ``2**n`` amplitudes are carried (n <= ~20), so ``p_theta`` and every
+    gradient below are analytic rather than sampled, which is what makes the gradient audit a
     verification instead of a noise comparison.
 
-    TWO INVARIANTS HOISTED, ONE LOOP BATCHED
-    ----------------------------------------
-    1. The entangling layer is a fixed PERMUTATION of basis indices and does not depend on
-       the parameters at all.  The shipped version rebuilt ``np.arange(dim)``, a shift, a
-       comparison and a ``np.where`` for every CNOT of every layer of every call; here the
-       whole chain (ring included) is composed into ONE index array in ``__init__`` and
-       applied as a single gather per layer.  ``n`` gathers become 1.
-    2. ``probs_batch`` simulates B parameter vectors at once, so parameter shift --
-       inherently ``2P`` evaluations of the same circuit -- costs ONE pass over the gate
-       list instead of ``2P`` passes.  At n=7, layers=3 that is 24 numpy calls in place of
-       1,806.
-
-    Neither changes the arithmetic: the RY update is the same two elementwise expressions
-    on the same slices, and a composed permutation is exact.  ``probs`` is BIT-identical to
-    the shipped loop (measured max |diff| 0.0 at n=7 and n=10); the parameter-shift gradient
-    agrees to 2e-16, the only difference being that the ``dCVaR/dp`` contraction is now one
-    matmul instead of ``P`` separate dot products.
-    ``t_statevector_probs_bit_identical_to_legacy`` pins both.
+    Two invariants are hoisted out of the inner loop and neither changes the arithmetic: the
+    CNOT chain plus ring is a parameter-independent permutation of basis indices, composed
+    once in ``__init__`` into a single gather, and ``probs_batch`` simulates B parameter
+    vectors in one pass so parameter shift costs one traversal of the gate list rather than
+    ``2P``.  ``probs`` is bit-identical to the unrolled loop (max |diff| 0.0 at n=7 and n=10)
+    and the shifted gradient agrees to 2e-16; ``t_statevector_probs_bit_identical_to_legacy``
+    pins both.
     """
 
     def __init__(self, n: int, layers: int = 3, ring: bool = True):
@@ -1073,8 +994,7 @@ def free_energy(circ: StatevectorCircuit, theta: np.ndarray, E: np.ndarray,
                 alpha: float, T: float):
     """``F = CVaR_alpha(E; p_theta) - T H(p_theta)``, and its exact gradient.
 
-    WHY AN ENTROPY TERM, AND WHY IT IS NOT A FUDGE
-    ----------------------------------------------
+    Why an entropy term, and why it is not A fudge
     Minimising CVaR alone is degenerate for this task: for ANY alpha the minimiser
     concentrates p on the lowest-energy basis states, so the readout collapses back to the
     argmin -- the shipped selector, 3.454 A.  That was measured before this term existed
@@ -1139,8 +1059,7 @@ def build_global_circuit(n_qubits: int, layers: int, ring: bool = True,
                          device: str = "lightning.qubit") -> Callable:
     """One circuit over ALL n_qubits. Returns probs over the full register.
 
-    A REAL DEVICE, EXECUTED ONCE PER TAPE INSTEAD OF REBUILT PER CALL
-    ----------------------------------------------------------------
+    A real device, executed once per tape instead of rebuilt per call
     The gate list, the wire map and the measurement are identical on every objective call
     -- only the ``layers * n_qubits`` rotation angles change.  The shipped version wrapped
     a QNode, which reconstructs the tape from the Python function and re-runs the transform
@@ -1273,7 +1192,6 @@ def _spsa(objective, x0, n_iter, rng, a=0.25, c=0.15,
     if set_sample_tag is not None:
         set_sample_tag(None)                # restore per-call streams
     return _SPSAResult(best_x, best_f)
-
 
 #: Fewest SPSA iterations at which the optimiser has been observed to do useful work on
 #: this objective. Below this the run returns something close to its initialisation.
@@ -1469,7 +1387,7 @@ def run_global_cvar_vqe(hamiltonian, layers: int = 4, alpha: float = 0.15,
     restarts left), so they are sequentially dependent by construction.  ``fold`` below,
     whose restarts share nothing but a reservoir, is where the free parallelism lives.
 
-    ``init_scale`` and the shots/budget ratio are LOAD-BEARING TOGETHER, and this is the
+    ``init_scale`` and the shots/budget ratio are LOAD-bearing together, and this is the
     single most consequential thing to know about this function.  Measured on 1UAO at 400
     SPSA iterations, changing nothing but the initial spread:
 
@@ -1660,7 +1578,6 @@ def run_global_cvar_vqe(hamiltonian, layers: int = 4, alpha: float = 0.15,
         "seed": seed,
     }
 
-
 # ================================================================== objective
 # Geometry and the classical energy terms come through the package's backend switch, not
 # by importing the root modules, so that a consolidated `core.geometry` / `core.energy`
@@ -1822,7 +1739,6 @@ class FoldObjective:
             e += self.w_cons * self._consensus(coords["CA"])
         self._count(len(coords["CA"]))
         return e, coords["CA"]
-
 
 # ================================================================ Hamiltonian
 #: Cap on the chi1 rotamer combinations scanned when scoring a *native* structure. The
@@ -2304,8 +2220,7 @@ def run_vqe(objective, ansatz, theta0: np.ndarray, iters: int, shots: int,
     available so the comparison stays measurable -- it is not a gradient of any objective
     and it is not the default.
 
-    THE ONE DEFAULT THAT CHANGED, STATED PLAINLY
-    --------------------------------------------
+    The one default that changed, stated plainly
     ``baseline`` defaults to ``"const"``, the CORRECTED control variate, where
     `foldvqe.run_vqe` used the biased tail-only form unconditionally.  So this function
     does NOT reproduce `foldvqe.run_vqe` at its defaults, by design: the shipped estimator
@@ -2392,7 +2307,7 @@ def fold(sequence: str, k: int = 8, layers: int = 1, restarts: int = 4,
     bit-identical to the sequential run (`test_reservoir_replay_is_identical_to_sequential
     _offering`).
 
-    IT DEFAULTS TO 1 BECAUSE IT WAS MEASURED AND IT DOES NOT PAY.  Four restarts, 30
+    It defaults to 1 Because it was measured and it does not pay.  Four restarts, 30
     iterations, 384 shots, 20 residues at k=8, against the real batched backbone builder,
     wall-clock in ms:
 

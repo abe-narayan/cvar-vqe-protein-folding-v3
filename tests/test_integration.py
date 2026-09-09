@@ -45,7 +45,6 @@ slow = pytest.mark.skipif(os.environ.get("VERIFY_SLOW") != "1",
 REF_1A13_INTERACTION = -489.9138948277905
 CANON_ALPHABET = "ARNDCQEGHILKMFPSTWYV"
 
-
 # =========================================================== independent references
 I2 = np.eye(2)
 

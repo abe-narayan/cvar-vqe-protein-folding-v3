@@ -12,7 +12,6 @@ peptide database, rebuilt by `protein_geometry.build_backbone_batch`, scored wit
 inputs, no hand-written coordinates.
 
 Tolerance, and why it is what it is
------------------------------------
 `core.amber` lifts the hot arithmetic byte-for-byte and reuses the same OpenMM calls in
 the same order on the same platform at Threads=1, so the expected difference is not
 "small", it is **exactly zero**. Every energy assertion here is `==`, not `approx`. That
@@ -46,8 +45,7 @@ REF_1A13_INTERACTION = -489.9138948277905
 PID = "1A13"
 
 
-# =====================================================================================
-# THE BOX IS NOT THE CODE
+# The box is not the code
 #
 # `core.amber.memory_guard` raises `MemoryError` above 92% physical memory, deliberately,
 # so that an OOM here kills this run rather than a sibling's. On a shared box that CORRECT
@@ -59,7 +57,6 @@ PID = "1A13"
 # suite leaking contexts until IT is what fills the box. So the verdict is explicit and
 # unit-tested. Skip only when the memory that crossed the ceiling demonstrably is not ours;
 # FAIL when our own working set accounts for it.
-# =====================================================================================
 def _own_rss_bytes() -> int:
     """This process's working set.
 
@@ -103,7 +100,6 @@ def _total_phys_bytes() -> int:
     ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(s))
     return int(s.ullTotalPhys)
 
-
 #: OUR share of the rise above which the suite is judged to be the cause.
 OWN_SHARE_IS_A_REGRESSION = 0.5
 
@@ -122,7 +118,6 @@ def _memory_verdict(pct, baseline_pct, own_growth_bytes, total_bytes,
     if rose > 0 and own_growth_bytes / rose >= share:
         return "fail"                    # we are what filled it
     return "skip"
-
 
 _BASELINE = {"pct": A.memory_percent(), "rss": _own_rss_bytes(),
              "total": _total_phys_bytes()}
@@ -585,7 +580,6 @@ def test_budget_classes_have_exactly_one_definition():
     src = inspect.getsource(budget)
     assert "core.amber" not in src and "from core" not in src, \
         "budget.py is the legacy arm; it must not import the consolidated module"
-
 
 
 def test_memory_verdict_distinguishes_the_box_from_the_code():

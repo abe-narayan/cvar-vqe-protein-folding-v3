@@ -107,7 +107,6 @@ def build(max_per_protein: int = 6, n_target: int = 6000, seed: int = 0,
     np.savez_compressed(cache, records=np.array(recs, dtype=object))
     return [pdb.Peptide(**r) for r in recs]
 
-
 #: Set to True to make every consumer read the larger extraction. Kept as a switch rather
 #: than a silent default so a result can always be attributed to a fragment set.
 USE_LARGE = os.environ.get("FRAG_LARGE", "") == "1"
@@ -135,7 +134,6 @@ def holdout(target_seq: str,
             continue
         out.append(p)
     return tuple(out)
-
 
 if __name__ == "__main__":
     frags = build(force=True)

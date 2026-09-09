@@ -4,7 +4,7 @@ Consolidates `protein_geometry.py` (628), `catrace.py` (158) and `floor.py` (73)
 operation below has ONE implementation; where the repository carried several, the one kept
 is named in its docstring together with the evidence that it is the correct one.
 
-THE SUPERPOSITION CONVENTION, which is the thing that has actually gone wrong here.
+The superposition convention, which is the thing that has actually gone wrong here.
 `kabsch_superpose` builds ``R = V D U^T`` and applies it on the LEFT, as ``(R @ Pc.T).T``,
 i.e. ``Pc @ R.T``. A caller that wants a matrix to POST-multiply by therefore needs
 ``R.T``, and getting that backwards yields a matrix that is still a valid rotation, so
@@ -96,9 +96,7 @@ def get_pdb_log() -> List[str]:
     return list(_PDB_ACCESS_LOG)
 
 
-# ==========================================================================
 # NeRF backbone construction
-# ==========================================================================
 def _place_atom(a, b, c, length: float, angle: float, torsion: float):
     bcx, bcy, bcz = c[0] - b[0], c[1] - b[1], c[2] - b[2]
     nb = math.sqrt(bcx * bcx + bcy * bcy + bcz * bcz)
@@ -259,9 +257,7 @@ def amide_h_positions(N: np.ndarray, C: np.ndarray, O: np.ndarray) -> np.ndarray
     return H
 
 
-# ==========================================================================
 # Torsions
-# ==========================================================================
 def dihedral(p0, p1, p2, p3) -> float:
     """Scalar dihedral, radians. `dihedral_batch` is the vectorised form and is exact."""
     p0, p1 = np.asarray(p0, float), np.asarray(p1, float)
@@ -332,9 +328,7 @@ def extract_torsions_batch(N, CA, C) -> Tuple[np.ndarray, np.ndarray]:
     return phi, psi
 
 
-# ==========================================================================
 # Superposition / metrics -- ONE implementation
-# ==========================================================================
 def _cross_covariance(Pc: np.ndarray, Qc: np.ndarray) -> np.ndarray:
     return np.einsum("bni,nj->bij", Pc, Qc)
 
@@ -552,9 +546,7 @@ def distance_matrix(coords: np.ndarray) -> np.ndarray:
     return np.linalg.norm(c[:, :, None, :] - c[:, None, :, :], axis=-1)
 
 
-# ==========================================================================
 # Contacts and secondary structure
-# ==========================================================================
 def contact_map(coords: np.ndarray, threshold: float = 8.0,
                 min_sep: int = 3) -> Set[Tuple[int, int]]:
     c = np.asarray(coords, dtype=float)
@@ -581,7 +573,7 @@ def dssp_energy_matrix(coords: Dict[str, np.ndarray], min_sep: int = 2,
     """``(E, ok)``: the DSSP electrostatic energy for every ordered (donor, acceptor) pair,
     and the mask of pairs admissible as hydrogen bonds.
 
-    THE SINGLE SOURCE OF TRUTH FOR THE DSSP FORM. It used to be written out twice -- here
+    The single source of truth for the DSSP form. It used to be written out twice -- here
     and in `energy_terms.hbond_terms` -- which is not a hypothetical drift risk: the N...O
     interpenetration fix was applied to one copy first, and until the second was found,
     structures whose donor and acceptor heavy atoms were interpenetrating were rejected by
@@ -651,10 +643,7 @@ def ss_agreement(pred: str, native: str) -> float:
     b = np.frombuffer(native[:n].encode(), dtype="S1")
     return float((a == b).mean())
 
-
-# ==========================================================================
 # PDB IO -- one fast reader, validated against Biopython, cached on disk
-# ==========================================================================
 _ATOMS = ("N", "CA", "C")
 _F32 = np.float32
 
@@ -767,7 +756,6 @@ def _read_models_biopython(path: str, chain_id: Optional[str] = None):
             break
     return out
 
-
 _CACHE_VERSION = 3
 
 
@@ -877,10 +865,7 @@ def scan_directory(pattern: str, verbose: bool = False):
         if verbose and (k + 1) % 500 == 0:
             print(f"  parsed {k + 1}", flush=True)
 
-
-# ==========================================================================
 # CA-trace prior -- the term that tells a structure from its mirror image
-# ==========================================================================
 # The search objective is dominated by a predicted CA-CA distance matrix, and a distance
 # matrix is invariant under reflection: the mirror image of any candidate has an identical
 # matrix and therefore an identical score. That is a blind spot in the functional form, and
@@ -1007,9 +992,7 @@ class CATracePrior:
         return self.score(m) - self.score(arr)
 
 
-# ==========================================================================
 # Representation floor
-# ==========================================================================
 # The best CA-RMSD an encoding can express for a given native: nearest-state projection,
 # batched coordinate descent, then restarts. A property of the ENCODING, measured with no
 # search and no energy model -- if the floor for a target is above 2 A, no optimiser can
@@ -1018,9 +1001,7 @@ def _floor_rmsd(phi: np.ndarray, psi: np.ndarray, native_ca: np.ndarray) -> np.n
     return ca_rmsd_batch(build_backbone_batch(phi, psi)["CA"], native_ca)
 
 
-# ==========================================================================
 # The `numerics` backend contract (core/__init__.py)
-# ==========================================================================
 # `s7/audit.py` carries its own batched Kabsch, its own BLOSUM62 table and its own
 # sequence encoder, deliberately retyped so that a pool built by it was not the same
 # object as the pool it audits. That was the right call for an audit and is the wrong

@@ -116,7 +116,6 @@ def ca_rmsd(a, b):
     import core
     return float(core.backend("numerics").kabsch_rmsd_batch(a[None], b)[0])
 
-
 if __name__ == "__main__":
     arms = [("cpu", "CPU", None, False),
             ("ocl_single", "OpenCL", None, False),

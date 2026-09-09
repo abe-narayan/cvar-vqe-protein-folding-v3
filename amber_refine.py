@@ -1,7 +1,6 @@
 """Restrained all-atom AMBER refinement of a discrete-torsion candidate.
 
 Why this module exists
-----------------------
 `torsion_lib2` builds structures from a *discrete* library of (phi, psi) states with ideal
 bond lengths and angles and a fixed rotamer per sidechain. Such a structure is
 stereochemically crude: after `floor.floor()` picks the states closest to a native, the
@@ -14,7 +13,6 @@ This module fixes that strain *without letting the fold move*, by running an Ope
 Everything else -- carbonyl O, OXT, all sidechain heavy atoms, all hydrogens -- is free.
 
 The restraint choice
---------------------
 `k_restraint` is in **kcal/mol/A^2** per restrained atom, matching
 `AmberHamiltonian.restraint_k`. The potential is 0.5*k*|r - r0|^2, so an atom pulled by an
 internal force F settles at a displacement d = F/k. Typical residual internal forces in an
@@ -52,7 +50,6 @@ the built structure sits ~19,000 kcal/mol above its own minimum -- but it does n
 structure toward native. Treat it as an energy-cleanup operator, not an accuracy operator.
 
 Relationship to `AmberHamiltonian`
-----------------------------------
 This module does *not* modify `amber_hamiltonian.py`. It composes with it: an
 `AmberHamiltonian` instance is used purely as a *builder* (topology with hydrogens, ff14SB
 + GBn2 System, calibrated hydrogen local frames, OpenMM Context), and this module then
@@ -205,7 +202,6 @@ def refine(sequence: str, rep, states: Sequence[int],
     """Restrained all-atom ff14SB/GBn2 refinement of one discrete candidate.
 
     Parameters
-    ----------
     sequence : one-letter sequence.
     rep      : a `torsion_lib2.PerResidueTorsion` (or any full-backbone representation).
     states   : per-residue torsion state indices, or a bitstring for `rep`.
@@ -215,7 +211,6 @@ def refine(sequence: str, rep, states: Sequence[int],
     tolerance: RMS force convergence threshold, kJ/mol/nm.
 
     Returns
-    -------
     dict with
         ca              (n, 3) refined CA coordinates, angstrom
         backbone        {"N","CA","C","O"} -> (n, 3), angstrom

@@ -5,7 +5,7 @@ all-atom AMBER ff14SB/GBn2 (`core.amber`).  Nothing here substitutes a learned s
 for either; the Legacy total is always the weighted sum of the eleven measured components
 and the AMBER numbers always come from OpenMM.
 
-FOUR THINGS THIS MODULE FIXES, all of which bind every statistic downstream.
+Four things this module fixes, all of which bind every statistic downstream.
 
 1. `gate()` -- the pre-declared AMBER convergence gate.  Implemented in
    `core.amber.convergence_flags` (declared there, in the code, before it was applied);
@@ -62,9 +62,7 @@ IDEAL = dict(N_CA=1.458, CA_C=1.525, C_N=1.329, C_O=1.231,
              ang_N_CA_C=111.0, ang_CA_C_N=116.2, ang_C_N_CA=121.7, ca_ca=3.804)
 
 
-# ==========================================================================
-# 1.  THE CONVERGENCE GATE  (consumer side; the rule lives in core.amber)
-# ==========================================================================
+# 1.  The convergence gate  (consumer side; the rule lives in core.amber)
 from core.amber import CONVERGE_MAX_KCAL, convergence_flags   # noqa: E402,F401
 
 
@@ -96,9 +94,7 @@ def gated_paired(a, b, energies, folds=None, names=None, seed=0,
     return out
 
 
-# ==========================================================================
-# 2.  THE STANDING FRAME-INVARIANCE NULL
-# ==========================================================================
+# 2.  The standing frame-invariance null
 def random_rigid(rng):
     """Proper rotation (det = +1) and translation.  A reflection is NOT a symmetry of
     ff14SB, so O(3) is deliberately reduced to SO(3)."""
@@ -174,9 +170,7 @@ def frame_null(targets=None, draw=1, k=30.0, max_kcal=CONVERGE_MAX_KCAL, verbose
     return rows, verdict
 
 
-# ==========================================================================
 # 3.  MONOTONE CONDITIONING
-# ==========================================================================
 def condition(E, how="signed_log", ref=None):
     """Monotone conditioning of an energy array.  Order-preserving BY CONSTRUCTION.
 
@@ -236,9 +230,7 @@ def tail_share(E, top=10):
     return float(v[idx].sum() / v.sum()) if v.sum() > 0 else float("nan")
 
 
-# ==========================================================================
 # 4.  THE BINDING AMBER DATA RULE
-# ==========================================================================
 def binding_mask(z):
     """`amber_kind == 0 AND amber_idx != snap_index`.  Returns (positions, report).
 
@@ -282,9 +274,7 @@ def load_enum(path, terms=True):
     return out
 
 
-# ==========================================================================
 # 5.  LEGACY -- the genuine eleven-component potential
-# ==========================================================================
 def legacy_weight_vector(w=None):
     from core import energy as et
     w = et.DEFAULT_WEIGHTS if w is None else w
@@ -320,9 +310,7 @@ def legacy_components_of_windows(seq, PHI, PSI, chunk=2048):
     return out
 
 
-# ==========================================================================
-# 6.  THE STEREOCHEMISTRY PANEL  (the repair benchmark's measuring instrument)
-# ==========================================================================
+# 6.  The stereochemistry panel  (the repair benchmark's measuring instrument)
 def panel(c, seq):
     """Full stereochemistry panel of one backbone dict (angstrom, keys N/CA/C[/O/CB]).
 
@@ -454,9 +442,7 @@ def rama3(phi, psi, seq=None):
             "n_rama": int(len(p))}
 
 
-# ==========================================================================
 # 7.  small helpers
-# ==========================================================================
 def spearman(a, b):
     a = np.asarray(a, float); b = np.asarray(b, float)
     ok = np.isfinite(a) & np.isfinite(b)

@@ -25,7 +25,7 @@ seed.
 Nothing here mutates `energy_terms`; `DEFAULT_WEIGHTS` behaviour is reproduced exactly
 when `weights` is None.
 
-WHAT THE REFINER WAS MEASURED TO DO, so nobody re-runs this hoping for a different answer
+What the refiner was measured to do, so nobody re-runs this hoping for a different answer
 (`work/refine_study.py`, `work/refine_native.py`, 12 benchmark targets, k=8):
 
     start                       box 5 deg   box 15 deg   box 30 deg
@@ -62,9 +62,7 @@ _ATOM_ORDER = ("N", "CA", "C", "O", "CB")
 _HB_PREFACTOR = 0.084 * 332.0
 
 
-# ==========================================================================
 # Batched energy
-# ==========================================================================
 class BatchedLegacy:
     """Legacy energy for a batch of structures of one fixed sequence.
 
@@ -370,9 +368,7 @@ def batched_energy(sequence: str, phi: np.ndarray, psi: np.ndarray,
     return BatchedLegacy(sequence, weights).energy(phi, psi)
 
 
-# ==========================================================================
 # Weight vectors (for fitting)
-# ==========================================================================
 def vector_from_weights(weights: Dict[str, float],
                         names: Sequence[str] = et.TERM_NAMES) -> np.ndarray:
     return np.array([float(weights.get(k, 0.0)) for k in names])
@@ -387,9 +383,7 @@ def weights_from_vector(vec: Iterable[float],
     return w
 
 
-# ==========================================================================
 # Refinement
-# ==========================================================================
 def _clip_box(phi, psi, phi0, psi0, box):
     return (np.clip(phi, phi0 - box, phi0 + box),
             np.clip(psi, psi0 - box, psi0 + box))
@@ -504,9 +498,7 @@ def refine(sequence: str, rep, states, weights: Optional[Dict[str, float]] = Non
                          steps=steps, pop=pop, seed=seed, polish=polish, model=model)
 
 
-# ==========================================================================
 # Self-test
-# ==========================================================================
 def selftest(sequence: str = "RLKWVRIWRRGDYE", B: int = 24, seed: int = 0,
              tol: float = 1e-9, verbose: bool = True) -> float:
     """Assert the batched terms match `energy_terms.energy_components` to `tol`.
@@ -538,7 +530,6 @@ def selftest(sequence: str = "RLKWVRIWRRGDYE", B: int = 24, seed: int = 0,
         print(f"selftest ok: worst relative term error {worst:.3e} "
               f"over {B} structures x {len(et.TERM_NAMES)} terms")
     return worst
-
 
 if __name__ == "__main__":
     selftest()

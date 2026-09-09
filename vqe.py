@@ -44,7 +44,6 @@ def cvar_from_distribution(energies: np.ndarray, probs: np.ndarray,
     return esum / acc if acc > 0 else float(energies[order[0]])
 
 
-
 def build_global_circuit(n_qubits: int, layers: int, ring: bool = True,
                          device: str = "lightning.qubit") -> Callable:
     """One circuit over ALL n_qubits. Returns probs over the full register."""
@@ -284,7 +283,6 @@ def _spsa(objective, x0, n_iter, rng, a=0.25, c=0.15,
         set_sample_tag(None)                # restore per-call streams
     return _SPSAResult(best_x, best_f)
 
-
 #: Fewest SPSA iterations at which the optimiser has been observed to do useful work on
 #: this objective. Below this the run returns something close to its initialisation.
 #: Measured: the shipped configuration (shots 2048, budget 20000, restarts 4) affords
@@ -361,7 +359,7 @@ def run_global_cvar_vqe(hamiltonian, layers: int = 4, alpha: float = 0.15,
     both, with an absolute floor for SPSA since its per-iteration cost does not grow with
     the parameter count.
 
-    ``init_scale`` and the shots/budget ratio are LOAD-BEARING TOGETHER, and this is the
+    ``init_scale`` and the shots/budget ratio are LOAD-bearing together, and this is the
     single most consequential thing to know about this function. Measured on 1UAO at 400
     SPSA iterations, changing nothing but the initial spread:
 

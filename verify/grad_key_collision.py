@@ -97,6 +97,5 @@ def main(pdbs=("1CS9", "1CB3")):
         json.dump(out, fh, indent=2, sort_keys=True, default=str)
     return out
 
-
 if __name__ == "__main__":
     main()

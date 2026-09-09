@@ -211,7 +211,6 @@ def benchmark_set(min_len: int = 9, max_len: int = 16,
     return [p for p in load()
             if p.seq in keep_seq and min_len <= p.n <= max_len]
 
-
 if __name__ == "__main__":
     db = build(force=True)
     print(f"{len(db)} peptides, lengths {min(p.n for p in db)}-{max(p.n for p in db)}")
@@ -219,7 +218,6 @@ if __name__ == "__main__":
     bench = benchmark_set()
     print(f"benchmark: {len(bench)} targets -> "
           f"{', '.join(sorted(p.pdb for p in bench))}")
-
 
 # --------------------------------------------------------------- clustering / folds
 _CLUSTER_CACHE = os.path.join(BASE, "peptide_clusters.json")
@@ -268,7 +266,6 @@ def clusters(threshold: float = IDENTITY_THRESHOLD) -> Dict[str, int]:
         json.dump({"threshold": threshold, "assign": assign}, f)
     return assign
 
-
 _FOLD_CACHE = os.path.join(BASE, "peptide_folds.json")
 
 
@@ -281,7 +278,7 @@ def folds(n_folds: int = 5, seed: int = 0) -> Dict[str, int]:
 
     The assignment is written to `peptide_folds.json` on first use and read back
     thereafter, and that pinning is load-bearing rather than a cache. Fold indices are a
-    shuffle of CLUSTER IDS, so anything that renumbers clusters -- adding a database entry,
+    shuffle of cluster ids, so anything that renumbers clusters -- adding a database entry,
     or replacing an unsound identity prefilter with a sound one -- silently reassigns every
     sequence. The trained fold models on disk would then be excluding the wrong fold, and a
     target could be scored by a model that had trained on it, with no error raised
@@ -345,7 +342,6 @@ def dev_set(n: int = 24, min_len: int = 9, max_len: int = 16,
     idx = np.random.default_rng(seed).permutation(len(reps))[:n]
     return [reps[i] for i in sorted(idx)]
 
-
 #: The reported benchmark. Membership is fixed by this function and by
 #: `results/benchmark_manifest.json`; it is never filtered on difficulty or on any result.
 #:
@@ -358,7 +354,6 @@ def dev_set(n: int = 24, min_len: int = 9, max_len: int = 16,
 BENCHMARK_N = 60
 BENCHMARK_MIN_LEN = 9
 BENCHMARK_MAX_LEN = 16
-
 
 MANIFEST = os.path.join(BASE, "results", "benchmark_manifest.json")
 #: The MONOMER benchmark: 52 peptides whose deposited conformation is that of an isolated

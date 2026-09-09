@@ -24,7 +24,6 @@ import numpy as np
 import protein_geometry as geo
 import sidechains as sc
 
-
 #: One-letter codes whose chi1 is encoded: the aromatics whose ring this repo can build.
 #: Chi1 rotates the ring about CA-CB, which is the degree of freedom that decides whether
 #: a stacked aromatic pair is geometrically reachable. It costs one qubit per aromatic
@@ -32,10 +31,7 @@ import sidechains as sc
 #: 10-mer from 4 to 8 backbone states for 0.04 A of ceiling.
 CHI1_ENCODED = tuple(sorted(geo.THREE_TO_ONE[r] for r in sc.AROMATIC_RING_RESIDUES))
 
-
-# ==========================================================================
 # Torsion state libraries
-# ==========================================================================
 # Convention, relied on by callers that build reference structures: index 0 is the
 # helical state of its class and index 1 is the extended/beta state, in every library.
 # `bitstring_from_states([0] * n)` is therefore "as helical as this sequence can be" and
@@ -209,7 +205,6 @@ def _ang_diff_deg(a: float, b: float) -> float:
     return ((a - b + 180.0) % 360.0) - 180.0
 
 
-# ==========================================================================
 class TorsionStateRepresentation:
     """Per-residue (phi, psi) drawn from a discrete, residue-class-specific library."""
 
@@ -470,8 +465,6 @@ class TorsionStateRepresentation:
             "realistic_bond_geometry": True,
         }
 
-
-# ==========================================================================
 LATTICE_DIRECTIONS = {
     (0, 0): (1.0, 1.0, 1.0),
     (0, 1): (1.0, -1.0, -1.0),

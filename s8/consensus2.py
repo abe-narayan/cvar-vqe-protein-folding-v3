@@ -1,7 +1,6 @@
 """How far does filter-then-consensus go, and what stops it?
 
-THE ONE THING THAT WORKED
--------------------------
+The one thing that worked
 S8-8 (`s8/inband.py`) established the only intervention in three sprints with a confidence
 interval excluding zero: filter the shipped BLOSUM top-500 to the shipped score's own top
 75, then return the CONSENSUS MEDOID of that subset.
@@ -32,13 +31,11 @@ where the ceiling is:
   5. DOES REFINEMENT STACK.  A bounded Legacy relaxation of the consensus output.
 
 INSTRUMENT
-----------
 The same 126-target tuning instrument, the same K=500 BLOSUM pools, rebuilt through
 `s8.generate`'s cached universes.  `stage_build` ASSERTS the baseline reproduces the
 shipped score's 3.454 A and pool best 1.711 A before anything else runs.
 
 DEPLOYABLE vs ORACLE -- the split is structural
------------------------------------------------
 Every filter key and every consensus operator is a function of the candidate coordinates,
 their torsions, the target sequence and the fold's own out-of-fold distogram.  `rr` (each
 candidate's CA-RMSD to the native) and `nat_ca` enter ONLY as reporting labels and in rows
@@ -46,7 +43,6 @@ explicitly named `oracle`.  `stage_leak` NaN-poisons both and asserts every filt
 and every operator output is bit-identical.
 
 TIES
-----
 `sel_of` is imported from `s8.inband` rather than rewritten.  `np.argmin` returns the FIRST
 tied index and the candidate order is informative (BLOSUM rank), so a signal with many ties
 reads out the sort order and can fake a spectacular win; `sel_of` averages the true RMSD
@@ -140,7 +136,7 @@ def superpose_batch(P, ref):
 
 
 def circmean(A, w=None, axis=0):
-    """Circular mean of angles in radians: atan2 of the SUMMED UNIT VECTORS.
+    """Circular mean of angles in radians: atan2 of the summed unit vectors.
 
     The naive arithmetic mean of +170 and -170 degrees is 0 degrees, which is the exact
     opposite of the right answer (180).  This bug has appeared in this repository before,
@@ -392,7 +388,7 @@ def op_value(op, c, sub):
                 break
         return "con", C
     if op == "avg_scale":
-        # THE SHRINKAGE CONTROL.  Averaging superposed structures CONTRACTS the chain --
+        # The shrinkage control.  Averaging superposed structures CONTRACTS the chain --
         # the mean of points scattered about a curve lies inside it -- so the average is
         # not a physical backbone and a shrunken object can flatter CA-RMSD.  Rescale it
         # about its centroid to restore the 3.80 A CA-CA step.  If the gain survives,
@@ -1163,7 +1159,7 @@ def _print_refine(out):
 
 # ============================================================ stage: dev
 def stage_dev():
-    """THE SINGLE DEV PASS. One pre-registered arm (`DEV_ARM`), no iteration.
+    """The single dev pass. One pre-registered arm (`DEV_ARM`), no iteration.
 
     The dev pools are `s8/inband_devpool`, built and asserted against `s7/audit_cache` by
     `s8.inband.stage_devpool`.  This module does not rebuild or alter them.

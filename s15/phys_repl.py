@@ -12,7 +12,7 @@ provably zero (maximum likelihood against a constant-width Gaussian IS least squ
 getting `+0.081 [+0.014, +0.169]` on one multi-start draw and `-0.003` on another.  -0.022 is a
 quarter of that floor.
 
-THE FIRST THING THIS MODULE ESTABLISHES, AND IT CHANGES THE QUESTION.
+The first thing this module establishes, and it changes the question.
 **The k = 30 pipeline contains no random number generator at all.**
 
     top75_windows      cache read, deterministic
@@ -28,7 +28,7 @@ random multi-start draw -- **cannot act here**, and the 0.08 A figure may not si
 The floor has to be built for THIS pipeline.  `--mode determinism` verifies the claim empirically
 by re-running targets in a fresh interpreter and comparing bit patterns.
 
-THE THREE DRAW AXES, and why each is the analogue it claims to be.
+The three draw axes, and why each is the analogue it claims to be.
 
   `canon`  draw 0.  Exactly the Sprint 14 construction.  Reproduces -0.022 or the module is
            measuring something else.
@@ -44,7 +44,7 @@ THE THREE DRAW AXES, and why each is the analogue it claims to be.
            0.148 kcal/mol under translation while the single point moves 1.3e-6.
 
   `startperm`
-           **THE SECOND EXACT NULL, and the one that reproduces the 0.08 A MECHANISM.**  The
+           **the second exact null, and the one that reproduces the 0.08 A MECHANISM.**  The
            `frame` null perturbs floating point only; both arms stay in the same basin, so it
            certifies the numerical floor and nothing more.  R1.5's floor came from something
            stronger -- a multi-start optimiser landing in DIFFERENT basins on different draws.
@@ -63,7 +63,7 @@ THE THREE DRAW AXES, and why each is the analogue it claims to be.
            available analogue of "an independent start draw": it perturbs what the two local
            optimisers are handed without privileging either arm.
 
-A DEFECT IN THE SPRINT 14 REPORT THAT THIS MODULE FIXES.  `s14/ener_avgrefine.run_target` scores
+A defect in the sprint 14 Report that this module fixes.  `s14/ener_avgrefine.run_target` scores
 arm A's RMSD on `pr["fit_ca"]` -- the **lam = 0** projection -- and arm A's Ramachandran fraction
 on `pr["phi"], pr["psi"]` -- the **lam = 0.3 ramah-penalised** projection.  Those are two
 different structures, and the penalised one is the arm that was explicitly optimised for

@@ -39,13 +39,6 @@ dependencies = [
 [project.optional-dependencies]
 test = ["pytest>=7.0"]
 
-# REMOVED from the previous requirements.txt, both now unimported anywhere in the tree:
-#   quimb        -- the matrix-product-state arm (mps/, deleted).  See project memory:
-#                   a dense statevector was bit-exact but 2.5x slower than lightning,
-#                   and the MPS route was abandoned.
-#   matplotlib   -- only ever used by the plotting and poster scripts (plot_structures,
-#                   poster_figures, diagnose_*), all deleted.  Nothing that ships plots.
-
 [tool.setuptools]
 packages = ["core"]
 py-modules = []
@@ -53,3 +46,4 @@ py-modules = []
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+markers = ["slow: needs a full AMBER minimisation; not run by default in CI"]

@@ -1,7 +1,7 @@
 """Sequence-conditioned per-residue torsion distribution: a mixture of von Mises over
 (phi, psi).
 
-WHY THIS EXISTS. Sprint 5 established two things about the current system. The candidate
+Why this exists. Sprint 5 established two things about the current system. The candidate
 pool is not the problem -- a pool of real protein fragments retrieved by sequence
 similarity reaches 1.356 A pool-best on held-out targets against Sprint 4's 2.355 A. And
 selection is the entire problem: the learned distogram returns 3.3-3.5 A from those pools
@@ -19,14 +19,14 @@ chirality or local backbone conformation, while (phi, psi) are local, O(n), and 
 the thing distances are blind to. A candidate structure can match a predicted distance
 matrix closely while sitting in the wrong region of Ramachandran space.
 
-WHAT THIS MODEL IS. Per residue, a K-component mixture of independent von Mises densities
+What this model is. Per residue, a K-component mixture of independent von Mises densities
 over phi and psi, conditioned on the sequence through a dilated convolution stack. A
 mixture, not a point prediction, because backbone torsions are genuinely multimodal --
 alpha and beta basins are both accessible to most residues and a unimodal fit lands between
 them, in a region no residue occupies. That failure mode is the torsion-space analogue of
 the lumpy-distogram problem already recorded in this project.
 
-TWO USES, AND ONE OF THEM IS SAFER THAN THE OTHER.
+Two uses, and one of them is safer than the other.
 
   * SCORING (`score_torsions`): the log-likelihood of an existing structure's torsions.
     This is a drop-in selection signal over any candidate pool and is the use that

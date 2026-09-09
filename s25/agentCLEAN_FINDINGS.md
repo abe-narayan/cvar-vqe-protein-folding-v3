@@ -119,7 +119,7 @@ This is the whole of it. **11 non-bytecode files, 148 KB.**
 
 | file | evidence |
 |---|---|
-| `work_bench_baseline.log` | root-level bench timing transcript. **Basename does not appear in any of the 8,556 text files in the tree — 433.7 MB searched, `.py` `.md` `.json` `.toml` `.txt` `.sh`, i.e. including every sprint result JSON and all 553 KB of `FINDINGS.md`.** `.gitignore` declares `*.log` disposable. Untracked. |
+| `work_bench_baseline.log` | root-level bench timing transcript. **Basename does not appear in any of the 8,556 text files in the tree — 433.7 MB searched, `.py` `.md` `.json` `.toml` `.txt` `.sh`, i.e. including every sprint result JSON and all 553 KB of `docs/FINDINGS.md`.** `.gitignore` declares `*.log` disposable. Untracked. |
 | `work_bench_comp.log` | as above |
 | `work_bench_comp2.log` | as above |
 | `work_bench_lpt.log` | as above |
@@ -146,7 +146,7 @@ wide search is what makes this a negative result rather than an unsearched assum
 (`s21`–`s24`) have the same "not cited by basename anywhere" evidence as the root ones —
 including under the 433.7 MB search.
 `_archive/README.txt` records that this exact check was run before, was run WRONG, and that
-one sprint log turned out to be cited in `FINDINGS.md` and another was the sole on-disk
+one sprint log turned out to be cited in `docs/FINDINGS.md` and another was the sole on-disk
 source of a published number. The precedent is to archive, not delete, and the cost of
 doing so is 200 KB.
 
@@ -160,7 +160,7 @@ doing so is 200 KB.
 Protein-Folding-Algorithm/
 ├── README.md               rewritten: purpose, install, run, architecture, results
 ├── ARCHITECTURE.md         new: data flow, Hamiltonians, VQE/CVaR, distogram, limits
-├── FINDINGS.md             the research record (stays at root, it is the headline)
+├── docs/FINDINGS.md             the research record (stays at root, it is the headline)
 ├── pyproject.toml
 ├── core/                   production — 11 modules, unchanged
 ├── tests/                  12 files (10 existing + test_instrument.py + test_cvar.py)
@@ -226,7 +226,7 @@ final_report.md,professor_brief.md}` — is compatible with what is there.
 2. `distogram_models_large.STALE-PRE-FOLD-REPIN-DO-NOT-USE/` — 7.2 MB, quarantined by
    rename on purpose so `FRAG_LARGE=1` fails loudly. It is doing a job. Keep, but it wants
    a sentence in the README rather than a scary directory name in `ls`.
-3. `CONSOLIDATION_MANIFEST.json` (12.7 KB) and `CONDENSED_REPORT.md` (12.4 KB) at root —
+3. `docs/consolidation-2026-09-04.json` (12.7 KB) and `docs/CONDENSED_REPORT.md` (12.4 KB) at root —
    neither is referenced by basename anywhere in the tree. They read as Sprint-11
    consolidation artefacts. Probably `research/`, possibly obsolete, **your call**.
 4. `s8/integrate.py` and `s8/invfold.py` — the only two modules in `s5/s7/s8/s9` outside
@@ -335,7 +335,7 @@ safe to run beside a live experiment.
 #### `tests/test_instrument.py` — 44 tests, all passing
 
 `s12/instrument.py` had **no test of its own**. Every RMSD in this project — every
-`FINDINGS.md` number, every LEDGER row, the 3.0483 Å incumbent — comes out of ten functions
+`docs/FINDINGS.md` number, every LEDGER row, the 3.0483 Å incumbent — comes out of ten functions
 in that file, and a silent change to `kabsch_rmsd_batch` would move all of them at once
 with nothing going red.
 

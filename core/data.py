@@ -3,7 +3,7 @@
 Consolidates `peptide_db.py` (434), `fragment_db.py` (145), `representations.py` (633) and
 `esm_features.py` (148).
 
-THE SHARPEST HAZARD IN THIS REPOSITORY IS THE SEQUENCE ALPHABET, so it is dealt with first.
+The sharpest hazard in this repository is the sequence alphabet, so it is dealt with first.
 Two different 20-letter orders were in use and they agree on exactly THREE letters (A, S,
 T):
 
@@ -26,7 +26,7 @@ Two structural defences, not one:
    way to save codes without saving the alphabet with them. The 2026 failure needed a
    default; there is now no default to be wrong about.
 
-THE IDENTITY CONVENTION. `identity` is Needleman-Wunsch match count normalised by the
+The identity convention. `identity` is Needleman-Wunsch match count normalised by the
 LONGER sequence, applied member-to-member. This is leaky at the member level for long
 library entries: 573 library members across 58 targets contain a target at >= 0.6 while
 passing the 0.6 filter, because 1CEK's 13 residues sitting verbatim inside the 25-residue
@@ -35,7 +35,7 @@ EXACTLY and pinned by a test. `containment` is the same alignment normalised by 
 sequence -- the quantity a window-level filter should actually use -- and is provided under
 its own name so the two can never be confused for each other again.
 
-RETRIEVAL TIE-BREAKING IS PINNED. `s7/audit.py` sorts candidates with a STABLE argsort and
+Retrieval tie-breaking is pinned. `s7/audit.py` sorts candidates with a STABLE argsort and
 `s5/inband.py` does not. Measured over the 126 cached universes, the stable sort reproduces
 the deposited ``order`` on every target exactly, while the unstable sort moves as many as
 47 of 500 pool members. `top_k` is stable, always.
@@ -57,9 +57,7 @@ from . import geometry as geo
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# =====================================================================================
-# 1. THE ALPHABET
-# =====================================================================================
+# 1. the alphabet
 #: THE canonical residue order. Everything in `core` encodes and decodes in this order,
 #: and it is the order the cached window banks on disk are already written in.
 ALPHABET = "ARNDCQEGHILKMFPSTWYV"
@@ -121,7 +119,6 @@ class CodedBank:
                 f"orders in this repository agree on three letters out of twenty.")
         return cls(z["codes"], str(z["alphabet"]))
 
-
 #: BLOSUM62 in `ALPHABET` order, upper triangle flattened.
 _B62_ROWS = """4 -1 -2 -2 0 -1 -1 0 -2 -1 -1 -1 -1 -2 -1 1 0 -3 -2 0
 5 0 -2 -3 1 0 -2 0 -3 -2 2 -1 -3 -2 -1 -1 -3 -2 -3
@@ -152,7 +149,6 @@ def _blosum62() -> np.ndarray:
             M[i, i + k] = M[i + k, i] = float(v)
     return M
 
-
 BLOSUM62 = _blosum62()
 
 
@@ -182,13 +178,11 @@ def top_k(scores: np.ndarray, k: int, largest: bool = True) -> np.ndarray:
     return order[:k] if k is not None else order
 
 
-# =====================================================================================
-# 2. ALIGNMENT AND IDENTITY
-# =====================================================================================
+# 2. Alignment and identity
 def identity(a: str, b: str, gap: float = -1.0) -> float:
     """Needleman-Wunsch identity normalised by the LONGER sequence.
 
-    THE REPOSITORY'S CONVENTION, preserved exactly -- results on record depend on it. It
+    The repository's convention, preserved exactly -- results on record depend on it. It
     is leaky at the member level (see the module docstring); `containment` is the
     normalisation a window-level filter should use, and it lives under its own name so the
     two cannot be mistaken for one another.
@@ -211,7 +205,6 @@ def containment(a: str, b: str, gap: float = -1.0) -> float:
     if n == 0 or m == 0:
         return 0.0
     return _nw_matches(a, [b])[0] / min(n, m)
-
 
 #: Below this many sequences the per-cell numpy overhead of the batched DP exceeds the
 #: pure-Python inner loop it replaces (the batched form does ``n*m`` numpy calls whatever
@@ -366,10 +359,7 @@ def max_possible_identity_many(a: str, C: np.ndarray, lens: np.ndarray) -> np.nd
 def _kmers(s: str, k: int = 3) -> set:
     return {s[i:i + k] for i in range(len(s) - k + 1)}
 
-
-# =====================================================================================
-# 3. THE PEPTIDE DATABASE
-# =====================================================================================
+# 3. The peptide database
 DIRS = (os.path.join(BASE, "pdbs"), os.path.join(BASE, "pdbs_ext"))
 PEPTIDE_CACHE = os.path.join(BASE, "peptide_db.npz")
 
@@ -493,7 +483,6 @@ def holdout(target_seq: str, threshold: float = IDENTITY_THRESHOLD) -> Tuple[Pep
 def _db_composition() -> Tuple[np.ndarray, np.ndarray]:
     return composition_matrix([p.seq for p in load()])
 
-
 # ------------------------------------------------------------------ clusters and folds
 _CLUSTER_CACHE = os.path.join(BASE, "peptide_clusters.json")
 _FOLD_CACHE = os.path.join(BASE, "peptide_folds.json")
@@ -544,7 +533,7 @@ def folds(n_folds: int = 5, seed: int = 0) -> Dict[str, int]:
 
     The assignment is written to `peptide_folds.json` on first use and read back
     thereafter, and that pinning is load-bearing rather than a cache. Fold indices are a
-    shuffle of CLUSTER IDS, so anything that renumbers clusters -- adding a database entry,
+    shuffle of cluster ids, so anything that renumbers clusters -- adding a database entry,
     or replacing an unsound prefilter with a sound one -- silently reassigns every sequence,
     the trained fold models on disk would then be excluding the wrong fold, and a target
     could be scored by a model that had trained on it with no error raised anywhere. Delete
@@ -567,7 +556,6 @@ def folds(n_folds: int = 5, seed: int = 0) -> Dict[str, int]:
     with open(_FOLD_CACHE, "w") as f:
         json.dump({"n_folds": n_folds, "seed": seed, "assign": out}, f)
     return out
-
 
 # ------------------------------------------------------------------ target sets
 MANIFEST = os.path.join(BASE, "results", "benchmark_manifest.json")
@@ -685,10 +673,7 @@ def monomer_benchmark(aqueous_only: bool = False) -> List[Peptide]:
             out.append(by_id[t["pdb"]])
     return out
 
-
-# =====================================================================================
 # 4. FRAGMENTS
-# =====================================================================================
 PROT_DIR = os.path.join(BASE, "prots")
 FRAGMENT_CACHE = os.path.join(BASE, "fragment_db.npz")
 FRAGMENT_CACHE_LARGE = os.path.join(BASE, "fragment_db_large.npz")
@@ -776,7 +761,6 @@ def load_fragments(large: Optional[bool] = None) -> Tuple[Peptide, ...]:
         large = USE_LARGE
     return tuple(build_fragments(path=FRAGMENT_CACHE_LARGE if large else FRAGMENT_CACHE))
 
-
 _FOLD_FRAG_VERSION = 1
 
 
@@ -822,9 +806,7 @@ def _digest(items: Sequence[str]) -> str:
     return h.hexdigest()
 
 
-# =====================================================================================
 # 5. WINDOWS -- the retrieval unit
-# =====================================================================================
 def windows(pool: Sequence[Peptide], n: int, with_torsions: bool = False):
     """Every contiguous length-``n`` window of every pool member.
 
@@ -865,10 +847,7 @@ def retrieve(query_seq: str, pool: Sequence[Peptide], k: int):
     idx = top_k(sim, k)
     return W[idx], S[idx], sim[idx], [src[i] for i in idx]
 
-
-# =====================================================================================
 # 6. ESM-2 FEATURES
-# =====================================================================================
 #: The full bank. ~1.5 GB, an object-array npz: `np.load` materialises ALL of it, and doing
 #: that in a process that then keeps running has repeatedly taken this box to 94-96%. It is
 #: never opened from a long-lived process here -- `warm` extracts the needed subset in a
@@ -904,7 +883,7 @@ def esm_available() -> bool:
 
 def warm(sequences: Sequence[str]) -> int:
     """Make ``sequences`` available from the hot cache, extracting from the 1.5 GB bank in
-    a THROWAWAY SUBPROCESS. Returns how many were added.
+    a throwaway subprocess. Returns how many were added.
 
     This is the established pattern and the reason it exists: caching per-target tables
     instead of the whole bank cut one downstream footprint from 2.0 GB to 0.26 GB.
@@ -995,7 +974,6 @@ def _pca() -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         _pca_cache = (z["mu"], z["W"], z["scale"])
     return _pca_cache
 
-
 _ESM_VERSION = 1
 
 
@@ -1023,10 +1001,7 @@ def esm_contacts(sequence: str) -> np.ndarray:
     distance prior needs, and the only part of ESM-2 ever supervised on structure."""
     return esm_raw(sequence)[1]
 
-
-# =====================================================================================
 # 7. REPRESENTATIONS -- bitstring to structure
-# =====================================================================================
 import sidechains as _sc                                                   # noqa: E402
 
 #: One-letter codes whose chi1 is encoded: the aromatics whose ring this repo can build.
@@ -1309,7 +1284,6 @@ class TorsionStateRepresentation:
                 "legacy_library": self.legacy_library, "expresses_alpha_helix": True,
                 "expresses_beta_strand": True, "expresses_turns": True, "chiral": True,
                 "realistic_bond_geometry": True}
-
 
 LATTICE_DIRECTIONS = {(0, 0): (1.0, 1.0, 1.0), (0, 1): (1.0, -1.0, -1.0),
                       (1, 0): (-1.0, 1.0, -1.0), (1, 1): (-1.0, -1.0, 1.0)}

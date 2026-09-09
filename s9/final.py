@@ -1,7 +1,6 @@
 """Sprint 9 FINAL EVALUATION -- the one clean pass on the 60-target held-out benchmark.
 
-THE PRE-REGISTRATION
-====================
+The pre-registration
 Everything in this file was fixed before a single benchmark number was read.  Nothing here
 may be tuned on these 60 targets; every hyperparameter is inherited from the 126-target
 tuning instrument and the pre-registration restates it:
@@ -14,8 +13,7 @@ tuning instrument and the pre-registration restates it:
     validity  = AMBER ff14SB/GBn2 restrained relaxation, k = 10 kcal/mol/A^2,
                 steps = 0 (converged)                    (S8-12, S9-5)
 
-THE FOUR STAGES, and what each is for
--------------------------------------
+The four stages, and what each is for
 1. RETRIEVE   Out-of-fold peptides + `distogram._fold_fragments(fold, 5)` are windowed at
               the target length; the K=500 highest BLOSUM62 sums are the pool.  Identical
               construction to `s7/audit.py:build_target` (the reference implementation),
@@ -37,8 +35,7 @@ THE FOUR STAGES, and what each is for
 The PRIMARY reported number is the full four-stage system INCLUDING AMBER.  Stage 3 alone
 is reported alongside as the declared ablation.  Both go in the record.
 
-WHAT IS A BASELINE AND WHAT IS A DIAGNOSTIC
--------------------------------------------
+What is A baseline and what is A diagnostic
 Deployable, reported as baselines:  the shipped distogram argmin (the historical
 pipeline), and the unfiltered pool's own best member (the achievability CEILING -- not
 deployable, but the number that prices the selection gap).  The perfect-distance-oracle
@@ -46,7 +43,6 @@ ranks the pool by L1 agreement with the NATIVE distance matrix; it is a diagnost
 labelled as one everywhere it appears.
 
 NATIVES
--------
 `nat_ca`, `rr` and `Dnat` are REPORTING LABELS.  Nothing on the deployable path reads
 them: `deployable_view()` is the only object the synthesis and relaxation see, and
 `stage_leak` NaN-poisons every native quantity and asserts the emitted structures are

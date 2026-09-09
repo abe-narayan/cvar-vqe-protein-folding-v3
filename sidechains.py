@@ -5,7 +5,6 @@ import numpy as np
 
 import protein_geometry as geo
 
-
 __all__ = [
     "build_sidechain", "build_full_structure", "sidechain_atom_names",
     "residue_bonds", "heavy_atom_count", "write_full_pdb", "ring_atom_names",
@@ -16,7 +15,6 @@ __all__ = [
 
 class NotImplementedResidueError(NotImplementedError):
     """Raised for residue types this module cannot build."""
-
 
 THREE = dict(geo.ONE_TO_THREE)
 ONE = dict(geo.THREE_TO_ONE)
@@ -30,7 +28,6 @@ ONE = dict(geo.THREE_TO_ONE)
 SUPPORTED_RESIDUES = ("GLY", "ALA", "SER", "THR", "ASP", "GLU",
                       "ASN", "LYS", "PRO", "PHE", "TYR", "TRP",
                       "VAL", "LEU", "ILE", "MET", "CYS", "GLN", "ARG", "HIS")
-
 
 CHI_ANGLES: Dict[str, Tuple[float, ...]] = {
     "SER": (62.0,),
@@ -72,7 +69,6 @@ CHI1_ROTAMERS: Dict[str, Tuple[float, ...]] = {
 #: not implemented, so His falls back to the CB proxy in `energy_terms.aromatic_term`.
 AROMATIC_RING_RESIDUES = ("PHE", "TYR", "TRP")
 
-
 _SPECS: Dict[str, List[Tuple[str, Tuple[str, str, str], float, float, object]]] = {
     "GLY": [],
     "ALA": [],
@@ -80,7 +76,6 @@ _SPECS: Dict[str, List[Tuple[str, Tuple[str, str, str], float, float, object]]] 
     "SER": [
         ("OG",  ("N", "CA", "CB"), 1.417, 110.8, ("chi", 0, 0.0)),
     ],
-
 
     "THR": [
         ("OG1", ("N", "CA", "CB"), 1.420, 110.1, ("chi", 0, 0.0)),
@@ -167,7 +162,6 @@ _SPECS: Dict[str, List[Tuple[str, Tuple[str, str, str], float, float, object]]] 
     ],
 }
 
-
 _RING_TEMPLATES: Dict[str, Dict[str, Tuple[float, float]]] = {
     "TYR": {
         "CB":  (-2.069719, -0.516542),
@@ -224,7 +218,6 @@ def ring_atom_names(resname: str) -> Tuple[str, ...]:
         key = THREE.get(key, key)
     return _RING_ATOMS.get(key, ())
 
-
 PRO_RING = {
     "b_CB_CG": 1.526,
     "a_CA_CB_CG": 102.286,
@@ -233,7 +226,6 @@ PRO_RING = {
     "a_CB_CG_CD": 106.700,
     "t_chi2": -22.549,
 }
-
 
 _SIDECHAIN_BONDS: Dict[str, Tuple[Tuple[str, str], ...]] = {
     "GLY": (),
@@ -341,7 +333,6 @@ def _frame(origin, x_ref, plane_ref):
     e2 = v - np.dot(v, e1) * e1
     e2 = e2 / np.linalg.norm(e2)
     return e1, e2, np.cross(e1, e2)
-
 
 #: resname -> (atom names, (k, 3) projection coefficients onto the template frame).
 #: The ring template, its frame, and every atom's coordinates in that frame are fixed

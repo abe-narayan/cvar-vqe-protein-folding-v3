@@ -29,7 +29,7 @@ Amber is a correctly-specified objective and the pipeline should pivot to it. If
 places the native mid-pool, then no available scoring channel ranks truth first, which is the
 most important negative result of the program.
 
-THE CONFOUND THIS CONTROLS, WHICH IS THE WHOLE REASON THE OLD RESULT IS SUSPECT. Pool
+The confound this controls, which is the whole reason the old result is suspect. Pool
 candidates are IDEAL-GEOMETRY backbones rebuilt from a real fragment's torsions via
 `build_backbone_batch`. A native read from a PDB is an EXPERIMENTAL structure with its own
 bond lengths and angles. Scoring one against the other compares geometry provenance, not

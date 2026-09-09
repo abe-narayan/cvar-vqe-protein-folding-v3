@@ -200,7 +200,6 @@ class MLP:
         self.mu, self.sd = z["mu"], z["s"]
         return self
 
-
 #: Regularisation defaults -- and the reason they are OFF is the most counter-intuitive
 #: measurement in this module, so it is recorded in full.
 #:
@@ -286,7 +285,6 @@ def train_fold(fold: int, use_esm: bool = True, n_folds: int = 5,
         m.save(path)
         out.append(m)
     return out
-
 
 # --------------------------------------------------------------------- prior
 #: Per-separation-shell weights and the exponent on the predicted spread, fitted on the

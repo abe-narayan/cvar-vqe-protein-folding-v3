@@ -6,7 +6,6 @@ potential, the DSSP H-bond model, the cooperativity terms and the Ramachandran t
 lifted byte-for-byte; `energy_components` returns exactly what it returned before.
 
 Where the time goes
--------------------
 Measured on real BLOSUM-pool structures for 1A13 (n=14), per structure:
 
     energy_components            0.306 ms
@@ -18,7 +17,6 @@ Measured on real BLOSUM-pool structures for 1A13 (n=14), per structure:
       electrostatic              0.012 ms
       coop_helix + coop_sheet    0.003 ms
       aromatic                   0.000 ms
-      ------------------------------------
       sum of terms               0.246 ms
       per-call overhead          0.060 ms   (d_cb, asarray, dict construction)
 
@@ -39,7 +37,6 @@ contention. It cannot be vectorised without changing the tie-break, which is why
 tie-break rather than an optimisation of the same one.
 
 What is actually new here
--------------------------
 `components_batch` scores a whole pool in one call. It batches every term whose reduction
 order it can preserve and loops only the sequential ones, so it is not an approximation of
 `energy_components`: measured over real pools, all eleven terms agree to 0.0 absolute
@@ -83,10 +80,7 @@ __all__ = [
     "BIN_EDGES", "NBINS",
 ]
 
-
-# ============================================================================
 # SECTION 1 -- the Legacy 11-term energy (was energy_terms.py)
-# ============================================================================
 MJ_ORDER = ["C", "M", "F", "I", "L", "V", "W", "Y", "A", "G",
             "T", "S", "N", "Q", "D", "E", "H", "R", "K", "P"]
 
@@ -120,15 +114,11 @@ def _build_mj_corrected() -> Dict[Tuple[str, str], float]:
     return {(a, b): _MJ_RAW[idx[a]][idx[b]] - 0.5 * (self_e[a] + self_e[b])
             for a in MJ_ORDER for b in MJ_ORDER}
 
-
 MJ_CORRECTED = _build_mj_corrected()
 MJ_RAW = {(a, b): _MJ_RAW[MJ_ORDER.index(a)][MJ_ORDER.index(b)]
           for a in MJ_ORDER for b in MJ_ORDER}
 
-
-# ==========================================================================
 # Burial scale
-# ==========================================================================
 #: Fauchere-Pliska octanol/water pi (1983), all twenty residues.
 #:
 #: This replaces Kyte-Doolittle, and the replacement is the single largest accuracy fix
@@ -247,10 +237,7 @@ AROM_ANGLE_WIDTH = 35.0
 AROM_CB_DIST = 5.50
 AROM_CB_WIDTH = 1.80
 
-
-# ==========================================================================
 # Weights
-# ==========================================================================
 #: Starting weights. `physical` entries are fixed by the units of the term they scale;
 #: `empirical` entries are free and should be set by
 #: `energy_quality.calibrate_weights` over a train split of sequences.
@@ -321,10 +308,7 @@ WEIGHT_ORIGIN = {
     "compactness": "empirical (one-sided Rg restraint)",
 }
 
-
-# ==========================================================================
 # Ramachandran
-# ==========================================================================
 _RAMA_BASINS = [
     (-63.0, -42.0, 28.0, 1.00),
     (-120.0, 130.0, 40.0, 0.90),
@@ -393,10 +377,7 @@ def switch(d: np.ndarray, d0: float, dc: float) -> np.ndarray:
         s[mid] = 0.5 * (1.0 + np.cos(math.pi * (d[mid] - d0) / (dc - d0)))
     return s
 
-
-# ==========================================================================
 # Per-sequence caches
-# ==========================================================================
 _SEQ_CACHE: Dict[Tuple[str, bool], Tuple] = {}
 
 
@@ -442,9 +423,7 @@ def clear_sequence_cache() -> None:
     pair_index.cache_clear()
 
 
-# ==========================================================================
 # Terms
-# ==========================================================================
 def steric_term(coords: Dict[str, np.ndarray], sequence: str,
                 rings: Optional[Dict[int, Dict[str, np.ndarray]]] = None,
                 min_sep: int = 2) -> float:
@@ -495,7 +474,6 @@ def steric_term(coords: Dict[str, np.ndarray], sequence: str,
 
     over = np.maximum(0.0, limit - np.linalg.norm(atoms[ii] - atoms[jj], axis=1))
     return float(over @ over)
-
 
 _STERIC_LAYOUT_CACHE: Dict[tuple, Tuple[np.ndarray, np.ndarray, np.ndarray]] = {}
 
@@ -797,7 +775,6 @@ def backtracking_term(rep, bitstring: str) -> float:
                      if float(np.dot(a, b)) < -2.5))
 
 
-# ==========================================================================
 def energy_components(sequence: str,
                      coords: Dict[str, np.ndarray],
                      phi: Optional[np.ndarray] = None,
@@ -865,10 +842,7 @@ def total_from_components(components: Dict[str, float],
     return float(sum(weights.get(k, 0.0) * components.get(k, 0.0)
                      for k in TERM_NAMES))
 
-
-# ============================================================================
 # SECTION 2 -- batched generation field (was legacy_field.py)
-# ============================================================================
 #: Term order. Same names as `energy_terms.TERM_NAMES` so weights are interchangeable.
 TERMS = list(TERM_NAMES)
 
@@ -1057,10 +1031,7 @@ class BatchLegacy:
         coords = geo.build_backbone_batch(phi, psi)
         return self.terms_from_coords(coords, states=S)
 
-
-# ==========================================================================
 # Weighting
-# ==========================================================================
 #: Per-term weights for the *generation* field. Fitted on real candidate pools of the
 #: 24 development peptides (`work/pools`, dev split), never on a benchmark target and
 #: never on the synthetic decoy bank. See `work/fit_legacy.py`.
@@ -1127,7 +1098,6 @@ class LegacyField:
                                                       phi=phi, psi=psi))
 
 
-# ==========================================================================
 def verify(sequence: str, representation, batch: int = 24, seed: int = 0):
     """Max per-term deviation of `BatchLegacy` from `energy_terms.energy_components`."""
     bl = BatchLegacy(sequence, representation)
@@ -1145,10 +1115,7 @@ def verify(sequence: str, representation, batch: int = 24, seed: int = 0):
             worst[t] = max(worst[t], abs(ref[t] - T[k, c]))
     return worst
 
-
-# ============================================================================
 # SECTION 3 -- per-residue torsion libraries (was torsion_lib2.py)
-# ============================================================================
 _CLASSES = (reps.CLASS_GENERAL, reps.CLASS_GLY, reps.CLASS_PRO,
             reps.CLASS_PRE_PRO)
 MIN_OBS = 40
@@ -1318,10 +1285,7 @@ def make(sequence: str, k: int = 8, exclude_seq: Optional[str] = None,
     tab = library_for(sequence, k, exclude_seq or "", seed, mode)
     return PerResidueTorsion(sequence, tab, chi_bits=chi_bits)
 
-
-# ============================================================================
 # SECTION 4 -- sequence priors (was priors.py)
-# ============================================================================
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # --------------------------------------------------------------------- residue features
@@ -1346,7 +1310,6 @@ _DEFAULT = tuple(float(np.mean([v[k] for v in _PROPS.values()])) for k in range(
 
 def _prop(seq: str) -> np.ndarray:
     return np.array([_PROPS.get(a, _DEFAULT) for a in seq], float)
-
 
 #: Distance bin edges, A. Fine where CA-CA distances are structurally informative
 #: (5-14 A spans an i,i+3 helical turn through a hairpin cross-strand pair) and coarse
@@ -1526,10 +1489,7 @@ class TorsionMRF:
         p = np.exp(-self.h)
         return p / p.sum(1, keepdims=True)
 
-
-# ==========================================================================
 # SECTION 5 -- batched scalar-exact scoring of a whole candidate pool
-# ==========================================================================
 """`components_batch` is `energy_components` over B structures at once, exactly.
 
 The design rule here was found by measuring, and it is the opposite of the obvious one.
@@ -1592,7 +1552,6 @@ class _PoolTables:
             self.st_names, n, (), 2)
         self.rg_target = 2.2 * (n ** 0.38)
 
-
 _POOL_TABLES: Dict[tuple, _PoolTables] = {}
 
 
@@ -1621,7 +1580,6 @@ def components_batch(sequence: str,
     """`energy_components` for a whole pool. Same numbers, one call.
 
     Parameters
-    ----------
     coords : dict of (B, n, 3) arrays in ANGSTROMS -- e.g. straight out of
              `protein_geometry.build_backbone_batch`. Must carry at least "CA";
              "N", "C", "O" enable the H-bond terms and "CB" the CB-pair terms,
@@ -1631,7 +1589,6 @@ def components_batch(sequence: str,
              orientation-dependent aromatic term.
 
     Returns
-    -------
     dict of term name -> (B,) float array, keys and order exactly `TERM_NAMES`.
     """
     CA = np.asarray(coords["CA"], dtype=float)

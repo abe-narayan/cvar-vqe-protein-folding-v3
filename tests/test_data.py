@@ -3,7 +3,7 @@
 The four conventions pinned here are the four that have each silently produced a wrong
 result in this repository:
 
-  1. THE ALPHABET. Two 20-letter orders were in use and they agree on three letters. An
+  1. the alphabet. Two 20-letter orders were in use and they agree on three letters. An
      audit decoded 126 targets' cached window banks with the wrong one and measured every
      identity against a scrambled sequence. Pinned against the deposited banks themselves.
   2. THE IDENTITY NORMALISATION. `identity` divides by the LONGER sequence, which is leaky
@@ -46,9 +46,7 @@ def peptides():
     return d.load()
 
 
-# =====================================================================================
-# 1. THE ALPHABET
-# =====================================================================================
+# 1. the alphabet
 def test_the_canonical_alphabet_is_the_one_the_banks_are_written_in():
     """THE PIN. Decode cached window banks and require the result to be real sequence.
 
@@ -153,9 +151,7 @@ def test_blosum_similarity_matches_the_loop_it_replaces():
     assert np.abs(fast - np.asarray(z["sim"], float)[:3000]).max() < 1e-4
 
 
-# =====================================================================================
-# 2. IDENTITY AND ITS NORMALISATION
-# =====================================================================================
+# 2. Identity and its normalisation
 def test_identity_matches_the_legacy_alignment_exactly(peptides):
     import peptide_db as legacy
     worst = 0.0
@@ -196,7 +192,7 @@ def test_the_batched_and_scalar_paths_agree_across_the_size_switch(peptides):
 
 
 def test_identity_normalises_by_the_longer_sequence_and_that_is_leaky():
-    """THE CONVENTION PIN, and the demonstration of why it is documented as leaky.
+    """The convention pin, and the demonstration of why it is documented as leaky.
 
     1CEK (13 residues) is a verbatim substring of 1A11 (25). `identity` reports 0.520,
     which passes a 0.6 filter; `containment` reports 1.000, which is the truth about the
@@ -243,9 +239,7 @@ def test_vectorised_prefilter_equals_the_dictionary_form(peptides):
         assert np.abs(fast - slow).max() < 1e-12
 
 
-# =====================================================================================
 # 3. DATABASE, CLUSTERS, FOLDS, TARGET SETS
-# =====================================================================================
 def test_holdout_membership_is_identical_to_the_legacy_module(peptides):
     import peptide_db as legacy
     for p in peptides[:120]:
@@ -264,7 +258,7 @@ def test_holdout_removes_the_target_and_everything_above_the_threshold(peptides)
 def test_clusters_reproduce_the_pinned_assignment(tmp_path, monkeypatch):
     """Recompute from scratch and compare against `peptide_clusters.json`.
 
-    The pinned file is load-bearing: fold indices are a shuffle of CLUSTER IDS, so a
+    The pinned file is load-bearing: fold indices are a shuffle of cluster ids, so a
     renumbering silently reassigns every sequence and a target can be scored by a model
     that trained on it, with nothing raised anywhere.
     """
@@ -315,11 +309,9 @@ def test_target_sets_match_the_legacy_module():
                 == [p.pdb for p in legacy.monomer_benchmark()])
 
 
-# =====================================================================================
 # 4. RETRIEVAL TIE-BREAKING
-# =====================================================================================
 def test_stable_argsort_reproduces_every_deposited_pool():
-    """THE TIE-BREAK PIN. `s7/audit.py` used a stable argsort and `s5/inband.py` did not.
+    """The tie-break pin. `s7/audit.py` used a stable argsort and `s5/inband.py` did not.
 
     Over all 126 universes the stable order reproduces the deposited ``order`` array with
     zero mismatches. The unstable sort differs on real targets by as many as 47 of 500
@@ -358,9 +350,7 @@ def test_windows_carry_their_parents_torsions(peptides):
     assert np.abs(PSI[7] - pool[m].psi[s:s + 9].astype(np.float32)).max() == 0.0
 
 
-# =====================================================================================
 # 5. REPRESENTATIONS
-# =====================================================================================
 def test_torsion_representation_decodes_identically_to_the_legacy_module(peptides):
     import representations as legacy
     rng = np.random.default_rng(0)
@@ -431,9 +421,7 @@ def test_batched_decode_matches_the_per_bitstring_form(peptides):
         assert np.abs(psi[k] - b).max() == 0.0
 
 
-# =====================================================================================
 # 6. THE CACHE
-# =====================================================================================
 def test_key_changes_with_every_parameter_and_with_its_type():
     k = C.key("ns", 1, a=1, b="x")
     assert C.key("ns", 1, a=1, b="x") == k                 # deterministic

@@ -75,9 +75,7 @@ TOL_EXACT = 0.0
 TOL_MEAN_RMSD = 0.02        # A, mean |change in CA-RMSD to native|
 
 
-# =====================================================================================
 # helpers
-# =====================================================================================
 @pytest.fixture(scope="module")
 def inputs():
     p = pj.INPUTS_JSON
@@ -103,9 +101,7 @@ def _run(mod, row, grad=None):
     return p[0.0], p[0.3]
 
 
-# =====================================================================================
-# 1. THE FORWARD MAP
-# =====================================================================================
+# 1. The forward map
 def test_scan_builder_reproduces_the_reference_builder():
     """The scan is a different SUMMATION ORDER for the same geometry, so the difference is
     accumulated rounding and must scale like the chain, not like an error."""
@@ -175,9 +171,7 @@ def test_frames_are_rotations_so_the_rotation_axes_are_unit():
     assert np.abs(np.linalg.det(R) - 1.0).max() < 1e-13
 
 
-# =====================================================================================
-# 2. THE ANALYTIC GRADIENT
-# =====================================================================================
+# 2. The analytic gradient
 def test_analytic_gradient_matches_central_differences():
     """The mandate's check.  Central differences at h=1e-6 are themselves only good to
     ~1e-9 (truncation O(h^2 f''') against roundoff O(eps/h)), so 1e-8 is the floor of the
@@ -255,9 +249,7 @@ def test_weighted_kabsch_reduces_to_the_unweighted_one():
                   - aud.kabsch_rmsd_batch(P, C)).max() < 1e-14
 
 
-# =====================================================================================
-# 3. THE PENALTY IS THE SAME PENALTY
-# =====================================================================================
+# 3. The penalty is the same penalty
 def test_penalty_is_bit_identical_to_the_reference(inputs):
     """The tables are the trained prior.  Consolidating the code that reads them must not
     change a single value: exactly 0.0, on real sequences and real folds."""
@@ -283,17 +275,15 @@ def test_hinge_thresholds_are_bit_identical(inputs):
     assert np.abs(pj.logp_tables("rama20") - ref.logp_tables("rama20")).max() == 0.0
 
 
-# =====================================================================================
-# 4. EQUIVALENCE ON REAL PIPELINE INPUTS
+# 4. Equivalence on real pipeline inputs
 #
 #    The bar here was RAISED after an independent audit.  It used to be "within optimiser
 #    path noise"; it is now EXACTLY 0.0 for the shipped mode, because the audit showed that
 #    a forward map agreeing to 1e-13 A still emits a different structure on 126/126 real
 #    targets.  The projection is degenerate and L-BFGS-B starts far from any minimum, so
 #    "numerically negligible" and "returns the same structure" are not the same claim.
-# =====================================================================================
 def test_the_shipped_objective_is_bit_identical_to_the_reference(inputs):
-    """THE PROOF HALF.  L-BFGS-B is deterministic given (f, g), so if the shipped mode's
+    """The proof half.  L-BFGS-B is deterministic given (f, g), so if the shipped mode's
     objective and gradient are bit-identical to the reference's at arbitrary points, the
     trajectory and therefore the emitted structure must be identical too.
 
@@ -345,7 +335,7 @@ def test_exact_builder_is_bit_identical_to_the_reference_builder():
 
 
 def test_live_subset_is_bit_identical_end_to_end(inputs):
-    """THE MEASUREMENT HALF, live, so a stale `verify/project_exactness.json` cannot carry
+    """The measurement half, live, so a stale `verify/project_exactness.json` cannot carry
     the suite: run `s8.project` and the shipped mode on real coordinate averages and
     compare the emitted coordinates and torsions themselves at exactly 0.0."""
     ref = pytest.importorskip("s8.project")
@@ -363,7 +353,7 @@ def test_measured_equivalence_of_the_shipped_arm_over_all_126_targets(measured):
     """The four-arm table's own verdict on the shipped mode: emitted coordinates, torsions
     and objective identical to `s8.project` on every target, at exactly 0.0.
 
-    IDENTITY IS READ OFF `darm_maxabs`, NOT off an RMSD.  A Kabsch RMSD between a structure
+    Identity is read off `darm_maxabs`, NOT off an RMSD.  A Kabsch RMSD between a structure
     and an identical copy of it is not 0.0 but ~1e-7: the residual is a cancellation of two
     large sums and the square root magnifies what survives.  Using it as the identity test
     would have hidden a real 1e-7 A difference and, worse, would have looked like a pass."""
@@ -466,13 +456,11 @@ def test_the_optimisation_is_actually_faster(measured):
         assert agg["s_per_target"]["ref"] / ex["s_per_target"] > 1.5, ex["s_per_target"]
 
 
-# =====================================================================================
-# 5. GEOMETRY VALIDITY ON EVERY EMISSION
-# =====================================================================================
+# 5. Geometry validity on every emission
 def test_every_emission_is_legal_geometry(measured):
     """Bond, pseudo-angle, clashes on every emission of every arm.
 
-    TWO DIFFERENT BARS, and conflating them was a real mistake in the first version of this
+    Two different bars, and conflating them was a real mistake in the first version of this
     file.  The SHIPPED arm is held to EQUIVALENCE -- every geometry statistic identical to
     the reference's, because it is the same structures.  The fast arms are different
     pipelines, so they are held to LEGALITY (bond, bond SD, no clash epidemic, L-handed)
@@ -520,7 +508,7 @@ def test_positive_phi_on_the_constrained_non_glycine_set(measured):
 
 
 def test_every_emission_is_L_handed(measured):
-    """THE CHIRALITY ASSERTION.  A distance objective is exactly mirror-blind and its
+    """The chirality assertion.  A distance objective is exactly mirror-blind and its
     lowest-objective multi-start selects enantiomers; this objective is a COORDINATE
     distance with reflections forbidden in the superposition, so the branch it picks is
     chirality-resolved.  That safety is a property of the objective and would be silently
@@ -545,9 +533,7 @@ def test_L_signature_detects_a_mirror():
     assert float(np.sign(v).mean()) == -1.0
 
 
-# =====================================================================================
-# 6. THE PARAMETERS THAT ARE SCIENCE, NOT TUNING
-# =====================================================================================
+# 6. The parameters that are science, NOT TUNING
 def test_the_starts_are_the_same_four():
     """Multi-start is load-bearing: the projection is degenerate, warm-starting cannot
     cross between the two branches, and reducing the starts would be weakening the science

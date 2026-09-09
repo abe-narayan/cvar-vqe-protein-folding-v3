@@ -1,7 +1,6 @@
 """`core.pipeline` -- the four-stage production path, consolidated, parallel and resumable.
 
-WHAT THIS IS
-============
+What this is
 `s9/final.py` is the authoritative reference implementation of the shipped predictor.  It
 is also a sprint script: one process, one target at a time, three separate CLI stages each
 walking the whole manifest, and a pool cache that stores a 500x500 matrix of which 5625
@@ -23,9 +22,8 @@ entries are ever read.  This module is the same science with none of that.
 Every constant above is inherited from the pre-registration in `s9/final.py` and NOTHING
 here may be tuned against a reported number.
 
-WHAT IS DIFFERENT, AND WHY EACH DIFFERENCE IS EXACT
-===================================================
-1. THE PAIRWISE RMSD MATRIX IS BUILT ON THE FILTERED SUBSET ONLY.
+What is different, and why each difference is exact
+1. The pairwise RMSD matrix is built on the filtered subset only.
    `s9.final.build_pool` computes all K^2 = 250,000 superpositions; `synthesise` then
    reads `P[np.ix_(sub, sub)]` and nothing else ever reads P on the deployable path.  So
    45x of that stage is dead work.  `kabsch_rmsd_batch` is elementwise over its batch axis
@@ -34,7 +32,7 @@ WHAT IS DIFFERENT, AND WHY EACH DIFFERENCE IS EXACT
    sub-block sliced out of the full matrix.  `tests/test_pipeline.py` asserts that at 0.0
    on real pools rather than arguing it.
 
-2. THE LIBRARY AND ITS WINDOWS ARE MEMOISED PER (FOLD, LENGTH).
+2. The library and its windows are memoised per (fold, length).
    `library_members(seq, fold)` filters `db.load()` by `folds[q.seq] != fold and q.seq !=
    target_seq`.  The second clause is unreachable: `folds` is keyed BY SEQUENCE, so any
    member sharing the target's sequence is in the target's own fold and the first clause
@@ -51,8 +49,7 @@ WHAT IS DIFFERENT, AND WHY EACH DIFFERENCE IS EXACT
    target is retrieved, filtered, synthesised and relaxed inside one function, and only
    the result is serialised.
 
-THREADING -- THE OVERSUBSCRIPTION TRAP
-======================================
+Threading -- the oversubscription trap
 Every worker imports numpy (BLAS), torch (the distogram predictor) and OpenMM.  With W
 workers each spawning T threads the box runs W*T runnable threads on 8 cores and the
 measured throughput FALLS.  Workers therefore pin `OMP_NUM_THREADS`, `MKL_NUM_THREADS`,
@@ -62,14 +59,12 @@ already pinned to one thread by `amber_refine` for determinism, and that is load
 for reproducibility, not just for speed.
 
 NATIVES
-=======
 `nat_ca`, `rr` and `Dnat` are REPORTING LABELS.  The deployable path sees a
 `deployable_view` and nothing else; `label()` is the only function that opens a native and
 it runs after the structure is final.  `tests/test_pipeline.py` NaN-poisons every native
 quantity and asserts every emitted coordinate is bit-identical.
 
 RESUMABILITY
-============
 Every target writes one atomic JSON checkpoint under
 ``bench_results/cache/<config-key>/<pdb>.json``.  The config key is a SHA-1 over every
 parameter that can change a number -- K, M, penalty, lambda, the AMBER schedule, the fold
@@ -138,7 +133,7 @@ class Config:
     min_sep: int = 2                 #: CA-CA pair separation for the distogram score
     maxiter: int = 300               #: L-BFGS-B cap inside the projection
     multi_start: bool = True         #: multi-start at every rung -- load-bearing (S9-2)
-    #: WHICH PROJECTION OBJECTIVE STAGE 3b MINIMISES, and it is a science parameter.
+    #: Which projection objective stage 3b MINIMISES, and it is a science parameter.
     #: `exact` is the reference: the bit-exact builder and the reference's own
     #: finite-difference gradient, reproducing `s8.project` bit-for-bit.  `analytic` is
     #: 4.6x faster and lands on DIFFERENT STRUCTURES -- 126/126 targets move, median
@@ -149,11 +144,11 @@ class Config:
     project_grad: str = "exact"
     tie_break: str = "stable"        #: `np.argsort(kind=...)`; PINNED, changes the pool
     torsion_window: int = 8          #: `torsion_lib2.library_for` window
-    #: THE REFERENCE PATH'S STORAGE PRECISION, and it is not cosmetic.
+    #: The reference path's storage precision, and it is not cosmetic.
     #: `s9.final` writes its pool to a float32 `npz` between the CLI stages and
     #: `load_pool` reads it back as float64, so everything downstream of retrieval --
     #: the filter order, the medoid, the coordinate average, the projection -- sees
-    #: coordinates and scores that have been ROUND-TRIPPED THROUGH FLOAT32.  This module
+    #: coordinates and scores that have been ROUND-tripped through FLOAT32.  This module
     #: has no such round trip, so reproducing the reference bit-for-bit means quantising
     #: at the same boundary.  Setting this False keeps full float64 through the pipeline;
     #: it is a numerical-precision CHANGE and `tests/test_pipeline.py` measures what it is
@@ -242,7 +237,6 @@ class Config:
                    "backends": backends if backends is not None else core.backend_report()}
         blob = json.dumps(payload, sort_keys=True, separators=(",", ":"))
         return hashlib.sha1(blob.encode()).hexdigest()[:16]
-
 
 PROD = Config()
 #: A clearly-labelled development configuration.  EXCLUDED from every headline.
@@ -408,7 +402,6 @@ def manifest(name: str):
         return list(debias.tuning_targets())[:n]
     raise KeyError(f"unknown manifest {name!r}")
 
-
 MANIFESTS = ("tuning126", "dev24", "benchmark60", "smoke8", "smoke24")
 
 
@@ -421,8 +414,7 @@ class _Library:
     and window banks instead of 126 of each.  `check(seq, fold)` re-derives the claim per
     target rather than trusting it.
 
-    WHY THE CAPS ARE SMALL, AND WHY THAT IS THE WHOLE POINT
-    ------------------------------------------------------
+    Why the caps are small, and why that is the whole point
     Cross-target parallelism on this box is MEMORY-bound, not core-bound: at 8 workers the
     run drops to 40% CPU at 99% RAM, which is swapping, and it is 2.1x SLOWER than 4
     workers.  So what each worker HOLDS decides how many workers fit, and an unbounded
@@ -434,7 +426,6 @@ class _Library:
         window banks, all 40 (fold, length) entries   435 MB   <-- the whole problem
         distogram fold models, all five                31 MB
         one target's AMBER context                   193 MB
-                                                     -------
                                                      ~967 MB
 
     Targets are dispatched in (fold, length) order, so a worker that keeps the two most
@@ -510,7 +501,6 @@ class _Library:
         return {"window_banks_mb": w / 2 ** 20, "n_window_banks": len(self._windows),
                 "n_member_folds": len(self._members)}
 
-
 _LIB = _Library()
 
 
@@ -537,7 +527,6 @@ def windows_all(pool, n):
             src.append(q.pdb)
     return (np.stack(cas), np.stack(phis), np.stack(psis), np.stack(seqs),
             np.array(src, dtype=object))
-
 
 # ============================================================ the ESM guard
 _GUARDED = [False]
@@ -623,7 +612,6 @@ def _probe_width(cdata):
         return int(np.asarray(v[0]).shape[1])
     return 1280
 
-
 _MODELS = {}
 
 
@@ -688,7 +676,7 @@ def retrieve(target, fold, cfg: Config, clk: Clock):
     the similarity itself.  Nothing native is read or returned.
     """
     aud = core.backend("numerics")
-    #: WINDOW EXTRACTION is clocked apart from the rest of retrieval on purpose.  It is
+    #: window extraction is clocked apart from the rest of retrieval on purpose.  It is
     #: the only part whose cost scales with the LIBRARY -- 7k to 39k windows per target --
     #: rather than with the pool, and it is exactly the part the per-(fold, length) memo
     #: removes.  Folding it into `retrieval` would hide both the cost and the saving.
@@ -818,8 +806,7 @@ def consensus_medoid(Dblock, w=None):
 def quantum_stage(pool, top, Pt, fold, cfg: Config, clk: Clock):
     """CVaR-VQE as the SELECTOR over the discrete hypothesis set.  Deployable.
 
-    WHY THIS IS THE HONEST PLACEMENT, and not a stub
-    ------------------------------------------------
+    Why this is the honest placement, and not a stub
     The near-native band holds ~2-3 populated structural clusters per target, so the
     quantity a consensus readout needs is a DISTRIBUTION over hypotheses, not a point.
     `s8/integrate.py` established exactly this formulation and measured it: the energy is
@@ -828,7 +815,6 @@ def quantum_stage(pool, top, Pt, fold, cfg: Config, clk: Clock):
     p_theta-weighted consensus medoid.
 
     WHY CVaR, MEASURED
-    ------------------
     Minimising the mean energy is degenerate here: at T = 0.1 the alpha = 1 arm collapses
     to 0.076 bits of state entropy -- i.e. back to the argmin, 3.4540 A, the shipped
     selector, contributing exactly nothing.  At the same temperature alpha = 0.1 holds
@@ -886,8 +872,7 @@ def average_weighted(Wo, block, w, clk: Clock):
 def legacy_stage(pool, seq, qs, cfg: Config, clk: Clock):
     """Legacy as a LATE refiner on an already-tight set.  Deployable.
 
-    WHY LATE, and why not anywhere else
-    -----------------------------------
+    Why late, and why not anywhere else
     Legacy's 11-term field is measured to be HARMFUL as a global objective (-0.106 A when
     it enters generation) and mediocre as a global ranker (4.103 A on the normal pool
     against the shipped 3.454).  The one regime where it has measured skill is a pool that
@@ -1122,7 +1107,7 @@ def run_target(target, fold, cfg: Config = PROD, clk: Clock | None = None):
 
 
 def label(rec, pool, target, clk: Clock, cfg: Config = PROD):
-    """THE ONLY PLACE A NATIVE IS OPENED.  Runs after every structure is final.
+    """The only place A native is opened.  Runs after every structure is final.
 
     Emits the four reporting arms the project quotes: the shipped distogram argmin (the
     historical pipeline's own answer), the unfiltered pool's best member (the achievability
@@ -1209,7 +1194,6 @@ def _jsonable(rec, lab, clk, cfg, key):
     out.update(lab)
     return out
 
-
 # ============================================================ worker plumbing
 THREAD_VARS = ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS",
                "NUMEXPR_NUM_THREADS", "VECLIB_MAXIMUM_THREADS", "NT",
@@ -1246,7 +1230,6 @@ class _pinned_env:
             else:
                 os.environ[v] = old
         return False
-
 
 _WSTATE = {}
 
@@ -1343,27 +1326,17 @@ def _worker_footprint():
 
 
 def dispatch_units(tg, folds):
-    """The work units, and their order.  A SCHEDULING decision: it cannot move a number.
+    """The work units, and their order.  Scheduling only: it cannot move a number.
 
-    THE TWO CONSTRAINTS PULL AGAINST EACH OTHER
-    -------------------------------------------
-    The library memo is keyed on (fold, length), so a worker wants CONSECUTIVE targets
-    that share that key.  Load balance wants the opposite: targets sorted by (fold,
-    length) are also sorted by cost, because cost climbs steeply with length -- measured,
-    10.5 s at n=9 against 24.8 s at n=16 -- so any contiguous equal-COUNT chunking hands
-    one worker all the short targets and another all the long ones.
+    Two constraints pull against each other.  The library memo is keyed on (fold, length),
+    so a worker wants consecutive targets sharing that key; load balance wants the opposite,
+    because cost climbs steeply with length -- 10.5 s at n=9 against 24.8 s at n=16 -- so
+    equal-count chunking hands one worker all the short targets.  The previous chunked
+    dispatch did exactly that and cost 16.5% of the machine.
 
-    That is exactly what the previous chunked dispatch did, and it cost 16.5% of the
-    machine.  Measured on the 8-worker run: workers were busy 351.4 s at most and 232.3 s
-    at least, a 119.1 s spread, against a 367.1 s wall.  Occupancy 6.68 of 8 cores.
-
-    THE FIX SATISFIES BOTH.  The unit is the (fold, length) GROUP itself -- every target
-    in a unit shares the memo key, so locality is perfect by construction rather than
-    approximate -- and the units are dispatched DYNAMICALLY, longest first.  Longest-first
-    on a dynamic queue is the classic LPT schedule; with 39 units over 8 workers it lands
-    within 2% of perfect balance.
-
-    Simulated against the measured per-target costs of the 8-worker run:
+    A unit is therefore the (fold, length) group itself, so locality is exact rather than
+    approximate, and units are dispatched dynamically longest-first (LPT).  Simulated on the
+    measured per-target costs of the 8-worker run:
 
         schedule                                 makespan   spread   memo hits
         contiguous equal-count chunks (before)     351.4 s   119.1 s     55%
@@ -1372,31 +1345,17 @@ def dispatch_units(tg, folds):
         (fold, n) groups, LPT by total length       311.2 s    10.0 s     69%
         perfect balance at the same CPU-work        306.4 s        --      --
 
-    Note the second row: grouping ALONE makes it worse.  The ordering is what does the
-    work, and grouping is what keeps the memo.  Note also the fourth: the WEIGHT barely
-    matters -- even ordering by target count reaches 312.2 s -- so the weight here is
-    total sequence length, a structural property of the manifest.  Weighting by measured
-    cost would buy 3 s and would make the scheduler depend on a results artefact, which
-    is a far worse trade than it looks.
+    Grouping alone makes it worse; the ordering does the work.  The weight barely matters, so
+    it is total sequence length -- a property of the manifest -- rather than measured cost,
+    which would make the scheduler depend on a results artefact.
 
-    THE ONE PLACE THIS SCHEDULE COSTS SOMETHING -- READ BEFORE RAISING THE WORKER COUNT
-    -----------------------------------------------------------------------------------
-    Longest-first orders by sequence length, and length is also what sets an AMBER
-    system's atom count.  So the first W units dispatched are the W BIGGEST systems, and
-    they are resident simultaneously.  Peak memory is therefore front-loaded by
-    construction, and it is a property of the SCHEDULE COMBINED WITH THE ARM rather than
-    of either alone:
-
-        like-for-like (one minimisation per target)   w8 fits: 92% peak, 0 declines
-        four-component (TWO per target)               w8 does NOT: AMBER declined on 7
-                                                      targets and the full system on 26
-
-    A decline is recorded per target, not as a run error, so that second row still
-    reports 126/126 while `rmsd_full` is a mean over 119 and `rmsd_system` over 100 --
-    an arm's mean moving without any single number being wrong.  `core.bench` reports
-    `n_amber_declined` and refuses such a run as a headline, but the fix here is simply
-    to run the heavier arm at w6.  Raising the worker count for an arm that relaxes more
-    than once per target needs this checked, not assumed.
+    Worth checking before raising the worker count: longest-first also orders by AMBER atom
+    count, so the first W units are the W biggest systems and are resident at once.  At one
+    minimisation per target w8 fits (92% peak, 0 declines); at two per target it does not
+    (AMBER declined on 7 targets, the full system on 26).  A decline is recorded per target
+    rather than as a run error, so such a run still reports 126/126 while its means are over
+    fewer targets.  `core.bench` reports `n_amber_declined` and refuses it as a headline; run
+    the heavier arm at w6.
     """
     groups = {}
     for p in tg:
@@ -1463,7 +1422,7 @@ def run(manifest_name="tuning126", cfg: Config = PROD, workers: int = 1,
     else:
         import concurrent.futures as cf
         ctx = _mp_context()
-        #: THE OVERSUBSCRIPTION TRAP.  `_worker_init` runs AFTER the child has already
+        #: The oversubscription trap.  `_worker_init` runs AFTER the child has already
         #: imported numpy to unpickle the task, and OpenBLAS reads its thread count once,
         #: at load.  So the pin has to be in the environment the child STARTS with, which
         #: means setting it here, in the parent, before the pool exists -- `spawn` copies
@@ -1593,7 +1552,6 @@ def summarise(rows):
             "frac_duplicate": float(1.0 - np.mean([b / a for a, b in dup]))}
     return out
 
-
 #: Every arm the harness reports.  The first block is the like-for-like `s9/final.py`
 #: pipeline; the second is the two mandated components that file does not contain.
 ARMS = ("shipped", "pool_best", "top_m_best", "rmsd_avg", "rmsd_fit",
@@ -1614,8 +1572,7 @@ def _paired(a, b):
             "n_better": int((d < -1e-9).sum()), "n_worse": int((d > 1e-9).sum()),
             "n": int(len(d))}
 
-
-#: THE COMPONENT ABLATIONS.  Each entry is (name, arm-with, arm-without, what it prices).
+#: The component ablations.  Each entry is (name, arm-with, arm-without, what it prices).
 #: A zero here is a RESULT, not a failure: the project's own findings say VQE ties uniform
 #: sampling at 4^n configurations and Legacy does not earn its place on accuracy.  The
 #: mandate is that the components genuinely participate and are honestly priced, and an
@@ -1721,7 +1678,6 @@ def main(argv=None):
     print(json.dumps({k: v for k, v in out.items() if k != "rows"}, indent=2,
                      default=float))
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())

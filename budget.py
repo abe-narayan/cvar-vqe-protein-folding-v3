@@ -19,7 +19,6 @@ constraint. If COBYLA spends its whole allowance constructing an initial simplex
 result about optimizer choice rather than an artifact of how the arms were configured.
 
 Readout reservation
--------------------
 A run must be able to report its answer even after the optimizer has spent everything.
 ``reserve(k)`` withholds ``k`` evaluations behind a soft limit for the duration of the
 search; ``release()`` hands them back for the final read-out. Charges still stop at the
@@ -27,7 +26,6 @@ hard limit, so the reserve bounds the read-out rather than exempting it.
 """
 import warnings
 from typing import Dict, Optional
-
 
 __all__ = ["BudgetExhausted", "BudgetedEnergyModel", "resolve_maxiter",
            "check_optimizer_budget"]

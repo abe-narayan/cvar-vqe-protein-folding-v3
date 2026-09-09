@@ -24,7 +24,6 @@ try:
 except Exception:  # pragma: no cover
     _HAVE_BIOPYTHON = False
 
-
 BOND_N_CA = 1.458
 BOND_CA_C = 1.525
 BOND_C_N = 1.329
@@ -60,7 +59,6 @@ THREE_TO_ONE = {
 }
 ONE_TO_THREE = {v: k for k, v in THREE_TO_ONE.items()}
 
-
 _PDB_ACCESS_LOG: List[str] = []
 
 
@@ -72,9 +70,7 @@ def get_pdb_log() -> List[str]:
     return list(_PDB_ACCESS_LOG)
 
 
-# ==========================================================================
 # NeRF backbone construction
-# ==========================================================================
 def _place_atom(a, b, c, length: float, angle: float, torsion: float):
     bcx, bcy, bcz = c[0] - b[0], c[1] - b[1], c[2] - b[2]
     nb = math.sqrt(bcx * bcx + bcy * bcy + bcz * bcz)
@@ -314,9 +310,7 @@ def extract_torsions(N, CA, C):
     return phi, psi
 
 
-# ==========================================================================
 # Superposition / metrics
-# ==========================================================================
 def kabsch_superpose(mobile: np.ndarray, target: np.ndarray) -> np.ndarray:
     P = np.asarray(mobile, dtype=float)
     Q = np.asarray(target, dtype=float)
@@ -412,9 +406,7 @@ def radius_of_gyration(coords: np.ndarray) -> float:
     return float(np.sqrt(np.mean(np.sum((c - c.mean(axis=0)) ** 2, axis=1))))
 
 
-# ==========================================================================
 # Contacts and secondary structure
-# ==========================================================================
 def contact_map(coords: np.ndarray, threshold: float = 8.0,
                 min_sep: int = 3) -> Set[Tuple[int, int]]:
     """Vectorised: was an O(n^2) Python loop with a norm call per pair."""
@@ -443,7 +435,7 @@ def dssp_energy_matrix(coords: Dict[str, np.ndarray], min_sep: int = 2,
     """``(E, ok)``: the DSSP electrostatic energy for every ordered (donor, acceptor)
     pair, and the mask of pairs admissible as hydrogen bonds.
 
-    THE SINGLE SOURCE OF TRUTH FOR THE DSSP FORM. It used to be written out twice --
+    The single source of truth for the DSSP form. It used to be written out twice --
     here and in `energy_terms.hbond_terms` -- which is not a hypothetical drift risk:
     the N...O interpenetration fix (`HB_MIN_ON`, `HB_E_FLOOR`) was applied to one copy
     first, and until the second was found, structures whose donor and acceptor heavy
@@ -523,9 +515,7 @@ def ss_agreement(pred: str, native: str) -> float:
     return sum(1 for i in range(n) if pred[i] == native[i]) / n
 
 
-# ==========================================================================
 # PDB IO
-# ==========================================================================
 def _residues_of(chain):
     out = []
     for residue in chain:

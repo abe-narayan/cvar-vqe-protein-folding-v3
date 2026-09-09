@@ -1,7 +1,6 @@
 """Equivalence and genuineness tests for `core.quantum`.
 
-WHAT THIS SUITE HAS TO SUPPORT
-==============================
+What this suite has to support
 Two claims, and neither of them is "the consolidation looks right".
 
 **1. It is still a real VQE with a real CVaR.**  A consolidation of a quantum component
@@ -19,8 +18,7 @@ with the same seeds.  Where the answer is bit-identical the assertion is ``==``,
 reduction ORDER genuinely changed (the MPS contraction is now log-depth) the difference is
 MEASURED and pinned with a stated tolerance, and the tolerance is justified in the test.
 
-THE ONE TEST THAT MATTERS MOST
-==============================
+The one test that matters most
 `test_cvar_gradient_baseline_is_constant_not_tail_only` pins a defect that was already
 found and fixed once: `qansatz.cvar_gradient` subtracts the tail mean from the tail entries
 only, i.e. it uses ``b(x) = m * 1[x in tail]``, which is a FUNCTION of x and therefore not
@@ -229,7 +227,7 @@ def test_finite_difference_reference_is_independent_machinery():
     assert e_coarse > 10 * e_fine, (e_coarse, e_fine)
 
 
-# ============================== 3. THE BASELINE REGRESSION TEST (most important)
+# ============================== 3. The baseline regression test (most important)
 def _stage_grad(nq=S9_NQ, trials=S9_TRIALS, shots=S9_SHOTS, alphas=S9_ALPHAS):
     """The s9 `stage_grad` audit, reproduced against an EXACT classical reference.
 
@@ -308,7 +306,7 @@ def _stage_grad(nq=S9_NQ, trials=S9_TRIALS, shots=S9_SHOTS, alphas=S9_ALPHAS):
 
 
 def test_cvar_gradient_baseline_is_constant_not_tail_only():
-    """THE REGRESSION TEST for the recorded CVaR-gradient baseline defect.
+    """The regression test for the recorded CVaR-gradient baseline defect.
 
     A baseline ``b`` leaves a score-function estimator unbiased iff it is CONSTANT in x,
     because the correction term is ``b * E_p[grad log p] = 0``.  The shipped
@@ -1178,7 +1176,6 @@ def _main():
     print(f"\n{len(fns) - len(fails)}/{len(fns)} passed"
           + (f"   FAILURES: {fails}" if fails else ""))
     return 1 if fails else 0
-
 
 if __name__ == "__main__":
     sys.exit(_main())

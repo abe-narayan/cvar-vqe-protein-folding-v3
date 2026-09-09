@@ -230,10 +230,7 @@ class BatchLegacy:
         coords = geo.build_backbone_batch(phi, psi)
         return self.terms_from_coords(coords, states=S)
 
-
-# ==========================================================================
 # Weighting
-# ==========================================================================
 #: Per-term weights for the *generation* field. Fitted on real candidate pools of the
 #: 24 development peptides (`work/pools`, dev split), never on a benchmark target and
 #: never on the synthetic decoy bank. See `work/fit_legacy.py`.
@@ -300,7 +297,6 @@ class LegacyField:
                                                       phi=phi, psi=psi))
 
 
-# ==========================================================================
 def verify(sequence: str, representation, batch: int = 24, seed: int = 0):
     """Max per-term deviation of `BatchLegacy` from `energy_terms.energy_components`."""
     bl = BatchLegacy(sequence, representation)

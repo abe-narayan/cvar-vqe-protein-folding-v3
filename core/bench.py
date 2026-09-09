@@ -1,7 +1,6 @@
 """`core.bench` -- the measurement instrument for the speedup claim.
 
-WHY THIS FILE EXISTS AND WHAT IT REFUSES TO DO
-==============================================
+Why this file exists and what it refuses to do
 A speedup claim without a committed baseline, measured on the same scientific experiment,
 is worthless.  So this harness:
 
@@ -18,8 +17,7 @@ is worthless.  So this harness:
   * writes machine-readable results to `bench_results/*.json`.  Speedups are computed by
     `--compare` from two real runs on disk.  Nothing here estimates anything.
 
-THE TWO ARMS
-============
+The two arms
 `--arm baseline` runs the `s9/final.py` path: its own `library_members`, its own
 `windows_all`, its own full K x K pairwise matrix, its own `synthesise`, its own AMBER
 block, one target at a time in one process, with the float32 `npz` round trip it puts
@@ -133,7 +131,6 @@ class Resources:
                 "ram_pct": s(self.ram_pct),
                 "ram_used_gb": s(self.ram_used, lambda x: x / 2 ** 30),
                 "total_ram_gb": self.total_ram / 2 ** 30}
-
 
 # ============================================================ startup / import cost
 #: The heavy closure a worker really touches once it starts doing work: torch (the
@@ -388,16 +385,15 @@ def run_baseline(manifest_name, cfg: P.Config, verbose=True, limit=None):
             "errors": errs, "stage_totals": P.stage_totals(rows),
             "summary": P.summarise(rows)}
 
-
 # ============================================================ the run record
 #: THIS MACHINE, measured with the AMBER workload itself rather than a proxy
 #: (`verify/amber_platform.json`, one process per core on an idle box).  It is an Intel
 #: Core Ultra 7 256V: 8 physical cores, NO hyperthreading, and a clean 4/4 P-core /
 #: LP-E-core split at 1.67x.
 #:
-#: WHY EVERY RESULTS FILE CARRIES THIS.  A CPU-second is not a unit of work here: a
+#: Why every results file carries this.  A CPU-second is not a unit of work here: a
 #: second on core 6 buys 0.60 of a second on core 1.  So a table showing the optimised
-#: arm consuming MORE CPU-seconds than the serial reference is not showing waste, it is
+#: arm consuming more CPU-seconds than the serial reference is not showing waste, it is
 #: showing the same arithmetic done on slower silicon -- if work spreads evenly over all
 #: eight cores the predicted inflation is mean(1/rel) = 1.291, and AMBER's measured
 #: inflation at 8 workers is 1660.37/1285.85 = 1.291.  Agreement to 0.03%: there is no
@@ -410,7 +406,7 @@ MACHINE = {
                                      0.640, 0.693, 0.600, 0.702],
     "core_equivalents": 6.426,
     "fast_cores": 4, "fast_core_equivalents": 3.791,
-    #: THE CPU-SECOND INFLATION FLOOR IS SCHEDULE-DEPENDENT, and there are two regimes.
+    #: The cpu-second inflation floor is schedule-dependent, and there are two regimes.
     #: With N cores of unequal speed, the per-structure CPU average depends on how
     #: structures are allotted:
     #:   equal COUNT per core  -> mean(1/rel) = 1.2908   (static equal-count chunks)
@@ -463,7 +459,7 @@ def _env_report(cfg: P.Config, workers):
 def _occupancy(rows, workers, wall, cpu_sum):
     """How much of the machine the run actually used, and where the idle went.
 
-    THE AUTOMATIC INVALIDATION SIGNAL.  A run whose workers are idle is either badly
+    The automatic invalidation signal.  A run whose workers are idle is either badly
     SCHEDULED or sharing the box, and those are different failures with the same
     symptom in a wall clock.  They separate cleanly once per-worker busy time is known:
 
@@ -670,7 +666,6 @@ def _clear_cache(arm, cfg, backends_env):
                          cfg.key(core.backend_report() if backends_env is None else None))
     if os.path.isdir(d):
         shutil.rmtree(d, ignore_errors=True)
-
 
 # ============================================================ printing
 #: (key, label).  The first block is the like-for-like `s9/final.py` pipeline; the second
@@ -1090,7 +1085,6 @@ def main(argv=None):
           components=a.components, verify_arms=a.verify_arms,
           amber_concurrency=a.amber_concurrency)
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())

@@ -43,9 +43,7 @@ def peptides():
     return d.load()
 
 
-# =====================================================================================
 # 1. THE RMSD IMPLEMENTATION
-# =====================================================================================
 def _explicit_rotation_rmsd(W, ref):
     """The other form that was in use (`s8/audit8.rmsd_to`): build R, rotate, measure."""
     W = np.asarray(W, float)
@@ -192,7 +190,7 @@ def test_weighted_rmsd_reduces_to_the_unweighted_one():
 
 
 def test_rotation_onto_matches_kabsch_superpose_side():
-    """THE TRANSPOSED-ROTATION PIN.
+    """The transposed-rotation pin.
 
     `kabsch_superpose` applies its rotation on the left; `rotation_onto` returns the matrix
     to POST-multiply by. Post-multiplying by the wrong one is still a valid rotation, so
@@ -223,9 +221,7 @@ def test_pairwise_ca_rmsd_is_symmetric_with_a_zero_diagonal():
     assert np.abs(np.diag(M)).max() < 1e-6      # residual-form floor, see above
 
 
-# =====================================================================================
-# 2. TORSIONS AND BACKBONE
-# =====================================================================================
+# 2. Torsions and backbone
 def test_dihedral_batch_is_exact_against_the_scalar_form(peptides):
     """Difference exactly 0.0 over every backbone torsion in the database."""
     worst = 0.0
@@ -290,9 +286,7 @@ def test_torsion_roundtrip_is_stable(peptides):
         assert np.abs(np.angle(np.exp(1j * (psi[:-1] - p.psi[:-1])))).max() < 1e-8
 
 
-# =====================================================================================
 # 3. PDB IO
-# =====================================================================================
 def _sample_pdbs(k=120, seed=0):
     paths = (sorted(glob.glob(os.path.join(ROOT, "pdbs", "*.pdb")))
              + sorted(glob.glob(os.path.join(ROOT, "pdbs_ext", "*.pdb")))
@@ -366,9 +360,7 @@ def test_pdb_access_is_logged():
     assert len(g.get_pdb_log()) == 1
 
 
-# =====================================================================================
 # 4. CONTACTS, SECONDARY STRUCTURE, CA-TRACE PRIOR, FLOOR
-# =====================================================================================
 def test_contacts_and_secondary_structure_match_the_legacy_module(peptides):
     import protein_geometry as pg
     for p in peptides[:60]:
@@ -432,9 +424,7 @@ def test_project_states_matches_the_legacy_loop(peptides):
                 == legacy_floor.project(rep, p.phi, p.psi)).all()
 
 
-# =====================================================================================
 # 5. THE numerics CONTRACT
-# =====================================================================================
 def test_numerics_contract_is_the_canonical_implementation():
     """`core/__init__.py` routes the `numerics` backend here. The aliases must be the same
     objects `s7/audit.py` retyped by hand, or the consolidation is cosmetic."""

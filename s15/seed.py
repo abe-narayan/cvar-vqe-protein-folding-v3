@@ -1,6 +1,6 @@
 """SPRINT 15 -- a STABLE seed, because `hash()` is not one.
 
-THE DEFECT THIS FIXES. Every multi-start module in this sprint seeded its RNG with
+The defect this fixes. Every multi-start module in this sprint seeded its RNG with
 
     rng = np.random.default_rng(hash(pdb) % (2 ** 32))
 
@@ -11,7 +11,7 @@ of multi-start initialisations, and no multi-start number in this sprint was bit
 re-running. Found by the RESTRAINT agent while checking that its ladder shared starts with the
 coordinator's reference arm.
 
-WHAT IT DID AND DID NOT BREAK, stated precisely because the distinction decides which results
+What it did and did not break, stated precisely because the distinction decides which results
 survive:
 
   * **Within one process it is harmless.** Every arm in a single run shares one start set, so

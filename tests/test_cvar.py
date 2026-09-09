@@ -1,11 +1,10 @@
 """Definitional regression tests for the CVaR machinery in `core.quantum`.
 
-WHAT THIS FILE ADDS THAT `tests/test_quantum.py` DOES NOT
-=========================================================
+What this file adds that `tests/test_quantum.py` DOES NOT
 `tests/test_quantum.py` is an EQUIVALENCE suite: it proves that the consolidated
 `core.quantum` reproduces `qansatz` / `vqe` / `foldvqe` bit-for-bit, and it pins the one
 gradient-baseline defect that was found and fixed.  That is the right test for a
-consolidation, and it is thorough — but it inherits its notion of "correct" from the
+consolidation, and it is thorough - but it inherits its notion of "correct" from the
 module it is comparing against.  **If the shipped CVaR and its reference were both wrong
 in the same way, every one of those tests would still pass.**
 
@@ -13,8 +12,8 @@ So this file asserts the DEFINITION instead.  CVaR_alpha of a distribution is th
 its lower alpha tail, and that object has properties that hold no matter who implemented
 it: it equals the mean at alpha=1, it never exceeds the mean, it is monotone in alpha, it
 descends to the minimum as alpha shrinks, it is translation-equivariant and positively
-homogeneous, and the four entry points in this module — `cvar`, `cvar_from_samples`,
-`cvar_from_probs`, `cvar_from_distribution` — must all agree wherever their domains meet.
+homogeneous, and the four entry points in this module - `cvar`, `cvar_from_samples`,
+`cvar_from_probs`, `cvar_from_distribution` - must all agree wherever their domains meet.
 None of that is checked anywhere else in the suite.
 
 The four entry points, and why there are four:
@@ -28,11 +27,11 @@ The four entry points, and why there are four:
 The sampled pair and the exact pair are NOT the same function: the sampled pair takes a
 whole number of samples (``k = ceil(alpha*N)``) and the exact pair splits the boundary
 state's probability mass.  They coincide exactly when ``alpha*N`` is an integer and the
-weights are uniform, and the tests below assert agreement there and only there — asserting
+weights are uniform, and the tests below assert agreement there and only there - asserting
 it everywhere would be asserting a falsehood.
 
 Also covered here for the first time: `alpha_schedule` (the anneal that exists to prevent
-premature concentration — a failure this project has met repeatedly), `tail_indices`
+premature concentration - a failure this project has met repeatedly), `tail_indices`
 (the selection every gradient weight is gathered through), `BestSeenTracker` (which
 carries the answer a run actually returns), `all_bitstrings` and `n_parameters`.
 
@@ -63,8 +62,8 @@ def _rng(seed=0):
 def _reference_cvar(e, alpha):
     """The definition, written out: sort ascending, average the lowest ceil(alpha*N).
 
-    Deliberately naive and deliberately not the shipped code path — no partition, no mask,
-    no tie rule — so that it is an independent statement of what the answer should be.
+    Deliberately naive and deliberately not the shipped code path - no partition, no mask,
+    no tie rule - so that it is an independent statement of what the answer should be.
     """
     e = np.sort(np.asarray(e, float))
     k = max(1, int(math.ceil(alpha * e.size)))
@@ -216,7 +215,7 @@ def test_cvar_from_probs_rejects_zero_total_mass():
 
 # ===================================================== the exact, distributional form
 def test_cvar_from_probs_and_from_distribution_are_the_same_quantity():
-    """Two implementations of the exact CVaR — one vectorised, one an explicit loop —
+    """Two implementations of the exact CVaR - one vectorised, one an explicit loop -
     and they exist so that the vectorised one can be differentiated.  If they disagree,
     the finite-difference gradient tests are differentiating something other than the
     objective the run minimises."""
@@ -234,7 +233,7 @@ def test_cvar_from_probs_and_from_distribution_are_the_same_quantity():
 def test_exact_cvar_matches_the_sampled_one_when_the_boundary_does_not_split():
     """The one place the sampled and exact forms MUST coincide: uniform weights and
     `alpha*N` a whole number, so no state's mass is cut.  Asserting agreement anywhere
-    else would be asserting something false — see the module docstring."""
+    else would be asserting something false - see the module docstring."""
     rng = _rng(12)
     n = 20
     e = rng.standard_normal(n)
@@ -273,7 +272,7 @@ def test_exact_cvar_puts_all_its_mass_on_the_lowest_states():
 
 
 def test_exact_cvar_splits_the_boundary_state_fractionally():
-    """Half of the third state's mass, and no more — the property that separates the exact
+    """Half of the third state's mass, and no more - the property that separates the exact
     form from the sampled one."""
     e = np.array([0.0, 1.0, 2.0, 3.0])
     p = np.array([0.25, 0.25, 0.25, 0.25])
@@ -339,7 +338,7 @@ def test_alpha_schedule_clamps_progress_outside_zero_one():
 
 
 def test_alpha_schedule_stays_a_legal_cvar_level():
-    """Its whole output range has to be acceptable to the functions that consume it —
+    """Its whole output range has to be acceptable to the functions that consume it -
     a schedule that emitted 0.0 or >1 would raise deep inside a run."""
     for p in np.linspace(-1, 2, 61):
         a = Q.alpha_schedule(float(p))
@@ -351,7 +350,7 @@ def test_alpha_schedule_stays_a_legal_cvar_level():
 def test_best_seen_tracker_keeps_the_minimum_and_counts_every_lookup():
     """The tracker carries what a run actually returns.  Two things are asserted because
     each has been a real bug class: it must keep the LOWEST (not the last, not the
-    highest), and `n_lookups` must count every offer including rejected ones — that count
+    highest), and `n_lookups` must count every offer including rejected ones - that count
     is the evidence used to show the search does not enumerate `2**n`."""
     t = Q.BestSeenTracker()
     assert t.best_energy == float("inf") and t.best_bitstring is None
@@ -423,7 +422,7 @@ def test_cvar_survives_the_scale_raw_amber_actually_arrives_at():
     """Unrelaxed AMBER windows are clash-dominated: 57.5% above 1e4 kcal and a worst case
     of 7.1e18.  The pipeline rank-standardises before scoring for exactly that reason, but
     the CVaR routine must not itself overflow, return NaN, or silently reorder when a
-    handful of such values are present — the tail is the LOW end and must be unaffected."""
+    handful of such values are present - the tail is the LOW end and must be unaffected."""
     e = np.concatenate([_rng(18).standard_normal(200), np.full(20, 7.1e18)])
     v, q, tail = Q.cvar(e, 0.1)
     assert np.isfinite(v)

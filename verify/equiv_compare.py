@@ -156,6 +156,5 @@ def main():
                      indent=2, sort_keys=True, default=float))
     return report
 
-
 if __name__ == "__main__":
     main()

@@ -129,7 +129,6 @@ def energies(reports):
             d.setdefault(r["pid"], set()).add(r["interaction"])
     return d
 
-
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "worker":
         main_worker()

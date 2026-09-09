@@ -1,7 +1,6 @@
 """Does the INPUT REPRESENTATION matter? Re-judged on SELECTION instead of distance MAE.
 
-THE ERROR THIS CORRECTS
------------------------
+The error this corrects
 `s5/dist_ablate.py` compared four inputs to the distance predictor and reported
 
     one-hot 2.216 | PCA-32 2.133 | PCA-128 2.212 | raw 1280-d + learned projection 2.109
@@ -27,7 +26,6 @@ can tie on MAE and differ on ranking; that is now measured, not hypothesised. Th
 re-runs the comparison with **selected CA-RMSD as the primary metric**.
 
 ARMS -- they differ ONLY in the feature block
----------------------------------------------
 Every arm shares the architecture, the training corpus, the optimiser, the seed, the
 number of epochs, the loss and the scoring code. Only the per-residue (and, for `escon`,
 the per-pair) feature block changes.
@@ -50,7 +48,6 @@ the per-pair) feature block changes.
              clean one.
 
 METRICS -- and which one decides
---------------------------------
     selected CA-RMSD    PRIMARY. argmin of the score over the 500-candidate pool.
     in-band Spearman    candidates within 1.5 A of pool best. Necessary, NOT sufficient:
                         in `s7.debias` the best-in-band arm of 28 selected worse.
@@ -60,7 +57,6 @@ METRICS -- and which one decides
     MAE                 reported for completeness and explicitly NOT used to choose.
 
 PROTOCOL
---------
 Tuning instrument: `s7.debias`'s 126 cluster-representative peptides, length 9-16,
 identity-cluster-disjoint from BOTH the 24-target dev set and the 60-target benchmark,
 pooled by `s7.audit.build_target`. Its base-arm SE is 0.147 A against dev's 0.354 A.
@@ -69,7 +65,6 @@ All arms, all seeds, all comparisons happen there. The SINGLE best arm is then r
 6 arms and SE 0.147 A no single-seed difference is claimable without it.
 
 DEPLOYABLE vs DIAGNOSTIC
-------------------------
 DEPLOYABLE: `Encoder.residues`, `Encoder.pair_extra`, `ReprNet.forward`, `predict` and
 `score_pool` -- their inputs are a SEQUENCE and the pool's own candidate distance
 matrices. No native coordinate, distance, torsion or RMSD of the scored target reaches
@@ -81,7 +76,6 @@ only AFTER the score vector exists, and only to report. Nothing fitted on a nati
 crosses back into any arm -- there is no fitted scalar in this study at all.
 
 LEAKAGE
--------
 * Training corpus for fold f = peptides with `peptide_db.folds(5)[seq] != f` plus
   `distogram._fold_fragments(f, 5)`, i.e. the production discipline: nothing above 0.6
   identity to a held-out peptide. `stage_leak` re-checks this by brute force.

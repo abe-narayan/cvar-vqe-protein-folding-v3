@@ -1,21 +1,12 @@
 """`core` -- the consolidated production path of the peptide structure predictor.
 
-Consolidated front half of the pipeline: data, geometry, prediction, cache; consolidated
-back half: energy, AMBER, quantum; and `core.pipeline`, which is the whole of it.  Each
-operation has exactly one implementation.  Importing a submodule is cheap -- nothing loads
-a database, a model or the ESM bank at import time, and THIS file imports nothing at all.
+The production import closure, traced by AST from `s9/final.py` (the final held-out
+evaluation), is 18 modules; 28 once VQE/CVaR are included.  `core` is that closure,
+consolidated, made parallel, resumable and measurable, without changing a single
+scientific decision.  Everything else in the tree is experiment record.
 
-WHAT THIS PACKAGE IS
-====================
-The scientific instrument in this repository is 372 Python files, but the *production
-import closure* traced by AST from `s9/final.py` (the final held-out evaluation) is 18
-modules -- 28 once VQE/CVaR are included.  Everything else is experiment debris.  `core`
-is that closure, consolidated, made parallel, resumable and measurable, WITHOUT changing a
-single scientific decision.
-
-    core.pipeline   the four-stage pipeline (retrieve -> filter -> synthesise -> relax)
-    core.bench      the benchmark harness that measures it, per stage, against the
-                    `s9/final.py` reference path
+    core.pipeline   the four stages: retrieve -> filter -> synthesise -> relax
+    core.bench      the harness that measures them, per stage, against `s9/final.py`
 
     core.geometry   backbone build / Kabsch / the manifold projection
     core.data       the peptide database, folds, identity clusters
@@ -23,26 +14,24 @@ single scientific decision.
     core.energy     the classical energy terms
     core.amber      the ff14SB/GBn2 restrained relaxation
     core.quantum    the VQE / CVaR optimiser
+    core.cache      on-disk caches and subset extraction out of the big banks
 
-THE ONE-LINE SWITCH
-===================
-`core.pipeline` never imports `protein_geometry` (or any other root module) directly.  It
-asks `core.backend("geometry")`, and this module hands back `core.geometry` if it exists
-AND exposes the whole contract, otherwise the root module it replaces.  So a consolidated
-module going live is *literally* the act of committing the file -- no edit here, no edit
-in `pipeline.py`.
+Importing a submodule is cheap: nothing loads a database, a model or the ESM bank at
+import time, and this file imports nothing at all.
 
-The contract check is deliberate.  A partially-written `core/geometry.py` appearing on
-disk mid-sprint must not silently break the pipeline or, far worse, silently change a
-number; `backend()` requires every symbol in `CONTRACT[name]` to be present before it will
-prefer the consolidated module, and records what it chose in `ACTIVE` so `core.bench` can
-write the live backend set into every results file AND into every cache key.  A run whose
-backends differ is a run with a different cache key: an optimised result can never be
-served out of a baseline cache.
+Backend switching.  `core.pipeline` never imports `protein_geometry` or any other root
+module directly.  It asks `backend("geometry")`, which returns `core.geometry` if that
+module exists AND exposes every symbol in `CONTRACT[name]`, otherwise the root module it
+replaces.  Bringing a consolidated module live is therefore just committing the file.
 
-Set `CORE_BACKENDS=legacy` in the environment to force every fallback -- this is how the
-`--baseline` arm of the harness guarantees it is measuring the reference path -- or
-`CORE_BACKENDS=geometry,amber` to force a specific subset consolidated.
+The contract check is what stops a half-written `core/geometry.py` from silently changing
+a number mid-sprint.  `backend()` records what it chose in `ACTIVE`, and `core.bench`
+writes that set into every results file and every cache key, so an optimised result can
+never be served out of a baseline cache.
+
+`CORE_BACKENDS=legacy` forces every fallback, which is how the harness's `--baseline` arm
+guarantees it is measuring the reference path.  `CORE_BACKENDS=geometry,amber` forces a
+named subset consolidated.
 """
 from __future__ import annotations
 

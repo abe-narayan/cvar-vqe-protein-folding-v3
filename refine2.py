@@ -13,7 +13,6 @@ the distances are smooth in the torsions through the NeRF chain. The gradient in
 space therefore exists almost everywhere, and this module computes it exactly.
 
 Two implementations, and the second is the one that ships
-------------------------------------------------------
 ``TorchObjective``   the NeRF chain and the score rewritten in torch, so autograd supplies
                      the gradient. Correct, and it is the ORACLE the fast path is verified
                      against -- but it is slow here for a reason that has nothing to do
@@ -748,7 +747,6 @@ def check_analytic(objective, B: int = 8, seed: int = 0) -> Dict[str, float]:
             "rel": float(np.abs(num - ref).max() / scale),
             "cos": float((num @ ref) / (np.linalg.norm(num) * np.linalg.norm(ref))),
             "grad_scale": float(scale)}
-
 
 if __name__ == "__main__":
     print("builder:", check_builder())

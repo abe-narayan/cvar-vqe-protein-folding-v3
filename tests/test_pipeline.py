@@ -1,7 +1,6 @@
 """Scientific equivalence tests for `core.pipeline` and `core.bench`.
 
-WHAT THIS SUITE IS FOR
-======================
+What this suite is for
 The sprint's claim is "the same experiment, faster".  A performance sprint's one real
 failure mode is that the second half of that sentence quietly stops being true, so every
 assertion here is about the FIRST half.  Coverage is not the point; these are the specific
@@ -685,7 +684,6 @@ def _assert_records_context(r, name=""):
     assert r["env"]["openmm_threads"] == 1, \
         "OpenMM's thread count changes the RESULT, not only the speed; it stays at 1"
 
-
 # ============================================================ 10. the components
 #: What the four-component arm has to reproduce, from `s8/integrate_vqe.json` on this
 #: same 126-target instrument.  These are not new results; they are the published ones,
@@ -870,7 +868,6 @@ def _main():
                 print(f"FAIL  {label}: {exc}")
     print(f"\n{len(fails)} failure(s)")
     return 1 if fails else 0
-
 
 if __name__ == "__main__":
     raise SystemExit(_main())

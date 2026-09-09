@@ -59,7 +59,6 @@ _DEFAULT = tuple(float(np.mean([v[k] for v in _PROPS.values()])) for k in range(
 def _prop(seq: str) -> np.ndarray:
     return np.array([_PROPS.get(a, _DEFAULT) for a in seq], float)
 
-
 #: Distance bin edges, A. Fine where CA-CA distances are structurally informative
 #: (5-14 A spans an i,i+3 helical turn through a hairpin cross-strand pair) and coarse
 #: beyond, where "far apart" is all the information there is.

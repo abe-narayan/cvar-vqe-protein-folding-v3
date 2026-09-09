@@ -1,9 +1,8 @@
-"""Regression tests for `s12/instrument.py` — the evaluation instrument.
+"""Regression tests for `s12/instrument.py` - the evaluation instrument.
 
-WHY THIS FILE EXISTS
-====================
-Every RMSD in this project — every finding in `FINDINGS.md`, every sprint LEDGER row,
-every incumbent number — is produced by a handful of functions in `s12/instrument.py`:
+Why this file exists
+Every RMSD in this project - every finding in `docs/FINDINGS.md`, every sprint LEDGER row,
+every incumbent number - is produced by a handful of functions in `s12/instrument.py`:
 `kabsch_rmsd_batch`, `superpose_batch`, `pairwise_rmsd`, `medoid`, `coordinate_average`,
 `pair_index`, `pair_dists`, `shipped_score`, `paired` and `write`.  Until now the module
 had **no test of its own**.  `tests/test_amber_frame_invariance.py` imports it, but only
@@ -12,18 +11,17 @@ to obtain targets; it asserts nothing about the instrument's arithmetic.
 That is the highest-leverage untested surface in the repository: a silent change to
 `kabsch_rmsd_batch` would move every number in the project at once and nothing would fail.
 
-THE DUPLICATE-UTILITY HAZARD THIS FILE PINS
-===========================================
+The duplicate-utility hazard this file pins
 `s12/instrument.py` carries its OWN implementations of four functions that also exist in
 `core.geometry`: `kabsch_rmsd_batch`, `ca_rmsd`, `pair_index`, `pair_dists`.  They are not
-imports and not aliases — they are separate code that happens to agree today.  The
+imports and not aliases - they are separate code that happens to agree today.  The
 production pipeline uses `core.geometry`'s; the instrument that scores the pipeline uses
 its own.  **If those two ever diverge, the project would be scoring one geometry with
 another geometry's ruler and no existing test would notice.**  The cross-checks below
 assert agreement to a stated tolerance, and are the reason the divergence cannot happen
-quietly.  (They do NOT assert bit-equality: the two use different reduction orders — the
+quietly.  (They do NOT assert bit-equality: the two use different reduction orders - the
 instrument reconstructs the RMSD from singular values, `core.geometry` from superposed
-coordinates — so a few ulp of difference is expected and is measured rather than assumed.)
+coordinates - so a few ulp of difference is expected and is measured rather than assumed.)
 
 Everything here is pure arithmetic on synthetic arrays.  Nothing loads the window
 universes, the distogram, ESM, OpenMM or any cache, so the file runs in about a second and
@@ -52,13 +50,13 @@ from s12 import instrument as I                                       # noqa: E4
 #: this tolerance is used only where a different reduction order is genuinely involved.
 CROSS_TOL = 1e-9
 
-#: THE INSTRUMENT'S NUMERICAL FLOOR, measured here rather than wished away.
+#: The instrument's numerical floor, measured here rather than wished away.
 #: `kabsch_rmsd_batch` reconstructs the residual as ``|P|^2 + |T|^2 - 2*sum(s)``.  When the
 #: two structures are the same, that is a difference of two quantities of order 1e3-1e4 Å^2
 #: whose true difference is zero, so the cancellation leaves ~1e-11 Å^2 of rounding, and the
 #: square root turns it into ~1e-7 Å.  `core.geometry` uses the identical construction and
 #: has the identical floor.  It is 4 orders of magnitude below the 1e-3 Å the project
-#: reports to and cannot affect a finding — but an "RMSD of a structure with itself" is
+#: reports to and cannot affect a finding - but an "RMSD of a structure with itself" is
 #: 1.3e-7, never 0.0, and a test written to expect an exact zero is the test that is wrong.
 SELF_RMSD_FLOOR = 1e-6
 
@@ -175,7 +173,7 @@ def test_ca_rmsd_is_the_single_structure_face_of_the_batch_routine():
 
 # ================================================================== cross-check vs core
 def test_instrument_kabsch_agrees_with_core_geometry():
-    """THE DIVERGENCE ALARM.  See the module docstring: the instrument scores what
+    """The divergence alarm.  See the module docstring: the instrument scores what
     `core.geometry` builds, using its own copy of the same maths.  If this ever fails,
     every RMSD in the project is being measured with a different ruler than the one the
     pipeline optimises against, and no other test in the repository would say so."""
@@ -248,7 +246,7 @@ def test_pairwise_rmsd_is_not_symmetrised_the_way_core_geometry_symmetrises_it()
     """A real behavioural difference between the two implementations, pinned rather than
     tidied: `core.geometry.pairwise_ca_rmsd` returns ``0.5*(M + M.T)``, the instrument
     returns the raw matrix.  Both are symmetric to ~1e-9 here, so the choice does not move
-    a number today — but a medoid is an argmin over ROW MEANS, and averaging the transpose
+    a number today - but a medoid is an argmin over ROW MEANS, and averaging the transpose
     in changes those means in the last bits, which is exactly the kind of difference that
     decides a tie.  Anyone unifying the two must know which one the findings were measured
     with: the instrument's, unsymmetrised."""
@@ -276,13 +274,13 @@ def test_medoid_is_the_argmin_of_the_mean_row():
 
 
 def test_medoid_tie_break_is_the_lowest_index_and_that_is_a_documented_hazard():
-    """`medoid` is `np.argmin`, so a tie resolves to the LOWEST INDEX — which is the
+    """`medoid` is `np.argmin`, so a tie resolves to the LOWEST INDEX - which is the
     order the pool arrived in.
 
     The project has already been bitten by this once: an `np.argmin` over a tied
     native-free signal silently read the ORACLE sort order of the candidate list and
     invented a 1.386 Å "winner" that did not exist.  This test does not call the behaviour
-    wrong — deterministic tie-breaking is the right default for reproducibility — it PINS
+    wrong - deterministic tie-breaking is the right default for reproducibility - it PINS
     it, so that any caller ranking on a signal with large tie sets knows it is inheriting
     the candidate order and must average the outcome over the tied argmin set instead.
     """
@@ -387,7 +385,7 @@ def test_shipped_score_is_the_mean_risk_over_pairs_at_the_looked_up_bin():
 
 
 def test_shipped_score_clamps_out_of_grid_distances_instead_of_wrapping():
-    """Distances outside 2–40 Å do occur — a stretched decoy, a mis-built chain — and the
+    """Distances outside 2-40 Å do occur - a stretched decoy, a mis-built chain - and the
     lookup index is `clip`ped.  A wrap (a negative index) would silently score a 60 Å pair
     with the risk of a 40 Å one at the far END of the table, which is a different number.
     Both ends are asserted, because only the low end can go negative."""
@@ -473,7 +471,7 @@ def test_paired_ci_brackets_the_mean_and_narrows_with_n():
 def test_paired_reports_the_concentration_diagnostics_the_ledgers_quote():
     """The median-vs-mean gap and the drop-top means are the project's free early warning
     for a result carried by a handful of targets.  They must be the mean over the SAME
-    difference vector with the largest gains removed — not a re-bootstrap, not a trim of
+    difference vector with the largest gains removed - not a re-bootstrap, not a trim of
     both tails."""
     rng = _rng(28)
     a = rng.standard_normal(50)
@@ -520,7 +518,7 @@ def test_write_flags_a_partial_result_as_incomplete(tmp_path, monkeypatch):
     """The documented hazard in `instrument.write`: it has NO CONFIG KEY, so a partial run
     overwrites a complete one of the same name.  The `complete` flag is the only thing that
     lets a reader tell them apart, and it must be driven by the ROW COUNT against
-    `n_expected` — the project's provenance rule is that `complete` requires the full key
+    `n_expected` - the project's provenance rule is that `complete` requires the full key
     set and never a filename."""
     monkeypatch.setattr(I, "RESULTS", str(tmp_path))
     part = json.load(open(I.write("x", {"per_target": [1, 2, 3]}, n_expected=126)))
@@ -558,7 +556,7 @@ def test_write_appends_the_json_suffix_exactly_once(tmp_path, monkeypatch):
 # ================================================================== constants
 def test_the_pinned_constants_are_the_ones_every_finding_assumes():
     """K, M and BAND appear by value in the findings text.  If one of them moves, the
-    numbers in `FINDINGS.md` stop referring to the experiment that produced them."""
+    numbers in `docs/FINDINGS.md` stop referring to the experiment that produced them."""
     assert I.K == 500                     # the retrieval pool
     assert I.M == 75                      # the top-M that survive the filter
     assert I.BAND == 1.5                  # the near-native band the recall is defined on

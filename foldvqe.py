@@ -1,7 +1,6 @@
 """The redesigned folding pipeline: prior -> warm-started CVaR-VQE -> refine -> select.
 
 Pipeline
---------
 ::
 
     sequence
@@ -34,7 +33,6 @@ Pipeline
                                           Model B (Amber ff14SB + GB) --+
 
 What changed and why
---------------------
 *Warm start.* The RY angles of the one-layer ansatz set the per-qubit marginals exactly,
 and the marginals of a torsion-state prior are exactly what we know before searching. The
 inversion is closed form: for the CNOT chain, ``P(b_q = 1) = (1 - prod_{t<=q}(1 - 2 s_t))

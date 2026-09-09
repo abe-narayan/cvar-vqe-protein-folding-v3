@@ -1,7 +1,6 @@
 """When every candidate is already good, what -- if anything -- discriminates?
 
 THE PHENOMENON
---------------
 Sprint 8's generation study fitted a law across 55 pool-construction arms:
 
     selected = 0.257 * pool_best + 0.311 * pool_mean + 1.673      (R^2 0.79)
@@ -16,7 +15,6 @@ it looks anti-informative.
 This module asks whether ANY native-free signal has skill inside the near-native band.
 
 THE INSTRUMENT
---------------
 126-target tuning set (`s7.debias.tuning_targets`), cluster-disjoint from the 24-target dev
 set and the 60-target benchmark, on the cached window universes `s8/generate_univ/*.npz`.
 Two pools per target, both size K=500 over the same universe:
@@ -27,7 +25,6 @@ Two pools per target, both size K=500 over the same universe:
 and inside each, the near-native BAND: candidates within `BAND` = 1.5 A of pool best.
 
 DIAGNOSTIC vs DEPLOYABLE -- the split is structural
----------------------------------------------------
 The tight pool and the band are ORACLE constructions: they read `rr` (each window's
 CA-RMSD to the native) to decide WHICH candidates are measured on.  They are diagnostics
 and feed nothing.  Every SIGNAL is computed by `signal_block()` from a context built by
@@ -36,8 +33,7 @@ sequence, the fold index and the fold's own out-of-fold statistics -- and nothin
 from the target's native structure.  `stage_leak` NaN-poisons `rr` and `nat_ca` in every
 cached universe and asserts every signal is bit-identical.
 
-WHAT IS MEASURED
-----------------
+What is measured
 For every signal, on both pools:
 
   * in-band Spearman rho against true CA-RMSD (the diagnostic), and the same rho with
@@ -53,7 +49,6 @@ rho of 28 had a worse selected RMSD -- so every rho is converted to a selected R
 anything is believed.
 
 GEOMETRY NOTE
--------------
 A candidate is a real length-n CA window carrying its parent's real (phi, psi).  The
 Legacy energy needs N/C/O/CB, which only exist on an ideal-geometry rebuild from those
 torsions; that rebuild sits 0.27 A CA-RMSD from the real window on average.  Legacy terms
@@ -72,7 +67,6 @@ size of that caveat is on the record rather than assumed away.
     python -m s8.inband report   # print everything already computed
 
 RESULT
-------
 1. THE PREMISE WAS HALF RIGHT.  In-band rho does not go NEGATIVE in the near-native regime,
    it collapses to ZERO and stays there: the shipped score runs +0.568 (whole pool) ->
    +0.126 (1.5 A band) -> -0.020 (0.5 A band) by band width, and +0.126 (pool mean 4.45) ->
@@ -466,7 +460,7 @@ def cached():
 def sel_of(v, rr, invert=False):
     """Expected CA-RMSD of the candidate a signal picks, under RANDOM tie-breaking.
 
-    THIS FUNCTION IS LOAD-BEARING AND ITS FIRST VERSION WAS WRONG.  `np.argmin` returns the
+    This function is load-bearing and its first version was wrong.  `np.argmin` returns the
     FIRST index of a tie, and the candidate order is informative in both pools -- BLOSUM
     rank in `nrm`, and true CA-RMSD in the ORACLE-tight pool `tgt`.  Several signals are
     massively tied (`lg_steric` is exactly 0.0 for most candidates, H-bond counts are small
@@ -1266,7 +1260,7 @@ def stage_devpool(verbose=True):
 
 
 def stage_dev():
-    """THE SINGLE DEV PASS. One pre-registered arm, no iteration, no selection here.
+    """The single dev pass. One pre-registered arm, no iteration, no selection here.
 
     The arm is `DEV_ARM`, fixed by the tuning instrument's leave-fold-out result before
     this function was ever run.  The shipped distogram score on the identical pools is the

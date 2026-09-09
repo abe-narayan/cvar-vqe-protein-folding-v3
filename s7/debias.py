@@ -1,7 +1,6 @@
 """Can the shipped distogram be DE-BIASED post-hoc into a ranker? No retraining.
 
 THE DIAGNOSIS THIS TESTS (from `s7.audit`, stage `prior`)
---------------------------------------------------------
 Ranking a 500-candidate pool by the NATIVE distance matrix selects 1.782 A. The shipped
 learned distogram selects 3.470 A at a dev MAE of 2.219 A. The audit swept three error
 models injected into the oracle matrix and found that the SAME MAE buys wildly different
@@ -22,7 +21,6 @@ the pool's own mean profile should walk the predictor back down the shrinkage cu
 reported and never steered by.
 
 ARMS
-----
 1. `base`      the shipped Bayes-risk score, unchanged.
 2. `gain{g}`   expected -> Dbar + g*(expected - Dbar), scored by weighted L1.
                `Dbar = D.mean(0)`, the mean distance matrix of the POOL'S OWN candidates:
@@ -39,7 +37,6 @@ ARMS
                sharpened distribution, `sharpF` holds `w` at its shipped value.
 
 DEPLOYABLE vs DIAGNOSTIC -- the split is enforced structurally
---------------------------------------------------------------
 `arm_scores()` is the DEPLOYABLE path. Its arguments are the predicted distribution, the
 candidate pool's distance matrices, and a training-set marginal. It never receives a
 held-out native's coordinates, distances, contacts or RMSD, and `test_debias.py` asserts
@@ -50,7 +47,6 @@ already selected, and in the tuning-only fits (`calibration slope`, variance-mat
 which are computed on the 126-target tuning instrument and never on a dev target.
 
 PROTOCOL
---------
 Tuning instrument: 126 cluster-representative peptides, length 9-16, whose identity
 clusters are disjoint from BOTH the 24-target dev set and the 60-target benchmark. Each is
 scored by the model of a fold it is not in, over a pool built exactly as `s7.audit`

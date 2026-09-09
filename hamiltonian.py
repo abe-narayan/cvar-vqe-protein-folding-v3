@@ -9,7 +9,6 @@ import protein_geometry as geo
 import sidechains as sc
 from budget import BudgetedEnergyModel
 
-
 #: Cap on the chi1 rotamer combinations scanned when scoring a *native* structure. The
 #: native's chi1 is not available from the PDB (`protein_geometry` reads N, CA and C only),
 #: so the fair comparison gives the native the same rotamer freedom the encoding gives a

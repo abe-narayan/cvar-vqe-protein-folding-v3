@@ -88,7 +88,6 @@ def kabsch_rmsd_batch(W, T):
     return np.sqrt(np.maximum(num, 0.0) / W.shape[1])
 
 
-
 KS = (1, 5, 20, 100, 500, 2000)
 OUT = "s5/retrieval_probe.json"
 

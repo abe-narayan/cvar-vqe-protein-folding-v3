@@ -12,9 +12,7 @@ import protein_geometry as geo
 import sidechains as sc
 from budget import BudgetedEnergyModel
 
-
 __all__ = ["AmberHamiltonian", "KCAL_PER_KJ", "AMBER_TERMS"]
-
 
 KJ_PER_KCAL = 4.184
 KCAL_PER_KJ = 1.0 / KJ_PER_KCAL
@@ -32,7 +30,6 @@ _NON_FRAME_ATOMS = ("O", "OXT")
 
 
 class AmberHamiltonian(BudgetedEnergyModel):
-
 
     def __init__(self, sequence: str, representation,
                  weights: Optional[Dict[str, float]] = None,
@@ -230,7 +227,6 @@ class AmberHamiltonian(BudgetedEnergyModel):
         for f in self.system.getForces():
             f.setForceGroup(_GROUP_OF.get(f.__class__.__name__, 5))
 
-
         rest = openmm.CustomExternalForce(
             "0.5*k_rest*((x-x0)^2+(y-y0)^2+(z-z0)^2)")
         rest.addGlobalParameter("k_rest", 0.0)
@@ -366,7 +362,6 @@ class AmberHamiltonian(BudgetedEnergyModel):
         out_pos = final_pos if want_positions else None
         self.t_energy += time.time() - t0
         return energy, comp, out_pos
-
 
     def _is_collapsed(self, pos: np.ndarray, energy: float) -> bool:
         """Is this structure a steric collapse rather than a low-energy fold?"""

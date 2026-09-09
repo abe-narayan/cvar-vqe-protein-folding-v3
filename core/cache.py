@@ -1,6 +1,6 @@
 """One deterministic persistent cache for the data, geometry and prediction layers.
 
-THE RULE THIS FILE EXISTS TO ENFORCE: a cache key contains **every parameter that can
+The rule this file exists to enforce: a cache key contains **every parameter that can
 change the result**, including the version of the code that produced it. A scientifically
 invalid collision -- two different computations reading each other's answer -- is far worse
 than a slow run, and it is silent. So:
@@ -261,7 +261,6 @@ def size_on_disk() -> Dict[str, Tuple[int, int]]:
         out[ns] = (n, b)
     return out
 
-
 # ------------------------------------------------------------------ the 1.5 GB landmine
 _EXTRACT = r"""
 import json, sys
@@ -311,7 +310,6 @@ def extract_subset(src_npz: str, sequences: Sequence[str], dst_npz: str,
         for p in (keyfile, script):
             if os.path.exists(p):
                 os.remove(p)
-
 
 # ------------------------------------------------------------------ box discipline
 import ctypes                                                   # noqa: E402

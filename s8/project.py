@@ -1,7 +1,6 @@
 """Does constraining the projection to plausible TORSION SPACE buy accuracy, validity, or both?
 
-THE INCUMBENT AND ITS DEFECT
-----------------------------
+The incumbent and its defect
 S8-11's winning arm (`s8/consensus2.py`, `sc|75:fit`) coordinate-averages the score-filtered
 top-75 and then PROJECTS that average back onto the manifold of ideal-geometry chains:
 
@@ -25,8 +24,7 @@ does.  This module adds the missing term:
 and sweeps `lambda` from 0 -- which must reproduce `fit` EXACTLY, and is asserted to --
 upward, reporting the whole trade-off between torsion plausibility and selected CA-RMSD.
 
-THE FOUR PENALTIES
-------------------
+The four penalties
 `rama`   Per-residue -log P(phi, psi | residue class) under a wrapped-Gaussian-smoothed
          histogram estimated from TRAINING FOLDS ONLY.  Four classes -- GLY, PRO, PRE-PRO,
          GENERAL -- because glycine and proline have genuinely different allowed regions
@@ -53,8 +51,7 @@ of the candidates being averaged, so the prior dominates exactly where the coord
 average is least determined.  This needs a WEIGHTED Kabsch, which is implemented here and
 tested against the unweighted one at uniform weights.
 
-GEOMETRICALLY INERT PARAMETERS -- a correction to the audit's headline number
------------------------------------------------------------------------------
+Geometrically inert parameters -- a correction to the audit's headline number
 `protein_geometry.build_backbone_batch` consumes `phi[1:]` and `psi[:-1]`.  `phi[0]` and
 `psi[n-1]` are NEVER READ: they are free parameters of the optimisation that cannot move
 the structure, so at the end of an unconstrained fit they hold whatever the optimiser left
@@ -67,7 +64,6 @@ honest number, alongside the all-residue number for like-for-like comparison wit
 audit, and it excludes the inert parameters from the penalty.
 
 DEPLOYABLE vs REPORTING
------------------------
 Every penalty is a function of (sequence, fold, torsions).  The Ramachandran tables are
 accumulated from `peptide_db.load()` restricted to `folds[seq] != fold` plus
 `distogram._fold_fragments(fold, 5)` -- the production discipline, and the identical corpus
@@ -75,8 +71,7 @@ accumulated from `peptide_db.load()` restricted to `folds[seq] != fold` plus
 `rr` and `nat_ca` enter only as reporting labels.  `stage_leak` NaN-poisons both and
 asserts every returned structure is bit-identical.
 
-WHAT IT BOUGHT: VALIDITY, NOT ACCURACY
---------------------------------------
+What it bought: VALIDITY, NOT ACCURACY
 Stated plainly, because the mandate's bar was to beat 3.204 and this does not.
 
 **No accuracy.**  The chosen arm is 3.202 against the incumbent's 3.204 at m=75, and the
@@ -121,7 +116,7 @@ phi goes 17.66% -> 4.50% -- the defect and its correction both transfer to withi
 percentage point.  Non-inferiority holds an order of magnitude inside its 0.05 A margin.
 No accuracy gain is claimed and none was testable: dev-24's SE on a mean is 0.349 A.
 
-**THE ARM TO CARRY FORWARD IS `ramah@0.3`, NOT THE ONE THE RULE PICKED.**  The
+**the arm to carry forward is `ramah@0.3`, NOT THE ONE THE RULE PICKED.**  The
 pre-declared rule ranked by RMSD subject to positive phi landing in the real band, and
 positive phi is one bit of a two-dimensional distribution that both candidates satisfy
 (5.45% and 5.62%).  On the distribution itself the hinge dominates: residues in NO
@@ -821,7 +816,7 @@ LAMS_H = (0.0, 0.03, 0.1, 0.3, 1.0)
 
 def stage_sweep(pens=PENALTIES, lams=LAMS, m=CELL_M, resume=True, verbose=True,
                 multi=False, tag=""):
-    """THE TRADE-OFF CURVE.  lambda x penalty at the tuning cell, 126 targets, resumable."""
+    """The trade-off curve.  lambda x penalty at the tuning cell, 126 targets, resumable."""
     name = f"project_sweep{tag}_m{m}.json"
     out = _read(name, {"m": m, "lams": list(lams), "pens": list(pens), "multi": multi,
                        "per": {}}) \
@@ -971,7 +966,7 @@ def fit_trace(C, phi0, psi0, snaps=SNAPS, maxiter=300):
 
 
 def stage_conv(m=CELL_M, resume=True, verbose=True):
-    """IS THE OVER-HELICAL BIAS A CONVERGENCE ARTEFACT?  The coordinator's hypothesis.
+    """Is the over-helical bias A CONVERGENCE ARTEFACT?  The coordinator's hypothesis.
 
     A second implementation of the same projection reports 5.5% positive phi where this one
     reports 12.1% (17.5% on the constrained set), and it stops 0.92 A from the coordinate
@@ -1527,7 +1522,7 @@ REAL_POSPHI = (0.029, 0.0566)
 
 
 def choose_arm(tag="h", m=CELL_M, band=REAL_POSPHI):
-    """THE PRE-DECLARED SELECTION RULE, written down before the sweep it reads finished.
+    """The pre-declared selection rule, written down before the sweep it reads finished.
 
     Among cells whose positive-phi rate lands INSIDE `REAL_POSPHI`, take the lowest
     selected CA-RMSD on the 126-target tuning instrument; break ties toward the smaller
@@ -1576,7 +1571,7 @@ def pin_dev_arm(pen_kind, lam, m, note=""):
         power for.
       SECONDARY, non-inferiority: is the paired RMSD difference against `fit`, computed in
         the SAME pass on the SAME targets from the SAME pools, inside +-`DEV_MARGIN`?
-      NOT AN ENDPOINT: any accuracy gain.  No claim of one will be made from this pass
+      Not an endpoint: any accuracy gain.  No claim of one will be made from this pass
         whatever it returns, and the tuning result already says there is none to find.
     """
     if os.path.exists(_p("project_devarm.json")):
@@ -1595,7 +1590,7 @@ def pin_dev_arm(pen_kind, lam, m, note=""):
 
 
 def stage_dev():
-    """THE SINGLE DEV PASS.  One pre-registered arm, no iteration.
+    """The single dev pass.  One pre-registered arm, no iteration.
 
     Dev pools are `s8/inband_devpool`, built and asserted by `s8.inband.stage_devpool`.
     They carry no torsions, so the projection runs from the generic starts only -- which is

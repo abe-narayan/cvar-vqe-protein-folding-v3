@@ -1,7 +1,6 @@
 """Can a better-DISTRIBUTED pool move selected RMSD, when the selector is powerless?
 
-THE INVERTED OBJECTIVE
-----------------------
+The inverted objective
 Sprint 7 finding 6 measured that selected CA-RMSD tracks the pool MEAN and moves AGAINST
 the pool BEST: from K=25 to K=2000 the pool best improved 2.350 -> 1.504 A while selected
 got WORSE, 3.439 -> 3.520, and the pool mean rose 4.177 -> 4.596.  A near-powerless
@@ -16,8 +15,7 @@ target the distribution instead of the minimum and measures the whole chain:
 
 with an oracle-ranked column throughout as the ceiling of each pool.
 
-THE WARNING THIS RESPECTS
--------------------------
+The warning this respects
 Sprint 7 also tried native-free PRUNING of a fixed pool: the best rule improved the pool
 mean 4.232 -> 3.712 and moved selected only 3.399 -> 3.420.  Pruning cannot create better
 candidates and typicality-based pruning eats the ranker's own skill.  So the arms here are
@@ -25,8 +23,7 @@ GENERATION arms -- retrieval over the FULL window universe under a different key
 recombination, and torsion-space contraction -- not subsets of the shipped top-500.  A
 pool-mean gain that does not reach selected RMSD is reported as a failure, not a result.
 
-WHAT A CANDIDATE IS
--------------------
+What A candidate is
 The shipped generator scores every length-n CA window of (out-of-fold peptides + this
 fold's fragment library), sorts by BLOSUM62 similarity to the target sequence, and keeps
 the top 2000; K=500 is the pool every sprint-7 number reports on.  The universe is only
@@ -34,7 +31,6 @@ the top 2000; K=500 is the pool every sprint-7 number reports on.  The universe 
 key.  A window carries its parent's real (phi, psi), so torsion-space arms are exact.
 
 DEPLOYABLE vs DIAGNOSTIC -- the split is structural
----------------------------------------------------
 Every generator lives in `GENERATORS` and is called as `f(view, pred, rng)`.  `view` is
 built by `deployable_view()`, which contains the window coordinates, torsions, encoded
 sequences, provenance flags and BLOSUM scores -- and NOTHING derived from the target's
@@ -47,7 +43,6 @@ Native coordinates are read in exactly two places, both after a pool is fixed:
 the `oracleK` arm, which are labelled DIAGNOSTIC and feed nothing.
 
 PROTOCOL
---------
 126-target tuning instrument (`s7.debias.tuning_targets`), cluster-disjoint from both the
 24-target dev set and the 60-target benchmark.  SE on the mean is 0.147 A.  The 24-target
 dev set is reserved for a tuning winner, and this sprint produced none: see RESULT.
@@ -61,7 +56,6 @@ dev set is reserved for a tuning winner, and this sprint produced none: see RESU
     python -m s8.generate report    # print everything already computed
 
 RESULT -- the hypothesis is right and unusable
-----------------------------------------------
 1. THE LEVER IS REAL.  `stage_transfer` drives a synthetic filter of controlled rank
    correlation against true CA-RMSD across the whole universe.  Selected RMSD falls
    monotonically with it: 3.531 (rho 0.00) -> 3.410 (0.30) -> 3.334 (0.60) -> 3.003

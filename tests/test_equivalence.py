@@ -202,7 +202,6 @@ def test_vqe_workload_matches_the_recorded_experiment():
     assert P.PROD.vqe_iters == rec["iters"] == 50
     assert (1 << P.PROD.vqe_qubits) == rec["dim"] == 128
 
-
 # ============================================================ equivalence
 #: Stages that are pure deterministic arithmetic and MUST be bit-identical.
 EXACT_ARRAYS = ("avg_ca",)

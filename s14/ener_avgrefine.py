@@ -11,7 +11,7 @@ The proposal: the projection buys validity by snapping to IDEAL geometry (fixed 
 fixed angles, only torsions free).  A force field needs no such thing.  Relax arm B with
 restrained AMBER instead and see whether validity can be recovered for less than 0.157 A.
 
-## THE CONFOUND IN THE TEST AS POSED, AND THE FIX
+## The confound in the test as posed, and the fix
 
 `I.coordinate_average` averages `u["W"]`, which is a **CA trace only** -- (n, 3), no
 backbone.  `core.amber.refine_coords` requires N, CA, C, O and CB.  The only route in this
@@ -31,7 +31,7 @@ is ASSERTED AT RUN TIME and reported, never assumed: `ca_identity_max_dev` is th
 coordinate deviation and the two arms' RMSDs are printed side by side.  No projection
 anywhere.
 
-## THE PREDICTION, STATED BEFORE THE MEASUREMENT
+## THE PREDICTION, stated before the measurement
 
 Averaging superposed structures CONTRACTS them: the mean of a set of unit vectors is
 shorter than a unit vector, so the averaged backbone's bonds must come out short, and the
@@ -385,7 +385,7 @@ def check(path=None, k=30.0):
           f"top-10 share  {share:.3f}")
     # A raw drop-top threshold is NOT a valid concentration test.  When the effect is
     # small relative to the per-target spread, removing the 10 most favourable targets
-    # mechanically eats most of the mean EVEN IF THE EFFECT IS PERFECTLY UNIFORM.  So the
+    # mechanically eats most of the mean even if the effect is perfectly uniform.  So the
     # observed statistic must be compared with its own null: a uniform effect of the SAME
     # mean and the SAME per-target sd.  (This replaces an invented 0.5 threshold that
     # produced a false FAILS verdict -- see E14e.)

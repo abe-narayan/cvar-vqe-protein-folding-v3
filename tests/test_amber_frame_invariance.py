@@ -1,12 +1,12 @@
-"""STANDING REGRESSION CHECK -- AMBER relaxation must be rigid-invariant.
+"""Standing regression check -- AMBER relaxation must be rigid-invariant.
 
 ff14SB, GBn2, the positional restraint (`0.5 k |x - x0|^2` with `x0` taken from the same
 input) and every RMSD in this project are all invariant under a proper rotation and a
 translation of the input structure.  Relaxing the SAME structure in a rotated lab frame
-is therefore ZERO BY CONSTRUCTION, and anything this test measures is the AMBER
+is therefore zero by construction, and anything this test measures is the AMBER
 minimiser's own numerical floor.
 
-WHY THIS IS A PERMANENT TEST AND NOT A ONE-OFF.  Sprint 15 measured this null at
+Why this is A permanent test and not A ONE-OFF.  Sprint 15 measured this null at
 **+0.0117 A, sd 0.137, max 1.51 A** on 126 targets -- half the size of the accuracy
 effect the project was quoting, on a comparison that must return zero.  The cause was
 four silently non-converged minimisations; with `core.amber`'s convergence gate applied
@@ -44,7 +44,7 @@ def test_amber_relaxation_is_frame_invariant():
     rows, verdict = L.frame_null(I.targets()[:N_TARGETS], draw=1, verbose=True)
     g = verdict.get("gated", verdict["ungated"])
 
-    # THE PRE-DECLARED BAND, AND ITS HONEST STATUS.  `FRAME_TOL_MEAN = 0.005` /
+    # The pre-declared band, and its honest status.  `FRAME_TOL_MEAN = 0.005` /
     # `FRAME_TOL_MAX = 0.05` were declared before any Sprint 16 draw.  On this 12-target
     # slice, live, the CONVERGED subset returns mean +0.0146 A and max 0.1401 A (1DEP) --
     # it FAILS the declared band on both counts, and the band has deliberately NOT been

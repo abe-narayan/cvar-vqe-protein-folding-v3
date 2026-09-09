@@ -20,10 +20,7 @@ import numpy as np
 
 import protein_geometry as geo
 
-
-# ==========================================================================
 # Miyazawa-Jernigan contact potential
-# ==========================================================================
 MJ_ORDER = ["C", "M", "F", "I", "L", "V", "W", "Y", "A", "G",
             "T", "S", "N", "Q", "D", "E", "H", "R", "K", "P"]
 
@@ -57,15 +54,11 @@ def _build_mj_corrected() -> Dict[Tuple[str, str], float]:
     return {(a, b): _MJ_RAW[idx[a]][idx[b]] - 0.5 * (self_e[a] + self_e[b])
             for a in MJ_ORDER for b in MJ_ORDER}
 
-
 MJ_CORRECTED = _build_mj_corrected()
 MJ_RAW = {(a, b): _MJ_RAW[MJ_ORDER.index(a)][MJ_ORDER.index(b)]
           for a in MJ_ORDER for b in MJ_ORDER}
 
-
-# ==========================================================================
 # Burial scale
-# ==========================================================================
 #: Fauchere-Pliska octanol/water pi (1983), all twenty residues.
 #:
 #: This replaces Kyte-Doolittle, and the replacement is the single largest accuracy fix
@@ -184,10 +177,7 @@ AROM_ANGLE_WIDTH = 35.0
 AROM_CB_DIST = 5.50
 AROM_CB_WIDTH = 1.80
 
-
-# ==========================================================================
 # Weights
-# ==========================================================================
 #: Starting weights. `physical` entries are fixed by the units of the term they scale;
 #: `empirical` entries are free and should be set by
 #: `energy_quality.calibrate_weights` over a train split of sequences.
@@ -258,10 +248,7 @@ WEIGHT_ORIGIN = {
     "compactness": "empirical (one-sided Rg restraint)",
 }
 
-
-# ==========================================================================
 # Ramachandran
-# ==========================================================================
 _RAMA_BASINS = [
     (-63.0, -42.0, 28.0, 1.00),
     (-120.0, 130.0, 40.0, 0.90),
@@ -330,10 +317,7 @@ def switch(d: np.ndarray, d0: float, dc: float) -> np.ndarray:
         s[mid] = 0.5 * (1.0 + np.cos(math.pi * (d[mid] - d0) / (dc - d0)))
     return s
 
-
-# ==========================================================================
 # Per-sequence caches
-# ==========================================================================
 _SEQ_CACHE: Dict[Tuple[str, bool], Tuple] = {}
 
 
@@ -379,9 +363,7 @@ def clear_sequence_cache() -> None:
     pair_index.cache_clear()
 
 
-# ==========================================================================
 # Terms
-# ==========================================================================
 def steric_term(coords: Dict[str, np.ndarray], sequence: str,
                 rings: Optional[Dict[int, Dict[str, np.ndarray]]] = None,
                 min_sep: int = 2) -> float:
@@ -432,7 +414,6 @@ def steric_term(coords: Dict[str, np.ndarray], sequence: str,
 
     over = np.maximum(0.0, limit - np.linalg.norm(atoms[ii] - atoms[jj], axis=1))
     return float(over @ over)
-
 
 _STERIC_LAYOUT_CACHE: Dict[tuple, Tuple[np.ndarray, np.ndarray, np.ndarray]] = {}
 
@@ -734,7 +715,6 @@ def backtracking_term(rep, bitstring: str) -> float:
                      if float(np.dot(a, b)) < -2.5))
 
 
-# ==========================================================================
 def energy_components(sequence: str,
                      coords: Dict[str, np.ndarray],
                      phi: Optional[np.ndarray] = None,

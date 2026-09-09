@@ -4,7 +4,6 @@ This is `amber_refine` + `amber_hamiltonian` + `budget` + `sidechains` in one mo
 with the driver layer rewritten around a measurement rather than an assumption.
 
 Where the time actually goes
-----------------------------
 Measured on 1A13 (INWKGIAAMAKKLL, n=14, 237 atoms) under the production recipe
 ``refine_coords(k_restraint=K_MODERATE, steps=0, tolerance=1.0, components=True)``,
 CPU platform, Threads=1:
@@ -50,7 +49,6 @@ reproducibility for 0.1% is a bad trade, and the pinned golden energies and `bud
 cache invariant both depend on it not being made.
 
 What this module does instead
------------------------------
 Three changes, in descending order of measured value. All three are exactly equivalent:
 they return the same floats as the serial implementation, not merely close ones.
 
@@ -96,7 +94,6 @@ that the numbers will not match the pinned set and are not comparing against any
 was computed at Threads=1.
 
 Hard invariants preserved
--------------------------
 Genuine ff14SB + GBn2: `app.ForceField("amber14/protein.ff14SB.xml", "implicit/gbn2.xml")`
 with `CustomGBForce` in the built System (asserted in `tests/test_amber.py`). AMBER
 parameters, the restraint constant, the tolerance and the `bond+angle > 1000` strain
@@ -106,8 +103,7 @@ projects onto the discrete state library and is still the wrong call for real ge
 Reference: on 1A13 the native interaction energy (nonbonded + solvation, k=10, steps=0,
 tolerance=1.0) is -489.9138948277905 kcal/mol. This module reproduces it bit-for-bit.
 
-THE PLATFORM QUESTION, SETTLED
-------------------------------
+The platform question, settled
 Everything below is measured, and the raw tables are in `verify/amber_platform.json`
 (reproduce with `verify/amber_platform.py`, `amber_affinity.py`, `amber_threads.py`).
 This box reports `Reference 1.0 / CPU 10.0 / OpenCL 50.0` and essentially all the cost is
@@ -129,7 +125,7 @@ and building the Hamiltonian on OpenCL re-solves `_calibrate_hydrogens`, which i
 `LocalEnergyMinimizer` call, moving the hydrogen frames 0.188 nm and the energy
 2.93 kcal/mol before any production work happens.
 
-**THIS BOX HAS FOUR FAST CORES, NOT EIGHT.** Ranked with the AMBER workload itself rather
+**this box has four fast cores, NOT EIGHT.** Ranked with the AMBER workload itself rather
 than with a proxy kernel -- a GBn2 minimisation is bandwidth-bound and does not rank cores
 the way a spin loop does -- the per-core cost of one structure is 4.375 / 4.260 / 4.557 /
 4.828 s on cores 0-3 and 6.661 / 6.146 / 7.099 / 6.073 s on cores 4-7. A clean 4/4 split
@@ -148,7 +144,7 @@ w4 inflation is dominated by placement onto slow cores, not by L3 contention, an
 no cheap bit-identical affinity fix. Every arm returned identical energies, which verifies
 rather than assumes that placement cannot change arithmetic.
 
-THE INFLATION FLOOR DEPENDS ON THE SCHEDULE, and an earlier version of this docstring
+The inflation floor depends on the schedule, and an earlier version of this docstring
 got that wrong by calling `mean(1/rel)` "the floor". It is the prediction for ONE regime.
 With N cores of unequal speed there are two:
 
@@ -248,7 +244,6 @@ def memory_percent() -> float:
     ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(s))
     return float(s.dwMemoryLoad)
 
-
 #: Refuse to start more OpenMM workers above this. Sibling processes and an untouchable
 #: browser share this box; an OOM here kills someone else's run, not just this one.
 MEMORY_LIMIT_PERCENT = 92.0
@@ -263,10 +258,7 @@ def memory_guard(limit: float = MEMORY_LIMIT_PERCENT) -> float:
             "refusing to start more OpenMM contexts")
     return p
 
-
-# ============================================================================
 # SECTION 1 -- evaluation budget: RE-EXPORTED from `budget.py`, not redefined
-# ============================================================================
 # These four symbols used to be copied into this module, byte for byte.  Two copies of
 # an EXCEPTION CLASS is not a style problem, it is a live trap: `except
 # budget.BudgetExhausted` does not catch `core.amber.BudgetExhausted`, and the two look
@@ -277,7 +269,7 @@ def memory_guard(limit: float = MEMORY_LIMIT_PERCENT) -> float:
 # the reverse) would send budget exhaustion straight through three handlers that still
 # read correctly, turning a graceful stop into a crash inside the VQE path.
 #
-# THE DEPENDENCY POINTS core -> root, AND THAT DIRECTION IS DELIBERATE.  `budget.py` is on
+# The dependency points core -> root, and that direction is deliberate.  `budget.py` is on
 # the LEGACY arm: it is what `CORE_BACKENDS=legacy` runs.  If it imported from
 # `core.amber`, the baseline arm would silently be executing consolidated code, and every
 # equivalence proof in this sprint is measured against that arm being pure.  So the
@@ -295,12 +287,9 @@ from budget import (                                                    # noqa: 
 )
 
 
-# ============================================================================
 # SECTION 2 -- all-20-residue sidechain builder (was sidechains.py)
-# ============================================================================
 class NotImplementedResidueError(NotImplementedError):
     """Raised for residue types this module cannot build."""
-
 
 THREE = dict(geo.ONE_TO_THREE)
 ONE = dict(geo.THREE_TO_ONE)
@@ -314,7 +303,6 @@ ONE = dict(geo.THREE_TO_ONE)
 SUPPORTED_RESIDUES = ("GLY", "ALA", "SER", "THR", "ASP", "GLU",
                       "ASN", "LYS", "PRO", "PHE", "TYR", "TRP",
                       "VAL", "LEU", "ILE", "MET", "CYS", "GLN", "ARG", "HIS")
-
 
 CHI_ANGLES: Dict[str, Tuple[float, ...]] = {
     "SER": (62.0,),
@@ -356,7 +344,6 @@ CHI1_ROTAMERS: Dict[str, Tuple[float, ...]] = {
 #: not implemented, so His falls back to the CB proxy in `energy_terms.aromatic_term`.
 AROMATIC_RING_RESIDUES = ("PHE", "TYR", "TRP")
 
-
 _SPECS: Dict[str, List[Tuple[str, Tuple[str, str, str], float, float, object]]] = {
     "GLY": [],
     "ALA": [],
@@ -364,7 +351,6 @@ _SPECS: Dict[str, List[Tuple[str, Tuple[str, str, str], float, float, object]]] 
     "SER": [
         ("OG",  ("N", "CA", "CB"), 1.417, 110.8, ("chi", 0, 0.0)),
     ],
-
 
     "THR": [
         ("OG1", ("N", "CA", "CB"), 1.420, 110.1, ("chi", 0, 0.0)),
@@ -451,7 +437,6 @@ _SPECS: Dict[str, List[Tuple[str, Tuple[str, str, str], float, float, object]]] 
     ],
 }
 
-
 _RING_TEMPLATES: Dict[str, Dict[str, Tuple[float, float]]] = {
     "TYR": {
         "CB":  (-2.069719, -0.516542),
@@ -508,7 +493,6 @@ def ring_atom_names(resname: str) -> Tuple[str, ...]:
         key = THREE.get(key, key)
     return _RING_ATOMS.get(key, ())
 
-
 PRO_RING = {
     "b_CB_CG": 1.526,
     "a_CA_CB_CG": 102.286,
@@ -517,7 +501,6 @@ PRO_RING = {
     "a_CB_CG_CD": 106.700,
     "t_chi2": -22.549,
 }
-
 
 _SIDECHAIN_BONDS: Dict[str, Tuple[Tuple[str, str], ...]] = {
     "GLY": (),
@@ -625,7 +608,6 @@ def _frame(origin, x_ref, plane_ref):
     e2 = v - np.dot(v, e1) * e1
     e2 = e2 / np.linalg.norm(e2)
     return e1, e2, np.cross(e1, e2)
-
 
 #: resname -> (atom names, (k, 3) projection coefficients onto the template frame).
 #: The ring template, its frame, and every atom's coordinates in that frame are fixed
@@ -813,10 +795,7 @@ def write_full_pdb(path: str, structure: Dict[str, object],
                 serial += 1
         fh.write("TER\nEND\n")
 
-
-# ============================================================================
 # SECTION 3 -- ff14SB/GBn2 builder (was amber_hamiltonian.py)
-# ============================================================================
 KJ_PER_KCAL = 4.184
 KCAL_PER_KJ = 1.0 / KJ_PER_KCAL
 
@@ -833,7 +812,6 @@ _NON_FRAME_ATOMS = ("O", "OXT")
 
 
 class AmberHamiltonian(BudgetedEnergyModel):
-
 
     def __init__(self, sequence: str, representation,
                  weights: Optional[Dict[str, float]] = None,
@@ -1041,7 +1019,6 @@ class AmberHamiltonian(BudgetedEnergyModel):
         for f in self.system.getForces():
             f.setForceGroup(_GROUP_OF.get(f.__class__.__name__, 5))
 
-
         rest = openmm.CustomExternalForce(
             "0.5*k_rest*((x-x0)^2+(y-y0)^2+(z-z0)^2)")
         rest.addGlobalParameter("k_rest", 0.0)
@@ -1181,7 +1158,6 @@ class AmberHamiltonian(BudgetedEnergyModel):
         self.t_energy += time.time() - t0
         return energy, comp, out_pos
 
-
     def _is_collapsed(self, pos: np.ndarray, energy: float) -> bool:
         """Is this structure a steric collapse rather than a low-energy fold?"""
         if self.collapse_mode == "none":
@@ -1261,10 +1237,7 @@ class AmberHamiltonian(BudgetedEnergyModel):
             "setup_time_s": self.setup_time,
         }
 
-
-# ============================================================================
 # SECTION 4 -- restrained refinement driver (was amber_refine.py)
-# ============================================================================
 #
 # `k_restraint` is in kcal/mol/A^2 per restrained atom; the potential is
 # 0.5*k*|r - r0|^2, so an atom pulled by an internal force F settles at d = F/k.
@@ -1298,7 +1271,7 @@ _K_SCALE = KJ_PER_KCAL * 100.0
 #: silently scored into every published mean.  Those four alone move the exact rotated-
 #: frame null (which is ZERO by construction) from -0.0005 to +0.0117 kcal-free angstrom.
 #:
-#: THE RULE, DECLARED BEFORE IT WAS APPLIED (s16/energy_gate.py records the declaration
+#: THE RULE, declared before it was applied (s16/energy_gate.py records the declaration
 #: and its timestamp).  A minimisation is CONVERGED iff, with the restraint switched off:
 #:
 #:     final potential energy <= CONVERGE_MAX_KCAL      (default 1000.0 kcal/mol)
@@ -1325,7 +1298,6 @@ def convergence_flags(energy: float, energy_initial: float,
     return {"converged": bool(ok), "converge_reason": why,
             "converge_max_kcal": float(max_kcal),
             "energy_drop": float(energy_initial) - e}
-
 
 # ---------------------------------------------------------------- builder LRU
 #: Bounded, unlike the original dict. A 126-target sweep used to retain 126 live OpenMM
@@ -1375,7 +1347,6 @@ def builder_for(sequence: str, rep, platform_name: str = "CPU",
         _, evicted = _BUILDERS.popitem(last=False)
         _drop_builder(evicted)
     return h
-
 
 # ---------------------------------------------------------------- result memo
 #: `_run` is a pure function of (builder, heavy positions, k_restraint, steps, tolerance)
@@ -1587,7 +1558,6 @@ def single_point(sequence: str, rep, states, platform_name: str = "CPU",
     return refine(sequence, rep, states, k_restraint=0.0, steps=-1,
                   tolerance=1e9, platform_name=platform_name,
                   components=components, threads=threads)
-
 
 # ---------------------------------------------------------------- parallel map
 #: Per-worker resident set, measured: ~230 MB for interpreter + numpy + OpenMM + one

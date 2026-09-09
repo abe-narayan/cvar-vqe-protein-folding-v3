@@ -79,7 +79,6 @@ def run(threads, ncores):
         raise RuntimeError(p.stderr.decode()[:600])
     return json.load(open(o))
 
-
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "worker":
         main_worker()

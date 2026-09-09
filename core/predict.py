@@ -3,20 +3,20 @@
 Consolidates `distogram.py` (493) and `pairnet.py` (349), and absorbs the pair-feature
 construction that `priors.py` owned.
 
-WHY THIS IS THE CENTRE. On decoy populations drawn from the search's own representation,
+Why this is the centre. On decoy populations drawn from the search's own representation,
 scoring a structure by its agreement with the TRUE distance matrix gives Spearman +0.85 to
 +0.96 against CA-RMSD and picks a top-20 averaging 0.4-2.6 A -- against +0.10 for the
 16-descriptor learned scorer, ~0.0 for the knowledge-based energy and -0.40 for Amber. A
 distance matrix is a sufficient statistic for ranking here, so the whole ranking problem
 reduces to predicting one from sequence.
 
-THE SCORING FORM. The predicted distribution is used through its L1 Bayes risk,
+The scoring form. The predicted distribution is used through its L1 Bayes risk,
 ``s = mean_ij w_ij * sum_b P(b | i, j) |d_ij - c_b|``, not through the log-likelihood of
 the occupied bin. Measured side by side: the log-likelihood form scores +0.02 to -0.42 (it
 is dominated by the entropy of the prediction and blind to HOW FAR a wrong distance is
 wrong) while the Bayes-risk form scores +0.16 to +0.82 on the same predictions.
 
-TWO MODEL FAMILIES, deliberately. `MLP` predicts every pair independently from the two
+Two model families, deliberately. `MLP` predicts every pair independently from the two
 residues' embeddings -- the crudest possible pair representation, and it shows: correlation
 0.744 with the true distances, MAE 2.04 A, in-band Spearman +0.425 against an oracle's
 +0.864. It cannot know that d_ij, d_ik and d_kj are three sides of a triangle. `PairNet`
@@ -123,7 +123,6 @@ def esm_available() -> bool:
     except Exception:                                          # pragma: no cover
         return False
 
-
 _FEAT_VERSION = 1
 
 
@@ -162,7 +161,6 @@ def features(seq: str, use_esm: bool = True
 
     got = cache.cached("dist_feat", _FEAT_VERSION, compute, seq=seq, n_pca=data.N_PCA)
     return np.hstack([base, got["extra"]]).astype(np.float32), i, j
-
 
 _WIDTH_VERSION = 1
 _PROBE_SEQ = "ACDEFGHIKL"
@@ -314,7 +312,6 @@ class MLP:
         self.mu, self.sd = z["mu"], z["s"]
         return self
 
-
 #: Regularisation defaults -- and the reason they are OFF is the most counter-intuitive
 #: measurement in this module, so it is recorded in full.
 #:
@@ -332,7 +329,7 @@ class MLP:
 #: curve. Sharpening the averaged distribution back recovers 0.363 -> 0.388 and never
 #: reaches 0.425.
 #:
-#: So ranking here wants SHARP AND DISCRIMINATIVE per-pair predictions, not unbiased ones.
+#: So ranking here wants sharp and discriminative per-pair predictions, not unbiased ones.
 #: Production keeps the single sharp model; the regularised path stays available because a
 #: downstream use that needs a calibrated DISTANCE rather than a ranking should prefer it.
 DROPOUT = 0.0
@@ -376,7 +373,6 @@ def train_fold(fold: int, use_esm: bool = True, n_folds: int = 5, epochs: int = 
         m.save(path)
         out.append(m)
     return out
-
 
 # --------------------------------------------------------------------- the prior
 #: Per-separation-shell weights and the exponent on the predicted spread. RETIRED: the fit
@@ -573,10 +569,7 @@ class CombinedDistogram(Distogram):
             out = out + self.disagree * (vals.max(0) - vals.min(0))
         return float(out) if single else out
 
-
-# =====================================================================================
 # PairNet -- the trRosetta/AlphaFold construction at peptide scale
-# =====================================================================================
 MAXLEN = 26
 #: Sequence-separation bins for the pair-feature encoding. Fine at short range, where the
 #: separation nearly determines the distance, and coarse beyond.

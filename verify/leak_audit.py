@@ -126,6 +126,5 @@ def main(pdbs=("1CS9", "1CB3", "1CEK")):
                      indent=2, sort_keys=True, default=str))
     return report
 
-
 if __name__ == "__main__":
     main()

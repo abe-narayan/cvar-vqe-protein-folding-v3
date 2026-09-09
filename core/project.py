@@ -1,7 +1,6 @@
 """`core.project` -- STAGE 3b, the projection onto the manifold of ideal-geometry chains.
 
-WHAT THIS STAGE IS
-==================
+What this stage is
 The coordinate average of the filtered pool is not a peptide: its mean CA-CA bond is
 ~2.96 A against a real 3.80.  This stage finds the torsion vector whose ideal-geometry
 backbone is nearest that point cloud,
@@ -13,8 +12,7 @@ same objective, same penalty, same starts, same ladder, same L-BFGS-B call -- wi
 inner loop rewritten.  `tests/test_project.py` measures the equivalence on real pipeline
 inputs rather than asserting it.
 
-WHY IT NEEDED REWRITING -- the measured profile
-===============================================
+Why it needed rewriting -- the measured profile
 Measured on the 126-target instrument at production settings (K=500, m=75, `ramah`,
 lam=0.3, maxiter=300, multi_start=True), the projection was 43.1% of the whole pipeline at
 8.2 s per target, and `cProfile` on the reference put 93.4% of that inside ONE function:
@@ -32,8 +30,7 @@ residue plus one for the carbonyl oxygen, each of which calls `numpy.cross` twic
 it was asked to do.  ~47 `_place_atom_batch` calls x ~60 numpy-level calls each = ~2,800
 numpy dispatches to build one 13-residue chain, and there are ~2,100 builds per target.
 
-WHAT WAS DONE ABOUT IT
-======================
+What was done about it
 Three things make the forward map cheaper.  Only the first two are in the SHIPPED path,
 because only the first two cannot change a value -- see the next section, which is the
 part of this docstring that was written after an audit proved the third one does.
@@ -62,8 +59,7 @@ part of this docstring that was written after an audit proved the third one does
     Together: 13x, agreeing with central differences to 1.6e-9 and with the reference
     builder to 3.1e-13 A at n=40.  AND IT IS NOT THE DEFAULT.  Read on.
 
-THREE MODES, AND WHY THE FAST ONE IS NOT THE DEFAULT
-===================================================
+Three modes, and why the fast one is not the default
 This is the correction that matters, and it was found by an independent audit rather than
 by this module, which had claimed it "changes only how fast one L-BFGS-B iteration is
 computed".  That is true of the science knobs and FALSE OF THE OUTPUT.
@@ -81,7 +77,7 @@ is nothing -- but L-BFGS-B is started from a fully extended or fully helical cha
 way from any minimum, and its early steps are large.  A 1e-13 A difference in the forward
 map is enough to route some trajectories into the OTHER ideal-geometry torsion branch, and
 the two branches sit at near-equal objective distance from the average.  Measured on the
-126-target instrument with the REFERENCE'S OWN gradient formula, so that the gradient is
+126-target instrument with the reference's own gradient formula, so that the gradient is
 not the variable: the scan builder alone moves the emitted structure on 126/126 targets,
 median 0.031 A, worst 1.63 A, while the objective it reaches is lower on 66 and higher on
 60 -- it is not converging worse, it is landing somewhere else.
@@ -90,8 +86,7 @@ So "faster and equivalent" was not available, and the choice is stated rather th
 quietly.  `exact` ships.  `analytic` is 4.6x faster again and is a legitimate arm to
 evaluate, but it is a DIFFERENT PIPELINE and is keyed as one.
 
-WHICH MODE IS IN THE CACHE KEY
-==============================
+Which mode is in the cache key
 `GRAD` is a module default and is NOT read from the environment.  An import-time
 environment global cannot reach `Config.key()`, and the audit demonstrated the
 consequence: two runs of `smoke8` under different modes produced the same `cfg_key`, and
@@ -100,8 +95,7 @@ travels as `core.pipeline.Config.project_grad`, is hashed like every other param
 changes a number, and is passed per call as `lam_path(..., grad=...)` so it cannot leak
 between targets inside a worker.
 
-THE HARD CONSTRAINT -- the branch structure is load-bearing
-===========================================================
+The hard constraint -- the branch structure is load-bearing
 The projection is DEGENERATE.  A CA trace admits two ideal-geometry torsion solutions at
 near-equal objective distance, one Ramachandran-plausible and one not, and a warm-started
 optimiser cannot cross between them (S9-2).  That is why `lam_path(multi=True)` puts the
@@ -190,7 +184,6 @@ def set_gradient(mode: str) -> str:
 #: reference optimisation, not a tolerance.
 FD_EPS = 1e-5
 
-
 # ============================================================ the forward map
 #: The two cyclic permutations a cross product is: ``(a x b)_i = a_{i+1} b_{i+2} -
 #: a_{i+2} b_{i+1}``.  Bound once because building them per call costs more than the
@@ -242,7 +235,6 @@ def _initial_frame() -> np.ndarray:
     G[:3, 3] = c0
     G[3, 3] = 1.0
     return G
-
 
 _G0 = _initial_frame()
 
@@ -382,12 +374,12 @@ def _place_exact(a, b, c, length: float, angle: float, torsion):
 def build_ca_exact(phi: np.ndarray, psi: np.ndarray, omega: float = OMEGA_TRANS):
     """``(B, n, 3)`` CA trace, BIT-IDENTICAL to `build_backbone_batch(...)["CA"]`.
 
-    THE POINT OF THIS FUNCTION IS THE WORD IDENTICAL.  The scan builder is 20x faster and
+    The point of this function is the word identical.  The scan builder is 20x faster and
     agrees only to ~1e-13 A, and that is not good enough here: the projection is degenerate,
     L-BFGS-B started from a fully extended or fully helical chain takes large early steps,
     and a 1e-13 A difference in the forward map routes some trajectories into the other
     torsion branch.  Measured on the 126-target instrument, the scan builder under the
-    REFERENCE'S OWN finite-difference gradient moves the emitted structure on 126/126
+    reference's own finite-difference gradient moves the emitted structure on 126/126
     targets, median 0.031 A and worst 1.63 A.  So the fast builder cannot be the default,
     and this one -- which reproduces the reference exactly -- is.
 
@@ -395,7 +387,7 @@ def build_ca_exact(phi: np.ndarray, psi: np.ndarray, omega: float = OMEGA_TRANS)
     the carbonyl oxygen and CB not built at all (the objective reads CA and the reference
     threw both away), and the norms not routed through `numpy.linalg.norm`'s dispatch.
 
-    WHERE THIS STOPS, AND WHY IT IS NOT PHYSICS.  `_place_exact` is now about 60 numpy
+    Where this stops, and why it is not physics.  `_place_exact` is now about 60 numpy
     dispatches averaging ~0.47 us each, which is the dispatch cost itself: 85% of the
     shipped objective is this function, and going faster means issuing fewer numpy calls,
     which means changing the sequence of operations, which is the one thing that costs
@@ -533,7 +525,6 @@ def _torsion_grad(G: np.ndarray, CA1: np.ndarray, g: np.ndarray) -> np.ndarray:
     out[1:n] = np.einsum("ij,ij->i", Gf[:, :3, 0], Vf)
     return out
 
-
 # ============================================================ the torsion priors
 #: Ramachandran grid, smoothing width in bins, and the Dirichlet pseudo-count.  Copied by
 #: VALUE from `s8.project` -- these are part of the trained prior, not parameters.
@@ -587,7 +578,6 @@ def _wrap_smooth(C: np.ndarray, sigma_bins: float = SIGMA_BINS) -> np.ndarray:
     A = np.fft.irfft(np.fft.rfft(A, axis=-2) * G[:, None], n=RB, axis=-2)
     return np.maximum(A, 0.0)
 
-
 _TAB: dict = {}
 _HINGE: dict = {}
 
@@ -639,7 +629,6 @@ def _bilinear(L: np.ndarray, phi: np.ndarray, psi: np.ndarray) -> np.ndarray:
     r = np.arange(L.shape[0])[None, :]
     return ((1 - fu) * (1 - fv) * L[r, i0, j0] + fu * (1 - fv) * L[r, i1, j0]
             + (1 - fu) * fv * L[r, i0, j1] + fu * fv * L[r, i1, j1])
-
 
 _ROWS: dict = {}
 
@@ -818,7 +807,6 @@ def agreement_weights(Wsub, C, floor=0.25):
     w = w / w.mean()
     return np.maximum(w, floor)
 
-
 # ============================================================ the constrained projection
 #: The four generic starting conformations, in degrees: extended, alpha-helix, beta-strand,
 #: polyproline II.  Copied by value from `s8.consensus2.FIT_STARTS`; the self-check asserts
@@ -836,7 +824,7 @@ def _emit(x, n):
 def _make_fg(C, pen, lam, w, n, grad=None):
     """The objective handed to L-BFGS-B, and whether it supplies its own gradient.
 
-    THREE MODES, and which one is the default is a scientific decision, not a speed one:
+    Three modes, and which one is the default is a scientific decision, not a speed one:
 
     ``exact``     the reference objective, bit-for-bit: the bit-exact builder, the
                   canonical Kabsch, the reference's one-sided finite difference at the
@@ -924,7 +912,7 @@ def fit_prior(C, phi0, psi0, pen=None, lam=0.0, w=None, maxiter=300, grad=None):
 def fit_multi(C, pen=None, lam=0.0, w=None, extra=None, maxiter=300, grad=None):
     """`fit_prior` from every generic start plus an optional extra, keeping the best.
 
-    THE NUMBER OF STARTS IS NOT A TUNING KNOB.  The projection is degenerate -- a CA trace
+    The number of starts is not a tuning knob.  The projection is degenerate -- a CA trace
     admits two ideal-geometry torsion solutions at near-equal objective distance, one
     plausible and one not -- and a warm-started optimiser cannot cross between them, so a
     single start locks the answer onto whichever branch it happened to fall into.
@@ -973,17 +961,15 @@ def lam_path(C, pen, lams, w=None, extra=None, maxiter=300, multi=False, grad=No
         cur = got
     return out
 
-
 # ============================================================ self-check / bench
 INPUTS_JSON = os.path.join(_ROOT, "verify", "project_inputs.json")
-
 
 #: The arms `equiv` compares, in report order.  `ref` is `s8.project` itself.
 ARMS = ("ref", "ex", "fd", "an")
 
 
 def _outpath(name, out, limit, done=None, want=None):
-    """Where a stage writes.  ONLY A COMPLETE RUN GETS THE CANONICAL FILENAME.
+    """Where a stage writes.  ONLY A complete run gets the canonical filename.
 
     Learned twice.  First: a one-target smoke of `equiv` silently overwrote a 126-target
     table that had cost half an hour of reference runtime, so a `limit` now goes in the
@@ -1013,7 +999,7 @@ def _harvested(path=None):
 
 
 def harvest(manifest="tuning126", limit=None, out=None):
-    """Persist THE REAL STAGE-3b INPUT for every target: the coordinate average.
+    """Persist the real stage-3b INPUT for every target: the coordinate average.
 
     Equivalence has to be measured on what the stage is actually handed, not on random
     torsions, so this runs stages 1-3a of `core.pipeline` at production settings and stores
@@ -1106,7 +1092,7 @@ def torsion_report(seq, phi, psi) -> dict:
 def l_signature(phi, psi) -> float:
     """The mean sign of ``(N - CA) . [(C - CA) x (CB - CA)]`` over the emitted residues.
 
-    THIS IS THE CHIRALITY ASSERTION, and it is on the emitted ATOMS, not on the torsions.
+    This is the chirality assertion, and it is on the emitted ATOMS, not on the torsions.
     A CA trace scored by a DISTANCE is exactly mirror-blind (pinned at 1e-9 elsewhere in
     this project), so a distance objective's lowest-objective multi-start selects
     enantiomers.  This projection minimises distance to a COORDINATE cloud with reflections
@@ -1128,7 +1114,7 @@ def l_signature(phi, psi) -> float:
 
 
 def equiv(limit=None, out=None, verbose=True):
-    """Measure the optimised projection against the reference ON REAL PIPELINE INPUTS.
+    """Measure the optimised projection against the reference on real pipeline inputs.
 
     Three arms per target, all at production settings (`ramah`, lam=0.3, maxiter=300,
     multi_start=True): `s8.project` unchanged, this module's finite-difference path, and
@@ -1320,12 +1306,12 @@ def exactness(limit=None, out=None, verbose=True, equiv_path=None):
 
 
 def degeneracy(limit=None, out=None, verbose=False):
-    """HOW BIG IS THE DEGENERACY?  The objective gap between the best start and the
+    """How big is the degeneracy?  The objective gap between the best start and the
     runner-up, per target, at the shipped rung.
 
     `fit_multi` returns ``argmin`` over the starts, so whenever that gap is smaller than
-    the difference between two implementations of the same arithmetic, WHICH BRANCH IS
-    RETURNED IS NOT DETERMINED BY THE OBJECTIVE.  This measures the gap in the objective's
+    the difference between two implementations of the same arithmetic, which branch is
+    Returned is not determined by the objective.  This measures the gap in the objective's
     own units, so a coordinate difference between implementations can be checked against
     it instead of being called a regression or a gain.
     """
@@ -1363,7 +1349,7 @@ def degeneracy(limit=None, out=None, verbose=False):
            "n_gap_under_1e2": int((g < 1e-2).sum()),
            "runner_up_dist_median": float(np.median(dd)),
            "runner_up_dist_max": float(dd.max()),
-           #: THE PAIRING THAT MATTERS: a near-tied objective whose runner-up is a
+           #: The pairing that matters: a near-tied objective whose runner-up is a
            #: DIFFERENT STRUCTURE.  A tie between two starts that converged to the same
            #: point is not a degeneracy, it is two roads to one answer -- and on this
            #: instrument every gap below 1e-4 is of that harmless kind, while the genuine
@@ -1433,7 +1419,7 @@ def iteration_profile(limit=24, out=None):
 def stability(pdbs=None, limit=None, out=None, verbose=True):
     """How stable is the REFERENCE's own branch choice under an exactly null change?
 
-    THE CONTROL FOR THE EQUIVALENCE TABLE.  Where the optimised arms land on a different
+    The control for the equivalence table.  Where the optimised arms land on a different
     structure it matters enormously whether that is the rewrite under-optimising or the
     stage being degenerate, and the two are told apart by asking the reference to disagree
     with ITSELF.  A CA-RMSD is exactly invariant under a rigid motion of the target cloud,
@@ -1607,7 +1593,6 @@ def main(argv=None):
         print(f"GRAD={GRAD}  {dt:.3f}s / {len(rows)} targets = {dt/len(rows):.3f}s per target")
         return 0
     raise SystemExit(f"unknown command {cmd!r}")
-
 
 if __name__ == "__main__":
     raise SystemExit(main())
