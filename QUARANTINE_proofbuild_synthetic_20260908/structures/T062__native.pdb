@@ -1,0 +1,26 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION native
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 14
+REMARK 999 PDB_ID 2NB7
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.0000
+REMARK 999 SEQUENCE MENTSITIEFSSKF
+REMARK 999 SOURCE s12.instrument.load_univ
+REMARK 999 TARGET_ID T062
+ATOM      1  CA  MET A   1       2.536  -0.204  -1.663  1.00  0.00           C
+ATOM      2  CA  GLU A   2       3.990  -3.321  -0.037  1.00  0.00           C
+ATOM      3  CA  ASN A   3       6.461  -1.103   1.820  1.00  0.00           C
+ATOM      4  CA  THR A   4       7.112   0.307   5.292  1.00  0.00           C
+ATOM      5  CA  SER A   5       7.720   4.007   4.655  1.00  0.00           C
+ATOM      6  CA  ILE A   6       4.971   5.573   2.545  1.00  0.00           C
+ATOM      7  CA  THR A   7       2.105   3.286   3.552  1.00  0.00           C
+ATOM      8  CA  ILE A   8       3.111   3.797   7.183  1.00  0.00           C
+ATOM      9  CA  GLU A   9       3.744   7.534   6.873  1.00  0.00           C
+ATOM     10  CA  PHE A  10       0.118   8.030   5.835  1.00  0.00           C
+ATOM     11  CA  SER A  11      -1.520   5.254   7.855  1.00  0.00           C
+ATOM     12  CA  SER A  12       0.194   6.750  10.903  1.00  0.00           C
+ATOM     13  CA  LYS A  13      -0.008  10.477  10.174  1.00  0.00           C
+ATOM     14  CA  PHE A  14      -3.706  10.114   9.356  1.00  0.00           C
+TER
+END

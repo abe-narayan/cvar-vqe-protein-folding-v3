@@ -1,0 +1,27 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 15
+REMARK 999 PDB_ID 1DJF
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.419125
+REMARK 999 RMSD_CA_MEMORY 2.419048
+REMARK 999 SEQUENCE QAPAYKKAAKKLAES
+REMARK 999 TARGET_ID T009
+ATOM      1  CA  GLN A   1     -11.864  -5.584  -5.287  1.00  0.00           C
+ATOM      2  CA  ALA A   2     -10.227   0.580  -1.610  1.00  0.00           C
+ATOM      3  CA  PRO A   3      -6.547  -1.627   2.228  1.00  0.00           C
+ATOM      4  CA  ALA A   4      -8.310   3.498  -1.441  1.00  0.00           C
+ATOM      5  CA  TYR A   5      -5.882   1.301   0.974  1.00  0.00           C
+ATOM      6  CA  LYS A   6      -3.857   0.011   1.021  1.00  0.00           C
+ATOM      7  CA  LYS A   7      -1.444  -0.682  -5.348  1.00  0.00           C
+ATOM      8  CA  ALA A   8       1.460   3.605   0.944  1.00  0.00           C
+ATOM      9  CA  ALA A   9       3.247   2.273   3.082  1.00  0.00           C
+ATOM     10  CA  LYS A  10       3.452   0.625   1.674  1.00  0.00           C
+ATOM     11  CA  LYS A  11       4.294   0.979  -0.706  1.00  0.00           C
+ATOM     12  CA  LEU A  12       5.171   4.744   3.962  1.00  0.00           C
+ATOM     13  CA  ALA A  13       4.946  -0.227   2.691  1.00  0.00           C
+ATOM     14  CA  GLU A  14       7.856  -0.556   0.145  1.00  0.00           C
+ATOM     15  CA  SER A  15       9.664   2.180   0.282  1.00  0.00           C
+TER
+END

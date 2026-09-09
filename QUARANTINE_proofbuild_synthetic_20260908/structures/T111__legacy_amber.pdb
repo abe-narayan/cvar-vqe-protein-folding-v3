@@ -1,0 +1,22 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_amber
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 10
+REMARK 999 PDB_ID 8HVS
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.914696
+REMARK 999 RMSD_CA_MEMORY 2.914822
+REMARK 999 SEQUENCE RFLRRIFFFF
+REMARK 999 TARGET_ID T111
+ATOM      1  CA  ARG A   1       3.310  -0.625  -1.603  1.00  0.00           C
+ATOM      2  CA  PHE A   2      -1.725  -1.121  -5.132  1.00  0.00           C
+ATOM      3  CA  LEU A   3      -6.983  -0.388  -0.241  1.00  0.00           C
+ATOM      4  CA  ARG A   4      -2.450  -0.470  -3.305  1.00  0.00           C
+ATOM      5  CA  ARG A   5      -2.728  -6.047  -5.839  1.00  0.00           C
+ATOM      6  CA  ILE A   6      -5.283  -4.481  -7.518  1.00  0.00           C
+ATOM      7  CA  PHE A   7     -10.047  -5.132  -1.360  1.00  0.00           C
+ATOM      8  CA  PHE A   8      -8.479  -6.363  -9.160  1.00  0.00           C
+ATOM      9  CA  PHE A   9      -5.096  -9.965  -7.004  1.00  0.00           C
+ATOM     10  CA  PHE A  10      -6.963 -14.180  -8.350  1.00  0.00           C
+TER
+END

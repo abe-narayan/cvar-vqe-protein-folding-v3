@@ -1,0 +1,26 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION native
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 14
+REMARK 999 PDB_ID 6WPB
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.0000
+REMARK 999 SEQUENCE GILDAIKAIAKAAG
+REMARK 999 SOURCE s12.instrument.load_univ
+REMARK 999 TARGET_ID T098
+ATOM      1  CA  GLY A   1       5.295   8.363  -9.412  1.00  0.00           C
+ATOM      2  CA  ILE A   2       8.962   7.604  -9.989  1.00  0.00           C
+ATOM      3  CA  LEU A   3      10.052  10.683  -8.062  1.00  0.00           C
+ATOM      4  CA  ASP A   4       7.766   9.827  -5.150  1.00  0.00           C
+ATOM      5  CA  ALA A   5       9.081   6.263  -5.029  1.00  0.00           C
+ATOM      6  CA  ILE A   6      12.713   7.392  -5.032  1.00  0.00           C
+ATOM      7  CA  LYS A   7      12.091   9.903  -2.260  1.00  0.00           C
+ATOM      8  CA  ALA A   8      10.518   7.313   0.040  1.00  0.00           C
+ATOM      9  CA  ILE A   9      13.215   4.764  -0.755  1.00  0.00           C
+ATOM     10  CA  ALA A  10      15.993   7.279  -0.124  1.00  0.00           C
+ATOM     11  CA  LYS A  11      14.772   8.021   3.387  1.00  0.00           C
+ATOM     12  CA  ALA A  12      14.074   4.356   4.044  1.00  0.00           C
+ATOM     13  CA  ALA A  13      17.578   3.414   2.931  1.00  0.00           C
+ATOM     14  CA  GLY A  14      19.150   5.952   5.280  1.00  0.00           C
+TER
+END

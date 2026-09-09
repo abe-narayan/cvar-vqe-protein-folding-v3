@@ -1,0 +1,35 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 BASIS_ROLE NON-PHYSICAL INTERMEDIATE -- not a molecule
+REMARK 999 CA_BOND_MAX 3.621372253718195
+REMARK 999 CA_BOND_MEAN 3.1284847858285842
+REMARK 999 CA_BOND_MIN 1.5989199479648755
+REMARK 999 CONFIGURATION legacy_amber
+REMARK 999 FOLD 2
+REMARK 999 GIT_COMMIT a15406c82245
+REMARK 999 LENGTH 16
+REMARK 999 MODULE_SHA 90e160cc06020ac1
+REMARK 999 PDB_ID 7YFS
+REMARK 999 PROVENANCE genuine
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 5.795770
+REMARK 999 RMSD_CA_MEMORY 5.795711
+REMARK 999 SEQUENCE APSNVLSTLLHGRACV
+REMARK 999 TARGET_ID T109
+ATOM      1  CA  ALA A   1      -5.130   1.784 -10.656  1.00  0.00           C
+ATOM      2  CA  PRO A   2      -2.420   2.251 -10.450  1.00  0.00           C
+ATOM      3  CA  SER A   3      -2.228   5.555  -9.584  1.00  0.00           C
+ATOM      4  CA  ASN A   4      -4.547   5.230  -7.219  1.00  0.00           C
+ATOM      5  CA  VAL A   5      -2.787   2.504  -5.958  1.00  0.00           C
+ATOM      6  CA  LEU A   6       0.225   4.327  -5.926  1.00  0.00           C
+ATOM      7  CA  SER A   7      -1.395   7.037  -4.325  1.00  0.00           C
+ATOM      8  CA  THR A   8      -2.723   4.846  -1.986  1.00  0.00           C
+ATOM      9  CA  LEU A   9       0.365   3.397  -1.261  1.00  0.00           C
+ATOM     10  CA  LEU A  10       2.003   6.555  -0.584  1.00  0.00           C
+ATOM     11  CA  HIS A  11      -0.298   7.338   1.982  1.00  0.00           C
+ATOM     12  CA  GLY A  12       0.134   4.532   3.813  1.00  0.00           C
+ATOM     13  CA  ARG A  13       3.141   4.607   4.398  1.00  0.00           C
+ATOM     14  CA  ALA A  14       2.824   6.729   5.672  1.00  0.00           C
+ATOM     15  CA  CYS A  15       1.546   5.853   7.275  1.00  0.00           C
+ATOM     16  CA  VAL A  16       2.543   4.603   7.269  1.00  0.00           C
+TER
+END

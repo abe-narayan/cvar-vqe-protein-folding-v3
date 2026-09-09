@@ -1,0 +1,27 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION distogram
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 15
+REMARK 999 PDB_ID 6GIJ
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.130803
+REMARK 999 RMSD_CA_MEMORY 2.130796
+REMARK 999 SEQUENCE KKLLPIVANLLKSLL
+REMARK 999 TARGET_ID T086
+ATOM      1  CA  LYS A   1      17.760  13.399  -1.275  1.00  0.00           C
+ATOM      2  CA  LYS A   2      17.671   7.318  -0.351  1.00  0.00           C
+ATOM      3  CA  LEU A   3      22.223   9.390  -2.826  1.00  0.00           C
+ATOM      4  CA  LEU A   4      24.937  10.667  -1.186  1.00  0.00           C
+ATOM      5  CA  PRO A   5      25.833   7.567   3.877  1.00  0.00           C
+ATOM      6  CA  ILE A   6      28.652   3.994  -3.526  1.00  0.00           C
+ATOM      7  CA  VAL A   7      30.007  11.808  -1.761  1.00  0.00           C
+ATOM      8  CA  ALA A   8      30.398   9.963  -1.974  1.00  0.00           C
+ATOM      9  CA  ASN A   9      31.982   7.473   1.207  1.00  0.00           C
+ATOM     10  CA  LEU A  10      32.030   8.730  -2.644  1.00  0.00           C
+ATOM     11  CA  LEU A  11      33.766  12.280  -1.380  1.00  0.00           C
+ATOM     12  CA  LYS A  12      38.724  13.629   2.721  1.00  0.00           C
+ATOM     13  CA  SER A  13      36.884   9.968  -0.810  1.00  0.00           C
+ATOM     14  CA  LEU A  14      37.244   5.608   3.424  1.00  0.00           C
+ATOM     15  CA  LEU A  15      34.844   8.052   4.411  1.00  0.00           C
+TER
+END

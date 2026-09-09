@@ -1,0 +1,22 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_distogram
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 10
+REMARK 999 PDB_ID 8HVS
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.151215
+REMARK 999 RMSD_CA_MEMORY 2.151319
+REMARK 999 SEQUENCE RFLRRIFFFF
+REMARK 999 TARGET_ID T111
+ATOM      1  CA  ARG A   1       1.987  -0.236   0.309  1.00  0.00           C
+ATOM      2  CA  PHE A   2      -0.257  -1.147  -2.692  1.00  0.00           C
+ATOM      3  CA  LEU A   3      -5.244  -2.958  -1.110  1.00  0.00           C
+ATOM      4  CA  ARG A   4      -5.095  -0.920  -3.735  1.00  0.00           C
+ATOM      5  CA  ARG A   5      -3.389  -5.991  -5.935  1.00  0.00           C
+ATOM      6  CA  ILE A   6      -6.904  -5.852  -5.134  1.00  0.00           C
+ATOM      7  CA  PHE A   7      -4.053  -4.251  -4.292  1.00  0.00           C
+ATOM      8  CA  PHE A   8      -7.623  -8.242  -6.758  1.00  0.00           C
+ATOM      9  CA  PHE A   9      -4.012  -9.162  -6.334  1.00  0.00           C
+ATOM     10  CA  PHE A  10      -8.259 -12.017  -7.265  1.00  0.00           C
+TER
+END

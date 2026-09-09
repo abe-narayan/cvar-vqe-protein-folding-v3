@@ -1,0 +1,34 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 BASIS_ROLE NON-PHYSICAL INTERMEDIATE -- not a molecule
+REMARK 999 CA_BOND_MAX 3.807224054347209
+REMARK 999 CA_BOND_MEAN 3.7951933630003913
+REMARK 999 CA_BOND_MIN 3.7772131261023665
+REMARK 999 CONFIGURATION production
+REMARK 999 FOLD 3
+REMARK 999 GIT_COMMIT a15406c82245
+REMARK 999 LENGTH 15
+REMARK 999 MODULE_SHA 90e160cc06020ac1
+REMARK 999 PDB_ID 3BTB
+REMARK 999 PROVENANCE genuine
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 4.960789
+REMARK 999 RMSD_CA_MEMORY 4.960746
+REMARK 999 SEQUENCE MEELQDDYEDMMEEN
+REMARK 999 TARGET_ID T070
+ATOM      1  CA  MET A   1      -2.907   2.310  -6.116  1.00  0.00           C
+ATOM      2  CA  GLU A   2       0.299   4.318  -6.028  1.00  0.00           C
+ATOM      3  CA  GLU A   3      -1.381   7.100  -4.089  1.00  0.00           C
+ATOM      4  CA  LEU A   4      -2.818   4.627  -1.600  1.00  0.00           C
+ATOM      5  CA  GLN A   5       0.584   3.004  -1.122  1.00  0.00           C
+ATOM      6  CA  ASP A   6       2.174   6.399  -0.499  1.00  0.00           C
+ATOM      7  CA  ASP A   7      -0.503   7.286   2.052  1.00  0.00           C
+ATOM      8  CA  TYR A   8      -0.058   3.960   3.832  1.00  0.00           C
+ATOM      9  CA  GLU A   9       3.719   4.415   3.981  1.00  0.00           C
+ATOM     10  CA  ASP A  10       3.288   7.897   5.456  1.00  0.00           C
+ATOM     11  CA  MET A  11       0.839   6.586   8.046  1.00  0.00           C
+ATOM     12  CA  MET A  12       3.221   3.790   9.021  1.00  0.00           C
+ATOM     13  CA  GLU A  13       6.100   6.236   9.423  1.00  0.00           C
+ATOM     14  CA  GLU A  14       3.982   8.489  11.604  1.00  0.00           C
+ATOM     15  CA  ASN A  15       2.853   5.576  13.727  1.00  0.00           C
+TER
+END

@@ -1,0 +1,25 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy
+REMARK 999 FOLD 3
+REMARK 999 LENGTH 13
+REMARK 999 PDB_ID 9S5G
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.192544
+REMARK 999 RMSD_CA_MEMORY 3.192555
+REMARK 999 SEQUENCE FLPLWLWLWRKLK
+REMARK 999 TARGET_ID T124
+ATOM      1  CA  PHE A   1      -1.261   2.743   0.363  1.00  0.00           C
+ATOM      2  CA  LEU A   2      -2.042   2.488  -2.288  1.00  0.00           C
+ATOM      3  CA  PRO A   3      -2.284   5.554  -5.138  1.00  0.00           C
+ATOM      4  CA  LEU A   4      -3.888   7.595  -4.632  1.00  0.00           C
+ATOM      5  CA  TRP A   5      -3.003  11.211  -6.747  1.00  0.00           C
+ATOM      6  CA  LEU A   6      -5.765  10.098  -2.775  1.00  0.00           C
+ATOM      7  CA  TRP A   7      -6.850   7.395  -1.960  1.00  0.00           C
+ATOM      8  CA  LEU A   8     -10.165  13.932  -2.189  1.00  0.00           C
+ATOM      9  CA  TRP A   9      -8.252  13.107  -1.188  1.00  0.00           C
+ATOM     10  CA  ARG A  10     -11.870   7.457  -3.826  1.00  0.00           C
+ATOM     11  CA  LYS A  11     -13.452  15.912  -0.653  1.00  0.00           C
+ATOM     12  CA  LEU A  12     -12.572  19.962  -2.394  1.00  0.00           C
+ATOM     13  CA  LYS A  13      -8.759  21.590   2.417  1.00  0.00           C
+TER
+END

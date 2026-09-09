@@ -1,0 +1,28 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION production
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 16
+REMARK 999 PDB_ID 6MBM
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 1.355838
+REMARK 999 RMSD_CA_MEMORY 1.355825
+REMARK 999 SEQUENCE KWAVRIIRKFIKGFIS
+REMARK 999 TARGET_ID T089
+ATOM      1  CA  LYS A   1      22.851  22.957  -0.049  1.00  0.00           C
+ATOM      2  CA  TRP A   2      22.814  26.246  -1.175  1.00  0.00           C
+ATOM      3  CA  ALA A   3      25.618  25.636  -3.065  1.00  0.00           C
+ATOM      4  CA  VAL A   4      24.248  22.851  -5.140  1.00  0.00           C
+ATOM      5  CA  ARG A   5      21.177  24.892  -5.973  1.00  0.00           C
+ATOM      6  CA  ILE A   6      23.301  27.841  -7.039  1.00  0.00           C
+ATOM      7  CA  ILE A   7      25.449  25.641  -9.246  1.00  0.00           C
+ATOM      8  CA  ARG A   8      22.377  24.137 -10.879  1.00  0.00           C
+ATOM      9  CA  LYS A   9      20.939  27.591 -11.516  1.00  0.00           C
+ATOM     10  CA  PHE A  10      24.187  28.797 -13.059  1.00  0.00           C
+ATOM     11  CA  ILE A  11      24.406  25.736 -15.289  1.00  0.00           C
+ATOM     12  CA  LYS A  12      20.818  26.229 -16.437  1.00  0.00           C
+ATOM     13  CA  GLY A  13      21.493  29.879 -17.212  1.00  0.00           C
+ATOM     14  CA  PHE A  14      24.608  28.998 -19.177  1.00  0.00           C
+ATOM     15  CA  ILE A  15      22.764  26.350 -21.142  1.00  0.00           C
+ATOM     16  CA  SER A  16      19.976  28.758 -21.976  1.00  0.00           C
+TER
+END

@@ -1,0 +1,24 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION production
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 12
+REMARK 999 PDB_ID 7QZV
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 1.077254
+REMARK 999 RMSD_CA_MEMORY 1.077304
+REMARK 999 SEQUENCE EKRWRRLIFNYF
+REMARK 999 TARGET_ID T105
+ATOM      1  CA  GLU A   1      41.592  18.507  12.246  1.00  0.00           C
+ATOM      2  CA  LYS A   2      42.778  18.274  13.471  1.00  0.00           C
+ATOM      3  CA  ARG A   3      45.289  17.136  12.815  1.00  0.00           C
+ATOM      4  CA  TRP A   4      46.712  19.836  11.950  1.00  0.00           C
+ATOM      5  CA  ARG A   5      48.166  20.703  14.966  1.00  0.00           C
+ATOM      6  CA  ARG A   6      50.682  18.293  14.989  1.00  0.00           C
+ATOM      7  CA  LEU A   7      51.966  19.355  11.709  1.00  0.00           C
+ATOM      8  CA  ILE A   8      52.483  22.776  12.833  1.00  0.00           C
+ATOM      9  CA  PHE A   9      54.266  21.695  15.745  1.00  0.00           C
+ATOM     10  CA  ASN A  10      56.565  19.960  13.744  1.00  0.00           C
+ATOM     11  CA  TYR A  11      57.337  22.857  11.842  1.00  0.00           C
+ATOM     12  CA  PHE A  12      58.052  24.845  14.380  1.00  0.00           C
+TER
+END

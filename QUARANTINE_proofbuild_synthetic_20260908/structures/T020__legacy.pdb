@@ -1,0 +1,27 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 15
+REMARK 999 PDB_ID 1KYC
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.857054
+REMARK 999 RMSD_CA_MEMORY 2.857083
+REMARK 999 SEQUENCE EELRRRIEELERRIR
+REMARK 999 TARGET_ID T020
+ATOM      1  CA  GLU A   1       7.273  22.565   2.133  1.00  0.00           C
+ATOM      2  CA  GLU A   2      12.912  23.372   7.614  1.00  0.00           C
+ATOM      3  CA  LEU A   3      18.091  26.156   4.019  1.00  0.00           C
+ATOM      4  CA  ARG A   4      10.608  27.337   9.078  1.00  0.00           C
+ATOM      5  CA  ARG A   5      10.209  25.046   9.590  1.00  0.00           C
+ATOM      6  CA  ARG A   6      14.731  23.058  11.934  1.00  0.00           C
+ATOM      7  CA  ILE A   7      13.796  25.470  14.206  1.00  0.00           C
+ATOM      8  CA  GLU A   8       6.293  27.178  14.159  1.00  0.00           C
+ATOM      9  CA  GLU A   9       9.408  27.176  13.845  1.00  0.00           C
+ATOM     10  CA  LEU A  10      10.341  25.531  17.641  1.00  0.00           C
+ATOM     11  CA  GLU A  11      12.635  29.523  15.780  1.00  0.00           C
+ATOM     12  CA  ARG A  12       8.141  28.069  20.509  1.00  0.00           C
+ATOM     13  CA  ARG A  13      10.881  27.920  25.062  1.00  0.00           C
+ATOM     14  CA  ILE A  14      11.622  28.930  22.424  1.00  0.00           C
+ATOM     15  CA  ARG A  15       8.734  33.856  17.584  1.00  0.00           C
+TER
+END

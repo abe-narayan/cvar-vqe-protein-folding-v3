@@ -1,0 +1,25 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION native
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 13
+REMARK 999 PDB_ID 7P3M
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.0000
+REMARK 999 SEQUENCE EDPAVDLLKNYMQ
+REMARK 999 SOURCE s12.instrument.load_univ
+REMARK 999 TARGET_ID T104
+ATOM      1  CA  GLU A   1      -8.604  -3.397  -1.343  1.00  0.00           C
+ATOM      2  CA  ASP A   2      -8.551   0.390  -1.241  1.00  0.00           C
+ATOM      3  CA  PRO A   3      -6.151   3.063  -2.586  1.00  0.00           C
+ATOM      4  CA  ALA A   4      -4.654   2.941   0.898  1.00  0.00           C
+ATOM      5  CA  VAL A   5      -4.008  -0.800   0.866  1.00  0.00           C
+ATOM      6  CA  ASP A   6      -2.102  -0.462  -2.406  1.00  0.00           C
+ATOM      7  CA  LEU A   7       0.022   2.369  -1.037  1.00  0.00           C
+ATOM      8  CA  LEU A   8       0.800   0.476   2.184  1.00  0.00           C
+ATOM      9  CA  LYS A   9       2.483  -2.186   0.104  1.00  0.00           C
+ATOM     10  CA  ASN A  10       3.946   0.517  -2.093  1.00  0.00           C
+ATOM     11  CA  TYR A  11       5.772   1.924   0.916  1.00  0.00           C
+ATOM     12  CA  MET A  12       6.683  -1.465   2.358  1.00  0.00           C
+ATOM     13  CA  GLN A  13       8.308  -2.726  -0.823  1.00  0.00           C
+TER
+END

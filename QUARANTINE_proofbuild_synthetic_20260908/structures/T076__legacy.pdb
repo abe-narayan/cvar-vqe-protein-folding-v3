@@ -1,0 +1,22 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 10
+REMARK 999 PDB_ID 5V5B
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.244995
+REMARK 999 RMSD_CA_MEMORY 3.244797
+REMARK 999 SEQUENCE KVQIINKKLD
+REMARK 999 TARGET_ID T076
+ATOM      1  CA  LYS A   1       4.298  -0.032  -7.516  1.00  0.00           C
+ATOM      2  CA  VAL A   2       1.115   2.218  -7.194  1.00  0.00           C
+ATOM      3  CA  GLN A   3       3.921   0.618  -3.140  1.00  0.00           C
+ATOM      4  CA  ILE A   4       3.389  -2.965   0.433  1.00  0.00           C
+ATOM      5  CA  ILE A   5       7.545  -2.788   3.957  1.00  0.00           C
+ATOM      6  CA  ASN A   6       6.675   0.494   8.505  1.00  0.00           C
+ATOM      7  CA  LYS A   7       6.869  -2.348  10.505  1.00  0.00           C
+ATOM      8  CA  LYS A   8       0.130  -0.482  14.061  1.00  0.00           C
+ATOM      9  CA  LEU A   9      13.074  -2.890  17.987  1.00  0.00           C
+ATOM     10  CA  ASP A  10       9.152   0.872  22.606  1.00  0.00           C
+TER
+END

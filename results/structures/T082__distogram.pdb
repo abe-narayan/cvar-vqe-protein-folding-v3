@@ -1,0 +1,34 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 BASIS_ROLE NON-PHYSICAL INTERMEDIATE -- not a molecule
+REMARK 999 CA_BOND_MAX 2.769024738062121
+REMARK 999 CA_BOND_MEAN 2.194910793224566
+REMARK 999 CA_BOND_MIN 1.1563520225260127
+REMARK 999 CONFIGURATION distogram
+REMARK 999 FOLD 4
+REMARK 999 GIT_COMMIT a15406c82245
+REMARK 999 LENGTH 15
+REMARK 999 MODULE_SHA 90e160cc06020ac1
+REMARK 999 PDB_ID 6BX9
+REMARK 999 PROVENANCE genuine
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.948274
+REMARK 999 RMSD_CA_MEMORY 3.948448
+REMARK 999 SEQUENCE CCTALCSRYHCLPCC
+REMARK 999 TARGET_ID T082
+ATOM      1  CA  CYS A   1      -2.448   4.677  -0.960  1.00  0.00           C
+ATOM      2  CA  CYS A   2      -2.498   4.173   0.381  1.00  0.00           C
+ATOM      3  CA  THR A   3      -4.742   3.443   0.899  1.00  0.00           C
+ATOM      4  CA  ALA A   4      -5.327   1.264  -0.068  1.00  0.00           C
+ATOM      5  CA  LEU A   5      -4.301  -0.896  -0.016  1.00  0.00           C
+ATOM      6  CA  CYS A   6      -3.029  -2.424  -0.522  1.00  0.00           C
+ATOM      7  CA  SER A   7      -1.934  -2.758  -0.685  1.00  0.00           C
+ATOM      8  CA  ARG A   8      -0.407  -3.203   0.434  1.00  0.00           C
+ATOM      9  CA  TYR A   9       1.707  -4.407   0.853  1.00  0.00           C
+ATOM     10  CA  HIS A  10       3.439  -3.347   0.264  1.00  0.00           C
+ATOM     11  CA  CYS A  11       3.862  -0.827   1.275  1.00  0.00           C
+ATOM     12  CA  LEU A  12       4.992   0.484   2.776  1.00  0.00           C
+ATOM     13  CA  PRO A  13       6.370   2.284   2.034  1.00  0.00           C
+ATOM     14  CA  CYS A  14       4.657   4.161   0.934  1.00  0.00           C
+ATOM     15  CA  CYS A  15       3.368   5.225   2.212  1.00  0.00           C
+TER
+END

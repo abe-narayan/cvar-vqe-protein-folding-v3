@@ -1,0 +1,63 @@
+{
+ "complete": true,
+ "n_rows": 126,
+ "n_expected": 126,
+ "required_keys": [
+  "avg_75",
+  "vb_avg_75",
+  "medoid_75",
+  "exp1",
+  "exp2",
+  "exp3"
+ ],
+ "exp1_required_cells": [
+  "m150_k3",
+  "m250_k3",
+  "m75_k2",
+  "m75_k3",
+  "m75_k4",
+  "m75_k5"
+ ],
+ "exp1_required_rules_per_cell": [
+  "size",
+  "score",
+  "combined",
+  "random",
+  "oracle"
+ ],
+ "exp2_required_m": [
+  "m20",
+  "m30",
+  "m50",
+  "m75",
+  "m100",
+  "m150",
+  "m250",
+  "m500"
+ ],
+ "exp3_required_families": [
+  "score_c0.1",
+  "score_c0.25",
+  "score_c0.5",
+  "score_c1.0",
+  "score_c2.0",
+  "score_c5.0",
+  "score_c1000000.0",
+  "rank_p0.0",
+  "rank_p0.5",
+  "rank_p1.0",
+  "rank_p2.0",
+  "rank_p4.0",
+  "rank_p8.0",
+  "dist_c0.1",
+  "dist_c0.25",
+  "dist_c0.5",
+  "dist_c1.0",
+  "dist_c2.0",
+  "dist_c5.0",
+  "dist_c1000000.0"
+ ],
+ "incumbent_selfcheck_avg_75": 3.0483380938795324,
+ "incumbent_pinned_constant": 3.048,
+ "time": "2026-09-08T14:03:26.743018"
+}

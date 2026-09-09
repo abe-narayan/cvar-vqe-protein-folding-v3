@@ -1,0 +1,33 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 BASIS_ROLE NON-PHYSICAL INTERMEDIATE -- not a molecule
+REMARK 999 CA_BOND_MAX 2.925894564060708
+REMARK 999 CA_BOND_MEAN 2.204562607446548
+REMARK 999 CA_BOND_MIN 1.2302946801478098
+REMARK 999 CONFIGURATION legacy_amber_distogram
+REMARK 999 FOLD 0
+REMARK 999 GIT_COMMIT a15406c82245
+REMARK 999 LENGTH 14
+REMARK 999 MODULE_SHA 90e160cc06020ac1
+REMARK 999 PDB_ID 2MSA
+REMARK 999 PROVENANCE genuine
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 5.470482
+REMARK 999 RMSD_CA_MEMORY 5.470494
+REMARK 999 SEQUENCE KNSFSLGENPNANP
+REMARK 999 TARGET_ID T058
+ATOM      1  CA  LYS A   1     -10.838  -2.421   2.109  1.00  0.00           C
+ATOM      2  CA  ASN A   2      -9.690  -2.656   2.606  1.00  0.00           C
+ATOM      3  CA  SER A   3      -7.626  -3.815   2.134  1.00  0.00           C
+ATOM      4  CA  PHE A   4      -6.288  -3.110   0.242  1.00  0.00           C
+ATOM      5  CA  SER A   5      -5.150  -1.436   0.341  1.00  0.00           C
+ATOM      6  CA  LEU A   6      -2.653  -1.369   1.058  1.00  0.00           C
+ATOM      7  CA  GLY A   7      -0.782  -1.862  -1.071  1.00  0.00           C
+ATOM      8  CA  GLU A   8      -0.709   0.361  -2.972  1.00  0.00           C
+ATOM      9  CA  ASN A   9       0.670   2.578  -1.790  1.00  0.00           C
+ATOM     10  CA  PRO A  10       3.270   2.400  -1.671  1.00  0.00           C
+ATOM     11  CA  ASN A  11       3.953   3.223  -2.846  1.00  0.00           C
+ATOM     12  CA  ALA A  12       4.097   4.331  -2.331  1.00  0.00           C
+ATOM     13  CA  ASN A  13       5.963   4.453  -0.740  1.00  0.00           C
+ATOM     14  CA  PRO A  14       6.856   3.481  -0.361  1.00  0.00           C
+TER
+END

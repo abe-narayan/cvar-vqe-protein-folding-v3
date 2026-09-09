@@ -1,0 +1,26 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber_distogram
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 14
+REMARK 999 PDB_ID 6WPB
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.318108
+REMARK 999 RMSD_CA_MEMORY 2.318166
+REMARK 999 SEQUENCE GILDAIKAIAKAAG
+REMARK 999 TARGET_ID T098
+ATOM      1  CA  GLY A   1       5.434   7.242  -8.602  1.00  0.00           C
+ATOM      2  CA  ILE A   2       8.672   7.267  -9.882  1.00  0.00           C
+ATOM      3  CA  LEU A   3       9.743  13.031  -7.256  1.00  0.00           C
+ATOM      4  CA  ASP A   4       7.437  10.656  -6.452  1.00  0.00           C
+ATOM      5  CA  ALA A   5       9.301   6.748  -8.098  1.00  0.00           C
+ATOM      6  CA  ILE A   6      11.548   6.758  -5.242  1.00  0.00           C
+ATOM      7  CA  LYS A   7      13.531   8.354  -4.920  1.00  0.00           C
+ATOM      8  CA  ALA A   8       9.484   5.461  -0.871  1.00  0.00           C
+ATOM      9  CA  ILE A   9      10.601   4.987  -0.040  1.00  0.00           C
+ATOM     10  CA  ALA A  10      13.922   7.042   2.900  1.00  0.00           C
+ATOM     11  CA  LYS A  11      14.916   7.447   4.248  1.00  0.00           C
+ATOM     12  CA  ALA A  12      14.985   3.192   4.241  1.00  0.00           C
+ATOM     13  CA  ALA A  13      19.459   4.780   4.152  1.00  0.00           C
+ATOM     14  CA  GLY A  14      17.669   9.241   5.057  1.00  0.00           C
+TER
+END

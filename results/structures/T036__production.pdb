@@ -1,0 +1,35 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 BASIS_ROLE NON-PHYSICAL INTERMEDIATE -- not a molecule
+REMARK 999 CA_BOND_MAX 2.4778934601794322
+REMARK 999 CA_BOND_MEAN 1.9889453286673227
+REMARK 999 CA_BOND_MIN 1.3520018491111614
+REMARK 999 CONFIGURATION production
+REMARK 999 FOLD 0
+REMARK 999 GIT_COMMIT a15406c82245
+REMARK 999 LENGTH 16
+REMARK 999 MODULE_SHA 90e160cc06020ac1
+REMARK 999 PDB_ID 2EFZ
+REMARK 999 PROVENANCE genuine
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.383996
+REMARK 999 RMSD_CA_MEMORY 3.383990
+REMARK 999 SEQUENCE VCCPFGGCHELCYCCD
+REMARK 999 TARGET_ID T036
+ATOM      1  CA  VAL A   1       3.366   3.437   5.765  1.00  0.00           C
+ATOM      2  CA  CYS A   2       3.500   2.000   5.131  1.00  0.00           C
+ATOM      3  CA  CYS A   3       4.568   1.369   3.861  1.00  0.00           C
+ATOM      4  CA  PRO A   4       6.625   0.261   3.748  1.00  0.00           C
+ATOM      5  CA  PHE A   5       6.759  -2.207   3.572  1.00  0.00           C
+ATOM      6  CA  GLY A   6       5.908  -4.096   2.616  1.00  0.00           C
+ATOM      7  CA  GLY A   7       4.005  -5.542   3.134  1.00  0.00           C
+ATOM      8  CA  CYS A   8       1.859  -4.605   2.831  1.00  0.00           C
+ATOM      9  CA  HIS A   9       0.042  -4.775   1.823  1.00  0.00           C
+ATOM     10  CA  GLU A  10      -1.322  -4.905   2.194  1.00  0.00           C
+ATOM     11  CA  LEU A  11      -2.442  -3.235   2.689  1.00  0.00           C
+ATOM     12  CA  CYS A  12      -3.583  -1.460   2.241  1.00  0.00           C
+ATOM     13  CA  TYR A  13      -4.842  -0.492   2.703  1.00  0.00           C
+ATOM     14  CA  CYS A  14      -4.413   1.381   3.880  1.00  0.00           C
+ATOM     15  CA  CYS A  15      -3.839   2.826   3.570  1.00  0.00           C
+ATOM     16  CA  ASP A  16      -4.097   3.339   2.346  1.00  0.00           C
+TER
+END

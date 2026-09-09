@@ -1,0 +1,25 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION distogram
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 13
+REMARK 999 PDB_ID 7JGX
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 1.997959
+REMARK 999 RMSD_CA_MEMORY 1.997989
+REMARK 999 SEQUENCE IFWLFRGKADVAL
+REMARK 999 TARGET_ID T100
+ATOM      1  CA  ILE A   1      -7.514  -0.109  -5.243  1.00  0.00           C
+ATOM      2  CA  PHE A   2      -5.920   2.142  -2.433  1.00  0.00           C
+ATOM      3  CA  TRP A   3      -7.428   0.698  -0.545  1.00  0.00           C
+ATOM      4  CA  LEU A   4      -3.361  -3.302  -2.127  1.00  0.00           C
+ATOM      5  CA  PHE A   5      -3.572   0.516  -2.184  1.00  0.00           C
+ATOM      6  CA  ARG A   6      -2.017   1.564   0.877  1.00  0.00           C
+ATOM      7  CA  GLY A   7      -0.508  -0.544   0.781  1.00  0.00           C
+ATOM      8  CA  LYS A   8       1.578  -1.023  -2.520  1.00  0.00           C
+ATOM      9  CA  ALA A   9       7.174  -0.644   1.234  1.00  0.00           C
+ATOM     10  CA  ASP A  10       4.214  -1.043   3.557  1.00  0.00           C
+ATOM     11  CA  VAL A  11       5.437   0.468   1.611  1.00  0.00           C
+ATOM     12  CA  ALA A  12       9.846   0.855   3.383  1.00  0.00           C
+ATOM     13  CA  LEU A  13      11.762  -0.500   6.432  1.00  0.00           C
+TER
+END

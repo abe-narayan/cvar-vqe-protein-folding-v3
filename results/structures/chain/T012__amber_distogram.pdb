@@ -1,0 +1,64 @@
+REMARK 999 BASIS built_chain_bb
+REMARK 999 BASIS_ROLE PRODUCTION RESULT
+REMARK 999 CA_BOND_MAX 3.8046542549882245
+REMARK 999 CA_BOND_MEAN 3.804034175822772
+REMARK 999 CA_BOND_MIN 3.803660079449793
+REMARK 999 CHAIN_LAM 0.300
+REMARK 999 CONFIGURATION amber_distogram
+REMARK 999 FOLD 2
+REMARK 999 GIT_COMMIT a15406c82245
+REMARK 999 LENGTH 11
+REMARK 999 MODULE_SHA 90e160cc06020ac1
+REMARK 999 PDB_ID 1I6Y
+REMARK 999 PROVENANCE genuine
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.522096
+REMARK 999 RMSD_CA_MEMORY 3.522166
+REMARK 999 SEQUENCE CRVVRGDYLDC
+REMARK 999 TARGET_ID T012
+ATOM      1  N   CYS A   1       0.000   0.000   0.000  1.00  0.00           N
+ATOM      2  CA  CYS A   1       1.458   0.000   0.000  1.00  0.00           C
+ATOM      3  C   CYS A   1       2.005   1.424   0.000  1.00  0.00           C
+ATOM      4  O   CYS A   1       1.422   2.323  -0.606  1.00  0.00           O
+ATOM      5  N   ARG A   2       3.127   1.621   0.684  1.00  0.00           N
+ATOM      6  CA  ARG A   2       3.754   2.935   0.764  1.00  0.00           C
+ATOM      7  C   ARG A   2       3.421   3.776  -0.464  1.00  0.00           C
+ATOM      8  O   ARG A   2       2.991   4.923  -0.345  1.00  0.00           O
+ATOM      9  N   VAL A   3       3.622   3.196  -1.643  1.00  0.00           N
+ATOM     10  CA  VAL A   3       3.343   3.890  -2.895  1.00  0.00           C
+ATOM     11  C   VAL A   3       4.043   5.245  -2.936  1.00  0.00           C
+ATOM     12  O   VAL A   3       3.414   6.272  -3.191  1.00  0.00           O
+ATOM     13  N   VAL A   4       5.348   5.239  -2.685  1.00  0.00           N
+ATOM     14  CA  VAL A   4       6.135   6.466  -2.693  1.00  0.00           C
+ATOM     15  C   VAL A   4       5.734   7.365  -3.857  1.00  0.00           C
+ATOM     16  O   VAL A   4       5.215   6.893  -4.869  1.00  0.00           O
+ATOM     17  N   ARG A   5       5.977   8.663  -3.707  1.00  0.00           N
+ATOM     18  CA  ARG A   5       5.641   9.631  -4.745  1.00  0.00           C
+ATOM     19  C   ARG A   5       5.991   9.092  -6.128  1.00  0.00           C
+ATOM     20  O   ARG A   5       5.112   8.670  -6.880  1.00  0.00           O
+ATOM     21  N   GLY A   6       7.278   9.109  -6.456  1.00  0.00           N
+ATOM     22  CA  GLY A   6       7.746   8.622  -7.749  1.00  0.00           C
+ATOM     23  C   GLY A   6       6.587   8.084  -8.582  1.00  0.00           C
+ATOM     24  O   GLY A   6       6.376   6.873  -8.661  1.00  0.00           O
+ATOM     25  N   ASP A   7       5.839   8.991  -9.202  1.00  0.00           N
+ATOM     26  CA  ASP A   7       4.701   8.609 -10.029  1.00  0.00           C
+ATOM     27  C   ASP A   7       5.120   7.618 -11.110  1.00  0.00           C
+ATOM     28  O   ASP A   7       5.742   7.994 -12.104  1.00  0.00           O
+ATOM     29  N   TYR A   8       4.775   6.350 -10.910  1.00  0.00           N
+ATOM     30  CA  TYR A   8       5.114   5.304 -11.866  1.00  0.00           C
+ATOM     31  C   TYR A   8       3.862   4.580 -12.351  1.00  0.00           C
+ATOM     32  O   TYR A   8       3.758   4.216 -13.523  1.00  0.00           O
+ATOM     33  N   LEU A   9       2.913   4.376 -11.443  1.00  0.00           N
+ATOM     34  CA  LEU A   9       1.667   3.696 -11.777  1.00  0.00           C
+ATOM     35  C   LEU A   9       1.938   2.377 -12.492  1.00  0.00           C
+ATOM     36  O   LEU A   9       1.105   1.891 -13.257  1.00  0.00           O
+ATOM     37  N   ASP A  10       3.109   1.802 -12.237  1.00  0.00           N
+ATOM     38  CA  ASP A  10       3.492   0.538 -12.856  1.00  0.00           C
+ATOM     39  C   ASP A  10       2.863  -0.642 -12.123  1.00  0.00           C
+ATOM     40  O   ASP A  10       3.124  -1.799 -12.451  1.00  0.00           O
+ATOM     41  N   CYS A  11       2.034  -0.341 -11.129  1.00  0.00           N
+ATOM     42  CA  CYS A  11       1.367  -1.376 -10.348  1.00  0.00           C
+ATOM     43  C   CYS A  11       0.229  -2.010 -11.141  1.00  0.00           C
+ATOM     44  O   CYS A  11      -0.449  -1.338 -11.918  1.00  0.00           O
+TER
+END

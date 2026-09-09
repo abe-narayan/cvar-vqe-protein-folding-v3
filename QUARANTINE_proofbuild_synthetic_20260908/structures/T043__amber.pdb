@@ -1,0 +1,25 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 13
+REMARK 999 PDB_ID 2LNG
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.847828
+REMARK 999 RMSD_CA_MEMORY 2.847875
+REMARK 999 SEQUENCE ELYENKPRRPYIL
+REMARK 999 TARGET_ID T043
+ATOM      1  CA  GLU A   1      -1.160  -8.100   7.907  1.00  0.00           C
+ATOM      2  CA  LEU A   2      -4.012  -4.098  11.289  1.00  0.00           C
+ATOM      3  CA  TYR A   3      -3.930  -4.024   6.374  1.00  0.00           C
+ATOM      4  CA  GLU A   4      -1.052  -3.993   7.550  1.00  0.00           C
+ATOM      5  CA  ASN A   5      -2.722  -3.446  -1.529  1.00  0.00           C
+ATOM      6  CA  LYS A   6      -0.583   2.735   2.054  1.00  0.00           C
+ATOM      7  CA  PRO A   7       3.459  -1.301   1.368  1.00  0.00           C
+ATOM      8  CA  ARG A   8       1.313  -3.153  -0.405  1.00  0.00           C
+ATOM      9  CA  ARG A   9       0.358   0.007  -6.448  1.00  0.00           C
+ATOM     10  CA  PRO A  10       0.346   6.858  -4.260  1.00  0.00           C
+ATOM     11  CA  TYR A  11      -3.624   3.928  -8.462  1.00  0.00           C
+ATOM     12  CA  ILE A  12       2.825   6.139 -10.791  1.00  0.00           C
+ATOM     13  CA  LEU A  13      -1.507   1.414  -9.516  1.00  0.00           C
+TER
+END

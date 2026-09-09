@@ -1,0 +1,35 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 BASIS_ROLE NON-PHYSICAL INTERMEDIATE -- not a molecule
+REMARK 999 CA_BOND_MAX 3.797186721771791
+REMARK 999 CA_BOND_MEAN 3.7602513519943765
+REMARK 999 CA_BOND_MIN 3.4338608009061757
+REMARK 999 CONFIGURATION distogram
+REMARK 999 FOLD 1
+REMARK 999 GIT_COMMIT a15406c82245
+REMARK 999 LENGTH 16
+REMARK 999 MODULE_SHA 90e160cc06020ac1
+REMARK 999 PDB_ID 1S9Z
+REMARK 999 PROVENANCE genuine
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.186442
+REMARK 999 RMSD_CA_MEMORY 0.186371
+REMARK 999 SEQUENCE SIRELEARIRELELRI
+REMARK 999 TARGET_ID T030
+ATOM      1  CA  SER A   1       7.460   2.356 -14.745  1.00  0.00           C
+ATOM      2  CA  ILE A   2       5.140  -0.174 -14.655  1.00  0.00           C
+ATOM      3  CA  ARG A   3       6.621  -1.951 -11.706  1.00  0.00           C
+ATOM      4  CA  GLU A   4       6.783   1.272  -9.744  1.00  0.00           C
+ATOM      5  CA  LEU A   5       3.170   2.088 -10.522  1.00  0.00           C
+ATOM      6  CA  GLU A   6       2.048  -1.384  -9.482  1.00  0.00           C
+ATOM      7  CA  ALA A   7       3.939  -1.077  -6.204  1.00  0.00           C
+ATOM      8  CA  ARG A   8       2.378   2.314  -5.509  1.00  0.00           C
+ATOM      9  CA  ILE A   9      -1.109   1.012  -6.245  1.00  0.00           C
+ATOM     10  CA  ARG A  10      -0.579  -1.968  -3.958  1.00  0.00           C
+ATOM     11  CA  GLU A  11       0.569   0.307  -1.144  1.00  0.00           C
+ATOM     12  CA  LEU A  12      -2.417   2.600  -1.625  1.00  0.00           C
+ATOM     13  CA  GLU A  13      -4.784  -0.350  -1.595  1.00  0.00           C
+ATOM     14  CA  LEU A  14      -3.252  -1.635   1.618  1.00  0.00           C
+ATOM     15  CA  ARG A  15      -3.571   1.750   3.252  1.00  0.00           C
+ATOM     16  CA  ILE A  16      -7.165   2.063   2.215  1.00  0.00           C
+TER
+END

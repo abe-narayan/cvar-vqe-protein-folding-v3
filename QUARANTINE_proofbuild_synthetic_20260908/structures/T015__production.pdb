@@ -1,0 +1,27 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION production
+REMARK 999 FOLD 3
+REMARK 999 LENGTH 15
+REMARK 999 PDB_ID 1ID6
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 5.554072
+REMARK 999 RMSD_CA_MEMORY 5.554024
+REMARK 999 SEQUENCE SVQARWEAAFDLDLY
+REMARK 999 TARGET_ID T015
+ATOM      1  CA  SER A   1      23.399  26.526  -1.464  1.00  0.00           C
+ATOM      2  CA  VAL A   2      25.528  25.701  -2.977  1.00  0.00           C
+ATOM      3  CA  GLN A   3      24.197  22.879  -5.086  1.00  0.00           C
+ATOM      4  CA  ALA A   4      21.087  24.844  -5.982  1.00  0.00           C
+ATOM      5  CA  ARG A   5      23.164  27.852  -6.962  1.00  0.00           C
+ATOM      6  CA  TRP A   6      25.406  25.709  -9.134  1.00  0.00           C
+ATOM      7  CA  GLU A   7      22.395  24.162 -10.836  1.00  0.00           C
+ATOM      8  CA  ALA A   8      20.906  27.583 -11.515  1.00  0.00           C
+ATOM      9  CA  ALA A   9      24.179  28.816 -12.990  1.00  0.00           C
+ATOM     10  CA  PHE A  10      24.429  25.771 -15.235  1.00  0.00           C
+ATOM     11  CA  ASP A  11      20.859  26.206 -16.425  1.00  0.00           C
+ATOM     12  CA  LEU A  12      21.469  29.852 -17.269  1.00  0.00           C
+ATOM     13  CA  ASP A  13      24.603  28.974 -19.188  1.00  0.00           C
+ATOM     14  CA  LEU A  14      22.776  26.348 -21.179  1.00  0.00           C
+ATOM     15  CA  TYR A  15      19.991  28.729 -21.981  1.00  0.00           C
+TER
+END

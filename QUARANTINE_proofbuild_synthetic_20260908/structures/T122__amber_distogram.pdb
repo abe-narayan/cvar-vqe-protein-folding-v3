@@ -1,0 +1,27 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber_distogram
+REMARK 999 FOLD 3
+REMARK 999 LENGTH 15
+REMARK 999 PDB_ID 9KAR
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.550635
+REMARK 999 RMSD_CA_MEMORY 2.550692
+REMARK 999 SEQUENCE GGWGTVPDWFFNMNW
+REMARK 999 TARGET_ID T122
+ATOM      1  CA  GLY A   1       2.169   1.867  -2.179  1.00  0.00           C
+ATOM      2  CA  GLY A   2       0.557   4.309  -5.763  1.00  0.00           C
+ATOM      3  CA  TRP A   3      -3.879   5.234   0.476  1.00  0.00           C
+ATOM      4  CA  GLY A   4      -3.517  -0.765   0.352  1.00  0.00           C
+ATOM      5  CA  THR A   5      -5.715  -3.340   4.308  1.00  0.00           C
+ATOM      6  CA  VAL A   6      -1.533  -5.879   3.706  1.00  0.00           C
+ATOM      7  CA  PRO A   7      -1.638   0.962   5.181  1.00  0.00           C
+ATOM      8  CA  ASP A   8       2.833   0.373   5.745  1.00  0.00           C
+ATOM      9  CA  TRP A   9       8.688   3.379   4.302  1.00  0.00           C
+ATOM     10  CA  PHE A  10       4.279   2.157   2.371  1.00  0.00           C
+ATOM     11  CA  PHE A  11      -0.483   0.951   3.260  1.00  0.00           C
+ATOM     12  CA  ASN A  12      -2.902  -0.967   1.249  1.00  0.00           C
+ATOM     13  CA  MET A  13       0.027  -1.712  -0.708  1.00  0.00           C
+ATOM     14  CA  ASN A  14      -3.665   1.264  -2.875  1.00  0.00           C
+ATOM     15  CA  TRP A  15      -2.996  -6.101  -1.307  1.00  0.00           C
+TER
+END

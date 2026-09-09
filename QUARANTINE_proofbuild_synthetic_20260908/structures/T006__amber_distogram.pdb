@@ -1,0 +1,24 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber_distogram
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 12
+REMARK 999 PDB_ID 1D0W
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.040770
+REMARK 999 RMSD_CA_MEMORY 3.040761
+REMARK 999 SEQUENCE RHYKNLLERQRY
+REMARK 999 TARGET_ID T006
+ATOM      1  CA  ARG A   1       7.551  -8.032   2.071  1.00  0.00           C
+ATOM      2  CA  HIS A   2       5.749  -6.421   1.248  1.00  0.00           C
+ATOM      3  CA  TYR A   3      10.558  -1.936  -4.873  1.00  0.00           C
+ATOM      4  CA  LYS A   4       6.700   4.751   2.366  1.00  0.00           C
+ATOM      5  CA  ASN A   5      11.897  -0.612   5.308  1.00  0.00           C
+ATOM      6  CA  LEU A   6      12.001  -1.168  -1.435  1.00  0.00           C
+ATOM      7  CA  LEU A   7      13.177   4.608  -3.553  1.00  0.00           C
+ATOM      8  CA  GLU A   8      13.947   3.804   0.398  1.00  0.00           C
+ATOM      9  CA  ARG A   9      18.234   2.653  -0.025  1.00  0.00           C
+ATOM     10  CA  GLN A  10      17.447   0.583  -1.095  1.00  0.00           C
+ATOM     11  CA  ARG A  11      23.734   3.790   3.334  1.00  0.00           C
+ATOM     12  CA  TYR A  12      19.137  -0.658   2.384  1.00  0.00           C
+TER
+END

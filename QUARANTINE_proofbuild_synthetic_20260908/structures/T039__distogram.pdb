@@ -1,0 +1,24 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION distogram
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 12
+REMARK 999 PDB_ID 2JN5
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 1.494892
+REMARK 999 RMSD_CA_MEMORY 1.494890
+REMARK 999 SEQUENCE MDVFMKGLSKAK
+REMARK 999 TARGET_ID T039
+ATOM      1  CA  MET A   1      -5.317  -1.778  -0.416  1.00  0.00           C
+ATOM      2  CA  ASP A   2      -2.722  -1.463  -0.426  1.00  0.00           C
+ATOM      3  CA  VAL A   3       1.201  -3.467   2.767  1.00  0.00           C
+ATOM      4  CA  PHE A   4       2.546  -1.634  -3.063  1.00  0.00           C
+ATOM      5  CA  MET A   5       4.799  -0.616  -3.852  1.00  0.00           C
+ATOM      6  CA  LYS A   6       6.621   2.211  -1.508  1.00  0.00           C
+ATOM      7  CA  GLY A   7       3.959   5.937  -2.954  1.00  0.00           C
+ATOM      8  CA  LEU A   8       1.299   4.503  -5.146  1.00  0.00           C
+ATOM      9  CA  SER A   9      -1.316   3.863   0.089  1.00  0.00           C
+ATOM     10  CA  LYS A  10       0.273   3.988   1.716  1.00  0.00           C
+ATOM     11  CA  ALA A  11      -3.718   1.708   3.070  1.00  0.00           C
+ATOM     12  CA  LYS A  12      -0.684  -1.041   7.420  1.00  0.00           C
+TER
+END

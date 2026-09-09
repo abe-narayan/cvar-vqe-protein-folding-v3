@@ -1,0 +1,21 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_distogram
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 9
+REMARK 999 PDB_ID 2MK7
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.508386
+REMARK 999 RMSD_CA_MEMORY 2.508418
+REMARK 999 SEQUENCE PPTTTTKKP
+REMARK 999 TARGET_ID T054
+ATOM      1  CA  PRO A   1       2.002 -22.628   8.675  1.00  0.00           C
+ATOM      2  CA  PRO A   2       3.898 -21.929  10.170  1.00  0.00           C
+ATOM      3  CA  THR A   3       3.409 -19.261   8.034  1.00  0.00           C
+ATOM      4  CA  THR A   4       4.935 -12.066   4.819  1.00  0.00           C
+ATOM      5  CA  THR A   5       6.501 -12.249  10.403  1.00  0.00           C
+ATOM      6  CA  THR A   6       8.030 -10.617   5.413  1.00  0.00           C
+ATOM      7  CA  LYS A   7       8.470  -8.824  11.236  1.00  0.00           C
+ATOM      8  CA  LYS A   8       5.798  -4.092   7.946  1.00  0.00           C
+ATOM      9  CA  PRO A   9       8.850  -0.516   6.826  1.00  0.00           C
+TER
+END

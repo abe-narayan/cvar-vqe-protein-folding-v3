@@ -1,0 +1,68 @@
+REMARK 999 BASIS built_chain_bb
+REMARK 999 BASIS_ROLE PRODUCTION RESULT
+REMARK 999 CA_BOND_MAX 3.8045738263306186
+REMARK 999 CA_BOND_MEAN 3.80395963137337
+REMARK 999 CA_BOND_MIN 3.8031001827456503
+REMARK 999 CHAIN_LAM 0.300
+REMARK 999 CONFIGURATION legacy_amber_distogram
+REMARK 999 FOLD 0
+REMARK 999 GIT_COMMIT a15406c82245
+REMARK 999 LENGTH 12
+REMARK 999 MODULE_SHA 90e160cc06020ac1
+REMARK 999 PDB_ID 1RSW
+REMARK 999 PROVENANCE genuine
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 4.539877
+REMARK 999 RMSD_CA_MEMORY 4.539906
+REMARK 999 SEQUENCE DKNGDGEVSFEE
+REMARK 999 TARGET_ID T029
+ATOM      1  N   ASP A   1       0.000   0.000   0.000  1.00  0.00           N
+ATOM      2  CA  ASP A   1       1.458   0.000   0.000  1.00  0.00           C
+ATOM      3  C   ASP A   1       2.005   1.424   0.000  1.00  0.00           C
+ATOM      4  O   ASP A   1       1.596   2.256  -0.810  1.00  0.00           O
+ATOM      5  N   LYS A   2       2.930   1.697   0.913  1.00  0.00           N
+ATOM      6  CA  LYS A   2       3.534   3.020   1.021  1.00  0.00           C
+ATOM      7  C   LYS A   2       3.738   3.641  -0.357  1.00  0.00           C
+ATOM      8  O   LYS A   2       4.145   2.962  -1.301  1.00  0.00           O
+ATOM      9  N   ASN A   3       3.451   4.934  -0.466  1.00  0.00           N
+ATOM     10  CA  ASN A   3       3.602   5.649  -1.728  1.00  0.00           C
+ATOM     11  C   ASN A   3       4.583   4.931  -2.649  1.00  0.00           C
+ATOM     12  O   ASN A   3       4.266   4.636  -3.801  1.00  0.00           O
+ATOM     13  N   GLY A   4       5.776   4.653  -2.133  1.00  0.00           N
+ATOM     14  CA  GLY A   4       6.806   3.970  -2.907  1.00  0.00           C
+ATOM     15  C   GLY A   4       6.189   2.933  -3.840  1.00  0.00           C
+ATOM     16  O   GLY A   4       6.768   2.592  -4.872  1.00  0.00           O
+ATOM     17  N   ASP A   5       5.013   2.437  -3.471  1.00  0.00           N
+ATOM     18  CA  ASP A   5       4.317   1.439  -4.274  1.00  0.00           C
+ATOM     19  C   ASP A   5       2.923   1.923  -4.659  1.00  0.00           C
+ATOM     20  O   ASP A   5       2.244   1.302  -5.477  1.00  0.00           O
+ATOM     21  N   GLY A   6       2.503   3.034  -4.064  1.00  0.00           N
+ATOM     22  CA  GLY A   6       1.190   3.603  -4.343  1.00  0.00           C
+ATOM     23  C   GLY A   6       1.209   4.417  -5.632  1.00  0.00           C
+ATOM     24  O   GLY A   6       0.169   4.646  -6.249  1.00  0.00           O
+ATOM     25  N   GLU A   7       2.399   4.852  -6.033  1.00  0.00           N
+ATOM     26  CA  GLU A   7       2.557   5.642  -7.249  1.00  0.00           C
+ATOM     27  C   GLU A   7       2.617   4.743  -8.480  1.00  0.00           C
+ATOM     28  O   GLU A   7       2.350   5.186  -9.597  1.00  0.00           O
+ATOM     29  N   VAL A   8       2.967   3.479  -8.267  1.00  0.00           N
+ATOM     30  CA  VAL A   8       3.062   2.516  -9.358  1.00  0.00           C
+ATOM     31  C   VAL A   8       1.682   2.011  -9.763  1.00  0.00           C
+ATOM     32  O   VAL A   8       1.282   2.128 -10.921  1.00  0.00           O
+ATOM     33  N   SER A   9       0.957   1.449  -8.801  1.00  0.00           N
+ATOM     34  CA  SER A   9      -0.379   0.925  -9.055  1.00  0.00           C
+ATOM     35  C   SER A   9      -1.102   1.758 -10.108  1.00  0.00           C
+ATOM     36  O   SER A   9      -1.275   1.324 -11.246  1.00  0.00           O
+ATOM     37  N   PHE A  10      -1.522   2.958  -9.719  1.00  0.00           N
+ATOM     38  CA  PHE A  10      -2.226   3.855 -10.628  1.00  0.00           C
+ATOM     39  C   PHE A  10      -1.721   3.692 -12.057  1.00  0.00           C
+ATOM     40  O   PHE A  10      -2.496   3.760 -13.012  1.00  0.00           O
+ATOM     41  N   GLU A  11      -0.417   3.475 -12.198  1.00  0.00           N
+ATOM     42  CA  GLU A  11       0.194   3.302 -13.510  1.00  0.00           C
+ATOM     43  C   GLU A  11      -0.204   1.965 -14.126  1.00  0.00           C
+ATOM     44  O   GLU A  11       0.212   1.634 -15.236  1.00  0.00           O
+ATOM     45  N   GLU A  12      -1.012   1.201 -13.399  1.00  0.00           N
+ATOM     46  CA  GLU A  12      -1.468  -0.100 -13.872  1.00  0.00           C
+ATOM     47  C   GLU A  12      -2.989  -0.142 -13.975  1.00  0.00           C
+ATOM     48  O   GLU A  12      -3.695   0.220 -13.034  1.00  0.00           O
+TER
+END

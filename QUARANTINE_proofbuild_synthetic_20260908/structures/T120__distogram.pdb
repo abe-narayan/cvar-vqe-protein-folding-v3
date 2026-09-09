@@ -1,0 +1,28 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION distogram
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 16
+REMARK 999 PDB_ID 9BAF
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.636062
+REMARK 999 RMSD_CA_MEMORY 2.636015
+REMARK 999 SEQUENCE GCCSHPACSRRRARSC
+REMARK 999 TARGET_ID T120
+ATOM      1  CA  GLY A   1      -3.845   3.705  -3.462  1.00  0.00           C
+ATOM      2  CA  CYS A   2      -3.101   2.515  -0.136  1.00  0.00           C
+ATOM      3  CA  CYS A   3       0.023   2.145   1.613  1.00  0.00           C
+ATOM      4  CA  SER A   4      -5.808  -1.292   2.886  1.00  0.00           C
+ATOM      5  CA  HIS A   5      -2.678  -3.167   0.271  1.00  0.00           C
+ATOM      6  CA  PRO A   6      -6.360  -6.215   2.464  1.00  0.00           C
+ATOM      7  CA  ALA A   7      -0.054  -9.207   2.920  1.00  0.00           C
+ATOM      8  CA  CYS A   8      -1.672  -0.388  -0.609  1.00  0.00           C
+ATOM      9  CA  SER A   9       1.198  -1.611   0.771  1.00  0.00           C
+ATOM     10  CA  ARG A  10       0.833  -7.051   3.313  1.00  0.00           C
+ATOM     11  CA  ARG A  11       2.036  -5.021  -0.245  1.00  0.00           C
+ATOM     12  CA  ARG A  12       7.448  -1.327  -2.514  1.00  0.00           C
+ATOM     13  CA  ALA A  13       7.728  -2.331   4.828  1.00  0.00           C
+ATOM     14  CA  ARG A  14       5.190   2.116  -0.337  1.00  0.00           C
+ATOM     15  CA  SER A  15       3.263   2.660  -0.962  1.00  0.00           C
+ATOM     16  CA  CYS A  16       4.692   3.771   3.226  1.00  0.00           C
+TER
+END

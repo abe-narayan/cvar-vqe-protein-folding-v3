@@ -1,0 +1,24 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION distogram
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 12
+REMARK 999 PDB_ID 2BFI
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.000001
+REMARK 999 RMSD_CA_MEMORY 0.000000
+REMARK 999 SEQUENCE KFFEAAAKKFFE
+REMARK 999 TARGET_ID T034
+ATOM      1  CA  LYS A   1       2.333   8.704   3.823  1.00  0.00           C
+ATOM      2  CA  PHE A   2       1.621   6.821   7.144  1.00  0.00           C
+ATOM      3  CA  PHE A   3       2.257   8.243  10.591  1.00  0.00           C
+ATOM      4  CA  GLU A   4       1.654   6.763  14.019  1.00  0.00           C
+ATOM      5  CA  ALA A   5       2.255   8.201  17.466  1.00  0.00           C
+ATOM      6  CA  ALA A   6       1.688   6.706  20.894  1.00  0.00           C
+ATOM      7  CA  ALA A   7       2.252   8.157  24.342  1.00  0.00           C
+ATOM      8  CA  LYS A   8       1.722   6.649  27.770  1.00  0.00           C
+ATOM      9  CA  LYS A   9       2.249   8.114  31.217  1.00  0.00           C
+ATOM     10  CA  PHE A  10       1.756   6.592  34.645  1.00  0.00           C
+ATOM     11  CA  PHE A  11       2.246   8.070  38.092  1.00  0.00           C
+ATOM     12  CA  GLU A  12       1.791   6.536  41.520  1.00  0.00           C
+TER
+END

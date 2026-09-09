@@ -1,0 +1,21 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION native
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 9
+REMARK 999 PDB_ID 6F3V
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.0000
+REMARK 999 SEQUENCE RPPGFSPFR
+REMARK 999 SOURCE s12.instrument.load_univ
+REMARK 999 TARGET_ID T085
+ATOM      1  CA  ARG A   1       2.093   0.000  -1.242  1.00  0.00           C
+ATOM      2  CA  PRO A   2      -0.601  -0.414  -3.929  1.00  0.00           C
+ATOM      3  CA  PRO A   3       0.063  -1.225  -7.609  1.00  0.00           C
+ATOM      4  CA  GLY A   4      -1.028   2.234  -8.714  1.00  0.00           C
+ATOM      5  CA  PHE A   5       1.958   3.657  -6.851  1.00  0.00           C
+ATOM      6  CA  SER A   6       4.466   1.018  -7.953  1.00  0.00           C
+ATOM      7  CA  PRO A   7       6.805   1.764 -10.889  1.00  0.00           C
+ATOM      8  CA  PHE A   8       5.075  -0.942 -12.927  1.00  0.00           C
+ATOM      9  CA  ARG A   9       1.794   0.976 -12.764  1.00  0.00           C
+TER
+END

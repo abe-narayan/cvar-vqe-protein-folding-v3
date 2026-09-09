@@ -1,0 +1,23 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_distogram
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 11
+REMARK 999 PDB_ID 1I8E
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.117061
+REMARK 999 RMSD_CA_MEMORY 2.116870
+REMARK 999 SEQUENCE CYCSLRGDCYC
+REMARK 999 TARGET_ID T013
+ATOM      1  CA  CYS A   1     -13.388   8.054   1.757  1.00  0.00           C
+ATOM      2  CA  TYR A   2      -7.767   5.266   2.409  1.00  0.00           C
+ATOM      3  CA  CYS A   3      -4.705   5.050   0.509  1.00  0.00           C
+ATOM      4  CA  SER A   4      -4.304  -0.650  -0.732  1.00  0.00           C
+ATOM      5  CA  LEU A   5      -2.707  -1.914  -2.240  1.00  0.00           C
+ATOM      6  CA  ARG A   6      -4.751  -3.499  -8.300  1.00  0.00           C
+ATOM      7  CA  GLY A   7      -5.925  -0.646  -5.998  1.00  0.00           C
+ATOM      8  CA  ASP A   8      -8.320   0.400  -5.375  1.00  0.00           C
+ATOM      9  CA  CYS A   9      -3.021   5.996  -2.377  1.00  0.00           C
+ATOM     10  CA  TYR A  10      -6.449  11.232  -4.038  1.00  0.00           C
+ATOM     11  CA  CYS A  11      -9.177   9.556  -2.249  1.00  0.00           C
+TER
+END

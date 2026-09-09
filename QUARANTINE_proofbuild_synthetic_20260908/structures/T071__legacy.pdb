@@ -1,0 +1,23 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 11
+REMARK 999 PDB_ID 3SGO
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.902790
+REMARK 999 RMSD_CA_MEMORY 2.902756
+REMARK 999 SEQUENCE KVKVLGDVIEV
+REMARK 999 TARGET_ID T071
+ATOM      1  CA  LYS A   1     -22.828 -11.589 -10.002  1.00  0.00           C
+ATOM      2  CA  VAL A   2     -21.423 -10.113  -7.572  1.00  0.00           C
+ATOM      3  CA  LYS A   3     -18.280  -7.532 -11.425  1.00  0.00           C
+ATOM      4  CA  VAL A   4     -13.161  -9.489 -10.481  1.00  0.00           C
+ATOM      5  CA  LEU A   5     -13.624 -11.067  -4.628  1.00  0.00           C
+ATOM      6  CA  GLY A   6      -8.938 -14.452  -3.068  1.00  0.00           C
+ATOM      7  CA  ASP A   7      -7.095 -10.114  -0.624  1.00  0.00           C
+ATOM      8  CA  VAL A   8      -5.347 -10.145  -5.486  1.00  0.00           C
+ATOM      9  CA  ILE A   9       2.299  -9.112  -2.467  1.00  0.00           C
+ATOM     10  CA  GLU A  10       6.606  -8.277  -2.689  1.00  0.00           C
+ATOM     11  CA  VAL A  11       4.584 -11.862  -3.627  1.00  0.00           C
+TER
+END

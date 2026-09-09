@@ -1,0 +1,25 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION native
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 13
+REMARK 999 PDB_ID 6TWG
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.0000
+REMARK 999 SEQUENCE FLPKILRKIVRAL
+REMARK 999 SOURCE s12.instrument.load_univ
+REMARK 999 TARGET_ID T097
+ATOM      1  CA  PHE A   1       2.093   0.000  -1.242  1.00  0.00           C
+ATOM      2  CA  LEU A   2       5.813   0.476  -1.885  1.00  0.00           C
+ATOM      3  CA  PRO A   3       7.820   3.494  -3.113  1.00  0.00           C
+ATOM      4  CA  LYS A   4       9.537   1.541  -5.889  1.00  0.00           C
+ATOM      5  CA  ILE A   5       6.279   0.197  -7.320  1.00  0.00           C
+ATOM      6  CA  LEU A   6       4.510   3.501  -6.668  1.00  0.00           C
+ATOM      7  CA  ARG A   7       7.146   5.729  -8.266  1.00  0.00           C
+ATOM      8  CA  LYS A   8       7.162   3.527 -11.368  1.00  0.00           C
+ATOM      9  CA  ILE A   9       3.448   4.223 -11.802  1.00  0.00           C
+ATOM     10  CA  VAL A  10       3.982   7.974 -11.468  1.00  0.00           C
+ATOM     11  CA  ARG A  11       6.678   8.079 -14.148  1.00  0.00           C
+ATOM     12  CA  ALA A  12       4.550   6.108 -16.608  1.00  0.00           C
+ATOM     13  CA  LEU A  13       1.428   8.115 -15.773  1.00  0.00           C
+TER
+END

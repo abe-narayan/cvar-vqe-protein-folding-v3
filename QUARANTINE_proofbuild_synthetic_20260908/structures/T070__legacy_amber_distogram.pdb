@@ -1,0 +1,27 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_amber_distogram
+REMARK 999 FOLD 3
+REMARK 999 LENGTH 15
+REMARK 999 PDB_ID 3BTB
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 1.910426
+REMARK 999 RMSD_CA_MEMORY 1.910473
+REMARK 999 SEQUENCE MEELQDDYEDMMEEN
+REMARK 999 TARGET_ID T070
+ATOM      1  CA  MET A   1      20.152  12.774  -0.208  1.00  0.00           C
+ATOM      2  CA  GLU A   2      14.862  13.817   1.653  1.00  0.00           C
+ATOM      3  CA  GLU A   3      17.069   7.513   0.772  1.00  0.00           C
+ATOM      4  CA  LEU A   4      15.325   8.167  -0.329  1.00  0.00           C
+ATOM      5  CA  GLN A   5      11.425   3.809   0.611  1.00  0.00           C
+ATOM      6  CA  ASP A   6       9.175   5.967   2.274  1.00  0.00           C
+ATOM      7  CA  ASP A   7       5.793   7.013   3.253  1.00  0.00           C
+ATOM      8  CA  TYR A   8       7.775   8.028   7.279  1.00  0.00           C
+ATOM      9  CA  GLU A   9       9.887  10.929   6.441  1.00  0.00           C
+ATOM     10  CA  ASP A  10      11.445  12.306   8.571  1.00  0.00           C
+ATOM     11  CA  MET A  11       8.228   9.777  11.944  1.00  0.00           C
+ATOM     12  CA  MET A  12      11.085   5.840  11.829  1.00  0.00           C
+ATOM     13  CA  GLU A  13      11.224   6.322  14.290  1.00  0.00           C
+ATOM     14  CA  GLU A  14       6.105   1.889  12.658  1.00  0.00           C
+ATOM     15  CA  ASN A  15       5.785   0.356  13.335  1.00  0.00           C
+TER
+END

@@ -1,0 +1,23 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_amber_distogram
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 11
+REMARK 999 PDB_ID 2N9A
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 1.568146
+REMARK 999 RMSD_CA_MEMORY 1.568178
+REMARK 999 SEQUENCE SLLSLIRKLIT
+REMARK 999 TARGET_ID T060
+ATOM      1  CA  SER A   1      -7.268   3.670  -2.466  1.00  0.00           C
+ATOM      2  CA  LEU A   2      -5.155   3.987  -1.400  1.00  0.00           C
+ATOM      3  CA  LEU A   3      -2.658   2.660   0.705  1.00  0.00           C
+ATOM      4  CA  SER A   4      -2.596  -2.291  -0.817  1.00  0.00           C
+ATOM      5  CA  LEU A   5      -3.431   0.317  -4.327  1.00  0.00           C
+ATOM      6  CA  ILE A   6       2.087   0.048  -2.361  1.00  0.00           C
+ATOM      7  CA  ARG A   7       0.629   0.006   1.977  1.00  0.00           C
+ATOM      8  CA  LYS A   8       3.359  -2.177   0.671  1.00  0.00           C
+ATOM      9  CA  LEU A   9       7.700  -0.383  -2.435  1.00  0.00           C
+ATOM     10  CA  ILE A  10       7.928  -0.598   2.346  1.00  0.00           C
+ATOM     11  CA  THR A  11       7.175  -3.007   3.294  1.00  0.00           C
+TER
+END

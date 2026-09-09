@@ -1,0 +1,25 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_amber_distogram
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 13
+REMARK 999 PDB_ID 1A1P
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.020978
+REMARK 999 RMSD_CA_MEMORY 2.020988
+REMARK 999 SEQUENCE ICVVQDWGHHRCT
+REMARK 999 TARGET_ID T002
+ATOM      1  CA  ILE A   1      -6.127   5.659  -1.148  1.00  0.00           C
+ATOM      2  CA  CYS A   2      -2.787   2.205  -0.090  1.00  0.00           C
+ATOM      3  CA  VAL A   3       0.323   3.704  -0.448  1.00  0.00           C
+ATOM      4  CA  VAL A   4       2.748   2.727  -0.102  1.00  0.00           C
+ATOM      5  CA  GLN A   5       4.669  -2.378  -0.006  1.00  0.00           C
+ATOM      6  CA  ASP A   6       5.924  -4.588  -3.177  1.00  0.00           C
+ATOM      7  CA  TRP A   7       8.548  -2.754  -2.324  1.00  0.00           C
+ATOM      8  CA  GLY A   8       5.827  -6.366   0.098  1.00  0.00           C
+ATOM      9  CA  HIS A   9       1.566  -1.895   2.680  1.00  0.00           C
+ATOM     10  CA  HIS A  10      -2.124  -5.074  -0.031  1.00  0.00           C
+ATOM     11  CA  ARG A  11      -6.118  -6.249  -2.151  1.00  0.00           C
+ATOM     12  CA  CYS A  12      -8.192  -2.182  -0.933  1.00  0.00           C
+ATOM     13  CA  THR A  13      -9.224  -1.612  -4.622  1.00  0.00           C
+TER
+END

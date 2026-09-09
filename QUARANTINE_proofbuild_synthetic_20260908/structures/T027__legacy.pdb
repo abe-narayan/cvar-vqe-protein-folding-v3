@@ -1,0 +1,26 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 14
+REMARK 999 PDB_ID 1NIZ
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.935690
+REMARK 999 RMSD_CA_MEMORY 2.935767
+REMARK 999 SEQUENCE KRIHIGPGRAFYTT
+REMARK 999 TARGET_ID T027
+ATOM      1  CA  LYS A   1       5.202  -3.393  -2.775  1.00  0.00           C
+ATOM      2  CA  ARG A   2       0.312  -1.423  -3.483  1.00  0.00           C
+ATOM      3  CA  ILE A   3       1.568   2.726  -1.848  1.00  0.00           C
+ATOM      4  CA  HIS A   4      -0.835   3.755   1.169  1.00  0.00           C
+ATOM      5  CA  ILE A   5      -5.474   5.473  -0.545  1.00  0.00           C
+ATOM      6  CA  GLY A   6     -10.172   6.788   0.957  1.00  0.00           C
+ATOM      7  CA  PRO A   7     -13.279   6.699  -0.336  1.00  0.00           C
+ATOM      8  CA  GLY A   8      -6.246   5.964   3.845  1.00  0.00           C
+ATOM      9  CA  ARG A   9     -10.271   0.791   6.773  1.00  0.00           C
+ATOM     10  CA  ALA A  10      -8.360   1.232   5.210  1.00  0.00           C
+ATOM     11  CA  PHE A  11      -2.464   0.661  -0.213  1.00  0.00           C
+ATOM     12  CA  TYR A  12       2.425  -1.324   0.133  1.00  0.00           C
+ATOM     13  CA  THR A  13       4.715  -2.697   5.169  1.00  0.00           C
+ATOM     14  CA  THR A  14       6.934  -0.975   1.587  1.00  0.00           C
+TER
+END

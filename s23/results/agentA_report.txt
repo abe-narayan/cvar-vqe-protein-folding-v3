@@ -1,0 +1,80 @@
+====================================================================================================
+WORKSTREAM A -- ENSEMBLE AGGREGATION -- n=126, incumbent avg_75 = 3.0483 (vbond 2.961, physical 3.805)
+====================================================================================================
+
+--- EXPERIMENT 1: CLUSTER-RESTRICTED AVERAGING ---
+
+  [m150_k3]  n_clusters(median)=3  sizes(median)=[110, 37, 3]
+    size                       mean=3.1610 vbond=3.035  +0.1127 SE 0.0469 MDE 0.1315 (0.86x)  iid[+0.020,+0.206] fold[+0.006,+0.190]  52W/74L  worst +1.996
+    score                      mean=3.3017 vbond=3.103  +0.2534 SE 0.0791 MDE 0.2216 (1.14x)  iid[+0.101,+0.402] fold[+0.136,+0.351]  52W/74L  worst +3.528
+    combined                   mean=3.1404 vbond=3.067  +0.0920 SE 0.0509 MDE 0.1425 (0.65x)  iid[-0.005,+0.190] fold[-0.007,+0.191]  55W/71L  worst +2.050
+    random                     mean=3.5372 vbond=3.177  +0.4888 SE 0.0922 MDE 0.2584 (1.89x)  iid[+0.311,+0.667] fold[+0.331,+0.638]  37W/89L  worst +3.528
+    ORACLE-CEILING             mean=2.6186 vbond=3.090  -0.4297 SE 0.0580 MDE 0.1624 (2.65x)  iid[-0.547,-0.321] fold[-0.507,-0.344]  91W/35L  worst +0.608
+
+  [m250_k3]  n_clusters(median)=3  sizes(median)=[146, 101, 3]
+    size                       mean=3.2530 vbond=2.898  +0.2047 SE 0.0788 MDE 0.2208 (0.93x)  iid[+0.042,+0.358] fold[+0.064,+0.362]  52W/74L  worst +2.759
+    score                      mean=3.1806 vbond=2.980  +0.1322 SE 0.0683 MDE 0.1914 (0.69x)  iid[-0.002,+0.263] fold[+0.001,+0.301]  59W/67L  worst +2.865
+    combined                   mean=3.1729 vbond=2.957  +0.1245 SE 0.0630 MDE 0.1766 (0.71x)  iid[+0.001,+0.254] fold[+0.075,+0.194]  60W/66L  worst +2.630
+    random                     mean=3.6789 vbond=3.014  +0.6306 SE 0.1120 MDE 0.3139 (2.01x)  iid[+0.405,+0.839] fold[+0.512,+0.758]  30W/96L  worst +3.451
+    ORACLE-CEILING             mean=2.5644 vbond=2.997  -0.4839 SE 0.0785 MDE 0.2198 (2.20x)  iid[-0.646,-0.340] fold[-0.591,-0.369]  84W/42L  worst +1.466
+
+  [m75_k2]  n_clusters(median)=2  sizes(median)=[71, 4]
+    size                       mean=3.0802 vbond=3.053  +0.0319 SE 0.0239 MDE 0.0669 (0.48x)  iid[-0.014,+0.078] fold[-0.012,+0.080]  50W/76L  worst +1.129
+    score                      mean=3.2103 vbond=3.098  +0.1619 SE 0.0653 MDE 0.1830 (0.88x)  iid[+0.041,+0.297] fold[+0.087,+0.209]  48W/78L  worst +2.987
+    combined                   mean=3.1376 vbond=3.107  +0.0893 SE 0.0469 MDE 0.1314 (0.68x)  iid[+0.001,+0.185] fold[+0.030,+0.143]  49W/77L  worst +2.987
+    random                     mean=3.4227 vbond=3.190  +0.3744 SE 0.0774 MDE 0.2168 (1.73x)  iid[+0.224,+0.526] fold[+0.198,+0.533]  37W/89L  worst +2.987
+    ORACLE-CEILING             mean=2.7910 vbond=3.141  -0.2573 SE 0.0422 MDE 0.1182 (2.18x)  iid[-0.341,-0.180] fold[-0.300,-0.210]  88W/38L  worst +0.418
+
+  [m75_k3]  n_clusters(median)=3  sizes(median)=[71, 3, 1]
+    size                       mean=3.0951 vbond=3.114  +0.0468 SE 0.0324 MDE 0.0908 (0.52x)  iid[-0.014,+0.109] fold[+0.015,+0.101]  53W/73L  worst +1.121
+    score                      mean=3.3383 vbond=3.189  +0.2900 SE 0.0733 MDE 0.2054 (1.41x)  iid[+0.150,+0.440] fold[+0.215,+0.359]  41W/85L  worst +2.943
+    combined                   mean=3.1900 vbond=3.133  +0.1417 SE 0.0503 MDE 0.1410 (1.00x)  iid[+0.042,+0.244] fold[+0.090,+0.194]  50W/76L  worst +2.314
+    random                     mean=3.4868 vbond=3.236  +0.4385 SE 0.0785 MDE 0.2199 (1.99x)  iid[+0.288,+0.598] fold[+0.330,+0.558]  40W/86L  worst +2.943
+    ORACLE-CEILING             mean=2.6791 vbond=3.201  -0.3692 SE 0.0481 MDE 0.1348 (2.74x)  iid[-0.467,-0.282] fold[-0.412,-0.325]  99W/27L  worst +0.449
+    random_same_size_partition mean=3.0530 vbond=nan  +0.0047 SE 0.0135 MDE 0.0377 (0.12x)  iid[-0.021,+0.032] fold[-0.013,+0.022]  60W/66L  worst +0.658
+
+  [m75_k4]  n_clusters(median)=4  sizes(median)=[56, 15, 3, 1]
+    size                       mean=3.1054 vbond=3.169  +0.0571 SE 0.0371 MDE 0.1038 (0.55x)  iid[-0.015,+0.132] fold[-0.009,+0.155]  51W/75L  worst +1.546
+    score                      mean=3.3469 vbond=3.285  +0.2985 SE 0.0779 MDE 0.2183 (1.37x)  iid[+0.149,+0.449] fold[+0.228,+0.375]  41W/85L  worst +2.890
+    combined                   mean=3.1637 vbond=3.197  +0.1153 SE 0.0628 MDE 0.1759 (0.66x)  iid[-0.008,+0.240] fold[+0.076,+0.155]  51W/75L  worst +2.987
+    random                     mean=3.4700 vbond=3.297  +0.4216 SE 0.0848 MDE 0.2377 (1.77x)  iid[+0.257,+0.590] fold[+0.338,+0.542]  44W/82L  worst +3.528
+    ORACLE-CEILING             mean=2.6364 vbond=3.245  -0.4120 SE 0.0474 MDE 0.1327 (3.10x)  iid[-0.507,-0.319] fold[-0.467,-0.354]  106W/20L  worst +0.373
+
+  [m75_k5]  n_clusters(median)=5  sizes(median)=[56, 14, 3, 1, 1]
+    size                       mean=3.1431 vbond=3.207  +0.0948 SE 0.0455 MDE 0.1273 (0.74x)  iid[+0.009,+0.188] fold[+0.028,+0.174]  48W/78L  worst +2.546
+    score                      mean=3.3962 vbond=3.313  +0.3479 SE 0.0788 MDE 0.2207 (1.58x)  iid[+0.198,+0.507] fold[+0.256,+0.426]  34W/92L  worst +2.890
+    combined                   mean=3.2176 vbond=3.227  +0.1693 SE 0.0620 MDE 0.1738 (0.97x)  iid[+0.047,+0.292] fold[+0.094,+0.251]  46W/80L  worst +2.411
+    random                     mean=3.3924 vbond=3.359  +0.3441 SE 0.0832 MDE 0.2330 (1.48x)  iid[+0.186,+0.505] fold[+0.193,+0.503]  43W/83L  worst +2.807
+    ORACLE-CEILING             mean=2.5868 vbond=3.285  -0.4615 SE 0.0477 MDE 0.1336 (3.45x)  iid[-0.556,-0.373] fold[-0.508,-0.414]  109W/17L  worst +0.488
+
+
+--- EXPERIMENT 2: ENSEMBLE-WIDTH SWEEP (plain vs cluster-restricted, k=3 combined) ---
+
+  m       avg_mean   avg_med avg_worst   avg_var avg_fail  |     cl_mean    cl_med  cl_worst    cl_var  cl_fail   vs avg_m
+  20        3.0907    2.8886    7.8756    2.6331    0.135  |      3.2725    3.0903    8.0541    2.5971    0.167   +0.1818 (1.37x MDE)
+  30        3.0720    2.9355    7.8212    2.6857    0.135  |      3.2396    3.1190    8.2531    2.7309    0.135   +0.1676 (1.19x MDE)
+  50        3.0676    2.8937    8.1765    2.6798    0.127  |      3.1994    3.0214    8.2253    2.8968    0.151   +0.1318 (1.08x MDE)
+  75        3.0483    2.8373    8.0688    2.6898    0.127  |      3.1900    2.9861    8.4548    3.0187    0.135   +0.1417 (1.00x MDE)
+  100       3.0559    2.9002    7.9793    2.6907    0.135  |      3.2836    3.0816    8.9370    2.7473    0.135   +0.2277 (1.40x MDE)
+  150       3.0716    2.9338    7.0219    2.6268    0.143  |      3.1404    2.9858    7.9977    2.7866    0.127   +0.0688 (0.42x MDE)
+  250       3.1326    3.0468    6.9744    2.5557    0.135  |      3.1729    2.8139    8.4763    3.0482    0.151   +0.0403 (0.22x MDE)
+  500       3.3961    3.2614    6.9117    2.2862    0.183  |      3.3003    3.1353    8.4862    2.8026    0.151   -0.0958 (0.40x MDE)
+
+  optimal m (plain avg_m): 75     optimal m (clust_m, k=3 combined): 150
+
+--- EXPERIMENT 3: WEIGHTED AVERAGING, NESTED CV ---
+
+  score-weighted:
+    in-sample-oracle param=2.0  mean=3.0445  vs avg_75: -0.0038 SE 0.0117 MDE 0.0327 (0.12x)  iid[-0.027,+0.019] fold[-0.020,+0.013]  65W/61L  worst +0.321   <- LEAKAGE CEILING, not achievable
+    nested-CV achieved     chosen params per fold={0: 5.0, 1: 2.0, 2: 5.0, 3: 2.0, 4: 5.0}  mean=3.0502  vs avg_75: +0.0018 SE 0.0069 MDE 0.0193 (0.09x)  iid[-0.012,+0.016] fold[-0.009,+0.013]  65W/61L  worst +0.248
+
+  rank-weighted:
+    in-sample-oracle param=0.0  mean=3.0483  vs avg_75: -0.0000 SE 0.0000 MDE 0.0000 (0.47x)  iid[-0.000,+0.000] fold[-0.000,+0.000]  57W/39L  worst +0.000   <- LEAKAGE CEILING, not achievable
+    nested-CV achieved     chosen params per fold={0: 0.0, 1: 0.0, 2: 0.5, 3: 0.5, 4: 0.0}  mean=3.0536  vs avg_75: +0.0052 SE 0.0030 MDE 0.0084 (0.62x)  iid[-0.000,+0.012] fold[-0.000,+0.011]  57W/52L  worst +0.158
+
+  dist-weighted:
+    in-sample-oracle param=1000000.0  mean=3.0483  vs avg_75: -0.0000 SE 0.0000 MDE 0.0000 (0.07x)  iid[-0.000,+0.000] fold[-0.000,+0.000]  61W/65L  worst +0.000   <- LEAKAGE CEILING, not achievable
+    nested-CV achieved     chosen params per fold={0: 5.0, 1: 1000000.0, 2: 1000000.0, 3: 1000000.0, 4: 1000000.0}  mean=3.0501  vs avg_75: +0.0018 SE 0.0024 MDE 0.0066 (0.27x)  iid[-0.003,+0.006] fold[-0.000,+0.005]  61W/65L  worst +0.130
+
+
+wrote C:\Users\abena\Protein-Folding-Algorithm\s23\results\agentA_report.json

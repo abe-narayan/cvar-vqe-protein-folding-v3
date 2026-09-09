@@ -1,0 +1,22 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber_distogram
+REMARK 999 FOLD 3
+REMARK 999 LENGTH 10
+REMARK 999 PDB_ID 9BFL
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.621471
+REMARK 999 RMSD_CA_MEMORY 2.621427
+REMARK 999 SEQUENCE HCTPNSNHCW
+REMARK 999 TARGET_ID T121
+ATOM      1  CA  HIS A   1      -2.404   9.796  -2.325  1.00  0.00           C
+ATOM      2  CA  CYS A   2      -3.126   2.200   1.835  1.00  0.00           C
+ATOM      3  CA  THR A   3      -4.033   3.542  -1.350  1.00  0.00           C
+ATOM      4  CA  PRO A   4      -3.833  -1.540   2.839  1.00  0.00           C
+ATOM      5  CA  ASN A   5      -4.726  -2.578   1.384  1.00  0.00           C
+ATOM      6  CA  SER A   6      -1.366  -5.068   0.200  1.00  0.00           C
+ATOM      7  CA  ASN A   7       2.641  -4.809   3.115  1.00  0.00           C
+ATOM      8  CA  HIS A   8       2.830   0.450  -4.906  1.00  0.00           C
+ATOM      9  CA  CYS A   9       4.587   2.658  -1.359  1.00  0.00           C
+ATOM     10  CA  TRP A  10       3.884   4.395   2.865  1.00  0.00           C
+TER
+END

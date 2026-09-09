@@ -1,0 +1,21 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION distogram
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 9
+REMARK 999 PDB_ID 6F3V
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.033819
+REMARK 999 RMSD_CA_MEMORY 2.033649
+REMARK 999 SEQUENCE RPPGFSPFR
+REMARK 999 TARGET_ID T085
+ATOM      1  CA  ARG A   1      -0.967   1.493   0.677  1.00  0.00           C
+ATOM      2  CA  PRO A   2      -1.177   0.102  -0.822  1.00  0.00           C
+ATOM      3  CA  PRO A   3       0.322  -0.287  -7.030  1.00  0.00           C
+ATOM      4  CA  GLY A   4      -0.769   2.986  -8.840  1.00  0.00           C
+ATOM      5  CA  PHE A   5       1.645   3.667  -9.264  1.00  0.00           C
+ATOM      6  CA  SER A   6       3.614   2.120  -8.260  1.00  0.00           C
+ATOM      7  CA  PRO A   7       6.088  -1.375 -11.249  1.00  0.00           C
+ATOM      8  CA  PHE A   8       3.615  -0.622 -14.198  1.00  0.00           C
+ATOM      9  CA  ARG A   9       1.071   1.735 -13.724  1.00  0.00           C
+TER
+END

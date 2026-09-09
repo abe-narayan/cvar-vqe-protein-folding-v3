@@ -1,0 +1,23 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 11
+REMARK 999 PDB_ID 5W52
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.251098
+REMARK 999 RMSD_CA_MEMORY 3.250938
+REMARK 999 SEQUENCE DLIIKGISVHI
+REMARK 999 TARGET_ID T077
+ATOM      1  CA  ASP A   1      -0.683   2.808   1.088  1.00  0.00           C
+ATOM      2  CA  LEU A   2       0.764  -3.642   1.854  1.00  0.00           C
+ATOM      3  CA  ILE A   3      -2.679  -0.015  -1.933  1.00  0.00           C
+ATOM      4  CA  ILE A   4      -6.397  -1.548  -7.700  1.00  0.00           C
+ATOM      5  CA  LYS A   5      -5.773  -1.805 -10.195  1.00  0.00           C
+ATOM      6  CA  GLY A   6      -9.889  -1.091  -8.895  1.00  0.00           C
+ATOM      7  CA  ILE A   7      -9.095   5.072 -15.062  1.00  0.00           C
+ATOM      8  CA  SER A   8     -13.560  -4.397 -17.813  1.00  0.00           C
+ATOM      9  CA  VAL A   9     -17.152  -0.791 -19.883  1.00  0.00           C
+ATOM     10  CA  HIS A  10     -20.761   0.350 -25.732  1.00  0.00           C
+ATOM     11  CA  ILE A  11     -20.329   0.292 -24.983  1.00  0.00           C
+TER
+END

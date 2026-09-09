@@ -1,0 +1,23 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 11
+REMARK 999 PDB_ID 1CB3
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.216925
+REMARK 999 RMSD_CA_MEMORY 2.216780
+REMARK 999 SEQUENCE IDYWLAHKALA
+REMARK 999 TARGET_ID T003
+ATOM      1  CA  ILE A   1       4.123  -3.746   0.528  1.00  0.00           C
+ATOM      2  CA  ASP A   2      -3.293  -3.653   1.317  1.00  0.00           C
+ATOM      3  CA  TYR A   3      -4.059  -2.474   0.424  1.00  0.00           C
+ATOM      4  CA  TRP A   4      -1.250   0.978   3.470  1.00  0.00           C
+ATOM      5  CA  LEU A   5      -4.063   3.630  -1.870  1.00  0.00           C
+ATOM      6  CA  ALA A   6      -4.812   3.377   2.871  1.00  0.00           C
+ATOM      7  CA  HIS A   7      -3.012   4.041   2.063  1.00  0.00           C
+ATOM      8  CA  LYS A   8       1.052   6.542   6.821  1.00  0.00           C
+ATOM      9  CA  ALA A   9       0.139   5.823   9.201  1.00  0.00           C
+ATOM     10  CA  LEU A  10      -0.344   7.578   9.787  1.00  0.00           C
+ATOM     11  CA  ALA A  11      -1.114  11.962  10.121  1.00  0.00           C
+TER
+END

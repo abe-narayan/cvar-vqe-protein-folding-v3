@@ -1,0 +1,21 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 9
+REMARK 999 PDB_ID 7N2I
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.424451
+REMARK 999 RMSD_CA_MEMORY 3.424537
+REMARK 999 SEQUENCE GSTVYAPFT
+REMARK 999 TARGET_ID T103
+ATOM      1  CA  GLY A   1      27.291   1.098   5.999  1.00  0.00           C
+ATOM      2  CA  SER A   2      16.657  -0.435   9.383  1.00  0.00           C
+ATOM      3  CA  THR A   3      20.327   4.880   6.214  1.00  0.00           C
+ATOM      4  CA  VAL A   4      16.038  -1.281   7.394  1.00  0.00           C
+ATOM      5  CA  TYR A   5      14.524   2.193   4.829  1.00  0.00           C
+ATOM      6  CA  ALA A   6      13.382   2.582   3.837  1.00  0.00           C
+ATOM      7  CA  PRO A   7       7.735   3.492   3.794  1.00  0.00           C
+ATOM      8  CA  PHE A   8       4.146   3.781   2.804  1.00  0.00           C
+ATOM      9  CA  THR A   9      -3.925   7.269   3.874  1.00  0.00           C
+TER
+END

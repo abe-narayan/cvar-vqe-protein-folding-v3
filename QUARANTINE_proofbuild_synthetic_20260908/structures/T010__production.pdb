@@ -1,0 +1,23 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION production
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 11
+REMARK 999 PDB_ID 1FUV
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.277764
+REMARK 999 RMSD_CA_MEMORY 3.277772
+REMARK 999 SEQUENCE ACDCRGDCFCG
+REMARK 999 TARGET_ID T010
+ATOM      1  CA  ALA A   1      -1.679  -3.889  -1.728  1.00  0.00           C
+ATOM      2  CA  CYS A   2      -4.099  -3.316  -0.972  1.00  0.00           C
+ATOM      3  CA  ASP A   3      -6.321  -2.378  -0.534  1.00  0.00           C
+ATOM      4  CA  CYS A   4      -8.336  -1.132   0.606  1.00  0.00           C
+ATOM      5  CA  ARG A   5     -10.896   0.411  -0.156  1.00  0.00           C
+ATOM      6  CA  GLY A   6     -10.867   1.814  -2.355  1.00  0.00           C
+ATOM      7  CA  ASP A   7      -8.585   3.581  -2.840  1.00  0.00           C
+ATOM      8  CA  CYS A   8      -5.474   3.290  -3.056  1.00  0.00           C
+ATOM      9  CA  PHE A   9      -2.600   3.379  -2.324  1.00  0.00           C
+ATOM     10  CA  CYS A  10       0.248   2.291  -1.731  1.00  0.00           C
+ATOM     11  CA  GLY A  11       2.257   2.287  -0.576  1.00  0.00           C
+TER
+END

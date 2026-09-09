@@ -1,0 +1,21 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION distogram
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 9
+REMARK 999 PDB_ID 1CS9
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 1.945787
+REMARK 999 RMSD_CA_MEMORY 1.945838
+REMARK 999 SEQUENCE CGGIRGERA
+REMARK 999 TARGET_ID T005
+ATOM      1  CA  CYS A   1      -1.713  -4.910  -4.196  1.00  0.00           C
+ATOM      2  CA  GLY A   2       0.359  -1.290  -2.825  1.00  0.00           C
+ATOM      3  CA  GLY A   3      -3.205   4.018  -3.739  1.00  0.00           C
+ATOM      4  CA  ILE A   4      -0.993   4.683  -1.683  1.00  0.00           C
+ATOM      5  CA  ARG A   5       3.449   2.899  -1.544  1.00  0.00           C
+ATOM      6  CA  GLY A   6       4.956  -1.199  -2.722  1.00  0.00           C
+ATOM      7  CA  GLU A   7       8.734  -1.511  -0.586  1.00  0.00           C
+ATOM      8  CA  ARG A   8       2.791  -6.134  -3.371  1.00  0.00           C
+ATOM      9  CA  ALA A   9       3.857  -8.411   0.755  1.00  0.00           C
+TER
+END

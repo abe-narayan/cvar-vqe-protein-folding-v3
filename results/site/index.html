@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Protein Folding Results Laboratory</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="brand">
+    <a href="#/" class="home">Results Laboratory</a>
+    <span class="sub" id="brandSub">CVaR-VQE protein structure prediction</span>
+  </div>
+  <nav class="crumbs" id="crumbs" aria-label="Breadcrumb"></nav>
+  <div class="badges">
+    <span class="badge" id="basisBadge" title="Which RMSD basis every number on this page is on">basis</span>
+    <span class="badge warn" id="statusBadge" hidden>status</span>
+  </div>
+</header>
+
+<main id="main" tabindex="-1"></main>
+
+<footer class="foot">
+  <span id="footProv"></span>
+</footer>
+
+<!-- 3Dmol.js, pinned. If the CDN is unreachable the page still works; the 3D panes
+     say so instead of failing silently. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.5.5/3Dmol-min.js"></script>
+<script src="data.js"></script>
+<script src="structures.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

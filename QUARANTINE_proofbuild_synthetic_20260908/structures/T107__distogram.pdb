@@ -1,0 +1,22 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION distogram
+REMARK 999 FOLD 3
+REMARK 999 LENGTH 10
+REMARK 999 PDB_ID 7T3H
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.358282
+REMARK 999 RMSD_CA_MEMORY 2.358110
+REMARK 999 SEQUENCE WNSNVHSYRF
+REMARK 999 TARGET_ID T107
+ATOM      1  CA  TRP A   1      21.245   1.316   3.155  1.00  0.00           C
+ATOM      2  CA  ASN A   2      21.475   2.901   4.605  1.00  0.00           C
+ATOM      3  CA  SER A   3      14.505   2.688   3.557  1.00  0.00           C
+ATOM      4  CA  ASN A   4      18.691   8.927   6.143  1.00  0.00           C
+ATOM      5  CA  VAL A   5      12.027   5.570   4.622  1.00  0.00           C
+ATOM      6  CA  HIS A   6      10.958   6.206   4.837  1.00  0.00           C
+ATOM      7  CA  SER A   7       6.936   6.596   5.576  1.00  0.00           C
+ATOM      8  CA  TYR A   8       5.679   5.393   8.323  1.00  0.00           C
+ATOM      9  CA  ARG A   9       1.985   6.851  10.503  1.00  0.00           C
+ATOM     10  CA  PHE A  10       2.024   4.320  12.631  1.00  0.00           C
+TER
+END

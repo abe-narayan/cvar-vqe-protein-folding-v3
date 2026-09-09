@@ -1,0 +1,25 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_distogram
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 13
+REMARK 999 PDB_ID 6QAX
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.362892
+REMARK 999 RMSD_CA_MEMORY 2.363069
+REMARK 999 SEQUENCE LGQQQPFPPQQPY
+REMARK 999 TARGET_ID T093
+ATOM      1  CA  LEU A   1       3.439   1.099  -7.080  1.00  0.00           C
+ATOM      2  CA  GLY A   2      -1.600   1.072  -4.207  1.00  0.00           C
+ATOM      3  CA  GLN A   3      -3.395  -2.985  -0.435  1.00  0.00           C
+ATOM      4  CA  GLN A   4      -5.388  -6.857  -2.892  1.00  0.00           C
+ATOM      5  CA  GLN A   5      -2.930  -9.082  -4.745  1.00  0.00           C
+ATOM      6  CA  PRO A   6      -9.187 -11.601  -4.874  1.00  0.00           C
+ATOM      7  CA  PHE A   7      -6.003 -14.028  -2.417  1.00  0.00           C
+ATOM      8  CA  PRO A   8      -6.643 -15.956  -9.131  1.00  0.00           C
+ATOM      9  CA  PRO A   9      -8.941 -18.098  -8.672  1.00  0.00           C
+ATOM     10  CA  GLN A  10     -12.640 -21.518  -3.579  1.00  0.00           C
+ATOM     11  CA  GLN A  11     -10.822 -18.386   0.007  1.00  0.00           C
+ATOM     12  CA  PRO A  12      -7.040 -21.699  -1.069  1.00  0.00           C
+ATOM     13  CA  TYR A  13      -8.658 -24.560   4.068  1.00  0.00           C
+TER
+END

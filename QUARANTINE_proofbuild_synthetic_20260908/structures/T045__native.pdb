@@ -1,0 +1,24 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION native
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 12
+REMARK 999 PDB_ID 2LWS
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.0000
+REMARK 999 SEQUENCE GSCFGAFCFRRD
+REMARK 999 SOURCE s12.instrument.load_univ
+REMARK 999 TARGET_ID T045
+ATOM      1  CA  GLY A   1      -3.470  -1.034  -4.707  1.00  0.00           C
+ATOM      2  CA  SER A   2      -0.510   1.332  -4.906  1.00  0.00           C
+ATOM      3  CA  CYS A   3       1.817  -1.180  -3.252  1.00  0.00           C
+ATOM      4  CA  PHE A   4       5.366   0.168  -3.009  1.00  0.00           C
+ATOM      5  CA  GLY A   5       7.762  -1.943  -0.966  1.00  0.00           C
+ATOM      6  CA  ALA A   6       7.447  -0.473   2.519  1.00  0.00           C
+ATOM      7  CA  PHE A   7       4.067   0.830   1.362  1.00  0.00           C
+ATOM      8  CA  CYS A   8       2.713  -2.541   0.237  1.00  0.00           C
+ATOM      9  CA  PHE A   9       0.189  -2.505   3.082  1.00  0.00           C
+ATOM     10  CA  ARG A  10      -2.478   0.109   2.356  1.00  0.00           C
+ATOM     11  CA  ARG A  11      -6.006   0.496   0.991  1.00  0.00           C
+ATOM     12  CA  ASP A  12      -5.041   1.668  -2.497  1.00  0.00           C
+TER
+END

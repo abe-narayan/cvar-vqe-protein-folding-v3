@@ -1,0 +1,28 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION production
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 16
+REMARK 999 PDB_ID 2NDN
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.709525
+REMARK 999 RMSD_CA_MEMORY 2.709541
+REMARK 999 SEQUENCE GICFKDPFGSTLCAPD
+REMARK 999 TARGET_ID T065
+ATOM      1  CA  GLY A   1      28.907  32.946  47.200  1.00  0.00           C
+ATOM      2  CA  ILE A   2      27.498  32.388  46.895  1.00  0.00           C
+ATOM      3  CA  CYS A   3      25.477  31.923  46.416  1.00  0.00           C
+ATOM      4  CA  PHE A   4      23.418  30.582  45.341  1.00  0.00           C
+ATOM      5  CA  LYS A   5      21.306  29.275  45.150  1.00  0.00           C
+ATOM      6  CA  ASP A   6      19.332  27.847  45.706  1.00  0.00           C
+ATOM      7  CA  PRO A   7      16.870  26.996  45.268  1.00  0.00           C
+ATOM      8  CA  PHE A   8      15.181  26.657  45.626  1.00  0.00           C
+ATOM      9  CA  GLY A   9      15.370  27.838  46.646  1.00  0.00           C
+ATOM     10  CA  SER A  10      16.091  29.297  48.546  1.00  0.00           C
+ATOM     11  CA  THR A  11      18.180  30.232  49.786  1.00  0.00           C
+ATOM     12  CA  LEU A  12      20.558  30.282  51.337  1.00  0.00           C
+ATOM     13  CA  CYS A  13      23.142  30.517  52.300  1.00  0.00           C
+ATOM     14  CA  ALA A  14      25.242  30.718  53.538  1.00  0.00           C
+ATOM     15  CA  PRO A  15      27.031  30.211  54.570  1.00  0.00           C
+ATOM     16  CA  ASP A  16      27.995  29.685  55.192  1.00  0.00           C
+TER
+END

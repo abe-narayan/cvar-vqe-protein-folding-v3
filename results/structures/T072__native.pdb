@@ -1,0 +1,35 @@
+REMARK 999 BASIS native_ca
+REMARK 999 BASIS_ROLE REFERENT -- the deposited Ca trace
+REMARK 999 CA_BOND_MAX 3.9150176905516787
+REMARK 999 CA_BOND_MEAN 3.8450452442931833
+REMARK 999 CA_BOND_MIN 3.802586672048432
+REMARK 999 CONFIGURATION native
+REMARK 999 FOLD 0
+REMARK 999 GIT_COMMIT a15406c82245
+REMARK 999 LENGTH 16
+REMARK 999 MODULE_SHA 90e160cc06020ac1
+REMARK 999 PDB_ID 5H1H
+REMARK 999 PROVENANCE genuine
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.000000
+REMARK 999 SEQUENCE CFPDGRCKRPPGFSPL
+REMARK 999 SOURCE s12.instrument.load_univ
+REMARK 999 TARGET_ID T072
+ATOM      1  CA  CYS A   1      -2.364   3.502  -0.388  1.00  0.00           C
+ATOM      2  CA  PHE A   2      -3.275   6.734   1.417  1.00  0.00           C
+ATOM      3  CA  PRO A   3      -5.084   9.718  -0.358  1.00  0.00           C
+ATOM      4  CA  ASP A   4      -2.098  11.992   0.340  1.00  0.00           C
+ATOM      5  CA  GLY A   5       1.520  10.822   0.369  1.00  0.00           C
+ATOM      6  CA  ARG A   6       2.763   7.338  -0.558  1.00  0.00           C
+ATOM      7  CA  CYS A   7       2.051   3.628   0.149  1.00  0.00           C
+ATOM      8  CA  LYS A   8       3.852   0.779   1.973  1.00  0.00           C
+ATOM      9  CA  ARG A   9       2.637  -2.852   1.994  1.00  0.00           C
+ATOM     10  CA  PRO A  10       4.153  -6.423   1.552  1.00  0.00           C
+ATOM     11  CA  PRO A  11       3.996  -8.402  -1.815  1.00  0.00           C
+ATOM     12  CA  GLY A  12       0.593 -10.029  -2.325  1.00  0.00           C
+ATOM     13  CA  PHE A  13      -2.230  -9.283  -4.779  1.00  0.00           C
+ATOM     14  CA  SER A  14      -3.851  -5.953  -3.796  1.00  0.00           C
+ATOM     15  CA  PRO A  15      -1.770  -3.354  -1.751  1.00  0.00           C
+ATOM     16  CA  LEU A  16      -3.072  -0.230   0.057  1.00  0.00           C
+TER
+END

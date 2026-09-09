@@ -1,0 +1,25 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber
+REMARK 999 FOLD 3
+REMARK 999 LENGTH 13
+REMARK 999 PDB_ID 1IM7
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.342358
+REMARK 999 RMSD_CA_MEMORY 3.342348
+REMARK 999 SEQUENCE IWGCSGKLICTTA
+REMARK 999 TARGET_ID T016
+ATOM      1  CA  ILE A   1       1.166   5.873  -2.152  1.00  0.00           C
+ATOM      2  CA  TRP A   2       4.329   4.113  -1.985  1.00  0.00           C
+ATOM      3  CA  GLY A   3       3.502  10.925   4.017  1.00  0.00           C
+ATOM      4  CA  CYS A   4       6.932   3.895   5.926  1.00  0.00           C
+ATOM      5  CA  SER A   5       8.236   6.049   5.126  1.00  0.00           C
+ATOM      6  CA  GLY A   6      12.121   9.048  13.446  1.00  0.00           C
+ATOM      7  CA  LYS A   7      12.362   4.523  10.725  1.00  0.00           C
+ATOM      8  CA  LEU A   8      15.338   2.447   8.328  1.00  0.00           C
+ATOM      9  CA  ILE A   9       8.620  -1.805   5.473  1.00  0.00           C
+ATOM     10  CA  CYS A  10      12.353  -1.027   5.380  1.00  0.00           C
+ATOM     11  CA  THR A  11      11.476   0.862   0.996  1.00  0.00           C
+ATOM     12  CA  THR A  12       4.777  -2.234   0.013  1.00  0.00           C
+ATOM     13  CA  ALA A  13      10.182  -2.244   0.136  1.00  0.00           C
+TER
+END

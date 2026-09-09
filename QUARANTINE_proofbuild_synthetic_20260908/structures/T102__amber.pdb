@@ -1,0 +1,27 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 15
+REMARK 999 PDB_ID 7LCW
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.321400
+REMARK 999 RMSD_CA_MEMORY 3.321316
+REMARK 999 SEQUENCE GSKYSDTADESSYRW
+REMARK 999 TARGET_ID T102
+ATOM      1  CA  GLY A   1      -0.110  -2.117  -5.094  1.00  0.00           C
+ATOM      2  CA  SER A   2      -0.356  -0.152   0.158  1.00  0.00           C
+ATOM      3  CA  LYS A   3       6.310   4.371  -6.395  1.00  0.00           C
+ATOM      4  CA  TYR A   4      -0.026   6.089  -5.474  1.00  0.00           C
+ATOM      5  CA  SER A   5      -0.098  10.402  -7.292  1.00  0.00           C
+ATOM      6  CA  ASP A   6      -3.167   5.962  -4.453  1.00  0.00           C
+ATOM      7  CA  THR A   7      -8.060   2.302  -4.241  1.00  0.00           C
+ATOM      8  CA  ALA A   8      -9.030  -2.117  -2.219  1.00  0.00           C
+ATOM      9  CA  ASP A   9      -5.136   1.792   0.018  1.00  0.00           C
+ATOM     10  CA  GLU A  10       1.034  -4.208   6.053  1.00  0.00           C
+ATOM     11  CA  SER A  11      -5.742   1.245   5.210  1.00  0.00           C
+ATOM     12  CA  SER A  12      -3.491   6.125   1.808  1.00  0.00           C
+ATOM     13  CA  TYR A  13      -6.546   3.259  -2.261  1.00  0.00           C
+ATOM     14  CA  ARG A  14      -0.630   2.247  -5.767  1.00  0.00           C
+ATOM     15  CA  TRP A  15      -2.356  -1.778  -6.553  1.00  0.00           C
+TER
+END

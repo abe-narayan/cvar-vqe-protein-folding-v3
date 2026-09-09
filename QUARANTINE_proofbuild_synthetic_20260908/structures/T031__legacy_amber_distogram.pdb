@@ -1,0 +1,22 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_amber_distogram
+REMARK 999 FOLD 3
+REMARK 999 LENGTH 10
+REMARK 999 PDB_ID 1TOR
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.086016
+REMARK 999 RMSD_CA_MEMORY 2.086025
+REMARK 999 SEQUENCE WNPADYGGIK
+REMARK 999 TARGET_ID T031
+ATOM      1  CA  TRP A   1       1.544   5.703   1.533  1.00  0.00           C
+ATOM      2  CA  ASN A   2      -1.349   4.210   4.419  1.00  0.00           C
+ATOM      3  CA  PRO A   3      -1.964   1.790   4.930  1.00  0.00           C
+ATOM      4  CA  ALA A   4      -6.111   2.024   4.651  1.00  0.00           C
+ATOM      5  CA  ASP A   5      -0.265   0.477  -0.045  1.00  0.00           C
+ATOM      6  CA  TYR A   6       1.228   0.230  -2.573  1.00  0.00           C
+ATOM      7  CA  GLY A   7       0.389   0.280   0.681  1.00  0.00           C
+ATOM      8  CA  GLY A   8       1.517  -4.653   2.372  1.00  0.00           C
+ATOM      9  CA  ILE A   9      -0.561  -5.015   0.890  1.00  0.00           C
+ATOM     10  CA  LYS A  10       2.782  -4.875  -1.524  1.00  0.00           C
+TER
+END

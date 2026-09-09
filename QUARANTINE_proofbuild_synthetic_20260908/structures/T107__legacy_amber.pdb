@@ -1,0 +1,22 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_amber
+REMARK 999 FOLD 3
+REMARK 999 LENGTH 10
+REMARK 999 PDB_ID 7T3H
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.402593
+REMARK 999 RMSD_CA_MEMORY 2.402598
+REMARK 999 SEQUENCE WNSNVHSYRF
+REMARK 999 TARGET_ID T107
+ATOM      1  CA  TRP A   1      26.018   2.846   2.122  1.00  0.00           C
+ATOM      2  CA  ASN A   2      24.140   0.555   0.269  1.00  0.00           C
+ATOM      3  CA  SER A   3      18.011  -0.542   1.563  1.00  0.00           C
+ATOM      4  CA  ASN A   4      17.791   7.620   5.782  1.00  0.00           C
+ATOM      5  CA  VAL A   5      10.948   6.277   3.293  1.00  0.00           C
+ATOM      6  CA  HIS A   6      12.797   5.910   6.830  1.00  0.00           C
+ATOM      7  CA  SER A   7       8.769   7.049   5.951  1.00  0.00           C
+ATOM      8  CA  TYR A   8       5.566   4.830  11.299  1.00  0.00           C
+ATOM      9  CA  ARG A   9       1.095   4.086   9.297  1.00  0.00           C
+ATOM     10  CA  PHE A  10       3.302   5.573  12.172  1.00  0.00           C
+TER
+END

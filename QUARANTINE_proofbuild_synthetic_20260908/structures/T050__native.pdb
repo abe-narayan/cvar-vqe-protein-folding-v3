@@ -1,0 +1,26 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION native
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 14
+REMARK 999 PDB_ID 2MFV
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.0000
+REMARK 999 SEQUENCE GGPLAGEEMGGITT
+REMARK 999 SOURCE s12.instrument.load_univ
+REMARK 999 TARGET_ID T050
+ATOM      1  CA  GLY A   1       2.340   0.313  -1.606  1.00  0.00           C
+ATOM      2  CA  GLY A   2       4.251  -3.014  -0.763  1.00  0.00           C
+ATOM      3  CA  PRO A   3       4.228  -6.291   1.321  1.00  0.00           C
+ATOM      4  CA  LEU A   4       5.341  -4.596   4.604  1.00  0.00           C
+ATOM      5  CA  ALA A   5       4.353  -1.559   6.864  1.00  0.00           C
+ATOM      6  CA  GLY A   6       4.989   2.012   5.516  1.00  0.00           C
+ATOM      7  CA  GLU A   7       1.945   3.682   3.817  1.00  0.00           C
+ATOM      8  CA  GLU A   8      -1.739   3.422   4.748  1.00  0.00           C
+ATOM      9  CA  MET A   9      -2.196   0.378   2.406  1.00  0.00           C
+ATOM     10  CA  GLY A  10       0.661  -2.030   3.345  1.00  0.00           C
+ATOM     11  CA  GLY A  11       4.073  -0.454   2.494  1.00  0.00           C
+ATOM     12  CA  ILE A  12       7.531  -1.737   1.486  1.00  0.00           C
+ATOM     13  CA  THR A  13       9.047  -0.967   4.958  1.00  0.00           C
+ATOM     14  CA  THR A  14       9.348  -3.380   7.882  1.00  0.00           C
+TER
+END

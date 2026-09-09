@@ -1,0 +1,27 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_distogram
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 15
+REMARK 999 PDB_ID 7LCW
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.308432
+REMARK 999 RMSD_CA_MEMORY 2.308393
+REMARK 999 SEQUENCE GSKYSDTADESSYRW
+REMARK 999 TARGET_ID T102
+ATOM      1  CA  GLY A   1       4.343   1.494  -1.349  1.00  0.00           C
+ATOM      2  CA  SER A   2       2.282   2.800  -1.155  1.00  0.00           C
+ATOM      3  CA  LYS A   3       1.776   5.930  -5.588  1.00  0.00           C
+ATOM      4  CA  TYR A   4       0.246   2.795  -8.238  1.00  0.00           C
+ATOM      5  CA  SER A   5      -1.963   7.830  -5.965  1.00  0.00           C
+ATOM      6  CA  ASP A   6      -5.346   7.277  -2.874  1.00  0.00           C
+ATOM      7  CA  THR A   7      -6.284   2.841  -2.489  1.00  0.00           C
+ATOM      8  CA  ALA A   8      -6.569  -0.779  -1.374  1.00  0.00           C
+ATOM      9  CA  ASP A   9      -3.950  -0.846  -0.006  1.00  0.00           C
+ATOM     10  CA  GLU A  10      -3.101   1.416   4.029  1.00  0.00           C
+ATOM     11  CA  SER A  11      -4.084   3.440   2.819  1.00  0.00           C
+ATOM     12  CA  SER A  12      -6.419   8.152  -0.273  1.00  0.00           C
+ATOM     13  CA  TYR A  13      -2.506   3.661  -4.996  1.00  0.00           C
+ATOM     14  CA  ARG A  14      -4.308   2.743  -3.627  1.00  0.00           C
+ATOM     15  CA  TRP A  15      -1.730  -4.231  -5.475  1.00  0.00           C
+TER
+END

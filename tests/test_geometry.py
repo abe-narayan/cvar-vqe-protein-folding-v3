@@ -10,7 +10,6 @@ Tolerances are stated and justified individually. Most are exactly 0.0.
 Run: ``python -m pytest tests/test_geometry.py -q``
 """
 import glob
-import math
 import os
 import random
 import sys

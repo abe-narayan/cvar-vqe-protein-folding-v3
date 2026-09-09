@@ -1,0 +1,24 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION production
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 12
+REMARK 999 PDB_ID 2MIG
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.119547
+REMARK 999 RMSD_CA_MEMORY 3.119590
+REMARK 999 SEQUENCE RKVPTGSNPQKN
+REMARK 999 TARGET_ID T052
+ATOM      1  CA  ARG A   1      32.411  26.236  14.925  1.00  0.00           C
+ATOM      2  CA  LYS A   2      32.213  28.090  15.332  1.00  0.00           C
+ATOM      3  CA  VAL A   3      33.410  28.677  17.502  1.00  0.00           C
+ATOM      4  CA  PRO A   4      35.795  30.289  17.738  1.00  0.00           C
+ATOM      5  CA  THR A   5      36.922  31.959  19.055  1.00  0.00           C
+ATOM      6  CA  GLY A   6      37.982  32.106  21.229  1.00  0.00           C
+ATOM      7  CA  SER A   7      37.469  31.451  23.547  1.00  0.00           C
+ATOM      8  CA  ASN A   8      36.136  29.224  24.330  1.00  0.00           C
+ATOM      9  CA  PRO A   9      36.824  27.010  24.140  1.00  0.00           C
+ATOM     10  CA  GLN A  10      37.186  25.576  25.729  1.00  0.00           C
+ATOM     11  CA  LYS A  11      35.800  25.045  26.917  1.00  0.00           C
+ATOM     12  CA  ASN A  12      34.923  23.870  25.771  1.00  0.00           C
+TER
+END

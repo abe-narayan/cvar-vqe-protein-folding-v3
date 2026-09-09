@@ -1,0 +1,26 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_amber_distogram
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 14
+REMARK 999 PDB_ID 1NIZ
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.147360
+REMARK 999 RMSD_CA_MEMORY 2.147312
+REMARK 999 SEQUENCE KRIHIGPGRAFYTT
+REMARK 999 TARGET_ID T027
+ATOM      1  CA  LYS A   1       3.956  -4.263  -4.740  1.00  0.00           C
+ATOM      2  CA  ARG A   2       2.027  -1.500  -5.963  1.00  0.00           C
+ATOM      3  CA  ILE A   3       1.721   1.800  -0.127  1.00  0.00           C
+ATOM      4  CA  HIS A   4      -4.570   2.751  -3.217  1.00  0.00           C
+ATOM      5  CA  ILE A   5      -4.578   5.140  -0.793  1.00  0.00           C
+ATOM      6  CA  GLY A   6      -9.849   2.876  -1.986  1.00  0.00           C
+ATOM      7  CA  PRO A   7     -14.136   7.100   3.584  1.00  0.00           C
+ATOM      8  CA  GLY A   8      -9.007   5.827   4.087  1.00  0.00           C
+ATOM      9  CA  ARG A   9      -6.596   1.504   5.112  1.00  0.00           C
+ATOM     10  CA  ALA A  10      -4.662   1.955   5.924  1.00  0.00           C
+ATOM     11  CA  PHE A  11      -3.964  -0.566   0.791  1.00  0.00           C
+ATOM     12  CA  TYR A  12       2.140   1.755   0.402  1.00  0.00           C
+ATOM     13  CA  THR A  13       4.559  -1.619   2.154  1.00  0.00           C
+ATOM     14  CA  THR A  14       5.569   0.512   1.937  1.00  0.00           C
+TER
+END

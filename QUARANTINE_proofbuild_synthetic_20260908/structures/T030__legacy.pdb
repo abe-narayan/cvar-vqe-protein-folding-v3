@@ -1,0 +1,28 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 16
+REMARK 999 PDB_ID 1S9Z
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.982141
+REMARK 999 RMSD_CA_MEMORY 2.982120
+REMARK 999 SEQUENCE SIRELEARIRELELRI
+REMARK 999 TARGET_ID T030
+ATOM      1  CA  SER A   1      15.295  13.635  -1.965  1.00  0.00           C
+ATOM      2  CA  ILE A   2      12.050  14.540   1.785  1.00  0.00           C
+ATOM      3  CA  ARG A   3       8.275  10.047  -0.857  1.00  0.00           C
+ATOM      4  CA  GLU A   4      10.678  10.990   2.751  1.00  0.00           C
+ATOM      5  CA  LEU A   5      10.642  12.470   4.982  1.00  0.00           C
+ATOM      6  CA  GLU A   6       9.424  10.392   5.305  1.00  0.00           C
+ATOM      7  CA  ALA A   7       9.644   7.443   9.770  1.00  0.00           C
+ATOM      8  CA  ARG A   8       9.525  15.713  11.722  1.00  0.00           C
+ATOM      9  CA  ILE A   9       9.799  16.188  10.358  1.00  0.00           C
+ATOM     10  CA  ARG A  10       6.900  12.878   6.475  1.00  0.00           C
+ATOM     11  CA  GLU A  11       6.506  10.119  15.150  1.00  0.00           C
+ATOM     12  CA  LEU A  12       9.244  10.745  17.839  1.00  0.00           C
+ATOM     13  CA  GLU A  13       4.977  18.416  13.641  1.00  0.00           C
+ATOM     14  CA  LEU A  14       3.908  11.424  17.112  1.00  0.00           C
+ATOM     15  CA  ARG A  15       6.601  10.746  18.284  1.00  0.00           C
+ATOM     16  CA  ILE A  16       9.514  15.703  18.169  1.00  0.00           C
+TER
+END

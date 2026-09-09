@@ -1,0 +1,28 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 16
+REMARK 999 PDB_ID 1KZ2
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.345966
+REMARK 999 RMSD_CA_MEMORY 3.346069
+REMARK 999 SEQUENCE RQIKIFFQNRRMKFKK
+REMARK 999 TARGET_ID T021
+ATOM      1  CA  ARG A   1      -6.925   5.839   1.733  1.00  0.00           C
+ATOM      2  CA  GLN A   2      -6.777   2.624   1.296  1.00  0.00           C
+ATOM      3  CA  ILE A   3      -6.260   5.714  -7.827  1.00  0.00           C
+ATOM      4  CA  LYS A   4       0.408   4.466   4.766  1.00  0.00           C
+ATOM      5  CA  ILE A   5      -4.600   1.223   2.491  1.00  0.00           C
+ATOM      6  CA  PHE A   6       1.534   2.087  -3.609  1.00  0.00           C
+ATOM      7  CA  PHE A   7       0.256   1.798  -7.111  1.00  0.00           C
+ATOM      8  CA  GLN A   8       4.385   3.947   1.195  1.00  0.00           C
+ATOM      9  CA  ASN A   9       1.237  -2.763   1.662  1.00  0.00           C
+ATOM     10  CA  ARG A  10       3.406  -2.120  -4.371  1.00  0.00           C
+ATOM     11  CA  ARG A  11       3.657   1.530   0.300  1.00  0.00           C
+ATOM     12  CA  MET A  12       4.072  -0.640  -0.244  1.00  0.00           C
+ATOM     13  CA  LYS A  13       3.089  -2.583   2.806  1.00  0.00           C
+ATOM     14  CA  PHE A  14       5.269  -5.038   2.513  1.00  0.00           C
+ATOM     15  CA  LYS A  15       7.075  -2.135   4.817  1.00  0.00           C
+ATOM     16  CA  LYS A  16       5.287  -3.766   7.269  1.00  0.00           C
+TER
+END

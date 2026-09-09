@@ -1,0 +1,25 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_amber_distogram
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 13
+REMARK 999 PDB_ID 9WXK
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 1.951755
+REMARK 999 RMSD_CA_MEMORY 1.951809
+REMARK 999 SEQUENCE IWLSLMKFAGKHL
+REMARK 999 TARGET_ID T126
+ATOM      1  CA  ILE A   1       3.532  -0.849  -2.428  1.00  0.00           C
+ATOM      2  CA  TRP A   2       2.186   3.444  -1.986  1.00  0.00           C
+ATOM      3  CA  LEU A   3       5.388   5.634   0.682  1.00  0.00           C
+ATOM      4  CA  SER A   4       5.835   3.103  -1.249  1.00  0.00           C
+ATOM      5  CA  LEU A   5       1.988   3.289  -4.767  1.00  0.00           C
+ATOM      6  CA  MET A   6       5.650   5.113  -9.223  1.00  0.00           C
+ATOM      7  CA  LYS A   7       7.772   2.520 -11.036  1.00  0.00           C
+ATOM      8  CA  PHE A   8       6.150   2.100 -13.309  1.00  0.00           C
+ATOM      9  CA  ALA A   9       2.966   0.862 -13.973  1.00  0.00           C
+ATOM     10  CA  GLY A  10       4.220   7.872 -13.470  1.00  0.00           C
+ATOM     11  CA  LYS A  11       6.906   4.648 -15.718  1.00  0.00           C
+ATOM     12  CA  HIS A  12       2.840   4.522 -15.847  1.00  0.00           C
+ATOM     13  CA  LEU A  13       2.358   6.829 -16.278  1.00  0.00           C
+TER
+END

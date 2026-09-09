@@ -1,0 +1,22 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION native
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 10
+REMARK 999 PDB_ID 1N9U
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.0000
+REMARK 999 SEQUENCE DRVYIHPFHL
+REMARK 999 SOURCE s12.instrument.load_univ
+REMARK 999 TARGET_ID T026
+ATOM      1  CA  ASP A   1      -4.131  -8.607  -4.648  1.00  0.00           C
+ATOM      2  CA  ARG A   2      -1.796  -5.617  -4.186  1.00  0.00           C
+ATOM      3  CA  VAL A   3       1.579  -5.274  -5.958  1.00  0.00           C
+ATOM      4  CA  TYR A   4       2.343  -2.483  -3.490  1.00  0.00           C
+ATOM      5  CA  ILE A   5       0.888  -2.059   0.009  1.00  0.00           C
+ATOM      6  CA  HIS A   6       1.309   0.909   2.284  1.00  0.00           C
+ATOM      7  CA  PRO A   7       0.365   1.270   5.950  1.00  0.00           C
+ATOM      8  CA  PHE A   8       0.291   4.978   5.175  1.00  0.00           C
+ATOM      9  CA  HIS A   9       0.744   6.831   1.861  1.00  0.00           C
+ATOM     10  CA  LEU A  10      -1.457   9.822   2.688  1.00  0.00           C
+TER
+END

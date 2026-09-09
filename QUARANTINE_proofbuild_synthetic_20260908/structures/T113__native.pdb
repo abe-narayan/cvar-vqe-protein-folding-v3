@@ -1,0 +1,21 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION native
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 9
+REMARK 999 PDB_ID 8IS3
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.0000
+REMARK 999 SEQUENCE FRFPFKFRR
+REMARK 999 SOURCE s12.instrument.load_univ
+REMARK 999 TARGET_ID T113
+ATOM      1  CA  PHE A   1      -3.855  -3.326  -5.784  1.00  0.00           C
+ATOM      2  CA  ARG A   2      -2.091  -4.131  -2.505  1.00  0.00           C
+ATOM      3  CA  PHE A   3      -1.141  -1.000  -0.549  1.00  0.00           C
+ATOM      4  CA  PRO A   4       2.649  -0.340   0.055  1.00  0.00           C
+ATOM      5  CA  PHE A   5       1.852   0.096   3.764  1.00  0.00           C
+ATOM      6  CA  LYS A   6       1.986  -2.958   6.028  1.00  0.00           C
+ATOM      7  CA  PHE A   7      -1.028  -3.124   8.338  1.00  0.00           C
+ATOM      8  CA  ARG A   8       0.493  -6.033  10.290  1.00  0.00           C
+ATOM      9  CA  ARG A   9       3.795  -6.850   8.565  1.00  0.00           C
+TER
+END

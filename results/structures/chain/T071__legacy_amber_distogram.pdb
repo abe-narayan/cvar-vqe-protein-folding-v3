@@ -1,0 +1,64 @@
+REMARK 999 BASIS built_chain_bb
+REMARK 999 BASIS_ROLE PRODUCTION RESULT
+REMARK 999 CA_BOND_MAX 3.804681721248178
+REMARK 999 CA_BOND_MEAN 3.804278881030907
+REMARK 999 CA_BOND_MIN 3.8036900504641538
+REMARK 999 CHAIN_LAM 0.300
+REMARK 999 CONFIGURATION legacy_amber_distogram
+REMARK 999 FOLD 1
+REMARK 999 GIT_COMMIT a15406c82245
+REMARK 999 LENGTH 11
+REMARK 999 MODULE_SHA 90e160cc06020ac1
+REMARK 999 PDB_ID 3SGO
+REMARK 999 PROVENANCE genuine
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 5.973295
+REMARK 999 RMSD_CA_MEMORY 5.973214
+REMARK 999 SEQUENCE KVKVLGDVIEV
+REMARK 999 TARGET_ID T071
+ATOM      1  N   LYS A   1       0.000   0.000   0.000  1.00  0.00           N
+ATOM      2  CA  LYS A   1       1.458   0.000   0.000  1.00  0.00           C
+ATOM      3  C   LYS A   1       2.005   1.424   0.000  1.00  0.00           C
+ATOM      4  O   LYS A   1       2.904   1.754   0.773  1.00  0.00           O
+ATOM      5  N   VAL A   2       1.456   2.263  -0.872  1.00  0.00           N
+ATOM      6  CA  VAL A   2       1.887   3.652  -0.974  1.00  0.00           C
+ATOM      7  C   VAL A   2       0.758   4.604  -0.594  1.00  0.00           C
+ATOM      8  O   VAL A   2       0.940   5.501   0.230  1.00  0.00           O
+ATOM      9  N   LYS A   3      -0.408   4.403  -1.198  1.00  0.00           N
+ATOM     10  CA  LYS A   3      -1.569   5.242  -0.924  1.00  0.00           C
+ATOM     11  C   LYS A   3      -1.853   5.309   0.572  1.00  0.00           C
+ATOM     12  O   LYS A   3      -2.901   5.799   0.994  1.00  0.00           O
+ATOM     13  N   VAL A   4      -0.913   4.815   1.371  1.00  0.00           N
+ATOM     14  CA  VAL A   4      -1.061   4.817   2.822  1.00  0.00           C
+ATOM     15  C   VAL A   4      -0.494   6.097   3.426  1.00  0.00           C
+ATOM     16  O   VAL A   4      -0.540   6.296   4.640  1.00  0.00           O
+ATOM     17  N   LEU A   5       0.041   6.963   2.572  1.00  0.00           N
+ATOM     18  CA  LEU A   5       0.618   8.225   3.019  1.00  0.00           C
+ATOM     19  C   LEU A   5      -0.003   8.672   4.338  1.00  0.00           C
+ATOM     20  O   LEU A   5       0.693   8.833   5.341  1.00  0.00           O
+ATOM     21  N   GLY A   6      -1.317   8.873   4.330  1.00  0.00           N
+ATOM     22  CA  GLY A   6      -2.034   9.302   5.524  1.00  0.00           C
+ATOM     23  C   GLY A   6      -3.057   8.255   5.953  1.00  0.00           C
+ATOM     24  O   GLY A   6      -3.556   8.285   7.078  1.00  0.00           O
+ATOM     25  N   ASP A   7      -3.365   7.331   5.049  1.00  0.00           N
+ATOM     26  CA  ASP A   7      -4.329   6.274   5.332  1.00  0.00           C
+ATOM     27  C   ASP A   7      -3.742   5.242   6.289  1.00  0.00           C
+ATOM     28  O   ASP A   7      -4.254   5.042   7.391  1.00  0.00           O
+ATOM     29  N   VAL A   8      -2.667   4.588   5.861  1.00  0.00           N
+ATOM     30  CA  VAL A   8      -2.010   3.576   6.679  1.00  0.00           C
+ATOM     31  C   VAL A   8      -2.356   3.755   8.154  1.00  0.00           C
+ATOM     32  O   VAL A   8      -2.697   2.794   8.843  1.00  0.00           O
+ATOM     33  N   ILE A   9      -2.267   4.992   8.631  1.00  0.00           N
+ATOM     34  CA  ILE A   9      -2.570   5.300  10.024  1.00  0.00           C
+ATOM     35  C   ILE A   9      -3.948   4.774  10.412  1.00  0.00           C
+ATOM     36  O   ILE A   9      -4.229   4.551  11.589  1.00  0.00           O
+ATOM     37  N   GLU A  10      -4.803   4.577   9.414  1.00  0.00           N
+ATOM     38  CA  GLU A  10      -6.153   4.077   9.648  1.00  0.00           C
+ATOM     39  C   GLU A  10      -6.122   2.763  10.421  1.00  0.00           C
+ATOM     40  O   GLU A  10      -6.646   2.672  11.531  1.00  0.00           O
+ATOM     41  N   VAL A  11      -5.504   1.747   9.828  1.00  0.00           N
+ATOM     42  CA  VAL A  11      -5.404   0.436  10.459  1.00  0.00           C
+ATOM     43  C   VAL A  11      -4.728   0.537  11.823  1.00  0.00           C
+ATOM     44  O   VAL A  11      -5.208  -0.026  12.806  1.00  0.00           O
+TER
+END

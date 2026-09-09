@@ -1,0 +1,56 @@
+REMARK 999 BASIS built_chain_bb
+REMARK 999 BASIS_ROLE PRODUCTION RESULT
+REMARK 999 CA_BOND_MAX 3.804673704800452
+REMARK 999 CA_BOND_MEAN 3.8039472312547282
+REMARK 999 CA_BOND_MIN 3.8032873938212988
+REMARK 999 CHAIN_LAM 0.300
+REMARK 999 CONFIGURATION distogram
+REMARK 999 FOLD 0
+REMARK 999 GIT_COMMIT a15406c82245
+REMARK 999 LENGTH 9
+REMARK 999 MODULE_SHA 90e160cc06020ac1
+REMARK 999 PDB_ID 6F3V
+REMARK 999 PROVENANCE genuine
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 4.366703
+REMARK 999 RMSD_CA_MEMORY 4.366709
+REMARK 999 SEQUENCE RPPGFSPFR
+REMARK 999 TARGET_ID T085
+ATOM      1  N   ARG A   1       0.000   0.000   0.000  1.00  0.00           N
+ATOM      2  CA  ARG A   1       1.458   0.000   0.000  1.00  0.00           C
+ATOM      3  C   ARG A   1       2.005   1.424   0.000  1.00  0.00           C
+ATOM      4  O   ARG A   1       2.904   1.754   0.773  1.00  0.00           O
+ATOM      5  N   PRO A   2       1.456   2.263  -0.872  1.00  0.00           N
+ATOM      6  CA  PRO A   2       1.887   3.652  -0.974  1.00  0.00           C
+ATOM      7  C   PRO A   2       2.117   4.256   0.407  1.00  0.00           C
+ATOM      8  O   PRO A   2       3.247   4.575   0.775  1.00  0.00           O
+ATOM      9  N   PRO A   3       1.037   4.410   1.167  1.00  0.00           N
+ATOM     10  CA  PRO A   3       1.120   4.976   2.508  1.00  0.00           C
+ATOM     11  C   PRO A   3       1.737   3.980   3.485  1.00  0.00           C
+ATOM     12  O   PRO A   3       2.300   2.964   3.077  1.00  0.00           O
+ATOM     13  N   GLY A   4       1.627   4.278   4.775  1.00  0.00           N
+ATOM     14  CA  GLY A   4       2.173   3.410   5.811  1.00  0.00           C
+ATOM     15  C   GLY A   4       1.166   2.339   6.214  1.00  0.00           C
+ATOM     16  O   GLY A   4       1.095   1.947   7.379  1.00  0.00           O
+ATOM     17  N   PHE A   5       0.389   1.869   5.244  1.00  0.00           N
+ATOM     18  CA  PHE A   5      -0.616   0.843   5.495  1.00  0.00           C
+ATOM     19  C   PHE A   5      -0.024  -0.553   5.332  1.00  0.00           C
+ATOM     20  O   PHE A   5       0.395  -0.936   4.239  1.00  0.00           O
+ATOM     21  N   SER A   6       0.008  -1.309   6.424  1.00  0.00           N
+ATOM     22  CA  SER A   6       0.549  -2.663   6.404  1.00  0.00           C
+ATOM     23  C   SER A   6      -0.458  -3.644   5.813  1.00  0.00           C
+ATOM     24  O   SER A   6      -1.602  -3.720   6.261  1.00  0.00           O
+ATOM     25  N   PRO A   7      -0.024  -4.394   4.805  1.00  0.00           N
+ATOM     26  CA  PRO A   7      -0.886  -5.372   4.151  1.00  0.00           C
+ATOM     27  C   PRO A   7      -0.801  -6.727   4.846  1.00  0.00           C
+ATOM     28  O   PRO A   7       0.264  -7.342   4.898  1.00  0.00           O
+ATOM     29  N   PHE A   8      -1.929  -7.185   5.378  1.00  0.00           N
+ATOM     30  CA  PHE A   8      -1.983  -8.467   6.070  1.00  0.00           C
+ATOM     31  C   PHE A   8      -2.715  -9.510   5.232  1.00  0.00           C
+ATOM     32  O   PHE A   8      -2.624 -10.709   5.497  1.00  0.00           O
+ATOM     33  N   ARG A   9      -3.439  -9.046   4.219  1.00  0.00           N
+ATOM     34  CA  ARG A   9      -4.187  -9.937   3.340  1.00  0.00           C
+ATOM     35  C   ARG A   9      -3.267 -10.970   2.698  1.00  0.00           C
+ATOM     36  O   ARG A   9      -3.575 -12.161   2.676  1.00  0.00           O
+TER
+END

@@ -1,0 +1,56 @@
+REMARK 999 BASIS built_chain_bb
+REMARK 999 BASIS_ROLE PRODUCTION RESULT
+REMARK 999 CA_BOND_MAX 3.8047823853671305
+REMARK 999 CA_BOND_MEAN 3.8040619444981494
+REMARK 999 CA_BOND_MIN 3.8033928274633952
+REMARK 999 CHAIN_LAM 0.300
+REMARK 999 CONFIGURATION amber
+REMARK 999 FOLD 4
+REMARK 999 GIT_COMMIT a15406c82245
+REMARK 999 LENGTH 9
+REMARK 999 MODULE_SHA 90e160cc06020ac1
+REMARK 999 PDB_ID 2MK7
+REMARK 999 PROVENANCE genuine
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.395646
+REMARK 999 RMSD_CA_MEMORY 3.395649
+REMARK 999 SEQUENCE PPTTTTKKP
+REMARK 999 TARGET_ID T054
+ATOM      1  N   PRO A   1       0.000   0.000   0.000  1.00  0.00           N
+ATOM      2  CA  PRO A   1       1.458   0.000   0.000  1.00  0.00           C
+ATOM      3  C   PRO A   1       2.005   1.424   0.000  1.00  0.00           C
+ATOM      4  O   PRO A   1       2.904   1.754   0.773  1.00  0.00           O
+ATOM      5  N   PRO A   2       1.456   2.263  -0.872  1.00  0.00           N
+ATOM      6  CA  PRO A   2       1.887   3.652  -0.974  1.00  0.00           C
+ATOM      7  C   PRO A   2       1.385   4.468   0.212  1.00  0.00           C
+ATOM      8  O   PRO A   2       0.207   4.818   0.284  1.00  0.00           O
+ATOM      9  N   THR A   3       2.288   4.769   1.140  1.00  0.00           N
+ATOM     10  CA  THR A   3       1.939   5.545   2.325  1.00  0.00           C
+ATOM     11  C   THR A   3       2.537   6.946   2.256  1.00  0.00           C
+ATOM     12  O   THR A   3       2.828   7.558   3.284  1.00  0.00           O
+ATOM     13  N   THR A   4       2.719   7.447   1.039  1.00  0.00           N
+ATOM     14  CA  THR A   4       3.283   8.776   0.835  1.00  0.00           C
+ATOM     15  C   THR A   4       2.625   9.472  -0.353  1.00  0.00           C
+ATOM     16  O   THR A   4       2.608   8.942  -1.463  1.00  0.00           O
+ATOM     17  N   THR A   5       2.086  10.662  -0.110  1.00  0.00           N
+ATOM     18  CA  THR A   5       1.426  11.432  -1.158  1.00  0.00           C
+ATOM     19  C   THR A   5       2.143  12.758  -1.395  1.00  0.00           C
+ATOM     20  O   THR A   5       1.510  13.773  -1.684  1.00  0.00           O
+ATOM     21  N   THR A   6       3.466  12.740  -1.271  1.00  0.00           N
+ATOM     22  CA  THR A   6       4.270  13.940  -1.471  1.00  0.00           C
+ATOM     23  C   THR A   6       4.768  14.030  -2.909  1.00  0.00           C
+ATOM     24  O   THR A   6       5.533  14.929  -3.256  1.00  0.00           O
+ATOM     25  N   LYS A   7       4.328  13.093  -3.743  1.00  0.00           N
+ATOM     26  CA  LYS A   7       4.728  13.065  -5.144  1.00  0.00           C
+ATOM     27  C   LYS A   7       3.569  13.466  -6.051  1.00  0.00           C
+ATOM     28  O   LYS A   7       2.866  12.612  -6.591  1.00  0.00           O
+ATOM     29  N   LYS A   8       3.376  14.771  -6.215  1.00  0.00           N
+ATOM     30  CA  LYS A   8       2.303  15.287  -7.056  1.00  0.00           C
+ATOM     31  C   LYS A   8       2.563  14.975  -8.526  1.00  0.00           C
+ATOM     32  O   LYS A   8       1.817  14.221  -9.151  1.00  0.00           O
+ATOM     33  N   PRO A   9       3.625  15.559  -9.071  1.00  0.00           N
+ATOM     34  CA  PRO A   9       3.984  15.344 -10.468  1.00  0.00           C
+ATOM     35  C   PRO A   9       4.185  13.861 -10.759  1.00  0.00           C
+ATOM     36  O   PRO A   9       3.673  13.338 -11.748  1.00  0.00           O
+TER
+END

@@ -1,0 +1,24 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 12
+REMARK 999 PDB_ID 2BFI
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 4.080405
+REMARK 999 RMSD_CA_MEMORY 4.080408
+REMARK 999 SEQUENCE KFFEAAAKKFFE
+REMARK 999 TARGET_ID T034
+ATOM      1  CA  LYS A   1       3.171   8.677   2.276  1.00  0.00           C
+ATOM      2  CA  PHE A   2       4.096   7.454   6.631  1.00  0.00           C
+ATOM      3  CA  PHE A   3       1.029  10.928   6.318  1.00  0.00           C
+ATOM      4  CA  GLU A   4       3.302   9.060  14.898  1.00  0.00           C
+ATOM      5  CA  ALA A   5       5.061  10.107  16.422  1.00  0.00           C
+ATOM      6  CA  ALA A   6      -1.578   9.099  22.667  1.00  0.00           C
+ATOM      7  CA  ALA A   7      -1.749   6.942  20.946  1.00  0.00           C
+ATOM      8  CA  LYS A   8      -0.988   4.928  28.613  1.00  0.00           C
+ATOM      9  CA  LYS A   9       3.370   4.418  29.377  1.00  0.00           C
+ATOM     10  CA  PHE A  10       7.333   9.870  37.392  1.00  0.00           C
+ATOM     11  CA  PHE A  11       2.608   7.324  38.676  1.00  0.00           C
+ATOM     12  CA  GLU A  12       1.766   2.286  44.684  1.00  0.00           C
+TER
+END

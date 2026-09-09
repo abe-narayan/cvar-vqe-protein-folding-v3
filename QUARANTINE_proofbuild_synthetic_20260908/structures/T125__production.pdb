@@ -1,0 +1,21 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION production
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 9
+REMARK 999 PDB_ID 9UV5
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 1.766670
+REMARK 999 RMSD_CA_MEMORY 1.766740
+REMARK 999 SEQUENCE PDHEGTYDY
+REMARK 999 TARGET_ID T125
+ATOM      1  CA  PRO A   1       7.904  13.083  22.526  1.00  0.00           C
+ATOM      2  CA  ASP A   2       9.000  11.415  22.707  1.00  0.00           C
+ATOM      3  CA  HIS A   3      10.757  10.936  24.623  1.00  0.00           C
+ATOM      4  CA  GLU A   4      12.451  12.024  26.441  1.00  0.00           C
+ATOM      5  CA  GLY A   5      13.434  14.431  27.305  1.00  0.00           C
+ATOM      6  CA  THR A   6      14.215  16.958  26.133  1.00  0.00           C
+ATOM      7  CA  TYR A   7      13.464  19.730  24.723  1.00  0.00           C
+ATOM      8  CA  ASP A   8      13.717  22.654  23.817  1.00  0.00           C
+ATOM      9  CA  TYR A   9      12.945  25.198  22.569  1.00  0.00           C
+TER
+END

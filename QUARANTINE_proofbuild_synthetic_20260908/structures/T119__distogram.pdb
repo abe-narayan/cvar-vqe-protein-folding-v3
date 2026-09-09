@@ -1,0 +1,23 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION distogram
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 11
+REMARK 999 PDB_ID 8ZG2
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.622112
+REMARK 999 RMSD_CA_MEMORY 2.622036
+REMARK 999 SEQUENCE YRQSSATSSFG
+REMARK 999 TARGET_ID T119
+ATOM      1  CA  TYR A   1       7.907  -1.920   1.864  1.00  0.00           C
+ATOM      2  CA  ARG A   2      -0.446  -2.034   1.139  1.00  0.00           C
+ATOM      3  CA  GLN A   3       3.574   1.278   2.468  1.00  0.00           C
+ATOM      4  CA  SER A   4      -1.236   4.231   5.990  1.00  0.00           C
+ATOM      5  CA  SER A   5      -0.321   0.614   3.505  1.00  0.00           C
+ATOM      6  CA  ALA A   6      -0.135   3.507  -3.287  1.00  0.00           C
+ATOM      7  CA  THR A   7      -5.967   1.601  -3.242  1.00  0.00           C
+ATOM      8  CA  SER A   8      -5.306  -2.982  -5.474  1.00  0.00           C
+ATOM      9  CA  SER A   9      -5.404   2.056 -11.315  1.00  0.00           C
+ATOM     10  CA  PHE A  10       0.545  -0.240  -5.732  1.00  0.00           C
+ATOM     11  CA  GLY A  11      -0.694  -3.387  -2.803  1.00  0.00           C
+TER
+END

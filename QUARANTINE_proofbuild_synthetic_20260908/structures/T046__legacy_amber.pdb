@@ -1,0 +1,27 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_amber
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 15
+REMARK 999 PDB_ID 2LWU
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.593676
+REMARK 999 RMSD_CA_MEMORY 2.593645
+REMARK 999 SEQUENCE GHCIPTTSGPICLRD
+REMARK 999 TARGET_ID T046
+ATOM      1  CA  GLY A   1      -6.223   4.987   0.411  1.00  0.00           C
+ATOM      2  CA  HIS A   2      -5.432   5.550  -3.415  1.00  0.00           C
+ATOM      3  CA  CYS A   3      -2.875  -1.163  -5.226  1.00  0.00           C
+ATOM      4  CA  ILE A   4      -0.511   4.791  -0.914  1.00  0.00           C
+ATOM      5  CA  PRO A   5       6.686   1.935  -0.836  1.00  0.00           C
+ATOM      6  CA  THR A   6       5.152   2.481   2.020  1.00  0.00           C
+ATOM      7  CA  THR A   7      11.810   3.002   5.031  1.00  0.00           C
+ATOM      8  CA  SER A   8       7.205  -2.409   1.921  1.00  0.00           C
+ATOM      9  CA  GLY A   9       6.116  -4.561  -1.046  1.00  0.00           C
+ATOM     10  CA  PRO A  10       5.703   0.213  -5.567  1.00  0.00           C
+ATOM     11  CA  ILE A  11       4.578  -3.231   0.292  1.00  0.00           C
+ATOM     12  CA  CYS A  12      -3.614  -2.588  -2.941  1.00  0.00           C
+ATOM     13  CA  LEU A  13      -3.369  -1.558   1.283  1.00  0.00           C
+ATOM     14  CA  ARG A  14      -9.538  -3.200   3.497  1.00  0.00           C
+ATOM     15  CA  ASP A  15      -8.099  -0.463   2.411  1.00  0.00           C
+TER
+END

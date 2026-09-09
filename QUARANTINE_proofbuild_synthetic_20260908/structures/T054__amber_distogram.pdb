@@ -1,0 +1,21 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber_distogram
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 9
+REMARK 999 PDB_ID 2MK7
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.481917
+REMARK 999 RMSD_CA_MEMORY 2.482125
+REMARK 999 SEQUENCE PPTTTTKKP
+REMARK 999 TARGET_ID T054
+ATOM      1  CA  PRO A   1       0.550 -25.130   2.570  1.00  0.00           C
+ATOM      2  CA  PRO A   2       4.197 -21.155   6.750  1.00  0.00           C
+ATOM      3  CA  THR A   3       3.202 -17.860   6.468  1.00  0.00           C
+ATOM      4  CA  THR A   4       7.564 -15.881   7.929  1.00  0.00           C
+ATOM      5  CA  THR A   5       1.386 -10.768   7.121  1.00  0.00           C
+ATOM      6  CA  THR A   6       9.069 -10.399   7.798  1.00  0.00           C
+ATOM      7  CA  LYS A   7       6.903  -8.506   6.517  1.00  0.00           C
+ATOM      8  CA  LYS A   8       7.239  -1.379   9.507  1.00  0.00           C
+ATOM      9  CA  PRO A   9       7.191  -0.945   6.797  1.00  0.00           C
+TER
+END

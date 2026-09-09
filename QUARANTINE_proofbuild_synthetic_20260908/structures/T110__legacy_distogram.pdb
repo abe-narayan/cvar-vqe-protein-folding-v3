@@ -1,0 +1,25 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_distogram
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 13
+REMARK 999 PDB_ID 8FLP
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 1.599516
+REMARK 999 RMSD_CA_MEMORY 1.599439
+REMARK 999 SEQUENCE GCCANPVCNGKHC
+REMARK 999 TARGET_ID T110
+ATOM      1  CA  GLY A   1       1.641   5.523   4.072  1.00  0.00           C
+ATOM      2  CA  CYS A   2       2.281   2.303   4.320  1.00  0.00           C
+ATOM      3  CA  CYS A   3      -1.479   0.720  -2.563  1.00  0.00           C
+ATOM      4  CA  ALA A   4       5.113   2.799  -1.814  1.00  0.00           C
+ATOM      5  CA  ASN A   5       4.446  -1.266   0.815  1.00  0.00           C
+ATOM      6  CA  PRO A   6       5.346  -3.867  -0.852  1.00  0.00           C
+ATOM      7  CA  VAL A   7       2.796  -5.953   0.788  1.00  0.00           C
+ATOM      8  CA  CYS A   8       0.402  -3.615   0.395  1.00  0.00           C
+ATOM      9  CA  ASN A   9      -0.777  -2.775   0.144  1.00  0.00           C
+ATOM     10  CA  GLY A  10      -3.954  -5.765  -1.042  1.00  0.00           C
+ATOM     11  CA  LYS A  11      -4.128  -5.057   0.099  1.00  0.00           C
+ATOM     12  CA  HIS A  12      -3.783   0.377   1.792  1.00  0.00           C
+ATOM     13  CA  CYS A  13      -3.836  -0.607  -0.799  1.00  0.00           C
+TER
+END

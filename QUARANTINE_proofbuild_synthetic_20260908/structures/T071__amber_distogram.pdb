@@ -1,0 +1,23 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber_distogram
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 11
+REMARK 999 PDB_ID 3SGO
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.885133
+REMARK 999 RMSD_CA_MEMORY 2.885193
+REMARK 999 SEQUENCE KVKVLGDVIEV
+REMARK 999 TARGET_ID T071
+ATOM      1  CA  LYS A   1     -23.386 -11.886  -7.162  1.00  0.00           C
+ATOM      2  CA  VAL A   2     -21.144 -12.027 -12.498  1.00  0.00           C
+ATOM      3  CA  LYS A   3     -16.107 -13.138  -7.781  1.00  0.00           C
+ATOM      4  CA  VAL A   4     -14.439  -9.285  -7.875  1.00  0.00           C
+ATOM      5  CA  LEU A   5     -14.090 -10.135  -2.828  1.00  0.00           C
+ATOM      6  CA  GLY A   6     -11.428 -12.560  -2.951  1.00  0.00           C
+ATOM      7  CA  ASP A   7      -3.596 -12.609  -1.154  1.00  0.00           C
+ATOM      8  CA  VAL A   8      -0.496  -8.305  -2.477  1.00  0.00           C
+ATOM      9  CA  ILE A   9       4.262  -8.869  -2.321  1.00  0.00           C
+ATOM     10  CA  GLU A  10       5.743 -15.069   0.593  1.00  0.00           C
+ATOM     11  CA  VAL A  11       5.210 -12.395  -3.272  1.00  0.00           C
+TER
+END

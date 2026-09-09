@@ -1,0 +1,22 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber_distogram
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 10
+REMARK 999 PDB_ID 7VI4
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.277873
+REMARK 999 RMSD_CA_MEMORY 2.277964
+REMARK 999 SEQUENCE GYRVTGYETQ
+REMARK 999 TARGET_ID T108
+ATOM      1  CA  GLY A   1      -5.264   1.996  -9.536  1.00  0.00           C
+ATOM      2  CA  TYR A   2      -1.056   3.965  -7.418  1.00  0.00           C
+ATOM      3  CA  ARG A   3       2.852   4.462  -5.342  1.00  0.00           C
+ATOM      4  CA  VAL A   4       3.406   5.320  -3.630  1.00  0.00           C
+ATOM      5  CA  THR A   5       6.921   1.908   0.396  1.00  0.00           C
+ATOM      6  CA  GLY A   6      12.888   4.669   3.407  1.00  0.00           C
+ATOM      7  CA  TYR A   7      11.003   3.504   2.368  1.00  0.00           C
+ATOM      8  CA  GLU A   8      11.081   5.006   4.883  1.00  0.00           C
+ATOM      9  CA  THR A   9      18.791   2.637   7.184  1.00  0.00           C
+ATOM     10  CA  GLN A  10      20.416   4.304  12.197  1.00  0.00           C
+TER
+END

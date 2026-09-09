@@ -1,0 +1,169 @@
+{
+ "complete": true,
+ "frag_per_fold": {
+  "0": 6001,
+  "1": 5988,
+  "2": 6001,
+  "3": 6003,
+  "4": 6002
+ },
+ "n_fragments": 6003,
+ "n_peptides": 787,
+ "pep_per_fold": {
+  "0": 629,
+  "1": 647,
+  "2": 608,
+  "3": 626,
+  "4": 638
+ },
+ "sets": {
+  "bench60": {
+   "affected": [
+    {
+     "any": true,
+     "fold": 1,
+     "frag_deposit": [],
+     "frag_homolog_missed_by_kmer": [],
+     "frag_verbatim": [],
+     "n": 11,
+     "pdb": "8Y3S",
+     "pep_deposit": [],
+     "pep_verbatim": [
+      [
+       "8XTO",
+       "LGGGSVRFGPGVAFRAPSIHG",
+       0.524
+      ]
+     ]
+    },
+    {
+     "any": true,
+     "fold": 4,
+     "frag_deposit": [],
+     "frag_homolog_missed_by_kmer": [],
+     "frag_verbatim": [],
+     "n": 11,
+     "pdb": "8ZG3",
+     "pep_deposit": [],
+     "pep_verbatim": [
+      [
+       "8XTO",
+       "LGGGSVRFGPGVAFRAPSIHG",
+       0.524
+      ],
+      [
+       "8ZUG",
+       "YRQSSATSSFGGLGGGSVRFGPG",
+       0.478
+      ]
+     ]
+    }
+   ],
+   "complete": true,
+   "summary": {
+    "any": 2,
+    "frag_deposit": 0,
+    "frag_homolog_missed_by_kmer": 0,
+    "frag_verbatim": 0,
+    "n_targets": 60,
+    "pep_deposit": 0,
+    "pep_verbatim": 2
+   }
+  },
+  "dev24": {
+   "affected": [],
+   "complete": true,
+   "summary": {
+    "any": 0,
+    "frag_deposit": 0,
+    "frag_homolog_missed_by_kmer": 0,
+    "frag_verbatim": 0,
+    "n_targets": 24,
+    "pep_deposit": 0,
+    "pep_verbatim": 0
+   }
+  },
+  "tuning126": {
+   "affected": [
+    {
+     "any": true,
+     "fold": 2,
+     "frag_deposit": [],
+     "frag_homolog_missed_by_kmer": [],
+     "frag_verbatim": [],
+     "n": 13,
+     "pdb": "1CEK",
+     "pep_deposit": [],
+     "pep_verbatim": [
+      [
+       "1A11",
+       "GSEKMSTAISVLLAQAVFLLLTSQR",
+       0.52
+      ]
+     ]
+    },
+    {
+     "any": true,
+     "fold": 4,
+     "frag_deposit": [],
+     "frag_homolog_missed_by_kmer": [],
+     "frag_verbatim": [],
+     "n": 12,
+     "pdb": "2FBU",
+     "pep_deposit": [],
+     "pep_verbatim": [
+      [
+       "2LMF",
+       "LLGDFFRKSKEKIGKEFKRIVQR",
+       0.522
+      ]
+     ]
+    },
+    {
+     "any": true,
+     "fold": 4,
+     "frag_deposit": [],
+     "frag_homolog_missed_by_kmer": [],
+     "frag_verbatim": [],
+     "n": 9,
+     "pdb": "2P5H",
+     "pep_deposit": [],
+     "pep_verbatim": [
+      [
+       "2P5J",
+       "LGRVDIHVWDGVYIRGR",
+       0.529
+      ]
+     ]
+    },
+    {
+     "any": true,
+     "fold": 0,
+     "frag_deposit": [],
+     "frag_homolog_missed_by_kmer": [],
+     "frag_verbatim": [],
+     "n": 10,
+     "pdb": "6B9K",
+     "pep_deposit": [],
+     "pep_verbatim": [
+      [
+       "1U6V",
+       "KSIRIQRGPGRAFVTIG",
+       0.588
+      ]
+     ]
+    }
+   ],
+   "complete": true,
+   "summary": {
+    "any": 4,
+    "frag_deposit": 0,
+    "frag_homolog_missed_by_kmer": 0,
+    "frag_verbatim": 0,
+    "n_targets": 126,
+    "pep_deposit": 0,
+    "pep_verbatim": 4
+   }
+  }
+ }
+}

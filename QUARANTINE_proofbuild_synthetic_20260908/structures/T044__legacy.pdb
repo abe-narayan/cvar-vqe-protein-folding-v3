@@ -1,0 +1,26 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 14
+REMARK 999 PDB_ID 2LU6
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.291429
+REMARK 999 RMSD_CA_MEMORY 2.291467
+REMARK 999 SEQUENCE CNCSRWARDHSRCC
+REMARK 999 TARGET_ID T044
+ATOM      1  CA  CYS A   1      11.277  18.273  14.904  1.00  0.00           C
+ATOM      2  CA  ASN A   2      16.872  20.682  10.545  1.00  0.00           C
+ATOM      3  CA  CYS A   3      18.060  17.368  15.775  1.00  0.00           C
+ATOM      4  CA  SER A   4      18.772  16.574  14.424  1.00  0.00           C
+ATOM      5  CA  ARG A   5      21.732  13.942  15.578  1.00  0.00           C
+ATOM      6  CA  TRP A   6      22.390  17.360  15.282  1.00  0.00           C
+ATOM      7  CA  ALA A   7      21.335  20.697  15.471  1.00  0.00           C
+ATOM      8  CA  ARG A   8      26.414  21.706  15.261  1.00  0.00           C
+ATOM      9  CA  ASP A   9      21.079  25.949  18.721  1.00  0.00           C
+ATOM     10  CA  HIS A  10      19.838  27.086  17.567  1.00  0.00           C
+ATOM     11  CA  SER A  11      14.598  21.911  17.523  1.00  0.00           C
+ATOM     12  CA  ARG A  12      16.316  23.290  20.375  1.00  0.00           C
+ATOM     13  CA  CYS A  13      13.299  19.915  18.411  1.00  0.00           C
+ATOM     14  CA  CYS A  14      13.424  21.109  21.541  1.00  0.00           C
+TER
+END

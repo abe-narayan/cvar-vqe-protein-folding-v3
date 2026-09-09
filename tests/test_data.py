@@ -29,7 +29,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from core import cache as C                                            # noqa: E402
 from core import data as d                                             # noqa: E402
-from core import geometry as g                                         # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UNIV = os.path.join(ROOT, "s8", "generate_univ")

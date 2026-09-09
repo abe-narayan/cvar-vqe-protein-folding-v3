@@ -1,0 +1,25 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_amber_distogram
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 13
+REMARK 999 PDB_ID 7JGX
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 1.873920
+REMARK 999 RMSD_CA_MEMORY 1.873862
+REMARK 999 SEQUENCE IFWLFRGKADVAL
+REMARK 999 TARGET_ID T100
+ATOM      1  CA  ILE A   1      -7.284   0.196  -3.412  1.00  0.00           C
+ATOM      2  CA  PHE A   2      -7.485   4.094  -0.886  1.00  0.00           C
+ATOM      3  CA  TRP A   3      -8.266  -1.349   1.426  1.00  0.00           C
+ATOM      4  CA  LEU A   4      -2.723  -0.905  -2.940  1.00  0.00           C
+ATOM      5  CA  PHE A   5      -2.311   1.685  -1.845  1.00  0.00           C
+ATOM      6  CA  ARG A   6       1.066   1.474   1.014  1.00  0.00           C
+ATOM      7  CA  GLY A   7       0.247  -0.821  -0.424  1.00  0.00           C
+ATOM      8  CA  LYS A   8       3.683  -2.123  -1.603  1.00  0.00           C
+ATOM      9  CA  ALA A   9       2.701   2.618  -1.023  1.00  0.00           C
+ATOM     10  CA  ASP A  10       4.907   0.568   5.208  1.00  0.00           C
+ATOM     11  CA  VAL A  11       6.956  -4.015   3.073  1.00  0.00           C
+ATOM     12  CA  ALA A  12       9.876  -0.898   0.846  1.00  0.00           C
+ATOM     13  CA  LEU A  13      10.405   2.012   7.244  1.00  0.00           C
+TER
+END

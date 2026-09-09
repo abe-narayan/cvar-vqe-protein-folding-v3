@@ -125,3 +125,34 @@ n=12 CVaR-VQE matrix; the two are never quoted as one table. Terms rank-normalis
 | M5 | **Three lanes refuted their own registered hypotheses.** The coordinator's m-noise hypothesis (A1) and m-hedge hypothesis (B5); Workstream B's concentration test, which came back *refuted backwards* and was rediagnosed and rerun rather than quietly dropped (E3); Workstream C's own pre-declared favourite weighting scheme, which was numerically the worst. |
 | M6 | **A process failure that is the coordinator's.** The brief mandated serialised AMBER/OpenMM access. `s22/results/` shows fresh concurrently-written artefacts from multiple lanes throughout Workstream B's run — **the rule was not enforceable by the lanes themselves.** No artefact was corrupted, but the gate did not exist. |
 | M7 | Self-caught defects reported rather than silently fixed: a bootstrap RNG re-seeded inside its resampling closure (degenerate CI, B); an exact-tie-induced gauge dependence with the buggy pilot **preserved** as a separate artefact (A). |
+
+---
+
+## CORRECTION, ISSUED IN SPRINT 23 — THE n BEHIND "BOTH ENERGIES LOSE TO A MATCHED RANDOM TAIL"
+
+**G2 above, and any restatement of it, must carry two different sample sizes. It did not, and that
+was an error of mine.** The claim is a conjunction of two results measured on two instruments:
+
+| half of the claim | source artefact | n | status |
+|---|---|---|---|
+| **Legacy** alone is worse than a matched random tail | `s22/results/ablate.json` (F3) | **126**, complete | stands |
+| **AMBER** alone is worse than a matched random tail | `s21/results/tailprice.json` | **42** of 126 | stands *at n=42* |
+
+`s21/results/tailprice.json` carries `"complete": false, "n_rows": 42, "n_expected": 126` on its own
+face, and `s21/LEDGER.md:2385` labels it correctly as *"deliberately frozen and labelled"*. The
+defect is not in the artefact or in that ledger line — **it is that the summary claim was carried
+forward without its n**, which reads as though the AMBER half were measured at full instrument.
+
+**Restated correctly, and split, as the user's own challenge forced:**
+
+    each physics energy ALONE, vs a matched random tail
+      Legacy   +0.328   (n=126)          Torsion  +0.899   (n=126)
+      Legacy   +0.265   (n=42)           AMBER    +0.519   (n=42)
+
+    physics PLUS the distogram, vs the same matched random tail
+      d+a      -0.309   (n=42)           d+l+a    -0.232   (n=42)
+
+> **Physics added to the structural objective beats random; physics alone does not. And no
+> combination containing a physics term ever beats distance alone.** Both halves have to be said
+> together — quoting only the first is the version that overstates, and quoting only the second is
+> the version that oversells.

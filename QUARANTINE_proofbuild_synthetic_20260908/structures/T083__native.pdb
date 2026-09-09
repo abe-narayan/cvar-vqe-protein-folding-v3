@@ -1,0 +1,26 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION native
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 14
+REMARK 999 PDB_ID 6CEJ
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.0000
+REMARK 999 SEQUENCE GRKRRQTSMTDFYH
+REMARK 999 SOURCE s12.instrument.load_univ
+REMARK 999 TARGET_ID T083
+ATOM      1  CA  GLY A   1       9.846   5.527  -1.977  1.00  0.00           C
+ATOM      2  CA  ARG A   2      12.556   3.363  -0.442  1.00  0.00           C
+ATOM      3  CA  LYS A   3      10.320   0.699   1.095  1.00  0.00           C
+ATOM      4  CA  ARG A   4       7.816  -0.032  -1.660  1.00  0.00           C
+ATOM      5  CA  ARG A   5       7.138  -3.749  -1.307  1.00  0.00           C
+ATOM      6  CA  GLN A   6       3.879  -5.731  -1.376  1.00  0.00           C
+ATOM      7  CA  THR A   7       1.563  -2.747  -1.573  1.00  0.00           C
+ATOM      8  CA  SER A   8      -1.770  -4.338  -0.730  1.00  0.00           C
+ATOM      9  CA  MET A   9      -5.046  -2.443  -1.061  1.00  0.00           C
+ATOM     10  CA  THR A  10      -5.867  -2.140   2.637  1.00  0.00           C
+ATOM     11  CA  ASP A  11      -8.103   0.772   1.689  1.00  0.00           C
+ATOM     12  CA  PHE A  12     -10.428   0.885  -1.302  1.00  0.00           C
+ATOM     13  CA  TYR A  13      -9.833   4.582  -1.893  1.00  0.00           C
+ATOM     14  CA  HIS A  14      -6.068   4.650  -2.408  1.00  0.00           C
+TER
+END

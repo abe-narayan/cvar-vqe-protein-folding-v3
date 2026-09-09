@@ -1,0 +1,28 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_amber
+REMARK 999 FOLD 3
+REMARK 999 LENGTH 16
+REMARK 999 PDB_ID 8T61
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.441584
+REMARK 999 RMSD_CA_MEMORY 3.441606
+REMARK 999 SEQUENCE RHYYKFNSTGRHYHYY
+REMARK 999 TARGET_ID T114
+ATOM      1  CA  ARG A   1       8.006   1.830  -0.325  1.00  0.00           C
+ATOM      2  CA  HIS A   2       3.374   1.275  -2.187  1.00  0.00           C
+ATOM      3  CA  TYR A   3       7.236  -0.226   3.870  1.00  0.00           C
+ATOM      4  CA  TYR A   4       4.831   2.645   3.147  1.00  0.00           C
+ATOM      5  CA  LYS A   5      14.089   3.450   4.836  1.00  0.00           C
+ATOM      6  CA  PHE A   6      12.908   5.750   7.437  1.00  0.00           C
+ATOM      7  CA  ASN A   7      19.605   7.544   7.047  1.00  0.00           C
+ATOM      8  CA  SER A   8      23.150   7.891   9.805  1.00  0.00           C
+ATOM      9  CA  THR A   9      18.579  11.263   3.885  1.00  0.00           C
+ATOM     10  CA  GLY A  10      19.107  14.431   5.837  1.00  0.00           C
+ATOM     11  CA  ARG A  11      12.241  12.379   1.397  1.00  0.00           C
+ATOM     12  CA  HIS A  12      12.178  10.807   0.903  1.00  0.00           C
+ATOM     13  CA  TYR A  13       9.378   6.803  -5.117  1.00  0.00           C
+ATOM     14  CA  HIS A  14      12.723   5.695  -2.029  1.00  0.00           C
+ATOM     15  CA  TYR A  15       8.736  -0.620   4.793  1.00  0.00           C
+ATOM     16  CA  TYR A  16      10.091  -1.677   3.214  1.00  0.00           C
+TER
+END

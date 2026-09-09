@@ -1,0 +1,1 @@
+{"complete": true, "n_rows": 30, "missing_keys": [], "required_keys": ["pdb", "n", "fold", "k", "basis", "label", "rmsd_incumbent", "rho_legacy_amber", "partitions", "shared_referent_floor"], "time": "2026-09-08 16:50:38"}

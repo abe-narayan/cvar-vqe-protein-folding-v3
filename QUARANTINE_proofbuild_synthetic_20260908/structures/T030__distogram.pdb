@@ -1,0 +1,28 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION distogram
+REMARK 999 FOLD 1
+REMARK 999 LENGTH 16
+REMARK 999 PDB_ID 1S9Z
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.414596
+REMARK 999 RMSD_CA_MEMORY 2.414504
+REMARK 999 SEQUENCE SIRELEARIRELELRI
+REMARK 999 TARGET_ID T030
+ATOM      1  CA  SER A   1      14.819  14.251  -1.243  1.00  0.00           C
+ATOM      2  CA  ILE A   2      10.256  15.946   0.112  1.00  0.00           C
+ATOM      3  CA  ARG A   3      10.422  11.928  -2.632  1.00  0.00           C
+ATOM      4  CA  GLU A   4      11.713   9.160   5.156  1.00  0.00           C
+ATOM      5  CA  LEU A   5      12.015  15.273   5.889  1.00  0.00           C
+ATOM      6  CA  GLU A   6       7.860  14.574   6.795  1.00  0.00           C
+ATOM      7  CA  ALA A   7       7.481  15.087   9.928  1.00  0.00           C
+ATOM      8  CA  ARG A   8      12.556  14.866   9.181  1.00  0.00           C
+ATOM      9  CA  ILE A   9       9.824  15.224   9.634  1.00  0.00           C
+ATOM     10  CA  ARG A  10       6.039  16.310   9.695  1.00  0.00           C
+ATOM     11  CA  GLU A  11       7.896  11.572  14.465  1.00  0.00           C
+ATOM     12  CA  LEU A  12       9.704  14.706  12.339  1.00  0.00           C
+ATOM     13  CA  GLU A  13       6.769  15.737  17.038  1.00  0.00           C
+ATOM     14  CA  LEU A  14       4.483  13.266  14.982  1.00  0.00           C
+ATOM     15  CA  ARG A  15       7.218  10.092  20.603  1.00  0.00           C
+ATOM     16  CA  ILE A  16       6.774  18.506  19.319  1.00  0.00           C
+TER
+END

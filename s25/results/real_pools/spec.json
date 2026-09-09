@@ -1,0 +1,158 @@
+{
+ "basis_note": "emitted point clouds; the results lab projects to the built chain",
+ "source": "s25/make_real_pools.py",
+ "configurations": {
+  "legacy": {
+   "path": "s25/results/real_pools/legacy.npz",
+   "meta": {
+    "is_synthetic": false,
+    "selector": "CVaR-VQE",
+    "hamiltonians": [
+     "Legacy"
+    ],
+    "config_name": "Legacy",
+    "alpha": 0.18,
+    "T": 0.5,
+    "qubits": 9,
+    "layers": 3,
+    "norm": "rank",
+    "candidates": 500,
+    "retained": "CVaR tail",
+    "distogram_used": false
+   }
+  },
+  "amber": {
+   "path": "s25/results/real_pools/amber.npz",
+   "meta": {
+    "is_synthetic": false,
+    "selector": "CVaR-VQE",
+    "hamiltonians": [
+     "AMBER"
+    ],
+    "config_name": "AMBER",
+    "alpha": 0.18,
+    "T": 0.5,
+    "qubits": 9,
+    "layers": 3,
+    "norm": "rank",
+    "candidates": 500,
+    "retained": "CVaR tail",
+    "distogram_used": false
+   }
+  },
+  "distogram": {
+   "path": "s25/results/real_pools/distogram.npz",
+   "meta": {
+    "is_synthetic": false,
+    "selector": "CVaR-VQE",
+    "hamiltonians": [
+     "Distogram"
+    ],
+    "config_name": "Distogram",
+    "alpha": 0.18,
+    "T": 0.5,
+    "qubits": 9,
+    "layers": 3,
+    "norm": "rank",
+    "candidates": 500,
+    "retained": "CVaR tail",
+    "distogram_used": true
+   }
+  },
+  "legacy_distogram": {
+   "path": "s25/results/real_pools/legacy_distogram.npz",
+   "meta": {
+    "is_synthetic": false,
+    "selector": "CVaR-VQE",
+    "hamiltonians": [
+     "Legacy",
+     "Distogram"
+    ],
+    "config_name": "Legacy+Distogram",
+    "alpha": 0.18,
+    "T": 0.5,
+    "qubits": 9,
+    "layers": 3,
+    "norm": "rank",
+    "candidates": 500,
+    "retained": "CVaR tail",
+    "distogram_used": true
+   }
+  },
+  "amber_distogram": {
+   "path": "s25/results/real_pools/amber_distogram.npz",
+   "meta": {
+    "is_synthetic": false,
+    "selector": "CVaR-VQE",
+    "hamiltonians": [
+     "AMBER",
+     "Distogram"
+    ],
+    "config_name": "AMBER+Distogram",
+    "alpha": 0.18,
+    "T": 0.5,
+    "qubits": 9,
+    "layers": 3,
+    "norm": "rank",
+    "candidates": 500,
+    "retained": "CVaR tail",
+    "distogram_used": true
+   }
+  },
+  "legacy_amber": {
+   "path": "s25/results/real_pools/legacy_amber.npz",
+   "meta": {
+    "is_synthetic": false,
+    "selector": "CVaR-VQE",
+    "hamiltonians": [
+     "Legacy",
+     "AMBER"
+    ],
+    "config_name": "Legacy+AMBER",
+    "alpha": 0.18,
+    "T": 0.5,
+    "qubits": 9,
+    "layers": 3,
+    "norm": "rank",
+    "candidates": 500,
+    "retained": "CVaR tail",
+    "distogram_used": false
+   }
+  },
+  "legacy_amber_distogram": {
+   "path": "s25/results/real_pools/legacy_amber_distogram.npz",
+   "meta": {
+    "is_synthetic": false,
+    "selector": "CVaR-VQE",
+    "hamiltonians": [
+     "Legacy",
+     "AMBER",
+     "Distogram"
+    ],
+    "config_name": "Legacy+AMBER+Distogram",
+    "alpha": 0.18,
+    "T": 0.5,
+    "qubits": 9,
+    "layers": 3,
+    "norm": "rank",
+    "candidates": 500,
+    "retained": "CVaR tail",
+    "distogram_used": true
+   }
+  },
+  "production": {
+   "path": "s25/results/real_pools/production.npz",
+   "meta": {
+    "is_synthetic": false,
+    "selector": "score-filter top-75 (== CVaR tail, s24 theorem)",
+    "hamiltonians": [
+     "Distogram"
+    ],
+    "config_name": "Production",
+    "candidates": 500,
+    "retained": 75,
+    "distogram_used": true
+   }
+  }
+ }
+}

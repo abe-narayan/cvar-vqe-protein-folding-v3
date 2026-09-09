@@ -1,0 +1,21 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION native
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 9
+REMARK 999 PDB_ID 1CS9
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.0000
+REMARK 999 SEQUENCE CGGIRGERA
+REMARK 999 SOURCE s12.instrument.load_univ
+REMARK 999 TARGET_ID T005
+ATOM      1  CA  CYS A   1      -0.020  -3.917  -2.604  1.00  0.00           C
+ATOM      2  CA  GLY A   2       1.669  -0.458  -3.040  1.00  0.00           C
+ATOM      3  CA  GLY A   3      -1.123   2.172  -2.471  1.00  0.00           C
+ATOM      4  CA  ILE A   4       0.789   5.458  -2.285  1.00  0.00           C
+ATOM      5  CA  ARG A   5       4.236   3.526  -2.485  1.00  0.00           C
+ATOM      6  CA  GLY A   6       5.970   0.543  -4.345  1.00  0.00           C
+ATOM      7  CA  GLU A   7       6.113  -2.449  -1.875  1.00  0.00           C
+ATOM      8  CA  ARG A   8       4.432  -5.932  -1.356  1.00  0.00           C
+ATOM      9  CA  ALA A   9       5.113  -8.875   1.141  1.00  0.00           C
+TER
+END

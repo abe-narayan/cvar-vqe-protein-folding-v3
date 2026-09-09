@@ -1,0 +1,56 @@
+REMARK 999 BASIS built_chain_bb
+REMARK 999 BASIS_ROLE PRODUCTION RESULT
+REMARK 999 CA_BOND_MAX 3.804912613976831
+REMARK 999 CA_BOND_MEAN 3.804177837356148
+REMARK 999 CA_BOND_MIN 3.8034296365254345
+REMARK 999 CHAIN_LAM 0.300
+REMARK 999 CONFIGURATION amber
+REMARK 999 FOLD 4
+REMARK 999 GIT_COMMIT a15406c82245
+REMARK 999 LENGTH 9
+REMARK 999 MODULE_SHA 90e160cc06020ac1
+REMARK 999 PDB_ID 2P5H
+REMARK 999 PROVENANCE genuine
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.644482
+REMARK 999 RMSD_CA_MEMORY 2.644509
+REMARK 999 SEQUENCE VDIHVWDGV
+REMARK 999 TARGET_ID T067
+ATOM      1  N   VAL A   1       0.000   0.000   0.000  1.00  0.00           N
+ATOM      2  CA  VAL A   1       1.458   0.000   0.000  1.00  0.00           C
+ATOM      3  C   VAL A   1       2.005   1.424   0.000  1.00  0.00           C
+ATOM      4  O   VAL A   1       1.422   2.323  -0.606  1.00  0.00           O
+ATOM      5  N   ASP A   2       3.127   1.621   0.684  1.00  0.00           N
+ATOM      6  CA  ASP A   2       3.754   2.935   0.764  1.00  0.00           C
+ATOM      7  C   ASP A   2       3.970   3.523  -0.626  1.00  0.00           C
+ATOM      8  O   ASP A   2       4.667   2.939  -1.456  1.00  0.00           O
+ATOM      9  N   ILE A   3       3.370   4.683  -0.873  1.00  0.00           N
+ATOM     10  CA  ILE A   3       3.496   5.351  -2.163  1.00  0.00           C
+ATOM     11  C   ILE A   3       3.666   6.856  -1.984  1.00  0.00           C
+ATOM     12  O   ILE A   3       2.695   7.577  -1.754  1.00  0.00           O
+ATOM     13  N   HIS A   4       4.905   7.324  -2.090  1.00  0.00           N
+ATOM     14  CA  HIS A   4       5.205   8.743  -1.940  1.00  0.00           C
+ATOM     15  C   HIS A   4       4.544   9.560  -3.045  1.00  0.00           C
+ATOM     16  O   HIS A   4       5.073   9.669  -4.151  1.00  0.00           O
+ATOM     17  N   VAL A   5       3.385  10.133  -2.737  1.00  0.00           N
+ATOM     18  CA  VAL A   5       2.650  10.942  -3.702  1.00  0.00           C
+ATOM     19  C   VAL A   5       3.287  12.318  -3.861  1.00  0.00           C
+ATOM     20  O   VAL A   5       3.368  13.089  -2.905  1.00  0.00           O
+ATOM     21  N   TRP A   6       3.738  12.620  -5.074  1.00  0.00           N
+ATOM     22  CA  TRP A   6       4.369  13.903  -5.360  1.00  0.00           C
+ATOM     23  C   TRP A   6       3.370  15.046  -5.219  1.00  0.00           C
+ATOM     24  O   TRP A   6       3.751  16.217  -5.203  1.00  0.00           O
+ATOM     25  N   ASP A   7       2.092  14.699  -5.118  1.00  0.00           N
+ATOM     26  CA  ASP A   7       1.036  15.695  -4.978  1.00  0.00           C
+ATOM     27  C   ASP A   7       0.878  16.507  -6.259  1.00  0.00           C
+ATOM     28  O   ASP A   7       0.685  17.722  -6.216  1.00  0.00           O
+ATOM     29  N   GLY A   8       0.961  15.827  -7.399  1.00  0.00           N
+ATOM     30  CA  GLY A   8       0.828  16.484  -8.694  1.00  0.00           C
+ATOM     31  C   GLY A   8      -0.502  17.224  -8.797  1.00  0.00           C
+ATOM     32  O   GLY A   8      -0.789  17.866  -9.807  1.00  0.00           O
+ATOM     33  N   VAL A   9      -1.308  17.131  -7.745  1.00  0.00           N
+ATOM     34  CA  VAL A   9      -2.608  17.792  -7.714  1.00  0.00           C
+ATOM     35  C   VAL A   9      -2.453  19.293  -7.496  1.00  0.00           C
+ATOM     36  O   VAL A   9      -1.557  19.736  -6.777  1.00  0.00           O
+TER
+END

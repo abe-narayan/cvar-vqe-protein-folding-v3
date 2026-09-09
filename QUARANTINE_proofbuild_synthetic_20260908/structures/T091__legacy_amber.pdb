@@ -1,0 +1,25 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_amber
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 13
+REMARK 999 PDB_ID 6OQP
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.700421
+REMARK 999 RMSD_CA_MEMORY 3.700466
+REMARK 999 SEQUENCE SKWICANRSVCPI
+REMARK 999 TARGET_ID T091
+ATOM      1  CA  SER A   1       4.250  -0.261  -5.199  1.00  0.00           C
+ATOM      2  CA  LYS A   2       4.342   0.042   3.335  1.00  0.00           C
+ATOM      3  CA  TRP A   3       6.095   1.589   2.503  1.00  0.00           C
+ATOM      4  CA  ILE A   4       8.612   4.772  -6.198  1.00  0.00           C
+ATOM      5  CA  CYS A   5       8.664   5.115  -6.448  1.00  0.00           C
+ATOM      6  CA  ALA A   6      13.120  10.631  -5.590  1.00  0.00           C
+ATOM      7  CA  ASN A   7      14.075  11.423  -6.033  1.00  0.00           C
+ATOM      8  CA  ARG A   8      19.281   9.671  -5.920  1.00  0.00           C
+ATOM      9  CA  SER A   9      20.667  15.249  -1.968  1.00  0.00           C
+ATOM     10  CA  VAL A  10      16.722   8.236  -1.896  1.00  0.00           C
+ATOM     11  CA  CYS A  11      15.870   5.673  -3.986  1.00  0.00           C
+ATOM     12  CA  PRO A  12      13.092   0.406  -0.997  1.00  0.00           C
+ATOM     13  CA  ILE A  13      14.069   3.761  -8.516  1.00  0.00           C
+TER
+END

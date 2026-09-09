@@ -1,0 +1,21 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 9
+REMARK 999 PDB_ID 8IS3
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.434204
+REMARK 999 RMSD_CA_MEMORY 2.434160
+REMARK 999 SEQUENCE FRFPFKFRR
+REMARK 999 TARGET_ID T113
+ATOM      1  CA  PHE A   1      -9.188  -2.393  -3.755  1.00  0.00           C
+ATOM      2  CA  ARG A   2      -5.580  -2.419  -3.155  1.00  0.00           C
+ATOM      3  CA  PHE A   3      -2.392  -2.503  -1.329  1.00  0.00           C
+ATOM      4  CA  PRO A   4      -1.081   2.017   1.434  1.00  0.00           C
+ATOM      5  CA  PHE A   5       1.519   0.156   4.901  1.00  0.00           C
+ATOM      6  CA  LYS A   6       3.620  -2.305   3.533  1.00  0.00           C
+ATOM      7  CA  PHE A   7       0.872  -2.835   9.408  1.00  0.00           C
+ATOM      8  CA  ARG A   8       3.710  -6.872   6.920  1.00  0.00           C
+ATOM      9  CA  ARG A   9       1.106  -5.307   7.167  1.00  0.00           C
+TER
+END

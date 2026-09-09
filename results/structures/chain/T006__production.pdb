@@ -1,0 +1,68 @@
+REMARK 999 BASIS built_chain_bb
+REMARK 999 BASIS_ROLE PRODUCTION RESULT
+REMARK 999 CA_BOND_MAX 3.8045683066545144
+REMARK 999 CA_BOND_MEAN 3.8039634013255825
+REMARK 999 CA_BOND_MIN 3.8034773563148767
+REMARK 999 CHAIN_LAM 0.300
+REMARK 999 CONFIGURATION production
+REMARK 999 FOLD 2
+REMARK 999 GIT_COMMIT a15406c82245
+REMARK 999 LENGTH 12
+REMARK 999 MODULE_SHA 90e160cc06020ac1
+REMARK 999 PDB_ID 1D0W
+REMARK 999 PROVENANCE genuine
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 1.641493
+REMARK 999 RMSD_CA_MEMORY 1.641677
+REMARK 999 SEQUENCE RHYKNLLERQRY
+REMARK 999 TARGET_ID T006
+ATOM      1  N   ARG A   1       0.000   0.000   0.000  1.00  0.00           N
+ATOM      2  CA  ARG A   1       1.458   0.000   0.000  1.00  0.00           C
+ATOM      3  C   ARG A   1       2.005   1.424   0.000  1.00  0.00           C
+ATOM      4  O   ARG A   1       1.532   2.280  -0.748  1.00  0.00           O
+ATOM      5  N   HIS A   2       3.002   1.669   0.843  1.00  0.00           N
+ATOM      6  CA  HIS A   2       3.614   2.989   0.942  1.00  0.00           C
+ATOM      7  C   HIS A   2       4.351   3.347  -0.344  1.00  0.00           C
+ATOM      8  O   HIS A   2       4.284   4.484  -0.813  1.00  0.00           O
+ATOM      9  N   TYR A   3       5.052   2.371  -0.911  1.00  0.00           N
+ATOM     10  CA  TYR A   3       5.802   2.582  -2.143  1.00  0.00           C
+ATOM     11  C   TYR A   3       4.865   2.884  -3.308  1.00  0.00           C
+ATOM     12  O   TYR A   3       5.168   3.720  -4.160  1.00  0.00           O
+ATOM     13  N   LYS A   4       3.727   2.199  -3.338  1.00  0.00           N
+ATOM     14  CA  LYS A   4       2.744   2.393  -4.398  1.00  0.00           C
+ATOM     15  C   LYS A   4       2.136   3.790  -4.330  1.00  0.00           C
+ATOM     16  O   LYS A   4       1.835   4.397  -5.358  1.00  0.00           O
+ATOM     17  N   ASN A   5       1.957   4.294  -3.114  1.00  0.00           N
+ATOM     18  CA  ASN A   5       1.385   5.619  -2.910  1.00  0.00           C
+ATOM     19  C   ASN A   5       2.364   6.708  -3.335  1.00  0.00           C
+ATOM     20  O   ASN A   5       1.962   7.750  -3.853  1.00  0.00           O
+ATOM     21  N   LEU A   6       3.651   6.460  -3.113  1.00  0.00           N
+ATOM     22  CA  LEU A   6       4.689   7.418  -3.473  1.00  0.00           C
+ATOM     23  C   LEU A   6       4.881   7.475  -4.984  1.00  0.00           C
+ATOM     24  O   LEU A   6       5.145   8.537  -5.547  1.00  0.00           O
+ATOM     25  N   LEU A   7       4.747   6.324  -5.636  1.00  0.00           N
+ATOM     26  CA  LEU A   7       4.905   6.240  -7.083  1.00  0.00           C
+ATOM     27  C   LEU A   7       3.738   6.911  -7.800  1.00  0.00           C
+ATOM     28  O   LEU A   7       3.911   7.511  -8.861  1.00  0.00           O
+ATOM     29  N   GLU A   8       2.550   6.805  -7.214  1.00  0.00           N
+ATOM     30  CA  GLU A   8       1.353   7.400  -7.795  1.00  0.00           C
+ATOM     31  C   GLU A   8       1.378   8.919  -7.661  1.00  0.00           C
+ATOM     32  O   GLU A   8       0.860   9.636  -8.518  1.00  0.00           O
+ATOM     33  N   ARG A   9       1.982   9.403  -6.581  1.00  0.00           N
+ATOM     34  CA  ARG A   9       2.076  10.837  -6.334  1.00  0.00           C
+ATOM     35  C   ARG A   9       3.147  11.475  -7.212  1.00  0.00           C
+ATOM     36  O   ARG A   9       3.060  12.654  -7.556  1.00  0.00           O
+ATOM     37  N   GLN A  10       4.156  10.688  -7.571  1.00  0.00           N
+ATOM     38  CA  GLN A  10       5.246  11.175  -8.409  1.00  0.00           C
+ATOM     39  C   GLN A  10       4.865  11.122  -9.885  1.00  0.00           C
+ATOM     40  O   GLN A  10       5.431  11.841 -10.708  1.00  0.00           O
+ATOM     41  N   ARG A  11       3.902  10.266 -10.212  1.00  0.00           N
+ATOM     42  CA  ARG A  11       3.444  10.119 -11.589  1.00  0.00           C
+ATOM     43  C   ARG A  11       2.133  10.865 -11.812  1.00  0.00           C
+ATOM     44  O   ARG A  11       1.380  10.555 -12.735  1.00  0.00           O
+ATOM     45  N   TYR A  12       1.866  11.850 -10.960  1.00  0.00           N
+ATOM     46  CA  TYR A  12       0.646  12.642 -11.062  1.00  0.00           C
+ATOM     47  C   TYR A  12       0.930  14.118 -10.805  1.00  0.00           C
+ATOM     48  O   TYR A  12       1.643  14.468  -9.864  1.00  0.00           O
+TER
+END

@@ -1,0 +1,27 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy
+REMARK 999 FOLD 2
+REMARK 999 LENGTH 15
+REMARK 999 PDB_ID 1KMR
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.031754
+REMARK 999 RMSD_CA_MEMORY 3.031756
+REMARK 999 SEQUENCE CRALIKRIQAMIPKG
+REMARK 999 TARGET_ID T018
+ATOM      1  CA  CYS A   1      -5.786  -7.386   1.033  1.00  0.00           C
+ATOM      2  CA  ARG A   2      -0.945  -5.061   4.469  1.00  0.00           C
+ATOM      3  CA  ALA A   3       1.543  -7.900   1.642  1.00  0.00           C
+ATOM      4  CA  LEU A   4       6.574  -4.148  -0.574  1.00  0.00           C
+ATOM      5  CA  ILE A   5       0.153  -3.604   0.056  1.00  0.00           C
+ATOM      6  CA  LYS A   6      -0.550   0.140   1.875  1.00  0.00           C
+ATOM      7  CA  ARG A   7       6.048  -0.963   1.656  1.00  0.00           C
+ATOM      8  CA  ILE A   8       4.394  -2.161  -3.441  1.00  0.00           C
+ATOM      9  CA  GLN A   9      -2.036   4.081  -0.418  1.00  0.00           C
+ATOM     10  CA  ALA A  10       1.057   1.969   4.122  1.00  0.00           C
+ATOM     11  CA  MET A  11       2.357   8.067  -5.445  1.00  0.00           C
+ATOM     12  CA  ILE A  12      -1.768   3.614  -4.388  1.00  0.00           C
+ATOM     13  CA  PRO A  13      -7.548   5.718  -0.846  1.00  0.00           C
+ATOM     14  CA  LYS A  14      -3.929  10.616   6.590  1.00  0.00           C
+ATOM     15  CA  GLY A  15      -5.411   5.327   2.839  1.00  0.00           C
+TER
+END

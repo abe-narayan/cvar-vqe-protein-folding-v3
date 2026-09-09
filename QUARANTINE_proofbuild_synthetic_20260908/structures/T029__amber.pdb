@@ -1,0 +1,24 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION amber
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 12
+REMARK 999 PDB_ID 1RSW
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 3.453172
+REMARK 999 RMSD_CA_MEMORY 3.453157
+REMARK 999 SEQUENCE DKNGDGEVSFEE
+REMARK 999 TARGET_ID T029
+ATOM      1  CA  ASP A   1      -2.203   4.236   1.460  1.00  0.00           C
+ATOM      2  CA  LYS A   2      -2.124  -2.772  -5.057  1.00  0.00           C
+ATOM      3  CA  ASN A   3      -1.953   3.622  -3.948  1.00  0.00           C
+ATOM      4  CA  GLY A   4      -2.105   4.788  -1.869  1.00  0.00           C
+ATOM      5  CA  ASP A   5      -1.431   1.376   1.764  1.00  0.00           C
+ATOM      6  CA  GLY A   6       4.987   1.679   0.564  1.00  0.00           C
+ATOM      7  CA  GLU A   7      -4.969   4.094  -5.080  1.00  0.00           C
+ATOM      8  CA  VAL A   8      -1.480  -1.398  -0.594  1.00  0.00           C
+ATOM      9  CA  SER A   9       3.961   1.673  -0.559  1.00  0.00           C
+ATOM     10  CA  PHE A  10      -3.054  -2.990   4.674  1.00  0.00           C
+ATOM     11  CA  GLU A  11      -5.898  -1.392  -0.116  1.00  0.00           C
+ATOM     12  CA  GLU A  12       0.298  -5.473   2.017  1.00  0.00           C
+TER
+END

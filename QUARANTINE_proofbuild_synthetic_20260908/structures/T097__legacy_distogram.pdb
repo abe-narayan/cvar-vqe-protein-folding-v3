@@ -1,0 +1,25 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION legacy_distogram
+REMARK 999 FOLD 0
+REMARK 999 LENGTH 13
+REMARK 999 PDB_ID 6TWG
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 2.001942
+REMARK 999 RMSD_CA_MEMORY 2.001911
+REMARK 999 SEQUENCE FLPKILRKIVRAL
+REMARK 999 TARGET_ID T097
+ATOM      1  CA  PHE A   1       0.906   0.108  -0.716  1.00  0.00           C
+ATOM      2  CA  LEU A   2       7.471  -0.775  -2.223  1.00  0.00           C
+ATOM      3  CA  PRO A   3       8.182   3.579  -4.130  1.00  0.00           C
+ATOM      4  CA  LYS A   4      10.978   0.720  -4.497  1.00  0.00           C
+ATOM      5  CA  ILE A   5       4.885  -1.533  -9.749  1.00  0.00           C
+ATOM      6  CA  LEU A   6       4.555   1.826  -5.029  1.00  0.00           C
+ATOM      7  CA  ARG A   7       8.194   5.088  -9.328  1.00  0.00           C
+ATOM      8  CA  LYS A   8       5.138   2.788 -12.163  1.00  0.00           C
+ATOM      9  CA  ILE A   9       2.314   2.504 -12.510  1.00  0.00           C
+ATOM     10  CA  VAL A  10       3.546   7.369 -11.027  1.00  0.00           C
+ATOM     11  CA  ARG A  11       8.173   9.630 -13.128  1.00  0.00           C
+ATOM     12  CA  ALA A  12       6.294   4.802 -19.142  1.00  0.00           C
+ATOM     13  CA  LEU A  13       3.008   6.958 -16.608  1.00  0.00           C
+TER
+END

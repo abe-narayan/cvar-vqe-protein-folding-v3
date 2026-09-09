@@ -1,0 +1,22 @@
+REMARK 999 BASIS point_cloud_ca
+REMARK 999 CONFIGURATION native
+REMARK 999 FOLD 4
+REMARK 999 LENGTH 10
+REMARK 999 PDB_ID 7VI4
+REMARK 999 REFERENT s8/generate_univ nat_ca
+REMARK 999 RMSD_CA 0.0000
+REMARK 999 SEQUENCE GYRVTGYETQ
+REMARK 999 SOURCE s12.instrument.load_univ
+REMARK 999 TARGET_ID T108
+ATOM      1  CA  GLY A   1      -4.975   3.472  -8.657  1.00  0.00           C
+ATOM      2  CA  TYR A   2      -1.971   4.757  -6.767  1.00  0.00           C
+ATOM      3  CA  ARG A   3       1.701   4.067  -5.961  1.00  0.00           C
+ATOM      4  CA  VAL A   4       3.580   4.387  -2.691  1.00  0.00           C
+ATOM      5  CA  THR A   5       7.115   3.853  -1.460  1.00  0.00           C
+ATOM      6  CA  GLY A   6       9.001   4.479   1.757  1.00  0.00           C
+ATOM      7  CA  TYR A   7      12.593   3.935   2.841  1.00  0.00           C
+ATOM      8  CA  GLU A   8      14.496   4.684   6.041  1.00  0.00           C
+ATOM      9  CA  THR A   9      17.907   4.015   7.504  1.00  0.00           C
+ATOM     10  CA  GLN A  10      19.252   4.836  10.824  1.00  0.00           C
+TER
+END
