@@ -139,13 +139,48 @@ def labels_s():
     return {r["pdb"]: r for r in z["rows"]}
 
 
+_PREP = {}
+_CHAIN = {}
+
+
+def prep(pdb):
+    """Per-target pool in shipped-score order, the native (ORACLE, read once) and the m=75 cloud."""
+    if pdb not in _PREP:
+        t = {x["pdb"]: x for x in I.targets()}[pdb]
+        u = I.load_univ(pdb); idx = I.pool_idx(u); dg = I.distogram(pdb)
+        W = np.asarray(u["W"][idx], float); i, j = I.pair_index(int(u["n"]))
+        sc = np.asarray(I.shipped_score(dg, I.pair_dists(W, i, j)), float)
+        o = np.argsort(sc, kind="stable")
+        _PREP[pdb] = {"W": W[o], "nat": np.asarray(u["nat_ca"], float), "seq": t["seq"], "fold": int(t["fold"]),
+                      "C75": None}
+        _PREP[pdb]["C75"] = cloud_m(pdb, 75)
+        del u
+    return _PREP[pdb]
+
+
+def cloud_m(pdb, m):
+    """The top-m (by the shipped score) average in the subset's own medoid frame (agg_surface's operator)."""
+    p = _PREP[pdb] if pdb in _PREP else prep(pdb)
+    top = p["W"][:m]
+    if m == 1:
+        return top[0]
+    P = I.pairwise_rmsd(top)
+    return I.superpose_batch(top, top[I.medoid(P)]).mean(0)
+
+
 def scale_endpoint(pdb, s):
-    """RMSD of the shipped cloud scaled by s about its centroid, in errdecomp's frame.  ORACLE read."""
-    u = I.load_univ(pdb); idx = I.pool_idx(u); rec = I.shipped_record(pdb)
-    top = np.asarray(u["W"][idx][np.asarray(rec["sub"], int)], float)
-    P = I.pairwise_rmsd(top); C = I.superpose_batch(top, top[I.medoid(P)]).mean(0)
-    nat = np.asarray(u["nat_ca"], float)
+    """RMSD of the shipped m=75 cloud scaled by s about its centroid (errdecomp's construction).  ORACLE read."""
+    p = prep(pdb); C = p["C75"]; nat = p["nat"]
     return float(I.ca_rmsd((C - C.mean(0)) * s, nat - nat.mean(0)))
+
+
+def chain_endpoint(pdb, m):
+    """Built chain of the top-m average through the production projection.  Cached per (pdb, m)."""
+    key = (pdb, int(m))
+    if key not in _CHAIN:
+        p = prep(pdb); pr = I.project(cloud_m(pdb, int(m)), p["seq"], p["fold"])
+        _CHAIN[key] = float(I.ca_rmsd(pr["ca"], p["nat"]))
+    return _CHAIN[key]
 
 
 def run(n_perm=N_PERM):
@@ -160,22 +195,36 @@ def run(n_perm=N_PERM):
     fixed = V[:, MS.index(75)]
     bok = ST.best_of_k_within(V, n_boot=300)
     out["m_oracle"] = {"gain": float((V.min(1) - fixed).mean()), "best_of_k_within": {k: v for k, v in bok.items() if k != "argmin_counts"}}
+    # anchors: this module's own m=75 cloud vs the persisted surface and errdecomp (same operator, re-derived)
+    for p in pdbs:
+        prep(p)
+    c75 = np.array([I.ca_rmsd(_PREP[p]["C75"], _PREP[p]["nat"]) for p in pdbs])
+    out["anchor"] = {"m75_cloud_vs_surface_maxabs": float(np.abs(c75 - fixed).max()),
+                     "m75_cloud_vs_errdecomp_rmsd1_maxabs": float(np.abs(c75 - rmsd1).max())}
+    print("anchor: rebuilt m=75 cloud vs agg_surface max abs %.2e ; vs errdecomp rmsd_1 %.2e" % (out["anchor"]["m75_cloud_vs_surface_maxabs"], out["anchor"]["m75_cloud_vs_errdecomp_rmsd1_maxabs"]))
+    chain75 = np.array([chain_endpoint(p, 75) for p in pdbs])
+    out["anchor"]["m75_chain_mean"] = float(chain75.mean())
+    print("anchor: rebuilt m=75 built chain mean %.4f (production rmsd_arm 3.2148)" % chain75.mean())
     for bname, cols in blocks(names).items():
         X = np.array([[r[k] for k in cols] for r in rows], float)
         r = route_m(X, V, folds, rng, n_perm)
         rep = {}
         for key in ("A", "B"):
-            cmp = ST.compare(r[key]["end"], fixed, folds, names=pdbs, label="C4 m-router %s [%s] routed - fixed m=75 (point cloud)" % (key, bname))
+            cmp = ST.compare(r[key]["end"], fixed, folds, names=pdbs, label="C4 m-router %s [%s] routed - fixed m=75 (POINT CLOUD, persisted surface)" % (key, bname))
             rep[key] = {"stats": cmp, "null_mean": float(r[key]["null"].mean()), "null_p05": float(np.percentile(r[key]["null"], 5)),
                         "p_perm": float((r[key]["null"] <= cmp["effect"]).mean()), "alphas": r[key]["alphas"],
                         "m_hist": {int(m): int((np.array(MS)[r[key]["m"]] == m).sum()) for m in MS}}
             print(ST.fmt(cmp)); print("    perm null mean %+.4f p05 %+.4f  p_perm %.3f" % (rep[key]["null_mean"], rep[key]["null_p05"], rep[key]["p_perm"]))
+            if bname in ("new_all", "old_S22"):
+                routed_chain = np.array([chain_endpoint(p, MS[int(mi)]) for p, mi in zip(pdbs, r[key]["m"])])
+                cmpc = ST.compare(routed_chain, chain75, folds, names=pdbs, label="C4 m-router %s [%s] routed - fixed m=75 (BUILT CHAIN, same projection both sides)" % (key, bname))
+                rep[key]["stats_chain"] = cmpc; print(ST.fmt(cmpc))
         out["m_router"][bname] = rep
         ps_, a_s = PS.nested_predict(X, s_star, folds, "reg")
         routed = np.array([scale_endpoint(p, float(ps_[k])) for k, p in enumerate(pdbs)])
         cmp = ST.compare(routed, rmsd1, folds, names=pdbs, label="C4 s-router [%s] routed - s=1 (point cloud)" % bname)
         null = []
-        for _ in range(min(n_perm, 50)):
+        for _ in range(min(n_perm, 100)):
             perm = rng.permutation(len(pdbs)); pp, _ = PS.nested_predict(X, s_star[perm], folds, "reg")
             null.append(float(np.mean([scale_endpoint(p, float(pp[k])) for k, p in enumerate(pdbs)]) - rmsd1.mean()))
         out["s_router"][bname] = {"stats": cmp, "rho_pred_vs_sstar": float(np.corrcoef(ps_, s_star)[0, 1]),
