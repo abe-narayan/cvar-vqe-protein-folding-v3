@@ -59,8 +59,16 @@ C8. The dynamical Lie algebra of the deployed ansatz is the FULL so(2^n) from de
     RY generators; the strings ADAPT selected) and are never compared as one quantity.
     `s26/results/q_dla.json`, `s26/results/q_dla_smoke_n456.json`; pre-registered
     prediction of a proper subalgebra at n = 7 falsified (`s26/PREREG_A2.md` addendum).
-C9. PENDING (A4): the grown circuits' variance beside the fixed ansatz at matched P.
-    `s26/results/q_var.json` (running).
+C9. ADAPT-grown circuits at matched P = 3n on the deployed spectrum: at alpha = 1 they are
+    product circuits (1 to 3 distinct operators, the rest consecutive repeats) with no decay
+    in n (log2 Var per qubit -0.079 / +0.006 at T = 0, +0.035 / -0.008 at T = 0.3, pools V /
+    L2) and variance 2 to 370 times the fixed ansatz's; at alpha = 0.25, T = 0.3 the L2-grown
+    circuit (4 to 21 distinct 2-local strings) decays at -0.302 against the fixed -0.243,
+    equal within the fit's error; at T = 0 with alpha < 1 growth stops at P = n (the collapse)
+    and the cell is degenerate. S25's n = 7 rows reproduce at relative deviation 0.0. A large
+    gradient from a product circuit is not trainability. `s26/results/q_var.json`
+    (matched-P rows only; the log's printed slopes include the early stops and are not the
+    quantity), `s26/PREREG_A4.md` addendum.
 C10. The optimiser trains and the readout cannot tell: beats best-of-200 untrained draws at
     every T, closes 78 to 89% of the free-energy gap, sits 0.902 nats and 45% of mass from its
     Gibbs optimum at the deployed T, and the endpoint difference is 0.24x MDE.
@@ -90,8 +98,8 @@ C12. New (S26): the deployed Gibbs target is a product state (E affine in the re
     F7  depth sweep at n = 7; `s25/results/q_plateau.json` (`depth_sweep_n7`)
     F8  dim(DLA) vs n for L = 1..6 against so(2^n), su(2^n), and the pools;
         `s26/results/q_dla.json` (PENDING)
-    F9  grown vs fixed slopes, side by side, with actual P per row;
-        `s26/results/q_var.json` (PENDING)
+    F9  grown vs fixed slopes per cell (matched-P rows), and the deployed cells' Var-vs-n
+        curves; `s26/results/q_var.json` -> `s26/figures/a4_variance_slopes.png`
     F10 the Gibbs ladder: F, KL, TV, entropy from random theta through 5/15/50 Adam steps to
         the optimum, three temperatures; `s25/results/q_gibbs.json`
     F11 the product-state structure of the deployed Gibbs target: KL(Gibbs || product) by

@@ -205,9 +205,69 @@ the circuit is simulable because n = 7 (S21 L4), not because of its structure.
 
 Pre-registered in `s26/PREREG_A3.md`.
 
-## 4. A4 -- gradient variance of grown circuits. RUNNING (`s26/jobs/a4_var.json` -> `s26/results/q_var.json`).
+## 4. A4 -- GRADIENT VARIANCE OF GROWN CIRCUITS. COMPLETE. DEMONSTRATED (property, no native).
 
-Pre-registered in `s26/PREREG_A4.md`.
+`s26/q_var.py` -> `s26/results/q_var.json`; `s26/jobs_done/a4_var.json`: 2,765 s, peak RSS
+0.08 GB. Pre-registered in `s26/PREREG_A4.md` (addendum records which predictions held).
+Figure `s26/figures/a4_variance_slopes.png`. Ledger L35.
+
+### 4.1 The gate: S25 reproduced exactly
+
+`s25.q_plateau.measure(7, 3, alpha, T, 250, seed=1007, init_sd=0.6)` returns the n = 7
+`var_g0` of every cell of `s25/results/q_plateau.json` at relative deviation 0.0 (bit-identical
+on all five cells).
+
+### 4.2 The side-by-side table (matched P = 3n rows only for the grown circuits)
+
+    fitted log2 Var[dF/dtheta_0] per qubit, n = 4..13, theta ~ N(0, 0.6^2), draws 250/250/250/250/200/120/80
+      cell                    fixed (S25)    grown V (rows)     grown L2 (rows)
+      alpha=1,    T=0         -0.649         -0.079 (7)         +0.006 (7)
+      alpha=0.25, T=0         -0.252         degenerate (0)     degenerate (0)
+      alpha=0.10, T=0         -0.047         degenerate (0)     degenerate (0)
+      alpha=1,    T=0.3       -0.311         +0.035 (5)         -0.008 (7)
+      alpha=0.25, T=0.3       -0.243         -0.246 (6)         -0.302 (7)
+    unmatched rows (eps stop before 3n): V alpha=1 T=0.3 at n = 12 (P 13), 13 (P 15);
+                                          V alpha=0.25 T=0.3 at n = 12 (P 13)
+    grown/fixed variance ratio at matched n: 1.63 at n = 4 (alpha=1, T=0.3, both pools),
+                                             2.5 to 370 on the other 31 matched rows
+
+The slopes printed at the end of `s26/logs/a4_var.log` include the early-stopped rows and
+differ from the table above for the two T = 0 cells (-0.733, +0.065 printed) and slightly for
+V at T = 0.3; the matched-only values are the pre-registered quantity.
+
+### 4.3 What the grown circuits are, which is the finding
+
+At alpha = 1 (T = 0 and T = 0.3) the grown circuits hold 1 to 3 distinct operators; the other
+12 to 25 selections are consecutive repeats of one single-qubit Y (`n_distinct_ops`,
+`consecutive_repeats` per row in the artefact). They are product circuits carrying the fixed
+ansatz's parameter count, so their gradient variance does not decay with n (slopes -0.08 to
++0.04) and is 2 to 370 times the fixed ansatz's. That is the trivial regime, and section 0.1
+says why: the target at alpha = 1 is a product state. At T = 0 with alpha < 1 growth stops at
+P = n on every width (the collapse; all gradients vanish at a basis state) and the variance
+is 0 to 2.4e-2: degenerate, as pre-registered. The one non-trivial family, alpha = 0.25,
+T = 0.3, pool L2, grows 4 to 21 distinct 2-local strings and decays at -0.302 per qubit
+against the fixed ansatz's -0.243, equal within the error of a 7-point slope fitted to
+variances with 9 to 16% relative SE; its variance is 4.1 to 20.7 times the fixed one's at
+matched n, with no trend. The L2 alpha = 1 curve is erratic in n (0.089, 0.102, 0.372, 0.092,
+0.410, 0.097, 0.086) because which operators are grown changes with n; that is a property of
+the grown family, not sampling error.
+
+### 4.4 Predictions, as measured
+
+    H4a  T = 0.3 grown slopes in [-0.3, 0]   3 of 4 inside; +0.035 (V, alpha=1) and -0.302 (L2,
+                                             alpha=0.25) outside by 0.035 and 0.002; the
+                                             falsifier (below -0.5) did not fire
+    H4b  grown/fixed ratio > 2 at every matched n   failed on 1 of 32 rows (n = 4, 1.63), held on 31
+    H4c  T = 0, alpha < 1 degenerate         P < 3n on 14 of 14 rows; "Var < 1e-3" failed on
+                                             3 of 7 rows at alpha = 0.25 (2.4e-2, 1.0e-3, 1.2e-3)
+    H4d  S25 n = 7 reproduced                exactly
+
+### 4.5 What it means for Proposal A
+
+A large gradient from a product circuit is not trainability (rule 10's mirror). The only grown
+family that is not a product circuit decays like the ansatz it would replace. A4 gives Proposal
+A no width-scaling argument, and the record's "no exponential plateau at n <= 13" keeps its
+scope: depth 3, this ansatz, this spectrum, with the algebra (A2) offering no protection.
 
 ---
 

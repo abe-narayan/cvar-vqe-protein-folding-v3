@@ -2,9 +2,9 @@
 
 This is the paper-outline form the campaign prompt requires if Proposal B is replaced. Lane P's
 `s26/PROPOSAL_B.md` carries the B1 to B3 evidence and points here. It is built from
-`s26/TRAINABILITY_PAPER_OUTLINE.md` with this sprint's A2 (measured) and A4 (pending; the row is
-marked and is filled from `s26/results/q_var.json` when it lands). Every figure is tied to an
-artefact path. Nothing here is a claim of advantage.
+`s26/TRAINABILITY_PAPER_OUTLINE.md` with this sprint's A2 and A4, both measured
+(`s26/results/q_dla.json`, `s26/results/q_var.json`; ledger L27, L35). Every figure is tied to
+an artefact path. Nothing here is a claim of advantage.
 
 ## 1. The replacement in one paragraph (what the presenter says)
 
@@ -16,10 +16,12 @@ conditioned away); the spectrum times the circuit's own gradient kernel predicts
 gradient variance to 0.4%. At the depth we use, the kernel is flat in Pauli weight, so the
 force field's locality is not what limits training; the circuit's width is. The circuit's
 Lie algebra is the whole real algebra from depth 2, so nothing algebraic protects it from a
-plateau at scale; what we observe at 4 to 13 qubits is the shallow regime. And the state the
-optimiser is asked to reach is a product state, which seven parameters represent exactly. The
-paper is about what a spectrum does and does not predict. It does not claim a quantum
-advantage and does not call a small gradient a barren plateau.
+plateau at scale; what we observe at 4 to 13 qubits is the shallow regime. The state the
+optimiser is asked to reach is a product state, which seven parameters represent exactly,
+and an adaptive ansatz grown on that target grows no entanglement: its gradients do not decay
+because there is nothing to train. The paper is about what a spectrum does and does not
+predict. It does not claim a quantum advantage, does not call a small gradient a barren
+plateau, and does not call a large gradient trainability.
 
 ## 2. Claims, each with scope and artefact
 
@@ -48,8 +50,14 @@ advantage and does not call a small gradient a barren plateau.
         so(2^(n-1)+1); 2-local odd-Y pool generates so(2^n);
         ADAPT sets abelian at alpha = 1, 1025 of 8128 at
         alpha = 0.25; symbolic == SVD rank (rtol 1e-10) 12/12
-    C9  PENDING (A4): grown vs fixed log2 Var per qubit at   s26/results/q_var.json
-        matched P; T = 0 grown cells degenerate (collapse)
+    C9  MEASURED THIS SPRINT (A4): ADAPT-grown circuits at   s26/results/q_var.json,
+        matched P = 3n are product circuits at alpha = 1     s26/PREREG_A4.md addendum
+        (no decay: -0.079 / +0.006 at T = 0, +0.035 / -0.008
+        at T = 0.3; variance 2 to 370x the fixed ansatz's);
+        the alpha = 0.25, T = 0.3 L2-grown circuit decays at
+        -0.302 vs fixed -0.243 (equal within error); T = 0
+        grown cells degenerate (collapse); S25's n = 7 rows
+        reproduced at relative deviation 0.0
     C10 the optimiser trains and the readout cannot tell:    s25/results/q_gibbs.json,
         78 to 89% of the gap closed; 0.902 nats and 45% of   s25/results/q_alpha.json,
         mass from the optimum; endpoint 0.24x MDE            s26/results/q_mde_reference.json
@@ -69,8 +77,8 @@ advantage and does not call a small gradient a barren plateau.
     F7  depth sweep at n = 7                                      s25/results/q_plateau.json
     F8  dim(DLA) vs n: fixed ansatz by depth, pools, ADAPT sets,  s26/results/q_dla.json  ->  s26/figures/a2_dla_dimension.png
         against so(2^n) and su(2^n)
-    F9  fitted log2 Var per qubit, fixed vs grown, per cell,     s26/results/q_var.json  ->  s26/figures/a4_variance_slopes.png
-        with the deployed cells' Var-vs-n curves                  (PENDING until A4 lands)
+    F9  fitted log2 Var per qubit, fixed vs grown, per cell      s26/results/q_var.json  ->  s26/figures/a4_variance_slopes.png
+        (matched-P rows), with the deployed cells' Var-vs-n curves
     F10 the Gibbs ladder (F, KL, TV, entropy along training)      s25/results/q_gibbs.json
     F11 KL(Gibbs || product) by energy variant                    s26/results/probe/1A13.json (one target; full table after A3)
     T1  set-equality cells                                        s25/results/q_verify.json
@@ -126,5 +134,7 @@ Zhang et al. (arXiv:2510.06413).
                                      2-design rate base 0.504 at depth 8, s13/results/geo_kernel.json
     "a product state, seven params"  KL(Gibbs || product) 7.2e-17 (ideal) / 5.4e-5 (1A13),
                                      s26/q_tests.py, s26/results/probe/1A13.json
+    "grown circuits do not decay"    slopes -0.079 / +0.006 / +0.035 / -0.008 at alpha = 1;
+                                     -0.302 vs -0.243 at alpha = 0.25, s26/results/q_var.json
     "clash spike, 99.6%"             top-10 share 0.996 median, s13/results/walsh_xval.json
     "0.902 nats, 45% of mass"        s25/results/q_gibbs.json; endpoint 0.24x MDE, s26/results/q_mde_reference.json

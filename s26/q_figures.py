@@ -139,10 +139,18 @@ def fig_a4(path_json=os.path.join(RES, "q_var.json"), out=os.path.join(FIG, "a4_
                label=f"ADAPT-grown, pool {pn} (P = 3n, matched rows only)")
     ax.axhline(-1.0, color="#d62728", ls="--", lw=1.2, label="2-design rate (S13 depth 8: base 0.504)")
     ax.axhline(0.0, color="0.7", lw=0.8)
+    # the degenerate cells: every grown row stopped at P = n (the collapse), no slope exists
+    for i, c in enumerate(cells):
+        degenerate = all(
+            not any(r.get("P_matched", True) for r in R["grown"][f"{pn}:adam_best:{c}"]["rows"])
+            for pn in pools if f"{pn}:adam_best:{c}" in R["grown"])
+        if degenerate and pools:
+            ax.text(x[i] + width * (len(pools) + 1) / 2, -0.06, "grown:\ndegenerate\n(stops at P = n)",
+                    ha="center", va="top", fontsize=6.8, color="0.3")
     ax.set_xticks(x + width * len(pools) / 2)
     ax.set_xticklabels([CELL_LABEL[c] for c in cells], rotation=18, ha="right", fontsize=8)
     ax.set_ylabel("fitted log2 Var[dF/dtheta_0] per qubit, n = 4..13")
-    ax.legend(fontsize=7.2, loc="lower left", frameon=True)
+    ax.legend(fontsize=7.2, loc="lower center", ncol=2, frameon=True)
     ax.grid(True, axis="y", color="0.9")
     # right: the deployed cells, Var vs n
     ax = axes[1]
@@ -162,14 +170,14 @@ def fig_a4(path_json=os.path.join(RES, "q_var.json"), out=os.path.join(FIG, "a4_
     ax.set_yscale("log")
     ax.set_xlabel("qubits n")
     ax.set_ylabel("Var[dF/dtheta_0] (exact parameter shift)")
-    ax.legend(fontsize=6.8, loc="lower left", frameon=True)
+    ax.legend(fontsize=6.8, loc="upper center", bbox_to_anchor=(0.5, -0.16), ncol=2, frameon=True)
     ax.grid(True, which="major", color="0.9")
     title = "A4: gradient variance vs width, fixed vs ADAPT-grown, theta ~ N(0, 0.6^2), same draws as S25"
     if partial or not J.get("results", {}).get("slopes"):
         title += "  [PARTIAL FILE]"
     fig.suptitle(title, fontsize=9)
     fig.tight_layout()
-    fig.savefig(out, dpi=DPI, facecolor="white")
+    fig.savefig(out, dpi=DPI, facecolor="white", bbox_inches="tight")
     plt.close(fig)
     return out
 

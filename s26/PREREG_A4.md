@@ -93,3 +93,15 @@ law for the grown circuit's parameters; it is the same N(0, 0.6^2) law S25 used 
 one, and the alternative (drawing only the grown angles and keeping the RY layer at its
 trained values) is NOT TAKEN because a barren-plateau statement is about random
 initialisation.
+
+## ADDENDUM (2026-09-13 09:40, after the run; the text above is unchanged)
+
+`s26/results/q_var.json` landed (2,765 s, peak RSS 0.08 GB, `s26/jobs_done/a4_var.json`).
+H4d held exactly (relative deviation 0.0 on all five n = 7 rows). H4a: matched-P grown slopes
+at T = 0.3 are +0.035 (V, 5 rows), -0.008 (L2, 7), -0.246 (V, 6), -0.302 (L2, 7); the
+falsifier (below -0.5) did not fire; two values sit just outside the predicted [-0.3, 0] by
+0.035 and 0.002. H4b failed on 1 of 32 matched rows (n = 4, alpha = 1, T = 0.3: ratio 1.63)
+and held on 31 (2.5 to 370). H4c: P < 3n held on 14 of 14 rows; "Var < 1e-3" failed on 3 of 7
+rows at alpha = 0.25, T = 0 (2.4e-2, 1.0e-3, 1.2e-3). The printed side-by-side slopes in
+`s26/logs/a4_var.log` include the early-stopped rows; the matched-only slopes above are the
+pre-registered quantity and are the ones in the ledger (L35) and the figure. Ledger entry L35.
