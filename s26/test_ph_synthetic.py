@@ -126,6 +126,37 @@ def test_random_displacement():
     assert real <= pred + 1e-9, (real, pred)
 
 
+def test_branch_logic():
+    from s26 import ph_branch as B
+    # warm wins ties and wins when no generic is strictly lower
+    assert B.production_index([1.0, 1.0, 1.2, 1.3, 1.4]) == 0
+    assert B.production_index([1.0, 0.9, 0.9, 1.3, 1.4]) == 1      # first strictly lowest generic
+    assert B.production_index([1.0, 1.1, 0.8, 0.8, 1.4]) == 2
+    assert B.energy_pick([5.0, 3.0, 3.0, 9.0, np.inf], [True, True, True, True, False], 0) == [1, 2]
+    assert B.energy_pick([5.0, 3.0], [False, False], 1) == [1]
+    ca = np.cumsum(np.ones((10, 3)), 0) * 2.0
+    assert B.distinct_count([ca, ca.copy(), ca + np.array([0.0, 0.0, 1.0]) * np.arange(10)[:, None]]) == 2
+
+
+def test_relief_logic():
+    from s26 import ph_relief as RL
+    assert RL.option_set(180.0) == [180.0, 60.0, 300.0]
+    assert RL.option_set(-60.0) == [-60.0, 60.0, 180.0]         # 300 == -60 mod 360, removed
+    seq = "MGKPFAW"
+    defaults = {0: 180.0, 2: 180.0, 4: 180.0, 6: 180.0}
+    table = {(): 10.0, ((0, 60.0),): 4.0, ((0, 60.0), (2, 300.0)): 2.0}
+
+    def efn(chi1):
+        key = tuple(sorted(chi1.items()))
+        return table.get(key, 10.0 - 0.1 * len(chi1) if key and all(v == 180.0 for _, v in key) else table.get(key, 50.0))
+
+    e, chi1, n_ev = RL.greedy_relief(efn, seq, defaults)
+    assert e <= 10.0 and chi1.get(0) == 60.0 and chi1.get(2) == 300.0, (e, chi1)
+    # never worse than raw, and residues without chi1 (G, A, P) are never touched
+    assert all(seq[i] not in RL.NO_CHI1 for i in chi1)
+    assert n_ev == 1 + 3 * 4
+
+
 def test_ca_helpers():
     ca = np.zeros((10, 3)); ca[:, 0] = np.arange(10) * 3.8
     assert L.ca_contacts(ca, 4.0) == 0 and L.min_sep3(ca) > 11.0

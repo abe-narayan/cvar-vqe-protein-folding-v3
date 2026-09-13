@@ -168,16 +168,23 @@ def retained_sets(pool: dict, T: float, n_draws: int = N_DRAWS) -> dict:
     rs = L.stable_rng(pdb, "rands", tkey(T))
     rr = L.stable_rng(pdb, "randr", tkey(T))
     rp = L.stable_rng(pdb, "perm", tkey(T))
-    out["RANDS"] = [random_shrink(sub, r, rs) for _ in range(n_draws)]
-    out["RANDR"] = [random_refill(order, sub, r, rr) for _ in range(n_draws)]
+    #: every control draw that comes back EMPTY (r = 75 for the shrink controls; a pool with no
+    #: survivor for PERMR) takes the same fallback as its matched arm: the anchor.  Counted.
+    def _fb(sets):
+        return [x if len(x) else sub.copy() for x in sets], int(sum(1 for x in sets if len(x) == 0))
+
+    out["RANDS"], out["RANDS_fallbacks"] = _fb([random_shrink(sub, r, rs) for _ in range(n_draws)])
+    out["RANDR"], out["RANDR_fallbacks"] = _fb([random_refill(order, sub, r, rr) for _ in range(n_draws)])
     perms, ps, pr = [], [], []
     for _ in range(n_draws):
         ep = permuted_energy(e, rp)
         s_ = reject_shrink(sub, ep, T)
         perms.append(int(len(sub) - len(s_)))
-        ps.append(s_ if len(s_) else sub.copy())
+        ps.append(s_)
         pr.append(reject_refill(order, ep, T))
-    out["PERMS"] = ps; out["PERMR"] = pr; out["perm_n_reject"] = perms
+    out["PERMS"], out["PERMS_fallbacks"] = _fb(ps)
+    out["PERMR"], out["PERMR_fallbacks"] = _fb(pr)
+    out["perm_n_reject"] = perms
     return out
 
 
@@ -504,25 +511,41 @@ def report() -> dict:
                                                  if a["n_reject"] > 0 and not a.get("R_empty"))),
                     "n_targets_S_moved": int(sum(1 for a in arms
                                                  if a["n_reject"] > 0 and not a.get("S_empty")))}
-            for arm in ("R", "S", "RANDS", "RANDR", "PERMS", "PERMR"):
-                if not all(arm in a for a in arms):
-                    continue
-                v = np.array([a[arm] for a in arms], float)
-                ok = np.isfinite(v)
-                c = ST.compare(v[ok], anchor[ok], folds[ok], names=[p for p, o in zip(pdbs, ok) if o],
-                               label=f"{basis} {arm}@{k} minus anchor (negative = arm better)")
-                print(ST.fmt(c))
-                resT[f"{arm}_vs_anchor"] = {q: c[q] for q in c if q != "concentration"}
-                resT[f"{arm}_vs_anchor"]["concentration"] = c["concentration"]
-            for arm, ctrl in (("S", "RANDS"), ("R", "RANDR"), ("S", "PERMS"), ("R", "PERMR")):
-                if not all(arm in a and ctrl in a for a in arms):
-                    continue
-                v = np.array([a[arm] for a in arms], float); w = np.array([a[ctrl] for a in arms], float)
-                ok = np.isfinite(v) & np.isfinite(w)
-                c = ST.compare(v[ok], w[ok], folds[ok], names=[p for p, o in zip(pdbs, ok) if o],
-                               label=f"{basis} {arm}@{k} minus {ctrl}@{k} (matched control)")
-                print(ST.fmt(c))
-                resT[f"{arm}_vs_{ctrl}"] = {q: c[q] for q in c}
+            #: PRIMARY: every target (an empty set fell back to the anchor, a tie of exactly 0).
+            #: DECLARED SECONDARY (coordinator, 2026-09-13 09:10): the same contrasts restricted to
+            #: the targets whose retained set actually moved (n_reject > 0 and no fallback), with
+            #: n reported.  The R family follows R's fallback flag, the S family follows S's.
+            moved = {"R": np.array([a["n_reject"] > 0 and not a.get("R_empty", False) for a in arms]),
+                     "S": np.array([a["n_reject"] > 0 and not a.get("S_empty", False) for a in arms])}
+            fam = {"R": "R", "RANDR": "R", "PERMR": "R", "S": "S", "RANDS": "S", "PERMS": "S"}
+            for subset_name, mask_of in (("all", lambda arm: np.ones(len(arms), bool)),
+                                         ("moved", lambda arm: moved[fam[arm]])):
+                for arm in ("R", "S", "RANDS", "RANDR", "PERMS", "PERMR"):
+                    if not all(arm in a for a in arms):
+                        continue
+                    v = np.array([a[arm] for a in arms], float)
+                    ok = np.isfinite(v) & mask_of(arm)
+                    if ok.sum() < 12:
+                        resT[f"{arm}_vs_anchor_{subset_name}"] = {"n": int(ok.sum()), "verdict": "too few targets"}
+                        continue
+                    c = ST.compare(v[ok], anchor[ok], folds[ok], names=[p for p, o in zip(pdbs, ok) if o],
+                                   label=f"{basis} [{subset_name}, n={int(ok.sum())}] {arm}@{k} minus anchor "
+                                         f"(negative = arm better)")
+                    print(ST.fmt(c))
+                    resT[f"{arm}_vs_anchor_{subset_name}"] = {q: c[q] for q in c}
+                for arm, ctrl in (("S", "RANDS"), ("R", "RANDR"), ("S", "PERMS"), ("R", "PERMR")):
+                    if not all(arm in a and ctrl in a for a in arms):
+                        continue
+                    v = np.array([a[arm] for a in arms], float); w = np.array([a[ctrl] for a in arms], float)
+                    ok = np.isfinite(v) & np.isfinite(w) & mask_of(arm)
+                    if ok.sum() < 12:
+                        resT[f"{arm}_vs_{ctrl}_{subset_name}"] = {"n": int(ok.sum()), "verdict": "too few targets"}
+                        continue
+                    c = ST.compare(v[ok], w[ok], folds[ok], names=[p for p, o in zip(pdbs, ok) if o],
+                                   label=f"{basis} [{subset_name}, n={int(ok.sum())}] {arm}@{k} minus {ctrl}@{k} "
+                                         f"(matched control)")
+                    print(ST.fmt(c))
+                    resT[f"{arm}_vs_{ctrl}_{subset_name}"] = {q: c[q] for q in c}
             res[k] = resT
         # the threshold sweep is an order statistic
         for arm in ("R", "S"):

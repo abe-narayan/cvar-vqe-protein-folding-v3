@@ -163,7 +163,22 @@ side-chain clashes", and `s26/IDEA_rotamer_relief.md` part B is the test of the 
 version. Part A of that idea (more than half of the catastrophes side-chain-involving) is
 satisfied.
 
-### 2.3 What the endpoint will measure (gated, ready)
+### 2.3 How the endpoint will be read, stated before any number exists
+
+The primary reading of "does a steric reject help" comes from arm R (reject and refill to
+m = 75): it is the deployable operator, it keeps the averaging mechanism at its production width,
+and it cannot empty a set unless the whole 500-candidate pool has no survivor, which happens on
+8 targets at 1e4 (20 at 1e3, 1 at 1e5, 0 at 1e6; census, L23). Those targets fall back to the
+anchor, exactly as registered, and count as a tie of 0. Arm S (reject, no refill) is the second
+reading and it empties 11 sets at 1e4, also to the anchor. Every contrast is then reported
+twice: PRIMARY on all 126 (fallbacks included as ties), and as a DECLARED SECONDARY restricted
+to the targets whose retained set actually moved (n_reject > 0 and no fallback; at 1e4 that is
+116 for R and 113 for S), with n printed beside the MDE. The secondary is a subset chosen by a
+native-free property of the operator, not by outcome, and it is not the result; it exists so a
+null on all 126 cannot be blamed on the ties. Both were fixed by the coordinator on 2026-09-13
+09:10, before `cloud` or `chain` ran.
+
+### 2.4 What the endpoint will measure (gated, ready)
 
 `python s26/ph_reject.py cloud` (~5 min): point-cloud RMSD of every arm, every threshold, 16
 draws. `python s26/ph_reject.py chain` (~3 h CPU, per-target cells under

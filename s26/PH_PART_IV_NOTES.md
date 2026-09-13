@@ -1,8 +1,13 @@
 # PART IV NOTES -- THE PHYSICS, FOR A READER WHO KNOWS NO PROTEIN PHYSICS (lane PH, S26)
 
-For the report writer (lane E). Plain sentences, every number with its artefact path. Two pages.
-Basis is stated at every RMSD: point cloud (`rmsd_avg`, 3.0483 A), built chain (`rmsd_arm`,
-3.2148 A, the production result), relaxed chain (`rmsd_full`, 3.2355 A).
+For the report writer (lane E). Plain sentences, every number with its artefact path. Two pages
+plus a table of the numbers (section 8). Basis is stated at every RMSD: point cloud (`rmsd_avg`,
+3.0483 A), built chain (`rmsd_arm`, 3.2148 A, the production result), relaxed chain
+(`rmsd_full`, 3.2355 A). Checked on 2026-09-13 09:30 against the six Part IV items of the
+campaign prompt (Legacy's eleven terms; AMBER through OpenMM and H = E o Relax50; the two
+compactness signs; worse than a random subset; the steric singularity; the non-monotone
+standardisation trap): sections 1 to 6 in that order, with the S13 Walsh numbers and the S26
+side-chain finding (ledger L23) in section 5.
 
 ## 1. What the two "physics" scores are
 
@@ -63,9 +68,19 @@ peptide sits at -1170 to -500). Measured: 58.6% of every pool is above 1e4 kcal/
 span 15.3 decades; 97.0% of a pool lands inside |z| < 0.1 of a moment z-score; the ten worst
 candidates carry 99.66% of the variance (`s25/results/phys_landscape.json`,
 `AMB_frac_absz_lt_0p1`, `AMB_decades`, `AMB_top10_var_share`). In the Pauli basis the same fact
-reads: 99.6% of raw AMBER's Walsh variance sits on ten configurations out of 4,096
-(`s13/results/walsh_xval.json`, `concentration`, amber median top-10 share 0.996), which makes its
-spectrum a delta spike, Binomial(m, 1/2) exactly, and says nothing about the physics. In the
+reads: over the 25 fully enumerated AMBER tables of S13, the ten most extreme configurations out
+of 4,096 carry a median 99.56% of raw AMBER's Walsh variance (range 60.7% to 99.98%; the single
+worst configuration alone a median 46.5%), against a median 26.6% for Legacy over 41 tables
+(`s13/results/walsh_xval.json`, `concentration`, `var_share_top10` and `var_share_top1` by
+`model`). A function that is a constant plus one spike has a Pauli-weight spectrum of exactly
+Binomial(m, 1/2), so the spike makes raw AMBER look maximally non-local for arithmetic reasons
+that say nothing about the physics (`s13/walsh_FINDINGS.md`, headline correction). And the spike
+is one term: in the same enumerations the non-bonded term (Lennard-Jones plus Coulomb) owns the
+whole variance, covariance share 1.000 on every cell, while bond and angle terms have variance
+0.0 and torsion and solvation have variances of order 3 and 900 (kcal/mol)^2 against the
+non-bonded term's 7e30 to 2e31 (`s13/results/walsh_amber.json`, `exact[*].terms`;
+`s13/walsh_FINDINGS.md` section 3.1). Remove that one term and AMBER's spectrum falls below
+Legacy's on 6 of 6 targets (section 3.2 there). In the
 torsion-space Hessian the same fact reads: 7.45% of AMBER's modes carry all of its curvature
 (participation ratio 0.0745 against Legacy's 0.4221, 30W/0L; anisotropy 18.8 against 5.8,
 0W/30L; condition number three orders larger; `s20/results/c_land_report.txt` section 1). And
@@ -108,7 +123,24 @@ that step does to accuracy against a random move of the same size is C3 (`s26/C3
 after the gate); on the record so far the step costs +0.0207 A [+0.0143, +0.0276] and S16 found a
 random displacement of matched size at least as accurate (`s16/LEDGER.md` L27).
 
-## 8. The sentence for the presenter
+## 8. The numbers for the speaker notes, one line each
+
+    Legacy weights: steric 4.0, contact 1.0, hbond_local 1.0, hbond_longrange 3.0, coop_helix 2.0, coop_sheet 2.0, solvation 0.5, electrostatic 1.0, aromatic 0.8, torsion 0.15, compactness 0.4     core/energy.py DEFAULT_WEIGHTS
+    Legacy top-75 Rg vs pool -0.758 A (SE 0.023); rho(Legacy, Rg) +0.60; AMBER +1.103 A (SE 0.042); rho(AMBER, Rg) -0.27                    s25/results/phys_landscape.json summary
+    rho(Legacy, AMBER) -0.090 (SE 0.018); rho(AMBER, distogram) -0.019, CI includes zero                                                       s25/results/phys_landscape.json summary
+    selector suite, point cloud: Distogram 3.058, AMBER+Dist 3.132, Legacy+Dist 3.215, all three 3.253, random-75 3.425, Legacy+AMBER 3.674, Legacy 3.755, AMBER 3.881   s25/results/phys_suite.json configs_rank, random_null_rank
+    Legacy +0.330 A (1.99x MDE) and AMBER +0.455 A (2.42x MDE) worse than a random 75-subset, 5/5 folds                                       s25/agentPHYS_FINDINGS.md section 1.4
+    pool above 1e4 kcal/mol 58.6%; 15.3 decades; ten candidates carry 99.66% of the variance                                                 s25/results/phys_landscape.json summary
+    Walsh: ten configurations carry a median 99.56% of raw AMBER's variance (25 tables); Legacy 26.6% (41 tables)                            s13/results/walsh_xval.json concentration
+    Hessian: participation ratio 0.0745 vs 0.4221 (30W/0L); anisotropy 18.8 vs 5.8 (0W/30L)                                                   s20/results/c_land_report.txt section 1
+    AMBER minimisation damage: +0.620 A of which +0.444 is the size of the move (72%)                                                          s20/results/c_land_null.json
+    unrelaxed AMBER finite on 112/192 lattice states, 186/192 after 50 restrained steps                                                        s20/LEDGER.md L6
+    moment z-score breaks AMBER's own ordering on 40/126 targets; tie blocks up to 462/500; rho(pool index, ORACLE RMSD) +0.054                s25/agentPHYS_FINDINGS.md section 3; s25/results/phys_suite.json normalisation_fork
+    top-75 rebuilds with a heavy-atom pair < 2.0 A: 40.7/75 all-atom, 2.6/75 backbone+CB; 96.8% of members above 1e4 have a side-chain closest contact; rho(e, min heavy) -0.74   s26/results/ph_reject_census.json singularity (L23)
+    production relaxation: moves 0.220 A RMS; 58.7% of built chains above 1e4 before; 125/126 converge; virtual bond 3.804 -> 3.867 A; broken on 2BP4 (5.38) and 9KAR (4.86)   s26/results/ph_c3_nativefree.json (L24)
+    production relaxation accuracy cost +0.0207 A [+0.0143, +0.0276] on the built chain; S16: a matched random displacement at least as accurate    docs/STATE_BRIEF_2026-09-12.md section 4; s16/LEDGER.md L27
+
+## 9. The sentence for the presenter
 
 The two physics scores are real, they disagree with each other about what a good peptide looks
 like (one likes compact, one likes spread out), and on this pool both are worse than choosing at
