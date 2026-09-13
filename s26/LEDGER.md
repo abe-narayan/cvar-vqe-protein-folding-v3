@@ -1011,3 +1011,17 @@ What it means, in the record's own terms. A large gradient from a product circui
 trainability; it is the trivial regime (rule 10's mirror: never call a large gradient a
 merit). The one non-trivial grown family (alpha = 0.25, L2) decays like the fixed ansatz it
 would replace. A4 gives Proposal A no width-scaling argument.
+## L36 -- jobrun v2.1: THE LAUNCH CAP IS RE-CHECKED AFTER A JITTER; SIX JOBS HAD LAUNCHED AGAINST A CAP OF FOUR (2026-09-13, coordinator)
+
+`s26/governor_state.json` at 09:28:11 showed six registered jobs (p_train_conly, two W census
+passes, a1_build_s0 and s1, p_eval_shipped) against jobrun's cap of four: when A4 finished,
+three waiting jobrun processes read the same 5 s snapshot with three jobs and all launched.
+The governor's band held (smoothed CPU 85.7%, RAM 76.9%; a1_build_s0 suspended as the newest
+job, resumed when CPU fell), so nothing was lost, but the cap was not a cap. `s26/jobrun.py`
+now counts live registrations in `s26/jobs/` directly instead of the snapshot, sleeps a random
+0.2 to 3 s after passing the gate and re-checks the count before registering. Waiters started
+before this edit run the old code until they launch; new waiters use v2.1. No production module
+touched; `s26/governor.py` unchanged.
+
+---
+

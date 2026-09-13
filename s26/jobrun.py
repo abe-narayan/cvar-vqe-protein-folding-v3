@@ -59,6 +59,19 @@ def _running_amber() -> int:
     return n
 
 
+def _live_registrations() -> int:
+    """Registered jobs whose pid is alive, read from s26/jobs/ directly."""
+    n = 0
+    for f in JOBS.glob("*.json"):
+        try:
+            j = json.loads(f.read_text(encoding="utf-8"))
+            if psutil.pid_exists(int(j["pid"])):
+                n += 1
+        except Exception:
+            pass
+    return n
+
+
 def _tree_rss(p: psutil.Process) -> int:
     tot = 0
     try:
@@ -101,16 +114,24 @@ def main() -> int:
 
     # Wait for headroom and, for AMBER, for a slot.
     waited = 0.0
+    import random
     while True:
         st = _state()
         stale = (time.time() - st["epoch"]) > 60 if st else True
         ram = st["ram_pct"] if st else 0.0
         cpu = st.get("cpu_smooth", st["cpu_pct"]) if st else 0.0
-        n_reg = int(st.get("n_jobs", 0)) if st else 0
+        #: the registration count is read from s26/jobs/ directly (fresher than the governor's
+        #: 5 s snapshot); v2.1: several waiters saw one freed slot at once and six jobs launched
+        #: against a cap of four (2026-09-13 09:27), so the pass is re-checked after a jitter.
+        n_reg = _live_registrations()
         amber_block = tag == "AMBER" and _running_amber() >= MAX_AMBER
         crowded = (not stale) and (ram > CEILING or cpu > CPU_START or n_reg >= MAX_CONCURRENT)
         if not crowded and not amber_block:
-            break
+            time.sleep(random.uniform(0.2, 3.0))
+            if _live_registrations() < MAX_CONCURRENT and not (
+                    tag == "AMBER" and _running_amber() >= MAX_AMBER):
+                break
+            continue
         if waited == 0.0 or waited % 60.0 == 0.0:
             why = ("AMBER slot" if amber_block else
                    f"box at ram {ram:.1f}% cpu(15s) {cpu:.1f}% jobs {n_reg}/{MAX_CONCURRENT}")
