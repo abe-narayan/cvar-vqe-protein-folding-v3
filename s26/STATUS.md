@@ -24,8 +24,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 00:12 next: finish reading core/energy, core/amber, the 24 root modules, s5/s7/s8/s9, tests, verify, resultslab; then write EXAMINATION.md sections A-H.
 - 2026-09-13 08:42 running: resumed after the 00:46 session cut; scripts and artefacts committed; reading ledger L6-L16b and the PREREG files; assembling EXAMINATION.md (A-H), then BRIEF.md and agentE_FINDINGS.md.
 - 2026-09-13 08:42 next: ledger entry for the unsourced claims and the incident notes; commit the three deliverables; two-line summary for the coordinator.
-- 2026-09-13 09:40 running: report writer role; s26/REPORT.md Parts I-III committed; drafting IV (from PH_PART_IV_NOTES), V (from s25/QUANTUM.md, q_* artefacts, L27), VI (sprint story), IX, Appendix A.
-- 2026-09-13 09:40 next: commit each part as it lands; append a dated addendum to EXAMINATION.md for the updated test totals (370/357/13); answer any Adversary finding within the hour.
+- 2026-09-13 09:26 running: report writer; s26/REPORT.md Parts I to VI, IX, Appendix A and the B rows committed part by part (stub commit 5aaea13c was a path error, content followed in 3312996a); addenda for L31 to L34 applied (C26 artefact, Phase 0 signed off).
+- 2026-09-13 09:26 next: fill Part VII / VIII / Appendix C slots and the Part V S26 additions as verdicts land from L33 on; keep the hourly STATUS; the 09:40 stamp on the previous pair was a clock error, the lines were written about 09:15.
 ## I (Infrastructure / Governor)
 
 - 2026-09-13 00:13 running: read contract/brief/code; job pytest_core (non-AMBER suite, tag TEST, est 2.5 GB) launched under the governor at ~00:11; brief committed unchanged.
@@ -43,6 +43,10 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 
 - 2026-09-13 09:25 running: A4 (s26/q_var.py, job a4_var) grown-circuit sweep in progress; A2 complete (s26/results/q_dla.json, ledger L27: full so(2^n) from depth 2 at n=7, my H2b falsified). PREREG_A1-A4, three IDEA files, TRAINABILITY_PAPER_OUTLINE.md, agentQ_FINDINGS.md on disk and committed (05f39d2f).
 - 2026-09-13 09:25 next: A4 results into the findings and a ledger entry; A1/A3 builds and labels wait for PHASE 0 SIGNED OFF (harness ready, --label self-gated).
+- 2026-09-13 09:35 running: gate open (L33); A1 launched as two governed shards (a1_build_s0/s1, est-ram 0.4, threads 1, per-target checkpoints s26/results/a1/); A3 chained to start when both A1 shards finish (s26/q_chain_a3.py); A4 (a4_var) on its last cell.
+- 2026-09-13 09:35 next: A2 figure (s26/figures/), PROPOSAL_B_REPLACEMENT.md drafted; A4 findings + figure when it lands; A1 label/stats, ledger entries with ST.fmt, replications, PROPOSAL_A.md.
+- 2026-09-13 09:45 running: A1 shards a1_build_s0/s1 (63 targets each) building under the governor; A3 chained behind them. A4 complete (s26/results/q_var.json, ledger L35, figure s26/figures/a4_variance_slopes.png).
+- 2026-09-13 09:45 next: findings section 4 and outline C9/F9 from A4; then A1 label + stats + ledger (ST.fmt verbatim) when the shards finish; PROPOSAL_A.md.
 ## P (Prior / Learning lane)
 - 2026-09-13 00:20 running: read LANE_CONTRACT, state brief, S24 ledger (all), S25/S23/S22/S17/S19 sections, S7/S8/S9/S10 findings, S12 dossier+agg, core/predict, data, distogram, esm_features, pairnet, s7/repr_select, priorladder, instrument, stats_lib, errdecomp; probes p_probe_esm (CPU, 1.0 GB) then p_probe_esmcache (ESM, 2.5 GB) launched under jobrun.
 - 2026-09-13 00:20 next: write PREREG_C1..C5, PREREG_B1..B3, three IDEA files, s26/p_ladder.py + synthetic unit test, C2 one-fold training-time probe, B1 feasibility json, agentP_FINDINGS.md; no endpoint runs before sign-off.
@@ -52,6 +56,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 08:45 next: C1 closure write-up; B3/C4/C5 code with synthetic tests; agentP_FINDINGS sections; ledger entry for the launch (re-reading the tail first); commit; hourly STATUS.
 - 2026-09-13 09:25 running: C2 training chain (p_train_noesm in progress, then conly, pca32, wide, pca32f, pca128, esm8m, raw; one governor job at a time; ~6-10 h). Committed 19ca2ea3: C1 write-up, p_stats/p_b3/p_c4/p_deliver, features cached, IDEA_amber_prior_partner, PREREG_C2/C3 addenda; ledger L26.
 - 2026-09-13 09:25 next: turn ends once p_c5 selftest is green and committed; after "PHASE 0 SIGNED OFF": eval shipped then each rung as its checkpoints complete, B3/C4/C5 runs, PROPOSAL_C/B/B_REPLACEMENT, p_deliver for the best rung (ledger + finish turn for PH).
+- 2026-09-13 09:26 running: PHASE 0 SIGNED OFF (L33). Training chain: noesm done (5 folds, 29 min, 0.63 GB), conly training. Eval chain launched (s26/p_eval_chain.sh): shipped anchor -> noesm -> B3 run -> conly -> pca32 -> mix -> pairnet -> C4 -> C5 -> wide/pca32f/pca128/esm8m/raw as checkpoints appear; one lane-P job beside the training job.
+- 2026-09-13 09:26 next: ledger entry per rung with ST.fmt verbatim (s26/p_rung_report.py); PROPOSAL_B.md after B3; p_deliver for the best rung; PROPOSAL_C.md when PH's C3_RESULT.md exists.
 
 ## A (Adversary)
 - 2026-09-13 09:15 running: nothing. Done: `s26/EXAMINATION_AUDIT.md` and ledger L31 (reproduction exact on HEAD; one MATERIAL: the 369/356 test count in EXAMINATION D / C35 / L28 against the artefact's 370/357; C26 re-derived from `s13/cache/tors_rows.npz`; C27 in git history at 5fa05cd).
@@ -62,6 +68,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 08:41 next: READY TO LAUNCH the minute PHASE 0 SIGNED OFF lands: `ph_cis.py floor` (1 min), `ph_c3.py stage1` (2 min), `ph_reject.py cloud` (5 min) then `ph_reject.py chain` (CPU, ~3 h, per-target cells); C3 stage 2 when P delivers (AMBER, probe first). Awaiting tournament ranking for IDEA_branch_select / rotamer_relief part B.
 - 2026-09-13 09:35 running: nothing (gate closed). Done since 08:41: PREREG_branch_select.md + ph_branch.py and PREREG_rotamer_relief.md + ph_relief.py (probe modes, per-target cells, 7/7 synthetic tests pass); reject report gains the moved-subset secondary and the empty-draw fallback; findings section 2.3 states the R-first reading; Part IV notes checked against the six prompt items, Walsh numbers and L23 added, speaker-notes table (section 8).
 - 2026-09-13 09:35 next: on sign-off: floor, C3 stage 1, reject cloud then chain (as above). If ranked: `jobrun --tag AMBER --name ph_branch_probe --est-ram 1.0 -- python s26/ph_branch.py probe --pdb 1A13` after `ph_branch.py solutions` (CPU, 10 min); `jobrun --tag AMBER --name ph_relief_probe --est-ram 0.8 -- python s26/ph_relief.py probe --pdb 1A13 --m 5`. C3 stage 2 on s26/results/p_best_rung_chains.json when P delivers.
+- 2026-09-13 09:21 running: gate open (L33, gate_open() True). ph_cis_floor and ph_c3_stage1 launched 09:20 under jobrun, HELD at the 4/4 job cap (box 73.9% RAM, cpu 75-93%); they start when a slot frees. Then ph_reject cloud, then chain (~3 h, cells).
+- 2026-09-13 09:21 next: ledger entries with ST.fmt verbatim per result; C3_RESULT.md after stage 1; answer Adversary checks on L22-L24 in the ledger.
 
 ## PR (Presentation lane) -- not yet spawned
 

@@ -962,3 +962,52 @@ the phase gate string in this heading is the one the lanes' code checks.
 
 ---
 
+## L34 -- ADVERSARY RE-CHECK OF L32: THE ADDENDA STAND; THE L33 SIGN-OFF IS NOT VETOED (2026-09-13, A)
+
+Re-read at commit `195cf93e`: the appended addenda in `s26/EXAMINATION.md` (after section I) and `s26/agentE_FINDINGS.md` (after the unsourced list) both state 370 tests, 357 passed, 0 failed, 0 errors, 13 skipped, 0 memory-guard skips with the artefact paths (`s26/results/test_run.json :: combined`, `pytest_core_post.xml` 351/338/13, `pytest_amber.xml` 16/16, `pytest_amber_frame.xml` 3/3), and L32 item 1 matches them; the original lines are left as written. L31 item A1: STANDS as fixed. No veto.
+
+---
+
+## L35 -- LANE Q, A4: ADAPT-GROWN CIRCUITS ON THE DEPLOYED HAMILTONIAN ARE PRODUCT CIRCUITS AT alpha = 1 (NO DECAY, NOTHING TO TRAIN) AND DECAY LIKE THE FIXED ANSATZ AT alpha = 0.25; THE S25 n = 7 ROWS REPRODUCE EXACTLY (2026-09-13, lane Q)
+
+`s26/q_var.py` -> `s26/results/q_var.json` (complete); `s26/jobs_done/a4_var.json`: 2,765 s,
+peak RSS 0.08 GB. Pre-registered in `s26/PREREG_A4.md` before the run. Property measurement:
+energies are the deployed SHAPE (standardised ranks 1..2^n), no target, no native. Figure:
+`s26/figures/a4_variance_slopes.png` (190 dpi, white), from the JSON.
+
+Gate: `s25.q_plateau.measure(7, 3, alpha, T, 250, seed=1007)` reproduces the n = 7 row of
+all five cells of `s25/results/q_plateau.json` at relative deviation 0.0 (bit-identical).
+
+    fitted log2 Var[dF/dtheta_0] per qubit, n = 4..13, theta ~ N(0, 0.6^2), same draws as S25
+    (grown: rows with P = 3n only, count in brackets; growth by Adam best-iterate, 50 steps,
+     eps 1e-3, pool V = Tang 2n-2, pool L2 = 2-local odd-Y)
+      cell                    fixed (S25)   grown V          grown L2
+      alpha=1,    T=0         -0.649        -0.079 (7)       +0.006 (7)
+      alpha=0.25, T=0         -0.252        degenerate (0)   degenerate (0)
+      alpha=0.10, T=0         -0.047        degenerate (0)   degenerate (0)
+      alpha=1,    T=0.3       -0.311        +0.035 (5)       -0.008 (7)
+      alpha=0.25, T=0.3       -0.243        -0.246 (6)       -0.302 (7)
+    grown/fixed variance ratio at matched n: 1.63 (n = 4, alpha=1 T=0.3, both pools) and
+    2.5 to 370 everywhere else (31 of 32 matched rows above 2).
+
+What the grown circuits are. At alpha = 1 (T = 0 or 0.3) they hold 1 to 3 DISTINCT operators;
+the other 12 to 25 selections are consecutive repeats of the same single-qubit Y (a repeated
+rotation merges with the previous one): they are product circuits with the parameter count
+of the fixed ansatz, which is why their variance does not decay with n. At alpha = 0.25,
+T = 0.3, pool L2 grows 4 to 21 distinct 2-local strings and its decay, -0.302 per qubit, is
+the fixed ansatz's -0.243 within the sampling error of a 7-point slope (relative SE of a
+variance 9 to 16%). At T = 0 with alpha < 1 growth stops at P = n on every width (the
+collapse; all first-order gradients vanish at a basis state, the lemma in s26/q_adapt.py) and
+the variance is 0 to 2.4e-2; those cells are degenerate by construction, as pre-registered.
+
+Predictions (PREREG_A4): H4a (T = 0.3 grown slopes in [-0.3, 0]) held for three of four
+(V alpha=1 +0.035 and L2 alpha=0.25 -0.302 sit just outside by 0.035 and 0.002, inside the
+error of the fit); the falsifier (below -0.5) did not fire. H4b (ratio > 2 at every matched
+n) failed on 1 of 32 rows (n = 4, 1.63) and held on 31. H4c held on P < 3n (14 of 14) and
+failed on "Var < 1e-3" for 3 of 7 rows at alpha = 0.25 (max 2.4e-2 at n = 4). H4d held
+exactly. All four recorded as measured, none softened.
+
+What it means, in the record's own terms. A large gradient from a product circuit is not
+trainability; it is the trivial regime (rule 10's mirror: never call a large gradient a
+merit). The one non-trivial grown family (alpha = 0.25, L2) decays like the fixed ansatz it
+would replace. A4 gives Proposal A no width-scaling argument.
