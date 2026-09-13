@@ -471,7 +471,13 @@ logs, the comparison), `s26/results/run_equiv2_compare.json`, `verify/e2_*.log` 
 Not run: the AMBER-inclusive form; stage 4 is downstream of the projection the script compares.
 
 ---
-## L18 -- GOVERNOR v2: SMOOTHED CPU, RAM-ONLY KILLS, 20 s MINIMUM SUSPENSION, LAUNCH CAP OF 4 (2026-09-13, coordinator)
+## L18b -- GOVERNOR v2: SMOOTHED CPU, RAM-ONLY KILLS, 20 s MINIMUM SUSPENSION, LAUNCH CAP OF 4 (2026-09-13, coordinator)
+
+(Numbered L18b: lane I's L18 landed first; the governor.log RESTART line says "ledger L18" and means this
+entry. Lane I's L18 records that the benchmark counts in L15 came from `core.data.benchmark()` sequences
+only, with no coordinate, native or RMSD read; the coordinator logs that as the conservative path:
+membership and sequence through the project's own helper is allowed for counting, and nothing further
+is computed on benchmark targets in S26.)
 
 `s26/governor.log` 00:37:01 to 00:38:51: with five governed jobs registered the raw CPU sample
 crossed 93% and fell under 90% on alternate 5 s ticks (SAMPLE lines 00:37:41 cpu 98.7%, 00:38:41
