@@ -1,29 +1,29 @@
 # SPRINT 26, LANE I (INFRASTRUCTURE / GOVERNOR): FINDINGS
 
-Status: Phase 3 items done; every number below has an artefact path. Branch `s26`, commits
-`6e50ea93` (brief as received), `eb89c165`, `37bddbbb`, `601a39c7` and the brief edit
-`[PENDING: commit]`. Ledger entries L6, L7 (+ correction L9), L8, L10, L15, L16, and
-`[PENDING: L for item 2, item 5, the test run]`.
+Status: Phase 3 complete. Every number below has an artefact path. Branch `s26`. Lane-I commits:
+`6e50ea93` (the brief as received), `eb89c165`, `37bddbbb`, `601a39c7`, `83305549` (the brief's
+6.1), `52d15a2e` (the test record), and the closing commit that carries this file. Ledger entries
+(lane I): L6, L7 with its correction L9, L8, L10, L15, L16, L18, L19, L20, L21.
 
 Tiers: DEMONSTRATED (measured, artefact on disk) / ORACLE DIAGNOSTIC (reads native-derived
 quantities, never selects) / HYPOTHESIS / REFUTED / OPEN.
 
 ---
 
-## 0. The answers the brief asked for, in one table
+## 0. CLOSURE TABLE
 
-| item | disposition | where |
-|---|---|---|
-| 1. test suite under the governor | DEMONSTRATED: 369 tests, 356 passed, 0 failed, 0 errors, 13 skipped (0 memory-guard) over three jobs; final non-AMBER re-run on the committed tree `[PENDING: counts]` | `s26/TEST_RUN.md`, `s26/results/test_run.json`, `s26/results/pytest_*.xml`, `s26/jobs_done/pytest_*.json` |
-| 2. `verify/run_equiv2.sh` stale | CLOSED: rewritten to drive `Config.project_grad` through `s26/i_run_equiv2_arm.py`; four arms of smoke8 run with `--no-amber`; `[PENDING: result]` | `verify/run_equiv2.sh`, `s26/results/run_equiv2.log`, `s26/results/run_equiv2_compare.json` |
-| 3. six held unused imports | CLOSED: all six applied, AST diff = exactly the removed names, tests green | commit `37bddbbb`, L10, `s26/i_ast_check.py` |
-| 4. `_archive/logs/s8/predictor_report.log` | CLOSED: excerpt tracked with sha256 and size; the number is the S8-13 transfer law | `docs/sources/s8_predictor_report_excerpt.md`, L6 |
-| 5. `TEST_RUN_RESULT_PLACEHOLDER` | CLOSED: brief committed unchanged (`6e50ea93`), then section 6.1 replaced with the governor run `[PENDING: commit]` | `docs/STATE_BRIEF_2026-09-12.md` |
-| 6a. identity leak | flag ships dark; audit in memory; folds untouched (sha256-verified); the "corrected" criterion is at the null as a clustering threshold; the minimal fix moves exactly the 4 declared dev self-copies (+1 transitive) and 2/60 benchmark sequences | commit `37bddbbb`, `s26/i_identity_audit.py`, `s26/results/i_identity_audit.json`, `s26/PREREG_identity_null.md`, L15 |
-| 6b. AMBER memory guard | message names the ceiling and quotes the governor; shared with the frame-invariance file; unit test; both AMBER files green under the governor | commit `eb89c165`, L16 |
-| 6c. `pool_gate = WARN` | 1D6X and 1KWE; mechanism confirmed from the production cache; explanation added to the leaderboard text and the rule string; takes effect on rebuild | commit `eb89c165`, L7 + L9 |
-| 6d. moment standardisation | production uses `core.pipeline._zrank`; every moment z-score is research-only or not on an AMBER energy | L8 |
-| 7. hygiene | README governor section; `s26/examine.py` + `examine.sh`/`.bat`; claim ledger 21/21 OK; STATUS kept | commit `eb89c165`, `s26/results/claim_check.json` |
+| item | disposition | commit | artefacts | ledger |
+|---|---|---|---|---|
+| 1. test suite under the governor | DONE. 370 tests, 357 passed, 13 skipped (0 memory-guard), 0 failed, 0 errors, three jobs, peak RSS 1.692 / 0.872 / 0.324 GB | `52d15a2e` (record); tree tested `601a39c7` | `s26/TEST_RUN.md`, `s26/results/test_run.json`, `s26/results/pytest_{core,core_post,amber,amber_frame,nanpoison_post_core_edit}.xml`, `s26/jobs_done/pytest_*.json`, `s26/logs/pytest_*.log` | L16, L20 |
+| 2. `verify/run_equiv2.sh` stale | CLOSED. Repaired to set `Config.project_grad`; run with `--no-amber`; four distinct cfg_keys; baseline and the shipped `exact` mode bit-identical on 8/8 targets | `eb89c165` (script + driver); `52d15a2e` (transcript) | `verify/run_equiv2.sh`, `s26/i_run_equiv2_arm.py`, `s26/i_equiv2_compare.py`, `s26/results/run_equiv2.log`, `s26/results/run_equiv2_compare.json`, `s26/jobs_done/run_equiv2.json` | L19 |
+| 3. six held unused imports | CLOSED. All six applied; AST diff = exactly the removed names; tests green after | `37bddbbb` | `s26/i_ast_check.py`, `s26/jobs_done/pytest_nanpoison_post_core_edit.json`, `pytest_amber.json`, `pytest_core_post.json` | L10 |
+| 4. `_archive/logs/s8/predictor_report.log` | CLOSED. The S8-13 transfer law is its only-source number; excerpt tracked with sha256 and size | `eb89c165` | `docs/sources/s8_predictor_report_excerpt.md` | L6 |
+| 5. `TEST_RUN_RESULT_PLACEHOLDER` | CLOSED. Brief committed unchanged, then 6.1 replaced with the governed run | `6e50ea93`, then `83305549` | `docs/STATE_BRIEF_2026-09-12.md` section 6.1 | L20 |
+| 6a. identity leak | DONE, ships dark. `identity(..., norm=)` flag, default bit-identical; in-memory audit; pinned files sha256-unchanged; the brief's criterion is at the null as a clustering threshold; the minimal fix moves exactly the 4 declared dev self-copies (+1 transitive) and 2/60 benchmark sequences | `37bddbbb` (flag + test), `601a39c7` (audit) | `core/data.py`, `tests/test_data.py`, `s26/i_identity_audit.py`, `s26/results/i_identity_audit.json`, `s26/PREREG_identity_null.md`, `s26/jobs_done/i_identity_audit3.json` | L15, L18 |
+| 6b. AMBER memory guard | DONE. Skip/fail text names the 92% ceiling and quotes the governor; fixture shared with the frame-invariance file; unit test; both files green | `eb89c165` | `tests/test_amber.py`, `tests/test_amber_frame_invariance.py`, `s26/results/pytest_amber.xml`, `pytest_amber_frame.xml` | L16 |
+| 6c. `pool_gate = WARN` | DONE. 1D6X and 1KWE; mechanism confirmed from the production cache; one explanatory line in the leaderboard text and the persisted rule string; takes effect on the next build, `results/` not rebuilt | `eb89c165` | `s25/resultslab/schema.py`, `s26/logs/precheck_fmt_leaderboard.log` | L7, L9 |
+| 6d. moment standardisation | DONE. Production uses `core.pipeline._zrank`; every moment z-score is research-only or not on an AMBER energy; table per path | none (analysis) | L8 (the table) | L8 |
+| 7. hygiene | DONE. README governor section; `python s26/examine.py` (+ `examine.sh` / `examine.bat`) = module map + pinned-hash drift + claim ledger; STATUS lines at 00:13, 00:42, 08:40, 08:4x | `eb89c165`, closing commit | `README.md`, `s26/examine.py`, `s26/i_claim_check.py`, `s26/results/claims.json`, `s26/results/claim_check.json`, `s26/logs/i_examine_full.log` | L21 |
 
 ---
 
@@ -32,46 +32,63 @@ quantities, never selects) / HYPOTHESIS / REFUTED / OPEN.
 Every job ran through `s26/jobrun.py` (registered with the governor, stdout in
 `s26/logs/<job>.log`, exit / wall / peak RSS in `s26/jobs_done/<job>.json`), never more than
 one AMBER job from this lane at a time, and every launch was preceded by a read of
-`s26/governor_state.json` (box 64.6 to 74.6% RAM throughout; never above 88% at a launch).
+`s26/governor_state.json` (box 64.6 to 74.6% RAM during the lane's jobs; never above 88% at a
+launch; the governor never suspended or killed anything of mine, `s26/governor.log`).
 
-| job | files | tree | tests | passed | skipped | failed/err | wall | peak RSS |
-|---|---|---|---|---:|---:|---:|---:|---:|
-| `pytest_core` | the 10 non-AMBER files | `a4db170c` (before any lane-I edit) | 350 | 337 | 13 | 0 | 195.3 s | 1.694 GB |
-| `pytest_amber` | `tests/test_amber.py` | `37bddbbb` | 16 | 16 | 0 | 0 | 260.5 s | 0.872 GB |
-| `pytest_amber_frame` | `tests/test_amber_frame_invariance.py` | `37bddbbb` | 3 | 3 | 0 | 0 | 255.7 s | 0.324 GB |
-| `pytest_nanpoison_post_core_edit` (not in the total) | `test_pipeline.py` + `test_data.py` on the edited core | `37bddbbb` | 79 | 77 | 2 | 0 | 225.5 s | 1.566 GB |
-| `pytest_core_post` (replaces `pytest_core` in the final total) | the 10 non-AMBER files | `601a39c7` | `[PENDING]` | | | | | |
+| job | files | tree | tests | passed | skipped | failed/err | wall | peak RSS | in total |
+|---|---|---|---|---:|---:|---:|---:|---:|---|
+| `pytest_core` | the 10 non-AMBER files | `a4db170c`, before any lane-I edit | 350 | 337 | 13 | 0 | 195.3 s | 1.694 GB | superseded |
+| `pytest_amber` | `tests/test_amber.py` | `37bddbbb` | 16 | 16 | 0 | 0 | 260.5 s | 0.872 GB | yes |
+| `pytest_amber_frame` | `tests/test_amber_frame_invariance.py` | `37bddbbb` | 3 | 3 | 0 | 0 | 255.7 s | 0.324 GB | yes |
+| `pytest_nanpoison_post_core_edit` | `test_pipeline.py` + `test_data.py` on the edited core | `37bddbbb` | 79 | 77 | 2 | 0 | 225.5 s | 1.566 GB | no (re-run of counted files) |
+| `pytest_core_post` | the 10 non-AMBER files | `601a39c7` | 351 | 338 | 13 | 0 | 240.4 s | 1.692 GB | yes |
 
-Per-file counts are in `s26/TEST_RUN.md`. The 13 skips, all real and none from the memory
-guard (`-rs` reasons, verbatim in `s26/TEST_RUN.md`): 3 in `test_equivalence.py` and 8 in
-`test_integration.py` are `set VERIFY_SLOW=1 ...` (the full-pipeline / OpenMM arms are opt-in);
-2 in `test_pipeline.py` are absent artefacts (`bench_results/optimised_tuning126_w6.json`, "no
-smoke result on disk"). The memory guard did not fire in any job, so no re-run was needed.
+**Suite total on the committed tree: 370 tests, 357 passed, 13 skipped, 0 failed, 0 errors,
+0 memory-guard skips.** Per-file counts are in `s26/TEST_RUN.md`. The 13 skips are real and
+none is from the memory guard (`-rs` reasons verbatim in `s26/TEST_RUN.md`): 3 in
+`test_equivalence.py` and 8 in `test_integration.py` are `set VERIFY_SLOW=1 ...` opt-ins (the
+full-pipeline / OpenMM arms); 2 in `test_pipeline.py` are absent artefacts
+(`bench_results/optimised_tuning126_w6.json`; "no smoke result on disk"). The memory guard did
+not fire in any job, so no re-run was needed. The suite is 370 rather than 368 because S26
+added one test to `test_amber.py` (the 6b message) and one to `test_data.py` (the 6a flag).
 
 The previous record (state brief 6.1, "355 passed, 13 skipped") was one number for one
-process; this one is per file, per job, with the peak RSS the governor measured, and one test
-more (the 6b message test). The test count went 368 -> 369 (+1 in `test_amber.py`) and the
-`test_data.py` count 41 -> 42 (+1 identity-flag test), so the whole suite is 370 with the
-final non-AMBER re-run `[PENDING: confirm 370 = 351 + 16 + 3]`.
+process; the S26 record is per file, per job, with the peak RSS the governor measured, and the
+same files were run before and after the production-path edits with an identical skip list.
 
-## 2. `verify/run_equiv2.sh` (operational item 2). `[PENDING: verdict]`
+## 2. `verify/run_equiv2.sh` (operational item 2). DEMONSTRATED, L19.
 
 Why it was stale: it exported `PROJECT_GRAD` into the environment, which `core/project.py`
 stopped reading when the gradient mode moved into `core.pipeline.Config.project_grad` so that it
-reaches the cache key (`verify/grad_key_collision.py` documents the collision: two modes, one
-`cfg_key`, the second run served the first's arrays). The `core.pipeline` CLI has no flag for the
-mode, so as written the script ran three arms in the same mode.
+reaches the cache key (`verify/grad_key_collision.py`: two modes, one `cfg_key`, the second run
+served the first's arrays). The `core.pipeline` CLI has no flag for the mode, so as written the
+script ran three arms in the same mode.
 
-The repair: `s26/i_run_equiv2_arm.py` builds the identical `Config` to `python -m core.pipeline
+Repair: `s26/i_run_equiv2_arm.py` builds the identical `Config` to `python -m core.pipeline
 run` (the same `replace(PROD, ...)` call) and sets `project_grad`; the script runs four arms
 (baseline legacy; consolidated `exact`, the shipped default; `fd`; `analytic`), keeps the
 original `cfg_key` grep, and passes any argument (here `--no-amber`) to every arm.
-`s26/i_equiv2_compare.py` then compares the arms per target from their cache directories
-(`ca`, `fit_ca`, `phi`, `psi`, `avg_ca`, and the scalar RMSDs) with `==`.
+`s26/i_equiv2_compare.py` compares the arms per target from their cache directories with `==`.
 
 Run: job `run_equiv2`, tag AMBER (conservative: with `--no-amber` no OpenMM context is created,
-and the driver prints whether `openmm` was even imported), `[PENDING: wall, peak RSS]`.
-Result `[PENDING]`. Log: `s26/results/run_equiv2.log` (whitelisted in `.gitignore`).
+but the driver's diagnostic shows `openmm` is still imported because `core.pipeline` resolves
+the amber backend at start), exit 0, 145.3 s, peak RSS 0.596 GB. Per arm on smoke8: baseline
+67.4 s, exact 33.0 s, fd 20.2 s, analytic 8.8 s.
+
+| arm | cfg_key | against `opt_exact`, 8 targets |
+|---|---|---|
+| `baseline_legacy` | `65ec272db3d31f05` | `ca`, `fit_ca`, `phi`, `psi`, `avg_ca`, `rmsd_avg`, `rmsd_fit`, `rmsd_arm`, `n_windows`, `n_top`: bit-identical 8/8 |
+| `opt_exact` | `66050f6daae4ca07` | the shipped default |
+| `opt_fd` | `85faafd84d76a827` | `avg_ca`, `rmsd_avg` identical; `rmsd_fit` differs 8/8, max 6.9e-4 A; `rmsd_arm` max 1.2e-2 A |
+| `opt_analytic` | `f4e137a48586bd4b` | `avg_ca`, `rmsd_avg` identical; `rmsd_fit` max 1.0e-1 A; `rmsd_arm` max 4.8e-2 A, 8/8 |
+
+Four distinct keys, so the collision is closed; baseline against the shipped mode bit-identical
+on every array and scalar, so the consolidation is faithful; `fd` and `analytic` differ by the
+builder and the gradient as `core/project.py` states. Raw coordinate max|d| between modes (22 to
+32 A) and phi/psi differences near 2 pi are lab-frame and wrap differences of un-superposed
+chains, not the science. Transcript: `s26/results/run_equiv2.log` (whitelisted in `.gitignore`);
+comparison: `s26/results/run_equiv2_compare.json`. Not run: the AMBER-inclusive form; stage 4
+is downstream of the projection the script compares.
 
 ## 3. THE SIX HELD UNUSED IMPORTS (operational item 3). CLOSED, L10.
 
@@ -92,37 +109,42 @@ number with no other source: `selected = 1.009 * ref + 0.011` (r = 0.981, 2,520 
 92; a search for `1.009 * ref` over every json/md/py/txt/log file finds only FINDINGS and the
 log. Two gaps found on the way: S8-13's second regression (`1.019 * ref - 0.001`, r = 0.984) is
 in no on-disk file at all, and S8-13's X_fit positive-phi 0.0551 does not match the converged
-row in the log (0.0629). Only the excerpt is tracked.
+row in the log (0.0629). Only the excerpt is tracked; `python s26/examine.py` checks the
+transfer law as claim `s8_13_transfer_law` with the excerpt as fallback.
 
-## 5. THE BRIEF'S SECTION 6.1 (operational item 5). `[PENDING: commit]`
+## 5. THE BRIEF'S SECTION 6.1 (operational item 5). CLOSED, L20.
 
 `docs/STATE_BRIEF_2026-09-12.md` was committed exactly as received (`6e50ea93`, so history holds
-the "355 passed, 13 skipped" sentence), then the sentence was replaced with the governor run
-(per file, skip reasons, peak RSS, date, commit) in a second commit `[PENDING: hash]`.
+the "355 passed, 13 skipped" sentence), then the live-run paragraph was replaced with the
+governed run (totals, three jobs with peak RSS, passed count per file, the skip reasons, the
+pointer to `s26/TEST_RUN.md` / `s26/results/test_run.json`, and the pre-edit baseline beside it)
+in commit `83305549`.
 
 ## 6. THE DECLARED DEFECTS
 
-### 6a. Identity leak. Flag ships dark; folds pinned; the brief's criterion is AT THE NULL. L15.
+### 6a. Identity leak. Flag ships dark; folds pinned; the brief's criterion is AT THE NULL. L15, L18.
 
 Code (`37bddbbb`): `core.data.identity(..., norm="longer")` / `identity_many(..., norm=)`;
 default statement-for-statement the pinned convention; `norm="shorter"` = match count over the
-shorter sequence behind a verbatim-substring test; `clusters()` / `folds()` do not accept it.
-Test in `tests/test_data.py` (default bit-identical; 1CEK-in-1A11 = 1.0 under the flag; scalar
-and batched agree on both sides of `_BATCH_MIN`).
+shorter sequence behind a verbatim-substring test; `clusters()` / `folds()` do not accept it;
+nothing on the production path passes it. Test in `tests/test_data.py` (default bit-identical;
+1CEK-in-1A11 = 1.0 under the flag; scalar and batched agree on both sides of `_BATCH_MIN`).
 
 Audit (`s26/i_identity_audit.py`, in memory; `peptide_folds.json` / `peptide_clusters.json`
-sha256 before == after == lane E's `pinned_hashes.json`; 0.056 GB, job `i_identity_audit3`):
+sha256 before == after == lane E's `pinned_hashes.json`; job `i_identity_audit3`, 180.6 s,
+0.056 GB; `s26/results/i_identity_audit.json`):
 
 - DEMONSTRATED: the in-memory copy of `core.data.clusters` reproduces the pinned clusters
   (470) and the pinned folds exactly.
 - DEMONSTRATED: the brief's corrected criterion at 0.6 collapses 470 clusters to 166, touches
-  594/787 sequences, 71/126 dev targets and 48/60 benchmark sequences (count only).
+  594/787 sequences, 71/126 dev targets and 48/60 benchmark sequences (count only; how the
+  benchmark sequences were obtained is L18).
 - DEMONSTRATED (pre-registered, `s26/PREREG_identity_null.md`): that is chance. A real dev
   sequence passes the shorter criterion against 0.5% of the other 786 members; a
-  composition-preserving shuffle passes against 0.3% (ratio 0.62; falsifier was < 0.2). At
-  mean degree ~3 on chance edges, single linkage percolates. The pinned longer criterion:
-  0.07% real vs 0.001% shuffled. So the flag is a per-pair leak test, not a clustering
-  threshold, and its docstring says so.
+  composition-preserving shuffle passes against 0.3% (ratio 0.62; the falsifier was < 0.2). At
+  mean degree ~3 on chance edges, single linkage percolates. The pinned longer criterion: 0.07%
+  real vs 0.001% shuffled. So the flag is a per-pair leak test, not a clustering threshold, and
+  its docstring says so.
 - DEMONSTRATED: the minimal fix (pinned criterion OR verbatim substring): 459 clusters, 23
   sequences change membership (20 verbatim containments + 3 carried by single linkage), and
   the dev targets that gain a cross-fold mate are exactly the 4 declared self-copies (1CEK
@@ -169,34 +191,38 @@ the optional `legacy` term, `w_legacy = 0`, not instantiated by `core.pipeline`)
 `core/quantum.py:2126 build_distogram(models="both")` (distogram scores; generation lane). None
 applies a moment to an AMBER energy on a production path.
 
-## 7. HYGIENE. DEMONSTRATED.
+## 7. HYGIENE. DEMONSTRATED, L21.
 
 README section "The S26 resource governor" (band 88/90/93/95, AMBER cap 2, tags, log and state
-paths, the split test run). `s26/examine.py` = `make examine`: calls lane E's `e_module_map`
-(module map) and `s26/i_claim_check.py` (21 claims in `s26/results/claims.json`, each re-read
-from its artefact: 21/21 OK, `s26/results/claim_check.json`; `--search` also runs lane E's
-`e_claims.py`). `examine.sh` / `examine.bat` at the root (no conflict; no Makefile exists).
-`s26/i_ast_check.py` makes the AST-identity rule runnable. STATUS lines at 00:13 and 00:42.
+paths, how to start it, the split test run). `python s26/examine.py` = `make examine` (no
+Makefile, no `make` on this box; `examine.sh` / `examine.bat` at the root, no conflict): lane
+E's `e_module_map` (module map), lane E's `e_hashes --check` (pinned-hash drift), lane I's
+`i_claim_check` (claim ledger), `--search` for lane E's `e_claims`. Full run at 08:41 (job
+`i_examine_full`, 15 s, 0.299 GB, `s26/logs/i_examine_full.log`): 725 modules mapped, backend
+reports default and legacy as in the README, **no drift across 101 pinned entries** (the
+benchmark manifest matches the S20 record), **21/21 claims OK** (`s26/results/claim_check.json`).
+`s26/i_ast_check.py` makes the contract's AST-identity rule runnable; `s26/i_test_report.py`
+turns junit XML plus `jobs_done` into the test record. STATUS lines at 00:13, 00:42, 08:40, 08:4x.
 
 ## 8. WHAT I DID NOT DO, AND WHY
 
 - Did not re-derive folds or clusters, did not call `core.data.clusters()` / `folds()` or their
   `peptide_db` twins from the audit, did not write `peptide_folds.json` / `peptide_clusters.json`
-  (hashes verified before and after). The fix ships dark.
-- Did not add the `norm` flag to `peptide_db.identity`: the legacy arm must stay pure
-  (`tests/test_amber.py::test_budget_classes_have_exactly_one_definition` states the rule for
-  `budget.py`; the same reasoning holds), and `tests/test_data.py` pins `core.data.identity ==
-  peptide_db.identity` on the default path.
+  (hashes verified before and after, and again by `examine.py` at 08:41). The fix ships dark.
+- Did not add the `norm` flag to `peptide_db.identity`: the legacy arm must stay pure, and
+  `tests/test_data.py` pins `core.data.identity == peptide_db.identity` on the default path.
 - Did not rebuild `results/`; the 6c text change is dormant until the next frozen build.
 - Did not run `verify/run_equiv2.sh` with AMBER: `--no-amber` leaves the projection comparison
-  intact and keeps OpenMM out; the script supports both and says so.
-- Did not read `results/benchmark_manifest.json`, any benchmark PDB or any benchmark RMSD. The
-  benchmark counts came from `core.backend("data").benchmark()` sequences only; no benchmark
-  name was printed; non-dev database members are described by length only in the audit output.
-- Did not regenerate `s26/results/module_map.json` until the end `[PENDING: state whether done]`,
-  because lane E was reading its own artefact for EXAMINATION.md.
+  intact; the script supports both and says so.
+- Did not open `results/benchmark_manifest.json` directly, any benchmark PDB, native or RMSD.
+  The benchmark counts came from `core.backend("data").benchmark()` sequences only, which is the
+  route the brief named and which itself parses the manifest for its ids (stated plainly in
+  L18); no benchmark name was printed; non-dev database members appear by length only. Nothing
+  further will be computed on benchmark targets by this lane.
 - Did not add a claim for the benchmark headline (+0.0103, CI [-0.160, +0.180]) to
   `claims.json`: I did not find its results artefact and would not invent a path.
+- Did not add a Makefile: no `make` on this box; the two launchers and `s26/examine.py` are
+  the target.
 
 ## 9. WHAT DAMAGED MY OWN EXPECTATIONS
 
@@ -213,10 +239,13 @@ from its artefact: 21/21 OK, `s26/results/claim_check.json`; `--search` also run
    to be a verbatim containment itself; 3 of 23 are carried along by single linkage. The
    falsifier should have been written on the edges, not on the nodes.
 4. **8ZG2 looked like a fifth self-copy for one turn.** It is a transitive case (its carrier is
-   in its own fold). The audit's first pass listed it; only the per-target verbatim breakdown
-   in the third pass separated direct from transitive.
+   in its own fold). Only the per-target verbatim breakdown in the third audit pass separated
+   direct from transitive.
 5. **The frame-invariance file ran in 255.7 s at 0.324 GB peak.** S25 L14 recorded it as the
-   test most likely to hit the ceiling; on a 65% box with the governor's budget it is not close.
+   test most likely to hit the ceiling; on a 65% box under the governor's budget it is not close.
+6. **`--no-amber` still imports openmm.** I expected the flag to keep OpenMM out of the process;
+   `core.pipeline` resolves the amber backend at start, so only the contexts are avoided. The
+   AMBER tag on that job was conservative and correct.
 
 ## 10. PRODUCTION-PATH CHANGES MADE (all deliberate, tested, in the ledger)
 
@@ -224,21 +253,22 @@ from its artefact: 21/21 OK, `s26/results/claim_check.json`; `--search` also run
 |---|---|---|---|
 | `core/data.py` | `identity(..., norm=)`, `identity_many(..., norm=)`; `_seq_index` removed | `norm="longer"` = old behaviour, bit-identical | `tests/test_data.py` (new test + the four existing identity pins) |
 | `core/amber.py` | two unused names dropped from the `budget` import | n/a | `tests/test_amber.py` 16/16 |
-| `core/bench.py`, `core/cache.py`, `core/predict.py` | one unused typing/dataclasses import each | n/a | non-AMBER suite |
+| `core/bench.py`, `core/cache.py`, `core/predict.py` | one unused typing/dataclasses import each | n/a | non-AMBER suite, `pytest_core_post` |
 | `verify/vqe_lfo_audit.py` | unused `defaultdict` | n/a (not production) | byte-compiled |
 | `s25/resultslab/schema.py` | WARN explanation in `fmt_leaderboard` and `pool_gate_rule` | text only | rendered on the on-disk payload |
 | `tests/test_amber.py`, `tests/test_amber_frame_invariance.py`, `tests/test_data.py` | 6b message + shared fixture; 6a flag test | n/a | themselves |
 
 No number changed anywhere: the identity default is asserted bit-identical, the removed names
-were never read, and the leaderboard change is text.
+were never read, the leaderboard change is text, and the four-arm equivalence run shows the
+shipped mode bit-identical to the legacy baseline after the edits.
 
 ## 11. ARTEFACT INDEX
 
-`s26/TEST_RUN.md`, `s26/results/test_run.json`, `s26/results/pytest_{core,amber,amber_frame,nanpoison_post_core_edit,core_post}.xml`,
+`s26/TEST_RUN.md`, `s26/results/test_run.json`, `s26/results/pytest_{core,core_post,amber,amber_frame,nanpoison_post_core_edit}.xml`,
 `s26/jobs_done/*.json`, `s26/logs/*.log`; `docs/sources/s8_predictor_report_excerpt.md`;
 `verify/run_equiv2.sh`, `s26/i_run_equiv2_arm.py`, `s26/i_equiv2_compare.py`,
 `s26/results/run_equiv2.log`, `s26/results/run_equiv2_compare.json`; `s26/i_identity_audit.py`,
 `s26/results/i_identity_audit.json`, `s26/PREREG_identity_null.md`; `s26/i_ast_check.py`;
 `s26/i_test_report.py`; `s26/examine.py`, `s26/i_claim_check.py`, `s26/results/claims.json`,
-`s26/results/claim_check.json`, `examine.sh`, `examine.bat`; README section; ledger L6-L10
-(lane I: L6, L7, L8, L9, L10), L15, L16, `[PENDING]`.
+`s26/results/claim_check.json`, `examine.sh`, `examine.bat`; README section; ledger L6, L7, L8,
+L9, L10, L15, L16, L18, L19, L20, L21.

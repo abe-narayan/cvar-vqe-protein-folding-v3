@@ -2,16 +2,22 @@
 """s26/examine.py -- the repository's `make examine` (there is no Makefile; `examine.sh` and
 `examine.bat` at the root call this).
 
-Two steps, both cheap (no database, model or ESM bank is loaded):
+Three steps, all cheap (no database, model or ESM bank is loaded):
 
   1. regenerate the module map, `s26/results/module_map.json`, by calling lane E's
      `s26/e_module_map.py` (imported, not duplicated);
-  2. re-read every claimed number in `s26/results/claims.json` from the artefact it is
+  2. re-hash every pinned artefact and report drift against lane E's
+     `s26/results/pinned_hashes.json` (`s26/e_hashes.py --check`; the sealed benchmark
+     manifest is hashed as bytes, never parsed);
+  3. re-read every claimed number in `s26/results/claims.json` from the artefact it is
      claimed from (`s26/i_claim_check.py`) and report OK / MISMATCH / ABSENT.
 
-    python s26/examine.py               # both
-    python s26/examine.py --no-map      # claims only
-    python s26/examine.py --no-claims   # map only
+    python s26/examine.py               # all three
+    python s26/examine.py --no-map      # hashes and claims only
+    python s26/examine.py --no-claims   # map and hashes only
+    python s26/examine.py --search      # plus lane E's tree-wide claim search (slower)
+
+Exit status is non-zero if any step reports a problem.
 """
 from __future__ import annotations
 
@@ -29,6 +35,7 @@ for p in (ROOT, HERE):
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-map", action="store_true")
+    ap.add_argument("--no-hashes", action="store_true")
     ap.add_argument("--no-claims", action="store_true")
     ap.add_argument("--claims", default=os.path.join(HERE, "results", "claims.json"))
     ap.add_argument("--search", action="store_true",
@@ -40,6 +47,10 @@ def main(argv=None):
         import e_module_map                                  # lane E's script, called as-is
         print("== module map (s26/e_module_map.py) ==")
         rc |= int(e_module_map.main() or 0)
+    if not a.no_hashes:
+        import e_hashes                                      # lane E's script, called as-is
+        print("\n== pinned-artefact hashes (s26/e_hashes.py --check) ==")
+        rc |= int(e_hashes.main(["--check"]) or 0)
     if not a.no_claims:
         import i_claim_check
         print("\n== claim ledger (s26/i_claim_check.py) ==")
