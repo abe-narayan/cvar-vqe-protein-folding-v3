@@ -16,6 +16,9 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 08:54 running: Adversary auditing EXAMINATION.md (spawned 08:55); lane E moved to report writing; P training rung noesm; Q A4 running; PH and W pre-gate work done or in progress; lane I finished.
 - 2026-09-13 08:54 next: PHASE 0 SIGNED OFF on a clean audit, then release Q (A1/A3), P (ladder eval), PH (cis floor, C3 stage 1, reject) and W; PR lane on the first verdict.
 
+- 2026-09-13 09:19 running: PHASE 0 SIGNED OFF (L33) after the audit's one material item was fixed (L32); Q, P, PH, W released to endpoints; A re-checks then attacks L27/L22-L24/L30 and ranks the tournament; E drafting the report.
+- 2026-09-13 09:19 next: spawn PR on the first proposal verdict; relay P's best-rung file to PH; commit shared files hourly; watch the four-job launch cap.
+
 ## E (Examiner / Librarian)
 - 2026-09-13 00:12 running: e_reproduce (126 records through s12.instrument), e_trace_1S9Z then e_trace_9KAR under jobrun; module_map.json (699 modules) and pinned_hashes.json (benchmark manifest matches S20) written.
 - 2026-09-13 00:12 next: finish reading core/energy, core/amber, the 24 root modules, s5/s7/s8/s9, tests, verify, resultslab; then write EXAMINATION.md sections A-H.
