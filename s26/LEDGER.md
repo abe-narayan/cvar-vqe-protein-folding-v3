@@ -390,3 +390,21 @@ job `pytest_amber_frame` **3 passed**, 255.7 s, peak RSS 0.324 GB; the guard fir
 
 ---
 
+## L17 -- SESSION-LIMIT INTERRUPTION 00:46 TO 08:40; NOTHING LOST; LANES RESUMED FROM DISK (2026-09-13, coordinator)
+
+All five lanes (E, I, Q, P, PH) were terminated at about 00:46 by the API session limit
+("session limit, resets 03:30 America/Los_Angeles"), not by any error. The governor (pid 36196)
+ran throughout: `s26/governor.log` is continuous, with SAMPLE lines every minute from 23:52 to
+08:36. No governed job was in flight at the cut: the last registration reaped was
+`pytest_core_post` at 00:45:56 and `s26/jobs/` was empty at 08:36; every record in
+`s26/jobs_done/` carries an exit code. Every lane's files on disk stand (listing at 08:36:
+preregs C1-C5, B1-B3, amber_reject, cis, c3_control, identity_null; eight IDEA files; scripts
+e_*, i_*, p_*, ph_*, q_*; results in `s26/results/`); lane commits eb89c165, 37bddbbb, 9bb7f4f6,
+601a39c7 are on the branch. At 08:40 each lane was resumed from its own transcript with an
+instruction to commit what is on disk and continue, not restart. The phase gate is still closed
+(`s26/EXAMINATION.md` and `s26/BRIEF.md` not yet written). Rulings added on resumption: lane Q's
+A2 (DLA) and A4 (gradient variance versus width) read no native and may run before the gate;
+A1 and A3 endpoints wait.
+
+---
+

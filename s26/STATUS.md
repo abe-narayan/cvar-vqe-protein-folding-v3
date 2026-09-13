@@ -10,9 +10,14 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 00:20 running: lanes E, I, Q, P active; coordinator finished reading predict/data/walsh/geo/S25 physics; committed contract+ledger (74e073e2); spawning PH.
 - 2026-09-13 00:20 next: Adversary when s26/EXAMINATION.md lands; Presentation lane when the first proposal verdict is in; Wildcard after that.
 
+- 2026-09-13 08:40 running: all five lanes resumed after the 00:46 session-limit cut (L17); governor continuous; no job in flight at the cut.
+- 2026-09-13 08:40 next: Adversary when EXAMINATION.md lands; PR lane on the first proposal verdict; commit shared ledger/status hourly.
+
 ## E (Examiner / Librarian)
 - 2026-09-13 00:12 running: e_reproduce (126 records through s12.instrument), e_trace_1S9Z then e_trace_9KAR under jobrun; module_map.json (699 modules) and pinned_hashes.json (benchmark manifest matches S20) written.
 - 2026-09-13 00:12 next: finish reading core/energy, core/amber, the 24 root modules, s5/s7/s8/s9, tests, verify, resultslab; then write EXAMINATION.md sections A-H.
+- 2026-09-13 08:42 running: resumed after the 00:46 session cut; scripts and artefacts committed; reading ledger L6-L16b and the PREREG files; assembling EXAMINATION.md (A-H), then BRIEF.md and agentE_FINDINGS.md.
+- 2026-09-13 08:42 next: ledger entry for the unsourced claims and the incident notes; commit the three deliverables; two-line summary for the coordinator.
 
 ## I (Infrastructure / Governor)
 
