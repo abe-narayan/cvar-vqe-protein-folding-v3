@@ -55,3 +55,10 @@ Part A sharpens Part IV of the report whatever the answer (the singularity is na
 builder's or the pool's, with a number). Part B is the only way to test whether "AMBER measures
 its worst clash" is a property of the force field on this pool or of the sidechain placement,
 which decides whether any future all-atom scoring of retrieved windows is worth attempting.
+
+---
+Part A measured (2026-09-13 08:41, ledger L23, `s26/results/ph_reject_census.json` `singularity`): of
+the 5,057 top-75 members above 1e4 kcal/mol, the closest heavy-atom contact is bb-sc on 2,627
+and sc-sc on 2,267 (96.8% side-chain-involving) and bb-bb on 163; rho(e, min heavy-atom
+distance) within the top-75 is -0.74. Part A survives. Part B (the relief itself, ~1.2 h AMBER)
+is offered to the tournament as written.

@@ -25,18 +25,26 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 00:13 next: AMBER test files as two sequential AMBER jobs; S8-13 source excerpt; identity audit script (in memory only); run_equiv2.sh fix.
 - 2026-09-13 00:42 running: run_equiv2 (AMBER slot, --no-amber, 4 arms of smoke8) and pytest_core_post (final non-AMBER suite on 601a39c7). Done: pytest_core 337/13/0, pytest_amber 16/0, frame 3/0; identity audit (in memory) L15; items 3, 4 closed (L6, L10); 6b/6c/6d entered; 3 commits (eb89c165, 37bddbbb, 601a39c7).
 - 2026-09-13 00:42 next: compare the equiv2 arms, write s26/results/run_equiv2.log, brief 6.1 edit + commit, examine.py full run (regenerates s26/results/module_map.json, lane E: it will be rewritten once), agentI_FINDINGS.md.
+- 2026-09-13 08:40 running: resumed after the 00:46 session cut (nothing restarted). Recorded pytest_core_post (final suite: 370 tests, 357 passed, 13 skipped, 0 failed) and run_equiv2 (4 arms, baseline = exact bit-identical 8/8); brief 6.1 replaced and committed; ledger L17 (benchmark provenance), L18 (item 2).
+- 2026-09-13 08:40 next: examine.py now also runs e_hashes --check; full examine run (rewrites s26/results/module_map.json once); closure table in agentI_FINDINGS.md; ledger notes for item 5 and hygiene; final commit; then finish.
 
 ## Q (Quantum lane)
+- 2026-09-13 08:50 running: resumed after the session cut at 00:46; q_*.py, probes and reference MDEs committed (2fb2998b); PREREG_A2/A4 on disk; launching A2 (DLA, s26/q_dla.py) and A4 (variance, s26/q_var.py) under the governor per the coordinator ruling.
+- 2026-09-13 08:50 next: PREREG_A1/A3, IDEA files, TRAINABILITY_PAPER_OUTLINE.md, agentQ_FINDINGS.md; A1/A3 endpoints wait for PHASE 0 SIGNED OFF.
 
 ## P (Prior / Learning lane)
 - 2026-09-13 00:20 running: read LANE_CONTRACT, state brief, S24 ledger (all), S25/S23/S22/S17/S19 sections, S7/S8/S9/S10 findings, S12 dossier+agg, core/predict, data, distogram, esm_features, pairnet, s7/repr_select, priorladder, instrument, stats_lib, errdecomp; probes p_probe_esm (CPU, 1.0 GB) then p_probe_esmcache (ESM, 2.5 GB) launched under jobrun.
 - 2026-09-13 00:20 next: write PREREG_C1..C5, PREREG_B1..B3, three IDEA files, s26/p_ladder.py + synthetic unit test, C2 one-fold training-time probe, B1 feasibility json, agentP_FINDINGS.md; no endpoint runs before sign-off.
 - 2026-09-13 01:00 running: nothing (phase gate). Written: PREREG_C1..C5, PREREG_B1..B3, IDEA_better_prior_inputs / window_ensembling / coherence_penalised_training, p_ladder.py (11 rungs, tests pass), b1_feasibility.json (B1 infeasible: RAM 8.76 GB vs 4.4 GB headroom, openfold/omegaconf absent), probes done (esm_cache 1.79 GB; pca32 fold-0 retrain 453 s / 1.25 GB reproduces the pinned model, argmin 25/25); ledger L11-L14.
 - 2026-09-13 01:00 next: awaiting sign-off (question in L12: may the 5-fold ladder TRAINING run before sign-off?); then eval shipped -> noesm -> conly -> pca32 -> mix -> pairnet -> pca32f -> pca128 -> raw -> wide -> esm8m, C1 write-up, B3, C4, C5, PROPOSAL_C/B/B_REPLACEMENT.
+- 2026-09-13 08:45 running: resumed after the 00:46 session cut (no training job had launched; only the probe model exists). Training order fixed in PREREG_C2 addendum 2; launching the 8-rung training chain one governor job at a time (est-ram 1.5 GB); PREREG_C3 addendum 2 and IDEA_amber_prior_partner.md written.
+- 2026-09-13 08:45 next: C1 closure write-up; B3/C4/C5 code with synthetic tests; agentP_FINDINGS sections; ledger entry for the launch (re-reading the tail first); commit; hourly STATUS.
 
 ## A (Adversary) -- not yet spawned
 
 ## PH (Physics lane)
+- 2026-09-13 08:41 running: nothing (gate closed). Done: reading list; PREREG_amber_reject/cis/c3_control; five IDEA files; ph_lib/ph_cis/ph_reject/ph_c3 + synthetic tests; census jobs ph_cis_census (0.038 GB), ph_reject_census (0.117 GB), ph_c3_nativefree; ledger L22-L24; findings and Part IV notes; commit 5dc7a3a6.
+- 2026-09-13 08:41 next: READY TO LAUNCH the minute PHASE 0 SIGNED OFF lands: `ph_cis.py floor` (1 min), `ph_c3.py stage1` (2 min), `ph_reject.py cloud` (5 min) then `ph_reject.py chain` (CPU, ~3 h, per-target cells); C3 stage 2 when P delivers (AMBER, probe first). Awaiting tournament ranking for IDEA_branch_select / rotamer_relief part B.
 
 ## PR (Presentation lane) -- not yet spawned
 

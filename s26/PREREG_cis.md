@@ -78,3 +78,16 @@ the cost of a test. Nothing on the production path is edited.
 
 Part 1: ~2 min, < 0.5 GB (parses 126 PDB files and their ensembles through the cached column
 reader; loads each `W` bank once). Part 2: ~1 min. Tag CPU. Agent-hours: 1.5.
+
+---
+## ADDENDUM 1 (2026-09-13 08:41) -- THE CENSUS RESULT AND THE RE-SCOPE OF PART 2
+
+`s26/results/ph_cis_census.json`, ledger L22. The registered prediction held on model 1 and on
+the pool (0/126, 0/2,352,893, universe minimum step 3.5045 A, which is the gate) and FAILED on
+the ensembles: 0 of 1,966 deposited models carry a cis bond, where I predicted some. Written
+before part 2 runs: the cis-vs-non-cis comparison is empty; part 2 measures the ideal-trans
+representation floor (CA and N/CA/C bases) on all 126 as the residual cost of the constant
+omega, its Spearman with the per-target maximum omega deviation, and reports 9UV5 (the one
+target with a bond beyond 30 deg) by name, never as a subgroup. The falsifier for "the design is
+worth writing on this instrument" cannot fire, so the design is written for the world supply
+with the base rate stated as 0 of 1,507 bonds here and a literature value with its source.

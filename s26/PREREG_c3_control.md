@@ -90,3 +90,16 @@ Stage 1: ~2 min CPU, < 0.5 GB. Stage 2: ~30 min AMBER, ~1.0 GB. Agent-hours: 1.5
 
 A positive result (AMBER beating both controls) is re-run with different draw seeds and the fold
 order reversed and must land inside its own fold CI.
+
+---
+## ADDENDUM 1 (2026-09-13 08:41) -- THE MEASURED MAGNITUDE AND THE DERIVED PREDICTION
+
+`s26/results/ph_c3_nativefree.json`, ledger L24. The production displacement is 0.220 A RMS
+after superposition (median 0.197, range 0.103 to 0.591), not the ~0.15 A guessed from one
+target in section 3. The S16 identity then predicts that a move of that size orthogonal to the
+residual costs about 0.220^2 / (2 x 3.21) = 0.0075 A on the built chain; the production step
+costs +0.0207. Registered prediction: AMBER minus the matched random control = about +0.013 A
+(AMBER worse), ORACLE cosine of AMBER's displacement negative. 9KAR does not converge (e1 = 1262
+> 1000); the convergence gate is REPORTED, never silently applied: every stage-1 contrast is
+given on all 126 and on the 125 converged. 2BP4 (relaxed CA-CA 5.38 A) and 9KAR (4.86 A) are
+the two emissions whose virtual bond the relaxation breaks; they stay in.

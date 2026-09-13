@@ -498,3 +498,160 @@ continuous through the restart.
 
 ---
 
+## L20 -- OPERATIONAL ITEM 5 CLOSED: THE BRIEF'S 6.1 CARRIES THE GOVERNED RUN; THE ORIGINAL SENTENCE IS IN HISTORY (2026-09-13, lane I)
+
+`docs/STATE_BRIEF_2026-09-12.md` was committed exactly as received as `6e50ea93`, so the
+"355 passed, 13 skipped, 0 failed, 0 errors, exit 0" sentence survives in history; then its
+section 6.1 live-run paragraph was replaced (commit `83305549`) by the S26 governed run:
+**370 tests, 357 passed, 13 skipped, 0 failed, 0 errors, 0 memory-guard skips** on commit
+`601a39c7`, in three jobs under `s26/governor.py` (`pytest_core_post`, the 10 non-AMBER files:
+351 tests, 338 passed, 13 skipped, 240 s, peak RSS 1.692 GB; `pytest_amber`: 16 passed, 261 s,
+0.872 GB; `pytest_amber_frame`: 3 passed, 256 s, 0.324 GB), with the passed count per file,
+the 13 skip reasons (11 `VERIFY_SLOW=1` opt-ins in `test_equivalence.py` and
+`test_integration.py`, 2 absent artefacts in `test_pipeline.py`) and the pointer to
+`s26/TEST_RUN.md` / `s26/results/test_run.json`. The suite is 370 rather than 368 because S26
+added one test to `test_amber.py` and one to `test_data.py`.
+
+The same non-AMBER files run BEFORE any S26 edit (job `pytest_core`, tree `a4db170c`: 337
+passed, 13 skipped, 0 failed, identical skip list) are recorded beside it and marked
+superseded, so the before/after of the production-path edits (L10, L15) is on file.
+`TEST_RUN_RESULT_PLACEHOLDER` never existed in the tree (L3); the live-run sentence held the
+placeholder's role.
+
+---
+
+## L21 -- HYGIENE: README GOVERNOR SECTION; `make examine` IS `python s26/examine.py` (WITH examine.sh / examine.bat), WRAPPING THE MODULE MAP, THE PINNED HASHES AND THE CLAIM LEDGER (2026-09-13, lane I)
+
+`README.md` (commit `eb89c165`) gained the section "The S26 resource governor": the three
+scripts and what each does, the band (88% low water to launch queued work; resume below 90%;
+93% ceiling suspends the newest job; 95% for 15 s kills it with CTRL_BREAK first and requeues
+it), the AMBER cap of two, the tags CPU / AMBER / ESM / TEST, where the live state
+(`s26/governor_state.json`) and the log (`s26/governor.log`, whitelisted) are, how to start it
+(`python s26/governor.py`, `--once`, `--status`), how a job is run or queued, the three-way
+split of the test suite, and the examine entry point.
+
+There is no Makefile in the repository and no `make` on this box, so the `make examine`
+equivalent is a script: `python s26/examine.py`, with the one-line launchers `examine.sh` and
+`examine.bat` at the repository root (no name conflict). It calls, imported rather than copied:
+lane E's `s26/e_module_map.py` (rewrites `s26/results/module_map.json`), lane E's
+`s26/e_hashes.py --check` (re-hashes every pinned artefact against
+`s26/results/pinned_hashes.json`; the benchmark manifest as bytes only), and lane I's
+`s26/i_claim_check.py` over `s26/results/claims.json` (21 claims, each re-read from the artefact
+it names: the four 126-target means of the production cache, the `compare_tuning126.json`
+science deltas and baseline constants, the leaderboard's production row and gate, the pinned
+hashes, the S8-13 transfer law with the excerpt as fallback, and the S26 test-run totals);
+`--search` adds lane E's `s26/e_claims.py`. Exit status is non-zero on any drift, mismatch or
+non-optional absence. Validated: 21/21 OK at 00:37 (`s26/results/claim_check.json`), and the
+full run at 08:4x is `s26/logs/i_examine_full.log` (it rewrote lane E's `module_map.json` once;
+the map is deterministic apart from the sha256 of the files S26 edited).
+
+Also added for the contract's own rules: `s26/i_ast_check.py` (section 5, AST identity modulo
+docstrings against a commit, with a readable diff of any deviation) and `s26/i_test_report.py`
+(junit XML plus `s26/jobs_done/` into `s26/TEST_RUN.md` and `s26/results/test_run.json`, with
+memory-guard skips counted apart from real skips).
+
+---
+
+## L22 -- CIS CENSUS: NO CIS PEPTIDE BOND EXISTS ANYWHERE ON THE INSTRUMENT; THE DATABASE STEP GATE, NOT THE PROJECTION, SETS THE COST (2026-09-13, PH)
+
+`s26/ph_cis.py census`, `s26/results/ph_cis_census.json` (complete 126/126), job
+`s26/jobs_done/ph_cis_census.json` (exit 0, 90 s, peak RSS 0.038 GB). Pre-registered in
+`s26/PREREG_cis.md` section 2 with the prediction "zero on model 1 and in the pool, because of
+the step gate; some cis bonds in other ensemble models". Allowed before the gate by L5: ORACLE
+DIAGNOSTIC on the natives (omega angles only, no RMSD), native-free on the pool.
+
+    model-1 natives with a cis bond, |omega| < 30 deg        0 / 126
+    the same by consecutive CA-CA < 3.3 A                    0 / 126   (the two criteria agree 126/126)
+    deposited models with a cis bond, every ensemble         0 / 1,966
+    universe windows with a CA-CA step < 3.3 A               0 / 2,352,893   minimum step 3.5045 A
+    K=500 pools and production top-75 with such a window     0 and 0
+    omega non-planarity |180 - |omega||, 1,507 bonds         mean 1.91 deg, median 0.34, p90 5.8, p99 17.4,
+                                                             max 42.8 (9UV5, bonds 0 and 6: -137.2 and +144.8 deg);
+                                                             0.53% of bonds beyond 20 deg, 0.13% beyond 30 deg
+
+The universe minimum step IS the gate: `core/data.py:406-407` drops any peptide with a
+consecutive CA-CA step below 3.5 A and `core/data.py:697-698` drops any fragment window with
+one. The 126 are drawn from that database (`s7/debias.py:103-120`) and so is the sealed
+benchmark, so neither can contain a cis target and no pool can contain a cis window. The
+two-bond-length projection is therefore worth exactly 0.000 A on this instrument by
+construction of the database, not by any property of the projection. The residual cost of the
+constant omega here is the non-planarity tail (0.5% of bonds beyond 20 deg), which part 2
+(gated) prices as the ideal-trans floor on the native's own torsions. The registered prediction
+that other ensemble models carry cis bonds was WRONG: 0 of 1,966. The cis-peptide question is a
+world-supply question (the 16 containment-fresh targets, 10 amyloid) and the design note in
+`s26/agentPH_FINDINGS.md` section 1.4 is written for that supply.
+
+---
+
+## L23 -- STERIC REJECT CENSUS: AT 1e4 kcal/mol THE REJECT REMOVES 40 OF 75, EMPTIES 11 TOP-75 SETS AND 8 WHOLE POOLS, AND 96.8% OF THE CATASTROPHES ARE SIDE-CHAIN CONTACTS (2026-09-13, PH)
+
+`s26/ph_reject.py census`, `s26/results/ph_reject_census.json` (complete 126/126), job
+`s26/jobs_done/ph_reject_census.json` (exit 0, 100 s, peak RSS 0.117 GB). Native-free: the
+63,000 cached single points (`s24/cache_amber`, pool identity `universe_idx == I.pool_idx` and
+production `sub` == score top-75 asserted on every target) and the ideal-geometry rebuilds; no
+RMSD, no native. Required by `s26/briefs/PH.md` section 3.1 before any RMSD is read; the prior
+was registered in `s26/PREREG_amber_reject.md` section 5.
+
+    threshold     pool frac > T   top-75 rejected   zero-reject   all-75 rejected   no survivor in 500   refill depth (mean/median)   R overlap with anchor
+    1e3             0.760           54.5 / 75          1              25                 20                270 / 234                    0.27
+    1e4 PRIMARY     0.586           40.1 / 75          2              11                  8                201 / 147                    0.46
+    1e5             0.446           30.3 / 75          6               3                  1                167 / 118                    0.60
+    1e6             0.345           23.3 / 75          8               2                  0                135 / 103                    0.69
+
+The 0.586 reproduces S25's 58.6% (`s25/results/phys_landscape.json`). At the primary threshold
+the operator is not a small surgical reject: it removes more than half of every shipped set,
+reaches rank 147 (median) of 500 to refill, empties the whole top-75 on 11 targets (1G89 1ID6
+1LB7 2MAI 2NB7 2XL1 5MML 5Z5W 7BX2 8UN8 9S5G) and finds no survivor among all 500 candidates on
+8 (1G89 1ID6 2MAI 2NB7 2XL1 5MML 7BX2 8UN8). Both empty cases fall back to the anchor, a rule
+added in the prereg's addendum 1 before any RMSD is read. Native-free geometry of the retained
+set at 1e4: R is +0.254 A more expanded in Rg than the anchor (SE 0.058) and +0.144 A in the
+minimum |i-j| >= 3 CA-CA distance; S is +0.060 and +0.070. Same sign as S25's +1.10 A expansion
+of AMBER's top-75, smaller because the distogram's order is kept among the survivors.
+
+WHERE THE SINGULARITY LIVES (the optional Part IV measurement, `singularity` block; every top-75
+member rebuilt with all heavy atoms through the reference builder `sidechains.py`, no OpenMM):
+
+    closest heavy-atom contact, residue separation >= 2
+      all 9,450 members:              bb-bb 1,054   bb-sc 5,300   sc-sc 3,096
+      the 5,057 members above 1e4:    bb-bb   163   bb-sc 2,627   sc-sc 2,267    -> 96.8% side-chain-involving
+    members per target with a heavy-atom pair closer than 2.0 A:   all-atom 40.7 of 75 (SE 1.9)
+                                                                    backbone+CB 2.61 of 75 (SE 0.34)   [S19 section 3.1: 2.66, reproduced]
+    Spearman(e_amber, minimum heavy-atom distance) within a top-75: mean -0.743, median -0.803
+    minimum heavy-atom distance: members above 1e4, 1.48 A; members below 1e4, 2.31 A
+
+The AMBER single point on the top-75 is, to rho -0.74, the minimum heavy-atom distance of the
+rebuild, and 96.8% of the rebuilds it condemns are condemned by a contact involving a side chain
+placed by the deterministic builder (fixed chi1, no rotamer scan). The physically impossible
+class on the backbone is 2.6 per 75 (S19); the class the 1e4 reject removes is 40 per 75.
+Stated before any RMSD is read: the steric reject at the primary threshold is a reject of the
+builder's side-chain placement, not of the pool's backbones. This is Part A of
+`s26/IDEA_rotamer_relief.md` and it survives.
+
+---
+
+## L24 -- C3 NATIVE-FREE PART: THE PRODUCTION RELAXATION MOVES THE CA TRACE 0.220 A RMS; 58.7% OF BUILT CHAINS START ABOVE 1e4 kcal/mol; 125 OF 126 CONVERGE (2026-09-13, PH)
+
+`s26/ph_c3.py nativefree`, `s26/results/ph_c3_nativefree.json` (complete 126/126), job
+`s26/jobs_done/ph_c3_nativefree.json` (exit 0, 5 s; the RSS sampler polls every 5 s and
+under-reads a 5 s process, so no memory number is claimed). Read from
+`bench_results/cache/1fc9f2dcf489e2fb` with every RMSD key stripped; nothing here reads a native.
+
+    AMBER displacement of the built chain, per-atom RMS after superposition   0.220 A (SE 0.008, median 0.197, range 0.103 to 0.591)
+    `amber_moved` (restraint RMSD on N/CA/C, unsuperposed)                     0.233 A
+    the built chain's own AMBER energy e0 before relaxation                    median 8.6e4 kcal/mol, min -473, max 1.3e14; 58.7% above 1e4
+    relaxed energy e1                                                          mean -560 (SE 30), max +1262 (9KAR)
+    converged (e1 <= CONVERGE_MAX_KCAL = 1000)                                 125 / 126 (9KAR fails)
+    bond + angle strain after                                                  mean 60 kcal/mol
+    virtual CA-CA bond: built 3.80395 (exact, sd 1e-16) -> relaxed             mean 3.867, min 3.12 (1M02), max 5.38 (2BP4, e1 +845); 4.86 on 9KAR
+    targets with a relaxed CA-CA outside [3.6, 4.0]                            6 / 126
+    Rg change                                                                  +0.046 A
+
+Two things the validity story must carry: the emission's own strain census (58.7% of built
+chains sit above 1e4 kcal/mol before relaxation, the same fraction as the pool), and the two
+targets where the relaxation itself breaks a virtual bond (2BP4, 9KAR). Derived prediction for
+stage 1, registered in `s26/PREREG_c3_control.md` addendum 1 before the gate: an orthogonal move
+of 0.220 A on a 3.21 A chain costs about m^2 / (2 RMSD) = 0.0075 A by the S16 identity; the
+production step costs +0.0207; so AMBER is predicted WORSE than the matched random control by
+about +0.013 A. Measured after the gate.
+
+---

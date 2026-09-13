@@ -74,7 +74,7 @@ times Legacy's 0.104, because its first steps are clash relief; 72% of the RMSD 
 minimisation does is the SIZE of that move, not its direction (`s20/results/c_land_null.json`,
 toward-member null +0.444 of +0.620).
 
-**New in S26 (`s26/results/ph_reject_census.json`, `singularity`; ledger L16).** On the
+**New in S26 (`s26/results/ph_reject_census.json`, `singularity`; ledger L23).** On the
 9,450 shipped top-75 rebuilds, 40.7 of every 75 have two heavy atoms closer than 2.0 A when
 every side chain is built, but only 2.6 of 75 do on the backbone plus CB (S19 measured 2.66). Of
 the 5,057 rebuilds above 1e4 kcal/mol, 96.8% have their closest contact on a side-chain atom
@@ -99,7 +99,7 @@ Rank standardisation is monotone and has no such failure; it is what production 
 ## 7. The relaxation, on the production chain (native-free part, S26)
 
 The last production stage relaxes the built chain with a restraint of 10 kcal/mol/A^2 on N, CA
-and C. Measured on the 126 emissions (`s26/results/ph_c3_nativefree.json`; ledger L17): the
+and C. Measured on the 126 emissions (`s26/results/ph_c3_nativefree.json`; ledger L24): the
 built chain's own AMBER energy is above 1e4 kcal/mol on 58.7% of targets before relaxation
 (median 8.6e4), the relaxation brings it to -560 on average and converges on 125 of 126 (9KAR
 ends at +1262), moves the CA trace 0.220 A RMS, and stretches the virtual CA-CA bond from 3.804

@@ -125,3 +125,26 @@ Agent-hours: 2 to write, 1 to analyse and report. Tags: CPU. Runs after `PHASE 0
 
 A positive result is re-run with the draw seeds changed (`stable_rng` salt "s26ph" to "s26ph-rep")
 and the fold processing order reversed, and must land inside its own fold CI, or it is not a result.
+
+---
+## ADDENDUM 1 (2026-09-13 08:41) -- THE CENSUS, WRITTEN BEFORE ANY RMSD IS READ
+
+`s26/results/ph_reject_census.json`, ledger L23. Measured what section 5 guessed: at 1e4 the
+reject removes 40.1 of 75 (53.5%; prior "about half"), refill reaches rank 147 (median; prior
+150 to 200), 11 targets lose the whole top-75 and 8 have no survivor in the whole pool (the prior
+did not anticipate whole-pool emptiness). At 1e3 it is 54.5 of 75 with 25 empty sets and 20
+empty pools; at 1e5 30.3 of 75; at 1e6 23.3 of 75.
+
+Rules added before any endpoint is read: (1) an EMPTY retained set, S or R, falls back to the
+anchor (do nothing), the only native-free deployable choice; the number of fallbacks per arm and
+threshold, and the number of targets actually moved, are reported beside every MDE. (2) Every
+contrast is shown on all 126 and on the moved subset. (3) The operator at the primary threshold
+is now known to be a reject of the builder's side-chain placement (96.8% of condemned members
+have a side-chain-involving closest contact; rho(e, min heavy-atom distance) = -0.74) and not of
+the pool's backbones (2.6 of 75 have a backbone+CB contact below 2.0 A; S19 reproduced). That
+does not change the falsifier; it changes what a positive result would mean, and it is stated
+now so it cannot be discovered afterwards. Prior unchanged: null or harmful.
+
+The census artefact was stamped by `ph_reject.py` at source sha ba028f7717d38725, before the
+fallback lines (`R_empty`, `R_eff`) were added to `retained_sets`; the census computation does
+not read those fields. The committed file (5dc7a3a6) is the one the endpoint runs will stamp.
