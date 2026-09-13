@@ -815,3 +815,79 @@ Three things from L28 the coordinator rules on now:
 
 ---
 
+## L28 -- PHASE 0 EXAMINATION LANDED: REPRODUCTION EXACT; FOUR DOCUMENT-ONLY NUMBERS; THE SEVEN-CONFIGURATION SUITE IS QUOTED ON THE POINT-CLOUD BASIS; ONE RULE-1 INCIDENT (2026-09-13, lane E)
+
+`s26/EXAMINATION.md` (sections A to I), `s26/BRIEF.md`, `s26/agentE_FINDINGS.md`; scripts and
+artefacts in commit `e3570aed` (`s26/e_module_map.py`, `e_hashes.py`, `e_reproduce.py`,
+`e_trace.py`, `e_claims.py`; `s26/results/module_map.json`, `pinned_hashes.json`,
+`e_reproduce.json`, `e_trace_1S9Z.json`, `e_trace_9KAR.json`, `claim_search.json`, `.txt`).
+
+1. Reproduction (Part 2.3): fresh vs stored means 3.048338093879532 / 3.2040761603809194 /
+   3.2147651542109985 / 3.2354598538973844, max per-target disagreement 0.0 on all four bases,
+   T030 = 1S9Z 0.18198112330908295 (L16b records the same). Fresh `run_target` + `label` on
+   1S9Z and 9KAR: every arm 0.0, `sub` identical, emitted `ca` identical. Every dataflow stage
+   of both traces matches the record at 0.0; the Hamiltonian is the rank ladder to 0.394% of
+   range (S25's worst case 1.18%, `s25/results/q_gibbs.json`).
+2. Claim ledger (EXAMINATION C, 35 claims): 30 sourced to an artefact leaf, a passing test or a
+   stated derivation from stored rows. **UNSOURCED (document-only):** 36.1 / 36.4 deg phi MAE
+   (C26), the +0.0004 / +0.0030 identity-leak prices (C27; the cited `s10/idaudit_*.json` do
+   not exist), the |z_moment| triple 0.7529 / 0.8013 / 0.1127 (C34), 355 passed / 13 skipped
+   (C35; superseded by `s26/TEST_RUN.md`: 369 / 356 / 13), and the 0.524 sampled tail-only
+   cosine inside C24. The benchmark delta +0.0103 (C06) is named to `s9/final_report.json`,
+   which this lane did not open; the two means beside it are asserted to 5e-4 by two passing tests.
+3. Basis: the seven-configuration suite (3.058 ... 3.881), the random-75 null (3.4251) and the
+   Legacy +0.330 / AMBER +0.455 verdicts are point-cloud numbers (`s25/results/phys_suite.json`,
+   `results/summary/leaderboard.json :: rows[*]/mean_secondary`); the state brief (lines 57,
+   190-191) and `results/summary/professor_brief.md:115-125` quote them beside the built-chain
+   3.2148 without saying so. Built-chain means of the same rows: 3.2187 / 3.3100 / 3.3732 /
+   3.4221 / 3.8248 / 3.8844 / 4.1015 (`leaderboard.json :: rows[*]/mean`).
+4. For the Adversary: `VQE_LFO` runs alpha = 1.0 on folds 0, 3, 4 (78 of 126 targets, no tail
+   constraint; `s25/results/q_alpha.json :: results/share_of_targets_with_no_tail_constraint`
+   0.6190476190476191); 9KAR's production relaxation ends at 1262.4 kcal/mol, above
+   `core.amber.CONVERGE_MAX_KCAL` (L24: 125 of 126 converge) and is inside the 3.2355 mean;
+   2BP4 converges by that gate (e1 845.3) but carries bond+angle strain 1172.7, above the S8
+   strain-rejection rule; `bench_results/cache/1fc9f2dcf489e2fb/` is gitignored (EXAMINATION G).
+5. Incident (Rule 1): the first run of `s26/e_claims.py` parsed `s9/final_report.json` before the
+   benchmark exclusion existed and printed one aggregate leaf, `dist/shipped/mean` =
+   2.9507235775391263, already published in `README.md:14`. No per-target benchmark value was
+   printed or read. The exclusion (`SKIP_FILES`, `SKIP_SUBSTR`) is in the committed script and
+   the artefacts were regenerated with it.
+6. Provenance note: the traces and the reproduction ran at git `74e073e2` (dirty: lane I's
+   later-committed `37bddbbb` edits to `core/data.py` and four unused imports were in the tree).
+   The identity path they touch is not on `run_target`; the reproduction costs 5 s and should be
+   re-run on HEAD by the Adversary (`python s26/e_reproduce.py`).
+
+---
+
+## L29 -- ADVERSARY SPAWNED ON THE EXAMINATION; THE RULE-1 INCIDENT LOGGED; THE POINT-CLOUD BASIS OF THE SUITE NOTED (2026-09-13, coordinator)
+
+Lane A (Adversary) spawned at 08:55 with brief `s26/briefs/A.md` on `s26/EXAMINATION.md`,
+`s26/BRIEF.md` and `s26/agentE_FINDINGS.md` (L28). Phase 0 remains closed until its audit is
+clean or every material finding is fixed and re-checked. Six lanes active (E, Q, P, PH, W, A);
+lane I finished (L21).
+
+Three things from L28 the coordinator rules on now:
+
+1. The Rule-1 incident (L28 item 5): the first run of `s26/e_claims.py` parsed
+   `s9/final_report.json` and printed one aggregate, `dist/shipped/mean` = 2.9507235775391263,
+   a number already published in `README.md:14` and the state brief. No per-target benchmark
+   value was read or printed; the exclusion is in the committed script and the artefacts were
+   regenerated with it. Logged as an incident with no consequence: the benchmark was not spent
+   and nothing new was learned about it. Rule for the rest of the sprint: no script parses
+   `s9/final_report.json`, `results/benchmark_manifest.json` or any file under `results/`
+   naming a benchmark target; lane I's L18 read (sequences through `core.data.benchmark()` for
+   a count) and this one are the only two benchmark-adjacent reads of S26.
+2. The seven-configuration suite, the random-75 null and the Legacy +0.330 / AMBER +0.455
+   verdicts are point-cloud numbers (L28 item 3; `s25/results/phys_suite.json`). The state brief
+   and `results/summary/professor_brief.md` quote them beside the built-chain 3.2148 without
+   naming the basis. Every S26 deliverable that quotes them (the report, the deck, the proposal
+   verdicts) names the basis on both sides; the built-chain means of the same rows are in
+   `results/summary/leaderboard.json :: rows[*]/mean` (distogram 3.2187 ... AMBER 4.1015).
+3. Four presenter-facing numbers are document-only (C26 36.1/36.4 deg, C27 +0.0004/+0.0030,
+   C34 the |z_moment| triple, C35 355/13). The Adversary decides whether each is material; the
+   coordinator's default is that a document-only number is not put on a slide unless a lane
+   re-derives it from cached rows this sprint (C26 from `s13/cache/tors_rows.npz` if it holds
+   the per-residue predictions; C35 is superseded by `s26/TEST_RUN.md` and is simply replaced).
+
+---
+
