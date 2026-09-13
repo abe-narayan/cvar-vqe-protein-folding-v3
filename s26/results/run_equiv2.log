@@ -1,0 +1,759 @@
+S26 operational item 2: verify/run_equiv2.sh (repaired) run under the governor as job run_equiv2
+tree 601a39c7 + coordinator files; sh verify/run_equiv2.sh --no-amber; see s26/jobs_done/run_equiv2.json (exit 0, 145.3 s, peak RSS 0.596 GB)
+
+########## s26/logs/run_equiv2.log (the jobrun transcript)
+
+===== 2026-09-13T00:40:34 jobrun run_equiv2 agent=I tag=AMBER
+===== cmd: sh verify/run_equiv2.sh --no-amber
+=== BASELINE (legacy) --no-amber ===
+baseline rc=0
+=== OPTIMISED, project_grad=exact (the shipped default) --no-amber ===
+opt_exact rc=0
+=== OPTIMISED, project_grad=fd --no-amber ===
+opt_fd rc=0
+=== OPTIMISED, project_grad=analytic --no-amber ===
+opt_an rc=0
+=== DONE ===
+verify/e2_baseline.log:"cfg_key": "65ec272db3d31f05"
+verify/e2_opt_exact.log:"cfg_key": "66050f6daae4ca07"
+verify/e2_opt_fd.log:"cfg_key": "85faafd84d76a827"
+verify/e2_opt_an.log:"cfg_key": "f4e137a48586bd4b"
+{"diagnostic": "openmm_imported", "value": true, "project_grad": "exact", "amber": false}
+{"diagnostic": "openmm_imported", "value": true, "project_grad": "fd", "amber": false}
+{"diagnostic": "openmm_imported", "value": true, "project_grad": "analytic", "amber": false}
+
+########## verify/e2_baseline.log
+[  1/8] 1DEP   n=15 synth=0.872 full=  n/a pool=0.509 shipped=1.275 (11.0s) [mem 66%]
+[  2/8] 1A1P   n=13 synth=3.442 full=  n/a pool=2.587 shipped=3.520 (10.8s) [mem 66%]
+[  3/8] 1CS9   n= 9 synth=4.206 full=  n/a pool=1.358 shipped=4.316 (8.7s) [mem 66%]
+[  4/8] 1CB3   n=11 synth=2.934 full=  n/a pool=2.028 shipped=2.667 (3.5s) [mem 66%]
+[  5/8] 1D0W   n=12 synth=1.642 full=  n/a pool=0.947 shipped=1.464 (6.3s) [mem 67%]
+[  6/8] 1CEK   n=13 synth=0.525 full=  n/a pool=0.342 shipped=0.720 (7.0s) [mem 66%]
+[  7/8] 1D6X   n=13 synth=1.781 full=  n/a pool=2.419 shipped=3.175 (12.3s) [mem 66%]
+[  8/8] 1A13   n=14 synth=2.636 full=  n/a pool=1.759 shipped=2.848 (7.6s) [mem 66%]
+{
+  "manifest": "smoke8",
+  "n_requested": 8,
+  "n_done": 8,
+  "wall": 67.39579000000958,
+  "workers": 1,
+  "threads_per_worker": 1,
+  "cfg": {
+    "k": 500,
+    "m": 75,
+    "penalty": "ramah",
+    "lam": 0.3,
+    "amber_k": 10.0,
+    "amber_steps": 0,
+    "amber": false,
+    "n_folds": 5,
+    "min_sep": 2,
+    "maxiter": 300,
+    "multi_start": true,
+    "project_grad": "exact",
+    "tie_break": "stable",
+    "torsion_window": 8,
+    "reference_precision": true,
+    "report_single_start_fit": false,
+    "quantum": false,
+    "legacy": false,
+    "vqe_qubits": 7,
+    "vqe_layers": 3,
+    "vqe_iters": 50,
+    "vqe_seed": 0,
+    "legacy_top": 5,
+    "dev_mode": "no-amber"
+  },
+  "cfg_key": "65ec272db3d31f05",
+  "dev_mode": "no-amber",
+  "backends": {
+    "forced": "legacy"
+  },
+  "cache_dir": "C:\\Users\\abena\\Protein-Folding-Algorithm\\bench_results\\cache\\65ec272db3d31f05",
+  "errors": [],
+  "stage_totals": {
+    "retrieval": 0.02,
+    "windows": 12.5521,
+    "model_load": 0.8743000000000001,
+    "distogram": 0.0529,
+    "filter": 0.0,
+    "pairwise": 0.1603,
+    "average": 0.0031,
+    "projection": 53.5305,
+    "quantum": 0.0,
+    "legacy": 0.0,
+    "amber": 0.0,
+    "amber_wait": 0.0,
+    "reference_arms": 0.0,
+    "reporting": 0.0163,
+    "io": 0.0566,
+    "serialise": 0.0001,
+    "_sum": 67.2662,
+    "_fresh_retrieval": 0.02,
+    "_fresh_windows": 12.5521,
+    "_fresh_model_load": 0.8743000000000001,
+    "_fresh_distogram": 0.0529,
+    "_fresh_filter": 0.0,
+    "_fresh_pairwise": 0.1603,
+    "_fresh_average": 0.0031,
+    "_fresh_projection": 53.5305,
+    "_fresh_quantum": 0.0,
+    "_fresh_legacy": 0.0,
+    "_fresh_amber": 0.0,
+    "_fresh_amber_wait": 0.0,
+    "_fresh_reference_arms": 0.0,
+    "_fresh_reporting": 0.0163,
+    "_fresh_io": 0.0566,
+    "_fresh_serialise": 0.0001,
+    "_fresh_sum": 67.2662,
+    "_n_fresh": 8,
+    "_n_resumed": 0
+  },
+  "summary": {
+    "n": 8,
+    "shipped": {
+      "n": 8,
+      "mean": 2.498066671192646,
+      "median": 2.757504940032959,
+      "sd": 1.2354325399488046,
+      "min": 0.719850480556488,
+      "max": 4.315847396850586,
+      "frac_under_2.0": 0.375
+    },
+    "pool_best": {
+      "n": 8,
+      "mean": 1.4937286227941513,
+      "median": 1.5587340593338013,
+      "sd": 0.8470376323677269,
+      "min": 0.3419731855392456,
+      "max": 2.5868396759033203,
+      "frac_under_2.0": 0.625
+    },
+    "top_m_best": {
+      "n": 8,
+      "mean": 1.8640337884426117,
+      "median": 2.2789433002471924,
+      "sd": 0.9504294659522506,
+      "min": 0.3419731855392456,
+      "max": 2.852372884750366,
+      "frac_under_2.0": 0.375
+    },
+    "rmsd_avg": {
+      "n": 8,
+      "mean": 2.2021026753314636,
+      "median": 2.3529359917859702,
+      "sd": 1.155387575347706,
+      "min": 0.5330998407105982,
+      "max": 3.832165823009019,
+      "frac_under_2.0": 0.375
+    },
+    "rmsd_fit": {
+      "n": 8,
+      "mean": 2.2771950158178234,
+      "median": 2.271735814251935,
+      "sd": 1.2912057538906996,
+      "min": 0.5251418433409641,
+      "max": 4.196229943951492,
+      "frac_under_2.0": 0.5
+    },
+    "rmsd_arm": {
+      "n": 8,
+      "mean": 2.2547909976187617,
+      "median": 2.208687391996591,
+      "sd": 1.2721685779527172,
+      "min": 0.5251420854561515,
+      "max": 4.205953875937748,
+      "frac_under_2.0": 0.5
+    },
+    "paired": {
+      "rmsd_arm_vs_shipped": {
+        "mean_diff": -0.24327567357388455,
+        "se": 0.18103660773180533,
+        "ci95": [
+          -0.598107424728223,
+          0.11155607758045391
+        ],
+        "n_better": 6,
+        "n_worse": 2,
+        "n": 8
+      }
+    },
+    "ablations": {},
+    "duplicate_candidates": {
+      "n_top_mean": 75.0,
+      "n_distinct_mean": 67.875,
+      "frac_duplicate": 0.09499999999999997
+    }
+  }
+}
+
+########## verify/e2_opt_exact.log
+[  1/8] 1DEP   n=15 synth=0.872 full=  n/a pool=0.509 shipped=1.275 (5.6s) [mem 67%]
+[  2/8] 1A1P   n=13 synth=3.442 full=  n/a pool=2.587 shipped=3.520 (5.1s) [mem 68%]
+[  3/8] 1CS9   n= 9 synth=4.206 full=  n/a pool=1.358 shipped=4.316 (3.4s) [mem 69%]
+[  4/8] 1CB3   n=11 synth=2.934 full=  n/a pool=2.028 shipped=2.667 (2.2s) [mem 69%]
+[  5/8] 1D0W   n=12 synth=1.642 full=  n/a pool=0.947 shipped=1.464 (3.5s) [mem 70%]
+[  6/8] 1CEK   n=13 synth=0.525 full=  n/a pool=0.342 shipped=0.720 (4.1s) [mem 70%]
+[  7/8] 1D6X   n=13 synth=1.781 full=  n/a pool=2.419 shipped=3.175 (5.0s) [mem 70%]
+[  8/8] 1A13   n=14 synth=2.636 full=  n/a pool=1.759 shipped=2.848 (4.0s) [mem 70%]
+{
+  "manifest": "smoke8",
+  "n_requested": 8,
+  "n_done": 8,
+  "wall": 33.02704219997395,
+  "workers": 1,
+  "threads_per_worker": 1,
+  "cfg": {
+    "k": 500,
+    "m": 75,
+    "penalty": "ramah",
+    "lam": 0.3,
+    "amber_k": 10.0,
+    "amber_steps": 0,
+    "amber": false,
+    "n_folds": 5,
+    "min_sep": 2,
+    "maxiter": 300,
+    "multi_start": true,
+    "project_grad": "exact",
+    "tie_break": "stable",
+    "torsion_window": 8,
+    "reference_precision": true,
+    "report_single_start_fit": false,
+    "quantum": false,
+    "legacy": false,
+    "vqe_qubits": 7,
+    "vqe_layers": 3,
+    "vqe_iters": 50,
+    "vqe_seed": 0,
+    "legacy_top": 5,
+    "dev_mode": "no-amber"
+  },
+  "cfg_key": "66050f6daae4ca07",
+  "dev_mode": "no-amber",
+  "backends": {
+    "amber": "core.amber",
+    "data": "core.data",
+    "energy": "core.energy",
+    "geometry": "core.geometry",
+    "legacy": "core.energy",
+    "numerics": "core.geometry",
+    "predict": "core.predict",
+    "project": "core.project",
+    "quantum": "core.quantum"
+  },
+  "cache_dir": "C:\\Users\\abena\\Protein-Folding-Algorithm\\bench_results\\cache\\66050f6daae4ca07",
+  "errors": [],
+  "stage_totals": {
+    "retrieval": 0.022099999999999998,
+    "windows": 1.7370999999999999,
+    "model_load": 0.024,
+    "distogram": 0.056,
+    "filter": 0.0,
+    "pairwise": 0.181,
+    "average": 0.0033,
+    "projection": 30.8172,
+    "quantum": 0.0,
+    "legacy": 0.0,
+    "amber": 0.0,
+    "amber_wait": 0.0,
+    "reference_arms": 0.0,
+    "reporting": 0.0183,
+    "io": 0.0266,
+    "serialise": 0.0002,
+    "_sum": 32.885799999999996,
+    "_fresh_retrieval": 0.022099999999999998,
+    "_fresh_windows": 1.7370999999999999,
+    "_fresh_model_load": 0.024,
+    "_fresh_distogram": 0.056,
+    "_fresh_filter": 0.0,
+    "_fresh_pairwise": 0.181,
+    "_fresh_average": 0.0033,
+    "_fresh_projection": 30.8172,
+    "_fresh_quantum": 0.0,
+    "_fresh_legacy": 0.0,
+    "_fresh_amber": 0.0,
+    "_fresh_amber_wait": 0.0,
+    "_fresh_reference_arms": 0.0,
+    "_fresh_reporting": 0.0183,
+    "_fresh_io": 0.0266,
+    "_fresh_serialise": 0.0002,
+    "_fresh_sum": 32.885799999999996,
+    "_n_fresh": 8,
+    "_n_resumed": 0
+  },
+  "summary": {
+    "n": 8,
+    "shipped": {
+      "n": 8,
+      "mean": 2.498066671192646,
+      "median": 2.757504940032959,
+      "sd": 1.2354325399488046,
+      "min": 0.719850480556488,
+      "max": 4.315847396850586,
+      "frac_under_2.0": 0.375
+    },
+    "pool_best": {
+      "n": 8,
+      "mean": 1.4937286227941513,
+      "median": 1.5587340593338013,
+      "sd": 0.8470376323677269,
+      "min": 0.3419731855392456,
+      "max": 2.5868396759033203,
+      "frac_under_2.0": 0.625
+    },
+    "top_m_best": {
+      "n": 8,
+      "mean": 1.8640337884426117,
+      "median": 2.2789433002471924,
+      "sd": 0.9504294659522506,
+      "min": 0.3419731855392456,
+      "max": 2.852372884750366,
+      "frac_under_2.0": 0.375
+    },
+    "rmsd_avg": {
+      "n": 8,
+      "mean": 2.2021026753314636,
+      "median": 2.3529359917859702,
+      "sd": 1.155387575347706,
+      "min": 0.5330998407105982,
+      "max": 3.832165823009019,
+      "frac_under_2.0": 0.375
+    },
+    "rmsd_fit": {
+      "n": 8,
+      "mean": 2.2771950158178234,
+      "median": 2.271735814251935,
+      "sd": 1.2912057538906996,
+      "min": 0.5251418433409641,
+      "max": 4.196229943951492,
+      "frac_under_2.0": 0.5
+    },
+    "rmsd_arm": {
+      "n": 8,
+      "mean": 2.2547909976187617,
+      "median": 2.208687391996591,
+      "sd": 1.2721685779527172,
+      "min": 0.5251420854561515,
+      "max": 4.205953875937748,
+      "frac_under_2.0": 0.5
+    },
+    "paired": {
+      "rmsd_arm_vs_shipped": {
+        "mean_diff": -0.24327567357388455,
+        "se": 0.18103660773180533,
+        "ci95": [
+          -0.598107424728223,
+          0.11155607758045391
+        ],
+        "n_better": 6,
+        "n_worse": 2,
+        "n": 8
+      }
+    },
+    "ablations": {},
+    "duplicate_candidates": {
+      "n_top_mean": 75.0,
+      "n_distinct_mean": 67.875,
+      "frac_duplicate": 0.09499999999999997
+    }
+  }
+}
+{"diagnostic": "openmm_imported", "value": true, "project_grad": "exact", "amber": false}
+
+########## verify/e2_opt_fd.log
+[  1/8] 1DEP   n=15 synth=0.880 full=  n/a pool=0.509 shipped=1.275 (3.8s) [mem 71%]
+[  2/8] 1A1P   n=13 synth=3.443 full=  n/a pool=2.587 shipped=3.520 (3.5s) [mem 71%]
+[  3/8] 1CS9   n= 9 synth=4.204 full=  n/a pool=1.358 shipped=4.316 (1.9s) [mem 71%]
+[  4/8] 1CB3   n=11 synth=2.934 full=  n/a pool=2.028 shipped=2.667 (1.2s) [mem 71%]
+[  5/8] 1D0W   n=12 synth=1.642 full=  n/a pool=0.947 shipped=1.464 (1.5s) [mem 71%]
+[  6/8] 1CEK   n=13 synth=0.525 full=  n/a pool=0.342 shipped=0.720 (2.3s) [mem 71%]
+[  7/8] 1D6X   n=13 synth=1.769 full=  n/a pool=2.419 shipped=3.175 (2.8s) [mem 71%]
+[  8/8] 1A13   n=14 synth=2.636 full=  n/a pool=1.759 shipped=2.848 (2.9s) [mem 72%]
+{
+  "manifest": "smoke8",
+  "n_requested": 8,
+  "n_done": 8,
+  "wall": 20.216613600001438,
+  "workers": 1,
+  "threads_per_worker": 1,
+  "cfg": {
+    "k": 500,
+    "m": 75,
+    "penalty": "ramah",
+    "lam": 0.3,
+    "amber_k": 10.0,
+    "amber_steps": 0,
+    "amber": false,
+    "n_folds": 5,
+    "min_sep": 2,
+    "maxiter": 300,
+    "multi_start": true,
+    "project_grad": "fd",
+    "tie_break": "stable",
+    "torsion_window": 8,
+    "reference_precision": true,
+    "report_single_start_fit": false,
+    "quantum": false,
+    "legacy": false,
+    "vqe_qubits": 7,
+    "vqe_layers": 3,
+    "vqe_iters": 50,
+    "vqe_seed": 0,
+    "legacy_top": 5,
+    "dev_mode": "no-amber"
+  },
+  "cfg_key": "85faafd84d76a827",
+  "dev_mode": "no-amber",
+  "backends": {
+    "amber": "core.amber",
+    "data": "core.data",
+    "energy": "core.energy",
+    "geometry": "core.geometry",
+    "legacy": "core.energy",
+    "numerics": "core.geometry",
+    "predict": "core.predict",
+    "project": "core.project",
+    "quantum": "core.quantum"
+  },
+  "cache_dir": "C:\\Users\\abena\\Protein-Folding-Algorithm\\bench_results\\cache\\85faafd84d76a827",
+  "errors": [],
+  "stage_totals": {
+    "retrieval": 0.0235,
+    "windows": 1.8371,
+    "model_load": 0.0523,
+    "distogram": 0.0701,
+    "filter": 0.0002,
+    "pairwise": 0.2074,
+    "average": 0.0044,
+    "projection": 17.8348,
+    "quantum": 0.0,
+    "legacy": 0.0,
+    "amber": 0.0,
+    "amber_wait": 0.0,
+    "reference_arms": 0.0,
+    "reporting": 0.016900000000000002,
+    "io": 0.024399999999999998,
+    "serialise": 0.0001,
+    "_sum": 20.0712,
+    "_fresh_retrieval": 0.0235,
+    "_fresh_windows": 1.8371,
+    "_fresh_model_load": 0.0523,
+    "_fresh_distogram": 0.0701,
+    "_fresh_filter": 0.0002,
+    "_fresh_pairwise": 0.2074,
+    "_fresh_average": 0.0044,
+    "_fresh_projection": 17.8348,
+    "_fresh_quantum": 0.0,
+    "_fresh_legacy": 0.0,
+    "_fresh_amber": 0.0,
+    "_fresh_amber_wait": 0.0,
+    "_fresh_reference_arms": 0.0,
+    "_fresh_reporting": 0.016900000000000002,
+    "_fresh_io": 0.024399999999999998,
+    "_fresh_serialise": 0.0001,
+    "_fresh_sum": 20.0712,
+    "_n_fresh": 8,
+    "_n_resumed": 0
+  },
+  "summary": {
+    "n": 8,
+    "shipped": {
+      "n": 8,
+      "mean": 2.498066671192646,
+      "median": 2.757504940032959,
+      "sd": 1.2354325399488046,
+      "min": 0.719850480556488,
+      "max": 4.315847396850586,
+      "frac_under_2.0": 0.375
+    },
+    "pool_best": {
+      "n": 8,
+      "mean": 1.4937286227941513,
+      "median": 1.5587340593338013,
+      "sd": 0.8470376323677269,
+      "min": 0.3419731855392456,
+      "max": 2.5868396759033203,
+      "frac_under_2.0": 0.625
+    },
+    "top_m_best": {
+      "n": 8,
+      "mean": 1.8640337884426117,
+      "median": 2.2789433002471924,
+      "sd": 0.9504294659522506,
+      "min": 0.3419731855392456,
+      "max": 2.852372884750366,
+      "frac_under_2.0": 0.375
+    },
+    "rmsd_avg": {
+      "n": 8,
+      "mean": 2.2021026753314636,
+      "median": 2.3529359917859702,
+      "sd": 1.155387575347706,
+      "min": 0.5330998407105982,
+      "max": 3.832165823009019,
+      "frac_under_2.0": 0.375
+    },
+    "rmsd_fit": {
+      "n": 8,
+      "mean": 2.2771280318698253,
+      "median": 2.271724252165823,
+      "sd": 1.2911202698623088,
+      "min": 0.5251602589548497,
+      "max": 4.196349637933021,
+      "frac_under_2.0": 0.5
+    },
+    "rmsd_arm": {
+      "n": 8,
+      "mean": 2.254138547875183,
+      "median": 2.202533283586882,
+      "sd": 1.2710794775046919,
+      "min": 0.5251527064365756,
+      "max": 4.203830755829225,
+      "frac_under_2.0": 0.5
+    },
+    "paired": {
+      "rmsd_arm_vs_shipped": {
+        "mean_diff": -0.24392812331746277,
+        "se": 0.18227140418351157,
+        "ci95": [
+          -0.6011800755171455,
+          0.11332382888221987
+        ],
+        "n_better": 6,
+        "n_worse": 2,
+        "n": 8
+      }
+    },
+    "ablations": {},
+    "duplicate_candidates": {
+      "n_top_mean": 75.0,
+      "n_distinct_mean": 67.875,
+      "frac_duplicate": 0.09499999999999997
+    }
+  }
+}
+{"diagnostic": "openmm_imported", "value": true, "project_grad": "fd", "amber": false}
+
+########## verify/e2_opt_an.log
+[  1/8] 1DEP   n=15 synth=0.878 full=  n/a pool=0.509 shipped=1.275 (1.4s) [mem 73%]
+[  2/8] 1A1P   n=13 synth=3.448 full=  n/a pool=2.587 shipped=3.520 (1.4s) [mem 73%]
+[  3/8] 1CS9   n= 9 synth=4.202 full=  n/a pool=1.358 shipped=4.316 (1.1s) [mem 73%]
+[  4/8] 1CB3   n=11 synth=2.934 full=  n/a pool=2.028 shipped=2.667 (0.6s) [mem 73%]
+[  5/8] 1D0W   n=12 synth=1.642 full=  n/a pool=0.947 shipped=1.464 (0.8s) [mem 73%]
+[  6/8] 1CEK   n=13 synth=0.525 full=  n/a pool=0.342 shipped=0.720 (1.0s) [mem 73%]
+[  7/8] 1D6X   n=13 synth=1.830 full=  n/a pool=2.419 shipped=3.175 (1.3s) [mem 74%]
+[  8/8] 1A13   n=14 synth=2.634 full=  n/a pool=1.759 shipped=2.848 (1.0s) [mem 74%]
+{
+  "manifest": "smoke8",
+  "n_requested": 8,
+  "n_done": 8,
+  "wall": 8.786362000013469,
+  "workers": 1,
+  "threads_per_worker": 1,
+  "cfg": {
+    "k": 500,
+    "m": 75,
+    "penalty": "ramah",
+    "lam": 0.3,
+    "amber_k": 10.0,
+    "amber_steps": 0,
+    "amber": false,
+    "n_folds": 5,
+    "min_sep": 2,
+    "maxiter": 300,
+    "multi_start": true,
+    "project_grad": "analytic",
+    "tie_break": "stable",
+    "torsion_window": 8,
+    "reference_precision": true,
+    "report_single_start_fit": false,
+    "quantum": false,
+    "legacy": false,
+    "vqe_qubits": 7,
+    "vqe_layers": 3,
+    "vqe_iters": 50,
+    "vqe_seed": 0,
+    "legacy_top": 5,
+    "dev_mode": "no-amber"
+  },
+  "cfg_key": "f4e137a48586bd4b",
+  "dev_mode": "no-amber",
+  "backends": {
+    "amber": "core.amber",
+    "data": "core.data",
+    "energy": "core.energy",
+    "geometry": "core.geometry",
+    "legacy": "core.energy",
+    "numerics": "core.geometry",
+    "predict": "core.predict",
+    "project": "core.project",
+    "quantum": "core.quantum"
+  },
+  "cache_dir": "C:\\Users\\abena\\Protein-Folding-Algorithm\\bench_results\\cache\\f4e137a48586bd4b",
+  "errors": [],
+  "stage_totals": {
+    "retrieval": 0.0277,
+    "windows": 1.9448,
+    "model_load": 0.0276,
+    "distogram": 0.0733,
+    "filter": 0.0001,
+    "pairwise": 0.2161,
+    "average": 0.0039000000000000003,
+    "projection": 6.2382,
+    "quantum": 0.0,
+    "legacy": 0.0,
+    "amber": 0.0,
+    "amber_wait": 0.0,
+    "reference_arms": 0.0,
+    "reporting": 0.017,
+    "io": 0.0423,
+    "serialise": 0.0001,
+    "_sum": 8.5911,
+    "_fresh_retrieval": 0.0277,
+    "_fresh_windows": 1.9448,
+    "_fresh_model_load": 0.0276,
+    "_fresh_distogram": 0.0733,
+    "_fresh_filter": 0.0001,
+    "_fresh_pairwise": 0.2161,
+    "_fresh_average": 0.0039000000000000003,
+    "_fresh_projection": 6.2382,
+    "_fresh_quantum": 0.0,
+    "_fresh_legacy": 0.0,
+    "_fresh_amber": 0.0,
+    "_fresh_amber_wait": 0.0,
+    "_fresh_reference_arms": 0.0,
+    "_fresh_reporting": 0.017,
+    "_fresh_io": 0.0423,
+    "_fresh_serialise": 0.0001,
+    "_fresh_sum": 8.5911,
+    "_n_fresh": 8,
+    "_n_resumed": 0
+  },
+  "summary": {
+    "n": 8,
+    "shipped": {
+      "n": 8,
+      "mean": 2.498066671192646,
+      "median": 2.757504940032959,
+      "sd": 1.2354325399488046,
+      "min": 0.719850480556488,
+      "max": 4.315847396850586,
+      "frac_under_2.0": 0.375
+    },
+    "pool_best": {
+      "n": 8,
+      "mean": 1.4937286227941513,
+      "median": 1.5587340593338013,
+      "sd": 0.8470376323677269,
+      "min": 0.3419731855392456,
+      "max": 2.5868396759033203,
+      "frac_under_2.0": 0.625
+    },
+    "top_m_best": {
+      "n": 8,
+      "mean": 1.8640337884426117,
+      "median": 2.2789433002471924,
+      "sd": 0.9504294659522506,
+      "min": 0.3419731855392456,
+      "max": 2.852372884750366,
+      "frac_under_2.0": 0.375
+    },
+    "rmsd_avg": {
+      "n": 8,
+      "mean": 2.2021026753314636,
+      "median": 2.3529359917859702,
+      "sd": 1.155387575347706,
+      "min": 0.5330998407105982,
+      "max": 3.832165823009019,
+      "frac_under_2.0": 0.375
+    },
+    "rmsd_fit": {
+      "n": 8,
+      "mean": 2.2903453892059993,
+      "median": 2.3222304451392857,
+      "sd": 1.2881041039945116,
+      "min": 0.5251566063042986,
+      "max": 4.196216100734236,
+      "frac_under_2.0": 0.375
+    },
+    "rmsd_arm": {
+      "n": 8,
+      "mean": 2.2616305582961447,
+      "median": 2.232095547569525,
+      "sd": 1.2684597440712961,
+      "min": 0.5251452965706385,
+      "max": 4.201569991803392,
+      "frac_under_2.0": 0.5
+    },
+    "paired": {
+      "rmsd_arm_vs_shipped": {
+        "mean_diff": -0.23643611289650102,
+        "se": 0.17549426881806923,
+        "ci95": [
+          -0.5804048797799167,
+          0.1075326539869147
+        ],
+        "n_better": 6,
+        "n_worse": 2,
+        "n": 8
+      }
+    },
+    "ablations": {},
+    "duplicate_candidates": {
+      "n_top_mean": 75.0,
+      "n_distinct_mean": 67.875,
+      "frac_duplicate": 0.09499999999999997
+    }
+  }
+}
+{"diagnostic": "openmm_imported", "value": true, "project_grad": "analytic", "amber": false}
+
+########## s26/logs/i_equiv2_compare.log (python s26/i_equiv2_compare.py --no-amber)
+
+===== 2026-09-13T08:38:24 jobrun i_equiv2_compare agent=I tag=AMBER
+===== cmd: C:/Users/abena/miniforge_3/python.exe s26/i_equiv2_compare.py --no-amber
+arm             cfg_key           n
+baseline_legacy 65ec272db3d31f05  8
+opt_exact       66050f6daae4ca07  8
+opt_fd          85faafd84d76a827  8
+opt_analytic    f4e137a48586bd4b  8
+all four cfg_keys distinct: True
+
+opt_exact vs baseline_legacy: 8 shared targets
+  ca        bit-identical 8/8  max|d| 0.000e+00
+  fit_ca    bit-identical 8/8  max|d| 0.000e+00
+  phi       bit-identical 8/8  max|d| 0.000e+00
+  psi       bit-identical 8/8  max|d| 0.000e+00
+  avg_ca    bit-identical 8/8  max|d| 0.000e+00
+  rmsd_avg  equal 8/8  max|d| 0.000e+00
+  rmsd_fit  equal 8/8  max|d| 0.000e+00
+  rmsd_arm  equal 8/8  max|d| 0.000e+00
+  n_windows equal 8/8  max|d| 0.000e+00
+  n_top     equal 8/8  max|d| 0.000e+00
+
+opt_exact vs opt_fd: 8 shared targets
+  ca        bit-identical 0/8  max|d| 2.229e+01
+  fit_ca    bit-identical 0/8  max|d| 2.711e+01
+  phi       bit-identical 0/8  max|d| 6.285e+00
+  psi       bit-identical 0/8  max|d| 6.395e+00
+  avg_ca    bit-identical 8/8  max|d| 0.000e+00
+  rmsd_avg  equal 8/8  max|d| 0.000e+00
+  rmsd_fit  equal 0/8  max|d| 6.898e-04
+  rmsd_arm  equal 0/8  max|d| 1.220e-02
+  n_windows equal 8/8  max|d| 0.000e+00
+  n_top     equal 8/8  max|d| 0.000e+00
+
+opt_exact vs opt_analytic: 8 shared targets
+  ca        bit-identical 0/8  max|d| 3.175e+01
+  fit_ca    bit-identical 0/8  max|d| 2.898e+01
+  phi       bit-identical 0/8  max|d| 6.283e+00
+  psi       bit-identical 0/8  max|d| 6.373e+00
+  avg_ca    bit-identical 8/8  max|d| 0.000e+00
+  rmsd_avg  equal 8/8  max|d| 0.000e+00
+  rmsd_fit  equal 0/8  max|d| 1.010e-01
+  rmsd_arm  equal 0/8  max|d| 4.838e-02
+  n_windows equal 8/8  max|d| 0.000e+00
+  n_top     equal 8/8  max|d| 0.000e+00
+
+wrote C:\Users\abena\Protein-Folding-Algorithm\s26\results\run_equiv2_compare.json
