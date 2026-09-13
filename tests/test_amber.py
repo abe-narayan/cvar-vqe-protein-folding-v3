@@ -24,8 +24,10 @@ measures the deviation the threaded CustomGBForce path actually introduces rathe
 asserting it is absent. It is reported, not assumed.
 """
 import ctypes
+import json
 import os
 import sys
+import time
 
 import numpy as np
 import pytest
@@ -122,6 +124,56 @@ def _memory_verdict(pct, baseline_pct, own_growth_bytes, total_bytes,
 _BASELINE = {"pct": A.memory_percent(), "rss": _own_rss_bytes(),
              "total": _total_phys_bytes()}
 
+#: The S26 resource governor's live snapshot (`s26/governor.py` rewrites it every 5 s).  When
+#: it is fresh, a skip or fail quotes the governor's reading beside the in-process one, so
+#: the message says which ceiling fired and what the box looked like to the process that
+#: polices it.  The DECISION is unchanged: `_memory_verdict` still runs on
+#: `core.amber.memory_percent()`, the same syscall `core.amber.memory_guard` uses, so the
+#: verdict is identical whether or not a governor is running (S26 lane I, defect 6b).
+GOVERNOR_STATE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                              "s26", "governor_state.json")
+#: a snapshot older than this is a stopped governor, not a current reading
+GOVERNOR_MAX_AGE_S = 120.0
+
+
+def _governor_reading(path=GOVERNOR_STATE, max_age_s=GOVERNOR_MAX_AGE_S, now=None):
+    """The governor's last snapshot as a small dict, or None when it is not running
+    (file absent, unreadable, malformed, or older than `max_age_s`)."""
+    try:
+        with open(path, encoding="utf-8") as fh:
+            st = json.load(fh)
+        age = (time.time() if now is None else now) - float(st["epoch"])
+        if age > max_age_s:
+            return None
+        band = st.get("band") or {}
+        return {"ram_pct": float(st["ram_pct"]), "cpu_pct": float(st.get("cpu_pct", 0.0)),
+                "ts": str(st.get("ts", "")), "age_s": float(age),
+                "n_jobs": int(st.get("n_jobs", 0)), "n_amber": int(st.get("n_amber", 0)),
+                "ceiling": band.get("ceiling")}
+    except Exception:                                                    # noqa: BLE001
+        return None
+
+
+def _ceiling_message(verdict, pct, baseline_pct, grew_bytes, limit=None, gov=None):
+    """The text a skip or fail carries: the ceiling that fired, the reading that crossed it,
+    and the governor's own reading when one is running."""
+    limit = A.MEMORY_LIMIT_PERCENT if limit is None else limit
+    text = (f"physical memory {pct:.0f}% (core.amber.memory_percent) is above core.amber's "
+            f"{limit:.0f}% ceiling")
+    if gov is not None:
+        text += (f"; the S26 governor read {gov['ram_pct']:.1f}% RAM / {gov['cpu_pct']:.1f}% CPU "
+                 f"at {gov['ts']} ({gov['age_s']:.0f} s ago) with {gov['n_jobs']} registered "
+                 f"job(s), {gov['n_amber']} AMBER, governor ceiling {gov['ceiling']}%")
+    else:
+        text += "; no fresh s26/governor_state.json, so the governor is not running"
+    if verdict == "fail":
+        return (text + f", and THIS SUITE accounts for it: our working set grew "
+                f"{grew_bytes / 2**20:.0f} MB since the run started, from {baseline_pct:.0f}%. "
+                "That is a leak in the builder cache or context teardown, not a busy box.")
+    return (text + f", and this suite did not cause it (our working set grew "
+            f"{grew_bytes / 2**20:.0f} MB since {baseline_pct:.0f}%); memory_guard is refusing "
+            "contexts correctly. Re-run on a quiet box.")
+
 
 @pytest.fixture(autouse=True)
 def _memory_ceiling():
@@ -129,17 +181,11 @@ def _memory_ceiling():
     grew = _own_rss_bytes() - _BASELINE["rss"]
     verdict = _memory_verdict(pct, _BASELINE["pct"], grew, _BASELINE["total"])
     if verdict == "fail":
-        pytest.fail(
-            f"physical memory {pct:.0f}% is above the {A.MEMORY_LIMIT_PERCENT:.0f}% "
-            f"ceiling and THIS SUITE accounts for it: our working set grew "
-            f"{grew / 2**20:.0f} MB since the run started, from {_BASELINE['pct']:.0f}%. "
-            "That is a leak in the builder cache or context teardown, not a busy box.")
+        pytest.fail(_ceiling_message("fail", pct, _BASELINE["pct"], grew,
+                                     gov=_governor_reading()))
     if verdict == "skip":
-        pytest.skip(
-            f"physical memory {pct:.0f}% is above core.amber's "
-            f"{A.MEMORY_LIMIT_PERCENT:.0f}% ceiling and this suite did not cause it "
-            f"(our working set grew {grew / 2**20:.0f} MB since {_BASELINE['pct']:.0f}%); "
-            "memory_guard is refusing contexts correctly. Re-run on a quiet box.")
+        pytest.skip(_ceiling_message("skip", pct, _BASELINE["pct"], grew,
+                                     gov=_governor_reading()))
     yield
 K = 6                      # candidates per pool; each costs ~6 s converged
 
@@ -610,3 +656,33 @@ def test_the_memory_probes_return_something_sane():
     assert _total_phys_bytes() > 2 * 2 ** 30
     assert 2 ** 20 < _own_rss_bytes() < _total_phys_bytes()
     assert 0.0 < A.memory_percent() <= 100.0
+
+
+def test_the_ceiling_message_names_the_ceiling_and_the_governor_reading(tmp_path):
+    """S26 defect 6b: a skip must say which ceiling fired and what the governor saw.
+
+    Pure: synthetic snapshot files, no OpenMM.  The DECISION (`_memory_verdict`) is not
+    touched; only the message reads the governor, and only while its snapshot is fresh.
+    """
+    p = tmp_path / "governor_state.json"
+    now = 1_000_000.0
+    p.write_text(json.dumps({"epoch": now - 10.0, "ram_pct": 94.2, "cpu_pct": 40.0,
+                             "ts": "2026-09-13T00:00:00", "n_jobs": 2, "n_amber": 1,
+                             "band": {"ceiling": 93.0}}), encoding="utf-8")
+    g = _governor_reading(str(p), now=now)
+    assert g is not None and g["ram_pct"] == 94.2 and g["n_amber"] == 1 and g["ceiling"] == 93.0
+    # stale (older than the window), absent, or malformed -> not running -> fall back
+    assert _governor_reading(str(p), max_age_s=5.0, now=now) is None
+    assert _governor_reading(str(tmp_path / "missing.json"), now=now) is None
+    (tmp_path / "bad.json").write_text("{not json", encoding="utf-8")
+    assert _governor_reading(str(tmp_path / "bad.json"), now=now) is None
+
+    m = _ceiling_message("skip", 95.0, 60.0, 100 * 2 ** 20, limit=92.0, gov=g)
+    assert "92% ceiling" in m and "94.2% RAM" in m and "1 AMBER" in m
+    assert "did not cause it" in m and "governor ceiling 93.0%" in m
+    m2 = _ceiling_message("skip", 95.0, 60.0, 100 * 2 ** 20, limit=92.0, gov=None)
+    assert "92% ceiling" in m2 and "governor is not running" in m2
+    m3 = _ceiling_message("fail", 95.0, 60.0, 5 * 2 ** 30, limit=92.0, gov=g)
+    assert "THIS SUITE accounts for it" in m3 and "5120 MB" in m3
+    # the default limit is core.amber's own ceiling
+    assert f"{A.MEMORY_LIMIT_PERCENT:.0f}% ceiling" in _ceiling_message("skip", 99.0, 60.0, 0)

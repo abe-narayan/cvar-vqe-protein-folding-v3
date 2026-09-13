@@ -184,6 +184,44 @@ directories from `train_fold`. `.gitignore` names the owner of each, and carries
 tree. A checkpoint is valid only for the fold definition committed alongside it.
 
 
+## The S26 resource governor
+
+This is a 16.75 GB, 8-core box shared with the user's own sessions; the baseline load with no
+campaign work is about 67% RAM. Sprint 26 added a small governor so that several agents can run
+heavy jobs without pushing the box past its ceiling or running more than two OpenMM jobs at once.
+Three scripts, all under `s26/`, pure `psutil`:
+
+| script | what it does |
+|---|---|
+| `s26/governor.py` | samples every 5 s; **above 93% RAM or CPU suspends the newest registered job**; above 95% for 15 s kills the newest (CTRL_BREAK first so it can checkpoint, 25 s grace, then terminate) and puts its spec back on the queue; resumes suspended jobs once the box is back under 90%; **launches the next queued job when the box has sat under 88% for 60 s**; caps AMBER-tagged jobs at two (a third is suspended on sight until a slot frees). `--once` prints one sample, `--status` the last snapshot. |
+| `s26/jobrun.py` | runs one command as a registered job: waits for headroom (and an AMBER slot if tagged AMBER), writes `s26/jobs/<name>.json`, streams stdout+stderr to `s26/logs/<name>.log`, samples the process tree's RSS, and on exit writes `s26/jobs_done/<name>.json` with the exit code, wall time and **peak RSS** (the honest memory figure to quote). |
+| `s26/enqueue.py` | puts a job spec on `s26/queue/` with a priority; the governor launches it through `jobrun.py` when the band allows. |
+
+The band: **88% low water** (launch queued work), **90%** (resume suspended work below it),
+**93% ceiling** (suspend), **95% for 15 s** (kill and requeue). Tags: `CPU` (default), `AMBER`
+(anything that imports OpenMM or calls `core.amber`; at most two at once), `ESM` (loads the ESM
+bank), `TEST` (pytest). Live state is in `s26/governor_state.json` (rewritten every sample; read
+it before launching anything heavy); every action is appended to `s26/governor.log`, which is
+whitelisted past the blanket `*.log` ignore because it is a deliverable.
+
+    python s26/governor.py                                   # foreground; Ctrl-C stops it
+    python s26/jobrun.py --agent I --tag CPU --name probe --est-ram 0.5 -- python some_script.py
+    python s26/enqueue.py --agent P --tag AMBER --name relax --priority 20 --est-ram 2.5 -- python s26/p_relax.py
+
+The test suite runs under it split three ways so at most one AMBER job is live per lane: the
+non-AMBER files as one `TEST` job, then `tests/test_amber.py` and
+`tests/test_amber_frame_invariance.py` as two sequential `AMBER` jobs. The record of each run
+(per-file counts, every skip reason, peak RSS) is `s26/TEST_RUN.md` / `s26/results/test_run.json`.
+Both AMBER files carry an autouse memory guard: above `core.amber`'s 92% ceiling they skip (or
+fail, if this suite's own working set is what filled the box) with a message that names the
+ceiling and quotes the governor's last reading when one is running.
+
+`python s26/examine.py` (or `examine.sh` / `examine.bat` at the root; there is no Makefile)
+regenerates the module map `s26/results/module_map.json` and re-reads every number in
+`s26/results/claims.json` from the artefact it is claimed from, reporting `OK`, `MISMATCH` or
+`ABSENT`.
+
+
 ## Layout, and why it is flat
 
     README.md            this file

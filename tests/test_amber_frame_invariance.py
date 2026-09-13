@@ -31,6 +31,16 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
+#: The memory guard `tests/test_amber.py` carries, shared rather than copied (S25 L14
+#: approved it; S26 lane I applied it, defect 6b).  Without it, memory pressure on this box
+#: renders as a red FAIL out of `core.amber.memory_guard` instead of a skip that names the
+#: ceiling and the governor's reading.  Importing the fixture object registers it as autouse
+#: in THIS module; the decision logic stays in one place.
+_TESTS = os.path.dirname(os.path.abspath(__file__))
+if _TESTS not in sys.path:
+    sys.path.insert(0, _TESTS)
+from test_amber import _memory_ceiling                                   # noqa: E402,F401
+
 #: A fixed slice of the pinned 126-target instrument.  12 targets at ~2 x 12.6 s of
 #: restrained minimisation is ~5 minutes; the full sweep is a research run, not a test.
 N_TARGETS = 12
