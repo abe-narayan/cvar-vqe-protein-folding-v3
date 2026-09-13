@@ -925,3 +925,40 @@ for the rest of the sprint.
 AUDIT: MATERIAL FINDINGS 1, LISTED ABOVE
 
 ---
+## L32 -- L28 ITEM 2 CORRECTED: THE GOVERNED TEST RUN IS 370 / 357 / 13; THE test_pipeline BENCHMARK-AGGREGATE READ IS ACCEPTED; C26 IS DERIVED (2026-09-13, coordinator)
+
+1. The Adversary's one MATERIAL finding (L31 item A1) is fixed by appended addenda in
+   `s26/EXAMINATION.md` (sections D and C35) and `s26/agentE_FINDINGS.md` (X1): the governed
+   suite is 370 tests, 357 passed, 0 failed, 0 errors, 13 skipped, 0 memory-guard skips
+   (`s26/results/test_run.json :: combined`; junit files `pytest_core_post.xml` 351/338/13,
+   `pytest_amber.xml` 16/16, `pytest_amber_frame.xml` 3/3). L28 item 2's "369 / 356 / 13" was
+   the 00:41 render before `pytest_core_post` finished. Lane E's lines are left as written.
+2. Ruling on the Adversary's question: `tests/test_pipeline.py:338-347` reads two published
+   aggregates of `s9/final_report.json` (the benchmark means 2.9507 and 2.9610 already in
+   `README.md`) and asserts them to 5e-4. It is the repository's own regression test, it
+   predates S26, it reads no per-target value, and a pass or fail carries no new information
+   about the benchmark. Accepted; it is not deselected, so the S26 test record stays whole.
+   No S26 lane adds any benchmark read of its own (L29 item 1 stands).
+3. C26 (phi MAE 36.1 vs 36.4 deg) is DERIVED by the Adversary from `s13/cache/tors_rows.npz`
+   (arms `p_grid` / `n_marg`, key `err_phi`, 1,507 residues: 36.133 / 36.416 deg). The Adversary
+   saves that derivation as `s26/results/a_c26_phi_mae.json` with provenance; with it the number
+   may appear on a slide with that artefact path. C27's +0.0004 dev half is lane W's to
+   re-derive (L25, L30); C34 and C24's 0.524 stay document-only and off every slide.
+
+---
+
+## L33 -- PHASE 0 SIGNED OFF (2026-09-13 09:05, coordinator)
+
+The Adversary's audit (`s26/EXAMINATION_AUDIT.md`, L31) found the reproduction exact on HEAD on
+all four bases and all 126 rows, 29 claim leaves at stored precision, the trace faithful to the
+code, the hashes and sizes matching, Rule 1 closed, and one MATERIAL documentary finding, which
+L32 fixes with appended addenda; the Adversary re-checks the append on its next turn and may
+veto by ledger entry, in which case this sign-off is retracted by a new entry and every result
+read in between is provisional. Phase 1 begins: lanes Q (A1, A3), P (ladder evaluation, B3, C4,
+C5), PH (cis floor, C3 stage 1, steric reject) and W (the 2/60 proxy bound) may read RMSDs to
+natives under their pre-registrations. Standing: every positive result is attacked by the
+Adversary before it enters the closed/open tables; basis named on both sides of every contrast;
+the phase gate string in this heading is the one the lanes' code checks.
+
+---
+

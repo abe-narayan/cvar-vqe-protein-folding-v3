@@ -150,3 +150,11 @@ this lane** (Rule 1). The two means it sits between are asserted to 5e-4 by two 
 3. mean |z_moment| 0.7529 / 0.8013 / 0.1127 (C34): document-only.
 4. 355 passed / 13 skipped (C35): document-only; superseded by `s26/results/test_run.json`.
 5. 0.524 sampled tail-only cosine (part of C24): document-only.
+
+
+---
+
+## ADDENDUM (appended 2026-09-13 09:05, coordinator, after L31 item A1)
+
+X1 above quotes 369 / 356 / 13 for the governed test run; the committed artefact holds
+370 / 357 / 13 (`s26/results/test_run.json :: combined`). See the addendum in `s26/EXAMINATION.md`.

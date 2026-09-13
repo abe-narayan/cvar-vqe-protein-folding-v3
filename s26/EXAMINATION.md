@@ -472,3 +472,16 @@ recorded the same in L16b.
 5. **The production cache is not versioned** (section G, first row).
 6. **Four presenter-facing numbers have no artefact** (C26, C27, C34, C35) and one benchmark
    number is named to a file this lane did not open (C06).
+
+
+---
+
+## ADDENDUM (appended 2026-09-13 09:05, coordinator, after the Adversary's audit L31 item A1)
+
+Section D ("Combined: 369 tests, 356 passed, 0 failed, 0 errors, 13 skipped") and claim C35's
+"369 tests, 356 passed, 13 skipped" quote the 00:41 render of `s26/TEST_RUN.md`, taken before
+job `pytest_core_post` finished at 00:45:56. The artefact as committed (`s26/TEST_RUN.md` line 118,
+`s26/results/test_run.json :: combined`, junit `s26/results/pytest_core_post.xml` 351/338/13 plus
+`pytest_amber.xml` 16/16 plus `pytest_amber_frame.xml` 3/3) holds **370 tests, 357 passed, 0
+failed, 0 errors, 13 skipped, 0 memory-guard skips**. Section D's file list omits
+`pytest_core_post.xml`; it is the run that counts. The lines above are left as written.
