@@ -71,3 +71,16 @@ resultslab) is assigned to the Examiner and Infrastructure lanes, whose module m
 Phase 0 deliverable.
 
 ---
+## L5 -- PHASE-GATE READING FOR THE CIS-PEPTIDE CENSUS, AND LANE PH SPAWNED (2026-09-13, coordinator)
+
+The phase gate forbids any endpoint experiment (anything reading an RMSD to a native) before
+"PHASE 0 SIGNED OFF". The cis-peptide census reads omega angles of the 126 dev natives and CA-CA
+distances of pool windows; it computes no RMSD, selects nothing and changes nothing. It is an ORACLE
+DIAGNOSTIC and is allowed before the gate. The projection-floor cost on cis targets (an RMSD) waits
+for the gate. Lane PH (Physics) spawned at 00:20 with brief `s26/briefs/PH.md`: AMBER as a steric
+reject filter, the cis-peptide gap, the steric singularity for Part IV, and the C3 matched-random
+control (stage 1 on the production cache, stage 2 on the best C2 rung when lane P delivers it).
+Lanes active: E, I, Q, P, PH (`s26/lanes.json`).
+
+---
+
