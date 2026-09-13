@@ -422,7 +422,166 @@ together only to place the stages; the one contrast the programme makes across t
 the gap between what the pool holds (1.71 A, single window) and what the readout returns
 (3.21 A, built chain), which is the recognition problem every sprint from S7 to S25 worked on.
 
-<!-- PART IV -->
+## PART IV. THE TWO PHYSICS HAMILTONIANS
+
+Source: `s26/PH_PART_IV_NOTES.md` (lane PH, S26), which carries the artefact path of every
+number below; the underlying files are `s25/results/phys_landscape.json`,
+`s25/results/phys_suite.json`, `s13/results/walsh_xval.json`, `s13/results/walsh_amber.json`,
+`s20/results/c_land_report.txt`, `s20/results/c_land_null.json`,
+`s26/results/ph_reject_census.json` and `s26/results/ph_c3_nativefree.json`. Basis is named at
+every RMSD.
+
+### IV.1 What the two scores are
+
+The programme has two ways of asking "is this a plausible peptide?" that do not read the native.
+
+**Legacy** is an eleven-term score (`core/energy.py`, `DEFAULT_WEIGHTS`, never fitted): steric
+4.0, contact 1.0, local hydrogen bond 1.0, long-range hydrogen bond 3.0, helix cooperativity
+2.0, sheet cooperativity 2.0, solvation 0.5, electrostatic 1.0, aromatic 0.8, torsion 0.15,
+compactness 0.4. Each term reads the backbone and CB atoms only (the CB is the first side-chain
+atom) and adds a number; the weights are hand-set constants. It costs 0.3 ms per structure.
+
+**AMBER** is a molecular force field, ff14SB with the GBn2 implicit-solvent model, evaluated by
+OpenMM (`core/amber.py`). Every heavy atom of every side chain is built onto the backbone by a
+deterministic builder (a fixed rotamer, no scan), hydrogens are added, and the energy is the
+sum of bond, angle, torsion, non-bonded (Lennard-Jones plus Coulomb) and solvation terms. A
+single evaluation costs about 9 ms; a restrained minimisation to convergence 6 to 12 s
+(`s16/repair_FINDINGS.md` section 2.4). The record's earlier "6 ms" was a memoised re-evaluation
+and is corrected to 28 ms for the single point it timed (`docs/CONDENSED_REPORT.md:185`).
+
+### IV.2 What "H = E after 50 relaxation steps" means
+
+When AMBER is used as a Hamiltonian for a quantum selector, the structure it is handed is an
+ideal-geometry chain that has never been relaxed, and its energy there is not a finite number on
+42% of a lattice register (`s20/LEDGER.md` L6: finite at Relax_1 on 112 of 192 states, at
+Relax_50 on 186 of 192). The deployable object is therefore "run 50 steps of restrained
+minimisation, then read the energy". That operator, not the raw force field, is the
+Hamiltonian; the relaxation is what makes the objective defined, and the Spearman correlation
+between the energy after 50 steps and after 1 step is 0.36 to 0.88 across three targets, so the
+ordering is still moving when the cap stops it.
+
+### IV.3 Legacy is a compactness model; AMBER has the opposite sign
+
+Measured on the shipped K = 500 pools of all 126 targets
+(`s25/results/phys_landscape.json :: summary`): the 75 candidates Legacy likes best are 0.758 A
+more compact in radius of gyration than the pool (SE 0.023) and Legacy's rank correlation with
+Rg is +0.60. The 75 AMBER likes best are 1.103 A more expanded (SE 0.042), rho(AMBER, Rg)
+= -0.27. They disagree with each other about ordering: rho(Legacy, AMBER) = -0.090 (SE 0.018),
+reproduced on three instruments (`s20/results/c_q1.json` -0.0886; S24 -0.0829). Legacy's
+whole-pool correlation with the true RMSD is +0.307, but a score that reads only Rg gets +0.279,
+so almost all of Legacy's apparent skill is "prefer compact". AMBER's is -0.027 whole-pool and
++0.047 with Rg removed. (`s20/LEDGER.md` L8 is the first statement of this.)
+
+### IV.4 Why both rank worse than a random subset
+
+Used as the selector over the pool, with the identical coordinate-average readout and a CVaR-VQE
+for all seven configurations (`s25/results/phys_suite.json :: configs_rank, random_null_rank`;
+`s25/LEDGER.md` L16), the endpoints are, ALL POINT CLOUD: Distogram 3.058, AMBER+Distogram
+3.132, Legacy+Distogram 3.215, all three 3.253, random 75-subset 3.425, Legacy+AMBER 3.674,
+Legacy 3.755, AMBER 3.881 A. Legacy alone is +0.330 A point cloud worse than picking 75 at
+random (point cloud), 1.99x its MDE; AMBER +0.455 A, 2.42x MDE; 5 of 5 folds each
+(`s25/agentPHYS_FINDINGS.md` section 1.4). The built-chain means of the same seven rows are
+3.2187, 3.3100, 3.3732, 3.4221, 3.8248, 3.8844 and 4.1015 A (`results/summary/leaderboard.json
+:: rows[*]/mean`; the random-75 built-chain row is not in that table, so the "worse than
+random" contrast is stated on the point cloud only). Permuting a physics channel while keeping
+its distribution improves the endpoint (Legacy +0.327 point cloud worse than its own noise,
+AMBER +0.471; `s25/agentPHYS_FINDINGS.md` section 1.5). The reason is IV.3: the pool's dominant
+axis is compactness, the distogram already selects on it, and each energy pushes along that
+axis in a direction unrelated to which candidate is right. S16 had found the same for Legacy as
+a ranker inside the architecture (+0.068 [+0.012, +0.125] worse than a matched random drop at
+m = 5, `s16/LEDGER.md` L17), S17 had found the decisive AMBER-against-Legacy comparison at full
+scale and concluded "the objective is not weak, it is wrong" (`s17/LEDGER.md` L29, L30), and S18
+found every physics filter losing to a random gate (`s18/LEDGER.md` L17).
+
+### IV.5 The steric singularity, and where it lives
+
+An unrelaxed ideal-geometry rebuild of a retrieved window puts atoms on top of each other, and
+the Lennard-Jones r^-12 wall turns one overlap into an energy of 1e4 to 1e29 kcal/mol (a relaxed
+peptide sits at -1170 to -500). Measured: 58.6% of every pool is above 1e4 kcal/mol; the
+energies span 15.3 decades; 97.0% of a pool lands inside |z| < 0.1 of a moment z-score; the ten
+worst candidates carry 99.66% of the variance
+(`s25/results/phys_landscape.json :: AMB_frac_absz_lt_0p1, AMB_decades, AMB_top10_var_share`).
+
+In the Pauli basis the same fact reads: over the 25 fully enumerated AMBER tables of S13, the ten
+most extreme configurations out of 4,096 carry a median 99.56% of raw AMBER's Walsh variance
+(range 60.7% to 99.98%; the single worst configuration alone a median 46.5%), against a median
+26.6% for Legacy over 41 tables (`s13/results/walsh_xval.json :: concentration`,
+`var_share_top10`, `var_share_top1` by `model`). A function that is a constant plus one spike
+has a Pauli-weight spectrum of exactly Binomial(m, 1/2), so the spike makes raw AMBER look
+maximally non-local for arithmetic reasons that say nothing about the physics
+(`s13/walsh_FINDINGS.md`; Part V.7). The spike is one term: in the same enumerations the
+non-bonded term owns the whole variance, covariance share 1.000 on every cell, while bond and
+angle terms have variance 0.0 and torsion and solvation have variances of order 3 and 900
+(kcal/mol)^2 against the non-bonded term's 7e30 to 2e31
+(`s13/results/walsh_amber.json :: exact[*].terms`; `s13/walsh_FINDINGS.md` section 3.1). Remove
+that one term and AMBER's spectrum falls below Legacy's on 6 of 6 targets (section 3.2 there).
+
+In the torsion-space Hessian the same fact reads: 7.45% of AMBER's modes carry all of its
+curvature (participation ratio 0.0745 against Legacy's 0.4221, 30W/0L; anisotropy 18.8 against
+5.8, 0W/30L; condition number three orders larger; `s20/results/c_land_report.txt` section 1).
+When AMBER is minimised from a pool member it moves the chain 0.577 rad per coordinate, five
+times Legacy's 0.104, because its first steps are clash relief; 72% of the RMSD damage that
+minimisation does is the size of that move, not its direction
+(`s20/results/c_land_null.json`, toward-member null +0.444 of +0.620; `s20/LEDGER.md` L12).
+
+New in S26 (`s26/results/ph_reject_census.json :: singularity`; S26 ledger L23): on the 9,450
+shipped top-75 rebuilds, 40.7 of every 75 have two heavy atoms closer than 2.0 A when every side
+chain is built, but only 2.6 of 75 do on the backbone plus CB (S19 measured 2.66). Of the 5,057
+rebuilds above 1e4 kcal/mol, 96.8% have their closest contact on a side-chain atom (bb-sc 2,627,
+sc-sc 2,267, bb-bb 163). Within a top-75 the AMBER single point tracks the minimum heavy-atom
+distance at Spearman -0.74. So the singularity is mostly the builder's: the fixed rotamer that
+places each side chain onto a backbone it did not see. The backbones themselves are almost
+always physically possible.
+
+### IV.6 The non-monotone standardisation trap
+
+Turning an energy into a score by subtracting its mean and dividing by its standard deviation
+looks harmless, but with one 1e28 outlier setting the standard deviation, every candidate below
+about 1e12 maps to the same double-precision number. On 40 of 126 targets the moment z-score
+changes AMBER's own ordering, with exact tie blocks up to 462 of 500; `np.argsort` then returns
+those tied candidates in array order, which is the BLOSUM retrieval order, and that order is not
+neutral (rho with the true RMSD +0.054, seven standard errors from zero). Every Angstrom of the
+moment-z "advantage" on the AMBER configuration lived on exactly those 40 targets
+(`s25/agentPHYS_FINDINGS.md` section 3; `s25/results/phys_suite.json :: normalisation_fork`).
+Rank standardisation is monotone and has no such failure; it is what production uses
+(`core.pipeline._zrank`; `ARCHITECTURE.md` section 4).
+
+### IV.7 The relaxation on the production chain
+
+The last production stage relaxes the built chain with a restraint of 10 kcal/mol/A^2 on N, CA
+and C. Measured on the 126 emissions (`s26/results/ph_c3_nativefree.json`; S26 ledger L24):
+the built chain's own AMBER energy is above 1e4 kcal/mol on 58.7% of targets before relaxation
+(median 8.6e4), the relaxation brings it to -560 on average and converges on 125 of 126 (9KAR
+ends at +1262), moves the CA trace 0.220 A RMS, and stretches the virtual CA-CA bond from 3.804
+to 3.867 A on average, breaking it beyond 4.0 A on two targets (2BP4 5.38 A, 9KAR 4.86 A). What
+that step does to accuracy against a random move of the same size is C3 (`s26/C3_RESULT.md`,
+after the gate; Part VII); on the record so far the step costs +0.0207 A [+0.0143, +0.0276]
+relaxed chain against built chain (`docs/STATE_BRIEF_2026-09-12.md` section 4) and S16 found a
+random displacement of matched size at least as accurate (`s16/LEDGER.md` L27). S17's "steric
+validity is free" was quoted against the wrong baseline and corrected by the workstream that
+made it (`s17/LEDGER.md` L27), and S17 explained S16's cis-peptide defect in a way that
+exonerates the force field: the ideal-geometry builder cannot represent the cis bond, and the
+minimiser is asked to repair what the builder could not draw (`s17/LEDGER.md` L28).
+
+### IV.8 What the physics is for
+
+The record's settled role for both energies is a validity stage, not an accuracy stage:
+`docs/FINDINGS.md:3663` (S8-12, "AMBER is a validity stage, not an accuracy stage");
+`s17/LEDGER.md` L24 (the validity frontier splits in two, and the incumbent's restraint set
+wins); `s18/LEDGER.md` L15, L17 (`leg_contact` fails as a term in the objective and is harmful
+on the deployed one); `s21/LEDGER.md` L24, L33 (the Legacy-to-AMBER continuation is degenerate
+in raw units, preconditioning does not work, and the physics half is worse than chance at
+n = 126); `s24/LEDGER.md` L10, L10-A, L16 (two different physics functionals do not escape the
+shared referent; AMBER selects along a non-parallel direction and cannot pay for it; the
+functional lever is closed in all three forms); `s25/LEDGER.md` L16, L18 (the seven-configuration
+suite; closed in all five forms). The sentence lane PH wrote for the presenter is the
+programme's position: the two physics scores are real, they disagree with each other about what
+a good peptide looks like, and on this pool both are worse than choosing at random because
+neither is looking at the thing that decides accuracy; the all-atom force field's number on an
+unrelaxed candidate is almost entirely the distance between its two closest atoms, and that
+distance is set by how the side chains were placed, not by the backbone. It belongs in the
+pipeline as a validity check, which is what it is, and not as a judge of which candidate is
+right, which it is not (`s26/PH_PART_IV_NOTES.md` section 9).
 
 <!-- PART V -->
 
@@ -500,6 +659,24 @@ artefact; "as asserted" means a passing test pins it.
 | 1000 | III | `core/amber.py:1282`; `s8/integrate.py:292` | as in source |
 | 2.6e-4 | II | `s25/LEDGER.md` L10 | as cited |
 | 64.7th percentile | II | `s25/results/q_alpha.json` (concentration check, `s25/QUANTUM.md` 6.4) | as cited |
+| Legacy weights 4.0, 1.0, 1.0, 3.0, 2.0, 2.0, 0.5, 1.0, 0.8, 0.15, 0.4 | IV | `core/energy.py` `DEFAULT_WEIGHTS` | as in source |
+| 0.3 ms, 9 ms, 6 to 12 s | IV | `s16/repair_FINDINGS.md` section 2.4 | as cited |
+| 28 ms (corrects 6 ms) | IV | `docs/CONDENSED_REPORT.md:185` (corrections table) | as cited |
+| 112/192, 186/192, 0.36 to 0.88 | IV | `s20/LEDGER.md` L6 | as cited |
+| -0.758 (SE 0.023), +0.60, +1.103 (SE 0.042), -0.27, -0.090 (SE 0.018), +0.307, +0.279, -0.027, +0.047 | IV | `s25/results/phys_landscape.json :: summary` | as stored |
+| -0.0886, -0.0829 | IV | `s20/results/c_q1.json`; S24 (via `s26/PH_PART_IV_NOTES.md` section 3) | as cited |
+| 3.058, 3.132, 3.215, 3.253, 3.425, 3.674, 3.755, 3.881 (point cloud) | IV | `s25/results/phys_suite.json :: configs_rank, random_null_rank` | as stored |
+| +0.330 (1.99x MDE), +0.455 (2.42x MDE), +0.327, +0.471 | IV | `s25/agentPHYS_FINDINGS.md` sections 1.4, 1.5 (from `s25/results/phys_suite.json`) | as cited |
+| 3.2187, 3.3100, 3.3732, 3.4221, 3.8248, 3.8844, 4.1015 (built chain) | IV | `results/summary/leaderboard.json :: rows[*]/mean` | as stored |
+| +0.068 [+0.012, +0.125] | IV | `s16/LEDGER.md` L17 (`s16/integrate.py`; interval flagged provisional there) | as cited |
+| 58.6%, 15.3, 97.0%, 99.66% | IV | `s25/results/phys_landscape.json :: AMB_frac_absz_lt_0p1, AMB_decades, AMB_top10_var_share` | as stored |
+| 99.56% (60.7% to 99.98%), 46.5%, 26.6%, 25, 41 | IV | `s13/results/walsh_xval.json :: concentration` | as stored |
+| 1.000, 0.0, 3, 900, 7e30 to 2e31, 6 of 6 | IV | `s13/results/walsh_amber.json :: exact[*].terms`; `s13/walsh_FINDINGS.md` 3.1, 3.2 | as stored |
+| 0.0745, 0.4221, 30W/0L, 18.8, 5.8, 0W/30L | IV | `s20/results/c_land_report.txt` section 1 | as stored |
+| 0.577, 0.104, +0.444 of +0.620 (72%) | IV | `s20/results/c_land_null.json` | as stored |
+| 9450, 40.7/75, 2.6/75, 2.66, 5057, 96.8%, 2627, 2267, 163, -0.74 | IV | `s26/results/ph_reject_census.json :: singularity` | as stored |
+| 40/126, 462/500, +0.054 | IV | `s25/results/phys_suite.json :: normalisation_fork`; `s25/agentPHYS_FINDINGS.md` section 3 | as stored |
+| 58.7%, 8.6e4, -560, 125/126, +1262, 0.220, 3.804 to 3.867, 5.38, 4.86 | IV | `s26/results/ph_c3_nativefree.json` | as stored |
 <!-- APPENDIX B ROWS -->
 
 <!-- APPENDIX C -->
