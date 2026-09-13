@@ -1684,7 +1684,177 @@ part was opened; nothing here is a result yet):
 
 <!-- PART VIII -->
 
-<!-- PART IX -->
+## PART IX. OPERATING MANUAL
+
+Sources: `README.md` (layout, running, setup, the governor, the traps), `s26/TEST_RUN.md`,
+`s26/EXAMINATION.md` sections G and H, `s26/examine.py`, `s25/resultslab/build.py`. Commands
+are given for the Windows box the record was made on; the Python is
+`C:/Users/abena/miniforge_3/python.exe` and the working directory is the repository root.
+
+### IX.1 Environment
+
+- `pip install -e .` installs the nine runtime dependencies named in `pyproject.toml` (numpy,
+  scipy, torch, openmm, pennylane, pennylane-lightning, fair-esm, scikit-learn, biopython);
+  `pip install -e ".[test]"` adds pytest. `lightning.qubit` is the device `core.quantum` builds
+  circuits for and `tests/test_quantum.py` asserts probabilities against it with `==`, so it is
+  not interchangeable.
+- The machine: 16.75 GB RAM and 8 cores (4 fast and 4 slow, about 6.43 core-equivalents,
+  `docs/STATE_BRIEF_2026-09-12.md` section 8); the baseline load with no campaign work is about
+  67% RAM; the working rules are never above 93% RAM or CPU, never more than two OpenMM jobs at
+  once (`README.md`, "The S26 resource governor").
+- Every `.py` on the production path (`core/`, the 24 root modules, `s5/ s7/ s8/ s9/`) is the
+  reference arm for an equivalence claim; edit none of them without re-running
+  `tests/test_equivalence.py` and `tests/test_pipeline.py`. The full pre-consolidation tree is
+  at commit `5fa05cd`.
+
+### IX.2 Data and caches: which are pinned, which are rebuildable
+
+Pinned, never delete, move or regenerate (`s26/results/pinned_hashes.json` holds their sha256;
+`python s26/e_hashes.py --check` reports drift):
+
+| artefact | what it pins | why regeneration is dangerous |
+|---|---|---|
+| `peptide_folds.json`, `peptide_clusters.json` | the five folds and 470 clusters | write-on-first-use: a missing file is silently re-derived, which once moved 13 benchmark targets and invalidated every model |
+| `catrace_prior.npz` | the torsion prior | same write-on-first-use behaviour |
+| `results/benchmark_manifest.json` | the sealed 60 | hashed as bytes; never parsed by any S26 script |
+| `distogram_models/fold<f>_esm_frag.pt` | the five fold models | valid only for the fold definition committed alongside them; `distogram_models_large.STALE-PRE-FOLD-REPIN-DO-NOT-USE/` is quarantined by rename so that `FRAG_LARGE=1` fails loudly |
+| `pdbs/` (61 files) | the reporting set | globbed and sorted by three modules; adding, removing or renaming a file re-orders BLOSUM tie sets and moves up to 47 of 500 pool members |
+
+Rebuildable, ignored by git, owned by the module that rebuilds it (`.gitignore` names each
+owner): `prots/` (5.5 GB) and `pdbs_ext/` (555 MB) from the RCSB fetch scripts kept in git
+history; `esm_cache.npz` (1.5 GB, never load without a probe; the hot subset `esm_small.npz`
+serves the 126 targets) from `esm_features.compute`; `peptide_db.npz` and `fragment_db*.npz`
+from their `build` entry points; `*_models/` from `train_fold`. Caches that are the only copy of
+a scientific record and must be preserved: `bench_results/cache/1fc9f2dcf489e2fb/` (the
+production run's 126 checkpoints, gitignored), `s8/generate_univ/` (the 126 window universes),
+`s24/cache_amber/*.npz` (63k AMBER single points; the state brief's outstanding item is to
+whitelist and commit it), `s13/cache/` and the sprint `results/` directories. The full
+not-in-git census is `s26/EXAMINATION.md` section G.
+
+### IX.3 Running the production path on one target and reproducing its RMSD
+
+The record for a target is `bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json`; it carries the
+emitted `ca`, `avg_ca`, `fit_ca`, `amber_ca`, the shortlist `sub` and the labels. To reproduce
+it from scratch, without AMBER:
+
+    python s26/e_trace.py 1S9Z            # every stage, shapes and values, to s26/results/e_trace_1S9Z.json
+    python s26/e_trace.py 9KAR --amber    # also the relaxation (tag AMBER; run through jobrun)
+
+In code the trace does what production does:
+
+    from core import pipeline as pl
+    target, fold = ...                                   # from core.backend("data").load() and the pinned folds
+    cfg = pl.Config(amber=False)                         # PROD otherwise; reference_precision=True
+    rec, pool, clk = pl.run_target(target, fold, cfg, clk)
+    lab = pl.label(rec, pool, target, clk, cfg)          # the ONLY function that opens the native
+
+`lab` holds `rmsd_avg`, `rmsd_fit`, `rmsd_arm`, `shipped`, `pool_best`, `top_m_best`; on 1S9Z
+`rmsd_arm` is 0.18198112330908295 and every value equals the stored record at 0.0
+(`s26/EXAMINATION.md` H). To re-score every stored structure of all 126 records through the
+instrument in five seconds, `python s26/e_reproduce.py` (writes `s26/results/e_reproduce.json`;
+the four bases reproduce at 0.0). The instrument itself is `s12.instrument.ca_rmsd`; the natives
+go through `core.pipeline._q` because that is what `label()` scored.
+
+### IX.4 The full run, resuming, and the config key
+
+    python -m core.pipeline run --manifest tuning126 --workers 6
+    python -m core.pipeline stats --manifest tuning126
+
+Manifests: `smoke8`, `smoke24`, `tuning126`, `dev24`, `benchmark60`. Every target writes one
+atomic checkpoint under `bench_results/cache/<config-key>/<pdb>.json`; the key is a SHA-1 over
+every parameter that can change a number (K, M, penalty, lam, the AMBER schedule, the fold
+count, the pair separation, the optimiser cap, the tie-break rule, the live backend set), so
+resuming is re-running the same command, a run with a changed parameter cannot inherit the old
+answer, and `stats` reports how many targets were resumed. `core.bench --arm baseline|optimised
+--fresh` measures both arms cold, `--compare` prints the speedup, `--components` runs the
+four-component system. `benchmark60` is refused without `--i-am-spending-the-benchmark`; do not
+pass it (`README.md`, "The instrument discipline"). `CORE_BACKENDS=legacy` forces the reference
+modules (`amber_refine, peptide_db, energy_terms, protein_geometry, legacy_field, s7.audit,
+distogram, foldvqe, s8.project`) for an equivalence run.
+
+### IX.5 The test suite under the governor
+
+Never run `pytest tests/` bare on this box; the AMBER files can push it past 92% RAM. The suite
+runs in three governed jobs (`s26/TEST_RUN.md` records each command verbatim):
+
+    python s26/jobrun.py --agent I --tag TEST  --name pytest_core        --est-ram 2.0 -- python -m pytest tests/ -q -rs -p no:cacheprovider --deselect tests/test_amber.py --deselect tests/test_amber_frame_invariance.py --ignore=tests/test_amber.py --ignore=tests/test_amber_frame_invariance.py --junitxml=s26/results/pytest_core.xml
+    python s26/jobrun.py --agent I --tag AMBER --name pytest_amber       --est-ram 2.0 -- python -m pytest tests/test_amber.py -q -rs -p no:cacheprovider --junitxml=s26/results/pytest_amber.xml
+    python s26/jobrun.py --agent I --tag AMBER --name pytest_amber_frame --est-ram 1.5 -- python -m pytest tests/test_amber_frame_invariance.py -q -rs -p no:cacheprovider --junitxml=s26/results/pytest_amber_frame.xml
+    python s26/i_test_report.py     # renders s26/TEST_RUN.md and s26/results/test_run.json from the junit files
+
+The last governed run (branch `s26`, commit `601a39c7`): 370 tests, 357 passed, 0 failed, 0
+errors, 13 skipped, none from the memory guard; the 13 skips are 11 `VERIFY_SLOW=1` opt-ins
+(3 in `test_equivalence.py`, 8 in `test_integration.py`) and 2 absent artefacts; per-file
+counts, wall times and peak RSS (1.692, 0.872, 0.324 GB) are in `s26/TEST_RUN.md`. Set
+`VERIFY_SLOW=1` to run the full pipeline arms and the OpenMM checks. Both AMBER files carry an
+autouse memory guard that skips, with a message naming the ceiling and the governor's last
+reading, when the box is above `core.amber`'s 92% ceiling.
+
+### IX.6 The results lab
+
+`s25/resultslab/` is one command:
+
+    python -m s25.resultslab.build --mode selftest --limit 12     # sandbox smoke test, test-fixture labels only
+    python -m s25.resultslab.build --mode frozen --spec s25/results/frozen_configs.json
+
+`--mode frozen` is the only mode that writes to `results/`; the spec file, not the module,
+decides what a configuration is, and each configuration's path is a JSON of emitted point
+clouds keyed by PDB id, which the lab projects to the built chain itself. Four gates run on
+every exported set (pool-oracle, difficulty-correlation, per-target sd floor, provenance REMARK
+in every PDB header; the build refuses files without one), `providers.register` refuses
+synthetic bindings under real configuration names, and every exported structure reproduces its
+own RMSD through the instrument to within PDB quantisation (`s25/LEDGER.md` L10, L11). Outputs:
+`results/summary/leaderboard.json` (rows with `mean` on `built_chain_bb` and `mean_secondary`
+on the point cloud), `results/summary/target_map.json` (T001 to T126), `results/site/`.
+
+### IX.7 Adding a sprint
+
+1. Make `s27/` with a `BRIEF.md`, a `LEDGER.md` and a `STATUS.md`; nothing in `core/` imports
+   a sprint directory, and no sprint script edits the production path.
+2. Write `s27/PREREG_<name>.md` before any result exists: hypothesis, the exact falsifier, the
+   comparison arm, the basis of every RMSD, the expected effect against an MDE computed from
+   persisted per-target arrays (`s26/PREREG_C2.md` is the template), memory and agent-hours.
+   Never edit it afterwards; append addenda.
+3. Run heavy work through `s26/jobrun.py` (or `s26/enqueue.py` when the box is busy) with the
+   right tag; quote the peak RSS from `s26/jobs_done/<name>.json`.
+4. Write artefacts with `s24.stats_lib.save_atomic` (module hash, git commit, dirty flag,
+   `complete` gated on the expected rows) and compare with `s24.stats_lib.compare` (paired
+   effect, SE, MDE, iid and fold-clustered CI, W/L, per-fold, concentration null); average tied
+   argmins with `argmin_tied`; report grid minima through `best_of_k_within` and
+   `split_half_transfer`.
+5. Append to the ledger: re-read the tail immediately before appending, number the entry one
+   past the last, suffix (`L30b`) on a collision, never edit an earlier entry; two STATUS lines
+   per hour under the lane's heading.
+6. Register every number the sprint will quote in `s26/results/claims.json` (path, key, value)
+   so that `python s26/examine.py` re-reads it; `--search` runs the tree-wide search that finds
+   where each number is cited and stored.
+7. A positive result is re-run at a second seed and with the fold order reversed and must land
+   inside its own CI before it is called a result; a negative one is stated with its MDE.
+
+### IX.8 Running the governor
+
+    python s26/governor.py                    # foreground; samples every 5 s; Ctrl-C stops it
+    python s26/governor.py --once             # one sample
+    python s26/governor.py --status           # the last snapshot (also s26/governor_state.json)
+    python s26/jobrun.py --agent E --tag CPU --name probe --est-ram 0.5 -- python some_script.py
+    python s26/enqueue.py --agent P --tag AMBER --name relax --priority 20 --est-ram 2.5 -- python s26/p_relax.py
+
+The band: launch queued work when the box has sat under 88% for 60 s; resume suspended work
+under 90%; suspend the newest registered job above 93% RAM or CPU; above 95% for 15 s, kill the
+newest (CTRL_BREAK first, 25 s grace) and requeue it; at most two AMBER-tagged jobs at once.
+Every action is appended to `s26/governor.log`. Read `s26/governor_state.json` before launching
+anything heavy.
+
+### IX.9 The examination
+
+    python s26/examine.py             # module map, pinned-hash check, claim ledger (OK / MISMATCH / ABSENT)
+    python s26/examine.py --search    # plus the tree-wide claim search (slower)
+    python s26/e_module_map.py        # s26/results/module_map.json (699 modules)
+    python s26/e_hashes.py            # s26/results/pinned_hashes.json (--check to compare)
+    python s26/e_claims.py            # s26/results/claim_search.{json,txt}; benchmark files excluded
+
+`examine.sh` and `examine.bat` at the root call `examine.py`; there is no Makefile. Exit status
+is non-zero if any step reports a problem.
 
 <!-- APPENDIX A -->
 
@@ -1798,6 +1968,11 @@ artefact; "as asserted" means a passing test pins it.
 | +0.166, 7.2%, -2.15 | VI | `s24/LEDGER.md` L9-A, L14, L13 | as cited |
 | +0.164 | VI | `s20/LEDGER.md` L2 | as cited |
 | 370, 357, 13, 0 | VI, IX | `s26/TEST_RUN.md`; `s26/results/test_run.json` | as stored |
+| 16.75 GB, 8 cores, 6.43, 67%, 93%, 92%, 88 / 90 / 93 / 95%, 60 s, 15 s, 25 s, 5 s | IX | `README.md` ("The S26 resource governor"); `docs/STATE_BRIEF_2026-09-12.md` section 8; `s26/governor.py` | as in source |
+| 5.5 GB, 555 MB, 1.5 GB, 61, 63k | IX | `README.md` ("Data this repository does not carry"); `docs/STATE_BRIEF_2026-09-12.md` section 8 | as cited |
+| 0.18198112330908295 | IX | `s26/results/e_reproduce.json` (row 1S9Z, `rmsd_arm`); `s26/results/e_trace_1S9Z.json` | as stored |
+| 1.692, 0.872, 0.324, 11, 3, 8, 2, 601a39c7 | IX | `s26/TEST_RUN.md`; `s26/results/test_run.json` | as stored |
+| 699 | IX | `s26/results/module_map.json` | as stored |
 <!-- APPENDIX B ROWS -->
 
 <!-- APPENDIX C -->
