@@ -1,0 +1,62 @@
+{
+ "question": "B1 FEASIBILITY: can a learned folding model (ESMFold v1) run on this box inside the campaign's 93% RAM band?",
+ "verdict": "NO. Stop B1. Three independent blockers: (1) RAM: >= 8.5 GB resident before load transients against ~4.4 GB of campaign headroom; (2) dependencies: fair-esm 2.0.0's esmfold needs openfold (absent) and omegaconf (absent); openfold requires nvcc and python <= 3.9 per the fair-esm README, the box is Python 3.13 CPU-only torch; (3) the checkpoints are not on disk and total 8.45 GB to download.",
+ "measured_2026-09-13": {
+  "a_weights_on_disk": {
+   "torch_hub_checkpoints": {
+    "esm2_t33_650M_UR50D.pt": 2604537549,
+    "esm2_t33_650M_UR50D-contact-regression.pt": 3687,
+    "esm2_t6_8M_UR50D.pt": 30099493,
+    "esm2_t6_8M_UR50D-contact-regression.pt": 1511
+   },
+   "esmfold_3B_v1.pt_on_disk": false,
+   "esm2_t36_3B_UR50D.pt_on_disk": false,
+   "esm_package_data": "C:/Users/abena/miniforge_3/Lib/site-packages/esm (fair-esm 2.0.0); esmfold/v1/{esmfold.py, trunk.py, pretrained.py} present; no weights"
+  },
+  "b_import": {
+   "esm.pretrained.esmfold_v1_attribute": true,
+   "import_esm.esmfold.v1.pretrained": "ModuleNotFoundError: No module named 'omegaconf' (esm/esmfold/v1/esmfold.py:10)",
+   "esmfold_v1()_call": "ModuleNotFoundError: No module named 'omegaconf'",
+   "openfold_import": "ModuleNotFoundError: No module named 'openfold' (needed by esmfold.py:11-13 and trunk.py:11 for StructureModule)",
+   "pip_list_grep": "fair-esm 2.0.0, torch 2.13.0+cpu; no openfold, omegaconf, dllogger, einops, pytorch-lightning",
+   "python": "3.13 (fair-esm README: openfold install 'requires nvcc' and 'python <= 3.9')"
+  },
+  "c_size_and_ram": {
+   "source_readme": "https://github.com/facebookresearch/esm README (fetched 2026-09-13): esmfold_v1 = 48 (+36) layers, 690M (+3B) parameters; esm2_t36_3B_UR50D = 36 layers, 3B params, 2560-d; esm2_t33_650M_UR50D = 33 layers, 650M params, 1280-d",
+   "download_bytes_http_head": {
+    "esmfold_3B_v1.pt": 2771653574,
+    "esm2_t36_3B_UR50D.pt": 5678116398,
+    "esm2_t36_3B_UR50D-contact-regression.pt": 6759,
+    "total_GB": 8.45
+   },
+   "ram_fp32_GB_parameters_only": {"trunk_690M": 2.76, "lm_3B": 12.0, "total": 14.8},
+   "ram_fp16_GB_parameters_only": {"trunk_690M": 1.38, "lm_3B": 6.0, "total": 7.4},
+   "ram_as_fair_esm_loads_it_GB": {"note": "esm/esmfold/v1/esmfold.py:43-46 loads esm2_t36_3B_UR50D then calls self.esm.half(); the trunk stays fp32", "lm_fp16": 6.0, "trunk_fp32": 2.76, "total_resident_minimum": 8.76, "load_transient": "state_dict + module coexist during torch.load: roughly 2x the checkpoint size on top, i.e. peaks near 14-17 GB"},
+   "activations": "not counted; the README's chunk_size only reduces axial-attention memory"
+  },
+  "d_network": {
+   "curl_sI_https_dl.fbaipublicfiles.com_10s": "HTTP/1.1 200 OK (S3)",
+   "esmfold_3B_v1.pt_HEAD": "200 OK, Content-Length 2771653574",
+   "downloaded": "nothing (rule: no download above 100 MB without a probe and the coordinator's OK)"
+  },
+  "e_headroom": {
+   "governor_state_2026-09-13T00:19": {"ram_total_gb": 16.75, "ram_used_gb": 10.85, "ram_pct": 64.8},
+   "ceiling_pct": 93.0,
+   "ceiling_gb": 15.58,
+   "headroom_gb_all_lanes": 4.4,
+   "esmfold_minimum_resident_gb": 8.76,
+   "fits": false,
+   "fits_even_at_fp16_everything": false
+  }
+ },
+ "esm2_650M_contact_head_as_a_stand_in": {
+  "exposed": true,
+  "where": "esm_features.compute() calls model(toks, repr_layers=[33], return_contacts=True) and caches out['contacts'] (n, n) per sequence; core.data.esm_contacts(seq) serves it; s7/repr_cache/esmcon.npz holds it for all 6,790 training sequences and all 126 targets (s26/results/p_probe_esm.json)",
+  "already_inside_the_shipped_prior": "core.predict.features: con[i,j], its 4 diagonal neighbours, per-residue contact degree, 3 separation-shell contact masses (13 of the 183 input columns)",
+  "what_S17_L23_measured": "contact head in-band Spearman +0.116 [+0.047, +0.184] at top-75 (accuracy 0.541); increment over its ESM-free twin +0.050 [+0.005, +0.097]; mostly compactness; none reaches the argmin in any band; as a shortlist it is significantly WORSE than matched random (+0.315 to +0.449); ESM buys a FILTER, not a DISCRIMINATOR",
+  "consequence": "it is not a folding model (a contact probability map, no coordinates) and it is already consumed by the shipped distogram; B2 cannot be 'use the contact head', it is the shipped input. The cheapest genuine size ladder on this box is esm2_t6_8M (on disk) vs 650M, which s26/p_ladder.py carries as rung esm8m."
+ },
+ "artefacts": ["s26/results/p_probe_esm.json", "s26/results/p_probe_esmcache.json", "s26/governor_state.json", "C:/Users/abena/miniforge_3/Lib/site-packages/esm/esmfold/v1/esmfold.py"],
+ "lane": "P",
+ "date": "2026-09-13"
+}

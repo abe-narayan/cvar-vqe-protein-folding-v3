@@ -1,0 +1,13 @@
+{
+ "n_seqs": 22795,
+ "t_seqs_s": 0.0,
+ "rss_after_seqs_gb": 0.034,
+ "t_vals_s": 19.7,
+ "rss_after_vals_gb": 1.788,
+ "rep_dims_sampled": [
+  1280
+ ],
+ "mean_len_sampled": 13.99,
+ "peak_wset_gb": 1.793,
+ "wall_s": 19.7
+}

@@ -1,0 +1,90 @@
+{
+ "rss_start_gb": 0.031461376,
+ "n_peptides": 787,
+ "fragment_cache": "C:\\Users\\abena\\Protein-Folding-Algorithm\\fragment_db.npz",
+ "fragment_cache_exists": true,
+ "n_fragments": 6003,
+ "n_train_seqs_unique": 6790,
+ "n_targets": 126,
+ "per_fold": {
+  "0": {
+   "peptides": 629,
+   "fragments": 6001,
+   "chains": 6630,
+   "pairs": 552199,
+   "targets_in_fold": 25
+  },
+  "1": {
+   "peptides": 647,
+   "fragments": 5988,
+   "chains": 6635,
+   "pairs": 556344,
+   "targets_in_fold": 23
+  },
+  "2": {
+   "peptides": 608,
+   "fragments": 6001,
+   "chains": 6609,
+   "pairs": 554123,
+   "targets_in_fold": 25
+  },
+  "3": {
+   "peptides": 626,
+   "fragments": 6003,
+   "chains": 6629,
+   "pairs": 552912,
+   "targets_in_fold": 23
+  },
+  "4": {
+   "peptides": 638,
+   "fragments": 6002,
+   "chains": 6640,
+   "pairs": 556709,
+   "targets_in_fold": 30
+  }
+ },
+ "rss_after_db_gb": 0.072380416,
+ "esm_small": {
+  "n_keys": 360,
+  "train_covered": 359,
+  "train_missing": 6431,
+  "targets_covered": 126,
+  "targets_missing": 0
+ },
+ "rss_after_small_gb": 0.0723968,
+ "s5_esm32": {
+  "n_keys": 6790,
+  "train_covered": 6790,
+  "train_missing": 0,
+  "targets_covered": 126,
+  "targets_missing": 0
+ },
+ "s7_esmcon": {
+  "n_keys": 6790,
+  "train_covered": 6790,
+  "train_missing": 0,
+  "targets_covered": 126,
+  "targets_missing": 0
+ },
+ "s5_esmraw": {
+  "n_keys": 6790,
+  "train_covered": 6790,
+  "train_missing": 0,
+  "targets_covered": 126,
+  "targets_missing": 0
+ },
+ "s5_esmraw_load_s": 1.3,
+ "s5_esmraw_rss_gb": 0.561045504,
+ "s5_esmraw_dim": [
+  13,
+  1280
+ ],
+ "s5_esmraw_dtype": "float32",
+ "s5_esmraw_total_MB_float32": 486.6,
+ "project_target": "1A13",
+ "project_wall_s": 2.9,
+ "project_fit_ca_vs_persisted_maxabs": 0.0,
+ "project_ca_vs_persisted_maxabs": 0.0,
+ "peak_wset_gb": 0.804,
+ "wall_s": 5.4
+}
