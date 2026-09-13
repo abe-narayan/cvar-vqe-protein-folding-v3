@@ -583,7 +583,478 @@ distance is set by how the side chains were placed, not by the backbone. It belo
 pipeline as a validity check, which is what it is, and not as a judge of which candidate is
 right, which it is not (`s26/PH_PART_IV_NOTES.md` section 9).
 
-<!-- PART V -->
+## PART V. THE QUANTUM COMPONENT, IN FULL
+
+Sources: `s25/QUANTUM.md` (the S25 account, sections 0 to 8, with its artefacts
+`s25/results/q_verify.json`, `q_alpha.json`, `q_gibbs.json`, `q_plateau.json`),
+`s13/SPRINT13_DOSSIER.md` sections 6 to 11 (the trainability record), `s26/LEDGER.md` L27 with
+`s26/results/q_dla.json` (the dynamical Lie algebra), and the sprint ledgers named inline. The
+selector's place in the pipeline is Part III.5.
+
+### V.1 Two quantum paths, and which one is deployed
+
+There are two distinct quantum objects in the codebase, and conflating them is the first
+mistake available (`s25/QUANTUM.md` section 1):
+
+| | the selector | the generation lane |
+|---|---|---|
+| ansatz | `StatevectorCircuit` (`core/quantum.py:885-982`) | `MPSAnsatz` (`core/quantum.py:459-776`) |
+| register | candidate identity, n = 7, dim 128 | torsion or basin latent, n up to 96 |
+| deployed by | `core.pipeline.quantum_stage` | the S19 to S21 lanes |
+| simulation | exact dense statevector | exact matrix product state, bond dimension chi = 2^layers |
+
+`core/pipeline.py` does not use `MPSAnsatz`. Statements about chi apply to the generation lane;
+statements about the deployed selector apply to `StatevectorCircuit`. Production runs with
+`quantum=False`; the selector is executed by the four-component arm and by the S25 analysis
+scripts.
+
+### V.2 The ansatz, exactly
+
+The selector prepares `|psi(theta)> = prod_{l=1..L} [U_ent (x)_{q} RY(theta_{l,q})] |0...0>`
+with `RY(t) = exp(-i t Y/2)` and an entangler that is a CNOT chain plus a ring closure,
+`U_ent = CNOT(n-1,0) CNOT(n-2,n-1) ... CNOT(0,1)`. Deployed: n = 7 qubits, 128 basis states,
+L = 3 layers, P = 21 parameters, 21 RY and 21 CNOT gates (6 chain + 1 ring per layer), two-qubit
+depth 21, total depth about 24, 50 Adam steps, one restart, seed 0
+(`core/pipeline.py:186-189`). RY and CNOT are real matrices and the initial state is real, so
+the amplitudes are real exactly and the reachable manifold lies in SO(2^n), not SU(2^n);
+dim so(128) = 8128 against 21 parameters. The simulation carries all 2^n amplitudes; the CNOT
+chain is composed into one basis permutation, and `probs_batch` simulates all 2P shifted
+parameter vectors in one pass. Verified in S25 against a dense Kronecker-product simulator:
+max |p - p_dense| = 5.6e-17 (`s25/results/q_verify.json`).
+
+The generation-lane `MPSAnsatz` is layers of (RY on every wire, CNOT chain), no ring, with an
+optional trailing RY layer. A CNOT is an exact bond-dimension-2 matrix product operator, so
+after L entangling layers every interior bond is exactly 2^L and nothing is discarded: there is
+no SVD and no truncation threshold anywhere in the class (verified: no truncation primitive;
+chi by layers {1: 2, 2: 4, 3: 8, 4: 16}; chi independent of n at n = 64; max |p_MPS - p_dense|
+3.331e-16 over 24 configurations; max |<psi|psi> - 1| 6.661e-16). Cost is O(n chi^3), linear
+in n, which is why 64- and 96-qubit registers were routine in S19 to S21. The bond dimension is
+saturated, not merely bounded: the Schmidt spectrum across the middle cut at n = 6, L = 2 is
+[0.879145, 0.461538, 0.105625, 0.054141, 0, 0, 0, 0], rank exactly 4. The product-state control
+(`entangler="none"`) at identical angles moves a probability by up to 0.334, so the entangler
+does change the state (`s25/QUANTUM.md` 2.2, 7.4).
+
+### V.3 The objective, exactly
+
+`E = zrank(score[top[:128]])`, `H = diag(E)` (`core/pipeline.py:852`). `zrank` is the
+standardised rank: strictly monotone, so it changes no ordering, no argmin, no level set and
+(by V.6) no tail membership; it changes only the gaps, which is what the entropy term trades
+against. It is not cosmetic: a moment z-score of raw energies is outlier-dominated (Part IV.6).
+
+**The Hamiltonian barely changes between targets** (`s25/LEDGER.md` L17). `top = argsort(sc)`
+(`core/pipeline.py:768`), so `sc[top[:128]]` is already ascending and `_zrank` of an ascending
+vector returns the standardised ranks 1 to 128. E is therefore very nearly the same vector on
+every one of the 126 targets; it differs only through tie-averaging. On 8 real targets the
+worst |E - standardised ranks| is 4.06e-2 against an E range of 3.4371, 1.18% of range, and E
+is exactly the standardised ranks on 0 of 8 (`s25/results/q_gibbs.json ::
+results/spectrum_target_independence`; the two S26 traces show 0.394%, Part III.5). All of the
+per-target information enters through which candidate occupies which rank, and essentially
+none through the spectrum of H. Three consequences: the deployed selector solves very nearly
+the same variational problem on all 126 targets, so there are effectively two trained states in
+the whole deployment, one per (alpha, T) cell, not 126; the quantum stage is insensitive to the
+target; and a more expressive state has nothing target-specific to be expressive about, which
+is the mechanism behind five sprints of "deeper or wider orders nothing" (V.11).
+
+**CVaR.** For alpha in (0, 1] and q the alpha-quantile of E under p,
+`CVaR_alpha = (1/alpha) [sum_{E(x) < q} p(x) E(x) + (alpha - P(E < q)) q]`: the mean of the
+lowest-alpha mass of the energy distribution, the boundary state contributing fractionally. Two
+implementations, `cvar_exact` (`core/quantum.py:985-1005`, the deployed driver) and
+`cvar_from_probs` (`core/quantum.py:336-359`, which also returns the per-state mass the tail
+used), are mutually checked; `tests/test_cvar.py` (90 tests) asserts the definition on both
+sort-cutoff branches.
+
+**The deployed objective is a free energy**, `F(theta) = CVaR_alpha(E; p_theta) - T H(p_theta)`
+with `H(p) = -sum p log p` (`core/quantum.py:1072-1100`). Minimising CVaR alone is degenerate
+for a selection task: the minimiser concentrates p on the lowest-energy states and a consensus
+readout collapses to the argmin; measured at alpha = 1, T = 0.1 the state carries 0.0761 bits of
+a possible 7 and the arm is identical, target by target, to the plain argmin selector. The
+(alpha, T) pair comes from a leave-fold-out table (`core/pipeline.py:113-118`):
+`VQE_LFO = {0: (1.0, 0.3), 1: (0.25, 0.3), 2: (0.25, 0.3), 3: (1.0, 0.3), 4: (1.0, 0.3)}`.
+T = 0.3 on all five folds; alpha = 1.0 on three of them, where CVaR is the full mean and there
+is no tail constraint at all, 78 of 126 targets (share 0.6190,
+`s25/results/q_alpha.json :: results/share_of_targets_with_no_tail_constraint`;
+`s25/LEDGER.md` L3).
+
+**What is differentiable.** CVaR as a function of p is concave and piecewise linear; by the
+envelope theorem `dCVaR/dp(x) = (E(x) - q)/alpha` on the strict tail and 0 elsewhere, with the
+boundary state carrying its partial mass; it is non-differentiable exactly where the quantile
+crosses a state or where energies tie, a measure-zero set. The entropy is smooth on the
+interior (p clipped at 1e-15 inside the log). `p_theta` obeys an exact shift rule (V.4). The
+readout is not differentiable at all and is never differentiated: the consensus medoid is an
+argmin over candidates.
+
+### V.4 The gradient
+
+Each parameter enters as RY, whose generator Y/2 has eigenvalues +-1/2, so every basis
+probability obeys the two-term parameter-shift rule exactly:
+`dp(x)/dtheta_k = [p(x; theta_k + pi/2) - p(x; theta_k - pi/2)]/2`. Chained with `dCVaR/dp`
+and `dH/dp` this gives `dF/dtheta` exactly, at 2P = 42 circuit evaluations per gradient, batched
+into one pass (`grad_cvar_paramshift`, `core/quantum.py:1008-1023`). Verified in S25 against
+central finite differences on the exact objective (independent machinery): cosine
+1.000000000 (minimum over 12 cells, alpha in {0.1, 0.25, 1}), relative error 4.597e-10 (maximum
+over 12); for the free-energy gradient including the entropy term, cosine 1.000000000 and
+relative error 4.663e-10 over 4 (alpha, T) cells including the deployed one
+(`s25/results/q_verify.json`). `run_cvar_vqe` (`core/quantum.py:1103-1130`) is Adam
+(beta1 0.9, beta2 0.999, lr 0.15) on that gradient; it samples nothing, the only random draw
+being the initial angles theta ~ N(0, 0.6^2).
+
+### V.5 The CVaR gradient defect
+
+The sampled (device-realisable) estimator uses the score-function form,
+`grad CVaR = E_p[f(x) grad log p_theta(x)]` with `f(x) = -(q - E(x))_+/alpha`. A baseline b may
+be subtracted from f if and only if it is constant in x, because the correction
+`b E_p[grad log p]` vanishes only then. The historically shipped `qansatz.cvar_gradient`
+subtracted the tail mean from the tail entries and left the rest at zero, `b(x) = m 1[x in
+tail]`, a function of x. That is a bias, not extra variance; it does not shrink with shots.
+Both `cvar_gradient` (`core/quantum.py:816-863`) and `grad_cvar_score`
+(`core/quantum.py:1040-1069`) now default to `baseline="const"`; `baseline="tail"` reproduces
+the defect verbatim so that the regression test in `tests/test_quantum.py` measures its absence
+rather than asserting it (39 tests passed, `s26/TEST_RUN.md`). The magnitude is
+instrument-dependent and is always cited with its instrument, all three with zero sampling
+noise, which is what proves the disagreement is bias (`s25/QUANTUM.md` 4.2):
+
+| instrument | cosine with the exact gradient | norm ratio |
+|---|---|---|
+| S9, 10 qubits, 1024 amplitudes enumerated (`core/quantum.py:66`) | +0.655634 | 0.758 |
+| S25 re-verification, n = 7, L = 3, alpha = 0.15, deployed energy shape | +0.566586 | 0.519 |
+| any instrument, constant baseline | +1.000000 | 1.000 |
+| sampled estimator, constant baseline | +0.994 | about 1 |
+
+A third figure, +0.524 over 36 checks on the S8 instrument, lives only in project memory and is
+not in Appendix B (`s26/EXAMINATION.md` C24). There is no universal constant; what reproduces is
+the sign, the order of magnitude and the mechanism. The defect was first found and priced in
+S5 (`docs/FINDINGS.md:368`, "A defect in the shipped CVaR gradient") and re-audited against two
+references in S8-9 (`docs/FINDINGS.md:3147`) and S9-5 (`docs/FINDINGS.md:4197`).
+
+### V.6 The tail-subset-of-prefix theorem
+
+Statement (`s25/QUANTUM.md` section 5): the realised CVaR tail's support is always a subset of
+an initial prefix of the energy order, and equals that prefix exactly when every state in the
+prefix carries positive probability. The trained state can delete a member; it can never add
+one outside the classical top-m.
+
+Proof, from the source. `cvar_from_probs` computes `order = argsort(e)`, `cum = cumsum(p[order])`
+and `take = clip(alpha - (cum - p[order]), 0, p[order])` (`core/quantum.py:352-354`).
+`take[j] > 0` needs both conjuncts of the clip: (i) the exclusive prefix sum in the energy order
+is below alpha, and that sum is non-decreasing because p >= 0, so it crosses alpha exactly once
+and (i) alone defines an initial prefix; (ii) `p[order][j] > 0`, which punches out any
+zero-probability state inside the prefix. So the support is a prefix with holes, every hole a
+zero-probability state. On the other path, `tail_indices` (`core/quantum.py:229-272`) takes no
+probability vector and no parameters: `k = ceil(alpha n)` depends on (n, alpha) only.
+
+Consequences. The trained state moves exactly two things: where the prefix cuts (a rung m on
+the classical top-m ladder, plus which prefix members it deletes where it has exact zeros) and
+the weights inside the prefix. Membership is bounded above by `argsort(E)[:m]` as an identity,
+independent of the landscape's shape, degeneracy, multimodality and scale, and therefore of the
+pool that produced it. Subset-hood is the theorem; equality is the empirical regime (a trained
+RY/CNOT state has generic angles and full support), and an earlier draft that asserted
+prefix-hood without conjunct (ii) was wrong.
+
+Verification, S25, families rebuilt with exact zeros: 6 register sizes x 9 energy structures x
+8 probability structures x 6 alphas = 2,592 cells; 1,620 contain an exact zero probability, so
+the assertion can fire; subset-hood violations 0; holes that were not exactly zero-probability
+0; prefix-hood violations (the wrong, looser claim) 1,424 = 54.9%; full-support cells 972, with
+exact value equality on 972 of 972 (`s25/results/q_verify.json`). S24's independent run: 3,888
+cells, 0 violations, 29.9% hole rate; the coordinator's: 17,574 trials, 0 violations, 58.8%. The
+hole rates differ because the family mixes differ; the three assertions agree exactly.
+
+The honest statement about S22's Gate 1: a set-equality gate reported passing on 2,016 of 2,016
+cells was read at the time as evidence about the candidate pool. It was the code being read
+back. The same applies to the harness test that shows the quantum arm matching its classical
+control to 1e-9. A 100% pass rate on an algebraic identity carries no information about the
+problem.
+
+### V.7 The contribution, with the measurements
+
+Basis notice. Two instruments appear in this section and never share a column: the S8
+instrument (`s8/integrate_vqe.json`), consensus-medoid selection of one member from a
+128-candidate filtered set, SINGLE WINDOW, whose no-circuit rungs are 3.4540 (argmin), 3.3414,
+3.2835 and 3.3135 (the recorded VQE arm); and the 126-target production instrument, a
+score-filtered uniform top-75 coordinate average, 3.0483 POINT CLOUD and 3.2148 BUILT CHAIN.
+Everything measured below is on the S8 instrument at n = 126 over the five pinned folds, with
+MDE = 2.8016 x SE per comparison (`s25/q_alpha.py` -> `s25/results/q_alpha.json`).
+
+**The alpha effect does not survive the temperature** (`s25/QUANTUM.md` 6.1). Differences of
+mean single-window RMSD, alpha = 0.25 minus alpha = 1.0: at T = 0.1, -0.1067 (SE 0.0644,
+0.59x MDE, underpowered); at the deployed T = 0.3, -0.0011 (SE 0.0477, 0.01x MDE, 44W/47L,
+null); at T = 1.0, +0.0039 (SE 0.0240, 0.06x MDE, null). Alpha = 0.10 minus 1.0: -0.1126 (SE
+0.0792, 0.51x) at T = 0.1, +0.0279 (SE 0.0518, 0.19x) at T = 0.3, +0.0126 (SE 0.0268, 0.17x) at
+T = 1.0. The effect appears only at T = 0.1 and changes sign at the other two temperatures. The
+"+0.113 A CVaR contribution" of the earlier record was measured at a temperature that does not
+ship and was withdrawn (`s25/LEDGER.md` L3, L5).
+
+**One curve: the readout's entropy is the variable** (6.2). All 18 arms in the artefact pass
+through the same operator, `consensus_medoid(D, o, w)`, and differ only in the weight vector w,
+whose entropy is computable in closed form for the non-circuit arms (argmin 0 bits, top-fraction
+log2 k, Boltzmann H(exp(-E/T)), medoid over 128 = 7 bits). Over the nine VQE cells,
+corr(H_readout, mean RMSD) = -0.7423, corr(alpha, mean RMSD) = +0.2700, corr(T, mean RMSD)
+= -0.0234; alpha's marginal share of the variance left after H and H^2 is 0.032; a quadratic in
+H over all 18 arms has R^2 = 0.7045. Fitted on the nine no-circuit arms only, the curve scores
+the nine circuit arms with mean residual +0.0090 A (sd 0.0342) against the fit's own residual
+sd 0.0268 A: the circuit sits on a curve fitted without it.
+
+**The circuit against its own analytic optimum** (6.3). At alpha = 1 the objective is
+`mean_p(E) - T H(p)`, whose minimiser over the simplex is exactly the Gibbs distribution
+`p*(x) = exp(-E(x)/T)/Z`, so `boltz_T` is the optimum the 21-parameter state approximates. At
+the endpoint, circuit minus exact Boltzmann, single window: +0.0499 (SE 0.0427, 0.42x MDE) at
+T = 0.1; -0.0302 (SE 0.0450, 0.24x MDE, 43W/44L) at T = 0.3; +0.0445 (SE 0.0511, 0.31x) at
+T = 1.0. In distribution (`s25/q_gibbs.py` -> `s25/results/q_gibbs.json`), using the identity
+`F(p) - F(p*) = T KL(p || p*)`, asserted at runtime to < 1e-9 on every row, at T = 0.3:
+
+| state | F | KL nats | KL bits | TV | H bits |
+|---|---|---|---|---|---|
+| random theta (untrained) | -1.275443 | 3.927427 | 5.66608 | 0.78052 | 4.4562 |
+| uniform over 128 | -1.455609 | 3.326874 | 4.79966 | 0.70154 | 7.0000 |
+| point mass at the argmin | -1.718572 | 2.450332 | 3.53508 | 0.91374 | 0.0000 |
+| 5 Adam steps | -1.644194 | 2.698258 | 3.89276 | 0.70994 | 5.1019 |
+| 15 Adam steps | -1.908150 | 1.818405 | 2.62340 | 0.63160 | 5.4014 |
+| 50 Adam steps (deployed) | -2.183096 | 0.901916 | 1.30119 | 0.45308 | 5.6706 |
+| the Gibbs optimum | -2.453671 | 0 | 0 | 0 | 4.9135 |
+
+KL(trained || optimum) is 1.449 nats at T = 0.1, 0.902 at T = 0.3, 0.373 at T = 1.0; total
+variation 0.761, 0.453, 0.351. The mandatory control, best of 200 draws from the untrained
+circuit: F_trained -2.183096 against F_init_best -1.483528 and F_gibbs -2.453671 at T = 0.3,
+gap closed 0.783, beats best-of-200 at all three temperatures (0.891 at T = 0.1, 0.783 at
+T = 1.0). Three readings, in order: the optimiser trains (it beats best-of-200 and closes 78 to
+89% of the free-energy gap); it does not reach the optimum (0.902 nats away at the deployed
+temperature, disagreeing with it on 45% of its mass, and broader than optimal at 5.67 bits
+against 4.91); and the endpoint cannot tell (0.24x MDE). The readout is insensitive to a
+distributional difference of nearly half the mass (`s25/LEDGER.md` L15), which is the mechanism
+behind the entropy curve and the sharpest fact in the quantum record. Two details: at T = 0.1
+the trained state's free energy (-1.7176) is marginally worse than the point mass at the argmin
+(-1.7186) with entropy 0.075 bits, the collapse; at T = 1.0 the trained state (KL 0.373) is only
+modestly better than the uniform distribution (KL 0.458).
+
+**Against the no-circuit arms** (6.4), single window: VQE_LFO minus argmin -0.1405 (SE 0.0732,
+0.68x MDE, 66W/48L, 5 of 5 folds in sign; underpowered, not a result); minus Boltzmann at
+T = 0.3, -0.0002 (0.00x MDE); minus uniform top-64, +0.0262 (SE 0.0279, 0.34x); minus uniform
+top-128, -0.0308 (SE 0.0590, 0.19x). The medians are near zero (VQE_LFO minus argmin median
+-0.0081 against mean -0.1405; 12 of 126 targets tie exactly; 5 targets carry 45.3% of the
+effect), and the drop-top-5 statistic sits at the 64.7th percentile of a uniform-effect null,
+so concentration is suggested and not established.
+
+**The alpha = 1 folds are a claims problem, not a performance problem** (6.5). Forcing alpha < 1
+on every fold, an ORACLE counterfactual not applied, is worth -0.0311 A at 0.27x MDE
+(alpha = 0.25) or -0.0021 A (alpha = 0.10). Nothing about the deployed configuration changes on
+the strength of this; what changes is what is claimed about it.
+
+**Deleting the entangler.** The standing project result from removing the CNOTs and changing
+nothing else is -0.013 A [-0.095, +0.077], an interval containing zero and effects in both
+directions; and chi orders nothing (`s21/LEDGER.md` L34). Whether the entanglement changes the
+answer is therefore not measured and specifically not refuted (`s25/QUANTUM.md` 7.4).
+
+### V.8 The width and depth sweeps, and what they do and do not say
+
+`s25/q_plateau.py` -> `s25/results/q_plateau.json`, exact parameter-shift gradients (no shot
+noise), theta ~ N(0, 0.6^2), the deployed initialisation law, L = 3 throughout the width sweep.
+`Var_theta[dF/dtheta_0]`:
+
+| n | dim | P | alpha = 1, T = 0 (linear cost) | alpha = 0.25, T = 0 | alpha = 0.10, T = 0 | alpha = 1, T = 0.3 | alpha = 0.25, T = 0.3 |
+|---|---|---|---|---|---|---|---|
+| 4 | 16 | 12 | 5.358e-02 | 1.453e-02 | 4.699e-03 | 5.491e-02 | 2.088e-02 |
+| 6 | 64 | 18 | 1.699e-02 | 1.140e-02 | 3.214e-03 | 1.188e-02 | 1.559e-02 |
+| 7 | 128 | 21 | 2.062e-02 | 1.064e-02 | 1.922e-03 | 1.526e-02 | 1.121e-02 |
+| 8 | 256 | 24 | 4.358e-03 | 6.340e-03 | 2.284e-03 | 8.389e-03 | 7.837e-03 |
+| 10 | 1024 | 30 | 2.713e-03 | 5.517e-03 | 3.175e-03 | 5.731e-03 | 6.121e-03 |
+| 12 | 4096 | 36 | 1.218e-03 | 3.222e-03 | 2.524e-03 | 7.741e-03 | 6.376e-03 |
+| 13 | 8192 | 39 | 1.072e-03 | 3.600e-03 | 2.869e-03 | 4.802e-03 | 4.113e-03 |
+| fitted log2 Var per qubit | | | -0.6492 | -0.2522 | -0.0472 | -0.3105 | -0.2429 |
+
+No exponential plateau is present at any width measured, in any column, at this depth. The
+steepest decay is the linear cost at -0.649 log2 per qubit, about 1.6x per qubit added, against
+the factor of 2 a 2-design would give. Draws per row are 250 (n <= 8), 200 (n = 10), 120
+(n = 12), 80 (n = 13); the relative SE of a variance estimate is sqrt(2/(m - 1)), about 9% at
+m = 250 and 16% at m = 80. Depth sweep at n = 7, alpha = 0.25, T = 0.3, 250 draws: L = 1
+2.381e-02, L = 2 1.658e-02, L = 3 9.197e-03 (deployed), L = 4 7.999e-03, L = 6 7.644e-03, L = 8
+7.440e-03, L = 12 8.213e-03: depth costs a factor of about 3 and then saturates.
+
+**The CVaR non-linearity's effect on the picture** (7.2). At alpha = 1 the CVaR reduces
+identically to the linear cost `<psi| diag(E) |psi>`, so the linear control is the same
+expression with the non-linearity switched off, every confound held fixed by construction. The
+ratio Var[grad CVaR_alpha] / Var[grad MEAN] at matched n: alpha = 0.25 gives 0.2712, 0.6707,
+0.5159 (n = 7, deployed), 1.4549, 2.0336, 2.6447, 3.3585 for n = 4, 6, 7, 8, 10, 12, 13;
+alpha = 0.10 gives 0.0877, 0.1892, 0.0932, 0.5241, 1.1704, 2.0715, 2.6765. In magnitude at the
+deployed width the non-linearity shrinks the gradient (a tail objective's weight is supported on
+an alpha fraction of the states); in scaling it flattens the decay, from -0.649 log2 per qubit
+to -0.252 (alpha = 0.25) and -0.047 (alpha = 0.10), so the ratio crosses 1 near n = 8. The
+entropy term also flattens the decay (-0.311 and -0.243 in the T = 0.3 columns). A mechanism
+was offered as a reading, not tested.
+
+**Scope conditions**, so this is not over-read. The deployed register is n = 7; every larger n
+is an extrapolation instrument. P = 3n against dim so(2^n) = 2^(n-1)(2^n - 1), 21 against 8128
+at n = 7, so the circuit is nowhere near a 2-design at any width measured, and the observed
+decay rate is a property of this shallow, structured ansatz; the classic exponential-in-n
+plateau is a statement about 2-design circuits and this is not one. Not measured in S25: the
+dynamical Lie algebra (now measured, V.9); gradient variance along the optimisation trajectory
+rather than at random initialisations; anything on hardware; whether the same ordering holds
+for a different spectral shape. Everything reported is computed exactly and is
+shot-count-independent; on hardware the deployed gradient needs the full 128-outcome
+distribution resolved, which is distribution reconstruction rather than a few Pauli
+expectations, and the two device routes in the codebase (sampled CVaR with SPSA,
+`run_global_cvar_vqe` at `core/quantum.py:1448`; the score-function gradient with a constant
+baseline) produced none of the numbers above (7.3).
+
+### V.9 The dynamical Lie algebra (S26, lane Q, ledger L27)
+
+`s26/q_dla.py` -> `s26/results/q_dla.json` (complete; 85.3 s, peak RSS 0.479 GB), pre-registered
+in `s26/PREREG_A2.md` before the run; a property measurement with no native and no score. The
+closure is computed exactly on Pauli strings as a set and cross-checked by dense SVD at
+n = 4, 5 (12 of 12 cells agree; the two conjugation conventions agree on 12 of 12). Every
+closure lies in the odd-Y (real) set.
+
+| ansatz or pool | dim(DLA) | artefact leaf |
+|---|---|---|
+| fixed RY/CNOT chain + ring, L = 1 | n (abelian) at every n = 4 to 11 | `results/fixed/n<n>_L1/dim` |
+| fixed, n = 4, 5, 7, 8, 10, 11, L >= 2 | dim so(2^n): 120, 496, 8128, 32640, 523776, 2096128 | `results/fixed/n<n>_L2/dim`, `frac_of_so` = 1.0 |
+| fixed, n = 6 | 510 / 1023 / 2016 = so(64) at L = 2 / 3 / 4 | `results/fixed/n6_L{2,3,4}/dim` |
+| fixed, n = 9 | 32766 / 65535 / 130816 = so(512) at L = 2 / 3 / 4 | `results/fixed/n9_L{2,3,4}/dim` |
+| pools V and G (Tang 2021, 2n - 2 strings), n = 4 to 9 | 36, 136, 528, 2080, 8256, 32896 = dim so(2^(n-1) + 1) | `results/pools/V_n<n>/dim`, `G_n<n>/dim` |
+| pool L2 (all 1- and 2-local odd-Y strings), n = 4 to 9 | so(2^n) | `results/pools/L2_n<n>/dim` |
+| ADAPT-selected sets, n = 7, alpha = 1 | abelian (7) at every step, both pools, both optimisers; L-BFGS stops at P = 7 with no operator selected | `results/adapt_sets/*a1.0*` |
+| ADAPT-selected sets, n = 7, alpha = 0.25 | V: 7 -> 16; L2: 7 -> 1025 at P = 21 (12.6% of so(128)) | `results/adapt_sets/*a0.25*` |
+
+The pre-registered prediction H2b, that dim(DLA) at the deployed (n = 7, L = 3) is below 8128
+(guess 4095), is falsified: it is 8128, the full so(128), already at L = 2. H2a (depth 1
+abelian), H2c (the pools: 2080, 8256, 32896 predicted and measured), H2d (odd-Y) and H2e (ADAPT
+sets abelian at alpha = 1) held. That n = 6 and n = 9 need depth 4, with dimensions at L = 2 and
+3 equal to 2 dim su(2^(n-2)) and dim su(2^(n-1)), is an observation from two cases labelled
+HYPOTHESIS, not explained.
+
+What it means for V.8: the algebra at the deployed cell is maximal, so nothing in the algebra
+protects the ansatz from an exponential plateau. Once a circuit is a 2-design over exp(g), the
+variance scales as 1/dim(g) with dim(g) = 8128 at n = 7 and growing as 4^n/2; S13 measured the
+decay base approaching 0.504 per qubit at depth 8 (`s13/results/geo_kernel.json`), the 2-design
+rate. The S25 result "no exponential plateau at n = 4 to 13" is therefore a statement about
+depth 3 (P = 3n against dim so(2^n)) and is quoted with "at depth 3" attached. It is not
+evidence of a favourable algebra, and small-DLA simulability arguments do not apply: the circuit
+is simulable because n = 7, not because of its structure (`s21/LEDGER.md` L4). On the pools: a
+"complete" pool in Tang's sense (overlap-matrix rank 2^n - 1) generates so(2^(n-1) + 1), which
+acts transitively on the real sphere and has about a quarter of the dimension of so(2^n);
+completeness is weaker than controllability, so the ADAPT arm using pool V in A1 is restricted
+to that subalgebra by construction and the L2 arm is not.
+
+### V.10 The S13 locality theorem and the Pauli spectrum
+
+This is the trainability record of the torsion-space generation lane
+(`s13/SPRINT13_DOSSIER.md` sections 6 to 11; `docs/CONDENSED_REPORT.md`, "What survives").
+
+**An exact locality theorem in torsion space.** Under an ideal-geometry backbone builder, the
+CA-CA distance d_ij depends on exactly the j - i - 1 residues strictly between i and j,
+contiguous; proven on more than 5,000 (pair, variable) cells with agreement 1.0000 and zero
+counterexamples; non-supporting variables move it by exactly 0.000 A; it holds at chain
+termini, on glycine (74 targets) and proline (52), and under cis-omega. Mechanism: d_ij is an
+internal coordinate of the CA_i to CA_j sub-chain and the torsion-independent virtual bond
+removes the two end residues. The all-atom case follows four exact rules (CA: i < m < j; N:
+i <= m < j; C/O: i < m <= j; CB: i <= m <= j), max |delta d| outside support 1.4e-13 A against a
+minimum inside of 4.6e-2 A (`s13/qarch_FINDINGS.md` section 1). Consequences: a separation-8
+pair is a 14-qubit interaction at k = 4 bits per residue, so no 2-local Ising form of a
+distance-based molecular objective exists in this encoding; and the union of supports over all
+pairs is the whole chain, so both energies are full-register and "AMBER is less local than
+Legacy" is a category error, recorded as refuted.
+
+**The artefact, and the correction.** The first Pauli-spectrum measurement reported AMBER's
+mean Pauli weight above Legacy's on 14 of 14 cells. Over 141 fully enumerated tables the top-10
+configurations of 4,096 carry a median 99.6% of raw AMBER's Walsh variance; a constant plus a
+single spike has Walsh weight spectrum exactly Binomial(m, 1/2) with mean m/2, measured 6.001
+against predicted 6.001, L1 distance 0.0003. A delta spike is maximally global for arithmetic
+reasons; the measurement was of steric clashes (Part IV.5). Some Legacy cells are spiked too
+(top-10 share 0.878 on one), and 99th-percentile winsorisation is not sufficient conditioning
+(a winsorised AMBER table still carried 0.986 of its variance in ten configurations); only
+monotone rank-preserving conditioning works (`s13/walsh_FINDINGS.md`).
+
+**The corrected result.** With rank-preserving soft compression applied identically to both
+models: mean Pauli weight Legacy 2.236, AMBER 3.015, AMBER higher on 79 of 79 cells; share of
+variance at weight <= 2, 0.641 against 0.392; >= 4-body Sobol share 0.069 against 0.122 (12 of
+13 cells); cumulative 1 + 2-body share 0.778 against 0.629. Neither model is 2-local, and the
+non-locality is in interaction order, not sequence range. The chain closed with no free
+parameter: predicted gradient variance from `sum_S c_S^2 Var_theta[d<Z_S>/dtheta_i]` against
+measured, median ratio 1.006 (Legacy) and 1.001 (AMBER, conditioned) on the exact per-string
+form over 95 cells; the coarse weight-kernel form (1.278) is withdrawn, and raw AMBER's ratio
+(0.913) is not a converging estimator (its across-theta sd rises with the number of samples,
+0.15 to 4.18). Per term, AMBER's non-bonded term has covariance share 1.000 on all 26 component
+cells and Legacy's steric term 0.955 at m = 18: both models are a steric potential plus
+rounding error. The spectrum saturates: Legacy's mean weight goes 3.89, 4.10, 4.17, 4.27 across
+m = 12 to 18 with the tail beyond weight 3 flat at 0.60 to 0.64, an effective interaction order
+of about 3 residues independent of length. The residue-order spectrum is encoding-invariant to
+1e-16, but the same Legacy energy has mean qubit weight 2.70 / 10.00 / 1.27 under binary /
+one-hot-mean / one-hot-penalty encodings, a factor of 7.9: a one-hot Hamiltonian's Pauli
+spectrum is a free parameter of the implementer.
+
+**Trainability, the honest negative** (section 10). The measured ansatz kernel v(w) is flat in
+Pauli weight (median v(w_max)/v(1) = 1.00) and decays in n as 2^(-0.47n) to 2^(-0.86n); the
+standard barren-plateau theorem needs local 2-design blocks this ansatz does not have, so it
+licenses no prediction at 6 to 18 qubits. Exponential and polynomial decay both fit at R^2 0.93
+to 1.00 over n = 6 to 14 and are not discriminable. The decay base falls monotonically with
+depth onto the 2-design limit, 0.823, 0.768, 0.648, 0.537, 0.504 at depth 8; at depth 2 the
+kernel is not flat (0.862 to 0.078 over n = 6 to 14), so cost-locality would explain behaviour
+at depth 2 and does not at the depth the project uses.
+
+**Three clean results** (section 11). The metric (quantum Fisher information) contains no
+Hamiltonian: bit-identical across energy models at matched theta (0.000e+00), now a unit test;
+the energy model selects which region the optimiser visits, it does not reshape the manifold.
+Quantum natural gradient has nothing to fix: the metric is full rank at every theta, n and
+depth, g_ii = 0.2500 exactly, off-diagonal correlations 0.008 to 0.037 and shrinking with n,
+exactly I/4 at depth 1. CVaR at small alpha is exactly a steric clash filter: for alpha <= 0.25
+`amber` and `amber_soft` are the same objective to every printed digit while differing by
+1.7e16x in gradient variance at alpha = 1. And SPSA optimises the AMBER objective best of five
+arms (percentile 0.088) while returning the worst structure (+0.333 A against random): better
+optimisation of a misaligned objective produces worse physics.
+
+### V.11 The quantum record across the sprints
+
+- S5: the CVaR gradient defect found and priced (`docs/FINDINGS.md:368`); a VQE over segment
+  choices with its encoding and limits stated (`docs/FINDINGS.md:404`).
+- S6: VQE/CVaR assembly gives a narrow pool whose narrowness cannot be exploited
+  (`docs/FINDINGS.md:1021`).
+- S8-9: CVaR-VQE over the discrete hypothesis set, and the integrated four-component system
+  priced component by component (`docs/FINDINGS.md:3240`, `:3299`); the gradient audited against
+  two references (`:3147`).
+- S9-5: refinement's failure located in selection; the four-component ablation conclusive; the
+  gradient defect fixed and priced against an exact reference (`docs/FINDINGS.md:4154-4213`).
+- S12: the mandated quantum component, "a verified problem, and a classical win"
+  (`s12/SPRINT12_DOSSIER.md` section XVIII): 20 of 20 alpha x T arms lose, and the VQE's eight
+  most probable states never beat the eight best classical ones.
+- S13: the locality theorem, the Walsh artefact and its correction, the Pauli-spectrum to
+  gradient-variance chain, the metric, QNG and CVaR results (V.10).
+- S14: a VQE redesign around a structural objective whose optimum is in the right place while
+  the energies' is not (`s14/LEDGER.md`; `docs/STATE_BRIEF_2026-09-12.md` section 7).
+- S15: the paper-driven programme; `s15/VQE_CVaR.md`, `s15/qens_FINDINGS.md`,
+  `s15/qgeom_FINDINGS.md`, `s15/qrestraint_FINDINGS.md`.
+- S16: every CVaR-VQE arm loses to uniform random sampling at matched budget (+0.209 to
+  +0.301 single window, CIs excluding zero) on the coordinate-average readout as well
+  (`s16/LEDGER.md` L17); there is no phase boundary and the axis is not rho (L25); the
+  programme's last standing positive quantum result, the unranked ensemble, is retired: both
+  classical searches beat the VQE on the ensemble readout too, +0.27 to +0.62 A (L29).
+- S17: every matched-budget comparison in three sprints was run past classical saturation
+  (`s17/LEDGER.md` L22).
+- S18: the quantum branch of the degree-1 objective is closed, the answer forced before the arms
+  were run (`s18/LEDGER.md` L6, L16).
+- S20: the quantum sampler hypothesis is refuted (`s20/LEDGER.md` L1); every circuit-side
+  landscape metric is a difficulty proxy and the CVaR tail is worth nothing (L4); the AMBER
+  objective is defined only after relaxation (L6).
+- S21: the encoding lever is confounded by step count and closes (`s21/LEDGER.md` L2, L13, L30,
+  L37, the last showing both of S20's "significant" cells null); no bond dimension breaks
+  classical simulability because the register is too small (L4); the exhaustive latent argmin
+  does not beat a zero-evaluation pool (L14, L17); the ansatz ladder on AMBER is won by
+  best-of-N and chi orders nothing (L34); MDE is per comparison (L8).
+- S22: the entropy-regularised tail does not beat the classical selector (`s22/LEDGER.md` L13);
+  the readout-H effect replicates on a different substrate (L14) and is the same fact as the
+  A2b null (L16); multi-stage VQE helps the tail a little and beats no classical bar (L15).
+- S23: the probability-weighted readout fails; the last quantum-side door is closed
+  (`s23/LEDGER.md` L8).
+- S25: the +0.113 A CVaR contribution withdrawn (L3, L5); the readout insensitive to nearly half
+  the mass (L15); the Hamiltonian barely changes between targets (L17); `s25/QUANTUM.md`.
+- S26: A2, the dynamical Lie algebra (V.9); the rest of Proposal A fills Part VII as it lands.
+
+The position the record supports: the deployed selector is an exactly simulated, exactly
+differentiated, correctly implemented CVaR free-energy optimiser over a 128-state diagonal
+Hamiltonian that is nearly the same on every target; it trains, does not reach its cheap
+classical optimum, and is read out by an operator that cannot tell the difference; no
+configuration of it has beaten a matched classical control on any readout; and the part of the
+quantum work that survives as a result is the trainability measurement of V.10, with V.9's
+correction to its scope.
+
+<!-- PART V S26 ADDITIONS -->
 
 <!-- PART VI -->
 
@@ -677,6 +1148,33 @@ artefact; "as asserted" means a passing test pins it.
 | 9450, 40.7/75, 2.6/75, 2.66, 5057, 96.8%, 2627, 2267, 163, -0.74 | IV | `s26/results/ph_reject_census.json :: singularity` | as stored |
 | 40/126, 462/500, +0.054 | IV | `s25/results/phys_suite.json :: normalisation_fork`; `s25/agentPHYS_FINDINGS.md` section 3 | as stored |
 | 58.7%, 8.6e4, -560, 125/126, +1262, 0.220, 3.804 to 3.867, 5.38, 4.86 | IV | `s26/results/ph_c3_nativefree.json` | as stored |
+| n = 7, 128, L = 3, P = 21, 21 RY, 21 CNOT, depth 21 / ~24, 50 steps, seed 0, 8128 | V | `core/pipeline.py:186-189`; `core/quantum.py:885-982`; dim so(128) by arithmetic | as in source |
+| 5.6e-17, 3.331e-16, 6.661e-16, {1: 2, 2: 4, 3: 8, 4: 16}, [0.879145, 0.461538, 0.105625, 0.054141, 0, 0, 0, 0], 0.334 | V | `s25/results/q_verify.json` | as stored |
+| 4.06e-2, 3.4371, 1.18%, 0 of 8 | V | `s25/results/q_gibbs.json :: results/spectrum_target_independence` | as stored |
+| 0.0761 bits | V | `s25/results/q_alpha.json` (alpha = 1, T = 0.1 cell) | as cited (`s25/QUANTUM.md` 3.4) |
+| VQE_LFO table, 78 of 126, 0.6190 | V | `core/pipeline.py:113-118`; `s25/results/q_alpha.json :: results/share_of_targets_with_no_tail_constraint` | 0.6190476190476191 |
+| 1.000000000, 4.597e-10, 4.663e-10, 42 | V | `s25/results/q_verify.json` | as stored |
+| +0.655634 / 0.758, +0.566586 / 0.519, +1.000000, +0.994 | V | `core/quantum.py:66` (S9 instrument); `s25/results/q_verify.json` (S25 re-verification) | as stored |
+| 2592, 1620, 0, 0, 1424 (54.9%), 972 / 972; 3888, 29.9%; 17574, 58.8%; 2016 / 2016 | V | `s25/results/q_verify.json`; S24 harness and coordinator runs as cited in `s25/QUANTUM.md` section 5; `s22/LEDGER.md` (Gate 1) | as stored / as cited |
+| 3.4540, 3.3414, 3.2835, 3.3135 | V | `s8/integrate_vqe.json` (S8 instrument rungs) | as stored |
+| alpha-effect table: -0.1126 (0.0792), -0.1067 (0.0644), +0.0279 (0.0518), -0.0011 (0.0477), +0.0126 (0.0268), +0.0039 (0.0240) | V | `s25/results/q_alpha.json` | as stored |
+| -0.7423, +0.2700, -0.0234, 0.032, 0.7045, +0.0090 (sd 0.0342), 0.0268 | V | `s25/results/q_alpha.json` (entropy curve) | as stored |
+| +0.0499 (0.0427), -0.0302 (0.0450), +0.0445 (0.0511) | V | `s25/results/q_alpha.json` (circuit minus Boltzmann) | as stored |
+| Gibbs ladder at T = 0.3 (seven rows), 1.449 / 0.902 / 0.373, 0.761 / 0.453 / 0.351, -1.483528, -2.453671, 0.891 / 0.783 / 0.783, -1.7176 / -1.7186 / 0.075, 0.458 | V | `s25/results/q_gibbs.json :: results/*, results/training_control` | as stored |
+| -0.1405 (0.0732, 66W/48L), -0.0002, +0.0262 (0.0279), -0.0308 (0.0590), -0.0081, 12, 45.3%, 64.7th | V | `s25/results/q_alpha.json` | as stored |
+| -0.0311 (0.27x MDE), -0.0021 | V | `s25/results/q_alpha.json` (forced-alpha counterfactual) | as stored |
+| -0.013 [-0.095, +0.077] | V | standing project result cited in `s25/QUANTUM.md` 7.4 (no S25 artefact; not re-derived) | as cited |
+| width-sweep table (35 variances), slopes -0.6492 / -0.2522 / -0.0472 / -0.3105 / -0.2429, depth sweep (7 values), CVaR ratio tables (14 values), draws 250 / 200 / 120 / 80 | V | `s25/results/q_plateau.json` | as stored |
+| DLA table: 120, 496, 510, 1023, 2016, 8128, 32640, 32766, 65535, 130816, 523776, 2096128; pools 36, 136, 528, 2080, 8256, 32896; ADAPT 7, 16, 1025 (12.6%); 12 of 12; 85.3 s; 0.479 GB | V | `s26/results/q_dla.json :: results/fixed, results/pools, results/adapt_sets, results/numeric`; `s26/jobs_done/a2_dla.json` | as stored |
+| 0.504 (and 0.823, 0.768, 0.648, 0.537) | V | `s13/results/geo_kernel.json` (via `s13/SPRINT13_DOSSIER.md` section 10) | as cited |
+| 1.0000, 5,000+, 74, 52, 1.4e-13, 4.6e-2 | V | `s13/qarch_FINDINGS.md` section 1 (`s13/SPRINT13_DOSSIER.md` section 6) | as cited |
+| 141, 99.6%, 6.001 / 6.001, 0.0003, 0.878, 0.986 | V | `s13/walsh_FINDINGS.md` (`s13/SPRINT13_DOSSIER.md` section 7; raw sweep `geo_pauli_v1_rawonly.json`) | as cited |
+| 2.236, 3.015, 79 / 79, 0.641, 0.392, 0.069, 0.122, 12 / 13, 0.778, 0.629, 1.006, 1.001, 1.278, 0.913, 95, 0.15 to 4.18 | V | `s13/SPRINT13_DOSSIER.md` section 8 (Pauli tables of `s13/results/`) | as cited |
+| 1.000 on 26 cells, 0.955, 3.89 / 4.10 / 4.17 / 4.27, 0.60 to 0.64, 2.70 / 10.00 / 1.27, 7.9, 1e-16 | V | `s13/SPRINT13_DOSSIER.md` section 9 (`s13/results/walsh_amber.json`) | as cited |
+| 1.00, 2^(-0.47n) to 2^(-0.86n), 0.93 to 1.00, 0.862 to 0.078 | V | `s13/SPRINT13_DOSSIER.md` section 10 (`s13/results/geo_kernel.json`) | as cited |
+| 0.000e+00, 0.2500, 0.008 to 0.037, 1.7e16, 0.088, +0.333 | V | `s13/SPRINT13_DOSSIER.md` section 11 | as cited |
+| +0.209 to +0.301, +0.27 to +0.62 | V | `s16/LEDGER.md` L17, L29 (`s16/integrate.py`; `s16/qphase_FINDINGS.md` section 3) | as cited |
+| 20 of 20 | V | `s12/SPRINT12_DOSSIER.md` section XVIII | as cited |
 <!-- APPENDIX B ROWS -->
 
 <!-- APPENDIX C -->
