@@ -120,9 +120,66 @@ is a separate arm at 3.2280 A (`464a0ddb5f283e04`), +0.0133 A, 0.26x MDE, NOT ME
 
 Pre-registered in `s26/PREREG_A1.md`. Expected: null (both primaries within 0.5x MDE).
 
-## 2. A2 -- the dynamical Lie algebra. RUNNING (`s26/jobs/a2_dla.json` -> `s26/results/q_dla.json`).
+## 2. A2 -- THE DYNAMICAL LIE ALGEBRA. COMPLETE. DEMONSTRATED (exact; property, no native).
 
-Pre-registered in `s26/PREREG_A2.md`.
+`s26/q_dla.py` -> `s26/results/q_dla.json`; `s26/jobs_done/a2_dla.json`: 85.3 s, peak RSS
+0.479 GB. Pre-registered in `s26/PREREG_A2.md`; the addendum there records which
+predictions held.
+
+### 2.1 The fixed ansatz: maximal algebra from depth 2 at the deployed width
+
+    dim(DLA), RY / CNOT chain + ring, by n and L         so(2^n)      su(2^n)
+      n = 7   L = 1     7                                   8128        16383
+              L = 2..6  8128  = so(128)                     (the deployed cell is L = 3)
+      n = 4   L = 1  4;  L >= 2  120  = so(16)
+      n = 5   L = 1  5;  L >= 2  496  = so(32)
+      n = 6   L = 1  6;  L = 2  510;  L = 3  1023;  L >= 4  2016 = so(64)
+      n = 8   L = 1  8;  L >= 2  32640 = so(256)
+      n = 9   L = 1  9;  L = 2  32766;  L = 3  65535;  L >= 4  130816 = so(512)
+      n = 10  L = 1  10; L >= 2  523776 = so(1024)
+      n = 11  L = 1  11; L >= 2  2096128 = so(2048)
+    symbolic == numeric (dense SVD, rtol 1e-10) at n = 4, 5, L = 1..6: 12 of 12
+    left and right conjugation conventions: same dimension, 12 of 12
+    every closure inside the odd-Y (real) set: yes, at every cell
+
+Depth 1 is the abelian algebra of the n commuting RY generators; that is the algebraic form
+of S13's exact I/4 metric at depth 1 (`s13/results/geo_metric_arm1.json`). From depth 2 the
+algebra is the whole of so(2^n) at every width except n = 6 and n = 9, where it takes depth 4
+and the intermediate dimensions equal 2 dim su(2^(n-2)) and dim su(2^(n-1)). That the
+exceptions are the multiples of 3 is an observation from two widths: HYPOTHESIS, not
+explained.
+
+My prediction H2b (a proper subalgebra at n = 7, L = 3, guessed at 4095) is FALSIFIED. The
+deployed ansatz is controllable on the real sphere already at depth 2.
+
+### 2.2 The pools
+
+    V and G (Tang 2021, 2n-2 strings)   36, 136, 528, 2080, 8256, 32896   n = 4..9
+                                        = dim so(2^(n-1)+1) at all six widths (predicted for
+                                          n = 7, 8, 9 in the prereg: held)
+    L2 (1-, 2-local, odd Y)             so(2^n) at n = 4..9
+
+A "complete" pool in Tang's sense (overlap-matrix rank 2^n - 1) generates an algebra
+transitive on the real sphere with about a quarter of the dimension of so(2^n). The A1 arm
+with pool V is confined to it by construction; the L2 arm is not.
+
+### 2.3 The ADAPT-selected sets on the ideal ladder, n = 7
+
+    alpha = 1,    T = 0.3   both pools, both optimisers: abelian, dim 7 at every step;
+                            L-BFGS selects nothing and stops at P = 7 (the product target).
+    alpha = 0.25, T = 0.3   V: 7 -> 16 (one string, IIIYZZZ);  L2: 7 -> 1025 at P = 21,
+                            12.6% of so(128), for both optimisers.
+
+### 2.4 What it means for the S25 slopes
+
+The algebra at the deployed cell is maximal, so nothing algebraic protects the ansatz from a
+plateau. Larocca et al. (2022) and Ragone et al. (2024) give Var ~ 1/dim(g) once the circuit
+is a 2-design over exp(g); with dim(g) = 8128 at n = 7 and growing as 4^n / 2, that is the
+2^-n rate S13 measured at depth 8 (decay base 0.504, `s13/results/geo_kernel.json`). The S25
+"no exponential plateau at n = 4..13" (`s25/results/q_plateau.json`) is a statement about
+depth 3, P = 3n against dim so(2^n), and is to be quoted with "at depth 3" attached. It is
+not evidence of a favourable algebra. The small-DLA route of Cerezo et al. 2025 does not apply;
+the circuit is simulable because n = 7 (S21 L4), not because of its structure.
 
 ## 3. A3 -- target-dependent Hamiltonians. PENDING the phase gate (endpoint half).
 

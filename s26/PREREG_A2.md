@@ -107,3 +107,4 @@ H2a, H2c (2080 / 8256 / 32896 at n = 7 / 8 / 9, as predicted), H2d and H2e held.
 n = 6 pattern reappears at n = 9 (32766 / 65535 / 130816 at L = 2 / 3 / 4) and at no other
 n <= 11; "n divisible by 3" is an observation from two widths, HYPOTHESIS. Ledger entry
 appended as the next L number after L25.
+Correction (09:25): the entry landed as L27 (lane P had appended L26 in the meantime).
