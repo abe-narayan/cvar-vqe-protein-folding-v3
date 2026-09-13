@@ -661,3 +661,15 @@ production step costs +0.0207; so AMBER is predicted WORSE than the matched rand
 about +0.013 A. Measured after the gate.
 
 ---
+## L25 -- LANE W (WILDCARD) SPAWNED; THE 2/60 PROXY BOUND IS ITS FIRST MANDATORY DIRECTION (2026-09-13, coordinator)
+
+Six lanes active (E, I, Q, P, PH, W; `s26/lanes.json`). Brief `s26/briefs/W.md`. Of the mandatory
+tournament directions, test-time window ensembling is already claimed by lane P
+(`s26/IDEA_window_ensembling.md`) and the AMBER reject and cis census by PH (L22, L23); the 2/60
+benchmark self-copy leak bounded from a dev-set proxy without opening the benchmark is unclaimed
+and goes to W, building on lane I's L15 audit (the four dev self-copies and their carriers) and
+S10-4's +0.0004 A dev price. W also owes at least three ideas nobody else has proposed and takes
+the highest-ranked orphaned survivor once the Adversary ranks the tournament.
+
+---
+

@@ -27,6 +27,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 00:42 next: compare the equiv2 arms, write s26/results/run_equiv2.log, brief 6.1 edit + commit, examine.py full run (regenerates s26/results/module_map.json, lane E: it will be rewritten once), agentI_FINDINGS.md.
 - 2026-09-13 08:40 running: resumed after the 00:46 session cut (nothing restarted). Recorded pytest_core_post (final suite: 370 tests, 357 passed, 13 skipped, 0 failed) and run_equiv2 (4 arms, baseline = exact bit-identical 8/8); brief 6.1 replaced and committed; ledger L17 (benchmark provenance), L18 (item 2).
 - 2026-09-13 08:40 next: examine.py now also runs e_hashes --check; full examine run (rewrites s26/results/module_map.json once); closure table in agentI_FINDINGS.md; ledger notes for item 5 and hygiene; final commit; then finish.
+- 2026-09-13 08:43 running: nothing; examine.py full run passed (725 modules, no drift on 101 pinned entries, 21/21 claims); ledger L20 (item 5), L21 (hygiene); findings closure table written.
+- 2026-09-13 08:43 next: closing commit (findings, examine.py, claim_check.json), then the lane finishes its turn. Items 1-5 and defects 6a-6d closed; no production number changed.
 
 ## Q (Quantum lane)
 - 2026-09-13 08:50 running: resumed after the session cut at 00:46; q_*.py, probes and reference MDEs committed (2fb2998b); PREREG_A2/A4 on disk; launching A2 (DLA, s26/q_dla.py) and A4 (variance, s26/q_var.py) under the governor per the coordinator ruling.
@@ -48,4 +50,4 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 
 ## PR (Presentation lane) -- not yet spawned
 
-## W (Wildcard) -- not yet spawned
+## W (Wildcard)
