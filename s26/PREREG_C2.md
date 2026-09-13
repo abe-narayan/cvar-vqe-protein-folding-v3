@@ -176,3 +176,22 @@ Examiner for the operator-fork re-enumeration before it is called a result.
   (float32 rounding of the cached embeddings), equivalent in every quantity the pipeline consumes.
 - Rung `conly` (PREREG_B2) added to the ladder after the probe job exited: 55-d, no embedding block.
 - Fold-processing order: `--folds 4,3,2,1,0`; seed replication: `--seed 1`.
+
+## ADDENDUM 2 (2026-09-13 08:45) -- TRAINING ORDER FIXED BEFORE THE FIRST JOB, per LEDGER L16b
+
+Session note: the lane was cut by the API session limit at ~00:46 and resumed at 08:37; no
+training job had been launched before the cut (`s26/jobs_done/` holds only the probes; the only
+model on disk is `models/p_ladder/pca32_fold0_s0_probe.pt`). Nothing is restarted; the probe
+model is kept as the probe and the ladder's own pca32 fold 0 is trained afresh under the
+declared seed/tag so that the gate compares like with like.
+
+Rung TRAINING order, one governor job at a time, est-ram 1.5 GB (raw 1.8 GB), NT = 2, one .pt
+per fold as the checkpoint, each job resumable (existing fold checkpoints are skipped):
+
+    1 noesm  ->  2 conly  ->  3 pca32  ->  4 wide  ->  5 pca32f  ->  6 pca128
+    ->  7 featurise-esm8m then esm8m  ->  8 raw (last: its first Linear layer is 5175 x 384)
+
+Fold order inside every job: 0,1,2,3,4 (the replication run uses 4,3,2,1,0 and seed 1). pairnet
+and mix train nothing. No `eval`/`report` runs until "PHASE 0 SIGNED OFF" is in `s26/LEDGER.md`
+(enforced in code). Evaluation order after sign-off: shipped (the identity gate), then the rungs
+in the order their checkpoints completed.

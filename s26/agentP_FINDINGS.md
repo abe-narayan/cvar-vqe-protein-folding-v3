@@ -103,3 +103,58 @@ The record's prior for every one of them is a null; the MDEs are computed in PRE
 `s26/results/b1_feasibility.json` · `s26/results/p_ladder_gate_pca32_fold0_s0_probe.json` ·
 `s26/jobs_done/{p_probe_esm,p_probe_esmcache,p_ladder_test,p_probe_train_pca32_f0}.json` ·
 `s26/logs/p_*.log` · `s26/models/p_ladder/pca32_fold0_s0_probe.pt`
+
+## 7. C1 -- CLOSURE REPRODUCTION FROM PERSISTED ARTEFACTS (PREREG_C1; reads recorded numbers only)
+
+Both closures that Proposal C rests on reproduce from the artefacts on disk to the third
+decimal. (a) The set-transformer over the full signed deviation map (S12 agg_FINDINGS section 6)
+has a flat learning curve: `s12/results/agg_dec_v2_n8.json` mean_raw 3.0433, `_n16` 3.0491,
+`_n32` 3.0456, `_n64` 3.0358, `agg_dec_v2.json` (3 folds, ~75 targets, early-stopped) 3.0258;
+the same harness with the RMSD label leaked: `agg_dec_v2_oracle_n8.json` 2.5342,
+`_oracle_n32` 2.2004, `agg_dec_v2_oracle.json` 2.1460 (v1 harness: 3.0561 -> 3.0640 real;
+2.5335 -> 2.1466 leaked). The real-feature range over an 8x change in training data is 0.023 A,
+inside the seed spread (3.0258 vs 3.0337); the leaked label is at 57% of its final gain at n = 8.
+Basis: RAW weighted coordinate average (point cloud); avg75 reference 3.0483. (b) The perfect
+ranker inside the shipped top-25: `s17/results/inband.json`, 126 rows, cells['25']: band_best
+2.6087 (median 2.5155), random-in-band 3.4676, distance argmin 3.4540, consensus 3.3692,
+Legacy 3.4149, band mean 3.5016; band_best - random -0.8589, SE 0.0600, MDE 0.1680, 126W/0L.
+Basis: selected single candidate (selection). Neither number is a built chain.
+
+| closure | quantity | recorded | reproduced | artefact |
+|---|---|---|---|---|
+| set-transformer, real features | n=8 / 16 / 32 / 64 / ~75 | 3.043 / 3.049 / 3.046 / 3.036 / 3.026 | 3.0433 / 3.0491 / 3.0456 / 3.0358 / 3.0258 | `s12/results/agg_dec_v2*.json` |
+| set-transformer, leaked label | n=8 / 32 / ~75 | 2.534 / 2.200 / 2.146 | 2.5342 / 2.2004 / 2.1460 | `s12/results/agg_dec_v2_oracle*.json` |
+| perfect ranker in top-25 | band best / random / dist argmin | 2.609 / 3.468 / 3.454 | 2.6087 / 3.4676 / 3.4540 | `s17/results/inband.json` |
+
+Verdict for PROPOSAL_C: "selection inside the pool is closed" stands as CITED AND REPRODUCED;
+the S7-11 ESM number is CITED, ARTEFACT LOST (D6) and is re-measured by the C2 ladder.
+
+## 8. After L16b: the training chain, the code for B3/C4/C5, and the hand-off format (2026-09-13 09:10)
+
+- Session note: cut at ~00:46 by the API session limit, resumed 08:37; nothing had been
+  launched, nothing restarted. The probe model `models/p_ladder/pca32_fold0_s0_probe.pt` stays the
+  probe; the ladder's own pca32 is trained under the declared tag.
+- Training: `s26/p_train_chain.sh` runs the eight trainable rungs one governor job at a time in
+  the order fixed by PREREG_C2 addendum 2 (noesm, conly, pca32, wide, pca32f, pca128, esm8m after
+  `featurise-esm8m`, raw last), est-ram 1.5 GB (raw 1.8), one `.pt` per fold, a `_p2` pass to
+  resume anything the governor kills. `p_train_noesm` registered 08:52. No evaluation before
+  sign-off; `p_ladder.py eval/report` refuse in code.
+- Code written and self-tested on synthetic data (no RMSD read): `s26/p_stats.py` (closed-form
+  ridge, nested leave-fold-out alpha, balanced accuracy, permutation null; selftest: planted
+  signal 0.866 held-out balanced accuracy vs null p95 0.558, random labels 0.503, planted
+  regression R2 0.961), `s26/p_b3.py` (PREREG_B3: native-free features cached to
+  `results/p_b3_features.json`; classifier + regression + nulls; `run` gated), `s26/p_c4.py`
+  (PREREG_C4: four new feature blocks, the S22 feature set as the harness positive control,
+  routers A/B/S with label-permutation nulls; `run` gated), `s26/p_c5.py` (PREREG_C5: R1
+  distance-space and R2 cloud-frame representations, GLOBAL / RIDGE / ORACLE / RANDOM-MATCHED
+  arms through the same projection; selftest covers the frame round trip, rotation invariance,
+  the realisation and NaN-poison; `run` gated), `s26/p_deliver.py` (the C3 stage-2 hand-off:
+  `results/p_best_rung_chains.json`, phi/psi in radians as `I.project` emits them, `ca`,
+  `rmsd_arm`, provenance-stamped, equality with the eval JSON asserted).
+- `IDEA_amber_prior_partner.md` entered (H_C3a); H_C3b withdrawn (S8-14 arithmetic).
+
+### What I did not do (update)
+- Did not evaluate any rung, fit any router or classifier on real labels, or run C5's fit:
+  all read native quantities and wait for "PHASE 0 SIGNED OFF".
+- Did not edit `p_ladder.py` after `p_train_noesm` registered; the hand-off code lives in
+  `p_deliver.py` for that reason.

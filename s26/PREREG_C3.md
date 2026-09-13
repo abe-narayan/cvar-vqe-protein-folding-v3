@@ -70,3 +70,14 @@ different, physics-as-prior-partner experiment (H_C3a/H_C3b). **Lane PH's brief 
 draft above is offered to PH as an optional arm; it is not the C3 of record. Lane P will hand PH
 the best C2 rung's per-target posteriors and endpoints (`s26/results/p_ladder_<rung>_s0.json`)
 the moment they exist after sign-off, which is what stage 2 needs.
+
+## ADDENDUM 2 (2026-09-13 08:45) -- NOT PROPOSAL C's C3, per the coordinator (LEDGER L16b)
+
+Proposal C's item C3 is "AMBER refinement kept honest": re-run the restrained relaxation on the
+best C2 rung's output against the S16 matched-magnitude random displacement control, owned by
+lane PH (`s26/briefs/PH.md`, pre-registered in `s26/PREREG_c3_control.md`, result to be
+`s26/C3_RESULT.md`). This file's H_C3a/H_C3b are a DIFFERENT hypothesis (physics as a prior
+partner). Per L16b the file is neither deleted nor retitled; its cheap arm H_C3a is entered in
+the tournament as `s26/IDEA_amber_prior_partner.md` and the Adversary decides whether it runs.
+H_C3b (relaxed training labels) is withdrawn from the tournament: S8-14's arithmetic (label noise
+0.5 A per pair, de-noising worth 0.044 A) already bounds it below every MDE in PREREG_C2.
