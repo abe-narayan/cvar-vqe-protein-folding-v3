@@ -50,12 +50,12 @@ pipeline scores 3.2148 A built chain.
 
 Second, at this length the sequence says little about the shape. The programme measured the
 sequence-to-torsion channel directly: a model that reads the whole 15-residue context predicts
-phi no better than a model that reads no sequence at all (the record quotes 36.1 against 36.4
-degrees of mean absolute error, `docs/CONDENSED_REPORT.md:104-116`, `s13/SPRINT13_DOSSIER.md`
-section 5). The artefact behind those two numbers is not on disk (`s26/EXAMINATION.md` C26),
-so they are cited here to the documents that carry them and are not in Appendix B. Short
-peptides in isolation are also often flexible, and the deposited model is one member of an
-ensemble. Both facts matter for what "accuracy" can mean.
+phi with a mean absolute error of 36.133 degrees against 36.416 for a model that reads no
+sequence at all (`s26/results/a_c26_phi_mae.json`, re-derived by the S26 Adversary from
+`s13/cache/tors_rows.npz`, ledger L31, L32; the record's 36.1 against 36.4 is
+`docs/CONDENSED_REPORT.md:104-116`, `s13/SPRINT13_DOSSIER.md` section 5). Short peptides in
+isolation are also often flexible, and the deposited model is one member of an ensemble. Both
+facts matter for what "accuracy" can mean.
 
 ### I.2 Why this is a good testbed
 
@@ -447,7 +447,9 @@ deterministic builder (a fixed rotamer, no scan), hydrogens are added, and the e
 sum of bond, angle, torsion, non-bonded (Lennard-Jones plus Coulomb) and solvation terms. A
 single evaluation costs about 9 ms; a restrained minimisation to convergence 6 to 12 s
 (`s16/repair_FINDINGS.md` section 2.4). The record's earlier "6 ms" was a memoised re-evaluation
-and is corrected to 28 ms for the single point it timed (`docs/CONDENSED_REPORT.md:185`).
+and was corrected to 28 ms (`docs/CONDENSED_REPORT.md:185`); the S15 audit with memoisation
+defeated then measured 8.3 to 23.3 ms and recorded that budget matching had over-charged AMBER
+two to three times (`s15/LEDGER.md` row 0.8).
 
 ### IV.2 What "H = E after 50 relaxation steps" means
 
@@ -1161,7 +1163,8 @@ same pool gives 1.925, `docs/CONDENSED_REPORT.md:176`); retrieval is fixable and
 worth 0.016 A (S8-6); inverse folding is the least misspecified objective and still misspecified
 (S8-7); inside the near-native band the score is worse than a coin flip and consensus is the
 only discriminator, giving the first arm in three sprints with a CI excluding zero, a score
-filter plus consensus medoid (S8-8, `docs/FINDINGS.md:2893`); the channels' errors are
+filter plus consensus medoid at -0.172 A [-0.316, -0.027] single window, 74W/47L (S8-8,
+`docs/FINDINGS.md:2893-2935`); the channels' errors are
 decorrelated and it buys 0.01 A (S8-9); generation is worth nothing as candidates but exposes a
 second law (S8-10, corrected by S8-13: the transfer law is the identity map where we operate);
 synthesis beats selection at 3.204 A, replicated on dev (S8-11); AMBER is a validity stage, not
@@ -1659,15 +1662,19 @@ deployed ansatz's dynamical Lie algebra is the full so(128) from depth 2, falsif
 pre-registered proper-subalgebra prediction (L27; Part V.9). Lane PH: the steric singularity is
 mostly the side-chain builder's (L23), and the production relaxation's native-free census (L24;
 Part IV.7). Lane P: B1 is infeasible at its stated scale (L13); the repo-native stand-in (L14);
-C1 reproduced; the C2 ladder training (L26). One Rule-1 incident, logged with no consequence
-(L28 item 5, L29). The rest fills Part VII as the verdicts land.
+C1 reproduced; the C2 ladder training (L26). Lane W: the 2/60 proxy bound pre-registered and a
+native-free census of the four dev self-windows (L30). One Rule-1 incident, logged with no
+consequence (L28 item 5, L29). The Adversary's audit of the examination: reproduction exact on
+HEAD, one material documentary item (the test total, corrected by addenda to 370 / 357 / 13),
+C26 re-derived with an artefact, C27 located in git history (L31, L32, L34); Phase 0 signed off
+at 09:05 (L33). The rest fills Part VII as the verdicts land.
 
 Closed, retracted, open. Slots; see Parts VII and VIII.
 
 ## PART VII. WHAT S26 TESTED AND FOUND
 
-Slots, filled as verdicts land in `s26/LEDGER.md` (the phase gate was still closed when this
-part was opened; nothing here is a result yet):
+Slots, filled as verdicts land in `s26/LEDGER.md` from L33 (PHASE 0 SIGNED OFF, 09:05) onward;
+nothing here is a result until its entry lands:
 
 - VII.1 Proposal A (lane Q): A1 the null test of the deployed selector; A2 the dynamical Lie
   algebra (landed, `s26/LEDGER.md` L27, written into Part V.9); A3 a target-dependent
@@ -2091,8 +2098,10 @@ plans and rules; the agent that audits.
 ## APPENDIX B. EVERY NUMBER IN THIS REPORT, WITH ITS ARTEFACT
 
 Rows are added as parts land. A number whose only source is a document is not in the report;
-the four document-only numbers of `s26/EXAMINATION.md` section C (36.1/36.4 deg, +0.0004/+0.0030,
-the |z_moment| triple 0.7529/0.8013/0.1127, 355/13) are mentioned only as absent, and the 0.524
+of the four document-only numbers of `s26/EXAMINATION.md` section C, C26 (36.1/36.4 deg) was
+re-derived in S26 and now has a row; C27 (+0.0004/+0.0030; its artefact is in git history, L31)
+and C34 (the |z_moment| triple 0.7529/0.8013/0.1127) are mentioned only as absent; C35 (355/13)
+is superseded by the 370/357/13 of `s26/TEST_RUN.md`; and the 0.524
 sampled tail-only cosine inside C24 is replaced by the three instrument-specific values of
 `s25/QUANTUM.md` section 4.2. "as stored" means the leaf is the number to the precision printed;
 "as cited" means the number is quoted from the named document section, which names its own
@@ -2100,6 +2109,7 @@ artefact; "as asserted" means a passing test pins it.
 
 | number | where used | artefact (file :: key, or file:line) | stored value |
 |---|---|---|---|
+| 36.133, 36.416 | I | `s26/results/a_c26_phi_mae.json` (Adversary re-derivation from `s13/cache/tors_rows.npz`, L31) | as stored |
 | 3.2148 | I, II, III | `bench_results/baseline_tuning126.json :: science/rmsd_arm/mean` | 3.214765154210998 |
 | 3.0483 | II, III | `bench_results/baseline_tuning126.json :: science/rmsd_avg/mean` | 3.048338093879532 |
 | 3.2355 | II, III | `bench_results/baseline_tuning126.json :: science/rmsd_full/mean` | 3.2354598538973844 |
@@ -2125,6 +2135,8 @@ artefact; "as asserted" means a passing test pins it.
 | 7193, 9814, -1..19, -6..32, 144, 420, 105, 91, 183, 17 centres, 760, 488, 483, 0.6926..7.2688, 2.2420..5.1791, 401 98 193 161 284 260 372 373 381 382, 44/449, 3.75, 1.97, 1.16, 8, 128, 5.05..21.07, 0.23..2.70, 5.62..23.44, 7.58, 5.34, 1.40 | III | `s26/results/e_trace_1S9Z.json`, `s26/results/e_trace_9KAR.json` | as stored |
 | 3.3135, 3.3443 | III | `s8/integrate_vqe.json :: rmsd_vqe_sel, medoid128` (reproduced by `tests/test_pipeline.py::test_the_four_components_all_execute_and_reproduce_their_published_numbers`) | as stored |
 | 0.288 | III | `docs/FINDINGS.md:1970-2037` (S7 finding 11) | as cited |
+| -0.172 [-0.316, -0.027], 74W/47L | VI | `docs/FINDINGS.md:2901` (S8-8 table) | as cited |
+| 8.3 to 23.3 | IV | `s15/LEDGER.md` row 0.8 (`s15/results/audit_amber_cost_sweep.json`) | as cited |
 | 0.016 | III | `docs/FINDINGS.md:2379` (S8-6 heading) | as cited |
 | +0.142 | III | `ARCHITECTURE.md` section 2.5 | as cited |
 | +0.0207 [+0.0143, +0.0276] | III | `docs/STATE_BRIEF_2026-09-12.md` section 4 | as cited |
