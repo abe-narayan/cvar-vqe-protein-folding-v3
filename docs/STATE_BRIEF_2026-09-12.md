@@ -271,8 +271,7 @@ Last recorded status: 368 pass, 0 warnings (commit `ae86a124`). S25 L14 notes th
 carry a memory-ceiling guard: on this 15.6 GB box a full run can push past 92% RAM, and the guard
 turns those into skips/errors that are not code defects.
 
-**Live run for this brief (2026-09-12, `pytest tests/ -q`): 355 passed, 13 skipped, 0 failed,
-0 errors, exit 0.**
+**S26 governed run (2026-09-13, branch `s26`, commit `601a39c7`, under `s26/governor.py`; per-file counts, every skip reason and peak RSS in `s26/TEST_RUN.md` / `s26/results/test_run.json`): 370 tests, 357 passed, 13 skipped, 0 failed, 0 errors, 0 memory-guard skips**, split into three jobs so no more than one AMBER job from the lane was live: the 10 non-AMBER files as job `pytest_core_post` (351 tests, 338 passed, 13 skipped; 240 s, peak RSS 1.692 GB), `tests/test_amber.py` as AMBER job `pytest_amber` (16 passed; 261 s, 0.872 GB) and `tests/test_amber_frame_invariance.py` as AMBER job `pytest_amber_frame` (3 passed; 256 s, 0.324 GB). Passed per file: `cvar` 90 · `data` 42 · `energy` 9 · `equivalence` 11 (+3 skipped) · `geometry` 24 · `instrument` 43 · `integration` 17 (+8 skipped) · `pipeline` 35 (+2 skipped) · `project` 28 · `quantum` 39 · `amber` 16 · `amber_frame_invariance` 3. The 13 skips are real, none from the memory guard: 3 in `test_equivalence.py` and 8 in `test_integration.py` are `set VERIFY_SLOW=1` opt-ins, 2 in `test_pipeline.py` are absent artefacts (`bench_results/optimised_tuning126_w6.json`; no smoke result on disk). The suite is 370 rather than 368 because S26 added one test to `test_amber.py` (the memory-guard message) and one to `test_data.py` (the identity flag ships dark). The same files ran before any S26 edit (job `pytest_core`, tree `a4db170c`): 337 passed, 13 skipped, 0 failed, identical skip list.
 
 ### 6.2 Standalone audits (`verify/`)
 
