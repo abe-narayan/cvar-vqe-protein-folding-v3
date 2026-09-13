@@ -54,10 +54,13 @@ LOG = HERE / "governor.log"
 STATE = HERE / "governor_state.json"
 LANES = HERE / "lanes.json"
 
-CEILING = 93.0        # % RAM or CPU: suspend the newest job
-HARD = 95.0           # % RAM or CPU, sustained HARD_SECONDS: kill the newest job
+CEILING = 93.0        # % RAM, or % CPU smoothed over CPU_WINDOW samples: suspend the newest job
+HARD = 95.0           # % RAM sustained HARD_SECONDS: kill the newest job (RAM only, v2)
 HARD_SECONDS = 15.0
-RESUME_BELOW = 90.0   # the band is 90-93; resume only once we are back under 90
+RESUME_BELOW = 90.0   # RAM band is 90-93; resume only once RAM is back under 90 ...
+CPU_RESUME = 80.0     # ... and smoothed CPU is under 80 (v2: the 90-93 CPU band thrashed)
+CPU_WINDOW = 3        # samples in the CPU rolling mean (3 x 5 s = 15 s)
+MIN_SUSPEND = 20.0    # seconds a suspended job stays suspended before it may resume (v2)
 LOW = 88.0            # below this for LOW_SECONDS: launch the next queued job
 LOW_SECONDS = 60.0
 SAMPLE = 5.0
@@ -65,6 +68,13 @@ MAX_AMBER = 2
 MAX_JOBS = 8
 MIN_LANES, MAX_LANES = 4, 8
 KILL_GRACE = 25.0     # seconds between CTRL_BREAK and terminate
+
+# v2 (2026-09-13 08:50). The 00:37 log showed the v1 band oscillating: with five jobs the raw
+# CPU sample crossed 93% and fell under 90% on alternate 5 s ticks, so the newest job was
+# suspended and resumed every 5 s, and a sustained CPU spike would have KILLED a job that was
+# doing nothing wrong (CPU overload slows the box; it cannot crash it). v2: CPU is a 15 s
+# rolling mean; CPU above the ceiling suspends but never kills; only RAM kills; a suspended
+# job stays down at least MIN_SUSPEND seconds; resumption needs RAM < 90 AND CPU < 80.
 
 
 def now() -> str:
@@ -250,22 +260,29 @@ def launch_next(jobs: list) -> bool:
 
 # ----------------------------------------------------------------------------- loop
 
+_CPU_HIST: list = []
+
+
 def sample(jobs: list) -> dict:
     vm = psutil.virtual_memory()
     cpu = psutil.cpu_percent(interval=None)
+    _CPU_HIST.append(cpu)
+    del _CPU_HIST[:-CPU_WINDOW]
+    cpu_smooth = sum(_CPU_HIST) / len(_CPU_HIST)
     lanes = read_json(LANES) or {}
     return {
         "ts": now(), "epoch": time.time(),
         "ram_pct": vm.percent, "ram_used_gb": round(vm.used / 1e9, 3),
         "ram_avail_gb": round(vm.available / 1e9, 3), "ram_total_gb": round(vm.total / 1e9, 3),
-        "cpu_pct": cpu,
+        "cpu_pct": cpu, "cpu_smooth": round(cpu_smooth, 1),
         "jobs": [{"name": j["name"], "agent": j.get("agent"), "tag": j.get("tag"),
                   "pid": j["pid"], "rss_gb": round(j["_rss"] / 1e9, 3),
                   "suspended": j["_suspended"], "start": j.get("start")} for j in jobs],
         "n_jobs": len(jobs), "n_amber": n_amber(jobs),
         "n_queued": len(list(QUEUE.glob("*.json"))),
         "lanes": lanes.get("active", []), "n_lanes": len(lanes.get("active", [])),
-        "band": {"ceiling": CEILING, "hard": HARD, "resume_below": RESUME_BELOW, "low": LOW},
+        "band": {"ceiling": CEILING, "hard": HARD, "resume_below": RESUME_BELOW,
+                 "cpu_resume": CPU_RESUME, "low": LOW, "version": 2},
     }
 
 
@@ -289,12 +306,14 @@ def main() -> None:
         print(json.dumps(s, indent=1))
         return
 
-    log("START", f"governor pid {os.getpid()} ceiling={CEILING}% hard={HARD}%/{HARD_SECONDS:.0f}s "
+    log("START", f"governor v2 pid {os.getpid()} ceiling={CEILING}% hard(ram)={HARD}%/{HARD_SECONDS:.0f}s "
+                 f"cpu_resume={CPU_RESUME}% cpu_window={CPU_WINDOW} min_suspend={MIN_SUSPEND:.0f}s "
                  f"low={LOW}%/{LOW_SECONDS:.0f}s sample={SAMPLE:.0f}s max_amber={MAX_AMBER}")
     breach_since = None
     hard_since = None
     low_since = None
     suspended_stack: list = []      # names, in the order we suspended them (LIFO resume)
+    suspended_at: dict = {}         # name -> time of suspension (MIN_SUSPEND)
     last_sample_log = 0.0
     last_lane_warn = 0.0
     while True:
@@ -302,14 +321,14 @@ def main() -> None:
         jobs = load_jobs()
         s = sample(jobs)
         write_json_atomic(STATE, s)
-        ram, cpu = s["ram_pct"], s["cpu_pct"]
+        ram, cpu = s["ram_pct"], s["cpu_smooth"]
         hot = max(ram, cpu)
         which = "ram" if ram >= cpu else "cpu"
 
         if t0 - last_sample_log >= 60.0:
             log("SAMPLE", f"ram={ram:.1f}% ({s['ram_used_gb']:.2f}GB used, {s['ram_avail_gb']:.2f}GB free) "
-                          f"cpu={cpu:.1f}% jobs={s['n_jobs']} amber={s['n_amber']} "
-                          f"queued={s['n_queued']} lanes={s['n_lanes']}")
+                          f"cpu={s['cpu_pct']:.1f}% (15s mean {cpu:.1f}%) jobs={s['n_jobs']} "
+                          f"amber={s['n_amber']} queued={s['n_queued']} lanes={s['n_lanes']}")
             last_sample_log = t0
 
         if (s["n_lanes"] < MIN_LANES or s["n_lanes"] > MAX_LANES) and t0 - last_lane_warn >= 600:
@@ -326,19 +345,20 @@ def main() -> None:
             suspended_stack.append(j["name"])
             log("WARN", f"AMBER cap: {j['name']} suspended until a slot frees")
 
-        # Hard breach: > HARD for HARD_SECONDS -> kill the newest job.
-        if hot > HARD:
+        # Hard breach (RAM only, v2): > HARD for HARD_SECONDS -> kill the newest job.
+        if ram > HARD:
             hard_since = hard_since or t0
             if t0 - hard_since > HARD_SECONDS and jobs:
                 victim = jobs[-1]
-                kill(victim, f"{which} {hot:.1f}% > {HARD}% for {t0 - hard_since:.0f}s")
+                kill(victim, f"ram {ram:.1f}% > {HARD}% for {t0 - hard_since:.0f}s")
                 if victim["name"] in suspended_stack:
                     suspended_stack.remove(victim["name"])
+                suspended_at.pop(victim["name"], None)
                 hard_since = None
         else:
             hard_since = None
 
-        # Soft breach: > CEILING -> suspend the newest running job.
+        # Soft breach: > CEILING (RAM, or smoothed CPU) -> suspend the newest running job.
         if hot > CEILING:
             breach_since = breach_since or t0
             running = [j for j in jobs if not j["_suspended"]]
@@ -346,6 +366,7 @@ def main() -> None:
                 j = running[-1]
                 suspend(j)
                 suspended_stack.append(j["name"])
+                suspended_at[j["name"]] = t0
             elif not jobs:
                 if t0 - breach_since > 60 and int(t0 - breach_since) % 60 < SAMPLE:
                     log("WARN", f"{which} at {hot:.1f}% with no registered jobs: the pressure "
@@ -353,19 +374,24 @@ def main() -> None:
         else:
             breach_since = None
 
-        # Band restored: resume, one per sample, the most recently suspended job first,
-        # unless it is an AMBER job with no free slot.
-        if hot < RESUME_BELOW and suspended_stack:
+        # Band restored (RAM under 90 AND smoothed CPU under 80): resume, one per sample, the
+        # most recently suspended job first, after it has been down at least MIN_SUSPEND
+        # seconds, unless it is an AMBER job with no free slot.
+        if ram < RESUME_BELOW and cpu < CPU_RESUME and suspended_stack:
             by_name = {j["name"]: j for j in jobs}
             for name in reversed(list(suspended_stack)):
                 j = by_name.get(name)
                 if j is None or not j["_suspended"]:
                     suspended_stack.remove(name)
+                    suspended_at.pop(name, None)
+                    continue
+                if t0 - suspended_at.get(name, 0.0) < MIN_SUSPEND:
                     continue
                 if str(j.get("tag", "")).upper() == "AMBER" and n_amber(jobs) >= MAX_AMBER:
                     continue
                 resume(j)
                 suspended_stack.remove(name)
+                suspended_at.pop(name, None)
                 break
 
         # Low water: < LOW for LOW_SECONDS -> launch the next queued job.

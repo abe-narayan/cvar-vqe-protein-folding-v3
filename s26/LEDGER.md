@@ -408,3 +408,93 @@ A1 and A3 endpoints wait.
 
 ---
 
+## L18 -- HOW L15's BENCHMARK COUNTS WERE OBTAINED: THE MANIFEST WAS READ THROUGH core.data.benchmark(), SEQUENCES ONLY (2026-09-13, lane I)
+
+The counts in L15 that concern the sealed benchmark (48/60 gain a cross-fold mate under the
+shorter criterion; 52/60 would be relabelled by a naive re-derivation; 2/60 under the minimal
+pinned-OR-substring fix) were computed in `s26/i_identity_audit.py` (sections 3b and 5) over
+the SEQUENCES of the 60 benchmark peptides returned by `core.backend("data").benchmark()`.
+That function (`core/data.py:617-633`) opens `results/benchmark_manifest.json`, reads the `pdb`
+field of every entry in its `targets` list, and returns the matching `Peptide` records of the
+peptide database (`peptide_db.npz`). So the manifest's contents WERE read by the audit process,
+by the route the lane brief named as the permitted one ("through core.backend("data").benchmark()
+sequences only, print no names, report only the count"); stated plainly so the coordinator can
+log it as the conservative path. The S24 L4 count (2/60) was made the same way.
+
+What was and was not touched: the audit used only `.seq` of each returned record. The
+`Peptide` records carry native CA / phi / psi for every one of the 787 database entries
+(they ARE the database, loaded by every caller of `core.data.load()`), and no such field was
+accessed for a benchmark entry. No benchmark PDB file was opened, no native coordinate read,
+no RMSD computed, no benchmark name printed, saved or logged: `s26/results/i_identity_audit.json`
+holds counts only (`benchmark60`, `substring_or_pinned.benchmark60_with_new_mates_in_other_pinned_folds`),
+and non-dev database members appear in the audit output by length alone. Nothing further will be
+computed on benchmark targets by this lane.
+
+---
+
+## L19 -- OPERATIONAL ITEM 2 CLOSED: verify/run_equiv2.sh RUNS THE COMPARISON IT WAS WRITTEN FOR; BASELINE AND THE SHIPPED MODE ARE BIT-IDENTICAL (2026-09-13, lane I)
+
+Why it was stale: it exported `PROJECT_GRAD`, which `core/project.py` stopped reading when the
+mode moved into `core.pipeline.Config.project_grad` so that it reaches the cache key
+(`verify/grad_key_collision.py`). The `core.pipeline` CLI has no flag for the mode, so as
+written the script ran three arms in one mode. Repair (commit `eb89c165`): the consolidated
+arms go through `s26/i_run_equiv2_arm.py`, which builds the identical `Config` to
+`python -m core.pipeline run` (the same `replace(PROD, ...)` call) and sets `project_grad`;
+four arms (baseline legacy; `exact`, the shipped default; `fd`; `analytic`); the original
+`cfg_key` grep kept; any argument passed to every arm. `s26/i_equiv2_compare.py` compares the
+arms per target from their cache directories with `==`.
+
+Run: job `run_equiv2`, `sh verify/run_equiv2.sh --no-amber`, tag AMBER (with `--no-amber` no
+OpenMM context is created, but `openmm` is still imported because `core.pipeline` resolves
+the amber backend at start, so the conservative tag was the right one), exit 0, 145.3 s, peak
+RSS 0.596 GB (`s26/jobs_done/run_equiv2.json`). Per arm on smoke8 (8 targets, no stage 4):
+baseline 67.4 s, exact 33.0 s, fd 20.2 s, analytic 8.8 s.
+
+    arm              cfg_key            vs opt_exact (8 targets)
+    baseline_legacy  65ec272db3d31f05   ca, fit_ca, phi, psi, avg_ca, rmsd_avg, rmsd_fit,
+                                        rmsd_arm, n_windows, n_top: bit-identical 8/8
+    opt_exact        66050f6daae4ca07   (the shipped default)
+    opt_fd           85faafd84d76a827   avg_ca and rmsd_avg identical; rmsd_fit differs on
+                                        8/8, max 6.9e-4 A; rmsd_arm max 1.2e-2 A
+    opt_analytic     f4e137a48586bd4b   avg_ca and rmsd_avg identical; rmsd_fit max 1.0e-1 A;
+                                        rmsd_arm max 4.8e-2 A, 8/8 targets
+
+Four distinct keys: the mode is in the key and the collision the script was flagged for is
+closed. Baseline against the shipped mode is bit-identical on every emitted array and scalar:
+the consolidation is faithful, and the `fd` and `analytic` differences are the scan builder and
+the analytic gradient, as `core/project.py`'s docstring states. (The raw coordinate max|d| of
+22 to 32 A and phi/psi differences near 2 pi between modes are lab-frame and angle-wrap
+differences of un-superposed emitted chains, not the science; the RMSD scalars are.)
+
+Artefacts: `s26/results/run_equiv2.log` (whitelisted transcript: the jobrun log, all four arm
+logs, the comparison), `s26/results/run_equiv2_compare.json`, `verify/e2_*.log` (ignored).
+Not run: the AMBER-inclusive form; stage 4 is downstream of the projection the script compares.
+
+---
+## L18 -- GOVERNOR v2: SMOOTHED CPU, RAM-ONLY KILLS, 20 s MINIMUM SUSPENSION, LAUNCH CAP OF 4 (2026-09-13, coordinator)
+
+`s26/governor.log` 00:37:01 to 00:38:51: with five governed jobs registered the raw CPU sample
+crossed 93% and fell under 90% on alternate 5 s ticks (SAMPLE lines 00:37:41 cpu 98.7%, 00:38:41
+92.8%, RAM 67 to 68% throughout), so the v1 band suspended and resumed `q_dla_smoke` eleven times
+in two minutes and suspended two PH census jobs. No job was killed and every job exited 0, but a
+CPU spike sustained 15 s would have killed the newest job, which for jobrun-launched jobs has no
+queue spec to requeue from. Changes (commit follows this entry), all in `s26/governor.py` and
+`s26/jobrun.py`, no production module touched:
+
+- CPU enters the band as a 15 s rolling mean (`cpu_smooth`, three samples), written to
+  `s26/governor_state.json` beside the raw value.
+- The kill rule (95% for 15 s) now reads RAM only; CPU above 93% suspends the newest running job
+  and never kills. CPU overload slows the box; only RAM can crash it.
+- A suspended job stays suspended at least 20 s; resumption needs RAM under 90% AND smoothed CPU
+  under 80%.
+- `jobrun.py` also waits while the smoothed CPU is above 85% or four jobs are already
+  registered, so five lanes launching at once are serialised at the door instead of suspended
+  after the fact.
+
+The v1 governor (pid 36196) was terminated at 08:5x with the RESTART line in the log and v2
+started in its place. Two lane-Q jobs (`a2_dla`, `a4_var`) were registered at that moment and ran
+unsupervised for a few seconds; v2 picked their registrations up on its first sample. The log is
+continuous through the restart.
+
+---
+

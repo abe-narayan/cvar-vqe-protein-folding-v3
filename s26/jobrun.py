@@ -33,6 +33,10 @@ ROOT = HERE.parent
 JOBS, DONE, LOGS, QUEUE_L = HERE / "jobs", HERE / "jobs_done", HERE / "logs", HERE / "queue_launched"
 STATE = HERE / "governor_state.json"
 CEILING, MAX_AMBER = 93.0, 2
+#: v2 (2026-09-13): a new job also waits while the governor's 15 s CPU mean is above
+#: CPU_START, or while MAX_CONCURRENT jobs are already registered. Five lanes launching at
+#: once put the 8-core box at 98.7% CPU on 2026-09-13 00:37 and the governor thrashed.
+CPU_START, MAX_CONCURRENT = 85.0, 4
 
 
 def _state():
@@ -99,14 +103,19 @@ def main() -> int:
     waited = 0.0
     while True:
         st = _state()
-        hot = max(st["ram_pct"], st["cpu_pct"]) if st else 0.0
         stale = (time.time() - st["epoch"]) > 60 if st else True
+        ram = st["ram_pct"] if st else 0.0
+        cpu = st.get("cpu_smooth", st["cpu_pct"]) if st else 0.0
+        n_reg = int(st.get("n_jobs", 0)) if st else 0
         amber_block = tag == "AMBER" and _running_amber() >= MAX_AMBER
-        if (stale or hot <= CEILING) and not amber_block:
+        crowded = (not stale) and (ram > CEILING or cpu > CPU_START or n_reg >= MAX_CONCURRENT)
+        if not crowded and not amber_block:
             break
-        if waited == 0.0:
-            why = "AMBER slot" if amber_block else f"box at {hot:.1f}%"
-            print(f"jobrun: {a.name} waiting for {why}", file=sys.stderr, flush=True)
+        if waited == 0.0 or waited % 60.0 == 0.0:
+            why = ("AMBER slot" if amber_block else
+                   f"box at ram {ram:.1f}% cpu(15s) {cpu:.1f}% jobs {n_reg}/{MAX_CONCURRENT}")
+            print(f"jobrun: {a.name} waiting for {why} ({waited:.0f}s so far)",
+                  file=sys.stderr, flush=True)
         time.sleep(5.0)
         waited += 5.0
 
