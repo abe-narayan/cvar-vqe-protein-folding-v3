@@ -1682,7 +1682,26 @@ part was opened; nothing here is a result yet):
   identity null (L15), physics branch selection, strain as difficulty, rotamer relief,
   coherence-penalised training, window ensembling. [pending]
 
-<!-- PART VIII -->
+## PART VIII. CLOSED AND OPEN
+
+Two tables, filled at the close of S26 from Parts VI and VII. The rule: an open item is never
+moved to closed on one failed experiment; it moves when it has been measured to its own ceiling
+or refuted by a pre-registered falsifier, and the row names which.
+
+### VIII.1 Closed
+
+| direction | closed by | where |
+|---|---|---|
+| (rows added at the close; the standing list is `docs/STATE_BRIEF_2026-09-12.md` 5.6 and `docs/CONDENSED_REPORT.md`, "Closed - do not re-fund") | | |
+
+### VIII.2 Open
+
+| item | what would close it | where |
+|---|---|---|
+| whether a better distance predictor is obtainable (the only steep lever, -2.15 A per unit) | a predictor whose achievable ladder rung moves the built chain | `s24/LEDGER.md` L13; `docs/STATE_BRIEF_2026-09-12.md` 5.7 |
+| the 2/60 benchmark self-copy leak, declared and unquantified | by design, only a fresh benchmark, which does not exist | `s24/LEDGER.md` L4 |
+| publishing the trainability half | a manuscript from Part V.10 with V.9's scope correction | `s13/`, `s25/QUANTUM.md`, S26 L27 |
+| (S26 rows added at the close) | | |
 
 ## PART IX. OPERATING MANUAL
 
@@ -1856,7 +1875,218 @@ anything heavy.
 `examine.sh` and `examine.bat` at the root call `examine.py`; there is no Makefile. Exit status
 is non-zero if any step reports a problem.
 
-<!-- APPENDIX A -->
+## APPENDIX A. GLOSSARY
+
+Terms a reader who knows some quantum computing and nothing about proteins will meet, in the
+order a newcomer meets them. Where a term is a name in the code it is given in backticks.
+
+**Protein, peptide, residue.** A protein is a chain of amino acids; each amino acid in the chain
+is a residue. A peptide is a short chain; here 9 to 16 residues.
+
+**Backbone, side chain, CA, CB, N, C, O.** Every residue contributes three backbone atoms, N
+(nitrogen), CA (the alpha carbon) and C (the carbonyl carbon, with its oxygen O), to the chain;
+what distinguishes one amino acid from another is the side chain attached to CA, whose first
+atom is CB. Glycine has no CB.
+
+**CA trace, virtual bond.** The sequence of CA positions, one per residue; consecutive CAs are
+about 3.80 A apart in a real chain (3.8040 in the ideal geometry used here). That distance is
+the virtual bond. It is 2.9 A across a cis peptide bond.
+
+**phi, psi, omega; trans and cis; Ramachandran.** The three backbone torsion angles per residue.
+Omega, across the peptide bond, is nearly always 180 degrees (trans); cis (0 degrees) is rare.
+Phi and psi are the free ones, and the joint distribution real residues occupy is the
+Ramachandran distribution; a Ramachandran penalty (`ramah`) pushes a chain toward it.
+
+**Rotamer.** One of the discrete preferred conformations of a side chain. The builder here uses
+one fixed rotamer per residue type, without scanning.
+
+**Alpha-helix, beta-strand, polyproline II, extended.** Standard backbone conformations; a
+constant alpha-helix is phi = -63, psi = -42 degrees at every residue and is the programme's
+zero-information control.
+
+**Radius of gyration (Rg).** The root-mean-square distance of the atoms from their centroid; a
+compactness measure.
+
+**PDB, deposit, model 1, NMR.** The Protein Data Bank holds deposited experimental structures,
+each with a four-character id (1S9Z, 9KAR). NMR structures come as an ensemble of models; the
+instrument scores model 1.
+
+**Native, target.** The deposited structure of the peptide being predicted (the native) and the
+peptide itself (the target). The native is a reporting label only; no deployable operator reads
+it.
+
+**Superposition, Kabsch, CA-RMSD.** To compare two CA traces, one is rotated and translated
+onto the other to minimise the root-mean-square distance between corresponding atoms (the
+Kabsch algorithm; reflections are not allowed). The minimised value is the CA-RMSD. The endpoint
+of the programme is its mean over targets.
+
+**Basis (of an RMSD).** Which object is scored: SINGLE WINDOW, POINT CLOUD (`rmsd_avg`), BUILT
+CHAIN (`rmsd_arm`), RELAXED CHAIN (`rmsd_full`), or the lam = 0 chain (`rmsd_fit`). Part II.2.
+
+**Library, fragment, window, pool, universe.** The library is 787 peptide chains plus 6,003
+fragments cut from larger proteins. A window is a stretch of n consecutive residues of a
+library member with its CA coordinates. The universe is every window of the target's length in
+the target's fold; the pool is the top K = 500 windows by BLOSUM similarity.
+
+**BLOSUM62, similarity, identity.** BLOSUM62 is a standard substitution matrix scoring how
+alike two amino acids are; a window's similarity to the target is the sum over aligned
+positions. Identity is the fraction of identical residues, normalised here by the longer
+sequence.
+
+**Cluster, fold (of the cross-validation), leakage, self-copy.** Library sequences are grouped
+into identity clusters (470) and clusters into five folds; a target's fold model is trained on
+the other four. Leakage is a training sequence that is the target; a self-copy is a target
+sitting verbatim inside a longer training sequence that passed the identity threshold.
+
+**Distogram, prior, posterior, bin, over-confident.** The distogram is a neural network that
+predicts, for each residue pair, a probability distribution over 17 distance bins from the
+sequence; "prior" and "posterior" both refer to that distribution (prior to seeing any
+structure; posterior to the sequence). Over-confident means its stated uncertainty is smaller
+than its error.
+
+**ESM-2, `esm_pca32`, one-hot.** ESM-2 is a protein language model that maps a sequence to
+per-residue vectors; the pipeline uses a 32-component PCA of them. One-hot is the trivial
+encoding of residue identity as a 20-way indicator.
+
+**Score, Bayes risk, L1 risk, `sc`.** The score of a candidate window is the sum over pairs of
+the expected absolute distance error under the distogram, weighted by 1/(sd + 0.5): a Bayes
+risk under the L1 loss. Lower is better. `sc` is the vector of scores over the pool.
+
+**Argmin, shipped selector, top-m, shortlist, in-band.** The argmin is the single lowest-score
+candidate (the S8 baseline). Top-m is the m lowest; the shortlist. In-band means among
+candidates already close to the native, where ranking skill would have to act.
+
+**Ranker, selector, readout, terminal operator.** A ranker orders candidates; a selector chooses
+a subset; the readout (terminal operator) turns the chosen set into one structure. Production's
+readout is the uniform coordinate average of the top 75.
+
+**Medoid, consensus, typicality.** The medoid of a set is the member with the smallest mean RMSD
+to the others; consensus selection picks it; typicality is a candidate's closeness to the rest
+of the pool.
+
+**Coordinate average, point cloud, contraction.** Superposing the retained windows onto the
+medoid and averaging their coordinates gives a point cloud, which is contracted (its virtual
+bonds are short) because a mean of scattered points lies inside them.
+
+**Projection, built chain, `lam`, multi-start.** Fitting an ideal-geometry chain (fixed bond
+lengths and angles, omega = 180) to the point cloud by choosing phi and psi; lam is the weight
+of the Ramachandran penalty; multi-start runs the fit from several generic starts because the
+problem is degenerate.
+
+**Common mode.** The part of the pool's error that every member shares; 68% of the squared error.
+Averaging cannot remove it.
+
+**AMBER ff14SB, GBn2, OpenMM, kcal/mol.** A molecular force field (the set of functions and
+parameters giving a molecule's potential energy) and an implicit-solvent model, evaluated by the
+OpenMM library. Energies are in kilocalories per mole; a relaxed peptide sits around -1000, a
+clashing one at 1e4 and far above.
+
+**Lennard-Jones, steric clash, singularity.** The non-bonded term whose r^-12 wall makes two
+overlapping atoms cost an enormous energy; a clash is such an overlap.
+
+**Restraint, minimisation, relaxation, convergence gate, strain.** A restraint is a harmonic
+penalty holding named atoms near their starting positions (k = 10 kcal/mol/A^2 on N, CA, C);
+minimisation follows the energy downhill; the relaxation is the production minimisation;
+`CONVERGE_MAX_KCAL` = 1000 is the energy below which a relaxation counts as converged; strain is
+the residual bond-plus-angle energy.
+
+**Legacy energy.** The programme's own eleven-term coarse score over backbone and CB atoms with
+hand-set weights (`core/energy.py`).
+
+**ORACLE.** Any arm that reads the native. A diagnostic ceiling, never a result.
+
+**Zero-information control, matched control, best-of-N.** A control that knows nothing about
+the target but is a plausible structure (the constant helix); a control drawn from the same
+space as the operator with the same magnitude or count; the best of N draws from an untrained
+optimiser, the control an optimiser must beat.
+
+**Paired comparison, SE, CI, bootstrap, fold-clustered, W/L, concentration, MDE, Type-M.** Part
+II.3. MDE is the minimum detectable effect, 2.8016 times the paired SE; a Type-M error is an
+effect whose magnitude is inflated by having been selected for significance.
+
+**Pre-registration, falsifier, artefact, `save_atomic`, complete.** A written plan with a
+stated condition that would refute the hypothesis, filed before the result exists; the JSON
+file a result is read from; the writer that stamps provenance and marks the file complete only
+when every expected row is present.
+
+**tuning126, dev24, benchmark60, FAIL18.** The 126-target development instrument; a 24-target
+development split; the 60-target sealed benchmark; the 18 hardest development targets.
+
+**Config key, manifest, cache.** A hash over every parameter that can change a number, naming the
+directory of per-target checkpoints; a named list of targets; the checkpoint directory.
+
+**Hamiltonian, diagonal, spectrum, `zrank`.** Here the Hamiltonian is a diagonal 128 x 128
+matrix whose entries are the standardised ranks of the 128 shortlisted scores; its spectrum is
+that ladder; `zrank` is the rank-then-standardise map.
+
+**Qubit register, basis state, candidate index.** Seven qubits have 128 basis states; each
+indexes one shortlisted candidate.
+
+**Ansatz, RY, CNOT, chain, ring, layer, parameter.** The parameterised circuit; a single-qubit
+rotation about Y; the two-qubit controlled-NOT; a CNOT on each neighbouring pair in order; the
+closing CNOT from the last qubit to the first; one round of rotations plus entangler; one
+rotation angle.
+
+**Statevector, exact simulation, matrix product state (MPS), bond dimension chi, Schmidt
+rank.** The full vector of 2^n amplitudes; computing it without approximation; a tensor
+factorisation of the state whose internal index size is chi; the number of non-zero Schmidt
+coefficients across a cut, which chi bounds.
+
+**Parameter shift.** The exact rule giving the derivative of an expectation with respect to a
+rotation angle from two evaluations shifted by plus and minus pi/2.
+
+**CVaR, alpha, quantile, tail.** The conditional value at risk: the mean of the lowest-alpha
+fraction of the energy distribution; the quantile is the cut; the tail is the set of states
+below it.
+
+**Free energy, temperature T, entropy, Gibbs (Boltzmann) distribution.** F = CVaR - T H(p); T
+weights the entropy H; at alpha = 1 the minimiser over all distributions is
+p(x) proportional to exp(-E(x)/T), the Gibbs distribution.
+
+**KL divergence, total variation.** Two measures of the difference between distributions; KL in
+nats or bits; TV as the largest probability mass on which they disagree.
+
+**Adam, L-BFGS-B, SPSA, greedy, annealing.** Optimisers: a first-order stochastic method with
+momentum; a quasi-Newton method with bounds; a two-evaluation stochastic gradient
+approximation; a best-improvement local search; a temperature-scheduled random search.
+
+**Barren plateau, 2-design, gradient variance.** A regime in which gradients vanish
+exponentially in the qubit count; a circuit family matching the Haar distribution up to second
+moments, for which that regime is proven; the quantity measured to test for it.
+
+**Dynamical Lie algebra (DLA), so(2^n), su(2^n), controllable.** The Lie algebra generated by the
+circuit's generators under nested commutators; the orthogonal and unitary algebras on 2^n
+dimensions; an ansatz whose DLA is the full algebra can reach any state in the corresponding
+group.
+
+**Pauli string, Pauli weight, Walsh (Fourier) spectrum, Sobol share.** A tensor product of I, X,
+Y, Z over the qubits; the number of non-identity factors; the decomposition of a diagonal
+function over Z-strings; the fraction of variance carried by interactions of a given order.
+
+**Quantum Fisher information, metric, QNG.** The Fubini-Study metric on the ansatz manifold; the
+optimiser that preconditions by it.
+
+**ADAPT, operator pool, Tang pools V and G, L2.** A procedure that grows an ansatz one operator
+at a time from a pool; the minimal 2n - 2 element pools of Tang et al. 2021; the pool of all
+1- and 2-local odd-Y strings.
+
+**Torsion space, latent, lattice, encoding, k bits per residue.** Representing a chain by its
+torsions rather than coordinates; a discrete code for them; the discrete grid of allowed values;
+the map from bits to torsions; its resolution.
+
+**Locality theorem.** Part V.10: the CA-CA distance d_ij depends on exactly the residues
+strictly between i and j.
+
+**Governor, `jobrun`, peak RSS, AMBER tag.** The S26 resource scheduler; its job wrapper; the
+largest resident memory a job reached; the label for jobs that load OpenMM (at most two at
+once).
+
+**Results lab.** `s25/resultslab/`: the build that exports every structure set with provenance
+and checks it through four gates.
+
+**Ledger, STATUS, lane, sprint, coordinator, Adversary.** The append-only record of a sprint's
+findings; the hourly status file; one agent's assignment; one campaign of work; the agent that
+plans and rules; the agent that audits.
 
 ## APPENDIX B. EVERY NUMBER IN THIS REPORT, WITH ITS ARTEFACT
 
@@ -1975,4 +2205,9 @@ artefact; "as asserted" means a passing test pins it.
 | 699 | IX | `s26/results/module_map.json` | as stored |
 <!-- APPENDIX B ROWS -->
 
-<!-- APPENDIX C -->
+## APPENDIX C. THE S26 LEDGER
+
+Reproduced verbatim from `s26/LEDGER.md` at the close of the sprint; until then this slot
+points at the live file, whose tail at the time of the last report commit is noted here.
+
+<!-- APPENDIX C LEDGER (filled at close) -->
