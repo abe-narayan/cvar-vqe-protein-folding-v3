@@ -75,6 +75,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 09:35 next: on sign-off: floor, C3 stage 1, reject cloud then chain (as above). If ranked: `jobrun --tag AMBER --name ph_branch_probe --est-ram 1.0 -- python s26/ph_branch.py probe --pdb 1A13` after `ph_branch.py solutions` (CPU, 10 min); `jobrun --tag AMBER --name ph_relief_probe --est-ram 0.8 -- python s26/ph_relief.py probe --pdb 1A13 --m 5`. C3 stage 2 on s26/results/p_best_rung_chains.json when P delivers.
 - 2026-09-13 09:21 running: gate open (L33, gate_open() True). ph_cis_floor and ph_c3_stage1 launched 09:20 under jobrun, HELD at the 4/4 job cap (box 73.9% RAM, cpu 75-93%); they start when a slot frees. Then ph_reject cloud, then chain (~3 h, cells).
 - 2026-09-13 09:21 next: ledger entries with ST.fmt verbatim per result; C3_RESULT.md after stage 1; answer Adversary checks on L22-L24 in the ledger.
+- 2026-09-13 09:31 PAUSED at the coordinator's request (usage limit). STOPPED HERE: floor and C3 stage 1 done and in the ledger (entries above), C3_RESULT.md written; ph_reject_cloud launched 09:33 under jobrun (held/running; cells in s26/results/ph_reject_cloud_cells, resumable); NOT yet launched: ph_c3.py stage1 --rep (replication registered in PREREG_c3 addendum 2), ph_reject.py chain (~3 h), ph_cis.py floor2 (PREREG_cis addendum 2).
+- 2026-09-13 09:31 next on resume: check ph_reject_cloud (jobs_done), ledger entry for it; launch chain then stage1 --rep then floor2 under jobrun; answer Adversary checks on L22-L24; stage 2 when P's rung file exists.
 
 ## PR (Presentation lane) -- not yet spawned
 

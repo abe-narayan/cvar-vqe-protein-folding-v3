@@ -103,12 +103,31 @@ For a target that does carry a cis bond (the 16 containment-fresh targets, 10 am
   with the step gate relaxed for Xaa-Pro bonds, and 16 targets, of which 10 are fibrils, which
   is below any MDE this project can compute. Not proposed.
 
-### 1.5 Part 2 (gated, ready): the representation floor on the native's own torsions
+### 1.5 Part 2, the representation floor on the native's own torsions (ORACLE DIAGNOSTIC; DEMONSTRATED)
 
-`python s26/ph_cis.py floor` (1 min, CPU). Outputs `s26/results/ph_cis_floor.json`: per target
-`rebuild_bb` (N/CA/C), `floor_ca` (CA), `rmsd_arm - rmsd_avg` (the built-chain cost), Spearman
-against the maximum omega deviation, and `ST.compare` of the cost against the CA floor. The
-cis-vs-non-cis contrast is empty and will not be printed as a subgroup.
+`s26/ph_cis.py floor`, `s26/results/ph_cis_floor.json` (complete 126/126), job
+`s26/jobs_done/ph_cis_floor.json` (exit 0, 10 s, 0.098 GB). Ledger entry "CIS FLOOR" (see the
+ledger tail for its number).
+
+    floor_ca   CA-RMSD, native vs ideal-trans rebuild of its OWN phi/psi      mean 0.347 A (SE 0.029), median 0.272, p90 0.752, max 1.474 (1ID6)
+    rebuild_bb the same on N/CA/C (`Peptide.rebuild`)                          mean 0.340 A (SE 0.028), max 1.413
+    chain_cost production rmsd_arm - rmsd_avg (built chain minus point cloud) mean 0.166 A (SE 0.018), median 0.098
+    Spearman(floor_ca, max omega deviation) +0.828;  Spearman(chain_cost, floor_ca) +0.083;  Spearman(chain_cost, max omega dev) -0.036
+    targets with floor_ca > 0.5 A: 32;  floor_ca > chain_cost on 86/126;  cis targets 0 (the cis contrast is empty)
+
+    ST.compare: chain cost minus floor_ca   effect -0.1804  SE 0.0333  MDE 0.0933  iid [-0.2433, -0.1176]  fold [-0.2266, -0.1022]  86W/40L  5/5 folds  (two different objects; "smaller", not "better")
+
+Two readings, both DEMONSTRATED. The constant omega carries a representation cost on this
+instrument even with no cis bond: the ideal-trans rebuild of the native's own torsions misses
+the native by 0.35 A on average and by more than 0.5 A on a quarter of the targets, and that
+miss is omega non-planarity (rho 0.83 with the per-target maximum deviation). And it is NOT
+what the projection pays: the 0.166 A chain cost does not correlate with the floor (rho 0.08)
+or with the omega deviation (rho -0.04); it is the displacement effect S16 L27 measured, not a
+representation effect. Caveat, acted on: `floor_ca` is an UPPER bound on the manifold floor,
+because the projection fits phi/psi to a trace rather than rebuilding from the native's
+torsions. `s26/PREREG_cis.md` addendum 2 registers `floor2` (the native CA trace projected
+through the production projection, `python s26/ph_cis.py floor2`, 10 min CPU) as the tight
+number; it runs after the reject jobs and is reported in an addendum here.
 
 ---
 
@@ -226,13 +245,42 @@ brings every target but one below 1000 kcal/mol while moving the CA trace 0.22 A
 stretches the virtual bond by 0.06 A on average and breaks it on two targets, which the
 heavy-atom validity axis in stage 2 will price properly.
 
-### 3.3 Stage 1 and stage 2 (gated, ready)
+### 3.3 Stage 1, measured (DEMONSTRATED; the toward-member line provisional until replicated)
 
-`python s26/ph_c3.py stage1` (2 min, CPU): the S16 random displacement (16 draws), the
-toward-member displacement (16 draws), AMBER minus each, cosines, on the production chain. Stage
-2: `python s26/ph_c3.py probe --input <P's rung json> --pdb <pdb>` under `--tag AMBER`, then
-`stage2` (est. 1.0 GB, 10 to 30 min, per-target cells). Input format: rows with `pdb`, `phi`,
-`psi` in radians. `s26/C3_RESULT.md` is written when stage 1 is done.
+`s26/ph_c3.py stage1`, `s26/results/ph_c3_stage1.json` (complete 126/126), job
+`s26/jobs_done/ph_c3_stage1.json` (exit 0, 10 s, 0.041 GB). Ledger entry "C3 STAGE 1"; the
+seven `ST.fmt` blocks are there verbatim and in `s26/C3_RESULT.md`. Bases: arm input the built
+chain (`rmsd_arm` 3.2148), arm output the relaxed chain (`rmsd_full` 3.2355); controls displace
+the built chain's CA trace by AMBER's own per-atom RMS magnitude (0.220 A).
+
+    AMBER minus do-nothing                      +0.0207  SE 0.0034  MDE 0.0096  fold [+0.0154, +0.0290]  40W/86L  5/5   WORSE   (reproduces production)
+    AMBER minus random, same size (16 draws)    +0.0111  SE 0.0035  MDE 0.0099  fold [+0.0062, +0.0171]  52W/74L  5/5   WORSE, Type-M zone (1.12x)
+    AMBER minus toward-member, same size        +0.0385  SE 0.0061  MDE 0.0170  fold [+0.0298, +0.0479]  29W/97L  5/5   WORSE
+    random minus do-nothing                     +0.0096  SE 0.0015  MDE 0.0042  fold [+0.0077, +0.0122]  29W/97L  5/5   WORSE   (identity predicts +0.0107)
+    toward-member minus do-nothing              -0.0178  SE 0.0043  MDE 0.0120  fold [-0.0255, -0.0124]  90W/36L  5/5   BETTER, provisional (replication `ph_c3_stage1_rep`)
+    ORACLE cos(AMBER, residual)                 -0.049 (SE 0.015), positive on 36.5%;  random +0.001;  toward-member +0.123
+    ORACLE cos: AMBER minus random              -0.0503  MDE 0.0432  fold [-0.0735, -0.0253]  74W/52L   (S16 L27: -0.0491)
+
+The registered prediction (addendum 1: AMBER worse than random by about +0.013, cosine
+negative) held. Half of the production step's cost is the size of its move (the random twin
+costs +0.0096, the identity's orthogonal prediction +0.0107); the other half is its direction
+(cos -0.049, worse than random on 74 of 126 targets). S16 L27 is reproduced on the production
+input and operator to the fourth decimal. DECISION RULE: AMBER beats neither matched control,
+so "refine with physics" is dropped as an accuracy step and kept as a validity step
+(`s26/C3_RESULT.md`).
+
+The one positive line is a control, not the arm: a same-size move toward a random pool member
+improves the built chain by 0.018 A (ORACLE cos +0.123). Mechanism on the record: the projection
+moved the chain away from the point cloud with a negative cosine (S16 L27) and the members
+surround the cloud, so a move back toward any of them recovers part of the 0.166 A projection
+cost. It is provisional until the contract's replication (addendum 2: new seeds, reversed
+order) lands, and it will be reported as a property of the projection's cost, not of physics.
+
+### 3.4 Stage 2 (ready; waits for lane P's rung file)
+
+`python s26/ph_c3.py probe --input s26/results/p_best_rung_chains.json --pdb <pdb>` under
+`--tag AMBER` (est. 1.0 GB), then `stage2` (10 to 30 min, per-target cells). Input rows: `pdb`,
+`phi`, `psi` in radians (P's file also carries `ca` and `rung`).
 
 ---
 
