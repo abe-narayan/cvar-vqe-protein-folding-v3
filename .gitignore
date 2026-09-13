@@ -137,3 +137,14 @@ results/site/
 # copy was this disk. Caught by the blanket *.npz rule above and never tracked (S25 L13, S26
 # operational item 1). Whitelisted here, after the blanket rule, so it is committed.
 !s24/cache_amber/*.npz
+
+# ---------------------------------------------------------------- S26 governor runtime
+# s26/governor.py keeps its live state here; the log IS a deliverable and is whitelisted.
+s26/jobs/
+s26/jobs_done/
+s26/queue/
+s26/queue_launched/
+s26/logs/
+s26/governor_state.json
+s26/governor_state.json.tmp
+!s26/governor.log
