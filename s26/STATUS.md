@@ -19,6 +19,9 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 09:19 running: PHASE 0 SIGNED OFF (L33) after the audit's one material item was fixed (L32); Q, P, PH, W released to endpoints; A re-checks then attacks L27/L22-L24/L30 and ranks the tournament; E drafting the report.
 - 2026-09-13 09:19 next: spawn PR on the first proposal verdict; relay P's best-rung file to PH; commit shared files hourly; watch the four-job launch cap.
 
+- 2026-09-13 09:30 running: PAUSED at the user's request (usage limit 96%); governed jobs continue; lanes told to commit and end turn (L37).
+- 2026-09-13 09:30 next: on resume, re-read L33 onward and each lane's last STATUS line; spawn PR on the first verdict; relay P's best-rung file to PH; Adversary tournament ranking.
+
 ## E (Examiner / Librarian)
 - 2026-09-13 00:12 running: e_reproduce (126 records through s12.instrument), e_trace_1S9Z then e_trace_9KAR under jobrun; module_map.json (699 modules) and pinned_hashes.json (benchmark manifest matches S20) written.
 - 2026-09-13 00:12 next: finish reading core/energy, core/amber, the 24 root modules, s5/s7/s8/s9, tests, verify, resultslab; then write EXAMINATION.md sections A-H.
@@ -47,6 +50,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 09:35 next: A2 figure (s26/figures/), PROPOSAL_B_REPLACEMENT.md drafted; A4 findings + figure when it lands; A1 label/stats, ledger entries with ST.fmt, replications, PROPOSAL_A.md.
 - 2026-09-13 09:45 running: A1 shards a1_build_s0/s1 (63 targets each) building under the governor; A3 chained behind them. A4 complete (s26/results/q_var.json, ledger L35, figure s26/figures/a4_variance_slopes.png).
 - 2026-09-13 09:45 next: findings section 4 and outline C9/F9 from A4; then A1 label + stats + ledger (ST.fmt verbatim) when the shards finish; PROPOSAL_A.md.
+- 2026-09-13 09:50 PAUSED (usage limit): stopped after A4 (ledger L35) and the A4 figure. RUNNING: A1 shards a1_build_s0 / a1_build_s1 (s26/q_adapt.py --build --tag a1 --shard i/2, checkpoints s26/results/a1/<pdb>.json, 2 of 126 written at 56 to 68 s per target) and the A3 chain waiter (s26/q_chain_a3.py, launches a3_build_s0/s1 through jobrun when both A1 shard records appear in s26/jobs_done/). All lane-Q files committed; A1 per-target JSONs are not committed until the build completes.
+- 2026-09-13 09:50 NEXT after the reset: check s26/jobs_done/a1_build_s*.json; if a shard was killed, relaunch the same command (it resumes from its checkpoints); then `python s26/q_adapt.py --label --tag a1`, `--stats --tag a1`, ledger entry with ST.fmt verbatim, replication (--seed 1, --order fold_rev) on any positive, power statement on any null, s26/PROPOSAL_A.md; then the same for tag a3 (variants zrank,zraw,asinh,soft; adapt zrank,zraw; pool L2; adam_best).
 ## P (Prior / Learning lane)
 - 2026-09-13 00:20 running: read LANE_CONTRACT, state brief, S24 ledger (all), S25/S23/S22/S17/S19 sections, S7/S8/S9/S10 findings, S12 dossier+agg, core/predict, data, distogram, esm_features, pairnet, s7/repr_select, priorladder, instrument, stats_lib, errdecomp; probes p_probe_esm (CPU, 1.0 GB) then p_probe_esmcache (ESM, 2.5 GB) launched under jobrun.
 - 2026-09-13 00:20 next: write PREREG_C1..C5, PREREG_B1..B3, three IDEA files, s26/p_ladder.py + synthetic unit test, C2 one-fold training-time probe, B1 feasibility json, agentP_FINDINGS.md; no endpoint runs before sign-off.

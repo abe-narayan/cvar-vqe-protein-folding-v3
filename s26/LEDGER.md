@@ -1025,3 +1025,26 @@ touched; `s26/governor.py` unchanged.
 
 ---
 
+## L37 -- CAMPAIGN PAUSED AT THE USER'S REQUEST (2026-09-13 09:30); STATE SAVED; GOVERNED JOBS KEEP RUNNING (2026-09-13, coordinator)
+
+The user asked for a break with the usage limit at 96%. Every lane was told to commit its files,
+append a STATUS line and end its turn; the coordinator commits whatever remains as a checkpoint.
+Governed python jobs keep running on the box (they cost no API usage and checkpoint to disk):
+at 2026-09-13T09:30:16: p_train_conly (P), w_selfcopy_retrieval (W), w_selfcopy_envelope (W), a1_build_s1 (Q), a1_build_s0 (Q, suspended), p_eval_shipped (P); RAM 77.1%, smoothed CPU 93.6%. The governor v2
+(pid 25480) stays up. `s26/models/` (11 MB of ladder checkpoints, regenerable) is not committed.
+
+Where the sprint stands: Phase 0 signed off (L33, audit L31/L34). Done: A2 (L27), A4 (L35), the
+cis census (L22), the steric-reject census (L23), the C3 native-free part (L24), C1 (lane P
+findings section 7), B1 infeasible (L13), all operational items and declared defects (L6 to L10,
+L15, L16, L18 to L21), the report draft Parts I to VI, IX, Appendix A (`s26/REPORT.md`), the
+Proposal B replacement outline draft, the trainability paper outline, A2/A4 figures. Running or
+queued: A1 shards then A3 (Q), the C2 ladder training and evaluation (P), the cis floor, C3
+stage 1 and the steric reject (PH), the 2/60 proxy bound (W), the Adversary's checks of L27,
+L22 to L24, L30, L35 and the tournament ranking (A), the report's Appendix B check (E).
+
+To resume: read this ledger from L33, `s26/STATUS.md`, `s26/jobs_done/` and `s26/results/`,
+then continue each lane from its STATUS line; the lane briefs are in `s26/briefs/` and every
+lane's findings file names what it did not do. No lane restarts finished work.
+
+---
+
