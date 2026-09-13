@@ -46,7 +46,7 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 09:25 running: C2 training chain (p_train_noesm in progress, then conly, pca32, wide, pca32f, pca128, esm8m, raw; one governor job at a time; ~6-10 h). Committed 19ca2ea3: C1 write-up, p_stats/p_b3/p_c4/p_deliver, features cached, IDEA_amber_prior_partner, PREREG_C2/C3 addenda; ledger L26.
 - 2026-09-13 09:25 next: turn ends once p_c5 selftest is green and committed; after "PHASE 0 SIGNED OFF": eval shipped then each rung as its checkpoints complete, B3/C4/C5 runs, PROPOSAL_C/B/B_REPLACEMENT, p_deliver for the best rung (ledger + finish turn for PH).
 
-## A (Adversary) -- not yet spawned
+## A (Adversary)
 
 ## PH (Physics lane)
 - 2026-09-13 08:41 running: nothing (gate closed). Done: reading list; PREREG_amber_reject/cis/c3_control; five IDEA files; ph_lib/ph_cis/ph_reject/ph_c3 + synthetic tests; census jobs ph_cis_census (0.038 GB), ph_reject_census (0.117 GB), ph_c3_nativefree; ledger L22-L24; findings and Part IV notes; commit 5dc7a3a6.

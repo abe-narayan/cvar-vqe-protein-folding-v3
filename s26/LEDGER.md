@@ -673,3 +673,145 @@ the highest-ranked orphaned survivor once the Adversary ranks the tournament.
 
 ---
 
+
+## L26 -- LANE P: THE C2 TRAINING CHAIN IS RUNNING, ONE GOVERNOR JOB AT A TIME, IN THE ORDER FIXED BY PREREG_C2 ADDENDUM 2; THE C3 HAND-OFF FORMAT IS IMPLEMENTED (2026-09-13, lane P)
+
+Resumed 08:37 after the 00:46 session cut; no training job had been launched before the cut
+(`s26/jobs_done/` held only the probes). Per L16b: order noesm -> conly -> pca32 -> wide -> pca32f
+-> pca128 -> featurise-esm8m -> esm8m -> raw, fixed in `s26/PREREG_C2.md` addendum 2 BEFORE the
+first job; `s26/p_train_chain.sh` runs them sequentially through `s26/jobrun.py` (est-ram 1.5 GB,
+raw 1.8, NT = 2), one `.pt` per fold as the checkpoint, a second `_p2` pass resuming anything
+the governor kills. `p_train_noesm` registered 08:52. No `eval`/`report` before "PHASE 0 SIGNED
+OFF" (refused in code). Expected machine time 6-10 h (raw last: 5175 x 384 first layer).
+While it runs: `s26/PREREG_C3.md` addendum 2 (not Proposal C's C3; C3 is lane PH's,
+`s26/PREREG_c3_control.md`), `s26/IDEA_amber_prior_partner.md` (H_C3a entered in the tournament;
+H_C3b withdrawn by S8-14's arithmetic), the C1 closure reproduction written into
+`s26/agentP_FINDINGS.md` section 7 (S12 learning curve 3.0433 -> 3.0258 real vs 2.5342 leaked at
+n = 8; S17 band best 2.6087 vs random 3.4676, all to the third decimal), `s26/p_stats.py`
+(nested ridge, selftest OK: planted 0.866 vs null p95 0.558), `s26/p_b3.py`, `s26/p_c4.py`,
+`s26/p_c5.py` (native-free feature builds and synthetic selftests queued under jobrun; their
+`run` commands are gated). The C3 stage-2 hand-off format (`s26/results/p_best_rung_chains.json`:
+rows keyed by pdb with phi/psi in RADIANS as `s12.instrument.project` emits them at lam = 0.3,
+`ca`, `rmsd_arm`; `ST.save_atomic` with complete_keys and n_expected = 126) is implemented in
+`s26/p_deliver.py`, a separate module so that `p_ladder.py` is not edited while its jobs run; it
+re-projects the chosen rung and asserts equality with the eval JSON before writing.
+
+## L27 -- LANE Q, A2: THE DEPLOYED ANSATZ'S DYNAMICAL LIE ALGEBRA IS THE FULL so(2^n) FROM DEPTH 2 AT n = 7; MY PRE-REGISTERED PREDICTION OF A PROPER SUBALGEBRA IS FALSIFIED; THE TANG MINIMAL POOLS GENERATE so(2^(n-1)+1) (2026-09-13, lane Q)
+
+`s26/q_dla.py` -> `s26/results/q_dla.json` (complete; `s26/jobs_done/a2_dla.json`: 85.3 s, peak
+RSS 0.479 GB). Pre-registered in `s26/PREREG_A2.md` before the run. Property measurement, no
+native, no score: the closure is computed exactly on Pauli strings as a set and cross-checked
+by dense SVD (rtol 1e-10) at n = 4, 5: 12 of 12 cells agree; the two conjugation conventions
+agree on 12 of 12. Every closure lies in the odd-Y (real) set.
+
+    fixed ansatz (RY / CNOT chain + ring), dim(DLA) by width n and depth L
+      L = 1                       n            (abelian) at every n = 4..11
+      n = 4, 5, 7, 8, 10, 11      so(2^n)      from L = 2 on   (8128 at the deployed n = 7)
+      n = 6                       510 / 1023 / 2016 = so(64)  at L = 2 / 3 / 4
+      n = 9                       32766 / 65535 / 130816 = so(512)  at L = 2 / 3 / 4
+    pools V and G (Tang 2021, 2n-2 strings)   36, 136, 528, 2080, 8256, 32896  at n = 4..9
+                                              = dim so(2^(n-1) + 1) at all six widths
+    pool L2 (all 1-, 2-local odd-Y strings)   so(2^n) at n = 4..9
+    ADAPT-selected sets, ideal ladder, n = 7  alpha = 1: abelian (7) at every step, both pools,
+                                              both optimisers; L-BFGS stops at P = 7 with no
+                                              operator selected.  alpha = 0.25: V 7 -> 16;
+                                              L2 7 -> 1025 at P = 21 (12.6% of so(128)).
+
+H2b of the prereg said dim(DLA) at (n = 7, L = 3) is below 8128, guess 4095. It is 8128, the
+full so(128), already at L = 2. Falsified; the measured value stands. H2a (depth 1 abelian),
+H2c (pools: 2080, 8256, 32896 predicted and measured), H2d (odd-Y) and H2e (ADAPT sets abelian
+at alpha = 1) held. The only widths where depth 2 is not enough are n = 6 and n = 9, whose
+dimensions at L = 2 and 3 equal 2 dim su(2^(n-2)) and dim su(2^(n-1)); that n divisible by 3
+is the condition is an observation from two cases and is labelled HYPOTHESIS, not explained.
+
+What it means for the S25 slopes (`s25/results/q_plateau.json`): the algebra at the deployed
+cell is maximal, so nothing in the algebra protects the ansatz from an exponential plateau.
+Larocca et al. 2022 / Ragone et al. 2024 give Var ~ 1/dim(g) once the circuit is a 2-design
+over exp(g); dim(g) = 8128 at n = 7 and grows as 4^n / 2. S13 measured the decay base
+approaching 0.504 per qubit at depth 8 (`s13/results/geo_kernel.json`), the 2-design rate.
+The S25 result "no exponential plateau at n = 4..13" is therefore a statement about depth 3
+(P = 3n against dim so(2^n)), and must be quoted with "at depth 3" attached. It is not
+evidence of a favourable algebra, and Cerezo et al. 2025 does not apply through the
+small-DLA route; the circuit is simulable because n = 7, not because of its structure
+(S21 L4).
+
+The pools: a "complete" pool in Tang's sense (overlap-matrix rank 2^n - 1) generates
+so(2^(n-1) + 1), which acts transitively on the real sphere and has about a quarter of the
+dimension of so(2^n). Completeness is weaker than controllability; the ADAPT arm using pool V
+in A1 is therefore restricted to that subalgebra by construction, and the L2 arm is not.
+## L28 -- PHASE 0 EXAMINATION LANDED: REPRODUCTION EXACT; FOUR DOCUMENT-ONLY NUMBERS; THE SEVEN-CONFIGURATION SUITE IS QUOTED ON THE POINT-CLOUD BASIS; ONE RULE-1 INCIDENT (2026-09-13, lane E)
+
+`s26/EXAMINATION.md` (sections A to I), `s26/BRIEF.md`, `s26/agentE_FINDINGS.md`; scripts and
+artefacts in commit `e3570aed` (`s26/e_module_map.py`, `e_hashes.py`, `e_reproduce.py`,
+`e_trace.py`, `e_claims.py`; `s26/results/module_map.json`, `pinned_hashes.json`,
+`e_reproduce.json`, `e_trace_1S9Z.json`, `e_trace_9KAR.json`, `claim_search.json`, `.txt`).
+
+1. Reproduction (Part 2.3): fresh vs stored means 3.048338093879532 / 3.2040761603809194 /
+   3.2147651542109985 / 3.2354598538973844, max per-target disagreement 0.0 on all four bases,
+   T030 = 1S9Z 0.18198112330908295 (L16b records the same). Fresh `run_target` + `label` on
+   1S9Z and 9KAR: every arm 0.0, `sub` identical, emitted `ca` identical. Every dataflow stage
+   of both traces matches the record at 0.0; the Hamiltonian is the rank ladder to 0.394% of
+   range (S25's worst case 1.18%, `s25/results/q_gibbs.json`).
+2. Claim ledger (EXAMINATION C, 35 claims): 30 sourced to an artefact leaf, a passing test or a
+   stated derivation from stored rows. **UNSOURCED (document-only):** 36.1 / 36.4 deg phi MAE
+   (C26), the +0.0004 / +0.0030 identity-leak prices (C27; the cited `s10/idaudit_*.json` do
+   not exist), the |z_moment| triple 0.7529 / 0.8013 / 0.1127 (C34), 355 passed / 13 skipped
+   (C35; superseded by `s26/TEST_RUN.md`: 369 / 356 / 13), and the 0.524 sampled tail-only
+   cosine inside C24. The benchmark delta +0.0103 (C06) is named to `s9/final_report.json`,
+   which this lane did not open; the two means beside it are asserted to 5e-4 by two passing tests.
+3. Basis: the seven-configuration suite (3.058 ... 3.881), the random-75 null (3.4251) and the
+   Legacy +0.330 / AMBER +0.455 verdicts are point-cloud numbers (`s25/results/phys_suite.json`,
+   `results/summary/leaderboard.json :: rows[*]/mean_secondary`); the state brief (lines 57,
+   190-191) and `results/summary/professor_brief.md:115-125` quote them beside the built-chain
+   3.2148 without saying so. Built-chain means of the same rows: 3.2187 / 3.3100 / 3.3732 /
+   3.4221 / 3.8248 / 3.8844 / 4.1015 (`leaderboard.json :: rows[*]/mean`).
+4. For the Adversary: `VQE_LFO` runs alpha = 1.0 on folds 0, 3, 4 (78 of 126 targets, no tail
+   constraint; `s25/results/q_alpha.json :: results/share_of_targets_with_no_tail_constraint`
+   0.6190476190476191); 9KAR's production relaxation ends at 1262.4 kcal/mol, above
+   `core.amber.CONVERGE_MAX_KCAL` (L24: 125 of 126 converge) and is inside the 3.2355 mean;
+   2BP4 converges by that gate (e1 845.3) but carries bond+angle strain 1172.7, above the S8
+   strain-rejection rule; `bench_results/cache/1fc9f2dcf489e2fb/` is gitignored (EXAMINATION G).
+5. Incident (Rule 1): the first run of `s26/e_claims.py` parsed `s9/final_report.json` before the
+   benchmark exclusion existed and printed one aggregate leaf, `dist/shipped/mean` =
+   2.9507235775391263, already published in `README.md:14`. No per-target benchmark value was
+   printed or read. The exclusion (`SKIP_FILES`, `SKIP_SUBSTR`) is in the committed script and
+   the artefacts were regenerated with it.
+6. Provenance note: the traces and the reproduction ran at git `74e073e2` (dirty: lane I's
+   later-committed `37bddbbb` edits to `core/data.py` and four unused imports were in the tree).
+   The identity path they touch is not on `run_target`; the reproduction costs 5 s and should be
+   re-run on HEAD by the Adversary (`python s26/e_reproduce.py`).
+
+---
+
+## L29 -- ADVERSARY SPAWNED ON THE EXAMINATION; THE RULE-1 INCIDENT LOGGED; THE POINT-CLOUD BASIS OF THE SUITE NOTED (2026-09-13, coordinator)
+
+Lane A (Adversary) spawned at 08:55 with brief `s26/briefs/A.md` on `s26/EXAMINATION.md`,
+`s26/BRIEF.md` and `s26/agentE_FINDINGS.md` (L28). Phase 0 remains closed until its audit is
+clean or every material finding is fixed and re-checked. Six lanes active (E, Q, P, PH, W, A);
+lane I finished (L21).
+
+Three things from L28 the coordinator rules on now:
+
+1. The Rule-1 incident (L28 item 5): the first run of `s26/e_claims.py` parsed
+   `s9/final_report.json` and printed one aggregate, `dist/shipped/mean` = 2.9507235775391263,
+   a number already published in `README.md:14` and the state brief. No per-target benchmark
+   value was read or printed; the exclusion is in the committed script and the artefacts were
+   regenerated with it. Logged as an incident with no consequence: the benchmark was not spent
+   and nothing new was learned about it. Rule for the rest of the sprint: no script parses
+   `s9/final_report.json`, `results/benchmark_manifest.json` or any file under `results/`
+   naming a benchmark target; lane I's L18 read (sequences through `core.data.benchmark()` for
+   a count) and this one are the only two benchmark-adjacent reads of S26.
+2. The seven-configuration suite, the random-75 null and the Legacy +0.330 / AMBER +0.455
+   verdicts are point-cloud numbers (L28 item 3; `s25/results/phys_suite.json`). The state brief
+   and `results/summary/professor_brief.md` quote them beside the built-chain 3.2148 without
+   naming the basis. Every S26 deliverable that quotes them (the report, the deck, the proposal
+   verdicts) names the basis on both sides; the built-chain means of the same rows are in
+   `results/summary/leaderboard.json :: rows[*]/mean` (distogram 3.2187 ... AMBER 4.1015).
+3. Four presenter-facing numbers are document-only (C26 36.1/36.4 deg, C27 +0.0004/+0.0030,
+   C34 the |z_moment| triple, C35 355/13). The Adversary decides whether each is material; the
+   coordinator's default is that a document-only number is not put on a slide unless a lane
+   re-derives it from cached rows this sprint (C26 from `s13/cache/tors_rows.npz` if it holds
+   the per-residue predictions; C35 is superseded by `s26/TEST_RUN.md` and is simply replaced).
+
+---
+
