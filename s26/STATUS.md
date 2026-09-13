@@ -21,7 +21,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 00:12 next: finish reading core/energy, core/amber, the 24 root modules, s5/s7/s8/s9, tests, verify, resultslab; then write EXAMINATION.md sections A-H.
 - 2026-09-13 08:42 running: resumed after the 00:46 session cut; scripts and artefacts committed; reading ledger L6-L16b and the PREREG files; assembling EXAMINATION.md (A-H), then BRIEF.md and agentE_FINDINGS.md.
 - 2026-09-13 08:42 next: ledger entry for the unsourced claims and the incident notes; commit the three deliverables; two-line summary for the coordinator.
-
+- 2026-09-13 09:40 running: report writer role; s26/REPORT.md Parts I-III committed; drafting IV (from PH_PART_IV_NOTES), V (from s25/QUANTUM.md, q_* artefacts, L27), VI (sprint story), IX, Appendix A.
+- 2026-09-13 09:40 next: commit each part as it lands; append a dated addendum to EXAMINATION.md for the updated test totals (370/357/13); answer any Adversary finding within the hour.
 ## I (Infrastructure / Governor)
 
 - 2026-09-13 00:13 running: read contract/brief/code; job pytest_core (non-AMBER suite, tag TEST, est 2.5 GB) launched under the governor at ~00:11; brief committed unchanged.
@@ -50,6 +51,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 09:25 next: turn ends once p_c5 selftest is green and committed; after "PHASE 0 SIGNED OFF": eval shipped then each rung as its checkpoints complete, B3/C4/C5 runs, PROPOSAL_C/B/B_REPLACEMENT, p_deliver for the best rung (ledger + finish turn for PH).
 
 ## A (Adversary)
+- 2026-09-13 09:15 running: nothing. Done: `s26/EXAMINATION_AUDIT.md` and ledger L31 (reproduction exact on HEAD; one MATERIAL: the 369/356 test count in EXAMINATION D / C35 / L28 against the artefact's 370/357; C26 re-derived from `s13/cache/tors_rows.npz`; C27 in git history at 5fa05cd).
+- 2026-09-13 09:15 next: re-check lane E's correction when it lands; then section 2 checks of L27 (DLA, `s26/q_dla.py`) and L22 to L24 (PH censuses); discipline reading (stats_lib docstrings, S25/S16/S21 ledgers, FINDINGS corrections).
 
 ## PH (Physics lane)
 - 2026-09-13 08:41 running: nothing (gate closed). Done: reading list; PREREG_amber_reject/cis/c3_control; five IDEA files; ph_lib/ph_cis/ph_reject/ph_c3 + synthetic tests; census jobs ph_cis_census (0.038 GB), ph_reject_census (0.117 GB), ph_c3_nativefree; ledger L22-L24; findings and Part IV notes; commit 5dc7a3a6.
@@ -60,3 +63,5 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 ## PR (Presentation lane) -- not yet spawned
 
 ## W (Wildcard)
+- 2026-09-13 09:15 running: w_selfcopy_retrieval (126 targets, channel A native-free, est 0.5 GB) and w_selfcopy_envelope (126 x 4 leaked fold models, est 0.6 GB) under jobrun. Done: reading list; PREREG_selfcopy_bound; IDEA x4 (selfcopy_proxy_bound, tiebreak_noise_floor, conformational_identity_floor, window_provenance); w_selfcopy.py + synthetic tests (ALL OK); census (0.064 GB) and two 1-target probes (0.104 / 0.298 GB); ledger entry.
+- 2026-09-13 09:15 next: commit; agentW_FINDINGS.md skeleton; await the coordinator's ruling on Part B's retrains (PREREG section 8); on sign-off run `w_selfcopy.py endpoint`, `floor`, `report` (seconds each); write the tie-break floor script if the Adversary ranks it.
