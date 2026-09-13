@@ -2109,7 +2109,7 @@ artefact; "as asserted" means a passing test pins it.
 
 | number | where used | artefact (file :: key, or file:line) | stored value |
 |---|---|---|---|
-| 36.133, 36.416 | I | `s26/results/a_c26_phi_mae.json` (Adversary re-derivation from `s13/cache/tors_rows.npz`, L31) | as stored |
+| 36.133, 36.416 | I | `s26/results/a_c26_phi_mae.json :: summary/arms/p_grid/pooled_mae_phi_deg, summary/arms/n_marg/pooled_mae_phi_deg` (Adversary re-derivation from `s13/cache/tors_rows.npz`, L31; pooled MAE over 1507 residues, 126 targets) | 36.132758, 36.415619 |
 | 3.2148 | I, II, III | `bench_results/baseline_tuning126.json :: science/rmsd_arm/mean` | 3.214765154210998 |
 | 3.0483 | II, III | `bench_results/baseline_tuning126.json :: science/rmsd_avg/mean` | 3.048338093879532 |
 | 3.2355 | II, III | `bench_results/baseline_tuning126.json :: science/rmsd_full/mean` | 3.2354598538973844 |
