@@ -1521,7 +1521,7 @@ information beyond the distogram (L9); the budget exceeds the entire latent on 6
 (L11) and the exhaustive argmin does not beat a zero-evaluation pool (L14, complete at n = 126,
 L17); the answer is in the objective's top 5% and a top-512 readout ceiling is 1.986 A (L18);
 the source is not the lever, the retrieval pool beats the latent through the same operator
-(L20); all remaining leverage is in-pool selection, worth 1.33 A (L21), and the 1.338 A
+(L20); all remaining headroom is in-pool selection, worth 1.33 A (L21), and the 1.338 A
 selection gap is entirely uncaptured (L23); AMBER is harder, the continuation is degenerate in
 raw units and preconditioning does not work (L24, L33); the sprint's first positive, a
 compactness channel clearing where eleven functionals did not (L27), survives attack with the
