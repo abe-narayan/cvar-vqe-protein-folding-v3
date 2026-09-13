@@ -362,8 +362,10 @@ class LeanTrainer:
         a, c = R[ii[b]].astype(np.float64), R[jj[b]].astype(np.float64)
         return np.hstack([S[b], a, c, a * c, np.abs(a - c)]).astype(np.float32)
 
-    def _moments(self, S, R, ii, jj, chunk=16384):
+    def _moments(self, S, R, ii, jj, chunk=None):
         n = len(ii); d = S.shape[1] + 4 * R.shape[1]
+        #: chunk rows so the float64 chunk stays near 160 MB whatever the width (raw is 5175-d)
+        chunk = chunk or max(256, int(2.0e7 / d))
         s1 = np.zeros(d); s2 = np.zeros(d)
         for a in range(0, n, chunk):
             b = np.arange(a, min(n, a + chunk))
