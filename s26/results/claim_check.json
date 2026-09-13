@@ -1,0 +1,218 @@
+{
+ "checked": "2026-09-13T00:39:36",
+ "claims_file": "s26/results/claims.json",
+ "n": 21,
+ "n_failing": 0,
+ "rows": [
+  {
+   "id": "prod_rmsd_arm_mean_126",
+   "claim": "production result: 3.2148 A built chain (rmsd_arm), mean over the 126 dev targets in the production cache",
+   "status": "OK",
+   "expected": 3.2147651542109985,
+   "found": 3.214765154210998,
+   "artefact": "bench_results/cache/1fc9f2dcf489e2fb/*.json",
+   "note": "n=126",
+   "optional": false
+  },
+  {
+   "id": "prod_rmsd_avg_mean_126",
+   "claim": "intermediate: 3.0483 A raw coordinate average (rmsd_avg), not a structure",
+   "status": "OK",
+   "expected": 3.048338093879532,
+   "found": 3.048338093879532,
+   "artefact": "bench_results/cache/1fc9f2dcf489e2fb/*.json",
+   "note": "n=126",
+   "optional": false
+  },
+  {
+   "id": "prod_rmsd_full_mean_126",
+   "claim": "deployed emission after restrained AMBER relaxation: 3.2355 A (rmsd_full)",
+   "status": "OK",
+   "expected": 3.2354598538973844,
+   "found": 3.2354598538973844,
+   "artefact": "bench_results/cache/1fc9f2dcf489e2fb/*.json",
+   "note": "n=126",
+   "optional": false
+  },
+  {
+   "id": "prod_rmsd_fit_mean_126",
+   "claim": "single-start fit arm 3.2041 A (rmsd_fit)",
+   "status": "OK",
+   "expected": 3.2040761603809194,
+   "found": 3.2040761603809194,
+   "artefact": "bench_results/cache/1fc9f2dcf489e2fb/*.json",
+   "note": "n=126",
+   "optional": false
+  },
+  {
+   "id": "compare_science_delta_rmsd_avg",
+   "claim": "science_delta = 0 between the 1-worker baseline and the optimised arm (rmsd_avg)",
+   "status": "OK",
+   "expected": 0.0,
+   "found": 0.0,
+   "artefact": "bench_results/compare_tuning126.json",
+   "note": "",
+   "optional": false
+  },
+  {
+   "id": "compare_science_delta_rmsd_arm",
+   "claim": "science_delta = 0 between the arms (rmsd_arm; recorded 4.4e-16, one ulp)",
+   "status": "OK",
+   "expected": 0.0,
+   "found": 4.440892098500626e-16,
+   "artefact": "bench_results/compare_tuning126.json",
+   "note": "",
+   "optional": false
+  },
+  {
+   "id": "compare_baseline_shipped",
+   "claim": "shipped distogram-argmin selector 3.4540 A on tuning126",
+   "status": "OK",
+   "expected": 3.4540004952559396,
+   "found": 3.4540004952559396,
+   "artefact": "bench_results/compare_tuning126.json",
+   "note": "",
+   "optional": false
+  },
+  {
+   "id": "compare_baseline_pool_best",
+   "claim": "ORACLE best member of the K=500 pool: 1.7108 A",
+   "status": "OK",
+   "expected": 1.7108244199364904,
+   "found": 1.7108244199364904,
+   "artefact": "bench_results/compare_tuning126.json",
+   "note": "",
+   "optional": false
+  },
+  {
+   "id": "compare_baseline_top_m_best",
+   "claim": "ORACLE best of the top-75: 2.3062 A",
+   "status": "OK",
+   "expected": 2.3061526409453816,
+   "found": 2.3061526409453816,
+   "artefact": "bench_results/compare_tuning126.json",
+   "note": "",
+   "optional": false
+  },
+  {
+   "id": "leaderboard_production_mean",
+   "claim": "results-lab leaderboard rebuild of the production chain: 3.2126 A",
+   "status": "OK",
+   "expected": 3.2126212503925293,
+   "found": 3.2126212503925293,
+   "artefact": "results/summary/leaderboard.json",
+   "note": "",
+   "optional": false
+  },
+  {
+   "id": "leaderboard_pool_best_mean",
+   "claim": "pool-oracle gate reference 1.7108 A in the leaderboard",
+   "status": "OK",
+   "expected": 1.7108244199364904,
+   "found": 1.7108244199364904,
+   "artefact": "results/summary/leaderboard.json",
+   "note": "",
+   "optional": false
+  },
+  {
+   "id": "leaderboard_production_pool_gate",
+   "claim": "production row shows pool_gate = WARN",
+   "status": "OK",
+   "expected": "WARN",
+   "found": "WARN",
+   "artefact": "results/summary/leaderboard.json",
+   "note": "",
+   "optional": false
+  },
+  {
+   "id": "leaderboard_production_n_pool_violations",
+   "claim": "2 per-target pool violations on the production row (1D6X, 1KWE)",
+   "status": "OK",
+   "expected": 2,
+   "found": 2,
+   "artefact": "results/summary/leaderboard.json",
+   "note": "",
+   "optional": false
+  },
+  {
+   "id": "pinned_folds_sha256",
+   "claim": "peptide_folds.json is the pinned fold map (lane E hash, 2026-09-13)",
+   "status": "OK",
+   "expected": "89bc58edc59c6d794cd83f093cdafe74f05075aa43251f9ed3adfbe8115e4683",
+   "found": "89bc58edc59c6d794cd83f093cdafe74f05075aa43251f9ed3adfbe8115e4683",
+   "artefact": "peptide_folds.json",
+   "note": "18956 bytes",
+   "optional": false
+  },
+  {
+   "id": "pinned_clusters_sha256",
+   "claim": "peptide_clusters.json is the pinned cluster map (lane E hash, 2026-09-13)",
+   "status": "OK",
+   "expected": "9ae3d8f3afc281df7d37319fb04420cd22976032696f7c27f517de79549c75b9",
+   "found": "9ae3d8f3afc281df7d37319fb04420cd22976032696f7c27f517de79549c75b9",
+   "artefact": "peptide_clusters.json",
+   "note": "20217 bytes",
+   "optional": false
+  },
+  {
+   "id": "catrace_prior_sha256",
+   "claim": "catrace_prior.npz is the pinned prior (lane E hash)",
+   "status": "OK",
+   "expected": "d93a5c627d5ca4dfb8b6c358249415266c9f320b8cbb35caa7faf6a7449a1bf8",
+   "found": "d93a5c627d5ca4dfb8b6c358249415266c9f320b8cbb35caa7faf6a7449a1bf8",
+   "artefact": "catrace_prior.npz",
+   "note": "7172 bytes",
+   "optional": false
+  },
+  {
+   "id": "benchmark_manifest_sha256",
+   "claim": "the sealed benchmark manifest still hashes to the S20 record (bytes only; never parsed)",
+   "status": "OK",
+   "expected": "a40581ad01cfd2b77aa755a149fe40f3661dc5d35d4c4be0133f6bf23248422d",
+   "found": "a40581ad01cfd2b77aa755a149fe40f3661dc5d35d4c4be0133f6bf23248422d",
+   "artefact": "results/benchmark_manifest.json",
+   "note": "8002 bytes",
+   "optional": false
+  },
+  {
+   "id": "s8_13_transfer_law",
+   "claim": "S8-13: selected = 1.009 * ref + 0.011 (r = 0.981); sole source is the S8 predictor log",
+   "status": "OK",
+   "expected": "selected = 1.009 * ref + 0.011",
+   "found": "selected = 1.009 * ref + 0.011",
+   "artefact": "_archive/logs/s8/predictor_report.log",
+   "note": "",
+   "optional": false
+  },
+  {
+   "id": "s8_log_sha256",
+   "claim": "the S8 predictor log is unchanged since the S26 excerpt was taken (untracked file; ABSENT is a warning)",
+   "status": "OK",
+   "expected": "2647f640efb6d8f8e0398620647d503c366aa9a0209f17742d927366dd0f4740",
+   "found": "2647f640efb6d8f8e0398620647d503c366aa9a0209f17742d927366dd0f4740",
+   "artefact": "_archive/logs/s8/predictor_report.log",
+   "note": "13588 bytes",
+   "optional": true
+  },
+  {
+   "id": "s26_test_run_no_failures",
+   "claim": "the S26 governor test run recorded 0 failures",
+   "status": "OK",
+   "expected": 0,
+   "found": 0,
+   "artefact": "s26/results/test_run.json",
+   "note": "",
+   "optional": false
+  },
+  {
+   "id": "s26_test_run_no_errors",
+   "claim": "the S26 governor test run recorded 0 errors",
+   "status": "OK",
+   "expected": 0,
+   "found": 0,
+   "artefact": "s26/results/test_run.json",
+   "note": "",
+   "optional": false
+  }
+ ]
+}

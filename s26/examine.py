@@ -31,6 +31,9 @@ def main(argv=None):
     ap.add_argument("--no-map", action="store_true")
     ap.add_argument("--no-claims", action="store_true")
     ap.add_argument("--claims", default=os.path.join(HERE, "results", "claims.json"))
+    ap.add_argument("--search", action="store_true",
+                    help="also run lane E's s26/e_claims.py, which finds WHERE each number "
+                         "of EXAMINATION.md is cited and stored (slower: a tree-wide grep)")
     a = ap.parse_args(argv)
     rc = 0
     if not a.no_map:
@@ -41,6 +44,10 @@ def main(argv=None):
         import i_claim_check
         print("\n== claim ledger (s26/i_claim_check.py) ==")
         rc |= int(i_claim_check.main(["--claims", a.claims]) or 0)
+    if a.search:
+        import e_claims                                      # lane E's search, called as-is
+        print("\n== claim search (s26/e_claims.py) ==")
+        rc |= int(e_claims.main() or 0)
     return rc
 
 

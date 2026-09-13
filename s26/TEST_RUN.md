@@ -38,8 +38,36 @@ skip reasons (`-rs`):
 - `test_pipeline.py::test_tuning_instrument_reference_numbers[optimised_tuning126_w6]` [real]: bench_results/optimised_tuning126_w6.json not present -- run the harness first
 - `test_pipeline.py::test_the_harness_refuses_to_call_a_development_run_a_headline` [real]: no smoke result on disk
 
+## job `pytest_amber`
+
+- command: `C:/Users/abena/miniforge_3/python.exe -m pytest tests/test_amber.py -q -rs -p no:cacheprovider --junitxml=s26/results/pytest_amber.xml`
+- commit: `37bddbbb`  note: tests/test_amber.py with the S26 memory-guard message (defect 6b) and its new unit test (16 = 15 + 1); core/amber.py already carried the import removal committed as 37bddbbb; the guard did not fire
+- start 2026-09-13T00:29:14  end 2026-09-13T00:33:34  wall 260.5 s  exit 0  peak RSS 0.872 GB  tag AMBER  est 2.0 GB
+- totals: 16 tests, 16 passed, 0 failed, 0 errors, 0 skipped (0 memory-guard)
+
+| file | tests | passed | failed | errors | skipped | memory-guard skips |
+|---|---:|---:|---:|---:|---:|---:|
+| `test_amber.py` | 16 | 16 | 0 | 0 | 0 | 0 |
+
+## job `pytest_nanpoison_post_core_edit`
+
+- command: `C:/Users/abena/miniforge_3/python.exe -m pytest tests/test_pipeline.py tests/test_data.py -q -rs -p no:cacheprovider --junitxml=s26/results/pytest_nanpoison_post_core_edit.xml`
+- commit: `37bddbbb`  note: tests/test_pipeline.py (the NaN-poison test) + tests/test_data.py re-run on the edited core (identity flag, import removals, dead helper); these files are already counted through pytest_core, so this job is recorded but not added to the suite total
+- start 2026-09-13T00:29:58  end 2026-09-13T00:33:44  wall 225.5 s  exit 0  peak RSS 1.566 GB  tag TEST  est 1.7 GB
+- totals: 79 tests, 77 passed, 0 failed, 0 errors, 2 skipped (0 memory-guard)
+
+| file | tests | passed | failed | errors | skipped | memory-guard skips |
+|---|---:|---:|---:|---:|---:|---:|
+| `test_data.py` | 42 | 42 | 0 | 0 | 0 | 0 |
+| `test_pipeline.py` | 37 | 35 | 0 | 0 | 2 | 0 |
+
+skip reasons (`-rs`):
+
+- `test_pipeline.py::test_tuning_instrument_reference_numbers[optimised_tuning126_w6]` [real]: bench_results/optimised_tuning126_w6.json not present -- run the harness first
+- `test_pipeline.py::test_the_harness_refuses_to_call_a_development_run_a_headline` [real]: no smoke result on disk
+
 ## Combined (jobs marked as counting toward the suite total)
 
-**350 tests: 337 passed, 0 failed, 0 errors, 13 skipped (0 memory-guard skips).**
+**366 tests: 353 passed, 0 failed, 0 errors, 13 skipped (0 memory-guard skips).**
 
-Rendered 2026-09-13 00:29 by `s26/i_test_report.py`.
+Rendered 2026-09-13 00:39 by `s26/i_test_report.py`.

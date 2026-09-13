@@ -77,8 +77,10 @@ def cluster(seqs, mode):
     `mode="longer"` reproduces `core.data.clusters` statement for statement (the admissible
     composition bound, then the exact alignment on the survivors).  `mode="shorter"` is the
     corrected measure: the bound and the alignment are both normalised by the shorter length,
-    and a verbatim-substring pass follows.  The partition is unique whatever the union order,
-    and ids are assigned by the lowest-index member, so the id map is reproducible.
+    and a verbatim-substring pass follows.  `mode="substring"` is the minimal fix: the pinned
+    criterion, plus the verbatim-substring pass and nothing else.  The partition is unique
+    whatever the union order, and ids are assigned by the lowest-index member, so the id map
+    is reproducible.
     """
     C, lens = D.composition_matrix(seqs)
     parent = list(range(len(seqs)))
@@ -91,7 +93,7 @@ def cluster(seqs, mode):
 
     stats = {"n_bound_survivors": 0, "n_alignment_unions": 0, "n_substring_only_unions": 0}
     for a in range(len(seqs)):
-        if mode == "longer":
+        if mode in ("longer", "substring"):
             bound = np.asarray(D.max_possible_identity_many(seqs[a], C, lens), float).copy()
         else:
             shared = np.minimum(C[a][None, :], C).sum(1)
@@ -102,13 +104,13 @@ def cluster(seqs, mode):
         if cand:
             stats["n_bound_survivors"] += len(cand)
             bs = [seqs[b] for b in cand]
-            vals = (D.identity_many(seqs[a], bs) if mode == "longer"
+            vals = (D.identity_many(seqs[a], bs) if mode in ("longer", "substring")
                     else containment_many(seqs[a], bs))
             for b, v in zip(cand, vals):
                 if v >= THRESHOLD and find(a) != find(b):
                     parent[find(b)] = find(a)
                     stats["n_alignment_unions"] += 1
-        if mode == "shorter":
+        if mode in ("shorter", "substring"):
             sa = seqs[a]
             for b in range(a + 1, len(seqs)):
                 if find(a) != find(b) and (sa in seqs[b] or seqs[b] in sa):
@@ -215,6 +217,132 @@ def main():
           f"{len(dev_mates)}/126; new mates sitting in ANOTHER pinned fold (the leak) on "
           f"{len(dev_leak)}/126: {dev_leak}")
 
+    # ---- 3b. the minimal fix: the pinned criterion OR a verbatim substring (PREREG H3)
+    t = time.time()
+    a_sub, st_sub = cluster(seqs, "substring")
+    f_sub = fold_map(a_sub)
+    sub_changed = [s for s in seqs if set(members(a_sub, s)) != set(members(pc, s))]
+    sub_has_substring = [s for s in sub_changed
+                         if any((s in o or o in s) for o in seqs if o != s)]
+    dev_sub_mates = [tg["pdb"] for tg in T
+                     if set(members(a_sub, tg["seq"])) - set(members(pc, tg["seq"]))]
+    dev_sub_leak = [tg["pdb"] for tg in T
+                    if [g for g in set(members(a_sub, tg["seq"])) - set(members(pc, tg["seq"]))
+                        if pf[g] != pf[tg["seq"]]]]
+    devset = {tg["seq"]: tg["pdb"] for tg in T}
+    # the changed sequences that are NOT themselves verbatim containments: are they carried
+    # along by single linkage (a PINNED cluster mate is one)?  names are printed only for dev
+    # targets; every other member is described by its length alone
+    transitive = []
+    for s in sub_changed:
+        if s in sub_has_substring:
+            continue
+        mates_pinned = [o for o in members(pc, s) if o != s]
+        via_mate = any(any((o in q or q in o) for q in seqs if q != o) for o in mates_pinned)
+        transitive.append({"who": devset.get(s, f"(non-dev member, n={len(s)})"),
+                           "pinned_cluster_size": len(mates_pinned) + 1,
+                           "a_pinned_cluster_mate_is_a_verbatim_containment": bool(via_mate)})
+    # per dev target: the verbatim-containment partners (lengths, roles, folds; no names
+    # unless the partner is itself a dev target)
+    dev_verbatim = []
+    for tg in T:
+        s = tg["seq"]
+        partners = [o for o in seqs if o != s and (s in o or o in s)]
+        if partners:
+            dev_verbatim.append({
+                "pdb": tg["pdb"], "n": tg["n"], "pinned_fold": pf[s],
+                "partners": [{"who": devset.get(o, f"(non-dev member, n={len(o)})"),
+                              "n": len(o), "role": "carrier of the target" if s in o else
+                              "carried by the target", "pinned_fold": pf[o],
+                              "same_pinned_fold": pf[o] == pf[s],
+                              "longer_identity": round(float(D.identity(s, o)), 4)}
+                             for o in partners]})
+    # the benchmark under the minimal fix (counts only, as in section 5 below)
+    b_sub_leak = 0
+    for p_ in core.backend("data").benchmark():
+        gained = set(members(a_sub, p_.seq)) - set(members(pc, p_.seq))
+        b_sub_leak += bool([g for g in gained if pf[g] != pf[p_.seq]])
+    substring_fix = {
+        "n_clusters": len(set(a_sub.values())), "seconds": round(time.time() - t, 2), **st_sub,
+        "n_sequences_whose_cluster_membership_changes": len(sub_changed),
+        "n_changed_that_carry_or_are_carried_verbatim": len(sub_has_substring),
+        "H3_every_changed_sequence_is_a_verbatim_containment":
+            len(sub_changed) == len(sub_has_substring),
+        "changed_but_not_verbatim_themselves": transitive,
+        "n_sequences_whose_naive_fold_label_changes": sum(1 for s in seqs if f_sub[s] != pf[s]),
+        "dev126_with_new_mates": dev_sub_mates,
+        "dev126_with_new_mates_in_other_pinned_folds": dev_sub_leak,
+        "dev126_verbatim_containments": dev_verbatim,
+        "benchmark60_with_new_mates_in_other_pinned_folds": int(b_sub_leak),
+    }
+    for row in dev_verbatim:
+        print(f"  verbatim: {row['pdb']} (n={row['n']}, fold {row['pinned_fold']}) <-> "
+              + "; ".join(f"{q['who']} n={q['n']} fold {q['pinned_fold']} {q['role']} "
+                          f"longer-identity {q['longer_identity']}" for q in row["partners"]))
+    for row in transitive:
+        print(f"  transitive: {row['who']} pinned cluster of {row['pinned_cluster_size']}, "
+              f"mate is verbatim: {row['a_pinned_cluster_mate_is_a_verbatim_containment']}")
+    print(f"  benchmark60 under the minimal fix: new mates in another pinned fold on "
+          f"{b_sub_leak}/60 (count only)")
+    print(f"substring-OR-pinned: {substring_fix['n_clusters']} clusters; membership changes on "
+          f"{len(sub_changed)} sequences, {len(sub_has_substring)} of which carry or are carried "
+          f"verbatim; dev126 new mates on {len(dev_sub_mates)}: {dev_sub_mates}; in another "
+          f"pinned fold on {len(dev_sub_leak)}: {dev_sub_leak}; a naive fold re-derivation would "
+          f"relabel {substring_fix['n_sequences_whose_naive_fold_label_changes']}/787")
+
+    # ---- 3c. the null (PREREG H1/H2): shuffled dev-target sequences through both criteria
+    t = time.time()
+    N_SHUF = 5
+    others_of = {}
+    null_rows = []
+    for k, tg in enumerate(T):
+        s = tg["seq"]
+        others = [o for o in seqs if o != s]
+        others_of[s] = others
+        real_short = float(np.mean(containment_many(s, others) >= THRESHOLD))
+        real_long = float(np.mean(D.identity_many(s, others) >= THRESHOLD))
+        sh_short, sh_long = [], []
+        for r in range(N_SHUF):
+            rng = np.random.default_rng(1000 + k + 126 * r)
+            q = "".join(rng.permutation(list(s)))
+            sh_short.append(float(np.mean(containment_many(q, others) >= THRESHOLD)))
+            sh_long.append(float(np.mean(D.identity_many(q, others) >= THRESHOLD)))
+        null_rows.append({"pdb": tg["pdb"], "n": tg["n"],
+                          "real_pass_rate_shorter": real_short,
+                          "shuffled_pass_rate_shorter": float(np.mean(sh_short)),
+                          "real_pass_rate_longer": real_long,
+                          "shuffled_pass_rate_longer": float(np.mean(sh_long))})
+    rs = float(np.mean([r["real_pass_rate_shorter"] for r in null_rows]))
+    ss = float(np.mean([r["shuffled_pass_rate_shorter"] for r in null_rows]))
+    rl = float(np.mean([r["real_pass_rate_longer"] for r in null_rows]))
+    sl = float(np.mean([r["shuffled_pass_rate_longer"] for r in null_rows]))
+    by_len = {}
+    for r in null_rows:
+        by_len.setdefault(r["n"], []).append(r)
+    null = {
+        "n_shuffles_per_target": N_SHUF, "seconds": round(time.time() - t, 2),
+        "mean_pass_rate_shorter_real": rs, "mean_pass_rate_shorter_shuffled": ss,
+        "shuffled_over_real_shorter": (ss / rs if rs > 0 else None),
+        "mean_pass_rate_longer_real": rl, "mean_pass_rate_longer_shuffled": sl,
+        "H1_at_the_null_stands": bool(rs > 0 and ss >= 0.2 * rs),
+        "H2_pinned_criterion_discriminative_stands": bool(sl <= 0.005),
+        "by_length": {int(n): {"n_targets": len(rows),
+                               "shorter_real": float(np.mean([x["real_pass_rate_shorter"] for x in rows])),
+                               "shorter_shuffled": float(np.mean([x["shuffled_pass_rate_shorter"] for x in rows])),
+                               "longer_real": float(np.mean([x["real_pass_rate_longer"] for x in rows])),
+                               "longer_shuffled": float(np.mean([x["shuffled_pass_rate_longer"] for x in rows]))}
+                      for n, rows in sorted(by_len.items())},
+        "rows": null_rows,
+    }
+    print(f"NULL: shorter criterion passes {100*rs:.1f}% of members for the real sequence and "
+          f"{100*ss:.1f}% for a shuffle (ratio {null['shuffled_over_real_shorter']}); longer "
+          f"criterion {100*rl:.2f}% real vs {100*sl:.3f}% shuffled; H1 at-the-null stands: "
+          f"{null['H1_at_the_null_stands']}; H2 stands: {null['H2_pinned_criterion_discriminative_stands']}")
+    for n, v in null["by_length"].items():
+        print(f"   n={n:2d} ({v['n_targets']:2d} targets): shorter real {100*v['shorter_real']:.1f}% "
+              f"shuffled {100*v['shorter_shuffled']:.1f}%   longer real {100*v['longer_real']:.2f}% "
+              f"shuffled {100*v['longer_shuffled']:.3f}%")
+
     # ---- 4. the four known self-copies
     known = []
     for copy, carrier in KNOWN_SELF_COPIES:
@@ -283,6 +411,9 @@ def main():
                    "rows": dev},
         "known_self_copies": known,
         "benchmark60": benchmark,
+        "substring_or_pinned": substring_fix,
+        "null_control": null,
+        "prereg": "s26/PREREG_identity_null.md",
         "seconds_total": round(time.time() - t0, 1),
     }
     ST.save_atomic(OUT, payload, complete_keys=("pdb", "pinned_fold", "label_changes"),
