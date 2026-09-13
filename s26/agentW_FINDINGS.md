@@ -88,9 +88,56 @@ inside the pool and 55.5 outside. About 11% of every pool is chosen by corpus or
 of targets keep their BLOSUM rank-0 window in the shipped top-75. This is the basis of
 `s26/IDEA_tiebreak_noise_floor.md`.
 
+### 1.6 Two discrete operators inside the readout amplify a one-member change into a 1 to 2 A move of the emission. DEMONSTRATED, native-free (seen in Part A's control population).
+
+Dropping ONE of the 75 averaged windows (the matched control of Part A: the BLOSUM rank-0 window
+removed and the pool refilled) changes the top-75 by that one member (overlap 74/75) and moves
+the point cloud by 0.04 to 0.09 A on most targets, as arithmetic says it should. Two things can
+turn that into a large move of the emitted structure (`s26/logs/w_selfcopy_retrieval.log`;
+mechanism checked in-session on the universes, native-free):
+
+- The MEDOID FRAME. The average is taken after superposing every member onto the medoid of the
+  set; on 5H1H and 6EY3 the medoid changed (universe index 430 -> 5397; 8468 -> 7954) and the
+  cloud moved 1.294 and 0.736 A, while the same 74-member set averaged in the ORIGINAL medoid's
+  frame sits 0.077 and 0.064 A from the production cloud. The frame choice is a discrete
+  argmin with jumps of about 1 A. (S23 L4 found iterated Procrustes does not improve the MEAN;
+  the frame's discontinuity as a noise source was not priced.)
+- The PROJECTION BRANCH. With the medoid unchanged and the cloud moved by 0.04 to 0.09 A, the
+  built chain (ramah 0.3, multi-start) moved 0.85 A on 1NIZ, 0.96 on 1CS9, 1.52 on 1M02, 1.58
+  on 1RSW, 1.75 on 2LNG and 2.11 on 2BP4 (the lam = 0 chain moved 0.07 to 0.14 A on most of
+  them, 1.36 on 2BP4): a branch flip of the penalised projection (lane PH's
+  `IDEA_branch_select.md` names the degeneracy; here it is seen as a sensitivity).
+
+Both are native-free facts about the instrument and both feed `s26/IDEA_tiebreak_noise_floor.md`:
+an arbitrary tie-break at the pool boundary can flip either. The full incidence over the 122
+controls is reported with Part A's gated results (section 3).
+
+### 1.7 The same sequence in a different deposit sits 2.9 A from the native. ORACLE DIAGNOSTIC (Part E, gated; run after L33).
+
+`s26/results/w_selfcopy_floor.json` (job `w_selfcopy_floor`, exit 0, 5 s; complete 22/22,
+provenance-stamped). For the 18 dev targets with a verbatim relative in the database (lane I's
+list) and their 22 partners, the CA-RMSD between the target's native (model 1) and the copy of
+its sequence in the other deposit (the carrier's segment at the substring position, or the
+shorter relative against the target's own segment):
+
+    median 2.908 A   mean 2.811   min 0.317 (5V5B)   max 5.502 (7S3O)
+    below 1.0 A: 4 of 22 (18%)    below 1.5 A: 6 of 22 (27%)
+    the four cross-fold self-copies: 1CEK 0.595, 2FBU 3.278, 2P5H 2.334, 6B9K 4.126 (S24 L4's numbers, reproduced)
+    reference scales: the natives' own intra-ensemble spread 1.044 A (record, `docs/FINDINGS.md:2184`);
+    the targets' K = 500 pool mean 4.34 A; the copy is WORSE than the target's pool mean on 5 of 22
+    (2LNG, 5Z5W, 6B9K, 7S3O, 8ZG2) and beats the pool's best member on 3 of 22 (1ID6, 1NIZ, 5V5B);
+    carrier role (n = 15) median 2.98, carried role (n = 7) median 2.04; Spearman(length ratio,
+    RMSD) -0.08 (p 0.72, n = 22): no length dependence visible
+
+The registered prediction (median above 1.5 A, fewer than a third below 1.0 A) holds; F5 did
+not fire. A verbatim copy of the sequence is, in the median, no better a guess at the native
+than a typical unrelated pool window is at its best. This is the mechanism behind a small leak
+bound: a copy that sits 2.3 to 4.1 A from the native carries little the pipeline can exploit,
+and on some targets it is a worse window than the average one.
+
 ---
 
-## 2. GATED, WAITING FOR "PHASE 0 SIGNED OFF" (seconds each once the native-free runs are on disk)
+## 2. GATED, WAITING FOR THE NATIVE-FREE RUNS (seconds each once they are on disk)
 
 - `python s26/w_selfcopy.py endpoint`: signed per-target deltas on sel / cloud / arm / fit and
   the paired gain for the 4 self-copies and the 122 controls (Part A), the n = 126 envelope
