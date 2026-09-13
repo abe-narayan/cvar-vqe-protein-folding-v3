@@ -937,6 +937,9 @@ def main(argv=None):
     ap.add_argument("--order", default="fold", choices=("fold", "fold_rev", "pdb"))
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--pdbs", default=None, help="comma-separated pdb ids")
+    ap.add_argument("--shard", default=None,
+                    help="i/k: process every k-th target starting at i (after ordering), so k "
+                         "governed processes split the manifest with per-target checkpoints")
     ap.add_argument("--pools", default="V,L2")
     ap.add_argument("--variants", default="zrank", help="energy variants for the FIXED ansatz")
     ap.add_argument("--adapt-variants", default="zrank", help="energy variants for ADAPT")
@@ -963,6 +966,11 @@ def main(argv=None):
     os.makedirs(outdir, exist_ok=True)
     pdbs = a.pdbs.split(",") if a.pdbs else None
     tg, folds = _targets(cfg, limit=a.limit, order=a.order, pdbs=pdbs)
+    if a.shard:
+        i, k = (int(x) for x in a.shard.split("/"))
+        if not (0 <= i < k):
+            ap.error("--shard i/k needs 0 <= i < k")
+        tg = tg[i::k]
     pl.guard_esm([p.seq for p in pl.manifest("tuning126")])
     pl._LIB.n_folds = cfg.n_folds
     pl._LIB.cap = cfg.window_cache

@@ -142,6 +142,26 @@ predictions held.
     left and right conjugation conventions: same dimension, 12 of 12
     every closure inside the odd-Y (real) set: yes, at every cell
 
+Method, stated exactly. Symbolic route: each generator is a Pauli string (x, z) bit pair;
+two strings anticommute iff popcount(x & z') + popcount(z & x') is odd; the commutator of two
+anticommuting strings is the string (x ^ x', z ^ z') up to a non-zero scalar; the closure is
+the breadth-first set of strings reached by commuting generators into already-reached
+strings; dim(DLA) is the size of that set (distinct strings are linearly independent and
+right-normed nested commutators span the algebra). Numeric route: the same generators as dense
+2^n x 2^n real antisymmetric matrices -iP/2; the nested commutators [g, b] of every generator
+g with every basis element b are stacked as flattened vectors with the current basis; rank =
+the number of singular values above 1e-10 times the largest singular value (relative
+tolerance 1e-10, `numpy.linalg.svd`); the basis is rebuilt from the right singular vectors
+and the step repeats until the rank stops growing. The two routes agree on all 12 (n, L)
+cells at n = 4, 5 (`s26/results/q_dla.json`, key `numeric`, field `agree`).
+
+Two different numbers in `s26/logs/a2_dla.log` are two different generator sets, and a reader
+should not average them: 8128 is dim(DLA) of the FIXED ansatz's 21 conjugated RY generators
+at n = 7 (L = 3, and already at L = 2); 1025 is dim(DLA) of the 21 strings that ADAPT
+SELECTED with pool L2 at alpha = 0.25 (7 initial Y_q plus 14 grown 2-local strings), 12.6%
+of so(128). The fixed ansatz reaches the whole real algebra by depth 2; the grown ansatz at
+P = 21 spans an eighth of it.
+
 Depth 1 is the abelian algebra of the n commuting RY generators; that is the algebraic form
 of S13's exact I/4 metric at depth 1 (`s13/results/geo_metric_arm1.json`). From depth 2 the
 algebra is the whole of so(2^n) at every width except n = 6 and n = 9, where it takes depth 4

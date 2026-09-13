@@ -46,12 +46,19 @@ C7. Width sweep of the deployed CVaR free energy on the deployed spectrum, n = 4
     Depth saturates at n = 7 from L = 4 (7.4e-3 to 8.2e-3, flat to sampling error). Scope:
     this shallow real-amplitude ansatz, these widths, this spectrum; not a 2-design result.
     `s25/results/q_plateau.json`.
-C8. PENDING (A2): the dynamical Lie algebra of the deployed ansatz by width and depth, against
-    dim so(2^n) = 2^(n-1)(2^n - 1) and dim su(2^n) = 4^n - 1; the closure lies in the odd-Y
-    (real) subalgebra; the Tang pools close to a proper subalgebra; the 2-local odd-Y pool
-    closes to so(2^n); ADAPT-selected sets at alpha = 1 stay abelian. Observed at n <= 6:
-    depth 1 abelian (dim n); n = 6: 510 / 1023 / 2016 at L = 2 / 3 / 4.
-    `s26/results/q_dla.json` (running), `s26/results/q_dla_smoke_n456.json`.
+C8. The dynamical Lie algebra of the deployed ansatz is the FULL so(2^n) from depth 2 at
+    n = 4, 5, 7, 8, 10, 11 (8128 = so(128) at the deployed n = 7; depth 1 is abelian, dim n;
+    n = 6 and n = 9 need depth 4, with 510 / 1023 and 32766 / 65535 at depths 2 / 3). The
+    closure lies in the odd-Y (real) subalgebra at every cell. The Tang minimal pools V and G
+    generate so(2^(n-1)+1) (36, 136, 528, 2080, 8256, 32896 at n = 4..9); the 2-local odd-Y
+    pool generates so(2^n); ADAPT-selected sets at alpha = 1 stay abelian and at alpha = 0.25
+    reach 1025 of 8128 at P = 21 with pool L2. Method: exact closure on Pauli strings as a set
+    (symplectic anticommutation, bitwise product), agreeing with the numeric rank (dense
+    -iP/2, nested commutators, SVD rank at relative tolerance 1e-10) on 12 of 12 cells at
+    n = 4, 5. The 8128 and the 1025 are two generator sets (the fixed ansatz's conjugated
+    RY generators; the strings ADAPT selected) and are never compared as one quantity.
+    `s26/results/q_dla.json`, `s26/results/q_dla_smoke_n456.json`; pre-registered
+    prediction of a proper subalgebra at n = 7 falsified (`s26/PREREG_A2.md` addendum).
 C9. PENDING (A4): the grown circuits' variance beside the fixed ansatz at matched P.
     `s26/results/q_var.json` (running).
 C10. The optimiser trains and the readout cannot tell: beats best-of-200 untrained draws at
