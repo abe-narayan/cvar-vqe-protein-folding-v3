@@ -179,17 +179,37 @@ def top_k(scores: np.ndarray, k: int, largest: bool = True) -> np.ndarray:
 
 
 # 2. Alignment and identity
-def identity(a: str, b: str, gap: float = -1.0) -> float:
+def identity(a: str, b: str, gap: float = -1.0, norm: str = "longer") -> float:
     """Needleman-Wunsch identity normalised by the LONGER sequence.
 
     The repository's convention, preserved exactly -- results on record depend on it. It
     is leaky at the member level (see the module docstring); `containment` is the
     normalisation a window-level filter should use, and it lives under its own name so the
     two cannot be mistaken for one another.
+
+    ``norm`` (S26, lane I, declared defect 6a; ships dark) selects the normalisation:
+    ``"longer"``, the default and the pinned convention, bit-identical to the behaviour
+    before the keyword existed; ``"shorter"``, the corrected measure -- the same match count
+    over the SHORTER sequence (`containment`) behind a verbatim-substring test, so an exact
+    copy scores 1.0 whatever the aligner does. Nothing on the production path passes
+    ``norm``, and `clusters` / `folds` do not accept it: the pinned clusters and folds were
+    built with the default and must never be re-derived (README, "The trap worth knowing
+    about"). `s26/i_identity_audit.py` measures, in memory, what the corrected form would move,
+    and the answer is a warning: at the 0.6 threshold the shorter form is at the null as a
+    CLUSTERING criterion (a real dev sequence passes it against 0.5% of members, a shuffled one
+    against 0.3%, and single linkage on those chance edges collapses 470 clusters to 166), so it
+    is a per-pair leak test, not a replacement threshold. The verbatim-substring test alone
+    is what catches the known self-copies.
     """
     n, m = len(a), len(b)
     if n == 0 or m == 0:
         return 0.0
+    if norm == "shorter":
+        if a in b or b in a:
+            return 1.0
+        return _nw_matches(a, [b])[0] / min(n, m)
+    if norm != "longer":
+        raise ValueError(f"unknown identity normalisation {norm!r}; use 'longer' or 'shorter'")
     return _nw_matches(a, [b])[0] / max(n, m)
 
 
@@ -298,12 +318,24 @@ def _nw_matches(a: str, bs: Sequence[str], gap: float = -1.0) -> np.ndarray:
     return prev_c[np.arange(B), lens]
 
 
-def identity_many(a: str, bs: Sequence[str], gap: float = -1.0) -> np.ndarray:
-    """`identity` of ``a`` against many sequences at once. Same numbers, batched."""
+def identity_many(a: str, bs: Sequence[str], gap: float = -1.0,
+                  norm: str = "longer") -> np.ndarray:
+    """`identity` of ``a`` against many sequences at once. Same numbers, batched.
+
+    ``norm`` as in `identity` (S26 defect 6a): ``"shorter"`` is the corrected measure, with
+    the verbatim-substring test applied per pair; the default path is untouched.
+    """
     if not len(bs):
         return np.zeros(0)
     n = len(a)
     lens = np.array([len(b) for b in bs], float)
+    if norm == "shorter":
+        denom = np.minimum(lens, n)
+        out = np.where(denom > 0, _nw_matches(a, bs, gap) / np.maximum(denom, 1), 0.0)
+        sub = np.array([bool(a) and bool(b) and (a in b or b in a) for b in bs], bool)
+        return np.where(sub, 1.0, out)
+    if norm != "longer":
+        raise ValueError(f"unknown identity normalisation {norm!r}; use 'longer' or 'shorter'")
     denom = np.maximum(lens, n)
     return np.where(denom > 0, _nw_matches(a, bs, gap) / np.maximum(denom, 1), 0.0)
 
@@ -435,11 +467,6 @@ def build_peptides(force: bool = False) -> List[Peptide]:
 @lru_cache(maxsize=1)
 def load() -> Tuple[Peptide, ...]:
     return tuple(build_peptides())
-
-
-@lru_cache(maxsize=1)
-def _seq_index() -> Dict[str, int]:
-    return {p.seq: k for k, p in enumerate(load())}
 
 
 def by_pdb(pdbid: str) -> Optional[Peptide]:

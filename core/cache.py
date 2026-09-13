@@ -40,7 +40,7 @@ import subprocess
 import sys
 import tempfile
 import time
-from typing import Any, Dict, Iterable, Optional, Sequence, Tuple
+from typing import Any, Dict, Optional, Sequence, Tuple
 
 import numpy as np
 

@@ -16,7 +16,6 @@ import json
 import os
 import re
 import sys
-from collections import defaultdict
 
 import numpy as np
 

@@ -44,7 +44,7 @@ import subprocess
 import sys
 import threading
 import time
-from dataclasses import asdict, replace
+from dataclasses import replace
 
 _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _ROOT not in sys.path:

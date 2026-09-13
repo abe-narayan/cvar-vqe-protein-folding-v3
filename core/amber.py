@@ -278,8 +278,6 @@ def memory_guard(limit: float = MEMORY_LIMIT_PERCENT) -> float:
 # `tests/test_amber.py` pins the identity, so a re-introduced copy fails instead of
 # passing review.
 from budget import (                                                    # noqa: E402
-    MAXITER_PER_PARAM,
-    MIN_MAXITER_PER_PARAM,
     BudgetExhausted,
     BudgetedEnergyModel,
     check_optimizer_budget,

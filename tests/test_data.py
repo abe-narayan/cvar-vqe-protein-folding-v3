@@ -211,6 +211,42 @@ def test_identity_normalises_by_the_longer_sequence_and_that_is_leaky():
     assert d.containment(a.seq, b.seq) >= d.IDENTITY_THRESHOLD
 
 
+def test_identity_norm_flag_ships_dark_and_the_shorter_form_catches_the_self_copy(peptides):
+    """S26 defect 6a: the corrected normalisation exists behind a keyword and is OFF.
+
+    The default must be the pinned convention to the bit (the clusters and folds on disk were
+    built with it); ``norm="shorter"`` must score the 1CEK-in-1A11 verbatim copy at exactly
+    1.0, equal `containment` wherever no substring is involved, and agree between the scalar
+    and batched forms on both sides of `_BATCH_MIN`.
+    """
+    a, b = d.by_pdb("1CEK"), d.by_pdb("1A11")
+    if a is None or b is None:
+        pytest.skip("1CEK / 1A11 absent from the database")
+    assert d.identity(a.seq, b.seq) == d.identity(a.seq, b.seq, norm="longer")
+    assert abs(d.identity(a.seq, b.seq) - 13.0 / 25.0) < 1e-12
+    assert d.identity(a.seq, b.seq, norm="shorter") == 1.0
+    assert d.identity(b.seq, a.seq, norm="shorter") == 1.0
+    assert d.identity(a.seq, b.seq, norm="shorter") >= d.IDENTITY_THRESHOLD
+    with pytest.raises(ValueError):
+        d.identity(a.seq, b.seq, norm="middle")
+    with pytest.raises(ValueError):
+        d.identity_many(a.seq, [b.seq], norm="middle")
+    seqs = [p.seq for p in peptides[:60]]
+    for norm in ("longer", "shorter"):
+        many = d.identity_many(a.seq, seqs, norm=norm)                  # batched path
+        few = d.identity_many(a.seq, seqs[:10], norm=norm)              # scalar path
+        one = np.array([d.identity(a.seq, s, norm=norm) for s in seqs])
+        assert np.array_equal(many, one)
+        assert np.array_equal(few, one[:10])
+    for s in seqs[:30]:
+        if s in a.seq or a.seq in s:
+            continue
+        assert abs(d.identity(a.seq, s, norm="shorter") - d.containment(a.seq, s)) < 1e-12
+    # the default batched form is untouched by the flag
+    assert np.array_equal(d.identity_many(a.seq, seqs), d.identity_many(a.seq, seqs, norm="longer"))
+    assert d.identity_many(a.seq, [], norm="shorter").shape == (0,)
+
+
 def test_identity_is_symmetric_and_one_on_self(peptides):
     for p in peptides[:40]:
         assert abs(d.identity(p.seq, p.seq) - 1.0) < 1e-12
