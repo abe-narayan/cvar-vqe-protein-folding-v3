@@ -246,11 +246,64 @@ def floor() -> dict:
     return summ
 
 
+# ------------------------------------------------------------------ part 2b (gated, addendum 2)
+FLOOR2_JSON = os.path.join(L.RESULTS, "ph_cis_floor2.json")
+FLOOR2_KEYS = ("pdb", "n", "fold", "floor2_lam03", "floor2_lam0", "floor_ca", "chain_cost")
+
+
+def floor2() -> dict:
+    """ORACLE DIAGNOSTIC (PREREG_cis addendum 2): the native CA trace itself projected through
+    the PRODUCTION projection (`I.project`, ramah at 0.3, multi-start, exact gradient) and its
+    lam=0 rung, each scored against the native. The tight representation floor of the manifold."""
+    L.require_gate("ph_cis floor2")
+    from s12 import instrument as I
+    from s24 import stats_lib as ST
+    with open(FLOOR_JSON, encoding="utf-8") as fh:
+        prev = {r["pdb"]: r for r in json.load(fh)["rows"]}
+    tg = L.targets()
+    done = L.read_cells("ph_cis_floor2")
+    clk = L.Clock()
+    for k, t in enumerate(tg):
+        if t["pdb"] in done:
+            continue
+        u = L.univ_oracle(t["pdb"])
+        nat = u["nat_ca"]
+        pr = I.project(nat, t["seq"], int(t["fold"]))
+        row = {"pdb": t["pdb"], "n": int(t["n"]), "fold": int(t["fold"]),
+               "floor2_lam03": L.ca_rmsd(pr["ca"], nat), "floor2_lam0": L.ca_rmsd(pr["fit_ca"], nat),
+               "floor_ca": float(prev[t["pdb"]]["floor_ca"]), "chain_cost": float(prev[t["pdb"]]["chain_cost"]),
+               "max_omega_dev": float(prev[t["pdb"]]["max_omega_dev"])}
+        L.write_cell("ph_cis_floor2", t["pdb"], row)
+        print(f"[{k + 1}/{len(tg)}] {t['pdb']} floor2 lam0.3 {row['floor2_lam03']:.3f} lam0 {row['floor2_lam0']:.3f} "
+              f"rebuild {row['floor_ca']:.3f} ({clk():.0f}s)", flush=True)
+    rows = sorted(L.read_cells("ph_cis_floor2").values(), key=lambda r: r["pdb"])
+    pdbs = [r["pdb"] for r in rows]; folds = L.folds_of(pdbs)
+    f03 = np.array([r["floor2_lam03"] for r in rows]); f0 = np.array([r["floor2_lam0"] for r in rows])
+    fc = np.array([r["floor_ca"] for r in rows]); cost = np.array([r["chain_cost"] for r in rows])
+    from scipy.stats import spearmanr
+    summ = {"floor2_lam03": L.mean_se(f03), "floor2_lam0": L.mean_se(f0), "floor_ca": L.mean_se(fc),
+            "n_floor2_above_rebuild": int((f03 > fc).sum()),
+            "rho_floor2_vs_max_omega_dev": float(spearmanr(f03, [r["max_omega_dev"] for r in rows])[0]),
+            "rho_floor2_vs_chain_cost": float(spearmanr(f03, cost)[0])}
+    for lab, a, b in (("floor2 (native projected, lam 0.3) MINUS floor_ca (own-torsion rebuild)", f03, fc),
+                      ("floor2 lam 0.3 MINUS floor2 lam 0", f03, f0),
+                      ("production chain cost MINUS floor2 (lam 0.3)", cost, f03)):
+        c = ST.compare(a, b, folds, names=pdbs, label=lab)
+        print(ST.fmt(c)); summ[lab] = c
+    L.save(FLOOR2_JSON, {"what": "ORACLE DIAGNOSTIC: the native projected through the production "
+                                 "projection; the tight representation floor (CA basis)",
+                         "rows": rows, "summary": summ},
+           rows=rows, complete_keys=FLOOR2_KEYS, n_expected=126, module_file=__file__)
+    return summ
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("mode", choices=("census", "floor"))
+    ap.add_argument("mode", choices=("census", "floor", "floor2"))
     a = ap.parse_args()
     if a.mode == "census":
         census()
-    else:
+    elif a.mode == "floor":
         floor()
+    else:
+        floor2()

@@ -141,9 +141,10 @@ S1_KEYS = ("pdb", "n", "fold", "rmsd_arm", "rmsd_full", "mag", "cos_amber", "ran
 
 
 def controls_for(ca: np.ndarray, out: np.ndarray, nat: np.ndarray, Wpool: np.ndarray,
-                 pdb: str, n_draws: int = N_DRAWS) -> dict:
+                 pdb: str, n_draws: int = N_DRAWS, salt: str = "") -> dict:
     """ORACLE DIAGNOSTIC (reads `nat`). The operator's displacement, its cosine with the true
-    residual, and the two matched-magnitude controls, all on one input `ca`."""
+    residual, and the two matched-magnitude controls, all on one input `ca`.  `salt` changes
+    the draw seeds (the replication run uses "rep")."""
     ca = np.asarray(ca, float); n = len(ca)
     v, mag = displacement(ca, out)
     r = L.superpose_onto(nat, ca) - ca
@@ -154,12 +155,12 @@ def controls_for(ca: np.ndarray, out: np.ndarray, nat: np.ndarray, Wpool: np.nda
         return float((a * r).sum() / (na * rn)) if na > 0 and rn > 0 else float("nan")
 
     d_out = L.ca_rmsd(out, nat)
-    rng = L.stable_rng(pdb, "c3rand")
+    rng = L.stable_rng(pdb, "c3rand" + salt)
     rand_r, rand_c = [], []
     for _ in range(n_draws):
         g = L.random_displacement(ca, mag, rng)
         rand_r.append(L.ca_rmsd(ca + g, nat)); rand_c.append(cos(g))
-    rng2 = L.stable_rng(pdb, "c3member")
+    rng2 = L.stable_rng(pdb, "c3member" + salt)
     mem_r, mem_c, over = [], [], 0
     for _ in range(n_draws):
         j = int(rng2.integers(0, len(Wpool)))
@@ -182,7 +183,7 @@ def controls_for(ca: np.ndarray, out: np.ndarray, nat: np.ndarray, Wpool: np.nda
             "n_draws": n_draws}
 
 
-def stage1_target(t) -> dict:
+def stage1_target(t, salt: str = "") -> dict:
     L.require_gate("ph_c3 stage1")
     from s12 import instrument as I
     rec = L.prod_record_oracle(t["pdb"])
@@ -195,7 +196,7 @@ def stage1_target(t) -> dict:
     amb = np.asarray(rec["amber_ca"], float)
     ra, rf = I.ca_rmsd(ca, nat), I.ca_rmsd(amb, nat)
     assert abs(ra - rec["rmsd_arm"]) < 1e-6 and abs(rf - rec["rmsd_full"]) < 1e-6, t["pdb"]
-    c = controls_for(ca, amb, nat, u["W"][p], t["pdb"])
+    c = controls_for(ca, amb, nat, u["W"][p], t["pdb"], salt=salt)
     return {"pdb": t["pdb"], "n": int(t["n"]), "fold": int(t["fold"]), "basis_in": "built_chain",
             "basis_out": "relaxed_chain", "rmsd_arm": float(ra), "rmsd_full": float(rf), **c}
 
@@ -226,21 +227,29 @@ def _stats(rows, label_prefix, out):
     return out
 
 
-def stage1() -> dict:
+def stage1(rep: bool = False) -> dict:
+    """`rep=True` is the contract's replication of any positive result: different draw seeds
+    (salt "rep") and the targets processed in REVERSED pinned order (fold labels unchanged);
+    written to a separate artefact and compared to the first run in the ledger."""
     L.require_gate("ph_c3 stage1")
     tg = L.targets()
+    salt = "rep" if rep else ""
+    order = list(reversed(tg)) if rep else tg
     rows, clk = [], L.Clock()
-    for k, t in enumerate(tg):
-        r = stage1_target(t)
+    for k, t in enumerate(order):
+        r = stage1_target(t, salt=salt)
         rows.append(r)
         if "skipped" not in r:
             print(f"[{k + 1}/{len(tg)}] {r['pdb']} arm {r['rmsd_arm']:.3f} full {r['rmsd_full']:.3f} "
                   f"mag {r['mag']:.3f} cos {r['cos_amber']:+.3f} rand {r['rand_rmsd']:.3f} "
                   f"member {r['member_rmsd']:.3f} ({clk():.0f}s)", flush=True)
-    summ = _stats(rows, "stage1", {})
-    L.save(S1_JSON, {"what": "C3 stage 1: AMBER refinement vs matched-magnitude controls on the "
-                             "production built chain; ORACLE evaluation of native-free operators",
-                     "rows": rows, "summary": summ},
+    rows = sorted(rows, key=lambda r: r["pdb"])
+    summ = _stats(rows, "stage1" + ("-REP" if rep else ""), {})
+    path = S1_JSON.replace(".json", "_rep.json") if rep else S1_JSON
+    L.save(path, {"what": "C3 stage 1: AMBER refinement vs matched-magnitude controls on the "
+                          "production built chain; ORACLE evaluation of native-free operators"
+                          + (" -- REPLICATION: salt 'rep', reversed target order" if rep else ""),
+                  "rows": rows, "summary": summ},
            rows=rows, complete_keys=S1_KEYS, n_expected=126, module_file=__file__)
     return summ
 
@@ -336,11 +345,12 @@ if __name__ == "__main__":
     ap.add_argument("--input", default=None)
     ap.add_argument("--pdb", default=None)
     ap.add_argument("--n", type=int, default=0)
+    ap.add_argument("--rep", action="store_true", help="replication: new draw seeds, reversed order")
     a = ap.parse_args()
     if a.mode == "nativefree":
         nativefree()
     elif a.mode == "stage1":
-        stage1()
+        stage1(rep=a.rep)
     elif a.mode == "probe":
         probe(a.input, a.pdb)
     else:
