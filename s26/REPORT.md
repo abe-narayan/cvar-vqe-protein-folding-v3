@@ -1056,7 +1056,613 @@ correction to its scope.
 
 <!-- PART V S26 ADDITIONS -->
 
-<!-- PART VI -->
+## PART VI. THE TWENTY-TWO SPRINTS AS A STORY
+
+Sprints 1 to 4 predate the record kept here; their tree is in git history at `5fa05cd` and their
+one surviving claim (that physics ranks real geometry) was re-measured and overturned in S5 and
+S7. From S5 the record is `docs/FINDINGS.md` (S5 to S11, with its corrections ledger at lines
+60 to 118 and its index at 119 to 211), the sprint dossiers `s12/` to `s15/`, and the live
+ledgers `s14/LEDGER.md` to `s26/LEDGER.md`. `docs/CONDENSED_REPORT.md` condenses S5 to S13 and
+`docs/STATE_BRIEF_2026-09-12.md` section 7 gives one line per sprint. Each section below has the
+same six fields. "Falsifier" names the pre-registered condition where one existed; formal
+pre-registration began in S15, and before that the field names the test that decided the
+sprint. Numbers are quoted from the named section or ledger entry, which names its artefact;
+Appendix B lists them as cited.
+
+### VI.1 Sprint 5: the wall is located (`docs/FINDINGS.md:123`, sections at 248 to 780)
+
+Question. A K = 500 retrieval pool holds a 1.71 A member on average and the shipped selector
+returns 3.45 A (both single window): where between the two is the accuracy lost, and can a
+larger pool, more search, or a better sequence key recover it?
+
+Falsifier. Paired arms on the 126 targets against the shipped baseline; an arm that did not move
+the mean by more than its interval was a null.
+
+Result. The pool was never the problem (section 1) and search is not the constraint at any
+budget (2); the loss is a 3.3 A wall (3) which is not "no signal" but no resolution at the top
+of the ranking, the shortlist ceiling (4). The shipped CVaR gradient carries a defect (6, Part
+V.5). In-band skill is bounded by the prior's own accuracy (7); winner's curse is real and small
+(8); structure and sequence are decoupled at this length, so retrieval by sequence cannot work
+as a fix (9); a torsion prior is the sixth signal to hit the same wall (10); the causal chain
+closes and the prior cannot be improved from sequence, all four arms (11); retrieval by
+predicted structure buys better selection and a worse pool with no net gain (13); the synthesis
+is null too and its interim numbers were a mirage (14).
+
+Closed. Pool size, search budget, sequence-key retrieval, retrieval by predicted structure.
+
+Retracted. Section 12, "physics does rank real geometry, Sprint 4's measurement was
+confounded", was itself overturned in S7 (finding 10) on matched pools with a radius-of-gyration
+control: AMBER is worse, not better.
+
+Open. In-band discrimination, carried to S6.
+
+### VI.2 Sprint 6: selection is measured out (`docs/FINDINGS.md:140`, sections at 781 to 1331)
+
+Question. Can any ranker, learned or physical, order the near-native band of a pool?
+
+Falsifier. Properly powered paired comparisons at n = 126 with a correctness audit of every arm
+before it was reported.
+
+Result. The benchmark does not have a floor; the ceiling is ours (1). A learned ranker fixes
+the global ranking and not the in-band one (2); a correctness bug in the pairwise arm was found
+before it was reported (3); properly powered, the learned rankers are exactly null (4); building
+a structure instead of picking one is null (5); secondary structure is not the discriminating
+axis (6); tail aggregation of pair violations is null (7); VQE/CVaR assembly gives a narrow pool
+whose narrowness cannot be exploited (8); refinement's two hypotheses are answered and the
+second explains the first (9); the full ablation yields one usable confidence signal,
+inter-generator agreement (10); anchored selection is null (11); decomposed all-atom physics in
+a learned combiner is null and its +0.320 did not replicate (12); the distance channel is
+sufficient, the predictor is not (13).
+
+Closed. Learned in-band rankers; tail aggregation; anchored selection; physics in a learned
+combiner.
+
+Retracted. The +0.320 combiner effect (section 12).
+
+Open. The inter-generator agreement lead (closed in S7 as a difficulty thermometer).
+
+### VI.3 Sprint 7: the predictor is the constraint (`docs/FINDINGS.md:155`, sections at 1332 to 2088)
+
+Question. Is the distance predictor improvable, and does anything rank the truth first?
+
+Falsifier. Each lead carried a control that would show it to be difficulty rather than skill.
+
+Result. The agreement lead is a difficulty thermometer (1); thirty times more structural data
+makes the predictor monotonically worse (2); the predictor is not shrunk but uncorrelated, so
+post-hoc de-biasing is dead (3); chirality is a red herring on the generative path (4); the
+objective is misspecified, the native is not its minimum (5); pool size has an interior optimum
+and selection tracks the pool mean, not its best (6); training against ranking makes it worse,
+and the predictor is approximately typicality (8); the triangle operator improves the
+diagnostics and not the outcome (9); no scoring channel ranks the truth first, AMBER is worse
+not better, final at n = 70 (10); ESM does beat one-hot on selection, the recorded ablation
+having judged by the wrong metric (11); BLOSUM retrieval beats random fragments, the recorded
+claim refuted (12).
+
+Closed. Post-hoc de-biasing; more training data; chirality; physics as a ranker.
+
+Retracted. "ESM adds nothing" and "random fragments beat retrieval" (sections 11 and 12).
+
+Open. The aggregation metric, carried to S8.
+
+### VI.4 Sprint 8: the full architectural attack (`docs/FINDINGS.md:169`, sections S8-1 to S8-14 at 2089 to 3899)
+
+Question. With the ranker line closed, does any architectural change (representation, pool
+construction, retrieval key, generation, synthesis, physics) move the endpoint?
+
+Falsifier. Every arm paired at n = 126 with an ORACLE ceiling computed first; a single
+pre-registered dev24 pass for the survivor.
+
+Result. The representation is not the bottleneck, the aggregation metric is (S8-1);
+multimodality is modest, two to three basins (S8-2); the 3.454 A mean is four classes and a 28%
+opportunity, of which the coordinator corrected that class contributions are not recoverable
+fractions (S8-4); pool construction is capped at 2.406 A single window at any filter skill, and
+the law that says why (S8-5; later corrected: measured through a weak terminal, averaging the
+same pool gives 1.925, `docs/CONDENSED_REPORT.md:176`); retrieval is fixable and fixing it is
+worth 0.016 A (S8-6); inverse folding is the least misspecified objective and still misspecified
+(S8-7); inside the near-native band the score is worse than a coin flip and consensus is the
+only discriminator, giving the first arm in three sprints with a CI excluding zero, a score
+filter plus consensus medoid (S8-8, `docs/FINDINGS.md:2893`); the channels' errors are
+decorrelated and it buys 0.01 A (S8-9); generation is worth nothing as candidates but exposes a
+second law (S8-10, corrected by S8-13: the transfer law is the identity map where we operate);
+synthesis beats selection at 3.204 A, replicated on dev (S8-11); AMBER is a validity stage, not
+an accuracy stage (S8-12); the training target is misspecified by 0.5 A per pair and fixing it
+is worth 0.044 A (S8-14).
+
+Closed. Pool construction, retrieval key, generation as candidates, learned combinations of
+signals, K = 25.
+
+Retracted. The S8-10 transfer law (S8-13); the class-contribution arithmetic (coordinator
+correction at 2612).
+
+Open. Synthesis, taken to the benchmark in S9.
+
+### VI.5 Sprint 9: the benchmark pass (`docs/FINDINGS.md:186`, sections S9-1 to S9-10 at 3900 to 4607)
+
+Question. Does the synthesis architecture's tuning gain transfer to the sealed benchmark?
+
+Falsifier. Pre-registered constants; one pass; the paired difference's CI.
+
+Result. The shared bias is real, one interpretable mode, and not an error (S9-1); a torsion
+prior buys physical validity for free and no accuracy (S9-2); the relational channel is
+typicality wearing a tournament (S9-3); the loop is a contraction toward its own fixed point
+(S9-4); refinement fails and the failure is all selection (S9-5, with the gradient defect fixed
+and priced); synthesis is at its ceiling and the binding constraint is the distance target
+(S9-6); evolutionary information exists, is retrievable, and does not help (S9-7); the in-band
+ceiling is informational, not architectural (S9-8); consensus is the wrong operator for a
+refinement trajectory (S9-9); and the final benchmark pass: 2.9610 against 2.9507 A single
+window, +0.0103 [-0.1596, +0.1803], 31W/29L; the gain does not replicate, the concentration was
+the tell, and the leakage audit found a real defect (S9-10).
+
+Closed. The synthesis line as an accuracy claim; the benchmark (spent).
+
+Retracted. The tuning gain as a transferable effect.
+
+Open. Why the non-replication (S10).
+
+### VI.6 Sprint 10: adjudication and bounds (`docs/FINDINGS.md:198`, sections S10-1 to S10-5 at 4608 to 5159)
+
+Question. Was the non-replication contamination or concentration, and where is the remaining
+headroom?
+
+Falsifier. An attrition ledger over the 126 targets and a cross-tabulation of the identity
+audits.
+
+Result. The loss is set purity and the failure is a minority class (S10-1; its own identity
+audit withdrawn); the projection path is closed because the required matrix is 2.7x better than
+anything achievable (S10-2); physics does not supply decorrelated error, the force field agrees
+with retrieval target-specifically (S10-3); the identity-audit conflict is adjudicated as an
+alphabet permutation and the leak priced (S10-4; the artefact it cites is absent,
+`s26/EXAMINATION.md` C27, so the price is not quoted here); the reconciled bound ladder shows the
+geometry is not the barrier (S10-5).
+
+Closed. Contamination as the explanation; the projection path; physics as a decorrelated
+channel.
+
+Retracted. S10-1's identity audit (void, S10-4).
+
+Open. Recognition, named as the barrier.
+
+### VI.7 Sprint 11: performance engineering and consolidation (`docs/FINDINGS.md:205`, S11-1 at 5160, S11-2 at 5219)
+
+Question. Do the four mandated components run, and can the codebase be consolidated without
+changing a number?
+
+Falsifier. A paired ablation of all four components at n = 126, and a two-arm equivalence test
+between the consolidated `core/` and the reference modules.
+
+Result. The four components run and three buy nothing measurable (S11-1); the projection is not
+a function of its input at Angstrom resolution, the reference disagreeing with itself by 1.62 A,
+which is the degenerate-branch fact of Part III.7 (S11-2). The consolidation into `core/` kept
+the reference arm on disk as the equivalence oracle (`README.md`, "Where everything is";
+`docs/consolidation-2026-09-04.json`).
+
+Closed. The performance question; the reference arm frozen.
+
+Open. The last untested ranker class, learned aggregation over the deviation map (S12).
+
+### VI.8 Sprint 12: adversarial, aggregation, assembly (`s12/SPRINT12_DOSSIER.md`; thirteen findings files in `s12/`)
+
+Question. Is in-band discrimination signal-limited or sample-limited, and what does the terminal
+operator consume?
+
+Falsifier. A set-transformer over the signed (75 x n_pairs x 18) deviation tensor with the 18
+hardest targets held out; a leaked-label harness as the positive control.
+
+Result. The learned set decoder emits 3.184 against production 3.203 (d = -0.019 [-0.058,
++0.020], 63W/63L), with a flat learning curve 3.043 to 3.026 from n = 8 to 75 while the leaked
+label reaches 2.534 at n = 8: signal-limited, not sample-limited (section I). The terminal
+operator consumes the set mean, not the set best: d_out = 1.16 d_set_mean + 0.04 d_set_best,
+R^2 0.893 over 882 perturbations, so a perfect rank-1 decision is worth -1.743 A through argmin
+and -0.029 A through the m = 75 average (section III; `docs/CONDENSED_REPORT.md:61`). Sequence
+conditioning is worth 1.004 A on the 108 ordinary targets and negative on the 18 hardest, where
+a pipeline given random windows emits 5.425 A against the shipped 6.019 A; three routers are
+null (section I). Ten of the eighteen failures are fibril segments and lasso peptides, 10/18
+against 6/108, Fisher p = 1.2e-6 (section IV). Multi-piece assembly is closed. The mandated
+quantum component is a verified problem and a classical win: 20 of 20 alpha x T arms
+(section XVIII). Section XVII priced one direction that reaches the target, chemical-shift
+torsion restraints at 1.486 A.
+
+Closed. Learned aggregation; multi-piece assembly; the ranking line at every level.
+
+Retracted (later). The 1.486 A restraint figure and its coverage gate (S14 C14).
+
+Open. Torsion space and the quantum architecture (S13); chemical shifts (S14).
+
+### VI.9 Sprint 13: torsion space and the quantum architecture (`s13/SPRINT13_DOSSIER.md` sections 1 to 16)
+
+Question. Does a torsion-space representation with a molecular energy give a VQE something to
+optimise, and what does the energy model do to trainability?
+
+Falsifier. Full enumeration of nine targets at 262,144 configurations each; the certified global
+optimum against random sampling; leave-fold-out torsion prediction.
+
+Result. The representation is not the barrier: at about 24 live qubits the space contains a
+1.594 A answer, but 88% of what the library buys is generic Ramachandran and 0.388 A of the
+ceiling is the privileged oracle start (1). No native-free objective finds it (2); neither
+energy ranks the native, Legacy's in-decile rank correlation +0.043 and raw AMBER's -0.088, the
+native at the 32nd to 40th percentile, and Legacy's certified optimum +0.139 A worse than random
+(3). Optimising harder makes the structure worse, 3.764 at 10 evaluations, 3.667 at 300, 3.920
+at the certified optimum (4). Sequence-only torsion prediction is dead: full context predicts
+phi no better than a sequence-blind marginal, the whole channel is 10.4 degrees of psi, and the
+best sequence-only builder emits 3.770 A (5). The locality theorem, the Walsh artefact and its
+correction, the corrected Pauli spectrum with its no-free-parameter gradient-variance chain, and
+the metric, QNG and CVaR results are Part V.10 (6 to 11).
+
+Closed. Torsion-space search on either energy; sequence-only torsion prediction; QNG; the
+"AMBER is less local" framing.
+
+Retracted. "AMBER's weight exceeds Legacy's on 14/14 cells" (the delta-spike artefact);
+"optimising Legacy is worse than not optimising" as a general statement (reverses under
+stronger optimisers); the energy-ordered Gray-coding gain, corrected to -10.9% against its own
+null.
+
+Open. A native-free structural objective (S14); chemical shifts (S14).
+
+### VI.10 Sprint 14: chemical shifts and the VQE redesign (`s14/LEDGER.md`; `s14/SPRINT14_DOSSIER.md`)
+
+Question. Can chemical-shift-derived torsion restraints reach 2.0 A at real coverage, and does a
+structural (non-energy) Hamiltonian have a good low-energy region?
+
+Falsifier. Coverage measured from deposits before any structure code (C14); certified
+enumeration of the structural objective (C13).
+
+Result. The chemical-shift route is closed by arithmetic: 54 of 126 targets are runnable and
+ORACLE-perfect torsions on all of them still leave the instrument at 2.021 A, 55 being needed
+(C14); the durable outputs are that a bimodal shift posterior is one qubit with a physical
+justification (-2.253 A [-2.642, -1.865] for a search over the top-8 support against the
+argmax, C14b) and that confidently wrong costs two to three times what absent costs (C14c). The
+structural objective's certified global optimum is 0.885 A better than random where Legacy's is
+0.139 A worse (C13); the distogram orders the bulk and the torsion prior places the optimum
+(C13b); the selection gap survives certification across disjoint target sets (C13c) and a
+0.68 A gap survives infinite budget (V2). Searching a good objective harder buys nothing (C8);
+aggregating a low-energy set in coordinate space recovers 0.29 A and still loses to the
+incumbent (+0.110 [+0.004, +0.214], C9); the ablation ladder closes with aggregation worth 3.4x
+the objective and the objective's whole contribution 0.171 A (C11). `leg_torsion`, the sprint's
+strongest open lead, is refuted at n = 126 (+1.729 A, C12). Legacy is a clash gate (98.8% of its
+variance is `steric`, E1); AMBER is a validator and an inert refiner (+0.014 A [-0.001, +0.028],
+E2); no physical objective exceeds 0.511 pairwise accuracy below a 0.25 A quality gap (E3). The
+VQE is the worst optimiser tested on its own axis (V3); two new CVaR defects (V4); plain
+expectation-value VQE returns the best structure, low alpha buys entropy not accuracy (V5).
+
+Closed. Chemical shifts as a route to 2.0 A; `leg_torsion`; term reweighting; AMBER refinement
+as rescue; the log-qubit continuous-torsion encoding as compression (it is a
+reparameterisation, C5c).
+
+Retracted. The ledger's own REFUTED table lists twenty-two items, among them the coordinator's
+"eight times better ordered" headline (corrected under a uniform proposal), the ENERGY lane's
+`leg_torsion` and reweighting claims, the VQE lane's Gray-coding claim, and an 86% bond
+contraction (a frame bug; corrected to 16 to 19%).
+
+Open. N1 to N6 of the ledger: the per-target skill and compactness discrepancy; a
+pre-registered restraint constant for the -0.022 A; anything supplying the per-target sign of
+the in-band ordering; a forward chemical-shift predictor; QNG at depth >= 2; the
+generator-shift test.
+
+### VI.11 Sprint 15: the paper-driven programme (`s15/LEDGER.md`; `s15/FINAL_DOSSIER.md`; `s15/PAPER_DRAFT.md`)
+
+Question. Can a generative torsion distance-geometry architecture, with the instrument frozen
+and audited first, beat the incumbent; and what do the mechanism experiments say about the
+objective?
+
+Falsifier. Phase 0 audit rows 0.1 to 0.15 as a gate; every claim traced by an adversarial
+consistency audit; pre-registration from here on.
+
+Result. The gate passed with one retraction, one correction and one new defect: the peptide
+database and all 126 window universes rebuild bit-identically; `pool_best` reproduces from PDB
+files as 1.7108244199364904 exactly; an independent RMSD implementation agrees to 2.04e-13 A over
+63,000 structures; AMBER parameters are bit-exact against an independently built force field;
+AMBER's single point costs 8.3 to 23.3 ms with memoisation defeated, not 28; `BAND = 1.5 A` has
+no derivation; 16 of 126 targets carry verbatim own-fold windows with zero measured impact on
+`pool_best`. The generative architecture: torsion distance geometry reaches an ORACLE 0.611 A
+and a predicted 3.644 A, +0.440 [+0.290, +0.592] against the incumbent, a loss (1.3); the
+distogram has MAE 2.386 A, bias +0.509 rising to +1.492 at separation 11 to 15, z-sd 2.633
+(1.4); the retrieval pool is a second distance channel with the opposite bias sign (1.9).
+Mechanism: the native sits at the objective's 34.7th percentile and is its argmin on 4 of 126,
+yet the argmin is 0.949 A [0.753, 1.147] better than random (2.1, 2.2); the full cascade does
+not beat the incumbent (+0.117 [+0.050, +0.188]) because filtering the ensemble by the objective
+makes aggregation worse (2.6, 2.7). Workstreams: the literature survey (67 papers) found two
+claims already taken and one control without precedent; the quantum positive was demoted (27
+"cells" were 9 targets x 3 seeds; null at target level); the AMBER positive was weakened on
+accuracy and confirmed on validity; the adversarial audit traced 178 claims, 141 matched, 21
+mismatched, 16 untraceable, 13 blockers applied. The state brief's line: 3.321 A (worse); error
+shape beats magnitude; a 0.611 A true distance-geometry floor.
+
+Closed. The generative torsion architecture as an accuracy route; the pool channel as an
+objective (worst arm, 2.4); Family B feasibility (2.5).
+
+Retracted. The 8-target sign of the distance-geometry result (superseded at n = 126); the
+"1.06 A quantisation ceiling" (an artefact of a uniform-grid lookup on a non-uniform grid, 1.6,
+1.7); `hash(pdb)` seeding (salted per process, 1.10); the running tally is in the ledger.
+
+Open. The mechanism experiments in flight at close (2.8 to 2.12); native-free steering (S16).
+
+### VI.12 Sprint 16: native-free steering (`s16/LEDGER.md` L1 to L29)
+
+Question. Can the pool's error direction be estimated without the native and steered against?
+
+Falsifier. The flagship's rules were written before any measurement (L1, L2) and decided it
+(L9); the pivot carried a stronger falsifier (L13).
+
+Result. The flagship is refuted at n = 126 (L9) and the coordinate-space pivot is refuted too
+(L13); the audit found the flagship's premise about five times weaker than the record said
+(L14); the fusion law is a theorem and the claimed 0.162 A was two of our own errors (L16);
+integration found Legacy contributing nothing, every CVaR-VQE arm losing to uniform random
+sampling at matched budget, and an AMBER contribution that was then withdrawn (L17, L21, L23);
+diversity-aware selection is a null (L20); VERIFY found three of the coordinator's five claims
+failing the same way (L21); QPHASE found no phase boundary and the axis is not rho (L25);
+REVIEWER found the report breaking its own rule inside the section that states it (L26); REPAIR
+removed the last accuracy claim in the programme and recorded the rule that a control must
+match the operator's space (L27); the last standing positive quantum result, the unranked
+ensemble, is retired (L29).
+
+Closed. Native-free steering in both spaces; every arm chose "do nothing"; the AMBER relaxation
+gain dissolves under a matched-random control.
+
+Retracted. The 0.162 A fusion effect; the AMBER-as-ranker interval; the unranked-ensemble
+quantum positive.
+
+Open. The averaging-to-selection readout (S17).
+
+### VI.13 Sprint 17: averaging to selection (`s17/LEDGER.md` L1 to L30)
+
+Question. Is the shortlist or the ranker what binds, and does widening K help?
+
+Falsifier. The ORACLE map at n = 126 (L15), coverage-preserving shortlists (L14), and matched
+budgets audited for saturation (L22).
+
+Result. The K = 500 "retrieval ceiling" is a truncation artefact (L1); the distance objective
+cannot be re-engineered into a better selector (L5); the in-band problem is information-limited
+but the information is present and mis-routed (L6); consensus reproduces across a decade of
+instruments and typicality does not (L9); the in-band result at n = 126 (L10); widening K hurts
+because the shortlist loses the answer (L12); coverage-preserving shortlists recover the ceiling
+and the readout cannot use it (L14); the averaging readout has no hidden headroom (L17), except
+that at n = 126 the averaging ceiling does beat the best-member ceiling (L18); every
+matched-budget comparison in three sprints ran past classical saturation (L22); the last feature
+class is closed and the shortlist binds (L23); the validity frontier splits in two and the
+incumbent's restraint set wins (L24); the one target-level signal that works is the trivial one
+(L25); the decisive AMBER-against-Legacy comparison at full scale (L29); the objective is not
+weak, it is wrong (L30).
+
+Closed. Selection at four levels; widening K; feature classes.
+
+Retracted. L3 (the coordinator's own error, caught by SELECT); the "routing ceiling" as a
+min-of-N statistic below its noise floor (L8); "steric validity is free" quoted against the
+wrong baseline (L27).
+
+Open. The degree-1 objective (S18); why the errors are maladaptive (S19).
+
+### VI.14 Sprint 18: the degree-1 objective (`s18/LEDGER.md` L1 to L17)
+
+Question. Is a degree-1 (single-pair) truncation of the distance objective as good as the full
+one, and does a quantum branch on it have anything to optimise?
+
+Falsifier. Five pre-registered falsifiers F1 to F5; F2, F4 and F5 fired (L5).
+
+Result. The 19-target result reproduces exactly and was never significant (L1); the functional
+form is sound and the distogram's error is worse than noise (L2); both confound controls survive
+(L3); the degree-1 branch is closed (L5) and the quantum branch with it, the answer forced
+before the arms ran (L6); the degree-1 object is the torsion prior (L7); the prior arm is refuted
+with its falsifier fired (L9); 1/sd^2 weighting is validated native-free (L10, amending L4);
+the lambda ladder at n = 126 shows degree-1 decisively worse than the full objective (L11); the
+deployed tempering exponent is at the optimum (L14); `leg_contact` fails as a term (L15) and is
+harmful, and every physics filter loses to a random gate (L17).
+
+Closed. Degree-1 truncation; the quantum branch on it; `leg_contact`; physics filters.
+
+Retracted. `shuf_paired` priced the weights, not the error assignment (L4); the helix-mu
+control is not a match and is NOT MEASURED (L13, correcting L12).
+
+Open. The mechanism of the maladaptive error (S19).
+
+### VI.15 Sprint 19: why the errors are maladaptive (`s19/LEDGER.md` L1 to L20)
+
+Question. What is the pool's systematic error, and can it be estimated native-free?
+
+Falsifier. The opening hypothesis carried its mechanism; the P5 headroom test with an oracle
+(L7); the soft-consumption falsifier (L16).
+
+Result. The opening hypothesis is refuted in its mechanism (L1); the harm is the residual's
+cross-pair sign correlation (L3); the in-manifold mechanism is measured and deliberately not
+promoted (L6); the branch has no headroom even with an oracle (L7); the harmful coherent
+component is shared and two thirds of it is reproduced by zero-information references (L11);
+score gates damage an averaged set by alignment, not diversity (L12); the harmful mode is named
+and is not estimable native-free, an identifiability wall (L14); soft consumption's falsifier
+fires (L16); a scalar validity score would have promoted a broken structure (L18); "best built
+3.048 A" is a contracted point cloud, not a structure (L20).
+
+Closed. Native-free estimation of the harmful mode; the distribution-shape direction; soft
+consumption.
+
+Retracted. The "pathological AMBER minimiser" was CPU starvation (L17); a clip-induced magnitude
+confound in the headline (L15); L2's "the modes carry real positional information" downgraded
+(L5).
+
+Open. Landscape geometry and Legacy against AMBER (S20).
+
+### VI.16 Sprint 20: landscape geometry (`s20/LEDGER.md` L1 to L15, L-B)
+
+Question. What is each energy's landscape like, and is a quantum sampler worth anything on it?
+
+Falsifier. F-D2 (the relaxation clause, L6) and F-C2 (the validity score, L15) both fired.
+
+Result. The quantum sampler hypothesis is refuted (L1; the two positives that survived it were
+nulled by S21 L37); the +0.164 A "AMBER tax" is the projection's (L2); every circuit-side
+landscape metric is a difficulty proxy and the CVaR tail is worth nothing (L4); the
+shared-referent floor turns "two thirds sequence-independent" into one fifth (L5); the
+relaxation is what makes the AMBER objective defined (L6); Legacy is a compactness model and the
+two potentials disagree about ordering (L8); the programme's paired CI was iid over targets, not
+fold-clustered (L9); the Frechet mean recovers nothing (L11); AMBER's difficulty is a steric
+singularity and 72% of its apparent damage is move size (L12); corpus change does not
+decorrelate, the carrier is the selector (L13); the whole optimisation question is priced at
+zero for the first priority (L-B, L14).
+
+Closed. The sampler hypothesis; the Frechet route; the optimisation question.
+
+Retracted. Five live claims damaged by workstream D (L7); the "two thirds" framing (L5).
+
+Open. CVaR-VQE as a selector on the discrete latent (S21).
+
+### VI.17 Sprint 21: CVaR-VQE as selector (`s21/LEDGER.md` L1 to L37)
+
+Question. Does the encoding, the bond dimension or the Hamiltonian give the selector anything,
+and what is the exhaustive latent worth?
+
+Falsifier. The exhaustive latent control (L12, L14, L17); D1's direct replication (L35); the
+gauge sweep (L30).
+
+Result. The encoding lever is confounded by step count (L2) and closes (L13, L37, both of S20's
+"significant" cells null); "which Hamiltonian is best" is not well defined without a readout
+(L3); no bond dimension breaks classical simulability because the register is too small (L4);
+"MDE = 0.084 A" is not a property of the instrument (L8); Legacy carries no in-band rank
+information beyond the distogram (L9); the budget exceeds the entire latent on 60% of targets
+(L11) and the exhaustive argmin does not beat a zero-evaluation pool (L14, complete at n = 126,
+L17); the answer is in the objective's top 5% and a top-512 readout ceiling is 1.986 A (L18);
+the source is not the lever, the retrieval pool beats the latent through the same operator
+(L20); all remaining leverage is in-pool selection, worth 1.33 A (L21), and the 1.338 A
+selection gap is entirely uncaptured (L23); AMBER is harder, the continuation is degenerate in
+raw units and preconditioning does not work (L24, L33); the sprint's first positive, a
+compactness channel clearing where eleven functionals did not (L27), survives attack with the
+mechanism being disagreement (L28); the "encoding" is a step-size reparameterisation and the bug
+costs 0.015 A (L30); the ansatz ladder on AMBER is won by best-of-N and chi orders nothing
+(L34).
+
+Closed. The encoding question; bond dimension; the exhaustive latent; the Legacy-to-AMBER
+continuation.
+
+Retracted. R1 diversity-maximising set selection and the mechanism the lane had asserted (L7);
+the bimodal route as demonstrated (L25); the coordinator's fork review carried two unchecked
+operators (L32).
+
+Open. Routing to a per-target m (S22).
+
+### VI.18 Sprint 22: routing (`s22/LEDGER.md` L1 to L16)
+
+Question. Is a per-target shortlist size real, and can anything native-free choose it?
+
+Falsifier. The lane's own falsifiers on per-target m (L4) and hedging (L9) were stated and
+fired in the directions recorded.
+
+Result. The routing ceiling is 0.482 A and not concentrated (L1); the latent and the pool are
+complementary with difficulty as the crossover (L2), but two native-free difficulty proxies fail
+with the wrong sign (L3); per-target m is real and transferable, not noise-fitting (L4, L5, L6);
+four independent router constructions fail, one significantly harmful (L7); hedging across m is
+refuted (L9); sample size, not features, is the defensible explanation (L10); a third group's
+external corroboration, and the tension not hidden (L11); in the extended ablation distance
+alone wins and the torsion prior is the worst term (L12); the quantum lane closes, the
+entropy-regularised tail not beating the classical selector (L13); the readout-H effect
+replicates on a different substrate (L14), multi-stage VQE beats no classical bar (L15), and the
+A2b null and the readout-H "lever" are the same fact (L16).
+
+Closed. Routers (four); hedging; the quantum lane's tail regularisation.
+
+Retracted. None recorded beyond the fired falsifiers.
+
+Open. Driving the development instrument below 3.0 A (S23).
+
+### VI.19 Sprint 23: drive dev below 3.0 (`s23/LEDGER.md` L1 to L11)
+
+Question. Can the contraction be undone, the per-target scale predicted, or the readout
+re-weighted to reach 3.0 A built chain?
+
+Falsifier. Workstream A's three falsifiers (L5) and H5's setting sweep (L11), all fired.
+
+Result. Kabsch superposition makes the incumbent's contracted output cost RMSD (L1); the
+per-target scale is real and universal, but the global constant is worth nothing (L2), no
+native-free feature predicts it (L3), and it transfers almost perfectly while being unreachable
+in principle (L6); iterated Procrustes does not help and the contraction is intrinsic (L4); a
+fifth router fails, and the signal that fails is a new kind (L7); the probability-weighted
+readout fails and the last quantum-side door is closed (L8); the pool's error is 68% shared,
+which explains every null in the sprint (L9); the mechanism's forward prediction has the right
+direction and no measurable size (L10); H3 is closed by source audit and H5 repair strictly
+costs RMSD at every setting (L11).
+
+Closed. Scale correction; Procrustes; routers (five); probability-weighted readout.
+
+Retracted. None.
+
+Open. Learned candidate generation (S24).
+
+### VI.20 Sprint 24: learned candidate generation (`s24/LEDGER.md` L1 to L16 with amendments)
+
+Question. Can a learned generator supply candidates whose biases are independent of the
+retrieval pool's, and what is the prior worth?
+
+Falsifier. An ORACLE upper bound computed before the generator was trained (L7); the corpus
+census (L8).
+
+Result. The directive's screening statistic is broken, use the cosine (L1); the biases are
+partially independent and quality still dominates (L2); the shared bias is the score's, not the
+corpus's and not BLOSUM's (L3); a real leakage defect reaches the sealed benchmark, declared and
+not quantified (L4); workstream B closes its own lane by an oracle upper bound (L7); the corpus
+is not repetitive, it is small, with almost no beta sheet (L8, L8-A); the generation ladder at
+full n is null-to-worse in every union and selection's lift is universal, +0.166 (L9, L9-A);
+the functional lever closes in all three forms, AMBER selecting along a non-parallel direction
+it cannot pay for (L10, L10-A, L16); the prior-attribution ladder is the only steep lever in the
+project, -2.15 A per unit toward a perfect prior (L13, L13-A); chain correlation is 7.2% and the
+signed-bias tension dissolves (L14); grid oracles are order statistics and only transfer
+oracles survive (L15, L15-A).
+
+Closed. Learned candidate generation; the functional lever; per-target grid oracles.
+
+Retracted. L5's two primaries (L11, the mechanism claim withdrawn); L6's "fifth per-target
+oracle" is an order statistic (L12); the +0.20 selection lift corrected to +0.166 (L9-A).
+
+Open. The prior itself, and the basis question (S25).
+
+### VI.21 Sprint 25: the endgame (`s25/LEDGER.md` L1 to L18; `ARCHITECTURE.md`; `s25/QUANTUM.md`)
+
+Question. What is the production number, on what basis, and what does the record support about
+the prior, the physics and the quantum component?
+
+Falsifier. The round-trip gate on every exported structure (L10); the Phase I prior ladder
+(L12); the seven-configuration suite against a random 75-subset (L16).
+
+Result. The distance posterior is over-confident by a factor of two, measured (L1); calibrating
+it makes RMSD worse (L2, later retracted in its mechanism, L7); the "+0.113 A CVaR contribution"
+was measured at a temperature that does not ship, with alpha = 1 on three of five folds, and
+was never a measured effect (L3, L5); the headline number described an object that is not a
+protein structure and the basis decision is forced: built chain (L4, L8, L11); the shipped
+score's per-pair target is quantised to 17 values (L6); the "86% accounted" null carries no
+information (L9); the round-trip gate passes and the frozen build has a native-free leakage gate
+(L10); a synthetic native-plus-noise leaderboard was found on disk and quarantined (L11); Phase
+I closes: the score's target can be moved 25% toward truth and the endpoint does not move
+(L12); three sprints of record exist only on this disk (L13); the test suite is green (L14);
+the readout is insensitive to a distributional difference of nearly half the mass (L15); both
+physics energies are measurably worse than noise (L16); the Hamiltonian barely changes between
+targets (L17); the functional lever is closed in all five forms (L18).
+
+Closed. The basis question; the physics lever; the prior-calibration lever; the quantum
+contribution as a claim.
+
+Retracted. L2's mechanism and magnitudes (L7); L5 and L9 as stated; the S25 audit retracted
+five claims in all (L5, L7, L9, L11, L15).
+
+Open. Whether a better distance predictor is obtainable; the 2/60 benchmark self-copy leak;
+publishing the trainability half; the dynamical Lie algebra (measured in S26).
+
+### VI.22 Sprint 26: examination, proposals and tournament (`s26/LEDGER.md`; `s26/BRIEF.md`)
+
+Question. With the record examined end to end, do Proposals A (the quantum selector), B (the
+scaled generation lane) and C (the classical ladder) or any tournament entry move the built
+chain below 3.2148 A, and if not, what precisely closes?
+
+Falsifier. `s26/BRIEF.md` states one-sentence falsifiers for each; the pre-registrations are
+`s26/PREREG_*.md`; the phase gate held every endpoint experiment until Phase 0 was signed off.
+
+Result so far. Phase 0: the examination reproduces every stored structure on all four bases at
+0.0 and the two traced targets end to end (L28; Part III); the module map, pinned hashes,
+not-in-git census and claim ledger are `s26/results/module_map.json`, `pinned_hashes.json`,
+`claim_search.json` (`s26/EXAMINATION.md`); the governed test run is 370 tests, 357 passed, 13
+real skips, 0 failed (lane I, L6 to L10, L15, L16, L21; `s26/TEST_RUN.md`); the identity flag
+ships dark and the self-copy audit is `s26/results/i_identity_audit.json` (L15). Lane Q: the
+deployed ansatz's dynamical Lie algebra is the full so(128) from depth 2, falsifying the
+pre-registered proper-subalgebra prediction (L27; Part V.9). Lane PH: the steric singularity is
+mostly the side-chain builder's (L23), and the production relaxation's native-free census (L24;
+Part IV.7). Lane P: B1 is infeasible at its stated scale (L13); the repo-native stand-in (L14);
+C1 reproduced; the C2 ladder training (L26). One Rule-1 incident, logged with no consequence
+(L28 item 5, L29). The rest fills Part VII as the verdicts land.
+
+Closed, retracted, open. Slots; see Parts VII and VIII.
 
 ## PART VII. WHAT S26 TESTED AND FOUND
 
@@ -1175,6 +1781,23 @@ artefact; "as asserted" means a passing test pins it.
 | 0.000e+00, 0.2500, 0.008 to 0.037, 1.7e16, 0.088, +0.333 | V | `s13/SPRINT13_DOSSIER.md` section 11 | as cited |
 | +0.209 to +0.301, +0.27 to +0.62 | V | `s16/LEDGER.md` L17, L29 (`s16/integrate.py`; `s16/qphase_FINDINGS.md` section 3) | as cited |
 | 20 of 20 | V | `s12/SPRINT12_DOSSIER.md` section XVIII | as cited |
+| 2.406, 1.925 | VI | `docs/FINDINGS.md:2287` (S8-5); `docs/CONDENSED_REPORT.md:176` (correction) | as cited |
+| 3.204 | VI | `docs/FINDINGS.md:3603` (S8-11) | as cited |
+| 0.5 per pair, 0.044 | VI | `docs/FINDINGS.md:3810` (S8-14) | as cited |
+| 2.7x | VI | `docs/FINDINGS.md:4726` (S10-2) | as cited |
+| 1.62 | VI | `docs/FINDINGS.md:5219` (S11-2) | as cited |
+| 3.184, 3.203, -0.019 [-0.058, +0.020], 63W/63L, 3.043 to 3.026, 2.534, 1.004, 5.425, 6.019, 10/18, 6/108, 1.2e-6, 1.486 | VI | `s12/SPRINT12_DOSSIER.md` sections I, IV, XVII | as cited |
+| 1.16, 0.04, 0.893, 882, -1.743, -0.029 | VI | `s12/SPRINT12_DOSSIER.md` section III; `docs/CONDENSED_REPORT.md:61-65` | as cited |
+| 1.594, 88%, 0.388, +0.043, -0.088, 32nd to 40th, +0.139, 3.764 / 3.667 / 3.920, 10.4, 3.770, 262,144, 9 | VI | `s13/SPRINT13_DOSSIER.md` sections 1 to 5; `docs/CONDENSED_REPORT.md:84-116` | as cited |
+| -10.9% | VI | `s13/SPRINT13_DOSSIER.md` section 9 | as cited |
+| 54/126, 2.021, 55, -2.253 [-2.642, -1.865], 0.885, 0.139, 0.68, +0.110 [+0.004, +0.214], 0.29, 3.4x, 0.171, +1.729, 98.8%, +0.014 [-0.001, +0.028], 0.511, 0.25, 16 to 19% | VI | `s14/LEDGER.md` tables DEMONSTRATED, REFUTED, CLOSED (C8, C9, C11, C12, C13, C14, E1, E2, E3, V2) | as cited |
+| 787/787, 1.7108244199364904, 2.04e-13, 63,000, 8.3 to 23.3, 16/126, 0.611, 3.644, +0.440 [+0.290, +0.592], 2.386, +0.509, +1.492, 2.633, 34.7th, 4/126, -0.949 [-1.147, -0.753], +0.117 [+0.050, +0.188], 67, 178, 141, 21, 16, 13, 3.321 | VI | `s15/LEDGER.md` Phase 0 rows 0.1 to 0.15, rows 1.3, 1.4, 2.1, 2.2, 2.6, workstreams 3.2, 3.9 to 3.11; `docs/STATE_BRIEF_2026-09-12.md` section 7 | as cited |
+| 0.162 | VI | `s16/LEDGER.md` L16 | as cited |
+| 1.986, 1.33, 1.338, 0.015, 60% | VI | `s21/LEDGER.md` L18, L21, L23, L30, L11 | as cited |
+| 0.482 | VI | `s22/LEDGER.md` L1 | as cited |
+| +0.166, 7.2%, -2.15 | VI | `s24/LEDGER.md` L9-A, L14, L13 | as cited |
+| +0.164 | VI | `s20/LEDGER.md` L2 | as cited |
+| 370, 357, 13, 0 | VI, IX | `s26/TEST_RUN.md`; `s26/results/test_run.json` | as stored |
 <!-- APPENDIX B ROWS -->
 
 <!-- APPENDIX C -->
