@@ -815,3 +815,113 @@ Three things from L28 the coordinator rules on now:
 
 ---
 
+
+## L30 -- LANE W: THE 2/60 PROXY BOUND IS PRE-REGISTERED; NATIVE-FREE CENSUS: TWO OF THE FOUR DEV SELF-WINDOWS NEVER REACH THE EMISSION; EVERY TARGET HAS A BLOSUM TIE AT THE POOL BOUNDARY (2026-09-13, W)
+
+`s26/PREREG_selfcopy_bound.md` (written before any result), `s26/IDEA_selfcopy_proxy_bound.md`,
+code `s26/w_selfcopy.py`, synthetic tests `s26/w_selfcopy_test.py` (job `w_selfcopy_test2`, ALL
+OK, 5 s; the tests caught one definitional error in the `sel` bound before any real run). Nothing
+here reads a native, an RMSD to a native, a benchmark sequence, PDB or the manifest; every
+native-free command overwrites `rr` and `nat_ca` with NaN on load and asserts its outputs finite.
+The benchmark facts used are the record's only: 2/60 (S24 L4, L15) and the mechanism (S24 L4).
+
+Design, in short: the leak has two channels, (A) the carrier's self-window at BLOSUM rank 0 in
+the K = 500 pool, (B) the carrier's native distances in the fold model's training labels. Both
+are live, in the same direction, on 1CEK / 2FBU / 2P5H / 6B9K. Part A drops the identity-1.0
+window and refills the pool (S10-4's operator, exact copies only) on the 4, with the other 122
+targets' BLOSUM rank-0 window dropped as the matched control population, the >= 0.6 variant
+beside it (the C27 re-derivation on the production basis, L28), and an ORACLE insertion of the
+withheld same-fold carriers on 8 more targets. Part B retrains the three fold models with the
+carrier removed (through `s26/p_ladder.py`'s pca32 path; controls: two dev chains per fold).
+Part C, the n = 126 envelope: the four pinned fold models that trained on the target's OWN
+native, against the clean one, paired, fold-clustered (ORACLE). Part D: the bound
+(2/60) x max per-target effect, and (2/60) x the fold-CI limit of the envelope, judged against
+0.017 A (one tenth of the benchmark CI half-width). Before any RMSD is read, every part stores
+its emissions and the TRIANGLE BOUND: Kabsch CA-RMSD is a metric, so RMSD(leaked emission,
+un-leaked emission) bounds |change in RMSD-to-native| without the native. Assumptions A1 to A5
+are in the PREREG.
+
+Native-free census (`s26/results/w_selfcopy_census.json`, job `w_selfcopy_census`, 20 s, 0.064 GB):
+
+    target  n  fold  exact self-window: universe idx / BLOSUM rank / pool pos / in shipped top-75   >= 0.6 windows: universe / pool / top-75
+    1CEK   13   2          7 / 0 / 0 / NO                                                            8 / 3 / 0
+    2FBU   12   4       1602 / 0 / 0 / NO                                                            4 / 1 / 0
+    2P5H    9   4       3316 / 0 / 0 / YES                                                           5 / 1 / 1
+    6B9K   10   0       1082 / 0 / 0 / YES                                                           7 / 1 / 1
+
+So channel A cannot touch the emitted structure of 1CEK or 2FBU at all (the self-window is
+filtered out by the distogram score); on 2P5H and 6B9K it is one member of the 75 averaged.
+21/126 targets carry a >= 0.6 window somewhere in the universe (S10-4's 21 reproduced; its
+13-in-pool count is checked when the retrieval run completes). Only 31% of targets keep their
+BLOSUM rank-0 window in the top-75. Probes: retrieval on 1CEK (`w_selfcopy_retrieval_probe`,
+15 s, 0.104 GB): with and without the self-window the cloud, chain and lam = 0 chain are
+IDENTICAL (triangle bound 0.000) and the refill window does not enter the top-75; envelope on
+1CEK (`w_selfcopy_envelope_probe`, 25 s, 0.298 GB): production gate true (top-75 equals the
+cache's `sub`), the four leaked models keep 81 to 87% of the top-75 and move the built chain by
+0.079 / 0.124 / 0.137 / 0.122 A (triangle bounds, models 1 / 0 / 3 / 4). Full native-free runs
+`w_selfcopy_retrieval` (est 0.5 GB, ~20 min) and `w_selfcopy_envelope` (est 0.6 GB, ~40 min)
+are registered; the gated `endpoint`, `floor` and `report` wait for sign-off.
+
+A second census fact, recorded because it is the basis of `s26/IDEA_tiebreak_noise_floor.md`:
+every one of the 126 targets has a BLOSUM tie at the K = 500 boundary; the median tie class at
+the boundary score holds 115 windows, about 57 inside the pool and 60 outside, so ~11% of every
+pool is chosen by corpus order. S17 measured only the ORACLE pool best under random tie-breaks
+(sd 0.018); the production endpoint's floor is unmeasured. Three own ideas filed:
+`IDEA_tiebreak_noise_floor.md`, `IDEA_conformational_identity_floor.md` (Part E of the
+PREREG: the same sequence in a different deposit), `IDEA_window_provenance.md` (census first,
+plausibility 0.15).
+
+Question for the coordinator (rule 14; not run until answered): may Part B's 10 retrains (tag
+CPU, est-ram 1.5 GB, 456 s each, one at a time, order fixed in the PREREG section 8) run before
+sign-off under L16b's conditions, and may they interleave with lane P's chain (two training
+jobs resident, ~2.5 GB, against 4.7 GB available at 08:54)? Default if unanswered: the
+reference is lane P's `pca32` fold models and Part B trains after sign-off. Noted and NOT done:
+the triangle bound is computable on the benchmark itself with no native or RMSD read, but it
+would need the two benchmark sequences and universes, which L18b/L29 close for this sprint.
+
+## L31 -- EXAMINATION AUDIT: REPRODUCTION EXACT ON HEAD; ONE MATERIAL FINDING, THE TEST-SUITE TOTAL (369/356 QUOTED, 370/357 IN THE ARTEFACT); C26 RE-DERIVED; C27 IS IN GIT HISTORY (2026-09-13, A)
+
+`s26/EXAMINATION_AUDIT.md`, sections 1 to 9. (1) `s26/e_reproduce.py` re-run on HEAD `76287a33`
+through `s26/a_reproduce_head.py` (the Examiner's `main()` unchanged, the write redirected so
+lane E's artefact is not overwritten; job `a_reproduce_head`, exit 0, 5.0 s;
+`s26/results/a_reproduce_head.json`): all four means and all 126 rows equal
+`s26/results/e_reproduce.json` at 0.0; T030 = 1S9Z `rmsd_arm` 0.18198112330908295. (2) 29
+claim-ledger leaves opened (seed-26 sample C02, C05, C08, C15, C17, C19, C21, C23, C28, C32, plus
+every UNSOURCED and markdown-sourced entry); every sourced value sits at its cited key at stored
+precision. (3) The trace is faithful to `core/pipeline.py:836-848` (selector), `:934` (average)
+and `core/predict.py:416, 422` (score weight `1/(sd+0.5)`, `_risk`); the identical pool index
+449 on both traced targets is verified in `bench_results/cache/1fc9f2dcf489e2fb/{1S9Z,9KAR}.json
+:: sub` (positions 44 and 34). (4) The junit files agree with `s26/TEST_RUN.md` and
+`test_run.json`: 370 / 357 / 0 / 0 / 13, 0 memory-guard skips, 11 `VERIFY_SLOW` and 2
+absent-artefact skips. (5) Every defect file:line resolves at HEAD. (6) Four hashes recomputed,
+four equal. (7) Three sizes as listed, all ignored. (8) Rule 1: the grep over `s26/*.py` hits
+only `e_claims.py` (the SKIP lists, committed `e3570aed`), `e_hashes.py` (bytes) and
+`i_identity_audit.py` (L18's sequence count). L28 item 3: `s25/results/phys_suite.json :: basis`
+= "point_cloud"; the artefact declares its own basis.
+
+MATERIAL A1. `s26/EXAMINATION.md` section D ("Combined: 369 tests, 356 passed"), row C35,
+`s26/agentE_FINDINGS.md` X1 and L28 item 2 quote 369 / 356 / 13 for `s26/TEST_RUN.md`, which
+holds 370 / 357 / 13 (`pytest_core_post.xml` 351 / 338 / 13 plus `pytest_amber` 16 and
+`pytest_amber_frame` 3). The count is the 00:41 render, before `pytest_core_post` finished at
+00:45:56; section D lists four junit files and omits `pytest_core_post.xml`. L20 and the state
+brief 6.1 already carry the right number; nothing in Phase 1 depends on it. Fix: lane E, or the
+coordinator if E has finished, appends a correction to `s26/EXAMINATION.md` (D and C35) and
+`s26/agentE_FINDINGS.md` and posts a ledger entry naming L28 item 2; A re-checks on the append.
+
+MINOR. C26 (36.1 / 36.4 deg) is now DERIVED: `s13/cache/tors_rows.npz` arms `p_grid` / `n_marg`,
+key `err_phi`, pooled over 1,507 residues: 36.133 / 36.416 deg (psi 62.355 / 72.772), matching
+`s13/SPRINT13_DOSSIER.md:261-263`. C27's artefacts are not absent: `s10/idaudit_price.json` and
+four siblings are in git history at `5fa05cd` (commit `49fc708` exists); not opened, because the
+price stage covers the sealed benchmark; the +0.0030 half stays historical, the +0.0004 dev half
+is lane W's to re-derive (L25). C34 confirmed document-only (a grep of `s25/` hits only the two
+md files). C35's replacement is 370 / 357 / 13. C24's 0.524: `stage_cvarcheck` exists
+(`s8/integrate.py:1162`) but its JSON and console log do not; quote 0.655634
+(`tests/test_quantum.py:59`) or 0.566586 (`s25/results/q_verify.json`) instead.
+
+Question for the coordinator: `tests/test_pipeline.py:338-347` parses `s9/final_report.json`
+aggregates, so any further full `pytest tests/` in S26 does so again; accept, or `--deselect` it
+for the rest of the sprint.
+
+AUDIT: MATERIAL FINDINGS 1, LISTED ABOVE
+
+---
