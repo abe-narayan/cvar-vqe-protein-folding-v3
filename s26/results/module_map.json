@@ -1,6 +1,6 @@
 {
  "root": "C:\\Users\\abena\\Protein-Folding-Algorithm",
- "n_modules": 699,
+ "n_modules": 725,
  "skipped_dirs": [
   ".git",
   ".pytest_cache",
@@ -211,6 +211,12 @@
     "core.project",
     "core.quantum",
     "s15.audit_pipe",
+    "s26.e_reproduce",
+    "s26.e_trace",
+    "s26.i_equiv2_compare",
+    "s26.i_identity_audit",
+    "s26.ph_cis",
+    "s26.q_adapt",
     "tests.test_equivalence",
     "tests.test_integration",
     "tests.test_pipeline",
@@ -221,13 +227,13 @@
     "verify.leak_audit",
     "verify.legacy_audit"
    ],
-   "n_importers": 14,
+   "n_importers": 20,
    "backend_names": {}
   },
   "core.amber": {
    "path": "core/amber.py",
-   "lines": 1697,
-   "sha256": "cad50c8865000021f135064be784d4027d78f13052ba1774ad8c0d10a560e5f6",
+   "lines": 1695,
+   "sha256": "235b085992c00e9075b3422a98bc0163bf0f2d7cfb4146d198fef8f5f737fa00",
    "doc": "Consolidated AMBER physics: ff14SB + GBn2 through OpenMM.",
    "imports_repo": [
     {
@@ -238,14 +244,14 @@
     },
     {
      "module": "budget",
-     "as_written": "budget.MAXITER_PER_PARAM",
+     "as_written": "budget.BudgetExhausted",
      "line": 280,
      "lazy": false
     },
     {
      "module": "floor",
      "as_written": "floor",
-     "line": 1542,
+     "line": 1540,
      "lazy": true
     }
    ],
@@ -293,6 +299,7 @@
     "s21.d_enc",
     "s21.qb3_run",
     "s23.agentB_h5_carestraint",
+    "s26.ph_c3",
     "tests.test_amber",
     "tests.test_amber_frame_invariance",
     "tests.test_integration",
@@ -302,7 +309,7 @@
     "verify.amber_threads",
     "verify.hazard_audit"
    ],
-   "n_importers": 36,
+   "n_importers": 37,
    "backend_names": {
     "default": [
      "amber"
@@ -312,7 +319,7 @@
   "core.bench": {
    "path": "core/bench.py",
    "lines": 1090,
-   "sha256": "802757826f6d13d81983d2db001de8959b58e87bdc9012a7494f86adb09f2079",
+   "sha256": "920c8532ce8d5ea26474f865027924489651e29cc96a475ccb812a5741067d45",
    "doc": "`core.bench` -- the measurement instrument for the speedup claim.",
    "imports_repo": [
     {
@@ -424,7 +431,7 @@
   "core.cache": {
    "path": "core/cache.py",
    "lines": 355,
-   "sha256": "83c13545e54c3865903e1a8ad09075a51d912c44be1744b1e04b937961345058",
+   "sha256": "dc500821475a9c5610f28add0ad13ac25da3f318998b101dbde33e6400218a7c",
    "doc": "One deterministic persistent cache for the data, geometry and prediction layers.",
    "imports_repo": [],
    "imports_third_party": [
@@ -454,8 +461,8 @@
   },
   "core.data": {
    "path": "core/data.py",
-   "lines": 1409,
-   "sha256": "2f96d3bc0873efe8ced4ceb7107c290f761f7626243aea1eb135dff4cf4058ab",
+   "lines": 1436,
+   "sha256": "878746cadd4f3a5a87e6cce559058ce8ba8c2d7cd367c31477418b6a10bf5a46",
    "doc": "Sequences, structure databases, encodings and bitstring representations.",
    "imports_repo": [
     {
@@ -473,7 +480,7 @@
     {
      "module": "sidechains",
      "as_written": "sidechains",
-     "line": 1005,
+     "line": 1032,
      "lazy": false
     }
    ],
@@ -501,11 +508,16 @@
     "s12.forensics_lib",
     "s24.a_corpus",
     "s24.a_ha2",
+    "s26.e_trace",
+    "s26.i_identity_audit",
+    "s26.p_ladder",
+    "s26.p_ladder_test",
+    "s26.p_probe_esm",
     "tests.test_data",
     "tests.test_geometry",
     "tests.test_instrument"
    ],
-   "n_importers": 12,
+   "n_importers": 17,
    "backend_names": {
     "default": [
      "data"
@@ -643,10 +655,15 @@
     "s25.audit_t4",
     "s25.resultslab.exportlib",
     "s25.resultslab.test_export",
+    "s26.ph_c3",
+    "s26.ph_cis",
+    "s26.ph_lib",
+    "s26.ph_reject",
+    "s26.test_ph_synthetic",
     "tests.test_geometry",
     "tests.test_instrument"
    ],
-   "n_importers": 41,
+   "n_importers": 46,
    "backend_names": {
     "default": [
      "geometry",
@@ -742,6 +759,12 @@
     "s25.q_alpha",
     "s25.q_gibbs",
     "s25.q_verify",
+    "s26.e_reproduce",
+    "s26.e_trace",
+    "s26.i_equiv2_compare",
+    "s26.i_run_equiv2_arm",
+    "s26.q_adapt",
+    "s26.q_tests",
     "tests.test_equivalence",
     "tests.test_integration",
     "tests.test_pipeline",
@@ -751,13 +774,13 @@
     "verify.leak_audit",
     "verify.vqe_lfo_audit"
    ],
-   "n_importers": 20,
+   "n_importers": 26,
    "backend_names": {}
   },
   "core.predict": {
    "path": "core/predict.py",
    "lines": 853,
-   "sha256": "ce8240dd9cbe6a2d6d236a364125ea84dc695e427c87061c68c7940acf9879b6",
+   "sha256": "d95be71f5f718762613498fe46d9507611720c1ae09ee8ba57f787bfd9a1bb53",
    "doc": "Sequence -> CA-CA distance distribution, and the structure score built on it.",
    "imports_repo": [
     {
@@ -802,9 +825,12 @@
     "s25.loc",
     "s25.locrun",
     "s25.temper",
+    "s26.e_trace",
+    "s26.p_ladder",
+    "s26.p_ladder_test",
     "tests.test_data"
    ],
-   "n_importers": 19,
+   "n_importers": 22,
    "backend_names": {
     "default": [
      "predict"
@@ -1039,6 +1065,8 @@
     "s25.q_gibbs",
     "s25.q_plateau",
     "s25.q_verify",
+    "s26.q_adapt",
+    "s26.q_tests",
     "tests.test_amber",
     "tests.test_cvar",
     "tests.test_integration",
@@ -1046,7 +1074,7 @@
     "verify.ansatz_audit",
     "verify.cvar_audit"
    ],
-   "n_importers": 53,
+   "n_importers": 55,
    "backend_names": {
     "default": [
      "quantum"
@@ -1181,6 +1209,7 @@
     "core.pipeline",
     "distogram",
     "pairnet",
+    "s26.p_ladder",
     "s5.esm32",
     "s5.esmraw",
     "s5.torsion",
@@ -1188,7 +1217,7 @@
     "s7.repr_select",
     "s9.final"
    ],
-   "n_importers": 9,
+   "n_importers": 10,
    "backend_names": {}
   },
   "floor": {
@@ -5914,10 +5943,19 @@
     "s25.resultslab.schema",
     "s25.resultslab.test_export",
     "s25.temper",
+    "s26.e_reproduce",
+    "s26.e_trace",
+    "s26.i_identity_audit",
+    "s26.p_ladder",
+    "s26.p_ladder_test",
+    "s26.p_probe_esm",
+    "s26.ph_c3",
+    "s26.ph_lib",
+    "s26.ph_reject",
     "tests.test_amber_frame_invariance",
     "tests.test_instrument"
    ],
-   "n_importers": 469,
+   "n_importers": 478,
    "backend_names": {}
   },
   "s12.key_corpus": {
@@ -11992,9 +12030,10 @@
     "s19.d_headroom",
     "s19.distobj",
     "s19.qb_run",
-    "s20.d_alignnull"
+    "s20.d_alignnull",
+    "s26.ph_lib"
    ],
-   "n_importers": 32,
+   "n_importers": 33,
    "backend_names": {}
   },
   "s15.align_reg": {
@@ -14849,9 +14888,10 @@
     "s24.stats_lib",
     "s25.phys_form5",
     "s25.phys_suite",
-    "s25.temper"
+    "s25.temper",
+    "s26.ph_lib"
    ],
-   "n_importers": 220,
+   "n_importers": 221,
    "backend_names": {}
   },
   "s16": {
@@ -15507,9 +15547,10 @@
     "s22.ablate",
     "s22.qcand_lib",
     "s24.d_harness",
+    "s26.ph_c3",
     "tests.test_amber_frame_invariance"
    ],
-   "n_importers": 38,
+   "n_importers": 39,
    "backend_names": {}
   },
   "s16.energy_repair": {
@@ -26732,9 +26773,22 @@
     "s25.q_verify",
     "s25.resultslab.exportlib",
     "s25.resultslab.schema",
-    "s25.resultslab.site"
+    "s25.resultslab.site",
+    "s26.e_reproduce",
+    "s26.e_trace",
+    "s26.i_identity_audit",
+    "s26.i_test_report",
+    "s26.p_ladder",
+    "s26.ph_c3",
+    "s26.ph_cis",
+    "s26.ph_lib",
+    "s26.ph_reject",
+    "s26.q_adapt",
+    "s26.q_dla",
+    "s26.q_mde",
+    "s26.q_var"
    ],
-   "n_importers": 27,
+   "n_importers": 40,
    "backend_names": {}
   },
   "s25.agentCLEAN_classify": {
@@ -27450,8 +27504,10 @@
     "os",
     "sys"
    ],
-   "imported_by": [],
-   "n_importers": 0,
+   "imported_by": [
+    "s26.q_var"
+   ],
+   "n_importers": 1,
    "backend_names": {}
   },
   "s25.q_verify": {
@@ -27643,8 +27699,8 @@
   },
   "s25.resultslab.schema": {
    "path": "s25/resultslab/schema.py",
-   "lines": 510,
-   "sha256": "ebc30c4968f92484867a3098a6b74dbeae4a2c6b826719f5021df4d101201926",
+   "lines": 526,
+   "sha256": "41b8d8a5774580828c78a9cd89346357213a4523822bcd7f91c5ebc1085d4d37",
    "doc": "s25/resultslab/schema.py -- THE RESULTS DATA MODEL.",
    "imports_repo": [
     {
@@ -27804,6 +27860,23 @@
    "n_importers": 0,
    "backend_names": {}
   },
+  "s26.e_claims": {
+   "path": "s26/e_claims.py",
+   "lines": 368,
+   "sha256": "4ba8f54589339d8d0a3627d6a39f3f8c5c34b2e4a049c280498d7ce5a1ed7538",
+   "doc": "s26/e_claims.py -- locate every numerical claim of EXAMINATION.md section C in the repo.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "os",
+    "re",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
   "s26.e_hashes": {
    "path": "s26/e_hashes.py",
    "lines": 149,
@@ -27843,6 +27916,107 @@
    "n_importers": 0,
    "backend_names": {}
   },
+  "s26.e_reproduce": {
+   "path": "s26/e_reproduce.py",
+   "lines": 162,
+   "sha256": "4bd3111ea1007fb7d69ee3fae926fd0af2ce562ded1041116227355715d91a33",
+   "doc": "s26/e_reproduce.py -- reproduce the production means from the persisted records.",
+   "imports_repo": [
+    {
+     "module": "core",
+     "as_written": "core",
+     "line": 49,
+     "lazy": true
+    },
+    {
+     "module": "core.pipeline",
+     "as_written": "core.pipeline",
+     "line": 50,
+     "lazy": true
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 51,
+     "lazy": true
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 52,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "glob",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.e_trace": {
+   "path": "s26/e_trace.py",
+   "lines": 332,
+   "sha256": "8e7833b15a4b6dd0563d43d86739378085e4c7bff174ad586d99c2349fe83194",
+   "doc": "s26/e_trace.py -- the production dataflow for ONE target, stage by stage, with shapes.",
+   "imports_repo": [
+    {
+     "module": "core",
+     "as_written": "core",
+     "line": 70,
+     "lazy": true
+    },
+    {
+     "module": "core.pipeline",
+     "as_written": "core.pipeline",
+     "line": 71,
+     "lazy": true
+    },
+    {
+     "module": "core.predict",
+     "as_written": "core.predict",
+     "line": 72,
+     "lazy": true
+    },
+    {
+     "module": "core.data",
+     "as_written": "core.data",
+     "line": 73,
+     "lazy": true
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 74,
+     "lazy": true
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 75,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "dataclasses",
+    "hashlib",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
   "s26.enqueue": {
    "path": "s26/enqueue.py",
    "lines": 47,
@@ -27861,10 +28035,30 @@
    "n_importers": 0,
    "backend_names": {}
   },
+  "s26.examine": {
+   "path": "s26/examine.py",
+   "lines": 66,
+   "sha256": "f2dc7cdbb6ffa098253e72a0e37e24e95f4ba4526b344b5346be7e0d0d7770b5",
+   "doc": "s26/examine.py -- the repository's `make examine` (there is no Makefile; `examine.sh` and",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "e_claims",
+    "e_hashes",
+    "e_module_map",
+    "i_claim_check",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
   "s26.governor": {
    "path": "s26/governor.py",
-   "lines": 387,
-   "sha256": "61b49323a0c53fb4aa54355737978e0b37e4900234a318acc7108b8f5caf4bc4",
+   "lines": 413,
+   "sha256": "cc6f007c684be8d1822bdea1bbd207482b3b2412fb0f277d7d0b919db031be7f",
    "doc": "s26/governor.py - the Sprint 26 resource governor.",
    "imports_repo": [],
    "imports_third_party": [
@@ -27883,10 +28077,178 @@
    "n_importers": 0,
    "backend_names": {}
   },
+  "s26.i_ast_check": {
+   "path": "s26/i_ast_check.py",
+   "lines": 70,
+   "sha256": "0fc1ca9f52a70aa21fb6f60763961c1776d313074c1e74990978cbcf8948cfc6",
+   "doc": "s26/i_ast_check.py -- is a production-path module AST-identical to its committed parent",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "ast",
+    "difflib",
+    "os",
+    "subprocess",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.i_claim_check": {
+   "path": "s26/i_claim_check.py",
+   "lines": 157,
+   "sha256": "06578f65793a592e3bbbb2a7bd3ea38f4e8de5b0a33e6e584e11b4967bd26613",
+   "doc": "s26/i_claim_check.py -- re-read every claimed number from the artefact it is claimed from.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "glob",
+    "hashlib",
+    "json",
+    "os",
+    "re",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.i_equiv2_compare": {
+   "path": "s26/i_equiv2_compare.py",
+   "lines": 119,
+   "sha256": "5576cd929b9de3e1488473cbfa8fb30e9211d4bfbb3ac1a9e962a8e27bfadefc",
+   "doc": "s26/i_equiv2_compare.py -- compare the arms `verify/run_equiv2.sh` just ran, per target.",
+   "imports_repo": [
+    {
+     "module": "core",
+     "as_written": "core",
+     "line": 27,
+     "lazy": false
+    },
+    {
+     "module": "core.pipeline",
+     "as_written": "core.pipeline",
+     "line": 28,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "dataclasses",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.i_identity_audit": {
+   "path": "s26/i_identity_audit.py",
+   "lines": 426,
+   "sha256": "66b28fc626ea38a6c00746c6e1df10304f38c6e336bb684605c237f45ef28739",
+   "doc": "s26/i_identity_audit.py -- what the corrected identity normalisation would do to the folds,",
+   "imports_repo": [
+    {
+     "module": "core",
+     "as_written": "core",
+     "line": 41,
+     "lazy": false
+    },
+    {
+     "module": "core.data",
+     "as_written": "core.data",
+     "line": 42,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 43,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 190,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "hashlib",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.i_run_equiv2_arm": {
+   "path": "s26/i_run_equiv2_arm.py",
+   "lines": 56,
+   "sha256": "cd61502ff414c0adc4ab6b32ab0d7c7303eb80dcad43c37a1c5145927c4d958c",
+   "doc": "s26/i_run_equiv2_arm.py -- one consolidated arm of `verify/run_equiv2.sh`.",
+   "imports_repo": [
+    {
+     "module": "core.pipeline",
+     "as_written": "core.pipeline",
+     "line": 27,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "dataclasses",
+    "json",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.i_test_report": {
+   "path": "s26/i_test_report.py",
+   "lines": 173,
+   "sha256": "6630c5545de9294657eefa2dd6c1268c8c15a34350bb8c6f0488726db17e04e9",
+   "doc": "s26/i_test_report.py -- per-file test counts, skip reasons and peak RSS for the S26 record.",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 26,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "os",
+    "subprocess",
+    "sys",
+    "time",
+    "xml"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
   "s26.jobrun": {
    "path": "s26/jobrun.py",
-   "lines": 161,
-   "sha256": "689d8c74491a82a285c6a5d0fc1ab421cf0b355142632ce789238471dfbcc441",
+   "lines": 170,
+   "sha256": "19f290b185b59ee42015bad5b1a28ace67d1583cd0a8058c8624cb23b0ad6c91",
    "doc": "s26/jobrun.py - launch one job under the S26 governor.",
    "imports_repo": [],
    "imports_third_party": [
@@ -27899,6 +28261,651 @@
     "subprocess",
     "sys",
     "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.p_ladder": {
+   "path": "s26/p_ladder.py",
+   "lines": 755,
+   "sha256": "ccd9db6c41c9b1fa15245b91cf4d84977c43af2c7d45f7d1b5f52f173332672a",
+   "doc": "s26/p_ladder.py -- PROPOSAL C2: THE PRIOR-INPUT LADDER.  Lane P, Sprint 26.",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 96,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 97,
+     "lazy": false
+    },
+    {
+     "module": "core.data",
+     "as_written": "core.data",
+     "line": 98,
+     "lazy": false
+    },
+    {
+     "module": "core.predict",
+     "as_written": "core.predict",
+     "line": 99,
+     "lazy": false
+    },
+    {
+     "module": "esm_features",
+     "as_written": "esm_features",
+     "line": 271,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "esm",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "sys",
+    "time",
+    "torch"
+   ],
+   "imported_by": [
+    "s26.p_ladder_test"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
+  "s26.p_ladder_test": {
+   "path": "s26/p_ladder_test.py",
+   "lines": 130,
+   "sha256": "6da5f6c21026b292652a2ec96256c2bc35af37f59eb2ba4fb6afff3130339a3b",
+   "doc": "s26/p_ladder_test.py -- synthetic unit tests for s26/p_ladder.py.  No native RMSD is read;",
+   "imports_repo": [
+    {
+     "module": "s26.p_ladder",
+     "as_written": "s26.p_ladder",
+     "line": 17,
+     "lazy": false
+    },
+    {
+     "module": "core.predict",
+     "as_written": "core.predict",
+     "line": 18,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 46,
+     "lazy": true
+    },
+    {
+     "module": "core.data",
+     "as_written": "core.data",
+     "line": 113,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.p_probe_esm": {
+   "path": "s26/p_probe_esm.py",
+   "lines": 67,
+   "sha256": "56d2572e4014afcd759c5c9822522c0e94ec9b249f51e34cb7006bb6f412db47",
+   "doc": "s26/p_probe_esm.py -- lane P pre-sign-off PROBE. Reads NO native coordinate and NO RMSD.",
+   "imports_repo": [
+    {
+     "module": "core.data",
+     "as_written": "core.data",
+     "line": 24,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 32,
+     "lazy": false
+    },
+    {
+     "module": "s5.esmraw",
+     "as_written": "s5.esmraw",
+     "line": 52,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "json",
+    "numpy",
+    "os",
+    "psutil",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.p_probe_esmcache": {
+   "path": "s26/p_probe_esmcache.py",
+   "lines": 20,
+   "sha256": "92495c26ef6626dcfee5a3c30fc2561027873f921b5a6c0bf6534cc281c5f435",
+   "doc": "s26/p_probe_esmcache.py -- the ONE permitted load of esm_cache.npz (1.5 GB object npz), under",
+   "imports_repo": [],
+   "imports_third_party": [
+    "json",
+    "numpy",
+    "os",
+    "psutil",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.p_stats": {
+   "path": "s26/p_stats.py",
+   "lines": 115,
+   "sha256": "aa819943b021b009195f556989bf9996e6eb3d1e92846a2922555c4b80d85155",
+   "doc": "s26/p_stats.py -- lane P's shared nested leave-fold-out ridge machinery (B3, C4, C5).",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "numpy"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.ph_append_census": {
+   "path": "s26/ph_append_census.py",
+   "lines": 242,
+   "sha256": "65ea8a73c47a72355f614b3f3509e3f034a1e11c02d9d359250650b57049606a",
+   "doc": "s26/ph_append_census.py -- one-shot writer for lane PH's census ledger entries (2026-09-13).",
+   "imports_repo": [],
+   "imports_third_party": [
+    "os",
+    "re",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.ph_c3": {
+   "path": "s26/ph_c3.py",
+   "lines": 347,
+   "sha256": "0b3475db8daa00b371b5a66cd21efcb5cc65e63cbd23024d1ce85435440b1f9e",
+   "doc": "s26/ph_c3.py -- C3, THE MATCHED-RANDOM CONTROL FOR AMBER REFINEMENT (lane PH, S26).",
+   "imports_repo": [
+    {
+     "module": "s26.ph_lib",
+     "as_written": "s26.ph_lib",
+     "line": 61,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 187,
+     "lazy": true
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 204,
+     "lazy": true
+    },
+    {
+     "module": "core.geometry",
+     "as_written": "core.geometry",
+     "line": 254,
+     "lazy": true
+    },
+    {
+     "module": "core.amber",
+     "as_written": "core.amber",
+     "line": 255,
+     "lazy": true
+    },
+    {
+     "module": "torsion_lib2",
+     "as_written": "torsion_lib2",
+     "line": 256,
+     "lazy": true
+    },
+    {
+     "module": "s16.energy_lib",
+     "as_written": "s16.energy_lib",
+     "line": 257,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [
+    "s26.test_ph_synthetic"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
+  "s26.ph_cis": {
+   "path": "s26/ph_cis.py",
+   "lines": 256,
+   "sha256": "5958a387f1777c3635e437de77060c90da249e83fa7d56722abd9ccc8e5ae00f",
+   "doc": "s26/ph_cis.py -- THE CIS-PEPTIDE GAP (lane PH, S26).  Pre-registered in s26/PREREG_cis.md.",
+   "imports_repo": [
+    {
+     "module": "s26.ph_lib",
+     "as_written": "s26.ph_lib",
+     "line": 51,
+     "lazy": false
+    },
+    {
+     "module": "core",
+     "as_written": "core",
+     "line": 186,
+     "lazy": true
+    },
+    {
+     "module": "core.geometry",
+     "as_written": "core.geometry",
+     "line": 187,
+     "lazy": true
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 208,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "scipy",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.ph_lib": {
+   "path": "s26/ph_lib.py",
+   "lines": 350,
+   "sha256": "f30d9687eb127abbd473412fbfc996b23559918ca393d4bd25c4ef9b58204496",
+   "doc": "s26/ph_lib.py -- shared helpers for the S26 Physics lane (PH).",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 101,
+     "lazy": true
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 110,
+     "lazy": true
+    },
+    {
+     "module": "core.geometry",
+     "as_written": "core.geometry",
+     "line": 185,
+     "lazy": true
+    },
+    {
+     "module": "s15.align_lib",
+     "as_written": "s15.align_lib",
+     "line": 268,
+     "lazy": true
+    },
+    {
+     "module": "s15.seed",
+     "as_written": "s15.seed",
+     "line": 286,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "glob",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "sys",
+    "time",
+    "typing"
+   ],
+   "imported_by": [
+    "s26.ph_c3",
+    "s26.ph_cis",
+    "s26.ph_reject",
+    "s26.test_ph_synthetic"
+   ],
+   "n_importers": 4,
+   "backend_names": {}
+  },
+  "s26.ph_reject": {
+   "path": "s26/ph_reject.py",
+   "lines": 554,
+   "sha256": "b60b15def90bc109d65a1be5eac53427d97ca911aec5e86bca366f1987ee6e36",
+   "doc": "s26/ph_reject.py -- AMBER AS A STERIC REJECT FILTER, NOT A RANKER (lane PH, S26).",
+   "imports_repo": [
+    {
+     "module": "s26.ph_lib",
+     "as_written": "s26.ph_lib",
+     "line": 66,
+     "lazy": false
+    },
+    {
+     "module": "core.geometry",
+     "as_written": "core.geometry",
+     "line": 198,
+     "lazy": true
+    },
+    {
+     "module": "sidechains",
+     "as_written": "sidechains",
+     "line": 199,
+     "lazy": true
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 351,
+     "lazy": true
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 484,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "scipy",
+    "sys",
+    "time"
+   ],
+   "imported_by": [
+    "s26.test_ph_synthetic"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
+  "s26.q_adapt": {
+   "path": "s26/q_adapt.py",
+   "lines": 1106,
+   "sha256": "9e35bdc2da106d04527268b1eb8f63d1b179aee34777152bf5b82f0ea8bae14a",
+   "doc": "s26/q_adapt.py -- qubit-ADAPT-VQE on the DEPLOYED CVaR free energy.  Lane Q, Sprint 26.",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 377,
+     "lazy": true
+    },
+    {
+     "module": "core.pipeline",
+     "as_written": "core.pipeline._zrank",
+     "line": 679,
+     "lazy": true
+    },
+    {
+     "module": "core",
+     "as_written": "core",
+     "line": 747,
+     "lazy": true
+    },
+    {
+     "module": "s8.inband",
+     "as_written": "s8.inband.sel_of",
+     "line": 892,
+     "lazy": true
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 1028,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "dataclasses",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "scipy",
+    "sys",
+    "time",
+    "zlib"
+   ],
+   "imported_by": [
+    "s26.q_dla",
+    "s26.q_tests",
+    "s26.q_var"
+   ],
+   "n_importers": 3,
+   "backend_names": {}
+  },
+  "s26.q_dla": {
+   "path": "s26/q_dla.py",
+   "lines": 413,
+   "sha256": "bd264dae3d106fb8f66ab867f4ad7dfaa221056d18de708370be1ce0e9fdbf2c",
+   "doc": "s26/q_dla.py -- the DYNAMICAL LIE ALGEBRA of the deployed ansatz and of the ADAPT pools.",
+   "imports_repo": [
+    {
+     "module": "s26.q_adapt",
+     "as_written": "s26.q_adapt.Pauli",
+     "line": 71,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 357,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [
+    "s26.q_tests"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
+  "s26.q_mde": {
+   "path": "s26/q_mde.py",
+   "lines": 66,
+   "sha256": "6b2dea13bcce48706c9972603b208d4964fd22631928bd2127f2fc2086384c49",
+   "doc": "s26/q_mde.py -- the reference MDEs for the A1/A3 pre-registrations, from stored artefacts.",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 23,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.q_tests": {
+   "path": "s26/q_tests.py",
+   "lines": 358,
+   "sha256": "4dd40626e899028d06535f498af01bb117f682b4aa7760700e135d69abbeb5cc",
+   "doc": "s26/q_tests.py -- unit tests for s26/q_adapt.py, s26/q_dla.py, s26/q_var.py on SYNTHETIC",
+   "imports_repo": [
+    {
+     "module": "s26.q_adapt",
+     "as_written": "s26.q_adapt",
+     "line": 27,
+     "lazy": false
+    },
+    {
+     "module": "s26.q_dla",
+     "as_written": "s26.q_dla",
+     "line": 28,
+     "lazy": false
+    },
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 108,
+     "lazy": true
+    },
+    {
+     "module": "core.pipeline",
+     "as_written": "core.pipeline._zrank",
+     "line": 284,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "math",
+    "numpy",
+    "os",
+    "pennylane",
+    "sys",
+    "traceback"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.q_var": {
+   "path": "s26/q_var.py",
+   "lines": 205,
+   "sha256": "fca9d3a511bede8cf55eabd65ea57ad8fe9038b6c863fbe7aa903406fa0dc838",
+   "doc": "s26/q_var.py -- A4: gradient variance of ADAPT-grown circuits beside the fixed ansatz.",
+   "imports_repo": [
+    {
+     "module": "s26.q_adapt",
+     "as_written": "s26.q_adapt.PauliCircuit",
+     "line": 40,
+     "lazy": false
+    },
+    {
+     "module": "s25.q_plateau",
+     "as_written": "s25.q_plateau",
+     "line": 55,
+     "lazy": true
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 122,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.test_ph_synthetic": {
+   "path": "s26/test_ph_synthetic.py",
+   "lines": 140,
+   "sha256": "d942d7db23856fa1d1a6127afb2a7f7d6b5f475fbb3a47a80c1c6305ede72314",
+   "doc": "s26/test_ph_synthetic.py -- unit tests for the PH lane on SYNTHETIC data only.",
+   "imports_repo": [
+    {
+     "module": "s26.ph_lib",
+     "as_written": "s26.ph_lib",
+     "line": 20,
+     "lazy": false
+    },
+    {
+     "module": "s26.ph_reject",
+     "as_written": "s26.ph_reject",
+     "line": 21,
+     "lazy": false
+    },
+    {
+     "module": "s26.ph_c3",
+     "as_written": "s26.ph_c3",
+     "line": 22,
+     "lazy": false
+    },
+    {
+     "module": "core.geometry",
+     "as_written": "core.geometry",
+     "line": 53,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "math",
+    "numpy",
+    "os",
+    "sys",
+    "tempfile"
    ],
    "imported_by": [],
    "n_importers": 0,
@@ -27989,9 +28996,10 @@
     "sys"
    ],
    "imported_by": [
+    "s26.p_probe_esm",
     "s7.repr_select"
    ],
-   "n_importers": 1,
+   "n_importers": 2,
    "backend_names": {}
   },
   "s5.lib": {
@@ -28631,12 +29639,13 @@
    "imported_by": [
     "core.bench",
     "core.pipeline",
+    "s26.q_adapt",
     "s8.consensus2",
     "s8.integrate",
     "s8.project",
     "s9.final"
    ],
-   "n_importers": 6,
+   "n_importers": 7,
    "backend_names": {}
   },
   "s8.integrate": {
@@ -28991,85 +30000,88 @@
     "core.quantum",
     "hamiltonian",
     "representations",
+    "s26.ph_reject",
     "tests.test_amber"
    ],
-   "n_importers": 6,
+   "n_importers": 7,
    "backend_names": {}
   },
   "tests.test_amber": {
    "path": "tests/test_amber.py",
-   "lines": 612,
-   "sha256": "8c62fe9eed928a1f4959702eb06ecec9c9b426aac9b7ba6fd9f45c2dd0908086",
+   "lines": 688,
+   "sha256": "e773e5e81701d46358af7f2c857d6b706d5ff56c68d377deb850f13604d910b2",
    "doc": "Equivalence and genuineness tests for `core.amber` against the shipped AMBER stack.",
    "imports_repo": [
     {
      "module": "protein_geometry",
      "as_written": "protein_geometry",
-     "line": 35,
+     "line": 37,
      "lazy": false
     },
     {
      "module": "peptide_db",
      "as_written": "peptide_db",
-     "line": 36,
+     "line": 38,
      "lazy": false
     },
     {
      "module": "torsion_lib2",
      "as_written": "torsion_lib2",
-     "line": 37,
+     "line": 39,
      "lazy": false
     },
     {
      "module": "core.amber",
      "as_written": "core.amber",
-     "line": 39,
+     "line": 41,
      "lazy": false
     },
     {
      "module": "s5.lib",
      "as_written": "s5.lib.B62",
-     "line": 150,
+     "line": 196,
      "lazy": true
     },
     {
      "module": "s7.amber_native",
      "as_written": "s7.amber_native.pool_for",
-     "line": 151,
+     "line": 197,
      "lazy": true
     },
     {
      "module": "amber_refine",
      "as_written": "amber_refine",
-     "line": 246,
+     "line": 292,
      "lazy": true
     },
     {
      "module": "sidechains",
      "as_written": "sidechains",
-     "line": 295,
+     "line": 341,
      "lazy": true
     },
     {
      "module": "budget",
      "as_written": "budget",
-     "line": 563,
+     "line": 609,
      "lazy": true
     },
     {
      "module": "core.quantum",
      "as_written": "core.quantum",
-     "line": 564,
+     "line": 610,
      "lazy": true
     }
    ],
    "imports_third_party": [
     "ctypes",
     "inspect",
+    "json",
     "numpy",
     "os",
     "pytest",
-    "sys"
+    "sys",
+    "time"
    ],
    "imported_by": [],
    "n_importers": 0,
@@ -29077,44 +30089,44 @@
   },
   "tests.test_amber_frame_invariance": {
    "path": "tests/test_amber_frame_invariance.py",
-   "lines": 110,
-   "sha256": "dac1ddc9bda5a5f825bae05512d52876d8ce721b7aff30c3ca306c3d6764fea1",
+   "lines": 120,
+   "sha256": "b73ae854d94b949e00d03b7ba854fc0d72f438f352858bacf90e7b32c56e0d93",
    "doc": "Standing regression check -- AMBER relaxation must be rigid-invariant.",
    "imports_repo": [
     {
      "module": "s12.instrument",
      "as_written": "s12.instrument",
-     "line": 41,
+     "line": 51,
      "lazy": true
     },
     {
      "module": "s16.energy_lib",
      "as_written": "s16.energy_lib",
-     "line": 42,
+     "line": 52,
      "lazy": true
     },
     {
      "module": "torsion_lib2",
      "as_written": "torsion_lib2",
-     "line": 77,
+     "line": 87,
      "lazy": true
     },
     {
      "module": "core.amber",
      "as_written": "core.amber",
-     "line": 78,
+     "line": 88,
      "lazy": true
     },
     {
      "module": "s14.avgspace",
      "as_written": "s14.avgspace.top75_windows",
-     "line": 80,
+     "line": 90,
      "lazy": true
     },
     {
      "module": "s15.phys_repl",
      "as_written": "s15.phys_repl.averaged_backbone_from",
-     "line": 81,
+     "line": 91,
      "lazy": true
     }
    ],
@@ -29123,7 +30135,8 @@
     "numpy",
     "os",
     "pytest",
-    "sys"
+    "sys",
+    "test_amber"
    ],
    "imported_by": [],
    "n_importers": 0,
@@ -29156,8 +30169,8 @@
   },
   "tests.test_data": {
    "path": "tests/test_data.py",
-   "lines": 580,
-   "sha256": "908cbb83673df1decd2be11c769b96aa6d19d0994b4fd607d958acd60609c817",
+   "lines": 616,
+   "sha256": "0770f011b1f71d9a411702a3f76cecbe5ceaa3c7b40f8df1362cdbb52e94e750",
    "doc": "Equivalence and convention pins for `core.data` and `core.cache`.",
    "imports_repo": [
     {
@@ -29193,25 +30206,25 @@
     {
      "module": "representations",
      "as_written": "representations",
-     "line": 355,
+     "line": 391,
      "lazy": true
     },
     {
      "module": "distogram",
      "as_written": "distogram",
-     "line": 510,
+     "line": 546,
      "lazy": true
     },
     {
      "module": "core.predict",
      "as_written": "core.predict",
-     "line": 525,
+     "line": 561,
      "lazy": true
     },
     {
      "module": "priors",
      "as_written": "priors",
-     "line": 526,
+     "line": 562,
      "lazy": true
     }
    ],
@@ -29759,6 +30772,7 @@
     "s20.d_amberop",
     "s21.tailprice",
     "s23.agentB_h5_carestraint",
+    "s26.ph_c3",
     "s7.amber_native",
     "s8.integrate",
     "s9.final",
@@ -29771,7 +30785,7 @@
     "verify.amber_threads",
     "verify.hazard_audit"
    ],
-   "n_importers": 45,
+   "n_importers": 46,
    "backend_names": {}
   },
   "verify.amber_affinity": {
@@ -30302,20 +31316,19 @@
   },
   "verify.vqe_lfo_audit": {
    "path": "verify/vqe_lfo_audit.py",
-   "lines": 98,
-   "sha256": "48c39ab4e7fffe7e65a57eebb098d0cfca2b55af9c8e9d87e63b4cef6665f87b",
+   "lines": 97,
+   "sha256": "88091ddcefe6895ae44f1591e4ef966161058459412975bcb08e64496ef443dc",
    "doc": "Is `VQE_LFO` genuinely leave-fold-out, or was it read off the instrument?",
    "imports_repo": [
     {
      "module": "core.pipeline",
      "as_written": "core.pipeline.VQE_LFO",
-     "line": 63,
+     "line": 62,
      "lazy": true
     }
    ],
    "imports_third_party": [
     "__future__",
-    "collections",
     "json",
     "numpy",
     "os",
