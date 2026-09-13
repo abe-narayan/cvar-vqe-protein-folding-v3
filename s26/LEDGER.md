@@ -491,7 +491,7 @@ queue spec to requeue from. Changes (commit follows this entry), all in `s26/gov
   registered, so five lanes launching at once are serialised at the door instead of suspended
   after the fact.
 
-The v1 governor (pid 36196) was terminated at 08:5x with the RESTART line in the log and v2
+The v1 governor (pid 36196) was terminated at 08:40:24 with the RESTART line in the log and v2
 started in its place. Two lane-Q jobs (`a2_dla`, `a4_var`) were registered at that moment and ran
 unsupervised for a few seconds; v2 picked their registrations up on its first sample. The log is
 continuous through the restart.
