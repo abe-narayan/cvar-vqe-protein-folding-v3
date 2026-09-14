@@ -942,3 +942,13 @@
 2026-09-13T21:49:14 SAMPLE   ram=92.3% (15.46GB used, 1.29GB free) cpu=10.7% (15s mean 15.3%) jobs=4 amber=0 queued=0 lanes=7
 2026-09-13T21:49:44 SUSPEND  a3_build agent=Q tag=CPU rss=0.35GB
 2026-09-13T21:50:14 SAMPLE   ram=91.6% (15.35GB used, 1.40GB free) cpu=16.6% (15s mean 14.4%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:51:14 SAMPLE   ram=92.5% (15.49GB used, 1.26GB free) cpu=20.2% (15s mean 22.3%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:52:00 START    governor v2 pid 29576 ceiling=93.0% hard(ram)=95.0%/15s cpu_resume=80.0% cpu_window=3 min_suspend=20s low=88.0%/60s sample=5s max_amber=2
+2026-09-13T21:52:00 SAMPLE   ram=91.8% (15.37GB used, 1.38GB free) cpu=70.8% (15s mean 70.8%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:52:14 SAMPLE   ram=92.8% (15.54GB used, 1.21GB free) cpu=37.5% (15s mean 50.3%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:52:19 REAP     p_train_raw_f1 (pid 1848) is gone; registration removed
+2026-09-13T21:52:19 RESUME   a3_build agent=Q tag=CPU
+2026-09-13T21:52:24 RESUME   w_ensemble_clouds agent=W tag=CPU
+2026-09-13T21:52:29 RESUME   ph_reject_chain agent=PH tag=CPU
+2026-09-13T21:53:00 SAMPLE   ram=89.1% (14.93GB used, 1.82GB free) cpu=63.8% (15s mean 55.2%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:54:00 SAMPLE   ram=88.8% (14.87GB used, 1.88GB free) cpu=58.7% (15s mean 56.6%) jobs=4 amber=0 queued=0 lanes=7

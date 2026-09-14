@@ -2801,3 +2801,60 @@ verdict.
 
 ---
 
+## L75 -- LANE Q CORRECTS L68 ON PR's L73 FLAG: AT alpha = 1 ADAPT's GROWTH IS INERT, NOT ABSENT. OPERATORS ARE APPENDED ON 60 TO 78 OF 78 TARGETS, ALL MULTI-QUBIT UNDER L-BFGS, AND THEY BUY AT MOST 1.2e-4 NATS AND LEAVE A PRODUCT STATE (KL <= 4.1e-4); THE VERDICT DOES NOT MOVE (2026-09-13, lane Q)
+
+PR's L73 read `s26/results/a1/` correctly and I did not. Re-read of my own records
+(`s26/results/a1/<pdb>.json`, keys `adapt.<pool>_<optimiser>_zrank.sequence`, `.trace`,
+`.theta`, `.stopped`, and `arms.*.kl_to_product`), the 78 alpha = 1 targets:
+
+    pool / re-optimiser    stop reason     targets with >= 1     appended strings     F(P=7) - F(final)      max |angle| of      KL(p || product
+                                           string appended       total / weight >= 2  mean / max, nats       appended strings    of marginals) max
+    V  / L-BFGS-B          eps 78/78       60 / 78               235 / 235            1.5e-5 / 9.9e-5        0.018 rad           3.3e-4
+    L2 / L-BFGS-B          eps 78/78       68 / 78               393 / 393            1.7e-5 / 1.2e-4        0.018 rad           4.1e-4
+    V  / Adam best         P = 21 78/78    78 / 78               1092 / 304           7.5e-4 / 8.6e-4        0.28 rad (1 target) 3.0e-4
+    L2 / Adam best         P = 21 78/78    78 / 78               1092 / 642           7.4e-4 / 8.3e-4        0.11 rad            2.7e-4
+    (alpha = 0.25, L2 / Adam best, for contrast: F(P=7) - F(final) 0.053 nats; KL to product 0.126 mean, 0.148 max)
+
+What "selected" means in `s26/q_adapt.py` `run_adapt`: at each growth step the pool operator
+with the largest |dF/dphi| at phi = 0 is APPENDED to the circuit and all angles are
+re-optimised; every appended operator stays with whatever angle it receives. There is no
+retention step. So PR's count (appended) is the right count and my "no operator selected"
+was false; the correct statement is that the appended operators are inert.
+
+Why the ideal-ladder runs (L27, L35: L-BFGS appends nothing at alpha = 1; the Adam-grown
+sets are abelian) differ from the real targets: on the ideal ladder E is exactly affine in
+the register index, the RY layer reaches the exact Gibbs state and every pool gradient is
+exactly zero. On a real target tie-averaging makes E not exactly affine (KL(Gibbs || product)
+up to 7.9e-4), the RY layer's residual gradient in some multi-qubit direction exceeds
+eps = 1e-3, an operator is appended, re-optimisation gives it an angle of order 5e-3 rad,
+the free energy moves by order 1e-5 nats, and the criterion then fires. That is inert growth.
+
+CORRECTIONS. In L68, the line "L-BFGS growth at alpha = 1 stops with no operator selected on
+78 of 78 targets" and the sentence "ADAPT with either pool selects no entangling operator on
+any of the 78 alpha = 1 targets under L-BFGS" are RETRACTED and replaced by the table above.
+In `s26/PROPOSAL_A.md` section 3 ("selects no entangling operator on any of the 78 alpha = 1
+targets") and section 5 ("it declines them on all 78 targets; there is nothing to entangle")
+are corrected by an appended addendum. In `s26/agentQ_FINDINGS.md` sections 0.1 and 1.3 the
+same sentences are corrected by an appended note (section 9). The ideal-ladder statements in
+L27 and L35 stand as written (they are about the ladder, where the appended count is zero).
+
+What does not change: every endpoint number in L68 (the two primaries, the twelve arms, the
+controls, the subsets); the product-state result (KL(Gibbs_zrank || product) <= 7.9e-4 on 126
+targets; ADAPT reaches the Gibbs state to KL <= 9e-4 on the 78 alpha = 1 targets; the fixed
+circuit stops 0.90 nats short); the A2 and A4 results; the verdict REPLACE. The mechanism
+sentence becomes: at alpha = 1 the objective's optimum is a product state, and an adaptive
+ansatz that is free to entangle appends operators worth less than 1e-3 nats and leaves the
+state a product state; there is nothing for growth to do, and growing anyway moves the
+built chain by a third of the MDE.
+
+FINAL WORDING FOR SLIDE 8's NOTES (for lane PR), replacing any "grows nothing" / "declines
+them" phrasing:
+"At the deployed setting the optimum the circuit is asked to reach is a product state:
+seven single-qubit rotations represent it exactly (KL 0.0002 nats). When ADAPT is offered
+entangling operators it does append them, on 60 to 78 of the 78 targets, but they are inert:
+together they lower the objective by less than 0.001 nats, their angles stay below 0.02
+radians under L-BFGS, and the state remains a product state to 0.0004 nats. The deployed
+21-parameter circuit stops 0.9 nats short of that same optimum, and reaching it exactly
+moves the emitted structure by 0.014 to 0.022 angstroms, a third of what the comparison can
+resolve. Sources: s26/results/a1/*.json (adapt.*.sequence, .trace, arms.*.kl_to_product),
+s26/results/a1_stats.json, ledger L68 and L75."
