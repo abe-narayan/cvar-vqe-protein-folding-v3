@@ -181,6 +181,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 23:30 next: validity entry when ph_validity runs (~25 min once admitted); then rotamer_relief B probe + run (AMBER, one at a time); C3 stage 2 the moment P's rung file arrives; findings 'what damaged my expectations' and 'what I did not do' refreshed at close.
 - 2026-09-14 00:59 running: ph_relief_run (AMBER, rotamer_relief B, ~1.8 h, cells; probe gate 0.0 after the k=4 fix, peak 0.27 GB). Done since 23:32: validity axis L100 (34 clash targets to 1, 1.3%/2.5% strain, 6.6 deg omega), C3_RESULT addendum 3, findings 3d + sections 5-7.
 - 2026-09-14 00:59 next: relief B(i) census line and B(ii)/B(iii) gated report when the cells complete; C3 stage 2 the moment s26/results/p_best_rung_chains.json exists (not there yet).
+- 2026-09-14 03:08 running: nothing. All PH items closed: rotamer_relief B L131 (halves the catastrophic fraction, ranks nothing, rejects harmfully); C3 stage 2 reduced to stage 1 (L118); L53 sentence retracted per L121 (L123, PR lines named); findings sections 3e, 6, 6b updated.
+- 2026-09-14 03:08 next: none queued. Available for Adversary answers on L86/L88/L89/L100/L118/L131 and for any coordinator request until close.
 
 ## PR (Presentation lane)
 - 2026-09-13 19:25 running: read the brief, contract, state brief, ledger L0-L42, EXAMINATION C, proposals B/B-replacement/C, C3_RESULT, the paper outline, agentQ sections 2 and 4, s25/QUANTUM.md, professor_brief; verified every slide number against its artefact leaf (q_verify, q_plateau, q_alpha, q_gibbs, phys_suite, leaderboard, e_reproduce, priorladder, errdecomp, a_c26_phi_mae, q_dla, q_var, b1_feasibility, ph_c3_stage1). PROPOSAL_A.md not on disk at 19:22.

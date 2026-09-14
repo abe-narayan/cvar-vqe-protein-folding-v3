@@ -447,6 +447,25 @@ while the torsions are held and the trace moves 0.220 A. The presentation senten
 
 ---
 
+## 3e. ROTAMER RELIEF B (tournament rank 8): REFUTED as a ranker and as a reject; the census half confirmed
+
+`s26/ph_relief.py`, `s26/ph_relief_reject.py`; `s26/results/ph_relief_{run,report,reject}.json`
+(126/126 each; AMBER job `ph_relief_run` 6890 s, 0.31 GB; gate G1 = 0.0 on every target after
+the k = 4 representation fix, prereg addendum 1). Ledger L131 with six `ST.fmt` blocks.
+
+    B(i)   fraction of the top-75 above 1e4: raw 0.535 -> relieved 0.233 (above 1e6: 0.311 -> 0.057); falsifier (>= 0.27) does not fire
+    B(ii)  Spearman(E, ORACLE RMSD) in the top-75: raw +0.000, relieved -0.002; in-band +0.004 vs +0.006; difference 0.04x MDE, 2/5 folds
+    B(iii) arm S @1e4 on E_relief (point cloud): +0.030 vs anchor (fold CI [+0.019, +0.040], 5/5, 0.74x MDE: sign measured, size underpowered)
+           +0.022 vs same-count random (fold [+0.011, +0.032], 5/5, 0.61x); -0.078 vs the raw reject (rejects 13 of 75 instead of 40)
+           built-chain half not run (a point-cloud arm worse than the anchor with the CI excluding zero cannot clear the built-chain falsifier)
+
+Half of what the single point called impossible was the builder's chi1 choice (L23 by
+intervention). Once relieved, the energy ranks nothing and rejects harmfully. CLOSED, and with
+it the last route by which an all-atom single point on retrieved windows could enter the
+pipeline.
+
+---
+
 ## 4. TOURNAMENT IDEAS FILED
 
 `s26/IDEA_amber_reject.md` and `s26/IDEA_cis_peptide.md` (mandatory), `s26/IDEA_branch_select.md`
@@ -484,16 +503,36 @@ the MDE, a memory estimate and agent-hours.
 
 ## 6. WHAT I DID NOT DO AND WHY
 
-- C3 stage 2 (the relaxation on lane P's best C2 rung): waits for `s26/results/
-  p_best_rung_chains.json`; the runner (`ph_c3.py probe | stage2`) is ready and tested on the
-  production input by stage 1.
-- rotamer_relief part B: the probe is queued (`ph_relief_probe`, held at the job cap at 00:30);
-  the run follows the probe's peak under the one-AMBER-job rule.
+- C3 stage 2: reduced to stage 1 by identity (L118, C3_RESULT addendum 4): lane P's best rung
+  is the shipped prior and its delivery is the production emission bit for bit on 126/126, so
+  no relaxation was run; the runner (`ph_c3.py probe | stage2`) exists and was not needed.
+- rotamer_relief part B: run and closed (3e, L131); its built-chain half and its refill arm
+  were not run, for the reasons stated in L131 (a point-cloud arm worse than the anchor with
+  the fold CI excluding zero cannot clear the built-chain falsifier; refill needs relieved
+  energies beyond the top-75, not budgeted).
 - The reject's built-chain controls carry 4 draws at the primary threshold only (registered);
   16 draws at every threshold would have been 12 h of projection.
 - The relaxed emission's heavy-atom panel on lane P's rung output belongs to stage 2.
 - No seed replication of the harmful reject results (negatives; the cross-basis run is the
   replication) and none of the descriptive validity panel.
+
+## 6b. THE LANE'S LEDGER, IN ORDER
+
+    L22  cis census: 0 cis anywhere (natives, 1,966 models, 2.35 M windows); the data.py step gate     DEMONSTRATED
+    L23  reject census: 1e4 removes 40/75; 96.8% of catastrophes are side-chain contacts; rho(e, min heavy) -0.74   DEMONSTRATED
+    L24  C3 native-free: relaxation moves 0.220 A; 58.7% of built chains above 1e4; 125/126 converge      DEMONSTRATED
+    L38  cis floor, own-torsion rebuild 0.347 A (an upper bound; superseded as "the floor" by L89)          ORACLE DIAGNOSTIC
+    L39  C3 stage 1: AMBER worse than both matched controls; validity step, not accuracy (L46 caveats)      DEMONSTRATED
+    L43  steric reject, point cloud: harmful, dose monotone, limit = anchor (L54 caveats)                   REFUTED (harmful)
+    L53  strain difficulty: moved predicts the error at +0.43; one sentence retracted in L123               DEMONSTRATED as a phenomenon
+    L86  steric reject, built chain: replicates L43; filter closed on both bases                           REFUTED (harmful)
+    L87  C3 replication: every contrast inside L39's fold CI                                                DEMONSTRATED
+    L88  branch select: energy chooses the branch as well as the objective, no better                       REFUTED as accuracy
+    L89  cis floor, tight form: 0.083 A; the constant omega costs ~0.04 A                                   ORACLE DIAGNOSTIC
+    L100 validity axis: 34 clash targets to 1, at 1.3% / 2.5% strain and 6.6 deg omega                      DEMONSTRATED
+    L118 C3 stage 2 reduces to stage 1 (delivery identical to production, 126/126)                          DEMONSTRATED
+    L123 retraction per L121: the pool spread (+0.452) is the quantity; moved is its proxy (0.76)           RETRACTION
+    L131 rotamer relief B: halves the catastrophic fraction; ranks nothing; rejects harmfully               REFUTED
 
 ## 7. QUESTIONS FOR THE COORDINATOR
 
