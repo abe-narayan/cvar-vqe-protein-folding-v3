@@ -76,7 +76,7 @@ against a matched control on the same 126 targets.
 The programme did not reach its accuracy targets. On the 60-target sealed benchmark, opened
 once, the synthesis architecture scored 2.9610 A against the shipped baseline's 2.9507 A (both
 single-window selection arms on the S9 instrument), a paired difference of +0.0103 A with 95% CI
-[-0.1596, +0.1803], 31 wins to 29 losses (`docs/FINDINGS.md:4501-4629`, S9-10; the two means are
+[-0.1596, +0.1803], 31 wins to 29 losses (`docs/FINDINGS.md:4503-4631`, S9-10; the two means are
 asserted within 5e-4 A of the committed record `s9/final_report.json` by
 `tests/test_pipeline.py::test_the_committed_benchmark_report_still_holds_its_reference_numbers`,
 passed in `s26/TEST_RUN.md`; this lane did not open the record). On the 126-target development
@@ -91,7 +91,7 @@ output, are what Parts IV to VIII are about.
 
 This part is written so that a reader could design a valid experiment on this repository
 without further help. The rules are the ones the programme learned by breaking them; the
-retraction count that taught them is 23 corrections in `docs/FINDINGS.md:60-140` plus five S25
+retraction count that taught them is 23 corrections in `docs/FINDINGS.md:60-142` plus five S25
 claims retracted by internal audit (`s25/LEDGER.md` L5, L7, L9, L11, L15).
 
 ### II.1 The targets
@@ -116,7 +116,7 @@ claims retracted by internal audit (`s25/LEDGER.md` L5, L7, L9, L11, L15).
 - **benchmark60, sealed.** 60 targets in `results/benchmark_manifest.json`, cluster-disjoint
   from tuning126 (`tests/test_pipeline.py::test_tuning_instrument_is_disjoint_from_the_benchmark`).
   It was opened exactly once, by S9-10, on pre-registered constants
-  (`docs/FINDINGS.md:4501-4629`); the CLI refuses to run it without
+  (`docs/FINDINGS.md:4503-4631`); the CLI refuses to run it without
   `--i-am-spending-the-benchmark`
   (`tests/test_equivalence.py::test_the_benchmark_is_refused_without_the_explicit_flag`), and
   `tests/test_equivalence.py::test_benchmark60_cached_record_reproduces_and_is_not_rerun`
@@ -130,7 +130,7 @@ claims retracted by internal audit (`s25/LEDGER.md` L5, L7, L9, L11, L15).
   benchmark targets carry such a self-copy in their own fold model's training set
   (`s24/LEDGER.md` L4; `s26/results/i_identity_audit.json`, S26 ledger L15). At the looser
   >= 0.6 identity criterion 13 of 60 benchmark targets have such a pool window
-  (`docs/FINDINGS.md:4593`, S9-10), priced at +0.0030 A in S10-4. The dev price, re-derived in S26
+  (`docs/FINDINGS.md:4595`, S9-10), priced at +0.0030 A in S10-4. The dev price, re-derived in S26
   with an artefact: clean minus production +0.0004 A on the lam = 0 chain (fold CI [-0.0001,
   +0.0010], MDE 0.0012) and +0.0018 A on the built chain [-0.0003, +0.0039], neither clearing
   its MDE (`s26/results/w_selfcopy_endpoint.json`; S26 ledger L44, L50). The benchmark effect is
@@ -221,7 +221,7 @@ Every comparison is paired per target through `s24.stats_lib.compare(a, b, folds
   N = 200).
 - **Tied argmins are averaged.** `np.argmin` returns the first index of a tie, and the candidate
   order is the retrieval order, which is not neutral; a tied signal once "won" by 1.386 A by
-  reading that order (`docs/FINDINGS.md:2773`, "A methodological correction that changed the
+  reading that order (`docs/FINDINGS.md:2775`, "A methodological correction that changed the
   answer"; `s24.stats_lib.argmin_tied`). A selector's outcome is the mean RMSD over its tied
   argmin set.
 - **Grid oracles are order statistics.** A per-target minimum over K arms is mostly best-of-K;
@@ -272,7 +272,7 @@ What it discards: everything about the target that is not a function of its sequ
 can be wrong: the language model was trained on evolutionary sequence statistics, not on
 peptide structures; the sequence channel is weak at this length (Part I). What it is worth:
 ESM features against one-hot residue identity buy 0.288 A on selection
-(`docs/FINDINGS.md:1992-2059`, S7 finding 11; `docs/STATE_BRIEF_2026-09-12.md` 5.7).
+(`docs/FINDINGS.md:1994-2061`, S7 finding 11; `docs/STATE_BRIEF_2026-09-12.md` 5.7).
 
 ### III.2 The distogram (the prior)
 
@@ -316,8 +316,8 @@ reference did (`core.pipeline._q`).
 
 What it discards: every window outside the top 500, and every conformation not present in the
 library. Where it can be wrong: BLOSUM similarity is a weak key; fixing retrieval outright, by
-purchasing perfect retrieval with the native, was worth 0.016 A (`docs/FINDINGS.md:2401-2633`,
-S8-6), and structure and sequence are decoupled at this length (`docs/FINDINGS.md:499`, S5
+purchasing perfect retrieval with the native, was worth 0.016 A (`docs/FINDINGS.md:2403-2635`,
+S8-6), and structure and sequence are decoupled at this length (`docs/FINDINGS.md:501`, S5
 finding 9). The stable sort matters because similarity sums are small integers with large tie
 sets, and an unstable order moves up to 47 of the 500 members (`README.md`, "Layout"). ORACLE
 ceilings, single window: the best window in the pool averages 1.7108 A (`science/pool_best/mean`),
@@ -342,7 +342,7 @@ discards, on average, the 1.7108 A pool member for a set whose best is 0.6 A wor
 it keeps nothing under 5.34 A while the pool holds a 1.40 A window. A perfect ranker inside the
 shipped top-25 would return 2.6087 A single window (`s17/results/inband.json :: cells/25`,
 band_best; reproduced in `s26/PREREG_C1.md`); inside the near-native band the score itself is
-worse than a coin flip (`docs/FINDINGS.md:2761-3009`, S8-8).
+worse than a coin flip (`docs/FINDINGS.md:2763-3011`, S8-8).
 
 ### III.5 The selector (off in production)
 
@@ -609,7 +609,7 @@ minimiser is asked to repair what the builder could not draw (`s17/LEDGER.md` L2
 ### IV.8 What the physics is for
 
 The record's settled role for both energies is a validity stage, not an accuracy stage:
-`docs/FINDINGS.md:3685` (S8-12, "AMBER is a validity stage, not an accuracy stage");
+`docs/FINDINGS.md:3687` (S8-12, "AMBER is a validity stage, not an accuracy stage");
 `s17/LEDGER.md` L24 (the validity frontier splits in two, and the incumbent's restraint set
 wins); `s18/LEDGER.md` L15, L17 (`leg_contact` fails as a term in the objective and is harmful
 on the deployed one); `s21/LEDGER.md` L24, L33 (the Legacy-to-AMBER continuation is degenerate
@@ -758,7 +758,7 @@ noise, which is what proves the disagreement is bias (`s25/QUANTUM.md` 4.2):
 
 | instrument | cosine with the exact gradient | norm ratio |
 |---|---|---|
-| S5, the first measurement (`docs/FINDINGS.md:390-425`) | -0.023 | not recorded |
+| S5, the first measurement (`docs/FINDINGS.md:392-427`) | -0.023 | not recorded |
 | S9, 10 qubits, 1024 amplitudes enumerated (`core/quantum.py:42`) | +0.655634 | 0.758 |
 | the consolidation audit, exact / sampled (`verify/cvar_audit.json`) | +0.6847 / +0.685 | not recorded |
 | S25 re-verification, n = 7, L = 3, alpha = 0.15, deployed energy shape | +0.566586 | 0.519 |
@@ -768,8 +768,8 @@ noise, which is what proves the disagreement is bias (`s25/QUANTUM.md` 4.2):
 A third figure, +0.524 over 36 checks on the S8 instrument, lives only in project memory and is
 not in Appendix B (`s26/EXAMINATION.md` C24). There is no universal constant; what reproduces is
 the sign, the order of magnitude and the mechanism. The defect was first found and priced in
-S5 (`docs/FINDINGS.md:390`, "A defect in the shipped CVaR gradient") and re-audited against two
-references in S8-9 (`docs/FINDINGS.md:3169`) and S9-5 (`docs/FINDINGS.md:4219`).
+S5 (`docs/FINDINGS.md:392`, "A defect in the shipped CVaR gradient") and re-audited against two
+references in S8-9 (`docs/FINDINGS.md:3171`) and S9-5 (`docs/FINDINGS.md:4221`).
 
 ### V.6 The tail-subset-of-prefix theorem
 
@@ -1051,15 +1051,15 @@ produces worse physics.
 
 ### V.11 The quantum record across the sprints
 
-- S5: the CVaR gradient defect found and priced (`docs/FINDINGS.md:390`); a VQE over segment
-  choices with its encoding and limits stated (`docs/FINDINGS.md:426`).
+- S5: the CVaR gradient defect found and priced (`docs/FINDINGS.md:392`); a VQE over segment
+  choices with its encoding and limits stated (`docs/FINDINGS.md:428`).
 - S6: VQE/CVaR assembly gives a narrow pool whose narrowness cannot be exploited
-  (`docs/FINDINGS.md:1043`).
+  (`docs/FINDINGS.md:1045`).
 - S8-9: CVaR-VQE over the discrete hypothesis set, and the integrated four-component system
-  priced component by component (`docs/FINDINGS.md:3262`, `:3299`); the gradient audited against
+  priced component by component (`docs/FINDINGS.md:3264`, `:3299`); the gradient audited against
   two references (`:3147`).
 - S9-5: refinement's failure located in selection; the four-component ablation conclusive; the
-  gradient defect fixed and priced against an exact reference (`docs/FINDINGS.md:4176-4235`).
+  gradient defect fixed and priced against an exact reference (`docs/FINDINGS.md:4178-4237`).
 - S12: the mandated quantum component, "a verified problem, and a classical win"
   (`s12/SPRINT12_DOSSIER.md` section XVIII): 20 of 20 alpha x T arms lose, and the VQE's eight
   most probable states never beat the eight best classical ones.
@@ -1138,7 +1138,7 @@ weights and to nothing else that was varied.
 Sprints 1 to 4 predate the record kept here; their tree is in git history at `5fa05cd` and their
 one surviving claim (that physics ranks real geometry) was re-measured and overturned in S5 and
 S7. From S5 the record is `docs/FINDINGS.md` (S5 to S11, with its corrections ledger at lines
-60 to 140 (the S26 block appended at L130) and its index at 141 to 233), the sprint dossiers `s12/` to `s15/`, and the live
+60 to 142 (the S26 block appended at L130) and its index at 143 to 235), the sprint dossiers `s12/` to `s15/`, and the live
 ledgers `s14/LEDGER.md` to `s26/LEDGER.md`. `docs/CONDENSED_REPORT.md` condenses S5 to S13 and
 `docs/STATE_BRIEF_2026-09-12.md` section 7 gives one line per sprint. Each section below has the
 same six fields. "Falsifier" names the pre-registered condition where one existed; formal
@@ -1146,7 +1146,7 @@ pre-registration began in S15, and before that the field names the test that dec
 sprint. Numbers are quoted from the named section or ledger entry, which names its artefact;
 Appendix B lists them as cited.
 
-### VI.1 Sprint 5: the wall is located (`docs/FINDINGS.md:145`, sections at 248 to 780)
+### VI.1 Sprint 5: the wall is located (`docs/FINDINGS.md:147`, sections at 248 to 780)
 
 Question. A K = 500 retrieval pool holds a 1.71 A member on average and the shipped selector
 returns 3.45 A (both single window): where between the two is the accuracy lost, and can a
@@ -1173,7 +1173,7 @@ control: AMBER is worse, not better.
 
 Open. In-band discrimination, carried to S6.
 
-### VI.2 Sprint 6: selection is measured out (`docs/FINDINGS.md:162`, sections at 781 to 1331)
+### VI.2 Sprint 6: selection is measured out (`docs/FINDINGS.md:164`, sections at 781 to 1331)
 
 Question. Can any ranker, learned or physical, order the near-native band of a pool?
 
@@ -1198,7 +1198,7 @@ Retracted. The +0.320 combiner effect (section 12).
 
 Open. The inter-generator agreement lead (closed in S7 as a difficulty thermometer).
 
-### VI.3 Sprint 7: the predictor is the constraint (`docs/FINDINGS.md:177`, sections at 1332 to 2088)
+### VI.3 Sprint 7: the predictor is the constraint (`docs/FINDINGS.md:179`, sections at 1332 to 2088)
 
 Question. Is the distance predictor improvable, and does anything rank the truth first?
 
@@ -1221,7 +1221,7 @@ Retracted. "ESM adds nothing" and "random fragments beat retrieval" (sections 11
 
 Open. The aggregation metric, carried to S8.
 
-### VI.4 Sprint 8: the full architectural attack (`docs/FINDINGS.md:191`, sections S8-1 to S8-14 at 2089 to 3899)
+### VI.4 Sprint 8: the full architectural attack (`docs/FINDINGS.md:193`, sections S8-1 to S8-14 at 2089 to 3899)
 
 Question. With the ranker line closed, does any architectural change (representation, pool
 construction, retrieval key, generation, synthesis, physics) move the endpoint?
@@ -1239,7 +1239,7 @@ worth 0.016 A (S8-6); inverse folding is the least misspecified objective and st
 (S8-7); inside the near-native band the score is worse than a coin flip and consensus is the
 only discriminator, giving the first arm in three sprints with a CI excluding zero, a score
 filter plus consensus medoid at -0.172 A [-0.316, -0.027] single window, 74W/47L (S8-8,
-`docs/FINDINGS.md:2915-2957`); the channels' errors are
+`docs/FINDINGS.md:2917-2959`); the channels' errors are
 decorrelated and it buys 0.01 A (S8-9); generation is worth nothing as candidates but exposes a
 second law (S8-10, corrected by S8-13: the transfer law is the identity map where we operate);
 synthesis beats selection at 3.204 A, replicated on dev (S8-11); AMBER is a validity stage, not
@@ -1254,7 +1254,7 @@ correction at 2612).
 
 Open. Synthesis, taken to the benchmark in S9.
 
-### VI.5 Sprint 9: the benchmark pass (`docs/FINDINGS.md:208`, sections S9-1 to S9-10 at 3900 to 4607)
+### VI.5 Sprint 9: the benchmark pass (`docs/FINDINGS.md:210`, sections S9-1 to S9-10 at 3900 to 4607)
 
 Question. Does the synthesis architecture's tuning gain transfer to the sealed benchmark?
 
@@ -1277,7 +1277,7 @@ Retracted. The tuning gain as a transferable effect.
 
 Open. Why the non-replication (S10).
 
-### VI.6 Sprint 10: adjudication and bounds (`docs/FINDINGS.md:220`, sections S10-1 to S10-5 at 4608 to 5159)
+### VI.6 Sprint 10: adjudication and bounds (`docs/FINDINGS.md:222`, sections S10-1 to S10-5 at 4608 to 5159)
 
 Question. Was the non-replication contamination or concentration, and where is the remaining
 headroom?
@@ -1300,7 +1300,7 @@ Retracted. S10-1's identity audit (void, S10-4).
 
 Open. Recognition, named as the barrier.
 
-### VI.7 Sprint 11: performance engineering and consolidation (`docs/FINDINGS.md:227`, S11-1 at 5160, S11-2 at 5219)
+### VI.7 Sprint 11: performance engineering and consolidation (`docs/FINDINGS.md:229`, S11-1 at 5160, S11-2 at 5219)
 
 Question. Do the four mandated components run, and can the codebase be consolidated without
 changing a number?
@@ -3347,7 +3347,8 @@ is superseded by the 370/357/13 of `s26/TEST_RUN.md`; and the 0.524
 sampled tail-only cosine inside C24 is replaced by the three instrument-specific values of
 `s25/QUANTUM.md` section 4.2. "as stored" means the leaf is the number to the precision printed;
 "as cited" means the number is quoted from the named document section, which names its own
-artefact; "as asserted" means a passing test pins it.
+artefact; "as asserted" means a passing test pins it. Line numbers into `docs/FINDINGS.md` are
+those of commit `73d82db5` (the S26 corrections block, L130, moved every body line by 24).
 
 | number | where used | artefact (file :: key, or file:line) | stored value |
 |---|---|---|---|
@@ -3366,7 +3367,7 @@ artefact; "as asserted" means a passing test pins it.
 | 2.2261, 2.8334, -2.1496, 0.822 | III | `s24/results/priorladder.json :: rows[*]/MASS1.0, rows[*]/MASS0.1, rows[*]/MASS0.0` (means over 126 rows) | derived: (2.833382 - 3.048338)/0.1 = -2.1496; 3.048338 - 2.226080 = 0.8223 |
 | 4.0648 | I, II, III | `s12/results/s14_ladder.json :: rows/L0_constant_helix/mean` | 4.064753929494389 |
 | 2.9610, 2.9507 | I | `s9/final_report.json :: dist/full/mean, dist/shipped/mean`, asserted within 5e-4 by `tests/test_pipeline.py::test_the_committed_benchmark_report_still_holds_its_reference_numbers` (not opened by this lane) | as asserted |
-| +0.0103 [-0.1596, +0.1803], 31W/29L | I | `docs/FINDINGS.md:4501-4629` (S9-10), naming `s9/final_report.json` | as cited |
+| +0.0103 [-0.1596, +0.1803], 31W/29L | I | `docs/FINDINGS.md:4503-4631` (S9-10), naming `s9/final_report.json` | as cited |
 | 2.9614, 3.8122, 22.3%, 0.649, 80 of 126, 3.803955, 1.8e-15, 3.867 | II, III | `s26/results/e_reproduce.json :: summary/virtual_bond, n_rows` | as stored |
 | +0.1664, +0.0977, [+0.0049, +0.3379], 16 of 126 | II, III | `s26/results/e_reproduce.json :: summary/projection_gap_arm_minus_avg, n_rows` | as stored |
 | 0.0342, 0.0958, 0.2051 | II | `s26/results/q_mde_reference.json` | as stored |
@@ -3376,15 +3377,15 @@ artefact; "as asserted" means a passing test pins it.
 | 5370, -1290.6, 0.19, 52.0; 6.0e12, 1262.4, 0.61, 1166.1; 1172.7 (2BP4) | III | `s26/results/e_trace_1S9Z.json`, `e_trace_9KAR.json` (relax stage); `bench_results/cache/1fc9f2dcf489e2fb/2BP4.json` | as stored |
 | 7193, 9814, -1..19, -6..32, 144, 420, 105, 91, 183, 17 centres, 760, 488, 483, 0.6926..7.2688, 2.2420..5.1791, 401 98 193 161 284 260 372 373 381 382, 44/449, 3.75, 1.97, 1.16, 8, 128, 5.05..21.07, 0.23..2.70, 5.62..23.44, 7.58, 5.34, 1.40 | III | `s26/results/e_trace_1S9Z.json`, `s26/results/e_trace_9KAR.json` | as stored |
 | 3.3135, 3.3443 | III | `s8/integrate_vqe.json :: arms/vqe_LFO/sel, arms/medoid128/sel` (reproduced by `tests/test_pipeline.py::test_the_four_components_all_execute_and_reproduce_their_published_numbers`) | as stored |
-| 0.288 | III | `docs/FINDINGS.md:1992-2059` (S7 finding 11; its per-target artefact, s7/repr_tune.json, is lost, S26 ledger L11) | as cited |
-| -0.172 [-0.316, -0.027], 74W/47L | VI | `docs/FINDINGS.md:2923` (S8-8 table) | as cited |
+| 0.288 | III | `docs/FINDINGS.md:1994-2061` (S7 finding 11; its per-target artefact, s7/repr_tune.json, is lost, S26 ledger L11) | as cited |
+| -0.172 [-0.316, -0.027], 74W/47L | VI | `docs/FINDINGS.md:2925` (S8-8 table) | as cited |
 | 8.3 to 23.3 | IV | `s15/LEDGER.md` row 0.8 (`s15/results/audit_amber_cost_sweep.json`) | as cited |
-| 0.016 | III | `docs/FINDINGS.md:2401` (S8-6 heading) | as cited |
+| 0.016 | III | `docs/FINDINGS.md:2403` (S8-6 heading) | as cited |
 | +0.142 | III | `ARCHITECTURE.md` section 2.5 | as cited |
 | +0.0207 | III, IV | `bench_results/baseline_tuning126.json :: science/rmsd_full/mean, science/rmsd_arm/mean` | derived: 3.2354598538973844 - 3.214765154210998 = 0.0207 |
-| 1.386 | II | `docs/FINDINGS.md:2773-2782` (S8-8) | as cited |
+| 1.386 | II | `docs/FINDINGS.md:2775-2784` (S8-8) | as cited |
 | 470, 13, 47 of 500 | II, III | `tests/test_data.py:305`; `README.md` (fold repin; layout) | as asserted |
-| 23, 5 | II | `docs/FINDINGS.md:60-140`; `s25/LEDGER.md` L5, L7, L9, L11, L15 | as cited |
+| 23, 5 | II | `docs/FINDINGS.md:60-142`; `s25/LEDGER.md` L5, L7, L9, L11, L15 | as cited |
 | 4/126, 2/60 | II | `s24/LEDGER.md` L4; `s26/results/i_identity_audit.json` | as cited |
 | a40581ad...422d, 8002 | II | `s26/results/pinned_hashes.json` | as stored |
 | 1000 | III | `core/amber.py:1282`; `s8/integrate.py:292` | as in source |
@@ -3416,7 +3417,7 @@ artefact; "as asserted" means a passing test pins it.
 | 0.0761 bits | V | `s25/results/q_alpha.json` (alpha = 1, T = 0.1 cell) | as cited (`s25/QUANTUM.md` 3.4) |
 | VQE_LFO table, 78 of 126, 0.6190 | V | `core/pipeline.py:113`; `s25/results/q_alpha.json :: results/share_of_targets_with_no_tail_constraint, results/n` | derived: 0.6190476190476191*126 = 78 |
 | 1.000000000, 4.597e-10, 4.663e-10, 42 | V | `s25/results/q_verify.json :: results` | derived: 2*21 = 42 |
-| +0.655634 / 0.758, +0.566586 / 0.519, +1.000000, +0.994 | V | `core/quantum.py:42` (S9 instrument); `s25/results/q_verify.json :: results` (S25 re-verification); `docs/FINDINGS.md:3182` (the sampled estimator, S8-9) | as stored |
+| +0.655634 / 0.758, +0.566586 / 0.519, +1.000000, +0.994 | V | `core/quantum.py:42` (S9 instrument); `s25/results/q_verify.json :: results` (S25 re-verification); `docs/FINDINGS.md:3184` (the sampled estimator, S8-9) | as stored |
 | 2592, 1620, 0, 0, 1424 (54.9%), 972 / 972; 3888, 29.9%; 17574, 58.8%; 2016 / 2016 | V | `s25/results/q_verify.json`; S24 harness and coordinator runs as cited in `s25/QUANTUM.md` section 5; `s22/LEDGER.md` (Gate 1) | as stored / as cited |
 | 3.4540, 3.3414, 3.2835, 3.3135 | V | `s8/integrate_vqe.json` (S8 instrument rungs) | as stored |
 | alpha-effect table: -0.1126 (0.0792), -0.1067 (0.0644), +0.0279 (0.0518), -0.0011 (0.0477), +0.0126 (0.0268), +0.0039 (0.0240) | V | `s25/results/q_alpha.json` | as stored |
@@ -3438,11 +3439,11 @@ artefact; "as asserted" means a passing test pins it.
 | 0.000e+00, 0.2500, 0.008 to 0.037, 1.7e16, 0.088, +0.333 | V | `s13/SPRINT13_DOSSIER.md` section 11 | as cited |
 | +0.209 to +0.301, +0.27 to +0.62 | V | `s16/LEDGER.md` L17, L29 (`s16/integrate.py`; `s16/qphase_FINDINGS.md` section 3) | as cited |
 | 20 of 20 | V | `s12/SPRINT12_DOSSIER.md` section XVIII | as cited |
-| 2.406, 1.925 | VI | `docs/FINDINGS.md:2309` (S8-5); `docs/CONDENSED_REPORT.md:176` (correction) | as cited |
-| 3.204 | VI | `docs/FINDINGS.md:3625` (S8-11) | as cited |
-| 0.5 per pair, 0.044 | VI | `docs/FINDINGS.md:3832` (S8-14) | as cited |
-| 2.7x | VI | `docs/FINDINGS.md:4748` (S10-2) | as cited |
-| 1.62 | VI | `docs/FINDINGS.md:5241` (S11-2) | as cited |
+| 2.406, 1.925 | VI | `docs/FINDINGS.md:2311` (S8-5); `docs/CONDENSED_REPORT.md:176` (correction) | as cited |
+| 3.204 | VI | `docs/FINDINGS.md:3627` (S8-11) | as cited |
+| 0.5 per pair, 0.044 | VI | `docs/FINDINGS.md:3834` (S8-14) | as cited |
+| 2.7x | VI | `docs/FINDINGS.md:4750` (S10-2) | as cited |
+| 1.62 | VI | `docs/FINDINGS.md:5243` (S11-2) | as cited |
 | 3.184, 3.203, -0.019 [-0.058, +0.020], 63W/63L, 3.043 to 3.026, 2.534, 1.004, 5.425, 6.019, 10/18, 6/108, 1.2e-6, 1.486 | VI | `s12/SPRINT12_DOSSIER.md` sections I, IV, XVII | as cited |
 | 1.16, 0.04, 0.893, 882, -1.743, -0.029 | VI | `s12/SPRINT12_DOSSIER.md` section III; `docs/CONDENSED_REPORT.md:61-65` | as cited |
 | 1.594, 88%, 0.388, +0.043, -0.088, 32nd to 40th, +0.139, 3.764 / 3.667 / 3.920, 10.4, 3.770, 262,144, 9 | VI | `s13/SPRINT13_DOSSIER.md` sections 1 to 5; `docs/CONDENSED_REPORT.md:84-116` | as cited |
@@ -3468,11 +3469,11 @@ artefact; "as asserted" means a passing test pins it.
 | 1.75, 51, +0.054 | III, D | `s25/LEDGER.md` L6, L12 | as cited |
 | 5.551e-17 | V, D | `s25/results/q_verify.json :: results` | as stored |
 | 0.1 nats, fired | V, D | `s25/results/q_gibbs.json :: results/falsifier` | as stored |
-| -0.023 | V, D | `docs/FINDINGS.md:390-425` (S5 section 6) | as cited |
+| -0.023 | V, D | `docs/FINDINGS.md:392-427` (S5 section 6) | as cited |
 | 0.6847, 0.685 | V, D | `verify/cvar_audit.json :: D_tail_baseline_cosine_vs_paramshift, D_sampled_tail_cosine` | as stored |
 | 8.371, 2537.568, 303.137 | IX, D | `bench_results/compare_tuning126.json :: end_to_end_speedup, wall_s` | as stored |
 | 3.989, 3.213 | VI, D | `s12/SPRINT12_DOSSIER.md` section I | as cited |
-| 13 of 60, +0.0030 | II, D | `docs/FINDINGS.md:4593` (S9-10); S10-4 (artefact in git history at `5fa05cd`, S26 ledger L31) | as cited |
+| 13 of 60, +0.0030 | II, D | `docs/FINDINGS.md:4595` (S9-10); S10-4 (artefact in git history at `5fa05cd`, S26 ledger L31) | as cited |
 | A4 slopes -0.649 / -0.079 / +0.006, -0.252, -0.047, -0.311 / +0.024 / -0.008, -0.243 / -0.239 / -0.302 | V, VII | `s26/results/q_var.json :: results/slopes` | as stored |
 | +0.035, -0.246, 1.63, 2.5 to 370, 31 of 32, 1 to 3, 12 to 25, 4 to 21, 2.4e-2, 14 of 14, 3 of 7, 2,765 s, 0.08 GB | VII | `s26/LEDGER.md` L35; `s26/jobs_done/a4_var.json` | as cited |
 | 6 of 6, 1025 / 8128 = 0.126 | V, VII | `s26/results/a_dla_check.json`; `s26/LEDGER.md` L45 | as cited |
@@ -3569,7 +3570,7 @@ artefact and is a row of Appendix B; the docs file is cited as the pointer.
 | the score's per-pair target quantised to 17 values, up to 1.75 A of location error at long separation; 51 achievable arms, corr(gamma_eff, endpoint delta) +0.054 | `s25/LEDGER.md` L6, L12 | III.2 |
 | statevector check 5.551e-17 (this report had rounded to 5.6e-17) | `s25/results/q_verify.json :: results` | V.2 |
 | the S25 Gibbs falsifier (KL below 0.1 nats) fired against the draft | `s25/results/q_gibbs.json :: results/falsifier` | V.7 |
-| the S5 measurement of the gradient defect, cosine -0.023, and the consolidation audit's exact / sampled tail cosines 0.6847 / 0.685 | `docs/FINDINGS.md:390-425`; `verify/cvar_audit.json` | V.5 |
+| the S5 measurement of the gradient defect, cosine -0.023, and the consolidation audit's exact / sampled tail cosines 0.6847 / 0.685 | `docs/FINDINGS.md:392-427`; `verify/cvar_audit.json` | V.5 |
 | the entangler-deletion contrast's source, -0.013 [-0.095, +0.077] | `s20/LEDGER.md` L1 | V.7, Appendix B |
 | the optimised arm's end-to-end speed-up, 8.371x (2537.568 s to 303.137 s, both cold, 1 against 8 workers) | `bench_results/compare_tuning126.json :: wall_s, end_to_end_speedup` | IX.4 |
 | B1's feasibility numbers | `s26/results/b1_feasibility.json`; `s26/LEDGER.md` L13 | VII.2 |
@@ -3581,7 +3582,7 @@ artefact and is a row of Appendix B; the docs file is cited as the pointer.
 | 3.2126 (their headline's leaderboard rebuild) against 3.2148 (this report's production cache); 0.1643 against 0.1664 for the projection gap; T030 0.18242 against 0.18198 | Not a disagreement: the same built chain on two emission paths (the results lab re-projects the stored cloud and round-trips through PDB quantisation, up to 0.171 A per target, `s26/LEDGER.md` L14; `s26/EXAMINATION.md` H). Both reports say so. This report quotes the cache number as the production result and names the rebuild beside it. |
 | `bench_results/compare_tuning126.json :: science.rmsd_arm` (theirs) against `bench_results/baseline_tuning126.json :: science/rmsd_arm/mean` (this report) | The same values: `compare_tuning126.json :: science_delta` is 0.0 on every science key except two at 4.4e-16. Either path is valid. |
 | 5.6e-17 (this report, from `s25/QUANTUM.md`) against 5.551e-17 (theirs) | The artefact says 5.551e-17; corrected here. |
-| the benchmark leak count: "13 of 60 targets have a pool window at >= 0.6 identity" (their B.2, from `docs/FINDINGS.md:4593`) against the 2/60 of this report | Two criteria, both true: 13/60 is the >= 0.6 identity count of S9-10 (priced +0.0030 A in S10-4, artefact in git history at `5fa05cd`, L31); 2/60 is the verbatim self-copy defect of S24 L4 that lane W bounded (L44). This report keeps 2/60 as the declared leak and now names the 13/60 criterion beside it (II.1). The two benchmark target ids printed in `docs/FINDINGS.md` and in their table are not repeated here. |
+| the benchmark leak count: "13 of 60 targets have a pool window at >= 0.6 identity" (their B.2, from `docs/FINDINGS.md:4595`) against the 2/60 of this report | Two criteria, both true: 13/60 is the >= 0.6 identity count of S9-10 (priced +0.0030 A in S10-4, artefact in git history at `5fa05cd`, L31); 2/60 is the verbatim self-copy defect of S24 L4 that lane W bounded (L44). This report keeps 2/60 as the declared leak and now names the 13/60 criterion beside it (II.1). The two benchmark target ids printed in `docs/FINDINGS.md` and in their table are not repeated here. |
 | "each fold model saw ~100 of the other 125 dev natives": their citation `s20/LEDGER.md` L-B against this report's `s24/LEDGER.md` L8 | The sentence is at `s24/LEDGER.md:668` (entry L8); the S20 entry carries the fold-CI discussion. This report's citation stands. |
 | the blind pipeline: their 3.989 against shipped 3.213 (all 126) beside this report's 3.749 against 2.745 (the 108 ordinary targets) and 5.425 against 6.019 (FAIL18) | Both from `s12/SPRINT12_DOSSIER.md` section I on different subsets; the 126-target pair is added to VI.8 for completeness. |
 | ESM against one-hot, -0.288 A: their Appendix D9 records that the per-target artefact `s7/repr_tune.json` is lost (`s26/LEDGER.md` L11) | Agreed; this report's row cites `docs/FINDINGS.md` S7-11 and now carries the lost-artefact caveat. |
@@ -3602,7 +3603,7 @@ artefact and is a row of Appendix B; the docs file is cited as the pointer.
   as a measurement). A memory file is not an artefact; none of those numbers is quoted here
   except 6.43, which this report attributes to `docs/STATE_BRIEF_2026-09-12.md` section 8 as an
   operational estimate, not a measurement.
-- Their Appendix C (the corrections ledger) restates `docs/FINDINGS.md:60-140` and the sprint
+- Their Appendix C (the corrections ledger) restates `docs/FINDINGS.md:60-142` and the sprint
   ledgers; this report's Part VI carries the same corrections sprint by sprint and adds nothing
   from their table.
-- Their reading of `docs/FINDINGS.md:4593` names two benchmark targets; not repeated here.
+- Their reading of `docs/FINDINGS.md:4595` names two benchmark targets; not repeated here.
