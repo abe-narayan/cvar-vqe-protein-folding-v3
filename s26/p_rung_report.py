@@ -43,6 +43,36 @@ def mix_lfo(rows, folds, lams, key="arm"):
     return out, chosen, A
 
 
+BANDS = ((9, 10), (11, 12), (13, 14), (15, 16))
+
+
+def strata(vals, base, pdbs, lines):
+    """Length-stratified and FAIL18-stratified paired effects (descriptive: n per stratum is 12-48,
+    so no stratum carries its own verdict; SE and W/L are printed so the reader can see the power)."""
+    n_of = {t["pdb"]: int(t["n"]) for t in I.targets()}
+    fail = set(I.FAIL18)
+    out = {}
+    for k in ("arm", "cloud", "sel"):
+        d = vals[k] - np.array([r[k] for r in base])
+        rows = []
+        for lo, hi in BANDS:
+            m = np.array([lo <= n_of[p] <= hi for p in pdbs])
+            rows.append(("len %d-%d" % (lo, hi), m))
+        rows.append(("FAIL18", np.array([p in fail for p in pdbs])))
+        rows.append(("other108", np.array([p not in fail for p in pdbs])))
+        out[k] = {}
+        for lab, m in rows:
+            x = d[m]
+            if len(x) == 0:
+                continue
+            se = float(x.std(ddof=1) / np.sqrt(len(x))) if len(x) > 1 else float("nan")
+            out[k][lab] = {"n": int(len(x)), "mean": float(x.mean()), "median": float(np.median(x)), "se": se,
+                           "W": int((x < 0).sum()), "L": int((x > 0).sum()),
+                           "mean_rung": float(vals[k][m].mean()), "mean_shipped": float(np.array([r[k] for r in base])[m].mean())}
+        lines.append("  strata [%s]: " % k + " | ".join("%s n=%d %+.3f (SE %.3f, med %+.3f, %dW/%dL)" % (lab, v["n"], v["mean"], v["se"], v["median"], v["W"], v["L"]) for lab, v in out[k].items()))
+    return out
+
+
 def report(rung, seed=0):
     base = L._rows("shipped", seed)
     if base is None:
@@ -92,6 +122,7 @@ def report(rung, seed=0):
             c = ST.compare(vals[k], b, folds, names=pdbs, label="%s vs shipped -- %s" % (rung, lab))
             out["stats"][k] = c; lines.append(ST.fmt(c))
         out["progress"] = g
+        out["strata"] = strata(vals, base, pdbs, lines)
         lines.append("  gamma-equivalent: gam_eff prob-space %+.4f at cos %+.3f ; loc-space %+.4f at cos %+.3f ; MAE %.4f (diagnostic only)."
                      % (g["gam_prob"], g["cos_prob"], g["gam_loc"], g["cos_loc"], g["mae"]))
         lines.append("  CAVEAT (S25 L12): -2.1496 x gam_eff is redeemable only at cos = 1; a real operator travelling 25%% at cos 0.5 is worth +0.024 A. Never quote the product alone.")

@@ -158,3 +158,44 @@ the S7-11 ESM number is CITED, ARTEFACT LOST (D6) and is re-measured by the C2 l
   all read native quantities and wait for "PHASE 0 SIGNED OFF".
 - Did not edit `p_ladder.py` after `p_train_noesm` registered; the hand-off code lives in
   `p_deliver.py` for that reason.
+
+## 9. C2 LADDER RESULTS SO FAR (2026-09-13 22:50; ledger L56, L57, L62, L63, L65, L66, L67, L72)
+
+All rungs through one path (`s26/p_ladder.py`), paired per target against the shipped posterior;
+built chain on the rebuild basis 3.2126 (L57), point cloud 3.0483, selection 3.4540; MDE per
+comparison from `ST.compare`; fold CI is the deciding interval.
+
+| rung | inputs / change | arm effect (SE, MDE, x) | fold CI | folds | sel effect (x MDE) | verdict (arm) | gam_eff prob / cos | MAE |
+|---|---|---|---|---|---|---|---|---|
+| pca32 | retrained shipped recipe | 0.0000 (126 ties) | -- | 5/5 | 0.0000 | IDENTITY (gate 2 passes) | 0 / 0 | 2.339 |
+| noesm | no ESM block | +0.208 (0.073, 0.205, 1.01x) | [+0.099, +0.394] | 5/5 | +0.330 (1.27x) | WORSE, Type-M zone | +0.116 / 0.25 | 2.548 |
+| conly | contact head only | +0.122 (0.071, 0.198, 0.62x) | [-0.035, +0.267] | 4/5 | +0.112 (0.42x) | NOT MEASURED | +0.109 / 0.24 | 2.437 |
+| wide | 768 x 4 | +0.032 (0.046, 0.128, 0.25x) | [-0.030, +0.128] | 3/5 | +0.097 (0.48x; fold CI > 0) | NOT MEASURED | +0.096 / 0.18 | 2.348 |
+| pca32f | per-fold 32-PCA | +0.018 (0.049, 0.138, 0.13x) | [-0.073, +0.097] | 4/5 | -0.032 (0.17x) | NOT MEASURED | +0.111 / 0.24 | 2.317 |
+| pca128 | per-fold 128-PCA | +0.076 (0.063, 0.176, 0.43x) | [-0.069, +0.216] | 3/5 | +0.025 (0.13x) | NOT MEASURED | +0.117 / 0.21 | 2.386 |
+
+Isolations (paired, same path): conly - noesm (the contact head alone) -0.086 arm (0.51x MDE),
+-0.218 sel (1.00x, fold [-0.374, -0.037], 4/5); pca128 - pca32f (components only) +0.058 arm
+(0.32x, 3/5).
+
+**DEMONSTRATED.** (D7) The ESM channel is worth -0.208 A on the built chain and -0.330 A on
+selection, 5/5 folds each (L62); the lost S7-11 figure is re-measured and extended to the readout.
+(D8) The retrained shipped recipe reproduces the pipeline's emission on 126/126 targets (L65):
+every rung difference is attributable to inputs or architecture, not retraining noise.
+(D9) No rung beats the shipped prior; the closest to a gain (pca32f on the point cloud, -0.014)
+is 0.11x its MDE. **The ESM-input axis is flat at n = 126 for every reduction of the 650M model
+and for 2.7x the capacity, as S7-11 and S9-8 predicted.**
+
+**HYPOTHESIS (descriptive strata, n = 18 to 48, no verdicts).** (H1) On FAIL18 every worse rung
+is BETTER than the shipped prior (noesm -0.406, conly -0.513, wide -0.195, pca32f -0.187, pca128
+-0.253; 10-12W of 18 each; SE 0.16-0.28) while every one is worse on other108 (+0.05 to +0.31):
+S12's "on the failure class sequence conditioning is harmful" (blind 5.425 vs shipped 6.019)
+reproduced at the level of the prior's inputs. FAIL18 is an ORACLE stratum (zero recall) and
+this is not a router (S22 L10). (H2) The 9-10-mers carry the ESM channel's largest loss when it
+is removed (+0.40 noesm, +0.19 conly) and the 13-14-mers the smallest (+0.03, +0.10).
+
+**What damaged my expectations.** gam_eff is POSITIVE (+0.10 to +0.12 in probability space at
+cos 0.18 to 0.25) for five rungs that are null-to-worse: a large move at low cosine projects
+onto the truth direction and loses on the orthogonal component. S25 L12's caveat is reproduced
+from the training side, on achievable rungs. I expected the sign of gam_eff to track the sign of
+the endpoint; it does not.
