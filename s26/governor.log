@@ -864,3 +864,14 @@
 2026-09-13T20:49:13 SAMPLE   ram=70.6% (11.83GB used, 4.92GB free) cpu=56.2% (15s mean 56.1%) jobs=4 amber=1 queued=0 lanes=7
 2026-09-13T20:50:13 SAMPLE   ram=70.6% (11.83GB used, 4.92GB free) cpu=55.7% (15s mean 55.6%) jobs=4 amber=1 queued=0 lanes=7
 2026-09-13T20:51:13 SAMPLE   ram=71.6% (11.99GB used, 4.76GB free) cpu=58.6% (15s mean 58.8%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:51:48 REAP     ph_branch_relax (pid 14764) is gone; registration removed
+2026-09-13T20:52:13 SAMPLE   ram=71.7% (12.01GB used, 4.74GB free) cpu=63.9% (15s mean 65.4%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:53:13 SAMPLE   ram=71.0% (11.89GB used, 4.86GB free) cpu=55.9% (15s mean 55.6%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:54:13 SAMPLE   ram=70.8% (11.86GB used, 4.89GB free) cpu=56.1% (15s mean 56.9%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:55:13 SAMPLE   ram=70.6% (11.82GB used, 4.93GB free) cpu=55.2% (15s mean 54.9%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:56:13 SAMPLE   ram=71.1% (11.90GB used, 4.85GB free) cpu=56.3% (15s mean 55.7%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:57:13 SAMPLE   ram=70.5% (11.80GB used, 4.95GB free) cpu=44.1% (15s mean 51.9%) jobs=3 amber=0 queued=0 lanes=7
+2026-09-13T20:58:13 SAMPLE   ram=70.7% (11.84GB used, 4.91GB free) cpu=46.1% (15s mean 49.9%) jobs=3 amber=0 queued=0 lanes=7
+2026-09-13T20:59:13 SAMPLE   ram=70.5% (11.81GB used, 4.94GB free) cpu=45.5% (15s mean 44.8%) jobs=3 amber=0 queued=0 lanes=7
+2026-09-13T21:00:13 SAMPLE   ram=70.6% (11.83GB used, 4.92GB free) cpu=44.1% (15s mean 44.3%) jobs=3 amber=0 queued=0 lanes=7
+2026-09-13T21:00:43 REAP     p_eval_pca32 (pid 36536) is gone; registration removed
