@@ -1116,8 +1116,9 @@ the 2-design literature, not a measurement here.
 sentence for this part: on the deployed Hamiltonian an operator-growing (ADAPT) construction
 produces product circuits at alpha = 1, whose gradient variance does not decay with width because
 there is nothing entangled to train, and at alpha = 0.25 a 2-local family that decays like the
-fixed ansatz (-0.302 against -0.243 log2 per qubit); no width-scaling argument for the selector
-comes out of it (`s26/results/q_var.json :: results/slopes`).
+fixed ansatz (-0.302 against -0.243 log2 per qubit, a difference of -0.056 with a bootstrap 95% CI
+of [-0.182, +0.087], L119); no width-scaling argument for the selector comes out of it
+(`s26/results/q_var.json :: results/slopes`; `s26/results/q_var_boot.json`).
 
 **A1, the ADAPT endpoint (L68, L70, L75).** Part VII.1 carries the numbers. For this part: on the
 deployed Hamiltonian the optimum at alpha = 1 is a product state on every real target
@@ -1860,8 +1861,20 @@ held on P < 3n (14 of 14) and failed on Var < 1e-3 for 3 of 7 rows; H4d held. Ad
 the product-circuit reading rests on the ADAPT closures in `s26/results/q_dla.json ::
 results/adapt_sets`, not on `q_var.json`; and "-0.302 is the fixed ansatz's -0.243 within the
 sampling error" is asserted without a persisted slope CI (the qualitative conclusion, both slopes
-of order -0.25 to -0.30 and far from a 2-design's -1.0, is safe). Verdict: A4 gives Proposal A no
-width-scaling argument.
+of order -0.25 to -0.30 and far from a 2-design's -1.0, is safe). The bootstrap the caveat asked
+for landed as L119 (`s26/q_var_boot.py` -> `s26/results/q_var_boot.json`; 3,928 s, peak RSS
+0.09 GB; `s26/PREREG_A4.md` addendum 2): every A4 row re-measured with the same draws reproduces
+`q_var.json` at relative deviation 0.0 (35 fixed and 70 grown rows), and 2,000 percentile
+resamples of the draws within each width give the slopes their intervals: fixed -0.649 [-0.714,
+-0.596], -0.252 [-0.318, -0.187], -0.047 [-0.171, +0.201], -0.311 [-0.356, -0.267], -0.243
+[-0.294, -0.193]; grown minus fixed at alpha = 1 +0.571 [+0.500, +0.642] and +0.658 [+0.596,
++0.722] at T = 0, +0.346 [+0.265, +0.428] and +0.301 [+0.232, +0.369] at T = 0.3 (every interval
+excluding zero: the grown circuits do not decay); at alpha = 0.25, T = 0.3 the grown-L2 minus
+fixed difference is -0.056 [-0.182, +0.087] and grown-V +0.006 [-0.097, +0.123], so "decays like
+the fixed ansatz" is now a stored interval that includes zero. Predictions P4a and P4c held;
+P4b failed on one of five cells (the alpha = 0.10, T = 0 fixed slope, whose interval is wide
+because that gradient is supported on 13 of 128 states). Nothing in L35's direction changes.
+Verdict: A4 gives Proposal A no width-scaling argument.
 
 **A1, qubit-ADAPT-VQE in place of the fixed ansatz (L68; corrected by L75; Adversary L70:
 STANDS WITH CAVEAT; verdict L69).** Pre-registered in `s26/PREREG_A1.md` (09:00, before any
@@ -2012,7 +2025,12 @@ The ladder's decision (L112): no rung beats the shipped posterior on the built c
 stage-2 delivery file `s26/results/p_best_rung_chains.json` (126/126, complete) carries the
 production emission: `phi`, `psi` in radians, unwrapped (values up to 72.7 occur; wrap before any
 use that assumes (-pi, pi], L114), `ca`, `rmsd_arm` (mean 3.2148); stage 2 is therefore the
-stage-1 replication PH already ran (L87). The lane's own re-projection of the same rung
+stage-1 replication PH already ran (L87), verified in L118: `s26/ph_c3_verify.py` ->
+`s26/results/ph_c3_stage2_verify.json` (126/126, 5 s) compares the delivery with the production
+cache and finds `ca`, the wrapped phi and psi and `rmsd_arm` identical at 0.0 on 126 of 126
+(mean 3.2147652), so stage 2 reduces to stage 1 by identity, no relaxation is run, and the
+decision rule's outcome stands unchanged (`s26/C3_RESULT.md` addendum 4). The lane's own
+re-projection of the same rung
 (`p_deliver_shipped`, 567 s) is saved beside it as `p_best_rung_chains_rebuild_basis.json`
 (mean 3.2126, the L57 basis) as the cross-check that the ladder's anchor and the production
 chains are the same object up to the projection's multi-start sensitivity; it overwrote the
@@ -2692,7 +2710,7 @@ sprint. This part lists the S26 movements and the items that remain open at the 
 | The basis question (built chain is the result) | S25 L4, L8, L11 | Part II.2 |
 | The ansatz's dynamical Lie algebra as an unmeasured property | measured: full so(2^n) from depth 2 at n = 7; independently re-derived | S26 L27, L45; Part V.9 |
 | A width-scaling argument for Proposal A from grown (ADAPT) circuits | A4: product circuits at alpha = 1, fixed-ansatz decay at alpha = 0.25 | S26 L35, L47; Part VII.1 |
-| "Refine with physics" (the production AMBER relaxation) as an accuracy step | C3 stage 1: worse than do-nothing, worse than a matched random move, worse than a matched move toward a pool member; replicates S16 L27; kept as a validity step on 124 of 126 | S26 L39, L46; Part VII.3 |
+| "Refine with physics" (the production AMBER relaxation) as an accuracy step | C3 stage 1: worse than do-nothing, worse than a matched random move, worse than a matched move toward a pool member; replicated (L87); stage 2 reduces to stage 1 because the best C2 rung is the shipped prior (L118); kept as a validity step on 124 of 126 with its validity axis measured (L100) | S26 L39, L46, L87, L100, L118; Part VII.3 |
 | The steric reject at a physical threshold, with or without refill, on both bases | falsifier fired the other way on the point cloud and replicated on the built chain (harmful at 1e3 and 1e4, underpowered null at 1e5 and 1e6); the sixth and seventh instruments for the filter form of the functional lever | S26 L43, L54, L86; Part VII.4 |
 | The cis-peptide gap and the omega non-planarity gap as levers on this instrument | 0 cis natives, ensemble models or windows; the two-bond projection worth 0.000 A; the tight representation floor 0.083 A (non-planarity about 0.04 A) | S26 L22, L38, L48, L89; Part VII.4 |
 | Branch selection by the relaxed energy as an accuracy step | +0.0055 against the production choice (0.18x MDE; a 0.03 A gain would have been seen); the energy discriminates among branches as well as the objective and no better | S26 L88; Part VII.4 |
@@ -2712,7 +2730,6 @@ sprint. This part lists the S26 movements and the items that remain open at the 
 | Whether a better distance predictor is obtainable (the only steep lever, -2.15 A per unit toward truth); every input this machine can compute is measured flat (nine rungs) | a larger language model than this machine can hold, on a bigger machine; Proposal C's kept form (L117) | `s24/LEDGER.md` L13; `s26/PROPOSAL_C.md`; Part VII.3, VII.6 |
 | Proposal A's target-dependent Hamiltonian (A3) | the pre-registered A3 verdict (`a3_build` running) | Part VII.1 |
 | The rest of the C2 ladder (`raw` and the deferred rungs; the best rung so far is the shipped prior, L112) | a rung beating the shipped prior on the fold-clustered CI of the built chain, replicated | Part VII.3 |
-| C3 stage 2 (the relaxation on the best C2 rung), which is the stage-1 replication already run because the best rung is the shipped prior | nothing further unless `raw` or a deferred rung beats the shipped prior | S26 L39, L87, L112; Part VII.3 |
 | The 2/60 benchmark self-copy leak, now bounded MINOR (dev proxy 0.008 A with both channels measured on all four dev self-copies; own-native envelope 0.028 A mean CI to 0.151 A worst target on the built chain; 0.194 at the worst target on the selection basis); F3's control clause open (one of six control-out models) | by design only a fresh benchmark, which does not exist; the control-out models and a second seed of the 2P5H retrain if time allows | S26 L44, L49, L50, L55, L58, L108; Part VII.4 |
 | Where the target-specific third of the pool's coherent error comes from, and whether any native-free proxy is strong enough to act on it | a native-free proxy reaching the in-band ordering 2 A needs | `s19/LEDGER.md` L11, L14; `s17/LEDGER.md` L23 |
 | Publishing the trainability half | a manuscript from Part V.10 with V.9's scope correction | `s13/`, `s25/QUANTUM.md`; S26 L27 |
@@ -3301,6 +3318,8 @@ artefact; "as asserted" means a passing test pins it.
 | L112 to L116: 72.7, 6.19, 567 s, 0.128 GB, 6ed3b367 | VII | `s26/results/p_best_rung_chains.json`, `p_best_rung_chains_rebuild_basis.json`; `s26/LEDGER.md` L112, L114, L116 | as cited |
 | integration tier: 8, 165.6 s, 1.139 GB, 11, 368, 2, -489.9138948277905, 4,620 s, seven, 75, 7ad4ef68 | VII, IX | `s26/results/pytest_slow_integration.xml`; `s26/TEST_RUN.md`; `s26/LEDGER.md` L111, L113 | as cited |
 | the three verdicts (A REPLACE, B REPLACE, C KEEP WITH EDITS) and the slide 11 line | VII | `s26/PROPOSAL_A.md`, `s26/PROPOSAL_B.md`, `s26/PROPOSAL_B_REPLACEMENT.md`, `s26/PROPOSAL_C.md`, `s26/C3_RESULT.md`; `s26/LEDGER.md` L117 | as cited |
+| A4 bootstrap: 3,928 s, 0.09 GB, 35, 70, 2,000, -0.649 [-0.714, -0.596], -0.252 [-0.318, -0.187], -0.047 [-0.171, +0.201], -0.311 [-0.356, -0.267], -0.243 [-0.294, -0.193], +0.571 [+0.500, +0.642], +0.658 [+0.596, +0.722], +0.346 [+0.265, +0.428], +0.301 [+0.232, +0.369], -0.056 [-0.182, +0.087], +0.006 [-0.097, +0.123], 13 of 128, 0.23 to 0.60 | V, VII | `s26/results/q_var_boot.json`; `s26/jobs_done/a4_var_boot.json`; `s26/LEDGER.md` L119 | as stored / as cited |
+| C3 stage 2 verify: 3.2147652, 0.0 on 126 of 126, 5 s | VII, VIII | `s26/results/ph_c3_stage2_verify.json`; `s26/LEDGER.md` L118 | as stored / as cited |
 <!-- APPENDIX B ROWS -->
 
 ## APPENDIX C. THE S26 LEDGER (DRAFT: reproduced at the close)
