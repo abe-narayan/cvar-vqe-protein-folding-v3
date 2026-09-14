@@ -1206,3 +1206,21 @@ as a validity step. `s26/C3_RESULT.md` carries the sentence with the numbers for
 presentation. Stage 2 repeats this on lane P's best C2 rung when it is delivered.
 
 ---
+## L40 -- GOVERNOR KILLED BY THE HOST AT 10:10 FOR LOW MEMORY; AT 19:10 THE BOX WAS AT 91.8% RAM; THE TWO REMAINING LANE-P JOBS WERE STOPPED BY THE COORDINATOR (2026-09-13 19:11, coordinator)
+
+The harness stopped the governor v2 background process (pid 25480) at about 10:10 with the message
+"the system is running low on memory" (`s26/governor.log` ends at 10:10:36 with RAM 87.5%, six
+jobs registered). Every lane was then cut by the API session limit. At 19:10 the coordinator found:
+RAM 91.1 to 91.8% used with 1.5 GB available, no governor alive, a1_build_s0/s1, ph_reject_cloud
+and w_train_chain gone (their records, if any, are in `s26/jobs_done/`), `p_eval_shipped` suspended
+since 09:25 (0.03 GB; suspended by the governor before it died, never resumed), and `p_train_raw`
+running unsupervised since 16:50 at 1.11 GB (launched by lane P's chain driver through jobrun,
+which treats a stale governor snapshot as "go"). With the box at the campaign ceiling and the host
+already killing processes for memory, the coordinator terminated both lane-P jobs and the chain
+driver (per-fold checkpoints exist under `s26/models/p_ladder/`; lane P resumes the `raw` rung and
+the shipped evaluation from them) and restarted the governor. Nothing else of the campaign's is
+running. Rule added for jobrun: a stale governor snapshot is NOT "go" for a job whose est-ram
+exceeds 0.5 GB (implemented at the next resume; recorded here first).
+
+---
+
