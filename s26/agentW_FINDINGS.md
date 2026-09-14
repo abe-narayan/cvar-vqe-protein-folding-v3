@@ -15,7 +15,7 @@ No stock words; no em dashes.
 | at least three ideas nobody else proposed | FILED (three own, plus the mandatory one); the tie-break floor has PREREG, code, tests and a one-target probe; the identity floor is measured (Part E) | `s26/IDEA_tiebreak_noise_floor.md` + `PREREG_tiebreak_floor.md` + `w_tiebreak.py`, `s26/IDEA_conformational_identity_floor.md`, `s26/IDEA_window_provenance.md` |
 | the tournament's own ideas (L51: items 2 and 4) | item 2 conformational_identity_floor MEASURED AND POSTED (L52); item 4 tiebreak_noise_floor MEASURED AND POSTED (L64): floor 0.004 A on the 126-mean, 0.024 A paired MDE between two conventions, every hundredths-level recorded effect inside it | `s26/PREREG_identity_floor.md`, `s26/w_identity_floor_stats.py`, `s26/results/w_identity_floor.json`; `s26/PREREG_tiebreak_floor.md`, `s26/w_tiebreak.py`, `s26/w_tiebreak_report.py`, `s26/results/w_selfcopy_tiebreak_{draws,endpoint}.json`, `w_tiebreak_report.json` |
 | the top orphaned survivor: window_ensembling (lane P's idea, L51 item 6) | MEASURED AND POSTED (L84): refuted with power; ens3 minus shipped -0.0005 A (0.02x MDE), against the zero-information resample +0.0042 (0.14x); a gain of 0.028 A or more excluded; the fixed-K form of the mandatory direction is closed | `s26/PREREG_window_ensembling.md`, `s26/w_ensemble.py`, `s26/w_ensemble_test.py`, `s26/results/w_selfcopy_ensemble_{probe_1A13,clouds,endpoint}.json` |
-| the remaining orphans and extensions (L77) | preregs on disk before compute for window_provenance (census RUNNING), amber_prior_partner, partial_recall_gradient, memorisation_on_the_ladder; code written and synthetically checked for all four; Part B waits for the 1.9 GB headroom call | `s26/PREREG_{window_provenance,amber_prior_partner,partial_recall_gradient,memorisation_on_the_ladder}.md`, `s26/w_{provenance,amberprior,recall,ladder}.py` |
+| the remaining orphans and extensions (L77) | window_provenance census and ORACLE contrast POSTED (L85), its readout H_P3 RUNNING; amber_prior_partner probe done, stage 1 QUEUED; Part B's first retrain (2LMF/f4) QUEUED at est-ram 1.4; partial_recall_gradient and memorisation_on_the_ladder pre-registered with code ready | `s26/PREREG_{window_provenance,amber_prior_partner,partial_recall_gradient,memorisation_on_the_ladder}.md`, `s26/w_{provenance,amberprior,recall,ladder}.py` |
 | ideas found on the way (coordinator's request) | FILED: the partial-recall gradient below the 0.6 threshold; the own-native model placed on the S24 prior ladder | `s26/IDEA_partial_recall_gradient.md`, `s26/IDEA_memorisation_on_the_ladder.md` |
 | findings, ledger, status, commits | this file; L30, L44; STATUS 09:15, 09:31, 19:4x; commits `8d849504`, `213a5ebb` and the closing one | |
 
@@ -382,6 +382,48 @@ helpful direction is the K-variant ensemble on the point cloud (-0.012, 0.52x MD
 direction (the consensus readout improves with K on the cloud; the built chain does not follow).
 The mandatory test-time-ensembling direction is closed in the fixed-K form with this power
 statement; the widening-K form was closed by S17 L12. No deviation from the PREREG.
+
+---
+
+## 2d. WINDOW PROVENANCE: THE CENSUS AND THE ORACLE CLASS CONTRAST (tournament item 9; ledger L85; the readout test H_P3 running)
+
+`s26/PREREG_window_provenance.md`; jobs `w_provenance_census` (exit 0, 5 s, 0.004 GB;
+`s26/results/w_selfcopy_provenance_census.json`, complete 126/126, 0 unresolved) and
+`w_provenance_oracle` (exit 0, 10 s, 0.055 GB; `w_selfcopy_provenance_oracle.json`). Class rule
+tested synthetically (`s26/w_provenance_test.py` ALL OK).
+
+### 2d.1 Three quarters of every pool and of every top-75 is fragment windows; whole peptides are 0.6%. DEMONSTRATED, native-free.
+
+    class       K = 500 pool   shipped top-75   targets with one in the top-75
+    whole          0.6%            0.7%           30 / 126
+    terminal       8.0%            7.2%          113 / 126
+    interior      18.7%           18.3%
+    fragment      72.7%           73.8%
+
+The score keeps the pool's class mix (it neither favours nor removes peptide windows).
+
+### 2d.2 In the pool a peptide-derived window is 0.42 A nearer the native than a fragment window; inside the top-75 the gap is 0.09 to 0.13 A. ORACLE DIAGNOSTIC (single-window basis).
+
+    where    contrast (first minus second class, per-target mean rr)   effect    MDE     fold CI95             folds   verdict
+    pool     peptide_any minus fragment (n = 126)                       -0.416    0.131   [-0.447, -0.376]      5/5     BETTER (3.2x)
+    pool     whole+terminal minus fragment (126)                        -0.421    0.136   [-0.453, -0.388]      5/5     BETTER (3.1x)
+    pool     interior minus fragment (126)                              -0.411    0.136   [-0.447, -0.368]      5/5     BETTER (3.0x)
+    pool     whole+terminal minus interior (126)                        -0.011    0.085   [-0.055, +0.027]      3/5     NOT MEASURED (0.13x)
+    top-75   whole+terminal minus fragment (114)                        -0.131    0.116   [-0.165, -0.110]      5/5     BETTER, TYPE-M ZONE (1.13x)
+    top-75   peptide_any minus fragment (126)                           -0.086    0.090   [-0.116, -0.056]      5/5     NOT MEASURED (0.96x)
+    top-75   interior minus fragment (125)                              -0.061    0.093   [-0.104, -0.022]      4/5     NOT MEASURED (0.66x)
+    top-75   whole+terminal minus interior (113)                        -0.056    0.114   [-0.128, +0.007]      4/5     NOT MEASURED (0.49x)
+
+Any peptide window (whole, terminal or interior alike) is 0.41 to 0.42 A nearer the native than a
+fragment window in the pool, 5/5 folds, three times its MDE: S19's "the peptide corpus carries
+the sequence-structure channel" and S24 L8's "a fragment's conformation is held by contacts
+outside the window", measured for the first time on the single-window basis of the shipped
+pool; the window's position in its parent does not matter. The score removes most of it: inside
+the top-75 the remaining gap is at the edge of what n = 114 to 126 can see. By the PREREG's rule
+the achievable readout test H_P3 runs (fragment-class weight in {0, 0.5, 1, 2} chosen
+leave-fold-out on the built chain, against uniform and against the permuted-weight control;
+`s26/w_provenance_readout.py`, running); the registered expectation for it is NOT MEASURED (0.00
+to -0.02 A against an MDE of about 0.05).
 
 ---
 
