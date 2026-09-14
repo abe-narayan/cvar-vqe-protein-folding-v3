@@ -3765,3 +3765,16 @@ operator went, and the endpoint follows the location. Replication: deterministic
 models, fixed natives); nothing to replicate. Deviations from the PREREG: none. Not deployable
 by construction (own-native training); the value is the calibration of the currency the
 record uses to price a better prior.
+## L92 -- SEVEN LAUNCHER WAITERS STARTED BEFORE v2.3 WERE STARVED FOR TWO HOURS BY THE OLD FIXED CAP; RELAUNCHED UNDER THE FILE CAP (2026-09-14 00:10, coordinator)
+
+Waiters created before 22:25 read the cap of four at import and never saw the file cap of six
+(L83); with five or six jobs registered under the new cap they could never pass their own
+test. Found at 00:10 with no child and a start time of 22:05 to 22:07: p_eval_esm8m2 (P),
+pytest_slow_equivalence and pytest_slow_integration (I, AMBER), a2_dla_a1 and a4_var_boot (Q),
+a_strain_vs_spread (A), e_report_check5 (E). Each was terminated before it had launched
+anything and its exact command re-run under jobrun v2.3 (logs `s26/logs/relaunch_<name>.out`);
+the owners' done-file watchers are unaffected because the job names are unchanged. Lesson for
+the hygiene list: a launcher's cap must be read at every tick from the day it is written.
+
+---
+
