@@ -1967,3 +1967,4 @@
 2026-09-14T04:15:47 SAMPLE   ram=71.5% (11.98GB used, 4.77GB free) cpu=14.5% (15s mean 10.3%) jobs=1 amber=0 queued=0 lanes=8
 2026-09-14T04:16:47 SAMPLE   ram=71.1% (11.91GB used, 4.84GB free) cpu=19.2% (15s mean 17.8%) jobs=1 amber=0 queued=0 lanes=8
 2026-09-14T04:17:47 SAMPLE   ram=70.4% (11.79GB used, 4.96GB free) cpu=17.0% (15s mean 18.3%) jobs=1 amber=0 queued=0 lanes=8
+2026-09-14T04:18:47 SAMPLE   ram=70.4% (11.80GB used, 4.95GB free) cpu=5.3% (15s mean 17.3%) jobs=1 amber=0 queued=0 lanes=8
