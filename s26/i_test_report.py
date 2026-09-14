@@ -93,6 +93,7 @@ def render(state):
          "ceiling is a memory-guard skip and is counted apart from real skips.", ""]
     grand = {"passed": 0, "failed": 0, "errors": 0, "skipped": 0, "memory_guard_skips": 0,
              "total": 0}
+    optin = {"passed": 0, "failed": 0, "errors": 0, "skipped": 0, "total": 0}
     for name, j in state["jobs"].items():
         t = j["totals"]
         L += [f"## job `{name}`", "",
@@ -120,15 +121,34 @@ def render(state):
             for fn, x in fails:
                 L.append(f"- `{fn}::{x['test']}` ({x['kind']}): {x['message']}")
         L.append("")
-        if j.get("counts_in_grand_total", True):
+        if j.get("opt_in_tier"):
+            #: an opt-in job re-runs tests the suite total already counts as SKIPPED, so it
+            #: converts skips into outcomes rather than adding tests
+            for k in optin:
+                optin[k] += t[k]
+        elif j.get("counts_in_grand_total", True):
             for k in grand:
                 grand[k] += t[k]
+    uniq = dict(grand)
+    uniq["passed"] += optin["passed"]
+    uniq["failed"] += optin["failed"]
+    uniq["errors"] += optin["errors"]
+    uniq["skipped"] -= optin["total"] - optin["skipped"]
     L += ["## Combined (jobs marked as counting toward the suite total)", "",
           f"**{grand['total']} tests: {grand['passed']} passed, {grand['failed']} failed, "
           f"{grand['errors']} errors, {grand['skipped']} skipped "
-          f"({grand['memory_guard_skips']} memory-guard skips).**", "",
-          f"Rendered {time.strftime('%Y-%m-%d %H:%M')} by `s26/i_test_report.py`."]
+          f"({grand['memory_guard_skips']} memory-guard skips).**", ""]
+    if optin["total"]:
+        L += [f"Opt-in tier (`VERIFY_SLOW=1`, the same tests the suite counts as skipped): "
+              f"{optin['total']} run, {optin['passed']} passed, {optin['failed']} failed, "
+              f"{optin['errors']} errors, {optin['skipped']} still skipped.", "",
+              f"**Unique tests with the opt-in tier folded in: {uniq['total']} tests, "
+              f"{uniq['passed']} passed, {uniq['failed']} failed, {uniq['errors']} errors, "
+              f"{uniq['skipped']} skipped.**", ""]
+    L += [f"Rendered {time.strftime('%Y-%m-%d %H:%M')} by `s26/i_test_report.py`."]
     state["combined"] = grand
+    state["opt_in_tier"] = optin
+    state["combined_unique"] = uniq
     with open(OUT_MD, "w", encoding="utf-8") as fh:
         fh.write("\n".join(L) + "\n")
 
@@ -143,6 +163,9 @@ def main(argv=None):
     ap.add_argument("--no-grand-total", action="store_true",
                     help="record the job but do not count it toward the combined total "
                          "(a re-run of a file already counted)")
+    ap.add_argument("--opt-in", action="store_true",
+                    help="a VERIFY_SLOW=1 job: its tests are counted as skipped in the suite "
+                         "total, so its outcomes replace skips instead of adding tests")
     a = ap.parse_args(argv)
     state = load()
     if a.cmd == "record":
@@ -158,6 +181,7 @@ def main(argv=None):
             "xml": os.path.relpath(a.xml, ROOT).replace(os.sep, "/"), "files": files,
             "totals": totals(files), "commit": commit, "note": a.note,
             "counts_in_grand_total": not a.no_grand_total,
+            "opt_in_tier": bool(a.opt_in),
             "cmd": done.get("cmd", []), "tag": done.get("tag"), "est_ram_gb": done.get("est_ram_gb"),
             "start": done.get("start"), "end": done.get("end"), "wall_s": done.get("wall_s"),
             "exit_code": done.get("exit_code"), "peak_rss_gb": done.get("peak_rss_gb"),

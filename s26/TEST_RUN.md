@@ -113,8 +113,23 @@ skip reasons (`-rs`):
 - `test_pipeline.py::test_tuning_instrument_reference_numbers[optimised_tuning126_w6]` [real]: bench_results/optimised_tuning126_w6.json not present -- run the harness first
 - `test_pipeline.py::test_the_harness_refuses_to_call_a_development_run_a_headline` [real]: no smoke result on disk
 
+## job `pytest_slow_equivalence3`
+
+- command: `C:/Users/abena/miniforge_3/python.exe -c import os, sys, pytest; os.environ['VERIFY_SLOW'] = '1'; sys.exit(pytest.main(['tests/test_equivalence.py', '-q', '-rs', '-p', 'no:cacheprovider', '-k', 'test_everything_up_to_the_projection_is_bit_identical or test_the_projection_selects_a_different_degenerate_branch or test_no_stage_is_skipped_in_the_consolidated_arm', '--junitxml=s26/results/pytest_slow_equivalence.xml']))`
+- commit: `7e08b968`  note: the VERIFY_SLOW=1 opt-in tier of tests/test_equivalence.py (3 gated tests), after the L102 parser fix; both arms are served from the on-disk caches (production 1fc9f2dcf489e2fb and baseline 464a0ddb5f283e04, mtimes 2026-09-04 unchanged), which the test's docstring allows ('uses the harness's own cache'), so the 40 s wall is six resumed pipeline runs; the parser-skip run (pytest_slow_equivalence2) and the flagless null run are set aside
+- start 2026-09-14T00:28:51  end 2026-09-14T00:29:31  wall 40.2 s  exit 0  peak RSS 0.313 GB  tag AMBER  est 1.2 GB
+- totals: 3 tests, 3 passed, 0 failed, 0 errors, 0 skipped (0 memory-guard)
+
+| file | tests | passed | failed | errors | skipped | memory-guard skips |
+|---|---:|---:|---:|---:|---:|---:|
+| `test_equivalence.py` | 3 | 3 | 0 | 0 | 0 | 0 |
+
 ## Combined (jobs marked as counting toward the suite total)
 
 **370 tests: 357 passed, 0 failed, 0 errors, 13 skipped (0 memory-guard skips).**
 
-Rendered 2026-09-13 08:38 by `s26/i_test_report.py`.
+Opt-in tier (`VERIFY_SLOW=1`, the same tests the suite counts as skipped): 3 run, 3 passed, 0 failed, 0 errors, 0 still skipped.
+
+**Unique tests with the opt-in tier folded in: 370 tests, 360 passed, 0 failed, 0 errors, 10 skipped.**
+
+Rendered 2026-09-14 00:30 by `s26/i_test_report.py`.

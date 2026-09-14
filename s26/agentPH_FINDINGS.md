@@ -424,6 +424,29 @@ the torsion prior already does, and the unrelaxed energy does not."
 
 ---
 
+## 3d. THE VALIDITY AXIS OF THE PRODUCTION RELAXATION (DEMONSTRATED, native-free)
+
+`s26/ph_validity.py`, `s26/results/ph_validity.json` (126/126; the production relaxation re-run
+here reproduces the cache to dCA = 0.0 and dE = 0.0 on every target), ledger L100 (seven
+`ST.fmt` blocks), `s26/C3_RESULT.md` addendum 3. Prereg `s26/PREREG_validity_axis.md`.
+
+    axis              built    relaxed   helix     relaxed minus built, fold CI, W/L
+    clashes < 2.0 A   0.444    0.008     0.000     -0.437 [-0.555, -0.317]  34W/0L/92T   (34 targets to 1)
+    contacts < 2.6 A  3.452    0.119     0.000     -3.333 [-3.992, -2.739]  81W/0L/45T
+    min heavy (A)     2.363    2.785     3.079     +0.422 [+0.368, +0.478]  115 of 126 higher
+    bond strain       0.000    0.013     0.000     +0.013 (12% on 2BP4)
+    angle strain      0.000    0.025     0.000     +0.025
+    omega dev (deg)   0.00     6.61      0.00      +6.6 (48 on 1D6X); cis fraction 0.0 to 0.3%
+    rama favoured     0.930    0.911     1.000     -0.019, NOT MEASURED (0.84x MDE); outliers +0.008, NOT MEASURED
+
+The relaxation removes the builder's side-chain clashes (the L23 singularity, on the emission
+itself) and pays in covalent geometry and peptide-bond planarity, buying no Ramachandran. The
+constant helix beats it on every axis, so the claim is the S16 conjunction: clashes removed
+while the torsions are held and the trace moves 0.220 A. The presentation sentence is in
+`C3_RESULT.md` addendum 3.
+
+---
+
 ## 4. TOURNAMENT IDEAS FILED
 
 `s26/IDEA_amber_reject.md` and `s26/IDEA_cis_peptide.md` (mandatory), `s26/IDEA_branch_select.md`
@@ -437,40 +460,46 @@ the MDE, a memory estimate and agent-hours.
 
 ## 5. WHAT DAMAGED MY OWN EXPECTATIONS
 
-1. The ensemble prediction was wrong (section 1.3): 0 of 1,966 models, not "some".
-2. I expected the physical-threshold reject to be surgical on many targets (zero rejections on
-   clean targets). At 1e4 only two targets are untouched, eight have no survivor in the whole
-   pool, and the operator removes more than half of every set. The "count set by physics" form
-   is, on this pool, a "reject most of the set" form, and the prereg's addendum says so before
-   the endpoint.
-3. I expected the singularity to be a mixture of backbone and side-chain contacts. It is 97%
-   side-chain on the condemned members. That makes the mandatory reject a test of the builder's
-   rotamer placement, and it moves the interesting question to `IDEA_rotamer_relief.md` part B.
-4. A shell heredoc with an unbalanced quote silently dropped my ledger entries, STATUS lines and
-   prereg addenda at 00:46 and the session ended before I saw it; they were written eight hours
-   late (from a script file, not a heredoc). Nothing was lost but time; the census artefacts
-   themselves carried their own provenance.
+1. The ensemble prediction was wrong (1.3): 0 of 1,966 models carry a cis bond, not "some".
+2. I expected the physical-threshold reject to be surgical. At 1e4 it removes more than half of
+   every set, empties 8 whole pools, and is harmful on both bases; the "count set by physics"
+   form is "reject most of the set" on this pool.
+3. I expected the singularity to mix backbone and side-chain contacts. It is 97% side-chain on
+   the condemned members (L23), which made the mandatory reject a test of the builder's rotamer
+   placement and moved the question to rotamer_relief.
+4. L38's floor (0.347 A) overstated the representation floor by 4x; the registered addendum
+   predicted the direction but not the size. The tight floor is 0.083 A (L89).
+5. branch_select: I expected null with a harmful sign. The relaxed energy is exactly as good
+   as the objective at choosing the branch (beats random by 0.10, 5/5 folds) and no better; the
+   raw single point is worse. The mechanism I did not anticipate: relaxation is what makes the
+   energy a discriminator among branches, the same fact as S20 L6 from the other side.
+6. strain_difficulty: I registered rho 0.2 to 0.3 falling below 0.2 once n and Rg were
+   partialled. `moved` came in at +0.43, unchanged by the partial, replicated. The strongest
+   native-free correlate of the per-target error on the record, and I had it at 0.3 prior.
+7. The C3 toward-member control improves the chain (-0.021, replicated). I expected the two
+   controls to be equivalent; a same-size move toward any pool member recovers part of the
+   projection's displacement, which is a statement about the projection I had not priced.
+8. Two heredocs with lone apostrophes silently failed on the shell (00:46 and 22:45); both
+   times the fix was a script file. Recorded because it cost a ledger entry each time.
 
 ## 6. WHAT I DID NOT DO AND WHY
 
-- No RMSD to a native: the gate is closed. `ph_cis.py floor`, `ph_reject.py cloud` / `chain`,
-  `ph_c3.py stage1` refuse to run (`ph_lib.require_gate`) until `PHASE 0 SIGNED OFF` is a ledger
-  heading; the check ignores the phrase quoted inside L5's sentence.
-- No AMBER compute: the reject uses the 63,000 cached single points; C3 stage 2 waits for lane
-  P's rung; `IDEA_branch_select` and `IDEA_rotamer_relief` part B wait for the tournament.
-- The minimum heavy-atom distance of the RELAXED emission (the second half of the optional Part
-  IV measurement) needs the relaxed backbone, which the production cache does not hold; stage 2
-  computes `s16.energy_lib.panel` on input and output and will supply it.
-- `IDEA_strain_difficulty` was not run although it costs nothing: it reads `rmsd_arm`, so it
-  waits for the gate like everything else.
-- The built-chain controls in the reject are 4 draws at the primary threshold only (stated in
-  the prereg); if the coordinator prefers 16 draws at every threshold, the chain job becomes ~12 h.
+- C3 stage 2 (the relaxation on lane P's best C2 rung): waits for `s26/results/
+  p_best_rung_chains.json`; the runner (`ph_c3.py probe | stage2`) is ready and tested on the
+  production input by stage 1.
+- rotamer_relief part B: the probe is queued (`ph_relief_probe`, held at the job cap at 00:30);
+  the run follows the probe's peak under the one-AMBER-job rule.
+- The reject's built-chain controls carry 4 draws at the primary threshold only (registered);
+  16 draws at every threshold would have been 12 h of projection.
+- The relaxed emission's heavy-atom panel on lane P's rung output belongs to stage 2.
+- No seed replication of the harmful reject results (negatives; the cross-basis run is the
+  replication) and none of the descriptive validity panel.
 
 ## 7. QUESTIONS FOR THE COORDINATOR
 
-1. The empty-set fallback (anchor) is the rule I registered; if you would rather the emptied
-   targets be dropped from the moved-subset contrast only, say so before the endpoint runs.
-2. AMBER budget: `IDEA_branch_select` (1.6 h) and `IDEA_rotamer_relief` part B (1.2 h) are only
-   worth running if the tournament ranks them; I will not launch either without the ranking.
-3. Lane P's rung format for C3 stage 2: I read rows with `pdb`, `phi`, `psi` (radians). If P
-   emits CA only, I will project through `I.project` first and say so in the result.
+1. L100 (validity axis) and L89 (tight floor) supersede numbers in L24 and L38 respectively;
+   both earlier entries stand as written (upper bounds), and I have not retracted them. Say if
+   you want a formal supersession entry.
+2. The toward-member control's replicated -0.021 A is a property of the projection's
+   displacement, not a proposal; if the report wants it as a diagnostic of the projection, the
+   wording is in L87.
