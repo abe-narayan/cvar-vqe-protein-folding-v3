@@ -2785,3 +2785,19 @@ runs 7 to 21. Lane Q's file is not edited. Slide 11's direction line stays DRAFT
 all three verdicts; lane P's B and C verdicts will trigger one more rebuild.
 
 ---
+## L74 -- STALL AT 91.9% RAM WITH EVERY JOB SUSPENDED; GOVERNOR v2.2 ADDS A STALL BREAKER; THE raw RUNG'S TRAINING IS STOPPED BY HAND (21:51, coordinator)
+
+At 21:50 the box read 91.9% RAM (user load: Chrome 5.0 GB, three claude sessions 2.3 GB, VS
+Code 1.7 GB) with all four registered jobs suspended (ph_reject_chain, p_train_raw_f1 at
+0.87 GB, w_ensemble_clouds, a3_build) and CPU at 16%: the v2 band suspends above 93% and
+resumes only below 90%, so with the user's own load parked in between nothing of ours could
+resume. v2.2: if RAM sits at or above 90% for 180 s while jobs are suspended, the governor
+kills the suspended job holding the most memory (CTRL_BREAK first, so it checkpoints) and logs
+it; the owner relaunches from the checkpoint when the box frees. To clear tonight's stall at
+once the coordinator stops p_train_raw_f1 by hand (fold checkpoints under
+`s26/models/p_ladder/`; lane P resumes it only on the coordinator's word) and restarts the
+governor as v2.2. The raw rung is the ladder's last training item and not on the path to any
+verdict.
+
+---
+

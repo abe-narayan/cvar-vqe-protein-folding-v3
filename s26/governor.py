@@ -61,6 +61,7 @@ RESUME_BELOW = 90.0   # RAM band is 90-93; resume only once RAM is back under 90
 CPU_RESUME = 80.0     # ... and smoothed CPU is under 80 (v2: the 90-93 CPU band thrashed)
 CPU_WINDOW = 3        # samples in the CPU rolling mean (3 x 5 s = 15 s)
 MIN_SUSPEND = 20.0    # seconds a suspended job stays suspended before it may resume (v2)
+STALL_SECONDS = 180.0 # RAM parked in [RESUME_BELOW, CEILING) with jobs suspended: kill the fattest (v2.2)
 LOW = 88.0            # below this for LOW_SECONDS: launch the next queued job
 LOW_SECONDS = 60.0
 SAMPLE = 5.0
@@ -323,6 +324,7 @@ def main() -> None:
     low_since = None
     suspended_stack: list = []      # names, in the order we suspended them (LIFO resume)
     suspended_at: dict = {}         # name -> time of suspension (MIN_SUSPEND)
+    stall_since = None              # v2.2 stall breaker
     last_sample_log = 0.0
     last_lane_warn = 0.0
     while True:
@@ -407,6 +409,23 @@ def main() -> None:
                 suspended_stack.remove(name)
                 suspended_at.pop(name, None)
                 break
+
+        # Stall breaker (v2.2, ledger L74): RAM parked between RESUME_BELOW and CEILING with
+        # jobs suspended means the pressure is the user's own load and nothing of ours will
+        # ever resume. After STALL_SECONDS in that state, kill the suspended job holding the
+        # most memory (CTRL_BREAK first, so it checkpoints); its owner relaunches it later.
+        if ram >= RESUME_BELOW and suspended_stack and [j for j in jobs if j["_suspended"]]:
+            stall_since = stall_since or t0
+            if t0 - stall_since > STALL_SECONDS:
+                victim = max((j for j in jobs if j["_suspended"]), key=lambda j: j["_rss"])
+                kill(victim, f"stall: ram {ram:.1f}% >= {RESUME_BELOW}% for {t0 - stall_since:.0f}s "
+                             f"with {len(suspended_stack)} suspended; freeing {victim['_rss'] / 1e9:.2f}GB")
+                if victim["name"] in suspended_stack:
+                    suspended_stack.remove(victim["name"])
+                suspended_at.pop(victim["name"], None)
+                stall_since = None
+        else:
+            stall_since = None
 
         # Low water: < LOW for LOW_SECONDS -> launch the next queued job.
         if hot < LOW and not suspended_stack:
