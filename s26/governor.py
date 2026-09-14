@@ -98,7 +98,7 @@ def read_json(p: Path):
 def write_json_atomic(p: Path, obj) -> None:
     """Atomic replace, retried: on Windows `os.replace` raises PermissionError while another
     process (a jobrun waiter, a lane's `--status`) holds the target open for reading. That
-    killed governor v2 once (19:36, ledger L56); a snapshot lost to a reader is skipped, not fatal."""
+    killed governor v2 once (19:36, ledger L59); a snapshot lost to a reader is skipped, not fatal."""
     tmp = p.with_suffix(p.suffix + ".tmp")
     tmp.write_text(json.dumps(obj, indent=1), encoding="utf-8")
     for attempt in range(8):
