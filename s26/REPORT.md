@@ -2732,7 +2732,16 @@ slides 8 / 9 / 10 against a limit of 250. The coordinator appended a "Sprint 26 
 table to `docs/FINDINGS.md`'s corrections ledger (L130): R2's scope, S7-11's lost artefact
 re-measured (L62), S10-4's leak prices re-sourced with the 2/60 bound, the suite's basis named,
 S16's relaxation finding confirmed and sharpened, the routers extended, and S26's own corrections
-(R1, R5, L123, L101, L107, L57, L9); no sprint body edited. Lane I's extension
+(R1, R5, L123, L101, L107, L57, L9); no sprint body edited. The Adversary's final deliverables
+pass (L135, 04:00 to 04:12; `s26/DELIVERABLES_CHECK.md`): 13 of 14 rows OK with this report's
+row PARTIAL at 04:00 and re-checked at 04:40; 29 pre-registrations each filed before compute;
+18 ideas and the tournament; all eight findings files; 137 ledger entries; R6 to R10 added
+beside R1 to R5 with the prior-sprint disposition table; the repository fixes (items 1 to 5,
+defects 6a to 6d, `s24/cache_amber` tracked, the opt-in tier 11 of 11, the frozen rebuild 2016
+of 2016); the deck with the Adversary's qualifiers on the slides; the paper outline with one
+minor (the literal "at depth 3" in a caption); Rule 13 at 0 / 0 / 0 on every presenter-facing
+file and the deck dump. Not done by the Adversary before the close: the checks of L115 (C4) and
+L112 / L116 (the delivery file), both nulls or reproductions, recorded in its findings file. Lane I's extension
 found two things about the test suite itself: the relaunched slow-test jobs had lost
 `VERIFY_SLOW=1` because it lived in the launching shell, not in the command (one null run set
 aside, both tiers relaunched with the flag inside the command, L98), and the opt-in equivalence
@@ -2834,6 +2843,22 @@ contradicts it; nothing superseded is deleted anywhere.
 | R4 | lane PH's registered expectation of cis bonds in other ensemble models (`s26/PREREG_cis.md`) | 0 of 1,966 ensemble models, 0 of 126 natives, 0 of 2,352,893 windows | L22, L48; Part VII.4 |
 | L123 | L53's "the first native-free quantity in this programme's record with a correlation above 0.4 to the per-target error of the emitted structure", and the framings "the physics reports when the answer is untrustworthy" / "how far the relaxation moves the chain predicts its error" | the pool's own disagreement predicts the error (partial rho +0.452, 5/5 folds); the relaxation's displacement is its proxy (rho 0.76) and adds +0.08 given it; the phenomenon and the quartile table stand | L121, L123; Part VII.4 |
 | R5 (L75, L82) | L68's "L-BFGS growth at alpha = 1 stops with no operator selected on 78 of 78 targets" (and the same sentence in `s26/PROPOSAL_A.md` sections 3 and 5); the Adversary's L70 caveat 2 "L-BFGS grows nothing" | operators are appended on 60 to 78 of 78 targets and are inert (at most 1.2e-4 nats, angles below 0.02 rad, product state to 4.1e-4 nats); the verdict does not move | L73, L75, L76, L82; Part VII.1 |
+| R6 (L121, L123) | L53's "the first native-free quantity above 0.4" (the same row as the L123 line above; the Adversary's entry for it) | the pool's own disagreement is the quantity; `moved` is its proxy | Part VII.4 |
+| R7 (L57) | L56's "bit-exact on all four bases" for the C2 anchor | bit-exact on selection and the point cloud; the built chain lands on the rebuild basis 3.2126, 120 of 126 targets differing from the cache by more than 1e-6 | Part VII.3 |
+| R8 (L101) | L99's "-0.30" for the `esm8m` selection slope | +0.2246 (0.88x MDE, NOT MEASURED) | Part VII.3 |
+| R9 (L107) | L106's "helix content and the length" as the feature carrying the size of the gain over a helix | the pool's strand content (standardised ridge weight -0.612, correlation -0.638) | Part VII.2 |
+| R10 (L9) | L7's point-cloud values 1.5921 (1D6X) and 2.2812 (1KWE), typed before the query returned | 2.0900 and 2.7313 (`bench_results/cache/1fc9f2dcf489e2fb/{1D6X,1KWE}.json :: rmsd_avg`); the L7 mechanism stands on the corrected numbers | S26 L7, L9 |
+
+`s26/RETRACTIONS.md` also carries the disposition table of prior-sprint claims S26 contradicts,
+scopes or re-sources, mirrored in the "Sprint 26 additions" block of `docs/FINDINGS.md`'s
+corrections ledger (L130): the S25 plateau claim scoped to depth 3 (R2); the S13 Pauli mean
+weights 2.236 / 3.015 not re-derived in S26 and kept off the slides; S7-11's lost -0.288 replaced
+by the measured -0.330 single window and -0.208 built chain (L62); S10-4's leak prices
+re-derived on the lam = 0 chain and priced on the built chain with the 2/60 bound (L44, L58,
+L108); the seven-configuration suite's basis named as point cloud with its built-chain twins
+(L28, L29); S16 L27's relaxation finding confirmed and sharpened (L39, L87, L100); the routers
+extended by twelve m and six s constructions (L110, L115); and L38's own-torsion floor scoped as
+an upper bound by the tight floor (L89).
 
 Not retractions, recorded there as sourcing corrections: C27's +0.0004 / +0.0030 (re-derived
 exactly on the lam = 0 chain by lane W, L44; the S10 artefacts are in git history at `5fa05cd`).
@@ -3487,6 +3512,8 @@ artefact; "as asserted" means a passing test pins it.
 | rebuild: 4,472.9 s, 4,765 s, 0.11 GB, 2016 of 2016, 2,142, 8, 1008, 2, 083c9b95 | VII, IX | `s26/results/resultslab_rebuild/post_verdict.json`; `s26/LEDGER.md` L127 | as cited |
 | governor v2.4: 18, 0, 16, 28, 13.3, 46, 32 | VII | `s26/LEDGER.md` L128, L129 | as cited |
 | deck final: 520, 249, 248, 249, 250 | VII | `s26/pr_values.json`; `s26/pr_verify.txt`; `s26/LEDGER.md` L126, L134 | as cited |
+| R7 to R10: 120 of 126, 1e-6, +0.2246, 0.88x, -0.612, -0.638, 1.5921, 2.2812, 2.0900, 2.7313 | VII | `s26/RETRACTIONS.md` R7 to R10; `bench_results/cache/1fc9f2dcf489e2fb/{1D6X,1KWE}.json :: rmsd_avg`; `s26/LEDGER.md` L9, L57, L101, L107 | as cited / as stored |
+| L135: 13 of 14, 29, 18, 137, 11 of 11 | VII | `s26/DELIVERABLES_CHECK.md`; `s26/LEDGER.md` L135 | as cited |
 <!-- APPENDIX B ROWS -->
 
 ## APPENDIX C. THE S26 LEDGER (DRAFT: reproduced at the close)
