@@ -238,3 +238,8 @@ Proposal B verdict per the campaign rule: REPLACE (`s26/PROPOSAL_B.md`).
 - No `attn` rung (IDEA_better_prior_inputs): the box never emptied.
 - No coherence rungs, no raw evaluation: the job cap (6-7 concurrent jobs from five lanes) and
   79-minute raw folds consumed the window.
+
+### Correction to section 11 (per ledger L120)
+The clock times "03:05" and "03:20" in section 11 were estimated, not read, and are about 80
+minutes fast: C5 started at about 01:45 and section 11 was written at about 02:00; raw fold 3
+was queued at about 01:25. The ledger entries' timestamps are machine-written and correct.

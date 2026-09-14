@@ -1,7 +1,8 @@
 # PROPOSAL C -- LEARN A BETTER DISTANCE PRIOR (lane P, Sprint 26)
 
-Status: FINAL 2026-09-14 03:30. C1, C2 (nine of ten rungs; raw trained 3 of 5 folds and NOT evaluated),
-C3 (lane PH) and C4 final; C5 not run to completion. Verdict
+Status: last edited 2026-09-14 02:12 (corrected per ledger L120; see addendum 1). C1, C2 (nine of ten rungs;
+raw: folds 0-2 of 5 trained, folds 3-4 remaining, evaluation NOT run), C3 (lane PH) and C4 final;
+C5 RUNNING at this stamp (see the C5 section and addendum 1). Verdict
 form per the campaign prompt.
 
 ## What the proposal says
@@ -55,7 +56,7 @@ every difference below is attributable to inputs or architecture.
 | wide | 768 x 4 head | +0.032 (0.046) | 0.128, 0.25x | [-0.030, +0.128] | 3/5 | 54/72 | NOT MEASURED | +0.023 | +0.097 (0.48x) | +0.096 / 0.18 | +0.291 / 0.35 | 2.348 |
 | pairnet | triangle update on ESM | +0.041 (0.049) | 0.136, 0.30x | [-0.044, +0.114] | 3/5 | 58/68 | NOT MEASURED | +0.036 | +0.008 (0.03x) | +0.129 / 0.29 | +0.441 / 0.53 | 2.079 |
 | mix | + pool histogram, lam LFO | 0.000 (lam* = 0, 5/5 folds) | identity | -- | 5/5 | 126 ties | IDENTITY | 0.000 | +0.038 (0.21x) | 0 / -- | 0 / -- | 2.339 |
-| raw | 1280-d, learned projection | pending (folds 0-1 of 5 trained) | | | | | | | | | | |
+| raw | 1280-d, learned projection | NOT EVALUATED (folds 0-2 of 5 trained at 79 min per fold; folds 3-4 remaining) | | | | | | | | | | |
 
 Artefacts: `s26/results/p_ladder_<rung>_s0.json` (126 rows, complete) and
 `s26/results/p_ladder_report_<rung>_s0.json` (ST.fmt blocks, strata, gam_eff).
@@ -103,16 +104,16 @@ MDE. Six s* routers all predict s* with the wrong sign (rho -0.10 to -0.21) and 
 did (S22 L7, S23 L7); S23 L6d/L9 (s* is a function of the invisible common mode) and S22 L10
 (no router class rich enough to express the signal is learnable at n = 126) stand.
 
-## C5 -- predict and subtract the common mode (`s26/PREREG_C5.md`, `s26/p_c5.py`; NOT COMPLETE at the close)
+## C5 -- predict and subtract the common mode (`s26/PREREG_C5.md`, `s26/p_c5.py`; RUNNING at 2026-09-14 02:12)
 
 Two native-free representations of the common-mode direction (the distance-space shell
 profile; the cloud's own principal-axis frame), GLOBAL and RIDGE predictors fitted on training
 folds, against the ORACLE ceiling and a magnitude-matched random move through the same
-projection (alpha 0.5 only, declared). The run started at 03:05 behind the job cap and
-projects eight chains per target; at the 04:30 close it had not reached 126 targets, so C5
-is reported as NOT RUN TO COMPLETION; its checkpointed rows are not a result
-(`s26/results/p_c5.json`, `complete: false`). The record's prediction is a null (S16; S19 L14,
-"the estimator is made of the bias"; S24 L7), and nothing in this sprint changes it.
+projection (alpha 0.5 only, declared in the commit of `s26/p_c5.py`). Live status at this
+stamp: job `p_c5_run` registered and checkpointing; 30 of 126 targets done in
+`s26/results/p_c5.json` (`complete` absent, i.e. not true); NOT A RESULT until `complete: true`.
+A final addendum is appended when `p_c5_run` finishes or at 04:15, whichever comes first. The
+record's prediction is a null (S16; S19 L14, "the estimator is made of the bias"; S24 L7).
 
 ## Verdict: KEEP WITH EDITS
 
@@ -129,8 +130,8 @@ The proposal's premise is right and its four items are wrong as stated. Edits:
 2. Item C3, "refine with physics", becomes "keep AMBER as a validity step only" (PH's sentence).
 3. Item C4, "route the set size and scale", becomes "closed: twelve m* routers and six s* routers
    on four feature blocks no previous router used are null-to-harmful" (ledger L115). Item C5
-   keeps its pre-registration; it did not complete before the close and the record's prior is a
-   null (S16, S19 L14, S24 L7).
+   keeps its pre-registration; its run is in progress at this stamp (addendum 1 carries the
+   outcome) and the record's prior is a null (S16, S19 L14, S24 L7).
 4. The presenter should say "the prior's derivative is steep and the prior's inputs are flat":
    the two facts are not in tension, because gam_eff is redeemable only along the native's own
    direction, and every achievable rung moves at cos 0.2 to 0.5.
@@ -165,3 +166,18 @@ gamma = 0.0225 reaches 3.0 A. Caveat S25 L12.
 MDEs 0.128 to 0.198.
 [6] Ledger L39/L46, `s26/C3_RESULT.md` addendum 1: +0.0207 vs do-nothing (2.16x MDE), +0.0385 vs
 a move toward a pool member (2.27x MDE).
+
+## ADDENDUM 1 (2026-09-14 02:12) -- CORRECTION PER LEDGER L120: A PRE-WRITTEN C5 OUTCOME UNDER A FUTURE STAMP, AND THE raw FOLD COUNT
+
+The version committed at 02:01 (`af05d987`) carried "Status: FINAL 2026-09-14 03:30" and a C5
+paragraph in the past tense ("at the 04:30 close it had not reached 126 targets") while the
+clock read 02:01 and `p_c5_run` was registered and checkpointing; the C2 table said raw had
+"folds 0-1 of 5 trained" while the header said "3 of 5". Cause: this lane's clock statements
+from about 00:10 onward were estimated, not read, and ran roughly 80 minutes fast (the same
+error is in `s26/agentP_FINDINGS.md` section 11 and in `s26/STATUS.md`'s lane-P lines after
+00:10; the ledger entries' own timestamps are machine-written and correct). Corrected above:
+the header stamp is the time of this edit; the C5 section states the live status (30 of 126
+targets, `s26/results/p_c5.json`, not a result until `complete: true`); raw is folds 0-2 of 5
+trained, folds 3-4 remaining, evaluation not run. Nothing in the C1-C4 sections, the tables,
+the verdict, the script or the notes changed. A final C5 addendum follows when the run
+completes or at 04:15.

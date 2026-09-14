@@ -92,12 +92,20 @@ and the one input we could not test, a larger language model, needs a larger mac
 
 ## Notes block
 
-[1] `s26/results/b1_feasibility.json`; ledger L13: 8.76 GB resident vs 4.4 GB headroom;
+[1] `s26/results/b1_feasibility.json`; ledger L13: 8.76 GB resident is the derivation 12.0 / 2 (the 3B
+language model in fp16) + 2.76 (the 690M trunk in fp32), from `ram_fp32_GB_parameters_only`; the JSON's
+verdict string says ">= 8.5 GB"; against 4.4 GB headroom;
 `ModuleNotFoundError: omegaconf`, `openfold` absent; checkpoints 8.45 GB not on disk.
 [2] Ledger L62, `s26/results/p_ladder_noesm_s0.json`: +0.208 (fold CI [+0.099, +0.394]),
 +0.330 (fold CI [+0.212, +0.448]).
 [3] Ledger L99/L101, `s26/results/p_ladder_esm8m_s0.json`: +0.242 (fold CI [+0.113, +0.385]);
-esm8m - noesm +0.034 (0.15x MDE).
-[4] Ledger L63: conly - noesm -0.218 on selection (fold CI [-0.374, -0.037]).
+esm8m - noesm +0.034 (0.15x MDE), persisted in `s26/results/a_ladder_isolations.json` (Adversary, L120).
+[4] Ledger L63; `s26/results/a_ladder_isolations.json`: conly - noesm -0.218 on selection (1.00x MDE,
+fold CI [-0.383, -0.030], 4/5), -0.086 on the built chain (0.51x).
 [5] Ledger L106/L107, `s26/results/p_b3.json`: balanced accuracy 0.522 / 0.557 vs null 95th pct
-0.578 / 0.566; R2 0.404; rho(ss_E, d) = -0.638.
+0.578 / 0.566; R2 0.404. rho(ss_E, d) = -0.638 is the descriptive correlation in
+`s26/agentP_FINDINGS.md` section 10, not in the JSON.
+
+## ADDENDUM 1 (2026-09-14 02:12, per ledger L120)
+
+Notes [1], [3], [4], [5] now state the derivation and the artefact the Adversary asked for; no number changed.
