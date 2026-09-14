@@ -4530,3 +4530,113 @@ with them recorded as not run and the reason.
 
 ---
 
+
+## L112 -- THE BEST C2 RUNG IS THE SHIPPED PRIOR; THE C3 STAGE-2 DELIVERY FILE CARRIES THE PRODUCTION EMISSION (`s26/results/p_best_rung_chains.json`, 126/126, complete) (2026-09-14 01:37, lane P)
+
+Decision, with the fold-clustered evidence: no rung of the C2 ladder beats the shipped
+posterior on the built chain. noesm +0.208 [fold +0.099, +0.394] 5/5 WORSE (L62); esm8m +0.242
+[+0.113, +0.385] 5/5 WORSE (L99); conly +0.122 [-0.035, +0.267] (L63); pca128 +0.076 [-0.069,
++0.216] (L72); pairnet +0.041 [-0.044, +0.114] (L103); wide +0.032 [-0.030, +0.128] (L66);
+pca32f +0.018 [-0.073, +0.097] (L67); pca32 and mix are the identity (L65, L93); raw pending.
+The best rung is therefore the shipped one, and per the coordinator's rule the delivery file
+carries it: rows keyed by pdb with `phi`, `psi` (RADIANS, the production `core.project.lam_path`
+emission at lam = 0.3, from `bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json`), `ca` (n x 3),
+`rmsd_arm` (mean 3.2148), `rmsd_cloud`, `rmsd_fit`; provenance-stamped, `complete: true`,
+n = 126. The production emission is delivered rather than this lane's re-projection because it
+is the chain PH's C3 stage 1 already relaxed (L39), so stage 2 IS the stage-1 replication PH
+ran; the rebuild-basis re-projection (`p_deliver_shipped`, queued 47 min behind the job cap) is
+recorded when it lands as a cross-check only.
+
+---
+
+## L113 -- THE OPT-IN TIER IS COMPLETE: 11/11 PASS. WITH IT THE SUITE READS 370 TESTS, 368 PASSED, 2 SKIPPED (ABSENT ARTEFACTS), 0 FAILED (2026-09-14 01:37, lane I)
+
+Job `pytest_slow_integration2` (AMBER, `VERIFY_SLOW=1` in the command, tree `7e08b968`,
+registered 01:33 after 4,620 s in the queue, the 7th slot of L111): **8 passed, 0 failed,
+165.6 s, peak RSS 1.139 GB**, `s26/results/pytest_slow_integration.xml`,
+`s26/logs/pytest_slow_integration2.log`. The eight items: the 11 Legacy terms on a real
+retrieval pool, core vs root, column for column; the AMBER System's charge / sigma / epsilon and
+GBn2 per-particle parameters against a System built here from the same ff14SB + GBn2 XML on the
+same topology; the pinned 1A13 native interaction energy (-489.9138948277905) bit-exact;
+single-point invariance under a rigid translation (relative < 1e-5); NaN-poisoning of the native
+through `run_target` with stage 4 on 1CS9 and 1CB3 (every deployable quantity bit-identical,
+no NaN reaches any record); and bit-identity of the same target across processes and under a
+4-thread ambient environment (child processes through `verify/determinism_audit.run_child`).
+
+With L104's equivalence tier (3/3) that is the whole opt-in tier: **11 run, 11 passed**. Folded
+into the suite record (`s26/TEST_RUN.md`, `s26/results/test_run.json`, commit `7ad4ef68`):
+**370 unique tests, 368 passed, 0 failed, 0 errors, 2 skipped**, the two skips being the absent
+artefacts `bench_results/optimised_tuning126_w6.json` and "no smoke result on disk"
+(`tests/test_pipeline.py`). Peak RSS of every job is in the record; the memory guard fired in none.
+
+---
+
+## L114 -- NOTE TO L112 FOR LANE PH: THE DELIVERED TORSIONS ARE RADIANS BUT UNWRAPPED (2026-09-14 01:37, lane P)
+
+`s26/results/p_best_rung_chains.json` carries the production `phi`/`psi` exactly as
+`core.project.lam_path` emitted them: radians, not reduced modulo 2*pi (|value| up to 72.7
+occurs; 1A13 psi reaches 6.19). Wrap with ((x + pi) mod 2*pi) - pi before any use that
+assumes (-pi, pi]; `ca` is unaffected. The file's `torsion_units` field now says so.
+
+---
+
+## L115 -- C4 COMPLETE: TWELVE m* ROUTERS AND SIX s* ROUTERS ON SIX FEATURE BLOCKS, NONE CLEARS ITS MDE, ALL BUT ONE POINT THE HARMFUL WAY; THE ONE THAT DOES NOT (RETRIEVAL-SCORE ENTROPY, ROUTER B, -0.001 A) IS 0.02x ITS MDE (2026-09-14 01:45, lane P)
+
+`s26/results/p_c4.json` (job `p_c4_run`, exit 0, 2,839 s, peak RSS 0.114 GB), pre-registered
+in `s26/PREREG_C4.md`. Anchor: rebuilt m = 75 cloud vs `agg_surface` and `errdecomp` 0.00e+00;
+rebuilt m = 75 built chain 3.2126 (the L57 basis). Labels: per-m point-cloud RMSD from
+`s12/results/agg_surface.json` (15 rungs), s* from `s23/results/errdecomp.json`. The m* oracle
+over the grid: -0.408 A, `ST.best_of_k_within` share 1.43 (an order statistic; split-half
+-0.099, k_eff 12.7), consistent with S24 L15/L15-A for grid oracles (the real m* signal is the
+S22 L4 split-half transfer, which this grid does not measure).
+
+m routers (nested leave-fold-out ridge; A = multi-output over the 15 rungs then argmin, B = ridge
+on log m* then nearest rung; 200-draw label permutation null; positive = worse than fixed m = 75):
+    new_all    router A  point cloud +0.0684  SE 0.0269  MDE 0.0754 (0.91x)  fold[+0.002,+0.159]  3/5  40W/61L  perm-null mean +0.0265  p_perm 0.960  | built chain +0.0707 (0.83x)
+    new_all    router B  point cloud +0.0267  SE 0.0169  MDE 0.0474 (0.56x)  fold[+0.012,+0.046]  5/5  44W/64L  perm-null mean +0.0192  p_perm 0.865  | built chain +0.0237 (0.44x)
+    old_S22    router A  point cloud +0.0244  SE 0.0261  MDE 0.0732 (0.33x)  fold[-0.010,+0.057]  4/5  51W/56L  perm-null mean +0.0212  p_perm 0.675  | built chain +0.0466 (0.55x)
+    old_S22    router B  point cloud +0.0206  SE 0.0177  MDE 0.0495 (0.42x)  fold[+0.009,+0.034]  5/5  45W/73L  perm-null mean +0.0198  p_perm 0.595  | built chain +0.0198 (0.34x)
+    new_pax    router A  point cloud +0.0594  SE 0.0281  MDE 0.0786 (0.76x)  fold[-0.001,+0.138]  4/5  38W/52L  perm-null mean +0.0235  p_perm 0.945
+    new_pax    router B  point cloud +0.0198  SE 0.0194  MDE 0.0543 (0.36x)  fold[+0.011,+0.031]  5/5  44W/68L  perm-null mean +0.0189  p_perm 0.595
+    new_sim    router A  point cloud +0.0057  SE 0.0251  MDE 0.0703 (0.08x)  fold[-0.020,+0.033]  2/5  43W/53L  perm-null mean +0.0228  p_perm 0.075
+    new_sim    router B  point cloud -0.0012  SE 0.0176  MDE 0.0493 (-0.02x)  fold[-0.023,+0.023]  2/5  46W/57L  perm-null mean +0.0188  p_perm 0.010
+    new_dgent  router A  point cloud +0.0187  SE 0.0314  MDE 0.0878 (0.21x)  fold[-0.065,+0.124]  3/5  51W/59L  perm-null mean +0.0212  p_perm 0.520
+    new_dgent  router B  point cloud +0.0180  SE 0.0186  MDE 0.0522 (0.34x)  fold[-0.022,+0.062]  3/5  42W/53L  perm-null mean +0.0184  p_perm 0.375
+    new_con    router A  point cloud +0.0251  SE 0.0225  MDE 0.0632 (0.40x)  fold[-0.014,+0.068]  3/5  35W/49L  perm-null mean +0.0215  p_perm 0.680
+    new_con    router B  point cloud +0.0028  SE 0.0158  MDE 0.0442 (0.06x)  fold[-0.022,+0.031]  2/5  33W/50L  perm-null mean +0.0189  p_perm 0.045
+
+s routers (ridge on s*, applied as a global scale about the cloud's centroid; 100-draw null):
+    new_all    routed s - s=1  +0.0130  SE 0.0147  MDE 0.0412 (0.32x)  fold[-0.016,+0.053]  3/5  rho(pred, s*) -0.203  perm-null +0.0089
+    old_S22    routed s - s=1  +0.0263  SE 0.0169  MDE 0.0474 (0.56x)  fold[-0.016,+0.076]  3/5  rho(pred, s*) -0.199  perm-null +0.0094
+    new_pax    routed s - s=1  +0.0066  SE 0.0137  MDE 0.0383 (0.17x)  fold[-0.018,+0.032]  3/5  rho(pred, s*) -0.180  perm-null +0.0119
+    new_sim    routed s - s=1  +0.0111  SE 0.0130  MDE 0.0364 (0.30x)  fold[-0.013,+0.042]  3/5  rho(pred, s*) -0.209  perm-null +0.0072
+    new_dgent  routed s - s=1  +0.0228  SE 0.0159  MDE 0.0445 (0.51x)  fold[-0.015,+0.065]  3/5  rho(pred, s*) -0.170  perm-null +0.0050
+    new_con    routed s - s=1  +0.0270  SE 0.0155  MDE 0.0435 (0.62x)  fold[-0.014,+0.073]  3/5  rho(pred, s*) -0.096  perm-null +0.0074
+
+Reading. Twelve m routers on six feature sets: eleven point the harmful way, none clears its
+MDE (the largest, all new features with router A, is 0.91x and worse than 96% of the
+permutation null), and the S22 feature set through the same harness reproduces its recorded
+~0 (+0.020 to +0.047), so the harness is sound. The retrieval-score-entropy block with router B
+is the only negative number (-0.0012, 0.02x its MDE, p_perm 0.010 against a null whose mean is
++0.019: it is "not harmful", not "helpful"). Every s router predicts s* with the WRONG sign
+(rho -0.10 to -0.21) and costs +0.007 to +0.027 against s = 1, which is what S23 L6d/L9 says
+must happen: s* is a function of the invisible common mode. C4 is closed: the sixth through
+seventeenth router constructions land where the first five did (S22 L7, S23 L7), on feature
+blocks that describe the pool's shape, the retrieval's confidence, the posterior's entropy and
+the language model's contact map. The S22 L10 bound stands as the explanation.
+
+---
+
+## L116 -- DELIVERY CROSS-CHECK: THE RE-PROJECTION OF THE SHIPPED RUNG THROUGH THIS LANE'S PATH IS SAVED AS A SEPARATE FILE; THE DELIVERY FILE STAYS THE PRODUCTION EMISSION (2026-09-14 01:51, lane P)
+
+Job `p_deliver_shipped` (exit 0, 567 s, peak RSS 0.128 GB) re-projected the shipped rung's
+top-75 average on all 126 targets and asserted equality with `s26/results/p_ladder_shipped_s0.json`
+per target; its output overwrote `s26/results/p_best_rung_chains.json` for 6 minutes and was
+moved to `s26/results/p_best_rung_chains_rebuild_basis.json` (mean built chain 3.2126, the L57
+basis); the delivery file was restored from commit 6ed3b367 (production emission, mean 3.2148,
+L112/L114). Per-target |rmsd_arm| difference between the two files: reported in
+`s26/agentP_FINDINGS.md` section 11. Lane PH should use the production file; the rebuild file is
+the cross-check that the ladder's anchor and the production chains are the same object up to the
+projection's multi-start sensitivity (L57).
+
+---
