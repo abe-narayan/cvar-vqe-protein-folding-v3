@@ -2131,6 +2131,34 @@ pre-registration (L117).
 
 ### VII.4 The tournament entries
 
+`s26/TOURNAMENT.md` (the Adversary, L51) scored the sixteen ideas the lanes filed as `s26/IDEA_*.md`
+by information x plausibility / agent-hours, found no clean same-operator kill on the record for
+any of them (every closer in the record measured a different operator or space), ranked the
+survivors and set the run order. The outcome of every idea at the time of writing (the rows are
+updated at the close):
+
+| idea (lane) | tournament rank and plausibility | outcome | ledger | basis |
+|---|---|---|---|---|
+| product_state_optimum (Q) | 1, 0.80 | MEASURED: the deployed objective's optimum is a product state on every real target (KL to the product of marginals at most 7.9e-4 nats); reaching it exactly moves the built chain by -0.014 to -0.022 A, a third of the MDE | L68, L70, L75 | built chain (`rmsd_q_synth`) |
+| conformational_identity_floor (W) | 2, 0.70 | MEASURED, ORACLE: the same sequence in another deposit sits a median 2.908 A from the native; +0.97 A worse than the pool's best window, -1.44 better than its mean, both Type-M at n = 18 | L52, L80 | single window |
+| tiebreak_noise_floor (W) | 3, 0.85 | MEASURED: the pipeline's own convention noise is 0.0039 A on the 126-mean and 0.0236 A as the paired MDE between two tie-break conventions | L64, L71 | built chain (rebuild) |
+| strain_difficulty (PH) | 4, 0.50 | MEASURED as a calibration flag, provisional: partial rho +0.433 between how far the relaxation moved the chain and its error; not a lever by its pre-registration | L53, L81 | built chain (ORACLE label) |
+| branch_select (PH) | 5, 0.20 | CLOSED as an accuracy step: +0.0055 against the production choice (0.18x MDE); the relaxed energy picks the branch as well as the objective and no better (-0.102 against random) | L88, L96 | built chain |
+| window_ensembling (P, run by W) | 6, 0.15 | CLOSED in the fixed-K form: -0.0005 against shipped (0.02x), +0.0042 against a zero-information resample | L84, L94 | built chain (rebuild) |
+| l17_target_dependent_hamiltonian = A3 (Q) | 7, 0.15 | pending at the time of writing | | |
+| rotamer_relief B (PH) | 8, 0.15 | pending at the time of writing (Part A, the census, is L23: 96.8% of the condemned members are condemned by a side-chain contact) | L23 | |
+| window_provenance (W) | 9, 0.15 | census MEASURED (73% of every pool and top-75 is fragment windows, 0.6% whole peptides); the ORACLE class gap 0.42 A in the pool; the achievable readout H_P3 CLOSED (+0.0066 against uniform, 0.15x) | L85, L94, L109 | single window (census contrast); built chain (H_P3) |
+| amber_prior_partner (P, run by W) | 10, 0.10 | CLOSED: the leave-fold-out choice is lam = 0 on every fold; every mixture cell worse; the last AMBER form in the record | L105 | point cloud (cells); built chain (chosen arm) |
+| amber_reject (PH) | delivered on the point cloud before the ranking | CLOSED on both bases: the physical-threshold reject with refill is +0.228 (point cloud) and +0.248 (built chain) worse than the shipped top-75, harmful at 1e3 and 1e4, underpowered null at 1e5 and 1e6 | L23, L43, L54, L86, L95 | point cloud; built chain |
+| cis_peptide (PH) | delivered before the ranking | CLOSED as a lever: 0 cis on the instrument; the own-torsion floor 0.347 A is an upper bound and the tight floor is 0.083 A (0.043 with the prior off) | L22, L38, L48, L89, L97 | ideal chain against the native (ORACLE) |
+| selfcopy_proxy_bound (W) | delivered before the ranking | DELIVERED: the 2/60 benchmark leak bounded MINOR without opening the benchmark (dev proxy 0.008 A; envelope 0.028 A mean CI, 0.151 A worst target, built chain) | L30, L44, L49, L55, L58, L108 | built chain and the others, each named |
+| better_prior_inputs (P) | deferred on memory (`attn` 3 to 3.5 GB) | the C2 ladder's other inputs measured flat (VII.3); `attn` not run | L112 | built chain (rebuild) |
+| coherence_penalised_training (P) | deferred on memory (1.25 GB) | not run at the time of writing | | |
+| trainability_paper (Q) | not an experiment | the outline delivered (`s26/TRAINABILITY_PAPER_OUTLINE.md`); the direction the evidence favours (VII.6) | L117 | |
+| partial_recall_gradient (W, an L77 extension) | added under the extension | no gradient at the pre-registered MDE; a weak proximity effect of order rho -0.2 suggested, confounded with retrieval | L90, L97 | built chain (ORACLE label) |
+| memorisation_on_the_ladder (W, an L77 extension) | added under the extension | ORACLE calibration of the prior-ladder currency: the discounted currency under-prices a large trained move | L91, L97 | point cloud and built chain, ORACLE |
+| validity_axis (PH, an L77 extension) | added under the extension | MEASURED: the relaxation removes the builder's clashes (34 targets to 1) at 1.3% bond and 2.5% angle strain and 6.6 degrees of omega, no Ramachandran gain | L100 | descriptive, built and relaxed chains |
+
 **The AMBER reject filter.** Census, L23 (Adversary L48: STANDS; Part IV.5). Endpoint on the point
 cloud, L43: `s26/ph_reject.py cloud` and `report` -> `s26/results/ph_reject_cloud.json` (complete
 126/126), `s26/results/ph_reject_report.json`; pre-registered in `s26/PREREG_amber_reject.md`
