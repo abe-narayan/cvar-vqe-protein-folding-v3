@@ -1999,3 +1999,62 @@ SHIPPED THROUGH THE LADDER'S OWN PATH (the anchor), n=126
 ```
 
 ---
+
+## L57 -- CORRECTION TO L56: THE ANCHOR'S BUILT CHAIN IS THE LEADERBOARD-REBUILD BASIS (3.2126), NOT THE PRODUCTION CACHE (3.2148); SELECTION AND POINT CLOUD ARE BIT-EXACT (2026-09-13 19:35, lane P)
+
+L56's title says "bit-exact on all four bases"; the block under it says otherwise and the block is
+right. Through `s26/p_ladder.py`'s path the shipped posterior reproduces the production cache
+per target at 0.00e+00 on selection and 7.25e-14 on the point cloud, but the BUILT CHAIN lands at
+mean 3.2126 (the S13 `base` / S24 L9 "leaderboard rebuild" figure; the state brief lists both:
+"3.2148 (leaderboard rebuild: 3.2126)"), with 120/126 targets differing from `rmsd_arm` by more
+than 1e-6: mean abs 0.0107, max abs 0.1711, signed mean -0.0021, worst
+7JS6 0.171, 6QAX 0.148, 2LWU 0.121, 2NDN 0.115, 2LNG 0.101. Mechanism: the cloud enters `s12.instrument.project`
+differing from the persisted `avg_ca` by 1e-14, and the multi-start L-BFGS projection lands in a
+different local optimum on most targets; the 1A13 probe (L11) matched at 0.0 because it was fed
+the persisted `avg_ca` itself. Consequence for the ladder: every rung and the anchor are built
+through the SAME process and code path, so the paired contrasts are on one basis, the
+rebuild basis 3.2126, and that basis is stated in every C2 entry from here on; the 0.0022 A
+offset to the production figure is a basis difference, not an effect. The `fit` (lam = 0) basis
+lands at 3.2052 (production 3.2041) for the same reason. L56 stands with its title read as
+"bit-exact on selection and point cloud".
+
+---
+
+## L58 -- ADDENDUM TO L44 PER L55: THE BOUND ARTEFACT NOW CARRIES THE GAIN ENVELOPE ROW AND THE PER-TARGET READINGS; 0.028 IS QUOTED WITH 0.151 (WORST TARGET, 2BP4) BESIDE IT; ON THE SELECTION BASIS THE WORST-TARGET READING IS 0.194, ABOVE THE 0.170 LINE (2026-09-13, W)
+
+Both L55 caveats applied by `s26/w_bound_addendum.py` (run directly, 4 s, one JSON read, under
+200 MB; `s26/w_selfcopy.py` was not edited because `w_tiebreak_draws`, which imports it, is
+running). `s26/results/w_selfcopy_bound.json` is regenerated with this script's provenance and
+the original provenance kept under `provenance_original`; every number comes from
+`s26/results/w_selfcopy_endpoint.json`.
+
+1. `signed_bounds_gated/C_envelope_fold_ci/gain` added: leaked-model mean of (arm - sel) minus
+   clean, +0.5101, fold CI [+0.3698, +0.6838], MDE 0.2548, 5/5 folds; bound (2/60) x 0.6838 =
+   0.0228. `verdict/gain` now reads MINOR at 0.0228, as L44's Part D table says; the artefact and
+   the ledger agree.
+2. `signed_bounds_gated/C_envelope_per_target` added, every basis: (2/60) x |leaked-mean minus
+   clean| at the worst single target, at the p95 target, and over (target, model) pairs. The
+   Adversary's numbers reproduce exactly:
+
+       basis   mean-CI limit   p95 target   worst target (pdb)     worst (target, model) pair   class under every reading
+       arm       0.0277          0.0830       0.1512 (2BP4, 4.54 A)   0.1519                       MINOR
+       gain      0.0228          0.0816       0.1232 (2NBC)           0.1261                       MINOR
+       cloud     0.0280          0.0824       0.1587 (2MQ2)           0.1604                       MINOR
+       sel       0.0479          0.1154       0.1944 (9KAR)           0.1944                       crosses 0.170 at the worst target
+
+   So the class MINOR holds under every reading of the envelope on the built chain, the point
+   cloud and the paired gain (the benchmark's headline contrast), and on the SELECTION basis
+   (the benchmark's `shipped` argmin arm, the basis most sensitive to memorisation: L44 Part C
+   -1.21 A) the worst-single-target reading is 0.194 A, above the pre-registered 0.170 line.
+   Stated as the pre-registered rule gives it: for the benchmark's argmin mean alone, under the
+   over-bound of own-native training and assumption A2, a single benchmark self-copy behaving
+   like 9KAR could move that mean by up to 0.19 A; the expected contribution on every basis stays
+   0.002 A (dev proxy) to 0.05 A (mean envelope), and the paired gain, which is the benchmark's
+   verdict, is MINOR under every reading (worst 0.123). The benchmark verdict (no validated gain,
+   +0.0103 [-0.160, +0.180]) does not move.
+3. Wording to carry everywhere, as L55 asks: "2/60 self-copies; dev-proxy price 0.002 A; own-native
+   envelope 0.028 A (mean CI) to 0.151 A (worst target) on the built chain, under A2; MINOR under
+   every reading on the built chain and the paired gain; the selection basis reaches 0.194 at the
+   worst target; cannot move the benchmark verdict either way." Applied in
+   `s26/agentW_FINDINGS.md` (sections 0, 2.5, 4, 5), `s26/PREREG_selfcopy_bound.md` addendum 2 and
+   `s26/IDEA_selfcopy_proxy_bound.md`. L44 itself is not edited.

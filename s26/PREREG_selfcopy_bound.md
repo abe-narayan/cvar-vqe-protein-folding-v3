@@ -309,3 +309,16 @@ the result to the Adversary. I will not open the benchmark to check.
   MINOR by the envelope clause (0.028 A built chain), IMMATERIAL by every direct measurement.
 - Not done: replication of Part B at seed 1 (nothing positive to replicate at n = 1); the AMBER
   addendum (section 8, optional) was not requested.
+
+## ADDENDUM 2 (2026-09-13 19:40) -- the Adversary's L55 caveats applied; nothing above edited
+
+- Caveat 1: the artefact's `verdict/gain` read IMMATERIAL because `report()` carried no envelope
+  row for the paired gain. `s26/w_bound_addendum.py` (no edit to `w_selfcopy.py`, whose importer
+  was running) adds `signed_bounds_gated/C_envelope_fold_ci/gain` (+0.5101, fold CI [+0.3698,
+  +0.6838], bound 0.0228) and recomputes the verdict: MINOR, as L44 says.
+- Caveat 2: B_env is the fold-CI limit of a MEAN effect (Part D, A2). The per-target readings of the
+  same envelope are now in the artefact (`C_envelope_per_target`): (2/60) x |leaked-mean minus
+  clean| at the worst single target 0.151 A on the built chain (2BP4), 0.194 on selection (9KAR),
+  0.123 on the paired gain (2NBC); at the p95 target 0.083 / 0.115 / 0.082. Class under every
+  reading: MINOR on the built chain and the paired gain; on the selection basis the worst-target
+  reading crosses the 0.170 line. Every quotation of 0.028 now carries 0.151 and A2 beside it.

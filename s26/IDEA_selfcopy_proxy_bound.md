@@ -74,3 +74,10 @@ Closes open item 2 of the state brief with a number and its assumptions, re-deri
 on the production basis so it can be sourced, and measures for the first time what a
 verbatim training copy is worth to the shipped MLP through the whole pipeline (the envelope),
 which is also the quantity behind the fold-model non-independence caveat (EXAMINATION E4).
+
+---
+Measured (2026-09-13, L44; Adversary L55 STANDS WITH CAVEAT): every direct dev-proxy measurement
+is IMMATERIAL (0.002 A or less); the own-native envelope gives the pre-registered class MINOR,
+mean-CI limit 0.028 A on the built chain (0.048 selection, 0.023 paired gain), worst single target
+0.151 A (2BP4) under assumption A2; MINOR under every reading on the built chain and the paired
+gain. `s26/results/w_selfcopy_bound.json`.

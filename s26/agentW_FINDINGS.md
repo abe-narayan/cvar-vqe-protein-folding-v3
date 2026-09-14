@@ -11,7 +11,7 @@ No stock words; no em dashes.
 
 | item | state | artefacts |
 |---|---|---|
-| the 2/60 benchmark self-copy leak bounded from the dev proxy (mandatory, L25) | MEASURED AND POSTED (L44): pre-registered class MINOR by the own-native envelope (0.028 A built chain / 0.048 selection / 0.023 paired gain), IMMATERIAL by every direct dev-proxy measurement (0.002 A or less); Part B 1 of 10 models, the rest wait for headroom and the tournament | `s26/PREREG_selfcopy_bound.md`, `s26/IDEA_selfcopy_proxy_bound.md`, `s26/w_selfcopy.py`, `s26/w_selfcopy_test.py`, `s26/w_train_chain.py`, `s26/w_endpoint_report.py`, `s26/results/w_selfcopy_{census,retrieval,envelope,posterior,floor,endpoint,bound}.json` |
+| the 2/60 benchmark self-copy leak bounded from the dev proxy (mandatory, L25) | MEASURED AND POSTED (L44): pre-registered class MINOR by the own-native envelope (mean-CI limit 0.028 A built chain / 0.048 selection / 0.023 paired gain; worst single target 0.151 / 0.194 / 0.123 under assumption A2, L55), IMMATERIAL by every direct dev-proxy measurement (0.002 A or less); Part B 1 of 10 models, the rest wait for headroom and the tournament | `s26/PREREG_selfcopy_bound.md`, `s26/IDEA_selfcopy_proxy_bound.md`, `s26/w_selfcopy.py`, `s26/w_selfcopy_test.py`, `s26/w_train_chain.py`, `s26/w_endpoint_report.py`, `s26/results/w_selfcopy_{census,retrieval,envelope,posterior,floor,endpoint,bound}.json` |
 | at least three ideas nobody else proposed | FILED (three own, plus the mandatory one); the tie-break floor has PREREG, code, tests and a one-target probe; the identity floor is measured (Part E) | `s26/IDEA_tiebreak_noise_floor.md` + `PREREG_tiebreak_floor.md` + `w_tiebreak.py`, `s26/IDEA_conformational_identity_floor.md`, `s26/IDEA_window_provenance.md` |
 | the top orphaned tournament survivor | WAITING (no `s26/TOURNAMENT.md` yet) | |
 | findings, ledger, status, commits | this file; L30, L44; STATUS 09:15, 09:31, 19:4x; commits `8d849504`, `213a5ebb` and the closing one | |
@@ -225,18 +225,34 @@ measured on one target only and its control clause is not measured.
     dev-4 channel A, signed max                              0.0023    0.0000    0.0023         IMMATERIAL (< 0.017)
     dev-4 channel A, native-free triangle max                0.0067    0.0000    0.0067         IMMATERIAL
     both channels removed (1CEK only, n = 1)                 0.0004    0.0002    0.0006         IMMATERIAL
-    own-native envelope, fold-CI limit, n = 126              0.0277    0.0479    0.0228         MINOR (0.017 to 0.170)
+    own-native envelope, fold-CI limit of the MEAN, n = 126  0.0277    0.0479    0.0228         MINOR (0.017 to 0.170)
+    the same envelope at the p95 target                      0.0830    0.1154    0.0816         MINOR
+    the same envelope at the WORST single target             0.1512    0.1944    0.1232         MINOR on arm and gain; sel crosses 0.170 (9KAR)
+                                                             (2BP4)    (9KAR)    (2NBC)         (added per L55, `signed_bounds_gated/C_envelope_per_target`)
 
 The Part D rule says IMMATERIAL only if all of B_real(arm), B_real(gain) and B_env(arm) are below
 0.017 A; the envelope clause fires, so the pre-registered class is MINOR: 0.028 A on the built
 chain, 0.048 A on the selection basis (the benchmark's `shipped` argmin arm), 0.023 A on the paired
-gain. The envelope is loose by construction (a model trained on the target's own native, where the
+gain. Those three are fold-CI limits of a MEAN effect (Part D as pre-registered, assumption A2);
+the Adversary (L55) asked for the per-target reading of the same envelope beside them, and it is:
+(2/60) x |leaked-mean minus clean| at the worst single target 0.151 A on the built chain (2BP4,
+4.54 A), 0.194 A on selection (9KAR) and 0.123 A on the paired gain (2NBC); at the p95 target
+0.083 / 0.115 / 0.082. Under every reading the class on the built chain and on the paired gain is
+MINOR; on the selection basis the worst-target reading crosses 0.170 (MATERIAL by the
+pre-registered line) for the one benchmark arm most sensitive to memorisation, the `shipped`
+argmin. The expected contribution stays 0.002 A (dev proxy) to 0.023 A (mean envelope). The
+wording to carry: "expected contribution 0.023, mean-CI limit 0.028, worst single target 0.151,
+under A2", with the envelope named as the over-bound it is (own-native training, 60x the one
+measured carrier effect). The envelope is loose by construction (a model trained on the target's own native, where the
 benchmark carrier holds a copy that on the dev proxy sits 2.3 to 4.1 A from the native on 3 of 4
 cases and whose one measured effect is 60x smaller). What the bound does to the benchmark verdict:
 nothing. The un-leaked paired gain lies in +0.0103 +/- 0.023 under the envelope and within 0.003 of
 +0.0103 under the dev-proxy measurement, against a CI half-width of 0.170. The caveat for every
-benchmark figure: 2/60 self-copies, bounded at 0.028 A (built chain) by the own-native envelope and
-0.002 A by the dev proxy (`s26/results/w_selfcopy_bound.json`).
+benchmark figure (L55's wording): 2/60 self-copies; dev-proxy price 0.002 A; own-native envelope
+0.028 A (mean CI) to 0.151 A (worst target) on the built chain, under A2; MINOR under every
+reading on the built chain and the paired gain; cannot move the benchmark verdict either way
+(`s26/results/w_selfcopy_bound.json`, regenerated by `s26/w_bound_addendum.py` with the gain
+envelope row and the per-target readings; the original provenance kept under `provenance_original`).
 
 ### 2.6 Side measurements from the same runs.
 
@@ -305,9 +321,14 @@ null); test-time window ensembling (lane P's `IDEA_window_ensembling.md`).
    superposition", and so that nobody writes "chain exact" from the elementwise field.
 4. I expected the own-native envelope to be a formality that the direct measurements would
    make redundant. It is the binding clause of my own Part D rule: 0.028 A against the 0.017 A
-   line, so the pre-registered class is MINOR even though every direct measurement is 0.002 A
-   or less. The rule was written to be conservative and it is; I report the class it gives
-   and the reason the envelope is loose, not a softer class.
+   line (0.151 A at the worst single target, L55), so the pre-registered class is MINOR even
+   though every direct measurement is 0.002 A or less. The rule was written to be conservative
+   and it is; I report the class it gives and the reason the envelope is loose, not a softer
+   class.
+7. The artefact and the ledger disagreed on the paired gain (L55 caveat 1): `report()` had no
+   envelope row for the gain basis, so the JSON said IMMATERIAL where the ledger, from the gain
+   row I had computed in-session, said MINOR. A number computed outside the artefact's own
+   function is a number the artefact does not carry; fixed by `s26/w_bound_addendum.py`.
 5. The triangle bound is rigorous and loose by an order of magnitude on this operator (p95
    bound 1.44 A against p95 signed 0.15 A on the controls): the discrete flips move the chain
    orthogonally to the native. A native-free bound that never reads the native cannot know
@@ -342,7 +363,7 @@ null); test-time window ensembling (lane P's `IDEA_window_ensembling.md`).
   neither is ranked, and L42 allows one sub-1 GB job at a time for ranked work only.
 - Did not quote the envelope's 0.028 A as the leak's size: it is an upper bound from an
   operator stronger than the leak (own-native training), stated as such beside the direct
-  0.002 A.
+  0.002 A, and since L55 beside its worst-target reading 0.151 A under A2.
 
 ---
 
