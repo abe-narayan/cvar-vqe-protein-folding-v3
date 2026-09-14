@@ -369,6 +369,47 @@ def slide_07(prs, V):
     return s
 
 
+def slide_09(prs, V):
+    s = new_slide(prs, "Direction B: a learned folding model as the prior, and its replacement", 9,
+                  "from s26/PROPOSAL_B.md (lane P, DRAFT; B1 final) and s26/PROPOSAL_B_REPLACEMENT.md (lane Q); the A2 and A4 figures are on slides 6 and 8")
+    add_text(s, 0.6, 1.4, 6.1, 5.6, [
+        ("What the proposal says", dict(bold=True, color=ACCENT, bullet=False)),
+        ("Replace or augment the shipped distance prior with the output of a large pretrained folding model, because the prior's "
+         "accuracy is the only steep lever the record measured.", {}),
+        ("B1, final: the folding model cannot run on this machine", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"no checkpoint on disk; {F(V,'B1_DOWNLOAD_GB','.2f')} GB to download", {}),
+        ("openfold and omegaconf absent; openfold needs nvcc and Python <= 3.9; this box is Python 3.13, CPU-only torch", {}),
+        (f"{F(V,'B1_RESIDENT_GB','.2f')} GB resident as fair-esm loads it (fp16 LM, fp32 trunk) against {F(V,'B1_HEADROOM_GB','.1f')} GB of headroom; "
+         f"fp16 everywhere is still {F(V,'B1_FP16_GB','.1f')} GB", {}),
+        ("B2, pending: the feasible-scale ladder", dict(bold=True, color=ACCENT, bullet=False)),
+        ("the ESM-2 contact head alone as a prior input; the 8M language model against the 650M (rungs conly and esm8m of the C2 ladder)", {}),
+        ("B3, pending: where the pipeline beats sequence-only, and is that set recognisable native-free?", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"built chains: pipeline {F(V,'ARM_MEAN','.4f')}, sequence-only torsion predictor {F(V,'TORS','.4f')}, constant helix {F(V,'HELIX','.4f')} A; "
+         f"torsion minus pipeline {F(V,'B3_TORS_MINUS_ARM','+.4f')} (SE {F(V,'B3_TORS_MINUS_ARM_SE','.4f')}, MDE {F(V,'B3_TORS_MINUS_ARM_MDE','.4f')}, "
+         f"{F(V,'B3_TORS_W')}W/{F(V,'B3_TORS_L')}L); the classifier test is pending", {}),
+        ("Verdict: PENDING B2/B3. If null: REPLACE with the trainability paper (right).", dict(bold=True)),
+    ], size=11.5, spacing=3)
+    add_text(s, 6.95, 1.4, 5.95, 5.6, [
+        ("The replacement: publish the trainability result", dict(bold=True, color=ACCENT, bullet=False)),
+        ("chain geometry fixes which residues a distance term can depend on (exact theorem); that fixes the energy's Pauli spectrum "
+         "once raw AMBER's clash spike is conditioned away", {}),
+        (f"the spectrum times the circuit's own kernel predicts the measured gradient variance with no free parameter: median "
+         f"measured/predicted {F(V,'PAULI_RATIO_LEGACY','.3f')} over {F(V,'PAULI_N_CELLS')} cells", {}),
+        ("at depth >= 3 the kernel is flat in Pauli weight: the force field's locality is not what limits training; the width is", {}),
+        (f"the Lie algebra is the full so(2^n) from depth 2 (dim {F(V,'DLA_SO128')} at n = 7): nothing algebraic protects the ansatz at scale; "
+         f"n = {F(V,'SWEEP_N_MIN')}..{F(V,'SWEEP_N_MAX')} at depth 3 is the shallow regime", {}),
+        (f"the deployed Gibbs target is a product state (KL to its product of marginals {F(V,'PROD_KL_1A13','.1e')} on 1A13); an ADAPT-grown "
+         "circuit on it grows no entanglement, so its gradients do not decay because there is nothing to train", {}),
+        (f"the optimiser trains ({F(V,'Q_GAP_MIN','.0%')} to {F(V,'Q_GAP_MAX','.0%')} of the gap) and the readout cannot tell "
+         f"({F(V,'Q_CIRC_VS_GIBBS_X','.2f')} x MDE); the tail is a subset of the classical prefix ({F(V,'Q_CELLS')} cells, {F(V,'Q_VIOLATIONS')} violations)", {}),
+        ("Two claims the paper will not make", dict(bold=True, color=ACCENT, bullet=False)),
+        ("a quantum advantage (7 qubits, exact simulation, selection classical by theorem, a product-state target)", {}),
+        ("a barren plateau from a small gradient; 'no plateau' is said only as 'at n <= 13, depth 3, this ansatz'", {}),
+        ("Venue: noiseless exact simulation throughout; a submission adds a noise model, width beyond 13, a 2-design control, error bars", dict(color=MUTED)),
+    ], size=11.5, spacing=3)
+    return s
+
+
 def slide_10(prs, V):
     s = new_slide(prs, "Direction C: learn a better distance prior; physics for validity, not accuracy", 10,
                   "from s26/PROPOSAL_C.md (DRAFT, lane P) and s26/C3_RESULT.md (lane PH, L39, Adversary L46); verdict PENDING C2 to C5")
@@ -494,9 +535,8 @@ def main():
 
     prs = Presentation()
     prs.slide_width = Inches(W); prs.slide_height = Inches(H)
-    builders = {1: slide_01, 2: slide_02, 3: slide_03, 4: slide_04, 5: slide_05, 6: slide_06, 7: slide_07, 10: slide_10, 11: slide_11}
-    pending = {8: ("Direction A: ADAPT-VQE on this Hamiltonian", "s26/PROPOSAL_A.md"),
-               9: ("Direction B: a learned folding model as the prior", "s26/PROPOSAL_B.md and s26/PROPOSAL_B_REPLACEMENT.md")}
+    builders = {1: slide_01, 2: slide_02, 3: slide_03, 4: slide_04, 5: slide_05, 6: slide_06, 7: slide_07, 9: slide_09, 10: slide_10, 11: slide_11}
+    pending = {8: ("Direction A: ADAPT-VQE on this Hamiltonian", "s26/PROPOSAL_A.md")}
     spoken_by_slide = {}
     manifest = {}
     for no in range(1, 12):

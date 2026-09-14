@@ -1600,6 +1600,48 @@
   "basis": "",
   "note": ""
  },
+ "B3_TORS_MINUS_ARM": {
+  "value": 0.5556927740686186,
+  "path": "s13/cache/tors_rows.npz['a_pepPos'][*]/rmsd_build minus bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json :: rmsd_arm (paired mean)",
+  "status": "DERIVED",
+  "basis": "built_chain",
+  "note": "L14: +0.5557"
+ },
+ "B3_TORS_MINUS_ARM_MEDIAN": {
+  "value": 0.23139545027202857,
+  "path": "same rows, paired median",
+  "status": "DERIVED",
+  "basis": "built_chain",
+  "note": "L14: +0.2314"
+ },
+ "B3_TORS_MINUS_ARM_SE": {
+  "value": 0.1318391666400086,
+  "path": "same rows, SE of the paired mean",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L14: 0.1318"
+ },
+ "B3_TORS_MINUS_ARM_MDE": {
+  "value": 0.36936060925864816,
+  "path": "same rows, 2.8016 x SE",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L14: 0.3694"
+ },
+ "B3_TORS_W": {
+  "value": 37,
+  "path": "same rows, targets where the torsion predictor beats the pipeline",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L14: 37W"
+ },
+ "B3_TORS_L": {
+  "value": 89,
+  "path": "same rows, targets where the pipeline wins",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L14: 89L"
+ },
  "TESTS_TOTAL": {
   "value": 370,
   "path": "s26/results/test_run.json :: combined/total",

@@ -251,13 +251,45 @@ PENDING. This slide waits for `s26/PROPOSAL_A.md`.
 
 SOURCES (not spoken; token = value <- artefact path [basis]):
 ===== SLIDE 9 =====
-[shape] Direction B: a learned folding model as the prior
-[shape] 9 / 11    PENDING: s26/PROPOSAL_B.md and s26/PROPOSAL_B_REPLACEMENT.md
-[shape] PENDING. This slide is filled from s26/PROPOSAL_B.md and s26/PROPOSAL_B_REPLACEMENT.md when it lands. | Until then nothing on it is claimed.
+[shape] Direction B: a learned folding model as the prior, and its replacement
+[shape] 9 / 11    from s26/PROPOSAL_B.md (lane P, DRAFT; B1 final) and s26/PROPOSAL_B_REPLACEMENT.md (lane Q); the A2 and A4 figures are on slides 6 and 8
+[shape] What the proposal says | • Replace or augment the shipped distance prior with the output of a large pretrained folding model, because the prior's accuracy is the only steep lever the record measured. | B1, final: the folding model cannot run on this machine | • no checkpoint on disk; 8.45 GB to download | • openfold and omegaconf absent; openfold needs nvcc and Python <= 3.9; this box is Python 3.13, CPU-only torch | • 8.76 GB resident as fair-esm loads it (fp16 LM, fp32 trunk) against 4.4 GB of headroom; fp16 everywhere is still 7.4 GB | B2, pending: the feasible-scale ladder | • the ESM-2 contact head alone as a prior input; the 8M language model against the 650M (rungs conly and esm8m of the C2 ladder) | B3, pending: where the pipeline beats sequence-only, and is that set recognisable native-free? | • built chains: pipeline 3.2148, sequence-only torsion predictor 3.7705, constant helix 4.0648 A; torsion minus pipeline +0.5557 (SE 0.1318, MDE 0.3694, 37W/89L); the classifier test is pending | • Verdict: PENDING B2/B3. If null: REPLACE with the trainability paper (right).
+[shape] The replacement: publish the trainability result | • chain geometry fixes which residues a distance term can depend on (exact theorem); that fixes the energy's Pauli spectrum once raw AMBER's clash spike is conditioned away | • the spectrum times the circuit's own kernel predicts the measured gradient variance with no free parameter: median measured/predicted 0.997 over 104 cells | • at depth >= 3 the kernel is flat in Pauli weight: the force field's locality is not what limits training; the width is | • the Lie algebra is the full so(2^n) from depth 2 (dim 8,128 at n = 7): nothing algebraic protects the ansatz at scale; n = 4..13 at depth 3 is the shallow regime | • the deployed Gibbs target is a product state (KL to its product of marginals 5.4e-05 on 1A13); an ADAPT-grown circuit on it grows no entanglement, so its gradients do not decay because there is nothing to train | • the optimiser trains (78% to 89% of the gap) and the readout cannot tell (0.24 x MDE); the tail is a subset of the classical prefix (2,592 cells, 0 violations) | Two claims the paper will not make | • a quantum advantage (7 qubits, exact simulation, selection classical by theorem, a product-state target) | • a barren plateau from a small gradient; 'no plateau' is said only as 'at n <= 13, depth 3, this ansatz' | • Venue: noiseless exact simulation throughout; a submission adds a noise model, width beyond 13, a 2-design control, error bars
 [notes] SPOKEN:
-PENDING. This slide waits for its build step.
+Direction B was: use a large pretrained folding model as the distance prior. Step one asked whether such a model can run here. The answer is no, on three independent grounds. The checkpoints are not on disk and total 8.45 gigabytes. The code needs two packages that are absent, and one of them wants Python 3.9 or lower; this box runs 3.13 on a CPU. And the model needs at least 8.76 gigabytes resident against 4.4 gigabytes of headroom; even at half precision everywhere it is 7.4. Two feasible-scale checks are pending: the contact head alone as a prior input, and an 8-million-parameter language model against the 650-million one. A third asks whether the targets where the pipeline beats a sequence-only predictor form a set I can recognise without the native. The pipeline wins there by 0.56 angstroms, 89 targets to 37. If those checks are null, B is replaced by a paper. The paper says what a force field's Pauli spectrum does and does not predict. Chain geometry fixes which residues a distance can depend on; that is an exact theorem. That fixes the energy's Pauli spectrum, once the raw force field's clash spike is conditioned away. The spectrum times the circuit's own kernel predicts the measured gradient variance with no free parameter: the median ratio is 0.997 over 104 cells. This sprint added the algebra and the product-circuit result. The paper will not claim an advantage, and it will not call a small gradient a plateau.
+
+ALSO (not spoken):
+B1 verdict: "NO" (`s26/results/b1_feasibility.json`, L13). The one part of a large pretrained model this box already consumes is the ESM-2 650M embedding and its contact head, already 13 of the shipped prior's 183 input columns; its S7 selection value (a document-only -0.288 A whose per-target artefact is lost, L11) is not on this slide and is re-measured by C2's noesm and pca32 rungs. B3 arms, built chains, persisted: pipeline 3.2148, sequence-only torsion predictor 3.7705, constant helix 4.0648; torsion predictor minus pipeline +0.5557 (median +0.2314, SE 0.1318, MDE 0.3694, 37W/89L); the characterisability test (nested ridge against a permutation null) is pending in `s26/results/p_b3.json`. Replacement claims and their artefacts: C1 locality theorem (`s13/results/qarch_locality_geom.json`); C2 raw AMBER's delta-spike spectrum (`s13/results/walsh_xval.json`); C4 spectrum x kernel predicts the gradient variance, median measured/predicted 0.9969 over 104 cells (`s13/results/geo_pauli.json`); C5 the kernel is flat in Pauli weight at depth >= 3 (`s13/results/geo_kernel.json`); C7 the width sweep, slopes -0.649 / -0.252 / -0.047 / -0.311 / -0.243 (`s25/results/q_plateau.json`); C8 the DLA is the full so(2^n) from depth 2 at n = 7, dim 8,128 (`s26/results/q_dla.json`, slide 6); C9 ADAPT-grown circuits at alpha = 1 are product circuits (`s26/results/q_dla.json` adapt sets, `s26/results/q_var.json` slopes; slide 8); C10 the optimiser trains and the readout cannot tell, 0.902 nats, 0.24 x MDE (`s25/results/q_gibbs.json`, `q_alpha.json`); C11 the set-equality theorem, 2,592 cells, 0 violations (`s25/results/q_verify.json`); C12 the deployed Gibbs target is a product state, KL 7.2e-17 ideal, 5.4e-05 on 1A13 (`s26/results/probe/1A13.json`). Venue statement: every number is noiseless exact simulation; a submission would add a noise model, width beyond n = 13, a 2-design control, seeds and error bars on every variance.
 
 SOURCES (not spoken; token = value <- artefact path [basis]):
+ARM_MEAN = 3.21477 <- bench_results/baseline_tuning126.json :: science/rmsd_arm/mean [built_chain]
+B1_DOWNLOAD_GB = 8.45 <- s26/results/b1_feasibility.json :: .../download_bytes_http_head/total_GB
+B1_FP16_GB = 7.4 <- s26/results/b1_feasibility.json :: .../ram_fp16_GB_parameters_only/total
+B1_HEADROOM_GB = 4.4 <- s26/LEDGER.md L13 (governor_state 00:19: 64.8% of 16.75 GB used, ceiling 93%) (LEDGER)
+B1_RESIDENT_GB = 8.76 <- s26/results/b1_feasibility.json :: measured_2026-09-13/c_size_and_ram/ram_as_fair_esm_loads_it_GB/total_resident_minimum
+B1_VERDICT = NO <- s26/results/b1_feasibility.json :: verdict
+B3_TORS_L = 89 <- same rows, targets where the pipeline wins (DERIVED)
+B3_TORS_MINUS_ARM = 0.555693 <- s13/cache/tors_rows.npz['a_pepPos'][*]/rmsd_build minus bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json :: rmsd_arm (paired mean) [built_chain] (DERIVED)
+B3_TORS_MINUS_ARM_MDE = 0.369361 <- same rows, 2.8016 x SE (DERIVED)
+B3_TORS_MINUS_ARM_MEDIAN = 0.231395 <- same rows, paired median [built_chain] (DERIVED)
+B3_TORS_MINUS_ARM_SE = 0.131839 <- same rows, SE of the paired mean (DERIVED)
+B3_TORS_W = 37 <- same rows, targets where the torsion predictor beats the pipeline (DERIVED)
+DLA_SO128 = 8128 <- s26/results/q_dla.json :: results/fixed/n7_L3/dim_so
+HELIX = 4.06475 <- s12/results/s14_ladder.json :: rows/L0_constant_helix/mean [built_chain]
+PAULI_N_CELLS = 104 <- s13/results/geo_pauli.json :: len(cells)
+PAULI_RATIO_LEGACY = 0.996949 <- s13/results/geo_pauli.json :: cells[*]/legacy/ratio_meas_over_pred_exact (median) (DERIVED)
+PROD_KL_1A13 = 5.43789e-05 <- s26/results/probe/1A13.json :: product_diagnostics/zrank/kl_gibbs_to_product
+PROD_KL_IDEAL = 7.23403e-17 <- s26/results/probe/1A13.json :: product_diagnostics/ideal_ladder/kl_gibbs_to_product
+Q_CELLS = 2592 <- s25/results/q_verify.json :: results/n_cells
+Q_CIRC_VS_GIBBS_X = 0.239914 <- s25/results/q_alpha.json :: .../'circuit - exact Boltzmann @T=0.3'/eff_over_mde
+Q_KL_NATS = 0.901916 <- s25/results/q_gibbs.json :: results/divergence_ladder/[T=0.3]/ladder/'50 Adam steps (DEPLOYED)'/kl_nats
+Q_VIOLATIONS = 0 <- s25/results/q_verify.json :: results/'SUBSET-hood violations  <- THE THEOREM'
+SLOPE_A01_T0 = -0.0471589 <- s25/results/q_plateau.json :: results/cvar_alpha01_T0/log2_slope_per_qubit
+SLOPE_A025_T0 = -0.252201 <- s25/results/q_plateau.json :: results/cvar_alpha025_T0/log2_slope_per_qubit
+SLOPE_A025_T03 = -0.242884 <- s25/results/q_plateau.json :: results/deployed_a025_T03/log2_slope_per_qubit
+SLOPE_A1_T03 = -0.310535 <- s25/results/q_plateau.json :: results/deployed_a1_T03/log2_slope_per_qubit
+SLOPE_LIN = -0.649187 <- s25/results/q_plateau.json :: results/linear_alpha1_T0/log2_slope_per_qubit
+TORS = 3.77046 <- s13/results/tors_eval.json :: reports/a_pepPos/build/mean [built_chain]
 ===== SLIDE 10 =====
 [shape] Direction C: learn a better distance prior; physics for validity, not accuracy
 [shape] 10 / 11    from s26/PROPOSAL_C.md (DRAFT, lane P) and s26/C3_RESULT.md (lane PH, L39, Adversary L46); verdict PENDING C2 to C5

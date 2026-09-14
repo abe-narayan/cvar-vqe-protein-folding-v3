@@ -220,10 +220,52 @@ flag, not a lever (L53): how far the relaxation moves the chain predicts its err
 ### spoken
 PENDING. This slide waits for `s26/PROPOSAL_A.md`.
 
-## Slide 9 -- Direction B: a learned folding model as the prior (PENDING)
+## Slide 9 -- Direction B: a learned folding model as the prior, and its replacement
 
 ### spoken
-PENDING. This slide waits for its build step.
+Direction B was: use a large pretrained folding model as the distance prior. Step one asked
+whether such a model can run here. The answer is no, on three independent grounds. The
+checkpoints are not on disk and total {B1_DOWNLOAD_GB:.2f} gigabytes. The code needs two packages
+that are absent, and one of them wants Python 3.9 or lower; this box runs 3.13 on a CPU. And
+the model needs at least {B1_RESIDENT_GB:.2f} gigabytes resident against {B1_HEADROOM_GB:.1f} gigabytes
+of headroom; even at half precision everywhere it is {B1_FP16_GB:.1f}. Two feasible-scale checks
+are pending: the contact head alone as a prior input, and an 8-million-parameter language
+model against the 650-million one. A third asks whether the targets where the pipeline beats a
+sequence-only predictor form a set I can recognise without the native. The pipeline wins there
+by {B3_TORS_MINUS_ARM:.2f} angstroms, {B3_TORS_L} targets to {B3_TORS_W}. If those
+checks are null, B is replaced by a paper. The paper says what a force field's Pauli spectrum
+does and does not predict. Chain geometry fixes which residues a distance can depend on; that
+is an exact theorem. That fixes the energy's Pauli spectrum, once the raw force field's clash
+spike is conditioned away. The spectrum times the circuit's own kernel predicts the measured
+gradient variance with no free parameter: the median ratio is {PAULI_RATIO_LEGACY:.3f} over
+{PAULI_N_CELLS} cells. This sprint added the algebra and the product-circuit result. The paper
+will not claim an advantage, and it will not call a small gradient a plateau.
+
+### also
+B1 verdict: "{B1_VERDICT}" (`s26/results/b1_feasibility.json`, L13). The one part of a large
+pretrained model this box already consumes is the ESM-2 650M embedding and its contact head,
+already 13 of the shipped prior's 183 input columns; its S7 selection value (a document-only
+-0.288 A whose per-target artefact is lost, L11) is not on this slide and is re-measured by C2's
+noesm and pca32 rungs. B3 arms, built chains, persisted: pipeline {ARM_MEAN:.4f}, sequence-only
+torsion predictor {TORS:.4f}, constant helix {HELIX:.4f}; torsion predictor minus pipeline
+{B3_TORS_MINUS_ARM:+.4f} (median {B3_TORS_MINUS_ARM_MEDIAN:+.4f}, SE {B3_TORS_MINUS_ARM_SE:.4f},
+MDE {B3_TORS_MINUS_ARM_MDE:.4f}, {B3_TORS_W}W/{B3_TORS_L}L); the characterisability test
+(nested ridge against a permutation null) is pending in `s26/results/p_b3.json`. Replacement
+claims and their artefacts: C1 locality theorem (`s13/results/qarch_locality_geom.json`); C2 raw
+AMBER's delta-spike spectrum (`s13/results/walsh_xval.json`); C4 spectrum x kernel predicts the
+gradient variance, median measured/predicted {PAULI_RATIO_LEGACY:.4f} over {PAULI_N_CELLS} cells
+(`s13/results/geo_pauli.json`); C5 the kernel is flat in Pauli weight at depth >= 3
+(`s13/results/geo_kernel.json`); C7 the width sweep, slopes {SLOPE_LIN:.3f} / {SLOPE_A025_T0:.3f} /
+{SLOPE_A01_T0:.3f} / {SLOPE_A1_T03:.3f} / {SLOPE_A025_T03:.3f} (`s25/results/q_plateau.json`);
+C8 the DLA is the full so(2^n) from depth 2 at n = 7, dim {DLA_SO128} (`s26/results/q_dla.json`,
+slide 6); C9 ADAPT-grown circuits at alpha = 1 are product circuits (`s26/results/q_dla.json`
+adapt sets, `s26/results/q_var.json` slopes; slide 8); C10 the optimiser trains and the readout
+cannot tell, {Q_KL_NATS:.3f} nats, {Q_CIRC_VS_GIBBS_X:.2f} x MDE (`s25/results/q_gibbs.json`,
+`q_alpha.json`); C11 the set-equality theorem, {Q_CELLS:,} cells, {Q_VIOLATIONS} violations
+(`s25/results/q_verify.json`); C12 the deployed Gibbs target is a product state, KL
+{PROD_KL_IDEAL:.1e} ideal, {PROD_KL_1A13:.1e} on 1A13 (`s26/results/probe/1A13.json`). Venue
+statement: every number is noiseless exact simulation; a submission would add a noise model,
+width beyond n = 13, a 2-design control, seeds and error bars on every variance.
 
 ## Slide 10 -- Direction C: learn a better distance prior; physics for validity only
 

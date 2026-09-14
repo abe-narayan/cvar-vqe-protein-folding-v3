@@ -198,9 +198,38 @@
   "spoken_words": 6
  },
  "9": {
-  "title": "Direction B: a learned folding model as the prior (PENDING)",
-  "tokens": [],
-  "spoken_words": 8
+  "title": "Direction B: a learned folding model as the prior, and its replacement",
+  "tokens": [
+   "ARM_MEAN",
+   "B1_DOWNLOAD_GB",
+   "B1_FP16_GB",
+   "B1_HEADROOM_GB",
+   "B1_RESIDENT_GB",
+   "B1_VERDICT",
+   "B3_TORS_L",
+   "B3_TORS_MINUS_ARM",
+   "B3_TORS_MINUS_ARM_MDE",
+   "B3_TORS_MINUS_ARM_MEDIAN",
+   "B3_TORS_MINUS_ARM_SE",
+   "B3_TORS_W",
+   "DLA_SO128",
+   "HELIX",
+   "PAULI_N_CELLS",
+   "PAULI_RATIO_LEGACY",
+   "PROD_KL_1A13",
+   "PROD_KL_IDEAL",
+   "Q_CELLS",
+   "Q_CIRC_VS_GIBBS_X",
+   "Q_KL_NATS",
+   "Q_VIOLATIONS",
+   "SLOPE_A01_T0",
+   "SLOPE_A025_T0",
+   "SLOPE_A025_T03",
+   "SLOPE_A1_T03",
+   "SLOPE_LIN",
+   "TORS"
+  ],
+  "spoken_words": 248
  },
  "10": {
   "title": "Direction C: learn a better distance prior; physics for validity only",

@@ -405,6 +405,18 @@ def load_values():
         status="DERIVED", note=", ".join(rungs_trained))
     put("C2_N_RUNGS", 11, "s26/PREREG_C2.md / s26/PROPOSAL_C.md: rungs shipped, noesm, conly, pca32, pca32f, pca128, raw, esm8m, wide, pairnet, mix", status="LEDGER")
 
+    # ------------------------------------------------------------------ Proposal B: B3's persisted arms (L14)
+    tz = np.load(os.path.join(ROOT, "s13", "cache", "tors_rows.npz"), allow_pickle=True)
+    trows = json.loads(str(tz["a_pepPos"]))
+    dif = np.array([r["rmsd_build"] - _j(f"bench_results/cache/1fc9f2dcf489e2fb/{r['pdb']}.json")["rmsd_arm"] for r in trows])
+    put("B3_TORS_MINUS_ARM", float(dif.mean()), "s13/cache/tors_rows.npz['a_pepPos'][*]/rmsd_build minus bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json :: rmsd_arm (paired mean)",
+        status="DERIVED", basis="built_chain", note="L14: +0.5557")
+    put("B3_TORS_MINUS_ARM_MEDIAN", float(np.median(dif)), "same rows, paired median", status="DERIVED", basis="built_chain", note="L14: +0.2314")
+    put("B3_TORS_MINUS_ARM_SE", float(dif.std(ddof=1) / np.sqrt(len(dif))), "same rows, SE of the paired mean", status="DERIVED", note="L14: 0.1318")
+    put("B3_TORS_MINUS_ARM_MDE", float(2.8016 * dif.std(ddof=1) / np.sqrt(len(dif))), "same rows, 2.8016 x SE", status="DERIVED", note="L14: 0.3694")
+    put("B3_TORS_W", int((dif < 0).sum()), "same rows, targets where the torsion predictor beats the pipeline", status="DERIVED", note="L14: 37W")
+    put("B3_TORS_L", int((dif > 0).sum()), "same rows, targets where the pipeline wins", status="DERIVED", note="L14: 89L")
+
     # ------------------------------------------------------------------ tests, corpus, leak counts
     tr = _j("s26/results/test_run.json")["combined"]
     put("TESTS_TOTAL", int(tr["total"]), "s26/results/test_run.json :: combined/total")
