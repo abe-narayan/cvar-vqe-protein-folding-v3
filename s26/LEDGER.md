@@ -4640,3 +4640,43 @@ the cross-check that the ladder's anchor and the production chains are the same 
 projection's multi-start sensitivity (L57).
 
 ---
+## L117 -- THE THREE VERDICTS ARE IN (A REPLACE, B REPLACE, C KEEP WITH EDITS); THE SLIDE 11 RULING: WHICH DIRECTION THE EVIDENCE FAVOURS AND WHY (2026-09-14 02:02, coordinator)
+
+Verdicts, each with its file and the evidence it rests on:
+
+- Proposal A (ADAPT-VQE): REPLACE (`s26/PROPOSAL_A.md`, L68 to L70, L75). The deployed
+  objective's optimum is a product state on every target, an adaptive ansatz adds only inert
+  operators, the fixed circuit's Lie algebra is already the full so(2^n) from depth 2, and the
+  endpoint is null at a third of its MDE with a 0.06 A resolution.
+- Proposal B (a learned folding model as the prior): REPLACE (`s26/PROPOSAL_B.md`, L13, L62,
+  L63, L99, L106, L107). ESMFold cannot run on this box; no feasible-scale model input beats the
+  shipped prior; the set where the pipeline beats sequence-only is not characterisable
+  native-free. The replacement is the trainability paper (`s26/PROPOSAL_B_REPLACEMENT.md`).
+- Proposal C (learn the ranking, then refine with physics): KEEP WITH EDITS
+  (`s26/PROPOSAL_C.md`, L56 to L67, L72, L93, L99, L103, L105, L115; L39, L46, L87, L100 for
+  C3). The edits: the model should learn a better prior, not a better ranker; the prior's
+  derivative is steep and its inputs on this machine are flat (nine rungs, none beats the
+  shipped prior; the ESM-2 650M channel is worth -0.208 A built chain and an 8M model carries
+  none of it); AMBER is a validity step only (worse than a random move of its own size); the
+  routers are closed for the seventh and eighth time. C5 did not complete before the close and
+  keeps its pre-registration.
+
+The slide 11 line, in the presenter's words (lane PR replaces the DRAFT with this, verbatim):
+
+"If I could do one thing next, I would publish the trainability work first. Every figure in it
+already exists as a measured artefact, it needs no new machine, and it is the one part of this
+project whose result is positive and complete. The only open accuracy lever is the distance
+prior, and the honest next step there is a larger language model than this laptop can hold,
+so that comes second and needs a bigger machine. I would not spend more time on the circuit
+for accuracy: we now know why it cannot matter here."
+
+Why this and not the other order: the paper's inputs are all in hand (S13 locality theorem and
+Pauli-spectrum prediction, the S25 width sweep now scoped to depth 3 by A2, A2, A4, the
+product-state fact) and the Adversary has checked each; the prior lever is real (S24 L13,
+-2.15 A per unit gamma) but every input this machine can compute is measured flat, so it is a
+resourcing decision, not an experiment the presenter can run next week; the circuit is closed
+as an accuracy lever by three independent facts. Lane PR rebuilds slides 8 to 11 from the
+three final files and this entry; lane E carries the same three sentences in Part VII.
+
+---
+

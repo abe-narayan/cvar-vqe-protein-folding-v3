@@ -56,6 +56,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-14 00:42 next: hourly passes from L104 (A3, raw, H_P3, strain spread control, rotamer relief, coherence training, lane I's slow tiers and frozen rebuild for Part IX, the B and C verdicts, slide 11 ruling); final pass 04:15 to 04:45 with Appendix C last.
 - 2026-09-14 00:59 running: 01:00 pass committed: L104 to L107 (equivalence tier, amber_prior_partner, B3 and Proposal B REPLACE) into VII/VIII/IX; check 165/165 direct; governed e_report_check8 launched.
 - 2026-09-14 00:59 next: hourly passes from L108 (A3, raw, H_P3, strain spread control, rotamer relief, coherence training, the integration tier and frozen rebuild for Part IX, the C verdict and the slide 11 ruling); final pass 04:15 to 04:45, Appendix C last.
+- 2026-09-14 01:54 running: 01:55 pass committed: L108 to L116 (Part B complete, H_P3, C4, best rung = shipped, integration tier 8/8, suite 368/2) into II/VII/VIII/IX; check 170/170 direct; governed e_report_check9 launched.
+- 2026-09-14 01:54 next: hourly passes from L117 (A3, raw, C5, rotamer relief, coherence training, strain spread control, the frozen rebuild and verify chain for Part IX, the C verdict, slide 11 ruling, RETRACTIONS.md additions); final pass 04:15 to 04:45, Appendix C last.
 ## I (Infrastructure / Governor)
 
 - 2026-09-13 00:13 running: read contract/brief/code; job pytest_core (non-AMBER suite, tag TEST, est 2.5 GB) launched under the governor at ~00:11; brief committed unchanged.
@@ -122,6 +124,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 22:44 next: esm8m entry when its resume completes; mix and pairnet entries; raw folds 2-4 one at a time when >= 2.5 GB free, then raw eval; coherence rungs (sw_util, coh_l0.3/1/3) train+eval; B3/C4/C5 runs; p_deliver best rung; final PROPOSAL_B/C with scripts and notes.
 - 2026-09-14 01:37 running: p_c4_run (block 2 of 6, ~15 min per block), p_train_raw_fold2 (epoch 30/40); queued in jobrun behind the 7-job cap: p_deliver_shipped (cross-check only), p_c5_run (alpha 0.5). Posted L93 mix, L99/L101 esm8m, L103 pairnet, L106/L107 B3 (falsifier fires), L110 C4 block 1, L112/L113 delivery file (shipped rung, s26/results/p_best_rung_chains.json, complete). PROPOSAL_B.md FINAL (REPLACE), PROPOSAL_C.md near-final (KEEP WITH EDITS; C4/C5 addenda pending).
 - 2026-09-14 01:37 next: C4 remaining blocks and C5 entries as they land; raw folds 3-4 then raw eval if time; coherence rungs only if time; final findings sections; PROPOSAL_C addendum with C4/C5.
+- 2026-09-14 02:01 running: p_c5_run (8 projections per target, ~2 min/target under load; will not complete by 04:30; rows checkpoint every 10 targets), p_train_raw_fold3 queued behind the cap (79 min per fold; raw will not be evaluated). FINAL on disk: PROPOSAL_B.md (REPLACE), PROPOSAL_C.md (KEEP WITH EDITS), agentP_FINDINGS.md sections 1-11, delivery file p_best_rung_chains.json (production emission) + rebuild-basis cross-check, ledger L56-L116 (lane P entries).
+- 2026-09-14 02:01 next: if C5 completes, its ledger entry and a PROPOSAL_C addendum; otherwise nothing further from lane P before the close.
 
 ## A (Adversary)
 - 2026-09-13 09:15 running: nothing. Done: `s26/EXAMINATION_AUDIT.md` and ledger L31 (reproduction exact on HEAD; one MATERIAL: the 369/356 test count in EXAMINATION D / C35 / L28 against the artefact's 370/357; C26 re-derived from `s13/cache/tors_rows.npz`; C27 in git history at 5fa05cd).
