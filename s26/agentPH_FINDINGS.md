@@ -317,6 +317,29 @@ order) lands, and it will be reported as a property of the projection's cost, no
 
 ---
 
+---
+
+## 3b. STRAIN DIFFICULTY (tournament rank 4): DEMONSTRATED, REPLICATED; a calibration flag, not a lever
+
+`s26/ph_strain.py`, `s26/results/ph_strain.json` and `_rep.json` (126/126 each), jobs
+`ph_strain` / `ph_strain_rep` (35 s, 0.1 GB). Ledger L53 with the full table. Prereg
+`s26/PREREG_strain_difficulty.md` (59d8e934, before the run). Basis: `rmsd_arm` (built chain)
+as the ORACLE label of the already-emitted structure; every signal native-free and free.
+
+    partial rho(signal, rmsd_arm | n, Rg)   moved +0.433 fold [+0.247, +0.588] 5/5 perm p<0.00025  REPLICATED +0.433 [+0.248, +0.581]
+                                            log_e0 +0.241 (4/5 folds)   log_drop +0.250 (4/5)   strain_after +0.133 (CI spans zero)
+    rmsd_arm by quartile of moved            2.29 / 2.94 / 3.76 / 3.92 A (32 targets each)
+    FAIL18 in the top quartile               null for every signal (best p 0.113)
+    not two outliers (without 9KAR, 2BP4: +0.41); not e0 in disguise (moved beats log_e0 by 0.19 in rho)
+
+The first native-free quantity on this record above 0.4 against the per-target error (the
+S22/S23 routers and the compactness proxies reached 0.24 to 0.37). It is attachable to every
+emitted structure as a confidence flag at zero cost, and it is NOT convertible into a selector
+or a weight (the prereg forbids it; S22 L7 / S23 L7 say every such conversion fails held out).
+For the presentation: a calibration curve, never a gain.
+
+---
+
 ## 4. TOURNAMENT IDEAS FILED
 
 `s26/IDEA_amber_reject.md` and `s26/IDEA_cis_peptide.md` (mandatory), `s26/IDEA_branch_select.md`
