@@ -1671,7 +1671,7 @@ at 09:05 (L33). The rest fills Part VII as the verdicts land.
 
 Closed, retracted, open. Slots; see Parts VII and VIII.
 
-## PART VII. WHAT S26 TESTED AND FOUND
+## PART VII. WHAT S26 TESTED AND FOUND (DRAFT: slots only; fills from ledger L33 onward)
 
 Slots, filled as verdicts land in `s26/LEDGER.md` from L33 (PHASE 0 SIGNED OFF, 09:05) onward;
 nothing here is a result until its entry lands:
@@ -1689,7 +1689,7 @@ nothing here is a result until its entry lands:
   identity null (L15), physics branch selection, strain as difficulty, rotamer relief,
   coherence-penalised training, window ensembling. [pending]
 
-## PART VIII. CLOSED AND OPEN
+## PART VIII. CLOSED AND OPEN (DRAFT: filled at the close of S26)
 
 Two tables, filled at the close of S26 from Parts VI and VII. The rule: an open item is never
 moved to closed on one failed experiment; it moves when it has been measured to its own ceiling
@@ -2217,7 +2217,7 @@ artefact; "as asserted" means a passing test pins it.
 | 699 | IX | `s26/results/module_map.json` | as stored |
 <!-- APPENDIX B ROWS -->
 
-## APPENDIX C. THE S26 LEDGER
+## APPENDIX C. THE S26 LEDGER (DRAFT: reproduced at the close)
 
 Reproduced verbatim from `s26/LEDGER.md` at the close of the sprint; until then this slot
 points at the live file, whose tail at the time of the last report commit is noted here.
