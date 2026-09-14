@@ -93,3 +93,15 @@ minutes if it runs. One-target probe first. Agent-hours: 1.5.
 | multi-parent windows | first parent in database order; count reported | dropping them |
 | ORACLE unit | per-target class mean, paired within target where both classes present | pooling members across targets (pseudo-replication) |
 | readout weights | fragment class relative weight in {0, 0.5, 1, 2}, leave-fold-out | continuous weights fitted (S25: leakage-oracle grids found uniform) |
+
+## ADDENDUM 1 (2026-09-13 22:45) -- H_P1 and H_P2 measured; H_P3 runs with one declared reduction; nothing above edited
+
+- Census `w_provenance_census` (exit 0, 5 s, 0.004 GB; complete 126/126, 0 unresolved) and the
+  ORACLE contrast `w_provenance_oracle` (exit 0, 10 s, 0.055 GB): ledger L85. Inside the top-75
+  whole+terminal minus fragment is -0.131 A at 1.13x its MDE (fold CI [-0.165, -0.110], 5/5), so
+  by section 1's rule H_P3 runs.
+- Reduction, declared before H_P3 runs: the permuted-weight control uses 4 seeded draws per
+  target per weight (not 8), so the job stays under about one hour on the loaded box
+  (126 x (4 arms + 4 x 3 permuted) = 2,016 projections). Code `s26/w_provenance_readout.py`.
+- A target with no peptide-derived member in its top-75 and fragment weight 0 has an undefined
+  weighted mean; it falls back to the uniform cloud and is flagged `fallback`.

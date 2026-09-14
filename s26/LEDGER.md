@@ -3168,3 +3168,77 @@ ensemble and is not quoted. Artefacts: `s26/PREREG_window_ensembling.md`, `s26/w
 `s26/w_ensemble_test.py` (ALL OK), `s26/results/w_selfcopy_ensemble_probe_1A13.json`,
 `w_selfcopy_ensemble_clouds.json`, `w_selfcopy_ensemble_endpoint.json`,
 `s26/jobs_done/w_ensemble_{probe,clouds,endpoint}.json`.
+
+## L85 -- TOURNAMENT ITEM 9, window_provenance (W), CENSUS AND ORACLE CONTRAST: 73% OF EVERY POOL AND OF EVERY TOP-75 IS FRAGMENT WINDOWS, 0.6% WHOLE PEPTIDES; IN THE POOL A PEPTIDE-DERIVED WINDOW IS 0.42 A NEARER THE NATIVE THAN A FRAGMENT WINDOW (3.2x MDE, 5/5 FOLDS); INSIDE THE SCORE-SELECTED TOP-75 THE GAP SHRINKS TO 0.09 (0.96x MDE) AND WHOLE+TERMINAL VS FRAGMENT TO 0.13 (1.13x, TYPE-M ZONE); THE READOUT TEST H_P3 RUNS NEXT (2026-09-13, W)
+
+Pre-registered in `s26/PREREG_window_provenance.md` (written before the code ran on any target).
+Census (native-free, codes and sequences only): job `w_provenance_census` (exit 0, 5 s, peak
+0.004 GB; `s26/results/w_selfcopy_provenance_census.json`, complete 126/126, 0 unresolved
+windows). ORACLE contrast (single-window basis, the universe's `rr`): job `w_provenance_oracle`
+(exit 0, 10 s, 0.055 GB; `s26/results/w_selfcopy_provenance_oracle.json`). Class rule: a pool
+window's string looked up among the length-n substrings of the 787 peptides (whole: parent length
+n; terminal: offset 0 or the end; interior) and the 6,003 fragments (fragment), the FIRST parent
+in database order winning, the universe's `org` flag arbitrating a string present in both banks;
+synthetic test `s26/w_provenance_test.py` ALL OK. Multi-parent strings are common (15,990 at
+length 9 down to 1,224 at 16, mostly overlapping fragments of one protein) and are counted, not
+guessed.
+
+**Census (H_P1), means over 126 targets:**
+
+    class       K = 500 pool   shipped top-75   targets with one in the top-75
+    whole          0.6%            0.7%           30 / 126
+    terminal       8.0%            7.2%          113 / 126
+    interior      18.7%           18.3%
+    fragment      72.7%           73.8%
+    unresolved     0.0%            0.0%
+
+The score keeps the pool's class mix almost unchanged: it neither favours nor removes peptide
+windows. The registered "about 1% whole peptides" holds (0.6 to 0.7%).
+
+**ORACLE contrast (H_P2), per-target mean `rr` of one class minus another, `ST.fmt` verbatim for
+the two contrasts the falsifier names (single-window basis on both sides; negative = the first
+class is nearer the native):**
+
+  pool: class peptide_any minus class fragment, per-target mean ORACLE rr (single-window basis), n=126 targets with both
+    a 4.1721 (med 4.0394)   b 4.5882 (med 4.3129)   n=126
+    effect -0.4161   median -0.4358   SE 0.0468   MDE 0.1310   effect/MDE -3.18
+    iid  CI95 [-0.5066, -0.3220]
+    fold CI95 [-0.4472, -0.3758]   folds same sign 5/5   per-fold 0:-0.341 1:-0.401 2:-0.463 3:-0.439 4:-0.434
+    101W/25L/0T   worst degradation +1.1974 (7VI4)   p90 +0.2005   power 1.00  Type-M 1.00
+    concentration: drop-top10 -0.3272 vs uniform-effect null p10/p50/p90 -0.3902/-0.3278/-0.2696 -> pctile 0.504
+    VERDICT: BETTER
+  top75: class whole_or_terminal minus class fragment, per-target mean ORACLE rr (single-window basis), n=114 targets with both
+    a 3.5381 (med 3.4172)   b 3.6695 (med 3.7564)   n=114
+    effect -0.1313   median -0.0533   SE 0.0414   MDE 0.1159   effect/MDE -1.13
+    iid  CI95 [-0.2139, -0.0533]
+    fold CI95 [-0.1646, -0.1096]   folds same sign 5/5   per-fold 0:-0.106 1:-0.193 2:-0.123 3:-0.143 4:-0.107
+    66W/48L/0T   worst degradation +0.8160 (5MXS)   p90 +0.2992   power 0.89  Type-M 1.07
+    concentration: drop-top10 -0.0286 vs uniform-effect null p10/p50/p90 -0.0789/-0.0306/+0.0136 -> pctile 0.520
+    VERDICT: BETTER [TYPE-M ZONE: magnitude inflated ~1.07x]
+
+The other contrasts (effect / MDE / fold CI / verdict): pool whole+terminal minus fragment -0.421
+/ 0.136 / [-0.453, -0.388] BETTER (3.1x, 5/5); pool interior minus fragment -0.411 / 0.136 /
+[-0.447, -0.368] BETTER (3.0x, 5/5); pool whole+terminal minus interior -0.011 / 0.085 NOT
+MEASURED (0.13x); top-75 peptide_any minus fragment -0.086 / 0.090 / [-0.116, -0.056] NOT MEASURED
+(0.96x, 5/5 folds); top-75 interior minus fragment -0.061 / 0.093 NOT MEASURED (0.66x); top-75
+whole+terminal minus interior -0.056 / 0.114 NOT MEASURED (0.49x).
+
+Reading. In the retrieval pool, ANY peptide-derived window (whole, terminal or interior alike) is
+0.41 to 0.42 A nearer the native than a fragment window, 5/5 folds, 3x its MDE: S19's "the peptide
+corpus carries the sequence-structure channel; fragments are training-only material whose
+conformation is held by contacts outside the window" (S24 L8), measured for the first time on the
+single-window basis of the shipped pool. The position of the window in its parent peptide does
+not matter (whole+terminal minus interior 0.13x MDE). Inside the score-selected top-75 the gap
+shrinks to -0.09 (0.96x) for any peptide window and -0.13 (1.13x, Type-M zone) for whole+terminal
+windows: the shipped score already removes most of the class difference, and what remains is at
+the edge of what n = 114 to 126 can see. The registered expectation for H_P2 (NOT MEASURED inside
+the top-75, well under 0.1 A) held for the peptide_any and interior contrasts and was exceeded, in
+the Type-M zone, by the whole+terminal one. By the PREREG's rule the ACHIEVABLE readout test H_P3
+(fragment-class relative weight in {0, 0.5, 1, 2}, chosen leave-fold-out on the built chain,
+against the uniform readout and the permuted-weight control) therefore runs; the registered
+expectation for it is 0.00 to -0.02 A on the built chain against an MDE of about 0.05
+(NOT MEASURED), because a 0.13 A single-window difference on 8% of the members of a 75-member
+average is worth at most a few hundredths through the mean, and the L44/L64 controls show that a
+few members' change moves the chain mostly orthogonally to the native. Nothing here is deployable
+yet: the class of a window is native-free, the contrast is ORACLE. Replication: deterministic
+(the census and the `rr` are fixed); the bootstrap is seeded.
