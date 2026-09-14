@@ -989,3 +989,18 @@
 2026-09-13T22:18:01 SAMPLE   ram=77.2% (12.93GB used, 3.82GB free) cpu=50.0% (15s mean 46.8%) jobs=4 amber=1 queued=0 lanes=8
 2026-09-13T22:19:01 SAMPLE   ram=77.3% (12.94GB used, 3.81GB free) cpu=44.0% (15s mean 44.4%) jobs=4 amber=1 queued=0 lanes=8
 2026-09-13T22:20:01 SAMPLE   ram=77.3% (12.95GB used, 3.80GB free) cpu=44.5% (15s mean 44.7%) jobs=4 amber=1 queued=0 lanes=8
+2026-09-13T22:21:01 SAMPLE   ram=74.2% (12.43GB used, 4.32GB free) cpu=54.6% (15s mean 56.6%) jobs=4 amber=1 queued=0 lanes=8
+2026-09-13T22:21:41 RESTART  governor v2.2 stopped by the coordinator for v2.3 (adopt suspensions; ledger L83)
+2026-09-13T22:21:43 START    governor v2 pid 6544 ceiling=93.0% hard(ram)=95.0%/15s cpu_resume=80.0% cpu_window=3 min_suspend=20s low=88.0%/60s sample=5s max_amber=2
+2026-09-13T22:21:43 SAMPLE   ram=74.6% (12.50GB used, 4.25GB free) cpu=78.1% (15s mean 78.1%) jobs=4 amber=1 queued=0 lanes=8
+2026-09-13T22:21:43 ADOPT    a3_build was suspended before this governor started; adopted
+2026-09-13T22:21:43 RESUME   a3_build agent=Q tag=CPU
+2026-09-13T22:22:43 SAMPLE   ram=74.5% (12.48GB used, 4.27GB free) cpu=73.0% (15s mean 62.3%) jobs=4 amber=1 queued=0 lanes=8
+2026-09-13T22:23:43 SAMPLE   ram=74.3% (12.44GB used, 4.31GB free) cpu=62.4% (15s mean 57.5%) jobs=4 amber=1 queued=0 lanes=8
+2026-09-13T22:24:08 REAP     w_ensemble_endpoint (pid 1672) is gone; registration removed
+2026-09-13T22:24:43 SAMPLE   ram=73.9% (12.38GB used, 4.37GB free) cpu=56.7% (15s mean 56.9%) jobs=4 amber=1 queued=0 lanes=8
+2026-09-13T22:25:43 SAMPLE   ram=74.4% (12.47GB used, 4.28GB free) cpu=55.5% (15s mean 56.3%) jobs=4 amber=1 queued=0 lanes=8
+2026-09-13T22:26:43 SAMPLE   ram=73.6% (12.33GB used, 4.42GB free) cpu=57.3% (15s mean 57.6%) jobs=4 amber=1 queued=0 lanes=8
+2026-09-13T22:27:43 SAMPLE   ram=73.4% (12.29GB used, 4.46GB free) cpu=57.6% (15s mean 57.2%) jobs=4 amber=1 queued=0 lanes=8
+2026-09-13T22:28:43 SAMPLE   ram=74.3% (12.44GB used, 4.31GB free) cpu=69.2% (15s mean 70.1%) jobs=5 amber=1 queued=0 lanes=8
+2026-09-13T22:29:43 SAMPLE   ram=74.8% (12.52GB used, 4.23GB free) cpu=67.1% (15s mean 68.1%) jobs=5 amber=1 queued=0 lanes=8
