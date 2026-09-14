@@ -2928,3 +2928,18 @@ Eight lanes active (E, I, Q, P, PH, W, A, PR): the maximum.
 
 ---
 
+## L78 -- THE STALL BREAKER'S FIRST KILL (p_eval_esm8m, 22:03); THE CTRL_BREAK GRACE SIGNAL DOES NOT CROSS CONSOLES ON WINDOWS, SO A GOVERNOR KILL IS A HARD KILL AFTER 25 s (2026-09-13 22:08, coordinator)
+
+`s26/governor.log` 22:03:30: the v2.2 stall breaker (L74) fired as designed on the fattest
+suspended job while RAM sat above 90%, `p_eval_esm8m`; the CTRL_BREAK it sends first failed
+with `OSError(22, 'The parameter is incorrect')` (WinError 87): `GenerateConsoleCtrlEvent` can
+only reach a process group attached to the caller's console, and the governor runs in its own
+console. The job was terminated at 22:03:55 after the 25 s grace and lane P relaunches it from
+its checkpoint. Consequence, stated for every lane: a governor kill is a hard kill after 25 s;
+the loss is bounded by the job's own checkpoint granularity (per target or per fold in every
+S26 job), and a killed job's partial rows are not a result until the relaunched run completes
+with `complete: true`. Not changed tonight: a file-based stop request that jobs would poll is
+the right fix and is noted for the next campaign in `s26/agentI_FINDINGS.md`'s hygiene list.
+
+---
+
