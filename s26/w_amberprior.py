@@ -7,8 +7,9 @@ Stage 1 `clouds` (native-free): for every (lam, beta) cell the mixed posterior
 P = (1 - lam) P_shipped + lam H_beta, H_beta the K = 500 pool's per-pair 17-bin histogram
 weighted by exp(-beta * zrank(E_AMBER)) (the cached ff14SB/GBn2 single points), through a genuine
 core.predict.Distogram risk table, the shipped score, the top-75 and the medoid-frame average;
-the cloud and the top-75 stored, no projection.  The rank-permuted-AMBER control (energies
-permuted across the 500 candidates, 4 seeded draws) at every beta > 0 cell.  lam = 0 asserted
+the cloud and the top-75 stored, no projection (the medoid frame cached by top-75 set).  The
+rank-permuted-AMBER control (energies permuted across the 500 candidates, 4 seeded draws) is
+computed in stage 2 at the chosen cell only.  lam = 0 asserted
 bit-exact against the shipped risk table; beta = 0 asserted equal to p_ladder's pool_histogram.
 
 Stage 2 `endpoint` (GATED): cloud RMSD per cell; (lam*, beta*) chosen leave-fold-out on the point
@@ -76,10 +77,24 @@ def weighted_pool_histogram(D_pool, w, eps=1e-3):
     return H / H.sum(1, keepdims=True)
 
 
-def cell_cloud(P, seq, i, j, Wp, fold):
+_MEDOID = {}
+
+
+def cell_cloud(P, seq, i, j, Wp, fold, cache_key=None):
+    """Risk table, shipped score, top-75, medoid-frame mean.  The medoid (the cost: 75 x 75
+    Kabsch) is cached by the top-75 SET, which many (lam, beta) cells share."""
     rt = PL.risk_table(seq, P, i, j)
-    e = W.emit(Wp, rt, seq, fold, project=False)
-    return e["cloud"], e["top"], rt
+    Dp = _DP[cache_key] if cache_key in _DP else I.pair_dists(np.asarray(Wp, float), i, j)
+    sc = np.asarray(I.shipped_score(rt, Dp.astype(np.float32).astype(float)), float)
+    o = np.argsort(sc, kind="stable"); top = o[:TOPM]
+    key = (cache_key, tuple(sorted(int(x) for x in top)))
+    if key not in _MEDOID:
+        Pm = I.pairwise_rmsd(Wp[top]); _MEDOID[key] = int(top[I.medoid(Pm)])
+    C = I.superpose_batch(Wp[top], Wp[_MEDOID[key]]).mean(0)
+    return C, top, rt
+
+
+_DP = {}
 
 
 def clouds_target(t, verbose=True):
@@ -92,8 +107,9 @@ def clouds_target(t, verbose=True):
     Dp = I.pair_dists(Wp, i, j)
     E = amber_energies(pdb, u); zE = zrank(E)
     H0 = PL.pool_histogram(Dp)
-    row = {"pdb": pdb, "n": n, "fold": fold, "cells": {}, "perm": {}, "gate": None}
-    C0, top0, rt0 = cell_cloud(P0, seq, i, j, Wp, fold)
+    row = {"pdb": pdb, "n": n, "fold": fold, "cells": {}, "gate": None}
+    _MEDOID.clear(); _DP.clear(); _DP[pdb] = Dp
+    C0, top0, rt0 = cell_cloud(P0, seq, i, j, Wp, fold, cache_key=pdb)
     row["gate"] = W.production_gate(pdb, {"top": top0, "cloud": C0})
     assert np.array_equal(np.asarray(rt0["risk"]), np.asarray(dg["risk"], np.float32)), "shipped risk table not reproduced"
     for lam, beta in CELLS:
@@ -102,21 +118,11 @@ def clouds_target(t, verbose=True):
         if beta == 0.0:
             assert np.allclose(H, H0, atol=0, rtol=0), "beta = 0 != pool_histogram"
         P = (1.0 - lam) * P0 + lam * H
-        C, top, rt = cell_cloud(P, seq, i, j, Wp, fold)
+        C, top, rt = cell_cloud(P, seq, i, j, Wp, fold, cache_key=pdb)
         if lam == 0.0:
             assert np.array_equal(np.asarray(rt["risk"]), np.asarray(rt0["risk"])), "lam = 0 is not the incumbent bit-exactly"
         row["cells"]["%g,%g" % (lam, beta)] = {"cloud": C, "top": top, "top75_overlap": float(len(set(top.tolist()) & set(top0.tolist())) / TOPM),
                                                "tri_cloud": float(I.ca_rmsd(C, C0))}
-    for k in range(N_PERM):
-        rng = SD.stable_rng("w_amberprior", pdb, k)
-        zp = zE[rng.permutation(len(zE))]
-        for lam, beta in CELLS:
-            if beta == 0.0 or lam == 0.0:
-                continue
-            H = weighted_pool_histogram(Dp, np.exp(-beta * zp))
-            P = (1.0 - lam) * P0 + lam * H
-            C, top, _ = cell_cloud(P, seq, i, j, Wp, fold)
-            row["perm"]["%d:%g,%g" % (k, lam, beta)] = {"cloud": C, "top": top}
     assert W.finite(row), pdb
     if verbose:
         tc = row["cells"]
@@ -148,7 +154,7 @@ def clouds(probe=None, verbose=True):
     summ = {"n": len(rows), "top75_equals_sub_count": int(sum(r["gate"]["top75_equals_sub"] for r in rows)),
             "tri_cloud_median": {c: float(np.median([r["cells"][c]["tri_cloud"] for r in rows])) for c in rows[0]["cells"]}}
     p = W.save(name, {"label": "amber prior partner, stage 1 native-free", "summary": summ, "rows": rows}, rows=rows,
-               n_expected=len(tg), complete_keys=("pdb", "cells", "perm"))
+               n_expected=len(tg), complete_keys=("pdb", "cells"))
     print(json.dumps(summ, indent=1)); print("  ->", p)
     return rows
 
@@ -193,9 +199,21 @@ def endpoint(verbose=True):
                 "chosen_b0": np.asarray(r["cells"][chb0]["cloud"], float)}
         lam, beta = (float(x) for x in ch.split(","))
         perm = []
-        for q in range(N_PERM):
-            key = "%d:%g,%g" % (q, lam, beta)
-            perm.append(np.asarray(r["perm"][key]["cloud"], float) if key in r["perm"] else arms["chosen"])
+        if lam > 0.0 and beta > 0.0:
+            from s15 import seed as SD
+            u = W.load_blind(pdb); idx = I.pool_idx(u); Wp = np.asarray(u["W"][idx], float)
+            dg = I.distogram(pdb); P0 = np.asarray(dg["prob"], float); i, j = np.asarray(dg["i"]), np.asarray(dg["j"])
+            Dp = I.pair_dists(Wp, i, j); zE = zrank(amber_energies(pdb, u))
+            _MEDOID.clear(); _DP.clear(); _DP[pdb] = Dp
+            for q in range(N_PERM):
+                rng = SD.stable_rng("w_amberprior", pdb, q)
+                zp = zE[rng.permutation(len(zE))]
+                Pq = (1.0 - lam) * P0 + lam * weighted_pool_histogram(Dp, np.exp(-beta * zp))
+                Cq, _, _ = cell_cloud(Pq, t["seq"], i, j, Wp, int(t["fold"]), cache_key=pdb)
+                perm.append(Cq)
+            del u
+        else:
+            perm = [arms["chosen"]] * N_PERM
         e = {}
         for name, C in list(arms.items()) + [("perm%d" % q, perm[q]) for q in range(N_PERM)]:
             pr = I.project(C, t["seq"], int(t["fold"]))

@@ -98,3 +98,11 @@ One-target probe first. Agent-hours: 2 code, 1.5 run, 1 write-up.
 | choice of (lam, beta) | leave-fold-out on the point cloud (cost), verdict on the built chain | on the built chain (15 h); per-target beta |
 | control | rank-permuted AMBER at the chosen cell, 4 draws; the beta = 0 mixture | S25's random-75 null (a readout-level control, not a prior-level one) |
 | basis | built chain PRIMARY; cloud and sel carried | AMBER energy of the emission |
+
+## ADDENDUM 1 (2026-09-13 22:50) -- staging refined before the first real-target run; nothing above edited
+
+- Stage 1 stores the 30 cells' clouds only; the medoid frame (the cost, 75 x 75 Kabsch) is cached
+  by top-75 set within a target, and `cell_cloud` is checked on synthetic data to reproduce
+  `w_selfcopy.emit`'s cloud exactly. The rank-permuted-AMBER control (4 seeded draws) is computed
+  in stage 2 at the chosen (lam*, beta*) cell only, which is the only place the falsifier reads it.
+  Nothing else in sections 1 to 6 changes.
