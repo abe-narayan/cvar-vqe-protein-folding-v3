@@ -5542,3 +5542,31 @@ unchecked. Recorded in `s26/agentA_FINDINGS.md` "what I did not do".
 
 ---
 
+## L136 -- ADVERSARY CHECK OF L115 AND L112 / L116 (C4's EIGHTEEN ROUTERS; THE C3 DELIVERY FILE): BOTH STAND; THE "NOT DONE" LINE OF L135 IS CLOSED (2026-09-14, A)
+
+L115 (C4). Nested leave-fold-out ridge (the router is fitted on training folds only; the m* and
+s* labels are ORACLE per-target optima used as labels, never at inference); 200-draw label
+permutation nulls per router; the anchor reproduces `agg_surface` and `errdecomp` at 0.00e+00;
+the S22 feature set runs through the same harness as the control and reproduces its recorded
+~0 (+0.020 to +0.047); both bases stated (point cloud where m* and s* live, built chain
+carried). Twelve m routers: eleven harmful in sign, none clears its MDE (largest 0.91x, worse
+than 96% of its null); the one negative number (retrieval-score entropy, router B, -0.0012,
+0.02x MDE) is read as "not harmful", which is right, since the permutation null's own mean is
++0.019 (any routing away from m = 75 costs about 0.02 A, so p_perm 0.010 against that null is
+not a gain). Six s routers predict s* with the wrong sign (rho -0.10 to -0.21) and cost +0.007
+to +0.027 against s = 1. No order statistic is taken (each routed value is the ridge's own
+pick, not a minimum). Power stated per router. S22 L7 / S23 L7 extended to eighteen
+constructions; S22 L10's bound stands. STANDS.
+
+L112 / L116 (the delivery file). `s26/results/p_best_rung_chains.json` is the production
+emission (126/126, complete, mean `rmsd_arm` 3.2148, torsions in radians, unwrapped per L114),
+delivered because no C2 rung beat the shipped prior on the built chain (the nine fold CIs listed
+in L112 all include or exceed zero on the harmful side) and because PH's C3 stage 1 already
+relaxed that chain, so stage 2 is L87's replication. The rebuild-basis re-projection is saved
+separately (`p_best_rung_chains_rebuild_basis.json`, mean 3.2126, L57) as the cross-check; its
+six-minute overwrite of the delivery file was caught and the file restored from commit
+6ed3b367, with the per-target difference recorded in `s26/agentP_FINDINGS.md` section 11.
+STANDS.
+
+---
+
