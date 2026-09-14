@@ -87,7 +87,7 @@ def report(rung, seed=0):
                 vals[k] = np.array([r[k] for r in rr])
             g = {q: float(np.nanmean([r[q] for r in rr])) for q in ("gam_prob", "cos_prob", "gam_loc", "cos_loc", "mae")}
         out["stats"] = {}
-        for k, lab in (("arm", "BUILT CHAIN (PRIMARY, 3.2148 basis)"), ("cloud", "POINT CLOUD (3.0483 basis)"), ("sel", "SELECTION argmin K=500 (3.4540 basis)")):
+        for k, lab in (("arm", "BUILT CHAIN (PRIMARY; rebuild basis 3.2126, L57)"), ("cloud", "POINT CLOUD (3.0483 basis)"), ("sel", "SELECTION argmin K=500 (3.4540 basis)")):
             b = np.array([r[k] for r in base])
             c = ST.compare(vals[k], b, folds, names=pdbs, label="%s vs shipped -- %s" % (rung, lab))
             out["stats"][k] = c; lines.append(ST.fmt(c))
