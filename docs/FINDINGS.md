@@ -135,6 +135,8 @@ reader of this ledger meets them. Nothing below the front matter is edited.
 | **S26 L106** (lane P): the B3 gain-size feature is the pool's helix content or the length | **CORRECTED (L107):** it is the pool's strand content. |
 | **S26 L56** (lane P): the C2 anchor's built chain equals the production cache | **CORRECTED (L57):** selection and point cloud are bit-exact; the built chain lands on the leaderboard-rebuild basis 3.2126 because the multi-start projection is sensitive to a 1e-14 input difference. |
 | **S26 L7** (lane I): two point-cloud numbers for 1D6X and 1KWE | **CORRECTED (L9):** written before the query returned; the correct values are 2.0900 and 2.7313. |
+| **S26 L38** (lane PH): the cis floor 0.347 A (the native rebuilt from its own torsions) | **SCOPED (L89):** that figure is the own-torsion upper bound; the native projected through the production projection sits 0.083 A from itself, so the constant omega costs about 0.04 A. |
+| **S13 geo_FINDINGS**: the Pauli mean weights 2.236 (Legacy) and 3.015 (conditioned AMBER) | **NOT RE-DERIVED BY S26 (L122, L126):** kept off every slide; the paper outline cites them from `s13/results/geo_pauli.json` with that note; the measured/predicted ratio 0.9969 over 104 cells is what S26 reproduced. |
 
 ---
 
