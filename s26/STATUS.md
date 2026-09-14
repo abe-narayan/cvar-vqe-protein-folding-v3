@@ -47,6 +47,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 19:51 next: e_report_check4 (queued behind the job cap) refreshes s26/results/e_report_check.json; then hourly: read the ledger from L60, fill VII/VIII (A1/A3, C2 rungs, ph_reject_chain, C3 stage 2, tie-break floor) with B rows, commit each pass; Appendix C at the close.
 - 2026-09-13 22:07 running: 22:10 pass committed (VII.0 How S26 was run; A1/L69 verdict; six C2 rungs; tie-break floor; VII.6 retractions; VIII rows; check 146/146, governed re-run e_report_check5 queued); final pass planned 04:15 to 04:45 (Appendix C = ledger verbatim, appended last).
 - 2026-09-13 22:07 next: hourly passes from L78 (A3, remaining rungs, ph_reject_chain, branch_select, C3 stage 2 / rep, ensembling, provenance, Part B retrains, lane I's VERIFY_SLOW tier and frozen rebuild for Part IX); Appendix D kept current.
+- 2026-09-14 00:15 running: 00:20 pass committed (f6024aef): L78 to L93 into VII/VIII (mix rung, rung audit, C3 replication, steric reject built chain, branch select, tight cis floor, ensembling, provenance, recall gradient, memorisation ladder, R5); check 157/157, style 0/0/0; governed re-run e_report_check6 launched (e_report_check5 was among the starved waiters, L92).
+- 2026-09-14 00:15 next: hourly passes from L94 (A3, esm8m/pairnet/raw, H_P3, strain pool-spread control, rotamer relief, coherence training, lane I's slow tier and frozen rebuild for Part IX, the B and C verdicts); final pass 04:15 to 04:45 with Appendix C last.
 ## I (Infrastructure / Governor)
 
 - 2026-09-13 00:13 running: read contract/brief/code; job pytest_core (non-AMBER suite, tag TEST, est 2.5 GB) launched under the governor at ~00:11; brief committed unchanged.
