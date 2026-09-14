@@ -5,7 +5,7 @@ final pass before close is short. Each row: exists / meets the stated standard /
 missing. Banned-word and em-dash greps (rule 13) are run over every presenter-facing file each
 pass: `grep -nE "genuinely|honestly|leverage|robust|delve|underscore"` and a count of U+2014.
 
-Last pass: 2026-09-14 00:15 (after L97).
+Last pass: 2026-09-14 02:09 (after L121).
 
 | # | deliverable | exists | standard met | missing / note |
 |---|---|---|---|---|
@@ -13,7 +13,7 @@ Last pass: 2026-09-14 00:15 (after L97).
 | 2 | EXAMINATION + AUDIT (`s26/EXAMINATION.md`, `s26/EXAMINATION_AUDIT.md`) | OK | OK: audit L31, one MATERIAL fixed by addenda (L32), re-checked L34; Phase 0 signed off L33 | -- |
 | 3 | BRIEF (`s26/BRIEF.md`) | OK | OK: one-sentence falsifiers per item, basis named | -- |
 | 4 | PREREG_* (22 files) | OK | OK for the arms that ran; survivors still without a PREREG (L51): strain_difficulty, window_ensembling, window_provenance, amber_prior_partner, product_state_optimum (unless inside PREREG_A1) | PENDING: those five before compute |
-| 5 | PROPOSAL_A / B / C (+ B_REPLACEMENT) | PARTIAL | all four on disk; A's verdict REPLACE accepted (L69) and supported by the Adversary (L70); B_REPLACEMENT per L13 | C's verdict waits on the ladder eval (L62-L67 so far: noesm +0.208 Type-M, conly / wide / pca32f not measured) |
+| 5 | PROPOSAL_A / B / C (+ B_REPLACEMENT) | PARTIAL | all four FINAL; verdicts A REPLACE (L69/L70), B REPLACE (L120: notes sourced, isolations persisted in `s26/results/a_ladder_isolations.json`), C KEEP WITH EDITS (L120) | MATERIAL document fix owed on PROPOSAL_C: the FINAL 03:30 stamp and the past-tense C5 outcome written while C5 runs; raw fold count inconsistent (line 3 vs 58); rho -0.638 in B[5] cites p_b3.json but lives in agentP_FINDINGS section 10 |
 | 6 | IDEA_* + TOURNAMENT | OK | 16 IDEA files; `s26/TOURNAMENT.md` ranked (L51 accepted); banned-word clean | -- |
 | 7 | agent*_FINDINGS | PARTIAL | A, E, I, P, PH, Q, W on disk in the S12-S25 format; PR lane (spawned L42) has none yet | PENDING: agentPR_FINDINGS; each lane's "what I did not do" section present (checked A, E, W) |
 | 8 | LEDGER + RETRACTIONS | OK | append-only, numbered, collisions suffixed (L16b, L18b); `s26/RETRACTIONS.md` R1-R5 (R5 = L75's inert-growth correction), R2 marked FOR docs/FINDINGS.md | keep current: no S26 endpoint has contradicted a prior sprint yet (L39, L43, L44 confirm the record) |
@@ -51,6 +51,7 @@ Last pass: 2026-09-14 00:15 (after L97).
 - A1: "twelve of twelve arms negative" is one correlated observation (mean pairwise corr 0.955); quote it with the 0.23x / 0.36x MDE and the 0.06 A resolution (L70).
 - The tie-break floor 0.024 A applies across runs that do not share the tie-break; paired within-run contrasts (C3 etc.) are not inside it (L71).
 - The cis/omega floor: "0.35 A" is the own-torsion upper bound (L38); the tight floor is 0.083 A (L89); the projection's 0.166 A cost is displacement, not representation.
+- The strain flag (L53): the signal is the pool's own spread (rho +0.45, native-free, pre-AMBER); `moved` adds nothing given it (partial +0.08); never "the first native-free quantity above 0.4" (vetoed as worded, L121).
 - The toward-member 0.02 A improvement (L87) is a measured reversal of part of the projection's displacement, not a physics result and not a proposal (L95); the branch-degeneracy 0.08 A is an ORACLE order statistic (L96).
 - "No exponential plateau": always "at depth 3" (R2).
 - 3.2148 (cache) vs 3.2126 (leaderboard rebuild): quote one and name it (EXAMINATION H).

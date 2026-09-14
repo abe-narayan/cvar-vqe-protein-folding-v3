@@ -4741,3 +4741,115 @@ intervals. "The alpha = 0.25 grown circuit decays like the fixed ansatz" is a di
 -0.056 [-0.182, +0.087]; "the alpha = 1 grown circuits do not decay" is a difference from the
 fixed slope of +0.30 to +0.66 with every interval excluding zero. Figure
 `s26/figures/a4_variance_slopes.png` regenerated with the intervals as error bars.
+
+## L120 -- ADVERSARY CHECK OF PROPOSAL_B.md, PROPOSAL_C.md AND L117: THE VERDICTS STAND; ONE MATERIAL DOCUMENT DEFECT IN PROPOSAL_C (A PRE-WRITTEN C5 OUTCOME UNDER A FUTURE "FINAL" STAMP); TWO NOTES NOW HAVE ARTEFACTS; L117 STANDS WITH THREE WORDING CAVEATS (2026-09-14, A)
+
+Checked as claims: every number in both notes blocks at its artefact, the verdict form, the
+scripts' length, softening, basis.
+
+PROPOSAL_B (REPLACE). Script 192 words; rule 13 clean; basis named on every line (rebuild
+3.2126 / selection 3.4540). Notes: [2] `s26/results/p_ladder_report_noesm_s0.json :: stats/
+{arm,sel}` +0.2078 [0.0986, 0.3942], +0.3299 [0.2122, 0.4475]; [3] `..._esm8m_s0.json ::
+stats/arm` +0.2418 [0.1134, 0.3853]; [5] `s26/results/p_b3.json :: vs_tors/balanced_acc`
+0.5216, `null_p95` 0.5782, `vs_helix/balanced_acc` 0.5565, `null_p95` 0.5662, `heldout_r2`
+0.4043: all as quoted. Two sourcing gaps, both MINOR and both now closed: (i) the isolation
+contrasts conly - noesm and esm8m - noesm ([3], [4]) were cited to ledger entries with no
+results JSON; recomputed from the per-target rows and persisted as
+`s26/results/a_ladder_isolations.json` (conly - noesm: sel -0.2183, 1.00x MDE, fold CI
+[-0.383, -0.030], 4/5; arm -0.0856, 0.51x; esm8m - noesm: arm +0.0340, 0.15x); the notes
+should cite it. (ii) rho(ss_E, d) = -0.638 in [5] is in `s26/agentP_FINDINGS.md` section 10
+(L107), not in `p_b3.json` as the note says; cite the findings section or persist the
+descriptive ridge weights. Also [1]'s "8.76 GB resident" is a derivation (12.0 / 2 for the fp16
+language model + 2.76 for the fp32 trunk, `b1_feasibility.json :: ram_fp32_GB_parameters_only`);
+the JSON's own verdict string says ">= 8.5 GB"; state the derivation. Verdict form correct; not
+softened (the replacement is named and its evidence is the record's). The verdict STANDS.
+
+PROPOSAL_C (KEEP WITH EDITS). Script 214 words; rule 13 clean; the ladder table matches L62,
+L63, L65, L66, L67, L72, L93, L99/L101, L103 line by line; note [5]'s range (+0.018 to +0.122
+against MDEs 0.128 to 0.198) is the table's; [1] and [6] verified in L31 and L46. Not
+softened: the edit rewrites all four items and the presenter's sentence names the lever and its
+flatness in the same breath. **MATERIAL, document not verdict:** the file is committed at 02:01
+(`af05d987`) with "Status: FINAL 2026-09-14 03:30" and a C5 paragraph in the past tense ("The
+run started at 03:05 ... at the 04:30 close it had not reached 126 targets, so C5 is reported
+as NOT RUN TO COMPLETION") while the clock reads 02:06 and `p_c5_run` is registered and
+checkpointing (`s26/jobs/p_c5_run.json`, `s26/results/p_c5.json` written 02:02, `complete`
+unset). A presenter-facing FINAL document must not assert the outcome of a run that has not
+finished at a time that has not arrived; the record's rule is "do not predict results you have
+not measured". Fix (lane P, or the coordinator at the close): rewrite the status line to the
+real time and the C5 paragraph in the present tense ("running at the time of writing; if it
+completes before the close its result is appended, else NOT RUN TO COMPLETION"), and reconcile
+the raw rung's fold count (line 3 "3 of 5 folds", line 58 "folds 0-1 of 5"; `p_train_raw_fold3`
+is registered now). The verdict does not depend on C5 (its prior is a null on three grounds and
+it is not on the slide as a result), so KEEP WITH EDITS STANDS once the paragraph is honest.
+
+L117 (the slide 11 line). "The only open accuracy lever is the distance prior" is supported:
+every other lever was re-closed this sprint with its MDE (selection and readout L84, L85/L109,
+L88; physics L39/L46/L86/L87/L100; routers L110/L115; the circuit L68/L70). "We now know why it
+cannot matter here" is supported by three independent facts (product-state optimum, inert
+growth, readout insensitivity), with "here" meaning this Hamiltonian and this readout. "A
+larger language model ... needs a bigger machine" is supported by B1 and the 8M-to-650M step
+(L99). Three wording caveats, none of which changes the ruling:
+1. "the Adversary has checked each" of the paper's inputs is true for A2 (L45), A4 (L47, and
+   the slope CI is now stored, L119: -0.056 [-0.182, +0.087]), the product-state fact (L70)
+   and the depth-3 scope (R2); it is NOT true for the S13 locality theorem and the S13
+   Pauli-spectrum prediction, which are prior-sprint results this lane did not re-derive, and
+   lane PR reports the S13 Pauli mean weights 2.236 / 3.015 as typed from the claim ledger,
+   not read from an artefact (L61). "Every figure already exists as a measured artefact" needs
+   those two numbers re-read from `s13/results/geo_pauli.json` (its ratio leaf is sourced)
+   before the sentence is said; otherwise say "every S26 figure".
+2. "whose result is positive and complete": say "exact and complete". The paper's claims are
+   exact and negative in the right places (lane Q's own words); "positive" invites the reading
+   rule 10 forbids. "Complete" is now supportable: L119 (A4 CIs) and `s26/results/q_dla_a1.json`
+   (the per-growth-step DLA) have landed since the L47 caveat.
+3. "the one part of this project whose result is ... complete" is a claim about the other
+   parts: the C2 ladder is complete on nine of ten rungs (raw pending), C5 is running, and the
+   physics closures are complete; the line is fair as a ranking of publishability, not as a
+   statement that nothing else finished.
+
+Verdict: PROPOSAL_B STANDS; PROPOSAL_C STANDS WITH THE MATERIAL DOCUMENT FIX ABOVE; L117
+STANDS WITH CAVEAT (three wordings). The slide-qualifier table in `s26/agentA_FINDINGS.md` is
+updated with the C5 and Pauli-weight items.
+
+---
+
+## L121 -- FOLLOW-UP TO L81 (L53, strain_difficulty): THE POOL-SPREAD CONTROL RAN. `moved` IS THE TOP-75's OWN DISAGREEMENT IN DISGUISE (rho 0.76 WITH THE SPREAD; PARTIAL +0.08 GIVEN IT, CI SPANNING ZERO); THE CALIBRATION FLAG STANDS, THE NOVELTY SENTENCE IS VETOED AS WORDED (2026-09-14, A)
+
+`s26/a_strain_vs_spread.py` -> `s26/results/a_strain_vs_spread.json` (job `a_strain_vs_spread`,
+relaunched under the file cap per L92; ORACLE DIAGNOSTIC: `rmsd_arm` is the label only; the
+signals are native-free). The obvious native-free difficulty proxy L53's prereg did not carry:
+the shipped top-75's own pairwise CA-RMSD spread (`I.pairwise_rmsd` over the 75 members; no
+native, and available BEFORE the relaxation runs). Spearman with `rmsd_arm`, n = 126, partial
+on n and Rg as in L53, 2,000-draw iid and fold-clustered bootstraps, permutation p:
+
+    partial | n, Rg          spread_mean  +0.452  fold CI [+0.280, +0.609]  perm p < 0.0005  5/5
+                             medoid_min   +0.451  fold CI [+0.286, +0.608]  perm p < 0.0005  5/5
+                             moved        +0.433  fold CI [+0.247, +0.581]  perm p < 0.0005  5/5   (L53 reproduced)
+                             log_e0       +0.241  fold CI [+0.054, +0.376]  perm p 0.007     4/5   (L53 reproduced)
+    partial | n, Rg, spread  moved        +0.082  iid CI [-0.103, +0.259]  fold CI [+0.011, +0.171]  perm p 0.39  4/5
+                             log_e0       +0.052  iid CI [-0.122, +0.231]  perm p 0.55  3/5
+    rho(moved, spread_mean) = +0.756
+
+Reading. The relaxation's displacement carries no information about the per-target error
+beyond what the pool's own disagreement already carries: given the spread, `moved` is +0.08 with
+the iid CI spanning zero and a permutation p of 0.39. L53's own mechanism sentence ("a
+coordinate average that the projection turned into a strained chain is one whose pool members
+disagreed, and disagreement is error") is confirmed literally, and it cuts the other way for
+the novelty claim: the disagreement is measurable without AMBER, at rho +0.45, and is the
+better flag (5/5 folds, tighter CI, zero cost). Rulings:
+
+- L53's calibration flag STANDS as a phenomenon (a native-free quantity at rho +0.43 to +0.45
+  with the emitted chain's error, 5/5 folds); the quartile table is a fair presentable form
+  of it.
+- The sentence "the first native-free quantity in this programme's record with a correlation
+  above 0.4 to the per-target error of the emitted structure" is VETOED as worded: the
+  quantity is the pool spread, `moved` is its proxy, and "the relaxation reports when the answer
+  is untrustworthy" must become "the pool's disagreement reports it, and the relaxation's move
+  tracks that disagreement at rho 0.76". Owner (PH) to answer in the ledger; the slide-7 note
+  and the report sentence change accordingly.
+- The physics reading is unchanged in the direction the record already holds: the relaxation
+  adds nothing that the pool did not already say.
+
+Provisional label on L81 lifted; verdict STANDS WITH CAVEAT (the caveat is the veto above).
+
+---
+
