@@ -172,6 +172,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-14 02:09 next: (2) L115 and L112/L116; (3) the final RETRACTIONS.md (L57, L75, L101, L107, the depth-3 scope, the S13 Pauli weights, S7-11's -0.288 -> L62) for the FINDINGS corrections ledger; then the 04:00 Part 10 pass.
 - 2026-09-14 03:59 done: final Part 10 pass posted (13/14 rows OK, rule 13 clean everywhere incl. the deck dump); RETRACTIONS R6-R10 + prior-sprint table; L131/L132 STAND; agentA_FINDINGS final sections.
 - 2026-09-14 03:59 next: the report row at ~04:40 on lane E's committed text (rule-13 grep + the Appendix B numbers the report check names), one ledger line, commit, finish.
+- 2026-09-14 04:18 done: the report row (L144): OK at ed5e44cd with two items pending for lane E (A1 on two seeds; the report check re-run on the final sha) and one quoted banned word; L140 (L139/L138) and R11 posted. Part 10 table 14/14 once those land.
+- 2026-09-14 04:18 next: nothing owed; the lane finishes its turn. If lane E's final commit lands before 04:45, a one-line re-grep is the only remaining act.
 
 ## PH (Physics lane)
 - 2026-09-13 08:41 running: nothing (gate closed). Done: reading list; PREREG_amber_reject/cis/c3_control; five IDEA files; ph_lib/ph_cis/ph_reject/ph_c3 + synthetic tests; census jobs ph_cis_census (0.038 GB), ph_reject_census (0.117 GB), ph_c3_nativefree; ledger L22-L24; findings and Part IV notes; commit 5dc7a3a6.

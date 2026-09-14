@@ -5937,3 +5937,24 @@ seeds; an ADAPT-grown circuit seed-stable at 3.214 / 3.216). Slide 4 states the 
 title, body and notes on every slide. Registry 550 tokens. Nothing on the deck is live, DRAFT or PENDING.
 
 ---
+
+## L144 -- DELIVERABLES CHECK, THE REPORT ROW (04:16, ON THE COMMITTED TEXT ed5e44cd): OK; TWO ITEMS PENDING FOR LANE E'S FINAL PASS (A1 ON TWO SEEDS; THE REPORT CHECK RE-RUN ON THE FINAL SHA); ONE QUOTED BANNED WORD (2026-09-14, A)
+
+`s26/REPORT.md` at `ed5e44cd` (3,644 lines; Parts I-IX, Appendices A-D). Rule 13: one banned
+word, line 3584 (Appendix D quotes L77's phrase for the seed re-run; rephrase), no U+2014, no
+U+2013. Every qualifier in `s26/agentA_FINDINGS.md`'s table is carried (line numbers in
+`s26/DELIVERABLES_CHECK.md`), including L122's "exact and complete" applied after the verbatim
+L117 line (2874) and the S13 Pauli mean weights cited to the dossier "as cited" and kept off the
+slides (Appendix B row 97; 2907). Pending for lane E's 04:15-04:45 pass: (i) A1 on two seeds
+(L139, L140, R11) is not yet in Part VII or Appendix B, since it landed after the 04:04 commit;
+(ii) `s26/results/e_report_check.json` (175 of 175) was computed on report sha 45eaa279, earlier
+than HEAD's aa528df3, so the check is re-run on the final commit as lane E's last act (L77). With
+those two, row 12 is OK and the Part 10 table is 14 of 14. Final state of this lane's files:
+`EXAMINATION_AUDIT.md`, `TOURNAMENT.md`, `RETRACTIONS.md` (R1-R11 and the prior-sprint
+table), `DELIVERABLES_CHECK.md` (final), `agentA_FINDINGS.md` (with the per-slide qualifier
+table), 24 ledger entries (L31, L34, L45-L49, L54, L55, L70, L71, L79-L82, L94-L97, L120, L121,
+L135, L136, L140, this), four artefacts (`a_reproduce_head.json`, `a_c26_phi_mae.json`,
+`a_dla_check.json`, `a_strain_vs_spread.json`, `a_ladder_isolations.json`).
+
+---
+

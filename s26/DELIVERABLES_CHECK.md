@@ -19,7 +19,7 @@ presenter-facing file and the deck dump at 04:02; the results are in the second 
 | 9 | repository fixes on `s26` | OK | items 1-5 and defects 6a-6d closed (L1, L6, L7/L9, L8, L10, L15, L16, L19, L20, L21); `s24/cache_amber` tracked (126 files); AST identity checked; the opt-in tier 11/11 (L113, after L102/L104); the frozen lab rebuild reproduces 2016/2016 RMSDs (L127) | L127's three descriptive leaderboard columns written by uncommitted code is lane I's item, recorded there |
 | 10 | the deck + PRESENTATION_CHANGES | OK | `vqe_research_overview.pptx` (900 KB, built 03:55 from artefacts, L61/L73/L76/L126); `PRESENTATION_CHANGES.md` (584 lines) and `pr_notes.md` map every number to its path; the dump `pr_verify_dump.txt` is rule-13 clean; the Adversary's qualifiers are on the slides (L46, L54, L55, L70, L75/L82, L122, L123) | the presenter says each qualifier with its number (table in `agentA_FINDINGS.md`) |
 | 11 | TRAINABILITY_PAPER_OUTLINE | OK | on disk (184 lines), rule-13 clean; the plateau claim is placed against the depth-3 regime (line 127) and "a barren plateau from a small gradient" is in the claims-not-to-make list; "positive" reads "exact" (L122) | MINOR: put the literal "at depth 3" in the F5 caption |
-| 12 | REPORT (`s26/REPORT.md`) | PARTIAL at 04:00 | 3,423 lines at commit `439ce5f8` (02:21); rule-13 clean at 04:02; lane E's final pass (Parts VII, VIII, Appendix B, Appendix C) runs 04:15 to 04:45 | re-checked at ~04:40 on the committed text; result below |
+| 12 | REPORT (`s26/REPORT.md`) | OK at 04:16 (two PENDING items for lane E, below) | 3,423 lines at commit `439ce5f8` (02:21); rule-13 clean at 04:02; lane E's final pass (Parts VII, VIII, Appendix B, Appendix C) runs 04:15 to 04:45 | re-checked at ~04:40 on the committed text; result below |
 | 13 | STATUS | OK | hourly lines per lane, timestamped (230 lines) | -- |
 | 14 | docs/FINDINGS.md corrections ledger | OK | "Sprint 26 additions" block at line 117 (L130, commit `5f841706`); rule-13 clean; R6-R10 added to RETRACTIONS at 04:05, so the coordinator appends matching rows (L130's own clause) | PENDING: the R6-R10 rows |
 
@@ -50,6 +50,23 @@ presenter-facing file and the deck dump at 04:02; the results are in the second 
 - C5: null (GLOBAL) to harmful (RIDGE +0.164, 1.79x, 5/5); the -1.87 / -3.13 A ceilings are ORACLE (L132).
 - The raw rung was not run (4 of 5 folds trained, L133): the ladder is nine of ten rungs; say so.
 
-## Report re-check (appended at about 04:40)
+## Report re-check (04:16, on the committed text `ed5e44cd`, 3,644 lines)
 
-(pending)
+- Rule 13: banned words 1 (line 3584, Appendix D, the word quoted as the coordinator's L77
+  phrase; rephrase to avoid the literal), U+2014 0, U+2013 0.
+- Parts VII, VIII and Appendices B (187 path-bearing rows), C (the ledger) and D (the
+  reconciliation with `docs/REPORT_S26.md`) are present.
+- Every qualifier of the table above is carried: "at depth 3" (line 976); the C3 Type-M flag
+  (429) and "124 of 126" (432); the point-cloud basis beside +0.330 / +0.455 (511); 0.028 beside
+  0.151 (139); 3.2126 beside 3.2148 (161); the strain result restated with the withdrawn sentence
+  quoted as withdrawn (2252); inert growth (1114) and the 0.955 correlation (1023); the tie-break
+  floor's paired qualifier (2550); the tight floor 0.083 (400); C5's +0.164 (168); the raw rung not
+  run (219); L122's "exact and complete" applied after the verbatim L117 line (2874); the S13 Pauli
+  weights cited to the dossier "as cited" and off the slides (Appendix B row 97; line 2907).
+- PENDING for lane E's 04:15-04:45 pass: (i) A1 on two seeds (L139, L140, R11: not measured on
+  either seed; the deployed circuit moves 0.033 A between seeds) is not yet in Part VII or
+  Appendix B; (ii) `s26/results/e_report_check.json` (175/175) was computed on report sha
+  45eaa279..., earlier than HEAD's aa528df3...; the check is re-run on the final commit as the
+  last act (L77).
+- Row 12 verdict: OK once (i) and (ii) land; nothing in the committed text contradicts a ledger
+  entry or an artefact on the lines checked.
