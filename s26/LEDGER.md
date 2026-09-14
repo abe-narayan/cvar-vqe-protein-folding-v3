@@ -4680,3 +4680,28 @@ three final files and this entry; lane E carries the same three sentences in Par
 
 ---
 
+## L118 -- C3 STAGE 2 REDUCES TO STAGE 1: LANE P's BEST-RUNG DELIVERY IS THE PRODUCTION EMISSION BIT FOR BIT (ca, WRAPPED phi/psi AND rmsd_arm IDENTICAL AT 0.0 ON 126/126); NO RELAXATION TO RUN; THE L39/L87/L100 VERDICT STANDS (2026-09-14, PH)
+
+Coordinator's ruling (message of 2026-09-14 01:40): lane P's best C2 rung is the shipped prior
+itself (L112), so C3 stage 2 needs no AMBER run if the delivery is the production emission.
+Verification, `s26/ph_c3_verify.py`, `s26/results/ph_c3_stage2_verify.json` (complete 126/126),
+job `s26/jobs_done/ph_c3_verify.json` (exit 0, 5 s, CPU). Native-free (the cache's stored
+`rmsd_arm` is compared as a number, not recomputed).
+
+    delivery `s26/results/p_best_rung_chains.json`   126 rows, rung "shipped" on every row, mean rmsd_arm 3.2147652, provenance p_deliver.py @ 6ed3b367
+    vs `bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json`:
+      max |d ca|                       0.0 A      on 126 / 126
+      max |d phi|, |d psi| (wrapped)   0.0 rad    on 126 / 126   (delivered unwrapped per L114, |value| up to 72.7 rad; wrapped with ((x + pi) mod 2pi) - pi before comparing)
+      max |d rmsd_arm|                 0.0        on 126 / 126
+    targets differing beyond 1e-6:     none
+
+The delivery IS the production emission, bit for bit. Its production relaxation is what stage 1
+measured (L39: +0.0207 A vs do-nothing [fold +0.0154, +0.0290]; worse than a same-size random
+move by +0.0111 [Type-M] and than a same-size move toward a pool member by +0.0385; ORACLE cos
+-0.049), replicated in L87 (every contrast inside the first run's fold CI) and given its
+heavy-atom validity axis in L100 (34 clash targets to 1 at 1.3% bond and 2.5% angle strain).
+Stage 2 reduces to stage 1 by identity; no relaxation is run; the decision rule's outcome stands
+unchanged, "a validity step, not an accuracy step", with the L46 caveats. Recorded in
+`s26/C3_RESULT.md` addendum 4 for lanes P and PR.
+
+---

@@ -109,3 +109,19 @@ a covalent price. The sentence for the presentation: "a validity step that turns
 with a sub-2 A heavy-atom overlap into 1 and 125 of 126 energies above the 1000 kcal/mol gate
 into converged ones, at the price of 0.021 A of accuracy, 1.3% bond and 2.5% angle strain,
 6.6 degrees of peptide-bond non-planarity, and a broken virtual bond on 2BP4 and 9KAR."
+
+---
+## ADDENDUM 4 (2026-09-14 01:50) -- STAGE 2 REDUCES TO STAGE 1: THE BEST C2 RUNG IS THE PRODUCTION EMISSION
+
+Lane P's C2 ladder found no rung that beats the shipped prior (L112), so its delivery
+`s26/results/p_best_rung_chains.json` (126/126, provenance `p_deliver.py` at 6ed3b367, rung
+"shipped" on every row, mean `rmsd_arm` 3.2147652) is the production emission. Verified against
+`bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json` by `s26/ph_c3_verify.py`
+(`s26/results/ph_c3_stage2_verify.json`, job `ph_c3_verify`, exit 0, 5 s): `ca` identical to
+0.0 A on 126/126; `phi` and `psi`, wrapped to (-pi, pi] (delivered unwrapped, L114, |value| up
+to 72.7 rad), identical to 0.0 rad on 126/126; `rmsd_arm` identical to 0.0 on 126/126. No
+target differs beyond 1e-6, so there is nothing to relax that L39 did not already relax: the
+production relaxation of this exact emission is stage 1 (L39, +0.0207 vs do-nothing, worse
+than both matched controls), replicated in L87 and with its validity axis in L100. Stage 2 is
+therefore stage 1 by identity, and the decision rule's outcome is unchanged: "refine with
+physics" is a validity step, not an accuracy step, with the L46 caveats.
