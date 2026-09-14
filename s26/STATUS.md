@@ -84,6 +84,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-14 01:32 next: need a coordinator decision: reserve one slot for lane I (or cap 7 for ~2 h) so the integration tier (~15 min), the rebuild (~10 min) and the 20 audits (~90 min with the heavy projection audits) can run before 04:30; otherwise they will not.
 - 2026-09-14 01:37 running: resultslab_rebuild registered (8th waiter to enter after L111's cap of 7); verify chain launcher now free to start (gated on integration2, done). Opt-in tier complete 11/11 (L113): suite 370 / 368 passed / 2 skipped.
 - 2026-09-14 01:37 next: rebuild post-comparison when it lands; 20-audit table when the chain ends (deadline 03:30 per the coordinator); examine.py; closure table.
+- 2026-09-14 02:57 running: verify chain at audit 9/20 (grad_key_collision, AMBER; stalled 02:26-02:54 by the governor's stacked-suspend defect, L128, unstuck by hand + s26/i_tree_watchdog.py); 8 audits done: 7 IDENTICAL / 1 with 8 added Config fields. Rebuild REPRODUCED and committed (083c9b95, L127: every number, 2142/2142 ATOM records; three descriptive leaderboard columns were never reproducible). Opt-in tier 11/11 (L113).
+- 2026-09-14 02:57 next: at 03:30 stop taking new audits, record the rest as not run (the heavy projection audits will not fit), ledger the 20-audit table, examine.py, closure table, final commit by ~03:50.
 
 ## Q (Quantum lane)
 - 2026-09-13 08:50 running: resumed after the session cut at 00:46; q_*.py, probes and reference MDEs committed (2fb2998b); PREREG_A2/A4 on disk; launching A2 (DLA, s26/q_dla.py) and A4 (variance, s26/q_var.py) under the governor per the coordinator ruling.

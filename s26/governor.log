@@ -1792,3 +1792,99 @@
 2026-09-14T02:25:51 RESUME   a1s1_build agent=Q tag=CPU
 2026-09-14T02:26:06 SUSPEND  a1s1_build agent=Q tag=CPU rss=0.33GB
 2026-09-14T02:26:11 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:26:46 SAMPLE   ram=83.1% (13.92GB used, 2.83GB free) cpu=70.5% (15s mean 74.2%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:26:46 RESUME   a1s1_build agent=Q tag=CPU
+2026-09-14T02:27:06 SUSPEND  a1s1_build agent=Q tag=CPU rss=0.33GB
+2026-09-14T02:27:26 RESUME   a1s1_build agent=Q tag=CPU
+2026-09-14T02:27:46 SAMPLE   ram=83.2% (13.94GB used, 2.81GB free) cpu=91.2% (15s mean 91.8%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:28:46 SAMPLE   ram=82.3% (13.79GB used, 2.96GB free) cpu=79.8% (15s mean 79.4%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:29:46 SAMPLE   ram=84.9% (14.22GB used, 2.53GB free) cpu=81.9% (15s mean 82.2%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:30:46 SAMPLE   ram=84.1% (14.09GB used, 2.66GB free) cpu=80.9% (15s mean 80.8%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:31:46 SAMPLE   ram=84.3% (14.12GB used, 2.63GB free) cpu=84.9% (15s mean 82.8%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:32:46 SAMPLE   ram=82.3% (13.79GB used, 2.96GB free) cpu=81.2% (15s mean 82.4%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:33:21 SUSPEND  a1s1_build agent=Q tag=CPU rss=0.34GB
+2026-09-14T02:33:46 SAMPLE   ram=84.1% (14.08GB used, 2.67GB free) cpu=82.9% (15s mean 81.6%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:34:46 SAMPLE   ram=82.2% (13.77GB used, 2.98GB free) cpu=88.9% (15s mean 88.8%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:35:06 ADOPT    a1s1_build was suspended before this governor started; adopted
+2026-09-14T02:35:06 RESUME   a1s1_build agent=Q tag=CPU
+2026-09-14T02:35:46 SAMPLE   ram=82.8% (13.86GB used, 2.89GB free) cpu=83.3% (15s mean 82.6%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:36:46 SAMPLE   ram=83.7% (14.02GB used, 2.73GB free) cpu=80.5% (15s mean 80.7%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:37:46 SAMPLE   ram=83.9% (14.06GB used, 2.69GB free) cpu=98.8% (15s mean 91.0%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:37:51 SUSPEND  a1s1_build agent=Q tag=CPU rss=0.34GB
+2026-09-14T02:38:16 RESUME   a1s1_build agent=Q tag=CPU
+2026-09-14T02:38:46 SAMPLE   ram=83.3% (13.95GB used, 2.80GB free) cpu=92.7% (15s mean 89.2%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:39:46 SAMPLE   ram=81.9% (13.71GB used, 3.04GB free) cpu=80.6% (15s mean 81.9%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:40:46 SAMPLE   ram=82.3% (13.79GB used, 2.96GB free) cpu=85.5% (15s mean 85.0%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:41:46 SAMPLE   ram=83.5% (13.99GB used, 2.76GB free) cpu=82.1% (15s mean 82.7%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:42:46 SAMPLE   ram=81.9% (13.72GB used, 3.03GB free) cpu=82.8% (15s mean 80.8%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:43:46 SAMPLE   ram=81.9% (13.71GB used, 3.04GB free) cpu=83.7% (15s mean 80.1%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:44:46 SAMPLE   ram=81.2% (13.60GB used, 3.15GB free) cpu=83.2% (15s mean 81.1%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:45:46 SAMPLE   ram=81.5% (13.66GB used, 3.09GB free) cpu=84.7% (15s mean 80.9%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:46:46 SAMPLE   ram=81.4% (13.64GB used, 3.11GB free) cpu=80.6% (15s mean 81.5%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:47:16 SUSPEND  a1s1_build agent=Q tag=CPU rss=0.36GB
+2026-09-14T02:47:36 RESUME   a1s1_build agent=Q tag=CPU
+2026-09-14T02:47:46 SAMPLE   ram=81.9% (13.72GB used, 3.02GB free) cpu=82.3% (15s mean 78.6%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:48:46 SAMPLE   ram=81.8% (13.70GB used, 3.05GB free) cpu=83.3% (15s mean 81.6%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:49:46 SAMPLE   ram=81.0% (13.57GB used, 3.18GB free) cpu=80.6% (15s mean 86.2%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:50:06 SUSPEND  a1s1_build agent=Q tag=CPU rss=0.36GB
+2026-09-14T02:50:26 RESUME   a1s1_build agent=Q tag=CPU
+2026-09-14T02:50:46 SAMPLE   ram=81.4% (13.64GB used, 3.11GB free) cpu=98.4% (15s mean 90.1%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:51:01 REAP     resultslab_rebuild (pid 38444) is gone; registration removed
+2026-09-14T02:51:46 SAMPLE   ram=81.5% (13.65GB used, 3.10GB free) cpu=88.7% (15s mean 81.0%) jobs=6 amber=2 queued=0 lanes=8
+2026-09-14T02:52:46 SAMPLE   ram=81.9% (13.71GB used, 3.04GB free) cpu=78.7% (15s mean 75.9%) jobs=6 amber=2 queued=0 lanes=8
+2026-09-14T02:53:46 SAMPLE   ram=82.5% (13.82GB used, 2.93GB free) cpu=67.9% (15s mean 82.8%) jobs=6 amber=2 queued=0 lanes=8
+2026-09-14T02:54:46 SAMPLE   ram=80.8% (13.54GB used, 3.21GB free) cpu=70.8% (15s mean 70.8%) jobs=6 amber=2 queued=0 lanes=8
+2026-09-14T02:55:31 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:55:31 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:55:36 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:55:36 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:55:41 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:55:41 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:55:46 SAMPLE   ram=79.7% (13.36GB used, 3.39GB free) cpu=71.3% (15s mean 69.9%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-14T02:55:46 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:55:46 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:55:51 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:55:51 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:55:56 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:55:56 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:56:01 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:56:01 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:56:06 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:56:06 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:56:11 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:56:11 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:56:16 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:56:16 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:56:21 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:56:21 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:56:26 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:56:26 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:56:31 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:56:31 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:56:36 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:56:36 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:56:41 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:56:41 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:56:46 SAMPLE   ram=79.3% (13.29GB used, 3.46GB free) cpu=67.3% (15s mean 68.6%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-14T02:56:46 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:56:46 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:56:51 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:56:51 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:56:56 ADOPT    verify_grad_key_collision was suspended before this governor started; adopted
+2026-09-14T02:56:56 RESUME   verify_grad_key_collision agent=I tag=AMBER
+2026-09-14T02:57:41 REAP     verify_grad_key_collision (pid 18428) is gone; registration removed
+2026-09-14T02:57:46 SAMPLE   ram=79.1% (13.24GB used, 3.51GB free) cpu=64.8% (15s mean 76.0%) jobs=5 amber=1 queued=0 lanes=8
+2026-09-14T02:58:16 REAP     verify_equiv_compare (pid 10404) is gone; registration removed
+2026-09-14T02:58:31 REAP     ph_relief_run (pid 37456) is gone; registration removed
+2026-09-14T02:58:31 REAP     verify_project_arms (pid 13204) is gone; registration removed
+2026-09-14T02:58:35 RESTART  governor v2.3 stopped by the coordinator for v2.4 (own suspension memory; ledger L129)
+2026-09-14T02:58:47 START    governor v2 pid 22104 ceiling=93.0% hard(ram)=95.0%/15s cpu_resume=80.0% cpu_window=3 min_suspend=20s low=88.0%/60s sample=5s max_amber=2
+2026-09-14T02:58:47 SAMPLE   ram=81.0% (13.57GB used, 3.18GB free) cpu=98.3% (15s mean 98.3%) jobs=5 amber=1 queued=0 lanes=8
+2026-09-14T02:58:47 SUSPEND  verify_determinism_audit agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:59:07 RESUME   verify_determinism_audit agent=I tag=AMBER
+2026-09-14T02:59:12 REAP     ph_relief_report (pid 26328) is gone; registration removed
+2026-09-14T02:59:47 SAMPLE   ram=82.0% (13.73GB used, 3.02GB free) cpu=73.4% (15s mean 75.1%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-14T02:59:57 REAP     verify_hazard_audit (pid 4084) is gone; registration removed
+2026-09-14T03:00:02 REAP     verify_project_selfcheck (pid 5088) is gone; registration removed
+2026-09-14T03:00:47 SAMPLE   ram=78.6% (13.17GB used, 3.58GB free) cpu=79.5% (15s mean 82.6%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T03:01:47 SAMPLE   ram=78.7% (13.19GB used, 3.56GB free) cpu=81.2% (15s mean 81.0%) jobs=6 amber=0 queued=0 lanes=8
