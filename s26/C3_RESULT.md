@@ -51,3 +51,36 @@ recovers part of that cost. It is not a proposal and it waits for its replicatio
 The same seven contrasts on lane P's best C2 rung output (the production relaxation re-run under
 `--tag AMBER`, one-target probe first, per-target cells), plus the heavy-atom validity panel
 (`s16.energy_lib.panel`) of the input and the relaxed output.
+
+---
+## ADDENDUM 1 (2026-09-13 19:35) -- THE ADVERSARY'S CAVEATS ON L39 (ledger L46, STANDS WITH CAVEAT), FOR LANE P AND LANE PR
+
+Quote the result this way and not otherwise.
+
+1. The +0.0111 A "AMBER worse than a random move of its own size" is a TYPE-M number: 1.12x
+   its own MDE, fold CI [+0.0062, +0.0171] excluding zero, 5/5 folds, so its SIGN is measured
+   and its MAGNITUDE is inflated about 1.07x and is not a result as a magnitude. Any sentence
+   that quotes +0.0111 carries the Type-M flag. The two clean contrasts, both well clear of the
+   Type-M zone, are: AMBER minus do-nothing +0.0207 A (2.16x MDE, fold CI [+0.0154, +0.0290],
+   40W/86L) and AMBER minus a same-size move toward a random pool member +0.0385 A (2.27x MDE,
+   fold CI [+0.0298, +0.0479], 29W/97L). Lean on those two.
+
+2. The decision rule holds regardless of the Type-M flag: "accuracy step" required AMBER to
+   BEAT both matched controls, and it is worse than both. "Refine with physics" is not an
+   accuracy step. Note also what the Adversary notes: a zero-information move of the same size
+   TOWARD a random pool member IMPROVES the built chain (-0.0178, fold CI [-0.0255, -0.0124],
+   90W/36L), where the physics move worsens it. That line is provisional until its registered
+   replication (`ph_c3_stage1_rep`) lands, and it is a statement about the projection's cost
+   (S16 L27), not about physics.
+
+3. "Validity step" carries an exception: on 124 of 126 targets the relaxation converges with
+   a sane virtual CA-CA bond (3.804 to 3.867 A on average); on 2BP4 it stretches a virtual bond
+   to 5.38 A, and on 9KAR to 4.86 A while ending at +1262 kcal/mol, above the 1000 kcal/mol
+   convergence gate. The sentence is: "a validity step on 124 of 126 targets; on 2 it breaks a
+   virtual bond, one of which does not converge."
+
+The presentation line, with these applied: the physics relaxation costs 0.021 A of accuracy
+[+0.015, +0.029], more than a random displacement of the same size and 0.039 A more than a
+same-size move toward any other pool member; it is kept because it turns a chain with an
+energy above 1e4 kcal/mol on 59% of targets into one below 1000 kcal/mol on 125 of 126, at the
+price of a broken virtual bond on two.
