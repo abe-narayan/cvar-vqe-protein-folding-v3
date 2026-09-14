@@ -64,3 +64,11 @@ minutes, one governed job. No random element; nothing to replicate.
 | discount | cos multiplied in (the L12 reading) | the S25 amp ratio; a fitted transfer curve (that would be fitting the ladder to the data) |
 | endpoint | the cloud (the ladder's own basis, 3.0483) PRIMARY; built chain carried | selection |
 | cells | all 504 (target, model) pairs and their mean | the four-model mean only |
+
+## ADDENDUM 1 (2026-09-14 00:15) -- measured; nothing above edited
+
+- Job `w_ladder` (40 s, 0.274 GB; 504 cells); ledger L91. The registered falsifier fired in the
+  registered direction: the discounted ladder predicts -0.364 against the measured -0.709 on the
+  cloud (disagreement +0.346, 1.42x the L44 MDE; per-target fold CI [+0.206, +0.472], 5/5 folds).
+  The undiscounted reading (-0.603) is inside the MDE. gam_prob 0.281 at cos 0.584; gam_loc 0.773
+  at cos 0.911; MAE 2.34 -> 0.82 A per pair. No deviation.

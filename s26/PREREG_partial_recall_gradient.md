@@ -65,3 +65,15 @@ seed (deterministic covariates); the permutation null is seeded by `s15.seed.sta
 | identity | the pinned NW identity, both normalisations, gap -1 | BLOSUM similarity (that is retrieval, a different question) |
 | statistic | Spearman, one-sided, Bonferroni over 3 | a fitted router (S22/S23: routers are the wrong instrument at n = 126) |
 | outcome | `rmsd_arm` (built chain) PRIMARY; `rmsd_avg`, `shipped` carried | the leaked-model envelope (already measured) |
+
+## ADDENDUM 1 (2026-09-14 00:15) -- measured; one confound the file did not name; nothing above edited
+
+- Jobs `w_recall_cov` (15 s, 0.292 GB) and `w_recall_endpoint` (45 s, 0.111 GB); ledger L90.
+  No covariate reaches rho <= -0.25; I_long is -0.205 / -0.210 / -0.230 on arm / avg / shipped
+  with the fold CI excluding zero and permutation p 0.010 / 0.014 / 0.004: 0.81 to 0.91x the MDE,
+  suggestive, not measured. Power: |rho| >= 0.25 excluded.
+- Confound not named above: the training corpus is also the retrieval library, so I_long is
+  equally a retrieval-proximity covariate; the registered ORACLE mechanism check was gated on a
+  gradient at the MDE and did not run. If this idea is taken up again, the mechanism check
+  (posterior MAE vs I_short) should run unconditionally and a retrieval-only covariate (the pool
+  best's BLOSUM sum) should be partialled out.

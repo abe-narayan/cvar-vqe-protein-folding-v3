@@ -3660,3 +3660,108 @@ design note in `s26/agentPH_FINDINGS.md` 1.4 stands. L38's number is superseded 
 by this one and is retained as the own-torsion upper bound; both are in the findings.
 
 ---
+
+## L90 -- partial_recall_gradient (W, L77 extension): NO GRADIENT AT THE PRE-REGISTERED MDE (rho <= -0.25); THE STRONGEST COVARIATE, THE MAX PINNED IDENTITY TO THE TRAINING CORPUS, IS rho -0.205 WITH rmsd_arm (0.81x MDE, fold CI [-0.315, -0.099], PERMUTATION p 0.010, -0.176 AFTER PARTIALLING OUT LENGTH): SUGGESTIVE, NOT MEASURED, AND CONFOUNDED WITH RETRIEVAL BY CONSTRUCTION (2026-09-14, W)
+
+Pre-registered in `s26/PREREG_partial_recall_gradient.md` (written before any covariate was
+correlated with any RMSD). Covariates, native-free, sequences only: job `w_recall_cov` (exit 0,
+15 s, peak 0.292 GB; `s26/results/w_selfcopy_recall_covariates.json`, complete 126/126): for each
+dev target, against its own fold model's TRAINING corpus (`p_ladder.train_entries(fold)`, the
+list `core.predict.train_fold` uses; the target's own chain asserted absent), I_long = max
+pinned longer-normalised identity (mean 0.470, range 0.333 to 0.588, all below 0.6 as the fold
+discipline requires), I_short = max containment (mean 0.657, range 0.50 to 1.00; the 1.00s are
+the four self-copies of L44), L_kmer = the longest shared exact substring (mean 4.4 residues,
+range 3 to 13). Gated: job `w_recall_endpoint` (exit 0, 45 s, 0.111 GB;
+`s26/results/w_selfcopy_recall_endpoint.json`), Spearman against the production cache's
+`rmsd_arm` (built chain, PRIMARY), `rmsd_avg` and `shipped`, fold-clustered bootstrap CI (5
+folds, 4,000 draws), 500-draw label permutation one-sided in the direction of help, Bonferroni
+alpha 0.017; the rank-partial correlation given chain length beside each.
+
+    covariate   outcome     rho      fold CI95           perm p (help)   partial | n   verdict at the registered MDE 0.253
+    I_long      rmsd_arm   -0.205   [-0.315, -0.099]    0.010           -0.176        no gradient (0.81x MDE)
+    I_long      rmsd_avg   -0.210   [-0.312, -0.091]    0.014           -0.169        no gradient
+    I_long      shipped    -0.230   [-0.280, -0.156]    0.004           -0.195        no gradient (0.91x)
+    I_short     rmsd_arm   -0.157   [-0.254, -0.071]    0.036           -0.138        no gradient
+    I_short     rmsd_avg   -0.136   [-0.229, -0.064]    0.068           -0.109        no gradient
+    I_short     shipped    -0.175   [-0.252, -0.097]    0.026           -0.152        no gradient
+    L_kmer      rmsd_arm   -0.088   [-0.198, +0.006]    0.174           -0.090        no gradient
+    L_kmer      rmsd_avg   -0.081   [-0.192, +0.030]    0.178           -0.084        no gradient
+    L_kmer      shipped    -0.140   [-0.244, -0.035]    0.056           -0.143        no gradient
+
+Verdict by the pre-registered rule: no covariate reaches rho <= -0.25, so no gradient EXISTS at
+the MDE; the registered expectation (all |rho| within 0.15) is exceeded by I_long on all three
+bases (-0.205 to -0.230), whose fold CI excludes zero and whose permutation p passes Bonferroni
+on `rmsd_arm` and `shipped`, at 0.81 to 0.91x the MDE: the correlation analogue of the Type-M
+zone, sign consistent, magnitude not a result. Power: a gradient of |rho| >= 0.25 is excluded
+(the MDE); one of 0.2 is not.
+
+A confound the PREREG did not name, stated now: the fold model's training corpus IS the
+retrieval library (out-of-fold peptides + fold fragments; `s12/instrument.py`), so a target with
+a close relative in the corpus also has a closer BLOSUM retrieval pool, and a negative rho is
+expected from retrieval alone (S7-12: BLOSUM has skill; S10-4's table). The covariate cannot
+separate "the model recalls a training native" from "the pool holds a better window", and the
+registered ORACLE mechanism check (the posterior's MAE against I_short) was conditioned on a
+gradient at the MDE and did not run. What stands: a clean bill for the 0.6 threshold at the
+pre-registered resolution (no near-copy below 0.6 moves the MLP by an amount the instrument can
+call), with the honest addition that a weak sequence-proximity effect of either mechanism, of
+order rho -0.2, is suggested on every basis. Replication: the covariates are deterministic; the
+permutation and bootstrap are seeded (`s15.seed.stable_rng`). Not deployable: the covariate is
+native-free, the outcome is the native; nothing selects.
+
+## L91 -- memorisation_on_the_ladder (W, L77 extension; ORACLE DIAGNOSTIC): THE OWN-NATIVE MODELS TRAVEL 28% OF THE WAY TO THE NATIVE IN PROBABILITY SPACE AT COSINE 0.58 (77% AT COSINE 0.91 IN LOCATION SPACE, MAE 2.34 -> 0.82 A PER PAIR); THE DIRECTION-DISCOUNTED LADDER PREDICTS -0.36 A AGAINST A MEASURED -0.71 A (DISAGREEMENT +0.35, 1.5x MDE, 5/5 FOLDS): THE S25 L12 CURRENCY UNDER-PRICES A TRAINED OPERATOR; THE UNDISCOUNTED -2.15 x gam_eff LANDS WITHIN THE MDE (-0.60) (2026-09-14, W)
+
+Pre-registered in `s26/PREREG_memorisation_on_the_ladder.md` (written before any leaked model's
+gam_eff was computed). Job `w_ladder` (exit 0, 40 s, peak 0.274 GB;
+`s26/results/w_selfcopy_ladder.json`, complete 504/504 (target, model) cells). ORACLE on every
+line: gam_eff, cos and MAE are measured against the native's distances; the endpoint deltas are
+L44 Part C's (leaked-model mean minus clean, `s26/results/w_selfcopy_endpoint.json :: C/rows`).
+`gam_eff` and `cos` from `s26/p_ladder.progress` (the C2 ladder's code): probability space is
+the S24 MASS construction <Q - P0, O - P0> / |O - P0|^2; location space is the S25 loc currency
+on E[d].
+
+    quantity (mean over 504 cells)                       value
+    gam_prob / cos_prob / amp_prob                       0.281 / 0.584 / 0.473
+    gam_loc / cos_loc                                    0.773 / 0.911
+    MAE of E[d] vs native: clean -> leaked               2.339 -> 0.825 A per pair
+    measured delta, cloud / built chain (L44)            -0.709 / -0.698 A
+    ladder, naive  -2.1496 x gam_prob                    -0.603 A     (disagreement with the measured cloud delta +0.106, inside the MDE 0.244)
+    ladder, discounted  -2.1496 x gam_prob x cos_prob    -0.364 A     (disagreement +0.346, 1.42x the MDE; the registered falsifier FIRES)
+    corr over 504 cells: pred_discounted vs delta_cloud  +0.414   (S25 L12's 51 re-readings: +0.054)
+                         gam_prob vs delta_cloud         -0.436
+                         MAE change vs delta_cloud       +0.721
+
+The registered per-target contrast (`ST.fmt` verbatim; the ladder's prediction minus the
+measured cloud delta, four-model means, n = 126; positive = the ladder predicts LESS gain than
+measured):
+
+  ladder prediction (discounted, -2.1496 x gam x cos) minus MEASURED cloud delta, per target (ORACLE)
+    a -0.3635 (med -0.3440)   b -0.7094 (med -0.3121)   n=126
+    effect +0.3459   median -0.0122   SE 0.0826   MDE 0.2313   effect/MDE +1.50
+    iid  CI95 [+0.1905, +0.5148]
+    fold CI95 [+0.2058, +0.4719]   folds same sign 5/5   per-fold 0:+0.094 1:+0.575 2:+0.273 3:+0.362 4:+0.429
+    65W/61L/0T   worst degradation +4.1162 (2MQ2)   p90 +1.6348   power 0.99  Type-M 1.01
+    concentration: drop-top10 +0.4324 vs uniform-effect null p10/p50/p90 +0.3213/+0.4306/+0.5470 -> pctile 0.507
+    VERDICT: WORSE
+
+Reading. The registered expectation held: the direction-discounted currency of S25 L12
+(gam_eff x cos) under-prices the one trained operator that moved far, by 0.35 A on the mean,
+1.5x its MDE, 5/5 folds; the median disagreement is -0.01 (the mean is carried by the targets
+where memorisation is large and off-axis: 65W/61L). The undiscounted ladder slope applied to
+gam_prob alone lands within the MDE of the measured gain (-0.60 vs -0.71). So for a TRAINED
+posterior the endpoint responds to the full probability-space move, not only to its projection
+onto the native's direction; the L12 discount was derived from re-readings that move small
+distances at low cosine, and it does not transfer to a large trained move. Two consequences,
+both ORACLE and both for Proposal C's arithmetic rather than for any deployable arm: (i) the
+"-2.15 A per unit gamma" transfer function is a usable currency for a trained prior when gam_eff
+is measured in probability space and quoted without the cosine discount, but with the cosine
+reported (this operator: cos 0.58); (ii) MAE change tracks the endpoint at +0.72 here, so S7-3's
+"MAE does not price selection" is a statement about between-model differences of a few tenths
+of an Angstrom per pair, not about a 1.5 A per pair move. What the leaked models do to the
+posterior: E[d] travels 77% of the way to the native's distances at cosine 0.91 (they recall
+the native's distance matrix nearly along the right direction), while the 17-bin probability
+vectors travel only 28% at cosine 0.58 (the recalled mass sits in bins adjacent to the native's,
+not on it): the location currency and the probability currency disagree about how far the
+operator went, and the endpoint follows the location. Replication: deterministic (pinned
+models, fixed natives); nothing to replicate. Deviations from the PREREG: none. Not deployable
+by construction (own-native training); the value is the calibration of the currency the
+record uses to price a better prior.
