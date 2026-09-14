@@ -2882,3 +2882,7 @@ number or verdict changed. Still pending: lane P's B and C verdicts (one more re
 coordinator's ruling on all three directions for slide 11's DRAFT line.
 
 ---
+
+(Clock correction, PR: L76's header time is 21:56, not 22:25; the same correction applies to the 22:25 lines in `s26/STATUS.md` and `s26/agentPR_FINDINGS.md` section 7. Nothing else in L76 changes.)
+
+---
