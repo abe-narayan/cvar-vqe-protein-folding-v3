@@ -244,7 +244,39 @@ rest" split rests on RANDR vs anchor at 0.57x MDE and is a point-estimate decomp
 measured one; it is downgraded to a reading in section 2.4 and will be re-stated on the built
 chain only if RANDR clears its MDE there.
 
-### 2.5 The built-chain endpoint (running: job `ph_reject_chain`, per-target cells)
+### 2.5 The built-chain endpoint (DEMONSTRATED; the cross-basis replication of 2.4)
+
+`s26/ph_reject.py chain` + `report`, `s26/results/ph_reject_chain.json` (126/126), ledger L86
+(eleven `ST.fmt` blocks verbatim), job `ph_reject_chain` (3.3 h, 22.8 projections per target,
+0.09 GB). Basis: BUILT CHAIN on both sides; the anchor is the shipped top-75 RE-PROJECTED
+through `I.project` (3.2126 A, the leaderboard-rebuild number; the stored production chain is
+3.2148 because of its float32 round trip), so every arm shares one instrument; the two chains
+differ by more than 0.5 A on 6 targets (2BP4 1.62, 6QAX 1.56, 7JS6 1.54, 2LWU 1.25), the
+projection's own branch degeneracy.
+
+    threshold  arm   vs re-projected anchor (all 126, built chain)                          point cloud (2.4)
+    1e3        R     +0.563 (median +0.025) 1.77x MDE  fold [+0.441, +0.704]  5/5  WORSE      +0.532
+    1e3        S     +0.192 (median +0.001) 1.44x MDE  fold [+0.103, +0.247]  5/5  WORSE      +0.196
+    1e4  PRIM  R     +0.248 (median +0.002) 1.17x MDE  fold [+0.120, +0.348]  4/5  WORSE*     +0.228
+    1e4  PRIM  S     +0.104 (median +0.003) 1.11x MDE  fold [+0.037, +0.166]  5/5  WORSE*     +0.108
+    1e5        R     +0.119 (median  0.000) 0.78x MDE  fold [+0.048, +0.184]  5/5  NOT MEAS   +0.093
+    1e6        R     +0.092 (median  0.000) 0.65x MDE  fold [+0.033, +0.138]  4/5  NOT MEAS   +0.066
+    R@1e4 vs RANDR +0.157 (1.15x, fold [+0.048, +0.281], 4/5) WORSE*;  S@1e4 vs RANDS +0.055 (0.73x) NOT MEASURED
+    moved subset: R +0.270 WORSE*, R vs RANDR +0.169 WORSE*, S +0.116 WORSE*     (* Type-M zone)
+
+Same sign, same monotone dose, same tail structure (medians near zero, p90 +1.4, worst +4.2 on
+8T61) as the point cloud; one honest difference, fold 1 flips sign on R@1e4 (-0.002), so R is
+4/5 folds here with the fold CI still excluding zero. The projection adds its own noise to
+every arm, so the matched-control contrasts that were Type-M on the point cloud are
+UNDERPOWERED on the built chain (S vs RANDS 0.73x, R vs PERMR 0.88x); the L54 caveat that the
+refill/choice split is a point estimate stands on both bases.
+
+DISPOSITION. The falsifier required R or S at 1e4 to beat the anchor and its matched control on
+the built chain; both are worse than the anchor and R is worse than its control. AMBER as a
+steric reject at a physical threshold, with or without refill, is CLOSED on both bases in the
+two forms the record had not measured, with a harmful sign at 1e3 and 1e4 and an underpowered
+null at 1e5 and 1e6. Power on the null rungs: a gain below about 0.14 A on the built chain
+would not have been seen; any harm above it would. REFUTED (harmful direction), on both bases.
 
 `python s26/ph_reject.py cloud` (~5 min): point-cloud RMSD of every arm, every threshold, 16
 draws. `python s26/ph_reject.py chain` (~3 h CPU, per-target cells under

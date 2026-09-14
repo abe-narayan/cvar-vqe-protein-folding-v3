@@ -3242,3 +3242,177 @@ average is worth at most a few hundredths through the mean, and the L44/L64 cont
 few members' change moves the chain mostly orthogonally to the native. Nothing here is deployable
 yet: the class of a window is native-free, the contrast is ORACLE. Replication: deterministic
 (the census and the `rr` are fixed); the bootstrap is seeded.
+
+## L86 -- STERIC REJECT, BUILT CHAIN: THE POINT-CLOUD RESULT REPLICATES ACROSS BASES. R@1e4 IS +0.248 A WORSE THAN THE RE-PROJECTED SHIPPED TOP-75 (fold CI [+0.12, +0.35], 4/5 FOLDS, TYPE-M) AND +0.157 WORSE THAN THE SAME COUNT REJECTED AT RANDOM; DOSE MONOTONE; THE FILTER IS CLOSED ON BOTH BASES (2026-09-13, PH)
+
+`s26/ph_reject.py chain` then `report`, `s26/results/ph_reject_chain.json` (complete 126/126),
+`s26/results/ph_reject_report.json` (both bases), job `s26/jobs_done/ph_reject_chain.json` (exit
+0, 11,976 s = 3.3 h, 22.8 projections per target, peak RSS 0.09 GB). Pre-registered in
+`s26/PREREG_amber_reject.md` sections 3 to 5, addendum 1 (fallback and moved subset) and
+addendum 2 (the re-projected anchor). This is the falsifier's last leg and the cross-basis
+replication of L43.
+
+BASIS: BUILT CHAIN on both sides (`rmsd_arm`): every retained set is coordinate-averaged and
+then projected through `s12.instrument.project` (ramah at 0.3, multi-start, exact gradient,
+the production call) and the chain is scored ORACLE against `nat_ca`. The ANCHOR is the
+shipped top-75 RE-PROJECTED through the same call, not the stored production chain, so all arms
+share one instrument. Its deviation from the stored chain, reported as registered: mean
+3.2126 A against the production 3.2148 (the "leaderboard rebuild 3.2126" of the
+state brief and L57: the production path round-trips the cloud through float32 before
+projecting, `Config.reference_precision`, and this instrument does not); per-target RMSD
+difference mean -0.0021, max |0.171|; CA deviation between the two chains mean
+0.105 A, above 0.05 A on 46 targets and above 0.5 A on 6
+(2LWU 1.25, 7JS6 1.54, 6QAX 1.56, 2BP4 1.62), which is the projection's own branch
+degeneracy (`core/project.py` docstring: a 1e-13 input difference can route L-BFGS-B into the
+other torsion branch, up to 1.6 A). Arms, controls and fallbacks as in L43 (R = reject e_amber
+> T and refill to 75, the PRIMARY reading; S = reject, no refill; RANDR/RANDS same count at
+random; PERMR/PERMS the same threshold on a permuted energy); the built-chain controls at 1e4
+carry 4 draws each (registered in section 3), the other thresholds carry R and S only.
+Eleven `ST.fmt` blocks verbatim:
+
+      built_chain [all, n=126] R@1e4 minus anchor (negative = arm better)
+        a 3.4609 (med 3.2449)   b 3.2126 (med 2.9661)   n=126
+        effect +0.2483   median +0.0016   SE 0.0758   MDE 0.2123   effect/MDE +1.17
+        iid  CI95 [+0.1021, +0.4044]
+        fold CI95 [+0.1197, +0.3479]   folds same sign 4/5   per-fold 0:+0.267 1:-0.002 2:+0.226 3:+0.421 4:+0.310
+        49W/67L/10T   worst degradation +4.2043 (8T61)   p90 +1.3949   power 0.91  Type-M 1.06
+        concentration: drop-top10 +0.3567 vs uniform-effect null p10/p50/p90 +0.2615/+0.3545/+0.4565 -> pctile 0.511
+        VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.06x]
+      built_chain [all, n=126] R@1e4 minus RANDR@1e4 (matched control)
+        a 3.4609 (med 3.2449)   b 3.3036 (med 3.1840)   n=126
+        effect +0.1574   median +0.0085   SE 0.0488   MDE 0.1367   effect/MDE +1.15
+        iid  CI95 [+0.0701, +0.2539]
+        fold CI95 [+0.0480, +0.2811]   folds same sign 4/5   per-fold 0:+0.120 1:-0.049 2:+0.182 3:+0.376 4:+0.160
+        56W/68L/2T   worst degradation +3.2399 (8T61)   p90 +0.8244   power 0.90  Type-M 1.06
+        concentration: drop-top10 +0.2204 vs uniform-effect null p10/p50/p90 +0.1582/+0.2166/+0.2815 -> pctile 0.530
+        VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.06x]
+      built_chain [all, n=126] R@1e4 minus PERMR@1e4 (matched control)
+        a 3.4609 (med 3.2449)   b 3.3589 (med 3.1940)   n=126
+        effect +0.1021   median +0.0000   SE 0.0414   MDE 0.1159   effect/MDE +0.88
+        iid  CI95 [+0.0241, +0.1886]
+        fold CI95 [-0.0080, +0.2034]   folds same sign 4/5   per-fold 0:+0.017 1:-0.113 2:+0.137 3:+0.277 4:+0.174
+        57W/61L/8T   worst degradation +2.6686 (9KAR)   p90 +0.6660   power 0.69  Type-M 1.20
+        concentration: drop-top10 +0.1607 vs uniform-effect null p10/p50/p90 +0.1091/+0.1587/+0.2107 -> pctile 0.518
+        VERDICT: NOT MEASURED (|effect| 0.1021 <= its own MDE 0.1159, 0.88x)
+      built_chain [all, n=126] S@1e4 minus anchor (negative = arm better)
+        a 3.3164 (med 3.1608)   b 3.2126 (med 2.9661)   n=126
+        effect +0.1037   median +0.0025   SE 0.0333   MDE 0.0933   effect/MDE +1.11
+        iid  CI95 [+0.0414, +0.1747]
+        fold CI95 [+0.0373, +0.1662]   folds same sign 5/5   per-fold 0:+0.014 1:+0.002 2:+0.172 3:+0.194 4:+0.129
+        47W/66L/13T   worst degradation +1.7906 (9BAF)   p90 +0.4638   power 0.88  Type-M 1.08
+        concentration: drop-top10 +0.1422 vs uniform-effect null p10/p50/p90 +0.1000/+0.1424/+0.1914 -> pctile 0.498
+        VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.08x]
+      built_chain [all, n=126] S@1e4 minus RANDS@1e4 (matched control)
+        a 3.3164 (med 3.1608)   b 3.2612 (med 3.0604)   n=126
+        effect +0.0551   median +0.0028   SE 0.0269   MDE 0.0754   effect/MDE +0.73
+        iid  CI95 [+0.0041, +0.1101]
+        fold CI95 [-0.0005, +0.1064]   folds same sign 4/5   per-fold 0:-0.048 1:+0.027 2:+0.118 3:+0.127 4:+0.055
+        45W/68L/13T   worst degradation +1.3396 (8T61)   p90 +0.3322   power 0.53  Type-M 1.36
+        concentration: drop-top10 +0.0941 vs uniform-effect null p10/p50/p90 +0.0586/+0.0924/+0.1297 -> pctile 0.524
+        VERDICT: NOT MEASURED (|effect| 0.0551 <= its own MDE 0.0754, 0.73x)
+      built_chain [all, n=126] RANDR@1e4 minus anchor (negative = arm better)
+        a 3.3036 (med 3.1840)   b 3.2126 (med 2.9661)   n=126
+        effect +0.0909   median +0.0026   SE 0.0432   MDE 0.1211   effect/MDE +0.75
+        iid  CI95 [+0.0110, +0.1787]
+        fold CI95 [+0.0456, +0.1322]   folds same sign 5/5   per-fold 0:+0.148 1:+0.047 2:+0.045 3:+0.046 4:+0.151
+        59W/65L/2T   worst degradation +2.1588 (8FLP)   p90 +0.7406   power 0.56  Type-M 1.34
+        concentration: drop-top10 +0.1645 vs uniform-effect null p10/p50/p90 +0.1103/+0.1633/+0.2176 -> pctile 0.513
+        VERDICT: NOT MEASURED (|effect| 0.0909 <= its own MDE 0.1211, 0.75x)
+      built_chain [all, n=126] RANDS@1e4 minus anchor (negative = arm better)
+        a 3.2612 (med 3.0604)   b 3.2126 (med 2.9661)   n=126
+        effect +0.0486   median +0.0002   SE 0.0175   MDE 0.0490   effect/MDE +0.99
+        iid  CI95 [+0.0167, +0.0836]
+        fold CI95 [+0.0121, +0.0698]   folds same sign 4/5   per-fold 0:+0.063 1:-0.025 2:+0.055 3:+0.067 4:+0.074
+        48W/65L/13T   worst degradation +1.1826 (9BAF)   p90 +0.2279   power 0.79  Type-M 1.13
+        concentration: drop-top10 +0.0695 vs uniform-effect null p10/p50/p90 +0.0477/+0.0684/+0.0920 -> pctile 0.528
+        VERDICT: NOT MEASURED (|effect| 0.0486 <= its own MDE 0.0490, 0.99x)
+      built_chain [all, n=126] R@1e3 minus anchor (negative = arm better)
+        a 3.7757 (med 3.5036)   b 3.2126 (med 2.9661)   n=126
+        effect +0.5631   median +0.0248   SE 0.1138   MDE 0.3187   effect/MDE +1.77
+        iid  CI95 [+0.3549, +0.7891]
+        fold CI95 [+0.4413, +0.7037]   folds same sign 5/5   per-fold 0:+0.541 1:+0.346 2:+0.530 3:+0.822 4:+0.578
+        36W/69L/21T   worst degradation +4.6340 (2NDN)   p90 +2.7185   power 1.00  Type-M 1.00
+        concentration: drop-top10 +0.6994 vs uniform-effect null p10/p50/p90 +0.5482/+0.6942/+0.8531 -> pctile 0.518
+        VERDICT: WORSE
+      built_chain [all, n=126] S@1e3 minus anchor (negative = arm better)
+        a 3.4048 (med 3.2359)   b 3.2126 (med 2.9661)   n=126
+        effect +0.1921   median +0.0007   SE 0.0477   MDE 0.1338   effect/MDE +1.44
+        iid  CI95 [+0.1048, +0.2907]
+        fold CI95 [+0.1032, +0.2469]   folds same sign 5/5   per-fold 0:+0.231 1:+0.021 2:+0.273 3:+0.212 4:+0.208
+        37W/63L/26T   worst degradation +2.4536 (9BAF)   p90 +0.7604   power 0.98  Type-M 1.01
+        concentration: drop-top10 +0.2423 vs uniform-effect null p10/p50/p90 +0.1781/+0.2389/+0.3077 -> pctile 0.529
+        VERDICT: WORSE
+      built_chain [moved, n=116] R@1e4 minus anchor (negative = arm better)
+        a 3.4869 (med 3.2751)   b 3.2172 (med 3.0247)   n=116
+        effect +0.2697   median +0.0077   SE 0.0820   MDE 0.2298   effect/MDE +1.17
+        iid  CI95 [+0.1144, +0.4415]
+        fold CI95 [+0.1290, +0.3943]   folds same sign 4/5   per-fold 0:+0.267 1:-0.002 2:+0.283 3:+0.484 4:+0.321
+        49W/67L/0T   worst degradation +4.2043 (8T61)   p90 +1.5485   power 0.91  Type-M 1.06
+        concentration: drop-top10 +0.3904 vs uniform-effect null p10/p50/p90 +0.2849/+0.3857/+0.4945 -> pctile 0.520
+        VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.06x]
+      built_chain [moved, n=116] R@1e4 minus RANDR@1e4 (matched control)
+        a 3.4869 (med 3.2751)   b 3.3178 (med 3.2429)   n=116
+        effect +0.1692   median +0.0099   SE 0.0522   MDE 0.1462   effect/MDE +1.16
+        iid  CI95 [+0.0731, +0.2704]
+        fold CI95 [+0.0519, +0.3172]   folds same sign 4/5   per-fold 0:+0.120 1:-0.043 2:+0.202 3:+0.438 4:+0.165
+        51W/65L/0T   worst degradation +3.2399 (8T61)   p90 +0.8244   power 0.90  Type-M 1.06
+        concentration: drop-top10 +0.2393 vs uniform-effect null p10/p50/p90 +0.1716/+0.2352/+0.3086 -> pctile 0.533
+        VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.06x]
+
+All four thresholds, `[all, n=126]`, arm minus anchor, built chain:
+
+    1e3  R   +0.5631 (median  +0.0248, +1.77x MDE)  fold [+0.4413, +0.7037]   5/5  36W/69L/21T  WORSE
+    1e3  S   +0.1921 (median  +0.0007, +1.44x MDE)  fold [+0.1032, +0.2469]   5/5  37W/63L/26T  WORSE
+    1e4  R   +0.2483 (median  +0.0016, +1.17x MDE)  fold [+0.1197, +0.3479]   4/5  49W/67L/10T  WORSE
+    1e4  S   +0.1037 (median  +0.0025, +1.11x MDE)  fold [+0.0373, +0.1662]   5/5  47W/66L/13T  WORSE
+    1e5  R   +0.1190 (median  +0.0000, +0.78x MDE)  fold [+0.0482, +0.1844]   5/5  57W/62L/7T   NOT MEASURED
+    1e5  S   +0.0833 (median  +0.0000, +0.95x MDE)  fold [+0.0020, +0.1560]   3/5  58W/59L/9T   NOT MEASURED
+    1e6  R   +0.0915 (median  +0.0000, +0.65x MDE)  fold [+0.0328, +0.1377]   4/5  57W/61L/8T   NOT MEASURED
+    1e6  S   +0.0511 (median  +0.0000, +0.76x MDE)  fold [-0.0016, +0.0983]   3/5  61W/55L/10T  NOT MEASURED
+
+Threshold sweep (order statistic): R oracle minimum -0.3442, split-half transfer -0.1473 (43%%),
+k_eff 3.86; S -0.1345, transfer -0.0535 (40%%): the mildest rung transfers, not a gain (R@1e6
++0.092 at 0.65x MDE, S@1e6 +0.051 at 0.76x, both NOT MEASURED).
+
+READING. (1) The built chain REPLICATES the point cloud in sign on the primary reading: R@1e4
+is +0.248 A worse than the re-projected shipped top-75 (fold CI [+0.120, +0.348], 49W/67L/10T)
+and +0.157 worse than rejecting the same count at random with a judgment-free refill (fold CI
+[+0.048, +0.281]); L43 had +0.228 and +0.167 on the point cloud. Both are Type-M-zone
+magnitudes (1.17x and 1.15x MDE), as on the point cloud, and both are tail-carried (median
++0.002 and +0.009 against means +0.248 and +0.157; p90 +1.39; worst +4.20 on 8T61), so the
+Adversary's L54 caveats 1 and 2 transfer unchanged to this basis: near zero on the median
+target, catastrophic on the minority whose pool has no survivor or whose refill reaches deep.
+One difference from L43 that is reported rather than smoothed: fold 1 has the opposite sign on
+R (-0.002 against +0.267 / +0.226 / +0.421 / +0.310 on the other four), so R@1e4 is 4/5 folds
+on the built chain where it was 5/5 on the point cloud; the fold CI still excludes zero. S@1e4
+is +0.104 worse (5/5 folds, 1.11x MDE, Type-M) against +0.108 on the point cloud. (2) The
+dose is again monotone: 1e3 +0.563 (1.77x MDE, 5/5 folds, MEASURED), 1e4 +0.248, 1e5 +0.119
+(0.78x), 1e6 +0.092 (0.65x); the limit is the anchor. (3) The built chain is noisier than the
+point cloud by construction (the projection adds its own branch noise on every arm), so the
+matched-control contrasts that were Type-M on the point cloud are UNDERPOWERED here: S vs
+RANDS +0.055 at 0.73x MDE (fold CI [-0.0005, +0.106]), R vs PERMR +0.102 at 0.88x, S vs PERMS
++0.050 at 0.59x; RANDR vs anchor +0.091 at 0.75x, RANDS vs anchor +0.049 at 0.99x. The L54
+caveat 3 stands: the refill-cost / choice-cost split is a point estimate on both bases. (4)
+The moved subset (secondary, n = 116 / 113) agrees: R +0.270 WORSE (Type-M), R vs RANDR +0.169
+WORSE (Type-M), S +0.116 WORSE (Type-M).
+
+POWER. Built-chain SEs 0.03 to 0.11 A, MDEs 0.09 to 0.32; at 1e5 and 1e6 R sits at 0.78x and
+0.65x its MDE (SE 0.055 and 0.050), so "the mildest threshold is null" is UNDERPOWERED for a
+gain below about 0.14 A on this basis and MEASURED against any harm above it. Nothing is
+positive; the replication of the harmful direction is this entry (cross-basis, same sign, same
+monotone dose, same tail structure).
+
+DISPOSITION. The falsifier of `s26/PREREG_amber_reject.md` section 4 required R or S at 1e4 to
+BEAT the anchor and its matched control on the built chain; both are WORSE than the anchor
+with fold CIs excluding zero (R 4/5 folds, S 5/5), and R is worse than its matched control.
+AMBER as a steric reject filter at a physical threshold, with or without refill, is CLOSED on
+both bases in the two forms the record had not measured (physics-set count, refill), with a
+harmful sign at 1e3 and 1e4 and an underpowered null at 1e5 and 1e6. The functional lever's
+filter form (s19 Q3, s24 D1-C) keeps its closure and gains a sixth and seventh instrument. Why,
+from L23: the members the threshold condemns are condemned by the builder's side-chain
+placement (96.8%), not by their backbones; removing them removes compact members whose error
+cancelled in the average (S23 L5). The remaining physics question on this pool is
+`IDEA_rotamer_relief` part B (does the singularity move when the side chains are relieved),
+which runs next under the tournament.
+
+---
