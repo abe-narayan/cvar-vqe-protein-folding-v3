@@ -91,3 +91,17 @@ each target, resumable, never a third AMBER job. Report (gated, CPU): 2 min. Age
 
 A positive result is re-run with the fold processing order reversed and must land inside its own
 fold CI (the arm has no random draws; the relaxation is deterministic at threads = 1).
+
+---
+## ADDENDUM 1 (2026-09-13 19:55) -- THE GATES PASSED AND THE PROBE, BEFORE THE RUN
+
+G1: the reconstructed production choice equals `I.project` to max |dCA| = 0.0 on 126/126
+(`s26/results/ph_branch_solutions.json`, `summary.g1_max` 0.0; job `ph_branch_solutions`,
+1102 s, peak 0.088 GB). G2: 4.77 distinct solutions per target on average; ALL 126 targets have
+at least two distinct solutions, so the effective n of the arm is 126; the production choice is
+the warm start on 60 targets and one of the four generic starts on 66 (counts [60, 6, 34, 14,
+12]). G3, the AMBER probe on 1A13 (job `ph_branch_probe`, exit 0, wall 70 s, PEAK RSS 0.272 GB,
+held 510 s at the job cap): five relaxations, all converged, e1 -306 to -341 kcal/mol, 11.5 to
+16.1 s each, 65 s per target. Extrapolated run: 126 x 65 s = about 2.3 h, est-ram 0.4 GB
+(probe peak 0.272 rounded up), one job, `--tag AMBER`, per-target cells. Launched at 19:56 with
+3.9 GB free (rule: probe peak + 0.5 GB = 0.77 GB under the free reading).
