@@ -116,9 +116,65 @@ is a separate arm at 3.2280 A (`464a0ddb5f283e04`), +0.0133 A, 0.26x MDE, NOT ME
 
 ---
 
-## 1. A1 -- ADAPT-VQE vs the fixed ansatz (endpoint). PENDING the phase gate.
+## 1. A1 -- ADAPT-VQE vs THE FIXED ANSATZ (ENDPOINT). COMPLETE. NULL AT THE REGISTERED THRESHOLD.
 
-Pre-registered in `s26/PREREG_A1.md`. Expected: null (both primaries within 0.5x MDE).
+Pre-registered in `s26/PREREG_A1.md` (addendum records the outcome). Ledger L68 carries the
+five ST.fmt blocks verbatim. Artefacts: `s26/results/a1/<pdb>.json` (126, every one
+bit-for-bit against the production quantum cache: `cache_check` ca and q_ca 0.0, selection
+index equal, 126/126), `s26/results/a1_stats.json`, `s26/logs/a1_stats.log`;
+`s26/jobs_done/a1_build.json` (7,782 s for 93 targets, peak RSS 0.383 GB),
+`a1_label.json` (25 s, 0.36 GB). Basis: built chain on both sides; the selection readout is
+the named secondary.
+
+### 1.1 The primaries
+
+    built chain, vs fixed_zrank_it50 (3.2280 A), n = 126, paired
+      adaptL2_adam_best_zrank_P21   -0.0138  SE 0.0210  MDE 0.0588  0.23x  fold [-0.0705,+0.0442]  3/5  58W/68L  conc. pctile 0.498
+      adaptV_adam_best_zrank_P21    -0.0222  SE 0.0217  MDE 0.0608  0.36x  fold [-0.0854,+0.0424]  3/5  61W/65L  conc. pctile 0.509
+    "ADAPT is null" (within +-0.5x MDE) FIRED on both. "ADAPT helps" did not fire.
+    Power: resolution 0.059 to 0.061 A; Gelman-Carlin power at the observed effect 0.10 / 0.18,
+    Type-M 3.7 / 2.4; the whole quantum synthesis vs the classical arm is +0.0133 A
+    (`s26/results/q_mde_reference.json`), four times smaller than the resolution. NULL at the
+    registered threshold, UNDERPOWERED below 0.06 A.
+
+### 1.2 Every arm (built chain; all fold CIs span zero; 3-4/5 folds)
+
+    adaptL2 adam_best  P7 / P14 / P21   -0.0128 (0.21x) / -0.0192 (0.33x) / -0.0138 (0.23x)
+    adaptL2 lbfgs      P7 / P14 / P21   -0.0206 (0.34x) / -0.0187 (0.32x) / -0.0194 (0.33x)
+    adaptV  adam_best  P7 / P14 / P21   -0.0128 (0.21x) / -0.0195 (0.32x) / -0.0222 (0.36x)
+    adaptV  lbfgs      P7 / P14 / P21   -0.0206 (0.34x) / -0.0244 (0.39x) / -0.0245 (0.40x)
+    fixed 750 steps -0.0035 (0.16x)   gibbs_T +0.0088 (0.11x)   uniform128 +0.0135 (0.14x)
+    randH_fixed +0.0230 (0.24x, 4/5)   randH_adaptL2 +0.0337 (0.34x, fold CI [+0.012,+0.058], 5/5)
+    alpha = 1 subset (n=78):  L2 P21 -0.0223 (0.24x)   V P21 -0.0254 (0.28x)
+    alpha = 0.25 subset (n=48): L2 P21 +0.0000 (0.00x)  V P21 -0.0169 (0.27x)
+
+Selection readout: all twelve ADAPT arms -0.039 to -0.048 A, 0.42x to 0.47x MDE, fold CIs
+excluding zero on all twelve, 45 to 59 exact ties (58 of 126 targets select the identical
+candidate under ADAPT-L2-P21 and the fixed circuit). Not a result by the standing rule; the
+shape of S25's `VQE_LFO - argmin` (0.68x, 5/5). The 7-parameter arms carry the same effect
+as the 21-parameter ones on both bases: whatever the direction is, it is not expressivity.
+
+### 1.3 The property half on the real targets (no native)
+
+    KL(p || Gibbs), 78 alpha = 1 targets   fixed 0.9027 (max 0.984; S25's 0.902)   ADAPT 0.0002 (max 0.0009), both pools, both optimisers
+    KL(Gibbs_zrank || product)             mean 1.4e-4, max 7.9e-4 over 126 targets
+    L-BFGS growth at alpha = 1              no operator selected, 78 of 78 targets (stopped by eps at P = 7)
+    ADAPT L2 at alpha = 0.25                mean 13.7 distinct 2-local strings; 38 distinct sequences on 48 targets
+    KL(p || Gibbs), 48 alpha = 0.25 targets fixed 2.67, ADAPT 1.59 (Gibbs is not the CVaR optimum there; recorded, not interpreted)
+
+Section 0.1's product-state finding holds on every real target: the deployed selector's
+alpha = 1 target is a product state, seven RY angles reach it, the fixed circuit misses it
+by 0.90 nats, and reaching it exactly moves the built chain by -0.02 A, a third of the MDE.
+
+### 1.4 What damaged my expectations here
+
+I expected the alpha = 0.25 subset (where the objective is not the Gibbs functional and
+ADAPT-L2 reaches a lower F) to be where any signal lived. It is the one cell that is exactly
+zero (+0.0000, fold CI [-0.008, +0.008], n = 48): a lower free energy on the CVaR objective
+emits the same structure. The direction that does appear is on the alpha = 1 targets, where
+ADAPT differs from the fixed circuit only by reaching the product optimum.
+
+### 1.5 Verdict carried to `s26/PROPOSAL_A.md`: REPLACE.
 
 ## 2. A2 -- THE DYNAMICAL LIE ALGEBRA. COMPLETE. DEMONSTRATED (exact; property, no native).
 
