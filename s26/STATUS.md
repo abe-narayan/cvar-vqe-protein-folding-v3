@@ -34,6 +34,9 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 22:02 running: sprint extended by the user to ~04:30 Pacific with the report at ~04:45 (L77); all deferred runs, the VERIFY_SLOW test tier, the verify/ audits and the results-lab rebuild assigned; lane I resumed; eight lanes.
 - 2026-09-13 22:02 next: slide 11 ruling when B/C verdicts land; hourly commits; corrections-ledger update at the close.
 
+- 2026-09-14 00:43 running: six-job cap; A3 ~70/126; P pairnet done, raw fold 2 training; PH validity axis in (L100), rotamer relief queued; W retrains + amber-prior + provenance readout; I slow tiers/rebuild/verify chain queued; A checks current to L97; E report 162/162.
+- 2026-09-14 00:43 next: P's B/C verdicts by 02:30 -> slide 11 ruling -> PR final rebuild; A final pass 04:00; E final pass 04:15-04:45; corrections-ledger update and close entry.
+
 ## E (Examiner / Librarian)
 - 2026-09-13 00:12 running: e_reproduce (126 records through s12.instrument), e_trace_1S9Z then e_trace_9KAR under jobrun; module_map.json (699 modules) and pinned_hashes.json (benchmark manifest matches S20) written.
 - 2026-09-13 00:12 next: finish reading core/energy, core/amber, the 24 root modules, s5/s7/s8/s9, tests, verify, resultslab; then write EXAMINATION.md sections A-H.
