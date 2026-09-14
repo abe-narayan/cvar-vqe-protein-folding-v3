@@ -171,3 +171,19 @@ null" falsifier FIRED on both primaries (built chain: -0.0138 A at 0.23x MDE 0.0
 [-0.071, +0.044]; -0.0222 A at 0.36x MDE 0.0608, fold CI [-0.085, +0.042]); "ADAPT helps" did
 not fire; no replication owed. The expected effect (section 7: |effect| < 0.05 A, null
 expected) held. Power: resolution 0.06 A on the built chain; underpowered below it. Ledger L68.
+
+## ADDENDUM 2 (2026-09-13 22:35, BEFORE the run; robustness replication of a null, L77 scope)
+
+A1 is null at the registered threshold, so no replication is owed by the contract; the user
+extended the sprint (L77) and the record will ask. Run: `s26/q_adapt.py --build --tag a1s1
+--seed 1 --order fold_rev --fixed-iters 50 --optimisers adam_best` (arms: fixed_zrank_it50,
+adaptV/adaptL2 adam_best P7/14/21, gibbs_T, uniform128, randH_fixed, randH_adaptL2; 11
+projections per target, about 50 s each, 126 targets, one governed process, checkpoints under
+`s26/results/a1s1/`), then `--label --tag a1s1` and `--stats --tag a1s1`. Seed 1 changes the
+fixed circuit's initial angles, the ADAPT RY layer's initial angles and the random-control
+draws; reversed fold order changes only the processing order (each target is independent), so
+the order half is procedural. What replicates: the two primaries, built chain. Prediction: both
+inside +-0.5x their own MDE with fold CIs spanning zero, as on seed 0; the seed-0 point
+estimates (-0.0138, -0.0222) lie inside the seed-1 iid CIs. Falsifier: either primary outside
++-0.5x MDE with a fold CI excluding zero on seed 1 (then the seed-0 null is not stable and the
+discrepancy is reported as such). Launched after A3's build, as the coordinator ordered.

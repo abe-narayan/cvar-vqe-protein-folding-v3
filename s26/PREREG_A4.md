@@ -105,3 +105,25 @@ and held on 31 (2.5 to 370). H4c: P < 3n held on 14 of 14 rows; "Var < 1e-3" fai
 rows at alpha = 0.25, T = 0 (2.4e-2, 1.0e-3, 1.2e-3). The printed side-by-side slopes in
 `s26/logs/a4_var.log` include the early-stopped rows; the matched-only slopes above are the
 pre-registered quantity and are the ones in the ledger (L35) and the figure. Ledger entry L35.
+
+## ADDENDUM 2 (2026-09-13 22:35, BEFORE the run; bootstrap CIs on the slopes, the L47 caveat)
+
+L47 records that `q_var.json` stores point slopes and no CI, so "-0.302 is -0.243 within
+error" is asserted, not computed. Method: re-measure every (cell, n) row of A4, fixed and
+grown, with the SAME draws (seed 1000 + n, theta ~ N(0, 0.6^2), the same draw counts) but
+STORING every per-draw dF/dtheta_0; assert that the recomputed Var equals `q_var.json`'s
+`var_g0` to relative 1e-12 for every row (the reproduction gate of this addendum); then a
+percentile bootstrap over the theta draws within each n (resample the draws with replacement
+at every n independently, recompute Var, refit the 7-point log2 slope; 2000 resamples, seed
+2026), for every fixed and grown slope, and for the DIFFERENCE grown - fixed per cell (the two
+circuits' draws are independent, so the difference resamples both). Matched-P rows only for
+the grown slopes, as in L35. Code `s26/q_var_boot.py`, artefact `s26/results/q_var_boot.json`
+(per-draw g0 arrays, the CIs), figure `s26/figures/a4_variance_slopes.png` regenerated with
+error bars if the CIs exist.
+Predictions: P4a the 95% CI of (grown L2 - fixed) at alpha = 0.25, T = 0.3 includes zero;
+P4b the fixed-ansatz CIs are narrower than +-0.15 log2 per qubit at every cell; P4c every
+alpha = 1 grown slope's CI excludes the fixed slope's point value at the same cell (the
+"no decay" statement carries an interval). Falsifiers: the stated intervals, measured. The
+grown circuits are re-grown deterministically (seed 0) and must reproduce their
+`sequence` from `q_var.json` exactly (asserted). Time: the A4 run took 2,765 s; this one
+repeats it with storage, about 50 minutes, < 0.3 GB. Launch through jobrun as `a4_var_boot`.

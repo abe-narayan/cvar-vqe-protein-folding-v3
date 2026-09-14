@@ -108,3 +108,29 @@ n = 6 pattern reappears at n = 9 (32766 / 65535 / 130816 at L = 2 / 3 / 4) and a
 n <= 11; "n divisible by 3" is an observation from two widths, HYPOTHESIS. Ledger entry
 appended as the next L number after L25.
 Correction (09:25): the entry landed as L27 (lane P had appended L26 in the meantime).
+
+## ADDENDUM 2 (2026-09-13 22:35, BEFORE the run; the A2 per-growth-step item on the real targets)
+
+Object: for every one of the 126 A1 records and each of its four ADAPT runs (pools V and L2,
+re-optimisers Adam-best and L-BFGS-B, `s26/results/a1/<pdb>.json` key `adapt.*.ops`), the
+exact Lie closure of the first k strings for k = 7..len(ops) (the same `lie_closure` as A2,
+cap 2^21). No native, no RMSD, no score is read. Code `s26/q_dla_a1.py`, artefact
+`s26/results/q_dla_a1.json` (per record, per run, the dim ladder), figure
+`s26/figures/a2_dla_grown_ladder.png` (dim vs P, median and min/max across targets per cell).
+
+Predictions, each a number the run returns:
+- P2a. On the 78 alpha = 1 targets under L-BFGS, dim = 7 exactly on the targets where nothing
+  was appended (18 of 78 for V, 10 of 78 for L2, from L75) and > 7 on the others, because the
+  DLA is a property of the generator SET and L75 showed every appended string is multi-qubit
+  while inert (angles <= 0.018 rad). This is the point of the item: for a grown circuit the DLA
+  dimension does not track what the circuit does.
+- P2b. On the 48 alpha = 0.25 targets with pool L2 (13.7 distinct strings on average), the
+  median dim at P = 21 lies between 100 and 2000, and no target reaches so(128) = 8128.
+- P2c. Pool V never exceeds dim so(2^6 + 1) = 2080 (its whole-pool closure, L27) on any target.
+- P2d. Under Adam-best at alpha = 1, dim > 7 on the 30 (V) and 63 (L2) targets with a
+  multi-qubit string appended and = 7 on the rest.
+Falsifiers: any measured dim that differs from P2a, P2c or P2d as stated (they are exact
+counts); P2b fails if the median lies outside [100, 2000] or any target reaches 8128.
+Memory and time: 126 x 4 x <= 15 closures at n = 7, each < 0.05 s; under 5 minutes, < 0.3 GB.
+Launch `python s26/jobrun.py --agent Q --tag CPU --name a2_dla_a1 --est-ram 0.3 -- python
+s26/q_dla_a1.py`; checkpoint per record (atomic JSON rewrite every 10 records).
