@@ -5,7 +5,7 @@ final pass before close is short. Each row: exists / meets the stated standard /
 missing. Banned-word and em-dash greps (rule 13) are run over every presenter-facing file each
 pass: `grep -nE "genuinely|honestly|leverage|robust|delve|underscore"` and a count of U+2014.
 
-Last pass: 2026-09-13 21:45 (after L71). Status vocabulary: OK / PARTIAL / MISSING / PENDING.
+Last pass: 2026-09-13 22:20 (after L82; sprint extended to ~04:30, L77).
 
 | # | deliverable | exists | standard met | missing / note |
 |---|---|---|---|---|
@@ -16,7 +16,7 @@ Last pass: 2026-09-13 21:45 (after L71). Status vocabulary: OK / PARTIAL / MISSI
 | 5 | PROPOSAL_A / B / C (+ B_REPLACEMENT) | PARTIAL | all four on disk; A's verdict REPLACE accepted (L69) and supported by the Adversary (L70); B_REPLACEMENT per L13 | C's verdict waits on the ladder eval (L62-L67 so far: noesm +0.208 Type-M, conly / wide / pca32f not measured) |
 | 6 | IDEA_* + TOURNAMENT | OK | 16 IDEA files; `s26/TOURNAMENT.md` ranked (L51 accepted); banned-word clean | -- |
 | 7 | agent*_FINDINGS | PARTIAL | A, E, I, P, PH, Q, W on disk in the S12-S25 format; PR lane (spawned L42) has none yet | PENDING: agentPR_FINDINGS; each lane's "what I did not do" section present (checked A, E, W) |
-| 8 | LEDGER + RETRACTIONS | OK | append-only, numbered, collisions suffixed (L16b, L18b); `s26/RETRACTIONS.md` R1-R4 seeded, R2 marked FOR docs/FINDINGS.md | keep current: no S26 endpoint has contradicted a prior sprint yet (L39, L43, L44 confirm the record) |
+| 8 | LEDGER + RETRACTIONS | OK | append-only, numbered, collisions suffixed (L16b, L18b); `s26/RETRACTIONS.md` R1-R5 (R5 = L75's inert-growth correction), R2 marked FOR docs/FINDINGS.md | keep current: no S26 endpoint has contradicted a prior sprint yet (L39, L43, L44 confirm the record) |
 | 9 | repository fixes on `s26` | OK | lane I's L6, L7/L9, L8, L10, L15, L16, L19, L20, L21 with AST-identity checks and governed tests (370/357/13); no production number changed | -- |
 | 10 | presentation + PRESENTATION_CHANGES | MISSING | the pptx was never on this machine (L2); the PR lane builds the deck from the prompt's structure with python-pptx and writes `s26/PRESENTATION_CHANGES.md`; neither on disk at this pass | PENDING (PR lane). Every slide number must carry an artefact path; C34 and the 0.524 stay off every slide (L32); C26 now has `s26/results/a_c26_phi_mae.json`; the seven-configuration suite and +0.330/+0.455 carry the point-cloud basis (L29); the C3 "+0.0111 vs random" carries its Type-M flag (L46); the 2/60 caveat reads per L55 |
 | 11 | TRAINABILITY_PAPER_OUTLINE | OK | on disk (lane Q); the "no plateau" claim must carry "at depth 3" (RETRACTIONS R2) | check the outline text for "at depth 3" at the final pass |
@@ -34,7 +34,7 @@ Last pass: 2026-09-13 21:45 (after L71). Status vocabulary: OK / PARTIAL / MISSI
 | `s26/EXAMINATION_AUDIT.md` | 0 | 0 | 19:45 |
 | `s26/agentA_FINDINGS.md` | 0 | 0 | 19:45 |
 | `s26/LEDGER.md` (A's entries) | 0 (one rule-13 word removed) | 0 | 19:45 |
-| deck / PRESENTATION_CHANGES | built (L61, slide 8 pending); grep at the final pass | -- | -- |
+| deck / PRESENTATION_CHANGES | built (L61), slide 8 rebuilt (L73), L75 wording applied (L76); grep at the final pass | -- | -- |
 
 ## Numbers that must not reach a slide or the report without their qualifier
 

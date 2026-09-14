@@ -104,3 +104,34 @@ the `s26/PREREG_cis.md` addendum.
   physics-reject direction (L43), the C3 relaxation (L39) and the 2/60 bound (L44) all confirm
   the record rather than overturn it. If an endpoint result later contradicts a prior claim, both
   artefacts are named here and the discriminating experiment is run before the word "retracted".
+
+---
+
+## R5 -- L68's "L-BFGS SELECTS NO OPERATOR AT alpha = 1" IS RETRACTED BY LANE Q (L75); THE GROWTH IS INERT, NOT ABSENT (S26 internal)
+
+Claim, verbatim: "L-BFGS growth at alpha = 1 stops with no operator selected on 78 of 78 targets"
+(`s26/LEDGER.md` L68, property half) and "ADAPT with either pool selects no entangling operator on
+any of the 78 alpha = 1 targets under L-BFGS" (L68 reading; `s26/PROPOSAL_A.md` sections 3 and 5:
+"selects no entangling operator on any of the 78 alpha = 1 targets", "it declines them on all 78
+targets; there is nothing to entangle"; `s26/agentQ_FINDINGS.md` 0.1 and 1.3). The Adversary's
+L70 caveat 2 repeated it ("on the 78 alpha = 1 targets L-BFGS grows nothing and the 'P21' arm is
+the 7-parameter RY layer").
+
+Contradicted by: the A1 records themselves, `s26/results/a1/<pdb>.json :: adapt.<pool>_lbfgs_
+zrank.sequence / .trace / .theta` (read correctly by lane PR, L73): under L-BFGS at alpha = 1,
+operators ARE appended on 60 of 78 (pool V) and 68 of 78 (pool L2) targets, all multi-qubit, 235
+and 393 strings in total; they lower the free energy by at most 1.2e-4 nats, receive angles of at
+most 0.018 rad, and leave the state a product state (KL to the product of marginals at most
+4.1e-4). Under Adam-best, appended on 78 of 78 (1,092 strings), worth at most 8.6e-4 nats.
+
+Discriminating: the re-read of persisted per-target records (L75); no new experiment. The
+ideal-ladder statements (L27, L35: L-BFGS appends nothing on the exact ladder) stand, because on
+the ideal ladder E is exactly affine and every pool gradient is exactly zero; on a real target
+tie-averaging makes E not exactly affine and the residual gradient exceeds eps = 1e-3.
+
+Now stands: at alpha = 1 the optimum is a product state; an adaptive ansatz free to entangle
+appends operators that are inert (worth under 1e-3 nats, angles under 0.02 rad, the state stays a
+product to 4e-4 nats); growing anyway moves the built chain by a third of the MDE. Every endpoint
+number of L68, the A2 and A4 results and the verdict REPLACE are unchanged. Corrections applied by
+appended addenda to `s26/PROPOSAL_A.md` and `s26/agentQ_FINDINGS.md` (section 9), by lane PR to
+slide 8 and slide 9 (L76), and by the Adversary to its own L70 caveat 2 (ledger entry below L77).
