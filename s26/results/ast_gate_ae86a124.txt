@@ -1,0 +1,121 @@
+core/__init__.py: AST-identical to ae86a124 modulo docstrings
+core/amber.py: DIFFERS from ae86a124 modulo docstrings (2 changed lines)
+    --- ae86a124:core/amber.py
+    +++ working:core/amber.py
+    @@ -33,3 +33,3 @@
+         return p
+    -from budget import MAXITER_PER_PARAM, MIN_MAXITER_PER_PARAM, BudgetExhausted, BudgetedEnergyModel, check_optimizer_budget, resolve_maxiter
+    +from budget import BudgetExhausted, BudgetedEnergyModel, check_optimizer_budget, resolve_maxiter
+     
+core/bench.py: DIFFERS from ae86a124 modulo docstrings (2 changed lines)
+    --- ae86a124:core/bench.py
+    +++ working:core/bench.py
+    @@ -8,3 +8,3 @@
+     import time
+    -from dataclasses import asdict, replace
+    +from dataclasses import replace
+     _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+core/cache.py: DIFFERS from ae86a124 modulo docstrings (2 changed lines)
+    --- ae86a124:core/cache.py
+    +++ working:core/cache.py
+    @@ -8,3 +8,3 @@
+     import time
+    -from typing import Any, Dict, Iterable, Optional, Sequence, Tuple
+    +from typing import Any, Dict, Optional, Sequence, Tuple
+     import numpy as np
+core/data.py: DIFFERS from ae86a124 modulo docstrings (21 changed lines)
+    --- ae86a124:core/data.py
+    +++ working:core/data.py
+    @@ -72,3 +72,3 @@
+     
+    -def identity(a: str, b: str, gap: float=-1.0) -> float:
+    +def identity(a: str, b: str, gap: float=-1.0, norm: str='longer') -> float:
+         n, m = (len(a), len(b))
+    @@ -76,2 +76,8 @@
+             return 0.0
+    +    if norm == 'shorter':
+    +        if a in b or b in a:
+    +            return 1.0
+    +        return _nw_matches(a, [b])[0] / min(n, m)
+    +    if norm != 'longer':
+    +        raise ValueError(f"unknown identity normalisation {norm!r}; use 'longer' or 'shorter'")
+         return _nw_matches(a, [b])[0] / max(n, m)
+    @@ -150,3 +156,3 @@
+     
+    -def identity_many(a: str, bs: Sequence[str], gap: float=-1.0) -> np.ndarray:
+    +def identity_many(a: str, bs: Sequence[str], gap: float=-1.0, norm: str='longer') -> np.ndarray:
+         if not len(bs):
+    @@ -155,2 +161,9 @@
+         lens = np.array([len(b) for b in bs], float)
+    +    if norm == 'shorter':
+    +        denom = np.minimum(lens, n)
+    +        out = np.where(denom > 0, _nw_matches(a, bs, gap) / np.maximum(denom, 1), 0.0)
+    +        sub = np.array([bool(a) and bool(b) and (a in b or b in a) for b in bs], bool)
+    +        return np.where(sub, 1.0, out)
+    +    if norm != 'longer':
+    +        raise ValueError(f"unknown identity normalisation {norm!r}; use 'longer' or 'shorter'")
+         denom = np.maximum(lens, n)
+    @@ -252,6 +265,2 @@
+         return tuple(build_peptides())
+    -
+    -@lru_cache(maxsize=1)
+    -def _seq_index() -> Dict[str, int]:
+    -    return {p.seq: k for k, p in enumerate(load())}
+     
+core/energy.py: AST-identical to ae86a124 modulo docstrings
+core/geometry.py: AST-identical to ae86a124 modulo docstrings
+core/pipeline.py: AST-identical to ae86a124 modulo docstrings
+core/predict.py: DIFFERS from ae86a124 modulo docstrings (2 changed lines)
+    --- ae86a124:core/predict.py
+    +++ working:core/predict.py
+    @@ -4,3 +4,3 @@
+     import os
+    -from typing import Dict, List, Optional, Sequence, Tuple
+    +from typing import List, Optional, Sequence, Tuple
+     import numpy as np
+core/project.py: AST-identical to ae86a124 modulo docstrings
+core/quantum.py: AST-identical to ae86a124 modulo docstrings
+amber_hamiltonian.py: AST-identical to ae86a124 modulo docstrings
+amber_refine.py: AST-identical to ae86a124 modulo docstrings
+budget.py: AST-identical to ae86a124 modulo docstrings
+catrace.py: AST-identical to ae86a124 modulo docstrings
+distogram.py: AST-identical to ae86a124 modulo docstrings
+energy_terms.py: AST-identical to ae86a124 modulo docstrings
+esm_features.py: AST-identical to ae86a124 modulo docstrings
+floor.py: AST-identical to ae86a124 modulo docstrings
+foldvqe.py: AST-identical to ae86a124 modulo docstrings
+fragment_db.py: AST-identical to ae86a124 modulo docstrings
+hamiltonian.py: AST-identical to ae86a124 modulo docstrings
+legacy_field.py: AST-identical to ae86a124 modulo docstrings
+legacy_refine.py: AST-identical to ae86a124 modulo docstrings
+objective.py: AST-identical to ae86a124 modulo docstrings
+pairnet.py: AST-identical to ae86a124 modulo docstrings
+peptide_db.py: AST-identical to ae86a124 modulo docstrings
+priors.py: AST-identical to ae86a124 modulo docstrings
+protein_geometry.py: AST-identical to ae86a124 modulo docstrings
+qansatz.py: AST-identical to ae86a124 modulo docstrings
+refine2.py: AST-identical to ae86a124 modulo docstrings
+representations.py: AST-identical to ae86a124 modulo docstrings
+sidechains.py: AST-identical to ae86a124 modulo docstrings
+torsion_lib2.py: AST-identical to ae86a124 modulo docstrings
+vqe.py: AST-identical to ae86a124 modulo docstrings
+s5/__init__.py: AST-identical to ae86a124 modulo docstrings
+s5/esm32.py: AST-identical to ae86a124 modulo docstrings
+s5/esmraw.py: AST-identical to ae86a124 modulo docstrings
+s5/lib.py: AST-identical to ae86a124 modulo docstrings
+s5/torsion.py: AST-identical to ae86a124 modulo docstrings
+s7/__init__.py: AST-identical to ae86a124 modulo docstrings
+s7/amber_native.py: AST-identical to ae86a124 modulo docstrings
+s7/audit.py: AST-identical to ae86a124 modulo docstrings
+s7/debias.py: AST-identical to ae86a124 modulo docstrings
+s7/poolsize.py: AST-identical to ae86a124 modulo docstrings
+s7/repr_select.py: AST-identical to ae86a124 modulo docstrings
+s8/__init__.py: AST-identical to ae86a124 modulo docstrings
+s8/consensus2.py: AST-identical to ae86a124 modulo docstrings
+s8/generate.py: AST-identical to ae86a124 modulo docstrings
+s8/inband.py: AST-identical to ae86a124 modulo docstrings
+s8/integrate.py: AST-identical to ae86a124 modulo docstrings
+s8/invfold.py: AST-identical to ae86a124 modulo docstrings
+s8/project.py: AST-identical to ae86a124 modulo docstrings
+s9/__init__.py: AST-identical to ae86a124 modulo docstrings
+s9/final.py: AST-identical to ae86a124 modulo docstrings
