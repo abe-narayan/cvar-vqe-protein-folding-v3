@@ -1110,7 +1110,9 @@ correction to its scope.
 at n = 4 to 7, L = 1 to 4, for all four conjugation and gate-order conventions; the 8128 / 1025
 reconciliation (the fixed ansatz's algebra against the strings ADAPT selected, 1025 / 8128 =
 0.126) is correct. The "S25 slopes are a statement about depth 3" reading is an inference from
-the 2-design literature, not a measurement here.
+the 2-design literature, not a measurement here. Per growth step on the real targets (L138): the
+algebra of a grown set tracks the appended strings, not what the circuit does; the inert sets of
+the alpha = 1 targets reach closures of up to 530 dimensions and no grown set reaches so(128).
 
 **A4, grown against fixed circuits (L35, checked L47).** Part VII.1 carries the table. In one
 sentence for this part: on the deployed Hamiltonian an operator-growing (ADAPT) construction
@@ -1838,7 +1840,25 @@ ansatz generates the full so(2^n) from depth 2 at n = 7 (dim 8128), so the algeb
 protection against a 2-design plateau and the S25 slopes are a statement about depth 3. The
 Adversary re-derived every cell independently (`s26/results/a_dla_check.json`, no shared
 closure code, a different numeric rank rule): 8128 at n = 7 for all four conjugation and gate-order
-conventions; n = 4, 5 numeric and symbolic counts agree 6 of 6.
+conventions; n = 4, 5 numeric and symbolic counts agree 6 of 6. The per-growth-step item the
+prompt asked for under A2 landed as L138 (`s26/q_dla_a1.py` -> `s26/results/q_dla_a1.json`, the
+exact Lie closure of every ADAPT run at every growth step over the 126 A1 records;
+`s26/PREREG_A2.md` addendum 2; property measurement, no native, no score; the job's wrapper lost
+the child before the summary write and the summary was recomputed in-process from the stored
+ladders). Final closure dimension, median [min, max]: pool V, Adam, alpha = 1: 7 [7, 82] with dim
+7 on 48 of 78 targets (exactly those without a multi-qubit string appended); pool L2, Adam,
+alpha = 1: 11 [7, 139], dim 7 on 15; pool V, L-BFGS, alpha = 1: 58 [7, 530], dim 7 on exactly the
+18 targets where nothing was appended; pool L2, L-BFGS, alpha = 1: 37 [7, 513], dim 7 on the 10
+with nothing appended; at alpha = 0.25 pool L2 reaches a median 1025 [513, 2017] under Adam and
+1025 [258, 2017] under L-BFGS, pool V 16; no grown set on any target reaches so(128) = 8128, and
+pool V never exceeds 530 against its whole-pool 2080. All four predictions (P2a to P2d) held.
+Reading: the dynamical Lie algebra is a property of the generator set; on the 78 alpha = 1
+targets the grown sets whose appended strings are inert have closures of up to 530 dimensions
+while the fixed ansatz at the same parameter count has 8128 and does no more with it, so for a
+grown circuit the DLA dimension counts what could be done if the appended angles were not near
+zero, not what the circuit does; the only sets with a large algebra and non-trivial angles are
+the alpha = 0.25 L2 sets (1025 of 8128), and A1 measured their endpoint at +0.0000 A against the
+fixed circuit on those 48 targets. This closes the A2 deliverable.
 
 **A4, gradient variance of grown against fixed circuits (L35; Adversary L47: STANDS WITH
 CAVEAT).** `s26/q_var.py` -> `s26/results/q_var.json` (complete; 2,765 s, peak RSS 0.08 GB),
@@ -2393,8 +2413,11 @@ chain). Bases named on every line; a positive delta means the leaked emission is
   (positive = the carrier helped): 1CEK +0.0114, 2FBU -0.0021, 2P5H -0.2460, 6B9K -0.0265;
   with both channels removed, production minus clean +0.0114 / -0.0021 / -0.2460 / -0.0243.
   F3 is falsified (|delta| on 2P5H 0.246 above the registered 0.10 line; its control clause,
-  carrier-out change against two control-out chains per fold, is measured on one control so
-  far, 9BAF out of fold 0, five queued). The sign follows the cross-deposit distance of the
+  carrier-out change against two control-out chains per fold, is measured on one control,
+  9BAF out of fold 0; the five remaining control-out models and a second-seed retrain of the
+  one large value were withdrawn from the queue by the starvation ruling (L111) and the hold was
+  lifted 25 minutes before the close, so the control clause is OPEN and would need about two
+  hours of wall on this box, L137). The sign follows the cross-deposit distance of the
   copy (L52): the 2P5J copy sits 2.33 A from 2P5H's native and training on it pulls the
   posterior toward the carrier's geometry (mean |dE[d]| 1.38 A per pair, the largest of the
   four) and the built chain 0.25 A away from the native; on 1CEK, whose carrier is 0.60 A from
@@ -2704,6 +2727,16 @@ fixed, the force field still cannot tell a good backbone from a bad one.
 **Coherence-penalised training and `better_prior_inputs attn`.** Not run: deferred on memory all
 night (1.25 GB and 3 to 3.5 GB against a headroom that never freed) and recorded as such.
 
+Lane W's closing entry (L137) lists its twelve ledger entries and 32 governed jobs (31 exit 0;
+the one exit 1 the synthetic test that caught a bound error before any real run; largest peak
+RSS 1.250 GB, longest wall 9,321 s), confirms that no benchmark file, sequence, name, native or
+RMSD was read at any point, and names what it did not run with the time each would need: the
+Part B control-out models (about 2 h), the second-seed 2P5J retrain (about 21 min), the tie-break
+floor at 16 draws and on the relaxed basis, the ensembling and provenance replications (each
+the pre-declared replication for a positive that did not occur), the recall gradient's gated
+mechanism check, the triangle bound on the benchmark itself (a coordinator's option, closed for
+this sprint), and the two ideas deferred on memory.
+
 ### VII.5 Operational findings of the sprint (for the record)
 
 The governor v2 band held through the sprint until the host killed it for low memory at 10:10
@@ -2925,7 +2958,7 @@ sprint. This part lists the S26 movements and the items that remain open at the 
 | item | what would close it | where |
 |---|---|---|
 | Whether a better distance predictor is obtainable (the only steep lever, -2.15 A per unit toward truth); every input this machine can compute is measured flat (nine rungs) | a larger language model than this machine can hold, on a bigger machine; Proposal C's kept form (L117, L122) | `s24/LEDGER.md` L13; `s26/PROPOSAL_C.md`; Part VII.3, VII.6 |
-| The 2/60 benchmark self-copy leak, now bounded MINOR (dev proxy 0.008 A with both channels measured on all four dev self-copies; own-native envelope 0.028 A mean CI to 0.151 A worst target on the built chain; 0.194 at the worst target on the selection basis); F3's control clause open (one of six control-out models) | by design only a fresh benchmark, which does not exist; the control-out models and a second seed of the 2P5H retrain if time allows | S26 L44, L49, L50, L55, L58, L108; Part VII.4 |
+| The 2/60 benchmark self-copy leak, now bounded MINOR (dev proxy 0.008 A with both channels measured on all four dev self-copies; own-native envelope 0.028 A mean CI to 0.151 A worst target on the built chain; 0.194 at the worst target on the selection basis); F3's control clause open (one of six control-out models) | by design only a fresh benchmark, which does not exist; the five control-out models and a second seed of the 2P5H retrain, about two hours on this box (L137) | S26 L44, L49, L50, L55, L58, L108, L137; Part VII.4 |
 | Where the target-specific third of the pool's coherent error comes from, and whether any native-free proxy is strong enough to act on it | a native-free proxy reaching the in-band ordering 2 A needs | `s19/LEDGER.md` L11, L14; `s17/LEDGER.md` L23 |
 | Publishing the trainability half | a manuscript from Part V.10 with V.9's scope correction | `s13/`, `s25/QUANTUM.md`; S26 L27 |
 | Not run at the close, recorded as such: the `raw` rung (four of five folds trained), `coherence_penalised_training` and `better_prior_inputs attn` (deferred on memory) | their pre-registrations' falsifiers, on a machine with the headroom | `s26/TOURNAMENT.md`; `s26/PREREG_*.md`; S26 L133; Part VII.3, VII.4 |
@@ -3537,6 +3570,8 @@ those of commit `73d82db5` (the S26 corrections block, L130, moved every body li
 | R7 to R10: 120 of 126, 1e-6, +0.2246, 0.88x, -0.612, -0.638, 1.5921, 2.2812, 2.0900, 2.7313 | VII | `s26/RETRACTIONS.md` R7 to R10; `bench_results/cache/1fc9f2dcf489e2fb/{1D6X,1KWE}.json :: rmsd_avg`; `s26/LEDGER.md` L9, L57, L101, L107 | as cited / as stored |
 | L135: 13 of 14, 29, 18, 137, 11 of 11 | VII | `s26/DELIVERABLES_CHECK.md`; `s26/LEDGER.md` L135 | as cited |
 | verify re-run: 32, 18, 19, 30, 31, 123, 8, 1, 126 of 126, 0 of 8, 22, twelve, 02:59 | VII, IX | `s26/results/verify/REPORT.md`, `s26/results/verify/REPORT.json`; `s26/results/verify/*.rerun.json` | as stored |
+| A2 per step: 7 [7, 82], 48, 11 [7, 139], 15, 58 [7, 530], 18, 37 [7, 513], 10, 16 [7, 289], 1025 [513, 2017], 1025 [258, 2017], 16 [9, 161], 530, 2080, 30, 63, 60, 68, 36, 48 | V, VII | `s26/results/q_dla_a1.json`; `s26/LEDGER.md` L138 | as stored / as cited |
+| lane W close: 12, 32, 31, 1.250, 9,321 s, 2 h, 21 min, 25, 16 | VII, VIII | `s26/agentW_FINDINGS.md`; `s26/LEDGER.md` L137 | as cited |
 <!-- APPENDIX B ROWS -->
 
 ## APPENDIX C. THE S26 LEDGER
