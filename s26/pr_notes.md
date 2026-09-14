@@ -210,10 +210,15 @@ magnitude an upper bound). A validity step on 124 of 126; on 2BP4 and 9KAR the r
 virtual CA-CA bond and 9KAR does not converge. Physics as a steric reject filter at 1e4 kcal/mol
 (L43, L54, point cloud): {REJECT_R_VS_ANCHOR:+.3f} A worse than the shipped top-75 (median
 {REJECT_R_VS_ANCHOR_MEDIAN:+.3f}: near zero on the median target, the harm is tail-carried;
-Type-M) and {REJECT_R_VS_RANDR:+.3f} vs rejecting the same count at random. A free calibration
-flag, not a lever (L53): how far the relaxation moves the chain predicts its error, Spearman
-{STRAIN_RHO_MOVED:+.3f} partial on n and Rg, fold CI {STRAIN_RHO_MOVED_CI}; quartile means
-{STRAIN_QUARTILE_MEANS} A.
+Type-M) and {REJECT_R_VS_RANDR:+.3f} vs rejecting the same count at random. A free calibration flag, not a lever, restated per L121 / L123: the pool's own disagreement (the shipped
+top-75's pairwise CA-RMSD spread, native-free, available before any relaxation runs) predicts the
+emitted chain's error at Spearman {SPREAD_RHO_PARTIAL:+.3f} partial on n and Rg, fold CI
+{SPREAD_RHO_PARTIAL_CI}, {SPREAD_FOLDS}/5 folds; the relaxation's displacement tracks that disagreement at
+rho {RHO_MOVED_SPREAD:.2f} and adds nothing given it ({MOVED_GIVEN_SPREAD:+.3f}, iid CI {MOVED_GIVEN_SPREAD_CI},
+permutation p {MOVED_GIVEN_SPREAD_P:.2f}; `s26/results/a_strain_vs_spread.json`). L53's quartile means by
+the displacement, {STRAIN_QUARTILE_MEANS} A, stand as a presentable form of the phenomenon; L53's
+"first native-free quantity above 0.4" and "how far the relaxation moves the chain predicts its
+error" are retracted (L123).
 
 ## Slide 8 -- Direction A: let the circuit grow (qubit-ADAPT-VQE). Verdict: REPLACE
 
@@ -279,98 +284,162 @@ alpha = 1) stand: there E is exactly affine and every pool gradient is exactly z
 target tie-averaging leaves a residual gradient just above eps. The A4 figure
 (slide 8) is lane Q's; the product-circuit reading rests on the adapt sets of
 `s26/results/q_dla.json` (L47). Slide 9 carries what is published in A's place.
+L119's bootstrap (`s26/results/q_var_boot.json`, every q_var.json row reproduced at relative
+{A4_BOOT_REPRO}): the alpha = 0.25 grown-L2 minus fixed slope difference is {A4_BOOT_L2_A025_DIFF:+.3f},
+95% CI {A4_BOOT_L2_A025_DIFF_CI} (includes zero, so "decays like the fixed ansatz" now carries a stored
+interval); the alpha = 1 grown minus fixed differences are {A4_BOOT_A1_DIFF_LO:+.2f} to {A4_BOOT_A1_DIFF_HI:+.2f}
+with every interval excluding zero ("no decay" is measured, not read); the A4 figure on this slide
+carries those intervals as error bars. A3 (L125, `s26/results/a3_stats.json`, `a3_property.json`): a
+target-dependent Hamiltonian (the raw standardised score at a per-target temperature matched to the
+deployed entropy) makes the trained states target-dependent, {A3_DISTINCT_TMATCH} of {A3_DISTINCT_N}
+distinct against {A3_DISTINCT_ZRANK} under the deployed rank ladder, and the readout does not notice:
+{A3_TMATCH_EFFECT:+.4f} A on the built chain, {A3_TMATCH_X:.2f} x MDE, fold CI {A3_TMATCH_CI}.
 
-## Slide 9 -- Direction B, and what we publish: the trainability paper
-
-### spoken
-Direction B was: use a large pretrained folding model as the distance prior. Step one asked
-whether such a model can run here. The answer is no, on three independent grounds. The
-checkpoints are not on disk and total {B1_DOWNLOAD_GB:.2f} gigabytes. The code needs two packages
-that are absent, and one of them wants Python 3.9 or lower; this box runs 3.13 on a CPU. And
-the model needs at least {B1_RESIDENT_GB:.2f} gigabytes resident against {B1_HEADROOM_GB:.1f} gigabytes
-of headroom; even at half precision everywhere it is {B1_FP16_GB:.1f}. Two feasible-scale checks
-are pending: the contact head alone, and an 8-million-parameter language model against the
-650-million one. A third asks whether the targets where the pipeline beats a sequence-only
-predictor are recognisable without the native. The pipeline wins there
-by {B3_TORS_MINUS_ARM:.2f} angstroms, {B3_TORS_L} targets to {B3_TORS_W}. If those
-checks are null, B is replaced by the same paper that replaces A. The paper says what a force field's Pauli spectrum
-does and does not predict. Chain geometry fixes which residues a distance can depend on; that
-is an exact theorem. That fixes the energy's Pauli spectrum, once the raw force field's clash
-spike is conditioned away. The spectrum times the circuit's own kernel predicts the measured
-gradient variance with no free parameter: the median ratio is {PAULI_RATIO_LEGACY:.3f} over
-{PAULI_N_CELLS} cells. This sprint added the algebra, the product-state target and the ADAPT null. The
-paper will not claim an advantage, and it will not call a small gradient a plateau.
-
-### also
-B1 verdict: "{B1_VERDICT}" (`s26/results/b1_feasibility.json`, L13). The one part of a large
-pretrained model this box already consumes is the ESM-2 650M embedding and its contact head,
-already 13 of the shipped prior's 183 input columns; its S7 selection value (a document-only
--0.288 A whose per-target artefact is lost, L11) is not on this slide and is re-measured by C2's
-noesm and pca32 rungs. B3 arms, built chains, persisted: pipeline {ARM_MEAN:.4f}, sequence-only
-torsion predictor {TORS:.4f}, constant helix {HELIX:.4f}; torsion predictor minus pipeline
-{B3_TORS_MINUS_ARM:+.4f} (median {B3_TORS_MINUS_ARM_MEDIAN:+.4f}, SE {B3_TORS_MINUS_ARM_SE:.4f},
-MDE {B3_TORS_MINUS_ARM_MDE:.4f}, {B3_TORS_W}W/{B3_TORS_L}L); the characterisability test
-(nested ridge against a permutation null) is pending in `s26/results/p_b3.json`. Replacement
-claims and their artefacts: C1 locality theorem (`s13/results/qarch_locality_geom.json`); C2 raw
-AMBER's delta-spike spectrum (`s13/results/walsh_xval.json`); C4 spectrum x kernel predicts the
-gradient variance, median measured/predicted {PAULI_RATIO_LEGACY:.4f} over {PAULI_N_CELLS} cells
-(`s13/results/geo_pauli.json`); C5 the kernel is flat in Pauli weight at depth >= 3
-(`s13/results/geo_kernel.json`); C7 the width sweep, slopes {SLOPE_LIN:.3f} / {SLOPE_A025_T0:.3f} /
-{SLOPE_A01_T0:.3f} / {SLOPE_A1_T03:.3f} / {SLOPE_A025_T03:.3f} (`s25/results/q_plateau.json`);
-C8 the DLA is the full so(2^n) from depth 2 at n = 7, dim {DLA_SO128} (`s26/results/q_dla.json`,
-slide 6); C9 ADAPT-grown circuits at alpha = 1 are product circuits (`s26/results/q_dla.json`
-adapt sets, `s26/results/q_var.json` slopes; slide 8); C10 the optimiser trains and the readout
-cannot tell, {Q_KL_NATS:.3f} nats, {Q_CIRC_VS_GIBBS_X:.2f} x MDE (`s25/results/q_gibbs.json`,
-`q_alpha.json`); C11 the set-equality theorem, {Q_CELLS:,} cells, {Q_VIOLATIONS} violations
-(`s25/results/q_verify.json`); C12 the deployed Gibbs target is a product state, KL
-{PROD_KL_IDEAL:.1e} ideal, {PROD_KL_1A13:.1e} on 1A13 (`s26/results/probe/1A13.json`). Venue
-statement: every number is noiseless exact simulation; a submission would add a noise model,
-width beyond n = 13, a 2-design control, seeds and error bars on every variance.
-
-## Slide 10 -- Direction C: learn a better distance prior; physics for validity only
+## Slide 9 -- Direction B (REPLACE), and what we publish: the trainability paper
 
 ### spoken
-Direction C says: learn a better distance prior, and keep physics honest. The prior bounds the
-accuracy, so the plan has five parts. C1 reproduced the closures this rests on, to the third
-decimal. A learned ranker on real features moves from {C1_S12_REAL_N8:.3f} to
-{C1_S12_REAL_FULL:.3f} angstroms as its training set grows; the same model with a leaked label
-reaches {C1_S12_LEAK_FULL:.3f}. A perfect ranker inside the shipped top-25 returns
-{C1_S17_BAND_BEST:.3f} against {C1_S17_RAND:.3f} for a random member. So learning a ranker is
-closed, and the proposal is not that. C2 is a ladder of {C2_N_RUNGS} prior inputs, from no
-language model to the full 650-million-parameter embedding. Its falsifier was fixed before the
-first run: a rung must beat the shipped posterior on the built chain by more than its own MDE,
-with a fold-clustered interval excluding zero on five of five folds. Seven rungs are trained;
-the evaluations are running. C3 asked whether AMBER relaxation is an accuracy step. It is not.
-The relaxation moves the chain {C3_MAG:.3f} angstroms and costs {C3_AMBER_VS_NONE:+.4f}; a
-random move of exactly the same size costs {C3_RANDOM_VS_NONE:+.4f}. Physics is worse than
-noise, and its displacement points slightly away from the native. So refine-with-physics is
-kept as a validity step only: it brings {C3_N_CONVERGED} of 126 chains below a thousand
-kilocalories per mole, though on two targets it breaks a virtual bond. C4, routers, and C5, a
-learned common-mode correction, are pre-registered and pending. The verdict on C is pending the
-ladder.
+Proposal B wanted to swap our distance prior for a large pretrained folding model. We measured
+whether that can even run here: it cannot. ESMFold needs about {B1_RESIDENT_GB:.1f} gigabytes
+resident and a GPU-era dependency chain, and this machine had {B1_HEADROOM_GB:.1f} gigabytes of
+headroom and no CUDA. So we measured the part of that idea that does fit. Our prior already
+reads a 650-million-parameter protein language model; removing it costs {C2_NOESM_ARM:.2f}
+angstroms on the built chain and {C2_NOESM_SEL:.2f} on selection, five folds out of five.
+An 8-million-parameter model loses all of that, and two thirds of the selection value sits in
+the model's contact head. We also asked whether we could tell, without the answer, which
+targets the pipeline beats a sequence-only predictor on, to route between them. We cannot: a
+classifier is at chance, and the only predictable thing is how much a constant helix loses,
+set by how strand-like the retrieved pool is. Our verdict is replace. The replacement is the
+trainability paper, and it is what we publish: chain geometry
+fixes which residues a distance can depend on, an exact theorem; that fixes the energy's Pauli
+spectrum once the raw force field's clash spike is conditioned away; and the spectrum times
+the circuit's own kernel predicts the measured gradient variance with no free parameter, a
+median ratio of {PAULI_RATIO_LEGACY:.3f} over {PAULI_N_CELLS} cells. This sprint added the
+algebra, the product-state target and the ADAPT null. The one untested input, a larger
+language model, needs a larger machine.
 
 ### also
-Verdict form (campaign prompt): KEEP AS STATED / KEEP WITH EDITS / REPLACE; lane P's
-`s26/PROPOSAL_C.md` is DRAFT and its verdict is pending C2 to C5. The C1 learning curve spans
-{C1_S12_REAL_N8:.4f} (n = 8) to {C1_S12_REAL_FULL:.4f} (full) on the weighted-average basis;
-the leaked label reaches {C1_S12_LEAK_N8:.4f} at n = 8. Perfect ranker in the top-25
-{C1_S17_BAND_BEST:.4f}, random member {C1_S17_RAND:.4f}, distogram argmin {C1_S17_DIST_PICK:.4f}
-(single window). C2 anchor (L56, L57): selection max abs {C2_ANCHOR_SEL_MAXABS:.1e} and point
-cloud {C2_ANCHOR_CLOUD_MAXABS:.1e} against the production cache; the built chain through the
-ladder's own path is {C2_ANCHOR_ARM:.4f} A, the leaderboard-rebuild basis, so every C2 contrast
-is paired on that basis and the 0.002 A offset to {ARM_MEAN:.4f} is a basis difference, not an
-effect. Rungs with all five fold checkpoints on disk at build time: {C2_RUNGS_TRAINED}. C3 (L39,
-L46): AMBER vs built chain {C3_AMBER_VS_NONE:+.4f} [fold CI {C3_AMBER_VS_NONE_CI}], vs random
-{C3_AMBER_VS_RANDOM:+.4f} [{C3_AMBER_VS_RANDOM_CI}] at {C3_AMBER_VS_RANDOM_X:.2f} x MDE (Type-M:
-sign measured, magnitude an upper bound), vs toward-member {C3_AMBER_VS_MEMBER:+.4f}
-[{C3_AMBER_VS_MEMBER_CI}]; ORACLE cosine of the displacement with the true residual
-{C3_COS:+.3f}, positive on {C3_COS_FRAC_POS:.1%} of targets; before relaxation
-{C3_FRAC_E0_OVER_1E4:.1%} of built chains sit above 1e4 kcal/mol; after it {C3_N_CONVERGED} of
-126 converge (9KAR ends at {C3_E1_MAX:.0f} kcal/mol) and the virtual CA-CA bond stretches from
-{C3_BOND_BEFORE:.3f} to {C3_BOND_AFTER:.3f} A. The free calibration flag (L53): the distance the
-relaxation moves a chain predicts its error, Spearman {STRAIN_RHO_MOVED:+.3f} partial on n and Rg;
-never a selector. Stage 2 of C3 repeats the seven contrasts on the best C2 rung when lane P
-delivers it.
+Verdict REPLACE, final (`s26/PROPOSAL_B.md`, commit a88ea259; coordinator L117; Adversary L120 STANDS). B1 (L13):
+"{B1_VERDICT}"; {B1_DOWNLOAD_GB:.2f} GB of checkpoints not on disk; openfold and omegaconf
+absent, Python 3.13 vs <= 3.9; {B1_RESIDENT_GB:.2f} GB resident against {B1_HEADROOM_GB:.1f}
+GB, fp16 everywhere {B1_FP16_GB:.1f}. B2, the feasible-scale ladder (L62, L63, L99/L101; every
+rung through one path, built chain on the rebuild basis {C2_ANCHOR_ARM:.4f}, L57): noesm
+{C2_NOESM_ARM:+.3f} A (SE {C2_NOESM_ARM_SE:.3f}, MDE {C2_NOESM_ARM_MDE:.3f}, {C2_NOESM_ARM_X:.2f} x,
+fold CI {C2_NOESM_ARM_CI}, {C2_NOESM_ARM_FOLDS}/5, {C2_NOESM_ARM_W}W/{C2_NOESM_ARM_L}L; selection
+{C2_NOESM_SEL:+.3f} at {C2_NOESM_SEL_X:.2f} x, fold CI {C2_NOESM_SEL_CI}); conly
+{C2_CONLY_ARM:+.3f} ({C2_CONLY_ARM_X:.2f} x, fold CI {C2_CONLY_ARM_CI}, {C2_CONLY_ARM_FOLDS}/5;
+selection {C2_CONLY_SEL:+.3f} at {C2_CONLY_SEL_X:.2f} x); esm8m {C2_ESM8M_ARM:+.3f}
+({C2_ESM8M_ARM_X:.2f} x, fold CI {C2_ESM8M_ARM_CI}, {C2_ESM8M_ARM_FOLDS}/5; selection
+{C2_ESM8M_SEL:+.3f} at {C2_ESM8M_SEL_X:.2f} x); the retrained shipped recipe (pca32) is the
+identity on {C2_PCA32_ARM_T} of 126. Isolations: the contact head alone (conly minus noesm)
+{B2_CONLY_MINUS_NOESM_SEL:+.3f} on selection (L63: 1.00x MDE, fold CI [-0.374, -0.037], 4/5) and
+{B2_CONLY_MINUS_NOESM_ARM:+.3f} on the built chain; the 8M model minus no ESM
+{B2_ESM8M_MINUS_NOESM_ARM:+.3f} on the built chain (L99: 0.15x MDE). B3 (L106, L107,
+`s26/results/p_b3.json`): sign classifier balanced accuracy {B3_BACC_TORS:.3f} against the
+sequence-only predictor (permutation null 95th percentile {B3_NULL95_TORS:.3f}) and
+{B3_BACC_HELIX:.3f} against the constant helix (null {B3_NULL95_HELIX:.3f}); the SIZE of the gain
+over the helix is partly predictable, held-out R2 {B3_R2_HELIX:.2f}, squared-error reduction
+{B3_MSE_X_HELIX:.2f} x MDE, fold CI {B3_MSE_CI_HELIX}, carried by the pool's strand content
+(Pearson {B3_RHO_SSE_HELIX:+.3f} between the top-75 strand fraction and arm minus helix); on the
+ORACLE stratum FAIL18 the sequence-only predictor wins by {B3_FAIL18_TORS:+.3f} A and nothing
+native-free locates it. The two-minute script above is lane P's, with the numbers read from
+the artefacts. The trainability paper (`s26/PROPOSAL_B_REPLACEMENT.md`, lane Q): C1 locality
+theorem (`s13/results/qarch_locality_geom.json`); C2 raw AMBER's delta-spike spectrum
+(`s13/results/walsh_xval.json`); C4 spectrum x kernel, median measured/predicted
+{PAULI_RATIO_LEGACY:.4f} over {PAULI_N_CELLS} cells (`s13/results/geo_pauli.json`); C5 the kernel
+flat in Pauli weight at depth >= 3 (`s13/results/geo_kernel.json`); C7 the width sweep, slopes
+{SLOPE_LIN:.3f} / {SLOPE_A025_T0:.3f} / {SLOPE_A01_T0:.3f} / {SLOPE_A1_T03:.3f} / {SLOPE_A025_T03:.3f}
+(`s25/results/q_plateau.json`); C8 the DLA, dim {DLA_SO128} = so(128) from depth 2 at n = 7
+(`s26/results/q_dla.json`, slide 6); C9 the grown circuits (`s26/results/q_var.json`, slide 8);
+C10 the optimiser trains and the readout cannot tell, {Q_KL_NATS:.3f} nats, {Q_CIRC_VS_GIBBS_X:.2f} x
+MDE (`s25/results/q_gibbs.json`, `q_alpha.json`); C11 the set-equality theorem, {Q_CELLS:,} cells,
+{Q_VIOLATIONS} violations (`s25/results/q_verify.json`); C12 the product-state target, KL to the
+product of marginals at most {A1_KL_PRODUCT_MAX:.1e} on {A1_N_RECORDS} targets and the A1 null
+{A1_V_EFFECT:+.4f} A at {A1_V_X:.2f} x MDE (`s26/results/a1/*.json`, `a1_stats.json`, slide 8).
+Venue statement: every number is noiseless exact simulation; a submission would add a noise
+model, width beyond n = 13, a 2-design control, seeds and error bars on every variance. Scope of
+the checking (L120, L122): the S26 additions are Adversary-checked (A2 L45; A4 L47 with the L119
+intervals, the alpha = 0.25 grown minus fixed slope difference {A4_BOOT_L2_A025_DIFF:+.3f}, 95% CI
+{A4_BOOT_L2_A025_DIFF_CI}, and the alpha = 1 grown minus fixed differences {A4_BOOT_A1_DIFF_LO:+.2f} to
+{A4_BOOT_A1_DIFF_HI:+.2f} with every interval excluding zero; the product-state fact L70); the S13
+inputs (C1, C2, C4, C5 above) are cited from their artefacts without an S26 re-check, and the S13
+Pauli mean weights 2.236 / 3.015 are not on any slide. The lost S7 ESM number (-0.288 A, L11) is
+not on the slide; its re-measurement is C2_NOESM_SEL.
+
+## Slide 10 -- Direction C: learn a better distance prior (KEEP WITH EDITS); physics for validity only
+
+### spoken
+Our predictor's accuracy is set by its distance prior, and last sprint we measured that moving
+that prior {PRIOR_GAMMA_FOR_3A:.1%} of the way toward the truth would take us under three
+angstroms. So this sprint we asked whether any input our machine can compute makes the prior
+better. We retrained it nine ways: without the language model, with only its contact head,
+with a smaller language model, with more of its embedding, a bigger network, a triangle-update
+architecture, and a mix with the retrieval pool's own statistics. First, the
+retrained recipe reproduces the pipeline exactly on all {C2_PCA32_ARM_T} targets, so every
+difference is real. Second, the language model is worth {C2_NOESM_ARM:.2f} angstroms on the
+built chain and {C2_NOESM_SEL:.2f} on selection, five folds out of five, and an
+8-million-parameter model carries none of that. Third, nothing beats the shipped prior: every
+other variant lands within {C2_NULL_EFF_MAX:.2f} angstroms of it, below what 126 targets can
+resolve. Routing the set size on new features failed again. The physics step is worse than a
+random move of its own size, so it stays as a validity check only: it
+turns {VAL_CLASH_TARGETS_BEFORE} emissions with a sub-2-angstrom heavy-atom overlap into
+{VAL_CLASH_TARGETS_AFTER}, at a price of {C3_AMBER_VS_NONE:.3f} angstroms of accuracy,
+{VAL_BOND_STRAIN_AFTER:.1%} bond strain, and a broken virtual bond on two targets. Our verdict
+is keep with edits: the prior is the lever, its derivative is steep, its inputs on this
+machine are flat, and the honest next step is a language model too large for this box.
+
+### also
+Verdict KEEP WITH EDITS, final (`s26/PROPOSAL_C.md`, commit 0a85323f with addendum 1; coordinator L117; Adversary L120 STANDS). The
+four edits: (1) C2 "learn a better prior from better inputs" becomes "the prior's inputs are
+measured out at n = 126": the ESM-2 650M channel is the whole of the channel this instrument
+can see ({C2_NOESM_ARM:+.3f} A built chain, {C2_NOESM_SEL:+.3f} A selection, {C2_NOESM_ARM_FOLDS}/5
+folds), and no reduction, expansion, capacity, joint-consistency or pool-histogram variant of it
+moves the endpoint beyond {C2_NULL_EFF_MAX:.2f} A against MDEs of {C2_NULL_MDE_MIN:.2f} to
+{C2_NULL_MDE_MAX:.2f} A; the lever that stays open is a larger language model, which does not
+fit this box (B1). (2) C3 "refine with physics" becomes "keep AMBER as a validity step only".
+(3) C4 "route the set size and scale" becomes "closed": {C4_N_M_ROUTERS} m* routers on four
+feature blocks no previous router used, {C4_M_HARMFUL} pointing the harmful way, the largest
+{C4_M_MAX_EFF:+.3f} A at {C4_M_MAX_X:.2f} x MDE, none clearing its MDE; {C4_N_S_ROUTERS} s*
+routers, all with the wrong sign (rho {C4_S_RHO_MIN:+.2f} to {C4_S_RHO_MAX:+.2f}), costing
+{C4_S_EFF_MIN:+.3f} to {C4_S_EFF_MAX:+.3f} A against s = 1 (`s26/results/p_c4.json`, L110, L115);
+C5 (predict and subtract the common mode) was RUNNING at the proposal's 02:12 stamp
+(`s26/PROPOSAL_C.md` addendum 1, correcting a pre-written outcome per L120); at this build
+`s26/results/p_c5.json` holds {C5_N_ROWS} checkpointed rows with complete = {C5_COMPLETE}, so it is
+NOT A RESULT; lane P appends a final addendum when the run finishes or at 04:15, and the record's
+prior for it is a null (S16, S19 L14, S24 L7). The raw rung has {RAW_FOLDS_TRAINED} of 5 fold models
+trained and was not evaluated. (4) "The prior's derivative is steep
+and the prior's inputs are flat": every achievable rung moves at cosine 0.2 to 0.5 to the
+native's direction (S25 L12). C1 (L26): closures reproduced, {C1_S12_REAL_N8:.4f} to
+{C1_S12_REAL_FULL:.4f} real vs {C1_S12_LEAK_N8:.4f} to {C1_S12_LEAK_FULL:.4f} leaked;
+{C1_S17_BAND_BEST:.4f} vs {C1_S17_RAND:.4f}. C2, all nine evaluated rungs, built chain (rebuild
+basis {C2_ANCHOR_ARM:.4f}), effect (x MDE, fold CI, folds): noesm {C2_NOESM_ARM:+.3f}
+({C2_NOESM_ARM_X:.2f} x, {C2_NOESM_ARM_CI}, {C2_NOESM_ARM_FOLDS}/5, WORSE, Type-M); conly
+{C2_CONLY_ARM:+.3f} ({C2_CONLY_ARM_X:.2f} x, {C2_CONLY_ARM_CI}); esm8m {C2_ESM8M_ARM:+.3f}
+({C2_ESM8M_ARM_X:.2f} x, {C2_ESM8M_ARM_CI}, {C2_ESM8M_ARM_FOLDS}/5, WORSE, Type-M); pca32 identity
+({C2_PCA32_ARM_T} ties); pca32f {C2_PCA32F_ARM:+.3f} ({C2_PCA32F_ARM_X:.2f} x, {C2_PCA32F_ARM_CI});
+pca128 {C2_PCA128_ARM:+.3f} ({C2_PCA128_ARM_X:.2f} x, {C2_PCA128_ARM_CI}); wide {C2_WIDE_ARM:+.3f}
+({C2_WIDE_ARM_X:.2f} x, {C2_WIDE_ARM_CI}); pairnet {C2_PAIRNET_ARM:+.3f} ({C2_PAIRNET_ARM_X:.2f} x,
+{C2_PAIRNET_ARM_CI}); mix identity ({C2_MIX_ARM_T} ties, lam* = 0 on 5/5 folds); raw: {RAW_FOLDS_TRAINED} of 5
+folds trained, not evaluated. No rung is better than the shipped prior on the built chain ({C2_ANY_BETTER}).
+C3 (L39, L46, L87, L100; `s26/C3_RESULT.md` addenda 1 to 4): AMBER vs the built chain
+{C3_AMBER_VS_NONE:+.4f} (fold CI {C3_AMBER_VS_NONE_CI}, {C3_AMBER_VS_NONE_X:.2f} x); vs a random
+move of its own size {C3_AMBER_VS_RANDOM:+.4f} ({C3_AMBER_VS_RANDOM_CI}, {C3_AMBER_VS_RANDOM_X:.2f} x,
+Type-M: sign measured, size an upper bound; replication {C3_REP_AMBER_VS_RANDOM:+.4f}); vs a
+same-size move toward a random pool member {C3_AMBER_VS_MEMBER:+.4f} ({C3_AMBER_VS_MEMBER_CI};
+replication {C3_REP_AMBER_VS_MEMBER:+.4f}); the toward-member control itself improves the
+chain, {C3_MEMBER_VS_NONE:+.4f}, replicated at {C3_REP_MEMBER_VS_NONE:+.4f}
+{C3_REP_MEMBER_VS_NONE_CI}, a statement about the projection's cost (S16 L27), not about
+physics; ORACLE cosine {C3_COS:+.3f}. The validity axis (`s26/results/ph_validity.json`, L100):
+heavy-atom pairs below 2.0 A {VAL_CLASH_BEFORE:.3f} to {VAL_CLASH_AFTER:.3f} per target
+({VAL_CLASH_TARGETS_BEFORE} targets to {VAL_CLASH_TARGETS_AFTER}); closest pair
+{VAL_MINHEAVY_BEFORE:.2f} to {VAL_MINHEAVY_AFTER:.2f} A; bond strain {VAL_BOND_STRAIN_AFTER:.1%},
+angle strain {VAL_ANGLE_STRAIN_AFTER:.1%}, omega non-planarity {VAL_OMEGA_DEV_AFTER:.1f} deg;
+Ramachandran favoured {VAL_RAMA_BEFORE:.3f} to {VAL_RAMA_AFTER:.3f}; {C3_N_CONVERGED} of 126
+converge below 1000 kcal/mol (9KAR ends at {C3_E1_MAX:.0f}); a validity step on 124 of 126, on
+2BP4 and 9KAR it breaks a virtual bond. Stage 2 reduces to stage 1 because the best C2 rung is
+the shipped prior (L112, addendum 4). The calibration flag, restated per L123: the pool's own disagreement predicts the emitted chain's
+error (Spearman {SPREAD_RHO_PARTIAL:+.3f} partial on n and Rg, fold CI {SPREAD_RHO_PARTIAL_CI}); the
+relaxation's displacement tracks that disagreement at rho {RHO_MOVED_SPREAD:.2f} and adds nothing
+given it (`s26/results/a_strain_vs_spread.json`); never a selector.
 
 ## Slide 11 -- Goal and ask
 
@@ -386,13 +455,23 @@ I will not claim a quantum advantage. I will not call a small gradient a barren 
 will not report an effect below its own minimum detectable size.
 
 ### also
-DRAFT (until the coordinator's entry on all three verdicts; A is REPLACE by L68 / L69, B and C
-are pending lane P): if asked "which would you do first?", the evidence favours direction C in
-its learn-the-prior form as the accuracy study, because the prior is the only lever the record
-measured as steep ({PRIOR_SLOPE:.2f} A per unit, `s24/results/priorladder.json`) and every
-selection, ranking, physics and search lever is closed by measurement; paired with the
-trainability paper as the publication, because on this diagonal Hamiltonian the optimum is a
-product state and an adaptive ansatz confirms it (A1 null at {A1_V_X:.2f} x MDE,
-`s26/results/a1_stats.json`; product circuits, `s26/results/q_dla.json`). Direction A as an
-accuracy proposal is replaced (L68, L69); direction B as stated cannot be measured on this
-machine (`s26/results/b1_feasibility.json`).
+The line for "which would you do first?", verbatim from the coordinator's ruling (ledger L117,
+2026-09-14 02:02; verdicts A REPLACE, B REPLACE, C KEEP WITH EDITS):
+"If I could do one thing next, I would publish the trainability work first. Every figure in it
+already exists as a measured artefact, it needs no new machine, and it is the one part of this
+project whose result is exact and complete. The only open accuracy lever is the distance
+prior, and the honest next step there is a larger language model than this laptop can hold, so
+that comes second and needs a bigger machine. I would not spend more time on the circuit for
+accuracy: we now know why it cannot matter here."
+("positive" reads "exact" per the coordinator's L122, accepting the Adversary's L120 caveats.) Why this
+order (L117, as amended by L122): the paper's inputs are all in hand; its S26 additions are
+Adversary-checked (A2, L45; A4 with L119's bootstrap intervals, L47; the product-state fact, L70),
+while its S13 inputs (the locality theorem, `s13/results/qarch_locality_geom.json`; the
+Pauli-spectrum prediction, `s13/results/walsh_predict.json`, `geo_pauli.json`) are cited from their
+artefacts without an S26 re-check, and the S13 Pauli mean weights 2.236 / 3.015 stay off every slide; the prior lever is real ({PRIOR_SLOPE:.2f} A per unit gamma,
+`s24/results/priorladder.json`) but every input this machine can compute is measured flat
+(nine rungs, none beats the shipped prior, `s26/results/p_ladder_report_*_s0.json`), so it is a
+resourcing decision; the circuit is closed as an accuracy lever by three independent facts (the
+product-state optimum, the inert ADAPT growth and the A1 null at {A1_V_X:.2f} x MDE,
+`s26/results/a1_stats.json`; the full DLA, `s26/results/q_dla.json`; the set-equality theorem,
+`s25/results/q_verify.json`).

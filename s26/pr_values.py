@@ -329,6 +329,7 @@ def load_values():
     c3put("C3_AMBER_VS_RANDOM_FOLDS", "stage1 AMBER minus matched-magnitude RANDOM (16 draws)", "folds_same_sign")
     c3put("C3_AMBER_VS_MEMBER", "stage1 AMBER minus matched-magnitude TOWARD-MEMBER (16 draws)", "effect", basis="relaxed minus displaced built_chain")
     c3put("C3_AMBER_VS_MEMBER_CI", "stage1 AMBER minus matched-magnitude TOWARD-MEMBER (16 draws)", "ci95_fold")
+    c3put("C3_AMBER_VS_MEMBER_X", "stage1 AMBER minus matched-magnitude TOWARD-MEMBER (16 draws)", "effect_over_mde")
     c3put("C3_RANDOM_VS_NONE", "stage1 RANDOM minus do-nothing", "effect", basis="displaced built_chain minus built_chain")
     c3put("C3_RANDOM_VS_NONE_CI", "stage1 RANDOM minus do-nothing", "ci95_fold")
     c3put("C3_MEMBER_VS_NONE", "stage1 TOWARD-MEMBER minus do-nothing", "effect", basis="displaced built_chain minus built_chain", note="provisional until the registered replication lands (L39)")
@@ -503,6 +504,121 @@ def load_values():
     put("A1_DF_ABSMAX_ALL", float(max(dFV, dFL, dFVa, dFLa)), "s26/results/a1/*.json :: adapt/*_zrank/trace: F(P = 7) - F(final), max over the 78 and the four arms", status="DERIVED", note="L75: 8.6e-4 (Adam); 1.2e-4 (L-BFGS)")
     put("A1_LBFGS_DF_ABSMAX", float(max(abs(x) for x in dV + dL)), "s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank/trace: |F(final) - F(P = 7)|, max over 2 x 78", status="DERIVED",
         note="the largest free-energy change any grown operator produced under L-BFGS at alpha = 1 (all changes are decreases)")
+
+    # ------------------------------------------------------------------ Proposal C final: the C2 ladder (L62..L103), C4 (L110/L115), C5, the validity axis (L100), the C3 replication (L87)
+    RUNGS = ["noesm", "conly", "esm8m", "pca32", "pca32f", "pca128", "wide", "pairnet", "mix"]
+    for rung in RUNGS:
+        rp = _j(f"s26/results/p_ladder_report_{rung}_s0.json")["stats"]
+        a, se_, cl = rp["arm"], rp["sel"], rp["cloud"]
+        T = "C2_" + rung.upper()
+        put(f"{T}_ARM", a["effect"], f"s26/results/p_ladder_report_{rung}_s0.json :: stats/arm/effect", basis="built_chain (rebuild basis 3.2126, L57)", note=f"rung {rung} minus the shipped posterior")
+        put(f"{T}_ARM_SE", a["se"], f"s26/results/p_ladder_report_{rung}_s0.json :: stats/arm/se")
+        put(f"{T}_ARM_MDE", a["mde"], f"s26/results/p_ladder_report_{rung}_s0.json :: stats/arm/mde")
+        put(f"{T}_ARM_X", a["effect_over_mde"] if a["mde"] > 0 else 0.0, f"s26/results/p_ladder_report_{rung}_s0.json :: stats/arm/effect_over_mde", note="0 written for the identity rungs (MDE 0)")
+        put(f"{T}_ARM_CI", a["ci95_fold"], f"s26/results/p_ladder_report_{rung}_s0.json :: stats/arm/ci95_fold")
+        put(f"{T}_ARM_FOLDS", int(a["folds_same_sign"]), f"s26/results/p_ladder_report_{rung}_s0.json :: stats/arm/folds_same_sign")
+        put(f"{T}_ARM_W", int(a["n_better"]), f"s26/results/p_ladder_report_{rung}_s0.json :: stats/arm/n_better")
+        put(f"{T}_ARM_L", int(a["n_worse"]), f"s26/results/p_ladder_report_{rung}_s0.json :: stats/arm/n_worse")
+        put(f"{T}_ARM_T", int(a["n_tied"]), f"s26/results/p_ladder_report_{rung}_s0.json :: stats/arm/n_tied")
+        put(f"{T}_SEL", se_["effect"], f"s26/results/p_ladder_report_{rung}_s0.json :: stats/sel/effect", basis="s8_selection")
+        put(f"{T}_SEL_X", se_["effect_over_mde"] if se_["mde"] > 0 else 0.0, f"s26/results/p_ladder_report_{rung}_s0.json :: stats/sel/effect_over_mde")
+        put(f"{T}_SEL_CI", se_["ci95_fold"], f"s26/results/p_ladder_report_{rung}_s0.json :: stats/sel/ci95_fold")
+        put(f"{T}_CLOUD", cl["effect"], f"s26/results/p_ladder_report_{rung}_s0.json :: stats/cloud/effect", basis="point_cloud")
+    nonid = [r for r in RUNGS if r not in ("pca32", "mix")]
+    effs = {r: _j(f"s26/results/p_ladder_report_{r}_s0.json")["stats"]["arm"] for r in nonid}
+    put("C2_N_RUNGS_EVAL", len(RUNGS), "s26/results/p_ladder_report_<rung>_s0.json (count of evaluated rungs; raw not evaluated)", status="DERIVED")
+    put("C2_ANY_BETTER", any(effs[r]["effect"] < 0 for r in nonid), "s26/results/p_ladder_report_*_s0.json :: stats/arm/effect < 0 for any non-identity rung", status="DERIVED", note="no rung beats the shipped prior on the built chain")
+    NULLR = ("conly", "pca32f", "pca128", "wide", "pairnet")
+    put("C2_NULL_EFF_MIN", min(effs[r]["effect"] for r in NULLR), "s26/results/p_ladder_report_*_s0.json :: min stats/arm/effect over the five NOT MEASURED rungs", status="DERIVED")
+    put("C2_NULL_EFF_MAX", max(effs[r]["effect"] for r in NULLR), "s26/results/p_ladder_report_*_s0.json :: max stats/arm/effect over the five NOT MEASURED rungs", status="DERIVED")
+    put("C2_NULL_MDE_MIN", min(effs[r]["mde"] for r in NULLR), "s26/results/p_ladder_report_*_s0.json :: min stats/arm/mde over the five NOT MEASURED rungs", status="DERIVED")
+    put("C2_NULL_MDE_MAX", max(effs[r]["mde"] for r in NULLR), "s26/results/p_ladder_report_*_s0.json :: max stats/arm/mde over the five NOT MEASURED rungs", status="DERIVED")
+    nrows = _j("s26/results/p_ladder_noesm_s0.json")["rows"]; crows = _j("s26/results/p_ladder_conly_s0.json")["rows"]; erows = _j("s26/results/p_ladder_esm8m_s0.json")["rows"]
+    def mdiff(a, b, k):
+        return float(np.mean([r[k] for r in a]) - np.mean([r[k] for r in b]))
+    put("B2_CONLY_MINUS_NOESM_SEL", mdiff(crows, nrows, "sel"), "s26/results/p_ladder_conly_s0.json and p_ladder_noesm_s0.json :: rows[*]/sel (paired mean difference)", status="DERIVED", basis="s8_selection", note="L63: -0.218, 1.00x MDE, fold CI [-0.374, -0.037], 4/5")
+    put("B2_CONLY_MINUS_NOESM_ARM", mdiff(crows, nrows, "arm"), "the same on rows[*]/arm", status="DERIVED", basis="built_chain (rebuild basis)", note="L63: -0.086, 0.51x")
+    put("B2_ESM8M_MINUS_NOESM_ARM", mdiff(erows, nrows, "arm"), "s26/results/p_ladder_esm8m_s0.json and p_ladder_noesm_s0.json :: rows[*]/arm (paired mean difference)", status="DERIVED", basis="built_chain (rebuild basis)", note="L99: +0.034, 0.15x MDE")
+    b3 = _j("s26/results/p_b3.json")
+    put("B3_BACC_TORS", b3["vs_tors"]["balanced_acc"], "s26/results/p_b3.json :: vs_tors/balanced_acc", note="nested leave-fold-out ridge classifier of the sign of arm - tors on 45 native-free features")
+    put("B3_NULL95_TORS", b3["vs_tors"]["null_p95"], "s26/results/p_b3.json :: vs_tors/null_p95")
+    put("B3_BACC_HELIX", b3["vs_helix"]["balanced_acc"], "s26/results/p_b3.json :: vs_helix/balanced_acc")
+    put("B3_NULL95_HELIX", b3["vs_helix"]["null_p95"], "s26/results/p_b3.json :: vs_helix/null_p95")
+    put("B3_R2_HELIX", b3["vs_helix"]["heldout_r2"], "s26/results/p_b3.json :: vs_helix/heldout_r2", note="held-out R2 of the SIZE of the gain over the constant helix")
+    put("B3_MSE_X_HELIX", b3["vs_helix"]["mse_reduction"]["effect_over_mde"], "s26/results/p_b3.json :: vs_helix/mse_reduction/effect_over_mde")
+    put("B3_MSE_CI_HELIX", b3["vs_helix"]["mse_reduction"]["ci95_fold"], "s26/results/p_b3.json :: vs_helix/mse_reduction/ci95_fold")
+    put("B3_FAIL18_TORS", b3["oracle_stratum_FAIL18"]["d_tors_FAIL18"], "s26/results/p_b3.json :: oracle_stratum_FAIL18/d_tors_FAIL18", basis="built_chain", note="ORACLE stratum: arm - tors on FAIL18 (the sequence-only predictor wins there)")
+    frows = _j("s26/results/p_b3_features.json")["rows"]
+    hel = _j("s14/results/ladder.json")["per_target"]["L0_constant_helix"]
+    dd = np.array([_j(f"bench_results/cache/1fc9f2dcf489e2fb/{r['pdb']}.json")["rmsd_arm"] - hel[r["pdb"]] for r in frows]); sse = np.array([r["ss_E"] for r in frows])
+    put("B3_RHO_SSE_HELIX", float(np.corrcoef(sse, dd)[0, 1]), "s26/results/p_b3_features.json :: rows[*]/ss_E against (production rmsd_arm minus s14/results/ladder.json :: per_target/L0_constant_helix), Pearson", status="DERIVED", note="L107 quotes -0.638 as rho; it is the Pearson coefficient (Spearman is -0.557)")
+    c4 = _j("s26/results/p_c4.json")
+    meff = [(blk, nm, v["stats"]["effect"], v["stats"]["effect_over_mde"]) for blk, d in c4["m_router"].items() for nm, v in d.items()]
+    put("C4_N_M_ROUTERS", len(meff), "s26/results/p_c4.json :: m_router/*/* (count)", status="DERIVED")
+    put("C4_M_HARMFUL", sum(1 for x in meff if x[2] > 0), "s26/results/p_c4.json :: m_router/*/*/stats/effect > 0 (count)", status="DERIVED", note="L115: eleven point the harmful way")
+    put("C4_M_MAX_EFF", max(x[2] for x in meff), "s26/results/p_c4.json :: max m_router/*/*/stats/effect", status="DERIVED", basis="point_cloud", note="L115: +0.068, 0.91x")
+    put("C4_M_MAX_X", max(x[3] for x in meff), "s26/results/p_c4.json :: max m_router/*/*/stats/effect_over_mde", status="DERIVED")
+    put("C4_M_ANY_CLEARS", any(abs(x[3]) >= 1.0 for x in meff), "s26/results/p_c4.json :: any |effect_over_mde| >= 1 among the m routers", status="DERIVED")
+    seff = [(blk, v["stats"]["effect"], v["stats"]["effect_over_mde"], v["rho_pred_vs_sstar"]) for blk, v in c4["s_router"].items()]
+    put("C4_N_S_ROUTERS", len(seff), "s26/results/p_c4.json :: s_router/* (count)", status="DERIVED")
+    put("C4_S_EFF_MIN", min(x[1] for x in seff), "s26/results/p_c4.json :: min s_router/*/stats/effect", status="DERIVED", basis="point_cloud", note="L115: +0.007 to +0.027 against s = 1")
+    put("C4_S_EFF_MAX", max(x[1] for x in seff), "s26/results/p_c4.json :: max s_router/*/stats/effect", status="DERIVED", basis="point_cloud")
+    put("C4_S_RHO_MIN", min(x[3] for x in seff), "s26/results/p_c4.json :: min s_router/*/rho_pred_vs_sstar", status="DERIVED", note="every s* router predicts s* with the wrong sign")
+    put("C4_S_RHO_MAX", max(x[3] for x in seff), "s26/results/p_c4.json :: max s_router/*/rho_pred_vs_sstar", status="DERIVED")
+    c5 = _j("s26/results/p_c5.json")
+    put("C5_COMPLETE", bool(c5.get("complete", False)), "s26/results/p_c5.json :: complete (absent or false = not a result)", status="DERIVED")
+    put("C5_N_ROWS", len(c5.get("rows", [])), "s26/results/p_c5.json :: rows (count of checkpointed targets at build time)", status="DERIVED")
+    rawf = sorted(f for f in os.listdir(mdir) if f.startswith("raw_fold") and f.endswith("_s0.pt")) if os.path.isdir(mdir) else []
+    put("RAW_FOLDS_TRAINED", len(rawf), "s26/models/p_ladder/raw_fold*_s0.pt (count at build time)", status="DERIVED", note="PROPOSAL_C addendum 1: folds 0-2 of 5 trained, evaluation not run")
+    vs = _j("s26/results/ph_validity.json")["summary"]
+    put("VAL_CLASH_TARGETS_BEFORE", int(vs["targets_any_clash_2A_before"]), "s26/results/ph_validity.json :: summary/targets_any_clash_2A_before", note="L100: 34 emissions with a sub-2 A heavy-atom overlap")
+    put("VAL_CLASH_TARGETS_AFTER", int(vs["targets_any_clash_2A_after"]), "s26/results/ph_validity.json :: summary/targets_any_clash_2A_after", note="L100: 1")
+    put("VAL_CLASH_BEFORE", vs["n_clash_2A"]["before"]["mean"], "s26/results/ph_validity.json :: summary/n_clash_2A/before/mean", note="heavy-atom pairs below 2.0 A per target")
+    put("VAL_CLASH_AFTER", vs["n_clash_2A"]["after"]["mean"], "s26/results/ph_validity.json :: summary/n_clash_2A/after/mean")
+    put("VAL_MINHEAVY_BEFORE", vs["min_heavy"]["before"]["mean"], "s26/results/ph_validity.json :: summary/min_heavy/before/mean")
+    put("VAL_MINHEAVY_AFTER", vs["min_heavy"]["after"]["mean"], "s26/results/ph_validity.json :: summary/min_heavy/after/mean")
+    put("VAL_BOND_STRAIN_AFTER", vs["bond_strain"]["after"]["mean"], "s26/results/ph_validity.json :: summary/bond_strain/after/mean", note="L100: 1.3% (12% on 2BP4)")
+    put("VAL_ANGLE_STRAIN_AFTER", vs["angle_strain"]["after"]["mean"], "s26/results/ph_validity.json :: summary/angle_strain/after/mean", note="L100: 2.5%")
+    put("VAL_OMEGA_DEV_AFTER", vs["omega_dev"]["after"]["mean"], "s26/results/ph_validity.json :: summary/omega_dev/after/mean", note="degrees of peptide-bond non-planarity; L100: 6.6")
+    put("VAL_RAMA_BEFORE", vs["rama_favoured"]["before"]["mean"], "s26/results/ph_validity.json :: summary/rama_favoured/before/mean")
+    put("VAL_RAMA_AFTER", vs["rama_favoured"]["after"]["mean"], "s26/results/ph_validity.json :: summary/rama_favoured/after/mean")
+    rep3 = _j("s26/results/ph_c3_stage1_rep.json")["summary"]
+    put("C3_REP_MEMBER_VS_NONE", rep3["stage1-REP TOWARD-MEMBER minus do-nothing"]["effect"], "s26/results/ph_c3_stage1_rep.json :: summary/'stage1-REP TOWARD-MEMBER minus do-nothing'/effect", basis="displaced built_chain minus built_chain", note="L87: the replication; no longer provisional")
+    put("C3_REP_MEMBER_VS_NONE_CI", rep3["stage1-REP TOWARD-MEMBER minus do-nothing"]["ci95_fold"], "s26/results/ph_c3_stage1_rep.json :: .../ci95_fold")
+    put("C3_REP_AMBER_VS_RANDOM", rep3["stage1-REP AMBER minus matched-magnitude RANDOM (16 draws)"]["effect"], "s26/results/ph_c3_stage1_rep.json :: summary/'stage1-REP AMBER minus matched-magnitude RANDOM (16 draws)'/effect", basis="relaxed minus displaced built_chain", note="L87: +0.0100, still Type-M (1.02x)")
+    put("C3_REP_AMBER_VS_MEMBER", rep3["stage1-REP AMBER minus matched-magnitude TOWARD-MEMBER (16 draws)"]["effect"], "s26/results/ph_c3_stage1_rep.json :: summary/'stage1-REP AMBER minus matched-magnitude TOWARD-MEMBER (16 draws)'/effect", basis="relaxed minus displaced built_chain")
+
+    # ------------------------------------------------------------------ L119 (A4 bootstrap intervals) and L121 / L123 (the pool-spread control)
+    ci = _j("s26/results/q_var_boot.json")["results"]["ci"]
+    d = ci["deployed_a025_T03"]["grown_L2"]["diff_vs_fixed"]
+    put("A4_BOOT_L2_A025_DIFF", d["point"], "s26/results/q_var_boot.json :: results/ci/deployed_a025_T03/grown_L2/diff_vs_fixed/point", note="L119: -0.056")
+    put("A4_BOOT_L2_A025_DIFF_CI", d["ci95"], "s26/results/q_var_boot.json :: results/ci/deployed_a025_T03/grown_L2/diff_vs_fixed/ci95", note="L119: [-0.182, +0.087], includes zero")
+    lows = [ci[c][g]["diff_vs_fixed"]["ci95"][0] for c in ("linear_alpha1_T0", "deployed_a1_T03") for g in ("grown_V", "grown_L2")]
+    highs = [ci[c][g]["diff_vs_fixed"]["ci95"][1] for c in ("linear_alpha1_T0", "deployed_a1_T03") for g in ("grown_V", "grown_L2")]
+    put("A4_BOOT_A1_DIFF_LO", float(min(lows)), "s26/results/q_var_boot.json :: results/ci/{linear_alpha1_T0,deployed_a1_T03}/{grown_V,grown_L2}/diff_vs_fixed/ci95[0] (min)", status="DERIVED", note="L119: every alpha = 1 grown - fixed CI excludes zero, lower bounds +0.23 to +0.60")
+    put("A4_BOOT_A1_DIFF_HI", float(max(highs)), "s26/results/q_var_boot.json :: the same, ci95[1] (max)", status="DERIVED")
+    put("A4_BOOT_A1_EXCLUDE_ZERO", all(ci[c][g]["diff_vs_fixed"]["includes_zero"] is False for c in ("linear_alpha1_T0", "deployed_a1_T03") for g in ("grown_V", "grown_L2")),
+        "s26/results/q_var_boot.json :: results/ci/{alpha = 1 cells}/{grown_V,grown_L2}/diff_vs_fixed/includes_zero all False", status="DERIVED")
+    put("A4_BOOT_REPRO", _j("s26/results/q_var_boot.json")["results"]["repro_worst_rel"], "s26/results/q_var_boot.json :: results/repro_worst_rel", note="every q_var.json row reproduced")
+    sp = _j("s26/results/a_strain_vs_spread.json")["summary"]
+    put("SPREAD_RHO_PARTIAL", sp["partial_n_rg"]["spread_mean"]["rho"], "s26/results/a_strain_vs_spread.json :: summary/partial_n_rg/spread_mean/rho", note="L121/L123: the top-75's own pairwise CA-RMSD spread vs rmsd_arm, partial on n and Rg; native-free")
+    put("SPREAD_RHO_PARTIAL_CI", sp["partial_n_rg"]["spread_mean"]["ci_fold"], "s26/results/a_strain_vs_spread.json :: summary/partial_n_rg/spread_mean/ci_fold")
+    put("SPREAD_FOLDS", int(sp["partial_n_rg"]["spread_mean"]["folds_same_sign"]), "s26/results/a_strain_vs_spread.json :: summary/partial_n_rg/spread_mean/folds_same_sign")
+    put("RHO_MOVED_SPREAD", sp["rho_moved_spread"], "s26/results/a_strain_vs_spread.json :: summary/rho_moved_spread", note="L123: the relaxation's displacement tracks the pool's disagreement at 0.76")
+    put("MOVED_GIVEN_SPREAD", sp["partial_n_rg_spread"]["moved"]["rho"], "s26/results/a_strain_vs_spread.json :: summary/partial_n_rg_spread/moved/rho", note="L121: +0.08 given the spread")
+    put("MOVED_GIVEN_SPREAD_CI", sp["partial_n_rg_spread"]["moved"]["ci_iid"], "s26/results/a_strain_vs_spread.json :: summary/partial_n_rg_spread/moved/ci_iid")
+    put("MOVED_GIVEN_SPREAD_P", sp["partial_n_rg_spread"]["moved"]["perm_p"], "s26/results/a_strain_vs_spread.json :: summary/partial_n_rg_spread/moved/perm_p")
+
+    # ------------------------------------------------------------------ A3 (L125): a target-dependent Hamiltonian at matched entropy
+    a3 = _j("s26/results/a3_stats.json")["contrasts"]["rmsd_q_synth:fixed_zraw_Tmatch_it50-fixed_zrank_it50"]
+    put("A3_TMATCH_EFFECT", a3["effect"], "s26/results/a3_stats.json :: contrasts/'rmsd_q_synth:fixed_zraw_Tmatch_it50-fixed_zrank_it50'/effect", basis="built_chain (rmsd_q_synth)", note="L125: +0.003 A, 0.04x MDE")
+    put("A3_TMATCH_X", a3["effect_over_mde"], "s26/results/a3_stats.json :: .../'rmsd_q_synth:fixed_zraw_Tmatch_it50-fixed_zrank_it50'/effect_over_mde")
+    put("A3_TMATCH_CI", a3["ci95_fold"], "s26/results/a3_stats.json :: .../ci95_fold")
+    dz = _j("s26/results/a3_property.json")["distinct_states"]["fixed_zraw_Tmatch_it50"]
+    put("A3_DISTINCT_TMATCH", int(sum(v["n_distinct"] for v in dz.values())), "s26/results/a3_property.json :: distinct_states/fixed_zraw_Tmatch_it50/*/n_distinct (sum over the two cells)", status="DERIVED", note="L125: 124 of 126")
+    put("A3_DISTINCT_N", int(sum(v["n_targets"] for v in dz.values())), "s26/results/a3_property.json :: distinct_states/fixed_zraw_Tmatch_it50/*/n_targets (sum)", status="DERIVED")
+    dzr = _j("s26/results/a3_property.json")["distinct_states"]["fixed_zrank_it50"]
+    put("A3_DISTINCT_ZRANK", int(sum(v["n_distinct"] for v in dzr.values())), "s26/results/a3_property.json :: distinct_states/fixed_zrank_it50/*/n_distinct (sum)", status="DERIVED", note="L125: 14/78 + 26/48 under the deployed rank ladder")
 
     # ------------------------------------------------------------------ Proposal B: B3's persisted arms (L14)
     tz = np.load(os.path.join(ROOT, "s13", "cache", "tors_rows.npz"), allow_pickle=True)

@@ -16,7 +16,7 @@ slide  5: text yes, notes yes, spoken words 220
 slide  6: text yes, notes yes, spoken words 206
 slide  7: text yes, notes yes, spoken words 230
 slide  8: text yes, notes yes, spoken words 249  (proposal slide: limit 250)  OK
-slide  9: text yes, notes yes, spoken words 247  (proposal slide: limit 250)  OK
-slide 10: text yes, notes yes, spoken words 244  (proposal slide: limit 250)  OK
+slide  9: text yes, notes yes, spoken words 248  (proposal slide: limit 250)  OK
+slide 10: text yes, notes yes, spoken words 249  (proposal slide: limit 250)  OK
 slide 11: text yes, notes yes, spoken words 133
 VERDICT: PASS

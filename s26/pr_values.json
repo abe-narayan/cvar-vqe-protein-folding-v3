@@ -1320,6 +1320,13 @@
   "basis": "",
   "note": ""
  },
+ "C3_AMBER_VS_MEMBER_X": {
+  "value": 2.271756749831353,
+  "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 AMBER minus matched-magnitude TOWARD-MEMBER (16 draws)'/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
  "C3_RANDOM_VS_NONE": {
   "value": 0.009614231505565318,
   "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 RANDOM minus do-nothing'/effect",
@@ -2063,6 +2070,1352 @@
   "status": "DERIVED",
   "basis": "",
   "note": "the largest free-energy change any grown operator produced under L-BFGS at alpha = 1 (all changes are decreases)"
+ },
+ "C2_NOESM_ARM": {
+  "value": 0.20784785357709254,
+  "path": "s26/results/p_ladder_report_noesm_s0.json :: stats/arm/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126, L57)",
+  "note": "rung noesm minus the shipped posterior"
+ },
+ "C2_NOESM_ARM_SE": {
+  "value": 0.07333009365138313,
+  "path": "s26/results/p_ladder_report_noesm_s0.json :: stats/arm/se",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_NOESM_ARM_MDE": {
+  "value": 0.20544159037371498,
+  "path": "s26/results/p_ladder_report_noesm_s0.json :: stats/arm/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_NOESM_ARM_X": {
+  "value": 1.0117126390961069,
+  "path": "s26/results/p_ladder_report_noesm_s0.json :: stats/arm/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "0 written for the identity rungs (MDE 0)"
+ },
+ "C2_NOESM_ARM_CI": {
+  "value": [
+   0.09855816866912079,
+   0.39421059397275443
+  ],
+  "path": "s26/results/p_ladder_report_noesm_s0.json :: stats/arm/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_NOESM_ARM_FOLDS": {
+  "value": 5,
+  "path": "s26/results/p_ladder_report_noesm_s0.json :: stats/arm/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_NOESM_ARM_W": {
+  "value": 47,
+  "path": "s26/results/p_ladder_report_noesm_s0.json :: stats/arm/n_better",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_NOESM_ARM_L": {
+  "value": 79,
+  "path": "s26/results/p_ladder_report_noesm_s0.json :: stats/arm/n_worse",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_NOESM_ARM_T": {
+  "value": 0,
+  "path": "s26/results/p_ladder_report_noesm_s0.json :: stats/arm/n_tied",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_NOESM_SEL": {
+  "value": 0.32987663480970597,
+  "path": "s26/results/p_ladder_report_noesm_s0.json :: stats/sel/effect",
+  "status": "SOURCED",
+  "basis": "s8_selection",
+  "note": ""
+ },
+ "C2_NOESM_SEL_X": {
+  "value": 1.2740726200273487,
+  "path": "s26/results/p_ladder_report_noesm_s0.json :: stats/sel/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_NOESM_SEL_CI": {
+  "value": [
+   0.21223500867684683,
+   0.4475182609425651
+  ],
+  "path": "s26/results/p_ladder_report_noesm_s0.json :: stats/sel/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_NOESM_CLOUD": {
+  "value": 0.1958686024186381,
+  "path": "s26/results/p_ladder_report_noesm_s0.json :: stats/cloud/effect",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "C2_CONLY_ARM": {
+  "value": 0.12227333321040407,
+  "path": "s26/results/p_ladder_report_conly_s0.json :: stats/arm/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126, L57)",
+  "note": "rung conly minus the shipped posterior"
+ },
+ "C2_CONLY_ARM_SE": {
+  "value": 0.0707840122470627,
+  "path": "s26/results/p_ladder_report_conly_s0.json :: stats/arm/se",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_CONLY_ARM_MDE": {
+  "value": 0.19830848871137086,
+  "path": "s26/results/p_ladder_report_conly_s0.json :: stats/arm/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_CONLY_ARM_X": {
+  "value": 0.6165814383688206,
+  "path": "s26/results/p_ladder_report_conly_s0.json :: stats/arm/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "0 written for the identity rungs (MDE 0)"
+ },
+ "C2_CONLY_ARM_CI": {
+  "value": [
+   -0.0349670129156046,
+   0.2674009333267108
+  ],
+  "path": "s26/results/p_ladder_report_conly_s0.json :: stats/arm/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_CONLY_ARM_FOLDS": {
+  "value": 4,
+  "path": "s26/results/p_ladder_report_conly_s0.json :: stats/arm/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_CONLY_ARM_W": {
+  "value": 53,
+  "path": "s26/results/p_ladder_report_conly_s0.json :: stats/arm/n_better",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_CONLY_ARM_L": {
+  "value": 73,
+  "path": "s26/results/p_ladder_report_conly_s0.json :: stats/arm/n_worse",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_CONLY_ARM_T": {
+  "value": 0,
+  "path": "s26/results/p_ladder_report_conly_s0.json :: stats/arm/n_tied",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_CONLY_SEL": {
+  "value": 0.11160231275217873,
+  "path": "s26/results/p_ladder_report_conly_s0.json :: stats/sel/effect",
+  "status": "SOURCED",
+  "basis": "s8_selection",
+  "note": ""
+ },
+ "C2_CONLY_SEL_X": {
+  "value": 0.41952709892429174,
+  "path": "s26/results/p_ladder_report_conly_s0.json :: stats/sel/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_CONLY_SEL_CI": {
+  "value": [
+   -0.09752860994023435,
+   0.30081613567786486
+  ],
+  "path": "s26/results/p_ladder_report_conly_s0.json :: stats/sel/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_CONLY_CLOUD": {
+  "value": 0.10490082573579376,
+  "path": "s26/results/p_ladder_report_conly_s0.json :: stats/cloud/effect",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "C2_ESM8M_ARM": {
+  "value": 0.2418123631485464,
+  "path": "s26/results/p_ladder_report_esm8m_s0.json :: stats/arm/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126, L57)",
+  "note": "rung esm8m minus the shipped posterior"
+ },
+ "C2_ESM8M_ARM_SE": {
+  "value": 0.0740360820448746,
+  "path": "s26/results/p_ladder_report_esm8m_s0.json :: stats/arm/se",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_ESM8M_ARM_MDE": {
+  "value": 0.20741948745692065,
+  "path": "s26/results/p_ladder_report_esm8m_s0.json :: stats/arm/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_ESM8M_ARM_X": {
+  "value": 1.165813136042817,
+  "path": "s26/results/p_ladder_report_esm8m_s0.json :: stats/arm/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "0 written for the identity rungs (MDE 0)"
+ },
+ "C2_ESM8M_ARM_CI": {
+  "value": [
+   0.11339351234211517,
+   0.3853393140498519
+  ],
+  "path": "s26/results/p_ladder_report_esm8m_s0.json :: stats/arm/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_ESM8M_ARM_FOLDS": {
+  "value": 5,
+  "path": "s26/results/p_ladder_report_esm8m_s0.json :: stats/arm/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_ESM8M_ARM_W": {
+  "value": 52,
+  "path": "s26/results/p_ladder_report_esm8m_s0.json :: stats/arm/n_better",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_ESM8M_ARM_L": {
+  "value": 74,
+  "path": "s26/results/p_ladder_report_esm8m_s0.json :: stats/arm/n_worse",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_ESM8M_ARM_T": {
+  "value": 0,
+  "path": "s26/results/p_ladder_report_esm8m_s0.json :: stats/arm/n_tied",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_ESM8M_SEL": {
+  "value": 0.22461626974363175,
+  "path": "s26/results/p_ladder_report_esm8m_s0.json :: stats/sel/effect",
+  "status": "SOURCED",
+  "basis": "s8_selection",
+  "note": ""
+ },
+ "C2_ESM8M_SEL_X": {
+  "value": 0.8785938027365273,
+  "path": "s26/results/p_ladder_report_esm8m_s0.json :: stats/sel/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_ESM8M_SEL_CI": {
+  "value": [
+   0.12206891711269106,
+   0.304612648388571
+  ],
+  "path": "s26/results/p_ladder_report_esm8m_s0.json :: stats/sel/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_ESM8M_CLOUD": {
+  "value": 0.2111330001219116,
+  "path": "s26/results/p_ladder_report_esm8m_s0.json :: stats/cloud/effect",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "C2_PCA32_ARM": {
+  "value": 0.0,
+  "path": "s26/results/p_ladder_report_pca32_s0.json :: stats/arm/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126, L57)",
+  "note": "rung pca32 minus the shipped posterior"
+ },
+ "C2_PCA32_ARM_SE": {
+  "value": 0.0,
+  "path": "s26/results/p_ladder_report_pca32_s0.json :: stats/arm/se",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32_ARM_MDE": {
+  "value": 0.0,
+  "path": "s26/results/p_ladder_report_pca32_s0.json :: stats/arm/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32_ARM_X": {
+  "value": 0.0,
+  "path": "s26/results/p_ladder_report_pca32_s0.json :: stats/arm/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "0 written for the identity rungs (MDE 0)"
+ },
+ "C2_PCA32_ARM_CI": {
+  "value": [
+   0.0,
+   0.0
+  ],
+  "path": "s26/results/p_ladder_report_pca32_s0.json :: stats/arm/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32_ARM_FOLDS": {
+  "value": 5,
+  "path": "s26/results/p_ladder_report_pca32_s0.json :: stats/arm/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32_ARM_W": {
+  "value": 0,
+  "path": "s26/results/p_ladder_report_pca32_s0.json :: stats/arm/n_better",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32_ARM_L": {
+  "value": 0,
+  "path": "s26/results/p_ladder_report_pca32_s0.json :: stats/arm/n_worse",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32_ARM_T": {
+  "value": 126,
+  "path": "s26/results/p_ladder_report_pca32_s0.json :: stats/arm/n_tied",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32_SEL": {
+  "value": 0.0,
+  "path": "s26/results/p_ladder_report_pca32_s0.json :: stats/sel/effect",
+  "status": "SOURCED",
+  "basis": "s8_selection",
+  "note": ""
+ },
+ "C2_PCA32_SEL_X": {
+  "value": 0.0,
+  "path": "s26/results/p_ladder_report_pca32_s0.json :: stats/sel/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32_SEL_CI": {
+  "value": [
+   0.0,
+   0.0
+  ],
+  "path": "s26/results/p_ladder_report_pca32_s0.json :: stats/sel/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32_CLOUD": {
+  "value": 0.0,
+  "path": "s26/results/p_ladder_report_pca32_s0.json :: stats/cloud/effect",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "C2_PCA32F_ARM": {
+  "value": 0.018040319932961294,
+  "path": "s26/results/p_ladder_report_pca32f_s0.json :: stats/arm/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126, L57)",
+  "note": "rung pca32f minus the shipped posterior"
+ },
+ "C2_PCA32F_ARM_SE": {
+  "value": 0.049097778255537,
+  "path": "s26/results/p_ladder_report_pca32f_s0.json :: stats/arm/se",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32F_ARM_MDE": {
+  "value": 0.13755233556071247,
+  "path": "s26/results/p_ladder_report_pca32f_s0.json :: stats/arm/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32F_ARM_X": {
+  "value": 0.13115240725955327,
+  "path": "s26/results/p_ladder_report_pca32f_s0.json :: stats/arm/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "0 written for the identity rungs (MDE 0)"
+ },
+ "C2_PCA32F_ARM_CI": {
+  "value": [
+   -0.07253148114094085,
+   0.09698364149707508
+  ],
+  "path": "s26/results/p_ladder_report_pca32f_s0.json :: stats/arm/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32F_ARM_FOLDS": {
+  "value": 4,
+  "path": "s26/results/p_ladder_report_pca32f_s0.json :: stats/arm/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32F_ARM_W": {
+  "value": 70,
+  "path": "s26/results/p_ladder_report_pca32f_s0.json :: stats/arm/n_better",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32F_ARM_L": {
+  "value": 56,
+  "path": "s26/results/p_ladder_report_pca32f_s0.json :: stats/arm/n_worse",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32F_ARM_T": {
+  "value": 0,
+  "path": "s26/results/p_ladder_report_pca32f_s0.json :: stats/arm/n_tied",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32F_SEL": {
+  "value": -0.031595206922954984,
+  "path": "s26/results/p_ladder_report_pca32f_s0.json :: stats/sel/effect",
+  "status": "SOURCED",
+  "basis": "s8_selection",
+  "note": ""
+ },
+ "C2_PCA32F_SEL_X": {
+  "value": -0.17372049631578187,
+  "path": "s26/results/p_ladder_report_pca32f_s0.json :: stats/sel/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32F_SEL_CI": {
+  "value": [
+   -0.11078579143713449,
+   0.05414005399735506
+  ],
+  "path": "s26/results/p_ladder_report_pca32f_s0.json :: stats/sel/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA32F_CLOUD": {
+  "value": -0.013649638641654064,
+  "path": "s26/results/p_ladder_report_pca32f_s0.json :: stats/cloud/effect",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "C2_PCA128_ARM": {
+  "value": 0.07590113663249325,
+  "path": "s26/results/p_ladder_report_pca128_s0.json :: stats/arm/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126, L57)",
+  "note": "rung pca128 minus the shipped posterior"
+ },
+ "C2_PCA128_ARM_SE": {
+  "value": 0.06298111726555865,
+  "path": "s26/results/p_ladder_report_pca128_s0.json :: stats/arm/se",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA128_ARM_MDE": {
+  "value": 0.1764478981311891,
+  "path": "s26/results/p_ladder_report_pca128_s0.json :: stats/arm/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA128_ARM_X": {
+  "value": 0.43016174993516054,
+  "path": "s26/results/p_ladder_report_pca128_s0.json :: stats/arm/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "0 written for the identity rungs (MDE 0)"
+ },
+ "C2_PCA128_ARM_CI": {
+  "value": [
+   -0.06906497346184996,
+   0.21570656332564483
+  ],
+  "path": "s26/results/p_ladder_report_pca128_s0.json :: stats/arm/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA128_ARM_FOLDS": {
+  "value": 3,
+  "path": "s26/results/p_ladder_report_pca128_s0.json :: stats/arm/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA128_ARM_W": {
+  "value": 57,
+  "path": "s26/results/p_ladder_report_pca128_s0.json :: stats/arm/n_better",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA128_ARM_L": {
+  "value": 69,
+  "path": "s26/results/p_ladder_report_pca128_s0.json :: stats/arm/n_worse",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA128_ARM_T": {
+  "value": 0,
+  "path": "s26/results/p_ladder_report_pca128_s0.json :: stats/arm/n_tied",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA128_SEL": {
+  "value": 0.024875822284865002,
+  "path": "s26/results/p_ladder_report_pca128_s0.json :: stats/sel/effect",
+  "status": "SOURCED",
+  "basis": "s8_selection",
+  "note": ""
+ },
+ "C2_PCA128_SEL_X": {
+  "value": 0.12502559886288783,
+  "path": "s26/results/p_ladder_report_pca128_s0.json :: stats/sel/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA128_SEL_CI": {
+  "value": [
+   -0.11690616657753952,
+   0.14556705519772958
+  ],
+  "path": "s26/results/p_ladder_report_pca128_s0.json :: stats/sel/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PCA128_CLOUD": {
+  "value": 0.06059176234408577,
+  "path": "s26/results/p_ladder_report_pca128_s0.json :: stats/cloud/effect",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "C2_WIDE_ARM": {
+  "value": 0.03174835825933412,
+  "path": "s26/results/p_ladder_report_wide_s0.json :: stats/arm/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126, L57)",
+  "note": "rung wide minus the shipped posterior"
+ },
+ "C2_WIDE_ARM_SE": {
+  "value": 0.04576497004789215,
+  "path": "s26/results/p_ladder_report_wide_s0.json :: stats/arm/se",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_WIDE_ARM_MDE": {
+  "value": 0.12821514008617466,
+  "path": "s26/results/p_ladder_report_wide_s0.json :: stats/arm/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_WIDE_ARM_X": {
+  "value": 0.24761785728265584,
+  "path": "s26/results/p_ladder_report_wide_s0.json :: stats/arm/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "0 written for the identity rungs (MDE 0)"
+ },
+ "C2_WIDE_ARM_CI": {
+  "value": [
+   -0.030001159437642966,
+   0.12789757478045266
+  ],
+  "path": "s26/results/p_ladder_report_wide_s0.json :: stats/arm/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_WIDE_ARM_FOLDS": {
+  "value": 3,
+  "path": "s26/results/p_ladder_report_wide_s0.json :: stats/arm/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_WIDE_ARM_W": {
+  "value": 54,
+  "path": "s26/results/p_ladder_report_wide_s0.json :: stats/arm/n_better",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_WIDE_ARM_L": {
+  "value": 72,
+  "path": "s26/results/p_ladder_report_wide_s0.json :: stats/arm/n_worse",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_WIDE_ARM_T": {
+  "value": 0,
+  "path": "s26/results/p_ladder_report_wide_s0.json :: stats/arm/n_tied",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_WIDE_SEL": {
+  "value": 0.0972083265346194,
+  "path": "s26/results/p_ladder_report_wide_s0.json :: stats/sel/effect",
+  "status": "SOURCED",
+  "basis": "s8_selection",
+  "note": ""
+ },
+ "C2_WIDE_SEL_X": {
+  "value": 0.4784532370990546,
+  "path": "s26/results/p_ladder_report_wide_s0.json :: stats/sel/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_WIDE_SEL_CI": {
+  "value": [
+   0.04866830918414534,
+   0.1586966982576996
+  ],
+  "path": "s26/results/p_ladder_report_wide_s0.json :: stats/sel/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_WIDE_CLOUD": {
+  "value": 0.022667574820554166,
+  "path": "s26/results/p_ladder_report_wide_s0.json :: stats/cloud/effect",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "C2_PAIRNET_ARM": {
+  "value": 0.040745286134939857,
+  "path": "s26/results/p_ladder_report_pairnet_s0.json :: stats/arm/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126, L57)",
+  "note": "rung pairnet minus the shipped posterior"
+ },
+ "C2_PAIRNET_ARM_SE": {
+  "value": 0.048564387845670874,
+  "path": "s26/results/p_ladder_report_pairnet_s0.json :: stats/arm/se",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PAIRNET_ARM_MDE": {
+  "value": 0.13605798898843152,
+  "path": "s26/results/p_ladder_report_pairnet_s0.json :: stats/arm/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PAIRNET_ARM_X": {
+  "value": 0.29947000126838763,
+  "path": "s26/results/p_ladder_report_pairnet_s0.json :: stats/arm/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "0 written for the identity rungs (MDE 0)"
+ },
+ "C2_PAIRNET_ARM_CI": {
+  "value": [
+   -0.044154064624855965,
+   0.11432472346009627
+  ],
+  "path": "s26/results/p_ladder_report_pairnet_s0.json :: stats/arm/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PAIRNET_ARM_FOLDS": {
+  "value": 3,
+  "path": "s26/results/p_ladder_report_pairnet_s0.json :: stats/arm/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PAIRNET_ARM_W": {
+  "value": 58,
+  "path": "s26/results/p_ladder_report_pairnet_s0.json :: stats/arm/n_better",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PAIRNET_ARM_L": {
+  "value": 68,
+  "path": "s26/results/p_ladder_report_pairnet_s0.json :: stats/arm/n_worse",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PAIRNET_ARM_T": {
+  "value": 0,
+  "path": "s26/results/p_ladder_report_pairnet_s0.json :: stats/arm/n_tied",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PAIRNET_SEL": {
+  "value": 0.007705238366883899,
+  "path": "s26/results/p_ladder_report_pairnet_s0.json :: stats/sel/effect",
+  "status": "SOURCED",
+  "basis": "s8_selection",
+  "note": ""
+ },
+ "C2_PAIRNET_SEL_X": {
+  "value": 0.033655274191441986,
+  "path": "s26/results/p_ladder_report_pairnet_s0.json :: stats/sel/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PAIRNET_SEL_CI": {
+  "value": [
+   -0.20301660553353731,
+   0.16030821292488664
+  ],
+  "path": "s26/results/p_ladder_report_pairnet_s0.json :: stats/sel/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_PAIRNET_CLOUD": {
+  "value": 0.03599530665954596,
+  "path": "s26/results/p_ladder_report_pairnet_s0.json :: stats/cloud/effect",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "C2_MIX_ARM": {
+  "value": 0.0,
+  "path": "s26/results/p_ladder_report_mix_s0.json :: stats/arm/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126, L57)",
+  "note": "rung mix minus the shipped posterior"
+ },
+ "C2_MIX_ARM_SE": {
+  "value": 0.0,
+  "path": "s26/results/p_ladder_report_mix_s0.json :: stats/arm/se",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_MIX_ARM_MDE": {
+  "value": 0.0,
+  "path": "s26/results/p_ladder_report_mix_s0.json :: stats/arm/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_MIX_ARM_X": {
+  "value": 0.0,
+  "path": "s26/results/p_ladder_report_mix_s0.json :: stats/arm/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "0 written for the identity rungs (MDE 0)"
+ },
+ "C2_MIX_ARM_CI": {
+  "value": [
+   0.0,
+   0.0
+  ],
+  "path": "s26/results/p_ladder_report_mix_s0.json :: stats/arm/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_MIX_ARM_FOLDS": {
+  "value": 5,
+  "path": "s26/results/p_ladder_report_mix_s0.json :: stats/arm/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_MIX_ARM_W": {
+  "value": 0,
+  "path": "s26/results/p_ladder_report_mix_s0.json :: stats/arm/n_better",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_MIX_ARM_L": {
+  "value": 0,
+  "path": "s26/results/p_ladder_report_mix_s0.json :: stats/arm/n_worse",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_MIX_ARM_T": {
+  "value": 126,
+  "path": "s26/results/p_ladder_report_mix_s0.json :: stats/arm/n_tied",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_MIX_SEL": {
+  "value": 0.03846498614265805,
+  "path": "s26/results/p_ladder_report_mix_s0.json :: stats/sel/effect",
+  "status": "SOURCED",
+  "basis": "s8_selection",
+  "note": ""
+ },
+ "C2_MIX_SEL_X": {
+  "value": 0.21360648748149028,
+  "path": "s26/results/p_ladder_report_mix_s0.json :: stats/sel/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_MIX_SEL_CI": {
+  "value": [
+   -0.04873564189538024,
+   0.15899937460198998
+  ],
+  "path": "s26/results/p_ladder_report_mix_s0.json :: stats/sel/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_MIX_CLOUD": {
+  "value": 0.0,
+  "path": "s26/results/p_ladder_report_mix_s0.json :: stats/cloud/effect",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "C2_N_RUNGS_EVAL": {
+  "value": 9,
+  "path": "s26/results/p_ladder_report_<rung>_s0.json (count of evaluated rungs; raw not evaluated)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_ANY_BETTER": {
+  "value": false,
+  "path": "s26/results/p_ladder_report_*_s0.json :: stats/arm/effect < 0 for any non-identity rung",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "no rung beats the shipped prior on the built chain"
+ },
+ "C2_NULL_EFF_MIN": {
+  "value": 0.018040319932961294,
+  "path": "s26/results/p_ladder_report_*_s0.json :: min stats/arm/effect over the five NOT MEASURED rungs",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_NULL_EFF_MAX": {
+  "value": 0.12227333321040407,
+  "path": "s26/results/p_ladder_report_*_s0.json :: max stats/arm/effect over the five NOT MEASURED rungs",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_NULL_MDE_MIN": {
+  "value": 0.12821514008617466,
+  "path": "s26/results/p_ladder_report_*_s0.json :: min stats/arm/mde over the five NOT MEASURED rungs",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "C2_NULL_MDE_MAX": {
+  "value": 0.19830848871137086,
+  "path": "s26/results/p_ladder_report_*_s0.json :: max stats/arm/mde over the five NOT MEASURED rungs",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "B2_CONLY_MINUS_NOESM_SEL": {
+  "value": -0.21827432205752695,
+  "path": "s26/results/p_ladder_conly_s0.json and p_ladder_noesm_s0.json :: rows[*]/sel (paired mean difference)",
+  "status": "DERIVED",
+  "basis": "s8_selection",
+  "note": "L63: -0.218, 1.00x MDE, fold CI [-0.374, -0.037], 4/5"
+ },
+ "B2_CONLY_MINUS_NOESM_ARM": {
+  "value": -0.08557452036668822,
+  "path": "the same on rows[*]/arm",
+  "status": "DERIVED",
+  "basis": "built_chain (rebuild basis)",
+  "note": "L63: -0.086, 0.51x"
+ },
+ "B2_ESM8M_MINUS_NOESM_ARM": {
+  "value": 0.03396450957145358,
+  "path": "s26/results/p_ladder_esm8m_s0.json and p_ladder_noesm_s0.json :: rows[*]/arm (paired mean difference)",
+  "status": "DERIVED",
+  "basis": "built_chain (rebuild basis)",
+  "note": "L99: +0.034, 0.15x MDE"
+ },
+ "B3_BACC_TORS": {
+  "value": 0.521560886729426,
+  "path": "s26/results/p_b3.json :: vs_tors/balanced_acc",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "nested leave-fold-out ridge classifier of the sign of arm - tors on 45 native-free features"
+ },
+ "B3_NULL95_TORS": {
+  "value": 0.578150622532645,
+  "path": "s26/results/p_b3.json :: vs_tors/null_p95",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "B3_BACC_HELIX": {
+  "value": 0.5565159574468085,
+  "path": "s26/results/p_b3.json :: vs_helix/balanced_acc",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "B3_NULL95_HELIX": {
+  "value": 0.566156914893617,
+  "path": "s26/results/p_b3.json :: vs_helix/null_p95",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "B3_R2_HELIX": {
+  "value": 0.4043439994779432,
+  "path": "s26/results/p_b3.json :: vs_helix/heldout_r2",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "held-out R2 of the SIZE of the gain over the constant helix"
+ },
+ "B3_MSE_X_HELIX": {
+  "value": -1.1937331127260609,
+  "path": "s26/results/p_b3.json :: vs_helix/mse_reduction/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "B3_MSE_CI_HELIX": {
+  "value": [
+   -1.4948132091199144,
+   -0.6997898256339864
+  ],
+  "path": "s26/results/p_b3.json :: vs_helix/mse_reduction/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "B3_FAIL18_TORS": {
+  "value": 0.46312567074862826,
+  "path": "s26/results/p_b3.json :: oracle_stratum_FAIL18/d_tors_FAIL18",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "ORACLE stratum: arm - tors on FAIL18 (the sequence-only predictor wins there)"
+ },
+ "B3_RHO_SSE_HELIX": {
+  "value": -0.637705416912468,
+  "path": "s26/results/p_b3_features.json :: rows[*]/ss_E against (production rmsd_arm minus s14/results/ladder.json :: per_target/L0_constant_helix), Pearson",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L107 quotes -0.638 as rho; it is the Pearson coefficient (Spearman is -0.557)"
+ },
+ "C4_N_M_ROUTERS": {
+  "value": 12,
+  "path": "s26/results/p_c4.json :: m_router/*/* (count)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "C4_M_HARMFUL": {
+  "value": 11,
+  "path": "s26/results/p_c4.json :: m_router/*/*/stats/effect > 0 (count)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L115: eleven point the harmful way"
+ },
+ "C4_M_MAX_EFF": {
+  "value": 0.06844521736203285,
+  "path": "s26/results/p_c4.json :: max m_router/*/*/stats/effect",
+  "status": "DERIVED",
+  "basis": "point_cloud",
+  "note": "L115: +0.068, 0.91x"
+ },
+ "C4_M_MAX_X": {
+  "value": 0.9077246854277922,
+  "path": "s26/results/p_c4.json :: max m_router/*/*/stats/effect_over_mde",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "C4_M_ANY_CLEARS": {
+  "value": false,
+  "path": "s26/results/p_c4.json :: any |effect_over_mde| >= 1 among the m routers",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "C4_N_S_ROUTERS": {
+  "value": 6,
+  "path": "s26/results/p_c4.json :: s_router/* (count)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "C4_S_EFF_MIN": {
+  "value": 0.006623247598320148,
+  "path": "s26/results/p_c4.json :: min s_router/*/stats/effect",
+  "status": "DERIVED",
+  "basis": "point_cloud",
+  "note": "L115: +0.007 to +0.027 against s = 1"
+ },
+ "C4_S_EFF_MAX": {
+  "value": 0.026999635857334964,
+  "path": "s26/results/p_c4.json :: max s_router/*/stats/effect",
+  "status": "DERIVED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "C4_S_RHO_MIN": {
+  "value": -0.20914224906912,
+  "path": "s26/results/p_c4.json :: min s_router/*/rho_pred_vs_sstar",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "every s* router predicts s* with the wrong sign"
+ },
+ "C4_S_RHO_MAX": {
+  "value": -0.09584324670073542,
+  "path": "s26/results/p_c4.json :: max s_router/*/rho_pred_vs_sstar",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_COMPLETE": {
+  "value": false,
+  "path": "s26/results/p_c5.json :: complete (absent or false = not a result)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_N_ROWS": {
+  "value": 126,
+  "path": "s26/results/p_c5.json :: rows (count of checkpointed targets at build time)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "RAW_FOLDS_TRAINED": {
+  "value": 3,
+  "path": "s26/models/p_ladder/raw_fold*_s0.pt (count at build time)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "PROPOSAL_C addendum 1: folds 0-2 of 5 trained, evaluation not run"
+ },
+ "VAL_CLASH_TARGETS_BEFORE": {
+  "value": 34,
+  "path": "s26/results/ph_validity.json :: summary/targets_any_clash_2A_before",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L100: 34 emissions with a sub-2 A heavy-atom overlap"
+ },
+ "VAL_CLASH_TARGETS_AFTER": {
+  "value": 1,
+  "path": "s26/results/ph_validity.json :: summary/targets_any_clash_2A_after",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L100: 1"
+ },
+ "VAL_CLASH_BEFORE": {
+  "value": 0.4444444444444444,
+  "path": "s26/results/ph_validity.json :: summary/n_clash_2A/before/mean",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "heavy-atom pairs below 2.0 A per target"
+ },
+ "VAL_CLASH_AFTER": {
+  "value": 0.007936507936507936,
+  "path": "s26/results/ph_validity.json :: summary/n_clash_2A/after/mean",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "VAL_MINHEAVY_BEFORE": {
+  "value": 2.362926242143552,
+  "path": "s26/results/ph_validity.json :: summary/min_heavy/before/mean",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "VAL_MINHEAVY_AFTER": {
+  "value": 2.7846158056239774,
+  "path": "s26/results/ph_validity.json :: summary/min_heavy/after/mean",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "VAL_BOND_STRAIN_AFTER": {
+  "value": 0.01295302192980303,
+  "path": "s26/results/ph_validity.json :: summary/bond_strain/after/mean",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L100: 1.3% (12% on 2BP4)"
+ },
+ "VAL_ANGLE_STRAIN_AFTER": {
+  "value": 0.02456655870328813,
+  "path": "s26/results/ph_validity.json :: summary/angle_strain/after/mean",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L100: 2.5%"
+ },
+ "VAL_OMEGA_DEV_AFTER": {
+  "value": 6.611978573268805,
+  "path": "s26/results/ph_validity.json :: summary/omega_dev/after/mean",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "degrees of peptide-bond non-planarity; L100: 6.6"
+ },
+ "VAL_RAMA_BEFORE": {
+  "value": 0.9302309463023747,
+  "path": "s26/results/ph_validity.json :: summary/rama_favoured/before/mean",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "VAL_RAMA_AFTER": {
+  "value": 0.9114123090313566,
+  "path": "s26/results/ph_validity.json :: summary/rama_favoured/after/mean",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C3_REP_MEMBER_VS_NONE": {
+  "value": -0.020688256110606536,
+  "path": "s26/results/ph_c3_stage1_rep.json :: summary/'stage1-REP TOWARD-MEMBER minus do-nothing'/effect",
+  "status": "SOURCED",
+  "basis": "displaced built_chain minus built_chain",
+  "note": "L87: the replication; no longer provisional"
+ },
+ "C3_REP_MEMBER_VS_NONE_CI": {
+  "value": [
+   -0.024979669558754674,
+   -0.016596443287953653
+  ],
+  "path": "s26/results/ph_c3_stage1_rep.json :: .../ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C3_REP_AMBER_VS_RANDOM": {
+  "value": 0.009960997824445476,
+  "path": "s26/results/ph_c3_stage1_rep.json :: summary/'stage1-REP AMBER minus matched-magnitude RANDOM (16 draws)'/effect",
+  "status": "SOURCED",
+  "basis": "relaxed minus displaced built_chain",
+  "note": "L87: +0.0100, still Type-M (1.02x)"
+ },
+ "C3_REP_AMBER_VS_MEMBER": {
+  "value": 0.04138295579699278,
+  "path": "s26/results/ph_c3_stage1_rep.json :: summary/'stage1-REP AMBER minus matched-magnitude TOWARD-MEMBER (16 draws)'/effect",
+  "status": "SOURCED",
+  "basis": "relaxed minus displaced built_chain",
+  "note": ""
+ },
+ "A4_BOOT_L2_A025_DIFF": {
+  "value": -0.05635825908647055,
+  "path": "s26/results/q_var_boot.json :: results/ci/deployed_a025_T03/grown_L2/diff_vs_fixed/point",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L119: -0.056"
+ },
+ "A4_BOOT_L2_A025_DIFF_CI": {
+  "value": [
+   -0.18238797531641576,
+   0.08659155386171181
+  ],
+  "path": "s26/results/q_var_boot.json :: results/ci/deployed_a025_T03/grown_L2/diff_vs_fixed/ci95",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L119: [-0.182, +0.087], includes zero"
+ },
+ "A4_BOOT_A1_DIFF_LO": {
+  "value": 0.23154835507064636,
+  "path": "s26/results/q_var_boot.json :: results/ci/{linear_alpha1_T0,deployed_a1_T03}/{grown_V,grown_L2}/diff_vs_fixed/ci95[0] (min)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L119: every alpha = 1 grown - fixed CI excludes zero, lower bounds +0.23 to +0.60"
+ },
+ "A4_BOOT_A1_DIFF_HI": {
+  "value": 0.7220137238400817,
+  "path": "s26/results/q_var_boot.json :: the same, ci95[1] (max)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A4_BOOT_A1_EXCLUDE_ZERO": {
+  "value": true,
+  "path": "s26/results/q_var_boot.json :: results/ci/{alpha = 1 cells}/{grown_V,grown_L2}/diff_vs_fixed/includes_zero all False",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A4_BOOT_REPRO": {
+  "value": 0.0,
+  "path": "s26/results/q_var_boot.json :: results/repro_worst_rel",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "every q_var.json row reproduced"
+ },
+ "SPREAD_RHO_PARTIAL": {
+  "value": 0.4522144731908512,
+  "path": "s26/results/a_strain_vs_spread.json :: summary/partial_n_rg/spread_mean/rho",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L121/L123: the top-75's own pairwise CA-RMSD spread vs rmsd_arm, partial on n and Rg; native-free"
+ },
+ "SPREAD_RHO_PARTIAL_CI": {
+  "value": [
+   0.2799322731165941,
+   0.6093385774329712
+  ],
+  "path": "s26/results/a_strain_vs_spread.json :: summary/partial_n_rg/spread_mean/ci_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "SPREAD_FOLDS": {
+  "value": 5,
+  "path": "s26/results/a_strain_vs_spread.json :: summary/partial_n_rg/spread_mean/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "RHO_MOVED_SPREAD": {
+  "value": 0.756172478440195,
+  "path": "s26/results/a_strain_vs_spread.json :: summary/rho_moved_spread",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L123: the relaxation's displacement tracks the pool's disagreement at 0.76"
+ },
+ "MOVED_GIVEN_SPREAD": {
+  "value": 0.08168278965129361,
+  "path": "s26/results/a_strain_vs_spread.json :: summary/partial_n_rg_spread/moved/rho",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L121: +0.08 given the spread"
+ },
+ "MOVED_GIVEN_SPREAD_CI": {
+  "value": [
+   -0.10304666054419345,
+   0.25871978017672176
+  ],
+  "path": "s26/results/a_strain_vs_spread.json :: summary/partial_n_rg_spread/moved/ci_iid",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "MOVED_GIVEN_SPREAD_P": {
+  "value": 0.3895,
+  "path": "s26/results/a_strain_vs_spread.json :: summary/partial_n_rg_spread/moved/perm_p",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A3_TMATCH_EFFECT": {
+  "value": 0.0033752130087245542,
+  "path": "s26/results/a3_stats.json :: contrasts/'rmsd_q_synth:fixed_zraw_Tmatch_it50-fixed_zrank_it50'/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rmsd_q_synth)",
+  "note": "L125: +0.003 A, 0.04x MDE"
+ },
+ "A3_TMATCH_X": {
+  "value": 0.04416285503111369,
+  "path": "s26/results/a3_stats.json :: .../'rmsd_q_synth:fixed_zraw_Tmatch_it50-fixed_zrank_it50'/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A3_TMATCH_CI": {
+  "value": [
+   -0.044567720544638006,
+   0.033712074154716665
+  ],
+  "path": "s26/results/a3_stats.json :: .../ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A3_DISTINCT_TMATCH": {
+  "value": 124,
+  "path": "s26/results/a3_property.json :: distinct_states/fixed_zraw_Tmatch_it50/*/n_distinct (sum over the two cells)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L125: 124 of 126"
+ },
+ "A3_DISTINCT_N": {
+  "value": 126,
+  "path": "s26/results/a3_property.json :: distinct_states/fixed_zraw_Tmatch_it50/*/n_targets (sum)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A3_DISTINCT_ZRANK": {
+  "value": 40,
+  "path": "s26/results/a3_property.json :: distinct_states/fixed_zrank_it50/*/n_distinct (sum)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L125: 14/78 + 26/48 under the deployed rank ladder"
  },
  "B3_TORS_MINUS_ARM": {
   "value": 0.5556927740686186,

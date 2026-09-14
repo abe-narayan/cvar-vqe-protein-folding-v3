@@ -47,15 +47,20 @@ SLIDES = {
         "Gibbs state as a control). Right: what the proposal says; the product-state diagnosis (KL to the product of marginals, the "
         "7-rotation state, the fixed circuit's 0.90 nats, the inert L-BFGS growth on the 78 alpha = 1 targets, the full DLA, the "
         "product circuits of A4); verdict REPLACE and what replaces it (slide 9).", ["s26/figures/a4_variance_slopes.png"]),
-    9: ("Direction B, and what we publish: the trainability paper", "What we publish, kept distinct from slide 8's diagnosis (L69). "
-        "Left: what the proposal says; B1 final (three independent blockers); B2 pending; B3 pending with the persisted arms; verdict "
-        "PENDING B2/B3, REPLACE if null. Right: the paper's claim chain with its Sprint 26 additions (the DLA census, the product-state "
-        "target, the non-decaying grown circuits, the A1 null), the two claims it will not make, the venue statement.", []),
-    10: ("Direction C: learn a better distance prior; physics for validity, not accuracy", "Left: what the proposal says; C1 final "
-         "(closures reproduced); C2 running (rungs, falsifier, anchor and its basis). Right: C3 final (the seven-contrast result with "
-         "the Type-M flag and the 124-of-126 validity wording); C4 and C5 pending; verdict PENDING.", []),
-    11: ("Goal and ask", "Goal (two threads), ask (the study and one question), what will not be claimed. The direction line is in "
-         "the notes, marked DRAFT until the coordinator's verdict entry.", []),
+    9: ("Direction B (verdict REPLACE), and what we publish: the trainability paper", "Final, from s26/PROPOSAL_B.md (a88ea259) and "
+        "PROPOSAL_B_REPLACEMENT.md; verdict REPLACE (L117, Adversary L120). Left: what the proposal says; B1 final (three blockers); B2 final "
+        "(noesm, conly, esm8m against the shipped prior with the isolations); B3 final (the sign classifier at its permutation null, the size "
+        "of the gain carried by the pool's strand content). Right: the paper's claim chain with its Sprint 26 additions, the two claims it "
+        "will not make, the venue statement; the notes scope the Adversary's checking to the S26 additions (L122).", []),
+    10: ("Direction C (verdict KEEP WITH EDITS): learn a better prior; physics for validity only", "Final, from s26/PROPOSAL_C.md "
+         "(0a85323f with addendum 1) and C3_RESULT.md addenda 1 to 4; verdict KEEP WITH EDITS (L117, L120). Left: the four edits; C1; C2 "
+         "final on nine rungs (none beats the shipped prior; the ESM-2 650M channel; the five null rungs against their MDEs; raw 3 of 5 "
+         "folds, not evaluated); C4 final (12 m* and 6 s* routers). Right: C3 final with the L46 flags, the replication (L87), the validity "
+         "axis (L100: 34 to 1 clash targets, 1.3% bond and 2.5% angle strain, a validity step on 124 of 126), stage 2 = stage 1 (L112, "
+         "L118); C5 live status at build time (rows checkpointed, complete not set, not a result).", []),
+    11: ("Goal and ask", "Goal (two threads), ask (the study and one question), what will not be claimed. The direction line in the "
+         "notes is the coordinator's L117 ruling verbatim, amended by L122 ('exact and complete'; the S26 additions checked, the S13 inputs "
+         "cited without an S26 re-check; the Pauli mean weights off the slides).", []),
 }
 
 FIXES = """
@@ -79,7 +84,9 @@ FIXES = """
 | "ADAPT ... selects no entangling operator on any of the 78 alpha = 1 targets under L-BFGS" / "declines them on all 78 targets" / L68's "stops with no operator selected on 78 of 78" | `s26/PROPOSAL_A.md` sections 3 and 5 (as first written); L68 | RETRACTED by lane Q in L75 on this lane's L73 flag and corrected by the PROPOSAL_A.md addendum: the growth is inert, not absent. The deck carries L75's final wording on slide 8 and in its notes: operators are appended on 60 (pool V) and 68 (pool L2) of the 78 alpha = 1 targets under L-BFGS, every one multi-qubit, and on 78 of 78 under Adam; they lower the free energy by at most 1.2e-4 nats under L-BFGS and 8.6e-4 under Adam, their angles stay at or below 0.018 rad under L-BFGS, and the state remains a product state to KL 4.1e-4; the 7-rotation state is already within 7.9e-4 nats of the Gibbs optimum. The endpoint numbers and the verdict REPLACE are unchanged. The ideal-ladder statements of L27 and L35 stand. | `s26/results/a1/*.json :: adapt/{V,L2}_{lbfgs,adam_best}_zrank/{stopped, sequence, trace, theta}; arms/adapt*_P21/kl_to_product` |
 | the A1 basis | "built chain" in L68 | slide 8 names it `rmsd_q_synth` (the production projection of the WEIGHTED average over the 128 candidates, 3.2280 A for the deployed selector) and distinguishes it from the production top-75 arm 3.2148 | `s26/results/a1_stats.json :: means/fixed_zrank_it50/rmsd_q_synth`; `s26/results/q_mde_reference.json` |
 | the steric reject +0.228 / +0.167 | L43 | quoted with the Type-M flag and "tail-carried, median +0.003" (L54) | `s26/results/ph_reject_report.json :: report/point_cloud/1e4` |
-| the strain signal (Spearman +0.433) | L53 | quoted in the notes as a calibration flag, never as a gain, as L53 asks | `s26/results/ph_strain.json` |
+| the strain signal (Spearman +0.433, "how far the relaxation moves the chain predicts its error") | L53; the deck's 21:55 build (slide 7 and slide 10 notes) | RETRACTED as a framing by lane PH in L123 on the Adversary's L121: the pool's own disagreement (the top-75's pairwise CA-RMSD spread, native-free) predicts the error at Spearman +0.452 partial on n and Rg, fold CI [+0.280, +0.609], 5/5 folds; the relaxation's displacement tracks that spread at rho 0.756 and adds +0.082 given it (iid CI [-0.103, +0.259], permutation p 0.39). The deck's slide 7 and slide 10 notes carry that wording; the quartile means stand as a presentable form of the phenomenon; "the first native-free quantity above 0.4" was never on a slide | `s26/results/a_strain_vs_spread.json :: summary/{partial_n_rg/spread_mean, rho_moved_spread, partial_n_rg_spread/moved}` |
+| the slide 11 line's "positive and complete" and "the Adversary has checked each" | L117 (the DRAFT line was replaced by L117 verbatim at the 02:1x build) | per the Adversary's L120 and the coordinator's L122: "exact and complete"; the checking is scoped to the S26 additions (A2 L45, A4 L47 with the L119 intervals, the product-state fact L70) and the S13 inputs are cited from their artefacts without an S26 re-check; the S13 Pauli mean weights 2.236 / 3.015 stay off every slide | `s26/results/q_var_boot.json :: results/ci` (L119); L120, L122 |
+| PROPOSAL_C.md's pre-written C5 outcome under a future FINAL stamp (af05d987) | the 02:01 file | the Adversary's L120 MATERIAL item; lane P's 0a85323f rewrote it (live status, raw fold count, addendum 1); slide 10 and its notes are built from that file and read the live C5 checkpoint at build time (rows in `s26/results/p_c5.json`, `complete` not set: not a result) | `s26/results/p_c5.json`; `s26/models/p_ladder/raw_fold*_s0.pt` |
 
 ## Numbers on a slide or in a note that are not read from a results artefact
 
@@ -100,10 +107,14 @@ time (status SOURCED, SOURCED_BY_TEST or DERIVED with the arithmetic stated).
 
 - Slide 8 is in its proposal form (verdict REPLACE, L68, accepted L69 subject to the Adversary's check of L68); the
   builder falls back to the PENDING placeholder only if `s26/PROPOSAL_A.md` is absent (`s26/pr_build_deck.py`, `builders[8]`).
-- Slide 9's verdict is PENDING B2/B3 (lane P); the replacement form is shown as lane Q wrote it.
-- Slide 10's verdict is PENDING C2 to C5 (lane P); C1 and C3 are final.
-- Slide 11's note naming the direction the evidence favours is DRAFT until the coordinator's entry on all three verdicts
-  (A is REPLACE by L68 / L69; B and C pending lane P); it was drafted from the PROPOSAL files and the ledger.
+- Slide 9's verdict is REPLACE, final (`s26/PROPOSAL_B.md` a88ea259; L117; Adversary L120 STANDS).
+- Slide 10's verdict is KEEP WITH EDITS, final (`s26/PROPOSAL_C.md` 0a85323f; L117; L120 STANDS with the document fix applied);
+  C5 is the one live item: its checkpoint is read at build time and is not a result until `complete` is true; lane P's final
+  addendum (when the run finishes or at 04:15) would change one sentence of the slide 10 notes and nothing on the slide.
+- Slide 11's direction line is the coordinator's ruling (L117) verbatim, with L122's amendment; nothing on the deck is DRAFT.
+- Slide 8 is unchanged from the 21:56 build (L75 wording) apart from two additions to its notes: the L119 intervals and one
+  sentence on A3 (L125: 124 of 126 distinct trained states under the entropy-matched raw score against 40 under the rank ladder;
+  +0.0034 A, 0.04x MDE; `s26/results/a3_stats.json`, `a3_property.json`).
 """
 
 

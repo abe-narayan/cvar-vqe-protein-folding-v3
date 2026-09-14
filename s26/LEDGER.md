@@ -5071,3 +5071,42 @@ of the weights (S25 section 6.2: rho -0.74) and to nothing else that was varied 
 Hamiltonian's spectrum was the last untried lever on the selector's side and it moves the
 answer only through that entropy. IDEA_l17 is closed: measured, not helpful. No cell of
 VQE_LFO changes.
+
+## L126 -- LANE PR, FINAL BUILD: SLIDES 9 AND 10 FROM THE FINAL PROPOSAL_B.md (REPLACE) AND PROPOSAL_C.md (0a85323f, KEEP WITH EDITS); SLIDE 11 CARRIES L117 AS AMENDED BY L122; L123's STRAIN WORDING APPLIED; SLIDE 8 UNCHANGED PLUS L119's INTERVALS AND ONE A3 SENTENCE (L125); 485 REGISTERED NUMBERS; VERIFICATION PASS (2026-09-14 02:27, PR)
+
+`vqe_research_overview.pptx` rebuilt (`s26/pr_build_deck.py --no-figures`, then `s26/pr_changes.py`). Slide 9:
+lane P's two-minute script with every number read at build time from `s26/results/p_ladder_report_
+{noesm,conly,esm8m}_s0.json` (noesm +0.208 built chain, 1.01x MDE, fold CI [+0.099, +0.394], 5/5, selection
++0.330; conly +0.122, 0.62x; esm8m +0.242, 1.17x, 5/5), the isolations recomputed from the rung rows (conly
+minus noesm -0.218 on selection, -0.086 built chain; esm8m minus noesm +0.034), `p_b3.json` (balanced accuracy
+0.522 / 0.557 against nulls 0.578 / 0.566; held-out R2 0.404; squared-error reduction 1.19x MDE, fold CI
+[-1.495, -0.700]) and `p_b3_features.json` (the strand-content correlation reproduced as a Pearson -0.638
+against production rmsd_arm minus the s14 helix per target; L107's "rho" is Pearson, Spearman is -0.557);
+B1 from `b1_feasibility.json`; the right column is what we publish, with the checking scoped per L122.
+Slide 10: lane P's script with the nine evaluated rungs (`p_ladder_report_*_s0.json`: no rung beats the shipped
+prior; the five null rungs sit at +0.018 to +0.122 against MDEs 0.128 to 0.198; pca32 and mix are identities on
+126/126; raw 3 of 5 folds trained, not evaluated), C4 from `p_c4.json` (12 m* routers, 11 harmful, largest
++0.068 at 0.91x, none clears its MDE; 6 s* routers with the wrong sign, rho -0.21 to -0.10, costing +0.007 to
++0.027), C3 per `C3_RESULT.md` addenda 1 to 4 with `ph_validity.json` (clash targets 34 to 1, closest heavy-atom
+pair 2.36 to 2.78 A, bond strain 1.3%, angle strain 2.5%, omega non-planarity 6.6 deg, a validity step on 124 of
+126) and the L87 replication (`ph_c3_stage1_rep.json`: toward-member -0.0207, AMBER minus random +0.0100); C5
+stated as running at the proposal's stamp with the live checkpoint read at build time (126 rows, `complete`
+not set: not a result). Slide 11: the L117 line verbatim with L122's "exact and complete"; the notes scope the
+Adversary's checking to the S26 additions (A2 L45, A4 L47 with L119's intervals from `q_var_boot.json`: the
+alpha = 0.25 grown minus fixed difference -0.056 [-0.182, +0.087], the alpha = 1 differences +0.23 to +0.72 with
+every interval excluding zero; the product-state fact L70) and say the S13 inputs are cited without an S26
+re-check; the Pauli mean weights are on no slide. L123 applied to the slide 7 and slide 10 notes: the pool's
+own disagreement predicts the error (Spearman +0.452 partial on n and Rg, fold CI [+0.280, +0.609], 5/5); the
+relaxation's displacement tracks it at rho 0.756 and adds +0.082 given it (iid CI [-0.103, +0.259], p 0.39), all
+from `a_strain_vs_spread.json`; the retracted framing appears only as the notes' citation of what was retracted.
+Slide 8 is unchanged from the L75 build apart from L119's intervals and one A3 sentence in its notes (L125:
+124 of 126 distinct trained states under the entropy-matched raw score against 40 under the rank ladder, and
+the readout does not notice, +0.0034 A, 0.04x MDE; `s26/results/a3_stats.json`, `a3_property.json`).
+Verification (`s26/pr_verify.txt`, pasted into `s26/PRESENTATION_CHANGES.md`): 11 slides; 0 U+2014, 0 U+2013;
+0 banned words; spoken words 249 / 248 / 249 on slides 8 / 9 / 10 (limit 250); title, body and notes on every
+slide. Registry 485 tokens (`s26/pr_values.json`). The change log for the Adversary's RETRACTIONS.md is
+`s26/agentPR_FINDINGS.md` section 7 (the L73 flag, the L75 retraction, the L122 amendment, the L123 retraction,
+the L120 document fix). If lane P's final C5 addendum lands before the close, one sentence of the slide 10 notes
+changes and nothing on the slide.
+
+---

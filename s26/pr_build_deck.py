@@ -437,27 +437,29 @@ def slide_08_pending(prs, V):
 
 
 def slide_09(prs, V):
-    s = new_slide(prs, "Direction B, and what we publish: the trainability paper", 9,
-                  "from s26/PROPOSAL_B.md (lane P, DRAFT; B1 final) and s26/PROPOSAL_B_REPLACEMENT.md (lane Q); the paper replaces A (L68, L69) and, if B2/B3 are null, B")
-    add_text(s, 0.6, 1.4, 6.1, 5.6, [
+    s = new_slide(prs, "Direction B (verdict REPLACE), and what we publish: the trainability paper", 9,
+                  "from s26/PROPOSAL_B.md (lane P, final, a88ea259) and s26/PROPOSAL_B_REPLACEMENT.md (lane Q); verdicts L117; C2 basis: built chain, rebuild 3.2126 (L57)")
+    add_text(s, 0.6, 1.4, 6.15, 5.6, [
         ("What the proposal says", dict(bold=True, color=ACCENT, bullet=False)),
-        ("Replace or augment the shipped distance prior with the output of a large pretrained folding model, because the prior's "
-         "accuracy is the only steep lever the record measured.", {}),
-        ("B1, final: the folding model cannot run on this machine", dict(bold=True, color=ACCENT, bullet=False)),
-        (f"no checkpoint on disk; {F(V,'B1_DOWNLOAD_GB','.2f')} GB to download", {}),
-        ("openfold and omegaconf absent; openfold needs nvcc and Python <= 3.9; this box is Python 3.13, CPU-only torch", {}),
-        (f"{F(V,'B1_RESIDENT_GB','.2f')} GB resident as fair-esm loads it (fp16 LM, fp32 trunk) against {F(V,'B1_HEADROOM_GB','.1f')} GB of headroom; "
-         f"fp16 everywhere is still {F(V,'B1_FP16_GB','.1f')} GB", {}),
-        ("B2, pending: the feasible-scale ladder", dict(bold=True, color=ACCENT, bullet=False)),
-        ("the ESM-2 contact head alone as a prior input; the 8M language model against the 650M (rungs conly and esm8m of the C2 ladder)", {}),
-        ("B3, pending: where the pipeline beats sequence-only, and is that set recognisable native-free?", dict(bold=True, color=ACCENT, bullet=False)),
-        (f"built chains: pipeline {F(V,'ARM_MEAN','.4f')}, sequence-only torsion predictor {F(V,'TORS','.4f')}, constant helix {F(V,'HELIX','.4f')} A; "
-         f"torsion minus pipeline {F(V,'B3_TORS_MINUS_ARM','+.4f')} (SE {F(V,'B3_TORS_MINUS_ARM_SE','.4f')}, MDE {F(V,'B3_TORS_MINUS_ARM_MDE','.4f')}, "
-         f"{F(V,'B3_TORS_W')}W/{F(V,'B3_TORS_L')}L); the classifier test is pending", {}),
-        ("Verdict: PENDING B2/B3. If null: REPLACE with the trainability paper (right).", dict(bold=True)),
-    ], size=11.5, spacing=3)
+        ("replace or augment the shipped distance prior with the output of a large pretrained folding model; fallback B3: route "
+         "between the pipeline and a sequence-only predictor if the targets it beats can be recognised without the native", {}),
+        ("B1, final: the folding model cannot run here", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"no checkpoint ({F(V,'B1_DOWNLOAD_GB','.2f')} GB to download); openfold and omegaconf absent, Python 3.13 vs <= 3.9, CPU-only torch; "
+         f"{F(V,'B1_RESIDENT_GB','.2f')} GB resident against {F(V,'B1_HEADROOM_GB','.1f')} GB of headroom (fp16 everywhere {F(V,'B1_FP16_GB','.1f')} GB)", {}),
+        ("B2, final: the feasible-scale ladder (built chain vs the shipped prior)", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"no ESM: {F(V,'C2_NOESM_ARM','+.3f')} A ({F(V,'C2_NOESM_ARM_X','.2f')} x MDE, fold CI {F(V,'C2_NOESM_ARM_CI','+.3f')}, {F(V,'C2_NOESM_ARM_FOLDS')}/5), "
+         f"selection {F(V,'C2_NOESM_SEL','+.3f')}: WORSE (Type-M); contact head only {F(V,'C2_CONLY_ARM','+.3f')} ({F(V,'C2_CONLY_ARM_X','.2f')} x): NOT MEASURED; "
+         f"8M model for the 650M: {F(V,'C2_ESM8M_ARM','+.3f')} ({F(V,'C2_ESM8M_ARM_X','.2f')} x, {F(V,'C2_ESM8M_ARM_FOLDS')}/5): WORSE (Type-M)", {}),
+        (f"the contact head alone is worth {F(V,'B2_CONLY_MINUS_NOESM_SEL','+.3f')} A on selection (two thirds of the channel); the 8M model minus no ESM "
+         f"{F(V,'B2_ESM8M_MINUS_NOESM_ARM','+.3f')} A: it carries none of it", {}),
+        ("B3, final: the set where the pipeline beats sequence-only is not recognisable native-free", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"sign classifier at chance: balanced accuracy {F(V,'B3_BACC_TORS','.3f')} / {F(V,'B3_BACC_HELIX','.3f')} vs permutation nulls "
+         f"{F(V,'B3_NULL95_TORS','.3f')} / {F(V,'B3_NULL95_HELIX','.3f')}; only the SIZE of the gain over a constant helix is predictable "
+         f"(held-out R2 {F(V,'B3_R2_HELIX','.2f')}), carried by the pool's strand content (Pearson {F(V,'B3_RHO_SSE_HELIX','+.2f')})", {}),
+        ("Verdict: REPLACE. The replacement is the trainability paper (right); the one untested input, a larger language model, needs a larger machine.", dict(bold=True)),
+    ], size=11, spacing=2)
     add_text(s, 6.95, 1.4, 5.95, 5.6, [
-        ("What we publish: the trainability paper (in place of A, and of B if B2/B3 are null)", dict(bold=True, color=ACCENT, bullet=False)),
+        ("What we publish: the trainability paper (in place of A and B)", dict(bold=True, color=ACCENT, bullet=False)),
         ("chain geometry fixes which residues a distance term can depend on (exact theorem); that fixes the energy's Pauli spectrum "
          "once raw AMBER's clash spike is conditioned away", {}),
         (f"the spectrum times the circuit's own kernel predicts the measured gradient variance with no free parameter: median "
@@ -474,46 +476,50 @@ def slide_09(prs, V):
         ("a quantum advantage (7 qubits, exact simulation, selection classical by theorem, a product-state target)", {}),
         ("a barren plateau from a small gradient; 'no plateau' is said only as 'at n <= 13, depth 3, this ansatz'", {}),
         ("Venue: noiseless exact simulation throughout; a submission adds a noise model, width beyond 13, a 2-design control, error bars", dict(color=MUTED)),
-    ], size=11.5, spacing=3)
+    ], size=11, spacing=2)
     return s
 
 
 def slide_10(prs, V):
-    s = new_slide(prs, "Direction C: learn a better distance prior; physics for validity, not accuracy", 10,
-                  "from s26/PROPOSAL_C.md (DRAFT, lane P) and s26/C3_RESULT.md (lane PH, L39, Adversary L46); verdict PENDING C2 to C5")
-    add_text(s, 0.6, 1.4, 6.2, 5.6, [
-        ("What the proposal says", dict(bold=True, color=ACCENT, bullet=False)),
-        ("The prior bounds the accuracy; improve it by learning: better inputs (C2), physics kept honest (C3), routers for the "
-         "per-target set size (C4), a learned correction of the common-mode error (C5); C1 reproduces the closures first.", {}),
-        ("Not 'learn a better ranker': ranking inside the pool is closed at four levels; the prior is the only steep lever.", {}),
+    s = new_slide(prs, "Direction C (verdict KEEP WITH EDITS): learn a better prior; physics for validity only", 10,
+                  "from s26/PROPOSAL_C.md (lane P, 0a85323f with addendum 1) and s26/C3_RESULT.md addenda 1 to 4 (lane PH); verdicts L117 / L120; C2 basis: built chain, rebuild 3.2126 (L57)")
+    add_text(s, 0.6, 1.4, 6.3, 5.6, [
+        ("What the proposal says, and the four edits", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"the prior bounds the accuracy; the premise is right and the four items are wrong as stated: learn a better PRIOR, not a ranker; "
+         f"AMBER for validity only; the routers are closed; C5 was running at the file's stamp ({F(V,'C5_N_ROWS')} rows checkpointed at this build, "
+         f"complete = {F(V,'C5_COMPLETE')}: not a result) and keeps its pre-registration", {}),
         ("C1, final: the closures reproduce to the third decimal", dict(bold=True, color=ACCENT, bullet=False)),
-        (f"set-transformer ranker, real features: {F(V,'C1_S12_REAL_N8','.3f')} (n = 8) to {F(V,'C1_S12_REAL_FULL','.3f')} A (full); "
-         f"with a leaked label {F(V,'C1_S12_LEAK_N8','.3f')} to {F(V,'C1_S12_LEAK_FULL','.3f')} (ORACLE; weighted-average basis)", {}),
-        (f"perfect ranker inside the shipped top-25: {F(V,'C1_S17_BAND_BEST','.3f')} A vs random member {F(V,'C1_S17_RAND','.3f')} "
-         f"and distogram argmin {F(V,'C1_S17_DIST_PICK','.3f')} (single window)", {}),
-        ("C2, running: the prior-input ladder", dict(bold=True, color=ACCENT, bullet=False)),
-        (f"{F(V,'C2_N_RUNGS')} rungs (no ESM, contact head only, pca32, pca32f, pca128, raw, 8M vs 650M, wide, pairnet, mix); "
-         f"{F(V,'C2_RUNGS_TRAINED')} rungs have all five fold models on disk; evaluations running", {}),
-        ("falsifier, fixed before the first run: beat the shipped posterior on the built chain by more than its own MDE, "
-         "fold-clustered CI excluding zero, 5/5 folds", {}),
-        (f"anchor: selection and point cloud reproduce the production cache ({F(V,'C2_ANCHOR_SEL_MAXABS','.0e')}, "
-         f"{F(V,'C2_ANCHOR_CLOUD_MAXABS','.1e')}); built chain on the rebuild basis {F(V,'C2_ANCHOR_ARM','.4f')} A (L57)", {}),
-    ], size=12, spacing=3)
-    add_text(s, 7.05, 1.4, 5.85, 5.6, [
+        (f"set-transformer ranker {F(V,'C1_S12_REAL_N8','.3f')} to {F(V,'C1_S12_REAL_FULL','.3f')} A real vs {F(V,'C1_S12_LEAK_N8','.3f')} to "
+         f"{F(V,'C1_S12_LEAK_FULL','.3f')} with a leaked label; perfect ranker in the top-25 {F(V,'C1_S17_BAND_BEST','.3f')} vs random {F(V,'C1_S17_RAND','.3f')}", {}),
+        ("C2, final: nine rungs of prior inputs, none beats the shipped prior", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"the retrained shipped recipe reproduces the pipeline on {F(V,'C2_PCA32_ARM_T')}/126 targets; removing the ESM-2 650M channel costs "
+         f"{F(V,'C2_NOESM_ARM','+.3f')} A built chain / {F(V,'C2_NOESM_SEL','+.3f')} A selection ({F(V,'C2_NOESM_ARM_FOLDS')}/5 folds); "
+         f"an 8M model carries none of it ({F(V,'C2_ESM8M_ARM','+.3f')} A)", {}),
+        (f"every other variant (contact head only, per-fold PCA 32 / 128, 2.7x capacity, triangle update, pool-histogram mix) lands within "
+         f"{F(V,'C2_NULL_EFF_MIN','+.3f')} to {F(V,'C2_NULL_EFF_MAX','+.3f')} A of the shipped prior, under MDEs of {F(V,'C2_NULL_MDE_MIN','.2f')} to "
+         f"{F(V,'C2_NULL_MDE_MAX','.2f')} A; the mix rung chooses lam = 0 on 5/5 folds; raw: {F(V,'RAW_FOLDS_TRAINED')} of 5 folds trained, not evaluated", {}),
+        ("C4, final: routers closed for the seventh and eighth time", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"{F(V,'C4_N_M_ROUTERS')} m* routers on four new feature blocks: {F(V,'C4_M_HARMFUL')} harmful, largest {F(V,'C4_M_MAX_EFF','+.3f')} A "
+         f"({F(V,'C4_M_MAX_X','.2f')} x MDE), none clears its MDE; {F(V,'C4_N_S_ROUTERS')} s* routers all with the wrong sign "
+         f"(rho {F(V,'C4_S_RHO_MIN','+.2f')} to {F(V,'C4_S_RHO_MAX','+.2f')}), costing {F(V,'C4_S_EFF_MIN','+.3f')} to {F(V,'C4_S_EFF_MAX','+.3f')} A (point cloud)", {}),
+    ], size=10.5, spacing=2)
+    add_text(s, 7.1, 1.4, 5.8, 5.6, [
         ("C3, final: refine-with-physics is a validity step, not an accuracy step", dict(bold=True, color=ACCENT, bullet=False)),
         (f"the production relaxation moves the built chain {F(V,'C3_MAG','.3f')} A and costs {F(V,'C3_AMBER_VS_NONE','+.4f')} A "
-         f"(fold CI {F(V,'C3_AMBER_VS_NONE_CI','+.4f')}), {F(V,'C3_AMBER_VS_NONE_X','.2f')} x MDE (relaxed minus built chain)", {}),
-        (f"a random move of the same size costs {F(V,'C3_RANDOM_VS_NONE','+.4f')} A {F(V,'C3_RANDOM_VS_NONE_CI','+.4f')}; "
-         f"AMBER minus random {F(V,'C3_AMBER_VS_RANDOM','+.4f')} {F(V,'C3_AMBER_VS_RANDOM_CI','+.4f')}, "
-         f"{F(V,'C3_AMBER_VS_RANDOM_FOLDS')}/5 folds, {F(V,'C3_AMBER_VS_RANDOM_X','.2f')} x MDE: Type-M zone, sign measured, size an upper bound", {}),
-        (f"AMBER minus a move of the same size toward a random pool member: {F(V,'C3_AMBER_VS_MEMBER','+.4f')} A "
-         f"{F(V,'C3_AMBER_VS_MEMBER_CI','+.4f')}; ORACLE cosine of the displacement with the true residual: {F(V,'C3_COS','+.3f')}", {}),
-        (f"what validity buys: {F(V,'C3_FRAC_E0_OVER_1E4','.1%')} of built chains start above 1e4 kcal/mol; {F(V,'C3_N_CONVERGED')} of 126 "
-         f"converge below 1000 (9KAR ends at {F(V,'C3_E1_MAX','.0f')}); a validity step on 124 of 126, on 2BP4 and 9KAR it breaks a virtual bond", {}),
-        ("C4, C5: pre-registered, pending", dict(bold=True, color=ACCENT, bullet=False)),
-        ("routers on a feature set no previous router used (C4); predict and subtract the common mode (C5)", {}),
-        ("Verdict: PENDING the ladder (KEEP AS STATED / KEEP WITH EDITS / REPLACE, per lane P)", dict(bold=True)),
-    ], size=12, spacing=3)
+         f"(fold CI {F(V,'C3_AMBER_VS_NONE_CI','+.4f')}, {F(V,'C3_AMBER_VS_NONE_X','.2f')} x MDE); a random move of the same size costs "
+         f"{F(V,'C3_RANDOM_VS_NONE','+.4f')}; AMBER minus random {F(V,'C3_AMBER_VS_RANDOM','+.4f')} ({F(V,'C3_AMBER_VS_RANDOM_FOLDS')}/5 folds, "
+         f"{F(V,'C3_AMBER_VS_RANDOM_X','.2f')} x MDE: Type-M, sign measured, size an upper bound; replicated {F(V,'C3_REP_AMBER_VS_RANDOM','+.4f')})", {}),
+        (f"AMBER minus a same-size move toward a random pool member {F(V,'C3_AMBER_VS_MEMBER','+.4f')} A ({F(V,'C3_AMBER_VS_MEMBER_X','.2f')} x); "
+         f"that zero-information move itself improves the chain by {F(V,'C3_REP_MEMBER_VS_NONE','+.4f')} A (replicated): the projection's cost, not physics", {}),
+        (f"what validity buys (s26/results/ph_validity.json): emissions with a sub-2 A heavy-atom overlap {F(V,'VAL_CLASH_TARGETS_BEFORE')} to "
+         f"{F(V,'VAL_CLASH_TARGETS_AFTER')}; closest heavy-atom pair {F(V,'VAL_MINHEAVY_BEFORE','.2f')} to {F(V,'VAL_MINHEAVY_AFTER','.2f')} A; "
+         f"{F(V,'C3_N_CONVERGED')} of 126 energies converge below 1000 kcal/mol; at the price of {F(V,'VAL_BOND_STRAIN_AFTER','.1%')} bond and "
+         f"{F(V,'VAL_ANGLE_STRAIN_AFTER','.1%')} angle strain, {F(V,'VAL_OMEGA_DEV_AFTER','.1f')} deg of peptide-bond non-planarity, and a broken "
+         f"virtual bond on 2BP4 and 9KAR: a validity step on 124 of 126", {}),
+        ("stage 2 reduces to stage 1: the best C2 rung is the shipped prior, so the delivered chains are the production emission (L112)", {}),
+        ("Verdict: KEEP WITH EDITS. The prior is the lever; its derivative is steep and its inputs on this machine are flat; the honest next "
+         "step is a language model too large for this box.", dict(bold=True)),
+    ], size=10.5, spacing=2)
     return s
 
 
@@ -527,7 +533,7 @@ def slide_pending(prs, V, no, title, waiting_for):
 
 
 def slide_11(prs, V):
-    s = new_slide(prs, "Goal and ask", 11, "the direction line in the notes is DRAFT until the coordinator's verdict entry in s26/LEDGER.md")
+    s = new_slide(prs, "Goal and ask", 11, "the direction line in the notes is the coordinator's ruling, ledger L117, verbatim")
     add_text(s, 0.7, 1.45, 12.0, 5.5, [
         ("Goal", dict(bold=True, color=ACCENT, bullet=False, size=18)),
         ("Find out whether a better distance prior is obtainable from inputs this machine can compute, on the instrument I have, "
