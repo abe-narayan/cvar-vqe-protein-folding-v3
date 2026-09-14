@@ -388,7 +388,7 @@ is keep with edits: the prior is the lever, its derivative is steep, its inputs 
 machine are flat, and the honest next step is a language model too large for this box.
 
 ### also
-Verdict KEEP WITH EDITS, final (`s26/PROPOSAL_C.md`, commit 0a85323f with addendum 1; coordinator L117; Adversary L120 STANDS). The
+Verdict KEEP WITH EDITS, final (`s26/PROPOSAL_C.md` with addenda 1 and 2, 03:54; coordinator L117; Adversary L120 STANDS). The
 four edits: (1) C2 "learn a better prior from better inputs" becomes "the prior's inputs are
 measured out at n = 126": the ESM-2 650M channel is the whole of the channel this instrument
 can see ({C2_NOESM_ARM:+.3f} A built chain, {C2_NOESM_SEL:+.3f} A selection, {C2_NOESM_ARM_FOLDS}/5
@@ -401,12 +401,18 @@ feature blocks no previous router used, {C4_M_HARMFUL} pointing the harmful way,
 {C4_M_MAX_EFF:+.3f} A at {C4_M_MAX_X:.2f} x MDE, none clearing its MDE; {C4_N_S_ROUTERS} s*
 routers, all with the wrong sign (rho {C4_S_RHO_MIN:+.2f} to {C4_S_RHO_MAX:+.2f}), costing
 {C4_S_EFF_MIN:+.3f} to {C4_S_EFF_MAX:+.3f} A against s = 1 (`s26/results/p_c4.json`, L110, L115);
-C5 (predict and subtract the common mode) was RUNNING at the proposal's 02:12 stamp
-(`s26/PROPOSAL_C.md` addendum 1, correcting a pre-written outcome per L120); at this build
-`s26/results/p_c5.json` holds {C5_N_ROWS} checkpointed rows with complete = {C5_COMPLETE}, so it is
-NOT A RESULT; lane P appends a final addendum when the run finishes or at 04:15, and the record's
-prior for it is a null (S16, S19 L14, S24 L7). The raw rung has {RAW_FOLDS_TRAINED} of 5 fold models
-trained and was not evaluated. (4) "The prior's derivative is steep
+C5 (predict and subtract the common mode) is CLOSED (`s26/PROPOSAL_C.md` addendum 2, 03:54; ledger
+L132; `s26/results/p_c5.json` complete = {C5_COMPLETE}, 126/126): subtracting a predicted common-mode
+correction on held-out folds is null to harmful on the built chain (rebuild basis): GLOBAL in the
+coordinate frame {C5_GLOBAL_R2:+.4f} A ({C5_GLOBAL_R2_X:.2f} x MDE, fold CI {C5_GLOBAL_R2_CI},
+{C5_GLOBAL_R2_VERDICT}), GLOBAL in distance space {C5_GLOBAL_R1:+.4f} ({C5_GLOBAL_R1_X:.2f} x,
+{C5_GLOBAL_R1_VERDICT}), RIDGE in distance space on 45 native-free features {C5_RIDGE_R1:+.4f}
+({C5_RIDGE_R1_X:.2f} x, fold CI {C5_RIDGE_R1_CI}, {C5_RIDGE_R1_FOLDS}/5 folds, {C5_RIDGE_R1_VERDICT}),
+indistinguishable from a random correction of the same size ({C5_RANDOM_R1:+.4f}, {C5_RANDOM_R1_X:.2f} x);
+the ORACLE ceilings are {C5_ORACLE_R1:+.3f} A (distance space) and {C5_ORACLE_R2:+.3f} A (coordinate
+frame): the common mode is most of the error and nothing native-free touches it (S16, S19 L14, S24 L7
+confirmed on the same operator). The raw rung (1280-d input) is NOT RUN: {RAW_FOLDS_TRAINED} of 5 fold
+models trained, no evaluation (L133); its inputs are bracketed by the null pca32f and pca128 rungs. (4) "The prior's derivative is steep
 and the prior's inputs are flat": every achievable rung moves at cosine 0.2 to 0.5 to the
 native's direction (S25 L12). C1 (L26): closures reproduced, {C1_S12_REAL_N8:.4f} to
 {C1_S12_REAL_FULL:.4f} real vs {C1_S12_LEAK_N8:.4f} to {C1_S12_LEAK_FULL:.4f} leaked;
@@ -418,8 +424,8 @@ basis {C2_ANCHOR_ARM:.4f}), effect (x MDE, fold CI, folds): noesm {C2_NOESM_ARM:
 ({C2_PCA32_ARM_T} ties); pca32f {C2_PCA32F_ARM:+.3f} ({C2_PCA32F_ARM_X:.2f} x, {C2_PCA32F_ARM_CI});
 pca128 {C2_PCA128_ARM:+.3f} ({C2_PCA128_ARM_X:.2f} x, {C2_PCA128_ARM_CI}); wide {C2_WIDE_ARM:+.3f}
 ({C2_WIDE_ARM_X:.2f} x, {C2_WIDE_ARM_CI}); pairnet {C2_PAIRNET_ARM:+.3f} ({C2_PAIRNET_ARM_X:.2f} x,
-{C2_PAIRNET_ARM_CI}); mix identity ({C2_MIX_ARM_T} ties, lam* = 0 on 5/5 folds); raw: {RAW_FOLDS_TRAINED} of 5
-folds trained, not evaluated. No rung is better than the shipped prior on the built chain ({C2_ANY_BETTER}).
+{C2_PAIRNET_ARM_CI}); mix identity ({C2_MIX_ARM_T} ties, lam* = 0 on 5/5 folds); raw: NOT RUN, {RAW_FOLDS_TRAINED} of 5
+folds trained, not evaluated (L133). No rung is better than the shipped prior on the built chain ({C2_ANY_BETTER}).
 C3 (L39, L46, L87, L100; `s26/C3_RESULT.md` addenda 1 to 4): AMBER vs the built chain
 {C3_AMBER_VS_NONE:+.4f} (fold CI {C3_AMBER_VS_NONE_CI}, {C3_AMBER_VS_NONE_X:.2f} x); vs a random
 move of its own size {C3_AMBER_VS_RANDOM:+.4f} ({C3_AMBER_VS_RANDOM_CI}, {C3_AMBER_VS_RANDOM_X:.2f} x,

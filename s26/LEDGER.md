@@ -5475,3 +5475,19 @@ and S7-11 measured raw on selection as indistinguishable from pca32 and pca128. 
 not as a result; its four checkpoints stay on disk for the next sprint.
 
 ---
+
+## L134 -- LANE PR: C5's CLOSURE (L132, PROPOSAL_C.md ADDENDUM 2) AND THE raw RUNG's STATUS (L133) APPLIED TO SLIDE 10 AND ITS NOTES; THE DECK IS FINAL WITH NOTHING LIVE OR PENDING; 520 REGISTERED NUMBERS; VERIFICATION PASS (2026-09-14 03:55, PR)
+
+Rebuilt after `s26/PROPOSAL_C.md` addendum 2 landed at 03:54 (`python s26/pr_build_deck.py --no-figures; python
+s26/pr_changes.py`). Slide 10's first bullet and its notes now state C5 as CLOSED at one agent-day, every number read
+from `s26/results/p_c5.json :: summary` (complete: true, 126/126): GLOBAL in the coordinate frame -0.0090 A (0.23x MDE,
+fold CI [-0.033, +0.019], NOT MEASURED), GLOBAL in distance space +0.0312 (0.60x, NOT MEASURED), RIDGE in distance
+space +0.1643 A (1.79x MDE, fold CI [+0.118, +0.225], 5/5 folds, WORSE), the random correction of the same size
++0.1351 (1.33x), the ORACLE ceilings -1.875 A (distance space) and -3.129 A (coordinate frame); the raw rung is stated
+as NOT RUN (4 of 5 fold models on disk at build time, no evaluation, L133). Nothing else on the deck changed.
+Verification (`s26/pr_verify.txt`, pasted into `s26/PRESENTATION_CHANGES.md`): 11 slides; 0 U+2014, 0 U+2013; 0
+banned words; spoken words 249 / 248 / 249 on slides 8 / 9 / 10; title, body and notes on every slide. Registry 520
+tokens (`s26/pr_values.json`). `s26/agentPR_FINDINGS.md` section 7 carries the change-log row. The deck is final:
+no slide, note or verdict is live, DRAFT or PENDING.
+
+---

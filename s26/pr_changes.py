@@ -57,7 +57,7 @@ SLIDES = {
          "final on nine rungs (none beats the shipped prior; the ESM-2 650M channel; the five null rungs against their MDEs; raw 3 of 5 "
          "folds, not evaluated); C4 final (12 m* and 6 s* routers). Right: C3 final with the L46 flags, the replication (L87), the validity "
          "axis (L100: 34 to 1 clash targets, 1.3% bond and 2.5% angle strain, a validity step on 124 of 126), stage 2 = stage 1 (L112, "
-         "L118); C5 live status at build time (rows checkpointed, complete not set, not a result).", []),
+         "L118); C5 closed (addendum 2, L132: GLOBAL null, RIDGE harmful, the ORACLE ceilings); raw not run (L133).", []),
     11: ("Goal and ask", "Goal (two threads), ask (the study and one question), what will not be claimed. The direction line in the "
          "notes is the coordinator's L117 ruling verbatim, amended by L122 ('exact and complete'; the S26 additions checked, the S13 inputs "
          "cited without an S26 re-check; the Pauli mean weights off the slides).", []),
@@ -109,8 +109,9 @@ time (status SOURCED, SOURCED_BY_TEST or DERIVED with the arithmetic stated).
   builder falls back to the PENDING placeholder only if `s26/PROPOSAL_A.md` is absent (`s26/pr_build_deck.py`, `builders[8]`).
 - Slide 9's verdict is REPLACE, final (`s26/PROPOSAL_B.md` a88ea259; L117; Adversary L120 STANDS).
 - Slide 10's verdict is KEEP WITH EDITS, final (`s26/PROPOSAL_C.md` 0a85323f; L117; L120 STANDS with the document fix applied);
-  C5 is the one live item: its checkpoint is read at build time and is not a result until `complete` is true; lane P's final
-  addendum (when the run finishes or at 04:15) would change one sentence of the slide 10 notes and nothing on the slide.
+  C5 completed at 03:12 and lane P's addendum 2 (03:54, L132) is applied: slide 10 and its notes state C5 as CLOSED (null to
+  harmful; the ORACLE ceilings) with every number read from `s26/results/p_c5.json :: summary`; the raw rung is NOT RUN
+  (4 of 5 folds trained, L133). Nothing on the deck is live or pending.
 - Slide 11's direction line is the coordinator's ruling (L117) verbatim, with L122's amendment; nothing on the deck is DRAFT.
 - Slide 8 is unchanged from the 21:56 build (L75 wording) apart from two additions to its notes: the L119 intervals and one
   sentence on A3 (L125: 124 of 126 distinct trained states under the entropy-matched raw score against 40 under the rank ladder;

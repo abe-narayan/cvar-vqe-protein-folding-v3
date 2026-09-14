@@ -21,7 +21,7 @@ title, so the edits can be carried onto the real file if the presenter supplies 
   11 slides, 0 U+2014, 0 U+2013, 0 occurrences of any of the six banned words, the only
   non-ASCII character U+2022 (`s26/pr_verify.txt`).
 - Slides 1 to 7 and 11 (step a): every number read from an artefact at build time by
-  `s26/pr_values.py` (485 registered tokens, `s26/pr_values.json`), 30 of the 35 claims of
+  `s26/pr_values.py` (520 registered tokens, `s26/pr_values.json`), 30 of the 35 claims of
   `s26/EXAMINATION.md` section C re-read at their leaves. Slide 4 carries the two
   ORACLE-superposed CA overlays: 1S9Z (T030, n = 16, built chain 0.181981 A) and 9KAR (n = 15,
   7.437696 A), the built chain `ca` from `bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json`
@@ -178,11 +178,12 @@ the A1 endpoint numbers, the product-state facts and the verdict are as in L68 a
 | 2026-09-14 02:2x (final build) | L122 applied: "positive and complete" reads "exact and complete"; the notes of slides 9 and 11 scope the Adversary's checking to the S26 additions (A2 L45; A4 L47 with L119's intervals from `s26/results/q_var_boot.json`; the product-state fact L70) and say the S13 inputs are cited from their artefacts without an S26 re-check; the S13 Pauli mean weights stay off every slide | the Adversary's L120 caveats, accepted in L122 | L120, L122 |
 | 2026-09-14 02:2x (final build) | L123 applied: the strain-difficulty framing ("how far the relaxation moves the chain predicts its error") RETRACTED from the slide 7 and slide 10 notes and replaced by "the pool's own disagreement predicts the error (Spearman +0.452 partial on n and Rg, fold CI [+0.280, +0.609], 5/5 folds); the relaxation's displacement tracks that disagreement at rho 0.756 and adds nothing given it (+0.082, permutation p 0.39)", every number read from `s26/results/a_strain_vs_spread.json`; the quartile means stand as a presentable form of the phenomenon | lane PH's L123 retraction on the Adversary's L121 | L121, L123 |
 | 2026-09-14 02:2x (final build) | slide 10 and its notes read PROPOSAL_C.md's corrected version (0a85323f), not the 02:01 file: C5 stated as running at the file's stamp with the live checkpoint read at build time (not a result until complete is true); raw 3 of 5 folds trained, not evaluated | the Adversary's L120 MATERIAL item, fixed by lane P (L124) | L120, L124 |
+| 2026-09-14 03:55 | C5 final applied from PROPOSAL_C.md addendum 2 (03:54) and `s26/results/p_c5.json` (complete: true): slide 10 and its notes state C5 as CLOSED, null (GLOBAL -0.009 / +0.031 A) to harmful (RIDGE +0.164 A, 1.79x MDE, 5/5 folds, indistinguishable from a random correction of the same size +0.135), ORACLE ceilings -1.87 / -3.13 A; the raw rung stated as NOT RUN (4 of 5 folds trained, L133); no other slide changed | lane P's C5 completion (L132) and raw status (L133) | L132, L133 |
 
 ## 8. Artefacts and memory
 
     vqe_research_overview.pptx            the deck (11 slides)
-    s26/pr_values.py -> s26/pr_values.json the registry (485 tokens: value, path, basis, status, note)
+    s26/pr_values.py -> s26/pr_values.json the registry (520 tokens: value, path, basis, status, note)
     s26/pr_figures.py -> s26/figures/pr_overlay_1S9Z.png, pr_overlay_9KAR.png, pr_width_sweep.png, pr_ladder.png
     s26/pr_notes.md                        spoken text with {TOKEN} placeholders
     s26/pr_build_deck.py                   the build and the verification (pr_verify.txt, pr_verify_dump.txt, pr_manifest.json)

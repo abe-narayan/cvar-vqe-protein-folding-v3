@@ -3144,9 +3144,275 @@
   "note": ""
  },
  "C5_COMPLETE": {
-  "value": false,
+  "value": true,
   "path": "s26/results/p_c5.json :: complete (absent or false = not a result)",
   "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_GLOBAL_R1": {
+  "value": 0.03121701347921752,
+  "path": "s26/results/p_c5.json :: summary/global_R1_a0.5/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126)",
+  "note": "C5 arm global_R1_a0.5 minus the incumbent; NOT MEASURED (|effect| 0.0312 <= its own MDE 0.0519, 0.60x)"
+ },
+ "C5_GLOBAL_R1_X": {
+  "value": 0.6014616700598234,
+  "path": "s26/results/p_c5.json :: summary/global_R1_a0.5/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_GLOBAL_R1_CI": {
+  "value": [
+   0.015739843991048354,
+   0.048635553963470114
+  ],
+  "path": "s26/results/p_c5.json :: summary/global_R1_a0.5/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_GLOBAL_R1_FOLDS": {
+  "value": 5,
+  "path": "s26/results/p_c5.json :: summary/global_R1_a0.5/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_GLOBAL_R1_VERDICT": {
+  "value": "NOT MEASURED",
+  "path": "s26/results/p_c5.json :: summary/global_R1_a0.5/verdict",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_GLOBAL_R2": {
+  "value": -0.009032027899407711,
+  "path": "s26/results/p_c5.json :: summary/global_R2_a0.5/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126)",
+  "note": "C5 arm global_R2_a0.5 minus the incumbent; NOT MEASURED (|effect| 0.0090 <= its own MDE 0.0392, 0.23x)"
+ },
+ "C5_GLOBAL_R2_X": {
+  "value": -0.23024246343989602,
+  "path": "s26/results/p_c5.json :: summary/global_R2_a0.5/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_GLOBAL_R2_CI": {
+  "value": [
+   -0.03312525896366089,
+   0.018532209148554846
+  ],
+  "path": "s26/results/p_c5.json :: summary/global_R2_a0.5/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_GLOBAL_R2_FOLDS": {
+  "value": 3,
+  "path": "s26/results/p_c5.json :: summary/global_R2_a0.5/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_GLOBAL_R2_VERDICT": {
+  "value": "NOT MEASURED",
+  "path": "s26/results/p_c5.json :: summary/global_R2_a0.5/verdict",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_RIDGE_R1": {
+  "value": 0.1643123912046448,
+  "path": "s26/results/p_c5.json :: summary/ridge_R1/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126)",
+  "note": "C5 arm ridge_R1 minus the incumbent; WORSE"
+ },
+ "C5_RIDGE_R1_X": {
+  "value": 1.7862591981571692,
+  "path": "s26/results/p_c5.json :: summary/ridge_R1/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_RIDGE_R1_CI": {
+  "value": [
+   0.1175672352707539,
+   0.22529816879162798
+  ],
+  "path": "s26/results/p_c5.json :: summary/ridge_R1/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_RIDGE_R1_FOLDS": {
+  "value": 5,
+  "path": "s26/results/p_c5.json :: summary/ridge_R1/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_RIDGE_R1_VERDICT": {
+  "value": "WORSE",
+  "path": "s26/results/p_c5.json :: summary/ridge_R1/verdict",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_RANDOM_R1": {
+  "value": 0.13509528638412646,
+  "path": "s26/results/p_c5.json :: summary/random_R1/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126)",
+  "note": "C5 arm random_R1 minus the incumbent; WORSE"
+ },
+ "C5_RANDOM_R1_X": {
+  "value": 1.3274680013514253,
+  "path": "s26/results/p_c5.json :: summary/random_R1/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_RANDOM_R1_CI": {
+  "value": [
+   0.03654513639483916,
+   0.24630784222533564
+  ],
+  "path": "s26/results/p_c5.json :: summary/random_R1/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_RANDOM_R1_FOLDS": {
+  "value": 4,
+  "path": "s26/results/p_c5.json :: summary/random_R1/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_RANDOM_R1_VERDICT": {
+  "value": "WORSE",
+  "path": "s26/results/p_c5.json :: summary/random_R1/verdict",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_RANDOM_R2": {
+  "value": 0.012311691490734734,
+  "path": "s26/results/p_c5.json :: summary/random_R2_a0.5/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126)",
+  "note": "C5 arm random_R2_a0.5 minus the incumbent; NOT MEASURED (|effect| 0.0123 <= its own MDE 0.0274, 0.45x)"
+ },
+ "C5_RANDOM_R2_X": {
+  "value": 0.44897606929511275,
+  "path": "s26/results/p_c5.json :: summary/random_R2_a0.5/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_RANDOM_R2_CI": {
+  "value": [
+   -0.008116894757918821,
+   0.03001646623956781
+  ],
+  "path": "s26/results/p_c5.json :: summary/random_R2_a0.5/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_RANDOM_R2_FOLDS": {
+  "value": 3,
+  "path": "s26/results/p_c5.json :: summary/random_R2_a0.5/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_RANDOM_R2_VERDICT": {
+  "value": "NOT MEASURED",
+  "path": "s26/results/p_c5.json :: summary/random_R2_a0.5/verdict",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_ORACLE_R1": {
+  "value": -1.8749363713450962,
+  "path": "s26/results/p_c5.json :: summary/oracle_R1/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126)",
+  "note": "C5 arm oracle_R1 minus the incumbent; BETTER"
+ },
+ "C5_ORACLE_R1_X": {
+  "value": -5.149817014234783,
+  "path": "s26/results/p_c5.json :: summary/oracle_R1/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_ORACLE_R1_CI": {
+  "value": [
+   -2.0918639491834,
+   -1.602074173340305
+  ],
+  "path": "s26/results/p_c5.json :: summary/oracle_R1/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_ORACLE_R1_FOLDS": {
+  "value": 5,
+  "path": "s26/results/p_c5.json :: summary/oracle_R1/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_ORACLE_R1_VERDICT": {
+  "value": "BETTER",
+  "path": "s26/results/p_c5.json :: summary/oracle_R1/verdict",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_ORACLE_R2": {
+  "value": -3.129266987661006,
+  "path": "s26/results/p_c5.json :: summary/oracle_R2/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rebuild basis 3.2126)",
+  "note": "C5 arm oracle_R2 minus the incumbent; BETTER"
+ },
+ "C5_ORACLE_R2_X": {
+  "value": -7.282543497684016,
+  "path": "s26/results/p_c5.json :: summary/oracle_R2/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_ORACLE_R2_CI": {
+  "value": [
+   -3.2600211040968774,
+   -3.006665595507104
+  ],
+  "path": "s26/results/p_c5.json :: summary/oracle_R2/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_ORACLE_R2_FOLDS": {
+  "value": 5,
+  "path": "s26/results/p_c5.json :: summary/oracle_R2/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C5_ORACLE_R2_VERDICT": {
+  "value": "BETTER",
+  "path": "s26/results/p_c5.json :: summary/oracle_R2/verdict",
+  "status": "SOURCED",
   "basis": "",
   "note": ""
  },
@@ -3158,7 +3424,7 @@
   "note": ""
  },
  "RAW_FOLDS_TRAINED": {
-  "value": 3,
+  "value": 4,
   "path": "s26/models/p_ladder/raw_fold*_s0.pt (count at build time)",
   "status": "DERIVED",
   "basis": "",

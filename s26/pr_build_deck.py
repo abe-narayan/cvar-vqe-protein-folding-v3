@@ -482,12 +482,13 @@ def slide_09(prs, V):
 
 def slide_10(prs, V):
     s = new_slide(prs, "Direction C (verdict KEEP WITH EDITS): learn a better prior; physics for validity only", 10,
-                  "from s26/PROPOSAL_C.md (lane P, 0a85323f with addendum 1) and s26/C3_RESULT.md addenda 1 to 4 (lane PH); verdicts L117 / L120; C2 basis: built chain, rebuild 3.2126 (L57)")
+                  "from s26/PROPOSAL_C.md (lane P, with addenda 1 and 2) and s26/C3_RESULT.md addenda 1 to 4 (lane PH); verdicts L117 / L120; C5 L132; C2 basis: built chain, rebuild 3.2126 (L57)")
     add_text(s, 0.6, 1.4, 6.3, 5.6, [
         ("What the proposal says, and the four edits", dict(bold=True, color=ACCENT, bullet=False)),
         (f"the prior bounds the accuracy; the premise is right and the four items are wrong as stated: learn a better PRIOR, not a ranker; "
-         f"AMBER for validity only; the routers are closed; C5 was running at the file's stamp ({F(V,'C5_N_ROWS')} rows checkpointed at this build, "
-         f"complete = {F(V,'C5_COMPLETE')}: not a result) and keeps its pre-registration", {}),
+         f"AMBER for validity only; the routers are closed; C5 (predict and subtract the common mode) is closed at one agent-day: null "
+         f"(GLOBAL {F(V,'C5_GLOBAL_R2','+.3f')} / {F(V,'C5_GLOBAL_R1','+.3f')} A) to harmful (RIDGE {F(V,'C5_RIDGE_R1','+.3f')} A, "
+         f"{F(V,'C5_RIDGE_R1_X','.2f')} x MDE, {F(V,'C5_RIDGE_R1_FOLDS')}/5 folds), ORACLE ceilings {F(V,'C5_ORACLE_R1','+.2f')} / {F(V,'C5_ORACLE_R2','+.2f')} A", {}),
         ("C1, final: the closures reproduce to the third decimal", dict(bold=True, color=ACCENT, bullet=False)),
         (f"set-transformer ranker {F(V,'C1_S12_REAL_N8','.3f')} to {F(V,'C1_S12_REAL_FULL','.3f')} A real vs {F(V,'C1_S12_LEAK_N8','.3f')} to "
          f"{F(V,'C1_S12_LEAK_FULL','.3f')} with a leaked label; perfect ranker in the top-25 {F(V,'C1_S17_BAND_BEST','.3f')} vs random {F(V,'C1_S17_RAND','.3f')}", {}),
@@ -497,7 +498,7 @@ def slide_10(prs, V):
          f"an 8M model carries none of it ({F(V,'C2_ESM8M_ARM','+.3f')} A)", {}),
         (f"every other variant (contact head only, per-fold PCA 32 / 128, 2.7x capacity, triangle update, pool-histogram mix) lands within "
          f"{F(V,'C2_NULL_EFF_MIN','+.3f')} to {F(V,'C2_NULL_EFF_MAX','+.3f')} A of the shipped prior, under MDEs of {F(V,'C2_NULL_MDE_MIN','.2f')} to "
-         f"{F(V,'C2_NULL_MDE_MAX','.2f')} A; the mix rung chooses lam = 0 on 5/5 folds; raw: {F(V,'RAW_FOLDS_TRAINED')} of 5 folds trained, not evaluated", {}),
+         f"{F(V,'C2_NULL_MDE_MAX','.2f')} A; the mix rung chooses lam = 0 on 5/5 folds; raw: not run ({F(V,'RAW_FOLDS_TRAINED')} of 5 folds trained, no evaluation)", {}),
         ("C4, final: routers closed for the seventh and eighth time", dict(bold=True, color=ACCENT, bullet=False)),
         (f"{F(V,'C4_N_M_ROUTERS')} m* routers on four new feature blocks: {F(V,'C4_M_HARMFUL')} harmful, largest {F(V,'C4_M_MAX_EFF','+.3f')} A "
          f"({F(V,'C4_M_MAX_X','.2f')} x MDE), none clears its MDE; {F(V,'C4_N_S_ROUTERS')} s* routers all with the wrong sign "

@@ -567,6 +567,15 @@ def load_values():
     put("C4_S_RHO_MAX", max(x[3] for x in seff), "s26/results/p_c4.json :: max s_router/*/rho_pred_vs_sstar", status="DERIVED")
     c5 = _j("s26/results/p_c5.json")
     put("C5_COMPLETE", bool(c5.get("complete", False)), "s26/results/p_c5.json :: complete (absent or false = not a result)", status="DERIVED")
+    if c5.get("complete") and "summary" in c5:
+        for arm, tok in (("global_R1_a0.5", "C5_GLOBAL_R1"), ("global_R2_a0.5", "C5_GLOBAL_R2"), ("ridge_R1", "C5_RIDGE_R1"), ("random_R1", "C5_RANDOM_R1"),
+                         ("random_R2_a0.5", "C5_RANDOM_R2"), ("oracle_R1", "C5_ORACLE_R1"), ("oracle_R2", "C5_ORACLE_R2")):
+            c = c5["summary"][arm]
+            put(tok, c["effect"], f"s26/results/p_c5.json :: summary/{arm}/effect", basis="built_chain (rebuild basis 3.2126)", note=f"C5 arm {arm} minus the incumbent; {c['verdict']}")
+            put(tok + "_X", c["effect_over_mde"], f"s26/results/p_c5.json :: summary/{arm}/effect_over_mde")
+            put(tok + "_CI", c["ci95_fold"], f"s26/results/p_c5.json :: summary/{arm}/ci95_fold")
+            put(tok + "_FOLDS", int(c["folds_same_sign"]), f"s26/results/p_c5.json :: summary/{arm}/folds_same_sign")
+            put(tok + "_VERDICT", c["verdict"].split(" (")[0], f"s26/results/p_c5.json :: summary/{arm}/verdict")
     put("C5_N_ROWS", len(c5.get("rows", [])), "s26/results/p_c5.json :: rows (count of checkpointed targets at build time)", status="DERIVED")
     rawf = sorted(f for f in os.listdir(mdir) if f.startswith("raw_fold") and f.endswith("_s0.pt")) if os.path.isdir(mdir) else []
     put("RAW_FOLDS_TRAINED", len(rawf), "s26/models/p_ladder/raw_fold*_s0.pt (count at build time)", status="DERIVED", note="PROPOSAL_C addendum 1: folds 0-2 of 5 trained, evaluation not run")
