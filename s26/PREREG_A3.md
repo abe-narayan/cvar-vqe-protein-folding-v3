@@ -96,3 +96,16 @@ on one process; peak RSS under 0.4 GB (`s26/jobs_done/q_probe_1A13.json`). Agent
 No variant is selected by its endpoint. If `zraw_Tmatch` is null and `zraw` is harmful, the
 L17 answer is "the spectrum can be made target-dependent; the readout responds to its entropy
 and to nothing else that was varied", and that is what is reported.
+
+
+## ADDENDUM (2026-09-14, after the run; the text above is unchanged; ledger L125)
+
+Built 126/126 (`s26/results/a3/`, `s26/jobs_done/a3_build.json` 16,373 s, 0.352 GB), labelled
+after L33, statistics in `s26/results/a3_stats.json`. H3a: the zrank half FALSIFIED (14 and 26
+distinct per cell against "at most 3"; falsifier "> 10" fired); the zraw half missed (80 of 126
+against ">= 100") but its falsifier ("< 60") did not fire; zraw_Tmatch 124 of 126. H3b: zrank
+half FALSIFIED (58 and 38 against "at most 2"); zraw half held (126 of 126 against "> 40").
+H3c: 3.10 bits against "below 3": missed by 0.1; direction held. H3d: "null" FIRED for every
+Tmatch arm (zraw +0.0034, 0.04x); "harmful" did NOT fire for the unmatched arms (0.69x to 0.81x
+MDE with fold CIs above zero on 5/5 folds: Type-M zone, direction as predicted); "helps" did
+not fire. The alpha = 0.25 subset spans two folds (1, 2); its fold CI is not quoted.
