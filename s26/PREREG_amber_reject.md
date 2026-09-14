@@ -148,3 +148,22 @@ now so it cannot be discovered afterwards. Prior unchanged: null or harmful.
 The census artefact was stamped by `ph_reject.py` at source sha ba028f7717d38725, before the
 fallback lines (`R_empty`, `R_eff`) were added to `retained_sets`; the census computation does
 not read those fields. The committed file (5dc7a3a6) is the one the endpoint runs will stamp.
+
+---
+## ADDENDUM 2 (2026-09-13 19:40) -- THE BUILT-CHAIN ANCHOR IS RE-PROJECTED, NOT READ; ITS DEVIATION FROM THE STORED PRODUCTION CHAIN IS A REPORTED QUANTITY
+
+The first cell of `ph_reject_chain` (1A13) shows the anchor's projected chain 0.0117 A (CA
+RMSD) from the stored production `ca`, RMSD to native 2.63534 against the stored 2.63594.
+Cause, from the record and not yet measured: `core.pipeline.Config.reference_precision` rounds
+the cloud through float32 before projection and `s12.instrument.project` does not, and
+`core/project.py` documents that a 1e-13 input difference can route L-BFGS-B into the other
+torsion branch. Rule, written before the run is read: every contrast in the chain run is paired
+against the RE-PROJECTED anchor (one instrument for all arms), never against the stored
+production number; `anchor_vs_prod` (CA RMSD between the two) and `anchor - prod_rmsd_arm` are
+reported over all 126 with mean, max and the count above 0.05 A. The prereg's built-chain
+falsifier is unchanged. If the deviation reaches the 1.6 A branch flips the projection docstring
+describes on some targets, that is a property of the projection to be reported, and a contrast
+whose sign depends on it is not a result.
+
+Cost, measured on the first cell: 23 projections, 98 s per target (about 4.3 s per projection,
+matching S16's 4.44 s), so the 126-target run is about 3.4 h at one slot.
