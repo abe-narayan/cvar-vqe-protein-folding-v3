@@ -17,11 +17,12 @@ direction was measured to its own ceiling or refuted by a pre-registered falsifi
 neither has happened. Test names are given as `file::test`; the record of their last run is
 `s26/TEST_RUN.md`.
 
-Status of the sections: Parts I to VI, IX and Appendix A are drafted from the record as it
-stands; Parts VII and VIII fill from the S26 ledger as verdicts land (DRAFT until the sprint
-closes) and Appendix C is reproduced at the close; Appendix B lists every number of the drafted
-parts, and `python s26/e_report_check.py` (or `python s26/examine.py --report-check`) re-reads
-each one from its artefact; Appendix D reconciles this report with `docs/REPORT_S26.md`.
+Status: final, at the close of Sprint 26 (ledger L142, 2026-09-14 04:14). Parts I to VI, IX and
+Appendix A are written from the record; Parts VII and VIII carry every S26 verdict with its
+ledger entry and artefact; Appendix B lists every number in the report, and
+`python s26/e_report_check.py` (or `python s26/examine.py --report-check`) re-reads each one from
+its artefact; Appendix D reconciles this report with `docs/REPORT_S26.md`; Appendix C reproduces
+`s26/LEDGER.md` verbatim and is the last thing in the file.
 
 ---
 
@@ -1127,8 +1128,10 @@ deployed Hamiltonian the optimum at alpha = 1 is a product state on every real t
 (KL(Gibbs || product of marginals) at most 7.9e-4 nats), a 7-parameter RY layer reaches it, the
 21-parameter fixed circuit stops 0.90 nats short, an adaptive ansatz free to entangle appends
 operators worth less than 1e-3 nats and leaves a product state, and reaching the optimum exactly
-moves the built chain by -0.014 to -0.022 A, a third of what the comparison resolves (MDE 0.059 to
-0.061). Proposal A's verdict is REPLACE (L69). **A3, a target-dependent Hamiltonian (L125).** A
+moves the built chain by -0.014 to -0.022 A at seed 0 and -0.045 to -0.052 at seed 1, a third to
+four fifths of what the comparison resolves (MDE 0.059 to 0.066): not measured on either seed,
+the difference between the seeds being the fixed comparator's own initialisation (3.228 against
+3.261 A, L139, L140). Proposal A's verdict is REPLACE (L69), on seed-independent facts. **A3, a target-dependent Hamiltonian (L125).** A
 raw-score Hamiltonian at the deployed entropy makes the trained states target-dependent (124 of
 126 distinct, a median 1.34 nats apart against 0.010 under the rank ladder) and the emitted
 structure does not change (+0.0034 A, 0.04x MDE); without the entropy match the sharper states
@@ -1757,10 +1760,10 @@ Closed, retracted, open. Slots; see Parts VII and VIII.
 
 ## PART VII. WHAT S26 TESTED AND FOUND
 
-Filled from `s26/LEDGER.md` from L33 (PHASE 0 SIGNED OFF, 09:05) onward; each item names its
-ledger entry, its artefact, its pre-registration and the Adversary's check where one has landed.
-Nothing is written here before its ledger entry exists. Bases are named on both sides of every
-contrast. "Pending" means the run or its ledger entry has not landed.
+Filled from `s26/LEDGER.md` from L33 (PHASE 0 SIGNED OFF, 09:05) to L142 (SPRINT 26 CLOSE,
+04:14 the next morning); each item names its ledger entry, its artefact, its pre-registration
+and the Adversary's check. Nothing was written here before its ledger entry existed. Bases are
+named on both sides of every contrast. What did not run is recorded as such with its reason.
 
 ### VII.0 How S26 was run
 
@@ -1950,11 +1953,36 @@ budget, realised 7 to 21; the Gibbs control's +0.0088 is -0.0271 on the 78 alpha
 0.206) between two states 2.6e-4 nats apart, the projection amplifying sub-milli-nat differences
 (the mechanism the tie-break floor measures, VII.4); after L75 the Adversary corrected its own
 caveat 2 (L82; `s26/RETRACTIONS.md` R5): L-BFGS does append operators at alpha = 1, they are
-inert, and nothing in the null depends on the count. Verdict for Proposal A (`s26/PROPOSAL_A.md`,
+inert, and nothing in the null depends on the count. The registered replication (seed 1,
+reversed fold order; `s26/PREREG_A1.md` addendum 2; `s26/results/a1s1_stats.json`,
+`s26/results/a1s1/<pdb>.json`, L139) did not reproduce the seed-0 null: at seed 1 the two
+primaries are -0.0449 (SE 0.0227, MDE 0.0635, 0.71x, fold CI [-0.0960, -0.0037], 4/5 folds,
+72W/54L) and -0.0523 (SE 0.0235, MDE 0.0659, 0.79x, [-0.1087, -0.0054], 77W/49L), the Type-M
+zone; the seed-0 points lie inside the seed-1 iid CIs, and neither seed clears its MDE. The
+mechanism is in the arm means: the ADAPT arms are seed-stable (3.2142 to 3.2161 and 3.2059 to
+3.2087; they converge to the same product Gibbs state whatever the start) while the fixed
+21-parameter comparator, which stops 0.90 nats short of that optimum in a seed-dependent place,
+moved from 3.2280 to 3.2610 (+0.033 A) with the seed, so the contrast grew because the
+comparator landed worse, not because ADAPT emitted a better structure; the production top-75
+arm is seed-free (3.2148 on both). A1 is therefore NOT MEASURED on either seed: underpowered at
+seed 0 (0.23x / 0.36x), Type-M at seed 1 (0.71x / 0.79x), direction consistent, magnitude set by
+the deployed circuit's initialisation; L68's "null at the registered threshold" is a seed-0
+statement (`s26/RETRACTIONS.md` R11, a scope correction; `s26/PROPOSAL_A.md` addendum 3). The
+Adversary's reading (L140): two seeds are one ADAPT value against two draws of the comparator,
+so no pooling across seeds is licensed and by S20's rule a variational arm needs four seeds
+before its endpoint is called; the comparator's 0.033 A seed variance is a fact about the
+deployed selector worth a qualifier wherever its 3.228 is quoted; and REPLACE stands on
+seed-independent facts (the product-state optimum, the full so(2^n) algebra from depth 2, no
+width-scaling argument, inert growth) and on an endpoint not measured on either seed. What seed
+1 adds is a sentence about the deployed circuit, not about growth: a better-optimised state of
+the same product target (the 7-parameter RY layer, -0.050 at seed 1, or the exact Gibbs state,
+-0.024) sits 0.02 to 0.05 A nearer at 0.3 to 0.8x MDE because the fixed circuit is a
+seed-sensitive under-optimiser; that supports "replace", not "grow". A four-seed run is the
+next step and was not run. Verdict for Proposal A (`s26/PROPOSAL_A.md`,
 accepted L69): REPLACE, not the expected keep-with-edits, because the mechanism is absent rather
 than weak: the Hamiltonian is a constant ladder whose optimum is a product state, the fixed
 ansatz's algebra is already the full so(2^n), the grown circuits give no width-scaling argument,
-and the endpoint is null at a stated resolution of 0.06 A.
+and the endpoint is not measured on either seed at a stated resolution of 0.06 A.
 
 **A3, a target-dependent Hamiltonian (L125; the S25 L17 question).** `s26/PREREG_A3.md` (filed
 09:00); build `s26/q_adapt.py --build --tag a3` with the variants `zrank`, `zraw`, `asinh`, `soft`
@@ -2246,7 +2274,7 @@ updated at the close):
 
 | idea (lane) | tournament rank and plausibility | outcome | ledger | basis |
 |---|---|---|---|---|
-| product_state_optimum (Q) | 1, 0.80 | MEASURED: the deployed objective's optimum is a product state on every real target (KL to the product of marginals at most 7.9e-4 nats); reaching it exactly moves the built chain by -0.014 to -0.022 A, a third of the MDE | L68, L70, L75 | built chain (`rmsd_q_synth`) |
+| product_state_optimum (Q) | 1, 0.80 | MEASURED: the deployed objective's optimum is a product state on every real target (KL to the product of marginals at most 7.9e-4 nats); reaching it exactly moves the built chain by -0.014 to -0.022 A at seed 0 and -0.045 to -0.052 at seed 1, not measured on either seed | L68, L70, L75, L139, L140 | built chain (`rmsd_q_synth`) |
 | conformational_identity_floor (W) | 2, 0.70 | MEASURED, ORACLE: the same sequence in another deposit sits a median 2.908 A from the native; +0.97 A worse than the pool's best window, -1.44 better than its mean, both Type-M at n = 18 | L52, L80 | single window |
 | tiebreak_noise_floor (W) | 3, 0.85 | MEASURED: the pipeline's own convention noise is 0.0039 A on the 126-mean and 0.0236 A as the paired MDE between two tie-break conventions | L64, L71 | built chain (rebuild) |
 | strain_difficulty (PH) | 4, 0.50 | MEASURED as a calibration flag and RESTATED: the pool's own disagreement (the top-75's pairwise spread) predicts the emitted chain's error at partial rho +0.452; the relaxation's displacement (+0.433) is its proxy at rho 0.76 and adds +0.08 given it; the "first native-free quantity above 0.4" sentence retracted; not a lever | L53, L81, L121, L123 | built chain (ORACLE label) |
@@ -2792,8 +2820,35 @@ were built from (the fresh comparison bit-identical on 126 of 126 for `ca`, `fit
 arm); `amber_platform` and `projection_divergence` with no fresh output (the second raising a
 shape mismatch); two not re-runnable (`recon_containment_audit.json`, written by a script
 deleted in the consolidation, and `project_inputs.json`, the harvested input the projection
-audits read). The audit's own final count lands in lane I's closing entry and this paragraph
-carries it when it does. Lane I's extension
+audits read). The final table (L141; runner `s26/i_verify_rerun.py`, deletions and move-outs under `verify/`
+refused, the tracked sha256 asserted unchanged after every run): 20 of 20 audits ran, 0 not run;
+5 IDENTICAL, 11 DIFFERS each explained, 3 with no tracked JSON to diff (`determinism_audit`,
+`hazard_audit`, `project_selfcheck`, whose fresh outputs are recorded: bit-identical across
+processes and under 4 threads, no key collisions, the stable argsort, builder against reference
+1.732e-13 A), 1 ERROR by construction (`projection_divergence`, whose arm caches are gone and
+whose question `project_arms` answers). Every audit whose tracked JSON records a comparable
+experiment reproduces its science: `project_exactness` 126 of 126 bit-identical (worst 0.0; the
+one differing leaf a timing), `project_equiv` on every science leaf of its four-arm table
+(synthesis 3.2148 / 3.2148 / 3.2145 / 3.2057 for the reference, exact, finite-difference and
+analytic arms), `project_stability` identical on all 469 science leaves, `equiv_compare`
+bit-identical on 8 of 8 including every AMBER quantity; two audits record the repair of what
+they found (`grad_key_collision` true to false, the mode now in the cache key; `project_arms` 0
+of 8 to 126 of 126 once the exact projection replaced the scan builder); two are not like for
+like per target because the module default changed under them (`project_iters`,
+`project_degeneracy`) and say so; `amber_platform`'s tracked JSON is a hand-assembled summary
+with no writer. The sprint closed at 04:14 with L142: what stands and where it lives, in seven
+items (Phase 0 signed off with the production numbers reproduced to 0.0 on all four bases; the
+three verdicts; the tournament with every ranked survivor run or recorded as not run; the
+repository items and the suite at 370 / 368 / 2; the deck, the paper outline, this report, the
+retractions R1 to R11, the deliverables check and the `docs/FINDINGS.md` block; the not-run list
+with reasons; 184 governed job records, every one with an exit code and a peak RSS, the box
+never above the 93% ceiling under the governor's control). The findings, not the folding, remain
+the output: no proposal survived as stated, every mandatory direction has a measured answer, and
+the presenter walks in knowing which questions are closed and by which sprint. After the close
+lane PR applied L139, L140 and L138 to the deck (L143): slide 8 quotes both A1 seeds and says
+not measured on either, with the deployed circuit's 0.033 A seed variance beside it; slide 5
+carries the same qualifier; slide 4 states the 3.2148 A production number as seed-free; 550
+registered numbers, verification 0 dashes, 0 banned words, spoken words 248 / 248 / 249. Lane I's extension
 found two things about the test suite itself: the relaunched slow-test jobs had lost
 `VERIFY_SLOW=1` because it lived in the launching shell, not in the command (one null run set
 aside, both tiers relaunched with the flag inside the command, L98), and the opt-in equivalence
@@ -2846,7 +2901,7 @@ by the campaign's rule that a proposal is not softened to survive; the coordinat
 
 | proposal | verdict | file | what decided it |
 |---|---|---|---|
-| A: qubit-ADAPT-VQE in place of the fixed ansatz | REPLACE (the prompt expected keep with edits) | `s26/PROPOSAL_A.md` | the deployed objective's optimum is a product state on every real target (KL to the product of marginals at most 7.9e-4 nats); an adaptive ansatz appends only inert operators; the fixed circuit's Lie algebra is already the full so(2^n) from depth 2; the grown circuits give no width-scaling argument; the endpoint is null at 0.23x and 0.36x its MDE with a 0.06 A resolution (L27, L35, L45, L47, L68, L69, L70, L75, L82) |
+| A: qubit-ADAPT-VQE in place of the fixed ansatz | REPLACE (the prompt expected keep with edits) | `s26/PROPOSAL_A.md` (addendum 3) | the deployed objective's optimum is a product state on every real target (KL to the product of marginals at most 7.9e-4 nats); an adaptive ansatz appends only inert operators; the fixed circuit's Lie algebra is already the full so(2^n) from depth 2; the grown circuits give no width-scaling argument; the endpoint is not measured on either seed (0.23x / 0.36x MDE at seed 0, 0.71x / 0.79x at seed 1, the difference the fixed comparator's own seed) at a 0.06 A resolution (L27, L35, L45, L47, L68, L69, L70, L75, L82, L119, L138, L139, L140) |
 | B: a learned folding model as the prior | REPLACE | `s26/PROPOSAL_B.md`; the replacement `s26/PROPOSAL_B_REPLACEMENT.md` (the trainability paper) | ESMFold cannot run on this box (L13); no feasible-scale model input beats the shipped prior (`noesm` +0.208, `esm8m` +0.242, `conly` +0.122, L62, L63, L99); the set where the pipeline beats sequence-only is not characterisable native-free (L106, L107) |
 | C: learn the ranking, then refine with physics | KEEP WITH EDITS | `s26/PROPOSAL_C.md`; `s26/C3_RESULT.md` | the edits: the model should learn a better prior, not a better ranker (the prior's derivative is steep, -2.15 A per unit toward truth, and its inputs on this machine are flat: nine rungs, none beats the shipped prior, L56 to L67, L72, L93, L99, L103, L105, L112); AMBER is a validity step only, worse than a random move of its own size (L39, L46, L87, L100); the routers are closed for the seventh and eighth time (L110, L115); C5 did not complete before the close and keeps its pre-registration |
 
@@ -2900,6 +2955,7 @@ contradicts it; nothing superseded is deleted anywhere.
 | R8 (L101) | L99's "-0.30" for the `esm8m` selection slope | +0.2246 (0.88x MDE, NOT MEASURED) | Part VII.3 |
 | R9 (L107) | L106's "helix content and the length" as the feature carrying the size of the gain over a helix | the pool's strand content (standardised ridge weight -0.612, correlation -0.638) | Part VII.2 |
 | R10 (L9) | L7's point-cloud values 1.5921 (1D6X) and 2.2812 (1KWE), typed before the query returned | 2.0900 and 2.7313 (`bench_results/cache/1fc9f2dcf489e2fb/{1D6X,1KWE}.json :: rmsd_avg`); the L7 mechanism stands on the corrected numbers | S26 L7, L9 |
+| R11 (L139, L140) | L68's "null at the registered threshold" for A1 | a seed-0 statement: at seed 1 the primaries are -0.045 / -0.052 A at 0.71x / 0.79x MDE with fold CIs excluding zero; A1 is not measured on either seed; a scope correction, no number withdrawn | Part VII.1 |
 
 `s26/RETRACTIONS.md` also carries the disposition table of prior-sprint claims S26 contradicts,
 scopes or re-sources, mirrored in the "Sprint 26 additions" block of `docs/FINDINGS.md`'s
@@ -2923,8 +2979,7 @@ Two tables. The rule: an open item is never moved to closed on one failed experi
 when it has been measured to its own ceiling or refuted by a pre-registered falsifier, and the
 row names which. The standing pre-S26 list is `docs/STATE_BRIEF_2026-09-12.md` 5.6 and
 `docs/CONDENSED_REPORT.md`, "Closed - do not re-fund"; Part VI carries every closure with its
-sprint. This part lists the S26 movements and the items that remain open at the time of writing
-(DRAFT until the sprint closes).
+sprint. This part lists the S26 movements and the items that remain open at the close.
 
 ### VIII.1 Closed
 
@@ -2947,7 +3002,7 @@ sprint. This part lists the S26 movements and the items that remain open at the 
 | ESMFold (B1) on this box | infeasible on three independent grounds | S26 L13; Part VII.2 |
 | Proposal B: a native-free characterisation of the set where the pipeline beats sequence-only (B3) | the sign classifier is at its permutation null against both comparators; only the size of the gain over a helix is partly predictable, by the pool's strand content; verdict REPLACE | S26 L14, L106, L107; Part VII.2 |
 | AMBER as a distribution inside the prior (the last AMBER form in the record) | the leave-fold-out choice is lam = 0 on every fold; every mixture cell worse, beta without a consistent sign | S26 L105; Part VII.4 |
-| Proposal A: an adaptive (ADAPT) ansatz in place of the fixed one, as an accuracy or trainability lever | A1 null at the registered threshold (0.23x and 0.36x MDE, fold CIs spanning zero, resolution 0.06 A); the optimum is a product state on every real target; the fixed algebra is already maximal (A2); no width-scaling argument (A4, with intervals L119); verdict REPLACE | S26 L68, L69, L70, L75, L119; Part VII.1 |
+| Proposal A: an adaptive (ADAPT) ansatz in place of the fixed one, as an accuracy or trainability lever | A1 not measured on either seed (0.23x / 0.36x MDE at seed 0, 0.71x / 0.79x at seed 1, the difference the fixed comparator's own seed; resolution 0.06 A; a four-seed run not done); the optimum is a product state on every real target; the fixed algebra is already maximal (A2, per growth step L138); no width-scaling argument (A4, with intervals L119); verdict REPLACE on the seed-independent facts | S26 L68, L69, L70, L75, L119, L138, L139, L140; Part VII.1 |
 | A target-dependent Hamiltonian for the selector (A3, the S25 L17 question) | at matched entropy the trained states become target-dependent and the emitted structure does not change (+0.0034 A, 0.04x MDE); the sharper unmatched states are worse; the readout responds to the weights' entropy and nothing else | S26 L125; Part VII.1 |
 | Native-free prediction and subtraction of the pool's common mode (C5) | global corrections null (0.23x and 0.60x MDE), the learned correction harmful (+0.164 A, 1.79x, 5/5 folds) and indistinguishable from a random correction of the same size; the ceiling 1.9 to 3.1 A measured beside it | S26 L132; Part VII.3 |
 | An all-atom single point on retrieved windows after relieving the builder's rotamers (rotamer relief B) | the relief halves the catastrophic fraction and leaves an energy that ranks nothing and rejects harmfully; the last route for an all-atom single point on windows | S26 L131; Part VII.4 |
@@ -2961,7 +3016,7 @@ sprint. This part lists the S26 movements and the items that remain open at the 
 | The 2/60 benchmark self-copy leak, now bounded MINOR (dev proxy 0.008 A with both channels measured on all four dev self-copies; own-native envelope 0.028 A mean CI to 0.151 A worst target on the built chain; 0.194 at the worst target on the selection basis); F3's control clause open (one of six control-out models) | by design only a fresh benchmark, which does not exist; the five control-out models and a second seed of the 2P5H retrain, about two hours on this box (L137) | S26 L44, L49, L50, L55, L58, L108, L137; Part VII.4 |
 | Where the target-specific third of the pool's coherent error comes from, and whether any native-free proxy is strong enough to act on it | a native-free proxy reaching the in-band ordering 2 A needs | `s19/LEDGER.md` L11, L14; `s17/LEDGER.md` L23 |
 | Publishing the trainability half | a manuscript from Part V.10 with V.9's scope correction | `s13/`, `s25/QUANTUM.md`; S26 L27 |
-| Not run at the close, recorded as such: the `raw` rung (four of five folds trained), `coherence_penalised_training` and `better_prior_inputs attn` (deferred on memory) | their pre-registrations' falsifiers, on a machine with the headroom | `s26/TOURNAMENT.md`; `s26/PREREG_*.md`; S26 L133; Part VII.3, VII.4 |
+| Not run at the close, recorded as such: the `raw` rung (four of five folds trained), `coherence_penalised_training` and `better_prior_inputs attn` (deferred on memory), a four-seed A1, lane W's Part B controls, `project_stability` beyond L141, the C5 alpha grid beyond 0.5 | their pre-registrations' falsifiers, on a machine with the headroom | `s26/TOURNAMENT.md`; `s26/PREREG_*.md`; S26 L133, L137, L139, L142; Part VII.3, VII.4 |
 | The tie-break noise floor: measured (0.004 A on the 126-mean, 0.024 A paired MDE between conventions, built chain); not a lever | nothing; it is the floor every cross-run hundredths-level claim is read against | S26 L64, L71; Part VII.4 |
 | A native-free difficulty flag: the pool's own disagreement predicts the emitted chain's error (partial rho +0.452 given n and Rg, 5/5 folds); the relaxation's displacement is its proxy; forbidden as a lever by the pre-registration and by the record (every conversion of a difficulty signal into a selector failed held out) | a use as a confidence label only | S26 L53, L81, L121, L123; Part VII.4 |
 | Sequence proximity to the training corpus below the 0.6 threshold: no gradient at the pre-registered MDE (rho -0.25), a weak effect of order -0.2 suggested and confounded with retrieval | a design that separates recall from retrieval; none registered | S26 L90; Part VII.4 |
@@ -3155,7 +3210,9 @@ anything heavy.
 `examine.sh` and `examine.bat` at the root call `examine.py`; there is no Makefile. Exit status
 is non-zero if any step reports a problem. The standalone audits under `verify/` re-run one at a
 time as `python s26/i_verify_rerun.py run <name>` (writes redirected to `s26/results/verify/`, the
-tracked JSON compared leaf by leaf; table `s26/results/verify/REPORT.md`; Part VII.5).
+tracked JSON compared leaf by leaf; table `s26/results/verify/REPORT.md`); at the close 20 of 20
+had run with the science reproducing in every audit that has a comparable tracked record (L141;
+Part VII.5).
 
 ## APPENDIX A. GLOSSARY
 
@@ -3572,6 +3629,9 @@ those of commit `73d82db5` (the S26 corrections block, L130, moved every body li
 | verify re-run: 32, 18, 19, 30, 31, 123, 8, 1, 126 of 126, 0 of 8, 22, twelve, 02:59 | VII, IX | `s26/results/verify/REPORT.md`, `s26/results/verify/REPORT.json`; `s26/results/verify/*.rerun.json` | as stored |
 | A2 per step: 7 [7, 82], 48, 11 [7, 139], 15, 58 [7, 530], 18, 37 [7, 513], 10, 16 [7, 289], 1025 [513, 2017], 1025 [258, 2017], 16 [9, 161], 530, 2080, 30, 63, 60, 68, 36, 48 | V, VII | `s26/results/q_dla_a1.json`; `s26/LEDGER.md` L138 | as stored / as cited |
 | lane W close: 12, 32, 31, 1.250, 9,321 s, 2 h, 21 min, 25, 16 | VII, VIII | `s26/agentW_FINDINGS.md`; `s26/LEDGER.md` L137 | as cited |
+| A1 seed 1: -0.0449 (0.0227, 0.0635, 0.71x, [-0.0960, -0.0037], 72W/54L), -0.0523 (0.0235, 0.0659, 0.79x, [-0.1087, -0.0054], 77W/49L), 3.2161, 3.2087, 3.2610, 3.2280, 3.2142, 3.2059, +0.033, -0.0498 (0.76x), -0.0241 (0.28x), -0.0194, +0.0696, +0.0045, -0.0561 (0.65x), -0.0615 (0.69x), 1.40, 1.29, 25 s, 0.396 GB, 0.200 | V, VII, VIII | `s26/results/a1s1_stats.json`; `s26/results/a1s1/<pdb>.json`; `s26/jobs_done/a1s1_label.json`; `s26/LEDGER.md` L139, L140 | as stored / as cited |
+| verify final: 20 of 20, 5, 11, 3, 1, 0, 1.732e-13, 6.828e-06, 1.540, 1894, 12431, 508, 469, 3.2145, 3.2057, 587.0 s, 1798.9 s, 1308.6 s, 0.275 GB | VII, IX | `s26/results/verify/REPORT.md`; `s26/LEDGER.md` L141 | as stored / as cited |
+| close: 184, 18, 29, R1 to R11, 13 of 14; deck 550, 248, 248, 249 | VII | `s26/jobs_done/`; `s26/pr_values.json`; `s26/LEDGER.md` L142, L143 | as cited |
 <!-- APPENDIX B ROWS -->
 
 ## APPENDIX C. THE S26 LEDGER
