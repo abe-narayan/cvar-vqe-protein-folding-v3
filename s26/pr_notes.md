@@ -225,18 +225,17 @@ readout, and compared the built chains pairwise. The answer is no change: {A1_L2
 {A1_V_EFFECT:.3f} angstroms, a quarter to a third of what the comparison can resolve, with
 fold-clustered intervals straddling zero. All {A1_N_ARMS} variants point the same way, but they
 are one observation, not twelve, and none clears its bar; the resolution is {A1_L2_MDE:.2f}
-angstroms. Why? The energy
-is the same rank ladder on every peptide, and its optimum at the deployed setting is a product
-state, within {A1_KL_PRODUCT_MAX:.1e} nats of the product of its marginals on all {A1_N} targets.
-Seven rotations represent it to {A1_KL_RY7_MEAN:.1e} nats. Offered entangling operators on the
-{A1_N_ALPHA1} targets there, ADAPT's growth stops by its own gradient test on every
-one, and the operators it adds first lower the objective by at most {A1_LBFGS_DF_ABSMAX:.1e}. There
-is nothing to entangle. The deployed 21-parameter circuit stops {A1_KL_FIXED_MEAN:.2f} nats short
-of that optimum, and using the optimum itself moves the structure by {A1_GIBBS_EFFECT:+.4f}
-angstroms, a tenth of the resolution. Its Lie algebra is already the full real algebra from
-depth two: shallowness, not structure. So Proposal A is replaced. The adaptive circuit is a
-correct, tested tool; it confirmed the diagnosis instead of curing it. What we publish is on
-the next slide.
+angstroms. Why? At the deployed setting the optimum the circuit is asked to reach is a product
+state: seven single-qubit rotations represent it exactly, to {A1_KL_RY7_MEAN:.4f} nats. When
+ADAPT is offered entangling operators it does append them, on {A1_APPENDED_V_LBFGS} to
+{A1_APPENDED_ADAM} of the {A1_N_ALPHA1} targets, but they are inert: together they lower the
+objective by less than 0.001 nats, their angles stay below 0.02 radians under L-BFGS, and the
+state remains a product state to {A1_KL_TO_PRODUCT_MAX:.4f} nats. The deployed 21-parameter
+circuit stops {A1_KL_FIXED_MEAN:.2f} nats short of that same optimum, and reaching it exactly
+moves the emitted structure by those 0.014 to 0.022 angstroms, a third of the resolution. Its
+Lie algebra is already the full real algebra from depth two: shallowness, not structure. So
+Proposal A is replaced. The adaptive circuit is a correct, tested tool; it confirmed the
+diagnosis instead of curing it. What we publish is on the next slide.
 
 ### also
 Verdict REPLACE (`s26/PROPOSAL_A.md`, lane Q; L68; accepted by the coordinator in L69, subject
@@ -265,12 +264,19 @@ from the {A1_N_RECORDS} per-target records (`s26/results/a1/*.json`, no native):
 product of marginals) mean {A1_KL_PRODUCT_MEAN:.1e}, max {A1_KL_PRODUCT_MAX:.1e}; on the
 {A1_N_ALPHA1} alpha = 1 targets the fixed circuit's KL to Gibbs is {A1_KL_FIXED_MEAN:.4f} (max
 {A1_KL_FIXED_MAX:.3f}; S25's 0.902 reproduced) and the 7-parameter RY layer's {A1_KL_RY7_MEAN:.1e}
-(max {A1_KL_RY7_MAX:.1e}). Growth under L-BFGS at alpha = 1: stopped by the eps = 1e-3 gradient
-criterion on {A1_LBFGS_STOP_EPS} of 156 (pool, target) cells; the number of operators added
-before the stop is 0 on {A1_LBFGS_ZERO_OPS_V} (pool V) and {A1_LBFGS_ZERO_OPS_L2} (pool L2) of the
-78 targets and at most {A1_LBFGS_MAX_OPS}; the free-energy change they produce is a decrease of
-{A1_LBFGS_DF_ABSMAX:.1e} at most (median {A1_LBFGS_DF_MEDIAN:.1e}). This is the artefact's form of
-the proposal's "declines them on all 78 targets": the growth is inert, not absent. The A4 figure
+(max {A1_KL_RY7_MAX:.1e}). Growth at alpha = 1, L75's reconciliation of my L73 flag (the two "no operator selected"
+sentences of L68 and `s26/PROPOSAL_A.md` are retracted there and corrected by an addendum): the
+growth halts by the eps = 1e-3 gradient criterion on {A1_LBFGS_STOP_EPS} of 156 (pool, target)
+cells under L-BFGS and at the 21-parameter cap under Adam, but operators ARE appended, on
+{A1_APPENDED_V_LBFGS} (pool V) and {A1_APPENDED_L2_LBFGS} (pool L2) of the {A1_N_ALPHA1} targets
+under L-BFGS, every one a multi-qubit string, and on {A1_APPENDED_ADAM} of {A1_N_ALPHA1} under
+Adam; they are inert: the free energy moves by at most {A1_LBFGS_DF_ABSMAX:.1e} nats under L-BFGS
+and {A1_DF_ABSMAX_ALL:.1e} under Adam (median {A1_LBFGS_DF_MEDIAN:.1e} under L-BFGS), the appended
+angles stay at or below {A1_LBFGS_ANGLE_MAX:.3f} rad under L-BFGS, and the state stays a product
+state to KL {A1_KL_TO_PRODUCT_MAX:.1e} (`s26/results/a1/*.json :: adapt/*/sequence, trace, theta;
+arms/adapt*_P21/kl_to_product`). The ideal-ladder statements of L27 and L35 (nothing appended at
+alpha = 1) stand: there E is exactly affine and every pool gradient is exactly zero; on a real
+target tie-averaging leaves a residual gradient just above eps. The A4 figure
 (slide 8) is lane Q's; the product-circuit reading rests on the adapt sets of
 `s26/results/q_dla.json` (L47). Slide 9 carries what is published in A's place.
 

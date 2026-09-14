@@ -195,12 +195,16 @@
  "8": {
   "title": "Direction A: let the circuit grow (qubit-ADAPT-VQE). Verdict: REPLACE",
   "tokens": [
+   "A1_APPENDED_ADAM",
+   "A1_APPENDED_L2_LBFGS",
+   "A1_APPENDED_V_LBFGS",
    "A1_ARMS_EFF_MAX",
    "A1_ARMS_EFF_MIN",
    "A1_ARMS_X_MAX",
    "A1_ARMS_X_MIN",
    "A1_ARM_CORR_MEAN",
    "A1_ARM_CORR_MIN",
+   "A1_DF_ABSMAX_ALL",
    "A1_FIXED_MEAN",
    "A1_GIBBS_ALPHA025",
    "A1_GIBBS_ALPHA1",
@@ -212,6 +216,7 @@
    "A1_KL_PRODUCT_MEAN",
    "A1_KL_RY7_MAX",
    "A1_KL_RY7_MEAN",
+   "A1_KL_TO_PRODUCT_MAX",
    "A1_L2_CI",
    "A1_L2_EFFECT",
    "A1_L2_FOLDS",
@@ -220,12 +225,10 @@
    "A1_L2_SE",
    "A1_L2_W",
    "A1_L2_X",
+   "A1_LBFGS_ANGLE_MAX",
    "A1_LBFGS_DF_ABSMAX",
    "A1_LBFGS_DF_MEDIAN",
-   "A1_LBFGS_MAX_OPS",
    "A1_LBFGS_STOP_EPS",
-   "A1_LBFGS_ZERO_OPS_L2",
-   "A1_LBFGS_ZERO_OPS_V",
    "A1_N",
    "A1_N_ALPHA025",
    "A1_N_ALPHA1",
@@ -251,7 +254,7 @@
    "QSYNTH_VS_ARM",
    "QSYNTH_VS_ARM_X"
   ],
-  "spoken_words": 248
+  "spoken_words": 249
  },
  "9": {
   "title": "Direction B, and what we publish: the trainability paper",

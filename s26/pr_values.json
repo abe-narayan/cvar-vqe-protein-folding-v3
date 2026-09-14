@@ -2015,6 +2015,48 @@
   "basis": "",
   "note": "the primaries realise the full budget (repeats of one rotation merge)"
  },
+ "A1_APPENDED_V_LBFGS": {
+  "value": 60,
+  "path": "s26/results/a1/*.json :: adapt/V_lbfgs_zrank/sequence non-empty (count over the 78 alpha = 1 targets)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L75: 60"
+ },
+ "A1_APPENDED_L2_LBFGS": {
+  "value": 68,
+  "path": "s26/results/a1/*.json :: adapt/L2_lbfgs_zrank/sequence non-empty (count over 78)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L75: 68"
+ },
+ "A1_APPENDED_ADAM": {
+  "value": 78,
+  "path": "s26/results/a1/*.json :: adapt/{V,L2}_adam_best_zrank/sequence non-empty (count over 78)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L75: 78 / 78, both pools"
+ },
+ "A1_LBFGS_ANGLE_MAX": {
+  "value": 0.017929958369745282,
+  "path": "s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank/theta beyond the first n entries, max |angle| over the 78",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L75: 0.018 rad"
+ },
+ "A1_KL_TO_PRODUCT_MAX": {
+  "value": 0.00040725455997970336,
+  "path": "s26/results/a1/*.json :: arms/adapt*_zrank_P21/kl_to_product, max over the 78 alpha = 1 targets and the four (pool, optimiser) arms",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L75: 4.1e-4"
+ },
+ "A1_DF_ABSMAX_ALL": {
+  "value": 0.0008617460196891358,
+  "path": "s26/results/a1/*.json :: adapt/*_zrank/trace: F(P = 7) - F(final), max over the 78 and the four arms",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L75: 8.6e-4 (Adam); 1.2e-4 (L-BFGS)"
+ },
  "A1_LBFGS_DF_ABSMAX": {
   "value": 0.00012328232535496753,
   "path": "s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank/trace: |F(final) - F(P = 7)|, max over 2 x 78",

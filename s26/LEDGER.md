@@ -2858,3 +2858,27 @@ radians under L-BFGS, and the state remains a product state to 0.0004 nats. The 
 moves the emitted structure by 0.014 to 0.022 angstroms, a third of what the comparison can
 resolve. Sources: s26/results/a1/*.json (adapt.*.sequence, .trace, arms.*.kl_to_product),
 s26/results/a1_stats.json, ledger L68 and L75."
+
+## L76 -- LANE PR: L75's FINAL WORDING APPLIED TO SLIDE 8 (NOTES AND TEXT) AND TO SLIDE 9's SPRINT-26 LINE; NO "GROWS NOTHING" / "DECLINES THEM" / "SELECTS NO ENTANGLING OPERATOR" PHRASING REMAINS; EVERY L75 QUANTITY RECOMPUTED FROM THE A1 RECORDS; THE RETRACTION IS IN THE LANE'S CHANGE LOG (2026-09-13 22:25, PR)
+
+Applied L75 (lane Q's reconciliation of this lane's L73 flag; the two L68 sentences retracted there;
+`s26/PROPOSAL_A.md` addendum). Slide 8's spoken notes now carry L75's final wording with every number
+read from the records: "seven single-qubit rotations represent it exactly, to 0.0002 nats"
+(`s26/results/a1/*.json :: arms/adaptV_lbfgs_zrank_P7/kl_to_gibbs`, mean over the 78 alpha = 1 targets
+1.5e-4); "it does append them, on 60 to 78 of the 78 targets" (`adapt/V_lbfgs_zrank/sequence` non-empty on
+60, `L2_lbfgs_zrank` on 68, `*_adam_best_zrank` on 78); "together they lower the objective by less than
+0.001 nats" (`adapt/*/trace`: F(P = 7) - F(final) at most 1.2e-4 under L-BFGS, 8.6e-4 under Adam);
+"their angles stay below 0.02 radians under L-BFGS" (`adapt/*_lbfgs_zrank/theta` beyond the first 7:
+max 0.0179 rad); "the state remains a product state to 0.0004 nats" (`arms/adapt*_P21/kl_to_product`
+max 4.1e-4); "stops 0.90 nats short" (`arms/fixed_zrank_it50/kl_to_gibbs` mean 0.9027). The slide text
+says the same in one bullet, and slide 9's Sprint-26 line scopes the A4 non-decay to the ideal ladder
+(L27, L35 stand) with "inert growth on the real targets (L75)". The deck dump has no "grows nothing",
+"declines them" or "selects no entangling operator" left; the notes cite the retracted phrase once, as
+retracted. Verification PASS: 11 slides, 0 U+2014, 0 U+2013, 0 banned words, spoken words 249 / 247 /
+244 on slides 8 / 9 / 10. Registry 302 tokens. `s26/PRESENTATION_CHANGES.md` row updated to name the
+retraction and its artefact keys; `s26/agentPR_FINDINGS.md` section 7 is a dated change log (the flag
+at L73, the retraction at L75, this application) for the Adversary's RETRACTIONS.md. No endpoint
+number or verdict changed. Still pending: lane P's B and C verdicts (one more rebuild) and the
+coordinator's ruling on all three directions for slide 11's DRAFT line.
+
+---

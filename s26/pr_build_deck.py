@@ -395,9 +395,9 @@ def slide_08(prs, V):
         (f"the optimum at alpha = 1 is a product state on every target: KL to the product of its marginals at most "
          f"{F(V,'A1_KL_PRODUCT_MAX','.1e')} nats over {F(V,'A1_N_RECORDS')} records; 7 rotations reach it to {F(V,'A1_KL_RY7_MEAN','.1e')} nats; "
          f"the fixed 21-parameter circuit stops {F(V,'A1_KL_FIXED_MEAN','.2f')} nats short", {}),
-        (f"offered entangling operators on the {F(V,'A1_N_ALPHA1')} alpha = 1 targets, ADAPT's growth halts by its gradient test on all of them; "
-         f"the operators added first (0 on {F(V,'A1_LBFGS_ZERO_OPS_V')} / {F(V,'A1_LBFGS_ZERO_OPS_L2')} targets, at most {F(V,'A1_LBFGS_MAX_OPS')}) "
-         f"lower the objective by at most {F(V,'A1_LBFGS_DF_ABSMAX','.1e')}: inert growth", {}),
+        (f"offered entangling operators, ADAPT does append them, on {F(V,'A1_APPENDED_V_LBFGS')} to {F(V,'A1_APPENDED_ADAM')} of the "
+         f"{F(V,'A1_N_ALPHA1')} alpha = 1 targets, but they are inert: at most {F(V,'A1_DF_ABSMAX_ALL','.1e')} nats of free energy, angles at or "
+         f"below {F(V,'A1_LBFGS_ANGLE_MAX','.3f')} rad under L-BFGS, and the state stays a product state to KL {F(V,'A1_KL_TO_PRODUCT_MAX','.1e')} (L75)", {}),
         (f"the algebra: dim(DLA) = {F(V,'DLA_SO128')} = so(128) from depth 2; nothing for an adaptive ansatz to add (A2)", {}),
         (f"grown circuits at alpha = 1 are product circuits whose variance does not decay (A4, left); at alpha = 0.25 the grown circuit "
          f"decays at {F(V,'A4_L2_A025_T03','.3f')} vs the fixed {F(V,'A4_FIXED_A025_T03','.3f')} per qubit", {}),
@@ -466,8 +466,8 @@ def slide_09(prs, V):
         (f"the Lie algebra is the full so(2^n) from depth 2 (dim {F(V,'DLA_SO128')} at n = 7): nothing algebraic protects the ansatz at scale; "
          f"n = {F(V,'SWEEP_N_MIN')}..{F(V,'SWEEP_N_MAX')} at depth 3 is the shallow regime", {}),
         (f"Sprint 26 additions (slides 6 and 8): the DLA census; the product-state target (KL to the product of marginals at most "
-         f"{F(V,'A1_KL_PRODUCT_MAX','.1e')} nats on {F(V,'A1_N_RECORDS')} targets); grown circuits that do not decay because there is nothing to "
-         f"train; the A1 null ({F(V,'A1_V_EFFECT','+.3f')} A at {F(V,'A1_V_X','.2f')} x MDE)", {}),
+         f"{F(V,'A1_KL_PRODUCT_MAX','.1e')} nats on {F(V,'A1_N_RECORDS')} targets); grown circuits whose gradients do not decay on the ideal ladder "
+         f"(A4); the A1 null ({F(V,'A1_V_EFFECT','+.3f')} A at {F(V,'A1_V_X','.2f')} x MDE) with inert growth on the real targets (L75)", {}),
         (f"the optimiser trains ({F(V,'Q_GAP_MIN','.0%')} to {F(V,'Q_GAP_MAX','.0%')} of the gap) and the readout cannot tell "
          f"({F(V,'Q_CIRC_VS_GIBBS_X','.2f')} x MDE); the tail is a subset of the classical prefix ({F(V,'Q_CELLS')} cells, {F(V,'Q_VIOLATIONS')} violations)", {}),
         ("Two claims the paper will not make", dict(bold=True, color=ACCENT, bullet=False)),

@@ -485,6 +485,22 @@ def load_values():
     put("A1_P21_LBFGS_MIN", int(min(pl21)), "s26/results/a1/*.json :: arms/adapt*_lbfgs_zrank_P21/P_actual (min)", status="DERIVED", note="L70 caveat 2: the 21 is a budget")
     put("A1_P21_LBFGS_MAX", int(max(pl21)), "s26/results/a1/*.json :: arms/adapt*_lbfgs_zrank_P21/P_actual (max)", status="DERIVED")
     put("A1_P21_ADAM_MIN", int(min(pa21)), "s26/results/a1/*.json :: arms/adapt*_adam_best_zrank_P21/P_actual (min)", status="DERIVED", note="the primaries realise the full budget (repeats of one rotation merge)")
+    # L75's reconciliation: the appended operators are inert (counts, angles, KL to the product state, free energy)
+    def appended(pool, opt):
+        key = f"{pool}_{opt}_zrank"
+        n_with = sum(1 for r in a1r if len(r["adapt"][key]["sequence"]) > 0)
+        ang = [max(abs(x) for x in r["adapt"][key]["theta"][r["adapt"][key]["n"]:]) for r in a1r if len(r["adapt"][key]["theta"]) > r["adapt"][key]["n"]]
+        klp = [r["arms"][f"adapt{pool}_{opt}_zrank_P21"]["kl_to_product"] for r in a1r]
+        dF = [r["adapt"][key]["trace"][0]["F"] - r["adapt"][key]["trace"][-1]["F"] for r in a1r]
+        return n_with, (max(ang) if ang else 0.0), max(klp), max(dF)
+    nV, angV, klV, dFV = appended("V", "lbfgs"); nL, angL, klL, dFL = appended("L2", "lbfgs")
+    nVa, angVa, klVa, dFVa = appended("V", "adam_best"); nLa, angLa, klLa, dFLa = appended("L2", "adam_best")
+    put("A1_APPENDED_V_LBFGS", nV, "s26/results/a1/*.json :: adapt/V_lbfgs_zrank/sequence non-empty (count over the 78 alpha = 1 targets)", status="DERIVED", note="L75: 60")
+    put("A1_APPENDED_L2_LBFGS", nL, "s26/results/a1/*.json :: adapt/L2_lbfgs_zrank/sequence non-empty (count over 78)", status="DERIVED", note="L75: 68")
+    put("A1_APPENDED_ADAM", max(nVa, nLa), "s26/results/a1/*.json :: adapt/{V,L2}_adam_best_zrank/sequence non-empty (count over 78)", status="DERIVED", note="L75: 78 / 78, both pools")
+    put("A1_LBFGS_ANGLE_MAX", float(max(angV, angL)), "s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank/theta beyond the first n entries, max |angle| over the 78", status="DERIVED", note="L75: 0.018 rad")
+    put("A1_KL_TO_PRODUCT_MAX", float(max(klV, klL, klVa, klLa)), "s26/results/a1/*.json :: arms/adapt*_zrank_P21/kl_to_product, max over the 78 alpha = 1 targets and the four (pool, optimiser) arms", status="DERIVED", note="L75: 4.1e-4")
+    put("A1_DF_ABSMAX_ALL", float(max(dFV, dFL, dFVa, dFLa)), "s26/results/a1/*.json :: adapt/*_zrank/trace: F(P = 7) - F(final), max over the 78 and the four arms", status="DERIVED", note="L75: 8.6e-4 (Adam); 1.2e-4 (L-BFGS)")
     put("A1_LBFGS_DF_ABSMAX", float(max(abs(x) for x in dV + dL)), "s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank/trace: |F(final) - F(P = 7)|, max over 2 x 78", status="DERIVED",
         note="the largest free-energy change any grown operator produced under L-BFGS at alpha = 1 (all changes are decreases)")
 

@@ -21,7 +21,7 @@ title, so the edits can be carried onto the real file if the presenter supplies 
   11 slides, 0 U+2014, 0 U+2013, 0 occurrences of any of the six banned words, the only
   non-ASCII character U+2022 (`s26/pr_verify.txt`).
 - Slides 1 to 7 and 11 (step a): every number read from an artefact at build time by
-  `s26/pr_values.py` (296 registered tokens, `s26/pr_values.json`), 30 of the 35 claims of
+  `s26/pr_values.py` (302 registered tokens, `s26/pr_values.json`), 30 of the 35 claims of
   `s26/EXAMINATION.md` section C re-read at their leaves. Slide 4 carries the two
   ORACLE-superposed CA overlays: 1S9Z (T030, n = 16, built chain 0.181981 A) and 9KAR (n = 15,
   7.437696 A), the built chain `ca` from `bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json`
@@ -109,7 +109,10 @@ free energy by at most 1.2e-4 nats (median 9e-6) from a 7-rotation state that is
 7.9e-4 nats of the Gibbs optimum. The proposal's substance holds (the growth is inert; there is
 nothing to entangle that the readout or the objective can see) and the deck says it in the
 artefact's words, with the counts; the literal "no operator selected" does not. Flagged in the
-ledger; lane Q's file is not edited. The Adversary's L70 caveats are on the slide, recomputed
+ledger (L73); lane Q reconciled it in L75: the count was right, the two sentences of L68 are
+RETRACTED there, `s26/PROPOSAL_A.md` carries an addendum with the corrected sentences, and the
+verdict does not move; the deck now carries L75's final wording (section 8). The Adversary's L70
+caveats are on the slide, recomputed
 from the same records: the twelve arms' per-target delta vectors correlate at 0.955 on average
 (min 0.919), so they are one observation; the 21 parameters are a budget (the Adam primaries
 realise 21, L-BFGS 7 to 21); the Gibbs control's +0.0088 is -0.0271 on the 78 alpha = 1 targets
@@ -151,10 +154,23 @@ and +0.0671 on the 48 alpha = 0.25 targets where the Gibbs state is not the CVaR
 - I did not run anything through jobrun: the build peaks at 0.12 GB (`psutil` sampling of the
   child process at 50 ms; figure step alone 0.10 GB), under the 200 MB line.
 
-## 7. Artefacts and memory
+## 7. Change log (for the Adversary's RETRACTIONS.md)
+
+| when | what changed | why | where |
+|---|---|---|---|
+| 19:55 (71efb76d, a6738b35, e93fc98c, cb90ffb3, 4d58d253) | deck built; slides 1 to 7, 9, 10, 11 filled; slide 8 a PENDING placeholder | the deck did not exist (L2); Proposal A had not landed | L61 |
+| 21:55 (483abd7b) | slide 8 in proposal form (verdict REPLACE, L68, accepted L69) with the L70 caveats; slide 9 retitled as the publication | `s26/PROPOSAL_A.md` landed; L69's structure ruling | L73 |
+| 21:55 (483abd7b) | this lane FLAGGED two sentences of `s26/PROPOSAL_A.md` and L68 ("selects no entangling operator on any of the 78 alpha = 1 targets" / "declines them on all 78" / "stops with no operator selected on 78 of 78") as not matching `s26/results/a1/*.json`; the slide carried the records' counts instead of the sentences | the records show operators appended on 60 / 68 of 78 targets under L-BFGS (78 / 78 under Adam), inert | L73 |
+| 22:15 (lane Q) | the two sentences RETRACTED in L75; `s26/PROPOSAL_A.md` addendum with the corrected sentences; `s26/agentQ_FINDINGS.md` section 9 | lane Q's re-read of its own records agreed with L73 | L75 |
+| 22:25 (this commit) | slide 8's notes and text, and slide 9's Sprint-26-additions line, carry L75's final wording: appended on 60 to 78 of the 78 targets, inert (at most 1.2e-4 nats under L-BFGS and 8.6e-4 under Adam; angles at or below 0.018 rad; product state to KL 4.1e-4); no "grows nothing" / "declines them" / "selects no entangling operator" phrasing remains except the notes' citation of what was retracted | L75's instruction; every quantity recomputed from the records and registered (`A1_APPENDED_*`, `A1_LBFGS_ANGLE_MAX`, `A1_KL_TO_PRODUCT_MAX`, `A1_DF_ABSMAX_ALL`) | L76 |
+
+No number on any slide changed between the 21:55 and 22:25 builds except the wording above;
+the A1 endpoint numbers, the product-state facts and the verdict are as in L68 and L70.
+
+## 8. Artefacts and memory
 
     vqe_research_overview.pptx            the deck (11 slides)
-    s26/pr_values.py -> s26/pr_values.json the registry (296 tokens: value, path, basis, status, note)
+    s26/pr_values.py -> s26/pr_values.json the registry (302 tokens: value, path, basis, status, note)
     s26/pr_figures.py -> s26/figures/pr_overlay_1S9Z.png, pr_overlay_9KAR.png, pr_width_sweep.png, pr_ladder.png
     s26/pr_notes.md                        spoken text with {TOKEN} placeholders
     s26/pr_build_deck.py                   the build and the verification (pr_verify.txt, pr_verify_dump.txt, pr_manifest.json)
