@@ -15,7 +15,7 @@ No stock words; no em dashes.
 | at least three ideas nobody else proposed | FILED (three own, plus the mandatory one); the tie-break floor has PREREG, code, tests and a one-target probe; the identity floor is measured (Part E) | `s26/IDEA_tiebreak_noise_floor.md` + `PREREG_tiebreak_floor.md` + `w_tiebreak.py`, `s26/IDEA_conformational_identity_floor.md`, `s26/IDEA_window_provenance.md` |
 | the tournament's own ideas (L51: items 2 and 4) | item 2 conformational_identity_floor MEASURED AND POSTED (L52); item 4 tiebreak_noise_floor MEASURED AND POSTED (L64): floor 0.004 A on the 126-mean, 0.024 A paired MDE between two conventions, every hundredths-level recorded effect inside it | `s26/PREREG_identity_floor.md`, `s26/w_identity_floor_stats.py`, `s26/results/w_identity_floor.json`; `s26/PREREG_tiebreak_floor.md`, `s26/w_tiebreak.py`, `s26/w_tiebreak_report.py`, `s26/results/w_selfcopy_tiebreak_{draws,endpoint}.json`, `w_tiebreak_report.json` |
 | the top orphaned survivor: window_ensembling (lane P's idea, L51 item 6) | MEASURED AND POSTED (L84): refuted with power; ens3 minus shipped -0.0005 A (0.02x MDE), against the zero-information resample +0.0042 (0.14x); a gain of 0.028 A or more excluded; the fixed-K form of the mandatory direction is closed | `s26/PREREG_window_ensembling.md`, `s26/w_ensemble.py`, `s26/w_ensemble_test.py`, `s26/results/w_selfcopy_ensemble_{probe_1A13,clouds,endpoint}.json` |
-| the remaining orphans and extensions (L77) | window_provenance census and ORACLE contrast POSTED (L85), its readout H_P3 RUNNING; amber_prior_partner probe done, stage 1 QUEUED; Part B's first retrain (2LMF/f4) QUEUED at est-ram 1.4; partial_recall_gradient MEASURED (L90: no gradient at the MDE, I_long rho -0.205 suggestive) and memorisation_on_the_ladder MEASURED (L91: the discounted ladder under-prices the trained operator by 0.35 A, 1.5x MDE) | `s26/PREREG_{window_provenance,amber_prior_partner,partial_recall_gradient,memorisation_on_the_ladder}.md`, `s26/w_{provenance,amberprior,recall,ladder}.py` |
+| the remaining orphans and extensions (L77) | window_provenance POSTED in full (L85 census and ORACLE contrast; L109 readout H_P3 refuted with power); amber_prior_partner POSTED (L105: the LFO choice declines to mix on all five folds; every cell worse); Part B complete on the four carrier-out models (L108; F3 falsified by 2P5H in the harmful direction; direct bound 0.008 A, IMMATERIAL), control-out models 1 of 6 built and the rest queued; partial_recall_gradient MEASURED (L90: no gradient at the MDE, I_long rho -0.205 suggestive) and memorisation_on_the_ladder MEASURED (L91: the discounted ladder under-prices the trained operator by 0.35 A, 1.5x MDE) | `s26/PREREG_{window_provenance,amber_prior_partner,partial_recall_gradient,memorisation_on_the_ladder}.md`, `s26/w_{provenance,amberprior,recall,ladder}.py` |
 | ideas found on the way (coordinator's request) | FILED: the partial-recall gradient below the 0.6 threshold; the own-native model placed on the S24 prior ladder | `s26/IDEA_partial_recall_gradient.md`, `s26/IDEA_memorisation_on_the_ladder.md` |
 | findings, ledger, status, commits | this file; L30, L44; STATUS 09:15, 09:31, 19:4x; commits `8d849504`, `213a5ebb` and the closing one | |
 
@@ -207,18 +207,30 @@ architecture (+0.51 A per leaked target). Consequences beyond the bound: (i) EXA
 "the fold models are not independent" has a magnitude, 0.70 A on the built chain per target whose
 native a model saw; (ii) any arm that mixes fold models across targets is leaked by that much.
 
-### 2.4 Channel B, partial (1 of 10 models): the carrier's presence is worth 0.011 A on 1CEK's built chain. DEMONSTRATED, n = 1.
+### 2.4 Channel B on all four carrier-out models: the carrier's presence is worth +0.011 / -0.002 / -0.246 / -0.027 A on the built chain; F3 falsified by 2P5H in the harmful direction. DEMONSTRATED, n = 4 (ledger L108).
 
-`w_train_chain` was killed by the host after its first model (L40, L41). That model
-(`s26/models/w_selfcopy/pca32_fold2_s0_out_1A11.pt`: fold 2 retrained through lane P's exact
-pca32 path with 1A11's 276 pairs removed) against lane P's reference `pca32_fold2_s0.pt` (which
-reproduces the pinned emission at 0.000 on 1CEK): posterior mean |dE[d]| 1.02 A per pair, top-75
-overlap 0.76, and reference minus carrier-out = +0.0114 arm, +0.0204 cloud, -0.0062 sel: removing
-the carrier makes the built chain 0.011 A worse, so its presence helped by that much. Both channels
-removed on 1CEK: production is 0.0114 A better on arm and 0.0177 on the paired gain. 1CEK is the one
-dev case whose copy is near-native (0.595 A, section 1.7). The nine remaining models (three
-carrier-out, six control-out) wait for headroom (L42) and for the tournament; F3 is therefore
-measured on one target only and its control clause is not measured.
+The four carrier-out models (1A11 out of fold 2, built before the host kill of L40; 2LMF out of
+fold 4, job `w_train_out_2LMF`, 1049 s, peak 1.244 GB; 2P5J out of fold 4, 1063 s, 1.250 GB; 1U6V
+out of fold 0, 893 s, 1.248 GB), each through lane P's exact pca32 path with one chain's pairs
+removed, against lane P's reference fold models (which reproduce the pinned emission at 0.000);
+gated re-run `w_endpoint_report2` (145 s, 0.309 GB), the L55 additions re-applied by
+`s26/w_bound_addendum.py`. Delta = reference minus carrier-out; positive = the carrier helped.
+
+    target   carrier   |dE[d]| per pair; top-75 overlap   arm       cloud     fit       sel       gain      copy's distance from the native (L52)
+    1CEK     1A11      1.02 A; 0.76                       +0.0114   +0.0204   +0.0115   -0.0062   +0.0177   0.60 A
+    2FBU     2LMF      0.79 A; 0.89                       -0.0021   -0.0002   -0.0021   -0.0040   +0.0019   3.28 A
+    2P5H     2P5J      1.38 A; 0.77                       -0.2460   -0.1634   -0.2310   +0.0000   -0.2460   2.33 A
+    6B9K     1U6V      1.37 A; 0.91                       -0.0265   -0.0318   -0.0188   +0.0000   -0.0265   4.13 A
+
+F3's first clause (|delta arm| < 0.10 on all four) is falsified by 2P5H: training the fold model
+on the carrier's copy of 2P5H's sequence, whose geometry is 2.33 A from 2P5H's native, moves the
+built chain 0.25 A AWAY from the native. The training channel's sign follows the cross-deposit
+distance of the copy (helps at 0.60 A, hurts at 2.3 to 4.1 A): a memorising model with a copy
+that is not the native is a bias toward another deposit's conformation, not a gift. Both
+channels removed (self-window dropped and carrier out): production minus clean +0.0114 / -0.0021
+/ -0.2460 / -0.0243 on the built chain. F3's control clause (against two control-out chains per
+fold) is measured on one control so far (9BAF/f0, 1440 s, 1.247 GB); the rest are queued and go
+into an addendum.
 
 ### 2.5 The bound (Part D). PRE-REGISTERED CLASS: MINOR by the envelope, IMMATERIAL by every direct measurement.
 
@@ -227,7 +239,7 @@ measured on one target only and its control clause is not measured.
     source                                                  arm       sel       paired gain   class
     dev-4 channel A, signed max                              0.0023    0.0000    0.0023         IMMATERIAL (< 0.017)
     dev-4 channel A, native-free triangle max                0.0067    0.0000    0.0067         IMMATERIAL
-    both channels removed (1CEK only, n = 1)                 0.0004    0.0002    0.0006         IMMATERIAL
+    both channels removed (n = 4 since L108; 2P5H)           0.0082    0.0002    0.0082         IMMATERIAL
     own-native envelope, fold-CI limit of the MEAN, n = 126  0.0277    0.0479    0.0228         MINOR (0.017 to 0.170)
     the same envelope at the p95 target                      0.0830    0.1154    0.0816         MINOR
     the same envelope at the WORST single target             0.1512    0.1944    0.1232         MINOR on arm and gain; sel crosses 0.170 (9KAR)
@@ -243,15 +255,18 @@ the Adversary (L55) asked for the per-target reading of the same envelope beside
 0.083 / 0.115 / 0.082. Under every reading the class on the built chain and on the paired gain is
 MINOR; on the selection basis the worst-target reading crosses 0.170 (MATERIAL by the
 pre-registered line) for the one benchmark arm most sensitive to memorisation, the `shipped`
-argmin. The expected contribution stays 0.002 A (dev proxy) to 0.023 A (mean envelope). The
-wording to carry: "expected contribution 0.023, mean-CI limit 0.028, worst single target 0.151,
-under A2", with the envelope named as the over-bound it is (own-native training, 60x the one
+argmin. The expected contribution stays 0.008 A (dev proxy, both channels, n = 4 since L108; it was
+0.002 at n = 1) to 0.023 A (mean envelope), and where the direct measurement is not zero it is
+HARMFUL to the leaked target's built chain and neutral to its argmin, so an un-leaked benchmark
+paired gain would if anything be slightly more favourable to the architecture than +0.0103. The
+wording to carry: "expected contribution 0.008 to 0.023, mean-CI limit 0.028, worst single
+target 0.151, under A2", with the envelope named as the over-bound it is (own-native training, 60x the one
 measured carrier effect). The envelope is loose by construction (a model trained on the target's own native, where the
 benchmark carrier holds a copy that on the dev proxy sits 2.3 to 4.1 A from the native on 3 of 4
 cases and whose one measured effect is 60x smaller). What the bound does to the benchmark verdict:
 nothing. The un-leaked paired gain lies in +0.0103 +/- 0.023 under the envelope and within 0.003 of
 +0.0103 under the dev-proxy measurement, against a CI half-width of 0.170. The caveat for every
-benchmark figure (L55's wording): 2/60 self-copies; dev-proxy price 0.002 A; own-native envelope
+benchmark figure (L55's wording, the dev price updated by L108): 2/60 self-copies; dev-proxy price 0.008 A; own-native envelope
 0.028 A (mean CI) to 0.151 A (worst target) on the built chain, under A2; MINOR under every
 reading on the built chain and the paired gain; cannot move the benchmark verdict either way
 (`s26/results/w_selfcopy_bound.json`, regenerated by `s26/w_bound_addendum.py` with the gain
@@ -420,10 +435,14 @@ the sequence-structure channel" and S24 L8's "a fragment's conformation is held 
 outside the window", measured for the first time on the single-window basis of the shipped
 pool; the window's position in its parent does not matter. The score removes most of it: inside
 the top-75 the remaining gap is at the edge of what n = 114 to 126 can see. By the PREREG's rule
-the achievable readout test H_P3 runs (fragment-class weight in {0, 0.5, 1, 2} chosen
-leave-fold-out on the built chain, against uniform and against the permuted-weight control;
-`s26/w_provenance_readout.py`, running); the registered expectation for it is NOT MEASURED (0.00
-to -0.02 A against an MDE of about 0.05).
+the achievable readout test H_P3 ran (`s26/w_provenance_readout.py`, job `w_provenance_readout`,
+9321 s under load, 0.110 GB; ledger L109): the fragment-class weight chosen leave-fold-out on the
+built chain is 0.5 on three folds and 0 on two (never uniform, never up-weighting), and the routed
+readout is +0.0066 A against uniform on the built chain (0.15x MDE 0.044; +0.0001 on the cloud) and
+-0.0179 against the permuted-weight control (0.38x; -0.0284, 0.68x, on the cloud, 5/5 folds). H_P3
+is refuted; a gain of 0.044 A or more is excluded; the registered expectation held. The 0.13 A
+single-window gap acts on 8% of a 75-member mean and, as the L44 / L64 controls showed, a few
+members' change moves the chain mostly orthogonally to the native.
 
 ---
 
@@ -459,6 +478,23 @@ to its projection onto the native's direction; the L12 discount was derived from
 re-readings and does not transfer. Consequence for Proposal C's arithmetic: quote -2.15 x
 gam_eff (probability space) with the cosine reported beside it, not multiplied in. Not
 deployable by construction; a calibration of the currency.
+
+---
+
+## 2g. THE SECOND ORPHAN: AMBER AS A DISTRIBUTION INSIDE THE PRIOR (tournament item 10; ledger L105). REFUTED IN THE STRONGEST FORM THE DESIGN ALLOWS.
+
+`s26/PREREG_amber_prior_partner.md` (+ addendum 1, the staging); jobs `w_amberprior_probe` (5 s),
+`w_amberprior_clouds` (135 s, 0.163 GB; 126/126, lam = 0 bit-exact against the shipped risk
+table, beta = 0 equal to `p_ladder.pool_histogram`), `w_amberprior_endpoint` (4786 s under load,
+0.131 GB). The leave-fold-out choice over 30 (lam, beta) cells on the point cloud is (0, 0) on
+every fold: the deployable arm is the incumbent bit-exactly and every registered contrast is an
+exact tie (126T). Every mixture cell is worse than the shipped posterior on the cloud, +0.010 A at
+lam 0.05 to +0.152 at lam 0.5, monotone in lam (the typicality direction), none past its MDE, 22
+of 29 with the fold CI above zero; beta moves a cell by at most 0.02 A with no consistent sign,
+so AMBER's ordering carries nothing through the prior that the unweighted histogram does not
+(S24 L16's rank-permuted null seen from the prior side). The per-target oracle over the 30 cells
+(-0.29 A) is 224% accounted for by its valid across-target null and transfers 8% in split half.
+The last AMBER form on the record is closed on this instrument.
 
 ---
 
