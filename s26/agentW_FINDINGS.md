@@ -15,7 +15,7 @@ No stock words; no em dashes.
 | at least three ideas nobody else proposed | FILED (three own, plus the mandatory one); the tie-break floor has PREREG, code, tests and a one-target probe; the identity floor is measured (Part E) | `s26/IDEA_tiebreak_noise_floor.md` + `PREREG_tiebreak_floor.md` + `w_tiebreak.py`, `s26/IDEA_conformational_identity_floor.md`, `s26/IDEA_window_provenance.md` |
 | the tournament's own ideas (L51: items 2 and 4) | item 2 conformational_identity_floor MEASURED AND POSTED (L52); item 4 tiebreak_noise_floor MEASURED AND POSTED (L64): floor 0.004 A on the 126-mean, 0.024 A paired MDE between two conventions, every hundredths-level recorded effect inside it | `s26/PREREG_identity_floor.md`, `s26/w_identity_floor_stats.py`, `s26/results/w_identity_floor.json`; `s26/PREREG_tiebreak_floor.md`, `s26/w_tiebreak.py`, `s26/w_tiebreak_report.py`, `s26/results/w_selfcopy_tiebreak_{draws,endpoint}.json`, `w_tiebreak_report.json` |
 | the top orphaned survivor: window_ensembling (lane P's idea, L51 item 6) | MEASURED AND POSTED (L84): refuted with power; ens3 minus shipped -0.0005 A (0.02x MDE), against the zero-information resample +0.0042 (0.14x); a gain of 0.028 A or more excluded; the fixed-K form of the mandatory direction is closed | `s26/PREREG_window_ensembling.md`, `s26/w_ensemble.py`, `s26/w_ensemble_test.py`, `s26/results/w_selfcopy_ensemble_{probe_1A13,clouds,endpoint}.json` |
-| the remaining orphans and extensions (L77) | window_provenance census and ORACLE contrast POSTED (L85), its readout H_P3 RUNNING; amber_prior_partner probe done, stage 1 QUEUED; Part B's first retrain (2LMF/f4) QUEUED at est-ram 1.4; partial_recall_gradient and memorisation_on_the_ladder pre-registered with code ready | `s26/PREREG_{window_provenance,amber_prior_partner,partial_recall_gradient,memorisation_on_the_ladder}.md`, `s26/w_{provenance,amberprior,recall,ladder}.py` |
+| the remaining orphans and extensions (L77) | window_provenance census and ORACLE contrast POSTED (L85), its readout H_P3 RUNNING; amber_prior_partner probe done, stage 1 QUEUED; Part B's first retrain (2LMF/f4) QUEUED at est-ram 1.4; partial_recall_gradient MEASURED (L90: no gradient at the MDE, I_long rho -0.205 suggestive) and memorisation_on_the_ladder MEASURED (L91: the discounted ladder under-prices the trained operator by 0.35 A, 1.5x MDE) | `s26/PREREG_{window_provenance,amber_prior_partner,partial_recall_gradient,memorisation_on_the_ladder}.md`, `s26/w_{provenance,amberprior,recall,ladder}.py` |
 | ideas found on the way (coordinator's request) | FILED: the partial-recall gradient below the 0.6 threshold; the own-native model placed on the S24 prior ladder | `s26/IDEA_partial_recall_gradient.md`, `s26/IDEA_memorisation_on_the_ladder.md` |
 | findings, ledger, status, commits | this file; L30, L44; STATUS 09:15, 09:31, 19:4x; commits `8d849504`, `213a5ebb` and the closing one | |
 
@@ -427,6 +427,41 @@ to -0.02 A against an MDE of about 0.05).
 
 ---
 
+## 2e. THE PARTIAL-RECALL GRADIENT: NONE AT THE MDE; A SUGGESTIVE rho -0.2 THAT RETRIEVAL CAN EXPLAIN (ledger L90)
+
+`s26/PREREG_partial_recall_gradient.md`; jobs `w_recall_cov` (15 s, 0.292 GB;
+`s26/results/w_selfcopy_recall_covariates.json`) and `w_recall_endpoint` (45 s, 0.111 GB;
+`w_selfcopy_recall_endpoint.json`). Native-free covariates against each target's own fold
+model's training corpus: I_long (max pinned identity; 0.33 to 0.59, all below 0.6), I_short (max
+containment; 0.50 to 1.00), L_kmer (longest shared substring, 3 to 13). Against `rmsd_arm`:
+I_long rho -0.205 (fold CI [-0.315, -0.099], permutation p 0.010, partial on length -0.176),
+I_short -0.157, L_kmer -0.088; the registered MDE in rho is 0.253. No gradient exists by the
+pre-registered rule (rho <= -0.25); I_long sits at 0.81 to 0.91x the MDE on all three bases with
+the fold CI excluding zero: suggestive, not measured. A clean bill for the 0.6 fold threshold at
+this resolution; power: |rho| >= 0.25 excluded. Confound stated in the entry: the training
+corpus is the retrieval library, so the covariate is also a retrieval-proximity covariate, and a
+negative rho is expected from retrieval alone; the mechanism check that would separate the two
+was gated on a gradient at the MDE and did not run.
+
+## 2f. THE OWN-NATIVE MODELS ON THE S24 PRIOR LADDER: THE DISCOUNTED CURRENCY UNDER-PRICES A TRAINED OPERATOR (ledger L91; ORACLE DIAGNOSTIC)
+
+`s26/PREREG_memorisation_on_the_ladder.md`; job `w_ladder` (40 s, 0.274 GB;
+`s26/results/w_selfcopy_ladder.json`, 504 cells). The four leaked models per target travel
+gam_prob 0.281 at cos_prob 0.584 in the S24 probability currency and gam_loc 0.773 at cos_loc
+0.911 in the S25 location currency (E[d] MAE 2.34 -> 0.82 A per pair); the measured gain is
+-0.709 A on the cloud (L44). The direction-discounted ladder (-2.1496 x gam x cos, the S25 L12
+reading) predicts -0.364: disagreement +0.346 per target, 1.5x MDE, fold CI [+0.206, +0.472],
+5/5 folds (the registered falsifier fired in the registered direction); the undiscounted
+-2.1496 x gam_prob predicts -0.603, inside the MDE. Across the 504 cells corr(prediction, gain)
+= +0.41 (S25 L12's re-readings: +0.05) and corr(MAE change, gain) = +0.72. Reading: for a
+TRAINED posterior that moves far, the endpoint responds to the full probability-space move, not
+to its projection onto the native's direction; the L12 discount was derived from small
+re-readings and does not transfer. Consequence for Proposal C's arithmetic: quote -2.15 x
+gam_eff (probability space) with the cosine reported beside it, not multiplied in. Not
+deployable by construction; a calibration of the currency.
+
+---
+
 ## 3. IDEAS FILED (tournament entries; each has hypothesis, closure check, falsifier, MDE, memory, hours)
 
 1. `s26/IDEA_selfcopy_proxy_bound.md` (mandatory direction).
@@ -527,6 +562,15 @@ rejects).
    would change per draw and measured 3.6, because the score's top-75 is drawn mostly from
    the non-tied prefix. The floor is smaller than I guessed on membership and exactly where I
    guessed on the mean (0.004 A against a registered 0.003 to 0.010).
+10. The recall covariate I proposed cannot separate memorisation from retrieval, because the
+   fold model's training corpus is the retrieval library. I named S22/S23's router failures in
+   the idea file and missed the confound in my own design; the PREREG addendum says how to fix it
+   (partial out a retrieval-only covariate, run the mechanism check unconditionally).
+11. I registered that the ladder would under-price the trained operator, and it did, but the
+   mechanism is not the one I imagined: the leaked models recall the native's DISTANCES nearly on
+   axis (gam_loc 0.77 at cos 0.91) while their 17-bin probability vectors move only 0.28 at cos
+   0.58; the two currencies disagree about the same operator, and the endpoint follows the
+   location. I had assumed a single "how far toward the native" number exists.
 9. I nearly wrote the floor as a verdict on C3's relaxation. It is not: C3 was measured as a
    paired contrast with the pool held fixed, and that design excludes the tie-break noise by
    construction. The floor speaks to contrasts across runs and instruments, and the entry says
