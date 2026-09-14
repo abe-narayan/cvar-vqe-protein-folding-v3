@@ -922,3 +922,23 @@
 2026-09-13T21:38:13 SAMPLE   ram=84.2% (14.10GB used, 2.65GB free) cpu=72.4% (15s mean 84.0%) jobs=4 amber=0 queued=0 lanes=7
 2026-09-13T21:39:13 SAMPLE   ram=82.4% (13.80GB used, 2.95GB free) cpu=67.7% (15s mean 75.2%) jobs=4 amber=0 queued=0 lanes=7
 2026-09-13T21:40:14 SAMPLE   ram=82.7% (13.85GB used, 2.90GB free) cpu=71.2% (15s mean 72.4%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:41:14 SAMPLE   ram=83.4% (13.98GB used, 2.77GB free) cpu=78.0% (15s mean 74.8%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:42:14 SAMPLE   ram=84.6% (14.17GB used, 2.58GB free) cpu=72.3% (15s mean 75.0%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:43:14 SAMPLE   ram=84.7% (14.18GB used, 2.57GB free) cpu=77.5% (15s mean 77.0%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:44:14 SAMPLE   ram=84.4% (14.14GB used, 2.61GB free) cpu=69.3% (15s mean 69.3%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:44:38 REAP     p_eval_pca128 (pid 34372) is gone; registration removed
+2026-09-13T21:45:14 SAMPLE   ram=81.8% (13.70GB used, 3.05GB free) cpu=91.4% (15s mean 78.2%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:46:14 SAMPLE   ram=82.6% (13.84GB used, 2.91GB free) cpu=68.9% (15s mean 69.8%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:47:14 SAMPLE   ram=85.0% (14.24GB used, 2.51GB free) cpu=91.3% (15s mean 79.5%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:47:24 SUSPEND  a3_build agent=Q tag=CPU rss=0.35GB
+2026-09-13T21:47:29 SUSPEND  w_ensemble_clouds agent=W tag=CPU rss=0.09GB
+2026-09-13T21:47:34 SUSPEND  p_train_raw_f1 agent=P tag=CPU rss=0.96GB
+2026-09-13T21:47:39 SUSPEND  ph_reject_chain agent=PH tag=CPU rss=0.05GB
+2026-09-13T21:47:49 RESUME   w_ensemble_clouds agent=W tag=CPU
+2026-09-13T21:47:54 RESUME   p_train_raw_f1 agent=P tag=CPU
+2026-09-13T21:48:09 SUSPEND  w_ensemble_clouds agent=W tag=CPU rss=0.08GB
+2026-09-13T21:48:14 SAMPLE   ram=92.2% (15.45GB used, 1.30GB free) cpu=99.1% (15s mean 99.7%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:48:14 SUSPEND  p_train_raw_f1 agent=P tag=CPU rss=0.86GB
+2026-09-13T21:49:14 SAMPLE   ram=92.3% (15.46GB used, 1.29GB free) cpu=10.7% (15s mean 15.3%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:49:44 SUSPEND  a3_build agent=Q tag=CPU rss=0.35GB
+2026-09-13T21:50:14 SAMPLE   ram=91.6% (15.35GB used, 1.40GB free) cpu=16.6% (15s mean 14.4%) jobs=4 amber=0 queued=0 lanes=7
