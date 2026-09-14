@@ -5,7 +5,7 @@ final pass before close is short. Each row: exists / meets the stated standard /
 missing. Banned-word and em-dash greps (rule 13) are run over every presenter-facing file each
 pass: `grep -nE "genuinely|honestly|leverage|robust|delve|underscore"` and a count of U+2014.
 
-Last pass: 2026-09-13 19:45 (after L51). Status vocabulary: OK / PARTIAL / MISSING / PENDING.
+Last pass: 2026-09-13 21:45 (after L71). Status vocabulary: OK / PARTIAL / MISSING / PENDING.
 
 | # | deliverable | exists | standard met | missing / note |
 |---|---|---|---|---|
@@ -13,7 +13,7 @@ Last pass: 2026-09-13 19:45 (after L51). Status vocabulary: OK / PARTIAL / MISSI
 | 2 | EXAMINATION + AUDIT (`s26/EXAMINATION.md`, `s26/EXAMINATION_AUDIT.md`) | OK | OK: audit L31, one MATERIAL fixed by addenda (L32), re-checked L34; Phase 0 signed off L33 | -- |
 | 3 | BRIEF (`s26/BRIEF.md`) | OK | OK: one-sentence falsifiers per item, basis named | -- |
 | 4 | PREREG_* (22 files) | OK | OK for the arms that ran; survivors still without a PREREG (L51): strain_difficulty, window_ensembling, window_provenance, amber_prior_partner, product_state_optimum (unless inside PREREG_A1) | PENDING: those five before compute |
-| 5 | PROPOSAL_A / B / C (+ B_REPLACEMENT) | PARTIAL | `PROPOSAL_B.md`, `PROPOSAL_B_REPLACEMENT.md`, `PROPOSAL_C.md` on disk; `PROPOSAL_A.md` MISSING (lane Q, after A1/A3) | MISSING: PROPOSAL_A; C's verdict waits on the ladder eval |
+| 5 | PROPOSAL_A / B / C (+ B_REPLACEMENT) | PARTIAL | all four on disk; A's verdict REPLACE accepted (L69) and supported by the Adversary (L70); B_REPLACEMENT per L13 | C's verdict waits on the ladder eval (L62-L67 so far: noesm +0.208 Type-M, conly / wide / pca32f not measured) |
 | 6 | IDEA_* + TOURNAMENT | OK | 16 IDEA files; `s26/TOURNAMENT.md` ranked (L51 accepted); banned-word clean | -- |
 | 7 | agent*_FINDINGS | PARTIAL | A, E, I, P, PH, Q, W on disk in the S12-S25 format; PR lane (spawned L42) has none yet | PENDING: agentPR_FINDINGS; each lane's "what I did not do" section present (checked A, E, W) |
 | 8 | LEDGER + RETRACTIONS | OK | append-only, numbered, collisions suffixed (L16b, L18b); `s26/RETRACTIONS.md` R1-R4 seeded, R2 marked FOR docs/FINDINGS.md | keep current: no S26 endpoint has contradicted a prior sprint yet (L39, L43, L44 confirm the record) |
@@ -34,7 +34,7 @@ Last pass: 2026-09-13 19:45 (after L51). Status vocabulary: OK / PARTIAL / MISSI
 | `s26/EXAMINATION_AUDIT.md` | 0 | 0 | 19:45 |
 | `s26/agentA_FINDINGS.md` | 0 | 0 | 19:45 |
 | `s26/LEDGER.md` (A's entries) | 0 (one rule-13 word removed) | 0 | 19:45 |
-| deck / PRESENTATION_CHANGES | not on disk | -- | -- |
+| deck / PRESENTATION_CHANGES | built (L61, slide 8 pending); grep at the final pass | -- | -- |
 
 ## Numbers that must not reach a slide or the report without their qualifier
 
@@ -48,5 +48,7 @@ Last pass: 2026-09-13 19:45 (after L51). Status vocabulary: OK / PARTIAL / MISSI
   direction is measured at 1e3 and by S@1e4 (L54).
 - The 2/60 bound: "0.028" is the mean-CI envelope; the worst single target gives 0.151; MINOR
   under every reading; quote both with A2 named (L55).
+- A1: "twelve of twelve arms negative" is one correlated observation (mean pairwise corr 0.955); quote it with the 0.23x / 0.36x MDE and the 0.06 A resolution (L70).
+- The tie-break floor 0.024 A applies across runs that do not share the tie-break; paired within-run contrasts (C3 etc.) are not inside it (L71).
 - "No exponential plateau": always "at depth 3" (R2).
 - 3.2148 (cache) vs 3.2126 (leaderboard rebuild): quote one and name it (EXAMINATION H).
