@@ -1758,3 +1758,60 @@ product_state_optimum if its arm is not already inside PREREG_A1).
 
 ---
 
+
+## L52 -- TOURNAMENT ITEM 2, conformational_identity_floor (W): THE SAME SEQUENCE IN A DIFFERENT DEPOSIT SITS 2.9 A FROM THE NATIVE (MEDIAN OVER 22 PAIRS; 3.1 A OVER 18 TARGETS), 0.97 A WORSE THAN THE POOL'S BEST WINDOW AND 1.44 A BETTER THAN ITS MEAN; F5 HOLDS; ORACLE DIAGNOSTIC (2026-09-13, W)
+
+Pre-registered as Part E of `s26/PREREG_selfcopy_bound.md` (falsifier F5: median above 1.5 A;
+FALSIFIED if below 1.0 A) and, for the two paired contrasts, `s26/PREREG_identity_floor.md`
+(written before `s26/w_identity_floor_stats.py` ran). Measurement: job `w_selfcopy_floor` (exit 0,
+5 s; `s26/results/w_selfcopy_floor.json`, complete 22/22, provenance e480fc15); statistics: job
+`w_identity_floor_stats` (exit 0, 5 s, peak 0.004 GB; `s26/results/w_identity_floor.json`). Every
+quantity reads the native (the copy's CA-RMSD to the target's model-1 native at the shared
+segment; the pool's ORACLE `rr`): ORACLE DIAGNOSTIC, nothing selects, nothing is deployable.
+Population: the 18 dev targets with a verbatim relative in the peptide database (lane I's L15
+list; 4 cross-fold carriers, the rest same-fold), 22 partners; benchmark sequences never used.
+
+    cross-deposit CA-RMSD, 22 pairs:  median 2.908   mean 2.811   min 0.317 (5V5B)   max 5.502 (7S3O)
+                                       below 1.0 A: 4/22 (18%)     below 1.5 A: 6/22 (27%)
+    per target (partners averaged), 18:  median 3.055   below 1.0 A: 4/18   below 1.5 A: 5/18
+    the four cross-fold self-copies:  1CEK 0.595   2FBU 3.278   2P5H 2.334   6B9K 4.126   (S24 L4's four, reproduced)
+    role: carrier segment (n = 15) median 2.98;  carried whole chain (n = 7) median 2.04;  Spearman(length ratio, RMSD) -0.08 (p 0.72)
+    reference scales: the natives' own intra-ensemble spread 1.044 A (record); the S24 L8 "universe best" 1.313 A
+
+F5 holds (2.908 against the 1.5 A line; 18% below 1.0 A against "fewer than a third"). The two
+registered paired contrasts (`ST.fmt` verbatim; basis: a single window against the native on both
+sides; n = 18 targets, five folds):
+
+  copy_minus_pool_best (ORACLE both sides; single window vs native), n=18 targets
+    a 2.7968 (med 3.0548)   b 1.8291 (med 1.9778)   n=18
+    effect +0.9677   median +0.9703   SE 0.3269   MDE 0.9158   effect/MDE +1.06
+    iid  CI95 [+0.3349, +1.5834]
+    fold CI95 [+0.7247, +1.2809]   folds same sign 5/5   per-fold 0:+1.113 1:+1.523 2:+0.736 3:+0.635 4:+0.937
+    3W/15L/0T   worst degradation +2.9126 (7S3O)   p90 +2.5643   power 0.84  Type-M 1.10
+    concentration: drop-top10 +2.1403 vs uniform-effect null p10/p50/p90 +1.6224/+2.1031/+2.5080 -> pctile 0.544
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.10x]
+  copy_minus_pool_mean (ORACLE both sides; single window vs native), n=18 targets
+    a 2.7968 (med 3.0548)   b 4.2396 (med 4.1842)   n=18
+    effect -1.4428   median -0.9970   SE 0.4504   MDE 1.2618   effect/MDE -1.14
+    iid  CI95 [-2.3156, -0.6046]
+    fold CI95 [-1.7172, -1.1896]   folds same sign 5/5   per-fold 0:-1.855 1:-1.217 2:-1.773 3:-1.452 4:-1.023
+    13W/5L/0T   worst degradation +0.9307 (8ZG2)   p90 +0.4068   power 0.89  Type-M 1.06
+    concentration: drop-top10 +0.1234 vs uniform-effect null p10/p50/p90 -0.3330/+0.0854/+0.4138 -> pctile 0.555
+    VERDICT: BETTER [TYPE-M ZONE: magnitude inflated ~1.06x]
+
+Reading, with the discipline's labels: the copy is WORSE than the pool's own best window (+0.97 A,
+5/5 folds, fold CI excluding zero, but 1.06x MDE: Type-M zone, sign clean, magnitude not a result)
+and BETTER than a typical pool window (-1.44 A, 5/5 folds, 1.14x MDE: Type-M zone likewise). Both
+were registered as expected in sign; the second was registered as "not measured", and it is
+measured in the Type-M sense only. The number for the report: sequence identity buys a window that
+is, in the median, 2.9 A from the native, i.e. no nearer than the shipped built chain's 3.21 A mean
+by a margin the instrument can call at n = 18, and 1 A worse than the best window the pool already
+holds. The 2.0 A target of S15 to S25 is below what a verbatim sequence lookup reaches on this
+instrument. Two consequences carried forward: the self-copy leak is small where it is measured
+because the copy is not the native (L44); and "containment-fresh" novelty (memory
+`no-fresh-benchmark-exists`) is a weaker notion than the record has treated it as, since a
+verbatim copy is worth about one pool window. Replication: deterministic (Kabsch on fixed
+coordinates; no seed, no fit); the only random element, the bootstrap, is seeded by `stats_lib`.
+Not done: a length-matched non-verbatim control population (a random same-fold window against
+each target) is the natural third contrast and was not registered; it is the pool mean's role
+here and is left for the report's reader as such.
