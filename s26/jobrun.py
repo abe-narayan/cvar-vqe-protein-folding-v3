@@ -125,7 +125,17 @@ def main() -> int:
         #: against a cap of four (2026-09-13 09:27), so the pass is re-checked after a jitter.
         n_reg = _live_registrations()
         amber_block = tag == "AMBER" and _running_amber() >= MAX_AMBER
-        crowded = (not stale) and (ram > CEILING or cpu > CPU_START or n_reg >= MAX_CONCURRENT)
+        avail = float(st.get("ram_avail_gb", 99.0)) if st else 99.0
+        crowded = (not stale) and (ram > CEILING or cpu > CPU_START or n_reg >= MAX_CONCURRENT
+                                   or avail < a.est_ram + 0.5)
+        #: v2.2 (ledger L40): a stale snapshot means no governor is watching; a job that may
+        #: need more than 0.5 GB does not start unsupervised. Small jobs still may. And a job
+        #: never starts unless the box has its estimate plus 0.5 GB free right now.
+        if stale and a.est_ram > 0.5:
+            crowded = True
+            if waited == 0.0:
+                print(f"jobrun: {a.name} waiting for a live governor (est {a.est_ram} GB > 0.5)",
+                      file=sys.stderr, flush=True)
         if not crowded and not amber_block:
             time.sleep(random.uniform(0.2, 3.0))
             if _live_registrations() < MAX_CONCURRENT and not (

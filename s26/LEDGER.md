@@ -1224,3 +1224,29 @@ exceeds 0.5 GB (implemented at the next resume; recorded here first).
 
 ---
 
+## L41 -- THE BOX IS AT 84% WITH NOTHING OF OURS RUNNING; jobrun v2.2; WHAT FINISHED DURING THE PAUSE (2026-09-13 19:13, coordinator)
+
+After L40's stops the box reads 84.2% RAM used (14.1 GB) with no campaign process alive: the
+load is the user's own (twelve Chrome renderers at 0.3 to 0.8 GB each, VS Code, three claude
+sessions). Available memory is 2.6 GB, so the campaign's working headroom under the 93% ceiling
+is now about 1.4 GB, a third of what L0 measured. Every remaining job must be launched one at a
+time with a measured peak below 1 GB until the user's load drops; the ladder's `raw` rung (peak
+of its sibling `pca32f` 1.85 GB) does not fit and waits.
+
+`s26/jobrun.py` v2.2: (i) a stale governor snapshot is no longer "go" for a job with est-ram
+above 0.5 GB (L40); (ii) a job never starts unless the snapshot shows its estimate plus 0.5 GB
+available. Lane P's shell chain drivers (`p_train_chain.sh`, `p_eval_chain.sh`) were terminated
+because they re-launch the next rung whenever the previous job exits, including on a kill; on
+resume lane P launches rungs singly.
+
+Finished during the pause (`s26/jobs_done/`, exit 0): w_selfcopy_retrieval (09:34),
+p_train_conly (09:51), w_selfcopy_envelope (09:57), w_tiebreak_probe (09:58), p_train_pca32
+(10:33), p_train_wide (14:32), p_train_pca32f (15:13), p_train_pca128 (16:08),
+p_featurise_esm8m and p_train_esm8m (16:50). The "_p2" records at 19:11 to 19:12 are the chain
+driver re-touching finished rungs (5 s, no work). Killed without a record: a1_build_s0/s1
+(per-target checkpoints under `s26/results/a1/`), ph_reject_cloud, w_train_chain,
+p_eval_shipped, p_train_raw (fold checkpoints under `s26/models/p_ladder/`), p_eval_noesm.
+Each resumes from its checkpoint; none restarts.
+
+---
+
