@@ -88,23 +88,20 @@ breaks a virtual bond, one of which does not converge. Stage 2 (the relaxation o
 rung's output) reduces to the stage-1 replication PH already ran, because the best rung is the
 shipped one.
 
-## C4 -- routers for m* and s* on features no previous router used (`s26/PREREG_C4.md`, `s26/p_c4.py`, `s26/results/p_c4.json`; first block final, remaining blocks in the ledger addendum)
+## C4 -- routers for m* and s* on features no previous router used (final; `s26/PREREG_C4.md`, `s26/p_c4.py`, `s26/results/p_c4.json`, ledger L110, L115)
 
 Four feature blocks no previous router used (the top-75 cloud's principal-axis spread, the
-retrieval-score entropy, the posterior's per-pair bin entropy, ESM contact-map statistics; 25
-features) plus the S22 feature set as the harness control; nested leave-fold-out ridge; label
-permutation null (200 draws). Anchor: the rebuilt m = 75 cloud reproduces `agg_surface` and
-`errdecomp` at 0.00e+00. All 25 new features jointly, m-router A (multi-output ridge over the
-15-rung ladder, argmin of the prediction): +0.068 A on the point cloud, SE 0.027, MDE 0.075
-(0.91x), median 0.000, worse than 96% of the permutation-null routers (null mean +0.027); on the
-built chain through the same projection +0.071 (0.83x MDE). Router B (ridge on log m*, nearest
-rung): +0.027 (0.56x), null mean +0.019, p_perm 0.865. Both point the harmful way and neither
-clears its MDE: the sixth and seventh router constructions for m* land where the first five did
-(S22 L7, S23 L7), and the feature provenance did not matter, as S23 L7 already said. The s*
-router and the per-block routers are appended to the ledger as they complete; the record's
-verdict is unchanged by them unless one clears its MDE with 5/5 folds, which none is expected
-to (S23 L6d: s* is a property of the pool-native pair and provably carries no native-free
-content).
+retrieval-score entropy and gaps, the posterior's per-pair bin entropy, ESM contact-map
+statistics; 25 features), singly and jointly, plus the S22 feature set as the harness control;
+nested leave-fold-out ridge; label-permutation nulls. Anchor 0.00e+00 against `agg_surface` and
+`errdecomp`. Twelve m* routers: eleven point the harmful way and none clears its MDE (largest
++0.068 A on the point cloud, 0.91x, worse than 96% of the permutation null; +0.071 on the built
+chain through the same projection, 0.83x); the S22 features reproduce their recorded ~0 (+0.020
+to +0.047); the one negative number (retrieval-score entropy, router B, -0.001) is 0.02x its
+MDE. Six s* routers all predict s* with the wrong sign (rho -0.10 to -0.21) and cost +0.007 to
++0.027 against s = 1. The sixth to seventeenth router constructions land where the first five
+did (S22 L7, S23 L7); S23 L6d/L9 (s* is a function of the invisible common mode) and S22 L10
+(no router class rich enough to express the signal is learnable at n = 126) stand.
 
 ## C5 -- predict and subtract the common mode (`s26/PREREG_C5.md`, `s26/p_c5.py`; one agent-day; run queued at 01:35 with the alpha grid reduced to 0.5 for the close, result in the ledger addendum)
 
