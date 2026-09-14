@@ -18,8 +18,10 @@ neither has happened. Test names are given as `file::test`; the record of their 
 `s26/TEST_RUN.md`.
 
 Status of the sections: Parts I to VI, IX and Appendix A are drafted from the record as it
-stands; Parts VII and VIII and Appendix C carry slots that fill as S26 verdicts land; Appendix B
-lists the numbers of the drafted parts and grows with them.
+stands; Parts VII and VIII fill from the S26 ledger as verdicts land (DRAFT until the sprint
+closes) and Appendix C is reproduced at the close; Appendix B lists every number of the drafted
+parts, and `python s26/e_report_check.py` (or `python s26/examine.py --report-check`) re-reads
+each one from its artefact; Appendix D reconciles this report with `docs/REPORT_S26.md`.
 
 ---
 
@@ -126,9 +128,16 @@ claims retracted by internal audit (`s25/LEDGER.md` L5, L7, L9, L11, L15).
   (`core/data.py` `identity`), so a peptide sitting verbatim inside a longer library member can
   score below the 0.6 threshold and land in another fold. Four of 126 dev targets and two of 60
   benchmark targets carry such a self-copy in their own fold model's training set
-  (`s24/LEDGER.md` L4; `s26/results/i_identity_audit.json`, S26 ledger L15). The dev effect was
-  priced in S10-4; the benchmark effect is declared and unquantified by design, because
-  quantifying it would open the benchmark.
+  (`s24/LEDGER.md` L4; `s26/results/i_identity_audit.json`, S26 ledger L15). At the looser
+  >= 0.6 identity criterion 13 of 60 benchmark targets have such a pool window
+  (`docs/FINDINGS.md:4571`, S9-10), priced at +0.0030 A in S10-4. The dev price, re-derived in S26
+  with an artefact: clean minus production +0.0004 A on the lam = 0 chain (fold CI [-0.0001,
+  +0.0010], MDE 0.0012) and +0.0018 A on the built chain [-0.0003, +0.0039], neither clearing
+  its MDE (`s26/results/w_selfcopy_endpoint.json`; S26 ledger L44, L50). The benchmark effect is
+  never measured, because measuring it would open the benchmark; it is bounded from the dev
+  proxy without opening it at 0.028 A built chain (0.048 single window, 0.023 on the paired
+  gain) by an ORACLE own-native envelope and at 0.002 A by the dev-4 measurement, MINOR as
+  pre-registered (`s26/results/w_selfcopy_bound.json`; L44; Part VII.4).
 
 ### II.2 The endpoint and the reporting bases
 
@@ -150,7 +159,11 @@ arm on two emission paths: 3.2148 from the production cache and 3.2126 from the 
 which re-projects the stored cloud and round-trips through PDB coordinate quantisation, a
 per-target gap of up to 0.171 A (`results/summary/leaderboard.json :: rows[0]/mean`; S26 ledger
 L14). A fourth number, 3.2041 A, is the chain fitted with no torsion prior (`rmsd_fit`,
-`science/rmsd_fit/mean`) and is not a production arm.
+`science/rmsd_fit/mean`) and is not a production arm. The spread behind the built-chain mean, on
+the results-lab rebuild (`results/summary/leaderboard.json :: rows[0]`): median 2.9661 A, best
+0.1824 (1S9Z), worst 8.2342 (2MQ2), 28.6% of targets under 2 A and 50.8% under 3 A, correlation
+with the ORACLE pool best 0.7150, and a rebuild projection gap of 0.1643 A against the cache's
+0.1664 (Appendix D).
 
 The S25 ruling has a corollary the S26 examination had to restate (S26 ledger L28 item 3, L29
 item 2): the seven-configuration physics suite, the random-75 null and the "worse than noise"
@@ -273,15 +286,20 @@ up to 7.58 A.
 
 What it assumes: that a pair's distance is predictable from sequence alone at 17-bin
 resolution. Where it can be wrong: the posterior is over-confident by about a factor of two
-(`s25/LEDGER.md` L1); its L1 risk's per-pair minimiser is the posterior median, which sits on
-one of 17 atoms, so the per-pair target is quantised (`s25/LEDGER.md` L6); the fold models share
-most of their training data (Part II). The ORACLE ceiling above it: with the prior replaced by
+(standardised error sd 1.9962 where a calibrated model gives 1; 90% intervals cover 61.6% and 50%
+intervals 28.2%; 24.1% of pairs multimodal; `s25/results/calib.json`, means over 126 rows;
+`s25/LEDGER.md` L1); its L1 risk's per-pair minimiser is the posterior median, which sits on one
+of 17 atoms, so the per-pair target is quantised, up to 1.75 A of location error at long
+separation from binning alone (`s25/LEDGER.md` L6); the fold models share most of their training
+data (Part II). The ORACLE ceiling above it: with the prior replaced by
 the native's own distances, everything else fixed, the point cloud reaches 2.2261 A point cloud
 against 3.0483 point cloud (`s24/results/priorladder.json`, mean of column MASS1.0 over 126
 rows against MASS0.0), a gain of 0.822 A; the slope at the origin is -2.1496 A per unit of
-interpolation toward truth (first rung MASS0.1, mean 2.8334), but only along the native's own
-direction: moving the score's target 25% toward truth by any achievable route does not move the
-endpoint (`s25/LEDGER.md` L12).
+interpolation toward truth (first rung MASS0.1, mean 2.8334 point cloud, -0.2150 A at 2.4x its
+MDE, 113W/13L; `s24/LEDGER.md` L13), but only along the native's own direction: across 51
+achievable arms that move the score's target up to 25% toward truth, the correlation between
+the distance moved and the endpoint change is +0.054, and the endpoint does not move
+(`s25/LEDGER.md` L12).
 
 ### III.3 Retrieval
 
@@ -398,9 +416,14 @@ but carries strain 1172.7, above the S8 strain-rejection rule of 1000 kcal/mol
 
 What it assumes: that the force field's local minimum near the built chain is nearer the
 native. On the means the step costs +0.0207 A, relaxed chain 3.2355 against built chain 3.2148
-(`bench_results/baseline_tuning126.json :: science/rmsd_full/mean, science/rmsd_arm/mean`); S16
-found a random displacement of matched size at least as accurate (`s16/LEDGER.md` L27); the
-paired interval and the matched-random control are C3's to report (Part VII). What it buys is validity: exact bond
+(`bench_results/baseline_tuning126.json :: science/rmsd_full/mean, science/rmsd_arm/mean`);
+paired, +0.0207 with fold CI [+0.0154, +0.0290], 2.16x MDE, 40W/86L (S26 ledger L39). S16 found
+a random displacement of matched size at least as accurate (`s16/LEDGER.md` L27), and S26's C3
+stage 1 measured it: the relaxed chain is worse than the built chain displaced at random by the
+same 0.220 A (+0.0111, fold CI [+0.0062, +0.0171], Type-M zone) and worse than the built chain
+moved the same distance toward a random pool member (+0.0385 [+0.0298, +0.0479]); the AMBER
+displacement points away from the native (ORACLE cosine -0.049). The step is dropped as an
+accuracy step and kept as a validity step on 124 of 126 targets (Part VII.3; L39, L46). What it buys is validity: exact bond
 geometry, strain removed. The relaxed-chain endpoint is 3.2355 A.
 
 ### III.9 The ceilings, on one line each
@@ -486,8 +509,13 @@ random (point cloud), 1.99x its MDE; AMBER +0.455 A, 2.42x MDE; 5 of 5 folds eac
 (`s25/agentPHYS_FINDINGS.md` section 1.4). The built-chain means of the same seven rows are
 3.2187, 3.3100, 3.3732, 3.4221, 3.8248, 3.8844 and 4.1015 A (`results/summary/leaderboard.json
 :: rows[*]/mean`; the random-75 built-chain row is not in that table, so the "worse than
-random" contrast is stated on the point cloud only). Permuting a physics channel while keeping
-its distribution improves the endpoint (Legacy +0.327 point cloud worse than its own noise,
+random" contrast is stated on the point cloud only). Against the production point cloud itself
+(`s25/results/phys_suite.json :: vs_incumbent`, point cloud on both sides): Distogram +0.0097
+(0.43x MDE), AMBER+Distogram +0.0833 (0.70x), Legacy+Distogram +0.1668 (0.91x), all three
++0.2047 (1.07x, Type-M zone), Legacy+AMBER +0.6259 (1.89x), Legacy +0.7070 (2.14x), AMBER
++0.8322 (2.67x); on the built chain the distogram-selected configuration is +0.0061 A over
+production, 0.19x MDE, 61W/65L (`results/summary/leaderboard.json :: rows[1]`). Permuting a
+physics channel while keeping its distribution improves the endpoint (Legacy +0.327 point cloud worse than its own noise,
 AMBER +0.471; `s25/agentPHYS_FINDINGS.md` section 1.5). The reason is IV.3: the pool's dominant
 axis is compactness, the distogram already selects on it, and each energy pushes along that
 axis in a direction unrelated to which candidate is right. S16 had found the same for Legacy as
@@ -562,9 +590,11 @@ the built chain's own AMBER energy is above 1e4 kcal/mol on 58.7% of targets bef
 ends at +1262), moves the CA trace 0.220 A RMS, and stretches the virtual CA-CA bond from 3.804
 to 3.867 A on average, breaking it beyond 4.0 A on two targets (2BP4 5.38 A, 9KAR 4.86 A). What
 that step does to accuracy against a random move of the same size is C3 (`s26/C3_RESULT.md`,
-after the gate; Part VII); on the means the step costs +0.0207 A, relaxed chain 3.2355 against
-built chain 3.2148 (`bench_results/baseline_tuning126.json`), and S16 found a random
-displacement of matched size at least as accurate (`s16/LEDGER.md` L27). S17's "steric
+after the gate; Part VII.3): the relaxed chain is +0.0207 A worse than the built chain (fold CI
+[+0.0154, +0.0290]), +0.0111 worse than the built chain displaced at random by the same
+magnitude and +0.0385 worse than a move of the same size toward a random pool member (S26
+ledger L39, L46); S16 had found the random displacement at least as accurate (`s16/LEDGER.md`
+L27). S17's "steric
 validity is free" was quoted against the wrong baseline and corrected by the workstream that
 made it (`s17/LEDGER.md` L27), and S17 explained S16's cis-peptide defect in a way that
 exonerates the force field: the ideal-geometry builder cannot represent the cis bond, and the
@@ -627,7 +657,7 @@ the amplitudes are real exactly and the reachable manifold lies in SO(2^n), not 
 dim so(128) = 8128 against 21 parameters. The simulation carries all 2^n amplitudes; the CNOT
 chain is composed into one basis permutation, and `probs_batch` simulates all 2P shifted
 parameter vectors in one pass. Verified in S25 against a dense Kronecker-product simulator:
-max |p - p_dense| = 5.6e-17 (`s25/results/q_verify.json`).
+max |p - p_dense| = 5.551e-17 (`s25/results/q_verify.json`).
 
 The generation-lane `MPSAnsatz` is layers of (RY on every wire, CNOT chain), no ring, with an
 optional trailing RY layer. A CNOT is an exact bond-dimension-2 matrix product operator, so
@@ -722,7 +752,9 @@ noise, which is what proves the disagreement is bias (`s25/QUANTUM.md` 4.2):
 
 | instrument | cosine with the exact gradient | norm ratio |
 |---|---|---|
-| S9, 10 qubits, 1024 amplitudes enumerated (`core/quantum.py:66`) | +0.655634 | 0.758 |
+| S5, the first measurement (`docs/FINDINGS.md:368-403`) | -0.023 | not recorded |
+| S9, 10 qubits, 1024 amplitudes enumerated (`core/quantum.py:42`) | +0.655634 | 0.758 |
+| the consolidation audit, exact / sampled (`verify/cvar_audit.json`) | +0.6847 / +0.685 | not recorded |
 | S25 re-verification, n = 7, L = 3, alpha = 0.15, deployed energy shape | +0.566586 | 0.519 |
 | any instrument, constant baseline | +1.000000 | 1.000 |
 | sampled estimator, constant baseline | +0.994 | about 1 |
@@ -819,7 +851,9 @@ T = 1.0. In distribution (`s25/q_gibbs.py` -> `s25/results/q_gibbs.json`), using
 | the Gibbs optimum | -2.453671 | 0 | 0 | 0 | 4.9135 |
 
 KL(trained || optimum) is 1.449 nats at T = 0.1, 0.902 at T = 0.3, 0.373 at T = 1.0; total
-variation 0.761, 0.453, 0.351. The mandatory control, best of 200 draws from the untrained
+variation 0.761, 0.453, 0.351; the pre-registered falsifier (KL below 0.1 nats, "the circuit
+attains its own optimum") fired against the S25 draft (`s25/results/q_gibbs.json ::
+results/falsifier`). The mandatory control, best of 200 draws from the untrained
 circuit: F_trained -2.183096 against F_init_best -1.483528 and F_gibbs -2.453671 at T = 0.3,
 gap closed 0.783, beats best-of-200 at all three temperatures (0.891 at T = 0.1, 0.783 at
 T = 1.0). Three readings, in order: the optimiser trains (it beats best-of-200 and closes 78 to
@@ -846,8 +880,9 @@ on every fold, an ORACLE counterfactual not applied, is worth -0.0311 A at 0.27x
 the strength of this; what changes is what is claimed about it.
 
 **Deleting the entangler.** The standing project result from removing the CNOTs and changing
-nothing else is -0.013 A [-0.095, +0.077], an interval containing zero and effects in both
-directions; and chi orders nothing (`s21/LEDGER.md` L34). Whether the entanglement changes the
+nothing else (the S20 continuous encoding, same CVaR estimator, same seed) is -0.013 A [-0.095,
++0.077], an interval containing zero and effects in both directions (`s20/LEDGER.md` L1); and
+chi orders nothing (`s21/LEDGER.md` L34). Whether the entanglement changes the
 answer is therefore not measured and specifically not refuted (`s25/QUANTUM.md` 7.4).
 
 ### V.8 The width and depth sweeps, and what they do and do not say
@@ -1062,7 +1097,23 @@ configuration of it has beaten a matched classical control on any readout; and t
 quantum work that survives as a result is the trainability measurement of V.10, with V.9's
 correction to its scope.
 
-<!-- PART V S26 ADDITIONS -->
+### V.12 S26 additions as they land
+
+**A2 checked (L45).** The Adversary's independent re-derivation `s26/results/a_dla_check.json`
+(no shared closure code, incremental Gram-Schmidt rank) agrees with `q_dla.json` at every cell
+at n = 4 to 7, L = 1 to 4, for all four conjugation and gate-order conventions; the 8128 / 1025
+reconciliation (the fixed ansatz's algebra against the strings ADAPT selected, 1025 / 8128 =
+0.126) is correct. The "S25 slopes are a statement about depth 3" reading is an inference from
+the 2-design literature, not a measurement here.
+
+**A4, grown against fixed circuits (L35, checked L47).** Part VII.1 carries the table. In one
+sentence for this part: on the deployed Hamiltonian an operator-growing (ADAPT) construction
+produces product circuits at alpha = 1, whose gradient variance does not decay with width because
+there is nothing entangled to train, and at alpha = 0.25 a 2-local family that decays like the
+fixed ansatz (-0.302 against -0.243 log2 per qubit); no width-scaling argument for the selector
+comes out of it (`s26/results/q_var.json :: results/slopes`).
+
+**A1 and A3.** Pending (Part VII.1).
 
 ## PART VI. THE TWENTY-TWO SPRINTS AS A STORY
 
@@ -1264,9 +1315,9 @@ label reaches 2.534 at n = 8: signal-limited, not sample-limited (section I). Th
 operator consumes the set mean, not the set best: d_out = 1.16 d_set_mean + 0.04 d_set_best,
 R^2 0.893 over 882 perturbations, so a perfect rank-1 decision is worth -1.743 A through argmin
 and -0.029 A through the m = 75 average (section III; `docs/CONDENSED_REPORT.md:61`). Sequence
-conditioning is worth 1.004 A on the 108 ordinary targets and negative on the 18 hardest, where
-a pipeline given random windows emits 5.425 A against the shipped 6.019 A; three routers are
-null (section I). Ten of the eighteen failures are fibril segments and lasso peptides, 10/18
+conditioning is worth 0.776 A over all 126 (blind pipeline 3.989 against shipped 3.213) and
+1.004 A on the 108 ordinary targets, and is negative on the 18 hardest, where a pipeline given
+random windows emits 5.425 A against the shipped 6.019 A; three routers are null (section I). Ten of the eighteen failures are fibril segments and lasso peptides, 10/18
 against 6/108, Fisher p = 1.2e-6 (section IV). Multi-piece assembly is closed. The mandated
 quantum component is a verified problem and a classical win: 20 of 20 alpha x T arms
 (section XVIII). Section XVII priced one direction that reaches the target, chemical-shift
@@ -1678,48 +1729,299 @@ native-free census of the four dev self-windows (L30). One Rule-1 incident, logg
 consequence (L28 item 5, L29). The Adversary's audit of the examination: reproduction exact on
 HEAD, one material documentary item (the test total, corrected by addenda to 370 / 357 / 13),
 C26 re-derived with an artefact, C27 located in git history (L31, L32, L34); Phase 0 signed off
-at 09:05 (L33). The rest fills Part VII as the verdicts land.
+at 09:05 (L33). After the gate: A4 (L35), the cis floor (L38), C3 stage 1 (L39), the steric
+reject on the point cloud (L43), the 2/60 leak bound (L44) and the Adversary's checks of each
+(L45 to L50), all in Part VII. The campaign paused 09:30 to 19:14 (L37, L40 to L42).
 
 Closed, retracted, open. Slots; see Parts VII and VIII.
 
-## PART VII. WHAT S26 TESTED AND FOUND (DRAFT: slots only; fills from ledger L33 onward)
+## PART VII. WHAT S26 TESTED AND FOUND
 
-Slots, filled as verdicts land in `s26/LEDGER.md` from L33 (PHASE 0 SIGNED OFF, 09:05) onward;
-nothing here is a result until its entry lands:
+Filled from `s26/LEDGER.md` from L33 (PHASE 0 SIGNED OFF, 09:05) onward; each item names its
+ledger entry, its artefact, its pre-registration and the Adversary's check where one has landed.
+Nothing is written here before its ledger entry exists. Bases are named on both sides of every
+contrast. "Pending" means the run or its ledger entry has not landed.
 
-- VII.1 Proposal A (lane Q): A1 the null test of the deployed selector; A2 the dynamical Lie
-  algebra (landed, `s26/LEDGER.md` L27, written into Part V.9); A3 a target-dependent
-  Hamiltonian; A4 gradient variance, grown against fixed ansatz. [pending]
-- VII.2 Proposal B (lane P): B1 infeasible at the stated scale (L13); B2 the feasible-scale
-  rungs; B3 the repo-native stand-in (L14). [pending endpoint]
-- VII.3 Proposal C (lanes P, PH): C1 the reproduction (`s26/PREREG_C1.md`); C2 the ladder
-  (training running, L26); C3 the matched-random control of the relaxation (native-free half
-  landed, L24; the accuracy half waits on the gate); C4 routers; C5 the common-mode prediction.
-  [pending]
-- VII.4 Tournament entries: the AMBER reject filter (census L23), the cis-peptide gap, the
-  identity null (L15), physics branch selection, strain as difficulty, rotamer relief,
-  coherence-penalised training, window ensembling. [pending]
+### VII.1 Proposal A: the quantum selector (lane Q)
 
-## PART VIII. CLOSED AND OPEN (DRAFT: filled at the close of S26)
+**A2, the dynamical Lie algebra (L27; Adversary L45: STANDS).** Written in full in Part V.9.
+The pre-registered proper-subalgebra prediction was falsified: the deployed RY/CNOT chain-plus-ring
+ansatz generates the full so(2^n) from depth 2 at n = 7 (dim 8128), so the algebra offers no
+protection against a 2-design plateau and the S25 slopes are a statement about depth 3. The
+Adversary re-derived every cell independently (`s26/results/a_dla_check.json`, no shared
+closure code, a different numeric rank rule): 8128 at n = 7 for all four conjugation and gate-order
+conventions; n = 4, 5 numeric and symbolic counts agree 6 of 6.
 
-Two tables, filled at the close of S26 from Parts VI and VII. The rule: an open item is never
-moved to closed on one failed experiment; it moves when it has been measured to its own ceiling
-or refuted by a pre-registered falsifier, and the row names which.
+**A4, gradient variance of grown against fixed circuits (L35; Adversary L47: STANDS WITH
+CAVEAT).** `s26/q_var.py` -> `s26/results/q_var.json` (complete; 2,765 s, peak RSS 0.08 GB),
+pre-registered in `s26/PREREG_A4.md`; energies are the deployed shape (standardised ranks 1 to
+2^n), no target, no native. Gate: the n = 7 row of all five S25 cells reproduces bit-identically
+(`results/reproduction/passed`, `worst_rel` 0.0). Fitted log2 Var[dF/dtheta_0] per qubit over
+n = 4 to 13 (`results/slopes`; ADAPT growth by Adam best iterate, 50 steps, pool V = the Tang
+2n - 2 strings, pool L2 = all 2-local odd-Y strings):
+
+| cell | fixed (S25) | grown, pool V | grown, pool L2 |
+|---|---|---|---|
+| alpha = 1, T = 0 | -0.649 | -0.079 | +0.006 |
+| alpha = 0.25, T = 0 | -0.252 | degenerate | degenerate |
+| alpha = 0.10, T = 0 | -0.047 | degenerate | degenerate |
+| alpha = 1, T = 0.3 | -0.311 | +0.024 | -0.008 |
+| alpha = 0.25, T = 0.3 | -0.243 | -0.239 | -0.302 |
+
+(The ledger's table prints the P = 3n-only fits, +0.035 and -0.246 for the two pool-V cells; the
+stored slopes above use every row.) What the grown circuits are: at alpha = 1 they hold 1 to 3
+distinct operators, the other 12 to 25 selections being consecutive repeats of one single-qubit
+Y, so they are product circuits with the parameter count of the fixed ansatz, which is why their
+variance does not decay with n (a large gradient from a product circuit is the trivial regime,
+not trainability). At alpha = 0.25, T = 0.3, pool L2 grows 4 to 21 distinct 2-local strings and
+decays at -0.302 per qubit against the fixed ansatz's -0.243. At T = 0 with alpha < 1 growth
+stops at P = n on every width (all first-order gradients vanish at a basis state), degenerate by
+construction as pre-registered. Grown-to-fixed variance ratio at matched n: 1.63 at n = 4
+(alpha = 1, T = 0.3) and 2.5 to 370 everywhere else, 31 of 32 matched rows above 2. Predictions:
+H4a held on three of four cells (two sit 0.035 and 0.002 outside the registered band, inside the
+fit's error); the falsifier (a slope below -0.5) did not fire; H4b failed on 1 of 32 rows; H4c
+held on P < 3n (14 of 14) and failed on Var < 1e-3 for 3 of 7 rows; H4d held. Adversary caveats:
+the product-circuit reading rests on the ADAPT closures in `s26/results/q_dla.json ::
+results/adapt_sets`, not on `q_var.json`; and "-0.302 is the fixed ansatz's -0.243 within the
+sampling error" is asserted without a persisted slope CI (the qualitative conclusion, both slopes
+of order -0.25 to -0.30 and far from a 2-design's -1.0, is safe). Verdict: A4 gives Proposal A no
+width-scaling argument.
+
+**A1 (the ADAPT endpoint) and A3 (a target-dependent Hamiltonian).** Pending. The A1 shards were
+killed with the governor at 10:10 (L40, L41) and resume from per-target checkpoints under
+`s26/results/a1/`; A3 follows A1.
+
+### VII.2 Proposal B: the scaled generation lane (lane P)
+
+**B1 is infeasible on this box (L13).** `s26/results/b1_feasibility.json`: ESMFold v1 needs at
+least 8.76 GB resident (the 3B language model halved plus an fp32 trunk; 7.4 GB with everything
+in fp16) against 4.4 GB of campaign headroom under the 93% ceiling (64.8% of 16.75 GB in use at
+00:19); its `esmfold` module needs `omegaconf` and `openfold`, both absent, and `openfold` needs
+`nvcc` and Python <= 3.9 on a Python 3.13 CPU-only box; the checkpoints are not on disk
+(esmfold_3B_v1.pt 2,771,653,574 bytes and esm2_t36_3B_UR50D.pt 5,678,116,398 bytes, 8.45 GB to
+download). Nothing was downloaded. B1 stops.
+
+**B3, the repo-native stand-in (L14).** Its per-target artefacts exist: the sequence-only torsion
+predictor (`s13/cache/tors_rows.npz['a_pepPos']`, `rmsd_build` mean 3.7705 A, built chain from
+predicted torsions) and the constant helix (`s14/results/ladder.json`, 4.0648 A built chain).
+Paired against the production built chain 3.2148: torsion predictor +0.5557 A (median +0.2314,
+SE 0.1318, MDE 0.3694, 37W/89L); helix +0.8500 (SE 0.1494, 32W/94L); torsion predictor against
+helix -0.2943 (SE 0.0807, 69W/57L); on FAIL18 the three emit 5.569 / 6.032 / 5.887 A. The
+arm-choice ORACLE over {pipeline, torsion predictor, helix} is an order statistic (L14).
+
+**B2, the feasible-scale rungs.** Pending endpoint: the ladder's training rungs `conly`, `pca32`,
+`wide`, `pca32f`, `pca128`, `esm8m` finished during the pause (L41, `s26/jobs_done/`); the `raw`
+rung (sibling peak 1.85 GB) waits for headroom; the evaluations resume from
+`s26/models/p_ladder/` checkpoints (L40).
+
+### VII.3 Proposal C: the classical ladder (lanes P and PH)
+
+**C1, the reproduction (`s26/PREREG_C1.md`; lane P findings section 7).** The in-band ceiling of
+S17 reproduces from `s17/results/inband.json`: a perfect ranker inside the shipped top-25 returns
+2.6087 A single window (Part III.4).
+
+**C2, the prior ladder.** Training rungs as under B2; evaluation pending.
+
+**C3, the relaxation against matched controls.** Native-free half, L24 (Adversary L48: STANDS,
+every number recomputed: displacement 0.2198 A, SE 0.0084; e0 median 8.59e4 kcal/mol, 58.73%
+above 1e4; e1 mean -559.8, max 1262.4 at 9KAR; 125 of 126 converged; relaxed bond mean 3.867 A,
+6 of 126 outside [3.6, 4.0]): Part IV.7. Accuracy half, stage 1, L39 (Adversary L46: STANDS WITH
+CAVEAT). `s26/ph_c3.py stage1` -> `s26/results/ph_c3_stage1.json` (complete 126/126; 10 s, peak
+RSS 0.041 GB), pre-registered in `s26/PREREG_c3_control.md` sections 2 and 3 and addendum 1
+(prediction: AMBER worse than the matched random move by about +0.013 A, cosine negative). No
+AMBER compute: the production coordinates `ca` and `amber_ca` from the cache. Bases: the arm's
+input is the BUILT CHAIN (3.2148) and its output the RELAXED CHAIN (3.2355), both reproduced
+from the stored coordinates to 1e-6; the controls displace the built chain's CA trace by a
+vector of the same per-atom RMS magnitude as AMBER's displacement (0.220 A mean, measured after
+superposition), either isotropic with the six rigid components projected out (S16's
+construction, 16 draws) or along the line toward a random member of the shipped K = 500 pool (16
+draws); a displaced trace is not an ideal-geometry chain, so the controls match the operator's
+magnitude, not its validity, exactly as S16 did. All contrasts are full-chain CA-RMSD to the
+native, n = 126:
+
+| contrast (all on the displaced-built-chain basis) | effect | fold CI | x MDE | W/L | verdict |
+|---|---|---|---|---|---|
+| AMBER (relaxed chain) minus do-nothing (built chain) | +0.0207 | [+0.0154, +0.0290] | 2.16 | 40/86 | WORSE |
+| AMBER minus matched-magnitude random | +0.0111 | [+0.0062, +0.0171] | 1.12 | 52/74 | WORSE, Type-M zone |
+| AMBER minus matched-magnitude toward-member | +0.0385 | [+0.0298, +0.0479] | 2.27 | 29/97 | WORSE |
+| random minus do-nothing | +0.0096 | [+0.0077, +0.0122] | 2.28 | 29/97 | WORSE |
+| toward-member minus do-nothing | -0.0178 | [-0.0255, -0.0124] | 1.49 | 90/36 | BETTER (provisional) |
+| ORACLE cosine, AMBER minus random | -0.0503 | [-0.0735, -0.0253] | 1.17 | 74/52 | Type-M zone |
+| ORACLE cosine, AMBER minus toward-member | -0.1719 | [-0.2104, -0.1388] | 2.65 | 94/32 | measured |
+
+Every contrast is 5 of 5 folds in sign. The ORACLE cosine between AMBER's displacement and the
+true residual is -0.049 (SE 0.015), positive on 36.5% of targets; the S16 identity predicts
++0.0107 for a move of this size orthogonal to the residual. Reading: about half the production
+step's cost is the size of the move (a random move of the same 0.220 A costs +0.0096) and the
+other half is its direction (AMBER is worse than its own random twin by +0.0111, sign and fold
+CI clean, magnitude inflated about 1.07x); the displacement points away from the native and
+reproduces S16 L27 to the fourth decimal (S16 cosine -0.0521). A move of the same size toward a
+random pool member improves the built chain by -0.0178: a zero-information control, not a
+proposal, provisional until its registered replication (`ph_c3_stage1_rep`, new seeds, reversed
+order) lands; its mechanism is on the record (the projection moved the chain 0.166 A away from
+the cloud with a negative cosine, and the pool members surround the cloud). Decision rule
+(`s26/PREREG_c3_control.md` section 3): AMBER does not beat either matched control, so "refine
+with physics" is dropped as an accuracy step and kept as a validity step, with the Adversary's
+wording: a validity step on 124 of 126 targets; on 2BP4 (relaxed CA-CA 5.38 A) and 9KAR (4.86 A,
+not converged) it breaks a virtual bond (L46). `s26/C3_RESULT.md` carries the sentence for lane P
+and the presentation. Stage 2 repeats this on lane P's best C2 rung when it is delivered.
+
+**C4, routers, and C5, the common-mode prediction.** Pending.
+
+### VII.4 The tournament entries
+
+**The AMBER reject filter.** Census, L23 (Adversary L48: STANDS; Part IV.5). Endpoint on the point
+cloud, L43: `s26/ph_reject.py cloud` and `report` -> `s26/results/ph_reject_cloud.json` (complete
+126/126), `s26/results/ph_reject_report.json`; pre-registered in `s26/PREREG_amber_reject.md`
+sections 3 to 5 and addendum 1. BASIS: POINT CLOUD on both sides (the coordinate average of the
+retained windows; the anchor reproduces the production 3.0483 to 1e-6). Arms: R rejects members
+of the shipped top-75 with AMBER single-point energy above the threshold and refills from the
+next-ranked survivors to m = 75; S rejects without refill; matched controls reject the same count
+at random (RANDR, RANDS, 16 draws) or apply the threshold to a permuted energy vector (PERMR,
+PERMS). At the primary threshold 1e4 kcal/mol, point cloud against point cloud, n = 126:
+
+| contrast | effect | fold CI | x MDE | W/L/T | verdict |
+|---|---|---|---|---|---|
+| R minus the shipped top-75 (anchor 3.0483) | +0.2276 | [+0.1466, +0.3232] | 1.17 | 49/67/10 | WORSE, Type-M zone |
+| R minus RANDR | +0.1672 | [+0.0699, +0.2793] | 1.26 | 47/77/2 | WORSE, Type-M zone |
+| R minus PERMR | +0.1053 | [+0.0187, +0.2000] | 0.98 | 52/66/8 | NOT MEASURED |
+| S minus anchor | +0.1079 | [+0.0647, +0.1528] | 1.34 | 38/75/13 | WORSE |
+| S minus RANDS | +0.0709 | [+0.0317, +0.1087] | 1.00 | 41/72/13 | NOT MEASURED |
+| RANDR minus anchor | +0.0605 | [+0.0206, +0.0962] | 0.57 | 62/62/2 | NOT MEASURED |
+| RANDS minus anchor | +0.0371 | [+0.0229, +0.0495] | 1.47 | 35/78/13 | WORSE |
+
+The falsifier fired the other way. The dose is monotone: at 1e3 (54.5 of 75 rejected) R costs
++0.532 A; at 1e4 (40.1) +0.228; at 1e5 (30.3) +0.093 (0.66x MDE); at 1e6 (23.3) +0.066 (0.51x);
+the less the reject does, the less it costs, and its limit is the anchor. Rejecting the same count
+at random and refilling is nearly free (+0.061, not measured), so the energy's choice of what to
+reject costs the +0.167; the retained set at 1e4 is +0.254 A more expanded in Rg than the anchor,
+S25's "AMBER selects expansion" reproduced as a filter. The threshold sweep is an order statistic
+(`best_of_k_within`: R oracle minimum -0.3368, split-half transfer -0.1470, k_eff 3.74). Power:
+every arm-against-anchor contrast at 1e3 and 1e4 clears its MDE with the fold CI excluding zero;
+at 1e5 and 1e6 R is 0.66x and 0.51x its MDE, so "the mildest threshold is null" is underpowered
+below a 0.13 A gain and measured against any harm above it. Disposition, pending the built-chain
+twin (`ph_reject_chain`, running): the steric reject at a physical threshold, with refill, is
+closed on the point cloud, with a sign; the filter form of the functional lever (S24 D1-C, S19 Q3)
+stays closed and gains its sixth instrument.
+
+**The cis-peptide gap.** Census, L22 (Adversary L48: STANDS, with stale line numbers for the step
+gate, now `core/data.py:439` and `:725`): `s26/results/ph_cis_census.json`. Over the 1,507
+peptide bonds of the 126 model-1 natives the omega deviation from planarity has mean 1.91
+degrees, median 0.34, p90 5.8, p99 17.4, max 42.8 at 9UV5; 0.53% of bonds are beyond 20 degrees
+and 0.13% beyond 30; 0 of 126 natives, 0 of 1,966 ensemble models and 0 of 2,352,893 library
+windows are cis by either criterion (the universe's minimum CA step is 3.5045 A); the registered
+ensemble-cis prediction is falsified. The two-bond-length projection is therefore worth 0.000 A on
+this instrument (L22). Floor, L38 (ORACLE DIAGNOSTIC; Adversary L48: STANDS):
+`s26/results/ph_cis_floor.json` (complete 126/126), `s26/PREREG_cis.md` part 2. The ideal-trans
+rebuild of the native's own phi/psi sits 0.347 A from the native (SE 0.029, median 0.272, p90
+0.752, max 1.474 at 1ID6; N/CA/C rebuild 0.340), above 0.5 A on 32 of 126; it tracks omega
+non-planarity (Spearman +0.828 with the maximum deviation) and does not track the production
+chain cost of 0.166 A (rho +0.083; chain cost against omega deviation -0.036). The paired contrast
+chain cost minus floor is -0.1804 (fold CI [-0.2266, -0.1022], 86W/40L), meaning only that the
+production projection pays less than the own-torsion rebuild floor; the floor is an upper bound
+on the manifold floor (the tight `floor2` is registered), and the two Spearman nulls exclude
+|rho| above about 0.25 at n = 126. Nothing here is a proposal.
+
+**The identity null and the 2/60 benchmark leak.** The dev audit is L15 (Part II.1). Lane W's
+bound, pre-registered as `s26/PREREG_selfcopy_bound.md` (L30; Adversary L49: sound, no benchmark
+sequence, native or RMSD read anywhere), landed as L44 with the coordinator's ruling L50 on how
+the report quotes it: artefacts `s26/results/w_selfcopy_endpoint.json`, `w_selfcopy_bound.json`,
+`w_selfcopy_floor.json`, `w_selfcopy_retrieval.json`, `w_selfcopy_envelope.json`; job
+`w_endpoint_report` (160 s, peak RSS 0.302 GB). Reproduction gate: the "with" arm equals the
+production emission on all 126 (top-75 identical, cloud max abs 1.4e-14; means 3.4540 single
+window, 3.0483 point cloud, 3.2126 built chain on the re-projection rebuild, 3.2052 lam = 0
+chain). Bases named on every line; a positive delta means the leaked emission is worse.
+
+- Channel A, the four dev self-copies, dropping the self-window from the pool and refilling
+  (S10-4's operator): built chain 2P5H -0.0683, 6B9K +0.0071, 1CEK and 2FBU 0.0000; single
+  window 0.0000 on all four and on all 122 controls (the BLOSUM rank-0 window is never the
+  argmin). The matched control population (the rank-0 window dropped on the other 122 targets):
+  |delta| p50 0.000, p90 0.078, p95 0.147, max 0.511; the four sit at its 61st to 89th percentile.
+- C27 re-derived (S10-4's operator over the 13 targets with a >= 0.6 window): clean minus
+  production +0.0004 A on the lam = 0 chain (fold CI [-0.0001, +0.0010], MDE 0.0012, 117 ties),
+  +0.0018 A on the built chain [-0.0003, +0.0039], +0.0003 on the cloud, 0.0000 single window.
+  The report quotes both, each with its basis (L50): the +0.0004 is S10-4's figure on the lam = 0
+  chain, now with an artefact; the +0.0018 is the same operator on the production basis; neither
+  clears its MDE and both say the dev leak is immaterial.
+- Channel C, the ORACLE envelope: a fold model that had the target's own native among its
+  training labels emits a built chain 0.6980 A nearer to it (fold CI [-0.8312, -0.5764], 112W/14L,
+  5/5 folds; point cloud -0.7094; single window -1.2081 [-1.4377, -0.9745]; lam = 0 chain
+  -0.6932), changes half the top-75 (overlap 0.47) and the argmin on 97% of targets; the paired
+  gain of the architecture over the argmin is biased against the architecture by +0.5101 per
+  leaked target. This is an ORACLE fact about leaked training, not a price of the leak that
+  exists.
+- Channel B, the carrier chain in the training labels, partial (1 of 10 retrains; the rest killed
+  by the host, L40): on 1CEK the carrier is worth -0.0114 built chain, -0.0204 point cloud, +0.0062
+  single window; with both channels removed production is 0.0114 A better on the built chain.
+- Part E (ORACLE DIAGNOSTIC): the same sequence in a different deposit, 18 dev targets and 22
+  verbatim partners, sits a median 2.908 A from the native (min 0.317, max 5.502; 18% under 1.0 A;
+  the natives' own ensemble spread is 1.044 A). A verbatim copy is not a near-native answer at
+  this length.
+- The bound (2/60 times the per-target quantity, assumptions A1 to A5): dev-4 channel A, signed
+  max, 0.0023 built chain, IMMATERIAL; the native-free triangle max 0.0067, IMMATERIAL; both
+  channels removed (1CEK only) 0.0004, IMMATERIAL; the own-native envelope at its fold-CI limit
+  0.0277 built chain / 0.0479 single window / 0.0228 paired gain, MINOR. Pre-registered verdict:
+  MINOR, bounded at 0.028 A built chain, 0.048 single window and 0.023 on the paired gain because
+  the envelope clause fires; every direct dev-proxy measurement is 0.002 A or less. Against the
+  benchmark's own CI half-width of 0.170 A the bound cannot change the benchmark verdict in either
+  direction. The caveat that attaches to every benchmark figure now reads: 2/60 self-copies,
+  bounded at 0.028 A (built chain) by the own-native envelope and 0.002 A by the dev proxy
+  (`s26/results/w_selfcopy_bound.json`).
+- Measured on the way, native-free: a one-member change of the 75 can flip the medoid frame
+  (cloud moves 1.29 A on 5H1H, 0.74 on 6EY3) and the projection branch (chain moves 0.85 to
+  2.11 A on six targets at cloud moves of 0.04 to 0.09 A), recorded for the tie-break floor idea.
+
+**Physics branch selection, strain as difficulty, rotamer relief, coherence-penalised training,
+window ensembling, the tie-break floor (`s26/PREREG_tiebreak_floor.md`).** Pending.
+
+### VII.5 Operational findings of the sprint (for the record)
+
+The governor v2 band held through the sprint until the host killed it for low memory at 10:10
+(L40); jobrun v2.1 re-checks the launch cap after a jitter after six jobs launched against a cap
+of four (L36); v2.2 refuses a stale governor snapshot for any job above 0.5 GB and any launch
+without est-ram + 0.5 GB free (L41). The campaign paused at the user's request from 09:30 to
+19:14 (L37, L42); a second report, `docs/REPORT_S26.md`, appeared during the pause and is
+reconciled in Appendix D. The Adversary's checks of L27, L39, L35, L22 to L24, L38 and L30 all
+stand (L45 to L49), two with caveats recorded above.
+
+## PART VIII. CLOSED AND OPEN
+
+Two tables. The rule: an open item is never moved to closed on one failed experiment; it moves
+when it has been measured to its own ceiling or refuted by a pre-registered falsifier, and the
+row names which. The standing pre-S26 list is `docs/STATE_BRIEF_2026-09-12.md` 5.6 and
+`docs/CONDENSED_REPORT.md`, "Closed - do not re-fund"; Part VI carries every closure with its
+sprint. This part lists the S26 movements and the items that remain open at the time of writing
+(DRAFT until the sprint closes).
 
 ### VIII.1 Closed
 
 | direction | closed by | where |
 |---|---|---|
-| (rows added at the close; the standing list is `docs/STATE_BRIEF_2026-09-12.md` 5.6 and `docs/CONDENSED_REPORT.md`, "Closed - do not re-fund") | | |
+| Further in-band rankers over retrieval pools; post-hoc correction of the distance objective; growing the fragment library; multi-piece assembly; key fusion; either energy in a search objective | measured to ceiling or refuted, S5 to S13 | `docs/CONDENSED_REPORT.md`, "Closed"; Part VI.1 to VI.9 |
+| Chemical-shift torsion restraints; sequence-only torsion prediction; degree-1 truncation; native-free error steering; learned candidate generation; Legacy-to-AMBER continuation; probability-weighted readout; per-target scale correction; the encoding lever; bond dimension; routers (five) | pre-registered falsifiers fired or ORACLE ceilings, S14 to S25 | `docs/STATE_BRIEF_2026-09-12.md` 5.6; Part VI.10 to VI.21 |
+| The physics energies as selectors, filters or objectives (the functional lever, all five forms) | S17 L29/L30, S18 L17, S21 L33, S24 L16, S25 L16/L18 | Part IV.8 |
+| The CVaR-VQE selector as an accuracy contribution on any readout | S16 L29, S21, S22 L13, S23 L8, S25 L3/L5/L15 | Part V.7, V.11 |
+| The basis question (built chain is the result) | S25 L4, L8, L11 | Part II.2 |
+| The ansatz's dynamical Lie algebra as an unmeasured property | measured: full so(2^n) from depth 2 at n = 7; independently re-derived | S26 L27, L45; Part V.9 |
+| A width-scaling argument for Proposal A from grown (ADAPT) circuits | A4: product circuits at alpha = 1, fixed-ansatz decay at alpha = 0.25 | S26 L35, L47; Part VII.1 |
+| "Refine with physics" (the production AMBER relaxation) as an accuracy step | C3 stage 1: worse than do-nothing, worse than a matched random move, worse than a matched move toward a pool member; replicates S16 L27; kept as a validity step on 124 of 126 | S26 L39, L46; Part VII.3 |
+| The steric reject at a physical threshold, with or without refill, on the point cloud | falsifier fired the other way; the sixth instrument for the filter form of the functional lever; the built-chain twin is pending and the direction must hold there | S26 L43; Part VII.4 |
+| The cis-peptide gap as a lever on this instrument | 0 cis natives, ensemble models or windows; the two-bond projection worth 0.000 A | S26 L22, L38, L48; Part VII.4 |
+| ESMFold (B1) on this box | infeasible on three independent grounds | S26 L13; Part VII.2 |
 
 ### VIII.2 Open
 
 | item | what would close it | where |
 |---|---|---|
-| whether a better distance predictor is obtainable (the only steep lever, -2.15 A per unit) | a predictor whose achievable ladder rung moves the built chain | `s24/LEDGER.md` L13; `docs/STATE_BRIEF_2026-09-12.md` 5.7 |
-| the 2/60 benchmark self-copy leak, declared and unquantified | by design, only a fresh benchmark, which does not exist | `s24/LEDGER.md` L4 |
-| publishing the trainability half | a manuscript from Part V.10 with V.9's scope correction | `s13/`, `s25/QUANTUM.md`, S26 L27 |
-| (S26 rows added at the close) | | |
+| Whether a better distance predictor is obtainable from inputs this machine can compute (the only steep lever, -2.15 A per unit toward truth) | a C2 rung beating the shipped prior on the fold-clustered CI of the built chain | `s24/LEDGER.md` L13; `s26/PROPOSAL_C.md`; Part VII.3 |
+| Proposal A's endpoint (A1) and the target-dependent Hamiltonian (A3) | the pre-registered A1/A3 verdicts (`s26/PREREG_A1.md`, expected null under the set-equality theorem) | Part VII.1 |
+| Proposal B's feasible-scale rungs (B2) | the ladder's evaluation on the built chain | Part VII.2 |
+| C3 stage 2 (the relaxation on the best C2 rung) and the toward-member replication | `ph_c3_stage1_rep` and stage 2 | S26 L39; Part VII.3 |
+| The steric reject on the built chain | `ph_reject_chain` | S26 L43 |
+| The 2/60 benchmark self-copy leak, now bounded MINOR (0.028 A built chain by the envelope, 0.002 A by the dev proxy) | by design only a fresh benchmark, which does not exist; the bound tightens when channel B's remaining nine retrains land | S26 L44, L49, L50; Part VII.4 |
+| Where the target-specific third of the pool's coherent error comes from, and whether any native-free proxy is strong enough to act on it | a native-free proxy reaching the in-band ordering 2 A needs | `s19/LEDGER.md` L11, L14; `s17/LEDGER.md` L23 |
+| Publishing the trainability half | a manuscript from Part V.10 with V.9's scope correction | `s13/`, `s25/QUANTUM.md`; S26 L27 |
+| The tournament entries not yet run: routers (C4), the common-mode prediction (C5), physics branch selection, strain as difficulty, rotamer relief, coherence-penalised training, window ensembling, the tie-break floor | their pre-registrations' falsifiers | `s26/PREREG_*.md`; Part VII.4 |
 
 ## PART IX. OPERATING MANUAL
 
@@ -1803,7 +2105,9 @@ every parameter that can change a number (K, M, penalty, lam, the AMBER schedule
 count, the pair separation, the optimiser cap, the tie-break rule, the live backend set), so
 resuming is re-running the same command, a run with a changed parameter cannot inherit the old
 answer, and `stats` reports how many targets were resumed. `core.bench --arm baseline|optimised
---fresh` measures both arms cold, `--compare` prints the speedup, `--components` runs the
+--fresh` measures both arms cold, `--compare` prints the speedup (the recorded cold runs:
+2537.568 s at 1 worker against 303.137 s at 8, 8.371x end to end, with every science key
+identical to 4.4e-16, `bench_results/compare_tuning126.json`), `--components` runs the
 four-component system. `benchmark60` is refused without `--i-am-spending-the-benchmark`; do not
 pass it (`README.md`, "The instrument discipline"). `CORE_BACKENDS=legacy` forces the reference
 modules (`amber_refine, peptide_db, energy_terms, protein_geometry, legacy_field, s7.audit,
@@ -2145,7 +2449,7 @@ artefact; "as asserted" means a passing test pins it.
 | 5370, -1290.6, 0.19, 52.0; 6.0e12, 1262.4, 0.61, 1166.1; 1172.7 (2BP4) | III | `s26/results/e_trace_1S9Z.json`, `e_trace_9KAR.json` (relax stage); `bench_results/cache/1fc9f2dcf489e2fb/2BP4.json` | as stored |
 | 7193, 9814, -1..19, -6..32, 144, 420, 105, 91, 183, 17 centres, 760, 488, 483, 0.6926..7.2688, 2.2420..5.1791, 401 98 193 161 284 260 372 373 381 382, 44/449, 3.75, 1.97, 1.16, 8, 128, 5.05..21.07, 0.23..2.70, 5.62..23.44, 7.58, 5.34, 1.40 | III | `s26/results/e_trace_1S9Z.json`, `s26/results/e_trace_9KAR.json` | as stored |
 | 3.3135, 3.3443 | III | `s8/integrate_vqe.json :: arms/vqe_LFO/sel, arms/medoid128/sel` (reproduced by `tests/test_pipeline.py::test_the_four_components_all_execute_and_reproduce_their_published_numbers`) | as stored |
-| 0.288 | III | `docs/FINDINGS.md:1970-2037` (S7 finding 11) | as cited |
+| 0.288 | III | `docs/FINDINGS.md:1970-2037` (S7 finding 11; its per-target artefact, s7/repr_tune.json, is lost, S26 ledger L11) | as cited |
 | -0.172 [-0.316, -0.027], 74W/47L | VI | `docs/FINDINGS.md:2901` (S8-8 table) | as cited |
 | 8.3 to 23.3 | IV | `s15/LEDGER.md` row 0.8 (`s15/results/audit_amber_cost_sweep.json`) | as cited |
 | 0.016 | III | `docs/FINDINGS.md:2379` (S8-6 heading) | as cited |
@@ -2195,7 +2499,7 @@ artefact; "as asserted" means a passing test pins it.
 | -0.1405 (0.0732, 66W/48L), -0.0002, +0.0262 (0.0279), -0.0308 (0.0590), -0.0081, 12 | V | `s25/results/q_alpha.json :: results/vs_no_circuit` | as stored |
 | 45.3%, 64.7th | V | `s25/agentQ_FINDINGS.md:375-376` (drop-top-5 against a uniform-effect null; `s25/LEDGER.md` L5) | as cited |
 | -0.0311 (0.27x MDE), -0.0021 | V | `s25/results/q_alpha.json` (forced-alpha counterfactual) | as stored |
-| -0.013 [-0.095, +0.077] | V | standing project result cited in `s25/QUANTUM.md` 7.4 (no S25 artefact; not re-derived) | as cited |
+| -0.013 [-0.095, +0.077] | V | `s20/LEDGER.md` L1 (CNOT deletion on the S20 continuous encoding; cited by `s25/QUANTUM.md` 7.4) | as cited |
 | width-sweep table (seven widths, five columns), slopes -0.6492 / -0.2522 / -0.0472 / -0.3105 / -0.2429, depth sweep (seven depths), CVaR ratio tables (two columns of seven), draws 250 / 200 / 120 / 80 | V | `s25/results/q_plateau.json` | as stored |
 | DLA table: 120, 496, 510, 1023, 2016, 8128, 32640, 32766, 65535, 130816, 523776, 2096128; pools 36, 136, 528, 2080, 8256, 32896; ADAPT 7, 16, 1025 (12.6%); 12 of 12; 85.3 s; 0.479 GB | V | `s26/results/q_dla.json :: results/fixed, results/pools, results/adapt_sets, results/numeric`; `s26/jobs_done/a2_dla.json` | derived: 1025/8128 = 0.1261 |
 | 0.504 (and 0.823, 0.768, 0.648, 0.537) | V | `s13/results/geo_kernel.json` (via `s13/SPRINT13_DOSSIER.md` section 10) | as cited |
@@ -2229,6 +2533,30 @@ artefact; "as asserted" means a passing test pins it.
 | 0.18198112330908295 | IX | `s26/results/e_reproduce.json` (row 1S9Z, `rmsd_arm`); `s26/results/e_trace_1S9Z.json` | as stored |
 | 1.692, 0.872, 0.324, 11, 3, 8, 2, 601a39c7 | IX | `s26/TEST_RUN.md`; `s26/results/test_run.json` | as stored |
 | 725 | IX | `s26/results/module_map.json :: n_modules` | 725 |
+| 2.9661, 0.1824, 8.2342, 28.6%, 50.8%, 0.7150, 0.1643 | II, D | `results/summary/leaderboard.json :: rows[0]/median, rows[0]/best, rows[0]/worst, rows[0]/frac_under_2, rows[0]/frac_under_3, rows[0]/corr_with_pool_best, rows[0]/basis_delta_mean` (pointed to by `docs/REPORT_S26.md` B.1) | as stored |
+| +0.0061, 0.19x, 61W/65L | IV, D | `results/summary/leaderboard.json :: rows[1]/paired_effect, rows[1]/effect_over_mde, rows[1]/wins, rows[1]/losses` | as stored |
+| +0.7070 (2.14x), +0.8322 (2.67x), +0.0097 (0.43x), +0.1668 (0.91x), +0.0833 (0.70x), +0.6259 (1.89x), +0.2047 (1.07x) | IV, D | `s25/results/phys_suite.json :: vs_incumbent` (point cloud against point cloud) | as stored |
+| 1.9962, 0.6159, 0.2824, 0.2412 | III, D | `s25/results/calib.json :: rows[*]/z_sd, rows[*]/cov90, rows[*]/cov50, rows[*]/multimodal_frac` (means over 126 rows) | as stored |
+| 2.8334, -0.2150, 2.4x, 113W/13L | III, D | `s24/LEDGER.md` L13 | as cited |
+| 1.75, 51, +0.054 | III, D | `s25/LEDGER.md` L6, L12 | as cited |
+| 5.551e-17 | V, D | `s25/results/q_verify.json :: results` | as stored |
+| 0.1 nats, fired | V, D | `s25/results/q_gibbs.json :: results/falsifier` | as stored |
+| -0.023 | V, D | `docs/FINDINGS.md:368-403` (S5 section 6) | as cited |
+| 0.6847, 0.685 | V, D | `verify/cvar_audit.json :: D_tail_baseline_cosine_vs_paramshift, D_sampled_tail_cosine` | as stored |
+| 8.371, 2537.568, 303.137 | IX, D | `bench_results/compare_tuning126.json :: end_to_end_speedup, wall_s` | as stored |
+| 3.989, 3.213 | VI, D | `s12/SPRINT12_DOSSIER.md` section I | as cited |
+| 13 of 60, +0.0030 | II, D | `docs/FINDINGS.md:4571` (S9-10); S10-4 (artefact in git history at `5fa05cd`, S26 ledger L31) | as cited |
+| A4 slopes -0.649 / -0.079 / +0.006, -0.252, -0.047, -0.311 / +0.024 / -0.008, -0.243 / -0.239 / -0.302 | V, VII | `s26/results/q_var.json :: results/slopes` | as stored |
+| +0.035, -0.246, 1.63, 2.5 to 370, 31 of 32, 1 to 3, 12 to 25, 4 to 21, 2.4e-2, 14 of 14, 3 of 7, 2,765 s, 0.08 GB | VII | `s26/LEDGER.md` L35; `s26/jobs_done/a4_var.json` | as cited |
+| 6 of 6, 1025 / 8128 = 0.126 | V, VII | `s26/results/a_dla_check.json`; `s26/LEDGER.md` L45 | as cited |
+| 8.76 GB, 7.4 GB, 4.4 GB, 64.8%, 16.75 GB, 2,771,653,574, 5,678,116,398, 8.45 GB, 2.60 GB, 30 MB | VII | `s26/results/b1_feasibility.json`; `s26/LEDGER.md` L13 | as cited |
+| 3.7705, +0.5557, +0.2314, 0.1318, 0.3694, 37W/89L, +0.8500, 0.1494, 32W/94L, -0.2943, 0.0807, 69W/57L, 5.569, 6.032, 5.887 | VII | `s26/LEDGER.md` L14 (`s13/cache/tors_rows.npz`, `s14/results/ladder.json`) | as cited |
+| 0.2198, 0.0084, 8.59e4, 58.73%, -559.8, 6 of 126 | VII | `s26/LEDGER.md` L48 (recomputation of L24 from `bench_results/cache/1fc9f2dcf489e2fb`) | as cited |
+| C3 stage 1 table: +0.0207 [+0.0154, +0.0290] 2.16, +0.0111 [+0.0062, +0.0171] 1.12, +0.0385 [+0.0298, +0.0479] 2.27, +0.0096 [+0.0077, +0.0122] 2.28, -0.0178 [-0.0255, -0.0124] 1.49, -0.0503 [-0.0735, -0.0253] 1.17, -0.1719 [-0.2104, -0.1388] 2.65; 40/86, 52/74, 29/97, 90/36, 74/52, 94/32; -0.049 (0.015), 36.5%, +0.0107, -0.0521, 1.07x, 0.220, 16, 1e-6, 10 s, 0.041 GB, 124 of 126, 5.38, 4.86 | VII | `s26/results/ph_c3_stage1.json`; `s26/LEDGER.md` L39, L46; `s26/jobs_done/ph_c3_stage1.json` | as stored / as cited |
+| steric reject table: +0.2276 [+0.1466, +0.3232] 1.17 49/67/10; +0.1672 [+0.0699, +0.2793] 1.26 47/77/2; +0.1053 [+0.0187, +0.2000] 0.98 52/66/8; +0.1079 [+0.0647, +0.1528] 1.34 38/75/13; +0.0709 [+0.0317, +0.1087] 1.00 41/72/13; +0.0605 [+0.0206, +0.0962] 0.57 62/62/2; +0.0371 [+0.0229, +0.0495] 1.47 35/78/13; +0.532, 54.5, +0.228, 40.1, +0.093, 30.3, 0.66x, +0.066, 23.3, 0.51x, +0.061, +0.167, +0.254, -0.3368, -0.1470, 3.74, 0.13 | VII | `s26/results/ph_reject_report.json`; `s26/LEDGER.md` L43 | as stored / as cited |
+| 1,507, 1.91, 0.34, 5.8, 17.4, 42.8, 0.53%, 0.13%, 0 of 126, 1,966, 2,352,893, 3.5045, 439, 725 | VII | `s26/results/ph_cis_census.json`; `s26/LEDGER.md` L22, L48 | as stored / as cited |
+| 0.347 (0.029), 0.272, 0.752, 1.474, 0.340, 32 of 126, +0.828, +0.083, -0.036, 0.166, -0.1804 [-0.2266, -0.1022], 86W/40L, 0.25 | VII | `s26/results/ph_cis_floor.json`; `s26/LEDGER.md` L38, L48 | as stored / as cited |
+| 160 s, 0.302 GB, 1.4e-14, 3.4540, 3.0483, 3.2126, 3.2052; -0.0683, +0.0071, 0.0000, 122, 47, 0.078, 0.147, 0.511, 61st to 89th; +0.0004 [-0.0001, +0.0010], 0.0012, 117, +0.0018 [-0.0003, +0.0039], +0.0003; -0.6980 [-0.8312, -0.5764], 112/14, -0.7094, -1.2081 [-1.4377, -0.9745], -0.6932, 0.47, 97%, +0.5101; -0.0114, -0.0204, +0.0062; 18, 22, 2.908, 0.317, 5.502, 18%, 1.044; 0.0023, 0.0067, 0.0004, 0.0277, 0.0479, 0.0228, 0.028, 0.048, 0.023, 0.002, 0.170; 1.29, 0.74, 0.85, 2.11, 0.04, 0.09 | II, VII, VIII | `s26/results/w_selfcopy_endpoint.json`, `w_selfcopy_bound.json`, `w_selfcopy_floor.json`; `s26/LEDGER.md` L44, L50; `s26/jobs_done/w_endpoint_report.json` | as stored / as cited |
 <!-- APPENDIX B ROWS -->
 
 ## APPENDIX C. THE S26 LEDGER (DRAFT: reproduced at the close)
@@ -2237,3 +2565,61 @@ Reproduced verbatim from `s26/LEDGER.md` at the close of the sprint; until then 
 points at the live file, whose tail at the time of the last report commit is noted here.
 
 <!-- APPENDIX C LEDGER (filled at close) -->
+
+## APPENDIX D. RECONCILIATION WITH docs/REPORT_S26.md
+
+`docs/REPORT_S26.md` (181 KB, Parts I to X, Appendices A to D) and `docs/REPORT_S26_SUMMARY.md`
+appeared on disk during the 2026-09-13 pause, written from this branch by another session or by
+the user, not by any S26 lane, and are left untouched and uncommitted (`s26/LEDGER.md` L42). This
+appendix records what this report took from them, where the two disagree and which artefact
+decides, and what was deliberately not taken. Every number taken was re-read from the named
+artefact and is a row of Appendix B; the docs file is cited as the pointer.
+
+### D.1 Taken (artefact-sourced numbers this report lacked)
+
+| item | artefact | now in |
+|---|---|---|
+| production built chain per-target spread: median 2.9661, best 0.1824 (1S9Z), worst 8.2342 (2MQ2), 28.6% under 2 A, 50.8% under 3 A, correlation with the pool best 0.7150, rebuild basis delta 0.1643 | `results/summary/leaderboard.json :: rows[0]` | II.2 |
+| the seven configurations against production, built chain, effect and x MDE | `s25/results/phys_suite.json :: vs_incumbent` (point cloud); `results/summary/leaderboard.json :: rows[1]` (distogram row, built chain, +0.0061 at 0.19x MDE) | IV.4 |
+| the distogram's calibration: z sd 1.9962, 90% coverage 0.6159, 50% coverage 0.2824, multimodal fraction 0.2412 | `s25/results/calib.json :: rows[*]` (means over 126 rows) | III.2 |
+| the prior ladder's first rung: 2.8334 point cloud, -0.2150 at 2.4x MDE, 113W/13L | `s24/LEDGER.md` L13 | III.2 |
+| the score's per-pair target quantised to 17 values, up to 1.75 A of location error at long separation; 51 achievable arms, corr(gamma_eff, endpoint delta) +0.054 | `s25/LEDGER.md` L6, L12 | III.2 |
+| statevector check 5.551e-17 (this report had rounded to 5.6e-17) | `s25/results/q_verify.json :: results` | V.2 |
+| the S25 Gibbs falsifier (KL below 0.1 nats) fired against the draft | `s25/results/q_gibbs.json :: results/falsifier` | V.7 |
+| the S5 measurement of the gradient defect, cosine -0.023, and the consolidation audit's exact / sampled tail cosines 0.6847 / 0.685 | `docs/FINDINGS.md:368-403`; `verify/cvar_audit.json` | V.5 |
+| the entangler-deletion contrast's source, -0.013 [-0.095, +0.077] | `s20/LEDGER.md` L1 | V.7, Appendix B |
+| the optimised arm's end-to-end speed-up, 8.371x (2537.568 s to 303.137 s, both cold, 1 against 8 workers) | `bench_results/compare_tuning126.json :: wall_s, end_to_end_speedup` | IX.4 |
+| B1's feasibility numbers | `s26/results/b1_feasibility.json`; `s26/LEDGER.md` L13 | VII.2 |
+
+### D.2 Disagreements, and the artefact that decides
+
+| the two readings | decision |
+|---|---|
+| 3.2126 (their headline's leaderboard rebuild) against 3.2148 (this report's production cache); 0.1643 against 0.1664 for the projection gap; T030 0.18242 against 0.18198 | Not a disagreement: the same built chain on two emission paths (the results lab re-projects the stored cloud and round-trips through PDB quantisation, up to 0.171 A per target, `s26/LEDGER.md` L14; `s26/EXAMINATION.md` H). Both reports say so. This report quotes the cache number as the production result and names the rebuild beside it. |
+| `bench_results/compare_tuning126.json :: science.rmsd_arm` (theirs) against `bench_results/baseline_tuning126.json :: science/rmsd_arm/mean` (this report) | The same values: `compare_tuning126.json :: science_delta` is 0.0 on every science key except two at 4.4e-16. Either path is valid. |
+| 5.6e-17 (this report, from `s25/QUANTUM.md`) against 5.551e-17 (theirs) | The artefact says 5.551e-17; corrected here. |
+| the benchmark leak count: "13 of 60 targets have a pool window at >= 0.6 identity" (their B.2, from `docs/FINDINGS.md:4571`) against the 2/60 of this report | Two criteria, both true: 13/60 is the >= 0.6 identity count of S9-10 (priced +0.0030 A in S10-4, artefact in git history at `5fa05cd`, L31); 2/60 is the verbatim self-copy defect of S24 L4 that lane W bounded (L44). This report keeps 2/60 as the declared leak and now names the 13/60 criterion beside it (II.1). The two benchmark target ids printed in `docs/FINDINGS.md` and in their table are not repeated here. |
+| "each fold model saw ~100 of the other 125 dev natives": their citation `s20/LEDGER.md` L-B against this report's `s24/LEDGER.md` L8 | The sentence is at `s24/LEDGER.md:668` (entry L8); the S20 entry carries the fold-CI discussion. This report's citation stands. |
+| the blind pipeline: their 3.989 against shipped 3.213 (all 126) beside this report's 3.749 against 2.745 (the 108 ordinary targets) and 5.425 against 6.019 (FAIL18) | Both from `s12/SPRINT12_DOSSIER.md` section I on different subsets; the 126-target pair is added to VI.8 for completeness. |
+| ESM against one-hot, -0.288 A: their Appendix D9 records that the per-target artefact `s7/repr_tune.json` is lost (`s26/LEDGER.md` L11) | Agreed; this report's row cites `docs/FINDINGS.md` S7-11 and now carries the lost-artefact caveat. |
+| their "Sprint 26, for context only" and "V.12 ADAPT-VQE (in progress)" | Written at 14:25, before L38 to L50 landed; Part VII of this report supersedes them. |
+
+### D.3 Not taken
+
+- Their Appendix B.7 "External (audience)": four items read from the web (arXiv abstracts, an
+  author page) and the supervisors' names and affiliation. No external claim and no personal
+  detail enters this report (`s26/LEDGER.md` L42 item 1).
+- Their Part X (the presentation guide: the ninety-second statement, slide notes, flashcards,
+  the postdoc questions, the must-not-claim list). That is lane PR's deliverable; this report is
+  the record it draws on. Their must-not-claim list agrees with this report's Part VIII and the
+  S25 retractions in every item checked (the +0.113 A CVaR contribution, the 3.0483 headline, the
+  0.084 A MDE constant, "the circuit attains its own optimum").
+- Their Appendix D12: numbers quoted from `~/.claude/projects/.../memory/*.md` (the 82.8th
+  percentile, the 0.986 / 0.600 in-band figures, the 51st percentile, the 6.43 core-equivalents
+  as a measurement). A memory file is not an artefact; none of those numbers is quoted here
+  except 6.43, which this report attributes to `docs/STATE_BRIEF_2026-09-12.md` section 8 as an
+  operational estimate, not a measurement.
+- Their Appendix C (the corrections ledger) restates `docs/FINDINGS.md:60-118` and the sprint
+  ledgers; this report's Part VI carries the same corrections sprint by sprint and adds nothing
+  from their table.
+- Their reading of `docs/FINDINGS.md:4571` names two benchmark targets; not repeated here.
