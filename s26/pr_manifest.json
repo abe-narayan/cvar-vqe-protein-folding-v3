@@ -1,0 +1,194 @@
+{
+ "1": {
+  "title": "Title",
+  "tokens": [
+   "ARM_FRAC2",
+   "ARM_MEAN",
+   "N_TARGETS",
+   "Q_PARAMS",
+   "Q_QUBITS"
+  ],
+  "spoken_words": 121
+ },
+ "2": {
+  "title": "Why 9 to 16 residue peptides are hard",
+  "tokens": [
+   "COMMON_MODE",
+   "CORPUS_FRAGMENTS",
+   "CORPUS_PEPTIDES",
+   "HELIX",
+   "HELIX_MINUS_ARM",
+   "MDE_FACTOR",
+   "N_TARGETS",
+   "PHI_BLIND",
+   "PHI_N_RES",
+   "PHI_SEQ",
+   "PRIOR_GAMMA_FOR_3A",
+   "PRIOR_SLOPE",
+   "SELFCOPY_BENCH",
+   "SELFCOPY_DEV"
+  ],
+  "spoken_words": 212
+ },
+ "3": {
+  "title": "The pipeline, stage by stage",
+  "tokens": [
+   "ARM_MEAN",
+   "AVG_MEAN",
+   "BOND_AVG_MEAN",
+   "BOND_AVG_WORST",
+   "CORPUS_FRAGMENTS",
+   "CORPUS_PEPTIDES",
+   "FULL_MEAN",
+   "GAP_ARM_MINUS_AVG",
+   "N_TARGETS",
+   "REPRO_MAX_DISAGREE",
+   "SCIENCE_DELTA_MAX",
+   "T030_N_WINDOWS"
+  ],
+  "spoken_words": 219
+ },
+ "4": {
+  "title": "Results on 126 held-out targets, with two overlays",
+  "tokens": [
+   "ARM_BEST_PDB",
+   "ARM_FRAC2",
+   "ARM_FRAC3",
+   "ARM_MAX",
+   "ARM_MEAN",
+   "ARM_MEDIAN",
+   "ARM_MIN",
+   "ARM_WORST_PDB",
+   "AVG_MEAN",
+   "BENCH_CI_HI",
+   "BENCH_CI_LO",
+   "BENCH_DELTA",
+   "BENCH_FULL",
+   "BENCH_SHIPPED",
+   "BENCH_WL",
+   "HARD_ARM",
+   "HARD_PDB",
+   "HARD_POOL_BEST",
+   "HARD_TOPM_BEST",
+   "POOL_BEST",
+   "RANDOM75",
+   "T030_ARM",
+   "T030_PDB"
+  ],
+  "spoken_words": 186
+ },
+ "5": {
+  "title": "The quantum component: verified, then measured",
+  "tokens": [
+   "Q_ALPHA1_FOLDS",
+   "Q_BEST_OF_N",
+   "Q_CELLS",
+   "Q_CIRC_VS_GIBBS_X",
+   "Q_DIM",
+   "Q_GAP_MAX",
+   "Q_GAP_MIN",
+   "Q_KL_NATS",
+   "Q_LADDER_WORST_FRAC",
+   "Q_LAYERS",
+   "Q_MPS_ERR",
+   "Q_OFF_CURVE",
+   "Q_PARAMS",
+   "Q_PS_COS",
+   "Q_PS_REL",
+   "Q_QUBITS",
+   "Q_RHO_H",
+   "Q_SHARE_NO_TAIL",
+   "Q_SV_ERR",
+   "Q_VIOLATIONS",
+   "Q_VS_ARGMIN",
+   "Q_VS_ARGMIN_X",
+   "Q_VS_BOLTZ"
+  ],
+  "spoken_words": 220
+ },
+ "6": {
+  "title": "Gradient variance at depth 3, and the algebra",
+  "tokens": [
+   "DEPTH_L1",
+   "DEPTH_L12",
+   "DEPTH_L3",
+   "DEPTH_L4",
+   "DLA_N7_L1",
+   "DLA_NUMERIC_AGREE",
+   "DLA_SO128",
+   "GEO_BASE_DEPTH8",
+   "GEO_SLOPE_DEPTH8",
+   "Q_PARAMS",
+   "RATIO_N13_A025",
+   "RATIO_N7_A025",
+   "SLOPE_A01_T0",
+   "SLOPE_A025_T0",
+   "SLOPE_A025_T03",
+   "SLOPE_A1_T03",
+   "SLOPE_LIN",
+   "SWEEP_DRAWS_MAX",
+   "SWEEP_DRAWS_MIN",
+   "SWEEP_N_MAX",
+   "SWEEP_N_MIN"
+  ],
+  "spoken_words": 206
+ },
+ "7": {
+  "title": "Where the remaining accuracy lives",
+  "tokens": [
+   "AMBER_VS_RANDOM",
+   "AMBER_VS_RANDOM_CI",
+   "C3_AMBER_VS_RANDOM",
+   "COMMON_MODE",
+   "DISTGEO_TRUE",
+   "HELIX",
+   "LB_AMBER",
+   "LB_AMBER_DISTOGRAM",
+   "LB_DISTOGRAM",
+   "LB_LEGACY",
+   "LB_LEGACY_AMBER",
+   "LB_LEGACY_AMBER_DISTOGRAM",
+   "LB_LEGACY_DISTOGRAM",
+   "LEGACY_VS_RANDOM",
+   "LEGACY_VS_RANDOM_CI",
+   "POOL_BEST",
+   "PRIOR_GAMMA0",
+   "PRIOR_PERFECT",
+   "RANDOM75",
+   "SUITE_AMBER",
+   "SUITE_AMBER_DIST",
+   "SUITE_DIST",
+   "SUITE_LAD",
+   "SUITE_LEGACY",
+   "SUITE_LEGACY_AMBER",
+   "SUITE_LEGACY_DIST",
+   "TOPM_BEST",
+   "TORS",
+   "TORSION_CEILING",
+   "UNIVERSE_BEST"
+  ],
+  "spoken_words": 204
+ },
+ "8": {
+  "title": "Direction A: ADAPT-VQE (PENDING)",
+  "tokens": [],
+  "spoken_words": 6
+ },
+ "9": {
+  "title": "Direction B: a learned folding model as the prior (PENDING)",
+  "tokens": [],
+  "spoken_words": 8
+ },
+ "10": {
+  "title": "Direction C: learn a better distance prior (PENDING)",
+  "tokens": [],
+  "spoken_words": 8
+ },
+ "11": {
+  "title": "Goal and ask",
+  "tokens": [
+   "PRIOR_SLOPE"
+  ],
+  "spoken_words": 133
+ }
+}

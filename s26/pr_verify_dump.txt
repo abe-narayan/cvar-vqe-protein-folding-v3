@@ -1,0 +1,257 @@
+===== SLIDE 1 =====
+[shape] A verified CVaR-VQE inside a peptide structure predictor
+[shape] 1 / 11    every number on these slides has an artefact path in the speaker notes
+[shape] What I built, what it measured, and where I want to go
+[shape] • 126 held-out peptides, 9 to 16 residues, in 5 pinned folds; a sealed 60-target benchmark spent once | • Result: mean CA-RMSD 3.2148 A on the built chain (the production basis); 3.0483 A is the point-cloud intermediate and is not a structure | • Quantum component: 7 qubits, 3 layers, 21 parameters, exact statevector, exact parameter-shift gradient; verified, then measured: no detectable accuracy contribution | • What survives: the measuring instrument, and an exact chain from force-field locality to gradient variance | Presented to a postdoc in variational quantum algorithms. Sprint 26 deck, built from artefacts by s26/pr_build_deck.py
+[notes] SPOKEN:
+Hello. I built a pipeline that predicts the backbone shape of short peptides, nine to sixteen residues, from their sequence. On 126 held-out peptides it reaches a mean CA-RMSD of 3.21 angstroms on the built chain. That is not state of the art, and I do not claim it is. Inside the pipeline sits a real 7-qubit CVaR-VQE with 21 parameters. I verified it to machine precision, and then I measured what it adds. I could not detect an accuracy contribution. What survived is the measuring instrument, and a chain of exact statements about how a force field's structure reaches a circuit's gradients. Every number on these slides has a file path in the notes, and I can send the file.
+
+ALSO (not spoken):
+The project I first described in the summer is not the project on these slides. Say that once, early, without apology: the register is 7 qubits, exact; the targets are 126 real peptides; the sub-2 A target was not reached (28.6% of targets are under 2 A).
+
+SOURCES (not spoken; token = value <- artefact path [basis]):
+ARM_FRAC2 = 0.285714 <- bench_results/baseline_tuning126.json :: science/rmsd_arm/frac_under_2.0 [built_chain]
+ARM_MEAN = 3.21477 <- bench_results/baseline_tuning126.json :: science/rmsd_arm/mean [built_chain]
+N_TARGETS = 126 <- bench_results/baseline_tuning126.json :: science/n
+Q_PARAMS = 21 <- s25/results/q_verify.json :: results/'parameters = layers * qubits'
+Q_QUBITS = 7 <- s25/results/q_verify.json :: results/'core/pipeline Config.vqe_qubits'
+===== SLIDE 2 =====
+[shape] Why 9 to 16 residue peptides are hard
+[shape] 2 / 11    sources: s26/results/a_c26_phi_mae.json, s23/results/errdecomp.json, s24/results/priorladder.json, s12/results/s14_ladder.json
+[shape] Almost no sequence signal at this length | • phi from the full sequence context: 36.1 deg mean error over 1,507 residues; a sequence-blind corpus marginal: 36.4 deg (ORACLE diagnostic, no RMSD) | The retrieved candidates share their mistake | • 68% of the pool's error is common to every member (mean over 126 targets); averaging removes only the rest | The distance prior is the only steep lever | • interpolating the prior toward the true distances moves the endpoint -2.15 A per unit at the origin; 2.2% of the way reaches 3.0 A (ORACLE; point-cloud basis) | Scale | • a constant alpha-helix (zero information) scores 4.065 A; the pipeline is 0.850 A better (3.2148 A); both built chains | The instrument | • 126 cluster-disjoint targets, 5 pinned folds, paired per target; MDE = 2.8016 x SE per comparison; fold-clustered CI beside every iid CI; pre-registered falsifiers; a corrections ledger
+[notes] SPOKEN:
+Why are short peptides hard? Three reasons I can measure. First, the sequence says almost nothing about the backbone at this length. Predicting the phi angle from the full sequence context gives a mean error of 36.1 degrees over 1,507 residues. A model that ignores the sequence and uses only the corpus average gives 36.4 degrees. That is the whole sequence signal for phi: a third of a degree. Second, the candidates I retrieve all share the same mistake. 68% of the pool's error is common to every member, so averaging cannot remove it. Third, the only steep lever is the distance prior itself. Interpolating the prior toward the true distances moves the answer by -2.15 angstroms per unit of progress, on the point-cloud basis, and 2.2% of the way would reach three angstroms. That number is an oracle. It says where the accuracy lives, not how to get it. For scale, a constant alpha-helix, which knows nothing about the sequence, scores 4.06 angstroms on the built chain. The whole pipeline is 0.85 angstroms better than that. Everything is measured on 126 cluster-disjoint targets in five pinned folds, paired per target, with a minimum detectable effect of 2.8016 standard errors computed per comparison, and a fold-clustered confidence interval next to every mean.
+
+ALSO (not spoken):
+The library behind retrieval: 787 peptides and 6,003 protein fragments (ledger L11). The sealed benchmark of 60 was spent once (slide 4). The identity leak: 4/126 dev targets and 2/60 benchmark targets carry a verbatim self-copy in their fold model's training set; declared, and the benchmark half is unquantified by design.
+
+SOURCES (not spoken; token = value <- artefact path [basis]):
+COMMON_MODE = 0.67577 <- s23/results/errdecomp.json :: rows[*]/f_common (mean over 126) (DERIVED)
+CORPUS_FRAGMENTS = 6003 <- same (LEDGER)
+CORPUS_PEPTIDES = 787 <- s26/results/p_probe_esm.json (ledger L11: 787 peptides + 6,003 fragments = 6,790 unique training sequences) (LEDGER)
+HELIX = 4.06475 <- s12/results/s14_ladder.json :: rows/L0_constant_helix/mean [built_chain]
+HELIX_MINUS_ARM = 0.849989 <- s12/results/s14_ladder.json :: rows/L0_constant_helix/mean minus bench_results/baseline_tuning126.json :: science/rmsd_arm/mean [built_chain] (DERIVED)
+MDE_FACTOR = 2.8016 <- s26/LANE_CONTRACT.md section 2; s25/results/q_verify.json :: results/'MDE == 2.8016*SE exactly' (True)
+N_TARGETS = 126 <- bench_results/baseline_tuning126.json :: science/n
+PHI_BLIND = 36.4156 <- s26/results/a_c26_phi_mae.json :: summary/arms/n_marg/pooled_mae_phi_deg
+PHI_N_RES = 1507 <- s26/results/a_c26_phi_mae.json :: summary/n_residues_phi
+PHI_SEQ = 36.1328 <- s26/results/a_c26_phi_mae.json :: summary/arms/p_grid/pooled_mae_phi_deg
+PRIOR_GAMMA_FOR_3A = 0.0224874 <- s24/results/priorladder.json :: linear interpolation on the first rung [point_cloud] (DERIVED)
+PRIOR_SLOPE = -2.14956 <- s24/results/priorladder.json :: (mean MASS0.1 - mean MASS0.0) / 0.1 [point_cloud] (DERIVED)
+SELFCOPY_BENCH = 2/60 <- s26/results/i_identity_audit.json (count only, ledger L15/L18)
+SELFCOPY_DEV = 4/126 <- s26/results/i_identity_audit.json (ledger L15); tests/test_data.py:72-74
+===== SLIDE 3 =====
+[shape] The pipeline, stage by stage
+[shape] 3 / 11    sources: bench_results/baseline_tuning126.json, s26/results/e_reproduce.json, s26/EXAMINATION.md section B
+[shape] sequence | ESM-2 embedding
+[shape] distogram | 17-bin distance posterior | leave-fold-out
+[shape] BLOSUM62 retrieval | K = 500 real windows | 787 peptides + 6,003 fragments
+[shape] Bayes-risk score | keep the top 75 | (top 128 when the VQE runs)
+[shape] CVaR-VQE selector | 7 qubits, 3 layers, 21 params | OFF in production
+[shape] coordinate average | point cloud 3.0483 A | not a structure (bond 2.96 A, worst 0.65)
+[shape] ideal-geometry projection | built chain 3.2148 A | THE RESULT
+[shape] optional AMBER relaxation | ff14SB/GBn2, restrained | 3.2355 A: a validity step
+[shape] • The output is an average of the kept set, so it tracks the set mean, not the best member; a selector that only removes members from a ranked list cannot move it much. | • Hamiltonian of the selector: H = diag(zrank(scores)) on the top 128; the same rank ladder on every target to 1.18% of its range. The production run has quantum = False; the 3.2148 A never passes through the VQE. | • Reproduction: a fresh run of the instrument over all 126 stored records disagrees with the record by 0.0 on every basis; 1-worker and 8-worker runs agree to 4e-16.
+[notes] SPOKEN:
+Here is the pipeline. The sequence goes through ESM-2 into a distogram: a seventeen-bin posterior over every pairwise CA distance, trained leave-fold-out. In parallel, BLOSUM62 retrieval pulls five hundred real protein windows of the right length from a library of 787 peptides and 6,003 fragments. Each window is scored by its Bayes risk against the posterior, and the best seventy-five are kept. The quantum stage can select a subset of the top one hundred and twenty-eight, but it is off in production; the 3.2148 result never passes through it. The kept windows are averaged in coordinate space. That average scores 3.0483 angstroms, but it is not a structure: its virtual CA-CA bonds are 2.96 angstroms on average, with a worst case of 0.65. So the average is projected onto a chain with ideal geometry. That built chain, at 3.2148 angstroms, is the result I report; the projection costs 0.166 angstroms and I pay it because the chain is a real structure. An optional AMBER relaxation gives 3.2355. I will show later that it is a validity step, not an accuracy step. One design fact matters for everything that follows. The output is an average, so it tracks the whole set, not its best member. A selector that can only remove members from a ranked list cannot move it much.
+
+ALSO (not spoken):
+The 1-worker baseline and the 8-worker optimised run agree on every science quantity to 4.4e-16 (bit-identical science across the two arms). A fresh run of the instrument over all 126 stored records disagrees with the record by 0.0 on every basis. T030's universe holds 7,193 windows.
+
+SOURCES (not spoken; token = value <- artefact path [basis]):
+ARM_MEAN = 3.21477 <- bench_results/baseline_tuning126.json :: science/rmsd_arm/mean [built_chain]
+AVG_MEAN = 3.04834 <- bench_results/baseline_tuning126.json :: science/rmsd_avg/mean [point_cloud]
+BOND_AVG_MEAN = 2.96139 <- s26/results/e_reproduce.json :: summary/virtual_bond/avg_ca_mean_bond [point_cloud]
+BOND_AVG_WORST = 0.64918 <- s26/results/e_reproduce.json :: summary/virtual_bond/avg_ca_worst_bond [point_cloud]
+CORPUS_FRAGMENTS = 6003 <- same (LEDGER)
+CORPUS_PEPTIDES = 787 <- s26/results/p_probe_esm.json (ledger L11: 787 peptides + 6,003 fragments = 6,790 unique training sequences) (LEDGER)
+FULL_MEAN = 3.23546 <- bench_results/baseline_tuning126.json :: science/rmsd_full/mean [relaxed]
+GAP_ARM_MINUS_AVG = 0.166427 <- s26/results/e_reproduce.json :: summary/projection_gap_arm_minus_avg/mean [built_chain minus point_cloud]
+N_TARGETS = 126 <- bench_results/baseline_tuning126.json :: science/n
+REPRO_MAX_DISAGREE = 0 <- s26/results/e_reproduce.json :: summary/rmsd_arm/max_abs_disagreement
+SCIENCE_DELTA_MAX = 4.44089e-16 <- bench_results/compare_tuning126.json :: science_delta (max |value|) (DERIVED)
+T030_N_WINDOWS = 7193 <- bench_results/cache/1fc9f2dcf489e2fb/1S9Z.json :: n_windows
+===== SLIDE 4 =====
+[shape] Results on 126 held-out targets (built chain), with two overlays
+[shape] 4 / 11    overlays: bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json 'ca' vs s8/generate_univ/<pdb>.npz 'nat_ca', ORACLE-superposed for the figure
+[picture] Picture 5 6.10x2.12 in
+[picture] Picture 7 4.80x3.15 in
+[shape] Built chain, production cache | • mean 3.2148 A, median 2.966, best 0.182 (1S9Z), worst 8.240 (2MQ2) | • 28.6% of targets under 2 A, 50.8% under 3 A | • point cloud 3.0483 A (intermediate); relaxed 3.2355 A | Controls and oracles on the same targets | • random 75-subset 3.4251 A on the point-cloud basis (production point cloud 3.0483) | • constant alpha-helix 4.065 A (built chain) | • ORACLE best single window: pool 1.711 A, shipped top-75 2.306 A | • The hard target 9KAR: pool best 1.40 A, top-75 best 5.34 A (ORACLE): the score filter, not the search, discards the good window | Sealed benchmark, 60 targets, spent once | • full system minus shipped baseline: +0.0103 A paired, CI [-0.160, +0.180], 31W/29L. No validated improvement.
+[notes] SPOKEN:
+These are the results on the built chain. Mean 3.21 angstroms, median 2.97, best 0.18 on 1S9Z, worst 8.24 on 2MQ2. 29% of targets are under two angstroms and 51% under three. The upper figure is the best target, 1S9Z, a helix at 0.182 angstroms. The lower figure is a hard one, 9KAR, at 7.44. For the figures I superposed the prediction onto the native, so the pictures use the answer; nothing in the pipeline does. On 9KAR the retrieval pool holds a window at 1.40 angstroms, but the score filter keeps nothing under 5.34, so the average is built from the wrong windows. That is the failure mode: the score, not the search. For scale on the same targets, a random seventy-five-window subset scores 3.43 on the point-cloud basis, against the production point cloud of 3.05. The best single window in the pool would give 1.71; that is an oracle. On the sealed sixty-target benchmark, spent once, the full system was +0.0103 angstroms against the shipped baseline, confidence interval -0.160 to +0.180, 31W/29L. There is no validated improvement over the baseline, and I say so.
+
+ALSO (not spoken):
+The overlays are ORACLE-superposed (Kabsch onto the native through `s12.instrument.superpose_batch`, for the figure only); the RMSD printed on each figure was recomputed by `s26/pr_figures.py` and equals the production record. The benchmark numbers are typed from claim C06 of `s26/EXAMINATION.md`; no S26 lane opened `s9/final_report.json`, and the two benchmark means (2.9610 full system, 2.9507 shipped baseline) are asserted by a passing test.
+
+SOURCES (not spoken; token = value <- artefact path [basis]):
+ARM_BEST_PDB = 1S9Z <- s26/results/e_reproduce.json :: rows[argmin rmsd_arm]/pdb [built_chain] (DERIVED)
+ARM_FRAC2 = 0.285714 <- bench_results/baseline_tuning126.json :: science/rmsd_arm/frac_under_2.0 [built_chain]
+ARM_FRAC3 = 0.507937 <- s26/results/e_reproduce.json :: rows[*]/rmsd_arm (fraction under 3.0 A) [built_chain] (DERIVED)
+ARM_MAX = 8.2401 <- bench_results/baseline_tuning126.json :: science/rmsd_arm/max [built_chain]
+ARM_MEAN = 3.21477 <- bench_results/baseline_tuning126.json :: science/rmsd_arm/mean [built_chain]
+ARM_MEDIAN = 2.96607 <- bench_results/baseline_tuning126.json :: science/rmsd_arm/median [built_chain]
+ARM_MIN = 0.181981 <- bench_results/baseline_tuning126.json :: science/rmsd_arm/min [built_chain]
+ARM_WORST_PDB = 2MQ2 <- s26/results/e_reproduce.json :: rows[argmax rmsd_arm]/pdb [built_chain] (DERIVED)
+AVG_MEAN = 3.04834 <- bench_results/baseline_tuning126.json :: science/rmsd_avg/mean [point_cloud]
+BENCH_CI_HI = 0.1803 <- same as BENCH_DELTA (NAMED_NOT_OPENED)
+BENCH_CI_LO = -0.1596 <- same as BENCH_DELTA (NAMED_NOT_OPENED)
+BENCH_DELTA = 0.0103 <- s9/final_report.json (NOT OPENED, Rule 1); claim C06 of s26/EXAMINATION.md; docs/FINDINGS.md:4505; README.md:14 [benchmark synthesis minus shipped baseline, paired, n=60] (NAMED_NOT_OPENED)
+BENCH_FULL = 2.961 <- s9/final_report.json :: dist/full/mean (NOT OPENED); asserted within 5e-4 by tests/test_pipeline.py:338-347 (passed, s26/TEST_RUN.md) [benchmark, 60 targets] (SOURCED_BY_TEST)
+BENCH_SHIPPED = 2.9507 <- s9/final_report.json :: dist/shipped/mean (NOT OPENED); same tests [benchmark, 60 targets] (SOURCED_BY_TEST)
+BENCH_WL = 31W/29L <- same as BENCH_DELTA (NAMED_NOT_OPENED)
+HARD_ARM = 7.4377 <- bench_results/cache/1fc9f2dcf489e2fb/9KAR.json :: rmsd_arm [built_chain]
+HARD_PDB = 9KAR <- bench_results/cache/1fc9f2dcf489e2fb/9KAR.json :: pdb
+HARD_POOL_BEST = 1.39973 <- bench_results/cache/1fc9f2dcf489e2fb/9KAR.json :: pool_best [single_window]
+HARD_TOPM_BEST = 5.34363 <- bench_results/cache/1fc9f2dcf489e2fb/9KAR.json :: top_m_best [single_window]
+POOL_BEST = 1.71082 <- bench_results/baseline_tuning126.json :: science/pool_best/mean [single_window]
+RANDOM75 = 3.42513 <- s25/results/phys_suite.json :: random_null_rank/mean [point_cloud]
+T030_ARM = 0.181981 <- bench_results/cache/1fc9f2dcf489e2fb/1S9Z.json :: rmsd_arm [built_chain]
+T030_PDB = 1S9Z <- bench_results/cache/1fc9f2dcf489e2fb/1S9Z.json :: pdb
+===== SLIDE 5 =====
+[shape] The quantum component: verified, then measured
+[shape] 5 / 11    sources: s25/results/q_verify.json, q_gibbs.json, q_alpha.json; s25/QUANTUM.md
+[shape] Verified | • 7 qubits, 3 layers of RY + CNOT chain + ring, 21 parameters, 128 candidate states; exact dense statevector | • vs an independent dense simulator: max |dp| = 5.551e-17 | • exact parameter-shift gradient vs finite differences: cos 1.000000000, rel. err. 4.597e-10 (free-energy gradient 4.663e-10) | • sampling in the trained path: NONE; RNG: initial angles only | • objective F = CVaR_alpha(E) - T H(p); H = diag(zrank(scores)): the rank ladder, target-independent to 1.18% of its range (8 targets checked) | • theorem: the CVaR tail is a subset of a prefix of the energy order; 2,592 cells, 0 violations, exact equality on 972 / 972 full-support cells
+[shape] Measured | • the optimiser trains: beats best-of-200 untrained draws at every T; closes 78% to 89% of the free-energy gap | • it stops 0.902 nats (TV 0.453) from its Gibbs optimum, broader than optimal (5.67 vs 4.91 bits); the endpoint cannot tell: 0.24 x MDE | • selector vs the plain argmin: -0.1405 A at 0.68 x MDE, 66W/48L/12T (selection basis): UNDERPOWERED (<0.7x MDE, NOT A RESULT) | • vs an exact Boltzmann weighting at the same T: -0.0002 A | • alpha = 1 on folds 0, 3, 4: 61.9% of targets carry no tail constraint | • off in production; the theorem says it can delete a top-m member, never add one | • No quantum advantage is claimed. The register is 7 qubits and every state is simulated exactly.
+[notes] SPOKEN:
+The quantum component is a real CVaR-VQE, and I checked it before I measured it. It is a 7-qubit, 3-layer RY and CNOT circuit with 21 parameters, simulated as an exact statevector over 128 candidate structures. Against a dense simulator written independently from the gate list, the probabilities agree to 5.551e-17. The gradient is the exact parameter-shift rule; against finite differences its cosine is 1.000000000 with relative error 4.597e-10. Nothing is sampled in the trained path. The Hamiltonian is diagonal: the rank-standardised scores of the candidates. Because the candidates are already sorted, it is the same ladder on every target to within 1.2% of its range. I proved that the CVaR tail is always a subset of a prefix of that ranking: 2,592 adversarial cells, 0 violations. So the circuit can delete a candidate from the classical top set; it can never add one. Then I measured. The optimiser does train: it beats the best of 200 untrained draws and closes 78% to 89% of the free-energy gap. It stops 0.902 nats from its own Gibbs optimum, and the endpoint cannot tell: 0.24 of the minimum detectable effect. Against the plain argmin the selector is -0.1405 angstroms at 0.68 of its MDE, on the selection basis. By my own rule that is not a result. I claim no quantum advantage.
+
+ALSO (not spoken):
+The deployed table sets alpha = 1 on folds 0, 3, 4, so 61.9% of targets carry no tail constraint; there the objective is an entropy-regularised mean. Across 18 readout arms, mean RMSD tracks the entropy of the readout weights at rho -0.74; the nine circuit arms sit +0.0090 A from a curve fitted on the nine no-circuit arms. Against an exact Boltzmann weighting at the same temperature the selector is -0.0002 A. The withdrawn "+0.113 A CVaR contribution" (S25 L5) is not on any slide. The generation lane's exact MPS twin agrees with the dense circuit to 3.331e-16; it is not the selector.
+
+SOURCES (not spoken; token = value <- artefact path [basis]):
+Q_ALPHA1_FOLDS = [0, 3, 4] <- s25/results/q_verify.json :: results/'folds running alpha == 1.0 (NO tail constraint)'
+Q_BEST_OF_N = 200 <- s25/results/q_gibbs.json :: results/training_control/[T=0.3]/N
+Q_CELLS = 2592 <- s25/results/q_verify.json :: results/n_cells
+Q_CIRC_VS_GIBBS_X = 0.239914 <- s25/results/q_alpha.json :: .../'circuit - exact Boltzmann @T=0.3'/eff_over_mde
+Q_DIM = 128 <- s25/results/q_verify.json :: results/'hypothesis-set size 2**vqe_qubits'
+Q_GAP_MAX = 0.891496 <- s25/results/q_gibbs.json :: results/training_control/*/frac_gap_closed (max over T) (DERIVED)
+Q_GAP_MIN = 0.782951 <- s25/results/q_gibbs.json :: results/training_control/*/frac_gap_closed (min over T) (DERIVED)
+Q_KL_NATS = 0.901916 <- s25/results/q_gibbs.json :: results/divergence_ladder/[T=0.3]/ladder/'50 Adam steps (DEPLOYED)'/kl_nats
+Q_LADDER_WORST_FRAC = 0.0118211 <- s25/results/q_gibbs.json :: results/spectrum_target_independence/worst_frac_of_range
+Q_LAYERS = 3 <- s25/results/q_verify.json :: results/'core/pipeline Config.vqe_layers'
+Q_MPS_ERR = 3.331e-16 <- s25/results/q_verify.json :: results/'max |p_MPS - p_dense| over 24 configs'
+Q_OFF_CURVE = 0.00898638 <- s25/results/q_alpha.json :: results/circuit_off_curve/mean_residual_vqe
+Q_PARAMS = 21 <- s25/results/q_verify.json :: results/'parameters = layers * qubits'
+Q_PS_COS = 1.000000000 <- s25/results/q_verify.json :: results/'cos(param-shift, exact FD), min over 12'
+Q_PS_REL = 4.597e-10 <- s25/results/q_verify.json :: results/'rel |g_ps - g_fd| / |g_fd|, max over 12'
+Q_QUBITS = 7 <- s25/results/q_verify.json :: results/'core/pipeline Config.vqe_qubits'
+Q_RHO_H = -0.742284 <- s25/results/q_alpha.json :: results/cell_correlations/H
+Q_SHARE_NO_TAIL = 0.619048 <- s25/results/q_alpha.json :: results/share_of_targets_with_no_tail_constraint
+Q_SV_ERR = 5.551e-17 <- s25/results/q_verify.json :: results/'max |p_statevector - p_dense|'
+Q_VIOLATIONS = 0 <- s25/results/q_verify.json :: results/'SUBSET-hood violations  <- THE THEOREM'
+Q_VS_ARGMIN = -0.140476 <- s25/results/q_alpha.json :: results/vs_no_circuit/'VQE_LFO - argmin (shipped)'/mean [s8_selection]
+Q_VS_ARGMIN_X = 0.68483 <- s25/results/q_alpha.json :: .../'VQE_LFO - argmin (shipped)'/eff_over_mde
+Q_VS_BOLTZ = -0.00024437 <- s25/results/q_alpha.json :: results/vs_no_circuit/'VQE_LFO - Boltzmann T=0.3'/mean [s8_selection]
+===== SLIDE 6 =====
+[shape] Gradient variance at depth 3, and the algebra (not a barren-plateau claim)
+[shape] 6 / 11    sources: s25/results/q_plateau.json (left), s26/results/q_dla.json (right, lane Q's A2 figure), s13/results/geo_kernel.json
+[picture] Picture 5 7.00x2.98 in
+[picture] Picture 7 5.10x3.26 in
+[shape] • Width sweep, n = 4..13, depth 3, exact gradients, theta ~ N(0, 0.6^2): fitted log2 Var per qubit -0.649 (linear cost), -0.252 / -0.047 (CVaR alpha 0.25 / 0.10), -0.311 / -0.243 (deployed, T = 0.3). Reference: the depth-8 decay base 0.504 per qubit (-0.99 in log2). | • What it says: at this depth the decay is slower than the 2-design rate, and the CVaR non-linearity flattens it (variance ratio CVaR/linear 0.52 at n = 7, 3.36 at n = 13). Depth at n = 7 saturates from L = 4 (9.2e-03 at L = 3, 8.2e-03 at L = 12). | • What it does not say: it is not a 2-design result and not 'no barren plateau'. 21 parameters against dim so(128) = 8,128; the dynamical Lie algebra is the full so(2^n) from depth 2 at n = 7 (depth 1: abelian, dim 7), so nothing algebraic protects the ansatz at scale. Draws 250 to 80 per width: relative SE 9 to 16%.
+[notes] SPOKEN:
+I measured gradient variance against width, at depth three, with exact gradients and no shot noise, for 4 to 13 qubits. The fitted slopes, in log2 variance per qubit, are -0.649 for the linear cost, -0.252 and -0.047 for the CVaR tails, and -0.311 and -0.243 for the deployed free energy. For reference, the deepest circuit I measured, at depth eight, decays with base 0.504 per qubit, which is -0.99 on this scale. So the deployed circuit decays more slowly than that, and the CVaR non-linearity flattens the decay further. I do not call this the absence of a barren plateau, and I do not call a small gradient a barren plateau either. It is a depth-three measurement with 21 parameters against a Lie algebra of dimension 8,128. This sprint I computed that algebra exactly. At seven qubits the ansatz generates the full so(128) from depth two; depth one is abelian, dimension 7. So nothing algebraic protects this ansatz at scale, and what I see is the shallow regime. Depth at seven qubits saturates from four layers on. The draws per width are 250 down to 80, so each variance carries a relative error near ten to sixteen percent, and every slope is a seven-point fit.
+
+ALSO (not spoken):
+The symbolic Lie closure agrees with the dense SVD rank on 12/12 cells at n = 4, 5. The CVaR-to-linear variance ratio at n = 7 is 0.52 (alpha 0.25) and rises to 3.36 at n = 13. Depth sweep at n = 7: 2.38e-02 at L = 1, 9.20e-03 at the deployed L = 3, 8.00e-03 at L = 4, 8.21e-03 at L = 12. The A2 figure on the right is lane Q's, from `s26/results/q_dla.json`; the left figure is rebuilt from `s25/results/q_plateau.json` by `s26/pr_figures.py`.
+
+SOURCES (not spoken; token = value <- artefact path [basis]):
+DEPTH_L1 = 0.0238125 <- s25/results/q_plateau.json :: results/depth_sweep_n7/[layers=1]/var_g0
+DEPTH_L12 = 0.00821261 <- s25/results/q_plateau.json :: results/depth_sweep_n7/[layers=12]/var_g0
+DEPTH_L3 = 0.00919722 <- s25/results/q_plateau.json :: results/depth_sweep_n7/[layers=3]/var_g0
+DEPTH_L4 = 0.00799912 <- s25/results/q_plateau.json :: results/depth_sweep_n7/[layers=4]/var_g0
+DLA_N7_L1 = 7 <- s26/results/q_dla.json :: results/fixed/n7_L1/dim
+DLA_NUMERIC_AGREE = 12/12 <- s26/results/q_dla.json :: results/numeric/*/agree (DERIVED)
+DLA_SO128 = 8128 <- s26/results/q_dla.json :: results/fixed/n7_L3/dim_so
+GEO_BASE_DEPTH8 = 0.503917 <- s13/results/geo_kernel.json :: scaling/lay8_v_w1/decay_base
+GEO_SLOPE_DEPTH8 = -0.988741 <- s13/results/geo_kernel.json :: log2(scaling/lay8_v_w1/decay_base) (DERIVED)
+Q_PARAMS = 21 <- s25/results/q_verify.json :: results/'parameters = layers * qubits'
+RATIO_N13_A025 = 3.35853 <- s25/results/q_plateau.json :: results/nonlinearity_variance_ratio/13[0]
+RATIO_N7_A025 = 0.515912 <- s25/results/q_plateau.json :: results/nonlinearity_variance_ratio/7[0]
+SLOPE_A01_T0 = -0.0471589 <- s25/results/q_plateau.json :: results/cvar_alpha01_T0/log2_slope_per_qubit
+SLOPE_A025_T0 = -0.252201 <- s25/results/q_plateau.json :: results/cvar_alpha025_T0/log2_slope_per_qubit
+SLOPE_A025_T03 = -0.242884 <- s25/results/q_plateau.json :: results/deployed_a025_T03/log2_slope_per_qubit
+SLOPE_A1_T03 = -0.310535 <- s25/results/q_plateau.json :: results/deployed_a1_T03/log2_slope_per_qubit
+SLOPE_LIN = -0.649187 <- s25/results/q_plateau.json :: results/linear_alpha1_T0/log2_slope_per_qubit
+SWEEP_DRAWS_MAX = 250 <- s25/results/q_plateau.json :: results/linear_alpha1_T0/rows[*]/n_theta (max)
+SWEEP_DRAWS_MIN = 80 <- s25/results/q_plateau.json :: results/linear_alpha1_T0/rows[*]/n_theta (min)
+SWEEP_N_MAX = 13 <- s25/results/q_plateau.json :: results/linear_alpha1_T0/rows[*]/n (max)
+SWEEP_N_MIN = 4 <- s25/results/q_plateau.json :: results/linear_alpha1_T0/rows[*]/n (min)
+===== SLIDE 7 =====
+[shape] Where the remaining accuracy lives
+[shape] 7 / 11    sources: s25/results/phys_suite.json (point cloud), s24/results/priorladder.json, s23/results/errdecomp.json, s26/results/ph_c3_stage1.json
+[picture] Picture 5 7.00x3.98 in
+[shape] Closed by measurement | • selection and ranking inside the pool: the pool holds a 1.71 A window and the top-75 a 2.31 A one (ORACLE); no native-free ranker finds them | • physics as a selector: Legacy +0.330 A and AMBER +0.455 A WORSE than a random 75-subset, 5/5 folds each (point-cloud basis; fold CIs in the notes) | • physics as a relaxer: AMBER is +0.0111 A worse than a random move of its own size, fold CI [+0.0062, +0.0171]; a validity step, not an accuracy step | • search: the exact argmin over the whole latent ties the pool (S21) | Open | • the prior: -2.15 A per unit toward the true distances; a perfect prior through the same pipeline reaches 2.226 A from 3.048 (ORACLE, point cloud) | • the pool's error is 68% common-mode: nothing downstream of retrieval can remove most of it | • If accuracy moves, it moves through a better distance prior.
+[shape] Basis on every bar. Built chain: production 3.2148, helix 4.065, torsion predictor 3.770. Point cloud: production 3.0483, random-75 3.4251, perfect prior 2.226. Single window: pool best 1.711, top-75 best 2.306, whole library 1.313.
+[notes] SPOKEN:
+Where does the remaining accuracy live? The ladder on the left is measured on one instrument, with the basis written on every bar. Two native-free controls sit above the pipeline: a constant helix at 4.06 and a sequence-only torsion predictor at 3.77, both built chains. Below the pipeline are oracles that read the native. The best single window in the pool is 1.71 angstroms, and the best inside the shipped top-75 is 2.31. Those windows exist, and no native-free ranker finds them; the record closed that route at every level. The physics does not help either. As selectors, the Legacy potential and AMBER are worse than a random subset by +0.330 and +0.455 angstroms, five of five folds, on the point-cloud basis. And relaxing the built chain with AMBER is worse than a random move of the same size, by +0.0111 angstroms. The one steep lever is the distance prior. A perfect prior through the same pipeline reaches 2.23 on the point-cloud basis, from 3.05. And the pool's error is 68% common-mode, so nothing downstream of retrieval can remove most of it. The conclusion is plain. Search, selection, ranking and physics are closed by measurement. If accuracy moves, it moves through a better prior.
+
+ALSO (not spoken):
+Seven-configuration suite, point-cloud basis (`s25/results/phys_suite.json`): distogram 3.058, AMBER+distogram 3.132, Legacy+distogram 3.215, all three 3.253, random-75 3.425, Legacy+AMBER 3.674, Legacy 3.755, AMBER 3.880. The same rows on the built chain (`results/summary/leaderboard.json`): 3.219, 3.310, 3.373, 3.422, 3.825, 3.884, 4.102; the ranking is unchanged. Fold CIs: Legacy vs random [+0.2375, +0.4158], AMBER vs random [+0.3284, +0.5356]. Torsion-space ceiling 1.594 (ORACLE, k = 4); distance geometry from the true distances 0.611 (ORACLE); best window in the whole library 1.313 (ORACLE).
+
+SOURCES (not spoken; token = value <- artefact path [basis]):
+AMBER_VS_RANDOM = 0.455371 <- s25/results/phys_suite.json :: controls_rank/2/vs_random/effect [point_cloud]
+AMBER_VS_RANDOM_CI = [0.328398404491368, 0.5355771582778813] <- s25/results/phys_suite.json :: controls_rank/2/vs_random/ci95_fold [point_cloud]
+C3_AMBER_VS_RANDOM = 0.0110805 <- s26/results/ph_c3_stage1.json :: summary/'stage1 AMBER minus matched-magnitude RANDOM (16 draws)'/effect [relaxed minus displaced built_chain]
+COMMON_MODE = 0.67577 <- s23/results/errdecomp.json :: rows[*]/f_common (mean over 126) (DERIVED)
+DISTGEO_TRUE = 0.610822 <- s15/results/distgeo.json :: arms/ORACLE_true_distances/mean [distance-geometry fit]
+HELIX = 4.06475 <- s12/results/s14_ladder.json :: rows/L0_constant_helix/mean [built_chain]
+LB_AMBER = 4.10152 <- results/summary/leaderboard.json :: rows[amber]/mean [built_chain]
+LB_AMBER_DISTOGRAM = 3.30996 <- results/summary/leaderboard.json :: rows[amber_distogram]/mean [built_chain]
+LB_DISTOGRAM = 3.21871 <- results/summary/leaderboard.json :: rows[distogram]/mean [built_chain]
+LB_LEGACY = 3.88437 <- results/summary/leaderboard.json :: rows[legacy]/mean [built_chain]
+LB_LEGACY_AMBER = 3.82482 <- results/summary/leaderboard.json :: rows[legacy_amber]/mean [built_chain]
+LB_LEGACY_AMBER_DISTOGRAM = 3.42208 <- results/summary/leaderboard.json :: rows[legacy_amber_distogram]/mean [built_chain]
+LB_LEGACY_DISTOGRAM = 3.37315 <- results/summary/leaderboard.json :: rows[legacy_distogram]/mean [built_chain]
+LEGACY_VS_RANDOM = 0.330216 <- s25/results/phys_suite.json :: controls_rank/1/vs_random/effect [point_cloud]
+LEGACY_VS_RANDOM_CI = [0.23753999909000342, 0.4158172931555582] <- s25/results/phys_suite.json :: controls_rank/1/vs_random/ci95_fold [point_cloud]
+POOL_BEST = 1.71082 <- bench_results/baseline_tuning126.json :: science/pool_best/mean [single_window]
+PRIOR_GAMMA0 = 3.04834 <- s24/results/priorladder.json :: rows[*]/MASS0.0 (mean over 126) [point_cloud] (DERIVED)
+PRIOR_PERFECT = 2.22608 <- s24/results/priorladder.json :: rows[*]/MASS1.0 (mean over 126) [point_cloud] (DERIVED)
+RANDOM75 = 3.42513 <- s25/results/phys_suite.json :: random_null_rank/mean [point_cloud]
+SUITE_AMBER = 3.8805 <- s25/results/phys_suite.json :: configs_rank/*/mean (name == AMBER) [point_cloud]
+SUITE_AMBER_DIST = 3.13169 <- s25/results/phys_suite.json :: configs_rank/*/mean (name == AMBER+Distogram) [point_cloud]
+SUITE_DIST = 3.05802 <- s25/results/phys_suite.json :: configs_rank/*/mean (name == Distogram) [point_cloud]
+SUITE_LAD = 3.25302 <- s25/results/phys_suite.json :: configs_rank/*/mean (name == Legacy+AMBER+Distogram) [point_cloud]
+SUITE_LEGACY = 3.75534 <- s25/results/phys_suite.json :: configs_rank/*/mean (name == Legacy) [point_cloud]
+SUITE_LEGACY_AMBER = 3.6742 <- s25/results/phys_suite.json :: configs_rank/*/mean (name == Legacy+AMBER) [point_cloud]
+SUITE_LEGACY_DIST = 3.21512 <- s25/results/phys_suite.json :: configs_rank/*/mean (name == Legacy+Distogram) [point_cloud]
+TOPM_BEST = 2.30615 <- bench_results/baseline_tuning126.json :: science/top_m_best/mean [single_window]
+TORS = 3.77046 <- s13/results/tors_eval.json :: reports/a_pepPos/build/mean [built_chain]
+TORSION_CEILING = 1.59404 <- s13/results/ceiling_report.json :: k/4/descent/mean [built_chain (torsion-space rebuild)]
+UNIVERSE_BEST = 1.31345 <- bench_results/recon_library_saturation.json :: universe_best/small [single_window]
+===== SLIDE 8 =====
+[shape] Direction A: ADAPT-VQE on this Hamiltonian
+[shape] 8 / 11    PENDING: s26/PROPOSAL_A.md
+[shape] PENDING. This slide is filled from s26/PROPOSAL_A.md when it lands. | Until then nothing on it is claimed.
+[notes] SPOKEN:
+PENDING. This slide waits for `s26/PROPOSAL_A.md`.
+
+SOURCES (not spoken; token = value <- artefact path [basis]):
+===== SLIDE 9 =====
+[shape] Direction B: a learned folding model as the prior
+[shape] 9 / 11    PENDING: s26/PROPOSAL_B.md and s26/PROPOSAL_B_REPLACEMENT.md
+[shape] PENDING. This slide is filled from s26/PROPOSAL_B.md and s26/PROPOSAL_B_REPLACEMENT.md when it lands. | Until then nothing on it is claimed.
+[notes] SPOKEN:
+PENDING. This slide waits for its build step.
+
+SOURCES (not spoken; token = value <- artefact path [basis]):
+===== SLIDE 10 =====
+[shape] Direction C: learn a better distance prior
+[shape] 10 / 11    PENDING: s26/PROPOSAL_C.md and s26/C3_RESULT.md
+[shape] PENDING. This slide is filled from s26/PROPOSAL_C.md and s26/C3_RESULT.md when it lands. | Until then nothing on it is claimed.
+[notes] SPOKEN:
+PENDING. This slide waits for its build step.
+
+SOURCES (not spoken; token = value <- artefact path [basis]):
+===== SLIDE 11 =====
+[shape] Goal and ask
+[shape] 11 / 11    the direction line in the notes is DRAFT until the coordinator's verdict entry in s26/LEDGER.md
+[shape] Goal | • Find out whether a better distance prior is obtainable from inputs this machine can compute, on the instrument I have, pre-registered, with fold-clustered intervals. | • Publish the trainability chain: locality theorem, Pauli spectrum, kernel, width sweep, the Lie algebra and the product-circuit result. | Ask | • An independent study with those two threads, one measurement each. | • One question: what does an adaptive ansatz do when the target Hamiltonian is not diagonal, and does the spectrum-times-kernel prediction extend to that case? | What I will not claim | • A quantum advantage (7 qubits, exact simulation, selection classical by theorem). | • A barren plateau from a small gradient (a plateau is a decay with width; mine is a depth-3 measurement at n <= 13). | • An effect below its own minimum detectable size (MDE = 2.8016 x SE, per comparison).
+[notes] SPOKEN:
+My goal is two things. First, find out whether a better distance prior is obtainable from inputs this machine can compute, on the instrument I already have, and report it with a pre-registered falsifier and fold-clustered intervals. Second, publish the trainability chain: the locality theorem, the Pauli spectrum, the kernel, the width sweep, and this sprint's algebra and product-circuit results. The ask is an independent study with those two threads, and one question for you: what does an adaptive ansatz do when the target Hamiltonian is not diagonal, and does the spectrum-times-kernel prediction extend to that case? Three things I will not do. I will not claim a quantum advantage. I will not call a small gradient a barren plateau. And I will not report an effect below its own minimum detectable size.
+
+ALSO (not spoken):
+DRAFT (until the coordinator's verdict entry in `s26/LEDGER.md`): if asked "which would you do first?", the evidence favours direction C in its learn-the-prior form as the accuracy study, because the prior is the only lever the record measured as steep (-2.15 A per unit, `s24/results/priorladder.json`) and every selection, ranking, physics and search lever is closed by measurement; paired with direction A as a scientific study rather than an accuracy study, because on this diagonal Hamiltonian an ADAPT-grown circuit is a product circuit (`s26/results/q_var.json`, L35) and the set-equality theorem bounds any readout by the classical prefix. Direction B as stated cannot be measured on this machine (`s26/results/b1_feasibility.json`).
+
+SOURCES (not spoken; token = value <- artefact path [basis]):
+PRIOR_SLOPE = -2.14956 <- s24/results/priorladder.json :: (mean MASS0.1 - mean MASS0.0) / 0.1 [point_cloud] (DERIVED)

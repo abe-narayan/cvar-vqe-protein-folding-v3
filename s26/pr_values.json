@@ -1,0 +1,1473 @@
+{
+ "ARM_MEAN": {
+  "value": 3.214765154210998,
+  "path": "bench_results/baseline_tuning126.json :: science/rmsd_arm/mean",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "claim C01; also s26/results/e_reproduce.json :: summary/rmsd_arm/mean_fresh"
+ },
+ "ARM_MEDIAN": {
+  "value": 2.96606842892922,
+  "path": "bench_results/baseline_tuning126.json :: science/rmsd_arm/median",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": ""
+ },
+ "ARM_MIN": {
+  "value": 0.18198112330908295,
+  "path": "bench_results/baseline_tuning126.json :: science/rmsd_arm/min",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": ""
+ },
+ "ARM_MAX": {
+  "value": 8.24010323862393,
+  "path": "bench_results/baseline_tuning126.json :: science/rmsd_arm/max",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": ""
+ },
+ "ARM_FRAC2": {
+  "value": 0.2857142857142857,
+  "path": "bench_results/baseline_tuning126.json :: science/rmsd_arm/frac_under_2.0",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": ""
+ },
+ "AVG_MEAN": {
+  "value": 3.048338093879532,
+  "path": "bench_results/baseline_tuning126.json :: science/rmsd_avg/mean",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": "claim C02; an intermediate, not a structure"
+ },
+ "FULL_MEAN": {
+  "value": 3.2354598538973844,
+  "path": "bench_results/baseline_tuning126.json :: science/rmsd_full/mean",
+  "status": "SOURCED",
+  "basis": "relaxed",
+  "note": "claim C03; 9KAR ends above the 1000 kcal/mol gate and is inside this mean"
+ },
+ "POOL_BEST": {
+  "value": 1.7108244199364904,
+  "path": "bench_results/baseline_tuning126.json :: science/pool_best/mean",
+  "status": "SOURCED",
+  "basis": "single_window",
+  "note": "claim C07, ORACLE: best member of the K=500 pool"
+ },
+ "TOPM_BEST": {
+  "value": 2.3061526409453816,
+  "path": "bench_results/baseline_tuning126.json :: science/top_m_best/mean",
+  "status": "SOURCED",
+  "basis": "single_window",
+  "note": "ORACLE: best member of the shipped top-75"
+ },
+ "SHIPPED_ARGMIN": {
+  "value": 3.4540004952559396,
+  "path": "bench_results/baseline_tuning126.json :: science/shipped/mean",
+  "status": "SOURCED",
+  "basis": "single_window",
+  "note": "the shipped distogram argmin (one window)"
+ },
+ "N_TARGETS": {
+  "value": 126,
+  "path": "bench_results/baseline_tuning126.json :: science/n",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "ARM_FRAC3": {
+  "value": 0.5079365079365079,
+  "path": "s26/results/e_reproduce.json :: rows[*]/rmsd_arm (fraction under 3.0 A)",
+  "status": "DERIVED",
+  "basis": "built_chain",
+  "note": ""
+ },
+ "ARM_WORST_PDB": {
+  "value": "2MQ2",
+  "path": "s26/results/e_reproduce.json :: rows[argmax rmsd_arm]/pdb",
+  "status": "DERIVED",
+  "basis": "built_chain",
+  "note": ""
+ },
+ "ARM_BEST_PDB": {
+  "value": "1S9Z",
+  "path": "s26/results/e_reproduce.json :: rows[argmin rmsd_arm]/pdb",
+  "status": "DERIVED",
+  "basis": "built_chain",
+  "note": ""
+ },
+ "REPRO_MAX_DISAGREE": {
+  "value": 0.0,
+  "path": "s26/results/e_reproduce.json :: summary/rmsd_arm/max_abs_disagreement",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "fresh instrument vs stored record, 126 targets"
+ },
+ "GAP_ARM_MINUS_AVG": {
+  "value": 0.1664270603314659,
+  "path": "s26/results/e_reproduce.json :: summary/projection_gap_arm_minus_avg/mean",
+  "status": "SOURCED",
+  "basis": "built_chain minus point_cloud",
+  "note": ""
+ },
+ "BOND_AVG_MEAN": {
+  "value": 2.9613938229671057,
+  "path": "s26/results/e_reproduce.json :: summary/virtual_bond/avg_ca_mean_bond",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": "mean virtual CA-CA bond of the raw average"
+ },
+ "BOND_AVG_WORST": {
+  "value": 0.6491799200244281,
+  "path": "s26/results/e_reproduce.json :: summary/virtual_bond/avg_ca_worst_bond",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "T030_PDB": {
+  "value": "1S9Z",
+  "path": "bench_results/cache/1fc9f2dcf489e2fb/1S9Z.json :: pdb",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "T030_N": {
+  "value": 16,
+  "path": "bench_results/cache/1fc9f2dcf489e2fb/1S9Z.json :: n",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "T030_ARM": {
+  "value": 0.18198112330908295,
+  "path": "bench_results/cache/1fc9f2dcf489e2fb/1S9Z.json :: rmsd_arm",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": ""
+ },
+ "T030_POOL_BEST": {
+  "value": 0.1595955491065979,
+  "path": "bench_results/cache/1fc9f2dcf489e2fb/1S9Z.json :: pool_best",
+  "status": "SOURCED",
+  "basis": "single_window",
+  "note": "ORACLE"
+ },
+ "T030_TOPM_BEST": {
+  "value": 0.1595955491065979,
+  "path": "bench_results/cache/1fc9f2dcf489e2fb/1S9Z.json :: top_m_best",
+  "status": "SOURCED",
+  "basis": "single_window",
+  "note": "ORACLE"
+ },
+ "T030_AVG": {
+  "value": 0.19588790009124518,
+  "path": "bench_results/cache/1fc9f2dcf489e2fb/1S9Z.json :: rmsd_avg",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "HARD_PDB": {
+  "value": "9KAR",
+  "path": "bench_results/cache/1fc9f2dcf489e2fb/9KAR.json :: pdb",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "HARD_N": {
+  "value": 15,
+  "path": "bench_results/cache/1fc9f2dcf489e2fb/9KAR.json :: n",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "HARD_ARM": {
+  "value": 7.437696305468429,
+  "path": "bench_results/cache/1fc9f2dcf489e2fb/9KAR.json :: rmsd_arm",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": ""
+ },
+ "HARD_POOL_BEST": {
+  "value": 1.3997329473495483,
+  "path": "bench_results/cache/1fc9f2dcf489e2fb/9KAR.json :: pool_best",
+  "status": "SOURCED",
+  "basis": "single_window",
+  "note": "ORACLE"
+ },
+ "HARD_TOPM_BEST": {
+  "value": 5.343628883361816,
+  "path": "bench_results/cache/1fc9f2dcf489e2fb/9KAR.json :: top_m_best",
+  "status": "SOURCED",
+  "basis": "single_window",
+  "note": "ORACLE"
+ },
+ "HARD_AVG": {
+  "value": 7.060979298216974,
+  "path": "bench_results/cache/1fc9f2dcf489e2fb/9KAR.json :: rmsd_avg",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "T030_N_WINDOWS": {
+  "value": 7193,
+  "path": "bench_results/cache/1fc9f2dcf489e2fb/1S9Z.json :: n_windows",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "windows in the leakage-safe universe of T030"
+ },
+ "BENCH_DELTA": {
+  "value": 0.0103,
+  "path": "s9/final_report.json (NOT OPENED, Rule 1); claim C06 of s26/EXAMINATION.md; docs/FINDINGS.md:4505; README.md:14",
+  "status": "NAMED_NOT_OPENED",
+  "basis": "benchmark synthesis minus shipped baseline, paired, n=60",
+  "note": ""
+ },
+ "BENCH_CI_LO": {
+  "value": -0.1596,
+  "path": "same as BENCH_DELTA",
+  "status": "NAMED_NOT_OPENED",
+  "basis": "",
+  "note": ""
+ },
+ "BENCH_CI_HI": {
+  "value": 0.1803,
+  "path": "same as BENCH_DELTA",
+  "status": "NAMED_NOT_OPENED",
+  "basis": "",
+  "note": ""
+ },
+ "BENCH_WL": {
+  "value": "31W/29L",
+  "path": "same as BENCH_DELTA",
+  "status": "NAMED_NOT_OPENED",
+  "basis": "",
+  "note": ""
+ },
+ "BENCH_FULL": {
+  "value": 2.961,
+  "path": "s9/final_report.json :: dist/full/mean (NOT OPENED); asserted within 5e-4 by tests/test_pipeline.py:338-347 (passed, s26/TEST_RUN.md)",
+  "status": "SOURCED_BY_TEST",
+  "basis": "benchmark, 60 targets",
+  "note": ""
+ },
+ "BENCH_SHIPPED": {
+  "value": 2.9507,
+  "path": "s9/final_report.json :: dist/shipped/mean (NOT OPENED); same tests",
+  "status": "SOURCED_BY_TEST",
+  "basis": "benchmark, 60 targets",
+  "note": ""
+ },
+ "RANDOM75": {
+  "value": 3.4251256499338507,
+  "path": "s25/results/phys_suite.json :: random_null_rank/mean",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": "claim C08; the artefact declares basis = point_cloud; its production counterpart is AVG_MEAN"
+ },
+ "SUITE_INCUMBENT": {
+  "value": 3.0483380938795324,
+  "path": "s25/results/phys_suite.json :: incumbent",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "SUITE_DIST": {
+  "value": 3.058016219425174,
+  "path": "s25/results/phys_suite.json :: configs_rank/*/mean (name == Distogram)",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": "claim C29"
+ },
+ "SUITE_AMBER_DIST": {
+  "value": 3.131686249878013,
+  "path": "s25/results/phys_suite.json :: configs_rank/*/mean (name == AMBER+Distogram)",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": "claim C29"
+ },
+ "SUITE_LEGACY_DIST": {
+  "value": 3.215116303141773,
+  "path": "s25/results/phys_suite.json :: configs_rank/*/mean (name == Legacy+Distogram)",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": "claim C29"
+ },
+ "SUITE_LAD": {
+  "value": 3.2530157270854128,
+  "path": "s25/results/phys_suite.json :: configs_rank/*/mean (name == Legacy+AMBER+Distogram)",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": "claim C29"
+ },
+ "SUITE_LEGACY_AMBER": {
+  "value": 3.6742023446060776,
+  "path": "s25/results/phys_suite.json :: configs_rank/*/mean (name == Legacy+AMBER)",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": "claim C29"
+ },
+ "SUITE_LEGACY": {
+  "value": 3.7553415439547573,
+  "path": "s25/results/phys_suite.json :: configs_rank/*/mean (name == Legacy)",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": "claim C29"
+ },
+ "SUITE_AMBER": {
+  "value": 3.880496706249537,
+  "path": "s25/results/phys_suite.json :: configs_rank/*/mean (name == AMBER)",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": "claim C29"
+ },
+ "LEGACY_VS_RANDOM": {
+  "value": 0.3302158940209069,
+  "path": "s25/results/phys_suite.json :: controls_rank/1/vs_random/effect",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": "claim C30"
+ },
+ "LEGACY_VS_RANDOM_CI": {
+  "value": [
+   0.23753999909000342,
+   0.4158172931555582
+  ],
+  "path": "s25/results/phys_suite.json :: controls_rank/1/vs_random/ci95_fold",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "LEGACY_VS_RANDOM_FOLDS": {
+  "value": 5,
+  "path": "s25/results/phys_suite.json :: controls_rank/1/vs_random/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "LEGACY_VS_RANDOM_MDE": {
+  "value": 0.1662403218173309,
+  "path": "s25/results/phys_suite.json :: controls_rank/1/vs_random/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "AMBER_VS_RANDOM": {
+  "value": 0.45537105631568636,
+  "path": "s25/results/phys_suite.json :: controls_rank/2/vs_random/effect",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": "claim C30"
+ },
+ "AMBER_VS_RANDOM_CI": {
+  "value": [
+   0.328398404491368,
+   0.5355771582778813
+  ],
+  "path": "s25/results/phys_suite.json :: controls_rank/2/vs_random/ci95_fold",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "AMBER_VS_RANDOM_FOLDS": {
+  "value": 5,
+  "path": "s25/results/phys_suite.json :: controls_rank/2/vs_random/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "AMBER_VS_RANDOM_MDE": {
+  "value": 0.18834102878507575,
+  "path": "s25/results/phys_suite.json :: controls_rank/2/vs_random/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "LB_PROD_MEAN": {
+  "value": 3.2126212503925293,
+  "path": "results/summary/leaderboard.json :: rows[production]/mean",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "the results-lab rebuild (re-projected, PDB round trip); production cache is ARM_MEAN"
+ },
+ "LB_DISTOGRAM": {
+  "value": 3.218708055115966,
+  "path": "results/summary/leaderboard.json :: rows[distogram]/mean",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "built-chain mean of the same seven-configuration row (L28 item 3)"
+ },
+ "LB_AMBER_DISTOGRAM": {
+  "value": 3.309961759812365,
+  "path": "results/summary/leaderboard.json :: rows[amber_distogram]/mean",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "built-chain mean of the same seven-configuration row (L28 item 3)"
+ },
+ "LB_LEGACY_DISTOGRAM": {
+  "value": 3.3731520305329474,
+  "path": "results/summary/leaderboard.json :: rows[legacy_distogram]/mean",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "built-chain mean of the same seven-configuration row (L28 item 3)"
+ },
+ "LB_LEGACY_AMBER_DISTOGRAM": {
+  "value": 3.4220825100678876,
+  "path": "results/summary/leaderboard.json :: rows[legacy_amber_distogram]/mean",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "built-chain mean of the same seven-configuration row (L28 item 3)"
+ },
+ "LB_LEGACY_AMBER": {
+  "value": 3.8248241126995124,
+  "path": "results/summary/leaderboard.json :: rows[legacy_amber]/mean",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "built-chain mean of the same seven-configuration row (L28 item 3)"
+ },
+ "LB_LEGACY": {
+  "value": 3.8843706034949403,
+  "path": "results/summary/leaderboard.json :: rows[legacy]/mean",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "built-chain mean of the same seven-configuration row (L28 item 3)"
+ },
+ "LB_AMBER": {
+  "value": 4.101517931701575,
+  "path": "results/summary/leaderboard.json :: rows[amber]/mean",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "built-chain mean of the same seven-configuration row (L28 item 3)"
+ },
+ "HELIX": {
+  "value": 4.064753929494389,
+  "path": "s12/results/s14_ladder.json :: rows/L0_constant_helix/mean",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "claim C09; zero-information control, constant alpha-helix built at ideal geometry"
+ },
+ "HELIX_MINUS_ARM": {
+  "value": 0.8499887752833906,
+  "path": "s12/results/s14_ladder.json :: rows/L0_constant_helix/mean minus bench_results/baseline_tuning126.json :: science/rmsd_arm/mean",
+  "status": "DERIVED",
+  "basis": "built_chain",
+  "note": "ledger L14 quotes the same paired value +0.8500"
+ },
+ "TORS": {
+  "value": 3.7704579282796167,
+  "path": "s13/results/tors_eval.json :: reports/a_pepPos/build/mean",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "claim C10; sequence-only torsion predictor"
+ },
+ "TORS_MINUS_ARM": {
+  "value": 0.5556927740686186,
+  "path": "s13/results/tors_eval.json :: reports/a_pepPos/build/mean minus ARM_MEAN",
+  "status": "DERIVED",
+  "basis": "built_chain",
+  "note": "ledger L14: +0.5557, SE 0.1318, MDE 0.3694, 37W/89L"
+ },
+ "PRIOR_GAMMA0": {
+  "value": 3.0483380938795324,
+  "path": "s24/results/priorladder.json :: rows[*]/MASS0.0 (mean over 126)",
+  "status": "DERIVED",
+  "basis": "point_cloud",
+  "note": "equals AVG_MEAN"
+ },
+ "PRIOR_PERFECT": {
+  "value": 2.226080063107832,
+  "path": "s24/results/priorladder.json :: rows[*]/MASS1.0 (mean over 126)",
+  "status": "DERIVED",
+  "basis": "point_cloud",
+  "note": "claim C11, ORACLE"
+ },
+ "PRIOR_SLOPE": {
+  "value": -2.149562322742007,
+  "path": "s24/results/priorladder.json :: (mean MASS0.1 - mean MASS0.0) / 0.1",
+  "status": "DERIVED",
+  "basis": "point_cloud",
+  "note": "claim C15"
+ },
+ "PRIOR_GAMMA_FOR_3A": {
+  "value": 0.022487412143450545,
+  "path": "s24/results/priorladder.json :: linear interpolation on the first rung",
+  "status": "DERIVED",
+  "basis": "point_cloud",
+  "note": "claim C16"
+ },
+ "COMMON_MODE": {
+  "value": 0.6757696839814838,
+  "path": "s23/results/errdecomp.json :: rows[*]/f_common (mean over 126)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "claim C17"
+ },
+ "UNIVERSE_BEST": {
+  "value": 1.3134468768690186,
+  "path": "bench_results/recon_library_saturation.json :: universe_best/small",
+  "status": "SOURCED",
+  "basis": "single_window",
+  "note": "claim C12, ORACLE: best window in the whole library"
+ },
+ "TORSION_CEILING": {
+  "value": 1.5940389994797128,
+  "path": "s13/results/ceiling_report.json :: k/4/descent/mean",
+  "status": "SOURCED",
+  "basis": "built_chain (torsion-space rebuild)",
+  "note": "claim C13, ORACLE"
+ },
+ "DISTGEO_TRUE": {
+  "value": 0.6108221854859448,
+  "path": "s15/results/distgeo.json :: arms/ORACLE_true_distances/mean",
+  "status": "SOURCED",
+  "basis": "distance-geometry fit",
+  "note": "claim C14, ORACLE"
+ },
+ "PHI_SEQ": {
+  "value": 36.13275805455236,
+  "path": "s26/results/a_c26_phi_mae.json :: summary/arms/p_grid/pooled_mae_phi_deg",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C26 re-derived (L32); full sequence context"
+ },
+ "PHI_BLIND": {
+  "value": 36.4156194100631,
+  "path": "s26/results/a_c26_phi_mae.json :: summary/arms/n_marg/pooled_mae_phi_deg",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "sequence-blind corpus marginal"
+ },
+ "PHI_N_RES": {
+  "value": 1507,
+  "path": "s26/results/a_c26_phi_mae.json :: summary/n_residues_phi",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_QUBITS": {
+  "value": 7,
+  "path": "s25/results/q_verify.json :: results/'core/pipeline Config.vqe_qubits'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_LAYERS": {
+  "value": 3,
+  "path": "s25/results/q_verify.json :: results/'core/pipeline Config.vqe_layers'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_PARAMS": {
+  "value": 21,
+  "path": "s25/results/q_verify.json :: results/'parameters = layers * qubits'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_ITERS": {
+  "value": 50,
+  "path": "s25/results/q_verify.json :: results/'core/pipeline Config.vqe_iters'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_DIM": {
+  "value": 128,
+  "path": "s25/results/q_verify.json :: results/'hypothesis-set size 2**vqe_qubits'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_SV_ERR": {
+  "value": "5.551e-17",
+  "path": "s25/results/q_verify.json :: results/'max |p_statevector - p_dense|'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C21 (stored as a string)"
+ },
+ "Q_PS_COS": {
+  "value": "1.000000000",
+  "path": "s25/results/q_verify.json :: results/'cos(param-shift, exact FD), min over 12'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C22"
+ },
+ "Q_PS_REL": {
+  "value": "4.597e-10",
+  "path": "s25/results/q_verify.json :: results/'rel |g_ps - g_fd| / |g_fd|, max over 12'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C23"
+ },
+ "Q_FE_REL": {
+  "value": "4.663e-10",
+  "path": "s25/results/q_verify.json :: results/'rel err of free-energy grad, max over 4'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C23"
+ },
+ "Q_SAMPLING": {
+  "value": "NONE",
+  "path": "s25/results/q_verify.json :: results/'sampling calls inside run_cvar_vqe/free_energy'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_RNG": {
+  "value": "initial angles only",
+  "path": "s25/results/q_verify.json :: results/'rng use inside run_cvar_vqe'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_CELLS": {
+  "value": 2592,
+  "path": "s25/results/q_verify.json :: results/n_cells",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C32"
+ },
+ "Q_VIOLATIONS": {
+  "value": 0,
+  "path": "s25/results/q_verify.json :: results/'SUBSET-hood violations  <- THE THEOREM'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C32"
+ },
+ "Q_EQUALITY": {
+  "value": "972 / 972",
+  "path": "s25/results/q_verify.json :: results/'full-support cells with EXACT value equality'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C32"
+ },
+ "Q_TAIL_COS": {
+  "value": "0.566586",
+  "path": "s25/results/q_verify.json :: results/'cos(exact-expectation, TAIL baseline)'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C24 (the sourced member)"
+ },
+ "Q_LFO": {
+  "value": {
+   "0": [
+    1.0,
+    0.3
+   ],
+   "1": [
+    0.25,
+    0.3
+   ],
+   "2": [
+    0.25,
+    0.3
+   ],
+   "3": [
+    1.0,
+    0.3
+   ],
+   "4": [
+    1.0,
+    0.3
+   ]
+  },
+  "path": "s25/results/q_verify.json :: results/'VQE_LFO (alpha, T) per fold'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_ALPHA1_FOLDS": {
+  "value": [
+   0,
+   3,
+   4
+  ],
+  "path": "s25/results/q_verify.json :: results/'folds running alpha == 1.0 (NO tail constraint)'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_MPS_ERR": {
+  "value": "3.331e-16",
+  "path": "s25/results/q_verify.json :: results/'max |p_MPS - p_dense| over 24 configs'",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "generation lane; not the selector"
+ },
+ "Q_SHARE_NO_TAIL": {
+  "value": 0.6190476190476191,
+  "path": "s25/results/q_alpha.json :: results/share_of_targets_with_no_tail_constraint",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_VS_ARGMIN": {
+  "value": -0.14047598282969187,
+  "path": "s25/results/q_alpha.json :: results/vs_no_circuit/'VQE_LFO - argmin (shipped)'/mean",
+  "status": "SOURCED",
+  "basis": "s8_selection",
+  "note": ""
+ },
+ "Q_VS_ARGMIN_SE": {
+  "value": 0.07321726221348675,
+  "path": "s25/results/q_alpha.json :: .../'VQE_LFO - argmin (shipped)'/se",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_VS_ARGMIN_MDE": {
+  "value": 0.20512548181730447,
+  "path": "s25/results/q_alpha.json :: .../'VQE_LFO - argmin (shipped)'/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_VS_ARGMIN_X": {
+  "value": 0.6848295081876135,
+  "path": "s25/results/q_alpha.json :: .../'VQE_LFO - argmin (shipped)'/eff_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_VS_ARGMIN_W": {
+  "value": 66,
+  "path": "s25/results/q_alpha.json :: .../'VQE_LFO - argmin (shipped)'/W",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_VS_ARGMIN_L": {
+  "value": 48,
+  "path": "s25/results/q_alpha.json :: .../'VQE_LFO - argmin (shipped)'/L",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_VS_ARGMIN_T": {
+  "value": 12,
+  "path": "s25/results/q_alpha.json :: .../'VQE_LFO - argmin (shipped)'/ties",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_VS_ARGMIN_FOLDS": {
+  "value": 5,
+  "path": "s25/results/q_alpha.json :: .../'VQE_LFO - argmin (shipped)'/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_VS_ARGMIN_VERDICT": {
+  "value": "UNDERPOWERED (<0.7x MDE, NOT A RESULT)",
+  "path": "s25/results/q_alpha.json :: .../'VQE_LFO - argmin (shipped)'/verdict",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_VS_BOLTZ": {
+  "value": -0.0002443704103666639,
+  "path": "s25/results/q_alpha.json :: results/vs_no_circuit/'VQE_LFO - Boltzmann T=0.3'/mean",
+  "status": "SOURCED",
+  "basis": "s8_selection",
+  "note": ""
+ },
+ "Q_CIRC_VS_GIBBS": {
+  "value": -0.03024176839325163,
+  "path": "s25/results/q_alpha.json :: results/expressivity_vs_boltzmann/'circuit - exact Boltzmann @T=0.3'/mean",
+  "status": "SOURCED",
+  "basis": "s8_selection",
+  "note": "claim C19"
+ },
+ "Q_CIRC_VS_GIBBS_X": {
+  "value": 0.2399136519073786,
+  "path": "s25/results/q_alpha.json :: .../'circuit - exact Boltzmann @T=0.3'/eff_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C19"
+ },
+ "Q_RHO_H": {
+  "value": -0.7422836835050723,
+  "path": "s25/results/q_alpha.json :: results/cell_correlations/H",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C31"
+ },
+ "Q_OFF_CURVE": {
+  "value": 0.00898637732147773,
+  "path": "s25/results/q_alpha.json :: results/circuit_off_curve/mean_residual_vqe",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_KL_NATS": {
+  "value": 0.9019158325027764,
+  "path": "s25/results/q_gibbs.json :: results/divergence_ladder/[T=0.3]/ladder/'50 Adam steps (DEPLOYED)'/kl_nats",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C18"
+ },
+ "Q_TV": {
+  "value": 0.45308437902509247,
+  "path": "s25/results/q_gibbs.json :: .../'50 Adam steps (DEPLOYED)'/tv",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_H_TRAINED": {
+  "value": 5.670560263824815,
+  "path": "s25/results/q_gibbs.json :: .../'50 Adam steps (DEPLOYED)'/entropy_bits",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_H_GIBBS": {
+  "value": 4.913518398023244,
+  "path": "s25/results/q_gibbs.json :: .../'the Gibbs optimum itself'/entropy_bits",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_GAP_MIN": {
+  "value": 0.782951322968052,
+  "path": "s25/results/q_gibbs.json :: results/training_control/*/frac_gap_closed (min over T)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "claim C33"
+ },
+ "Q_GAP_MAX": {
+  "value": 0.8914955163069174,
+  "path": "s25/results/q_gibbs.json :: results/training_control/*/frac_gap_closed (max over T)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "claim C33"
+ },
+ "Q_GAP_T03": {
+  "value": 0.782951322968052,
+  "path": "s25/results/q_gibbs.json :: results/training_control/[T=0.3]/frac_gap_closed",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_BEATS_BEST_OF_N": {
+  "value": true,
+  "path": "s25/results/q_gibbs.json :: results/training_control/*/beats_best_of_N",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_BEST_OF_N": {
+  "value": 200,
+  "path": "s25/results/q_gibbs.json :: results/training_control/[T=0.3]/N",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "Q_LADDER_WORST_FRAC": {
+  "value": 0.011821117271971639,
+  "path": "s25/results/q_gibbs.json :: results/spectrum_target_independence/worst_frac_of_range",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C20"
+ },
+ "Q_LADDER_N_CHECKED": {
+  "value": 8,
+  "path": "s25/results/q_gibbs.json :: results/spectrum_target_independence/n_checked",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "SLOPE_LIN": {
+  "value": -0.6491874127317976,
+  "path": "s25/results/q_plateau.json :: results/linear_alpha1_T0/log2_slope_per_qubit",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C25; n = 4..13, depth 3, theta ~ N(0, 0.6^2)"
+ },
+ "SLOPE_A025_T0": {
+  "value": -0.2522012761595383,
+  "path": "s25/results/q_plateau.json :: results/cvar_alpha025_T0/log2_slope_per_qubit",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C25; n = 4..13, depth 3, theta ~ N(0, 0.6^2)"
+ },
+ "SLOPE_A01_T0": {
+  "value": -0.047158929969141276,
+  "path": "s25/results/q_plateau.json :: results/cvar_alpha01_T0/log2_slope_per_qubit",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C25; n = 4..13, depth 3, theta ~ N(0, 0.6^2)"
+ },
+ "SLOPE_A1_T03": {
+  "value": -0.31053500868274697,
+  "path": "s25/results/q_plateau.json :: results/deployed_a1_T03/log2_slope_per_qubit",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C25; n = 4..13, depth 3, theta ~ N(0, 0.6^2)"
+ },
+ "SLOPE_A025_T03": {
+  "value": -0.24288444013776891,
+  "path": "s25/results/q_plateau.json :: results/deployed_a025_T03/log2_slope_per_qubit",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C25; n = 4..13, depth 3, theta ~ N(0, 0.6^2)"
+ },
+ "SWEEP_N_MIN": {
+  "value": 4,
+  "path": "s25/results/q_plateau.json :: results/linear_alpha1_T0/rows[*]/n (min)",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "SWEEP_N_MAX": {
+  "value": 13,
+  "path": "s25/results/q_plateau.json :: results/linear_alpha1_T0/rows[*]/n (max)",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "SWEEP_DRAWS_MIN": {
+  "value": 80,
+  "path": "s25/results/q_plateau.json :: results/linear_alpha1_T0/rows[*]/n_theta (min)",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "SWEEP_DRAWS_MAX": {
+  "value": 250,
+  "path": "s25/results/q_plateau.json :: results/linear_alpha1_T0/rows[*]/n_theta (max)",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "DEPTH_L1": {
+  "value": 0.023812528017134932,
+  "path": "s25/results/q_plateau.json :: results/depth_sweep_n7/[layers=1]/var_g0",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "DEPTH_L3": {
+  "value": 0.009197219502432052,
+  "path": "s25/results/q_plateau.json :: results/depth_sweep_n7/[layers=3]/var_g0",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "DEPTH_L4": {
+  "value": 0.007999115889428848,
+  "path": "s25/results/q_plateau.json :: results/depth_sweep_n7/[layers=4]/var_g0",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "DEPTH_L12": {
+  "value": 0.008212609473499064,
+  "path": "s25/results/q_plateau.json :: results/depth_sweep_n7/[layers=12]/var_g0",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "RATIO_N7_A025": {
+  "value": 0.5159122955954036,
+  "path": "s25/results/q_plateau.json :: results/nonlinearity_variance_ratio/7[0]",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "Var[grad CVaR_0.25] / Var[grad mean] at n = 7"
+ },
+ "RATIO_N13_A025": {
+  "value": 3.358528161695611,
+  "path": "s25/results/q_plateau.json :: results/nonlinearity_variance_ratio/13[0]",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "GEO_BASE_DEPTH8": {
+  "value": 0.5039173273242449,
+  "path": "s13/results/geo_kernel.json :: scaling/lay8_v_w1/decay_base",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "the S13 depth-8 decay base, the 2-design-like rate"
+ },
+ "GEO_SLOPE_DEPTH8": {
+  "value": -0.9887410302943762,
+  "path": "s13/results/geo_kernel.json :: log2(scaling/lay8_v_w1/decay_base)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "PAULI_RATIO_LEGACY": {
+  "value": 0.9969490120271073,
+  "path": "s13/results/geo_pauli.json :: cells[*]/legacy/ratio_meas_over_pred_exact (median)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "measured over predicted gradient variance, per-string spectrum prediction, 104 cells"
+ },
+ "PAULI_N_CELLS": {
+  "value": 104,
+  "path": "s13/results/geo_pauli.json :: len(cells)",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "DLA_N7_L1": {
+  "value": 7,
+  "path": "s26/results/q_dla.json :: results/fixed/n7_L1/dim",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "DLA_N7_L2": {
+  "value": 8128,
+  "path": "s26/results/q_dla.json :: results/fixed/n7_L2/dim",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "DLA_N7_L3": {
+  "value": 8128,
+  "path": "s26/results/q_dla.json :: results/fixed/n7_L3/dim",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "DLA_SO128": {
+  "value": 8128,
+  "path": "s26/results/q_dla.json :: results/fixed/n7_L3/dim_so",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "DLA_POOL_V_N7": {
+  "value": 2080,
+  "path": "s26/results/q_dla.json :: results/pools/V_n7/dim",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "DLA_POOL_L2_N7": {
+  "value": 8128,
+  "path": "s26/results/q_dla.json :: results/pools/L2_n7/dim",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "DLA_NUMERIC_AGREE": {
+  "value": "12/12",
+  "path": "s26/results/q_dla.json :: results/numeric/*/agree",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "ADAPT_A1_DIM": {
+  "value": 7,
+  "path": "s26/results/q_dla.json :: results/adapt_sets/[alpha=1]/ladder[-1]/dim (max over pools and optimisers)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "ADAPT_A025_L2_DIM": {
+  "value": 1025,
+  "path": "s26/results/q_dla.json :: results/adapt_sets/[alpha=0.25, pool L2]/ladder[-1]/dim (max)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A4_V_LIN": {
+  "value": -0.0792065271232609,
+  "path": "s26/results/q_var.json :: results/grown/'V:adam_best:linear_alpha1_T0'/rows[P_matched] (log2 slope)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "ledger L35: -0.079"
+ },
+ "A4_L2_LIN": {
+  "value": 0.006200418723616749,
+  "path": "s26/results/q_var.json :: results/grown/'L2:adam_best:linear_alpha1_T0'/rows[P_matched]",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L35: +0.006"
+ },
+ "A4_V_A1_T03": {
+  "value": 0.0346106917326859,
+  "path": "s26/results/q_var.json :: results/grown/'V:adam_best:deployed_a1_T03'/rows[P_matched]",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L35: +0.035"
+ },
+ "A4_L2_A1_T03": {
+  "value": -0.007521007220637157,
+  "path": "s26/results/q_var.json :: results/grown/'L2:adam_best:deployed_a1_T03'/rows[P_matched]",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L35: -0.008"
+ },
+ "A4_V_A025_T03": {
+  "value": -0.24597468414083287,
+  "path": "s26/results/q_var.json :: results/grown/'V:adam_best:deployed_a025_T03'/rows[P_matched]",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L35: -0.246"
+ },
+ "A4_L2_A025_T03": {
+  "value": -0.3023606499404118,
+  "path": "s26/results/q_var.json :: results/grown/'L2:adam_best:deployed_a025_T03'/rows[P_matched]",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L35: -0.302"
+ },
+ "A4_FIXED_A025_T03": {
+  "value": -0.24288444013776891,
+  "path": "s26/results/q_var.json :: results/fixed/deployed_a025_T03/log2_slope_per_qubit",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A4_A1_DISTINCT_MIN": {
+  "value": 1,
+  "path": "s26/results/q_var.json :: results/grown/[alpha=1 cells]/rows[P_matched]/n_distinct_ops (min)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A4_A1_DISTINCT_MAX": {
+  "value": 3,
+  "path": "s26/results/q_var.json :: results/grown/[alpha=1 cells]/rows[P_matched]/n_distinct_ops (max)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A4_L2_A025_DISTINCT_MIN": {
+  "value": 4,
+  "path": "s26/results/q_var.json :: results/grown/'L2:adam_best:deployed_a025_T03'/rows[P_matched]/n_distinct_ops (min)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A4_L2_A025_DISTINCT_MAX": {
+  "value": 21,
+  "path": "s26/results/q_var.json :: results/grown/'L2:adam_best:deployed_a025_T03'/rows[P_matched]/n_distinct_ops (max)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A4_RATIO_MIN": {
+  "value": 1.628063871227848,
+  "path": "s26/results/q_var.json :: grown var_g0 / fixed var_g0 at matched (cell, n), min over the matched rows",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L35: 1.63"
+ },
+ "A4_RATIO_MAX": {
+  "value": 370.47045345334135,
+  "path": "s26/results/q_var.json :: the same, max",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L35: 370"
+ },
+ "A4_N_MATCHED": {
+  "value": 39,
+  "path": "s26/results/q_var.json :: number of matched rows",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A4_REPRO_WORST_REL": {
+  "value": 0.0,
+  "path": "s26/results/q_var.json :: results/reproduction/worst_rel",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "S25 n = 7 rows reproduced"
+ },
+ "PROD_KL_IDEAL": {
+  "value": 7.234030761492995e-17,
+  "path": "s26/results/probe/1A13.json :: product_diagnostics/ideal_ladder/kl_gibbs_to_product",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "PROD_KL_1A13": {
+  "value": 5.437886161355969e-05,
+  "path": "s26/results/probe/1A13.json :: product_diagnostics/zrank/kl_gibbs_to_product",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "PROD_KL_RY7": {
+  "value": 5.436212145932615e-05,
+  "path": "s26/results/probe/1A13.json :: arms/adaptV_lbfgs_zrank_P7/kl_to_gibbs",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "a 7-parameter RY layer, L-BFGS-B"
+ },
+ "PROD_KL_FIXED": {
+  "value": 0.9030488300399578,
+  "path": "s26/results/probe/1A13.json :: arms/fixed_zrank_it50/kl_to_gibbs",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "the deployed 21-parameter circuit, 50 Adam steps"
+ },
+ "B1_RESIDENT_GB": {
+  "value": 8.76,
+  "path": "s26/results/b1_feasibility.json :: measured_2026-09-13/c_size_and_ram/ram_as_fair_esm_loads_it_GB/total_resident_minimum",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "B1_FP16_GB": {
+  "value": 7.4,
+  "path": "s26/results/b1_feasibility.json :: .../ram_fp16_GB_parameters_only/total",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "B1_DOWNLOAD_GB": {
+  "value": 8.45,
+  "path": "s26/results/b1_feasibility.json :: .../download_bytes_http_head/total_GB",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "B1_VERDICT": {
+  "value": "NO",
+  "path": "s26/results/b1_feasibility.json :: verdict",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "B1_HEADROOM_GB": {
+  "value": 4.4,
+  "path": "s26/LEDGER.md L13 (governor_state 00:19: 64.8% of 16.75 GB used, ceiling 93%)",
+  "status": "LEDGER",
+  "basis": "",
+  "note": "campaign headroom at the time of the B1 measurement"
+ },
+ "C3_AMBER_VS_NONE": {
+  "value": 0.020694699686386257,
+  "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 AMBER (relaxed) minus do-nothing (built chain)'/effect",
+  "status": "SOURCED",
+  "basis": "relaxed minus built_chain",
+  "note": ""
+ },
+ "C3_AMBER_VS_NONE_CI": {
+  "value": [
+   0.015410149449308904,
+   0.02901849743558341
+  ],
+  "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 AMBER (relaxed) minus do-nothing (built chain)'/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C3_AMBER_VS_NONE_X": {
+  "value": 2.1564171310103055,
+  "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 AMBER (relaxed) minus do-nothing (built chain)'/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C3_AMBER_VS_RANDOM": {
+  "value": 0.011080468180820941,
+  "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 AMBER minus matched-magnitude RANDOM (16 draws)'/effect",
+  "status": "SOURCED",
+  "basis": "relaxed minus displaced built_chain",
+  "note": ""
+ },
+ "C3_AMBER_VS_RANDOM_CI": {
+  "value": [
+   0.006228043344255073,
+   0.017072513842064756
+  ],
+  "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 AMBER minus matched-magnitude RANDOM (16 draws)'/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C3_AMBER_VS_RANDOM_X": {
+  "value": 1.1192275249022017,
+  "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 AMBER minus matched-magnitude RANDOM (16 draws)'/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C3_AMBER_VS_RANDOM_MDE": {
+  "value": 0.00990010336083287,
+  "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 AMBER minus matched-magnitude RANDOM (16 draws)'/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C3_AMBER_VS_RANDOM_FOLDS": {
+  "value": 5,
+  "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 AMBER minus matched-magnitude RANDOM (16 draws)'/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C3_AMBER_VS_MEMBER": {
+  "value": 0.038513632382904235,
+  "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 AMBER minus matched-magnitude TOWARD-MEMBER (16 draws)'/effect",
+  "status": "SOURCED",
+  "basis": "relaxed minus displaced built_chain",
+  "note": ""
+ },
+ "C3_AMBER_VS_MEMBER_CI": {
+  "value": [
+   0.02980876592028565,
+   0.04793790929697891
+  ],
+  "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 AMBER minus matched-magnitude TOWARD-MEMBER (16 draws)'/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C3_RANDOM_VS_NONE": {
+  "value": 0.009614231505565318,
+  "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 RANDOM minus do-nothing'/effect",
+  "status": "SOURCED",
+  "basis": "displaced built_chain minus built_chain",
+  "note": ""
+ },
+ "C3_RANDOM_VS_NONE_CI": {
+  "value": [
+   0.007674993057411698,
+   0.012215008470758347
+  ],
+  "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 RANDOM minus do-nothing'/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C3_MEMBER_VS_NONE": {
+  "value": -0.017818932696517978,
+  "path": "s26/results/ph_c3_stage1.json :: summary/'stage1 TOWARD-MEMBER minus do-nothing'/effect",
+  "status": "SOURCED",
+  "basis": "displaced built_chain minus built_chain",
+  "note": "provisional until the registered replication lands (L39)"
+ },
+ "C3_MAG": {
+  "value": 0.21977809146492264,
+  "path": "s26/results/ph_c3_nativefree.json :: summary/mag_sup/mean",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "per-atom RMS displacement of the CA trace by the relaxation, after superposition"
+ },
+ "C3_COS": {
+  "value": -0.04906451135151611,
+  "path": "s26/results/ph_c3_stage1.json :: rows[*]/cos_amber (mean)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "ORACLE cosine between the relaxation displacement and the true residual"
+ },
+ "C3_COS_FRAC_POS": {
+  "value": 0.36507936507936506,
+  "path": "s26/results/ph_c3_stage1.json :: summary/frac_cos_amber_positive",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C3_FRAC_E0_OVER_1E4": {
+  "value": 0.5873015873015873,
+  "path": "s26/results/ph_c3_nativefree.json :: summary/frac_e0_over_1e4",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C3_N_CONVERGED": {
+  "value": 125,
+  "path": "s26/results/ph_c3_nativefree.json :: summary/n_converged_le_1000",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C3_E1_MAX": {
+  "value": 1262.4103583126937,
+  "path": "s26/results/ph_c3_nativefree.json :: summary/e1_max",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "9KAR"
+ },
+ "C3_BOND_AFTER": {
+  "value": 3.8665519730270517,
+  "path": "s26/results/ph_c3_nativefree.json :: summary/amb_bond_mean/mean",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "C3_BOND_BEFORE": {
+  "value": 3.803954938363982,
+  "path": "s26/results/ph_c3_nativefree.json :: summary/ca_bond_mean/mean",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "TESTS_TOTAL": {
+  "value": 370,
+  "path": "s26/results/test_run.json :: combined/total",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "TESTS_PASSED": {
+  "value": 357,
+  "path": "s26/results/test_run.json :: combined/passed",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "TESTS_SKIPPED": {
+  "value": 13,
+  "path": "s26/results/test_run.json :: combined/skipped",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "TESTS_FAILED": {
+  "value": 0,
+  "path": "s26/results/test_run.json :: combined/failed",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "CORPUS_PEPTIDES": {
+  "value": 787,
+  "path": "s26/results/p_probe_esm.json (ledger L11: 787 peptides + 6,003 fragments = 6,790 unique training sequences)",
+  "status": "LEDGER",
+  "basis": "",
+  "note": ""
+ },
+ "CORPUS_FRAGMENTS": {
+  "value": 6003,
+  "path": "same",
+  "status": "LEDGER",
+  "basis": "",
+  "note": ""
+ },
+ "SELFCOPY_DEV": {
+  "value": "4/126",
+  "path": "s26/results/i_identity_audit.json (ledger L15); tests/test_data.py:72-74",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C28"
+ },
+ "SELFCOPY_BENCH": {
+  "value": "2/60",
+  "path": "s26/results/i_identity_audit.json (count only, ledger L15/L18)",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "claim C28, count only"
+ },
+ "MDE_FACTOR": {
+  "value": 2.8016,
+  "path": "s26/LANE_CONTRACT.md section 2; s25/results/q_verify.json :: results/'MDE == 2.8016*SE exactly' (True)",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "SCIENCE_DELTA_MAX": {
+  "value": 4.440892098500626e-16,
+  "path": "bench_results/compare_tuning126.json :: science_delta (max |value|)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "1-worker baseline vs 8-worker optimised run"
+ }
+}

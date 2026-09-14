@@ -1,0 +1,22 @@
+deck: vqe_research_overview.pptx
+slide count: 11 (expected 11)
+U+2014 em dashes: 0; U+2013 en dashes: 0
+banned word 'genuinely': 0 occurrences
+banned word 'honestly': 0 occurrences
+banned word 'leverage': 0 occurrences
+banned word 'robust': 0 occurrences
+banned word 'delve': 0 occurrences
+banned word 'underscore': 0 occurrences
+non-ASCII characters present: U+2022
+slide  1: text yes, notes yes, spoken words 121
+slide  2: text yes, notes yes, spoken words 212
+slide  3: text yes, notes yes, spoken words 219
+slide  4: text yes, notes yes, spoken words 186
+slide  5: text yes, notes yes, spoken words 220
+slide  6: text yes, notes yes, spoken words 206
+slide  7: text yes, notes yes, spoken words 204
+slide  8: text yes, notes yes, spoken words 6  (proposal slide: limit 250)  OK
+slide  9: text yes, notes yes, spoken words 8  (proposal slide: limit 250)  OK
+slide 10: text yes, notes yes, spoken words 8  (proposal slide: limit 250)  OK
+slide 11: text yes, notes yes, spoken words 133
+VERDICT: PASS
