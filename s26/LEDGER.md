@@ -2071,3 +2071,78 @@ logs and retries on the next tick. Restarted as v2.1 at 19:37. No production mod
 
 ---
 
+## L60 -- REPORT CHECK: EVERY APPENDIX B NUMBER OF s26/REPORT.md RE-READ FROM ITS ARTEFACT (106 ROWS: 79 PASS / 2 MISSING PATH / 25 NOT FOUND ON THE FIRST RUN; 138 / 138 AFTER THE FIXES); STYLE 0 / 0 / 0; PARTS VII AND VIII FILLED TO L59; APPENDIX D RECONCILES docs/REPORT_S26.md (2026-09-13 19:50, lane E)
+
+`s26/e_report_check.py` (committed b981b523, revised through 7db128c0) parses Appendix B of
+`s26/REPORT.md` row by row, resolves every backticked path (`file :: key, key`, `file:line`,
+`file:a-b`, `tests/x.py::test`, ledger entries named after a ledger path), checks existence, and
+checks every number quoted in the row against the artefact: JSON leaves under the stated keys
+(list means, container lengths, `[field=value]` filters, means and counts over `rows[*]/x`,
+numbers inside string leaves), text lines or ledger entries by literal or by tolerance (half a
+unit in the last quoted digit; a percentage as x and x/100), and `derived: expr = value` cells
+evaluated with every four-decimal literal itself required to be in the row's artefacts. Rule 1:
+`s9/final_report.json` and anything named benchmark are checked for existence only (two rows,
+the benchmark means, are recorded as unverifiable behind Rule 1). `--style` scans the whole report
+for the six banned words, U+2013 / U+2014, and any RMSD sentence contrasting two numbers with no
+basis label on the sentence or its paragraph. Output: the table on stdout and
+`s26/results/e_report_check.json` (save_atomic provenance, report sha256). Repeatable as
+`python s26/examine.py --report-check` (examine.py gained the flag; a9984267 did not parse and
+6f3708dc repairs it).
+
+Runs, all through jobrun (tag CPU, est-ram 0.3): `e_report_check` (55 s including the wait, peak
+RSS 0.032 GB) on the draft as committed at fcfbaf1d: 106 rows, 79 PASS, 2 MISSING PATH, 25 NUMBER
+NOT FOUND; `e_report_check2` and `e_report_check3` after the fixes: 109 / 109 PASS, style 0 / 0 /
+0; `e_report_check4` on the Part VII/VIII/D state is queued behind the four registered jobs (the
+job cap) and refreshes the artefact when a slot frees; the iteration runs between them ran
+directly to a scratch output (5 s, 9 MB). Current state, 7db128c0: 138 rows, 138 PASS, style 0 /
+0 / 0.
+
+What the 27 failures were, and what was done (drop or correct, never a new number without an
+artefact): 2 MISSING PATH (a root `README.md` resolved against the previous citation's directory,
+parser fixed; `geo_pauli_v1_rawonly.json` cited without its `s13/results/` directory). 25 NUMBER
+NOT FOUND: 10 wrong or incomplete key paths (`cells/25` -> `rows[*]/cells/25/band_best`;
+`rows[*]/MASS1.0, MASS0.1, MASS0.0` -> three full paths; `rmsd_vqe_sel, medoid128` ->
+`arms/vqe_LFO/sel, arms/medoid128/sel`; `singularity` -> `summary/singularity`; the
+`phys_landscape` summary keys; `concentration` -> `[model=amber]` / `[model=legacy]` for the 25 /
+41 table counts; `q_alpha`, `q_verify` and `c_land_null` narrowed to their keys; `n_rows` added
+where a row quoted "of 126"); 6 derived cells declared (9450 = 126 x 75; 5057 = 163 + 2627 + 2267;
+96.8%; 78 = 0.6190 x 126; 42 = 2 P; 8128 = dim so(128); 12.6% = 1025 / 8128; the prior-ladder slope
+and gain; +0.0207 = 3.2355 - 3.2148); 5 citations moved to the document that carries the number
+(`s25/agentPHYS_FINDINGS.md:57-58, :357, :379` for 40/126, 462/500, +0.054;
+`s25/agentQ_FINDINGS.md:375-376` for 45.3% and the 64.7th percentile; `docs/FINDINGS.md:3160` for
++0.994; `core/quantum.py:42` for +0.655634; `docs/FINDINGS.md:2751-2760` for 1.386); 4 numbers
+replaced by the artefact's own (0.36 to 0.88 -> 0.358 / 0.827 / 0.882, `s20/LEDGER.md` L6; 2.6e-4 ->
+2.239e-4 against the 8.66e-4 quantisation bound, `s25/LEDGER.md` L10; 699 -> 725 modules,
+`module_map.json :: n_modules`; 58.6% re-sourced to `ph_reject_census.json ::
+summary/per_threshold/1e4/pool_frac_over`); 1 number DROPPED: the relaxation cost's interval
+"+0.0207 [+0.0143, +0.0276]" quoted from the state brief has no artefact (the brief does not
+contain it either); the mean +0.0207 is kept as a derived difference of two stored means and the
+paired interval now comes from L39 (+0.0207, fold CI [+0.0154, +0.0290]). One S19 number (2.66 per
+75) re-cited to `s19/LEDGER.md` L12. Style: the first, broad detector flagged 33 sentences; 24
+were not RMSD contrasts (correlations, free energies, variances, Pauli weights) and the detector
+now skips those; 9 real RMSD contrasts lacked a basis on the sentence and are labelled (S12,
+S13, S14, S15 and S21 numbers in Part VI, one S16 contrast in IV.4, the S8-instrument residual in
+V.7, the SPSA contrast in V.10). Banned words: one ("leverage", VI.17) removed at 92d559bb;
+dashes: none.
+
+Appendix D reconciles `docs/REPORT_S26.md` and its summary (L42 item 1; read only, not edited or
+committed): eleven artefact-sourced items taken with the same paths and the docs file cited as
+the pointer (the leaderboard spread, the seven configurations against the incumbent, the
+calibration means, the ladder's first rung, the binning and the 51-arm null, the Gibbs falsifier,
+the S5 cosine and the consolidation audit's cosines, the entangler-deletion source, the
+end-to-end speed-up, B1's numbers); one disagreement decided by the artefact (5.6e-17 -> 5.551e-17,
+mine corrected); five apparent disagreements that are the same quantity on two paths or two
+criteria (3.2126 / 3.2148 and 0.18242 / 0.18198, `compare_` / `baseline_tuning126.json`, 13/60 at
+>= 0.6 identity against the 2/60 verbatim self-copies, the "100 of 125" citation, the blind
+pipeline on 126 against 108); not taken: their external sources (arXiv, an author page), the
+supervisors' names and affiliation, their Part X presentation guide (lane PR's), their memory-file
+citations, and the two benchmark target ids they print from `docs/FINDINGS.md:4571`.
+
+Parts VII and VIII now carry L35, L38, L39, L43, L44, L52, L53, L56 / L57 and the Adversary's
+L45 to L49, L54, L55, L58, each row with its ledger entry and artefact; the C2 anchor's basis
+(the rebuild built chain 3.2126, L57) is stated where the ladder is discussed; the leak wording of
+L58 is carried in II.1, VII.4 and VIII.2. Next: A1 / A3, B2 / C2 rungs, the steric reject on the
+built chain, C3 stage 2, the tie-break floor and the remaining tournament entries as they land;
+Appendix C at the close.
+
+---
