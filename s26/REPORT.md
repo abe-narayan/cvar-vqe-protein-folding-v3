@@ -226,7 +226,8 @@ flag and gates `complete: true` on a full key set over the expected number of ro
 result is re-run at a second seed and with the fold processing order reversed and must land
 inside its own CI (`s26/BRIEF.md`). Nothing superseded is deleted; retractions are appended.
 Every emitted structure in the results lab reproduces its own RMSD through the instrument to
-within PDB quantisation, worst 2.6e-4 A (`s25/LEDGER.md` L10).
+within PDB quantisation: worst absolute error 2.239e-4 A against a quantisation bound of
+8.66e-4 A (`s25/LEDGER.md` L10).
 
 ---
 
@@ -325,7 +326,7 @@ worse than a coin flip (`docs/FINDINGS.md:2739-2987`, S8-8).
 ### III.5 The selector (off in production)
 
 With `quantum=True` the filter keeps the top 128 (`top`, 128 indices, 128 x 128 matrix) and
-`quantum_stage` (`core/pipeline.py:818-865`) forms `E = _zrank(sc[top])`: the 128 scores are
+`quantum_stage` (`core/pipeline.py:806`) forms `E = _zrank(sc[top])`: the 128 scores are
 replaced by their ranks, standardised to zero mean and unit sd, giving a ladder from -1.7186 to
 +1.7186 that is the same on every target up to tie-averaging (max deviation 0.394% of range on
 both traced targets; worst 1.18% over the S25 sample,
@@ -333,7 +334,7 @@ both traced targets; worst 1.18% over the S25 sample,
 Hamiltonian of a 7-qubit register whose basis states index the 128 candidates; a 3-layer,
 21-parameter circuit is trained for 50 Adam steps on `F = CVaR_alpha(E; p) - T H(p)` with
 (alpha, T) from `VQE_LFO[fold]` (alpha 0.25 on folds 1 and 2, 1.0 on folds 0, 3, 4; T = 0.3
-everywhere; `core/pipeline.py:113-118`), and the CVaR tail of the trained distribution is read
+everywhere; `core/pipeline.py:113`), and the CVaR tail of the trained distribution is read
 out. On 1S9Z (alpha 0.25) the realised tail is 8 states; on 9KAR (alpha 1.0) it is all 128. Part
 V is about this stage. Production runs with `quantum=False`, so the 3.2148 A result never
 executes it; the four-component arm that does (`bench_results/fourcomponent_tuning126_w8.json`)
@@ -396,10 +397,10 @@ but carries strain 1172.7, above the S8 strain-rejection rule of 1000 kcal/mol
 (`s8/integrate.py:292`).
 
 What it assumes: that the force field's local minimum near the built chain is nearer the
-native. The record says the step costs +0.0207 A [+0.0143, +0.0276] relaxed chain against built
-chain (`docs/STATE_BRIEF_2026-09-12.md` section 4) and that a random displacement of matched
-size is at least as accurate (`s16/LEDGER.md` L27); the S26 control experiment C3 measures it
-again against a random move of the same size (Part VII). What it buys is validity: exact bond
+native. On the means the step costs +0.0207 A, relaxed chain 3.2355 against built chain 3.2148
+(`bench_results/baseline_tuning126.json :: science/rmsd_full/mean, science/rmsd_arm/mean`); S16
+found a random displacement of matched size at least as accurate (`s16/LEDGER.md` L27); the
+paired interval and the matched-random control are C3's to report (Part VII). What it buys is validity: exact bond
 geometry, strain removed. The relaxed-chain endpoint is 3.2355 A.
 
 ### III.9 The ceilings, on one line each
@@ -459,8 +460,8 @@ ideal-geometry chain that has never been relaxed, and its energy there is not a 
 Relax_50 on 186 of 192). The deployable object is therefore "run 50 steps of restrained
 minimisation, then read the energy". That operator, not the raw force field, is the
 Hamiltonian; the relaxation is what makes the objective defined, and the Spearman correlation
-between the energy after 50 steps and after 1 step is 0.36 to 0.88 across three targets, so the
-ordering is still moving when the cap stops it.
+between the energy after 50 steps and after 1 step is 0.358, 0.827 and 0.882 on three targets,
+so the ordering is still moving when the cap stops it.
 
 ### IV.3 Legacy is a compactness model; AMBER has the opposite sign
 
@@ -491,7 +492,7 @@ AMBER +0.471; `s25/agentPHYS_FINDINGS.md` section 1.5). The reason is IV.3: the 
 axis is compactness, the distogram already selects on it, and each energy pushes along that
 axis in a direction unrelated to which candidate is right. S16 had found the same for Legacy as
 a ranker inside the architecture (+0.068 [+0.012, +0.125] worse than a matched random drop at
-m = 5, `s16/LEDGER.md` L17), S17 had found the decisive AMBER-against-Legacy comparison at full
+m = 5, same basis on both sides, the S16 integrate readout; `s16/LEDGER.md` L17), S17 had found the decisive AMBER-against-Legacy comparison at full
 scale and concluded "the objective is not weak, it is wrong" (`s17/LEDGER.md` L29, L30), and S18
 found every physics filter losing to a random gate (`s18/LEDGER.md` L17).
 
@@ -502,7 +503,9 @@ the Lennard-Jones r^-12 wall turns one overlap into an energy of 1e4 to 1e29 kca
 peptide sits at -1170 to -500). Measured: 58.6% of every pool is above 1e4 kcal/mol; the
 energies span 15.3 decades; 97.0% of a pool lands inside |z| < 0.1 of a moment z-score; the ten
 worst candidates carry 99.66% of the variance
-(`s25/results/phys_landscape.json :: AMB_frac_absz_lt_0p1, AMB_decades, AMB_top10_var_share`).
+(the fraction above 1e4 from `s26/results/ph_reject_census.json ::
+summary/per_threshold/1e4/pool_frac_over`; the rest from `s25/results/phys_landscape.json ::
+summary`).
 
 In the Pauli basis the same fact reads: over the 25 fully enumerated AMBER tables of S13, the ten
 most extreme configurations out of 4,096 carry a median 99.56% of raw AMBER's Walsh variance
@@ -528,7 +531,8 @@ minimisation does is the size of that move, not its direction
 
 New in S26 (`s26/results/ph_reject_census.json :: singularity`; S26 ledger L23): on the 9,450
 shipped top-75 rebuilds, 40.7 of every 75 have two heavy atoms closer than 2.0 A when every side
-chain is built, but only 2.6 of 75 do on the backbone plus CB (S19 measured 2.66). Of the 5,057
+chain is built, but only 2.6 of 75 do on the backbone plus CB (S19 measured 2.66 per 75,
+`s19/LEDGER.md` L12). Of the 5,057
 rebuilds above 1e4 kcal/mol, 96.8% have their closest contact on a side-chain atom (bb-sc 2,627,
 sc-sc 2,267, bb-bb 163). Within a top-75 the AMBER single point tracks the minimum heavy-atom
 distance at Spearman -0.74. So the singularity is mostly the builder's: the fixed rotamer that
@@ -544,7 +548,8 @@ changes AMBER's own ordering, with exact tie blocks up to 462 of 500; `np.argsor
 those tied candidates in array order, which is the BLOSUM retrieval order, and that order is not
 neutral (rho with the true RMSD +0.054, seven standard errors from zero). Every Angstrom of the
 moment-z "advantage" on the AMBER configuration lived on exactly those 40 targets
-(`s25/agentPHYS_FINDINGS.md` section 3; `s25/results/phys_suite.json :: normalisation_fork`).
+(`s25/agentPHYS_FINDINGS.md:57-58`, `:357`, `:379`, its section 3, computed from
+`s25/results/phys_suite.json :: normalisation_fork`).
 Rank standardisation is monotone and has no such failure; it is what production uses
 (`core.pipeline._zrank`; `ARCHITECTURE.md` section 4).
 
@@ -557,9 +562,9 @@ the built chain's own AMBER energy is above 1e4 kcal/mol on 58.7% of targets bef
 ends at +1262), moves the CA trace 0.220 A RMS, and stretches the virtual CA-CA bond from 3.804
 to 3.867 A on average, breaking it beyond 4.0 A on two targets (2BP4 5.38 A, 9KAR 4.86 A). What
 that step does to accuracy against a random move of the same size is C3 (`s26/C3_RESULT.md`,
-after the gate; Part VII); on the record so far the step costs +0.0207 A [+0.0143, +0.0276]
-relaxed chain against built chain (`docs/STATE_BRIEF_2026-09-12.md` section 4) and S16 found a
-random displacement of matched size at least as accurate (`s16/LEDGER.md` L27). S17's "steric
+after the gate; Part VII); on the means the step costs +0.0207 A, relaxed chain 3.2355 against
+built chain 3.2148 (`bench_results/baseline_tuning126.json`), and S16 found a random
+displacement of matched size at least as accurate (`s16/LEDGER.md` L27). S17's "steric
 validity is free" was quoted against the wrong baseline and corrected by the workstream that
 made it (`s17/LEDGER.md` L27), and S17 explained S16's cis-peptide defect in a way that
 exonerates the force field: the ideal-geometry builder cannot represent the cis bond, and the
@@ -617,7 +622,7 @@ with `RY(t) = exp(-i t Y/2)` and an entangler that is a CNOT chain plus a ring c
 `U_ent = CNOT(n-1,0) CNOT(n-2,n-1) ... CNOT(0,1)`. Deployed: n = 7 qubits, 128 basis states,
 L = 3 layers, P = 21 parameters, 21 RY and 21 CNOT gates (6 chain + 1 ring per layer), two-qubit
 depth 21, total depth about 24, 50 Adam steps, one restart, seed 0
-(`core/pipeline.py:186-189`). RY and CNOT are real matrices and the initial state is real, so
+(`core/pipeline.py:181-184`, `Config`). RY and CNOT are real matrices and the initial state is real, so
 the amplitudes are real exactly and the reachable manifold lies in SO(2^n), not SU(2^n);
 dim so(128) = 8128 against 21 parameters. The simulation carries all 2^n amplitudes; the CNOT
 chain is composed into one basis permutation, and `probs_batch` simulates all 2P shifted
@@ -670,7 +675,7 @@ with `H(p) = -sum p log p` (`core/quantum.py:1072-1100`). Minimising CVaR alone 
 for a selection task: the minimiser concentrates p on the lowest-energy states and a consensus
 readout collapses to the argmin; measured at alpha = 1, T = 0.1 the state carries 0.0761 bits of
 a possible 7 and the arm is identical, target by target, to the plain argmin selector. The
-(alpha, T) pair comes from a leave-fold-out table (`core/pipeline.py:113-118`):
+(alpha, T) pair comes from a leave-fold-out table (`core/pipeline.py:113`):
 `VQE_LFO = {0: (1.0, 0.3), 1: (0.25, 0.3), 2: (0.25, 0.3), 3: (1.0, 0.3), 4: (1.0, 0.3)}`.
 T = 0.3 on all five folds; alpha = 1.0 on three of them, where CVaR is the full mean and there
 is no tail constraint at all, 78 of 126 targets (share 0.6190,
@@ -793,7 +798,7 @@ corr(H_readout, mean RMSD) = -0.7423, corr(alpha, mean RMSD) = +0.2700, corr(T, 
 = -0.0234; alpha's marginal share of the variance left after H and H^2 is 0.032; a quadratic in
 H over all 18 arms has R^2 = 0.7045. Fitted on the nine no-circuit arms only, the curve scores
 the nine circuit arms with mean residual +0.0090 A (sd 0.0342) against the fit's own residual
-sd 0.0268 A: the circuit sits on a curve fitted without it.
+sd 0.0268 A, single window on both sides: the circuit sits on a curve fitted without it.
 
 **The circuit against its own analytic optimum** (6.3). At alpha = 1 the objective is
 `mean_p(E) - T H(p)`, whose minimiser over the simplex is exactly the Gibbs distribution
@@ -999,8 +1004,9 @@ depth, g_ii = 0.2500 exactly, off-diagonal correlations 0.008 to 0.037 and shrin
 exactly I/4 at depth 1. CVaR at small alpha is exactly a steric clash filter: for alpha <= 0.25
 `amber` and `amber_soft` are the same objective to every printed digit while differing by
 1.7e16x in gradient variance at alpha = 1. And SPSA optimises the AMBER objective best of five
-arms (percentile 0.088) while returning the worst structure (+0.333 A against random): better
-optimisation of a misaligned objective produces worse physics.
+arms (percentile 0.088) while returning the worst structure (+0.333 A against random, both
+sides built chains from their bitstrings): better optimisation of a misaligned objective
+produces worse physics.
 
 ### V.11 The quantum record across the sprints
 
@@ -1251,7 +1257,8 @@ operator consume?
 Falsifier. A set-transformer over the signed (75 x n_pairs x 18) deviation tensor with the 18
 hardest targets held out; a leaked-label harness as the positive control.
 
-Result. The learned set decoder emits 3.184 against production 3.203 (d = -0.019 [-0.058,
+Result. Every S12 contrast below is on the same basis on both sides, the S12 dossier's emitted
+structure. The learned set decoder emits 3.184 against production 3.203 (d = -0.019 [-0.058,
 +0.020], 63W/63L), with a flat learning curve 3.043 to 3.026 from n = 8 to 75 while the leaked
 label reaches 2.534 at n = 8: signal-limited, not sample-limited (section I). The terminal
 operator consumes the set mean, not the set best: d_out = 1.16 d_set_mean + 0.04 d_set_best,
@@ -1279,8 +1286,9 @@ optimise, and what does the energy model do to trainability?
 Falsifier. Full enumeration of nine targets at 262,144 configurations each; the certified global
 optimum against random sampling; leave-fold-out torsion prediction.
 
-Result. The representation is not the barrier: at about 24 live qubits the space contains a
-1.594 A answer, but 88% of what the library buys is generic Ramachandran and 0.388 A of the
+Result. Every S13 number below is a built chain from torsions, the same basis on both sides of
+each contrast. The representation is not the barrier: at about 24 live qubits the space contains
+a 1.594 A answer, but 88% of what the library buys is generic Ramachandran and 0.388 A of the
 ceiling is the privileged oracle start (1). No native-free objective finds it (2); neither
 energy ranks the native, Legacy's in-decile rank correlation +0.043 and raw AMBER's -0.088, the
 native at the 32nd to 40th percentile, and Legacy's certified optimum +0.139 A worse than random
@@ -1309,7 +1317,9 @@ structural (non-energy) Hamiltonian have a good low-energy region?
 Falsifier. Coverage measured from deposits before any structure code (C14); certified
 enumeration of the structural objective (C13).
 
-Result. The chemical-shift route is closed by arithmetic: 54 of 126 targets are runnable and
+Result. Every S14 contrast below is on the same basis on both sides, the S14 ladder's emitted
+structure (built chains from torsions), ORACLE arms labelled. The chemical-shift route is closed
+by arithmetic: 54 of 126 targets are runnable and
 ORACLE-perfect torsions on all of them still leave the instrument at 2.021 A, 55 being needed
 (C14); the durable outputs are that a bimodal shift posterior is one qubit with a physical
 justification (-2.253 A [-2.642, -1.865] for a search over the top-8 support against the
@@ -1356,8 +1366,9 @@ files as 1.7108244199364904 exactly; an independent RMSD implementation agrees t
 63,000 structures; AMBER parameters are bit-exact against an independently built force field;
 AMBER's single point costs 8.3 to 23.3 ms with memoisation defeated, not 28; `BAND = 1.5 A` has
 no derivation; 16 of 126 targets carry verbatim own-fold windows with zero measured impact on
-`pool_best`. The generative architecture: torsion distance geometry reaches an ORACLE 0.611 A
-and a predicted 3.644 A, +0.440 [+0.290, +0.592] against the incumbent, a loss (1.3); the
+`pool_best`. The generative architecture (built chains from torsions against the incumbent's built chain,
+the same basis on both sides): torsion distance geometry reaches an ORACLE 0.611 A and a
+predicted 3.644 A, +0.440 [+0.290, +0.592] against the incumbent, a loss (1.3); the
 distogram has MAE 2.386 A, bias +0.509 rising to +1.492 at separation 11 to 15, z-sd 2.633
 (1.4); the retrieval pool is a second distance channel with the opposite bias sign (1.9).
 Mechanism: the native sits at the objective's 34.7th percentile and is its argmin on 4 of 126,
@@ -1518,8 +1529,8 @@ Result. The encoding lever is confounded by step count (L2) and closes (L13, L37
 (L3); no bond dimension breaks classical simulability because the register is too small (L4);
 "MDE = 0.084 A" is not a property of the instrument (L8); Legacy carries no in-band rank
 information beyond the distogram (L9); the budget exceeds the entire latent on 60% of targets
-(L11) and the exhaustive argmin does not beat a zero-evaluation pool (L14, complete at n = 126,
-L17); the answer is in the objective's top 5% and a top-512 readout ceiling is 1.986 A (L18);
+(L11) and the exhaustive argmin does not beat a zero-evaluation pool, the same basis on both sides through
+one readout operator (L14, complete at n = 126, L17); the answer is in the objective's top 5% and a top-512 readout ceiling is 1.986 A (L18);
 the source is not the lever, the retrieval pool beats the latent through the same operator
 (L20); all remaining headroom is in-pool selection, worth 1.33 A (L21), and the 1.338 A
 selection gap is entirely uncaptured (L23); AMBER is harder, the continuation is degenerate in
@@ -1875,7 +1886,7 @@ anything heavy.
 
     python s26/examine.py             # module map, pinned-hash check, claim ledger (OK / MISMATCH / ABSENT)
     python s26/examine.py --search    # plus the tree-wide claim search (slower)
-    python s26/e_module_map.py        # s26/results/module_map.json (699 modules)
+    python s26/e_module_map.py        # s26/results/module_map.json (725 modules at the last check; grows with the sprint's scripts)
     python s26/e_hashes.py            # s26/results/pinned_hashes.json (--check to compare)
     python s26/e_claims.py            # s26/results/claim_search.{json,txt}; benchmark files excluded
 
@@ -2120,73 +2131,76 @@ artefact; "as asserted" means a passing test pins it.
 | 1.3134 | III | `bench_results/recon_library_saturation.json :: universe_best/small` | 1.3134468768690186 |
 | 2.3062 | III | `s26/results/e_reproduce.json :: summary/stored_top_m_best/mean` | 2.3061526409453816 |
 | 3.4540 | III | `s26/results/e_reproduce.json :: summary/stored_shipped/mean` | 3.4540004952559396 |
-| 2.6087 | III | `s17/results/inband.json :: cells/25` band_best mean (reproduced `s26/PREREG_C1.md`) | 2.6087 |
-| 2.2261, 2.8334, -2.1496, 0.822 | III | `s24/results/priorladder.json :: rows[*]/MASS1.0, MASS0.1, MASS0.0` (means 2.226080, 2.833382, 3.048338) | derived |
+| 2.6087 | III | `s17/results/inband.json :: rows[*]/cells/25/band_best` (mean over 126 rows; reproduced `s26/PREREG_C1.md`) | 2.608684 |
+| 2.2261, 2.8334, -2.1496, 0.822 | III | `s24/results/priorladder.json :: rows[*]/MASS1.0, rows[*]/MASS0.1, rows[*]/MASS0.0` (means over 126 rows) | derived: (2.833382 - 3.048338)/0.1 = -2.1496; 3.048338 - 2.226080 = 0.8223 |
 | 4.0648 | I, II, III | `s12/results/s14_ladder.json :: rows/L0_constant_helix/mean` | 4.064753929494389 |
 | 2.9610, 2.9507 | I | `s9/final_report.json :: dist/full/mean, dist/shipped/mean`, asserted within 5e-4 by `tests/test_pipeline.py::test_the_committed_benchmark_report_still_holds_its_reference_numbers` (not opened by this lane) | as asserted |
 | +0.0103 [-0.1596, +0.1803], 31W/29L | I | `docs/FINDINGS.md:4479-4607` (S9-10), naming `s9/final_report.json` | as cited |
-| 2.9614, 3.8122, 22.3%, 0.649, 80 of 126, 3.803955, 1.8e-15, 3.867 | II, III | `s26/results/e_reproduce.json :: summary/virtual_bond` | as stored |
-| +0.1664, +0.0977, [+0.0049, +0.3379], 16 of 126 | II, III | `s26/results/e_reproduce.json :: summary/projection_gap_arm_minus_avg` | as stored |
+| 2.9614, 3.8122, 22.3%, 0.649, 80 of 126, 3.803955, 1.8e-15, 3.867 | II, III | `s26/results/e_reproduce.json :: summary/virtual_bond, n_rows` | as stored |
+| +0.1664, +0.0977, [+0.0049, +0.3379], 16 of 126 | II, III | `s26/results/e_reproduce.json :: summary/projection_gap_arm_minus_avg, n_rows` | as stored |
 | 0.0342, 0.0958, 0.2051 | II | `s26/results/q_mde_reference.json` | as stored |
 | 0.394%, 1.18% | III | `s26/results/e_trace_1S9Z.json`, `e_trace_9KAR.json` (hamiltonian stage); `s25/results/q_gibbs.json :: results/spectrum_target_independence` | as stored |
 | 0.6758 (68%) | III | `s23/results/errdecomp.json :: rows[*]/f_common` mean | 0.675770 |
 | 0.220, -560, 125/126, 5.38, 4.86 | III | `s26/results/ph_c3_nativefree.json` (S26 ledger L24) | as stored |
 | 5370, -1290.6, 0.19, 52.0; 6.0e12, 1262.4, 0.61, 1166.1; 1172.7 (2BP4) | III | `s26/results/e_trace_1S9Z.json`, `e_trace_9KAR.json` (relax stage); `bench_results/cache/1fc9f2dcf489e2fb/2BP4.json` | as stored |
 | 7193, 9814, -1..19, -6..32, 144, 420, 105, 91, 183, 17 centres, 760, 488, 483, 0.6926..7.2688, 2.2420..5.1791, 401 98 193 161 284 260 372 373 381 382, 44/449, 3.75, 1.97, 1.16, 8, 128, 5.05..21.07, 0.23..2.70, 5.62..23.44, 7.58, 5.34, 1.40 | III | `s26/results/e_trace_1S9Z.json`, `s26/results/e_trace_9KAR.json` | as stored |
-| 3.3135, 3.3443 | III | `s8/integrate_vqe.json :: rmsd_vqe_sel, medoid128` (reproduced by `tests/test_pipeline.py::test_the_four_components_all_execute_and_reproduce_their_published_numbers`) | as stored |
+| 3.3135, 3.3443 | III | `s8/integrate_vqe.json :: arms/vqe_LFO/sel, arms/medoid128/sel` (reproduced by `tests/test_pipeline.py::test_the_four_components_all_execute_and_reproduce_their_published_numbers`) | as stored |
 | 0.288 | III | `docs/FINDINGS.md:1970-2037` (S7 finding 11) | as cited |
 | -0.172 [-0.316, -0.027], 74W/47L | VI | `docs/FINDINGS.md:2901` (S8-8 table) | as cited |
 | 8.3 to 23.3 | IV | `s15/LEDGER.md` row 0.8 (`s15/results/audit_amber_cost_sweep.json`) | as cited |
 | 0.016 | III | `docs/FINDINGS.md:2379` (S8-6 heading) | as cited |
 | +0.142 | III | `ARCHITECTURE.md` section 2.5 | as cited |
-| +0.0207 [+0.0143, +0.0276] | III | `docs/STATE_BRIEF_2026-09-12.md` section 4 | as cited |
-| 1.386 | II | `docs/FINDINGS.md:2751` (S8-8) | as cited |
+| +0.0207 | III, IV | `bench_results/baseline_tuning126.json :: science/rmsd_full/mean, science/rmsd_arm/mean` | derived: 3.2354598538973844 - 3.214765154210998 = 0.0207 |
+| 1.386 | II | `docs/FINDINGS.md:2751-2760` (S8-8) | as cited |
 | 470, 13, 47 of 500 | II, III | `tests/test_data.py:305`; `README.md` (fold repin; layout) | as asserted |
 | 23, 5 | II | `docs/FINDINGS.md:60-118`; `s25/LEDGER.md` L5, L7, L9, L11, L15 | as cited |
 | 4/126, 2/60 | II | `s24/LEDGER.md` L4; `s26/results/i_identity_audit.json` | as cited |
 | a40581ad...422d, 8002 | II | `s26/results/pinned_hashes.json` | as stored |
 | 1000 | III | `core/amber.py:1282`; `s8/integrate.py:292` | as in source |
-| 2.6e-4 | II | `s25/LEDGER.md` L10 | as cited |
-| 64.7th percentile | II | `s25/results/q_alpha.json` (concentration check, `s25/QUANTUM.md` 6.4) | as cited |
+| 2.239e-4, 8.66e-4 | II | `s25/LEDGER.md` L10 | as cited |
+| 64.7th percentile | II | `s25/agentQ_FINDINGS.md:375-376` (`s25/QUANTUM.md` 6.4) | as cited |
 | Legacy weights 4.0, 1.0, 1.0, 3.0, 2.0, 2.0, 0.5, 1.0, 0.8, 0.15, 0.4 | IV | `core/energy.py` `DEFAULT_WEIGHTS` | as in source |
 | 0.3 ms, 9 ms, 6 to 12 s | IV | `s16/repair_FINDINGS.md` section 2.4 | as cited |
 | 28 ms (corrects 6 ms) | IV | `docs/CONDENSED_REPORT.md:185` (corrections table) | as cited |
-| 112/192, 186/192, 0.36 to 0.88 | IV | `s20/LEDGER.md` L6 | as cited |
+| 112/192, 186/192, 0.358, 0.827, 0.882 | IV | `s20/LEDGER.md` L6 | as cited |
 | -0.758 (SE 0.023), +0.60, +1.103 (SE 0.042), -0.27, -0.090 (SE 0.018), +0.307, +0.279, -0.027, +0.047 | IV | `s25/results/phys_landscape.json :: summary` | as stored |
 | -0.0886, -0.0829 | IV | `s20/results/c_q1.json`; S24 (via `s26/PH_PART_IV_NOTES.md` section 3) | as cited |
 | 3.058, 3.132, 3.215, 3.253, 3.425, 3.674, 3.755, 3.881 (point cloud) | IV | `s25/results/phys_suite.json :: configs_rank, random_null_rank` | as stored |
 | +0.330 (1.99x MDE), +0.455 (2.42x MDE), +0.327, +0.471 | IV | `s25/agentPHYS_FINDINGS.md` sections 1.4, 1.5 (from `s25/results/phys_suite.json`) | as cited |
 | 3.2187, 3.3100, 3.3732, 3.4221, 3.8248, 3.8844, 4.1015 (built chain) | IV | `results/summary/leaderboard.json :: rows[*]/mean` | as stored |
 | +0.068 [+0.012, +0.125] | IV | `s16/LEDGER.md` L17 (`s16/integrate.py`; interval flagged provisional there) | as cited |
-| 58.6%, 15.3, 97.0%, 99.66% | IV | `s25/results/phys_landscape.json :: AMB_frac_absz_lt_0p1, AMB_decades, AMB_top10_var_share` | as stored |
-| 99.56% (60.7% to 99.98%), 46.5%, 26.6%, 25, 41 | IV | `s13/results/walsh_xval.json :: concentration` | as stored |
+| 15.3, 97.0%, 99.66% | IV | `s25/results/phys_landscape.json :: summary/AMB_decades/mean, summary/AMB_frac_absz_lt_0p1/mean, summary/AMB_top10_var_share/mean` | 15.2556, 0.96989, 0.99656 |
+| 58.6% | IV | `s26/results/ph_reject_census.json :: summary/per_threshold/1e4/pool_frac_over/mean` | 0.58554 |
+| 99.56% (60.7% to 99.98%), 46.5%, 26.6%, 25, 41 | IV | `s13/results/walsh_xval.json :: concentration[model=amber], concentration[model=legacy]` (medians over the 25 and 41 entries) | as stored |
 | 1.000, 0.0, 3, 900, 7e30 to 2e31, 6 of 6 | IV | `s13/results/walsh_amber.json :: exact[*].terms`; `s13/walsh_FINDINGS.md` 3.1, 3.2 | as stored |
 | 0.0745, 0.4221, 30W/0L, 18.8, 5.8, 0W/30L | IV | `s20/results/c_land_report.txt` section 1 | as stored |
-| 0.577, 0.104, +0.444 of +0.620 (72%) | IV | `s20/results/c_land_null.json` | as stored |
-| 9450, 40.7/75, 2.6/75, 2.66, 5057, 96.8%, 2627, 2267, 163, -0.74 | IV | `s26/results/ph_reject_census.json :: singularity` | as stored |
-| 40/126, 462/500, +0.054 | IV | `s25/results/phys_suite.json :: normalisation_fork`; `s25/agentPHYS_FINDINGS.md` section 3 | as stored |
+| 0.577, 0.104, +0.444 of +0.620 (72%) | IV | `s20/results/c_land_null.json :: rows[*]/null/amber/theta_moved, rows[*]/null/legacy/theta_moved` (means over 30 rows); `s20/LEDGER.md` L12 | as stored |
+| 9450, 40.7/75, 2.6/75, 5057, 96.8%, 2627, 2267, 163, -0.74 | IV | `s26/results/ph_reject_census.json :: summary/singularity, n_rows`; `s25/results/phys_landscape.json :: m_prod` | derived: 126*75 = 9450; 163+2627+2267 = 5057; (2627+2267)/5057 = 0.968 |
+| 2.66 | IV | `s19/LEDGER.md` L12 | as cited |
+| 40/126, 462/500, +0.054 | IV | `s25/agentPHYS_FINDINGS.md:57-58`, `s25/agentPHYS_FINDINGS.md:357`, `s25/agentPHYS_FINDINGS.md:379` (its section 3, computed from `s25/results/phys_suite.json :: normalisation_fork`) | as cited |
 | 58.7%, 8.6e4, -560, 125/126, +1262, 0.220, 3.804 to 3.867, 5.38, 4.86 | IV | `s26/results/ph_c3_nativefree.json` | as stored |
-| n = 7, 128, L = 3, P = 21, 21 RY, 21 CNOT, depth 21 / ~24, 50 steps, seed 0, 8128 | V | `core/pipeline.py:186-189`; `core/quantum.py:885-982`; dim so(128) by arithmetic | as in source |
+| n = 7, 128, L = 3, P = 21, 21 RY, 21 CNOT, depth 21 / ~24, 50 steps, seed 0, 8128 | V | `s25/results/q_verify.json :: results` (deployed register, parameter count); `s25/QUANTUM.md:180-192` (gate counts and depth); `core/pipeline.py:181-184` (`Config`) | derived: 2^6*(2^7-1) = 8128 |
 | 5.6e-17, 3.331e-16, 6.661e-16, {1: 2, 2: 4, 3: 8, 4: 16}, [0.879145, 0.461538, 0.105625, 0.054141, 0, 0, 0, 0], 0.334 | V | `s25/results/q_verify.json` | as stored |
 | 4.06e-2, 3.4371, 1.18%, 0 of 8 | V | `s25/results/q_gibbs.json :: results/spectrum_target_independence` | as stored |
 | 0.0761 bits | V | `s25/results/q_alpha.json` (alpha = 1, T = 0.1 cell) | as cited (`s25/QUANTUM.md` 3.4) |
-| VQE_LFO table, 78 of 126, 0.6190 | V | `core/pipeline.py:113-118`; `s25/results/q_alpha.json :: results/share_of_targets_with_no_tail_constraint` | 0.6190476190476191 |
-| 1.000000000, 4.597e-10, 4.663e-10, 42 | V | `s25/results/q_verify.json` | as stored |
-| +0.655634 / 0.758, +0.566586 / 0.519, +1.000000, +0.994 | V | `core/quantum.py:66` (S9 instrument); `s25/results/q_verify.json` (S25 re-verification) | as stored |
+| VQE_LFO table, 78 of 126, 0.6190 | V | `core/pipeline.py:113`; `s25/results/q_alpha.json :: results/share_of_targets_with_no_tail_constraint, results/n` | derived: 0.6190476190476191*126 = 78 |
+| 1.000000000, 4.597e-10, 4.663e-10, 42 | V | `s25/results/q_verify.json :: results` | derived: 2*21 = 42 |
+| +0.655634 / 0.758, +0.566586 / 0.519, +1.000000, +0.994 | V | `core/quantum.py:42` (S9 instrument); `s25/results/q_verify.json :: results` (S25 re-verification); `docs/FINDINGS.md:3160` (the sampled estimator, S8-9) | as stored |
 | 2592, 1620, 0, 0, 1424 (54.9%), 972 / 972; 3888, 29.9%; 17574, 58.8%; 2016 / 2016 | V | `s25/results/q_verify.json`; S24 harness and coordinator runs as cited in `s25/QUANTUM.md` section 5; `s22/LEDGER.md` (Gate 1) | as stored / as cited |
 | 3.4540, 3.3414, 3.2835, 3.3135 | V | `s8/integrate_vqe.json` (S8 instrument rungs) | as stored |
 | alpha-effect table: -0.1126 (0.0792), -0.1067 (0.0644), +0.0279 (0.0518), -0.0011 (0.0477), +0.0126 (0.0268), +0.0039 (0.0240) | V | `s25/results/q_alpha.json` | as stored |
 | -0.7423, +0.2700, -0.0234, 0.032, 0.7045, +0.0090 (sd 0.0342), 0.0268 | V | `s25/results/q_alpha.json` (entropy curve) | as stored |
 | +0.0499 (0.0427), -0.0302 (0.0450), +0.0445 (0.0511) | V | `s25/results/q_alpha.json` (circuit minus Boltzmann) | as stored |
 | Gibbs ladder at T = 0.3 (seven rows), 1.449 / 0.902 / 0.373, 0.761 / 0.453 / 0.351, -1.483528, -2.453671, 0.891 / 0.783 / 0.783, -1.7176 / -1.7186 / 0.075, 0.458 | V | `s25/results/q_gibbs.json :: results/*, results/training_control` | as stored |
-| -0.1405 (0.0732, 66W/48L), -0.0002, +0.0262 (0.0279), -0.0308 (0.0590), -0.0081, 12, 45.3%, 64.7th | V | `s25/results/q_alpha.json` | as stored |
+| -0.1405 (0.0732, 66W/48L), -0.0002, +0.0262 (0.0279), -0.0308 (0.0590), -0.0081, 12 | V | `s25/results/q_alpha.json :: results/vs_no_circuit` | as stored |
+| 45.3%, 64.7th | V | `s25/agentQ_FINDINGS.md:375-376` (drop-top-5 against a uniform-effect null; `s25/LEDGER.md` L5) | as cited |
 | -0.0311 (0.27x MDE), -0.0021 | V | `s25/results/q_alpha.json` (forced-alpha counterfactual) | as stored |
 | -0.013 [-0.095, +0.077] | V | standing project result cited in `s25/QUANTUM.md` 7.4 (no S25 artefact; not re-derived) | as cited |
-| width-sweep table (35 variances), slopes -0.6492 / -0.2522 / -0.0472 / -0.3105 / -0.2429, depth sweep (7 values), CVaR ratio tables (14 values), draws 250 / 200 / 120 / 80 | V | `s25/results/q_plateau.json` | as stored |
-| DLA table: 120, 496, 510, 1023, 2016, 8128, 32640, 32766, 65535, 130816, 523776, 2096128; pools 36, 136, 528, 2080, 8256, 32896; ADAPT 7, 16, 1025 (12.6%); 12 of 12; 85.3 s; 0.479 GB | V | `s26/results/q_dla.json :: results/fixed, results/pools, results/adapt_sets, results/numeric`; `s26/jobs_done/a2_dla.json` | as stored |
+| width-sweep table (seven widths, five columns), slopes -0.6492 / -0.2522 / -0.0472 / -0.3105 / -0.2429, depth sweep (seven depths), CVaR ratio tables (two columns of seven), draws 250 / 200 / 120 / 80 | V | `s25/results/q_plateau.json` | as stored |
+| DLA table: 120, 496, 510, 1023, 2016, 8128, 32640, 32766, 65535, 130816, 523776, 2096128; pools 36, 136, 528, 2080, 8256, 32896; ADAPT 7, 16, 1025 (12.6%); 12 of 12; 85.3 s; 0.479 GB | V | `s26/results/q_dla.json :: results/fixed, results/pools, results/adapt_sets, results/numeric`; `s26/jobs_done/a2_dla.json` | derived: 1025/8128 = 0.1261 |
 | 0.504 (and 0.823, 0.768, 0.648, 0.537) | V | `s13/results/geo_kernel.json` (via `s13/SPRINT13_DOSSIER.md` section 10) | as cited |
 | 1.0000, 5,000+, 74, 52, 1.4e-13, 4.6e-2 | V | `s13/qarch_FINDINGS.md` section 1 (`s13/SPRINT13_DOSSIER.md` section 6) | as cited |
-| 141, 99.6%, 6.001 / 6.001, 0.0003, 0.878, 0.986 | V | `s13/walsh_FINDINGS.md` (`s13/SPRINT13_DOSSIER.md` section 7; raw sweep `geo_pauli_v1_rawonly.json`) | as cited |
+| 141, 99.6%, 6.001 / 6.001, 0.0003, 0.878, 0.986 | V | `s13/walsh_FINDINGS.md` (`s13/SPRINT13_DOSSIER.md` section 7; raw sweep `s13/results/geo_pauli_v1_rawonly.json`) | as cited |
 | 2.236, 3.015, 79 / 79, 0.641, 0.392, 0.069, 0.122, 12 / 13, 0.778, 0.629, 1.006, 1.001, 1.278, 0.913, 95, 0.15 to 4.18 | V | `s13/SPRINT13_DOSSIER.md` section 8 (Pauli tables of `s13/results/`) | as cited |
 | 1.000 on 26 cells, 0.955, 3.89 / 4.10 / 4.17 / 4.27, 0.60 to 0.64, 2.70 / 10.00 / 1.27, 7.9, 1e-16 | V | `s13/SPRINT13_DOSSIER.md` section 9 (`s13/results/walsh_amber.json`) | as cited |
 | 1.00, 2^(-0.47n) to 2^(-0.86n), 0.93 to 1.00, 0.862 to 0.078 | V | `s13/SPRINT13_DOSSIER.md` section 10 (`s13/results/geo_kernel.json`) | as cited |
@@ -2214,7 +2228,7 @@ artefact; "as asserted" means a passing test pins it.
 | 5.5 GB, 555 MB, 1.5 GB, 61, 63k | IX | `README.md` ("Data this repository does not carry"); `docs/STATE_BRIEF_2026-09-12.md` section 8 | as cited |
 | 0.18198112330908295 | IX | `s26/results/e_reproduce.json` (row 1S9Z, `rmsd_arm`); `s26/results/e_trace_1S9Z.json` | as stored |
 | 1.692, 0.872, 0.324, 11, 3, 8, 2, 601a39c7 | IX | `s26/TEST_RUN.md`; `s26/results/test_run.json` | as stored |
-| 699 | IX | `s26/results/module_map.json` | as stored |
+| 725 | IX | `s26/results/module_map.json :: n_modules` | 725 |
 <!-- APPENDIX B ROWS -->
 
 ## APPENDIX C. THE S26 LEDGER (DRAFT: reproduced at the close)

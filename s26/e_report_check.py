@@ -163,13 +163,16 @@ def parse_citations(cell):
         path = path.strip()
         if not (("/" in path) or re.search(r"\.(json|md|txt|py|log|csv|npz|pt|pdb|sh|bat|toml)$", path)):
             continue                                        # a bare name such as DEFAULT_WEIGHTS
-        if "/" not in path and last_dir:
-            path = last_dir + "/" + path
-        elif "/" not in path:
-            hits = [h for h in glob.glob(os.path.join(ROOT, "**", path), recursive=True)
-                    if "node_modules" not in h]
-            if hits:
-                path = os.path.relpath(hits[0], ROOT).replace("\\", "/")
+        if "/" not in path:
+            if os.path.exists(os.path.join(ROOT, path)):
+                pass                                        # a root file such as README.md
+            elif last_dir and os.path.exists(os.path.join(ROOT, last_dir, path)):
+                path = last_dir + "/" + path                # `a/x.json`, `y.json` (same directory)
+            else:
+                hits = [h for h in glob.glob(os.path.join(ROOT, "**", path), recursive=True)
+                        if "node_modules" not in h]
+                if hits:
+                    path = os.path.relpath(hits[0], ROOT).replace("\\", "/")
         last_dir = path.rsplit("/", 1)[0] if "/" in path else last_dir
         cites.append({"span": span, "path": path, "keys": keys, "test": test,
                       "lines": (line_a, line_b) if line_a else None, "pos": m.start()})
@@ -263,8 +266,9 @@ def _apply_segment(o, seg):
         return [o[seg]]
     if isinstance(o, list) and re.fullmatch(r"\d+", seg) and int(seg) < len(o):
         return [o[int(seg)]]
-    # 2. name[idx][idx].attr.attr
-    m = re.fullmatch(r"([^\[\].]*)((?:\[(?:\*|\d+)\])*)(?:\.(.+))?", seg)
+    # 2. name[idx][idx].attr.attr, where idx is *, an integer, or a field=value filter over a
+    #    list of dicts (`concentration[model=legacy]`)
+    m = re.fullmatch(r"([^\[\].]*)((?:\[(?:\*|\d+|[\w.]+=[^\]]+)\])*)(?:\.(.+))?", seg)
     if not m:
         return []
     name, idx, attrs = m.group(1), m.group(2), m.group(3)
@@ -279,10 +283,16 @@ def _apply_segment(o, seg):
                     if isinstance(e, dict):
                         nxt.extend(v for k, v in e.items() if seg_match(name, k))
         cur = nxt
-    for ix in re.findall(r"\[(\*|\d+)\]", idx):
+    for ix in re.findall(r"\[([^\]]+)\]", idx):
         nxt = []
         for c in cur:
-            if isinstance(c, list):
+            if "=" in ix and not ix.isdigit():
+                field, val = ix.split("=", 1)
+                if isinstance(c, list):
+                    nxt.append([e for e in c if isinstance(e, dict) and str(e.get(field)) == val])
+                elif isinstance(c, dict):
+                    nxt.append([e for e in c.values() if isinstance(e, dict) and str(e.get(field)) == val])
+            elif isinstance(c, list):
                 nxt.extend(c if ix == "*" else ([c[int(ix)]] if int(ix) < len(c) else []))
             elif isinstance(c, dict):
                 nxt.extend(c.values() if ix == "*" else [])
@@ -312,6 +322,11 @@ def collect(obj, label, nums, strs, cap=3_000_000):
             nums.append((float(o), lab))
         elif isinstance(o, str):
             strs.append((o, lab))
+            for m in NUM_TOKEN.finditer(o):                  # "3.339e-01", "n=7 qubits, layers=3"
+                try:
+                    nums.append((float(m.group(1).replace(",", "")), lab + "#str"))
+                except ValueError:
+                    pass
         elif isinstance(o, dict):
             nums.append((float(len(o)), lab + "#len"))
             for k, v in o.items():
@@ -352,7 +367,8 @@ def ledger_entry_text(text, tok):
 # ----------------------------------------------------------------------------- matching
 
 def num_found(tok, nums):
-    v, tol = tok["value"], tok["tol"]
+    v, tol = abs(tok["value"]), tok["tol"]
+    nums = [(abs(x), lab) for x, lab in nums]
     cands = [(v, tol)]
     if tok["kind"] == "pct":
         cands.append((v / 100.0, tol / 100.0))
@@ -380,6 +396,22 @@ def text_found(tok, text):
         if re.search(r"(?<![\d])" + re.escape(var) + r"(?![\d])", t):
             return True
     return False
+
+
+_text_nums_cache = {}
+
+
+def text_numbers(seg, label):
+    """Every number written in a text segment, for tolerance matching (2.1496 matches -2.15)."""
+    if label not in _text_nums_cache:
+        out = []
+        for m in NUM_TOKEN.finditer(norm_text(seg)):
+            try:
+                out.append((abs(float(m.group(1).replace(",", ""))), label + "#text"))
+            except ValueError:
+                pass
+        _text_nums_cache[label] = out
+    return _text_nums_cache[label]
 
 
 SAFE_EXPR = re.compile(r"^[\d\s.eE+\-*/()^]+$")
@@ -453,6 +485,11 @@ def check_row(k, lineno, cells):
                             notes.append("key not found: %s :: %s" % (rel, key))
                         for h in hits:
                             collect(h, rel + "::" + key, nums, strs)
+                        vals = [float(h) for h in hits
+                                if isinstance(h, (int, float)) and not isinstance(h, bool)]
+                        if len(vals) > 1:                    # rows[*]/x: the mean and the count
+                            nums.append((sum(vals) / len(vals), rel + "::" + key + "#mean"))
+                            nums.append((float(len(vals)), rel + "::" + key + "#count"))
                     sources.append(rel + " :: " + ", ".join(c["keys"]))
                 else:
                     collect(obj, rel, nums, strs)
@@ -515,12 +552,15 @@ def check_row(k, lineno, cells):
         lab = num_found(t, nums)
         if lab is None:
             for seg, slab in texts:
-                if text_found(t, seg):
+                if text_found(t, seg) or num_found(t, text_numbers(seg, slab)) is not None:
                     lab = slab
                     break
         if lab is None:
             for d in derived_ok_values:
-                if abs(float(d["value"]) - t["value"]) <= t["tol"] + 1e-12:
+                targets = [(t["value"], t["tol"])]
+                if t["kind"] == "pct":
+                    targets.append((t["value"] / 100.0, t["tol"] / 100.0))
+                if any(abs(float(d["value"]) - tv) <= tt + 1e-12 for tv, tt in targets):
                     lab = "derived"
                     break
         (found if lab else missing).append(t["text"] + ("%" if t["kind"] == "pct" else ""))
@@ -551,8 +591,15 @@ def style_check(text):
                 banned.append({"line": i, "word": m.group(0)})
     dashes = [{"line": i, "char": "U+2014" if "—" in l else "U+2013"}
               for i, l in enumerate(lines, 1) if "—" in l or "–" in l]
-    # contrasts: a sentence with two or more RMSD-like numbers, a contrast cue, no basis label
+    # contrasts: a sentence about RMSD (an Angstrom or RMSD marker) with two or more numbers of
+    # RMSD size, a contrast cue, and no basis label; sentences about other quantities are skipped
     rmsd_num = re.compile(r"(?<![\w.])[-+]?\d\.\d{3,4}(?![\d])")
+    rmsd_marker = re.compile(r"\bRMSD\b|\d A\b|\bA\)|\bAngstrom\b|\bemits?\b|\bendpoint\b", re.I)
+    not_rmsd = ("radius of gyration", " rg ", "free energy", "kl ", "variance", "cosine", "pauli",
+                "weight", "correlation", "corr(", "participation", "schmidt", "bond dimension",
+                "gradient", "relative error", "entropy", "decay", "walsh", "log2", "kcal",
+                "percentile of a uniform", "spearman", "rho(", "torsion error", "degrees",
+                "theorem", "agreement")
     flagged = []
     para, start = [], 1
     for i, l in enumerate(lines + [""], 1):
@@ -569,10 +616,10 @@ def style_check(text):
                 for sent in re.split(r"(?<=[.;])\s+(?=[A-Z(`])", block):
                     nums = rmsd_num.findall(sent)
                     low = " " + sent.lower() + " "
-                    if len(nums) >= 2 and any(c in low for c in CUES) and " a" in low \
-                            and not any(b in low for b in BASIS):
-                        flagged.append({"line": start, "sentence": sent[:220],
-                                        "paragraph_has_basis": para_basis})
+                    if len(nums) >= 2 and any(c in low for c in CUES) and rmsd_marker.search(sent) \
+                            and not any(w in low for w in not_rmsd) \
+                            and not any(b in low for b in BASIS) and not para_basis:
+                        flagged.append({"line": start, "sentence": sent[:220]})
             para = []
     return {"banned": banned, "dashes": dashes, "contrasts_without_basis": flagged}
 
@@ -623,8 +670,7 @@ def main(argv=None):
         for d in style["dashes"]:
             print("     . dash line %d: %s" % (d["line"], d["char"]))
         for f in style["contrasts_without_basis"]:
-            print("     . contrast line %d%s: %s" % (f["line"],
-                  " (paragraph carries a basis)" if f["paragraph_has_basis"] else "", f["sentence"]))
+            print("     . contrast line %d: %s" % (f["line"], f["sentence"]))
         rc |= int(len(style["banned"]) + len(style["dashes"]) > 0)
     out = {
         "kind": "report check: every Appendix B number of s26/REPORT.md against its artefact",
