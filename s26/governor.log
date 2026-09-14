@@ -1757,3 +1757,38 @@
 2026-09-14T02:10:26 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
 2026-09-14T02:10:31 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
 2026-09-14T02:10:46 SAMPLE   ram=82.8% (13.88GB used, 2.87GB free) cpu=95.1% (15s mean 88.8%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:11:11 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:11:16 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:11:21 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:11:26 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:11:31 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:11:36 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:11:46 SAMPLE   ram=82.2% (13.77GB used, 2.98GB free) cpu=90.5% (15s mean 87.3%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:12:46 SAMPLE   ram=83.0% (13.90GB used, 2.85GB free) cpu=81.1% (15s mean 83.1%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:13:46 SAMPLE   ram=82.8% (13.87GB used, 2.88GB free) cpu=79.8% (15s mean 80.5%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:14:46 SAMPLE   ram=82.3% (13.78GB used, 2.97GB free) cpu=80.0% (15s mean 80.8%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:15:46 SAMPLE   ram=81.8% (13.70GB used, 3.05GB free) cpu=80.4% (15s mean 80.0%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:16:46 SAMPLE   ram=83.4% (13.96GB used, 2.79GB free) cpu=81.6% (15s mean 80.0%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:17:46 SAMPLE   ram=83.9% (14.05GB used, 2.70GB free) cpu=95.1% (15s mean 89.6%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:17:51 REAP     e_report_check11 (pid 7368) is gone; registration removed
+2026-09-14T02:18:46 SAMPLE   ram=82.6% (13.84GB used, 2.92GB free) cpu=72.5% (15s mean 70.3%) jobs=6 amber=2 queued=0 lanes=8
+2026-09-14T02:19:11 SUSPEND  a3_label agent=Q tag=CPU rss=0.40GB
+2026-09-14T02:19:16 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:19:31 RESUME   a3_label agent=Q tag=CPU
+2026-09-14T02:19:41 REAP     a3_label (pid 17500) is gone; registration removed
+2026-09-14T02:19:46 SAMPLE   ram=82.6% (13.83GB used, 2.92GB free) cpu=94.6% (15s mean 96.2%) jobs=6 amber=2 queued=0 lanes=8
+2026-09-14T02:19:46 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:19:51 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:20:46 SAMPLE   ram=83.0% (13.91GB used, 2.84GB free) cpu=77.0% (15s mean 76.0%) jobs=6 amber=2 queued=0 lanes=8
+2026-09-14T02:21:41 REAP     e_report_check12 (pid 37196) is gone; registration removed
+2026-09-14T02:21:46 SAMPLE   ram=82.9% (13.89GB used, 2.86GB free) cpu=87.3% (15s mean 89.2%) jobs=6 amber=2 queued=0 lanes=8
+2026-09-14T02:22:46 SAMPLE   ram=84.9% (14.22GB used, 2.53GB free) cpu=93.5% (15s mean 84.0%) jobs=6 amber=2 queued=0 lanes=8
+2026-09-14T02:23:46 SAMPLE   ram=82.4% (13.79GB used, 2.96GB free) cpu=69.7% (15s mean 74.5%) jobs=6 amber=2 queued=0 lanes=8
+2026-09-14T02:24:11 SUSPEND  a1s1_build agent=Q tag=CPU rss=0.33GB
+2026-09-14T02:24:46 SAMPLE   ram=84.4% (14.14GB used, 2.61GB free) cpu=75.6% (15s mean 81.4%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:24:51 RESUME   a1s1_build agent=Q tag=CPU
+2026-09-14T02:25:31 SUSPEND  a1s1_build agent=Q tag=CPU rss=0.33GB
+2026-09-14T02:25:46 SAMPLE   ram=84.7% (14.19GB used, 2.56GB free) cpu=72.9% (15s mean 76.3%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:25:51 RESUME   a1s1_build agent=Q tag=CPU
+2026-09-14T02:26:06 SUSPEND  a1s1_build agent=Q tag=CPU rss=0.33GB
+2026-09-14T02:26:11 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB

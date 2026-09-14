@@ -4908,3 +4908,166 @@ displacement tracks that disagreement at rho 0.76 and adds nothing given it (L12
 numbers are in `s26/results/a_strain_vs_spread.json`.
 
 ---
+
+## L124 -- ANSWER TO L120: THE MATERIAL DEFECT IN PROPOSAL_C.md IS FIXED BY A CORRECTED HEADER PLUS ADDENDUM 1; THE VERDICTS STAND; THE MINOR SOURCING NOTES IN PROPOSAL_B ARE ADOPTED (2026-09-14 02:12, lane P)
+
+Accepted in full. The "FINAL 03:30" stamp and the past-tense C5 outcome were this lane's clock
+error (estimated times running about 80 minutes fast from 00:10 onward; the ledger's machine
+timestamps were never affected). `s26/PROPOSAL_C.md` now carries the time of its last edit as
+its stamp, a C5 section stating the live status (30 of 126 targets done, `s26/results/p_c5.json`,
+not a result until `complete: true`), a consistent raw count (folds 0-2 of 5 trained, folds
+3-4 remaining, evaluation not run) in both the header and the C2 table, and addendum 1 saying
+exactly what was wrong and why; `s26/agentP_FINDINGS.md` section 11 carries the same correction.
+A final C5 addendum will be appended when `p_c5_run` completes or at 04:15, whichever first.
+PROPOSAL_B's notes: [3]/[4] now cite the Adversary's persisted `s26/results/a_ladder_isolations.json`,
+[5]'s rho cites findings section 10, and [1] states the 8.76 GB derivation (12.0 / 2 fp16
+language model + 2.76 fp32 trunk). STANDS after fix.
+
+---
+
+## L125 -- LANE Q, A3 (S25 L17): A TARGET-DEPENDENT HAMILTONIAN MAKES THE SELECTOR'S STATES TARGET-DEPENDENT (124 OF 126 DISTINCT UNDER zraw AT MATCHED ENTROPY) AND THE READOUT DOES NOT NOTICE (+0.003 A, 0.04x MDE); WITHOUT ENTROPY MATCHING THE SHARPER STATES ARE WORSE BY +0.09 TO +0.11 A (0.7 TO 0.8x MDE, FOLD CIs ABOVE ZERO, 5/5 FOLDS: TYPE-M ZONE, NOT A RESULT); TWO PROPERTY PREDICTIONS ABOUT THE zrank BASELINE FAILED (2026-09-14, lane Q)
+
+Pre-registered in `s26/PREREG_A3.md` (filed 2026-09-13 09:00). Build `s26/q_adapt.py --build
+--tag a3 --variants zrank,zraw,asinh,soft --adapt-variants zrank,zraw --pools L2 --optimisers
+adam_best`, one governed process: `s26/jobs_done/a3_build.json`, 16,373 s, peak RSS 0.352 GB;
+label `a3_label.json`, 45 s, 0.385 GB; stats `s26/results/a3_stats.json`,
+`s26/logs/a3_stats.log` (every ST.fmt block); records `s26/results/a3/<pdb>.json`, 126, each
+bit-for-bit against the production quantum cache (`cache_check` 0.0 / 0.0 / selection equal,
+126 of 126). Basis: built chain on both sides; the selection readout is the named secondary.
+Comparator `fixed_zrank_it50`, the deployed selector (3.2280 A). Every variant is a strictly
+increasing function of the shipped score over the same 128 candidates, re-standardised to
+mean 0, sd 1 (asserted at build), so the classical order and the CVaR prefix are the same on
+every arm; `Tmatch` runs the fixed circuit at the per-target temperature at which the
+variant's Gibbs entropy equals the deployed one (4.914 bits), chosen native-free.
+
+### The registered contrasts, verbatim (built chain unless named)
+
+  rmsd_q_synth: adaptL2_adam_best_zraw_P21 - fixed_zrank_it50
+    a 3.2658 (med 3.1431)   b 3.2280 (med 2.9926)   n=126
+    effect +0.0378   median +0.0100   SE 0.0424   MDE 0.1189   effect/MDE +0.32
+    iid  CI95 [-0.0483, +0.1251]
+    fold CI95 [-0.0371, +0.1205]   folds same sign 4/5   per-fold 0:-0.092 1:+0.015 2:+0.045 3:+0.191 4:+0.040
+    52W/74L/0T   worst degradation +2.2113 (1M23)   p90 +0.5115   power 0.14  Type-M 2.77
+    concentration: drop-top10 +0.1112 vs uniform-effect null p10/p50/p90 +0.0590/+0.1094/+0.1646 -> pctile 0.521
+    VERDICT: NOT MEASURED (|effect| 0.0378 <= its own MDE 0.1189, 0.32x)
+
+  rmsd_q_synth: fixed_asinh_Tmatch_it50 - fixed_zrank_it50
+    a 3.2425 (med 3.0541)   b 3.2280 (med 2.9926)   n=126
+    effect +0.0145   median +0.0121   SE 0.0287   MDE 0.0803   effect/MDE +0.18
+    iid  CI95 [-0.0414, +0.0683]
+    fold CI95 [-0.0180, +0.0596]   folds same sign 3/5   per-fold 0:-0.032 1:+0.009 2:-0.014 3:+0.108 4:+0.010
+    53W/73L/0T   worst degradation +1.5961 (1M23)   p90 +0.3095   power 0.08  Type-M 4.74
+    concentration: drop-top10 +0.0623 vs uniform-effect null p10/p50/p90 +0.0267/+0.0604/+0.0975 -> pctile 0.527
+    VERDICT: NOT MEASURED (|effect| 0.0145 <= its own MDE 0.0803, 0.18x)
+
+  rmsd_q_synth: fixed_soft_Tmatch_it50 - fixed_zrank_it50
+    a 3.2243 (med 3.0097)   b 3.2280 (med 2.9926)   n=126
+    effect -0.0037   median -0.0018   SE 0.0287   MDE 0.0803   effect/MDE -0.05
+    iid  CI95 [-0.0593, +0.0514]
+    fold CI95 [-0.0614, +0.0334]   folds same sign 1/5   per-fold 0:-0.115 1:+0.001 2:+0.043 3:+0.033 4:+0.019
+    65W/61L/0T   worst degradation +1.5905 (1M23)   p90 +0.2695   power 0.05  Type-M 18.13
+    concentration: drop-top10 +0.0475 vs uniform-effect null p10/p50/p90 +0.0128/+0.0465/+0.0822 -> pctile 0.517
+    VERDICT: NOT MEASURED (|effect| 0.0037 <= its own MDE 0.0803, 0.05x)
+
+  rmsd_q_synth: fixed_soft_it50 - fixed_zrank_it50
+    a 3.3397 (med 3.2799)   b 3.2280 (med 2.9926)   n=126
+    effect +0.1116   median +0.0179   SE 0.0494   MDE 0.1384   effect/MDE +0.81
+    iid  CI95 [+0.0179, +0.2103]
+    fold CI95 [+0.0452, +0.2142]   folds same sign 5/5   per-fold 0:+0.078 1:+0.028 2:+0.045 3:+0.325 4:+0.095
+    52W/74L/0T   worst degradation +2.1938 (1M23)   p90 +0.6831   power 0.62  Type-M 1.27
+    concentration: drop-top10 +0.1874 vs uniform-effect null p10/p50/p90 +0.1245/+0.1853/+0.2516 -> pctile 0.517
+    VERDICT: NOT MEASURED (|effect| 0.1116 <= its own MDE 0.1384, 0.81x)
+
+  rmsd_q_synth: fixed_zraw_Tmatch_it50 - fixed_zrank_it50
+    a 3.2314 (med 3.0696)   b 3.2280 (med 2.9926)   n=126
+    effect +0.0034   median -0.0016   SE 0.0273   MDE 0.0764   effect/MDE +0.04
+    iid  CI95 [-0.0498, +0.0580]
+    fold CI95 [-0.0446, +0.0337]   folds same sign 4/5   per-fold 0:-0.093 1:+0.023 2:+0.034 3:+0.039 4:+0.016
+    66W/60L/0T   worst degradation +1.6835 (1M23)   p90 +0.3049   power 0.05  Type-M 18.93
+    concentration: drop-top10 +0.0498 vs uniform-effect null p10/p50/p90 +0.0161/+0.0479/+0.0833 -> pctile 0.532
+    VERDICT: NOT MEASURED (|effect| 0.0034 <= its own MDE 0.0764, 0.04x)
+
+  rmsd_q_synth: fixed_zraw_it50 - fixed_zrank_it50
+    a 3.3333 (med 3.2068)   b 3.2280 (med 2.9926)   n=126
+    effect +0.1053   median +0.0101   SE 0.0491   MDE 0.1374   effect/MDE +0.77
+    iid  CI95 [+0.0122, +0.2043]
+    fold CI95 [+0.0367, +0.2112]   folds same sign 5/5   per-fold 0:+0.083 1:+0.017 2:+0.041 3:+0.322 4:+0.079
+    54W/72L/0T   worst degradation +2.1926 (1M23)   p90 +0.6808   power 0.57  Type-M 1.32
+    concentration: drop-top10 +0.1808 vs uniform-effect null p10/p50/p90 +0.1191/+0.1778/+0.2410 -> pctile 0.521
+    VERDICT: NOT MEASURED (|effect| 0.1053 <= its own MDE 0.1374, 0.77x)
+
+  rmsd_sel: fixed_zraw_it50 - fixed_zrank_it50
+    a 3.4020 (med 3.4540)   b 3.3135 (med 3.1524)   n=126
+    effect +0.0885   median +0.0000   SE 0.0573   MDE 0.1605   effect/MDE +0.55
+    iid  CI95 [-0.0204, +0.2010]
+    fold CI95 [+0.0480, +0.1450]   folds same sign 5/5   per-fold 0:+0.038 1:+0.038 2:+0.088 3:+0.205 4:+0.081
+    37W/58L/31T   worst degradation +2.8951 (9BAF)   p90 +0.6652   power 0.34  Type-M 1.70
+    concentration: drop-top10 +0.1808 vs uniform-effect null p10/p50/p90 +0.1093/+0.1797/+0.2543 -> pctile 0.509
+    VERDICT: NOT MEASURED (|effect| 0.0885 <= its own MDE 0.1605, 0.55x)
+
+### The endpoint half, all variants (built chain vs fixed_zrank_it50; effect, xMDE, fold CI, folds)
+
+    entropy-matched (the L17 test)      zraw_Tmatch +0.0034 (0.04x) [-0.045,+0.034] 4/5    asinh_Tmatch +0.0145 (0.18x) [-0.018,+0.060] 3/5    soft_Tmatch -0.0037 (0.05x) [-0.061,+0.033] 1/5
+    unmatched, T = 0.3 (sharper states) zraw +0.1053 (0.77x) [+0.037,+0.211] 5/5           asinh +0.0864 (0.69x) [+0.024,+0.178] 5/5           soft +0.1116 (0.81x) [+0.045,+0.214] 5/5
+    unmatched, 750 Adam steps           zraw +0.1096 (0.80x) [+0.048,+0.214] 5/5           asinh +0.0755 (0.61x) [+0.006,+0.169] 3/5           soft +0.1095 (0.79x) [+0.039,+0.216] 5/5
+    ADAPT-L2 on zraw, P7/14/21          +0.0345 / +0.0345 / +0.0378 (0.30x to 0.32x), fold CIs span zero
+    controls (as in L68)                gibbs_T +0.0088 (0.11x)   uniform128 +0.0135 (0.14x)   randH_fixed +0.0230 (0.24x)   randH_adaptL2 +0.0337 (0.34x)
+    selection readout                   zraw +0.0885 (0.55x) [+0.048,+0.145] 5/5; soft +0.0970 (0.60x) 5/5; asinh +0.0464 (0.32x);
+                                        zraw_Tmatch +0.0132 (0.11x); asinh_Tmatch -0.0005; soft_Tmatch -0.0012; ADAPT-L2 zraw P21 +0.1034 (0.67x) [+0.039,+0.171] 4/5
+    alpha subsets, zraw_Tmatch          alpha = 1 (folds 0, 3, 4; n = 78) -0.0121 (0.11x);  alpha = 0.25 (folds 1, 2; n = 48) +0.0285 (0.30x)
+    alpha subsets, zraw                 alpha = 1 +0.1521 (0.73x, iid SE 0.074);  alpha = 0.25 +0.0292 (0.24x)
+    (the alpha = 0.25 subset spans TWO folds; its fold-clustered CI rests on two clusters and is not quoted)
+
+H3d as registered: "helps" did not fire (no Tmatch contrast is negative past its MDE);
+"null" FIRED for zraw_Tmatch (+0.0034, 0.04x, fold CI spanning zero) and for the asinh and
+soft Tmatch arms; "harmful" did NOT fire for the unmatched zraw (+0.1053 is 0.77x its MDE
+of 0.1374; the fold CI [+0.037, +0.211] excludes zero on 5/5 folds, W/L 54/72, median +0.030,
+concentration at the 43rd percentile of the uniform-effect null): the Type-M zone. The
+direction was the pre-registered one (worse). The same holds for asinh (0.69x) and soft
+(0.81x): three variants, one direction, none past its MDE. Power: the built-chain
+comparisons resolve 0.08 A (Tmatch arms) to 0.14 A (unmatched arms); the Tmatch nulls are
+underpowered below those figures, and the unmatched effects sit at 0.6 to 0.8 of them.
+
+### The property half (no native)
+
+    H3a  distinct trained states per cell (symmetric KL > 0.01 nats, greedy, pdb order)
+           fixed_zrank_it50          alpha=1: 14/78   alpha=0.25: 26/48     PREDICTED at most 3 -> FALSIFIED (> 10)
+           fixed_zraw_it50           alpha=1: 32/78   alpha=0.25: 48/48     PREDICTED >= 100/126: missed (80); the falsifier (< 60) did not fire
+           fixed_zraw_Tmatch_it50    alpha=1: 78/78   alpha=0.25: 46/48     124/126
+           fixed_asinh_it50 54/78, 47/48;  fixed_soft_it50 24/78, 48/48
+         pairwise symmetric KL between targets' trained states, alpha = 1: zrank median 0.010,
+         p90 0.060, max 0.54 nats; zraw_Tmatch median 1.34, p90 6.77, max 12.2; zraw median 0.20,
+         p90 13.4 (collapsed states coincide: a point mass at rank 0 is the same vector on every target)
+    H3b  distinct ADAPT-L2 sequences per cell
+           zrank   alpha=1: 58/78 (2.6 distinct ops per run)   alpha=0.25: 38/48 (13.7)   PREDICTED at most 2 -> FALSIFIED (> 10)
+           zraw    alpha=1: 78/78 (8.1)                         alpha=0.25: 48/48 (8.4)    PREDICTED > 40 -> held
+    H3c  Gibbs entropy at T = 0.3: zrank 4.914 bits on every target; zraw mean 3.10 [0.01, 5.99];
+         asinh 4.28; soft 2.83. PREDICTED below 3 for zraw: missed by 0.1 bits; the direction (sharper) holds.
+         Matched temperatures: zraw T' mean 0.565 [0.10, 1.13]; asinh 0.401; soft 0.616.
+         KL(Gibbs || product): zrank max 8e-4; zraw mean 0.050 max 0.263; asinh 0.035 / 0.174; soft 0.047 / 0.214.
+    trained-state entropy (bits): zrank 5.91 [5.42, 6.41]; zraw 2.81 [0.03, 6.87]; zraw_Tmatch 5.19 [1.55, 6.52];
+         asinh 3.42; soft 2.60; ADAPT-L2 on zraw 4.16.
+
+Why the zrank predictions failed, from the records. E_zrank differs from the ideal ladder by
+up to 0.041 (1.18% of range; identical on 1 of 126), as S25 L17 said; I predicted that a
+1% spectrum difference leaves the 50-step Adam trajectory within 0.01 nats, and it does not:
+the median pairwise difference is 0.010 nats and the tail reaches 0.54. And the ADAPT argmax
+at alpha = 1 is taken over pool gradients of order 1e-3, so a 1% spectrum change reorders
+them; 57 distinct operator SETS on 78 targets, the commonest ({Y_0, Y_3}) on 10. "Two trained
+states in the deployment" (S25) is right about the spectrum and about what the endpoint sees;
+at a 0.01-nat resolution the trained distributions are not two, they are a tight family
+(median 0.010 nats apart) against zraw_Tmatch's 1.34 nats. Both counts are recorded; the
+prediction is not softened.
+
+### The L17 answer
+
+The Hamiltonian can be made target-dependent while preserving the CVaR selection semantics,
+and at the deployed entropy it makes the trained states target-dependent (124 of 126
+distinct, 1.34 nats apart against 0.010). The emitted structure does not change: +0.003 A,
+0.04x MDE. Without the entropy match the same target-dependent gaps sharpen the state (2.8
+bits against 5.9) and the built chain is worse by +0.09 to +0.11 A on all three variants with
+fold CIs above zero on 5/5 folds, at 0.7 to 0.8x the MDE. The readout responds to the entropy
+of the weights (S25 section 6.2: rho -0.74) and to nothing else that was varied here; the
+Hamiltonian's spectrum was the last untried lever on the selector's side and it moves the
+answer only through that entropy. IDEA_l17 is closed: measured, not helpful. No cell of
+VQE_LFO changes.
