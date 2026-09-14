@@ -1988,3 +1988,59 @@
 2026-09-14T04:34:47 SAMPLE   ram=70.2% (11.76GB used, 4.99GB free) cpu=10.3% (15s mean 8.0%) jobs=1 amber=0 queued=0 lanes=0
 2026-09-14T04:35:47 SAMPLE   ram=80.8% (13.53GB used, 3.22GB free) cpu=82.5% (15s mean 41.3%) jobs=1 amber=0 queued=0 lanes=0
 2026-09-14T04:36:47 SAMPLE   ram=82.6% (13.84GB used, 2.91GB free) cpu=3.7% (15s mean 4.6%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:37:47 SAMPLE   ram=82.6% (13.84GB used, 2.91GB free) cpu=39.5% (15s mean 32.6%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:38:47 SAMPLE   ram=79.2% (13.27GB used, 3.48GB free) cpu=12.3% (15s mean 11.1%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:39:32 WARN     0 lanes recorded in lanes.json; the campaign requires 4-8
+2026-09-14T04:39:47 SAMPLE   ram=79.7% (13.35GB used, 3.40GB free) cpu=3.9% (15s mean 9.5%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:40:47 SAMPLE   ram=78.0% (13.07GB used, 3.68GB free) cpu=6.0% (15s mean 5.0%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:41:47 SAMPLE   ram=77.7% (13.01GB used, 3.74GB free) cpu=2.5% (15s mean 4.8%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:42:47 SAMPLE   ram=78.1% (13.09GB used, 3.66GB free) cpu=3.8% (15s mean 3.9%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:43:47 SAMPLE   ram=78.0% (13.06GB used, 3.69GB free) cpu=7.6% (15s mean 6.2%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:44:47 SAMPLE   ram=77.7% (13.02GB used, 3.73GB free) cpu=5.1% (15s mean 6.7%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:45:47 SAMPLE   ram=78.4% (13.12GB used, 3.62GB free) cpu=5.9% (15s mean 5.1%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:46:47 SAMPLE   ram=77.5% (12.98GB used, 3.77GB free) cpu=7.5% (15s mean 5.8%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:47:47 SAMPLE   ram=77.5% (12.98GB used, 3.77GB free) cpu=9.9% (15s mean 7.4%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:48:47 SAMPLE   ram=77.9% (13.04GB used, 3.71GB free) cpu=7.0% (15s mean 5.6%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:49:32 WARN     0 lanes recorded in lanes.json; the campaign requires 4-8
+2026-09-14T04:49:47 SAMPLE   ram=77.2% (12.94GB used, 3.81GB free) cpu=6.6% (15s mean 6.3%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:50:47 SAMPLE   ram=77.5% (12.98GB used, 3.77GB free) cpu=6.6% (15s mean 5.4%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:51:47 SAMPLE   ram=77.4% (12.96GB used, 3.79GB free) cpu=8.2% (15s mean 8.3%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:52:47 SAMPLE   ram=77.6% (12.99GB used, 3.75GB free) cpu=17.7% (15s mean 14.0%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:53:47 SAMPLE   ram=78.5% (13.15GB used, 3.60GB free) cpu=7.1% (15s mean 7.0%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:54:47 SAMPLE   ram=78.2% (13.10GB used, 3.65GB free) cpu=5.5% (15s mean 6.1%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:55:47 SAMPLE   ram=78.8% (13.19GB used, 3.56GB free) cpu=7.3% (15s mean 7.7%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:56:47 SAMPLE   ram=78.5% (13.14GB used, 3.61GB free) cpu=8.4% (15s mean 7.5%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:57:47 SAMPLE   ram=78.3% (13.12GB used, 3.63GB free) cpu=3.4% (15s mean 3.8%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:58:47 SAMPLE   ram=78.7% (13.19GB used, 3.56GB free) cpu=27.0% (15s mean 20.1%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T04:59:32 WARN     0 lanes recorded in lanes.json; the campaign requires 4-8
+2026-09-14T04:59:47 SAMPLE   ram=78.3% (13.12GB used, 3.63GB free) cpu=5.3% (15s mean 5.6%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:00:47 SAMPLE   ram=78.9% (13.21GB used, 3.54GB free) cpu=5.7% (15s mean 5.9%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:01:47 SAMPLE   ram=78.5% (13.14GB used, 3.61GB free) cpu=9.0% (15s mean 6.0%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:02:47 SAMPLE   ram=78.3% (13.11GB used, 3.64GB free) cpu=3.3% (15s mean 6.4%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:03:47 SAMPLE   ram=79.0% (13.22GB used, 3.52GB free) cpu=7.1% (15s mean 6.8%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:04:47 SAMPLE   ram=77.9% (13.05GB used, 3.70GB free) cpu=7.2% (15s mean 6.9%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:05:47 SAMPLE   ram=78.2% (13.09GB used, 3.66GB free) cpu=8.0% (15s mean 7.3%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:06:47 SAMPLE   ram=78.1% (13.08GB used, 3.67GB free) cpu=8.7% (15s mean 7.5%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:07:47 SAMPLE   ram=78.0% (13.07GB used, 3.68GB free) cpu=6.8% (15s mean 6.5%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:08:47 SAMPLE   ram=78.1% (13.09GB used, 3.66GB free) cpu=5.1% (15s mean 5.2%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:09:32 WARN     0 lanes recorded in lanes.json; the campaign requires 4-8
+2026-09-14T05:09:47 SAMPLE   ram=74.0% (12.40GB used, 4.35GB free) cpu=9.4% (15s mean 7.3%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:10:47 SAMPLE   ram=74.3% (12.45GB used, 4.30GB free) cpu=3.0% (15s mean 6.8%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:11:47 SAMPLE   ram=74.0% (12.39GB used, 4.36GB free) cpu=8.4% (15s mean 6.8%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:12:47 SAMPLE   ram=74.1% (12.42GB used, 4.33GB free) cpu=5.7% (15s mean 5.7%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:13:47 SAMPLE   ram=74.0% (12.40GB used, 4.35GB free) cpu=6.3% (15s mean 6.8%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:14:47 SAMPLE   ram=72.4% (12.13GB used, 4.62GB free) cpu=5.7% (15s mean 5.5%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:15:47 SAMPLE   ram=73.1% (12.24GB used, 4.50GB free) cpu=6.1% (15s mean 5.9%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:16:47 SAMPLE   ram=72.6% (12.17GB used, 4.58GB free) cpu=7.0% (15s mean 7.9%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:17:47 SAMPLE   ram=72.8% (12.20GB used, 4.55GB free) cpu=9.1% (15s mean 8.4%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:18:47 SAMPLE   ram=73.4% (12.30GB used, 4.45GB free) cpu=6.5% (15s mean 7.4%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:19:32 WARN     0 lanes recorded in lanes.json; the campaign requires 4-8
+2026-09-14T05:19:47 SAMPLE   ram=72.5% (12.14GB used, 4.61GB free) cpu=9.6% (15s mean 6.0%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:20:47 SAMPLE   ram=72.4% (12.13GB used, 4.62GB free) cpu=10.3% (15s mean 7.2%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:21:47 SAMPLE   ram=72.0% (12.06GB used, 4.69GB free) cpu=6.3% (15s mean 6.0%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:22:47 SAMPLE   ram=72.2% (12.09GB used, 4.66GB free) cpu=2.2% (15s mean 6.2%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:23:47 SAMPLE   ram=72.5% (12.14GB used, 4.61GB free) cpu=7.3% (15s mean 8.6%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:24:47 SAMPLE   ram=74.2% (12.44GB used, 4.31GB free) cpu=16.3% (15s mean 14.3%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:25:47 SAMPLE   ram=74.3% (12.45GB used, 4.30GB free) cpu=7.3% (15s mean 8.0%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:26:47 SAMPLE   ram=74.0% (12.40GB used, 4.35GB free) cpu=12.2% (15s mean 9.8%) jobs=1 amber=0 queued=0 lanes=0
+2026-09-14T05:27:47 SAMPLE   ram=80.8% (13.54GB used, 3.21GB free) cpu=8.8% (15s mean 11.5%) jobs=1 amber=0 queued=0 lanes=0

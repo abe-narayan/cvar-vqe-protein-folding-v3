@@ -5958,3 +5958,16 @@ L135, L136, L140, this), four artefacts (`a_reproduce_head.json`, `a_c26_phi_mae
 
 ---
 
+## L145 -- POST-CLOSE NOTE: THE HOST KILLED THE GOVERNOR AT 05:28 FOR LOW MEMORY; THE ONE REMAINING JOB WAS STOPPED SO NOTHING RUNS UNSUPERVISED (2026-09-14 05:28, coordinator)
+
+After the close (L142) the harness stopped the governor v2.4 background process at about 05:28
+("the system is running low on memory"; the box at 84% from the user's own load, the campaign
+holding 0.3 GB). The only registered job, lane Q's second `a2_dla_a1` run (a re-run of the
+diagnostic already ledgered as L138 from its first, complete run), was terminated by the
+coordinator so that nothing of the campaign runs without supervision; its partial output is
+not a result and changes nothing in L138. No governor is running; the campaign's processes are
+all gone. To restart supervision for any future work: `python s26/governor.py` in its own
+terminal, then `s26/jobrun.py` as the README describes.
+
+---
+
