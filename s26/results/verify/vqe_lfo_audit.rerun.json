@@ -1,0 +1,40 @@
+{
+ "audit": "vqe_lfo_audit",
+ "script": "verify/vqe_lfo_audit.py",
+ "argv": [],
+ "tag": "CPU",
+ "est_ram_gb": 0.2,
+ "cost": "light",
+ "note": "reads s8/integrate_vqe.json; no model, no pipeline",
+ "tracked": [
+  "vqe_lfo_audit.json"
+ ],
+ "started": "2026-09-13T22:07:20",
+ "wall_s": 0.2,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\vqe_lfo_audit.json",
+   "written": "s26\\results\\verify\\verify__vqe_lfo_audit.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "vqe_lfo_audit.json": {
+   "n_tracked_leaves": 32,
+   "n_fresh_leaves": 32,
+   "identical": 32,
+   "close": 0,
+   "different": 0,
+   "run_property_different": 0,
+   "added": [],
+   "removed": [],
+   "diffs": [],
+   "run_property_diffs": [],
+   "n_added": 0,
+   "n_removed": 0,
+   "verdict": "IDENTICAL",
+   "fresh_path": "s26\\results\\verify\\verify__vqe_lfo_audit.json"
+  }
+ }
+}
