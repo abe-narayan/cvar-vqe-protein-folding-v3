@@ -3059,3 +3059,18 @@ appended operators inert; nothing in the A1 null depends on the count (P7, P14, 
 
 ---
 
+## L83 -- GOVERNOR v2.3 ADOPTS SUSPENSIONS MADE BEFORE ITS START; THE LAUNCH CAP IS NOW A FILE AND IS RAISED TO SIX (2026-09-13 22:21, coordinator)
+
+Two throttles found at 22:20 with the box at 78% RAM and 3.7 GB free: (1) `a3_build` had been
+suspended by the v2.1 governor and was never resumed by v2.2, whose suspended stack starts
+empty on a restart; v2.3 adopts any stopped registered job onto its stack on every tick and
+logs ADOPT, so it resumes under the normal rule. (2) Eight launcher waiters (P esm8m2 and mix,
+E report_check5, A strain_vs_spread, I slow_equivalence and slow_integration, Q a4_var_boot and
+a2_dla_a1) sat behind jobrun's fixed cap of four with room on the box. `s26/jobrun.py` v2.3
+reads the cap from `s26/launch_cap.json` on every wait tick (coordinator-only file); it is set
+to 6 now. Waiters started before this edit keep the old fixed cap of four until they launch;
+every new waiter uses the file. The memory rules (est-ram + 0.5 GB free; the 93% ceiling; the
+stall breaker) are unchanged and still bind before the cap does.
+
+---
+

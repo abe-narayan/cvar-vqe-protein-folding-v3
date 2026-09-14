@@ -1,0 +1,4 @@
+{
+ "max_concurrent": 6,
+ "note": "coordinator-only; raised from 4 at 22:25 with 3.7 GB free (ledger L83)"
+}

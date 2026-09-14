@@ -37,6 +37,14 @@ CEILING, MAX_AMBER = 93.0, 2
 #: CPU_START, or while MAX_CONCURRENT jobs are already registered. Five lanes launching at
 #: once put the 8-core box at 98.7% CPU on 2026-09-13 00:37 and the governor thrashed.
 CPU_START, MAX_CONCURRENT = 85.0, 4
+CAP_FILE = HERE / "launch_cap.json"   # v2.3: {"max_concurrent": n} read on every wait tick
+
+
+def _cap() -> int:
+    try:
+        return int(json.loads(CAP_FILE.read_text(encoding="utf-8"))["max_concurrent"])
+    except Exception:
+        return MAX_CONCURRENT
 
 
 def _state():
@@ -126,7 +134,7 @@ def main() -> int:
         n_reg = _live_registrations()
         amber_block = tag == "AMBER" and _running_amber() >= MAX_AMBER
         avail = float(st.get("ram_avail_gb", 99.0)) if st else 99.0
-        crowded = (not stale) and (ram > CEILING or cpu > CPU_START or n_reg >= MAX_CONCURRENT
+        crowded = (not stale) and (ram > CEILING or cpu > CPU_START or n_reg >= _cap()
                                    or avail < a.est_ram + 0.5)
         #: v2.2 (ledger L40): a stale snapshot means no governor is watching; a job that may
         #: need more than 0.5 GB does not start unsupervised. Small jobs still may. And a job
@@ -138,13 +146,13 @@ def main() -> int:
                       file=sys.stderr, flush=True)
         if not crowded and not amber_block:
             time.sleep(random.uniform(0.2, 3.0))
-            if _live_registrations() < MAX_CONCURRENT and not (
+            if _live_registrations() < _cap() and not (
                     tag == "AMBER" and _running_amber() >= MAX_AMBER):
                 break
             continue
         if waited == 0.0 or waited % 60.0 == 0.0:
             why = ("AMBER slot" if amber_block else
-                   f"box at ram {ram:.1f}% cpu(15s) {cpu:.1f}% jobs {n_reg}/{MAX_CONCURRENT}")
+                   f"box at ram {ram:.1f}% cpu(15s) {cpu:.1f}% jobs {n_reg}/{_cap()}")
             print(f"jobrun: {a.name} waiting for {why} ({waited:.0f}s so far)",
                   file=sys.stderr, flush=True)
         time.sleep(5.0)

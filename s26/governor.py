@@ -352,6 +352,15 @@ def main() -> None:
                         f"{MIN_LANES}-{MAX_LANES}")
             last_lane_warn = t0
 
+        # Adopt suspensions this governor did not make (v2.3, ledger L83): after a restart the
+        # stack is empty, and a job the previous governor suspended would otherwise never
+        # be resumed. Any stopped job not on the stack is put on it now.
+        for j in jobs:
+            if j["_suspended"] and j["name"] not in suspended_stack:
+                suspended_stack.append(j["name"])
+                suspended_at.setdefault(j["name"], 0.0)
+                log("ADOPT", f"{j['name']} was suspended before this governor started; adopted")
+
         # AMBER cap on direct-launched jobs: suspend any beyond the second, newest first.
         amber_live = [j for j in jobs if str(j.get("tag", "")).upper() == "AMBER" and not j["_suspended"]]
         while len(amber_live) > MAX_AMBER:
