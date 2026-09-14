@@ -213,3 +213,28 @@ dg_ent_max -0.27, aa_C -0.27, dg_multimodal +0.25, con_lr +0.23; rho(ss_H, d) +0
 ORACLE stratum: FAIL18 d_tors +0.463 (the torsion predictor wins), other108 -0.725.
 
 Proposal B verdict per the campaign rule: REPLACE (`s26/PROPOSAL_B.md`).
+
+## 11. C4, the delivery file, and the ladder's remaining rungs (2026-09-14 03:20; ledger L110, L112-L116)
+
+- C4 (`s26/results/p_c4.json`): twelve m* routers and six s* routers on six feature blocks;
+  none clears its MDE; eleven m routers point the harmful way (largest +0.068, 0.91x, worse
+  than 96% of the permutation null); the S22 feature set reproduces ~0 through the same
+  harness; every s router predicts s* with the wrong sign (rho -0.10 to -0.21). DEMONSTRATED
+  (D11): the seventeenth router construction lands where the first five did.
+- Delivery (`s26/results/p_best_rung_chains.json`, production emission, mean rmsd_arm 3.2148,
+  126/126 complete, torsions in unwrapped radians): the best rung is the shipped prior.
+  Cross-check `s26/results/p_best_rung_chains_rebuild_basis.json` (this lane's re-projection,
+  mean 3.2126): per-target |rmsd_arm| difference max 0.171, mean 0.011, 120/126 differ by more
+  than 1e-6, the L57 projection sensitivity.
+- raw: folds 0-2 of 5 trained (79 min per fold at peak 1.94-1.96 GB); fold 3 queued at 03:00
+  behind the job cap; the rung cannot be evaluated before the 04:30 close and is reported as
+  NOT RUN (its input ablation is bracketed by pca32f and pca128, both null).
+- C5: `p_c5_run` started 03:05 (alpha 0.5 only, declared in the commit); result in the ledger
+  when it lands. Coherence rungs (PREREG_coherence, `p_coh.py`): NOT RUN, no slot before close.
+
+### What I did not do and why (final)
+- No replication runs (second seed, reversed fold order): no rung cleared its MDE with 5/5
+  folds in the improving direction, so the replication rule never triggered.
+- No `attn` rung (IDEA_better_prior_inputs): the box never emptied.
+- No coherence rungs, no raw evaluation: the job cap (6-7 concurrent jobs from five lanes) and
+  79-minute raw folds consumed the window.
