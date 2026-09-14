@@ -4446,3 +4446,87 @@ PREREG: the 4-draw control (declared in addendum 1); the `fallback` flag (a targ
 peptide-derived member and w = 0 falls back to uniform) fired on 0 targets at the chosen weights
 (w = 0.5 or 0 with at least one peptide member on every target: 113 have a terminal, 30 a whole,
 every target an interior or terminal member by the census).
+
+## L110 -- C4 FIRST BLOCK (ALL 25 NEW FEATURES): THE SIXTH AND SEVENTH m* ROUTERS AND THE SECOND s* ROUTER ARE NULL-TO-HARMFUL; NEW FEATURE PROVENANCE DOES NOT MATTER, AS S23 L7 SAID (2026-09-14 01:27, lane P)
+
+`s26/p_c4.py run` (job `p_c4_run`, running; `s26/results/p_c4.json` is rewritten after every
+block), pre-registered in `s26/PREREG_C4.md`. Anchor: the rebuilt m = 75 cloud reproduces
+`s12/results/agg_surface.json` and `s23/results/errdecomp.json` per target at 0.00e+00. Nested
+leave-fold-out ridge (`s26/p_stats.py`), 200-draw label permutation null for m, 100 for s.
+Features: pax_* (principal-axis spread of the top-75 cloud), sim_* (retrieval-score entropy and
+gaps), dg_* (posterior bin entropy), con_* (ESM contact-map statistics), 25 in all, jointly.
+
+```
+  C4 m-router A [new_all] routed - fixed m=75 (POINT CLOUD, persisted surface)
+    a 3.1168 (med 2.9363)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0684   median +0.0000   SE 0.0269   MDE 0.0754   effect/MDE +0.91
+    iid  CI95 [+0.0169, +0.1236]
+    fold CI95 [+0.0023, +0.1592]   folds same sign 3/5   per-fold 0:+0.105 1:+0.238 2:-0.004 3:+0.057 4:-0.022
+    40W/61L/25T   worst degradation +1.6752 (7N2I)   p90 +0.3081   power 0.72  Type-M 1.18
+    concentration: drop-top10 +0.1082 vs uniform-effect null p10/p50/p90 +0.0745/+0.1061/+0.1412 -> pctile 0.533
+    VERDICT: NOT MEASURED (|effect| 0.0684 <= its own MDE 0.0754, 0.91x)
+    perm null mean +0.0265 p05 +0.0003  p_perm 0.960
+  C4 m-router A [new_all] routed - fixed m=75 (BUILT CHAIN, same projection both sides)
+    a 3.2834 (med 3.1928)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0707   median +0.0000   SE 0.0303   MDE 0.0849   effect/MDE +0.83
+    iid  CI95 [+0.0133, +0.1340]
+    fold CI95 [+0.0141, +0.1418]   folds same sign 4/5   per-fold 0:+0.091 1:+0.216 2:-0.006 3:+0.063 4:+0.012
+    40W/61L/25T   worst degradation +2.1542 (7N2I)   p90 +0.4232   power 0.65  Type-M 1.25
+    concentration: drop-top10 +0.1164 vs uniform-effect null p10/p50/p90 +0.0790/+0.1138/+0.1556 -> pctile 0.534
+    VERDICT: NOT MEASURED (|effect| 0.0707 <= its own MDE 0.0849, 0.83x)
+  C4 m-router B [new_all] routed - fixed m=75 (POINT CLOUD, persisted surface)
+    a 3.0751 (med 2.9202)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0267   median +0.0035   SE 0.0169   MDE 0.0474   effect/MDE +0.56
+    iid  CI95 [-0.0064, +0.0594]
+    fold CI95 [+0.0120, +0.0457]   folds same sign 5/5   per-fold 0:+0.016 1:+0.036 2:+0.019 3:+0.065 4:+0.005
+    44W/64L/18T   worst degradation +0.7631 (8HVS)   p90 +0.2352   power 0.35  Type-M 1.67
+    concentration: drop-top10 +0.0623 vs uniform-effect null p10/p50/p90 +0.0419/+0.0611/+0.0805 -> pctile 0.530
+    VERDICT: NOT MEASURED (|effect| 0.0267 <= its own MDE 0.0474, 0.56x)
+    perm null mean +0.0192 p05 +0.0065  p_perm 0.865
+  C4 m-router B [new_all] routed - fixed m=75 (BUILT CHAIN, same projection both sides)
+    a 3.2364 (med 3.0593)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0237   median +0.0000   SE 0.0193   MDE 0.0542   effect/MDE +0.44
+    iid  CI95 [-0.0137, +0.0606]
+    fold CI95 [+0.0045, +0.0529]   folds same sign 5/5   per-fold 0:+0.001 1:+0.002 2:+0.025 3:+0.082 4:+0.013
+    48W/60L/18T   worst degradation +0.8722 (8HVS)   p90 +0.2487   power 0.23  Type-M 2.07
+    concentration: drop-top10 +0.0616 vs uniform-effect null p10/p50/p90 +0.0391/+0.0607/+0.0841 -> pctile 0.520
+    VERDICT: NOT MEASURED (|effect| 0.0237 <= its own MDE 0.0542, 0.44x)
+  C4 s-router [new_all] routed - s=1 (point cloud)
+    a 3.0614 (med 2.8817)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0130   median +0.0138   SE 0.0147   MDE 0.0412   effect/MDE +0.32
+    iid  CI95 [-0.0150, +0.0409]
+    fold CI95 [-0.0161, +0.0529]   folds same sign 3/5   per-fold 0:+0.028 1:+0.085 2:-0.007 3:+0.005 4:-0.031
+    58W/68L/0T   worst degradation +0.6981 (5V5B)   p90 +0.2071   power 0.14  Type-M 2.78
+    concentration: drop-top10 +0.0385 vs uniform-effect null p10/p50/p90 +0.0196/+0.0380/+0.0576 -> pctile 0.517
+    VERDICT: NOT MEASURED (|effect| 0.0130 <= its own MDE 0.0412, 0.32x)
+    rho(pred, s*) -0.203 ; perm null mean +0.0089
+```
+
+Reading. The m* oracle over the 15-rung ladder is real (S22 L4: -0.239 split-half) and the
+routers point the HARMFUL way: router A (multi-output ridge, argmin of the prediction) +0.068 A
+on the point cloud at 0.91x its MDE with a median of 0.000 and worse than 96% of the permutation
+null (+0.027), and +0.071 on the built chain through the same projection (0.83x); router B
+(ridge on log m*, nearest rung) +0.027 (0.56x), null +0.019, p_perm 0.865. The s* router
+predicts s* with rho -0.203 (the wrong sign) and costs +0.013 (0.32x MDE) against s = 1.
+Neither m router clears its MDE and none is significantly harmful in the fold CI, so
+PREREG_C4's stop rule (a fold CI above zero) is not triggered and the remaining blocks run;
+their entries follow as the job writes them. The finding is the one the record predicted (S22
+L7/L10, S23 L3/L6/L7): a per-target quantity that transfers split-half is invisible to a
+linear router on any native-free feature set at n = 126, whatever the features describe.
+
+---
+## L111 -- LANE I STARVED FOR 75 MINUTES BY THE OTHER LANES' RELAUNCH CADENCE; CAP RAISED TO SEVEN AND NON-CRITICAL LAUNCHES HELD SO THE INTEGRATION TIER, THE FROZEN REBUILD AND THE VERIFY CHAIN CAN RUN (2026-09-14 01:33, coordinator)
+
+jobrun has no priority: a lane that relaunches within seconds of a job finishing wins the
+freed slot, and lane I's three waiters (pytest_slow_integration2, resultslab_rebuild, the
+20-audit verify chain gated behind them) lost every race since 00:17. Ruling: the file cap is
+raised from six to seven; lane W holds its Part B retrains after the one now training and
+launches nothing new until lane I's three items are registered; lane Q holds the A1
+replication until then (A3 keeps running); lane PH has nothing new to launch; lane P keeps
+its critical path (raw folds, C4, C5, the verdicts). Memory still binds: the integration tier
+needs 2.3 GB free and the rebuild 1.7 GB under jobrun's rule, so lane W's retrains (1.3 GB)
+stay held until the rebuild has run. If the three items cannot run by 03:30, lane I closes
+with them recorded as not run and the reason.
+
+---
+

@@ -1,4 +1,4 @@
 {
- "max_concurrent": 6,
- "note": "coordinator-only; raised from 4 at 22:25 with 3.7 GB free (ledger L83)"
+ "max_concurrent": 7,
+ "note": "coordinator-only; raised 6->7 at 01:05 so lane I's three items can enter (ledger L108); other lanes hold non-critical launches"
 }
