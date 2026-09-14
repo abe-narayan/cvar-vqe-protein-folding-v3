@@ -1273,3 +1273,175 @@ Each resumes from its checkpoint; none restarts.
 
 ---
 
+## L43 -- STERIC REJECT, POINT CLOUD: THE FALSIFIER FIRED THE OTHER WAY. AT 1e4 THE REFILL ARM IS +0.228 A WORSE THAN THE SHIPPED TOP-75 AND +0.167 WORSE THAN REJECTING THE SAME COUNT AT RANDOM (5/5 FOLDS); THE DOSE IS MONOTONE AND ITS LIMIT IS THE ANCHOR (2026-09-13, PH)
+
+`s26/ph_reject.py cloud` then `report`, `s26/results/ph_reject_cloud.json` (complete 126/126),
+`s26/results/ph_reject_report.json`, log `s26/results/ph_reject_report_cloud.log`; job
+`s26/jobs_done/ph_reject_cloud2.json` (exit 0, 170 s for the last 10 cells, peak RSS 0.041 GB;
+the first 116 cells came from `ph_reject_cloud`, killed with the governor by the host at about
+10:10, L40; the per-target cells made the restart lossless). Pre-registered in
+`s26/PREREG_amber_reject.md` sections 3 to 5 and addendum 1; the moved-subset secondary and the
+R-first reading were fixed by the coordinator at 09:10 (findings section 2.3) before any RMSD
+was read.
+
+BASIS: POINT CLOUD on both sides (`I.coordinate_average` of the retained windows, scored ORACLE
+against `nat_ca`; the anchor reproduces the production `rmsd_avg` 3.0483 to 1e-6 on every
+target). The built-chain twin (`rmsd_arm` basis) is job `ph_reject_chain`, running. Arms: R =
+reject e_amber > T from the shipped top-75 and refill from the next-ranked survivors to m = 75
+(the PRIMARY reading; it empties only when the whole pool has no survivor: 8 targets at 1e4,
+which fall back to the anchor and count as ties); S = reject without refill (empties 11 sets at
+1e4, same fallback). Controls matched in the operator's space: RANDR / RANDS reject the SAME
+COUNT at random (16 draws, mean); PERMR / PERMS apply the same threshold to a permuted energy
+vector (16 permutations). Twelve `ST.fmt` blocks verbatim, primary threshold 1e4:
+
+      point_cloud [all, n=126] R@1e4 minus anchor (negative = arm better)
+        a 3.2760 (med 3.1167)   b 3.0483 (med 2.8373)   n=126
+        effect +0.2276   median +0.0027   SE 0.0693   MDE 0.1941   effect/MDE +1.17
+        iid  CI95 [+0.0950, +0.3672]
+        fold CI95 [+0.1466, +0.3232]   folds same sign 5/5   per-fold 0:+0.278 1:+0.076 2:+0.195 3:+0.398 4:+0.199
+        49W/67L/10T   worst degradation +4.1545 (8T61)   p90 +1.2819   power 0.91  Type-M 1.06
+        concentration: drop-top10 +0.3256 vs uniform-effect null p10/p50/p90 +0.2365/+0.3216/+0.4116 -> pctile 0.521
+        VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.06x]
+      point_cloud [all, n=126] R@1e4 minus RANDR@1e4 (matched control)
+        a 3.2760 (med 3.1167)   b 3.1088 (med 3.0266)   n=126
+        effect +0.1672   median +0.0128   SE 0.0473   MDE 0.1326   effect/MDE +1.26
+        iid  CI95 [+0.0799, +0.2639]
+        fold CI95 [+0.0699, +0.2793]   folds same sign 5/5   per-fold 0:+0.156 1:+0.007 2:+0.191 3:+0.384 4:+0.113
+        47W/77L/2T   worst degradation +3.2867 (8T61)   p90 +0.7875   power 0.94  Type-M 1.03
+        concentration: drop-top10 +0.2306 vs uniform-effect null p10/p50/p90 +0.1709/+0.2276/+0.2895 -> pctile 0.523
+        VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.03x]
+      point_cloud [all, n=126] R@1e4 minus PERMR@1e4 (matched control)
+        a 3.2760 (med 3.1167)   b 3.1707 (med 3.0234)   n=126
+        effect +0.1053   median +0.0031   SE 0.0385   MDE 0.1078   effect/MDE +0.98
+        iid  CI95 [+0.0350, +0.1821]
+        fold CI95 [+0.0187, +0.2000]   folds same sign 4/5   per-fold 0:+0.070 1:-0.063 2:+0.128 3:+0.274 4:+0.115
+        52W/66L/8T   worst degradation +2.6065 (9KAR)   p90 +0.6742   power 0.78  Type-M 1.14
+        concentration: drop-top10 +0.1610 vs uniform-effect null p10/p50/p90 +0.1131/+0.1602/+0.2120 -> pctile 0.509
+        VERDICT: NOT MEASURED (|effect| 0.1053 <= its own MDE 0.1078, 0.98x)
+      point_cloud [all, n=126] S@1e4 minus anchor (negative = arm better)
+        a 3.1563 (med 3.0432)   b 3.0483 (med 2.8373)   n=126
+        effect +0.1079   median +0.0147   SE 0.0287   MDE 0.0805   effect/MDE +1.34
+        iid  CI95 [+0.0542, +0.1679]
+        fold CI95 [+0.0647, +0.1528]   folds same sign 5/5   per-fold 0:+0.043 1:+0.054 2:+0.133 3:+0.193 4:+0.117
+        38W/75L/13T   worst degradation +1.7827 (8T61)   p90 +0.4359   power 0.96  Type-M 1.02
+        concentration: drop-top10 +0.1427 vs uniform-effect null p10/p50/p90 +0.1043/+0.1412/+0.1794 -> pctile 0.516
+        VERDICT: WORSE
+      point_cloud [all, n=126] S@1e4 minus RANDS@1e4 (matched control)
+        a 3.1563 (med 3.0432)   b 3.0854 (med 2.8491)   n=126
+        effect +0.0709   median +0.0096   SE 0.0254   MDE 0.0711   effect/MDE +1.00
+        iid  CI95 [+0.0235, +0.1229]
+        fold CI95 [+0.0317, +0.1087]   folds same sign 4/5   per-fold 0:-0.000 1:+0.040 2:+0.105 3:+0.133 4:+0.077
+        41W/72L/13T   worst degradation +1.5172 (8T61)   p90 +0.3281   power 0.80  Type-M 1.13
+        concentration: drop-top10 +0.1041 vs uniform-effect null p10/p50/p90 +0.0714/+0.1030/+0.1371 -> pctile 0.520
+        VERDICT: NOT MEASURED (|effect| 0.0709 <= its own MDE 0.0711, 1.00x)
+      point_cloud [all, n=126] S@1e4 minus PERMS@1e4 (matched control)
+        a 3.1563 (med 3.0432)   b 3.0809 (med 2.8611)   n=126
+        effect +0.0754   median +0.0054   SE 0.0274   MDE 0.0767   effect/MDE +0.98
+        iid  CI95 [+0.0253, +0.1312]
+        fold CI95 [+0.0311, +0.1255]   folds same sign 5/5   per-fold 0:+0.020 1:+0.023 2:+0.113 3:+0.164 4:+0.063
+        49W/69L/8T   worst degradation +1.5869 (8T61)   p90 +0.3941   power 0.79  Type-M 1.13
+        concentration: drop-top10 +0.1137 vs uniform-effect null p10/p50/p90 +0.0787/+0.1119/+0.1493 -> pctile 0.526
+        VERDICT: NOT MEASURED (|effect| 0.0754 <= its own MDE 0.0767, 0.98x)
+      point_cloud [all, n=126] RANDR@1e4 minus anchor (negative = arm better)
+        a 3.1088 (med 3.0266)   b 3.0483 (med 2.8373)   n=126
+        effect +0.0605   median +0.0000   SE 0.0377   MDE 0.1056   effect/MDE +0.57
+        iid  CI95 [-0.0120, +0.1392]
+        fold CI95 [+0.0206, +0.0962]   folds same sign 5/5   per-fold 0:+0.121 1:+0.069 2:+0.004 3:+0.014 4:+0.086
+        62W/62L/2T   worst degradation +1.6061 (8FLP)   p90 +0.5672   power 0.36  Type-M 1.65
+        concentration: drop-top10 +0.1250 vs uniform-effect null p10/p50/p90 +0.0781/+0.1226/+0.1703 -> pctile 0.527
+        VERDICT: NOT MEASURED (|effect| 0.0605 <= its own MDE 0.1056, 0.57x)
+      point_cloud [all, n=126] RANDS@1e4 minus anchor (negative = arm better)
+        a 3.0854 (med 2.8491)   b 3.0483 (med 2.8373)   n=126
+        effect +0.0371   median +0.0023   SE 0.0090   MDE 0.0253   effect/MDE +1.47
+        iid  CI95 [+0.0214, +0.0556]
+        fold CI95 [+0.0229, +0.0495]   folds same sign 5/5   per-fold 0:+0.043 1:+0.014 2:+0.028 3:+0.060 4:+0.040
+        35W/78L/13T   worst degradation +0.6973 (9KAR)   p90 +0.1193   power 0.98  Type-M 1.01
+        concentration: drop-top10 +0.0450 vs uniform-effect null p10/p50/p90 +0.0330/+0.0445/+0.0570 -> pctile 0.519
+        VERDICT: WORSE
+      point_cloud [moved, n=116] R@1e4 minus anchor (negative = arm better)
+        a 3.2910 (med 3.1277)   b 3.0438 (med 2.8573)   n=116
+        effect +0.2473   median +0.0142   SE 0.0750   MDE 0.2101   effect/MDE +1.18
+        iid  CI95 [+0.1024, +0.3992]
+        fold CI95 [+0.1515, +0.3538]   folds same sign 5/5   per-fold 0:+0.278 1:+0.080 2:+0.244 3:+0.457 4:+0.206
+        49W/67L/0T   worst degradation +4.1545 (8T61)   p90 +1.3987   power 0.91  Type-M 1.05
+        concentration: drop-top10 +0.3564 vs uniform-effect null p10/p50/p90 +0.2617/+0.3505/+0.4495 -> pctile 0.526
+        VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.05x]
+      point_cloud [moved, n=116] R@1e4 minus RANDR@1e4 (matched control)
+        a 3.2910 (med 3.1277)   b 3.1149 (med 3.0689)   n=116
+        effect +0.1761   median +0.0170   SE 0.0507   MDE 0.1421   effect/MDE +1.24
+        iid  CI95 [+0.0825, +0.2822]
+        fold CI95 [+0.0809, +0.3007]   folds same sign 5/5   per-fold 0:+0.156 1:+0.017 2:+0.199 3:+0.439 4:+0.117
+        43W/73L/0T   worst degradation +3.2867 (8T61)   p90 +0.8178   power 0.93  Type-M 1.04
+        concentration: drop-top10 +0.2451 vs uniform-effect null p10/p50/p90 +0.1808/+0.2413/+0.3129 -> pctile 0.531
+        VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.04x]
+      point_cloud [moved, n=113] S@1e4 minus anchor (negative = arm better)
+        a 3.1525 (med 3.0824)   b 3.0321 (med 2.8563)   n=113
+        effect +0.1203   median +0.0233   SE 0.0319   MDE 0.0892   effect/MDE +1.35
+        iid  CI95 [+0.0601, +0.1875]
+        fold CI95 [+0.0668, +0.1862]   folds same sign 5/5   per-fold 0:+0.043 1:+0.057 2:+0.167 3:+0.246 4:+0.126
+        38W/75L/0T   worst degradation +1.7827 (8T61)   p90 +0.4649   power 0.97  Type-M 1.02
+        concentration: drop-top10 +0.1607 vs uniform-effect null p10/p50/p90 +0.1199/+0.1586/+0.2023 -> pctile 0.524
+        VERDICT: WORSE
+      point_cloud [moved, n=113] S@1e4 minus RANDS@1e4 (matched control)
+        a 3.1525 (med 3.0824)   b 3.0734 (med 2.8570)   n=113
+        effect +0.0790   median +0.0154   SE 0.0282   MDE 0.0790   effect/MDE +1.00
+        iid  CI95 [+0.0257, +0.1358]
+        fold CI95 [+0.0302, +0.1325]   folds same sign 4/5   per-fold 0:-0.000 1:+0.042 2:+0.132 3:+0.170 4:+0.083
+        41W/72L/0T   worst degradation +1.5172 (8T61)   p90 +0.3480   power 0.80  Type-M 1.12
+        concentration: drop-top10 +0.1172 vs uniform-effect null p10/p50/p90 +0.0815/+0.1153/+0.1524 -> pctile 0.531
+        VERDICT: NOT MEASURED (|effect| 0.0790 <= its own MDE 0.0790, 1.00x)
+
+All four thresholds, `[all, n=126]`, arm minus anchor and arm minus its matched random control:
+
+    1e3  R  vs anchor  +0.5317 (+1.75x MDE 0.3045)  fold [+0.4328, +0.6566]   36W/69L/21T  WORSE         | vs RANDR  +0.4611 (+1.87x)  fold [+0.3723, +0.6036]   WORSE
+    1e3  S  vs anchor  +0.1960 (+1.66x MDE 0.1182)  fold [+0.1347, +0.2330]   29W/71L/26T  WORSE         | vs RANDS  +0.1118 (+1.20x)  fold [+0.0583, +0.1424]   WORSE
+    1e4  R  vs anchor  +0.2276 (+1.17x MDE 0.1941)  fold [+0.1466, +0.3232]   49W/67L/10T  WORSE         | vs RANDR  +0.1672 (+1.26x)  fold [+0.0699, +0.2793]   WORSE
+    1e4  S  vs anchor  +0.1079 (+1.34x MDE 0.0805)  fold [+0.0647, +0.1528]   38W/75L/13T  WORSE         | vs RANDS  +0.0709 (+1.00x)  fold [+0.0317, +0.1087]   NOT MEASURED
+    1e5  R  vs anchor  +0.0929 (+0.66x MDE 0.1410)  fold [+0.0332, +0.1433]   58W/61L/7T   NOT MEASURED  | vs RANDR  +0.0416 (+0.44x)  fold [-0.0027, +0.0963]   NOT MEASURED
+    1e5  S  vs anchor  +0.0739 (+1.17x MDE 0.0634)  fold [+0.0385, +0.1077]   50W/67L/9T   WORSE         | vs RANDS  +0.0568 (+0.95x)  fold [+0.0264, +0.0871]   NOT MEASURED
+    1e6  R  vs anchor  +0.0662 (+0.51x MDE 0.1305)  fold [+0.0196, +0.1013]   56W/62L/8T   NOT MEASURED  | vs RANDR  +0.0297 (+0.30x)  fold [-0.0071, +0.0588]   NOT MEASURED
+    1e6  S  vs anchor  +0.0504 (+0.97x MDE 0.0517)  fold [+0.0261, +0.0717]   52W/64L/10T  NOT MEASURED  | vs RANDS  +0.0377 (+0.81x)  fold [+0.0139, +0.0590]   NOT MEASURED
+
+Threshold sweep (an order statistic): `ST.best_of_k_within` over the four thresholds, R: oracle
+per-target minimum -0.3368 A, split-half transfer -0.1470 (44%), k_eff 3.74; S: -0.1177,
+transfer -0.0556 (47%), k_eff 3.72. The transfer is negative because the sweep contains 1e6,
+which rejects least and so damages least: "the least harmful threshold transfers" is not a gain.
+R@1e6 is +0.066 against the anchor (0.51x MDE, NOT MEASURED) and S@1e6 +0.050 (0.97x).
+
+READING. (1) The falsifier did not clear; it fired the other way. At the primary threshold the
+refill arm R is WORSE than the shipped top-75 by +0.228 A [fold +0.147, +0.323], 49W/67L/10T,
+5/5 folds (1.17x MDE, Type-M zone: the size is an upper bound, the sign is measured), and WORSE
+than rejecting the same number at random and refilling with no energy judgment by +0.167
+[+0.070, +0.279], 5/5 folds (1.26x MDE, Type-M). The shrink arm S is worse than the anchor by
++0.108 [+0.065, +0.153], 1.34x MDE, measured; against its random twin +0.071 at exactly 1.00x
+MDE, not measured. Restricting to the targets the operator actually moved (the secondary,
+n = 116 / 113) changes nothing: R +0.247 and S +0.120, both WORSE; R vs RANDR +0.176, WORSE.
+(2) The dose is monotone: 1e3 (54.5 of 75 rejected) +0.532 A; 1e4 (40.1) +0.228; 1e5 (30.3)
++0.093 (0.66x MDE); 1e6 (23.3) +0.066 (0.51x). The less the reject does, the less it costs, and
+its limit is the anchor: S16 L27's k-ladder shape and S23 L5's mechanism (the members a physics
+score removes carry error that cancels in the average) through a third operator. (3) The
+matched controls say where the harm comes from. Rejecting the same COUNT at random and
+refilling (RANDR) costs +0.061 at 1e4 (0.57x MDE, not measured), so refilling from ranks 76 to
+147 is nearly free and the energy's CHOICE of what to reject costs the other +0.167. Rejecting
+the same count at random without refill (RANDS) costs +0.037 (1.47x MDE, measured): shrinking
+a 75-set to 35 at random costs 0.04 A and the energy's choice of which 40 costs 0.07 more. The
+permuted-energy controls sit between random and real (PERMR +0.122, PERMS +0.033) because a
+permuted single point rejects the same energies from other candidates. (4) Why: the census
+(L23) found 96.8% of the members the threshold condemns are condemned by a side-chain contact
+placed by the deterministic builder, and the retained set at 1e4 is +0.254 A more expanded in
+Rg than the anchor; the reject keeps expanded members and discards compact ones. S25's "AMBER
+selects expansion" (+1.10 A Rg on its own top-75) reproduced as a filter.
+
+POWER. Every arm-vs-anchor contrast at 1e3 and 1e4 is above its MDE with the fold CI excluding
+zero and 5/5 folds. At 1e5 and 1e6 R is 0.66x and 0.51x its MDE (SE 0.050 and 0.047, so a gain
+of 0.13 A or more would have been seen): "the mildest threshold is null" is UNDERPOWERED for a
+gain below 0.13 A and MEASURED against any harm above it. Nothing here is positive, so no seed
+replication is due; the cross-basis replication is the built-chain run, and the direction must
+hold there or the point-cloud result is a basis artefact (S16 showed the two bases can disagree
+about a repair). DISPOSITION, pending the built chain: the steric reject at a physical
+threshold, with refill, is closed on the point cloud in the two forms the record had not
+measured (physics-set count, refill), with a sign, on all 126 and on the moved subset; the
+filter form of the functional lever (s24 D1-C, s19 Q3) stays closed and gains its sixth
+instrument.
+
+---

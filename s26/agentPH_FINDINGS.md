@@ -197,7 +197,40 @@ native-free property of the operator, not by outcome, and it is not the result; 
 null on all 126 cannot be blamed on the ties. Both were fixed by the coordinator on 2026-09-13
 09:10, before `cloud` or `chain` ran.
 
-### 2.4 What the endpoint will measure (gated, ready)
+### 2.4 The point-cloud endpoint (DEMONSTRATED; REFUTED in the harmful direction)
+
+`s26/ph_reject.py cloud` + `report`, `s26/results/ph_reject_cloud.json` (complete 126/126),
+`s26/results/ph_reject_report.json`, log `s26/results/ph_reject_report_cloud.log`; ledger L43
+(twelve `ST.fmt` blocks verbatim). Basis: POINT CLOUD on both sides; the anchor reproduces
+`rmsd_avg` 3.0483 to 1e-6 on every target.
+
+    threshold  arm   vs anchor (all 126)                                    vs matched random (same count)
+    1e3        R     +0.532  1.75x MDE  fold [+0.433, +0.657]  36W/69L/21T  WORSE     +0.461  1.87x  WORSE
+    1e3        S     +0.196  1.66x MDE  fold [+0.135, +0.233]  29W/71L/26T  WORSE     +0.112  1.20x  WORSE
+    1e4  PRIM  R     +0.228  1.17x MDE  fold [+0.147, +0.323]  49W/67L/10T  WORSE*    +0.167  1.26x  WORSE*
+    1e4  PRIM  S     +0.108  1.34x MDE  fold [+0.065, +0.153]  38W/75L/13T  WORSE     +0.071  1.00x  NOT MEASURED
+    1e5        R     +0.093  0.66x MDE  fold [+0.033, +0.143]  58W/61L/7T   NOT MEAS  +0.042  0.44x  NOT MEASURED
+    1e5        S     +0.074  1.17x MDE  fold [+0.039, +0.108]  50W/67L/9T   WORSE*    +0.057  0.95x  NOT MEASURED
+    1e6        R     +0.066  0.51x MDE  fold [+0.020, +0.101]  56W/62L/8T   NOT MEAS  +0.030  0.30x  NOT MEASURED
+    1e6        S     +0.050  0.97x MDE  fold [+0.026, +0.072]  52W/64L/10T  NOT MEAS  +0.038  0.81x  NOT MEASURED
+    (* Type-M zone, 1.0 to 1.3x MDE: sign measured, size an upper bound)
+    moved subset at 1e4 (secondary): R n=116 +0.247 WORSE*, R vs RANDR +0.176 WORSE*; S n=113 +0.120 WORSE, S vs RANDS +0.079 at 1.00x
+    sweep over the four thresholds (order statistic): R oracle -0.337, split-half -0.147 (44%), k_eff 3.74; S -0.118, -0.056 (47%); the transfer is "the mildest threshold hurts least", not a gain
+
+The falsifier fired the other way. The primary reading (arm R, refill, all 126) is +0.228 A
+worse than the shipped top-75 and +0.167 worse than rejecting the same count at random with a
+judgment-free refill, 5/5 folds on both; the secondary on the moved targets says the same. The
+dose is monotone in the threshold and its limit is doing nothing. The controls locate the harm:
+refilling from ranks 76 to 147 costs +0.061 (not measured), shrinking to 35 at random costs
++0.037, and the energy's choice of WHICH members to remove costs the rest. Mechanism from the
+census: the condemned members are the ones whose builder-placed side chains clash (96.8%), the
+retained set is +0.254 A more expanded in Rg, so the reject keeps expanded members and throws
+away compact ones that carried error that cancelled (S23 L5). Power: at 1e5 and 1e6 the arm is
+below its MDE (SE 0.05, a gain of 0.13 A would have shown), so those two rungs are UNDERPOWERED
+for a small gain and MEASURED against any harm above 0.13 A. No positive result, so no seed
+replication; the built-chain run is the cross-basis replication and must agree in sign.
+
+### 2.5 The built-chain endpoint (running: job `ph_reject_chain`, per-target cells)
 
 `python s26/ph_reject.py cloud` (~5 min): point-cloud RMSD of every arm, every threshold, 16
 draws. `python s26/ph_reject.py chain` (~3 h CPU, per-target cells under
