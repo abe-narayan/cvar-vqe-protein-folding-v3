@@ -5861,3 +5861,57 @@ and write no tracked JSON; their fresh outputs are recorded. `amber_platform`'s 
 hand-assembled summary with no writer.
 
 ---
+## L142 -- SPRINT 26 CLOSE (2026-09-14 04:14, coordinator)
+
+The sprint closes at the user's extended time. What stands, with where it lives:
+
+1. Phase 0: `s26/EXAMINATION.md` (module map, two dataflow traces, the 35-claim ledger, the
+   five defects, the pinned hashes, the not-in-git census), audited in
+   `s26/EXAMINATION_AUDIT.md` (L31, one documentary item fixed, L32/L34), signed off (L33). The
+   production numbers reproduce to 0.0 on all four bases (3.0483 / 3.2041 / 3.2148 / 3.2355,
+   n = 126; T030 = 1S9Z 0.181981), re-run on HEAD by the Adversary.
+2. The three proposals: A REPLACE (`s26/PROPOSAL_A.md`; L68, L70, L75, L139, L140: not
+   measured on either seed; the mechanism is absent: product-state optimum, full so(2^n) DLA
+   from depth 2, inert growth); B REPLACE (`s26/PROPOSAL_B.md`, replacement
+   `s26/PROPOSAL_B_REPLACEMENT.md`, the trainability paper; L13, L106, L107, L120); C KEEP WITH
+   EDITS (`s26/PROPOSAL_C.md`; nine rungs, none beats the shipped prior, the ESM-2 650M channel
+   worth -0.208 A built chain and -0.330 A selection at 5/5 folds; AMBER a validity step only;
+   the routers closed again; C5 null to harmful; L56 to L67, L72, L93, L99, L103, L105, L115,
+   L124, L132). The slide 11 ruling is L117 as amended by L122.
+3. The tournament: `s26/TOURNAMENT.md`; 18 IDEA files, 29 PREREG files, every
+   ranked survivor run or recorded as not run with its reason (L51, L137, L133): the cis gap
+   (0 cis on the instrument, floor 0.083 A, L22/L38/L89), the steric reject (harmful on both
+   bases, L43/L86), the 2/60 leak bound (0.028 A mean, 0.151 worst, MINOR, L44/L58), window
+   ensembling (null with power, L84), branch selection (L88), strain difficulty (a proxy for
+   the pool's own spread, L53/L121/L123), rotamer relief (L131), the identity and tie-break
+   floors (L52, L64), provenance (L85/L109), the AMBER prior partner (L105), the recall gradient
+   and the memorisation ladder (L90, L91), A3 (L125), the per-step DLA (L138).
+4. Repository: operational items 1 to 5 and defects 6a to 6d closed on branch `s26` (L1, L6 to
+   L10, L15, L16, L18 to L21); the suite at 370 tests, 368 passed, 2 absent-artefact skips with
+   the opt-in tier (L113); the frozen results-lab rebuild reproducing every number and gate
+   (L127); 20 of 20 `verify/` audits re-run with the science reproducing (L141); the AST gate
+   50/55 identical and the 5 exactly the ledgered edits (L98); the governor v2.4 and jobrun
+   v2.3 with their incident history (L18b, L36, L40, L41, L59, L74, L78, L83, L92, L111,
+   L128, L129).
+5. The deck `vqe_research_overview.pptx` (built from artefacts, 11 slides, L61, L126, L134 and
+   the L139/L140 rebuild) with `s26/PRESENTATION_CHANGES.md`; `s26/TRAINABILITY_PAPER_OUTLINE.md`;
+   `s26/REPORT.md` (lane E's final pass ends at about 04:45 with this ledger as Appendix C);
+   `s26/RETRACTIONS.md` (R1 to R11); `s26/DELIVERABLES_CHECK.md` (13 of 14 rows at 04:12, the
+   report row at 04:40); the `docs/FINDINGS.md` corrections block (L130 and its two added rows);
+   eight `s26/agent*_FINDINGS.md`; `s26/STATUS.md` hourly.
+6. Not run, recorded with reasons: the raw rung's last fold and evaluation (L133), the `attn`
+   input (3 to 3.5 GB, never fit), coherence-penalised training, lane W's remaining Part B
+   models and F3 (L137), `project_stability` beyond what L141 states, the C5 alpha grid beyond
+   0.5. No superseded claim was deleted anywhere; every retraction is appended.
+7. Governed jobs: 184 records in `s26/jobs_done/`, every one with an exit code and a peak
+   RSS; the box never exceeded the 93% ceiling under the governor's control (the two
+   excursions above it, L40 and L74, were the user's own load with the governor dead or every
+   job suspended). One job of lane Q (`a2_dla_a1`, a second run) may still be finishing when
+   this entry is written; its record lands in `jobs_done` and changes nothing above.
+
+The findings, not the folding, remain the output: no proposal survived as stated, every
+mandatory direction has a measured answer, and the presenter walks in knowing which questions
+are closed and by which sprint.
+
+---
+
