@@ -1474,3 +1474,86 @@
 2026-09-14T00:42:25 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
 2026-09-14T00:42:40 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.24GB
 2026-09-14T00:42:45 SAMPLE   ram=82.6% (13.84GB used, 2.91GB free) cpu=70.0% (15s mean 88.1%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:43:35 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:43:45 SAMPLE   ram=82.5% (13.82GB used, 2.93GB free) cpu=96.5% (15s mean 88.9%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:43:50 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.22GB
+2026-09-14T00:44:10 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:44:25 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.20GB
+2026-09-14T00:44:30 SUSPEND  p_train_raw_fold2 agent=P tag=CPU rss=1.90GB
+2026-09-14T00:44:45 SAMPLE   ram=82.8% (13.86GB used, 2.89GB free) cpu=44.3% (15s mean 50.8%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:44:45 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:44:50 RESUME   p_train_raw_fold2 agent=P tag=CPU
+2026-09-14T00:45:05 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.20GB
+2026-09-14T00:45:25 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:45:40 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.22GB
+2026-09-14T00:45:45 SAMPLE   ram=82.3% (13.79GB used, 2.96GB free) cpu=69.0% (15s mean 88.4%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:46:00 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:46:15 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.24GB
+2026-09-14T00:46:35 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:46:45 SAMPLE   ram=84.4% (14.13GB used, 2.62GB free) cpu=96.1% (15s mean 87.5%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:46:50 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.23GB
+2026-09-14T00:47:10 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:47:25 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.24GB
+2026-09-14T00:47:45 SAMPLE   ram=82.4% (13.80GB used, 2.95GB free) cpu=69.3% (15s mean 69.9%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:47:45 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:48:00 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.22GB
+2026-09-14T00:48:20 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:48:35 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.22GB
+2026-09-14T00:48:45 SAMPLE   ram=81.5% (13.64GB used, 3.11GB free) cpu=70.1% (15s mean 82.3%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:48:55 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:49:10 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.20GB
+2026-09-14T00:49:30 REAP     w_amberprior_endpoint (pid 26940) is gone; registration removed
+2026-09-14T00:49:30 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:49:45 SAMPLE   ram=84.2% (14.11GB used, 2.64GB free) cpu=97.5% (15s mean 98.1%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:49:45 SUSPEND  w_endpoint_report2 agent=W tag=CPU rss=0.29GB
+2026-09-14T00:49:50 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.22GB
+2026-09-14T00:50:05 RESUME   w_endpoint_report2 agent=W tag=CPU
+2026-09-14T00:50:20 SUSPEND  w_endpoint_report2 agent=W tag=CPU rss=0.29GB
+2026-09-14T00:50:30 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:50:45 SAMPLE   ram=85.1% (14.25GB used, 2.50GB free) cpu=97.8% (15s mean 95.3%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:50:45 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.22GB
+2026-09-14T00:51:00 RESUME   w_endpoint_report2 agent=W tag=CPU
+2026-09-14T00:51:05 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:51:15 SUSPEND  w_endpoint_report2 agent=W tag=CPU rss=0.29GB
+2026-09-14T00:51:20 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.23GB
+2026-09-14T00:51:35 RESUME   w_endpoint_report2 agent=W tag=CPU
+2026-09-14T00:51:40 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:51:45 SAMPLE   ram=83.8% (14.04GB used, 2.71GB free) cpu=91.0% (15s mean 73.0%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:51:55 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.22GB
+2026-09-14T00:52:05 REAP     ph_relief_probe (pid 20412) is gone; registration removed
+2026-09-14T00:52:15 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:52:30 SUSPEND  p_b3_run agent=P tag=CPU rss=0.05GB
+2026-09-14T00:52:35 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.23GB
+2026-09-14T00:52:45 SAMPLE   ram=85.6% (14.34GB used, 2.41GB free) cpu=88.1% (15s mean 83.7%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:52:50 RESUME   p_b3_run agent=P tag=CPU
+2026-09-14T00:52:55 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:53:10 SUSPEND  p_b3_run agent=P tag=CPU rss=0.05GB
+2026-09-14T00:53:15 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.21GB
+2026-09-14T00:53:20 SUSPEND  p_train_raw_fold2 agent=P tag=CPU rss=1.79GB
+2026-09-14T00:53:30 RESUME   p_b3_run agent=P tag=CPU
+2026-09-14T00:53:35 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:53:40 RESUME   p_train_raw_fold2 agent=P tag=CPU
+2026-09-14T00:53:45 SAMPLE   ram=83.6% (14.00GB used, 2.75GB free) cpu=97.4% (15s mean 73.0%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:53:50 REAP     p_b3_run (pid 23696) is gone; registration removed
+2026-09-14T00:53:55 SUSPEND  ph_relief_probe2 agent=PH tag=AMBER rss=0.27GB
+2026-09-14T00:54:00 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.19GB
+2026-09-14T00:54:20 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:54:45 SAMPLE   ram=85.0% (14.24GB used, 2.51GB free) cpu=86.2% (15s mean 89.9%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-14T00:55:45 SAMPLE   ram=86.1% (14.43GB used, 2.32GB free) cpu=89.7% (15s mean 89.4%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-14T00:56:25 REAP     w_train_out_9BAF_f0 (pid 35648) is gone; registration removed
+2026-09-14T00:56:45 SAMPLE   ram=78.7% (13.18GB used, 3.57GB free) cpu=68.8% (15s mean 69.8%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-14T00:57:10 ADOPT    ph_relief_probe2 was suspended before this governor started; adopted
+2026-09-14T00:57:10 RESUME   ph_relief_probe2 agent=PH tag=AMBER
+2026-09-14T00:57:15 REAP     ph_relief_probe2 (pid 15764) is gone; registration removed
+2026-09-14T00:57:30 REAP     e_report_check7 (pid 26988) is gone; registration removed
+2026-09-14T00:57:45 SAMPLE   ram=77.2% (12.94GB used, 3.81GB free) cpu=85.1% (15s mean 90.7%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:58:00 SUSPEND  p_c4_run agent=P tag=CPU rss=0.11GB
+2026-09-14T00:58:05 SUSPEND  a4_var_boot agent=Q tag=CPU rss=0.06GB
+2026-09-14T00:58:20 RESUME   p_c4_run agent=P tag=CPU
+2026-09-14T00:58:25 RESUME   a4_var_boot agent=Q tag=CPU
+2026-09-14T00:58:45 SAMPLE   ram=77.9% (13.05GB used, 3.70GB free) cpu=81.9% (15s mean 83.8%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:59:05 SUSPEND  p_c4_run agent=P tag=CPU rss=0.11GB
+2026-09-14T00:59:10 SUSPEND  a4_var_boot agent=Q tag=CPU rss=0.07GB
+2026-09-14T00:59:25 RESUME   p_c4_run agent=P tag=CPU
+2026-09-14T00:59:30 RESUME   a4_var_boot agent=Q tag=CPU
+2026-09-14T00:59:45 SAMPLE   ram=78.5% (13.15GB used, 3.60GB free) cpu=88.7% (15s mean 90.3%) jobs=6 amber=0 queued=0 lanes=8

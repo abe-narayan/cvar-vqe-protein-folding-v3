@@ -4275,3 +4275,49 @@ built-chain number exists for a non-chosen cell, and none is claimed. Replicatio
 deterministic given the artefact; the permutation seeds were never consumed (lam* = 0). The last
 AMBER form in the record, as a distribution inside the prior, is closed on this instrument.
 Deviations from the PREREG: none beyond addendum 1's staging.
+
+## L106 -- B3: THE SET WHERE THE PIPELINE BEATS SEQUENCE-ONLY IS NOT CHARACTERISABLE NATIVE-FREE BY THE PRE-REGISTERED STANDARD; THE SIGN CLASSIFIER IS AT THE PERMUTATION NULL AGAINST BOTH COMPARATORS, AND ONLY THE SIZE OF THE GAIN OVER THE CONSTANT HELIX IS PARTLY PREDICTABLE (R2 0.40), WHICH IS THE HELICITY SIGNAL (2026-09-14 00:55, lane P)
+
+`s26/p_b3.py run`, `s26/results/p_b3.json` (job `p_b3_run`, exit 0, 100 s, peak RSS 0.053 GB),
+pre-registered in `s26/PREREG_B3.md`; 45 native-free features (`s26/results/p_b3_features.json`:
+length, composition, the top-75 members' H/E/C content, distogram entropy, ESM contact-map and
+retrieval-score statistics), nested leave-fold-out ridge (`s26/p_stats.py`), 300-draw label
+permutation null. Built chains on both sides: pipeline `rmsd_arm` 3.2148, sequence-only torsion
+predictor 3.7705 (`s13/cache/tors_rows.npz`), constant helix 4.0648 (`s14/results/ladder.json`).
+
+    sign(arm - tors): held-out balanced accuracy 0.522  vs permutation null mean 0.498, 95th pct 0.578  (p = 0.263)
+    sign(arm - helix): held-out balanced accuracy 0.557  vs null mean 0.498, 95th pct 0.566  (p = 0.093)
+    d = arm - tors, ridge regression: held-out R2 +0.244; squared-error reduction vs the training-fold mean
+      -0.5366  SE 0.2309  MDE 0.6469  (-0.83x)  fold CI [-0.882, -0.185]  4/5  84W/42L  NOT MEASURED
+    d = arm - helix, ridge regression: held-out R2 +0.404; squared-error reduction
+      -1.1420  SE 0.3415  MDE 0.9566  (-1.19x)  fold CI [-1.495, -0.700]  5/5  94W/32L  BETTER (Type-M zone)
+
+The falsifier required BOTH the classifier above its permutation null AND the regression's
+fold-clustered MSE reduction beyond MDE. Against the torsion predictor both halves fail
+(classifier at the null; regression 0.83x MDE). Against the constant helix the classifier fails
+(0.557 against a 95th percentile of 0.566) and the regression passes at 1.19x MDE: the SIZE of
+the pipeline's gain over a helix is partly predictable, the SIGN is not. The features that carry
+the size are the top-75 members' helix content and the length (descriptive ridge weights in
+`s26/agentP_FINDINGS.md` section 10): a helical retrieval pool means the constant helix is
+already close and the gain is small. That is S17 L25's "the one target-level signal that works,
+and it is the trivial one", re-found. ORACLE stratum for the record: on FAIL18 the torsion
+predictor beats the pipeline by 0.463 A and on the other 108 the pipeline wins by 0.725 A
+(S12's failure-class split), and nothing native-free in this feature set locates that stratum.
+**B3 verdict: the falsifier fires; Proposal B's B3 route does not yield a native-free
+characterisable set. Per the campaign rule, Proposal B's verdict is REPLACE.**
+
+---
+
+## L107 -- CORRECTION TO L106: THE FEATURE THAT CARRIES THE SIZE OF THE GAIN IS THE POOL'S STRAND CONTENT, NOT ITS HELIX CONTENT OR THE LENGTH (2026-09-14 00:55, lane P)
+
+Descriptive ridge weights and correlations, full data (`s26/agentP_FINDINGS.md` section 10):
+for d = arm - helix the largest standardised weight is the top-75 members' E (strand) fraction
+(-0.612; rho(ss_E, d) = -0.638), then the distogram's mean sd (+0.394), its max entropy (-0.273),
+the cysteine fraction (-0.266), its multimodal fraction (+0.253) and the ESM long-range contact
+mass (+0.230; rho -0.42); rho(ss_H, d) = +0.463 and rho(n, d) = -0.128. For d = arm - tors the
+same ordering (ss_E -0.636, rho -0.601). So: when the retrieval pool is strand-like the
+pipeline's gain over a constant helix is LARGE, and when it is helical the gain is small; the
+sign stays unpredictable (L106). "Helix content and the length" in L106 is struck; "the pool's
+strand content" is the sentence.
+
+---

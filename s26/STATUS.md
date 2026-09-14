@@ -54,6 +54,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-14 00:15 next: hourly passes from L94 (A3, esm8m/pairnet/raw, H_P3, strain pool-spread control, rotamer relief, coherence training, lane I's slow tier and frozen rebuild for Part IX, the B and C verdicts); final pass 04:15 to 04:45 with Appendix C last.
 - 2026-09-14 00:42 running: 00:40 pass committed: L94 to L103 into VII/VIII/IX (esm8m, pairnet, validity axis, Adversary checks L94 to L97, slow-tier and parser findings, AST gate); check 162/162 direct; governed e_report_check7 waiting for a slot.
 - 2026-09-14 00:42 next: hourly passes from L104 (A3, raw, H_P3, strain spread control, rotamer relief, coherence training, lane I's slow tiers and frozen rebuild for Part IX, the B and C verdicts, slide 11 ruling); final pass 04:15 to 04:45 with Appendix C last.
+- 2026-09-14 00:59 running: 01:00 pass committed: L104 to L107 (equivalence tier, amber_prior_partner, B3 and Proposal B REPLACE) into VII/VIII/IX; check 165/165 direct; governed e_report_check8 launched.
+- 2026-09-14 00:59 next: hourly passes from L108 (A3, raw, H_P3, strain spread control, rotamer relief, coherence training, the integration tier and frozen rebuild for Part IX, the C verdict and the slide 11 ruling); final pass 04:15 to 04:45, Appendix C last.
 ## I (Infrastructure / Governor)
 
 - 2026-09-13 00:13 running: read contract/brief/code; job pytest_core (non-AMBER suite, tag TEST, est 2.5 GB) launched under the governor at ~00:11; brief committed unchanged.
