@@ -2365,3 +2365,261 @@ Replication: the 8 draws are 8 seeds; the 28 pairwise contrasts give the paired 
 seed, and the fold order does not enter (no fit). Power: the floor's own numbers ARE the power
 statement. Not done: 16 draws (PREREG fork; the 8-draw m_tie carries a 27% relative SE, which the
 verdict does not depend on); the AMBER-relaxed basis.
+
+## L65 -- LANE P, C2 RUNG PCA32: REPRODUCTION GATE 2 PASSES AT THE ENDPOINT: THE RETRAINED pca32 EMITS THE SHIPPED PIPELINE'S ANSWER ON 126/126 TARGETS, ALL THREE BASES, 0 A DIFFERENCE (2026-09-13 21:01, lane P)
+
+Artefacts: `s26/results/p_ladder_pca32_s0.json` (126 rows, complete), `s26/results/p_ladder_report_pca32_s0.json`; anchor `s26/results/p_ladder_shipped_s0.json`. Every arm through `s26/p_ladder.py`'s single path: shipped K=500 pool -> the rung's posterior in a genuine `core.predict.Distogram` -> shipped Bayes-risk score -> top-75 uniform medoid-frame average -> `s12.instrument.project` (ramah 0.3). Paired per target against the shipped posterior through the same path. Negative = the rung is better.
+
+Job `p_eval_pca32`: exit 0, 536 s, peak RSS 0.306 GB; models `s26/models/p_ladder/pca32_fold{0..4}_s0.pt` retrained from the compact tables with the shipped recipe (`p_train_pca32`, peak 0.69 GB). The retrained posterior differs from the pinned one by 1.5e-5 per pair (fold-0 gate, L12) and that difference changes no argmin, no top-75 membership and therefore no emitted cloud or chain on any of the 126 targets: 126 exact ties on selection, point cloud and built chain (the FLAG on the concentration line is the degenerate all-zero case). This closes PREREG_C2's gate 2 in the strongest form: the ladder's trainer IS the production trainer at the endpoint, so any rung difference below is attributable to its inputs or architecture and not to retraining noise. It also fixes the ESM contrast: noesm (L62) is the shipped pipeline minus its ESM block and nothing else. gam_eff 0 at cos 0 (the identity), MAE 2.3386 = the shipped diagnostic.
+
+```
+  pca32 vs shipped -- BUILT CHAIN (PRIMARY; rebuild basis 3.2126, L57)
+    a 3.2126 (med 2.9661)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0000   median +0.0000   SE 0.0000   MDE 0.0000   effect/MDE +nan
+    iid  CI95 [+0.0000, +0.0000]
+    fold CI95 [+0.0000, +0.0000]   folds same sign 5/5   per-fold 0:+0.000 1:+0.000 2:+0.000 3:+0.000 4:+0.000
+    0W/0L/126T   worst degradation +0.0000 (1A13)   p90 +0.0000   power nan  Type-M nan
+    concentration: drop-top10 +0.0000 vs uniform-effect null p10/p50/p90 +0.0000/+0.0000/+0.0000 -> pctile 0.000  FLAG
+    VERDICT: NOT MEASURED (|effect| 0.0000 <= its own MDE 0.0000, nanx)
+  pca32 vs shipped -- POINT CLOUD (3.0483 basis)
+    a 3.0483 (med 2.8373)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0000   median +0.0000   SE 0.0000   MDE 0.0000   effect/MDE +nan
+    iid  CI95 [+0.0000, +0.0000]
+    fold CI95 [+0.0000, +0.0000]   folds same sign 5/5   per-fold 0:+0.000 1:+0.000 2:+0.000 3:+0.000 4:+0.000
+    0W/0L/126T   worst degradation +0.0000 (1A13)   p90 +0.0000   power nan  Type-M nan
+    concentration: drop-top10 +0.0000 vs uniform-effect null p10/p50/p90 +0.0000/+0.0000/+0.0000 -> pctile 0.000  FLAG
+    VERDICT: NOT MEASURED (|effect| 0.0000 <= its own MDE 0.0000, nanx)
+  pca32 vs shipped -- SELECTION argmin K=500 (3.4540 basis)
+    a 3.4540 (med 3.4779)   b 3.4540 (med 3.4779)   n=126
+    effect +0.0000   median +0.0000   SE 0.0000   MDE 0.0000   effect/MDE +nan
+    iid  CI95 [+0.0000, +0.0000]
+    fold CI95 [+0.0000, +0.0000]   folds same sign 5/5   per-fold 0:+0.000 1:+0.000 2:+0.000 3:+0.000 4:+0.000
+    0W/0L/126T   worst degradation +0.0000 (1A13)   p90 +0.0000   power nan  Type-M nan
+    concentration: drop-top10 +0.0000 vs uniform-effect null p10/p50/p90 +0.0000/+0.0000/+0.0000 -> pctile 0.000  FLAG
+    VERDICT: NOT MEASURED (|effect| 0.0000 <= its own MDE 0.0000, nanx)
+  gamma-equivalent: gam_eff prob-space -0.0000 at cos -0.001 ; loc-space -0.0000 at cos +0.010 ; MAE 2.3386 (diagnostic only).
+  CAVEAT (S25 L12): -2.1496 x gam_eff is redeemable only at cos = 1; a real operator travelling 25%% at cos 0.5 is worth +0.024 A. Never quote the product alone.
+  folds same sign (arm): 5/5 ; verdict (arm): NOT MEASURED (|effect| 0.0000 <= its own MDE 0.0000, nanx)
+```
+
+---
+
+## L66 -- LANE P, C2 RUNG WIDE: THE CAPACITY RUNG (WIDTH 768, DEPTH 4, SAME INPUTS) IS NULL-TO-WORSE: +0.032 A ON THE BUILT CHAIN (0.25x MDE), +0.097 A ON SELECTION (0.48x MDE, FOLD CI ABOVE ZERO 5/5); MORE CAPACITY DOES NOT BUY A BETTER PRIOR (2026-09-13 21:11, lane P)
+
+Artefacts: `s26/results/p_ladder_wide_s0.json` (126 rows, complete), `s26/results/p_ladder_report_wide_s0.json`; anchor `s26/results/p_ladder_shipped_s0.json`. Every arm through `s26/p_ladder.py`'s single path: shipped K=500 pool -> the rung's posterior in a genuine `core.predict.Distogram` -> shipped Bayes-risk score -> top-75 uniform medoid-frame average -> `s12.instrument.project` (ramah 0.3). Paired per target against the shipped posterior through the same path. Negative = the rung is better.
+
+Job `p_eval_wide`: exit 0, 566 s, peak RSS 0.337 GB; models `s26/models/p_ladder/wide_fold{0..4}_s0.pt` (2.7x the parameters of the shipped 384x3, same 183-d inputs, corpus, epochs, loss; `p_train_wide` peak 1.03 GB). The built-chain contrast is UNDERPOWERED (0.25x MDE, power 0.11), so no gain of 0.13 A or more exists, and the point estimate points the wrong way. On selection the fold-clustered CI excludes zero on the harmful side at 5/5 folds while the effect is 0.48x its MDE: a real, small degradation, worth reporting as 'the wider head selects slightly worse', not as a measured effect size. MAE barely moves (2.348 vs 2.339): the wider net reaches the same conditional mean. This is S9-8's monotone-decreasing capacity curve (ridge beats a 512x3 net and a 1500-tree GBT) reproduced at the PRIOR rather than at the ranker: the information is not in the inputs, and adding capacity spends it on fitting the fragment distribution (S7-2). gam_eff +0.096 prob / +0.291 loc at cos 0.18 / 0.35: the third rung in a row with positive gam_eff and a worse endpoint.
+
+```
+  wide vs shipped -- BUILT CHAIN (PRIMARY; rebuild basis 3.2126, L57)
+    a 3.2444 (med 3.1364)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0317   median +0.0099   SE 0.0458   MDE 0.1282   effect/MDE +0.25
+    iid  CI95 [-0.0566, +0.1201]
+    fold CI95 [-0.0300, +0.1279]   folds same sign 3/5   per-fold 0:+0.018 1:+0.021 2:-0.056 3:+0.230 4:-0.027
+    54W/72L/0T   worst degradation +2.4883 (6RRO)   p90 +0.3976   power 0.11  Type-M 3.50
+    concentration: drop-top10 +0.1272 vs uniform-effect null p10/p50/p90 +0.0792/+0.1235/+0.1749 -> pctile 0.536
+    VERDICT: NOT MEASURED (|effect| 0.0317 <= its own MDE 0.1282, 0.25x)
+  wide vs shipped -- POINT CLOUD (3.0483 basis)
+    a 3.0710 (med 2.8223)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0227   median +0.0123   SE 0.0427   MDE 0.1195   effect/MDE +0.19
+    iid  CI95 [-0.0650, +0.1031]
+    fold CI95 [-0.0500, +0.1161]   folds same sign 3/5   per-fold 0:+0.022 1:+0.060 2:-0.061 3:+0.199 4:-0.071
+    56W/70L/0T   worst degradation +2.1217 (6RRO)   p90 +0.3972   power 0.08  Type-M 4.52
+    concentration: drop-top10 +0.1131 vs uniform-effect null p10/p50/p90 +0.0692/+0.1096/+0.1545 -> pctile 0.544
+    VERDICT: NOT MEASURED (|effect| 0.0227 <= its own MDE 0.1195, 0.19x)
+  wide vs shipped -- SELECTION argmin K=500 (3.4540 basis)
+    a 3.5512 (med 3.5063)   b 3.4540 (med 3.4779)   n=126
+    effect +0.0972   median +0.0000   SE 0.0725   MDE 0.2032   effect/MDE +0.48
+    iid  CI95 [-0.0508, +0.2397]
+    fold CI95 [+0.0487, +0.1587]   folds same sign 5/5   per-fold 0:+0.018 1:+0.099 2:+0.216 3:+0.099 4:+0.062
+    55W/55L/16T   worst degradation +2.8395 (5MXS)   p90 +1.1442   power 0.27  Type-M 1.92
+    concentration: drop-top10 +0.2280 vs uniform-effect null p10/p50/p90 +0.1348/+0.2230/+0.3121 -> pctile 0.529
+    VERDICT: NOT MEASURED (|effect| 0.0972 <= its own MDE 0.2032, 0.48x)
+  gamma-equivalent: gam_eff prob-space +0.0958 at cos +0.182 ; loc-space +0.2909 at cos +0.350 ; MAE 2.3480 (diagnostic only).
+  CAVEAT (S25 L12): -2.1496 x gam_eff is redeemable only at cos = 1; a real operator travelling 25%% at cos 0.5 is worth +0.024 A. Never quote the product alone.
+  folds same sign (arm): 3/5 ; verdict (arm): NOT MEASURED (|effect| 0.0317 <= its own MDE 0.1282, 0.25x)
+```
+
+---
+
+## L67 -- LANE P, C2 RUNG PCA32F: REFITTING THE 32-PCA PER FOLD (NO GLOBAL-PCA LEAK) CHANGES NOTHING MEASURABLE: +0.018 A BUILT CHAIN (0.13x MDE), -0.032 A SELECTION (0.17x); THE SHIPPED GLOBAL PCA WAS NOT A LEAK WORTH ANYTHING (2026-09-13 21:34, lane P)
+
+Artefacts: `s26/results/p_ladder_pca32f_s0.json` (126 rows, complete), `s26/results/p_ladder_report_pca32f_s0.json`; anchor `s26/results/p_ladder_shipped_s0.json`. Every arm through `s26/p_ladder.py`'s single path: shipped K=500 pool -> the rung's posterior in a genuine `core.predict.Distogram` -> shipped Bayes-risk score -> top-75 uniform medoid-frame average -> `s12.instrument.project` (ramah 0.3). Paired per target against the shipped posterior through the same path. Negative = the rung is better.
+
+Job `p_eval_pca32f`: exit 0, 551 s, peak RSS 0.796 GB (the lean trainer's residue table, `s5/esmraw.npz`, is resident at eval); models `s26/models/p_ladder/pca32f_fold{0..4}_s0.pt` with per-fold bases `pca32f_pca_fold{0..4}.npz` fitted on training sequences only (`p_train_pca32f` peak 1.06 GB). Every contrast is far under its MDE (0.11x to 0.17x; power 0.06 to 0.08) with medians at or below 0.01 A: the rung is the shipped prior up to fitting noise. Two things this settles: the shipped `esm_pca.npz` (fitted once over the whole database, S7-11's 'weak leak') is worth nothing to the endpoint, so no ladder result is contaminated by it; and the isolate for pca128 is clean, since pca32f and pca128 differ only in the number of components. MAE 2.317 (the lowest so far) with no endpoint movement: S7-3's rule again. gam_eff +0.111 prob at cos 0.24, +0.348 loc at cos 0.40.
+
+```
+  pca32f vs shipped -- BUILT CHAIN (PRIMARY; rebuild basis 3.2126, L57)
+    a 3.2307 (med 3.0813)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0180   median -0.0092   SE 0.0491   MDE 0.1376   effect/MDE +0.13
+    iid  CI95 [-0.0806, +0.1111]
+    fold CI95 [-0.0725, +0.0970]   folds same sign 4/5   per-fold 0:+0.015 1:+0.103 2:+0.043 3:+0.125 4:-0.147
+    70W/56L/0T   worst degradation +1.8708 (9BAF)   p90 +0.6142   power 0.07  Type-M 6.46
+    concentration: drop-top10 +0.1163 vs uniform-effect null p10/p50/p90 +0.0582/+0.1142/+0.1710 -> pctile 0.518
+    VERDICT: NOT MEASURED (|effect| 0.0180 <= its own MDE 0.1376, 0.13x)
+  pca32f vs shipped -- POINT CLOUD (3.0483 basis)
+    a 3.0347 (med 2.9544)   b 3.0483 (med 2.8373)   n=126
+    effect -0.0136   median -0.0119   SE 0.0453   MDE 0.1270   effect/MDE -0.11
+    iid  CI95 [-0.1023, +0.0752]
+    fold CI95 [-0.1099, +0.0751]   folds same sign 3/5   per-fold 0:-0.000 1:+0.098 2:-0.021 3:+0.093 4:-0.187
+    71W/55L/0T   worst degradation +1.3544 (2N9M)   p90 +0.5068   power 0.06  Type-M 7.85
+    concentration: drop-top10 +0.0852 vs uniform-effect null p10/p50/p90 +0.0314/+0.0820/+0.1313 -> pctile 0.532
+    VERDICT: NOT MEASURED (|effect| 0.0136 <= its own MDE 0.1270, 0.11x)
+  pca32f vs shipped -- SELECTION argmin K=500 (3.4540 basis)
+    a 3.4224 (med 3.3752)   b 3.4540 (med 3.4779)   n=126
+    effect -0.0316   median +0.0000   SE 0.0649   MDE 0.1819   effect/MDE -0.17
+    iid  CI95 [-0.1541, +0.0917]
+    fold CI95 [-0.1108, +0.0541]   folds same sign 3/5   per-fold 0:+0.084 1:-0.136 2:-0.092 3:+0.101 4:-0.099
+    60W/49L/17T   worst degradation +2.1793 (2MAI)   p90 +0.7372   power 0.08  Type-M 4.91
+    concentration: drop-top10 +0.1025 vs uniform-effect null p10/p50/p90 +0.0195/+0.0986/+0.1767 -> pctile 0.523
+    VERDICT: NOT MEASURED (|effect| 0.0316 <= its own MDE 0.1819, 0.17x)
+  gamma-equivalent: gam_eff prob-space +0.1105 at cos +0.237 ; loc-space +0.3479 at cos +0.400 ; MAE 2.3168 (diagnostic only).
+  CAVEAT (S25 L12): -2.1496 x gam_eff is redeemable only at cos = 1; a real operator travelling 25%% at cos 0.5 is worth +0.024 A. Never quote the product alone.
+  folds same sign (arm): 4/5 ; verdict (arm): NOT MEASURED (|effect| 0.0180 <= its own MDE 0.1376, 0.13x)
+```
+
+---
+
+## L68 -- LANE Q, A1: qubit-ADAPT-VQE IN PLACE OF THE FIXED ANSATZ IS NULL AT THE REGISTERED THRESHOLD ON THE BUILT CHAIN (-0.014 / -0.022 A, 0.23x / 0.36x MDE, FOLD CIs SPAN ZERO); EVERY ADAPT ARM POINTS THE SAME WAY AND NONE CLEARS ITS MDE; ON THE 78 alpha = 1 TARGETS ADAPT REACHES THE PRODUCT GIBBS STATE THE FIXED CIRCUIT MISSES BY 0.90 NATS (2026-09-13, lane Q)
+
+Pre-registered in `s26/PREREG_A1.md` (filed 09:00, before any endpoint existed). Build:
+`s26/q_adapt.py --build --tag a1` (two shards killed by the host at 10:10 after 33 targets;
+one governed process resumed from those checkpoints: `s26/jobs_done/a1_build.json`, 7,782 s,
+peak RSS 0.383 GB). Label: `s26/jobs_done/a1_label.json` (25 s, 0.36 GB), run after L33.
+Stats: `s26/results/a1_stats.json`, `s26/logs/a1_stats.log` (every ST.fmt block).
+Per-target records: `s26/results/a1/<pdb>.json` (126). Every record reproduces the
+production quantum arm bit-for-bit: `ca` and `q_ca` against
+`bench_results/cache/464a0ddb5f283e04/<pdb>.json` at max |diff| 0.0 and the selection index
+equal, 126 of 126 (key `cache_check`). Basis: built chain (`rmsd_q_synth`, the production
+projection of the weighted average) on both sides of every contrast below; the selection
+readout (`rmsd_sel`) is the s8-instrument secondary and is named where it appears.
+Comparator: `fixed_zrank_it50`, the deployed selector (3.2280 A built chain, 3.3135 A
+selection; the production top-75 arm `rmsd_arm` is 3.2148 A, the shipped argmin 3.4540).
+
+### The two PRIMARY contrasts (built chain), their selection-basis secondaries, and the matched random control, verbatim
+
+  rmsd_q_synth: adaptL2_adam_best_zrank_P21 - fixed_zrank_it50
+    a 3.2142 (med 3.1307)   b 3.2280 (med 2.9926)   n=126
+    effect -0.0138   median +0.0066   SE 0.0210   MDE 0.0588   effect/MDE -0.23
+    iid  CI95 [-0.0562, +0.0258]
+    fold CI95 [-0.0705, +0.0442]   folds same sign 3/5   per-fold 0:-0.116 1:-0.008 2:+0.008 3:+0.096 4:-0.035
+    58W/68L/0T   worst degradation +0.5351 (2MK7)   p90 +0.2886   power 0.10  Type-M 3.68
+    concentration: drop-top10 +0.0294 vs uniform-effect null p10/p50/p90 +0.0046/+0.0295/+0.0533 -> pctile 0.498
+    VERDICT: NOT MEASURED (|effect| 0.0138 <= its own MDE 0.0588, 0.23x)
+
+  rmsd_q_synth: adaptV_adam_best_zrank_P21 - fixed_zrank_it50
+    a 3.2059 (med 3.0924)   b 3.2280 (med 2.9926)   n=126
+    effect -0.0222   median +0.0012   SE 0.0217   MDE 0.0608   effect/MDE -0.36
+    iid  CI95 [-0.0665, +0.0194]
+    fold CI95 [-0.0854, +0.0424]   folds same sign 3/5   per-fold 0:-0.129 1:-0.068 2:+0.030 3:+0.095 4:-0.031
+    61W/65L/0T   worst degradation +0.5816 (2N9M)   p90 +0.2586   power 0.18  Type-M 2.44
+    concentration: drop-top10 +0.0229 vs uniform-effect null p10/p50/p90 -0.0018/+0.0224/+0.0469 -> pctile 0.509
+    VERDICT: NOT MEASURED (|effect| 0.0222 <= its own MDE 0.0608, 0.36x)
+
+  rmsd_q_synth: randH_adaptL2 - fixed_zrank_it50
+    a 3.2617 (med 3.0966)   b 3.2280 (med 2.9926)   n=126
+    effect +0.0337   median +0.0214   SE 0.0350   MDE 0.0982   effect/MDE +0.34
+    iid  CI95 [-0.0354, +0.1008]
+    fold CI95 [+0.0122, +0.0581]   folds same sign 5/5   per-fold 0:+0.010 1:+0.006 2:+0.054 3:+0.075 4:+0.026
+    55W/71L/0T   worst degradation +1.1926 (1D6X)   p90 +0.4926   power 0.16  Type-M 2.58
+    concentration: drop-top10 +0.1077 vs uniform-effect null p10/p50/p90 +0.0701/+0.1069/+0.1436 -> pctile 0.513
+    VERDICT: NOT MEASURED (|effect| 0.0337 <= its own MDE 0.0982, 0.34x)
+
+  rmsd_sel: adaptL2_adam_best_zrank_P21 - fixed_zrank_it50
+    a 3.2698 (med 3.1903)   b 3.3135 (med 3.1524)   n=126
+    effect -0.0437   median +0.0000   SE 0.0334   MDE 0.0936   effect/MDE -0.47
+    iid  CI95 [-0.1103, +0.0213]
+    fold CI95 [-0.0720, -0.0224]   folds same sign 5/5   per-fold 0:-0.100 1:-0.052 2:-0.028 3:-0.025 4:-0.018
+    39W/29L/58T   worst degradation +1.7418 (8HVS)   p90 +0.0706   power 0.26  Type-M 1.96
+    concentration: drop-top10 +0.0289 vs uniform-effect null p10/p50/p90 -0.0089/+0.0268/+0.0645 -> pctile 0.527
+    VERDICT: NOT MEASURED (|effect| 0.0437 <= its own MDE 0.0936, 0.47x)
+
+  rmsd_sel: adaptV_adam_best_zrank_P21 - fixed_zrank_it50
+    a 3.2688 (med 3.1903)   b 3.3135 (med 3.1524)   n=126
+    effect -0.0448   median +0.0000   SE 0.0343   MDE 0.0961   effect/MDE -0.47
+    iid  CI95 [-0.1109, +0.0218]
+    fold CI95 [-0.0874, -0.0066]   folds same sign 4/5   per-fold 0:-0.099 1:-0.106 2:+0.016 3:-0.025 4:-0.018
+    43W/34L/49T   worst degradation +1.7418 (8HVS)   p90 +0.1779   power 0.26  Type-M 1.96
+    concentration: drop-top10 +0.0294 vs uniform-effect null p10/p50/p90 -0.0106/+0.0272/+0.0650 -> pctile 0.531
+    VERDICT: NOT MEASURED (|effect| 0.0448 <= its own MDE 0.0961, 0.47x)
+
+### The registered falsifiers
+
+"ADAPT is null" fires on both primaries: -0.0138 A (0.23x its MDE of 0.0588) and -0.0222 A
+(0.36x its MDE of 0.0608) are inside +-0.5x MDE, the fold-clustered CIs [-0.071, +0.044] and
+[-0.085, +0.042] span zero, 3 of 5 folds agree in sign, W/L is 58/68 and 61/65, and the
+drop-top-10 statistic sits at the 50th and 51st percentile of the uniform-effect null (no
+concentration). "ADAPT helps" does not fire; no replication is owed.
+
+Power statement. The comparison resolves 0.059 to 0.061 A on the built chain (MDE = 2.8016
+SE at n = 126). An effect smaller than that could exist unseen; the observed effects are a
+third of it, and Gelman-Carlin power for a true effect equal to the observed is 0.10 and 0.18
+(Type-M 3.7 and 2.4). For scale, the whole quantum synthesis against the classical top-75 arm
+is +0.0133 A (`s26/results/q_mde_reference.json`), so the resolution is four times the size
+of the component's own footprint. Null at the registered threshold; underpowered below 0.06 A.
+
+### Every ADAPT arm, built chain vs fixed_zrank_it50 (effect, x MDE; all fold CIs span zero; 3-4/5 folds)
+
+    adaptL2 adam_best  P7 / P14 / P21   -0.0128 (0.21x) / -0.0192 (0.33x) / -0.0138 (0.23x)
+    adaptL2 lbfgs      P7 / P14 / P21   -0.0206 (0.34x) / -0.0187 (0.32x) / -0.0194 (0.33x)
+    adaptV  adam_best  P7 / P14 / P21   -0.0128 (0.21x) / -0.0195 (0.32x) / -0.0222 (0.36x)
+    adaptV  lbfgs      P7 / P14 / P21   -0.0206 (0.34x) / -0.0244 (0.39x) / -0.0245 (0.40x)
+    controls:  fixed 750 steps -0.0035 (0.16x)   gibbs_T +0.0088 (0.11x)   uniform128 +0.0135 (0.14x)
+               randH_fixed +0.0230 (0.24x, 4/5)   randH_adaptL2 +0.0337 (0.34x, fold CI [+0.012,+0.058], 5/5)
+    alpha subsets: L2 P21 alpha=1 -0.0223 (0.24x, n=78), alpha=0.25 +0.0000 (0.00x, n=48);
+                   V  P21 alpha=1 -0.0254 (0.28x),       alpha=0.25 -0.0169 (0.27x)
+
+Twelve of twelve ADAPT arms are negative on the built chain and twelve of twelve on the
+selection readout (-0.039 to -0.048 A, 0.42x to 0.47x MDE, fold CIs excluding zero on all
+twelve, 45 to 59 exact ties per contrast; 58 of 126 targets emit the identical selected
+candidate under ADAPT-L2-P21 and the fixed circuit). By the standing rule (clear the MDE AND
+fold CI excluding zero) none is a result; it is the shape of S25's `VQE_LFO - argmin`
+(-0.1405 at 0.68x, 5/5 folds): a consistent direction with an unmeasured magnitude. The
+matched-entropy random control (same 128 candidates, same entropy, no information) is worse
+than the fixed circuit by +0.034 with a fold CI above zero on 5/5 folds and is likewise below
+its MDE. The 7-parameter arms (P7, one trained RY layer) carry the same effect as the
+21-parameter ones on both bases.
+
+### The property half, on the real targets (no native in any of these numbers)
+
+    KL(p || Gibbs) on the 78 alpha = 1 targets   fixed circuit 0.9027 (max 0.984)   [S25's 0.902 reproduced]
+                                                 ADAPT, both pools, both optimisers 0.0002 (max 0.0009)
+    KL(Gibbs_zrank || product of its marginals)  mean 1.4e-4, max 7.9e-4 over 126 targets
+    L-BFGS growth at alpha = 1                   stops with no operator selected on 78 of 78 targets
+    ADAPT sequences, alpha = 0.25, pool L2       mean 13.7 distinct 2-local strings; 38 distinct sequences on 48 targets
+
+The deployed selector's target at alpha = 1 is a product state on every real target; a
+7-parameter RY layer reaches it and the 21-parameter fixed circuit stops 0.90 nats short.
+Reaching it changes the emitted structure by -0.02 A, a third of the MDE. That is the one
+sentence Proposal A earns, and it is negative: a better-optimised state on the deployed
+Hamiltonian is not visible through the readout, S25's readout-slack finding reproduced by a
+second ansatz family.
+
+Verdict for Proposal A (`s26/PROPOSAL_A.md`): REPLACE. The record now holds both halves: the
+Hamiltonian is a constant ladder whose optimum is a product state (nothing to grow), and
+growing anyway moves the answer by a third of the MDE.
+## L69 -- PROPOSAL A VERDICT ACCEPTED: REPLACE (NOT THE EXPECTED KEEP WITH EDITS); HOW SLIDES 8 AND 9 STAY DISTINCT (2026-09-13 21:40, coordinator)
+
+The campaign prompt expected KEEP WITH EDITS for Proposal A ("ADAPT-VQE is the right tool for
+the trainability question and the DLA measurement"). Lane Q's evidence (L27, L35, L68;
+`s26/PROPOSAL_A.md`) says the mechanism is absent rather than weak: the deployed objective's
+optimum is a product state on every target (KL to the product of marginals at most 7.9e-4
+nats), ADAPT offered entangling operators grows none on any of the 78 alpha = 1 targets, the
+fixed circuit's DLA is already the full so(2^n) from depth 2 so there is no expressivity gap
+for an adaptive ansatz to fill, the grown circuits give no width-scaling argument (L35), and the
+endpoint is null at 0.23x and 0.36x its MDE with fold CIs spanning zero and a stated
+resolution of 0.06 A. The prompt's own rule governs: a proposal is not softened to survive. The
+verdict REPLACE stands, subject to the Adversary's check of L68.
+
+Structure of the deck after this verdict (for lane PR): Proposal A and Proposal B both point
+at the trainability paper, so slides 8 and 9 must not say the same thing twice. Slide 8 is
+"what we learned by letting the circuit grow" (the ADAPT measurements and the product-state
+diagnosis, the reason an ansatz cannot matter here); slide 9 is "what we publish" (the
+trainability paper: the S13 locality theorem and Pauli-spectrum prediction, the S25 width sweep
+scoped to depth 3 by the DLA result, A2, A4, the product-state fact, with the venue-honest gap
+statement). Lane P's Proposal B verdict, when it lands, adds the feasible-scale ladder facts
+(B2) and the B3 characterisability result to slide 9's notes as the evidence that the original
+B had no testable form on this machine.
+
+---
+
