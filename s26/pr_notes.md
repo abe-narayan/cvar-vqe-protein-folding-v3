@@ -52,7 +52,10 @@ comparison, and a fold-clustered confidence interval next to every mean.
 The library behind retrieval: {CORPUS_PEPTIDES} peptides and {CORPUS_FRAGMENTS:,} protein
 fragments (ledger L11). The sealed benchmark of 60 was spent once (slide 4). The identity leak:
 {SELFCOPY_DEV} dev targets and {SELFCOPY_BENCH} benchmark targets carry a verbatim self-copy in
-their fold model's training set; declared, and the benchmark half is unquantified by design.
+their fold model's training set; declared. Its dev price, re-derived this sprint (L44):
+{LEAK_DEV_PRICE_FIT:+.4f} A on the lam = 0 chain (S10-4's figure reproduced) and
+{LEAK_DEV_PRICE_ARM:+.4f} A on the built chain, neither clearing its MDE; the benchmark half is
+bounded from the dev proxy without opening the benchmark (slide 4 notes).
 
 ## Slide 3 -- The pipeline, stage by stage
 
@@ -104,6 +107,12 @@ for the figure only); the RMSD printed on each figure was recomputed by `s26/pr_
 equals the production record. The benchmark numbers are typed from claim C06 of
 `s26/EXAMINATION.md`; no S26 lane opened `s9/final_report.json`, and the two benchmark means
 ({BENCH_FULL} full system, {BENCH_SHIPPED} shipped baseline) are asserted by a passing test.
+Caveat that attaches to every benchmark figure (L44, L55, L58): {SELFCOPY_BENCH} benchmark targets
+carry a verbatim self-copy in their fold model's training set; dev-proxy price
+{LEAK_DEV4_BOUND_ARM:.3f} A; own-native envelope {LEAK_BOUND_ARM_MEANCI:.3f} A (mean CI) to
+{LEAK_BOUND_ARM_WORST:.3f} A (worst target) on the built chain under assumption A2; class
+{LEAK_CLASS} under every reading, against a benchmark CI half-width of {LEAK_BENCH_CI_HALF:.3f};
+it cannot move the benchmark verdict either way.
 
 ## Slide 5 -- The quantum component: verified, then measured
 
@@ -172,8 +181,10 @@ is {POOL_BEST:.2f} angstroms, and the best inside the shipped top-75 is {TOPM_BE
 windows exist, and no native-free ranker finds them; the record closed that route at every
 level. The physics does not help either. As selectors, the Legacy potential and AMBER are worse
 than a random subset by {LEGACY_VS_RANDOM:+.3f} and {AMBER_VS_RANDOM:+.3f} angstroms, five of
-five folds, on the point-cloud basis. And relaxing the built chain with AMBER is worse than a
-random move of the same size, by {C3_AMBER_VS_RANDOM:+.4f} angstroms. The one steep lever is the
+five folds, on the point-cloud basis. And relaxing the built chain with AMBER costs
+{C3_AMBER_VS_NONE:+.4f} angstroms; a random move of the same size costs only
+{C3_RANDOM_VS_NONE:+.4f}, so the physics is worse than noise, and the difference sits in the
+Type-M zone, so its sign is what I have measured, not its size. The one steep lever is the
 distance prior. A perfect prior through the same pipeline reaches {PRIOR_PERFECT:.2f} on the
 point-cloud basis, from {PRIOR_GAMMA0:.2f}. And the pool's error is {COMMON_MODE:.0%}
 common-mode, so nothing downstream of retrieval can remove most of it. The conclusion is plain.
@@ -190,7 +201,19 @@ the built chain (`results/summary/leaderboard.json`): {LB_DISTOGRAM:.3f}, {LB_AM
 {LB_AMBER:.3f}; the ranking is unchanged. Fold CIs: Legacy vs random {LEGACY_VS_RANDOM_CI},
 AMBER vs random {AMBER_VS_RANDOM_CI}. Torsion-space ceiling {TORSION_CEILING:.3f} (ORACLE, k = 4);
 distance geometry from the true distances {DISTGEO_TRUE:.3f} (ORACLE); best window in the whole
-library {UNIVERSE_BEST:.3f} (ORACLE).
+library {UNIVERSE_BEST:.3f} (ORACLE). AMBER relaxation (L39, Adversary L46): vs the built chain
+{C3_AMBER_VS_NONE:+.4f} [fold CI {C3_AMBER_VS_NONE_CI}], {C3_AMBER_VS_NONE_X:.2f} x MDE; vs a
+move of the same size toward a random pool member {C3_AMBER_VS_MEMBER:+.4f} [{C3_AMBER_VS_MEMBER_CI}];
+vs a random move of the same size {C3_AMBER_VS_RANDOM:+.4f} [{C3_AMBER_VS_RANDOM_CI}],
+{C3_AMBER_VS_RANDOM_FOLDS}/5 folds, {C3_AMBER_VS_RANDOM_X:.2f} x MDE (Type-M zone: sign measured,
+magnitude an upper bound). A validity step on 124 of 126; on 2BP4 and 9KAR the relaxation breaks a
+virtual CA-CA bond and 9KAR does not converge. Physics as a steric reject filter at 1e4 kcal/mol
+(L43, L54, point cloud): {REJECT_R_VS_ANCHOR:+.3f} A worse than the shipped top-75 (median
+{REJECT_R_VS_ANCHOR_MEDIAN:+.3f}: near zero on the median target, the harm is tail-carried;
+Type-M) and {REJECT_R_VS_RANDR:+.3f} vs rejecting the same count at random. A free calibration
+flag, not a lever (L53): how far the relaxation moves the chain predicts its error, Spearman
+{STRAIN_RHO_MOVED:+.3f} partial on n and Rg, fold CI {STRAIN_RHO_MOVED_CI}; quartile means
+{STRAIN_QUARTILE_MEANS} A.
 
 ## Slide 8 -- Direction A: ADAPT-VQE (PENDING)
 
@@ -202,10 +225,50 @@ PENDING. This slide waits for `s26/PROPOSAL_A.md`.
 ### spoken
 PENDING. This slide waits for its build step.
 
-## Slide 10 -- Direction C: learn a better distance prior (PENDING)
+## Slide 10 -- Direction C: learn a better distance prior; physics for validity only
 
 ### spoken
-PENDING. This slide waits for its build step.
+Direction C says: learn a better distance prior, and keep physics honest. The prior bounds the
+accuracy, so the plan has five parts. C1 reproduced the closures this rests on, to the third
+decimal. A learned ranker on real features moves from {C1_S12_REAL_N8:.3f} to
+{C1_S12_REAL_FULL:.3f} angstroms as its training set grows; the same model with a leaked label
+reaches {C1_S12_LEAK_FULL:.3f}. A perfect ranker inside the shipped top-25 returns
+{C1_S17_BAND_BEST:.3f} against {C1_S17_RAND:.3f} for a random member. So learning a ranker is
+closed, and the proposal is not that. C2 is a ladder of {C2_N_RUNGS} prior inputs, from no
+language model to the full 650-million-parameter embedding. Its falsifier was fixed before the
+first run: a rung must beat the shipped posterior on the built chain by more than its own MDE,
+with a fold-clustered interval excluding zero on five of five folds. Seven rungs are trained;
+the evaluations are running. C3 asked whether AMBER relaxation is an accuracy step. It is not.
+The relaxation moves the chain {C3_MAG:.3f} angstroms and costs {C3_AMBER_VS_NONE:+.4f}; a
+random move of exactly the same size costs {C3_RANDOM_VS_NONE:+.4f}. Physics is worse than
+noise, and its displacement points slightly away from the native. So refine-with-physics is
+kept as a validity step only: it brings {C3_N_CONVERGED} of 126 chains below a thousand
+kilocalories per mole, though on two targets it breaks a virtual bond. C4, routers, and C5, a
+learned common-mode correction, are pre-registered and pending. The verdict on C is pending the
+ladder.
+
+### also
+Verdict form (campaign prompt): KEEP AS STATED / KEEP WITH EDITS / REPLACE; lane P's
+`s26/PROPOSAL_C.md` is DRAFT and its verdict is pending C2 to C5. The C1 learning curve spans
+{C1_S12_REAL_N8:.4f} (n = 8) to {C1_S12_REAL_FULL:.4f} (full) on the weighted-average basis;
+the leaked label reaches {C1_S12_LEAK_N8:.4f} at n = 8. Perfect ranker in the top-25
+{C1_S17_BAND_BEST:.4f}, random member {C1_S17_RAND:.4f}, distogram argmin {C1_S17_DIST_PICK:.4f}
+(single window). C2 anchor (L56, L57): selection max abs {C2_ANCHOR_SEL_MAXABS:.1e} and point
+cloud {C2_ANCHOR_CLOUD_MAXABS:.1e} against the production cache; the built chain through the
+ladder's own path is {C2_ANCHOR_ARM:.4f} A, the leaderboard-rebuild basis, so every C2 contrast
+is paired on that basis and the 0.002 A offset to {ARM_MEAN:.4f} is a basis difference, not an
+effect. Rungs with all five fold checkpoints on disk at build time: {C2_RUNGS_TRAINED}. C3 (L39,
+L46): AMBER vs built chain {C3_AMBER_VS_NONE:+.4f} [fold CI {C3_AMBER_VS_NONE_CI}], vs random
+{C3_AMBER_VS_RANDOM:+.4f} [{C3_AMBER_VS_RANDOM_CI}] at {C3_AMBER_VS_RANDOM_X:.2f} x MDE (Type-M:
+sign measured, magnitude an upper bound), vs toward-member {C3_AMBER_VS_MEMBER:+.4f}
+[{C3_AMBER_VS_MEMBER_CI}]; ORACLE cosine of the displacement with the true residual
+{C3_COS:+.3f}, positive on {C3_COS_FRAC_POS:.1%} of targets; before relaxation
+{C3_FRAC_E0_OVER_1E4:.1%} of built chains sit above 1e4 kcal/mol; after it {C3_N_CONVERGED} of
+126 converge (9KAR ends at {C3_E1_MAX:.0f} kcal/mol) and the virtual CA-CA bond stretches from
+{C3_BOND_BEFORE:.3f} to {C3_BOND_AFTER:.3f} A. The free calibration flag (L53): the distance the
+relaxation moves a chain predicts its error, Spearman {STRAIN_RHO_MOVED:+.3f} partial on n and Rg;
+never a selector. Stage 2 of C3 repeats the seven contrasts on the best C2 rung when lane P
+delivers it.
 
 ## Slide 11 -- Goal and ask
 

@@ -349,8 +349,11 @@ def slide_07(prs, V):
          f"{F(V,'TOPM_BEST','.2f')} A one (ORACLE); no native-free ranker finds them", {}),
         (f"physics as a selector: Legacy {F(V,'LEGACY_VS_RANDOM','+.3f')} A and AMBER {F(V,'AMBER_VS_RANDOM','+.3f')} A WORSE than a random "
          f"75-subset, {F(V,'LEGACY_VS_RANDOM_FOLDS')}/5 folds each (point-cloud basis; fold CIs in the notes)", {}),
-        (f"physics as a relaxer: AMBER is {F(V,'C3_AMBER_VS_RANDOM','+.4f')} A worse than a random move of its own size, fold CI "
-         f"{F(V,'C3_AMBER_VS_RANDOM_CI','+.4f')}; a validity step, not an accuracy step", {}),
+        (f"physics as a relaxer: AMBER costs {F(V,'C3_AMBER_VS_NONE','+.4f')} A against the built chain ({F(V,'C3_AMBER_VS_NONE_X','.2f')} x MDE) "
+         f"and is {F(V,'C3_AMBER_VS_RANDOM','+.4f')} A worse than a random move of its own size (fold CI {F(V,'C3_AMBER_VS_RANDOM_CI','+.4f')}, "
+         "Type-M zone: sign measured, size an upper bound); a validity step on 124 of 126", {}),
+        (f"physics as a steric reject filter (1e4 kcal/mol, point cloud): {F(V,'REJECT_R_VS_ANCHOR','+.3f')} A worse than the shipped top-75, "
+         f"median {F(V,'REJECT_R_VS_ANCHOR_MEDIAN','+.3f')} (tail-carried; Type-M)", {}),
         ("search: the exact argmin over the whole latent ties the pool (S21)", {}),
         ("Open", dict(bold=True, color=ACCENT, bullet=False)),
         (f"the prior: {F(V,'PRIOR_SLOPE','.2f')} A per unit toward the true distances; a perfect prior through the same pipeline reaches "
@@ -363,6 +366,45 @@ def slide_07(prs, V):
          f"Point cloud: production {F(V,'AVG_MEAN','.4f')}, random-75 {F(V,'RANDOM75','.4f')}, perfect prior {F(V,'PRIOR_PERFECT','.3f')}. "
          f"Single window: pool best {F(V,'POOL_BEST','.3f')}, top-75 best {F(V,'TOPM_BEST','.3f')}, whole library {F(V,'UNIVERSE_BEST','.3f')}.", dict(bullet=False)),
     ], size=10.5, color=MUTED)
+    return s
+
+
+def slide_10(prs, V):
+    s = new_slide(prs, "Direction C: learn a better distance prior; physics for validity, not accuracy", 10,
+                  "from s26/PROPOSAL_C.md (DRAFT, lane P) and s26/C3_RESULT.md (lane PH, L39, Adversary L46); verdict PENDING C2 to C5")
+    add_text(s, 0.6, 1.4, 6.2, 5.6, [
+        ("What the proposal says", dict(bold=True, color=ACCENT, bullet=False)),
+        ("The prior bounds the accuracy; improve it by learning: better inputs (C2), physics kept honest (C3), routers for the "
+         "per-target set size (C4), a learned correction of the common-mode error (C5); C1 reproduces the closures first.", {}),
+        ("Not 'learn a better ranker': ranking inside the pool is closed at four levels; the prior is the only steep lever.", {}),
+        ("C1, final: the closures reproduce to the third decimal", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"set-transformer ranker, real features: {F(V,'C1_S12_REAL_N8','.3f')} (n = 8) to {F(V,'C1_S12_REAL_FULL','.3f')} A (full); "
+         f"with a leaked label {F(V,'C1_S12_LEAK_N8','.3f')} to {F(V,'C1_S12_LEAK_FULL','.3f')} (ORACLE; weighted-average basis)", {}),
+        (f"perfect ranker inside the shipped top-25: {F(V,'C1_S17_BAND_BEST','.3f')} A vs random member {F(V,'C1_S17_RAND','.3f')} "
+         f"and distogram argmin {F(V,'C1_S17_DIST_PICK','.3f')} (single window)", {}),
+        ("C2, running: the prior-input ladder", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"{F(V,'C2_N_RUNGS')} rungs (no ESM, contact head only, pca32, pca32f, pca128, raw, 8M vs 650M, wide, pairnet, mix); "
+         f"{F(V,'C2_RUNGS_TRAINED')} rungs have all five fold models on disk; evaluations running", {}),
+        ("falsifier, fixed before the first run: beat the shipped posterior on the built chain by more than its own MDE, "
+         "fold-clustered CI excluding zero, 5/5 folds", {}),
+        (f"anchor: selection and point cloud reproduce the production cache ({F(V,'C2_ANCHOR_SEL_MAXABS','.0e')}, "
+         f"{F(V,'C2_ANCHOR_CLOUD_MAXABS','.1e')}); built chain on the rebuild basis {F(V,'C2_ANCHOR_ARM','.4f')} A (L57)", {}),
+    ], size=12, spacing=3)
+    add_text(s, 7.05, 1.4, 5.85, 5.6, [
+        ("C3, final: refine-with-physics is a validity step, not an accuracy step", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"the production relaxation moves the built chain {F(V,'C3_MAG','.3f')} A and costs {F(V,'C3_AMBER_VS_NONE','+.4f')} A "
+         f"(fold CI {F(V,'C3_AMBER_VS_NONE_CI','+.4f')}), {F(V,'C3_AMBER_VS_NONE_X','.2f')} x MDE (relaxed minus built chain)", {}),
+        (f"a random move of the same size costs {F(V,'C3_RANDOM_VS_NONE','+.4f')} A {F(V,'C3_RANDOM_VS_NONE_CI','+.4f')}; "
+         f"AMBER minus random {F(V,'C3_AMBER_VS_RANDOM','+.4f')} {F(V,'C3_AMBER_VS_RANDOM_CI','+.4f')}, "
+         f"{F(V,'C3_AMBER_VS_RANDOM_FOLDS')}/5 folds, {F(V,'C3_AMBER_VS_RANDOM_X','.2f')} x MDE: Type-M zone, sign measured, size an upper bound", {}),
+        (f"AMBER minus a move of the same size toward a random pool member: {F(V,'C3_AMBER_VS_MEMBER','+.4f')} A "
+         f"{F(V,'C3_AMBER_VS_MEMBER_CI','+.4f')}; ORACLE cosine of the displacement with the true residual: {F(V,'C3_COS','+.3f')}", {}),
+        (f"what validity buys: {F(V,'C3_FRAC_E0_OVER_1E4','.1%')} of built chains start above 1e4 kcal/mol; {F(V,'C3_N_CONVERGED')} of 126 "
+         f"converge below 1000 (9KAR ends at {F(V,'C3_E1_MAX','.0f')}); a validity step on 124 of 126, on 2BP4 and 9KAR it breaks a virtual bond", {}),
+        ("C4, C5: pre-registered, pending", dict(bold=True, color=ACCENT, bullet=False)),
+        ("routers on a feature set no previous router used (C4); predict and subtract the common mode (C5)", {}),
+        ("Verdict: PENDING the ladder (KEEP AS STATED / KEEP WITH EDITS / REPLACE, per lane P)", dict(bold=True)),
+    ], size=12, spacing=3)
     return s
 
 
@@ -452,10 +494,9 @@ def main():
 
     prs = Presentation()
     prs.slide_width = Inches(W); prs.slide_height = Inches(H)
-    builders = {1: slide_01, 2: slide_02, 3: slide_03, 4: slide_04, 5: slide_05, 6: slide_06, 7: slide_07, 11: slide_11}
+    builders = {1: slide_01, 2: slide_02, 3: slide_03, 4: slide_04, 5: slide_05, 6: slide_06, 7: slide_07, 10: slide_10, 11: slide_11}
     pending = {8: ("Direction A: ADAPT-VQE on this Hamiltonian", "s26/PROPOSAL_A.md"),
-               9: ("Direction B: a learned folding model as the prior", "s26/PROPOSAL_B.md and s26/PROPOSAL_B_REPLACEMENT.md"),
-               10: ("Direction C: learn a better distance prior", "s26/PROPOSAL_C.md and s26/C3_RESULT.md")}
+               9: ("Direction B: a learned folding model as the prior", "s26/PROPOSAL_B.md and s26/PROPOSAL_B_REPLACEMENT.md")}
     spoken_by_slide = {}
     manifest = {}
     for no in range(1, 12):

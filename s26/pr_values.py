@@ -343,6 +343,68 @@ def load_values():
     put("C3_BOND_AFTER", nf["amb_bond_mean"]["mean"], "s26/results/ph_c3_nativefree.json :: summary/amb_bond_mean/mean")
     put("C3_BOND_BEFORE", nf["ca_bond_mean"]["mean"], "s26/results/ph_c3_nativefree.json :: summary/ca_bond_mean/mean")
 
+    # ------------------------------------------------------------------ L43 (steric reject), L44/L58 (the 2/60 bound), L53 (strain)
+    rr = _j("s26/results/ph_reject_report.json")["report"]["point_cloud"]["1e4"]
+    put("REJECT_R_VS_ANCHOR", rr["R_vs_anchor_all"]["effect"], "s26/results/ph_reject_report.json :: report/point_cloud/1e4/R_vs_anchor_all/effect",
+        basis="point_cloud", note="L43; Type-M zone (1.17x MDE), tail-carried (L54)")
+    put("REJECT_R_VS_ANCHOR_CI", rr["R_vs_anchor_all"]["ci95_fold"], "s26/results/ph_reject_report.json :: report/point_cloud/1e4/R_vs_anchor_all/ci95_fold", basis="point_cloud")
+    put("REJECT_R_VS_ANCHOR_MEDIAN", rr["R_vs_anchor_all"]["median_effect"], "s26/results/ph_reject_report.json :: report/point_cloud/1e4/R_vs_anchor_all/median_effect", basis="point_cloud")
+    put("REJECT_R_VS_RANDR", rr["R_vs_RANDR_all"]["effect"], "s26/results/ph_reject_report.json :: report/point_cloud/1e4/R_vs_RANDR_all/effect",
+        basis="point_cloud", note="L43; Type-M zone (1.26x MDE)")
+    wb = _j("s26/results/w_selfcopy_bound.json")
+    er = wb["verdict"]["arm"]["envelope_readings_A"]
+    put("LEAK_BOUND_ARM_MEANCI", er["mean_ci_limit"], "s26/results/w_selfcopy_bound.json :: verdict/arm/envelope_readings_A/mean_ci_limit", basis="built_chain", note="L44/L58; (2/60) x the own-native envelope's fold-CI limit")
+    put("LEAK_BOUND_ARM_WORST", er["worst_target"], "s26/results/w_selfcopy_bound.json :: verdict/arm/envelope_readings_A/worst_target", basis="built_chain", note="L58; worst single target " + str(er["worst_target_pdb"]))
+    put("LEAK_CLASS", wb["verdict"]["arm"]["class_under_every_reading"], "s26/results/w_selfcopy_bound.json :: verdict/arm/class_under_every_reading")
+    put("LEAK_BENCH_CI_HALF", wb["bench_ci_half"], "s26/results/w_selfcopy_bound.json :: bench_ci_half", note="half-width of the benchmark CI, the materiality scale")
+    we = _j("s26/results/w_selfcopy_endpoint.json")["A"]
+    put("LEAK_DEV_PRICE_FIT", -we["ge06_mean_delta_all126"]["fit"], "s26/results/w_selfcopy_endpoint.json :: -A/ge06_mean_delta_all126/fit (clean minus production, lam = 0 chain)",
+        status="DERIVED", basis="fit (lam = 0 chain)", note="L44: S10-4's +0.0004 re-derived; fold CI [-0.0001, +0.0010], MDE 0.0012")
+    put("LEAK_DEV_PRICE_ARM", -we["ge06_mean_delta_all126"]["arm"], "s26/results/w_selfcopy_endpoint.json :: -A/ge06_mean_delta_all126/arm (clean minus production)",
+        status="DERIVED", basis="built_chain", note="L44: +0.0018 [-0.0003, +0.0039]")
+    put("LEAK_DEV4_BOUND_ARM", wb["signed_bounds_gated"]["A_real4"]["arm"],
+        "s26/results/w_selfcopy_bound.json :: signed_bounds_gated/A_real4/arm (dev-proxy price, (2/60) x the signed max over the four dev self-copies)",
+        basis="built_chain", note="L44 Part D: 0.0023, IMMATERIAL")
+    stt = _j("s26/results/ph_strain.json")
+    sm = stt["summary"]["partial_n_rg"]["moved"]
+    put("STRAIN_RHO_MOVED", sm["rho"], "s26/results/ph_strain.json :: summary/partial_n_rg/moved/rho", note="L53; Spearman with rmsd_arm, partial on n and Rg; replicated (ph_strain_rep.json)")
+    put("STRAIN_RHO_MOVED_CI", sm["ci95_fold"], "s26/results/ph_strain.json :: summary/partial_n_rg/moved/ci95_fold")
+    srows = stt["rows"]
+    mv = np.array([r["moved"] for r in srows]); ar = np.array([r["rmsd_arm"] for r in srows])
+    order = np.argsort(mv, kind="stable")
+    qm = [float(ar[order[0:32]].mean()), float(ar[order[32:64]].mean()), float(ar[order[64:96]].mean()), float(ar[order[96:]].mean())]
+    put("STRAIN_QUARTILE_MEANS", qm, "s26/results/ph_strain.json :: rows[*]/{moved, rmsd_arm}: mean rmsd_arm by quartile of moved (32/32/32/30)",
+        status="DERIVED", basis="built_chain", note="L53: 2.286 / 2.936 / 3.758 / 3.923; a calibration flag, never a gain")
+
+    # ------------------------------------------------------------------ Proposal C: C1 closures (L26), C2 anchor (L56/L57)
+    put("C1_S12_REAL_N8", _j("s12/results/agg_dec_v2_n8.json")["mean_raw"], "s12/results/agg_dec_v2_n8.json :: mean_raw", basis="point_cloud (weighted average)",
+        note="L26: set-transformer ranker, real features, 8 training targets")
+    put("C1_S12_REAL_FULL", _j("s12/results/agg_dec_v2.json")["mean_raw"], "s12/results/agg_dec_v2.json :: mean_raw", basis="point_cloud (weighted average)",
+        note="L26: the same, full training set (ntrain None = all)")
+    put("C1_S12_LEAK_N8", _j("s12/results/agg_dec_v2_oracle_n8.json")["mean_raw"], "s12/results/agg_dec_v2_oracle_n8.json :: mean_raw", basis="point_cloud (weighted average)",
+        note="L26: the same model with a leaked (ORACLE) label, 8 training targets")
+    put("C1_S12_LEAK_FULL", _j("s12/results/agg_dec_v2_oracle.json")["mean_raw"], "s12/results/agg_dec_v2_oracle.json :: mean_raw", basis="point_cloud (weighted average)",
+        note="ORACLE label, full training set")
+    ib = _j("s17/results/inband.json")["rows"]
+    put("C1_S17_BAND_BEST", float(np.mean([r["cells"]["25"]["band_best"] for r in ib])), "s17/results/inband.json :: rows[*]/cells/25/band_best (mean over 126)",
+        status="DERIVED", basis="single_window", note="L26: a perfect ranker inside the shipped top-25 (ORACLE)")
+    put("C1_S17_RAND", float(np.mean([r["cells"]["25"]["rand"] for r in ib])), "s17/results/inband.json :: rows[*]/cells/25/rand (mean over 126)",
+        status="DERIVED", basis="single_window", note="a random member of the top-25")
+    put("C1_S17_DIST_PICK", float(np.mean([r["cells"]["25"]["dist_pick"] for r in ib])), "s17/results/inband.json :: rows[*]/cells/25/dist_pick (mean over 126)",
+        status="DERIVED", basis="single_window", note="the distogram argmin")
+    pa = _j("s26/results/p_ladder_report_shipped_s0.json")
+    put("C2_ANCHOR_SEL_MAXABS", pa["sel"]["maxabs_vs_cache"], "s26/results/p_ladder_report_shipped_s0.json :: sel/maxabs_vs_cache", note="L56: the anchor vs the production cache, selection")
+    put("C2_ANCHOR_CLOUD_MAXABS", pa["cloud"]["maxabs_vs_cache"], "s26/results/p_ladder_report_shipped_s0.json :: cloud/maxabs_vs_cache", note="L56: point cloud")
+    put("C2_ANCHOR_ARM", pa["arm"]["mean"], "s26/results/p_ladder_report_shipped_s0.json :: arm/mean", basis="built_chain (leaderboard-rebuild basis, L57)")
+    put("C2_ANCHOR_ARM_MAXABS", pa["arm"]["maxabs_vs_cache"], "s26/results/p_ladder_report_shipped_s0.json :: arm/maxabs_vs_cache", note="L57: the projection lands in a different local optimum on 120/126")
+    mdir = os.path.join(ROOT, "s26", "models", "p_ladder")
+    present = set(os.listdir(mdir)) if os.path.isdir(mdir) else set()
+    cands = {f.split("_fold")[0] for f in present if f.endswith("_s0.pt") and "probe" not in f}
+    rungs_trained = sorted(r for r in cands if all(f"{r}_fold{k}_s0.pt" in present for k in range(5)))
+    put("C2_RUNGS_TRAINED", len(rungs_trained), "s26/models/p_ladder/<rung>_fold{0..4}_s0.pt (rungs with all five fold checkpoints; L41 lists noesm, conly, pca32, wide, pca32f, pca128, esm8m)",
+        status="DERIVED", note=", ".join(rungs_trained))
+    put("C2_N_RUNGS", 11, "s26/PREREG_C2.md / s26/PROPOSAL_C.md: rungs shipped, noesm, conly, pca32, pca32f, pca128, raw, esm8m, wide, pairnet, mix", status="LEDGER")
+
     # ------------------------------------------------------------------ tests, corpus, leak counts
     tr = _j("s26/results/test_run.json")["combined"]
     put("TESTS_TOTAL", int(tr["total"]), "s26/results/test_run.json :: combined/total")

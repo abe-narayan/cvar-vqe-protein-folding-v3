@@ -1400,6 +1400,206 @@
   "basis": "",
   "note": ""
  },
+ "REJECT_R_VS_ANCHOR": {
+  "value": 0.22764211054325553,
+  "path": "s26/results/ph_reject_report.json :: report/point_cloud/1e4/R_vs_anchor_all/effect",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": "L43; Type-M zone (1.17x MDE), tail-carried (L54)"
+ },
+ "REJECT_R_VS_ANCHOR_CI": {
+  "value": [
+   0.1466219188175214,
+   0.32320948307610614
+  ],
+  "path": "s26/results/ph_reject_report.json :: report/point_cloud/1e4/R_vs_anchor_all/ci95_fold",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "REJECT_R_VS_ANCHOR_MEDIAN": {
+  "value": 0.002691113726071781,
+  "path": "s26/results/ph_reject_report.json :: report/point_cloud/1e4/R_vs_anchor_all/median_effect",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": ""
+ },
+ "REJECT_R_VS_RANDR": {
+  "value": 0.1671692836241295,
+  "path": "s26/results/ph_reject_report.json :: report/point_cloud/1e4/R_vs_RANDR_all/effect",
+  "status": "SOURCED",
+  "basis": "point_cloud",
+  "note": "L43; Type-M zone (1.26x MDE)"
+ },
+ "LEAK_BOUND_ARM_MEANCI": {
+  "value": 0.027706837583528005,
+  "path": "s26/results/w_selfcopy_bound.json :: verdict/arm/envelope_readings_A/mean_ci_limit",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "L44/L58; (2/60) x the own-native envelope's fold-CI limit"
+ },
+ "LEAK_BOUND_ARM_WORST": {
+  "value": 0.15120585940089346,
+  "path": "s26/results/w_selfcopy_bound.json :: verdict/arm/envelope_readings_A/worst_target",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "L58; worst single target 2BP4"
+ },
+ "LEAK_CLASS": {
+  "value": "MINOR (0.017 to 0.170 A)",
+  "path": "s26/results/w_selfcopy_bound.json :: verdict/arm/class_under_every_reading",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "LEAK_BENCH_CI_HALF": {
+  "value": 0.17,
+  "path": "s26/results/w_selfcopy_bound.json :: bench_ci_half",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "half-width of the benchmark CI, the materiality scale"
+ },
+ "LEAK_DEV_PRICE_FIT": {
+  "value": 0.0003867894866730275,
+  "path": "s26/results/w_selfcopy_endpoint.json :: -A/ge06_mean_delta_all126/fit (clean minus production, lam = 0 chain)",
+  "status": "DERIVED",
+  "basis": "fit (lam = 0 chain)",
+  "note": "L44: S10-4's +0.0004 re-derived; fold CI [-0.0001, +0.0010], MDE 0.0012"
+ },
+ "LEAK_DEV_PRICE_ARM": {
+  "value": 0.0017504143584508483,
+  "path": "s26/results/w_selfcopy_endpoint.json :: -A/ge06_mean_delta_all126/arm (clean minus production)",
+  "status": "DERIVED",
+  "basis": "built_chain",
+  "note": "L44: +0.0018 [-0.0003, +0.0039]"
+ },
+ "LEAK_DEV4_BOUND_ARM": {
+  "value": 0.0022779839485171185,
+  "path": "s26/results/w_selfcopy_bound.json :: signed_bounds_gated/A_real4/arm (dev-proxy price, (2/60) x the signed max over the four dev self-copies)",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "L44 Part D: 0.0023, IMMATERIAL"
+ },
+ "STRAIN_RHO_MOVED": {
+  "value": 0.4325669291338583,
+  "path": "s26/results/ph_strain.json :: summary/partial_n_rg/moved/rho",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L53; Spearman with rmsd_arm, partial on n and Rg; replicated (ph_strain_rep.json)"
+ },
+ "STRAIN_RHO_MOVED_CI": {
+  "value": [
+   0.24715403137333128,
+   0.587580518912838
+  ],
+  "path": "s26/results/ph_strain.json :: summary/partial_n_rg/moved/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "STRAIN_QUARTILE_MEANS": {
+  "value": [
+   2.286050405639703,
+   2.936410873698196,
+   3.758273630199497,
+   3.92256307751297
+  ],
+  "path": "s26/results/ph_strain.json :: rows[*]/{moved, rmsd_arm}: mean rmsd_arm by quartile of moved (32/32/32/30)",
+  "status": "DERIVED",
+  "basis": "built_chain",
+  "note": "L53: 2.286 / 2.936 / 3.758 / 3.923; a calibration flag, never a gain"
+ },
+ "C1_S12_REAL_N8": {
+  "value": 3.0433444263854663,
+  "path": "s12/results/agg_dec_v2_n8.json :: mean_raw",
+  "status": "SOURCED",
+  "basis": "point_cloud (weighted average)",
+  "note": "L26: set-transformer ranker, real features, 8 training targets"
+ },
+ "C1_S12_REAL_FULL": {
+  "value": 3.025847103428913,
+  "path": "s12/results/agg_dec_v2.json :: mean_raw",
+  "status": "SOURCED",
+  "basis": "point_cloud (weighted average)",
+  "note": "L26: the same, full training set (ntrain None = all)"
+ },
+ "C1_S12_LEAK_N8": {
+  "value": 2.5342399579138384,
+  "path": "s12/results/agg_dec_v2_oracle_n8.json :: mean_raw",
+  "status": "SOURCED",
+  "basis": "point_cloud (weighted average)",
+  "note": "L26: the same model with a leaked (ORACLE) label, 8 training targets"
+ },
+ "C1_S12_LEAK_FULL": {
+  "value": 2.145950164595157,
+  "path": "s12/results/agg_dec_v2_oracle.json :: mean_raw",
+  "status": "SOURCED",
+  "basis": "point_cloud (weighted average)",
+  "note": "ORACLE label, full training set"
+ },
+ "C1_S17_BAND_BEST": {
+  "value": 2.608683702391321,
+  "path": "s17/results/inband.json :: rows[*]/cells/25/band_best (mean over 126)",
+  "status": "DERIVED",
+  "basis": "single_window",
+  "note": "L26: a perfect ranker inside the shipped top-25 (ORACLE)"
+ },
+ "C1_S17_RAND": {
+  "value": 3.4675921206422093,
+  "path": "s17/results/inband.json :: rows[*]/cells/25/rand (mean over 126)",
+  "status": "DERIVED",
+  "basis": "single_window",
+  "note": "a random member of the top-25"
+ },
+ "C1_S17_DIST_PICK": {
+  "value": 3.4540004861635283,
+  "path": "s17/results/inband.json :: rows[*]/cells/25/dist_pick (mean over 126)",
+  "status": "DERIVED",
+  "basis": "single_window",
+  "note": "the distogram argmin"
+ },
+ "C2_ANCHOR_SEL_MAXABS": {
+  "value": 0.0,
+  "path": "s26/results/p_ladder_report_shipped_s0.json :: sel/maxabs_vs_cache",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L56: the anchor vs the production cache, selection"
+ },
+ "C2_ANCHOR_CLOUD_MAXABS": {
+  "value": 7.252531908363835e-14,
+  "path": "s26/results/p_ladder_report_shipped_s0.json :: cloud/maxabs_vs_cache",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L56: point cloud"
+ },
+ "C2_ANCHOR_ARM": {
+  "value": 3.212625219723354,
+  "path": "s26/results/p_ladder_report_shipped_s0.json :: arm/mean",
+  "status": "SOURCED",
+  "basis": "built_chain (leaderboard-rebuild basis, L57)",
+  "note": ""
+ },
+ "C2_ANCHOR_ARM_MAXABS": {
+  "value": 0.17105348013527433,
+  "path": "s26/results/p_ladder_report_shipped_s0.json :: arm/maxabs_vs_cache",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L57: the projection lands in a different local optimum on 120/126"
+ },
+ "C2_RUNGS_TRAINED": {
+  "value": 7,
+  "path": "s26/models/p_ladder/<rung>_fold{0..4}_s0.pt (rungs with all five fold checkpoints; L41 lists noesm, conly, pca32, wide, pca32f, pca128, esm8m)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "conly, esm8m, noesm, pca128, pca32, pca32f, wide"
+ },
+ "C2_N_RUNGS": {
+  "value": 11,
+  "path": "s26/PREREG_C2.md / s26/PROPOSAL_C.md: rungs shipped, noesm, conly, pca32, pca32f, pca128, raw, esm8m, wide, pairnet, mix",
+  "status": "LEDGER",
+  "basis": "",
+  "note": ""
+ },
  "TESTS_TOTAL": {
   "value": 370,
   "path": "s26/results/test_run.json :: combined/total",
