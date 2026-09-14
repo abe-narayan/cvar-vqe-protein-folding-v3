@@ -25,6 +25,9 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 19:14 running: RESUMED after the 10:10 governor kill and session cut (L40, L41); box at 83% with nothing of ours running (user load); governor v2 restarted (pid 26384); relaunching all lanes; spawning PR.
 - 2026-09-13 19:14 next: one governed job at a time under 1 GB; Q finishes A1 (33/126 checkpointed) then A3; P evaluates the trained rungs; PH reject cloud+chain; W endpoint; A checks + tournament; E report reconcile.
 
+- 2026-09-13 19:34 running: box freed to 76% (4.0 GB avail); jobs a1_build (Q, 44/126 cells), ph_reject_chain (PH, 9/126), w_tiebreak_draws (W); tournament ranked and assigned (L51); L52, L53 in; PR building slides 1-7, 11.
+- 2026-09-13 19:34 next: P evaluates rungs one by one (told to wait on each job instead of ending its turn); A checks L43/L44/L52/L53; relay P's rung file to PH; PROPOSAL_A after A1; verdict entry for slide 11.
+
 ## E (Examiner / Librarian)
 - 2026-09-13 00:12 running: e_reproduce (126 records through s12.instrument), e_trace_1S9Z then e_trace_9KAR under jobrun; module_map.json (699 modules) and pinned_hashes.json (benchmark manifest matches S20) written.
 - 2026-09-13 00:12 next: finish reading core/energy, core/amber, the 24 root modules, s5/s7/s8/s9, tests, verify, resultslab; then write EXAMINATION.md sections A-H.
