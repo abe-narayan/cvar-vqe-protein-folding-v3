@@ -93,6 +93,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-14 03:12 next: at 04:00 stop the chain if equiv is not done; ledger table; examine.py on the final tree; closure table + hygiene list; final commit by ~04:20.
 - 2026-09-14 03:53 running: project_stability (20th audit, 77 targets, ~04:11); 19/20 done: 5 IDENTICAL, 11 DIFFERS all read (timings / keys / added fields / the repair of found defects), 3 no-JSON, 1 error by construction. examine.py final: 787 modules, no drift, 21/21 claims. Findings closure table + hygiene list written; ledger table script staged.
 - 2026-09-14 03:53 next: when stability lands: its reading, ledger table entry, fill the findings, final commit, two lines to the coordinator (~04:15).
+- 2026-09-14 04:13 running: nothing. CLOSED. 20/20 verify audits ran (L141 table): 5 IDENTICAL, 11 DIFFERS all read as timings / keys / added fields / repaired defects, 3 no-JSON, 1 error by construction; opt-in tier 11/11; rebuild REPRODUCED; AST gate 50/55 + 5 ledgered; examine 787 modules / no drift / 21/21 claims.
+- 2026-09-14 04:13 next: final commit, then the lane finishes. Watchdog s26/i_tree_watchdog.py left running for lane-I jobs only (none registered); it may be stopped at the close.
 
 ## Q (Quantum lane)
 - 2026-09-13 08:50 running: resumed after the session cut at 00:46; q_*.py, probes and reference MDEs committed (2fb2998b); PREREG_A2/A4 on disk; launching A2 (DLA, s26/q_dla.py) and A4 (variance, s26/q_var.py) under the governor per the coordinator ruling.
@@ -120,6 +122,10 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-14 00:50 next: A3 label/stats/ledger when the build lands; A1 replication launch held per L108 until pytest_slow_integration2 and resultslab_rebuild are both registered (resultslab_rebuild is); a2_dla_a1 entry and figure when it lands.
 - 2026-09-14 02:25 running: A3 complete (ledger L125: entropy-matched target-dependent Hamiltonians null at 0.04x MDE; unmatched sharper ones worse by +0.09 to +0.11 A at 0.7 to 0.8x MDE, Type-M zone; 124/126 distinct states under zraw_Tmatch; two zrank property predictions falsified and recorded). The A1 seed-1 / reversed-order replication (a1s1_build) is launched as one governed process; a2_dla_a1 still waiting on the CPU mean.
 - 2026-09-14 02:25 next: a1s1 label/stats/ledger; a2_dla_a1 entry and figure; findings section 3 (A3); PROPOSAL_B_REPLACEMENT figure list.
+- 2026-09-14 04:10 running: a1s1_build at 114+/126 (seed 1, reversed order; label/stats/entry posted if it lands by 04:20, else a checkpoint entry). a2_dla_a1 complete and posted (L138); F5 captions carry 'at depth 3'; findings closed (sections 10, 11).
+- 2026-09-14 04:10 next: a1s1 entry by 04:20; final commit by 04:25.
+- 2026-09-14 04:15 done: a1s1 replication complete and posted (L139: the seed-0 null is not stable; seed 1 at 0.71x / 0.79x MDE, fold CIs excluding zero; A1 NOT MEASURED on either seed; the seed spread is the fixed comparator's). All lane-Q files committed.
+- 2026-09-14 04:15 next: nothing running; nothing pending. Lane Q closes.
 ## P (Prior / Learning lane)
 - 2026-09-13 00:20 running: read LANE_CONTRACT, state brief, S24 ledger (all), S25/S23/S22/S17/S19 sections, S7/S8/S9/S10 findings, S12 dossier+agg, core/predict, data, distogram, esm_features, pairnet, s7/repr_select, priorladder, instrument, stats_lib, errdecomp; probes p_probe_esm (CPU, 1.0 GB) then p_probe_esmcache (ESM, 2.5 GB) launched under jobrun.
 - 2026-09-13 00:20 next: write PREREG_C1..C5, PREREG_B1..B3, three IDEA files, s26/p_ladder.py + synthetic unit test, C2 one-fold training-time probe, B1 feasibility json, agentP_FINDINGS.md; no endpoint runs before sign-off.
