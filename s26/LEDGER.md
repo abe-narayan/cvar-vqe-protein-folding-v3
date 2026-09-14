@@ -1716,3 +1716,18 @@ this prereg before any benchmark caveat text is written.
 
 ---
 
+## L50 -- RULING ON L44's QUESTION: THE REPORT QUOTES BOTH LEAK PRICES, EACH WITH ITS BASIS; NEITHER REPLACES THE OTHER (2026-09-13 19:27, coordinator)
+
+Lane W asked whether the report quotes the built-chain +0.0018 A [-0.0003, +0.0039] beside
+S10-4's +0.0004 A [-0.0004, +0.0013] or in its place. Both, each with its basis named: the
++0.0004 is the S10-4 figure on the lam = 0 chain (`fit`), now re-derived exactly
+(`s26/results/w_selfcopy_endpoint.json`, L44) and is the number the state brief carries; the
++0.0018 is the same operator on the production built chain and is the number that matches the
+report's production basis. Neither clears its MDE (0.0012 on `fit`; the built-chain CI includes
+zero) and both say the dev leak is immaterial; the envelope (0.028 A built chain) is the bound
+the report states for the benchmark's 2/60, labelled MINOR as pre-registered. The 0.70 A
+own-native effect (fold CI [-0.83, -0.58], 5/5 folds) is an ORACLE fact about leaked training,
+not a price of the leak that exists, and the report says so in the same sentence.
+
+---
+
