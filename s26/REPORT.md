@@ -1930,7 +1930,28 @@ predicted torsions) and the constant helix (`s14/results/ladder.json`, 4.0648 A 
 Paired against the production built chain 3.2148: torsion predictor +0.5557 A (median +0.2314,
 SE 0.1318, MDE 0.3694, 37W/89L); helix +0.8500 (SE 0.1494, 32W/94L); torsion predictor against
 helix -0.2943 (SE 0.0807, 69W/57L); on FAIL18 the three emit 5.569 / 6.032 / 5.887 A. The
-arm-choice ORACLE over {pipeline, torsion predictor, helix} is an order statistic (L14).
+arm-choice ORACLE over {pipeline, torsion predictor, helix} is an order statistic (L14). The B3
+question proper, whether the set of targets where the pipeline beats sequence-only is
+characterisable native-free (L106, corrected by L107): `s26/PREREG_B3.md`; `s26/p_b3.py run` ->
+`s26/results/p_b3.json` (job `p_b3_run`, 100 s, peak RSS 0.053 GB); 45 native-free features
+(`s26/results/p_b3_features.json`: length, composition, the top-75 members' helix / strand / coil
+content, distogram entropy, ESM contact-map and retrieval-score statistics), a nested
+leave-fold-out ridge and a 300-draw label-permutation null; built chains on both sides
+(pipeline 3.2148, torsion predictor 3.7705, constant helix 4.0648). The sign classifier is at its
+permutation null against both comparators (held-out balanced accuracy 0.522 against a null 95th
+percentile of 0.578 for the torsion predictor, p = 0.263; 0.557 against 0.566 for the helix,
+p = 0.093); the regression of the gain's size reduces the held-out squared error by -0.5366 (SE
+0.2309, 0.83x MDE, NOT MEASURED) against the torsion predictor and by -1.1420 (SE 0.3415, 1.19x
+MDE, fold CI [-1.495, -0.700], 5/5, 94W/32L, Type-M zone) against the helix. The falsifier
+required both halves; the size of the gain over a helix is partly predictable and the sign is
+not. The feature that carries the size is the pool's strand content (standardised ridge weight
+-0.612, rho -0.638 with the gain over the helix; L107 struck L106's "helix content and the
+length"): a strand-like retrieval pool means a large gain over a constant helix, a helical one a
+small gain, S17 L25's trivial target-level signal re-found. ORACLE stratum for the record: on
+FAIL18 the torsion predictor beats the pipeline by 0.463 A and on the other 108 the pipeline
+wins by 0.725 A, and nothing native-free in this feature set locates that stratum. **B3 verdict:
+the falsifier fires; Proposal B's verdict is REPLACE** (the feasible-scale rungs B2 are the C2
+ladder of VII.3, none of which clears its MDE in the helpful direction).
 
 **B2, the feasible-scale rungs.** The ladder's rungs are evaluated under C2 (VII.3); the `raw`
 rung's training was stopped by hand at the 21:50 stall (L74; fold checkpoints under
@@ -2433,8 +2454,30 @@ small distances at low cosine. Not deployable by construction. Adversary check, 
 S25 L12 currency is calibrated on small re-readings only and must not price a large off-axis
 move, as L62 and L79 already apply.
 
-**Rotamer relief, coherence-penalised training, amber_prior_partner, the provenance readout test
-H_P3, the pool-spread control for strain difficulty.** Pending.
+**AMBER as a partner to the prior (tournament item 10, lane W, L105).**
+`s26/PREREG_amber_prior_partner.md` (22:15, before any real-target run); stage 1 native-free
+`w_amberprior_clouds` (135 s, peak 0.163 GB; `s26/results/w_selfcopy_amberprior_clouds.json`,
+126/126; lam = 0 asserted bit-exact against the shipped risk table), stage 2 gated
+`w_amberprior_endpoint` (4,786 s under a six-job load, peak 0.131 GB;
+`w_selfcopy_amberprior_endpoint.json`; per-cell contrasts `w_amberprior_cells_cloud.json`).
+Operator: per pair, the K = 500 pool's 17-bin distance histogram weighted by exp(-beta x
+zrank(E_AMBER)) from the 63,000 cached single points, mixed into the shipped posterior at weight
+lam through a real `Distogram` risk table and the production path; lam in {0, 0.05, 0.1, 0.2,
+0.35, 0.5} x beta in {0, 0.5, 1, 2, 4}, chosen leave-fold-out on the point cloud, verdict on the
+built chain. The leave-fold-out choice is (0, 0) on every fold, so the deployable arm is the
+incumbent bit-exactly on 126 of 126 and every registered contrast is an exact tie. Cell by cell
+on the point cloud every mixture is worse than the shipped posterior, monotonically in lam
+(+0.016 [+0.002, +0.030] at lam 0.05 to +0.145 [+0.001, +0.260] at lam 0.5 with beta 0; 22 of 29
+cells with the fold CI above zero, every cell NOT MEASURED by the rule), and beta moves a cell
+by at most 0.02 A with no consistent sign: AMBER's ordering carries nothing through the prior
+that the unweighted histogram does not (S24 L16's rank-permuted null seen from the prior side).
+The per-target ORACLE over the 30 cells (-0.290 on the cloud) is 224% accounted for by the
+best-of-k null (k_eff 9.7), split-half transfer -0.022. The last AMBER form in the record, a
+distribution inside the prior, is closed on this instrument; registered expectation (0.00 +/-
+0.03, lam = 0 on most folds) held.
+
+**Rotamer relief, coherence-penalised training, the provenance readout test H_P3, the
+pool-spread control for strain difficulty.** Pending.
 
 ### VII.5 Operational findings of the sprint (for the record)
 
@@ -2461,7 +2504,15 @@ aside, both tiers relaunched with the flag inside the command, L98), and the opt
 tier had never been able to run: its summary parser took the last brace of an indented JSON
 dump and turned the parse failure into a skip, so the three gated equivalence tests were among
 the "13 skips" of every recorded run; fixed in the test file (commit `7be8e4b0`, a parse
-failure is now a failure) and relaunched (L102). The final AST gate against `ae86a124` passed:
+failure is now a failure) and relaunched (L102); once it could run the tier passed 3 of 3
+(`pytest_slow_equivalence3`, 40.2 s, peak RSS 0.313 GB, L104): the legacy and consolidated arms
+are bit-identical up to the projection on all 8 smoke8 targets and the projection's divergence
+stays inside its pinned band, served from the two on-disk caches (so it certifies the
+equivalence of the two recorded arms, the same fact as `compare_tuning126.json`'s
+`science_delta` of 0), and the suite record became 370 tests, 360 passed, 0 failed, 10 skipped
+with the tier in (357 / 13 without it); the integration tier (8 items) was still queued. One
+housekeeping fact: eight lanes share one git index, and a lane's commit once swept four files
+another lane had just staged (L104). The final AST gate against `ae86a124` passed:
 50 of 55 production files AST-identical with docstrings stripped and the 5 that differ exactly
 the ledgered edits (`s26/results/ast_gate_ae86a124.txt`, L98); the frozen results-lab rebuild is
 queued (`resultslab_rebuild`) with its comparator self-checked on the untouched tree (2016 of
@@ -2517,6 +2568,8 @@ sprint. This part lists the S26 movements and the items that remain open at the 
 | Branch selection by the relaxed energy as an accuracy step | +0.0055 against the production choice (0.18x MDE; a 0.03 A gain would have been seen); the energy discriminates among branches as well as the objective and no better | S26 L88; Part VII.4 |
 | Test-time ensembling of retrieval keys (fixed K) | -0.0005 against shipped (0.02x MDE), +0.0042 against a zero-information resample; a 0.028 A gain excluded | S26 L84; Part VII.4 |
 | ESMFold (B1) on this box | infeasible on three independent grounds | S26 L13; Part VII.2 |
+| Proposal B: a native-free characterisation of the set where the pipeline beats sequence-only (B3) | the sign classifier is at its permutation null against both comparators; only the size of the gain over a helix is partly predictable, by the pool's strand content; verdict REPLACE | S26 L14, L106, L107; Part VII.2 |
+| AMBER as a distribution inside the prior (the last AMBER form in the record) | the leave-fold-out choice is lam = 0 on every fold; every mixture cell worse, beta without a consistent sign | S26 L105; Part VII.4 |
 | Proposal A: an adaptive (ADAPT) ansatz in place of the fixed one, as an accuracy or trainability lever | A1 null at the registered threshold (0.23x and 0.36x MDE, fold CIs spanning zero, resolution 0.06 A); the optimum is a product state on every real target; the fixed algebra is already maximal (A2); no width-scaling argument (A4); verdict REPLACE | S26 L68, L69, L70, L75; Part VII.1 |
 | More prior capacity (`wide`), a per-fold PCA (`pca32f`), 128 ESM components (`pca128`), a pool-histogram mixture (`mix`), a triangle-update PairNet on the same inputs (`pairnet`) as prior levers; a smaller language model (`esm8m`) or none (`noesm`) as alternatives | null-to-worse on the built chain (`wide` +0.032, `pca32f` +0.018, `pca128` +0.076, `pairnet` +0.041, all under 0.5x MDE; `mix` chooses lam = 0 on 5/5 folds); removing or shrinking the ESM channel is worse (`noesm` +0.208, `esm8m` +0.242, both 5/5 folds, Type-M zone) | S26 L62, L63, L66, L67, L72, L93, L99, L103; Part VII.3 |
 
@@ -2526,12 +2579,12 @@ sprint. This part lists the S26 movements and the items that remain open at the 
 |---|---|---|
 | Whether a better distance predictor is obtainable from inputs this machine can compute (the only steep lever, -2.15 A per unit toward truth) | a C2 rung beating the shipped prior on the fold-clustered CI of the built chain | `s24/LEDGER.md` L13; `s26/PROPOSAL_C.md`; Part VII.3 |
 | Proposal A's target-dependent Hamiltonian (A3) | the pre-registered A3 verdict (`a3_build` running) | Part VII.1 |
-| Proposal B's feasible-scale rungs (B2) and the rest of the C2 ladder (`raw` and the deferred rungs; nine rungs in, none clears its MDE in the helpful direction) | a rung beating the shipped prior on the fold-clustered CI of the built chain, replicated | Part VII.2, VII.3 |
+| The rest of the C2 ladder (`raw` and the deferred rungs; nine rungs in, none clears its MDE in the helpful direction) | a rung beating the shipped prior on the fold-clustered CI of the built chain, replicated | Part VII.3 |
 | C3 stage 2 (the relaxation on the best C2 rung) | lane P's best-rung delivery file | S26 L39, L87; Part VII.3 |
 | The 2/60 benchmark self-copy leak, now bounded MINOR (dev proxy 0.002 A; own-native envelope 0.028 A mean CI to 0.151 A worst target on the built chain; 0.194 at the worst target on the selection basis) | by design only a fresh benchmark, which does not exist; the bound tightens when channel B's remaining nine retrains land | S26 L44, L49, L50, L55, L58; Part VII.4 |
 | Where the target-specific third of the pool's coherent error comes from, and whether any native-free proxy is strong enough to act on it | a native-free proxy reaching the in-band ordering 2 A needs | `s19/LEDGER.md` L11, L14; `s17/LEDGER.md` L23 |
 | Publishing the trainability half | a manuscript from Part V.10 with V.9's scope correction | `s13/`, `s25/QUANTUM.md`; S26 L27 |
-| The tournament entries not yet run or not yet complete: routers (C4), the common-mode prediction (C5), rotamer relief, coherence-penalised training, the provenance readout test H_P3, amber_prior_partner | their pre-registrations' falsifiers | `s26/TOURNAMENT.md`; `s26/PREREG_*.md`; Part VII.4 |
+| The tournament entries not yet run or not yet complete: routers (C4), the common-mode prediction (C5), rotamer relief, coherence-penalised training, the provenance readout test H_P3 | their pre-registrations' falsifiers | `s26/TOURNAMENT.md`; `s26/PREREG_*.md`; Part VII.4 |
 | Window provenance: the ORACLE class gap is measured (peptide windows 0.42 A nearer than fragments in the pool, 3.18x MDE; 0.09 to 0.13 inside the top-75); whether a native-free class weight in the readout buys anything | H_P3 (expected 0.00 to -0.02 A against an MDE of about 0.05) | S26 L85; Part VII.4 |
 | The tie-break noise floor: measured (0.004 A on the 126-mean, 0.024 A paired MDE between conventions, built chain); not a lever | nothing; it is the floor every cross-run hundredths-level claim is read against | S26 L64, L71; Part VII.4 |
 | Strain as difficulty: measured as a calibration flag (partial rho +0.433 of `moved` with the built-chain error), forbidden as a lever by its pre-registration; provisional | the pool-spread control `a_strain_vs_spread` (whether `moved` is the top-75's own disagreement in disguise) | S26 L53, L81; Part VII.4 |
@@ -2645,8 +2698,9 @@ counts, wall times and peak RSS (1.692, 0.872, 0.324 GB) are in `s26/TEST_RUN.md
 command, not in the launching shell (a relaunch dropped it once, S26 ledger L98). The three gated
 equivalence tests could never run before S26: their summary parser took the last brace of an
 indented JSON dump and turned the failure into a skip; the test file was fixed at `7be8e4b0`
-(L102) and the slow tiers re-run under the governor; Part VII.5 and this section carry the
-result when lane I's run lands. Both AMBER files carry an
+(L102) and the slow tiers re-run under the governor: the equivalence tier passed 3 of 3 from the
+on-disk caches and the record with it in is 370 tests, 360 passed, 0 failed, 10 skipped (L104);
+the integration tier's result lands in Part VII.5 when lane I posts it. Both AMBER files carry an
 autouse memory guard that skips, with a message naming the ceiling and the governor's last
 reading, when the box is above `core.amber`'s 92% ceiling.
 
@@ -3105,6 +3159,9 @@ artefact; "as asserted" means a passing test pins it.
 | validity axis: 2,568 s, 0.274 GB, 0.4444, 0.0079, 34, 1, [-0.5546, -0.3172], 2.05x, 34W/0L/92T, 3.4524, 0.1190, 3.30x, 81W/0L, 2.3629, 2.7846, 4.62x, 115, 1.3%, 12%, 2.5%, 6.61, 48, 0.33%, 0.9302, 0.9114, 0.84x, 0.0242, 0.0327, 0.021, 3.0792, 1000 | VII | `s26/results/ph_validity.json`; `s26/LEDGER.md` L100 | as stored / as cited |
 | L95: 0.166, 0.22, eighth; L96: 3.320, 3.21, 0.083; L94: 101W/25L | VII | `s26/LEDGER.md` L94, L95, L96 | as cited |
 | 50 of 55, 5, 2016 of 2016, 2142 of 2142, 7be8e4b0, 210.6 s, 0.632 GB, 8 | VII, IX | `s26/results/ast_gate_ae86a124.txt`; `s26/LEDGER.md` L98, L102 | as cited |
+| B3: 100 s, 0.053 GB, 45, 300, 0.522, 0.498, 0.578, 0.263, 0.557, 0.566, 0.093, +0.244, -0.5366 (0.2309, 0.6469, 0.83x, [-0.882, -0.185], 84W/42L), +0.404, -1.1420 (0.3415, 0.9566, 1.19x, [-1.495, -0.700], 94W/32L), 0.463, 0.725, -0.612, -0.638, +0.463, -0.128, +0.394, -0.273, -0.266, +0.253, +0.230, -0.42, -0.636, -0.601 | VII, VIII | `s26/results/p_b3.json`, `s26/results/p_b3_features.json`; `s26/LEDGER.md` L106, L107 | as stored / as cited |
+| amber_prior_partner: 135 s, 0.163 GB, 4,786 s, 0.131 GB, 63,000, 29, 30, +0.016 [+0.002, +0.030], +0.145 [+0.001, +0.260], 22 of 29, 0.02, 0.006, 0.007, -0.290, 2.804, 224%, 9.7, -0.022, 8%, 0.04, 0.19, -0.0010, 0.08x | VII, VIII | `s26/results/w_selfcopy_amberprior_endpoint.json`, `w_selfcopy_amberprior_clouds.json`, `w_amberprior_cells_cloud.json`; `s26/LEDGER.md` L105 | as stored / as cited |
+| 3 of 3, 40.2 s, 0.313 GB, 360, 10, 0.05, 0.25, a6ce3ab6 | VII, IX | `s26/results/pytest_slow_equivalence.xml`; `s26/TEST_RUN.md`; `s26/LEDGER.md` L104 | as cited |
 <!-- APPENDIX B ROWS -->
 
 ## APPENDIX C. THE S26 LEDGER (DRAFT: reproduced at the close)
