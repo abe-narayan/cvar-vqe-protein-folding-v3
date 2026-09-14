@@ -1,6 +1,7 @@
 {
  "active": [
   "E",
+  "I",
   "Q",
   "P",
   "A",
@@ -8,9 +9,7 @@
   "PR",
   "W"
  ],
- "updated": "2026-09-13T19:14:53",
+ "updated": "2026-09-13T22:02:47",
  "note": "coordinator is the only writer of this file",
- "finished": [
-  "I"
- ]
+ "finished": []
 }

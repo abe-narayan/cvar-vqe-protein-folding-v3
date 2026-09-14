@@ -2886,3 +2886,45 @@ coordinator's ruling on all three directions for slide 11's DRAFT line.
 (Clock correction, PR: L76's header time is 21:56, not 22:25; the same correction applies to the 22:25 lines in `s26/STATUS.md` and `s26/agentPR_FINDINGS.md` section 7. Nothing else in L76 changes.)
 
 ---
+## L77 -- THE USER EXTENDS THE SPRINT: EVERY DEFERRED RUN, TEST AND DIAGNOSTIC GOES AHEAD; CLOSE AT ABOUT 04:30 PACIFIC, FINAL REPORT AT ABOUT 04:45 (2026-09-13 22:02, coordinator)
+
+The user's instruction at 22:0x: run all the tests and additional diagnostics possible, push the
+close to about 04:30 Pacific (2026-09-14), and deliver the final report with all detail at about
+04:45. Nothing running is interrupted. The extra scope, by lane, under the same rules (prereg
+before compute; governor; one honest est-ram per job; the 93% ceiling stands, so memory, which
+is the user's own load tonight, sets the parallelism, and the stall breaker (L74) may kill the
+fattest suspended job):
+
+- I (resumed): the opt-in test tier `VERIFY_SLOW=1` (the 11 real skips of `s26/TEST_RUN.md`:
+  OpenMM and pipeline checks, AMBER-tagged, two at most); every standalone audit under
+  `verify/` re-run with its JSON compared to the tracked one; the results lab `--mode frozen`
+  rebuild as a governed job with the four gates and the leaderboard numbers compared to the
+  tracked `results/summary/` (3.2126 built chain, 3.0483 point cloud; the L7 WARN explanation
+  appears); the final AST gate of every production `.py` against `ae86a124` (docstrings
+  stripped); `python s26/examine.py` on the final tree; `s26/TEST_RUN.md` extended.
+- Q: A3 to completion; the DLA dimension of the ADAPT-grown circuit at every growth step across
+  the 126 A1 records (the A2 item the prompt asked for per growth step); bootstrap CIs on the
+  A4 slopes (the L47 caveat); a second-seed and reversed-fold-order replication of A1's
+  fixed-versus-ADAPT contrast as a robustness check even though it is a null.
+- P: the remaining rungs (esm8m, mix, pairnet), then raw (retrain fold by fold when the
+  governor shows 2.5 GB free), then the deferred coherence_penalised_training (1.25 GB) if the
+  box allows; B3, C4, C5; length-stratified and FAIL18-stratified tables for every rung;
+  replication for any rung clearing its MDE; the best-rung delivery file; the final
+  PROPOSAL_B.md and PROPOSAL_C.md. `attn` (3 to 3.5 GB) only if the box empties.
+- PH: the reject chain to completion; branch_select relaunched from its 41 cells; rotamer_relief
+  B; `stage1 --rep` (the C3 replication) and `floor2`; C3 stage 2 on P's rung file; the
+  heavy-atom validity axis of the relaxed emission.
+- W: ensembling to completion; window_provenance; amber_prior_partner; Part B's retrains one at a
+  time as memory allows; the two IDEA files found on the way get preregs and, if cheap, runs.
+- A: every new entry checked within the hour; RETRACTIONS.md and DELIVERABLES_CHECK.md kept
+  current; the final deliverables pass at about 04:00.
+- E: the report grows with every result; the final pass (Parts VII, VIII, Appendix B, Appendix C
+  = this ledger reproduced) starts at about 04:15 for a 04:45 close; the report check re-run last.
+- PR: the last rebuild after the B and C verdicts and the coordinator's slide 11 ruling.
+- Coordinator: the slide 11 ruling once the three verdicts are in; the `docs/FINDINGS.md`
+  corrections-ledger update from RETRACTIONS.md; the sprint-close entry.
+
+Eight lanes active (E, I, Q, P, PH, W, A, PR): the maximum.
+
+---
+
