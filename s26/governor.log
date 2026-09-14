@@ -952,3 +952,28 @@
 2026-09-13T21:52:29 RESUME   ph_reject_chain agent=PH tag=CPU
 2026-09-13T21:53:00 SAMPLE   ram=89.1% (14.93GB used, 1.82GB free) cpu=63.8% (15s mean 55.2%) jobs=4 amber=0 queued=0 lanes=7
 2026-09-13T21:54:00 SAMPLE   ram=88.8% (14.87GB used, 1.88GB free) cpu=58.7% (15s mean 56.6%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:55:00 SAMPLE   ram=89.1% (14.93GB used, 1.82GB free) cpu=52.2% (15s mean 53.7%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:56:00 SAMPLE   ram=89.3% (14.96GB used, 1.79GB free) cpu=46.2% (15s mean 49.0%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:57:00 SAMPLE   ram=89.4% (14.98GB used, 1.77GB free) cpu=71.7% (15s mean 55.5%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:58:00 SAMPLE   ram=89.2% (14.93GB used, 1.82GB free) cpu=49.7% (15s mean 49.5%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T21:59:00 SAMPLE   ram=88.4% (14.81GB used, 1.94GB free) cpu=47.1% (15s mean 47.2%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T22:00:00 SAMPLE   ram=89.9% (15.06GB used, 1.69GB free) cpu=57.0% (15s mean 58.4%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T22:00:30 SUSPEND  p_eval_esm8m agent=P tag=CPU rss=0.43GB
+2026-09-13T22:00:35 SUSPEND  w_ensemble_clouds agent=W tag=CPU rss=0.10GB
+2026-09-13T22:00:40 SUSPEND  ph_reject_chain agent=PH tag=CPU rss=0.05GB
+2026-09-13T22:01:00 SAMPLE   ram=94.8% (15.88GB used, 0.87GB free) cpu=38.1% (15s mean 40.0%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T22:02:00 SAMPLE   ram=94.4% (15.82GB used, 0.93GB free) cpu=18.5% (15s mean 17.0%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T22:02:25 SUSPEND  p_eval_esm8m agent=P tag=CPU rss=0.43GB
+2026-09-13T22:03:00 SAMPLE   ram=94.2% (15.77GB used, 0.98GB free) cpu=17.6% (15s mean 19.1%) jobs=4 amber=0 queued=0 lanes=8
+2026-09-13T22:03:30 KILL     p_eval_esm8m agent=P tag=CPU rss=0.43GB reason=stall: ram 92.2% >= 90.0% for 180s with 4 suspended; freeing 0.43GB; sending CTRL_BREAK, grace 25s for a checkpoint
+2026-09-13T22:03:30 RESUME   p_eval_esm8m agent=P tag=CPU
+2026-09-13T22:03:30 WARN     signal to p_eval_esm8m failed: OSError(22, 'The parameter is incorrect', None, 87, None)
+2026-09-13T22:03:55 KILLED   p_eval_esm8m terminated
+2026-09-13T22:03:55 WARN     p_eval_esm8m was a direct job with no spec; its owner must restart it from its checkpoint
+2026-09-13T22:03:56 RESUME   ph_reject_chain agent=PH tag=CPU
+2026-09-13T22:04:01 SAMPLE   ram=89.1% (14.92GB used, 1.83GB free) cpu=41.8% (15s mean 29.6%) jobs=4 amber=1 queued=0 lanes=8
+2026-09-13T22:04:01 RESUME   w_ensemble_clouds agent=W tag=CPU
+2026-09-13T22:05:01 SAMPLE   ram=79.2% (13.27GB used, 3.48GB free) cpu=51.0% (15s mean 56.1%) jobs=4 amber=1 queued=0 lanes=8
+2026-09-13T22:06:01 SAMPLE   ram=80.0% (13.39GB used, 3.36GB free) cpu=56.9% (15s mean 55.9%) jobs=4 amber=1 queued=0 lanes=8
+2026-09-13T22:07:01 SAMPLE   ram=79.7% (13.35GB used, 3.40GB free) cpu=50.6% (15s mean 52.1%) jobs=4 amber=1 queued=0 lanes=8
+2026-09-13T22:08:01 SAMPLE   ram=80.2% (13.43GB used, 3.32GB free) cpu=71.8% (15s mean 66.7%) jobs=4 amber=1 queued=0 lanes=8

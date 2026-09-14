@@ -45,6 +45,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 19:16 next: run e_report_check.py through jobrun (est-ram 0.3), fix every Appendix B failure and the style findings, post the counts in the ledger (tail L42 at last read), add a report-check line to s26/examine.py, read the two docs/REPORT_S26* files and write the reconciliation appendix, then fill Part VII/VIII from L35, L38, L39 onward.
 - 2026-09-13 19:51 running: report writer; e_report_check.py run under jobrun (106 rows 79/2/25 -> 138/138 PASS, style 0/0/0; L60); Parts VII/VIII filled to L59; Appendix D (reconciliation with docs/REPORT_S26.md) written; examine.py --report-check; all committed (7db128c0).
 - 2026-09-13 19:51 next: e_report_check4 (queued behind the job cap) refreshes s26/results/e_report_check.json; then hourly: read the ledger from L60, fill VII/VIII (A1/A3, C2 rungs, ph_reject_chain, C3 stage 2, tie-break floor) with B rows, commit each pass; Appendix C at the close.
+- 2026-09-13 22:07 running: 22:10 pass committed (VII.0 How S26 was run; A1/L69 verdict; six C2 rungs; tie-break floor; VII.6 retractions; VIII rows; check 146/146, governed re-run e_report_check5 queued); final pass planned 04:15 to 04:45 (Appendix C = ledger verbatim, appended last).
+- 2026-09-13 22:07 next: hourly passes from L78 (A3, remaining rungs, ph_reject_chain, branch_select, C3 stage 2 / rep, ensembling, provenance, Part B retrains, lane I's VERIFY_SLOW tier and frozen rebuild for Part IX); Appendix D kept current.
 ## I (Infrastructure / Governor)
 
 - 2026-09-13 00:13 running: read contract/brief/code; job pytest_core (non-AMBER suite, tag TEST, est 2.5 GB) launched under the governor at ~00:11; brief committed unchanged.
@@ -55,6 +57,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 08:40 next: examine.py now also runs e_hashes --check; full examine run (rewrites s26/results/module_map.json once); closure table in agentI_FINDINGS.md; ledger notes for item 5 and hygiene; final commit; then finish.
 - 2026-09-13 08:43 running: nothing; examine.py full run passed (725 modules, no drift on 101 pinned entries, 21/21 claims); ledger L20 (item 5), L21 (hygiene); findings closure table written.
 - 2026-09-13 08:43 next: closing commit (findings, examine.py, claim_check.json), then the lane finishes its turn. Items 1-5 and defects 6a-6d closed; no production number changed.
+- 2026-09-13 22:07 running: pytest_slow_equivalence (AMBER, est 1.2 GB, 3 gated tests) and pytest_slow_integration (AMBER, est 1.8 GB, 8 gated items) launched under jobrun v2.2 and WAITING for headroom (box 91% RAM, 4 suspended registrations); s26/i_verify_rerun.py scripted and smoke-tested (vqe_lfo_audit IDENTICAL, tracked file untouched).
+- 2026-09-13 22:07 next: on the coordinator's word, `python s26/i_verify_rerun.py launch` (light+medium audits, sequential governed jobs; --include-heavy for the 126-target projection audits), then the frozen results-lab rebuild, the AST gate, examine.py, ledger entries.
 
 ## Q (Quantum lane)
 - 2026-09-13 08:50 running: resumed after the session cut at 00:46; q_*.py, probes and reference MDEs committed (2fb2998b); PREREG_A2/A4 on disk; launching A2 (DLA, s26/q_dla.py) and A4 (variance, s26/q_var.py) under the governor per the coordinator ruling.
