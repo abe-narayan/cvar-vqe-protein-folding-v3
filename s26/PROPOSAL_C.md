@@ -1,7 +1,7 @@
 # PROPOSAL C -- LEARN A BETTER DISTANCE PRIOR (lane P, Sprint 26)
 
-Status: 2026-09-14 01:50. C1 and C2 final for nine of ten rungs (raw pending its last three
-folds), C3 final from lane PH, C4 first block final, C5 queued; ledger addenda carry the rest. Verdict
+Status: FINAL 2026-09-14 03:30. C1, C2 (nine of ten rungs; raw trained 3 of 5 folds and NOT evaluated),
+C3 (lane PH) and C4 final; C5 not run to completion. Verdict
 form per the campaign prompt.
 
 ## What the proposal says
@@ -103,12 +103,16 @@ MDE. Six s* routers all predict s* with the wrong sign (rho -0.10 to -0.21) and 
 did (S22 L7, S23 L7); S23 L6d/L9 (s* is a function of the invisible common mode) and S22 L10
 (no router class rich enough to express the signal is learnable at n = 126) stand.
 
-## C5 -- predict and subtract the common mode (`s26/PREREG_C5.md`, `s26/p_c5.py`; one agent-day; run queued at 01:35 with the alpha grid reduced to 0.5 for the close, result in the ledger addendum)
+## C5 -- predict and subtract the common mode (`s26/PREREG_C5.md`, `s26/p_c5.py`; NOT COMPLETE at the close)
 
-Two native-free representations of the common-mode direction (distance-space shell profile;
-the cloud's own principal-axis frame), GLOBAL and RIDGE predictors fitted on training folds,
-against the ORACLE ceiling and a magnitude-matched random move through the same projection.
-The record's prediction is a null (S16, S19 L14: "the estimator is made of the bias"; S24 L7).
+Two native-free representations of the common-mode direction (the distance-space shell
+profile; the cloud's own principal-axis frame), GLOBAL and RIDGE predictors fitted on training
+folds, against the ORACLE ceiling and a magnitude-matched random move through the same
+projection (alpha 0.5 only, declared). The run started at 03:05 behind the job cap and
+projects eight chains per target; at the 04:30 close it had not reached 126 targets, so C5
+is reported as NOT RUN TO COMPLETION; its checkpointed rows are not a result
+(`s26/results/p_c5.json`, `complete: false`). The record's prediction is a null (S16; S19 L14,
+"the estimator is made of the bias"; S24 L7), and nothing in this sprint changes it.
 
 ## Verdict: KEEP WITH EDITS
 
@@ -123,8 +127,10 @@ The proposal's premise is right and its four items are wrong as stated. Edits:
    change what enters the prior (`IDEA_better_prior_inputs.md`: attention-head maps; retrieval-
    augmented training input).
 2. Item C3, "refine with physics", becomes "keep AMBER as a validity step only" (PH's sentence).
-3. Items C4 and C5 keep their pre-registrations and are reported as their runs return (below);
-   the record's prior for both is a null (S22 L7/L10, S23 L6/L9, S19 L14).
+3. Item C4, "route the set size and scale", becomes "closed: twelve m* routers and six s* routers
+   on four feature blocks no previous router used are null-to-harmful" (ledger L115). Item C5
+   keeps its pre-registration; it did not complete before the close and the record's prior is a
+   null (S16, S19 L14, S24 L7).
 4. The presenter should say "the prior's derivative is steep and the prior's inputs are flat":
    the two facts are not in tension, because gam_eff is redeemable only along the native's own
    direction, and every achievable rung moves at cos 0.2 to 0.5.
