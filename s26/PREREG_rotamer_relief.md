@@ -78,3 +78,16 @@ run. Report: 5 min CPU, plus 1.4 h CPU for the built-chain half of B(iii). Agent
 
 A positive B(ii) or B(iii) result is re-run with the residue sweep order reversed (a different
 greedy path) and the fold order reversed, and must land inside its own fold CI.
+
+---
+## ADDENDUM 1 (2026-09-14 00:45) -- THE FIRST PROBE FIRED GATE G1, AND WHY
+
+`ph_relief_probe` (jobs_done, exit 1, 10 s, peak 0.264 GB): on 1A13 member 387 the fast single
+point equalled `refine_coords(k=0, steps=-1)` to 0.0 but differed from the cached value by a
+relative 0.47. Cause, read from `s24/d2_amberscore.py:114`: the cache was built with
+`s13.qarch_lib.Space(pdb, 4).rep` (k = 4 torsion states), while `ph_relief.py` built its
+representation with k = 8. `core.amber.builder_for` keys its OpenMM context on `rep.n_states`
+and calibrates the hydrogen frames on the representation's reference states, so the two
+representations give two legitimate single points that differ by the hydrogen placement. The
+fix is one constant (k = 4, the cache's instrument); the gate is unchanged and must now pass at
+0.0 against both `refine_coords` and the cache, or the run stops. Nothing else changed.

@@ -79,7 +79,13 @@ class SinglePoint:
         import torsion_lib2 as tl2
         self.am = am
         self.seq = seq
-        tab = tl2.library_for(seq, 8, seq)
+        #: k = 4, the representation `s24/cache_amber` was built with (`s24/d2_amberscore.py:114`,
+        #: `s13.qarch_lib.Space(pdb, 4).rep`).  `builder_for` keys its OpenMM context on
+        #: `rep.n_states` and calibrates hydrogen frames on the representation's reference
+        #: states, so a different k gives a different (legitimate) single point; the probe's
+        #: first gate fired on exactly that (rel 0.47 against the cache at k = 8, 0.0 against
+        #: `refine_coords`).  PREREG_rotamer_relief addendum 1.
+        tab = tl2.library_for(seq, 4, seq)
         self.rep = tl2.PerResidueTorsion(seq, tab, chi_bits=False)
         self.H = am.builder_for(seq, self.rep, "CPU", 1)
         self.n_calls = 0
