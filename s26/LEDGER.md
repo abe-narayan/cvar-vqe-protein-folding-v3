@@ -5915,3 +5915,25 @@ are closed and by which sprint.
 
 ---
 
+
+## L143 -- LANE PR: L139 / L140 / L138 APPLIED TO SLIDES 4, 5 AND 8; A1 READS "NOT MEASURED ON EITHER SEED" WITH BOTH SEEDS' MDE MULTIPLES AND THE COMPARATOR'S 0.033 A SEED VARIANCE; THE DECK IS FINAL; 550 REGISTERED NUMBERS; VERIFICATION PASS (2026-09-14 04:16, PR)
+
+Rebuilt (`python s26/pr_build_deck.py --no-figures; python s26/pr_changes.py`). Slide 8's A1 block now quotes both seeds
+from `s26/results/a1_stats.json` and `a1s1_stats.json` (seed 0: -0.0138 / -0.0222 A at 0.23x / 0.36x MDE, fold CIs
+spanning zero; seed 1: -0.0449 / -0.0523 A at 0.71x / 0.79x MDE, fold CIs [-0.096, -0.004] / [-0.109, -0.005], 4/5 folds)
+and says NOT MEASURED on either seed (underpowered at seed 0, Type-M at seed 1), with the L140 qualifier: the grown
+circuits are seed-stable (3.214 / 3.216 A) and the deployed fixed circuit moves 0.033 A between seeds (3.228 / 3.261,
+`means/fixed_zrank_it50/rmsd_q_synth` of the two stats files), so the size of the contrast is set by the deployed
+circuit's seed, not by growth; the spoken text carries PROPOSAL_A.md addendum 3's corrected sentence ("on two seeds ...
+0.014 to 0.052 angstroms closer ... between a quarter and four fifths of what the comparison can resolve ... the spread
+between the seeds comes from the deployed circuit"); the verdict line says the endpoint is not measured on either seed
+and REPLACE stands on the product-state diagnosis. L138 added as one bullet (`s26/results/q_dla_a1.json`: dim 7 exactly
+where nothing was appended, up to 530 where inert strings were, median 1025 of 8128 for the alpha = 0.25 L2 sets, no
+grown set reaches so(128)). Slide 5 carries the same seed qualifier beside the deployed circuit (3.228 / 3.261 A on two
+seeds; an ADAPT-grown circuit seed-stable at 3.214 / 3.216). Slide 4 states the 3.2148 A production number as seed-free
+(Config quantum = False; 3.2148 on both A1 seeds). The earlier builds' "no change" / "null" wording for A1 is superseded
+(R11) and recorded in `s26/agentPR_FINDINGS.md` section 7 and `s26/PRESENTATION_CHANGES.md`. Verification
+(`s26/pr_verify.txt`): 11 slides; 0 U+2014, 0 U+2013; 0 banned words; spoken words 248 / 248 / 249 on slides 8 / 9 / 10;
+title, body and notes on every slide. Registry 550 tokens. Nothing on the deck is live, DRAFT or PENDING.
+
+---

@@ -629,6 +629,38 @@ def load_values():
     dzr = _j("s26/results/a3_property.json")["distinct_states"]["fixed_zrank_it50"]
     put("A3_DISTINCT_ZRANK", int(sum(v["n_distinct"] for v in dzr.values())), "s26/results/a3_property.json :: distinct_states/fixed_zrank_it50/*/n_distinct (sum)", status="DERIVED", note="L125: 14/78 + 26/48 under the deployed rank ladder")
 
+    # ------------------------------------------------------------------ L139 (A1 seed-1 replication) and L138 (the grown sets' algebra per step)
+    a1s = _j("s26/results/a1s1_stats.json")
+    for pool, tag in (("adaptL2", "L2"), ("adaptV", "V")):
+        key = f"rmsd_q_synth:{pool}_adam_best_zrank_P21-fixed_zrank_it50"
+        c = a1s["contrasts"][key]
+        put(f"A1S1_{tag}_EFFECT", c["effect"], f"s26/results/a1s1_stats.json :: contrasts/'{key}'/effect", basis="built_chain (rmsd_q_synth)", note="L139: seed 1, reversed fold order")
+        put(f"A1S1_{tag}_MDE", c["mde"], f"s26/results/a1s1_stats.json :: contrasts/'{key}'/mde")
+        put(f"A1S1_{tag}_X", c["effect_over_mde"], f"s26/results/a1s1_stats.json :: contrasts/'{key}'/effect_over_mde")
+        put(f"A1S1_{tag}_CI", c["ci95_fold"], f"s26/results/a1s1_stats.json :: contrasts/'{key}'/ci95_fold")
+        put(f"A1S1_{tag}_FOLDS", int(c["folds_same_sign"]), f"s26/results/a1s1_stats.json :: contrasts/'{key}'/folds_same_sign")
+        put(f"A1S1_{tag}_W", int(c["n_better"]), f"s26/results/a1s1_stats.json :: contrasts/'{key}'/n_better")
+        put(f"A1S1_{tag}_L", int(c["n_worse"]), f"s26/results/a1s1_stats.json :: contrasts/'{key}'/n_worse")
+        put(f"A1S1_{tag}_VERDICT", c["verdict"].split(" (")[0], f"s26/results/a1s1_stats.json :: contrasts/'{key}'/verdict")
+    put("A1S1_FIXED_MEAN", a1s["means"]["fixed_zrank_it50"]["rmsd_q_synth"], "s26/results/a1s1_stats.json :: means/fixed_zrank_it50/rmsd_q_synth", basis="built_chain (rmsd_q_synth)", note="L139: the comparator moves +0.033 A with the seed")
+    put("A1S1_L2_MEAN", a1s["means"]["adaptL2_adam_best_zrank_P21"]["rmsd_q_synth"], "s26/results/a1s1_stats.json :: means/adaptL2_adam_best_zrank_P21/rmsd_q_synth", basis="built_chain (rmsd_q_synth)")
+    put("A1S1_V_MEAN", a1s["means"]["adaptV_adam_best_zrank_P21"]["rmsd_q_synth"], "s26/results/a1s1_stats.json :: means/adaptV_adam_best_zrank_P21/rmsd_q_synth", basis="built_chain (rmsd_q_synth)")
+    put("A1_FIXED_SEED_DELTA", a1s["means"]["fixed_zrank_it50"]["rmsd_q_synth"] - a1["means"]["fixed_zrank_it50"]["rmsd_q_synth"],
+        "s26/results/a1s1_stats.json :: means/fixed_zrank_it50/rmsd_q_synth minus s26/results/a1_stats.json :: means/fixed_zrank_it50/rmsd_q_synth", status="DERIVED",
+        basis="built_chain (rmsd_q_synth)", note="L139/L140: the deployed fixed circuit's readout moves +0.033 A between two seeds")
+    put("A1_L2_MEAN", a1["means"]["adaptL2_adam_best_zrank_P21"]["rmsd_q_synth"], "s26/results/a1_stats.json :: means/adaptL2_adam_best_zrank_P21/rmsd_q_synth", basis="built_chain (rmsd_q_synth)")
+    put("A1_V_MEAN", a1["means"]["adaptV_adam_best_zrank_P21"]["rmsd_q_synth"], "s26/results/a1_stats.json :: means/adaptV_adam_best_zrank_P21/rmsd_q_synth", basis="built_chain (rmsd_q_synth)")
+    s1arms = [k for k in a1s["contrasts"] if k.startswith("rmsd_q_synth:adapt")]
+    put("A1S1_ARMS_ALL_NEG", all(a1s["contrasts"][k]["effect"] < 0 for k in s1arms), "s26/results/a1s1_stats.json :: every 'rmsd_q_synth:adapt*' effect < 0", status="DERIVED", note="L139: 24 of 24 ADAPT arms negative over the two seeds")
+    put("A1S1_N_ARMS", len(s1arms), "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adapt*' (count)", status="DERIVED")
+    put("A1_BOTH_SEEDS_X_MAX", max(abs(a1s["contrasts"][k]["effect_over_mde"]) for k in s1arms), "s26/results/a1s1_stats.json :: max |effect/MDE| over the seed-1 ADAPT arms", status="DERIVED", note="every ADAPT arm on both seeds is below 1x MDE")
+    dla1 = _j("s26/results/q_dla_a1.json")["results"]["summary"]
+    put("DLA_A1_L2_A025_MEDIAN", dla1["L2_adam_best_zrank:alpha0.25"]["final"]["median"], "s26/results/q_dla_a1.json :: results/summary/'L2_adam_best_zrank:alpha0.25'/final/median", note="L138: median 1025 of 8128 at P = 21")
+    put("DLA_A1_L2_A025_MAX", dla1["L2_adam_best_zrank:alpha0.25"]["final"]["max"], "s26/results/q_dla_a1.json :: results/summary/'L2_adam_best_zrank:alpha0.25'/final/max")
+    put("DLA_A1_V_LBFGS_A1_MAX", dla1["V_lbfgs_zrank:alpha1.0"]["final"]["max"], "s26/results/q_dla_a1.json :: results/summary/'V_lbfgs_zrank:alpha1.0'/final/max", note="L138: up to 530 where inert multi-qubit strings were appended")
+    put("DLA_A1_DIM7_IFF_NOTHING", all(v["dim7_iff_nothing_appended"] for k, v in dla1.items() if "lbfgs" in k and "alpha1.0" in k), "s26/results/q_dla_a1.json :: results/summary/'*_lbfgs_zrank:alpha1.0'/dim7_iff_nothing_appended", status="DERIVED", note="L138 P2a: dim 7 exactly where nothing was appended")
+    put("DLA_A1_ANY_SO128", any(v["n_reach_so128"] > 0 for v in dla1.values()), "s26/results/q_dla_a1.json :: results/summary/*/n_reach_so128 > 0 (any)", status="DERIVED", note="no grown set reaches so(128)")
+
     # ------------------------------------------------------------------ Proposal B: B3's persisted arms (L14)
     tz = np.load(os.path.join(ROOT, "s13", "cache", "tors_rows.npz"), allow_pickle=True)
     trows = json.loads(str(tz["a_pepPos"]))

@@ -272,7 +272,7 @@ def slide_04(prs, V):
     add_text(s, 6.95, 1.4, 6.0, 5.6, [
         ("Built chain, production cache", dict(bold=True, color=ACCENT, bullet=False)),
         (f"mean {F(V,'ARM_MEAN','.4f')} A, median {F(V,'ARM_MEDIAN','.3f')}, best {F(V,'ARM_MIN','.3f')} ({F(V,'ARM_BEST_PDB')}), "
-         f"worst {F(V,'ARM_MAX','.3f')} ({F(V,'ARM_WORST_PDB')})", {}),
+         f"worst {F(V,'ARM_MAX','.3f')} ({F(V,'ARM_WORST_PDB')}); this number does not run the selector (Config quantum = False) and is seed-free", {}),
         (f"{F(V,'ARM_FRAC2','.1%')} of targets under 2 A, {F(V,'ARM_FRAC3','.1%')} under 3 A", {}),
         (f"point cloud {F(V,'AVG_MEAN','.4f')} A (intermediate); relaxed {F(V,'FULL_MEAN','.4f')} A", {}),
         ("Controls and oracles on the same targets", dict(bold=True, color=ACCENT, bullet=False)),
@@ -313,6 +313,9 @@ def slide_05(prs, V):
          f"{F(V,'Q_VS_ARGMIN_W')}W/{F(V,'Q_VS_ARGMIN_L')}L/{F(V,'Q_VS_ARGMIN_T')}T (selection basis): {F(V,'Q_VS_ARGMIN_VERDICT')}", {}),
         (f"vs an exact Boltzmann weighting at the same T: {F(V,'Q_VS_BOLTZ','+.4f')} A", {}),
         (f"alpha = 1 on folds {F(V,'Q_ALPHA1_FOLDS')}: {F(V,'Q_SHARE_NO_TAIL','.1%')} of targets carry no tail constraint", {}),
+        (f"on two seeds the deployed circuit's built chain is {F(V,'A1_FIXED_MEAN','.3f')} and {F(V,'A1S1_FIXED_MEAN','.3f')} A "
+         f"(a {F(V,'A1_FIXED_SEED_DELTA','.3f')} A seed variance of the readout) while an ADAPT-grown circuit is seed-stable at "
+         f"{F(V,'A1_L2_MEAN','.3f')} / {F(V,'A1S1_L2_MEAN','.3f')} (L139, L140)", {}),
         ("off in production; the theorem says it can delete a top-m member, never add one", {}),
         ("No quantum advantage is claimed. The register is 7 qubits and every state is simulated exactly.", dict(bold=True)),
     ], size=13, spacing=3)
@@ -371,22 +374,23 @@ def slide_07(prs, V):
 
 def slide_08(prs, V):
     s = new_slide(prs, "Direction A: let the circuit grow (qubit-ADAPT-VQE). Verdict: REPLACE", 8,
-                  "from s26/PROPOSAL_A.md (lane Q; L68, accepted L69); A1 basis: built chain, rmsd_q_synth on both sides; A4 figure: lane Q, s26/results/q_var.json")
+                  "from s26/PROPOSAL_A.md with addenda 1 to 3 (lane Q; L68, L69, L75, L139); A1 basis: built chain, rmsd_q_synth on both sides; A4 figure: lane Q, s26/results/q_var.json")
     add_picture(s, os.path.join(FIG, "a4_variance_slopes.png"), 0.5, 1.4, 6.9, 2.85)
     add_text(s, 0.55, 4.35, 6.85, 2.65, [
-        (f"A1, the endpoint: ADAPT under the same 21-parameter budget (realised {F(V,'A1_P21_ADAM_MIN')} by the Adam primaries, "
-         f"{F(V,'A1_P21_LBFGS_MIN')} to {F(V,'A1_P21_LBFGS_MAX')} by L-BFGS) vs the deployed fixed circuit, paired on {F(V,'A1_N')} targets", dict(bold=True, color=ACCENT, bullet=False)),
-        (f"2-local pool: {F(V,'A1_L2_EFFECT','+.4f')} A, SE {F(V,'A1_L2_SE','.4f')}, MDE {F(V,'A1_L2_MDE','.4f')}, {F(V,'A1_L2_X','.2f')} x MDE, "
-         f"fold CI {F(V,'A1_L2_CI','+.3f')}, {F(V,'A1_L2_W')}W/{F(V,'A1_L2_L')}L", {}),
-        (f"Tang pool: {F(V,'A1_V_EFFECT','+.4f')} A, SE {F(V,'A1_V_SE','.4f')}, MDE {F(V,'A1_V_MDE','.4f')}, {F(V,'A1_V_X','.2f')} x MDE, "
-         f"fold CI {F(V,'A1_V_CI','+.3f')}, {F(V,'A1_V_W')}W/{F(V,'A1_V_L')}L", {}),
-        (f"NOT MEASURED: null at the registered threshold, resolution {F(V,'A1_L2_MDE','.2f')} A; all {F(V,'A1_N_ARMS')} ADAPT arms between "
-         f"{F(V,'A1_ARMS_EFF_MIN','+.3f')} and {F(V,'A1_ARMS_EFF_MAX','+.3f')} A at {F(V,'A1_ARMS_X_MIN','.2f')} to {F(V,'A1_ARMS_X_MAX','.2f')} x MDE, "
-         f"but one observation, not twelve (their per-target deltas correlate at {F(V,'A1_ARM_CORR_MEAN','.3f')}; L70)", {}),
-        (f"the exact Gibbs state in place of the circuit: {F(V,'A1_GIBBS_EFFECT','+.4f')} A ({F(V,'A1_GIBBS_X','.2f')} x) overall; "
+        (f"A1, the endpoint: ADAPT under the same 21-parameter budget vs the deployed fixed circuit, paired on {F(V,'A1_N')} targets, two seeds", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"seed 0: 2-local pool {F(V,'A1_L2_EFFECT','+.4f')} A ({F(V,'A1_L2_X','.2f')} x MDE {F(V,'A1_L2_MDE','.4f')}, fold CI {F(V,'A1_L2_CI','+.3f')}), "
+         f"Tang pool {F(V,'A1_V_EFFECT','+.4f')} ({F(V,'A1_V_X','.2f')} x, fold CI {F(V,'A1_V_CI','+.3f')}); "
+         f"seed 1: {F(V,'A1S1_L2_EFFECT','+.4f')} ({F(V,'A1S1_L2_X','.2f')} x MDE {F(V,'A1S1_L2_MDE','.4f')}, fold CI {F(V,'A1S1_L2_CI','+.3f')}, {F(V,'A1S1_L2_FOLDS')}/5), "
+         f"{F(V,'A1S1_V_EFFECT','+.4f')} ({F(V,'A1S1_V_X','.2f')} x, fold CI {F(V,'A1S1_V_CI','+.3f')}, {F(V,'A1S1_V_FOLDS')}/5)", {}),
+        (f"NOT MEASURED on either seed: below 0.5x MDE at seed 0, in the Type-M zone at seed 1; the direction is the same on both "
+         f"({F(V,'A1_N_ARMS')} + {F(V,'A1S1_N_ARMS')} ADAPT arms all negative, one observation per seed at correlation {F(V,'A1_ARM_CORR_MEAN','.3f')}); "
+         f"the grown circuits are seed-stable ({F(V,'A1_L2_MEAN','.3f')} / {F(V,'A1S1_L2_MEAN','.3f')} A) and the deployed fixed circuit moves "
+         f"{F(V,'A1_FIXED_SEED_DELTA','.3f')} A between seeds ({F(V,'A1_FIXED_MEAN','.3f')} / {F(V,'A1S1_FIXED_MEAN','.3f')}), so the size of the contrast is set by the "
+         f"deployed circuit's seed, not by growth; resolution 0.06 A (L139, L140)", {}),
+        (f"the exact Gibbs state in place of the circuit: {F(V,'A1_GIBBS_EFFECT','+.4f')} A ({F(V,'A1_GIBBS_X','.2f')} x) at seed 0; "
          f"{F(V,'A1_GIBBS_ALPHA1','+.4f')} on the {F(V,'A1_N_ALPHA1')} alpha = 1 targets where it is the optimum, {F(V,'A1_GIBBS_ALPHA025','+.4f')} on the "
          f"{F(V,'A1_N_ALPHA025')} alpha = 0.25 targets where it is not (L70)", {}),
-    ], size=11, spacing=2)
+    ], size=10.5, spacing=2)
     add_text(s, 7.65, 1.4, 5.25, 5.6, [
         ("What the proposal says", dict(bold=True, color=ACCENT, bullet=False)),
         ("grow the ansatz one operator at a time on the same CVaR free energy (qubit-ADAPT, pools V and L2); a problem-shaped circuit "
@@ -401,9 +405,12 @@ def slide_08(prs, V):
         (f"the algebra: dim(DLA) = {F(V,'DLA_SO128')} = so(128) from depth 2; nothing for an adaptive ansatz to add (A2)", {}),
         (f"grown circuits at alpha = 1 are product circuits whose variance does not decay (A4, left); at alpha = 0.25 the grown circuit "
          f"decays at {F(V,'A4_L2_A025_T03','.3f')} vs the fixed {F(V,'A4_FIXED_A025_T03','.3f')} per qubit", {}),
-        ("Verdict: REPLACE. The mechanism is absent, not weak: a better ansatz has nothing to be better at, and the readout cannot "
-         "see the difference between two well-trained states. What replaces it is the trainability paper (slide 9), with A2, A4 and "
-         "the product-state result as its Sprint 26 additions.", dict(bold=True)),
+        (f"the grown sets' algebra tracks the appended strings, not what the circuit does: dim 7 exactly where nothing was appended, up to "
+         f"{F(V,'DLA_A1_V_LBFGS_A1_MAX')} where inert strings were; median {F(V,'DLA_A1_L2_A025_MEDIAN','.0f')} of {F(V,'DLA_SO128')} for the alpha = 0.25 "
+         f"L2 sets; no grown set reaches so(128) (L138)", {}),
+        ("Verdict: REPLACE. The mechanism is absent, not weak: the optimum is a product state, the growth is inert, and the readout cannot "
+         "see the difference between two well-trained states; the endpoint is not measured on either seed. What replaces it is the "
+         "trainability paper (slide 9), with A2, A4 and the product-state result as its Sprint 26 additions.", dict(bold=True)),
     ], size=11, spacing=3)
     return s
 

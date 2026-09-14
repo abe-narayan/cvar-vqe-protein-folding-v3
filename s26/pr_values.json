@@ -3683,6 +3683,222 @@
   "basis": "",
   "note": "L125: 14/78 + 26/48 under the deployed rank ladder"
  },
+ "A1S1_L2_EFFECT": {
+  "value": -0.04488087756296534,
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rmsd_q_synth)",
+  "note": "L139: seed 1, reversed fold order"
+ },
+ "A1S1_L2_MDE": {
+  "value": 0.06346727378775885,
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1S1_L2_X": {
+  "value": -0.7071499197058889,
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1S1_L2_CI": {
+  "value": [
+   -0.09600106535815536,
+   -0.003665688505696382
+  ],
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1S1_L2_FOLDS": {
+  "value": 4,
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1S1_L2_W": {
+  "value": 72,
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/n_better",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1S1_L2_L": {
+  "value": 54,
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/n_worse",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1S1_L2_VERDICT": {
+  "value": "NOT MEASURED",
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/verdict",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1S1_V_EFFECT": {
+  "value": -0.052286917916322305,
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rmsd_q_synth)",
+  "note": "L139: seed 1, reversed fold order"
+ },
+ "A1S1_V_MDE": {
+  "value": 0.06589357692815216,
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1S1_V_X": {
+  "value": -0.7935055335261881,
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1S1_V_CI": {
+  "value": [
+   -0.10872053314398761,
+   -0.005409507483908904
+  ],
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1S1_V_FOLDS": {
+  "value": 4,
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1S1_V_W": {
+  "value": 77,
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/n_better",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1S1_V_L": {
+  "value": 49,
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/n_worse",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1S1_V_VERDICT": {
+  "value": "NOT MEASURED",
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/verdict",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1S1_FIXED_MEAN": {
+  "value": 3.260950741164194,
+  "path": "s26/results/a1s1_stats.json :: means/fixed_zrank_it50/rmsd_q_synth",
+  "status": "SOURCED",
+  "basis": "built_chain (rmsd_q_synth)",
+  "note": "L139: the comparator moves +0.033 A with the seed"
+ },
+ "A1S1_L2_MEAN": {
+  "value": 3.2160698636012284,
+  "path": "s26/results/a1s1_stats.json :: means/adaptL2_adam_best_zrank_P21/rmsd_q_synth",
+  "status": "SOURCED",
+  "basis": "built_chain (rmsd_q_synth)",
+  "note": ""
+ },
+ "A1S1_V_MEAN": {
+  "value": 3.2086638232478712,
+  "path": "s26/results/a1s1_stats.json :: means/adaptV_adam_best_zrank_P21/rmsd_q_synth",
+  "status": "SOURCED",
+  "basis": "built_chain (rmsd_q_synth)",
+  "note": ""
+ },
+ "A1_FIXED_SEED_DELTA": {
+  "value": 0.032902084829816935,
+  "path": "s26/results/a1s1_stats.json :: means/fixed_zrank_it50/rmsd_q_synth minus s26/results/a1_stats.json :: means/fixed_zrank_it50/rmsd_q_synth",
+  "status": "DERIVED",
+  "basis": "built_chain (rmsd_q_synth)",
+  "note": "L139/L140: the deployed fixed circuit's readout moves +0.033 A between two seeds"
+ },
+ "A1_L2_MEAN": {
+  "value": 3.2142446453562488,
+  "path": "s26/results/a1_stats.json :: means/adaptL2_adam_best_zrank_P21/rmsd_q_synth",
+  "status": "SOURCED",
+  "basis": "built_chain (rmsd_q_synth)",
+  "note": ""
+ },
+ "A1_V_MEAN": {
+  "value": 3.2058953928140848,
+  "path": "s26/results/a1_stats.json :: means/adaptV_adam_best_zrank_P21/rmsd_q_synth",
+  "status": "SOURCED",
+  "basis": "built_chain (rmsd_q_synth)",
+  "note": ""
+ },
+ "A1S1_ARMS_ALL_NEG": {
+  "value": true,
+  "path": "s26/results/a1s1_stats.json :: every 'rmsd_q_synth:adapt*' effect < 0",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L139: 24 of 24 ADAPT arms negative over the two seeds"
+ },
+ "A1S1_N_ARMS": {
+  "value": 6,
+  "path": "s26/results/a1s1_stats.json :: contrasts/'rmsd_q_synth:adapt*' (count)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_BOTH_SEEDS_X_MAX": {
+  "value": 0.7935055335261881,
+  "path": "s26/results/a1s1_stats.json :: max |effect/MDE| over the seed-1 ADAPT arms",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "every ADAPT arm on both seeds is below 1x MDE"
+ },
+ "DLA_A1_L2_A025_MEDIAN": {
+  "value": 1025.0,
+  "path": "s26/results/q_dla_a1.json :: results/summary/'L2_adam_best_zrank:alpha0.25'/final/median",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L138: median 1025 of 8128 at P = 21"
+ },
+ "DLA_A1_L2_A025_MAX": {
+  "value": 2017,
+  "path": "s26/results/q_dla_a1.json :: results/summary/'L2_adam_best_zrank:alpha0.25'/final/max",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "DLA_A1_V_LBFGS_A1_MAX": {
+  "value": 530,
+  "path": "s26/results/q_dla_a1.json :: results/summary/'V_lbfgs_zrank:alpha1.0'/final/max",
+  "status": "SOURCED",
+  "basis": "",
+  "note": "L138: up to 530 where inert multi-qubit strings were appended"
+ },
+ "DLA_A1_DIM7_IFF_NOTHING": {
+  "value": true,
+  "path": "s26/results/q_dla_a1.json :: results/summary/'*_lbfgs_zrank:alpha1.0'/dim7_iff_nothing_appended",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L138 P2a: dim 7 exactly where nothing was appended"
+ },
+ "DLA_A1_ANY_SO128": {
+  "value": false,
+  "path": "s26/results/q_dla_a1.json :: results/summary/*/n_reach_so128 > 0 (any)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "no grown set reaches so(128)"
+ },
  "B3_TORS_MINUS_ARM": {
   "value": 0.5556927740686186,
   "path": "s13/cache/tors_rows.npz['a_pepPos'][*]/rmsd_build minus bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json :: rmsd_arm (paired mean)",

@@ -102,6 +102,9 @@ system was {BENCH_DELTA:+.4f} angstroms against the shipped baseline, confidence
 baseline, and I say so.
 
 ### also
+The {ARM_MEAN:.4f} A production number does not run the selector (the production Config has
+quantum = False) and is seed-free: it is {ARM_MEAN:.4f} on both A1 seeds (L139, L140), while the
+deployed selector's own arm moves {A1_FIXED_SEED_DELTA:.3f} A between seeds (slide 5 notes).
 The overlays are ORACLE-superposed (Kabsch onto the native through `s12.instrument.superpose_batch`,
 for the figure only); the RMSD printed on each figure was recomputed by `s26/pr_figures.py` and
 equals the production record. The benchmark numbers are typed from claim C06 of
@@ -141,7 +144,15 @@ arms, mean RMSD tracks the entropy of the readout weights at rho {Q_RHO_H:.2f}; 
 arms sit {Q_OFF_CURVE:+.4f} A from a curve fitted on the nine no-circuit arms. Against an exact
 Boltzmann weighting at the same temperature the selector is {Q_VS_BOLTZ:+.4f} A. The withdrawn
 "+0.113 A CVaR contribution" (S25 L5) is not on any slide. The generation lane's exact MPS twin
-agrees with the dense circuit to {Q_MPS_ERR}; it is not the selector.
+agrees with the dense circuit to {Q_MPS_ERR}; it is not the selector. A1 (L68) reproduces the
+readout-slack finding with a second ansatz family: the exact Gibbs state in place of the trained
+circuit moves the built chain {A1_GIBBS_EFFECT:+.4f} A ({A1_GIBBS_X:.2f} x MDE). The deployed
+circuit's own seed variance (L139, L140): on two seeds its built chain is {A1_FIXED_MEAN:.4f} and
+{A1S1_FIXED_MEAN:.4f} A ({A1_FIXED_SEED_DELTA:+.3f}), while an ADAPT-grown circuit, which converges
+to the same product Gibbs state whatever the start, sits at {A1_L2_MEAN:.4f} / {A1S1_L2_MEAN:.4f};
+the fixed 21-parameter circuit is a seed-sensitive under-optimiser (0.90 nats short of its
+optimum in a seed-dependent place), which is why A1's contrast is set by the comparator's seed
+and is not measured on either seed.
 
 ## Slide 6 -- Gradient variance at depth 3, and the algebra
 
@@ -225,26 +236,48 @@ error" are retracted (L123).
 ### spoken
 We tested letting the circuit grow itself. qubit-ADAPT-VQE starts from one layer of
 single-qubit rotations and adds, one at a time, whichever operator would lower the objective
-fastest. We ran it on all {A1_N} development peptides with the deployed objective, seed and
-readout, and compared the built chains pairwise. The answer is no change: {A1_L2_EFFECT:.3f} to
-{A1_V_EFFECT:.3f} angstroms, a quarter to a third of what the comparison can resolve, with
-fold-clustered intervals straddling zero. All {A1_N_ARMS} variants point the same way, but they
-are one observation, not twelve, and none clears its bar; the resolution is {A1_L2_MDE:.2f}
-angstroms. Why? At the deployed setting the optimum the circuit is asked to reach is a product
-state: seven single-qubit rotations represent it exactly, to {A1_KL_RY7_MEAN:.4f} nats. When
-ADAPT is offered entangling operators it does append them, on {A1_APPENDED_V_LBFGS} to
-{A1_APPENDED_ADAM} of the {A1_N_ALPHA1} targets, but they are inert: together they lower the
-objective by less than 0.001 nats, their angles stay below 0.02 radians under L-BFGS, and the
-state remains a product state to {A1_KL_TO_PRODUCT_MAX:.4f} nats. The deployed 21-parameter
-circuit stops {A1_KL_FIXED_MEAN:.2f} nats short of that same optimum, and reaching it exactly
-moves the emitted structure by those 0.014 to 0.022 angstroms, a third of the resolution. Its
-Lie algebra is already the full real algebra from depth two: shallowness, not structure. So
-Proposal A is replaced. The adaptive circuit is a correct, tested tool; it confirmed the
-diagnosis instead of curing it. What we publish is on the next slide.
+fastest. We ran it on all {A1_N} development peptides with the deployed objective and readout,
+on two seeds, and compared the built chains pairwise. The grown circuit's structures are
+{A1_L2_EFFECT:.3f} to {A1S1_V_EFFECT:.3f} angstroms closer on average, between a quarter and four
+fifths of what the comparison can resolve, so the effect is not measured on either seed; the
+spread between the seeds comes from the deployed circuit, which lands in a different place
+each time, not from the grown one. The resolution is {A1_L2_MDE:.2f} angstroms. Why? At the
+deployed setting the optimum is a product state: seven single-qubit rotations represent it
+exactly, to {A1_KL_RY7_MEAN:.4f} nats. Offered entangling operators, ADAPT does append them, on
+{A1_APPENDED_V_LBFGS} to {A1_APPENDED_ADAM} of the {A1_N_ALPHA1} targets, but they are inert:
+together they lower the objective by less than 0.001 nats, their angles stay below 0.02
+radians under L-BFGS, and the state remains a product state to {A1_KL_TO_PRODUCT_MAX:.4f} nats.
+The deployed 21-parameter circuit stops {A1_KL_FIXED_MEAN:.2f} nats short of that optimum, and
+using the optimum itself moves the structure by a tenth of the resolution. Its Lie algebra is
+already the full real algebra from depth two: shallowness, not structure. So Proposal A is
+replaced. The adaptive circuit is a correct, tested tool; it confirmed the diagnosis instead of
+curing it. What we publish is on the next slide.
 
 ### also
-Verdict REPLACE (`s26/PROPOSAL_A.md`, lane Q; L68; accepted by the coordinator in L69, subject
-to the Adversary's check of L68): the mechanism is absent, not weak. A1 basis: built chain,
+Verdict REPLACE (`s26/PROPOSAL_A.md` with addenda 1 to 3, lane Q; L68, L69, L70, L75, L139): the
+mechanism is absent, not weak. The seed-1 replication (L139, reversed fold order,
+`s26/results/a1s1_stats.json`): 2-local pool {A1S1_L2_EFFECT:+.4f} A ({A1S1_L2_X:.2f} x MDE
+{A1S1_L2_MDE:.4f}, fold CI {A1S1_L2_CI}, {A1S1_L2_FOLDS}/5 folds, {A1S1_L2_W}W/{A1S1_L2_L}L,
+{A1S1_L2_VERDICT}), Tang pool {A1S1_V_EFFECT:+.4f} ({A1S1_V_X:.2f} x MDE {A1S1_V_MDE:.4f}, fold CI
+{A1S1_V_CI}, {A1S1_V_FOLDS}/5, {A1S1_V_W}W/{A1S1_V_L}L, {A1S1_V_VERDICT}). So the registered
+"ADAPT is null" falsifier (inside 0.5x MDE with fold CIs spanning zero) fired at seed 0 and not at
+seed 1, where the two primaries sit in the Type-M zone; neither seed clears its MDE, so A1 is NOT
+MEASURED on either seed, and by S20 L-B's rule two seeds do not settle a variational arm either
+way. The seed spread lives in the comparator, the fixed 21-parameter circuit, which stops 0.90
+nats short of the optimum in a seed-dependent place: {A1_FIXED_MEAN:.4f} A at seed 0 to
+{A1S1_FIXED_MEAN:.4f} at seed 1, while the ADAPT arms, which converge to the same product Gibbs
+state whatever the start, move from {A1_L2_MEAN:.4f} to {A1S1_L2_MEAN:.4f} and {A1_V_MEAN:.4f} to
+{A1S1_V_MEAN:.4f}; all {A1S1_N_ARMS} seed-1 ADAPT arms are negative ({A1S1_ARMS_ALL_NEG}) and the
+largest is {A1_BOTH_SEEDS_X_MAX:.2f} x its MDE. Per the Adversary's L140 the reading is "underpowered at
+seed 0, Type-M at seed 1", the two seed contrasts are one ADAPT value against two draws of the
+fixed comparator (no pooling across seeds is licensed), and the comparator's seed variance
+({A1_FIXED_SEED_DELTA:+.3f} A) is a fact about the deployed selector. The product-state diagnosis
+is the reason and the verdict REPLACE stands on seed-independent facts. L138 (`s26/results/q_dla_a1.json`, the exact Lie closure of every ADAPT
+run at every growth step): the grown set's algebra tracks the appended strings and not what the
+circuit does, dim 7 exactly where nothing was appended ({DLA_A1_DIM7_IFF_NOTHING}) and up to
+{DLA_A1_V_LBFGS_A1_MAX} where inert multi-qubit strings were; the alpha = 0.25 L2 sets reach a
+median {DLA_A1_L2_A025_MEDIAN:.0f} of {DLA_SO128} at P = 21 (max {DLA_A1_L2_A025_MAX}); no grown
+set reaches so(128) (any: {DLA_A1_ANY_SO128}). A1 basis: built chain,
 `rmsd_q_synth` (the production projection of the weighted average over the 128 candidates) on
 both sides; the deployed selector's arm is {A1_FIXED_MEAN:.4f} A on that basis against the
 production top-75 arm {ARM_MEAN:.4f} A, and the whole quantum synthesis is worth

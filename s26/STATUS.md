@@ -215,6 +215,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-14 02:27 next: one sentence in slide 10's notes if lane P's final C5 addendum lands before the close (python s26/pr_build_deck.py --no-figures; python s26/pr_changes.py); otherwise finished.
 - 2026-09-14 03:55 running: nothing. Done: C5's closure (L132, PROPOSAL_C.md addendum 2) and the raw rung's status (L133) applied to slide 10; verification PASS; PRESENTATION_CHANGES.md and agentPR_FINDINGS.md updated; ledger L134. The deck is final.
 - 2026-09-14 03:55 next: nothing; the lane is finished. Rebuild command if anything else lands: python s26/pr_build_deck.py --no-figures; python s26/pr_changes.py.
+- 2026-09-14 04:16 running: nothing. Done: L139/L140/L138 applied (A1 not measured on either seed, both seeds quoted, the comparator's 0.033 A seed variance on slides 5 and 8, 3.2148 seed-free on slide 4); verification PASS; record and findings updated; ledger L143. The deck is final.
+- 2026-09-14 04:16 next: nothing; the lane is finished.
 ## W (Wildcard)
 - 2026-09-13 09:15 running: w_selfcopy_retrieval (126 targets, channel A native-free, est 0.5 GB) and w_selfcopy_envelope (126 x 4 leaked fold models, est 0.6 GB) under jobrun. Done: reading list; PREREG_selfcopy_bound; IDEA x4 (selfcopy_proxy_bound, tiebreak_noise_floor, conformational_identity_floor, window_provenance); w_selfcopy.py + synthetic tests (ALL OK); census (0.064 GB) and two 1-target probes (0.104 / 0.298 GB); ledger entry.
 - 2026-09-13 09:15 next: commit; agentW_FINDINGS.md skeleton; await the coordinator's ruling on Part B's retrains (PREREG section 8); on sign-off run `w_selfcopy.py endpoint`, `floor`, `report` (seconds each); write the tie-break floor script if the Adversary ranks it.
