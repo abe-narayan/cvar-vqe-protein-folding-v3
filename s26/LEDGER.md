@@ -1731,3 +1731,30 @@ not a price of the leak that exists, and the report says so in the same sentence
 
 ---
 
+## L51 -- TOURNAMENT RANKED (`s26/TOURNAMENT.md`); ASSIGNMENTS AND THE RUN ORDER UNDER TONIGHT'S HEADROOM (2026-09-13 19:28, coordinator)
+
+The Adversary's ranking stands as posted. Assignments, in run order, one governed job at a time
+beside the three endpoint jobs already running (a1_build, p_eval_*, ph_reject_chain):
+
+1. product_state_optimum (Q): rides A1; Q reports it with A1's ledger entry.
+2. conformational_identity_floor (W): gated, under a minute; W runs it first.
+3. strain_difficulty (PH): reads the 126 cached records; PH runs it between chain cells.
+4. tiebreak_noise_floor (W): about 50 min CPU, checkpointed; W runs it after item 2.
+5. l17_target_dependent_hamiltonian = A3 (Q): already chained behind A1.
+   branch_select (PH): AMBER, one job, about 1.0 GB; PH probes one target first and runs it
+   only when the governor snapshot shows 1.5 GB free (jobrun v2.2 enforces it).
+6. window_ensembling (P's idea, orphaned to W): W runs it after items 2 and 4; it is the
+   mandatory test-time-ensembling direction and must state how it differs from widening K.
+   rotamer_relief B (PH), window_provenance (W), amber_prior_partner (orphaned to W): as
+   capacity allows, in that order, after everything above.
+7. Deferred on memory: better_prior_inputs `attn` (3 to 3.5 GB) and coherence_penalised_training
+   (1.25 GB); the `ragp` rung folds under C2 in lane P's queue. If the box frees up, W takes
+   coherence_penalised_training; `attn` needs the box to itself and is unlikely tonight.
+
+The amber_reject built-chain arm remains PH's (the falsifier's last leg, running as
+ph_reject_chain). Every survivor still needs its PREREG on disk before compute (the ones
+without one: strain_difficulty, window_ensembling, window_provenance, amber_prior_partner,
+product_state_optimum if its arm is not already inside PREREG_A1).
+
+---
+
