@@ -120,7 +120,25 @@ def fig_a4(path_json=os.path.join(RES, "q_var.json"), out=os.path.join(FIG, "a4_
         sl_fixed.append(s)
         if len(rows) < 7:
             partial = True
+    boot = None
+    bpath = os.path.join(RES, "q_var_boot.json")
+    if os.path.exists(bpath):
+        try:
+            boot = json.load(open(bpath))["results"].get("ci")
+        except Exception:                                                # noqa: BLE001
+            boot = None
+
+    def err(cell, arm):
+        if not boot or cell not in boot or arm not in boot[cell] or not boot[cell][arm].get("ci95"):
+            return None
+        pt, (lo, hi) = boot[cell][arm]["point"], boot[cell][arm]["ci95"]
+        return [[pt - lo], [hi - pt]]
+
+    ef = [err(c, "fixed") for c in cells]
     ax.bar(x, sl_fixed, width, color="0.35", label="fixed RY/CNOT ansatz, depth 3 (P = 3n)")
+    for xi, v, e in zip(x, sl_fixed, ef):
+        if e:
+            ax.errorbar([xi], [v], yerr=e, fmt="none", ecolor="black", capsize=3, lw=1)
     colors = {"V": "#ff7f0e", "L2": "#17becf"}
     for j, pn in enumerate(pools):
         sl = []
@@ -137,6 +155,13 @@ def fig_a4(path_json=os.path.join(RES, "q_var.json"), out=os.path.join(FIG, "a4_
                 partial = True
         ax.bar(x + (j + 1) * width, sl, width, color=colors.get(pn, "0.6"),
                label=f"ADAPT-grown, pool {pn} (P = 3n, matched rows only)")
+        for xi, v, c in zip(x + (j + 1) * width, sl, cells):
+            e = err(c, f"grown_{pn}")
+            if e and np.isfinite(v):
+                ax.errorbar([xi], [v], yerr=e, fmt="none", ecolor="black", capsize=3, lw=1)
+    if boot:
+        ax.text(0.99, 0.985, "error bars: 95% percentile bootstrap over the theta draws\n(2,000 resamples, s26/results/q_var_boot.json)",
+                transform=ax.transAxes, ha="right", va="top", fontsize=6.8, color="0.3")
     ax.axhline(-1.0, color="#d62728", ls="--", lw=1.2, label="2-design rate (S13 depth 8: base 0.504)")
     ax.axhline(0.0, color="0.7", lw=0.8)
     # the degenerate cells: every grown row stopped at P = n (the collapse), no slope exists

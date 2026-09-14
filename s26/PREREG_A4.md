@@ -127,3 +127,10 @@ alpha = 1 grown slope's CI excludes the fixed slope's point value at the same ce
 grown circuits are re-grown deterministically (seed 0) and must reproduce their
 `sequence` from `q_var.json` exactly (asserted). Time: the A4 run took 2,765 s; this one
 repeats it with storage, about 50 minutes, < 0.3 GB. Launch through jobrun as `a4_var_boot`.
+
+## ADDENDUM 3 (2026-09-14, after the addendum-2 run; ledger L119)
+
+`s26/results/q_var_boot.json` landed (3,928 s, 0.09 GB). Reproduction exact (relative 0.0 on
+35 fixed and 70 grown rows). P4a HELD (grown L2 - fixed at alpha = 0.25, T = 0.3: -0.056
+[-0.182, +0.087]). P4b held on 4 of 5 cells and FAILED on alpha = 0.10, T = 0 (upper half-width
++0.20). P4c HELD (alpha = 1 differences +0.30 to +0.66, all CIs excluding zero).

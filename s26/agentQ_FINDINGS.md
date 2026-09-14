@@ -318,6 +318,23 @@ the grown family, not sampling error.
                                              3 of 7 rows at alpha = 0.25 (2.4e-2, 1.0e-3, 1.2e-3)
     H4d  S25 n = 7 reproduced                exactly
 
+### 4.4b The intervals (bootstrap over the theta draws, `s26/results/q_var_boot.json`)
+
+Every A4 row re-measured with the same draws and per-draw storage reproduces `q_var.json` at
+relative 0.0 (35 fixed and 70 grown rows). 95% percentile bootstrap (2,000 resamples, seed
+2026, draws resampled within each n, matched-P grown rows):
+
+    cell                  fixed                   grown V                 grown L2                grown - fixed (V / L2)
+    alpha=1,    T=0       -0.649 [-0.714,-0.596]   -0.079 [-0.126,-0.044]  +0.006 [-0.017,+0.026]  +0.571 [+0.500,+0.642] / +0.658 [+0.596,+0.722]
+    alpha=1,    T=0.3     -0.311 [-0.356,-0.267]   +0.035 [-0.034,+0.103]  -0.008 [-0.064,+0.038]  +0.346 [+0.265,+0.428] / +0.301 [+0.232,+0.369]
+    alpha=0.25, T=0.3     -0.243 [-0.294,-0.193]   -0.246 [-0.326,-0.127]  -0.302 [-0.415,-0.171]  +0.006 [-0.097,+0.123] / -0.056 [-0.182,+0.087]
+    alpha=0.25, T=0       -0.252 [-0.318,-0.187]   degenerate              degenerate
+    alpha=0.10, T=0       -0.047 [-0.171,+0.201]   degenerate              degenerate
+
+L47's caveat is closed by measurement: "-0.302 is -0.243 within error" is a difference of
+-0.056 with a CI that includes zero, and "the alpha = 1 grown circuits do not decay" is a
+difference from the fixed slope of +0.30 to +0.66 with every CI excluding zero.
+
 ### 4.5 What it means for Proposal A
 
 A large gradient from a product circuit is not trainability (rule 10's mirror). The only grown
@@ -402,7 +419,7 @@ scope: depth 3, this ansatz, this spectrum, with the algebra (A2) offering no pr
     s26/results/a1/<pdb>.json             A1 per-target records, 126 (built, labelled after L33)
     s26/results/a1_stats.json             A1 contrasts (ledger L68, corrected by L75); s26/logs/a1_stats.log
     s26/results/q_dla_a1.json             per-growth-step DLA on the A1 records (running) -> s26/figures/a2_dla_grown_ladder.png
-    s26/results/q_var_boot.json           A4 slope bootstrap CIs (running)
+    s26/results/q_var_boot.json           A4 slope bootstrap CIs (complete; ledger entry after L93)
     s26/results/a3/<pdb>.json             A3 per-target records (building)
     s26/results/a1s1/<pdb>.json           A1 seed-1 / reversed-order replication (after A3)
     s26/jobs_done/q_*.json, a2_dla.json, a4_var.json, a1_build.json, a1_label.json   peak RSS and wall per job

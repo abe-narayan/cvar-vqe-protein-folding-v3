@@ -84,8 +84,8 @@ plateau, and does not call a large gradient trainability.
     F12 dim of the Lie closure of the ADAPT-grown set at every growth step on the 126 A1
         records (median and min..max per cell): the algebra of the SET grows while the
         angles are inert at alpha = 1; s26/results/q_dla_a1.json -> s26/figures/a2_dla_grown_ladder.png (PENDING)
-    F9b F9 with bootstrap CIs on every slope and on grown - fixed per cell;
-        s26/results/q_var_boot.json (PENDING)
+    F9b F9 now carries 95% bootstrap CIs on every slope (error bars) and on grown - fixed per
+        cell; s26/results/q_var_boot.json (grown L2 - fixed at alpha=0.25, T=0.3: -0.056 [-0.182, +0.087])
     T1  set-equality cells                                        s25/results/q_verify.json
     T2  the CVaR-vs-linear ratio table                            s25/results/q_plateau.json
     T3  the Gibbs-ladder table at T = 0.3                         s25/results/q_gibbs.json
