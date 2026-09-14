@@ -419,7 +419,7 @@ scope: depth 3, this ansatz, this spectrum, with the algebra (A2) offering no pr
     s26/results/a1/<pdb>.json             A1 per-target records, 126 (built, labelled after L33)
     s26/results/a1_stats.json             A1 contrasts (ledger L68, corrected by L75); s26/logs/a1_stats.log
     s26/results/q_dla_a1.json             per-growth-step DLA on the A1 records (running) -> s26/figures/a2_dla_grown_ladder.png
-    s26/results/q_var_boot.json           A4 slope bootstrap CIs (complete; ledger entry after L93)
+    s26/results/q_var_boot.json           A4 slope bootstrap CIs (complete; ledger L119)
     s26/results/a3/<pdb>.json             A3 per-target records (building)
     s26/results/a1s1/<pdb>.json           A1 seed-1 / reversed-order replication (after A3)
     s26/jobs_done/q_*.json, a2_dla.json, a4_var.json, a1_build.json, a1_label.json   peak RSS and wall per job
