@@ -5198,3 +5198,17 @@ lesson (the ledger of a supervisor's actions must be the supervisor's own state)
 
 ---
 
+## L130 -- docs/FINDINGS.md CORRECTIONS LEDGER UPDATED WITH THE S26 BLOCK (DELIVERABLE 14) (2026-09-14 03:03, coordinator)
+
+A "Sprint 26 additions" table is appended to the front-matter corrections section of
+`docs/FINDINGS.md` (after the two structural lessons, before the Index); no sprint body is
+edited. Rows: the S25 "no barren plateau" claim scoped to depth 3 (R2); S7-11's lost -0.288
+artefact re-measured (L62); S10-4's leak prices reproduced and re-sourced with the 2/60 bound
+(L44, L58); the seven-configuration suite's basis named (L28, L29); S16's AMBER-relaxation
+finding confirmed and sharpened (L39, L87, L100); the routers extended (L110, L115); and S26's
+own corrections R1, R5, L123, L101, L107, L57, L9. If the Adversary's final RETRACTIONS.md adds
+an entry before the close, the coordinator appends a matching row. Rule 9 respected: nothing
+superseded is deleted anywhere.
+
+---
+

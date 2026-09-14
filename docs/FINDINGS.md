@@ -114,6 +114,28 @@ Two structural lessons the record itself draws, worth carrying forward:
    result.** (S9-10.) Ten targets carried ~61% of the tuning gain; after dropping the ten
    largest the system is +0.2013 A *worse* than the baseline (+0.3296 after twenty).
 
+### Sprint 26 additions to this ledger (2026-09-14; `s26/RETRACTIONS.md`, `s26/LEDGER.md`)
+
+The S26 record lives in `s26/`; the entries below are the corrections that touch claims
+quoted from this file or from the S12 to S25 ledgers, plus S26's own retractions, so that a
+reader of this ledger meets them. Nothing below the front matter is edited.
+
+| Claim as recorded | Status |
+|---|---|
+| **S25 QUANTUM.md / state brief 5.4**: "no barren plateau at any width measured" (log2 Var per qubit -0.649 to -0.311, n = 4..13) | **SCOPED by S26 (R2, ledger L27, L47, L119).** The deployed ansatz's dynamical Lie algebra is the full so(2^n) from depth 2 (dim 8128 at n = 7; `s26/results/q_dla.json`, cross-checked in `s26/results/a_dla_check.json`), so the measured slopes are a statement about shallowness at depth 3, not about a favourable algebra. The numbers stand; every quotation carries "at depth 3". |
+| **S7-11**: ESM-pca32 is worth -0.288 A over one-hot on selection (artefact `s7/repr_tune.json`) | **ARTEFACT LOST; RE-MEASURED (ledger L11, L62).** The file is absent from disk and git. S26's ladder measures the ESM-2 650M block at -0.330 A on selection and -0.208 A on the built chain, 5/5 folds (`s26/results/p_ladder_noesm_s0.json`). The direction and size are confirmed; quote the S26 figure with its artefact. |
+| **S10-4**: the identity-leak price +0.0004 A (dev) / +0.0030 A (benchmark); the S10 artefacts `s10/idaudit_*.json` | **REPRODUCED / RE-SOURCED (ledger L31, L44, L50).** The dev half reproduces exactly on the same basis (+0.0004 [-0.0001, +0.0010]; +0.0018 [-0.0003, +0.0039] on the production built chain; `s26/results/w_selfcopy_endpoint.json`); the artefacts are in git history at `5fa05cd`, not absent. The benchmark half stays historical; S26 bounds the 2/60 case from the dev proxy at 0.028 A on the mean (0.151 A at the worst target, 2BP4), class MINOR, without opening the benchmark (L44, L58). |
+| **S25 L16 / state brief 5.3**: the seven-configuration suite (3.058 ... 3.881), the random-75 null 3.4251 and Legacy +0.330 / AMBER +0.455, quoted beside the built-chain 3.2148 | **BASIS NAMED (ledger L28 item 3, L29).** Those are point-cloud numbers (`s25/results/phys_suite.json :: basis`); the built-chain means of the same rows are 3.2187 to 4.1015 (`results/summary/leaderboard.json`). The ranking is unchanged; every S26 document names the basis on both sides. |
+| **S16 L27 / state brief 5.3**: AMBER relaxation's gain dissolves under a matched random displacement | **CONFIRMED AND SHARPENED (ledger L39, L46, L87, L100).** On the production emission the relaxation is worse than a random move of its own size by +0.0111 A (fold CI [+0.0062, +0.0171], Type-M zone at 1.12x MDE) and worse than a move toward a pool member by +0.0385 (2.27x), replicated on new seeds; it is a validity step on 124 of 126 (34 emissions with a sub-2 A heavy-atom overlap become 1) and breaks a virtual bond on 2BP4 and 9KAR. |
+| **S22 L7 / S23 L7**: five router constructions fail to predict per-target m* native-free | **EXTENDED (ledger L110, L115).** Twelve more m* routers and six s* routers on six feature blocks no previous router used: none clears its MDE, all but one point the harmful way. |
+| **S26 L28 item 2** (lane E): the governed test run "369 / 356 / 13" | **CORRECTED (R1, L31, L32):** 370 / 357 / 13 at the time; with the opt-in tier 370 / 368 / 2 (L113). |
+| **S26 L68** (lane Q): "ADAPT under L-BFGS selects no operator at alpha = 1" | **RETRACTED (R5, L75):** operators are appended on 60 / 68 of the 78 alpha = 1 targets and are inert (at most 1.2e-4 nats); the verdict is unchanged. |
+| **S26 L53** (lane PH): the relaxation's displacement is "the first native-free quantity above rho 0.4" for the error | **RETRACTED AS WORDED (L121, L123):** the pool's own spread carries the signal (partial rho +0.452); the displacement tracks it at rho 0.76 and adds +0.08 given it. |
+| **S26 L99** (lane P): the esm8m selection contrast "-0.30" | **CORRECTED (L101):** +0.225 A (0.88x MDE, not measured). |
+| **S26 L106** (lane P): the B3 gain-size feature is the pool's helix content or the length | **CORRECTED (L107):** it is the pool's strand content. |
+| **S26 L56** (lane P): the C2 anchor's built chain equals the production cache | **CORRECTED (L57):** selection and point cloud are bit-exact; the built chain lands on the leaderboard-rebuild basis 3.2126 because the multi-start projection is sensitive to a 1e-14 input difference. |
+| **S26 L7** (lane I): two point-cloud numbers for 1D6X and 1KWE | **CORRECTED (L9):** written before the query returned; the correct values are 2.0900 and 2.7313. |
+
 ---
 
 ## Index
