@@ -2845,7 +2845,9 @@ with reasons; 184 governed job records, every one with an exit code and a peak R
 never above the 93% ceiling under the governor's control). The findings, not the folding, remain
 the output: no proposal survived as stated, every mandatory direction has a measured answer, and
 the presenter walks in knowing which questions are closed and by which sprint. After the close
-lane PR applied L139, L140 and L138 to the deck (L143): slide 8 quotes both A1 seeds and says
+the Adversary's report row (L144, on the 04:12 text) passed with two items this final pass
+carries (the two-seed A1 statement; the check re-run on the final commit) and one quoted word
+rephrased; lane PR applied L139, L140 and L138 to the deck (L143): slide 8 quotes both A1 seeds and says
 not measured on either, with the deployed circuit's 0.033 A seed variance beside it; slide 5
 carries the same qualifier; slide 4 states the 3.2148 A production number as seed-free; 550
 registered numbers, verification 0 dashes, 0 banned words, spoken words 248 / 248 / 249. Lane I's extension
@@ -3698,11 +3700,13 @@ artefact and is a row of Appendix B; the docs file is cited as the pointer.
 sprint-close entry, as the campaign prompt requires. It is the record this report cites by
 entry number throughout. Being verbatim it is exempt from the report's own style rules (the
 check in `s26/e_report_check.py` scans the prose before this appendix): it contains no em or en
-dash and two occurrences of a banned word, both quotations (L60 names the word this report
-removed; L77's "robustness check" is the coordinator's phrase).
+dash, and two of the six words the report's own prose never uses appear in it as the ledger's
+own text (L60 names the word this report removed at 92d559bb; L77 uses the adjective form of
+another for a seed re-run); they are quotations of the record, not this report's prose.
 
-Reproduced from `s26/LEDGER.md` at commit `e6249605` (2026-09-14 04:17, through L143; entries after L142 are lane PR's post-close deck rebuild L143), unchanged; 146 numbered entries (L1 to L143, with the suffixed collisions). The report's own text
-ends here; everything below is the ledger.
+Reproduced from `s26/LEDGER.md` at commit `95652f6b` (2026-09-14 04:18, through L144), unchanged; 147 numbered entries
+(L1 to L144, with the suffixed collisions). The report's own text ends here; everything below is
+the ledger.
 
 ---
 
@@ -9646,6 +9650,26 @@ title, body and notes on every slide. Registry 550 tokens. Nothing on the deck i
 
 ---
 
+## L144 -- DELIVERABLES CHECK, THE REPORT ROW (04:16, ON THE COMMITTED TEXT ed5e44cd): OK; TWO ITEMS PENDING FOR LANE E'S FINAL PASS (A1 ON TWO SEEDS; THE REPORT CHECK RE-RUN ON THE FINAL SHA); ONE QUOTED BANNED WORD (2026-09-14, A)
+
+`s26/REPORT.md` at `ed5e44cd` (3,644 lines; Parts I-IX, Appendices A-D). Rule 13: one banned
+word, line 3584 (Appendix D quotes L77's phrase for the seed re-run; rephrase), no U+2014, no
+U+2013. Every qualifier in `s26/agentA_FINDINGS.md`'s table is carried (line numbers in
+`s26/DELIVERABLES_CHECK.md`), including L122's "exact and complete" applied after the verbatim
+L117 line (2874) and the S13 Pauli mean weights cited to the dossier "as cited" and kept off the
+slides (Appendix B row 97; 2907). Pending for lane E's 04:15-04:45 pass: (i) A1 on two seeds
+(L139, L140, R11) is not yet in Part VII or Appendix B, since it landed after the 04:04 commit;
+(ii) `s26/results/e_report_check.json` (175 of 175) was computed on report sha 45eaa279, earlier
+than HEAD's aa528df3, so the check is re-run on the final commit as lane E's last act (L77). With
+those two, row 12 is OK and the Part 10 table is 14 of 14. Final state of this lane's files:
+`EXAMINATION_AUDIT.md`, `TOURNAMENT.md`, `RETRACTIONS.md` (R1-R11 and the prior-sprint
+table), `DELIVERABLES_CHECK.md` (final), `agentA_FINDINGS.md` (with the per-slide qualifier
+table), 24 ledger entries (L31, L34, L45-L49, L54, L55, L70, L71, L79-L82, L94-L97, L120, L121,
+L135, L136, L140, this), four artefacts (`a_reproduce_head.json`, `a_c26_phi_mae.json`,
+`a_dla_check.json`, `a_strain_vs_spread.json`, `a_ladder_isolations.json`).
+
 ---
 
-End of Appendix C. Entries after L143, if any, are in `s26/LEDGER.md` itself.
+---
+
+End of Appendix C. Entries after L144, if any, are in `s26/LEDGER.md` itself.
