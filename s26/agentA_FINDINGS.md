@@ -118,3 +118,19 @@ Q's H2b; R4 lane PH's cis-ensemble prediction).
 - The pool-spread control for L53 (`s26/a_strain_vs_spread.py`, job queued behind the four-job cap); L81 is provisional until it lands.
 - Every new entry within the hour: the reject chain, A3, the remaining rungs (esm8m after L78's kill, mix, pairnet, raw), branch_select, rotamer_relief B, the ensembling, W's survivors, lane I's slow test tier and the results-lab rebuild.
 - RETRACTIONS.md (R1-R5) and DELIVERABLES_CHECK.md kept current; the final Part 10 pass at about 04:00 with the rule-13 grep over the report, the deck dump and every presenter-facing file.
+
+## Final pass (2026-09-14 04:00 to 04:12; ledger entry "DELIVERABLES CHECK (FINAL PASS)")
+
+`s26/DELIVERABLES_CHECK.md` final: 13 of 14 rows OK; the report row re-checked at about 04:40
+on lane E's committed text (result in the ledger). Rule 13 clean on every presenter-facing file
+and the deck dump. `s26/RETRACTIONS.md` R1-R10 plus the prior-sprint disposition table for the
+`docs/FINDINGS.md` corrections block (L130). L131 and L132 checked: both STAND.
+
+## What I did not do (final)
+
+- L115 (C4, eighteen routers) and L112 / L116 (the delivery file) were not given their own
+  check entries; both are nulls or reproductions and nothing positive stands unchecked.
+- The S13 locality theorem and the S13 Pauli-spectrum prediction were cited, not re-derived,
+  this sprint (L120, L122); the S13 Pauli mean weights are off the slides for that reason.
+- The `attn` rung (3 to 3.5 GB) and the raw rung's evaluation (L133) did not run on this box;
+  they are the two prior inputs the ladder could not price.

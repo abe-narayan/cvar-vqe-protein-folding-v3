@@ -135,3 +135,96 @@ product to 4e-4 nats); growing anyway moves the built chain by a third of the MD
 number of L68, the A2 and A4 results and the verdict REPLACE are unchanged. Corrections applied by
 appended addenda to `s26/PROPOSAL_A.md` and `s26/agentQ_FINDINGS.md` (section 9), by lane PR to
 slide 8 and slide 9 (L76), and by the Adversary to its own L70 caveat 2 (ledger entry below L77).
+
+---
+
+## R6 -- L53's "THE FIRST NATIVE-FREE QUANTITY ABOVE 0.4" IS RETRACTED BY LANE PH (L123) AFTER THE ADVERSARY'S CONTROL (L121) (S26 internal)
+
+Claim, verbatim: "It is the first native-free quantity in this programme's record with a
+correlation above 0.4 to the per-target error of the emitted structure" (`s26/LEDGER.md` L53;
+`s26/agentPH_FINDINGS.md` section 3b), with the framings "the physics reports when the answer is
+untrustworthy" and "how far the relaxation moves the chain predicts its error".
+
+Contradicted by: `s26/results/a_strain_vs_spread.json` (the control L53's prereg did not carry):
+the shipped top-75's own pairwise CA-RMSD spread, native-free and available before the
+relaxation runs, has partial Spearman +0.452 with `rmsd_arm` (n, Rg partialled; fold CI [+0.280,
++0.609], 5/5 folds); `moved` correlates with that spread at +0.756 and, given it, adds +0.082
+(iid CI [-0.103, +0.259], permutation p 0.39).
+
+Discriminating experiment (run): the pool-spread control, job `a_strain_vs_spread` (L121).
+
+Now stands: the pool's own disagreement is the native-free quantity that predicts the emitted
+chain's error (rho +0.45); the relaxation's displacement is its proxy and adds nothing given it.
+The phenomenon, the quartile table and "not a lever" stand; the sentence and the two framings
+are withdrawn (L123; `s26/pr_notes.md` lines 213-216 and 414-415 replaced by lane PR, L126).
+
+---
+
+## R7 -- L56's "BIT-EXACT ON ALL FOUR BASES" IS CORRECTED BY LANE P (L57) (S26 internal)
+
+Claim, verbatim: the L56 title, "the shipped posterior through the ladder's own path is
+bit-exact against the production cache on all four bases".
+
+Contradicted by: the block under L56 and `s26/results/p_ladder_shipped_s0.json`: selection and
+point cloud reproduce the cache at 0.00e+00 and 7.25e-14, but the built chain lands on the
+leaderboard-rebuild basis 3.2126 (the multi-start projection is sensitive to a 1e-14 input
+difference), not the cache's 3.2148.
+
+Now stands: the C2 anchor's built chain is the rebuild basis 3.2126 (named on every C2 line,
+L57); selection and point cloud are bit-exact.
+
+---
+
+## R8 -- L99's "-0.30" ESM8M SELECTION SLOPE IS CORRECTED BY LANE P (L101) (S26 internal)
+
+Claim, verbatim: L99's note quoting a selection slope of "-0.30" for the 8M-to-650M step.
+
+Contradicted by: `s26/results/p_ladder_report_esm8m_s0.json :: stats/sel`: esm8m vs shipped on
+selection is +0.2246, SE 0.0913, MDE 0.2557, 0.88x, fold CI [+0.122, +0.305], NOT MEASURED.
+
+Now stands: +0.225 A on selection (0.88x MDE, not measured); the built-chain +0.242 (1.17x,
+WORSE, Type-M) is unchanged (L101).
+
+---
+
+## R9 -- L106's "HELIX CONTENT AND THE LENGTH" IS CORRECTED BY LANE P (L107) (S26 internal)
+
+Claim: L106 named the pool's helix content and the length as the features carrying the size of
+the pipeline's gain over a constant helix.
+
+Contradicted by: the descriptive ridge weights and correlations (`s26/agentP_FINDINGS.md`
+section 10): the largest standardised weight is the top-75 members' strand (E) fraction
+(-0.612; rho(ss_E, d) = -0.638); rho(n, d) = -0.128.
+
+Now stands: the pool's strand content carries the size of the gain; the sign stays
+unpredictable (L106 / L107). Sourcing note: the -0.638 is document-sourced (a findings section),
+not a results JSON (L120).
+
+---
+
+## R10 -- L7's TWO POINT-CLOUD NUMBERS ARE CORRECTED BY LANE I (L9) (S26 internal)
+
+Claim, verbatim: the raw coordinate average of 1D6X "is already at 1.5921 A" and of 1KWE
+"2.2812" (L7).
+
+Contradicted by: `bench_results/cache/1fc9f2dcf489e2fb/{1D6X,1KWE}.json :: rmsd_avg` = 2.0900
+and 2.7313 (the entry was composed before the query returned).
+
+Now stands: 1D6X 2.0900 / 1KWE 2.7313 on the point cloud; the L7 mechanism (the average can
+land nearer the native than any single member) stands on the corrected numbers (L9). Lane I's
+rule for itself is recorded there: a number enters the ledger only after its tool output is read.
+
+---
+
+## Prior-sprint claims that S26 contradicts, scopes or re-sources (for the docs/FINDINGS.md corrections ledger; the coordinator's L130 block carries the matching rows)
+
+| prior claim | where | S26 disposition | S26 artefact |
+|---|---|---|---|
+| "no barren plateau at any width measured" (S25) | `docs/STATE_BRIEF_2026-09-12.md` 5.4; `s25/results/q_plateau.json` | SCOPED to depth 3 (P = 3n); the DLA is the full so(2^n) from depth 2, so the slopes are a shallowness statement (R2); the grown-vs-fixed slope CI is stored (L119) | `s26/results/q_dla.json`, `a_dla_check.json`, `q_var_boot.json` |
+| S13 Pauli mean weights 2.236 (Legacy) / 3.015 (AMBER) | S13 / `docs/CONDENSED_REPORT.md` | NOT re-derived in S26; typed from the claim ledger by lane PR (L61) and kept off the slides (L122); the ratio leaf of `s13/results/geo_pauli.json` is sourced; a sourcing gap, not a contradiction | `s26/PRESENTATION_CHANGES.md` |
+| S7-11's ESM value -0.288 A on selection (artefact `s7/repr_tune.json` lost, L11) | `docs/FINDINGS.md` S7-11 | REPLACED by the measured -0.330 A on selection (fold CI [-0.448, -0.212], 5/5) and -0.208 A on the built chain (Type-M, 5/5) (L62) | `s26/results/p_ladder_report_noesm_s0.json` |
+| S10-4's identity-leak prices +0.0004 (dev) / +0.0030 (benchmark), artefacts absent (C27) | `docs/FINDINGS.md` S10-4 | the dev half RE-DERIVED exactly on the `fit` basis (+0.0004, fold CI [-0.0001, +0.0010]) and priced on the built chain (+0.0018); the benchmark half stays historical; the 2/60 bound is 0.028 A (mean-CI envelope) to 0.151 A (worst target), MINOR (L44, L55, L58) | `s26/results/w_selfcopy_endpoint.json`, `w_selfcopy_bound.json` |
+| the seven-configuration suite and the Legacy +0.330 / AMBER +0.455 verdicts quoted beside 3.2148 | state brief 2, 5.3; professor brief | BASIS NAMED: point cloud; built-chain twins 3.2187 to 4.1015 (L28, L29) | `s25/results/phys_suite.json :: basis`, `results/summary/leaderboard.json` |
+| S16 L27's AMBER-relaxation finding (matched random move as accurate) | `s16/` | CONFIRMED and SHARPENED on the production input: worse than a random move (+0.0111, Type-M) and than a move toward a pool member (+0.0385), replicated (L39, L46, L87); the toward-member move is a partial reversal of the projection's displacement (L95) | `s26/results/ph_c3_stage1.json`, `ph_c3_stage1_rep.json` |
+| the routers (five constructions fail, S22 L7 / S23 L7) | `s22/`, `s23/` | EXTENDED: twelve m* and six s* routers on four new feature blocks null-to-harmful (L110, L115) | `s26/results/p_c4.json` |
+| L38's own-torsion floor 0.347 A (this sprint) | L38 | SCOPED: an upper bound; the tight floor is 0.083 A (L89) | `s26/results/ph_cis_floor2.json` |
