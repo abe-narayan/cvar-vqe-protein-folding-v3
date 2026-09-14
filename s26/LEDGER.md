@@ -3416,3 +3416,74 @@ cancelled in the average (S23 L5). The remaining physics question on this pool i
 which runs next under the tournament.
 
 ---
+
+## L87 -- C3 STAGE 1 REPLICATION (new seeds, reversed order): EVERY CONTRAST LANDS INSIDE L39's FOLD CI; THE TOWARD-MEMBER CONTROL's -0.018 A IMPROVEMENT IS NO LONGER PROVISIONAL (-0.0207 [-0.0250, -0.0166], 5/5) (2026-09-13, PH)
+
+`s26/ph_c3.py stage1 --rep`, `s26/results/ph_c3_stage1_rep.json` (complete 126/126), job
+`s26/jobs_done/ph_c3_stage1_rep.json` (exit 0, 10 s, peak RSS 0.04 GB). Registered in
+`s26/PREREG_c3_control.md` addendum 2 before it ran: new draw seeds (salt "rep"), targets
+processed in reversed pinned order, fold labels untouched. Basis as in L39: arm input the
+BUILT CHAIN (`rmsd_arm` 3.2148), arm output the RELAXED CHAIN (`rmsd_full` 3.2355); the
+controls displace the built chain's CA trace by AMBER's own per-atom RMS magnitude. The arm
+has no randomness, so only the controls' draws change. `ST.fmt` verbatim, the five contrasts
+the replication was registered to judge:
+
+      stage1-REP TOWARD-MEMBER minus do-nothing
+        a 3.1941 (med 2.9650)   b 3.2148 (med 2.9661)   n=126
+        effect -0.0207   median -0.0158   SE 0.0042   MDE 0.0117   effect/MDE -1.77
+        iid  CI95 [-0.0287, -0.0126]
+        fold CI95 [-0.0250, -0.0166]   folds same sign 5/5   per-fold 0:-0.026 1:-0.020 2:-0.026 3:-0.015 4:-0.016
+        94W/32L/0T   worst degradation +0.1064 (8TXS)   p90 +0.0279   power 1.00  Type-M 1.00
+        concentration: drop-top10 -0.0121 vs uniform-effect null p10/p50/p90 -0.0173/-0.0123/-0.0073 -> pctile 0.522
+        VERDICT: BETTER
+      stage1-REP AMBER minus matched-magnitude RANDOM (16 draws)
+        a 3.2355 (med 2.9757)   b 3.2255 (med 2.9698)   n=126
+        effect +0.0100   median +0.0094   SE 0.0035   MDE 0.0098   effect/MDE +1.02
+        iid  CI95 [+0.0033, +0.0172]
+        fold CI95 [+0.0059, +0.0175]   folds same sign 5/5   per-fold 0:+0.008 1:+0.026 2:+0.006 3:+0.005 4:+0.007
+        49W/77L/0T   worst degradation +0.1442 (2LM8)   p90 +0.0561   power 0.81  Type-M 1.12
+        concentration: drop-top10 +0.0156 vs uniform-effect null p10/p50/p90 +0.0109/+0.0156/+0.0204 -> pctile 0.509
+        VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.12x]
+      stage1-REP AMBER minus matched-magnitude TOWARD-MEMBER (16 draws)
+        a 3.2355 (med 2.9757)   b 3.1941 (med 2.9650)   n=126
+        effect +0.0414   median +0.0387   SE 0.0059   MDE 0.0165   effect/MDE +2.50
+        iid  CI95 [+0.0299, +0.0527]
+        fold CI95 [+0.0331, +0.0501]   folds same sign 5/5   per-fold 0:+0.047 1:+0.058 2:+0.043 3:+0.028 4:+0.033
+        30W/96L/0T   worst degradation +0.3600 (2BP4)   p90 +0.1093   power 1.00  Type-M 1.00
+        concentration: drop-top10 +0.0512 vs uniform-effect null p10/p50/p90 +0.0439/+0.0513/+0.0588 -> pctile 0.492
+        VERDICT: WORSE
+      stage1-REP RANDOM minus do-nothing
+        a 3.2255 (med 2.9698)   b 3.2148 (med 2.9661)   n=126
+        effect +0.0107   median +0.0083   SE 0.0014   MDE 0.0039   effect/MDE +2.79
+        iid  CI95 [+0.0082, +0.0135]
+        fold CI95 [+0.0093, +0.0120]   folds same sign 5/5   per-fold 0:+0.013 1:+0.012 2:+0.011 3:+0.008 4:+0.010
+        28W/98L/0T   worst degradation +0.1035 (1S9Z)   p90 +0.0283   power 1.00  Type-M 1.00
+        concentration: drop-top10 +0.0124 vs uniform-effect null p10/p50/p90 +0.0106/+0.0124/+0.0143 -> pctile 0.513
+        VERDICT: WORSE
+      stage1-REP ORACLE cos: AMBER minus RANDOM
+        a -0.0491 (med -0.0498)   b -0.0032 (med -0.0030)   n=126
+        effect -0.0459   median -0.0401   SE 0.0155   MDE 0.0435   effect/MDE -1.05
+        iid  CI95 [-0.0770, -0.0157]
+        fold CI95 [-0.0734, -0.0212]   folds same sign 5/5   per-fold 0:-0.042 1:-0.101 2:-0.050 3:-0.003 4:-0.036
+        77W/49L/0T   worst degradation +0.4596 (5MXS)   p90 +0.1598   power 0.84  Type-M 1.10
+        concentration: drop-top10 -0.0172 vs uniform-effect null p10/p50/p90 -0.0377/-0.0175/+0.0020 -> pctile 0.508
+        VERDICT: BETTER [TYPE-M ZONE: magnitude inflated ~1.10x]
+
+    first run (L39)                          replication              first run's fold CI       inside?
+    toward-member minus do-nothing  -0.0178  -0.0207 [-0.0250, -0.0166]  [-0.0255, -0.0124]     yes
+    AMBER minus random              +0.0111  +0.0100 [+0.0059, +0.0175]  [+0.0062, +0.0171]     yes
+    AMBER minus toward-member       +0.0385  +0.0414 [+0.0331, +0.0501]  [+0.0298, +0.0479]     yes
+    random minus do-nothing         +0.0096  +0.0107 [+0.0093, +0.0120]  [+0.0077, +0.0122]     yes
+    ORACLE cos AMBER minus random   -0.0503  -0.0459 [-0.0734, -0.0212]  [-0.0735, -0.0253]     yes
+
+Every replicated quantity lands inside the first run's fold-clustered CI, all 5/5 folds. The
+PROVISIONAL label on the toward-member line of L39 is lifted: a zero-information move of the
+same size as the relaxation's, toward a random member of the shipped pool, improves the built
+chain by 0.018 to 0.021 A (94W/32L in the replication, 1.77x its MDE), where the relaxation's
+own move worsens it by 0.021. The reading in L39 stands unchanged: this is a property of the
+projection's displacement (S16 L27: the projection moved the chain 0.166 A away from the point
+cloud with a negative cosine, and the pool members surround the cloud), not of physics, and it
+is not a proposal. The Type-M status of AMBER-minus-random (1.02x MDE in the replication) is
+unchanged and the L46 caveat still applies to any quotation of that number.
+
+---

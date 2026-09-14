@@ -84,3 +84,12 @@ The presentation line, with these applied: the physics relaxation costs 0.021 A 
 same-size move toward any other pool member; it is kept because it turns a chain with an
 energy above 1e4 kcal/mol on 59% of targets into one below 1000 kcal/mol on 125 of 126, at the
 price of a broken virtual bond on two.
+
+---
+## ADDENDUM 2 (2026-09-13 23:05) -- THE REPLICATION LANDED
+
+`s26/results/ph_c3_stage1_rep.json` (new draw seeds, reversed target order; ledger entry "C3
+STAGE 1 REPLICATION"): every contrast inside the first run's fold CI. Toward-member minus
+do-nothing -0.0207 [-0.0250, -0.0166], 94W/32L; AMBER minus random +0.0100 [+0.0059, +0.0175]
+(still Type-M, 1.02x MDE); AMBER minus toward-member +0.0414 [+0.0331, +0.0501]. The
+"provisional" label in the table above is lifted; nothing else changes.
