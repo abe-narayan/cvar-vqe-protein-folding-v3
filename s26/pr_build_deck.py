@@ -369,6 +369,34 @@ def slide_07(prs, V):
     return s
 
 
+def slide_08_pending(prs, V):
+    s = new_slide(prs, "Direction A: ADAPT-VQE on this Hamiltonian (PENDING)", 8,
+                  "PENDING: wording and verdict from s26/PROPOSAL_A.md when lane Q posts it; the facts shown are measured (A2 L27, A4 L35; Adversary L45, L47)")
+    add_picture(s, os.path.join(FIG, "a4_variance_slopes.png"), 0.5, 1.4, 7.2, 3.0)
+    add_text(s, 0.55, 4.5, 7.1, 2.5, [
+        (f"A4 (lane Q's figure, s26/results/q_var.json): grown circuits at alpha = 1 hold {F(V,'A4_A1_DISTINCT_MIN')} to "
+         f"{F(V,'A4_A1_DISTINCT_MAX')} distinct operators (product circuits, per the adapt sets of q_dla.json); their variance does not decay "
+         f"with n (slopes {F(V,'A4_V_LIN','+.3f')} / {F(V,'A4_L2_LIN','+.3f')} at T = 0, {F(V,'A4_V_A1_T03','+.3f')} / {F(V,'A4_L2_A1_T03','+.3f')} at T = 0.3) "
+         f"and is {F(V,'A4_RATIO_MIN','.1f')} to {F(V,'A4_RATIO_MAX','.0f')} x the fixed ansatz's at matched n. A large gradient from a product circuit is not trainability.", {}),
+        (f"the one non-trivial grown family (alpha 0.25, pool L2, {F(V,'A4_L2_A025_DISTINCT_MIN')} to {F(V,'A4_L2_A025_DISTINCT_MAX')} distinct 2-local strings) "
+         f"decays at {F(V,'A4_L2_A025_T03','.3f')} per qubit vs the fixed {F(V,'A4_FIXED_A025_T03','.3f')}; both far from a 2-design's -1; no CI on the difference is on disk (L47)", {}),
+    ], size=11, spacing=3)
+    add_text(s, 7.95, 1.4, 4.95, 5.6, [
+        ("What the proposal says", dict(bold=True, color=ACCENT, bullet=False)),
+        ("replace the fixed RY/CNOT ansatz with an adaptively grown one (qubit-ADAPT pools V and L2)", {}),
+        ("A2, final: the algebra offers nothing to grow into", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"dim(DLA) at n = 7: {F(V,'DLA_N7_L1')} at depth 1 (abelian), {F(V,'DLA_N7_L2')} from depth 2 = dim so(128) = {F(V,'DLA_SO128')}; "
+         f"pool V generates {F(V,'DLA_POOL_V_N7')}, pool L2 {F(V,'DLA_POOL_L2_N7')}; ADAPT-selected sets: dim {F(V,'ADAPT_A1_DIM')} at alpha = 1, "
+         f"{F(V,'ADAPT_A025_L2_DIM')} at alpha = 0.25 (L2)", {}),
+        ("The target is a product state", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"KL(Gibbs || product of its marginals) = {F(V,'PROD_KL_IDEAL','.1e')} on the ideal ladder, {F(V,'PROD_KL_1A13','.1e')} on 1A13; "
+         f"a 7-parameter RY layer reaches the Gibbs state to {F(V,'PROD_KL_RY7','.1e')} nats, the deployed 21-parameter circuit stops at {F(V,'PROD_KL_FIXED','.3f')}", {}),
+        ("A1, endpoint: running (fixed vs ADAPT-grown, built chain primary); expected null by the set-equality theorem", {}),
+        ("Verdict: PENDING s26/PROPOSAL_A.md. Nothing here is a width-scaling argument for ADAPT on this Hamiltonian (L35).", dict(bold=True)),
+    ], size=11.5, spacing=3)
+    return s
+
+
 def slide_09(prs, V):
     s = new_slide(prs, "Direction B: a learned folding model as the prior, and its replacement", 9,
                   "from s26/PROPOSAL_B.md (lane P, DRAFT; B1 final) and s26/PROPOSAL_B_REPLACEMENT.md (lane Q); the A2 and A4 figures are on slides 6 and 8")
@@ -536,6 +564,8 @@ def main():
     prs = Presentation()
     prs.slide_width = Inches(W); prs.slide_height = Inches(H)
     builders = {1: slide_01, 2: slide_02, 3: slide_03, 4: slide_04, 5: slide_05, 6: slide_06, 7: slide_07, 9: slide_09, 10: slide_10, 11: slide_11}
+    if not os.path.exists(os.path.join(ROOT, 's26', 'PROPOSAL_A.md')):
+        builders[8] = slide_08_pending   # the 'until then' state of step (d)
     pending = {8: ("Direction A: ADAPT-VQE on this Hamiltonian", "s26/PROPOSAL_A.md")}
     spoken_by_slide = {}
     manifest = {}

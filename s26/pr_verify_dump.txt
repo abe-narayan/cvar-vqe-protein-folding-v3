@@ -243,13 +243,49 @@ TORS = 3.77046 <- s13/results/tors_eval.json :: reports/a_pepPos/build/mean [bui
 TORSION_CEILING = 1.59404 <- s13/results/ceiling_report.json :: k/4/descent/mean [built_chain (torsion-space rebuild)]
 UNIVERSE_BEST = 1.31345 <- bench_results/recon_library_saturation.json :: universe_best/small [single_window]
 ===== SLIDE 8 =====
-[shape] Direction A: ADAPT-VQE on this Hamiltonian
-[shape] 8 / 11    PENDING: s26/PROPOSAL_A.md
-[shape] PENDING. This slide is filled from s26/PROPOSAL_A.md when it lands. | Until then nothing on it is claimed.
+[shape] Direction A: ADAPT-VQE on this Hamiltonian (PENDING)
+[shape] 8 / 11    PENDING: wording and verdict from s26/PROPOSAL_A.md when lane Q posts it; the facts shown are measured (A2 L27, A4 L35; Adversary L45, L47)
+[picture] Picture 5 7.20x2.98 in
+[shape] • A4 (lane Q's figure, s26/results/q_var.json): grown circuits at alpha = 1 hold 1 to 3 distinct operators (product circuits, per the adapt sets of q_dla.json); their variance does not decay with n (slopes -0.079 / +0.006 at T = 0, +0.035 / -0.008 at T = 0.3) and is 1.6 to 370 x the fixed ansatz's at matched n. A large gradient from a product circuit is not trainability. | • the one non-trivial grown family (alpha 0.25, pool L2, 4 to 21 distinct 2-local strings) decays at -0.302 per qubit vs the fixed -0.243; both far from a 2-design's -1; no CI on the difference is on disk (L47)
+[shape] What the proposal says | • replace the fixed RY/CNOT ansatz with an adaptively grown one (qubit-ADAPT pools V and L2) | A2, final: the algebra offers nothing to grow into | • dim(DLA) at n = 7: 7 at depth 1 (abelian), 8,128 from depth 2 = dim so(128) = 8,128; pool V generates 2,080, pool L2 8,128; ADAPT-selected sets: dim 7 at alpha = 1, 1,025 at alpha = 0.25 (L2) | The target is a product state | • KL(Gibbs || product of its marginals) = 7.2e-17 on the ideal ladder, 5.4e-05 on 1A13; a 7-parameter RY layer reaches the Gibbs state to 5.4e-05 nats, the deployed 21-parameter circuit stops at 0.903 | • A1, endpoint: running (fixed vs ADAPT-grown, built chain primary); expected null by the set-equality theorem | • Verdict: PENDING s26/PROPOSAL_A.md. Nothing here is a width-scaling argument for ADAPT on this Hamiltonian (L35).
 [notes] SPOKEN:
-PENDING. This slide waits for `s26/PROPOSAL_A.md`.
+PENDING: this slide is a placeholder until lane Q's proposal file lands; every fact on it is measured. Direction A was: replace the fixed ansatz with ADAPT-VQE. Two things are already known. First, the algebra. The fixed ansatz generates the full so(128) at seven qubits from depth two, so ADAPT cannot add expressivity the fixed circuit lacks; the Tang minimal pool generates only 2,080 dimensions of it. Second, the target. At alpha equal to one, the state the optimiser is asked to reach is a product state: the divergence between the Gibbs state and the product of its marginals is 5.4e-05 nats on a real target. A seven-parameter layer of single-qubit rotations reaches it to 5.4e-05 nats; the deployed 21-parameter circuit stops at 0.903. So an ADAPT-grown circuit on this Hamiltonian selects 1 to 3 distinct operators and repeats one single-qubit rotation: it is a product circuit. Its gradient variance does not decay with width, and it is 1.6 to 370 times the fixed ansatz's. That is not trainability; there is nothing to train. The one non-trivial grown family, alpha 0.25 with the two-local pool, decays at -0.302 per qubit against the fixed -0.243; both are far from the minus one of a two-design, and no interval on their difference is on disk. The endpoint experiment is running and I expect a null, because the set-equality theorem bounds every readout by the classical prefix.
+
+ALSO (not spoken):
+PENDING: the wording and verdict come from `s26/PROPOSAL_A.md` (lane Q) when it exists; A1 (fixed vs ADAPT-grown, built chain primary) was at 33 of 126 targets at 19:20 (`s26/STATUS.md`). A2 (L27, Adversary L45 STANDS): dim(DLA) at n = 7 is 7 at depth 1, 8,128 at depth 2 and 8,128 at depth 3 against dim so(128) = 8,128; pool V 2,080, pool L2 8,128; ADAPT-selected sets at alpha = 1 stay abelian (dim 7), at alpha = 0.25 with pool L2 reach 1,025; symbolic closure equals the dense SVD rank on 12/12 cells. A4 (L35, Adversary L47 STANDS WITH CAVEAT): matched-P slopes, log2 Var per qubit, grown V / L2: -0.079 / +0.006 (alpha 1, T 0), +0.035 / -0.008 (alpha 1, T 0.3), -0.246 / -0.302 (alpha 0.25, T 0.3) against the fixed -0.649 / -0.311 / -0.243; grown/fixed variance ratio 1.63 to 370 over 39 matched rows; the alpha = 0.25 L2 family grows 4 to 21 distinct 2-local strings; S25's n = 7 rows reproduce at relative deviation 0.0000. Per L47 the product-circuit reading rests on `s26/results/q_dla.json` (adapt sets), not on `q_var.json`. The product-state target: KL(Gibbs || product of marginals) 7.2e-17 on the ideal ladder and 5.4e-05 on 1A13 (`s26/results/probe/1A13.json`). What A gives Proposal A: no width-scaling argument (L35); on this diagonal, nearly target-independent Hamiltonian the honest form of direction A is ADAPT as a diagnostic, or a Hamiltonian that is not diagonal, which this project does not have.
 
 SOURCES (not spoken; token = value <- artefact path [basis]):
+A4_A1_DISTINCT_MAX = 3 <- s26/results/q_var.json :: results/grown/[alpha=1 cells]/rows[P_matched]/n_distinct_ops (max) (DERIVED)
+A4_A1_DISTINCT_MIN = 1 <- s26/results/q_var.json :: results/grown/[alpha=1 cells]/rows[P_matched]/n_distinct_ops (min) (DERIVED)
+A4_FIXED_A025_T03 = -0.242884 <- s26/results/q_var.json :: results/fixed/deployed_a025_T03/log2_slope_per_qubit
+A4_L2_A025_DISTINCT_MAX = 21 <- s26/results/q_var.json :: results/grown/'L2:adam_best:deployed_a025_T03'/rows[P_matched]/n_distinct_ops (max) (DERIVED)
+A4_L2_A025_DISTINCT_MIN = 4 <- s26/results/q_var.json :: results/grown/'L2:adam_best:deployed_a025_T03'/rows[P_matched]/n_distinct_ops (min) (DERIVED)
+A4_L2_A025_T03 = -0.302361 <- s26/results/q_var.json :: results/grown/'L2:adam_best:deployed_a025_T03'/rows[P_matched] (DERIVED)
+A4_L2_A1_T03 = -0.00752101 <- s26/results/q_var.json :: results/grown/'L2:adam_best:deployed_a1_T03'/rows[P_matched] (DERIVED)
+A4_L2_LIN = 0.00620042 <- s26/results/q_var.json :: results/grown/'L2:adam_best:linear_alpha1_T0'/rows[P_matched] (DERIVED)
+A4_N_MATCHED = 39 <- s26/results/q_var.json :: number of matched rows (DERIVED)
+A4_RATIO_MAX = 370.47 <- s26/results/q_var.json :: the same, max (DERIVED)
+A4_RATIO_MIN = 1.62806 <- s26/results/q_var.json :: grown var_g0 / fixed var_g0 at matched (cell, n), min over the matched rows (DERIVED)
+A4_REPRO_WORST_REL = 0 <- s26/results/q_var.json :: results/reproduction/worst_rel
+A4_V_A025_T03 = -0.245975 <- s26/results/q_var.json :: results/grown/'V:adam_best:deployed_a025_T03'/rows[P_matched] (DERIVED)
+A4_V_A1_T03 = 0.0346107 <- s26/results/q_var.json :: results/grown/'V:adam_best:deployed_a1_T03'/rows[P_matched] (DERIVED)
+A4_V_LIN = -0.0792065 <- s26/results/q_var.json :: results/grown/'V:adam_best:linear_alpha1_T0'/rows[P_matched] (log2 slope) (DERIVED)
+ADAPT_A025_L2_DIM = 1025 <- s26/results/q_dla.json :: results/adapt_sets/[alpha=0.25, pool L2]/ladder[-1]/dim (max) (DERIVED)
+ADAPT_A1_DIM = 7 <- s26/results/q_dla.json :: results/adapt_sets/[alpha=1]/ladder[-1]/dim (max over pools and optimisers) (DERIVED)
+DLA_N7_L1 = 7 <- s26/results/q_dla.json :: results/fixed/n7_L1/dim
+DLA_N7_L2 = 8128 <- s26/results/q_dla.json :: results/fixed/n7_L2/dim
+DLA_N7_L3 = 8128 <- s26/results/q_dla.json :: results/fixed/n7_L3/dim
+DLA_NUMERIC_AGREE = 12/12 <- s26/results/q_dla.json :: results/numeric/*/agree (DERIVED)
+DLA_POOL_L2_N7 = 8128 <- s26/results/q_dla.json :: results/pools/L2_n7/dim
+DLA_POOL_V_N7 = 2080 <- s26/results/q_dla.json :: results/pools/V_n7/dim
+DLA_SO128 = 8128 <- s26/results/q_dla.json :: results/fixed/n7_L3/dim_so
+PROD_KL_1A13 = 5.43789e-05 <- s26/results/probe/1A13.json :: product_diagnostics/zrank/kl_gibbs_to_product
+PROD_KL_FIXED = 0.903049 <- s26/results/probe/1A13.json :: arms/fixed_zrank_it50/kl_to_gibbs
+PROD_KL_IDEAL = 7.23403e-17 <- s26/results/probe/1A13.json :: product_diagnostics/ideal_ladder/kl_gibbs_to_product
+PROD_KL_RY7 = 5.43621e-05 <- s26/results/probe/1A13.json :: arms/adaptV_lbfgs_zrank_P7/kl_to_gibbs
+SLOPE_A025_T03 = -0.242884 <- s25/results/q_plateau.json :: results/deployed_a025_T03/log2_slope_per_qubit
+SLOPE_A1_T03 = -0.310535 <- s25/results/q_plateau.json :: results/deployed_a1_T03/log2_slope_per_qubit
+SLOPE_LIN = -0.649187 <- s25/results/q_plateau.json :: results/linear_alpha1_T0/log2_slope_per_qubit
 ===== SLIDE 9 =====
 [shape] Direction B: a learned folding model as the prior, and its replacement
 [shape] 9 / 11    from s26/PROPOSAL_B.md (lane P, DRAFT; B1 final) and s26/PROPOSAL_B_REPLACEMENT.md (lane Q); the A2 and A4 figures are on slides 6 and 8

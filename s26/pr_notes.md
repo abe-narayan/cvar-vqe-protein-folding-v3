@@ -215,10 +215,47 @@ flag, not a lever (L53): how far the relaxation moves the chain predicts its err
 {STRAIN_RHO_MOVED:+.3f} partial on n and Rg, fold CI {STRAIN_RHO_MOVED_CI}; quartile means
 {STRAIN_QUARTILE_MEANS} A.
 
-## Slide 8 -- Direction A: ADAPT-VQE (PENDING)
+## Slide 8 -- Direction A: ADAPT-VQE on this Hamiltonian (PENDING s26/PROPOSAL_A.md)
 
 ### spoken
-PENDING. This slide waits for `s26/PROPOSAL_A.md`.
+PENDING: this slide is a placeholder until lane Q's proposal file lands; every fact on it is
+measured. Direction A was: replace the fixed ansatz with ADAPT-VQE. Two things are already
+known. First, the algebra. The fixed ansatz generates the full so(128) at seven qubits from
+depth two, so ADAPT cannot add expressivity the fixed circuit lacks; the Tang minimal pool
+generates only {DLA_POOL_V_N7:,} dimensions of it. Second, the target. At alpha equal to one,
+the state the optimiser is asked to reach is a product state: the divergence between the Gibbs
+state and the product of its marginals is {PROD_KL_1A13:.1e} nats on a real target. A
+seven-parameter layer of single-qubit rotations reaches it to {PROD_KL_RY7:.1e} nats; the
+deployed 21-parameter circuit stops at {PROD_KL_FIXED:.3f}. So an ADAPT-grown circuit on this
+Hamiltonian selects {A4_A1_DISTINCT_MIN} to {A4_A1_DISTINCT_MAX} distinct operators and repeats
+one single-qubit rotation: it is a product circuit. Its gradient variance does not decay with
+width, and it is {A4_RATIO_MIN:.1f} to {A4_RATIO_MAX:.0f} times the fixed ansatz's. That is not
+trainability; there is nothing to train. The one non-trivial grown family, alpha 0.25 with the
+two-local pool, decays at {A4_L2_A025_T03:.3f} per qubit against the fixed {A4_FIXED_A025_T03:.3f};
+both are far from the minus one of a two-design, and no interval on their difference is on disk.
+The endpoint experiment is running and I expect a null, because the set-equality theorem
+bounds every readout by the classical prefix.
+
+### also
+PENDING: the wording and verdict come from `s26/PROPOSAL_A.md` (lane Q) when it exists; A1
+(fixed vs ADAPT-grown, built chain primary) was at 33 of 126 targets at 19:20 (`s26/STATUS.md`).
+A2 (L27, Adversary L45 STANDS): dim(DLA) at n = 7 is {DLA_N7_L1} at depth 1, {DLA_N7_L2} at depth
+2 and {DLA_N7_L3} at depth 3 against dim so(128) = {DLA_SO128}; pool V {DLA_POOL_V_N7}, pool L2
+{DLA_POOL_L2_N7}; ADAPT-selected sets at alpha = 1 stay abelian (dim {ADAPT_A1_DIM}), at alpha =
+0.25 with pool L2 reach {ADAPT_A025_L2_DIM}; symbolic closure equals the dense SVD rank on
+{DLA_NUMERIC_AGREE} cells. A4 (L35, Adversary L47 STANDS WITH CAVEAT): matched-P slopes, log2
+Var per qubit, grown V / L2: {A4_V_LIN:+.3f} / {A4_L2_LIN:+.3f} (alpha 1, T 0), {A4_V_A1_T03:+.3f} /
+{A4_L2_A1_T03:+.3f} (alpha 1, T 0.3), {A4_V_A025_T03:+.3f} / {A4_L2_A025_T03:+.3f} (alpha 0.25,
+T 0.3) against the fixed {SLOPE_LIN:.3f} / {SLOPE_A1_T03:.3f} / {SLOPE_A025_T03:.3f}; grown/fixed
+variance ratio {A4_RATIO_MIN:.2f} to {A4_RATIO_MAX:.0f} over {A4_N_MATCHED} matched rows; the
+alpha = 0.25 L2 family grows {A4_L2_A025_DISTINCT_MIN} to {A4_L2_A025_DISTINCT_MAX} distinct
+2-local strings; S25's n = 7 rows reproduce at relative deviation {A4_REPRO_WORST_REL}. Per L47
+the product-circuit reading rests on `s26/results/q_dla.json` (adapt sets), not on `q_var.json`.
+The product-state target: KL(Gibbs || product of marginals) {PROD_KL_IDEAL:.1e} on the ideal
+ladder and {PROD_KL_1A13:.1e} on 1A13 (`s26/results/probe/1A13.json`). What A gives Proposal A:
+no width-scaling argument (L35); on this diagonal, nearly target-independent Hamiltonian the
+honest form of direction A is ADAPT as a diagnostic, or a Hamiltonian that is not diagonal,
+which this project does not have.
 
 ## Slide 9 -- Direction B: a learned folding model as the prior, and its replacement
 
