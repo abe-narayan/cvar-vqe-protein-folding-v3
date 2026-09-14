@@ -2256,3 +2256,112 @@ Job `p_eval_conly`: exit 0, 621 s, peak RSS 0.305 GB; models `s26/models/p_ladde
 ```
 
 ---
+
+## L64 -- TOURNAMENT ITEM 4, tiebreak_noise_floor (W): THE PIPELINE'S OWN NOISE FLOOR FROM BLOSUM TIE-BREAKING AT THE K = 500 BOUNDARY IS 0.004 A ON THE 126-MEAN (BUILT CHAIN) AND 0.024 A AS THE PAIRED MDE BETWEEN TWO CONVENTIONS; EVERY HUNDREDTHS-LEVEL EFFECT ON THE RECORD IS INSIDE THE LATTER; THE PRODUCTION CONVENTION IS NOT DISTINGUISHABLE FROM A RANDOM DRAW (2026-09-13, W)
+
+Pre-registered in `s26/PREREG_tiebreak_floor.md` (falsifiers and expectations in section 1, written
+before the probe). Native-free half: job `w_tiebreak_draws` (exit 0, 5166 s under a four-job load,
+peak RSS 0.111 GB; `s26/results/w_selfcopy_tiebreak_draws.json`, complete 126/126, production gate
+top-75 == `sub` on 126/126). Gated half: job `w_tiebreak_endpoint` (exit 0, 25 s, 0.062 GB;
+`s26/results/w_selfcopy_tiebreak_endpoint.json`); ledger numbers composed by
+`s26/w_tiebreak_report.py` -> `s26/results/w_tiebreak_report.json`. Operator: on each target the
+boundary tie class (every window sharing the 500th window's BLOSUM62 sum; median 115 windows, 54.5
+of them inside the production pool) is re-drawn uniformly 8 times (`s15.seed.stable_rng`, seeds
+("w_tiebreak", pdb, k)), the non-tied prefix unchanged, everything downstream identical (shipped
+score, top-75, medoid-frame average, ramah 0.3 multi-start projection). Basis stated on every
+line; the production chain here is the rebuild basis 3.2126 (L9, L57). Negative = the first arm is
+better.
+
+**Membership (native-free).** A random tie-break replaces 3.57 of the 75 averaged members on
+average (median 3, max 15; one target never changes) and leaves the argmin unchanged on 91.5% of
+(target, draw) cells: the score's top-75 is drawn mostly from the non-tied prefix. The registered
+"about 8 of 75" was an over-estimate. The chain moves 0.168 A per draw in the median (triangle
+bound, p90 1.08 A), 7x more than its RMSD-to-native changes (below): the moves are mostly
+orthogonal to the native, as in L44.
+
+**The floor, per basis (8 draws x 126 targets):**
+
+    basis   m_tie (sd of the 126-mean over 8 draws)   mean over draws   production   s_tie median / p90   paired MDE between two draws: median / max over 28 pairs   max |paired effect| between draws
+    arm     0.0039                                     3.2152            3.2126       0.0227 / 0.1290      0.0236 / 0.0321                                              0.0108
+    cloud   0.0017                                     3.0532            3.0483       0.0126 / 0.0408      0.0100 / 0.0124                                              0.0046
+    fit     0.0032                                     3.2099            3.2052       0.0148 / 0.0745      0.0157 / 0.0187                                              0.0104
+    sel     0.0136                                     3.4741            3.4540       0.0000 / 0.0901      0.0466 / 0.0714                                              0.0398
+
+Per target on the built chain: s_tie above 0.1 A on 21/126, above 0.5 A on 0/126; the range over
+the 8 draws median 0.065 A, p90 0.362, max 0.713 (1D6X, the `pool_gate = WARN` target of L7/L9,
+whose emission sits on a projection-branch flip). m_tie from 8 draws carries a relative SE of about
+27% (sd of 8 numbers).
+
+**Falsifier (PREREG section 1).** The claim is FALSIFIED if m_tie < 0.002 AND the paired MDE < 0.010
+on the built chain: m_tie 0.0039 and paired MDE 0.0236, so not falsified. CONFIRMED if any recorded
+effect is below the paired MDE between two draws: all nine listed are (`w_tiebreak_report.json ::
+recorded_effects_vs_floor`): C3's production relaxation +0.0207 (L39) and its +0.0111 against the
+matched random move, the S24 restrained relaxation -0.022, the ORACLE functional weight 0.015 (S24
+L16), the all-atom reranking +0.004, C27's +0.0004 / +0.0018 (L44), the fd-vs-exact projection
+difference 0.012 (L19), L24's predicted +0.013. Three of them (C27's two prices and the all-atom
+reranking) are also below 2 x m_tie = 0.008 A, the spread of the 126-mean that the convention alone
+produces. Registered predictions: m_tie 0.003 to 0.010 (measured 0.0039, holds); paired MDE 0.02 to
+0.05 (0.0236, holds); median s_tie 0.03 to 0.08 (0.0227, just below); ~8 of 75 replaced (3.6, below).
+
+**What the floor means, and what it does not.** It is the size of effect an unstated convention
+produces on its own: two runs of the same pipeline that differ only in how the boundary ties are
+broken differ on the 126-mean by an sd of 0.004 A (built chain) and can be told apart at 80% power
+only above 0.024 A. It applies to any contrast whose two arms do NOT share the tie-break: a re-run
+after a change of corpus order (the pinned `pdbs/` file set, state brief section 3), a different K,
+a re-retrieval, a comparison across instruments or sprints (S9's 0.004 to 0.005 A residual between
+the stable and the plain argsort, `docs/FINDINGS.md:1526, 7261`, is exactly this floor's effect on
+the mean). It does NOT apply to a paired contrast whose two arms share the pool and its tie-break
+(C3's relaxation, the functional weight, the reranking were all measured that way, and their
+paired SEs already exclude this noise). So the sentence for the report is: "a hundredths-level
+effect is real only as a paired contrast with the tie-break held fixed; quoted across runs or
+against another instrument it is inside the pipeline's own convention noise (0.024 A at n = 126)."
+
+**The production convention against random draws (registered secondary; `ST.fmt` verbatim):**
+
+  production convention minus mean over 8 draws [arm], n=126
+    a 3.2126 (med 2.9661)   b 3.2152 (med 2.9625)   n=126
+    effect -0.0026   median -0.0004   SE 0.0062   MDE 0.0174   effect/MDE -0.15
+    iid  CI95 [-0.0142, +0.0098]
+    fold CI95 [-0.0155, +0.0156]   folds same sign 4/5   per-fold 0:-0.010 1:+0.031 2:-0.001 3:-0.004 4:-0.022
+    64W/61L/1T   worst degradation +0.3828 (2LNG)   p90 +0.0577   power 0.07  Type-M 5.64
+    concentration: drop-top10 +0.0099 vs uniform-effect null p10/p50/p90 +0.0023/+0.0095/+0.0171 -> pctile 0.534
+    VERDICT: NOT MEASURED (|effect| 0.0026 <= its own MDE 0.0174, 0.15x)
+  production convention minus mean over 8 draws [cloud], n=126
+    a 3.0483 (med 2.8373)   b 3.0532 (med 2.8162)   n=126
+    effect -0.0048   median -0.0011   SE 0.0032   MDE 0.0088   effect/MDE -0.55
+    iid  CI95 [-0.0112, +0.0011]
+    fold CI95 [-0.0089, -0.0006]   folds same sign 4/5   per-fold 0:-0.011 1:-0.007 2:+0.003 3:-0.008 4:-0.003
+    70W/55L/1T   worst degradation +0.1433 (7YFS)   p90 +0.0133   power 0.34  Type-M 1.71
+    concentration: drop-top10 +0.0019 vs uniform-effect null p10/p50/p90 -0.0013/+0.0017/+0.0050 -> pctile 0.524
+    VERDICT: NOT MEASURED (|effect| 0.0048 <= its own MDE 0.0088, 0.55x)
+  production convention minus mean over 8 draws [sel], n=126
+    a 3.4540 (med 3.4779)   b 3.4741 (med 3.4796)   n=126
+    effect -0.0201   median +0.0000   SE 0.0096   MDE 0.0269   effect/MDE -0.75
+    iid  CI95 [-0.0392, -0.0033]
+    fold CI95 [-0.0392, -0.0018]   folds same sign 4/5   per-fold 0:+0.009 1:-0.000 2:-0.055 3:-0.028 4:-0.024
+    13W/6L/107T   worst degradation +0.2561 (6F3V)   p90 +0.0000   power 0.55  Type-M 1.34
+    concentration: drop-top10 +0.0065 vs uniform-effect null p10/p50/p90 -0.0009/+0.0052/+0.0106 -> pctile 0.618
+    VERDICT: NOT MEASURED (|effect| 0.0201 <= its own MDE 0.0269, 0.75x)
+
+The corpus-order convention is not distinguishable from a random draw on the built chain (0.15x
+MDE) or the point cloud (0.55x); on the selection basis it is 0.020 A better than a random draw at
+0.75x MDE with the fold CI excluding zero and 107 ties: suggestive of the S25 finding that the
+retrieval order is not neutral (rho(pool index, ORACLE RMSD) +0.054), and NOT MEASURED by the rule.
+Nothing here is a lever: a tie-break cannot be chosen native-free, and the point of the number is
+the floor. One representative draw-to-draw contrast (`ST.fmt` verbatim; the other 27 pairs are
+summarised above):
+
+  tie-break draw 0 minus draw 1 [arm], n=126
+    a 3.2182 (med 2.9452)   b 3.2143 (med 3.0146)   n=126
+    effect +0.0039   median +0.0007   SE 0.0084   MDE 0.0236   effect/MDE +0.17
+    iid  CI95 [-0.0123, +0.0203]
+    fold CI95 [-0.0041, +0.0193]   folds same sign 1/5   per-fold 0:-0.001 1:-0.001 2:-0.004 3:+0.034 4:-0.005
+    54W/69L/3T   worst degradation +0.2871 (8T61)   p90 +0.0708   power 0.07  Type-M 5.16
+    concentration: drop-top10 +0.0222 vs uniform-effect null p10/p50/p90 +0.0117/+0.0216/+0.0310 -> pctile 0.538
+    VERDICT: NOT MEASURED (|effect| 0.0039 <= its own MDE 0.0236, 0.17x)
+
+Replication: the 8 draws are 8 seeds; the 28 pairwise contrasts give the paired MDE's spread
+(0.0236 median, 0.0321 max on the built chain); there is nothing positive to replicate at a second
+seed, and the fold order does not enter (no fit). Power: the floor's own numbers ARE the power
+statement. Not done: 16 draws (PREREG fork; the 8-draw m_tie carries a 27% relative SE, which the
+verdict does not depend on); the AMBER-relaxed basis.

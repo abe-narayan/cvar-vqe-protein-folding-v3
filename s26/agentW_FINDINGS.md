@@ -13,7 +13,7 @@ No stock words; no em dashes.
 |---|---|---|
 | the 2/60 benchmark self-copy leak bounded from the dev proxy (mandatory, L25) | MEASURED AND POSTED (L44): pre-registered class MINOR by the own-native envelope (mean-CI limit 0.028 A built chain / 0.048 selection / 0.023 paired gain; worst single target 0.151 / 0.194 / 0.123 under assumption A2, L55), IMMATERIAL by every direct dev-proxy measurement (0.002 A or less); Part B 1 of 10 models, the rest wait for headroom and the tournament | `s26/PREREG_selfcopy_bound.md`, `s26/IDEA_selfcopy_proxy_bound.md`, `s26/w_selfcopy.py`, `s26/w_selfcopy_test.py`, `s26/w_train_chain.py`, `s26/w_endpoint_report.py`, `s26/results/w_selfcopy_{census,retrieval,envelope,posterior,floor,endpoint,bound}.json` |
 | at least three ideas nobody else proposed | FILED (three own, plus the mandatory one); the tie-break floor has PREREG, code, tests and a one-target probe; the identity floor is measured (Part E) | `s26/IDEA_tiebreak_noise_floor.md` + `PREREG_tiebreak_floor.md` + `w_tiebreak.py`, `s26/IDEA_conformational_identity_floor.md`, `s26/IDEA_window_provenance.md` |
-| the tournament's own ideas (L51: items 2 and 4) | item 2 conformational_identity_floor MEASURED AND POSTED (L52); item 4 tiebreak_noise_floor RUNNING (`w_tiebreak_draws`, 126 x 8 draws, checkpointed) | `s26/PREREG_identity_floor.md`, `s26/w_identity_floor_stats.py`, `s26/results/w_identity_floor.json`; `s26/PREREG_tiebreak_floor.md`, `s26/w_tiebreak.py` |
+| the tournament's own ideas (L51: items 2 and 4) | item 2 conformational_identity_floor MEASURED AND POSTED (L52); item 4 tiebreak_noise_floor MEASURED AND POSTED (L64): floor 0.004 A on the 126-mean, 0.024 A paired MDE between two conventions, every hundredths-level recorded effect inside it | `s26/PREREG_identity_floor.md`, `s26/w_identity_floor_stats.py`, `s26/results/w_identity_floor.json`; `s26/PREREG_tiebreak_floor.md`, `s26/w_tiebreak.py`, `s26/w_tiebreak_report.py`, `s26/results/w_selfcopy_tiebreak_{draws,endpoint}.json`, `w_tiebreak_report.json` |
 | the top orphaned survivor: window_ensembling (lane P's idea, L51 item 6) | PREREG written before any real-target run, code and synthetic tests done (ALL OK), one-target probe and the 126-target run wait for the tie-break job to finish (one governed job at a time) | `s26/PREREG_window_ensembling.md`, `s26/w_ensemble.py`, `s26/w_ensemble_test.py` |
 | ideas found on the way (coordinator's request) | FILED: the partial-recall gradient below the 0.6 threshold; the own-native model placed on the S24 prior ladder | `s26/IDEA_partial_recall_gradient.md`, `s26/IDEA_memorisation_on_the_ladder.md` |
 | findings, ledger, status, commits | this file; L30, L44; STATUS 09:15, 09:31, 19:4x; commits `8d849504`, `213a5ebb` and the closing one | |
@@ -279,6 +279,61 @@ channels removed where measured).
 
 ---
 
+## 2b. THE TIE-BREAK NOISE FLOOR, MEASURED (tournament item 4; ledger L64)
+
+`s26/PREREG_tiebreak_floor.md`; jobs `w_tiebreak_draws` (exit 0, 5166 s under a four-job load, peak
+0.111 GB; `s26/results/w_selfcopy_tiebreak_draws.json`, complete 126/126, gate top-75 == `sub`
+126/126) and `w_tiebreak_endpoint` (exit 0, 25 s, 0.062 GB; `w_selfcopy_tiebreak_endpoint.json`);
+ledger numbers by `s26/w_tiebreak_report.py` -> `w_tiebreak_report.json`. Every target's K = 500
+boundary falls inside a BLOSUM62 tie class (median 115 windows, 54.5 inside the pool); the
+production convention breaks it by corpus order. Eight seeded uniform re-draws of the boundary
+members per target, everything downstream identical.
+
+### 2b.1 A random tie-break replaces 3.6 of the 75 averaged members and the argmin on 8.5% of cells. DEMONSTRATED, native-free.
+
+Median 3 replaced (max 15); one target never changes; the chain moves 0.168 A per draw in the
+median (triangle bound; p90 1.08 A), seven times more than its RMSD-to-native changes: the moves
+are mostly orthogonal to the native, as in the L44 controls. The registered "about 8 of 75" was
+an over-estimate: the score's top-75 is drawn mostly from the non-tied prefix.
+
+### 2b.2 The floor: 0.004 A on the 126-mean, 0.024 A as the paired MDE between two conventions (built chain). DEMONSTRATED.
+
+    basis   m_tie (sd of the 126-mean, 8 draws)   s_tie median / p90   paired MDE between two draws, median / max (28 pairs)   production vs mean of draws
+    arm     0.0039                                 0.0227 / 0.1290      0.0236 / 0.0321                                          -0.0026, 0.15x MDE, NOT MEASURED
+    cloud   0.0017                                 0.0126 / 0.0408      0.0100 / 0.0124                                          -0.0048, 0.55x MDE, NOT MEASURED
+    fit     0.0032                                 0.0148 / 0.0745      0.0157 / 0.0187                                          -0.0047, 0.36x MDE, NOT MEASURED
+    sel     0.0136                                 0.0000 / 0.0901      0.0466 / 0.0714                                          -0.0201, 0.75x MDE, NOT MEASURED (fold CI [-0.039, -0.002], 107 ties)
+
+Per target on the built chain: s_tie above 0.1 A on 21/126, above 0.5 A on none; range over the 8
+draws median 0.065, p90 0.362, max 0.713 (1D6X, the `pool_gate = WARN` target, on a branch flip).
+Registered predictions: m_tie 0.003 to 0.010 (0.0039, holds); paired MDE 0.02 to 0.05 (0.0236,
+holds); median s_tie 0.03 to 0.08 (0.0227, just below); ~8 of 75 replaced (3.6, below).
+
+### 2b.3 Every hundredths-level effect on the record is inside the paired MDE between two tie-breaks. DEMONSTRATED (the idea's confirmation clause).
+
+All nine recorded effects listed in `w_tiebreak_report.json :: recorded_effects_vs_floor` (C3's
++0.0207 and +0.0111, the S24 restrained relaxation -0.022, the ORACLE functional weight 0.015,
+the all-atom reranking +0.004, C27's +0.0004 / +0.0018, the fd-vs-exact projection 0.012, L24's
++0.013) are below 0.0236 A; three (C27's two prices, the reranking) are also below 2 x m_tie =
+0.008 A, the spread of the mean that the convention alone produces. What that means and does not
+mean: the floor applies to any contrast whose two arms do NOT share the tie-break (a re-run after a
+change of the pinned `pdbs/` order, a different K, a re-retrieval, a comparison across sprints or
+instruments; S9's 0.004 to 0.005 A stable-vs-plain-argsort residual is this floor on the mean); it
+does NOT apply to a paired contrast whose arms share the pool, which is how C3, the functional
+weight and the reranking were measured, so their paired SEs already exclude it. The report's
+sentence: a hundredths-level effect is real only as a paired contrast with the tie-break held
+fixed; quoted across runs it is inside the pipeline's own convention noise (0.024 A at n = 126).
+
+### 2b.4 The production convention is not distinguishable from a random draw. DEMONSTRATED (secondary).
+
+Built chain -0.0026 (0.15x MDE), point cloud -0.0048 (0.55x), lam = 0 chain -0.0047 (0.36x): all
+NOT MEASURED. On the selection basis the corpus-order convention's argmin is 0.020 A better than
+a random draw's at 0.75x MDE, fold CI [-0.039, -0.002], 13W/6L/107T: suggestive of the S25
+finding that the retrieval order is not neutral (rho(pool index, ORACLE RMSD) +0.054), not a
+result, and not a lever (a tie-break cannot be chosen native-free).
+
+---
+
 ## 3. IDEAS FILED (tournament entries; each has hypothesis, closure check, falsifier, MDE, memory, hours)
 
 1. `s26/IDEA_selfcopy_proxy_bound.md` (mandatory direction).
@@ -290,8 +345,10 @@ channels removed where measured).
    peak 0.098 GB): 1CEK's boundary tie class holds 130 windows, 44 inside the pool; over 8
    seeded draws 3 to 7 of the 75 averaged members change, the argmin never does, and the
    built chain moves 0.008 to 0.031 A (triangle bounds). On this one target the floor is of
-   order 0.02 A on the built chain; the 126-target run (50 min CPU, est-ram 0.5 GB) is not
-   launched until the tournament ranks it (L42's headroom rule).
+   order 0.02 A on the built chain. MEASURED at n = 126 (L64, section 2b): m_tie 0.0039 A,
+   paired MDE between two draws 0.0236 A (built chain), 3.6 of 75 members replaced per draw;
+   every hundredths-level effect on the record is inside the paired MDE; the production
+   convention is not distinguishable from a random draw.
 3. `s26/IDEA_conformational_identity_floor.md`: same sequence, different deposit, 18 targets
    / 22 partners; the record had four numbers (S24 L4) and no distribution. MEASURED (L52,
    tournament item 2; section 1.7 and `s26/results/w_identity_floor.json`): median 2.908 A over
@@ -373,6 +430,14 @@ rejects).
 6. Part B's chain died with the host's memory kill after one model. The one model it made is
    the informative one (1CEK, the near-native copy), by luck of the pre-registered order, not
    by design.
+8. I over-estimated the tie-break's reach: I predicted about 8 of the 75 averaged members
+   would change per draw and measured 3.6, because the score's top-75 is drawn mostly from
+   the non-tied prefix. The floor is smaller than I guessed on membership and exactly where I
+   guessed on the mean (0.004 A against a registered 0.003 to 0.010).
+9. I nearly wrote the floor as a verdict on C3's relaxation. It is not: C3 was measured as a
+   paired contrast with the pool held fixed, and that design excludes the tie-break noise by
+   construction. The floor speaks to contrasts across runs and instruments, and the entry says
+   so in its own words before anyone reads the table the other way.
 
 ---
 

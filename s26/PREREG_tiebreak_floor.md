@@ -98,3 +98,18 @@ Agent-hours: 1 code, 1 run, 1 write-up.
   moves up to 0.51 A on the built chain on 5% of targets.
 - Launch condition: only if the Adversary ranks the idea and the coordinator confirms headroom
   (L42: one sub-1 GB job at a time). Not launched.
+
+## ADDENDUM 2 (2026-09-13 21:05) -- the 126-target run; nothing above edited
+
+- `w_tiebreak_draws` (exit 0, 5166 s at a four-job load, peak 0.111 GB; complete 126/126, gate
+  126/126) and `w_tiebreak_endpoint` (exit 0, 25 s, 0.062 GB). Ledger L64; findings section 2b;
+  `s26/w_tiebreak_report.py` composed the ledger numbers.
+- Falsifier: not falsified (m_tie 0.0039 > 0.002; paired MDE 0.0236 > 0.010); the confirmation
+  clause holds (all nine listed recorded effects are below the paired MDE between two draws).
+- Predictions: m_tie and the paired MDE inside their registered ranges; median s_tie 0.0227 just
+  below the registered 0.03 to 0.08; members replaced 3.6 of 75 against the registered ~8.
+- The scope sentence added at the ledger entry, and to be carried with the number: the floor
+  applies to contrasts whose arms do not share the tie-break, not to paired contrasts with the
+  pool held fixed.
+- Not done: the 16-draw fork (the 8-draw m_tie's 27% relative SE does not affect the verdict);
+  the AMBER-relaxed basis.
