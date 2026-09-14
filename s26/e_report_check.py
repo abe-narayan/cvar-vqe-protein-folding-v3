@@ -645,8 +645,7 @@ def main(argv=None):
               for s in ("PASS", "MISSING PATH", "NUMBER NOT FOUND")}
     # the style rules apply to the report's own prose; Appendix C reproduces s26/LEDGER.md
     # verbatim and is exempt (its two banned-word occurrences are declared in its preamble)
-    own_text = text.split("
-## APPENDIX C")[0]
+    own_text = text.split("\n## APPENDIX C")[0]
     style = None if a.no_style else style_check(own_text)
     if not a.quiet:
         print("%-4s %-17s %-6s %s" % ("row", "status", "line", "numbers / problem"))
