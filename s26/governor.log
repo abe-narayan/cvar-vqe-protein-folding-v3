@@ -1750,3 +1750,10 @@
 2026-09-14T02:08:06 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
 2026-09-14T02:08:46 SAMPLE   ram=82.5% (13.83GB used, 2.92GB free) cpu=80.8% (15s mean 87.0%) jobs=7 amber=2 queued=0 lanes=8
 2026-09-14T02:09:46 SAMPLE   ram=82.5% (13.82GB used, 2.93GB free) cpu=90.6% (15s mean 86.5%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:10:06 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:10:11 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:10:16 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:10:21 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:10:26 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:10:31 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:10:46 SAMPLE   ram=82.8% (13.88GB used, 2.87GB free) cpu=95.1% (15s mean 88.8%) jobs=7 amber=2 queued=0 lanes=8
