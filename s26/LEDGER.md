@@ -3487,3 +3487,108 @@ is not a proposal. The Type-M status of AMBER-minus-random (1.02x MDE in the rep
 unchanged and the L46 caveat still applies to any quotation of that number.
 
 ---
+
+## L88 -- BRANCH SELECT (tournament 5): THE RELAXED ENERGY PICKS THE PROJECTION BRANCH AS WELL AS THE OBJECTIVE AND NO BETTER (+0.0055 vs production, 0.18x MDE, 42 ties; -0.102 vs a random branch, 2.29x, 5/5); THE RAW SINGLE POINT PICKS WORSE (+0.092); CLOSED AS AN ACCURACY STEP (2026-09-13, PH)
+
+`s26/ph_branch.py solutions | relax | report`, artefacts `s26/results/ph_branch_solutions.json`
+(126/126, G1 exact 0.0 on every target), `ph_branch_relax.json` (126/126; jobs `ph_branch_relax`
+41 cells + `ph_branch_relax2` 85 cells, AMBER, peak RSS 0.27 GB probe / 0.3 GB run, about 65 s
+per target), `ph_branch_report.json`. Pre-registered in `s26/PREREG_branch_select.md` (sections
+1 to 7, addendum 1 with the gates); tournament item 5 (L51). Per-target cells under
+`s26/results/ph_branch_{sol_,}cells/`.
+
+THE OPERATOR, native-free. The production projection chooses among FIVE solutions at its
+lam = 0.3 rung (the warm start from lam = 0 and the four generic starts alpha / beta / PPII /
+extended) by the lowest objective; the choice was reconstructed and equals `I.project` to
+0.0 A on 126/126. The arm relaxes all five built chains with the production operator
+(`refine_coords(k=10, steps=0)`), reads the converged energy with the restraint off (`e1`) and
+emits the BUILT chain of the lowest converged `e1` (ties averaged by `ST.argmin_tied`; 0 ties
+occurred; on 10 targets fewer than five converged and the pick is among the converged). All 126
+targets have at least two distinct solutions (4.77 on average), so the effective n is 126 and
+the moved subset equals the whole. BASIS: BUILT CHAIN (`rmsd_arm`) for the primary; the relaxed
+chain of the same pick as a secondary. Controls in the operator's space: the production choice
+(anchor, the re-projected 3.2126); the exact expectation of a uniformly random pick among the
+five; the raw single point `e0` as the declared secondary picker. `ST.fmt` verbatim:
+
+      [all, n=126] pick_e1 minus production (built chain)
+        a 3.2181 (med 2.9950)   b 3.2126 (med 2.9661)   n=126
+        effect +0.0055   median +0.0000   SE 0.0109   MDE 0.0306   effect/MDE +0.18
+        iid  CI95 [-0.0154, +0.0271]
+        fold CI95 [+0.0004, +0.0106]   folds same sign 4/5   per-fold 0:+0.008 1:+0.012 2:+0.010 3:-0.003 4:+0.001
+        39W/45L/42T   worst degradation +0.6492 (1D6X)   p90 +0.1157   power 0.08  Type-M 4.77
+        concentration: drop-top10 +0.0269 vs uniform-effect null p10/p50/p90 +0.0142/+0.0262/+0.0389 -> pctile 0.534
+        VERDICT: NOT MEASURED (|effect| 0.0055 <= its own MDE 0.0306, 0.18x)
+      [all, n=126] pick_e1 minus random pick (built chain)
+        a 3.2181 (med 2.9950)   b 3.3202 (med 3.0808)   n=126
+        effect -0.1021   median -0.0752   SE 0.0159   MDE 0.0446   effect/MDE -2.29
+        iid  CI95 [-0.1339, -0.0718]
+        fold CI95 [-0.1270, -0.0750]   folds same sign 5/5   per-fold 0:-0.064 1:-0.099 2:-0.119 3:-0.074 4:-0.142
+        91W/35L/0T   worst degradation +0.2983 (2BP4)   p90 +0.0937   power 1.00  Type-M 1.00
+        concentration: drop-top10 -0.0662 vs uniform-effect null p10/p50/p90 -0.0868/-0.0661/-0.0483 -> pctile 0.497
+        VERDICT: BETTER
+      [all, n=126] random pick minus production (built chain)
+        a 3.3202 (med 3.0808)   b 3.2126 (med 2.9661)   n=126
+        effect +0.1076   median +0.0641   SE 0.0145   MDE 0.0406   effect/MDE +2.65
+        iid  CI95 [+0.0795, +0.1365]
+        fold CI95 [+0.0795, +0.1327]   folds same sign 5/5   per-fold 0:+0.073 1:+0.111 2:+0.130 3:+0.071 4:+0.143
+        32W/94L/0T   worst degradation +0.6698 (2RUO)   p90 +0.3744   power 1.00  Type-M 1.00
+        concentration: drop-top10 +0.1267 vs uniform-effect null p10/p50/p90 +0.1074/+0.1266/+0.1460 -> pctile 0.501
+        VERDICT: WORSE
+      [all, n=126] pick_e0 minus production (built chain)
+        a 3.3048 (med 3.0309)   b 3.2126 (med 2.9661)   n=126
+        effect +0.0922   median +0.0000   SE 0.0300   MDE 0.0840   effect/MDE +1.10
+        iid  CI95 [+0.0387, +0.1557]
+        fold CI95 [+0.0270, +0.1676]   folds same sign 4/5   per-fold 0:-0.004 1:+0.108 2:+0.076 3:+0.034 4:+0.218
+        39W/58L/29T   worst degradation +2.2014 (2F3A)   p90 +0.3328   power 0.87  Type-M 1.08
+        concentration: drop-top10 +0.1219 vs uniform-effect null p10/p50/p90 +0.0823/+0.1208/+0.1623 -> pctile 0.516
+        VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.08x]
+      [all, n=126] pick_e1 minus production (relaxed chain)
+        a 3.2400 (med 3.0159)   b 3.2437 (med 2.9873)   n=126
+        effect -0.0036   median +0.0000   SE 0.0141   MDE 0.0395   effect/MDE -0.09
+        iid  CI95 [-0.0342, +0.0220]
+        fold CI95 [-0.0212, +0.0089]   folds same sign 2/5   per-fold 0:+0.014 1:+0.005 2:-0.038 3:+0.000 4:-0.000
+        35W/49L/42T   worst degradation +0.6488 (1D6X)   p90 +0.0842   power 0.06  Type-M 9.18
+        concentration: drop-top10 +0.0264 vs uniform-effect null p10/p50/p90 +0.0135/+0.0255/+0.0385 -> pctile 0.538
+        VERDICT: NOT MEASURED (|effect| 0.0036 <= its own MDE 0.0395, 0.09x)
+
+    means, built chain:  production 3.2126   e1 pick 3.2181   e0 pick 3.3048   random pick 3.3202   ORACLE min over five 3.1301
+    e1 pick equals the production choice on 42 of 126 targets (the 42 exact ties in the first block)
+    ORACLE DIAGNOSTIC: the e1 pick is the per-target best on 32.5% of targets, the production choice on 29.4%
+    ORACLE min over the five (an order statistic): -0.1901; valid across-target null -0.2475 (share 1.30);
+      split-half transfer -0.1067 (56%); k_eff 4.63; argmin counts over the five columns [33, 24, 39, 18, 12]
+
+READING. (1) The falsifier (`PREREG_branch_select.md` section 4) required the relaxed-energy
+pick to BEAT the production choice past its MDE with the fold CI excluding zero. It does not:
++0.0055 A, 0.18x MDE, 39W/45L/42T, the fold CI [+0.0004, +0.0106] on the wrong side of zero
+anyway. NOT MEASURED, and at SE 0.011 an improvement of 0.03 A or more would have been seen:
+underpowered below that, null above it. The idea is CLOSED as an accuracy step. (2) What the
+energy DOES do, and it is the interesting half: the converged relaxed energy beats a uniformly
+random choice among the same five solutions by -0.102 A [fold -0.127, -0.075], 91W/35L, 5/5
+folds, 2.29x MDE, MEASURED. The production objective (CA-RMSD to the cloud plus 0.3 x ramah)
+beats the random pick by 0.108 (2.65x MDE). So the converged all-atom energy carries the SAME
+discriminating power among the projection's branches as the 2D torsion prior, and adds nothing
+to it: on 42 targets it picks the identical solution, on the rest it trades one near-equivalent
+branch for another (median difference 0.000). This is the first place in the record where an
+AMBER quantity ranks a real discrete choice as well as the structural objective does; it is
+also the first place where that choice is among only five candidates that all came from the
+same cloud. (3) The raw single point `e0` is WORSE than the objective by +0.092 (1.10x MDE,
+Type-M, 39W/58L/29T): the unrelaxed energy, which L23 showed is the builder's side-chain clash,
+picks the wrong branch where the relaxed energy does not. Relaxation is what makes the energy a
+usable discriminator here, the same operator fact as S20 L6 ("the relaxation is what makes the
+AMBER objective defined"). (4) On the relaxed-chain basis the e1 pick is a null against the
+production choice relaxed (-0.004, 0.09x MDE). (5) The ORACLE minimum over the five solutions is
+-0.19 A below the production choice, but the valid best-of-5 null accounts for 130% of it and
+the split-half transfer is 56% (-0.107): the branch degeneracy is real (a per-target-consistent
+column exists) and it is worth about 0.1 A to a perfect chooser, which neither the objective
+nor the energy is (each finds the per-target best on about 30% of targets, chance being 20%).
+
+POWER. n = 126 with 42 exact ties; SE of the primary 0.011, MDE 0.031: a gain of 0.03 A would
+have cleared. No positive result on the falsifier, so no seed replication is due (the arm has
+no randomness; the relaxation is deterministic at threads = 1). The measured negative-control
+contrast (energy beats random by 0.10) is not a proposal and needs no replication to be quoted
+as a diagnostic. DISPOSITION: branch_select CLOSED as an accuracy lever; the record gains one
+measured sentence for the report: "the converged force-field energy discriminates among the
+projection's own branches exactly as well as the torsion prior already does, and the
+unrelaxed energy does not."
+
+---

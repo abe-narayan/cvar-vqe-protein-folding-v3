@@ -386,6 +386,30 @@ For the presentation: a calibration curve, never a gain.
 
 ---
 
+## 3c. BRANCH SELECT (tournament rank 5): REFUTED as an accuracy step; one measured diagnostic
+
+`s26/ph_branch.py`, `s26/results/ph_branch_{solutions,relax,report}.json` (126/126 each; G1 = 0.0
+on every target; AMBER jobs `ph_branch_relax` + `ph_branch_relax2`, 0.3 GB, 65 s per target).
+Ledger L88 with the five `ST.fmt` blocks. Basis: built chain (`rmsd_arm`) of the chosen
+projection solution; anchor = the production choice (re-projected, 3.2126).
+
+    e1 pick minus production          +0.0055  SE 0.011  MDE 0.031  0.18x  39W/45L/42T   NOT MEASURED (a 0.03 A gain would have shown)
+    e1 pick minus random branch       -0.1021  SE 0.016  MDE 0.045  2.29x  91W/35L  fold [-0.127, -0.075]  5/5   BETTER
+    objective (production) minus random branch   -0.1076  2.65x  5/5           (the objective does the same)
+    e0 (raw single point) pick minus production  +0.0922  1.10x  Type-M   WORSE
+    ORACLE min over the five: -0.190; valid best-of-5 null 130% of it; split-half transfer 56% (-0.107); k_eff 4.63
+
+The converged relaxed energy chooses among the projection's five branch solutions exactly as
+well as the production objective (a 2D torsion prior) and no better: identical pick on 42
+targets, a near-equivalent branch on the rest. The unrelaxed single point (the builder's clash,
+L23) chooses worse. The branch degeneracy is real and worth about 0.1 A to a perfect chooser;
+neither the objective nor the energy is one (each finds the per-target best about 30% of the
+time against 20% by chance). CLOSED as an accuracy lever; the report gains the sentence "the
+force-field energy, once relaxed, discriminates among the projection's own branches as well as
+the torsion prior already does, and the unrelaxed energy does not."
+
+---
+
 ## 4. TOURNAMENT IDEAS FILED
 
 `s26/IDEA_amber_reject.md` and `s26/IDEA_cis_peptide.md` (mandatory), `s26/IDEA_branch_select.md`
