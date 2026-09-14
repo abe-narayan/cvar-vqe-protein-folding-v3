@@ -3592,3 +3592,71 @@ projection's own branches exactly as well as the torsion prior already does, and
 unrelaxed energy does not."
 
 ---
+
+## L89 -- CIS FLOOR, TIGHT FORM (ORACLE DIAGNOSTIC): THE NATIVE PROJECTED THROUGH THE PRODUCTION PROJECTION SITS 0.083 A FROM ITSELF (max 0.44, 0.043 WITH THE PRIOR OFF); L38's 0.347 A WAS THE OWN-TORSION UPPER BOUND; THE CONSTANT OMEGA COSTS ABOUT 0.04 A HERE AND THE PROJECTION'S 0.166 A COST IS NOT REPRESENTATION (2026-09-13, PH)
+
+`s26/ph_cis.py floor2`, `s26/results/ph_cis_floor2.json` (complete 126/126), job
+`s26/jobs_done/ph_cis_floor2.json` (exit 0, 2813 s, peak RSS 0.104 GB). Registered in
+`s26/PREREG_cis.md` addendum 2 before it ran, as the tight form of L38's floor: the native CA
+trace itself is projected through the PRODUCTION projection (`I.project`: ramah at 0.3,
+multi-start, exact gradient) and its lam = 0 rung, and each is scored against the native.
+ORACLE DIAGNOSTIC (the native is the input). BASIS: CA-RMSD of an ideal-geometry chain
+against the native CA trace, on both sides; `chain_cost` is the production
+`rmsd_arm - rmsd_avg` as in L38. `ST.fmt` verbatim:
+
+      floor2 (native projected, lam 0.3) MINUS floor_ca (own-torsion rebuild)
+        a 0.0833 (med 0.0596)   b 0.3468 (med 0.2722)   n=126
+        effect -0.2636   median -0.1713   SE 0.0272   MDE 0.0762   effect/MDE -3.46
+        iid  CI95 [-0.3177, -0.2126]
+        fold CI95 [-0.2998, -0.2289]   folds same sign 5/5   per-fold 0:-0.203 1:-0.293 2:-0.268 3:-0.324 4:-0.242
+        113W/13L/0T   worst degradation +0.2127 (9L1M)   p90 +0.0059   power 1.00  Type-M 1.00
+        concentration: drop-top10 -0.1993 vs uniform-effect null p10/p50/p90 -0.2339/-0.1999/-0.1694 -> pctile 0.513
+        VERDICT: BETTER
+      floor2 lam 0.3 MINUS floor2 lam 0
+        a 0.0833 (med 0.0596)   b 0.0429 (med 0.0228)   n=126
+        effect +0.0404   median +0.0087   SE 0.0060   MDE 0.0169   effect/MDE +2.39
+        iid  CI95 [+0.0292, +0.0522]
+        fold CI95 [+0.0318, +0.0492]   folds same sign 5/5   per-fold 0:+0.029 1:+0.042 2:+0.058 3:+0.030 4:+0.042
+        23W/103L/0T   worst degradation +0.2741 (6GIJ)   p90 +0.1276   power 1.00  Type-M 1.00
+        concentration: drop-top10 +0.0452 vs uniform-effect null p10/p50/p90 +0.0370/+0.0449/+0.0533 -> pctile 0.522
+        VERDICT: WORSE
+      production chain cost MINUS floor2 (lam 0.3)
+        a 0.1664 (med 0.0977)   b 0.0833 (med 0.0596)   n=126
+        effect +0.0832   median +0.0214   SE 0.0197   MDE 0.0552   effect/MDE +1.51
+        iid  CI95 [+0.0440, +0.1214]
+        fold CI95 [+0.0440, +0.1331]   folds same sign 5/5   per-fold 0:+0.178 1:+0.069 2:+0.038 3:+0.101 4:+0.040
+        57W/69L/0T   worst degradation +0.5706 (1RSW)   p90 +0.3935   power 0.99  Type-M 1.01
+        concentration: drop-top10 +0.1171 vs uniform-effect null p10/p50/p90 +0.0913/+0.1167/+0.1418 -> pctile 0.510
+        VERDICT: WORSE
+
+    floor2, lam 0.3 (the production rung)   mean 0.0833 A (SE 0.0075), median 0.0596, p90 0.215, max 0.435 (6MBM), none above 0.5
+    floor2, lam 0 (no torsion prior)        mean 0.0429 A (SE 0.0053), median 0.0228
+    L38's own-torsion rebuild floor          mean 0.3468 A, max 1.474
+    Spearman(floor2, max omega deviation) +0.372;  Spearman(floor2, chain cost) +0.114;  floor2 above the rebuild floor on 13 targets
+
+READING. (1) The tight representation floor of the production manifold is SMALL: the nearest
+ideal-trans chain to any dev native is 0.083 A away at the production rung (0.043 A with the
+prior off), never more than 0.44 A. L38's 0.347 A was the own-torsion rebuild, an upper bound
+that the registered addendum predicted would fall, and it fell by 0.264 A [fold -0.300,
+-0.229], 113W/13L. The reason is arithmetic: rebuilding from the native's own phi/psi lets
+every 2-degree omega error accumulate down the chain, while fitting phi/psi to the trace
+absorbs those errors into compensating torsions. (2) The constant omega and the ideal bond
+geometry therefore cost the projection at most a few hundredths on this instrument; the
+Spearman with omega non-planarity drops from 0.83 (L38) to 0.37. The cis-peptide gap (L22:
+zero cis on the instrument) and the non-planarity gap are both priced now: 0.000 A and about
+0.04 A. (3) The ramah prior at 0.3 pulls the projection 0.040 A [+0.032, +0.049] away from the
+native when the input IS the native (23W/103L): the prior is a bias toward typical torsions,
+and on a perfect input it can only cost. On the production input (a coordinate average, not a
+native) the prior is what chooses the Ramachandran-plausible branch (S9-2), so this is not a
+proposal to remove it; it is the prior's price on the one input where it has nothing to fix.
+(4) The production chain cost (0.166 A) exceeds the tight floor by +0.083 [+0.044, +0.133],
+57W/69L, 5/5 folds, 1.51x MDE: what the projection pays on the production input is not
+representation (0.08 of it is) but the operator's own displacement of a non-native cloud (S16
+L27), and floor2's rho with the chain cost is +0.11.
+
+POWER. SE 0.006 to 0.027 A on the three contrasts; the smallest MDE is 0.017 A. Nothing here is
+a proposal; the two-bond-length projection stays worth 0.000 A on this instrument (L22) and the
+design note in `s26/agentPH_FINDINGS.md` 1.4 stands. L38's number is superseded as "the floor"
+by this one and is retained as the own-torsion upper bound; both are in the findings.
+
+---

@@ -131,6 +131,20 @@ number; it runs after the reject jobs and is reported in an addendum here.
 
 ---
 
+### 1.6 Part 2b, the tight floor (ORACLE DIAGNOSTIC; DEMONSTRATED; supersedes 1.5's number as "the floor")
+
+`s26/ph_cis.py floor2`, `s26/results/ph_cis_floor2.json` (126/126), ledger entry "CIS FLOOR,
+TIGHT FORM". The native CA trace projected through the production projection is 0.083 A from
+itself at lam 0.3 (median 0.060, max 0.435, none above 0.5) and 0.043 A at lam 0; the
+own-torsion rebuild of 1.5 (0.347 A) overstated the floor by 0.264 A [-0.300, -0.229],
+113W/13L, because omega errors accumulate down a rebuilt chain and are absorbed when phi/psi
+are fitted to the trace. The constant omega costs about 0.04 A on this instrument; the ramah
+prior costs 0.040 A [+0.032, +0.049] on a perfect input (its price where it has nothing to
+fix, not a proposal to remove it); the production chain cost exceeds the tight floor by
++0.083 [+0.044, +0.133], so the projection's 0.166 A is the operator's displacement of a
+non-native cloud (S16 L27), not representation. Both cis gaps are priced: 0.000 A (no cis
+target) and about 0.04 A (non-planarity).
+
 ## 2. AMBER AS A STERIC REJECT FILTER
 
 ### 2.1 What the census measured before any RMSD (DEMONSTRATED, native-free)
