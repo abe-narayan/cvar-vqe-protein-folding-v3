@@ -4374,3 +4374,75 @@ in place of 0.002. Replication: not applicable to deterministic retrains at seed
 of the 2P5H retrain is the natural check of the one large value and is queued behind the
 control-out models if time allows). Deviation from the PREREG: Part B's controls are 1 of 6 at
 this entry; F3's control clause is open.
+
+## L109 -- window_provenance, H_P3 (THE ACHIEVABLE READOUT): DOWN-WEIGHTING FRAGMENT WINDOWS IN THE TOP-75 AVERAGE, THE WEIGHT CHOSEN LEAVE-FOLD-OUT, IS +0.0066 A ON THE BUILT CHAIN (0.15x MDE) AGAINST THE UNIFORM READOUT AND -0.018 (0.38x) AGAINST ITS PERMUTED-WEIGHT CONTROL; NOT MEASURED; A GAIN OF 0.044 A OR MORE IS EXCLUDED; THE 0.13 A ORACLE CLASS GAP OF L85 DOES NOT REACH THE EMISSION (2026-09-14, W)
+
+Pre-registered in `s26/PREREG_window_provenance.md` (section 1, H_P3; addendum 1 declared the one
+reduction, 4 permutation draws instead of 8, before the run). Job `w_provenance_readout` (exit 0,
+9321 s wall under the six-job load, peak RSS 0.110 GB; `s26/results/w_selfcopy_provenance_readout.json`,
+complete 126/126; the uniform-weight cloud asserted equal to the production `avg_ca` on every
+target). Operator: the shipped top-75 (production `sub`) averaged in the production medoid frame
+with fragment-class members at relative weight w in {0, 0.5, 1, 2} and peptide-derived members
+at 1, one projection per weight; w chosen on the four training folds' built-chain mean and
+applied to the fifth; control: the same weights permuted across the 75 members (4 seeded draws,
+`s15.seed.stable_rng`) at the chosen weight. Basis on every line; negative = the routed arm is
+better.
+
+The leave-fold-out choice: w = 0.5 on folds 0, 3, 4 and w = 0 on folds 1, 2 (the routed arm
+down-weights fragments everywhere; it never chooses the uniform readout and never up-weights).
+
+  routed_minus_uniform [arm], fragment weight chosen leave-fold-out on the built chain
+    a 3.2193 (med 2.9905)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0066   median -0.0017   SE 0.0157   MDE 0.0440   effect/MDE +0.15
+    iid  CI95 [-0.0238, +0.0370]
+    fold CI95 [-0.0155, +0.0289]   folds same sign 2/5   per-fold 0:-0.002 1:-0.023 2:+0.046 3:-0.016 4:+0.020
+    68W/58L/0T   worst degradation +0.7206 (9UV5)   p90 +0.1643   power 0.07  Type-M 5.65
+    concentration: drop-top10 +0.0345 vs uniform-effect null p10/p50/p90 +0.0154/+0.0335/+0.0535 -> pctile 0.535
+    VERDICT: NOT MEASURED (|effect| 0.0066 <= its own MDE 0.0440, 0.15x)
+  routed_minus_permuted [arm], fragment weight chosen leave-fold-out on the built chain
+    a 3.2193 (med 2.9905)   b 3.2372 (med 3.0123)   n=126
+    effect -0.0179   median -0.0050   SE 0.0168   MDE 0.0470   effect/MDE -0.38
+    iid  CI95 [-0.0503, +0.0147]
+    fold CI95 [-0.0316, -0.0057]   folds same sign 4/5   per-fold 0:+0.004 1:-0.039 2:-0.032 3:-0.017 4:-0.010
+    70W/56L/0T   worst degradation +1.0627 (3SGO)   p90 +0.1302   power 0.19  Type-M 2.35
+    concentration: drop-top10 +0.0150 vs uniform-effect null p10/p50/p90 -0.0054/+0.0138/+0.0340 -> pctile 0.525
+    VERDICT: NOT MEASURED (|effect| 0.0179 <= its own MDE 0.0470, 0.38x)
+  routed_minus_uniform [cloud], fragment weight chosen leave-fold-out on the built chain
+    a 3.0484 (med 2.8024)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0001   median -0.0042   SE 0.0150   MDE 0.0421   effect/MDE +0.00
+    iid  CI95 [-0.0270, +0.0289]
+    fold CI95 [-0.0274, +0.0450]   folds same sign 1/5   per-fold 0:-0.019 1:-0.026 2:+0.089 3:-0.034 4:-0.013
+    69W/57L/0T   worst degradation +0.9086 (9UV5)   p90 +0.0997   power 0.05  Type-M 495.60
+    concentration: drop-top10 +0.0252 vs uniform-effect null p10/p50/p90 +0.0062/+0.0240/+0.0436 -> pctile 0.527
+    VERDICT: NOT MEASURED (|effect| 0.0001 <= its own MDE 0.0421, 0.00x)
+  routed_minus_permuted [cloud], fragment weight chosen leave-fold-out on the built chain
+    a 3.0484 (med 2.8024)   b 3.0768 (med 2.8418)   n=126
+    effect -0.0284   median -0.0130   SE 0.0150   MDE 0.0420   effect/MDE -0.68
+    iid  CI95 [-0.0565, +0.0029]
+    fold CI95 [-0.0480, -0.0167]   folds same sign 5/5   per-fold 0:-0.017 1:-0.065 2:-0.016 3:-0.033 4:-0.017
+    85W/41L/0T   worst degradation +1.0753 (3SGO)   p90 +0.0692   power 0.48  Type-M 1.44
+    concentration: drop-top10 +0.0010 vs uniform-effect null p10/p50/p90 -0.0171/-0.0002/+0.0188 -> pctile 0.537
+    VERDICT: NOT MEASURED (|effect| 0.0284 <= its own MDE 0.0420, 0.68x)
+
+Fixed weights over all folds (diagnostic, NOT the routed arm; built chain minus uniform): w = 0
+-0.0043 (0.06x MDE 0.076; fold CI [-0.042, +0.030]); w = 0.5 -0.0117 (0.39x MDE 0.030; fold CI
+[-0.041, +0.010], 4/5 folds); w = 2 +0.0183 (0.68x MDE 0.027; fold CI [-0.008, +0.040]). The
+direction is consistent with L85 (down-weighting fragments helps slightly, up-weighting hurts
+slightly), and none of it is measurable at n = 126.
+
+Verdict: H_P3 refuted; the idea closes with its power statement. The routed readout is +0.007 A
+against uniform (0.15x MDE; it excludes a gain of 0.044 A or more) and -0.018 against the
+permuted-weight control (0.38x; the fold CI excludes zero at 4/5 folds and 0.38x MDE, i.e. the
+class information is worth something against noise-with-the-same-weights but nothing against
+doing nothing). Mechanism: the 0.13 A single-window class gap inside the top-75 (L85) acts on 8%
+of the members of a 75-member mean, and the L44 / L64 controls already showed that a few
+members' change moves the chain mostly orthogonally to the native; the registered expectation
+(0.00 to -0.02 against an MDE of about 0.05) held. What the census leaves for the report: the
+pool is three-quarters fragment windows; a peptide-derived window is 0.42 A nearer the native
+before the score and 0.09 to 0.13 A after it; and re-weighting by provenance cannot convert that
+into an emission gain at this n. Replication: for a positive, the second permutation seed and the
+reversed fold order were pre-declared; there is no positive to replicate. Deviations from the
+PREREG: the 4-draw control (declared in addendum 1); the `fallback` flag (a target with no
+peptide-derived member and w = 0 falls back to uniform) fired on 0 targets at the chosen weights
+(w = 0.5 or 0 with at least one peptide member on every target: 113 have a terminal, 30 a whole,
+every target an interior or terminal member by the census).

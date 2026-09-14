@@ -105,3 +105,11 @@ minutes if it runs. One-target probe first. Agent-hours: 1.5.
   (126 x (4 arms + 4 x 3 permuted) = 2,016 projections). Code `s26/w_provenance_readout.py`.
 - A target with no peptide-derived member in its top-75 and fragment weight 0 has an undefined
   weighted mean; it falls back to the uniform cloud and is flagged `fallback`.
+
+## ADDENDUM 2 (2026-09-14 01:15) -- H_P3 measured; nothing above edited
+
+- Job `w_provenance_readout` (9321 s under load, 0.110 GB; complete 126/126). Ledger entry
+  after L108. Routed (w chosen leave-fold-out: 0.5 on folds 0, 3, 4; 0 on folds 1, 2) minus
+  uniform +0.0066 A on the built chain (0.15x MDE 0.044), minus the permuted-weight control
+  -0.0179 (0.38x). H_P3 refuted; a gain of 0.044 A or more excluded. The fallback flag fired on
+  no target. No deviation beyond addendum 1's 4-draw control.
