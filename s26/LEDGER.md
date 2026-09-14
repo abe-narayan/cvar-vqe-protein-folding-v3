@@ -5110,3 +5110,91 @@ the L120 document fix). If lane P's final C5 addendum lands before the close, on
 changes and nothing on the slide.
 
 ---
+
+## L127 -- THE FROZEN RESULTS-LAB REBUILD REPRODUCES EVERY NUMBER (2016/2016 RMSDs, ALL 2,142 PDB ATOM RECORDS, EVERY GATE AND VERDICT); THE TRACKED LEADERBOARD'S THREE DESCRIPTIVE COLUMNS WERE WRITTEN BY UNCOMMITTED CODE AND DO NOT REPRODUCE (2026-09-14 02:53, lane I)
+
+Governed job `resultslab_rebuild` (CPU, est 1.2 GB; registered 01:36 after 4,765 s in the queue;
+4,472.9 s wall under seven concurrent jobs; peak RSS 0.11 GB; `s26/logs/resultslab_rebuild.log`):
+the documented command unchanged, `python -m s25.resultslab.build --mode frozen --spec
+s25/results/real_pools/spec.json`, bracketed by `s26/i_resultslab_rebuild.py pre` (sha256 and
+ATOM-record sha256 of the 2,142 tracked PDBs, copies of `results/summary/*`) and `post`
+(`s26/results/resultslab_rebuild/post_verdict.json`). Verdict **REPRODUCED**:
+
+- per-target RMSD, both bases, 1008 records: **2016/2016 values exactly equal** (worst |d| 0.0);
+- leaderboard: every mean, median, secondary mean, pool gate and violation count, difficulty
+  gate, corr, paired effect, MDE, fold CI, W/L and verdict identical for all 8 configurations;
+  production **3.2126 built chain / 3.0483 point cloud, pool WARN (2), difficulty PASS**;
+  provenance `genuine` on all 1008 records; status GENERATED, no synthetic row;
+- the L7 explanation is present: `pool_gate_rule` carries the PASS / WARN / FAIL text and the
+  printed table carries the one-line WARN note (defect 6c is now live in the artefact);
+- structures: **2142/2142 PDBs identical in their ATOM records**; every file's bytes differ only
+  in `REMARK 999 GIT_COMMIT` (a15406c82245 -> the S26 tree) and `MODULE_SHA`
+  (90e160cc06020ac1 -> 47cb4ebecedc4f89, `exportlib.py` having changed since the tracked build).
+  `results/structures` was restored to the tracked bytes (`git checkout`), per the ruling
+  "commit results/summary only".
+
+Committed (`083c9b95`): `results/summary/results.json`, `results.csv`, `leaderboard.json`.
+Byte-wise: provenance blocks and per-record timestamp / git_commit / module_hash (the git_commit
+stamps read `3391f3c4288c` on the records and `f56adc317493` on the summary because other lanes
+committed during the 75-minute build); `results.csv`'s `hamiltonians` column now reads the
+channel NAME (`Legacy`) instead of the code (`LEG`) and `distogram_used` reads `true`/`false`
+instead of empty, both now consistent with `results.json`; `leaderboard.csv`, `pool_best.json`,
+`target_map.json`, `professor_brief.md` byte-identical.
+
+**The finding.** The tracked `leaderboard.json` rows carried three descriptive keys,
+`selector`, `hamiltonians`, `distogram_used`, that are not in `schema.LEADERBOARD_KEYS`, are not
+produced by any `schema.py` in the repository's history (`a065d670`, `ae86a124`, HEAD), and were
+written by the working copy the tracked build ran from (`provenance.git_dirty: true`,
+`source_sha256 ebc30c49...` against no committed version). The rebuilt leaderboard has them as
+null. `s25/resultslab/site/app.js` (lines 424-425, 507-509) reads them, so the regenerated site
+(untracked) shows "-" / "none" in those three cells of the overview table; the per-record values
+are intact in `results.json` and in `s25/results/real_pools/spec.json`. Not hand-patched: a
+generated artefact is not edited by hand, and a schema fix now would demand another 75-minute
+rebuild. Recommended follow-up (one function): let `schema.leaderboard()` copy the
+configuration's `selector` / `hamiltonians` / `distogram_used` from its first present record
+into the row, then rebuild once.
+
+---
+
+## L128 -- GOVERNOR DEFECT (COORDINATOR, URGENT): A JOB WHOSE ROOT BLOCKS IN subprocess.run READS "running" TO psutil AFTER suspend(), SO THE GOVERNOR RE-SUSPENDS ITS TREE ON EVERY HOT SAMPLE AND NEVER RESUMES IT; ON WINDOWS THE SUSPENDS STACK, AND THE CHILD THEN NEEDS AS MANY resume() CALLS (2026-09-14 02:56, lane I)
+
+Observed on my job `verify_grad_key_collision` (AMBER, registered 02:07:45): `s26/governor.log`
+holds **18 `SUSPEND` lines and 0 `RESUME` lines** for it between 02:19 and 02:26; the governor's
+state file never marked it suspended; its root process (`i_verify_rerun.py run`, blocked in
+`subprocess.run` on the audit's child) read `running` to psutil, and its child (pid 26656, the
+pipeline for the first target) read `stopped` with 13.3 CPU-seconds accumulated in 46 minutes.
+One `psutil.Process.resume()` did nothing; the child ran only after **16 consecutive
+`resume()` calls**, because on Windows `SuspendThread` increments a per-thread count and each
+of the governor's `suspend()` passes added one. The job lost 28 minutes (02:26 to 02:54) on a
+box that was never above the RAM ceiling; the trigger was CPU above 93%.
+
+Mechanism, from `s26/governor.py`: `is_suspended()` judges the ROOT only; `suspend()` is called
+on `running[-1]` every sample while `hot > CEILING`, so a root that psutil keeps reporting as
+running is re-suspended each sample (18x here) and is never on `suspended_stack`, so neither
+the resume path nor v2.3's ADOPT ever sees it. Any registered job whose root waits on a child
+(pytest with `run_child`, `core.pipeline` with workers, a driver that spawns `python -m ...`)
+is exposed. Two fixes, both small: (1) judge suspension over the WHOLE tree (any stopped member,
+or the child count), and never call `suspend()` on a member already stopped; (2) on resume,
+loop `resume()` until `status() != stopped` (Windows counts). Until then, lane I runs
+`s26/i_tree_watchdog.py` (its own jobs only): when a job's root is running but a descendant is
+stopped, it resumes the descendant until it runs; it never touches a job whose root is stopped
+(the governor's deliberate suspension) and never touches another lane's job. A scan at 02:54
+found no other lane's job in the mixed state at that moment; the coordinator may want to run
+the scan (`s26/i_tree_watchdog.py` `tick`) across agents.
+
+---
+## L129 -- GOVERNOR v2.4: SUSPENSION STATE IS THE GOVERNOR'S OWN MEMORY, NOT psutil's STATUS; RESUME REPEATS UNTIL THE PROCESS RUNS (2026-09-14 02:58, coordinator)
+
+Lane I's L128: a job whose root process blocks in `subprocess.run` reads "running" to psutil
+after `suspend()` on Windows, so the v2.3 band re-suspended its tree on every hot tick (18
+suspends, 0 resumes on `verify_grad_key_collision`), and because Windows counts suspends per
+thread the child then needed 16 `resume()` calls; the audit stalled 28 minutes. v2.4: the
+governor keeps its own set of the jobs it has suspended and never suspends one twice; a job is
+"suspended" if it is in that set or psutil says stopped; `resume()` repeats until psutil no
+longer reports the process stopped (bounded at 32), so a process suspended many times by an
+earlier governor is fully released. Restarted at 02:58; the running jobs are adopted (L83). The
+last governor change of the sprint; the hygiene list in `s26/agentI_FINDINGS.md` carries the
+lesson (the ledger of a supervisor's actions must be the supervisor's own state).
+
+---
+

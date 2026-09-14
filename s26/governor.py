@@ -171,18 +171,27 @@ def load_jobs() -> list:
         job["_proc"] = p
         job["_file"] = f
         job["_rss"] = tree_rss(p)
-        job["_suspended"] = is_suspended(p)
+        job["_suspended"] = (job.get("name") in SUSPENDED) or is_suspended(p)
         jobs.append(job)
     jobs.sort(key=lambda j: float(j.get("start_ts", 0.0)))   # oldest first
     return jobs
 
 
+SUSPENDED: set = set()     # v2.4 (ledger L129): the governor's own memory of what it suspended.
+                           # Windows counts suspends per thread, and a root blocked in a wait
+                           # reads "running" after suspend(), so psutil's status is not the
+                           # truth; this set is. Every SUSPEND is matched by exactly one RESUME.
+
+
 def suspend(job: dict) -> None:
+    if job["name"] in SUSPENDED:
+        return
     for q in tree(job["_proc"]):
         try:
             q.suspend()
         except (psutil.NoSuchProcess, psutil.AccessDenied):
             pass
+    SUSPENDED.add(job["name"])
     log("SUSPEND", f"{job['name']} agent={job.get('agent')} tag={job.get('tag')} "
                    f"rss={job['_rss'] / 1e9:.2f}GB")
 
@@ -191,8 +200,15 @@ def resume(job: dict) -> None:
     for q in reversed(tree(job["_proc"])):
         try:
             q.resume()
+            #: a process suspended more than once (by an earlier governor) needs as many
+            #: resumes; keep resuming while psutil still reports it stopped, bounded.
+            for _ in range(32):
+                if not is_suspended(q):
+                    break
+                q.resume()
         except (psutil.NoSuchProcess, psutil.AccessDenied):
             pass
+    SUSPENDED.discard(job["name"])
     log("RESUME", f"{job['name']} agent={job.get('agent')} tag={job.get('tag')}")
 
 
