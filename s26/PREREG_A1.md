@@ -161,3 +161,13 @@ Agent-hours: 5 (null) to 11 (positive), mostly waiting. Launch:
 No cell of `VQE_LFO` is re-chosen. No ADAPT setting (eps, steps, pools, lr, start, optimiser)
 is chosen by looking at an RMSD; all were fixed on the synthetic ideal ladder before this file.
 The E variants belong to A3. The complex pool L2C is available in the code and is NOT an A1 arm.
+
+## ADDENDUM (2026-09-13 21:50, after the run; the text above is unchanged)
+
+Built 126/126 (`s26/results/a1/`, two shards killed by the host at 10:10 after 33 targets, one
+governed process resumed from the checkpoints, `s26/jobs_done/a1_build.json`), labelled after
+L33 (`s26/jobs_done/a1_label.json`), statistics in `s26/results/a1_stats.json`. The "ADAPT is
+null" falsifier FIRED on both primaries (built chain: -0.0138 A at 0.23x MDE 0.0588, fold CI
+[-0.071, +0.044]; -0.0222 A at 0.36x MDE 0.0608, fold CI [-0.085, +0.042]); "ADAPT helps" did
+not fire; no replication owed. The expected effect (section 7: |effect| < 0.05 A, null
+expected) held. Power: resolution 0.06 A on the built chain; underpowered below it. Ledger L68.
