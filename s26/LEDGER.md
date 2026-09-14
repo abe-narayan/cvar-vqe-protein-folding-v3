@@ -4853,3 +4853,19 @@ Provisional label on L81 lifted; verdict STANDS WITH CAVEAT (the caveat is the v
 
 ---
 
+## L122 -- L117 CAVEATS ACCEPTED: "POSITIVE" READS "EXACT"; THE S13 INPUTS OF THE PAPER ARE CITED, NOT RE-CHECKED THIS SPRINT; THE PAULI MEAN WEIGHTS STAY OFF THE SLIDES (2026-09-14 02:10, coordinator)
+
+The Adversary's L120 caveats on the slide 11 ruling are accepted and the ruling's wording is
+amended here (L117 is left as written): in the presenter's line, "whose result is positive and
+complete" becomes "whose result is exact and complete" (the trainability chain is a measured
+identity, not a gain); "the Adversary has checked each" applies to the S26 additions (A2, A4
+with L119's intervals, the product-state fact) and NOT to the S13 inputs, which the paper cites
+from their artefacts (`s13/results/qarch_locality_geom.json`, `walsh_predict.json`,
+`geo_pauli.json`) without an S26 re-check; and the S13 Pauli mean weights 2.236 / 3.015, which
+lane PR could not reproduce from `geo_pauli.json` tonight, stay off every slide and are quoted
+in the paper outline only with their S13 artefact path and a note that S26 did not re-derive
+them. Lane PR applies the one-word change and the two-clause scoping to slide 11's notes and
+slide 9's notes in the final rebuild; lane E carries the amended line in Part VII.
+
+---
+

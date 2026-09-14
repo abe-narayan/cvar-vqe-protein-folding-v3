@@ -1721,3 +1721,32 @@
 2026-09-14T02:04:21 SUSPEND  p_c5_run agent=P tag=CPU rss=0.09GB
 2026-09-14T02:04:31 RESUME   verify_amber_platform agent=I tag=AMBER
 2026-09-14T02:04:36 RESUME   p_train_raw_fold3 agent=P tag=CPU
+2026-09-14T02:04:41 RESUME   p_c5_run agent=P tag=CPU
+2026-09-14T02:04:46 SAMPLE   ram=82.6% (13.83GB used, 2.92GB free) cpu=100.0% (15s mean 89.9%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:04:51 SUSPEND  verify_amber_platform agent=I tag=AMBER rss=0.30GB
+2026-09-14T02:04:56 SUSPEND  p_train_raw_fold3 agent=P tag=CPU rss=1.59GB
+2026-09-14T02:05:01 SUSPEND  p_c5_run agent=P tag=CPU rss=0.09GB
+2026-09-14T02:05:06 SUSPEND  resultslab_rebuild agent=I tag=CPU rss=0.11GB
+2026-09-14T02:05:11 RESUME   verify_amber_platform agent=I tag=AMBER
+2026-09-14T02:05:16 RESUME   p_train_raw_fold3 agent=P tag=CPU
+2026-09-14T02:05:21 RESUME   p_c5_run agent=P tag=CPU
+2026-09-14T02:05:26 RESUME   resultslab_rebuild agent=I tag=CPU
+2026-09-14T02:05:36 SUSPEND  verify_leak_audit agent=I tag=AMBER rss=0.29GB
+2026-09-14T02:05:41 SUSPEND  e_report_check10 agent=E tag=CPU rss=0.10GB
+2026-09-14T02:05:46 SAMPLE   ram=83.3% (13.96GB used, 2.79GB free) cpu=99.8% (15s mean 99.9%) jobs=8 amber=1 queued=0 lanes=8
+2026-09-14T02:05:46 SUSPEND  p_train_raw_fold3 agent=P tag=CPU rss=1.61GB
+2026-09-14T02:05:56 RESUME   verify_leak_audit agent=I tag=AMBER
+2026-09-14T02:06:01 RESUME   e_report_check10 agent=E tag=CPU
+2026-09-14T02:06:36 RESUME   p_train_raw_fold3 agent=P tag=CPU
+2026-09-14T02:06:46 SAMPLE   ram=83.4% (13.97GB used, 2.78GB free) cpu=96.0% (15s mean 89.1%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:06:51 SUSPEND  verify_leak_audit agent=I tag=AMBER rss=0.57GB
+2026-09-14T02:07:01 SUSPEND  p_train_raw_fold3 agent=P tag=CPU rss=1.63GB
+2026-09-14T02:07:16 RESUME   verify_leak_audit agent=I tag=AMBER
+2026-09-14T02:07:21 RESUME   p_train_raw_fold3 agent=P tag=CPU
+2026-09-14T02:07:31 SUSPEND  p_train_raw_fold3 agent=P tag=CPU rss=1.61GB
+2026-09-14T02:07:46 SAMPLE   ram=79.5% (13.32GB used, 3.43GB free) cpu=63.7% (15s mean 61.5%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:07:51 RESUME   p_train_raw_fold3 agent=P tag=CPU
+2026-09-14T02:08:01 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:08:06 SUSPEND  verify_grad_key_collision agent=I tag=AMBER rss=0.58GB
+2026-09-14T02:08:46 SAMPLE   ram=82.5% (13.83GB used, 2.92GB free) cpu=80.8% (15s mean 87.0%) jobs=7 amber=2 queued=0 lanes=8
+2026-09-14T02:09:46 SAMPLE   ram=82.5% (13.82GB used, 2.93GB free) cpu=90.6% (15s mean 86.5%) jobs=7 amber=2 queued=0 lanes=8
