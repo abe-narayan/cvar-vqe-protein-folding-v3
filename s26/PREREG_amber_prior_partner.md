@@ -106,3 +106,13 @@ One-target probe first. Agent-hours: 2 code, 1.5 run, 1 write-up.
   `w_selfcopy.emit`'s cloud exactly. The rank-permuted-AMBER control (4 seeded draws) is computed
   in stage 2 at the chosen (lam*, beta*) cell only, which is the only place the falsifier reads it.
   Nothing else in sections 1 to 6 changes.
+
+## ADDENDUM 2 (2026-09-14 00:55) -- measured; nothing above edited
+
+- Stage 1 `w_amberprior_clouds` (135 s, 0.163 GB; complete 126/126, gates exact); stage 2
+  `w_amberprior_endpoint` (4786 s under load, 0.131 GB; complete 126/126). Ledger entry posted
+  after L91; per-cell cloud contrasts in `s26/results/w_amberprior_cells_cloud.json`.
+- The leave-fold-out choice is (lam, beta) = (0, 0) on all five folds: the deployable arm is the
+  incumbent bit-exactly; every mixture cell is worse on the cloud (+0.010 to +0.152), none past
+  its MDE, beta without a consistent sign. H_AP refuted. Split-half transfer of the per-target
+  oracle: 8%. No deviation beyond addendum 1.

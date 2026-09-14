@@ -4220,3 +4220,58 @@ just staged (`s26/i_test_report.py`, `s26/TEST_RUN.md`, `s26/results/test_run.js
 the content is correct and committed, only the message is PH's. Stage-and-commit in one call.
 
 ---
+
+## L105 -- TOURNAMENT ITEM 10, amber_prior_partner (P's H_C3a, orphaned to W): THE LEAVE-FOLD-OUT CHOICE DECLINES TO MIX ON ALL FIVE FOLDS (lam* = 0), SO THE DEPLOYABLE ARM IS THE INCUMBENT BIT-EXACTLY; EVERY ONE OF THE 29 MIXTURE CELLS IS WORSE THAN THE SHIPPED POSTERIOR ON THE POINT CLOUD (+0.010 TO +0.152 A, NONE PAST ITS MDE, 22 OF 29 WITH THE FOLD CI ABOVE ZERO); THE ENERGY WEIGHTING CHANGES NOTHING THE UNWEIGHTED HISTOGRAM DOES NOT; THE PER-TARGET ORACLE OVER 30 CELLS TRANSFERS 8% IN SPLIT HALF (2026-09-14, W)
+
+Pre-registered in `s26/PREREG_amber_prior_partner.md` (written 22:15, before any real-target run;
+addendum 1 records the staging refinement before the run). Stage 1 (native-free): job
+`w_amberprior_clouds` (exit 0, 135 s, peak 0.163 GB; `s26/results/w_selfcopy_amberprior_clouds.json`,
+complete 126/126; gate top-75 == `sub` 126/126; lam = 0 asserted bit-exact against the shipped risk
+table and beta = 0 against `p_ladder.pool_histogram` on every target). Stage 2 (gated): job
+`w_amberprior_endpoint` (exit 0, 4786 s wall under a six-job load, peak 0.131 GB;
+`s26/results/w_selfcopy_amberprior_endpoint.json`, complete 126/126); per-cell cloud contrasts in
+`s26/results/w_amberprior_cells_cloud.json`. Probe `w_amberprior_probe` (1A13, 5 s). Operator: per
+pair, the K = 500 pool's 17-bin distance histogram weighted by exp(-beta x zrank(E_AMBER)) from
+the 63,000 cached ff14SB/GBn2 single points (`s24/cache_amber`, pool identity asserted), mixed
+into the shipped posterior at weight lam, through a genuine `core.predict.Distogram` risk table,
+the shipped score, the top-75 and the medoid-frame average; grid lam in {0, 0.05, 0.1, 0.2, 0.35,
+0.5} x beta in {0, 0.5, 1, 2, 4}; (lam*, beta*) chosen leave-fold-out on the point cloud (the
+declared cost fork), verdict on the built chain. Basis on every line; negative = better.
+
+**The leave-fold-out choice is (0, 0) on every fold** (`chosen_cells_by_fold`: 0,0 for folds 0 to
+4; the beta = 0 row's own choice likewise 0,0). The deployable arm is therefore the incumbent
+bit-exactly on 126/126 targets, and every registered contrast (chosen minus shipped; chosen minus
+the unweighted mixture; chosen minus the rank-permuted-AMBER mixture) is an exact tie on both
+bases (`ST.fmt`: effect +0.0000, 0W/0L/126T, "NOT MEASURED (|effect| 0.0000 <= its own MDE
+0.0000)"). H_AP is refuted in the strongest form the design allows: the choice the rule makes with
+four training folds is to leave the prior alone.
+
+**Why, cell by cell (point cloud, all folds, `ST.compare` against the shipped posterior; lam = 0 is
+the identity at every beta):**
+
+    lam    beta 0                  beta 0.5                beta 1                  beta 2                  beta 4
+    0.05   +0.016 [+0.002,+0.030]  +0.015 [+0.003,+0.024]  +0.019 [+0.005,+0.033]  +0.012 [+0.001,+0.030]  +0.010 [+0.001,+0.020]
+    0.1    +0.021 [-0.008,+0.045]  +0.022 [-0.008,+0.053]  +0.021 [-0.010,+0.053]  +0.021 [-0.003,+0.047]  +0.009 [-0.003,+0.024]
+    0.2    +0.041 [-0.013,+0.086]  +0.035 [-0.012,+0.086]  +0.029 [-0.013,+0.086]  +0.033 [+0.002,+0.069]  +0.042 [+0.011,+0.078]
+    0.35   +0.080 [-0.005,+0.151]  +0.059 [-0.008,+0.131]  +0.057 [-0.007,+0.136]  +0.060 [+0.009,+0.125]  +0.075 [+0.021,+0.127]
+    0.5    +0.145 [+0.001,+0.260]  +0.143 [+0.007,+0.260]  +0.125 [+0.031,+0.235]  +0.125 [+0.032,+0.228]  +0.152 [+0.061,+0.243]
+    (effect and fold CI95, A; MDEs 0.036 to 0.186; effect/MDE 0.15 to 1.00; W/L from 60/64 to 49/77; every cell NOT MEASURED by the rule, 22 of 29 with the fold CI above zero)
+
+Every mixture cell is worse than the shipped posterior on the point cloud, monotonically in lam
+(the typicality direction of S7-3 / S19 L14, reproduced: moving the prior toward the pool's own
+histogram costs accuracy), and beta moves a cell by at most 0.02 A in either direction with no
+consistent sign (at lam 0.05 the energy weighting helps by 0.006; at lam 0.5 beta 4 hurts by
+0.007): AMBER's ordering carries nothing through the prior that the unweighted histogram does not,
+which is S24 L16's rank-permuted null (-0.0010, 0.08x MDE) seen from the prior side. The
+per-target ORACLE over the 30 cells is -0.290 A on the cloud (2.804 vs 3.048), and
+`ST.best_of_k_within` accounts for 224% of it with its valid across-target null (k_eff 9.7), the
+split-half transfer is -0.022 (8% of the oracle): "NOT A SIGNAL", as the PREREG required it to be
+quoted. Registered expectation (0.00 +/- 0.03, lam* = 0 on most folds): held, with lam* = 0 on all
+five. Power: for the deployable arm the question is moot (it is the identity); for the cells, a
+gain of 0.04 A or more at lam 0.05 and of 0.19 A at lam 0.5 is excluded on the cloud. The built
+chain was projected only for the chosen cell (the identity), the beta = 0 chosen cell (the
+identity) and the permuted control (the identity when lam = 0), per the declared staging; no
+built-chain number exists for a non-chosen cell, and none is claimed. Replication: the choice is
+deterministic given the artefact; the permutation seeds were never consumed (lam* = 0). The last
+AMBER form in the record, as a distribution inside the prior, is closed on this instrument.
+Deviations from the PREREG: none beyond addendum 1's staging.
