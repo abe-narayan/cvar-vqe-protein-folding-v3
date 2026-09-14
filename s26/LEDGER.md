@@ -1982,3 +1982,20 @@ under every reading; cannot move the benchmark verdict either way."
 
 ---
 
+
+## L56 -- LANE P, C2 RUNG SHIPPED: THE ANCHOR. THE SHIPPED POSTERIOR THROUGH THE LADDER'S OWN PATH IS BIT-EXACT AGAINST THE PRODUCTION CACHE ON ALL FOUR BASES (2026-09-13 19:34, lane P)
+
+Artefacts: `s26/results/p_ladder_shipped_s0.json` (126 rows, complete), `s26/results/p_ladder_report_shipped_s0.json`; anchor `s26/results/p_ladder_shipped_s0.json`. Every arm through `s26/p_ladder.py`'s single path: shipped K=500 pool -> the rung's posterior in a genuine `core.predict.Distogram` -> shipped Bayes-risk score -> top-75 uniform medoid-frame average -> `s12.instrument.project` (ramah 0.3). Paired per target against the shipped posterior through the same path. Negative = the rung is better.
+
+Job `p_eval_shipped2` (resumed from a 30-row checkpoint): exit 0, 416 s, peak RSS 0.13 GB (`s26/jobs_done/p_eval_shipped2.json`); the first attempt `p_eval_shipped` was suspended by the governor at 09:25 and terminated at 19:11 (L42). Every later rung is paired against these 126 rows. The per-target production values are `bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json` (`shipped`, `rmsd_avg`, `rmsd_arm`, `rmsd_fit`).
+
+```
+SHIPPED THROUGH THE LADDER'S OWN PATH (the anchor), n=126
+  sel   mean 3.4540 (pinned 3.4540)  vs production cache per target: max abs 0.00e+00, mean abs 0.00e+00, n(diff>1e-6)=0
+  cloud mean 3.0483 (pinned 3.0483)  vs production cache per target: max abs 7.25e-14, mean abs 2.69e-15, n(diff>1e-6)=0
+  arm   mean 3.2126 (pinned 3.2148)  vs production cache per target: max abs 1.71e-01, mean abs 1.07e-02, n(diff>1e-6)=120
+  fit   mean 3.2052 (pinned 3.2041)  vs production cache per target: max abs 1.41e-01, mean abs 1.80e-03, n(diff>1e-6)=118
+  gam_eff/cos of the shipped posterior against itself: prob +0.0000/nan loc +0.0000/nan (must be 0/nan)  MAE 2.3386
+```
+
+---

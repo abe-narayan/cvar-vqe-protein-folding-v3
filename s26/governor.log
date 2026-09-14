@@ -750,3 +750,34 @@
 2026-09-13T19:13:01 REAP     p_eval_noesm (pid 19928) is gone; registration removed
 2026-09-13T19:13:41 SAMPLE   ram=83.5% (13.98GB used, 2.77GB free) cpu=17.1% (15s mean 19.0%) jobs=0 amber=0 queued=0 lanes=6
 2026-09-13T19:14:41 SAMPLE   ram=83.8% (14.04GB used, 2.71GB free) cpu=16.4% (15s mean 17.7%) jobs=0 amber=0 queued=0 lanes=6
+2026-09-13T19:15:41 SAMPLE   ram=87.3% (14.63GB used, 2.12GB free) cpu=51.0% (15s mean 42.4%) jobs=1 amber=0 queued=0 lanes=7
+2026-09-13T19:15:56 SUSPEND  a1_build agent=Q tag=CPU rss=0.35GB
+2026-09-13T19:16:31 SUSPEND  ph_reject_cloud2 agent=PH tag=CPU rss=0.03GB
+2026-09-13T19:16:36 SUSPEND  w_endpoint_report agent=W tag=CPU rss=0.21GB
+2026-09-13T19:16:41 SAMPLE   ram=93.8% (15.72GB used, 1.03GB free) cpu=22.1% (15s mean 35.3%) jobs=3 amber=0 queued=0 lanes=7
+2026-09-13T19:17:36 SUSPEND  e_report_check agent=E tag=CPU rss=0.03GB
+2026-09-13T19:17:41 SAMPLE   ram=93.2% (15.62GB used, 1.13GB free) cpu=6.8% (15s mean 9.8%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T19:18:26 RESUME   e_report_check agent=E tag=CPU
+2026-09-13T19:18:31 RESUME   w_endpoint_report agent=W tag=CPU
+2026-09-13T19:18:36 RESUME   ph_reject_cloud2 agent=PH tag=CPU
+2026-09-13T19:18:41 SAMPLE   ram=87.6% (14.66GB used, 2.08GB free) cpu=46.1% (15s mean 40.7%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T19:18:41 RESUME   a1_build agent=Q tag=CPU
+2026-09-13T19:19:41 SAMPLE   ram=85.7% (14.36GB used, 2.39GB free) cpu=62.9% (15s mean 49.8%) jobs=3 amber=0 queued=0 lanes=7
+2026-09-13T19:20:41 SAMPLE   ram=84.8% (14.21GB used, 2.54GB free) cpu=50.2% (15s mean 51.5%) jobs=3 amber=0 queued=0 lanes=7
+2026-09-13T19:21:41 SAMPLE   ram=85.1% (14.26GB used, 2.50GB free) cpu=75.3% (15s mean 66.5%) jobs=3 amber=0 queued=0 lanes=7
+2026-09-13T19:22:41 SAMPLE   ram=86.1% (14.42GB used, 2.33GB free) cpu=62.8% (15s mean 69.7%) jobs=3 amber=0 queued=0 lanes=7
+2026-09-13T19:23:41 SAMPLE   ram=86.0% (14.41GB used, 2.34GB free) cpu=65.5% (15s mean 57.5%) jobs=3 amber=0 queued=0 lanes=7
+2026-09-13T19:24:41 SAMPLE   ram=86.9% (14.55GB used, 2.20GB free) cpu=46.5% (15s mean 49.5%) jobs=3 amber=0 queued=0 lanes=7
+2026-09-13T19:25:41 SAMPLE   ram=87.6% (14.67GB used, 2.08GB free) cpu=42.4% (15s mean 42.0%) jobs=2 amber=0 queued=0 lanes=7
+2026-09-13T19:26:41 SAMPLE   ram=87.1% (14.58GB used, 2.17GB free) cpu=42.7% (15s mean 44.6%) jobs=2 amber=0 queued=0 lanes=7
+2026-09-13T19:26:56 REAP     e_report_check2 (pid 29900) is gone; registration removed
+2026-09-13T19:27:41 SAMPLE   ram=87.2% (14.61GB used, 2.14GB free) cpu=34.3% (15s mean 43.1%) jobs=2 amber=0 queued=0 lanes=7
+2026-09-13T19:28:41 SAMPLE   ram=86.3% (14.45GB used, 2.30GB free) cpu=36.2% (15s mean 44.0%) jobs=2 amber=0 queued=0 lanes=7
+2026-09-13T19:29:41 SAMPLE   ram=87.9% (14.72GB used, 2.03GB free) cpu=58.1% (15s mean 44.7%) jobs=2 amber=0 queued=0 lanes=7
+2026-09-13T19:30:21 REAP     w_identity_floor_stats (pid 13564) is gone; registration removed
+2026-09-13T19:30:41 SAMPLE   ram=88.3% (14.79GB used, 1.97GB free) cpu=47.9% (15s mean 48.0%) jobs=3 amber=0 queued=0 lanes=7
+2026-09-13T19:31:41 SAMPLE   ram=75.9% (12.71GB used, 4.04GB free) cpu=55.7% (15s mean 60.2%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T19:31:56 REAP     ph_strain_rep (pid 31140) is gone; registration removed
+2026-09-13T19:32:41 SAMPLE   ram=75.1% (12.58GB used, 4.17GB free) cpu=48.1% (15s mean 45.6%) jobs=3 amber=0 queued=0 lanes=7
+2026-09-13T19:33:41 SAMPLE   ram=76.4% (12.79GB used, 3.96GB free) cpu=73.9% (15s mean 65.2%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T19:34:41 SAMPLE   ram=76.3% (12.78GB used, 3.97GB free) cpu=60.5% (15s mean 63.3%) jobs=4 amber=0 queued=0 lanes=7
