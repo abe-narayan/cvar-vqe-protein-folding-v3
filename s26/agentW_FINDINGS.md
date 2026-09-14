@@ -1,7 +1,9 @@
 # SPRINT 26, LANE W (WILDCARD): FINDINGS
 
-Status: Phase 0 signed off (L33); the mandatory bound is measured and posted (L44). Branch `s26`.
-Ledger entries (lane W): L30, L44. Tiers: DEMONSTRATED (measured, artefact on disk) / ORACLE DIAGNOSTIC (reads native-derived
+Status: CLOSED at the sprint's end (2026-09-14 04:2x). Branch `s26`. Ledger entries (lane W): L30, L44,
+L52, L58, L64, L84, L85, L90, L91, L105, L108, L109 and the closing entry L137 (what ran, what did
+not, and the time each open item would need). Every governed job of this lane exited 0 except the
+first synthetic test run (fixed before any real run); largest peak RSS 1.250 GB. Tiers: DEMONSTRATED (measured, artefact on disk) / ORACLE DIAGNOSTIC (reads native-derived
 quantities, never selects) / HYPOTHESIS / REFUTED / OPEN. Basis is stated on every RMSD line.
 No stock words; no em dashes.
 
@@ -706,4 +708,4 @@ Models (untracked, `*.pt` under `s26/models/w_selfcopy/`): `pca32_fold2_s0_out_1
 `pca32_fold0_s0_out_9BAF.pt`.
 Job records and logs: `s26/jobs_done/w_*.json`, `s26/logs/w_*.log`.
 Ledger (lane W): L30, L44, L52, L58, L64, L84, L85, L90, L91, L105, L108, L109. STATUS lines
-under `## W (Wildcard)`.
+under `## W (Wildcard)`. Closing entry: L137.

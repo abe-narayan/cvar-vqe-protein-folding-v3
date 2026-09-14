@@ -5570,3 +5570,69 @@ STANDS.
 
 ---
 
+
+## L137 -- LANE W CLOSING ENTRY: WHAT RAN, WHAT DID NOT, AND WHAT EACH OPEN ITEM WOULD NEED (2026-09-14 04:05, W)
+
+Everything of lane W's is committed (last commit `7b2e7e77` before this entry); nothing of lane
+W's is registered with the governor; `s26/agentW_FINDINGS.md` sections 0 to 6 are final.
+
+**Ran and posted (12 ledger entries, every number with its artefact path, every RMSD line with
+its basis, every null with its power):**
+
+    L30   the 2/60 proxy bound pre-registered; native-free census (two of the four self-windows never reach the emission; a BLOSUM tie at every pool boundary)
+    L44   the bound measured: direct dev-proxy price 0.002 A (later 0.008, L108), own-native envelope 0.028 A (built chain) / 0.048 (selection) / 0.023 (paired gain); class MINOR by the envelope; C27's +0.0004 re-derived exactly; a fold model that saw the target's native emits a chain 0.70 A nearer (2.83x MDE, 5/5)
+    L52   tournament item 2: the same sequence in a different deposit sits 2.91 A from the native (22 pairs; F5 holds)
+    L58   L55's caveats applied: the artefact carries the gain envelope row and the per-target readings (worst target 0.151 A under A2)
+    L64   tournament item 4: the tie-break noise floor, 0.004 A on the 126-mean, 0.024 A paired MDE between two conventions; every hundredths-level recorded effect inside it, with the scope stated (L71 caveat)
+    L84   tournament item 6 (the orphan, the mandatory test-time-ensembling direction): fixed-K ensembling refuted with power (-0.0005 A, 0.02x MDE; a gain of 0.028 A or more excluded)
+    L85   tournament item 9: provenance census (73% fragment windows, 0.6% whole peptides) and the ORACLE class contrast (0.42 A in the pool, 0.09 to 0.13 inside the top-75)
+    L90   partial recall gradient: none at the MDE; I_long rho -0.205 suggestive and confounded with retrieval
+    L91   the own-native models on the S24 ladder: the direction-discounted currency under-prices the trained operator by 0.35 A (1.5x MDE)
+    L105  tournament item 10 (the second orphan): AMBER as a prior partner; the leave-fold-out choice declines to mix on all five folds; every cell worse on the cloud
+    L108  Part B on all four carrier-out models: F3 falsified by 2P5H in the harmful direction; direct bound 0.008 A, IMMATERIAL; class unchanged
+    L109  provenance readout H_P3: not measured; a gain of 0.044 A or more excluded
+
+Governed jobs run by this lane: 32 (`s26/jobs_done/w_*.json`), 31 exit 0 and one exit 1 (the first synthetic test run, `w_selfcopy_test`, which caught the `sel`-bound error and was fixed before any real run; L30); largest peak RSS
+1.250 GB (the four Part B retrains at 1.244 to 1.250; every other job under 0.32 GB); longest
+wall 9,321 s (the provenance readout under a six-job load). No benchmark file, sequence, name,
+native or RMSD was read at any point; the only benchmark-derived inputs were the record's count
+2/60 and the mechanism of S24 L4.
+
+**Did not run, with the reason and the time each would need:**
+
+1. Part B's five remaining control-out models (8TXS/f0, 8TXS/f2, 8T63/f2, 9BAF/f4, 8T63/f4;
+   one of six, 9BAF/f0, is built) and therefore F3's CONTROL CLAUSE (whether the carrier-out
+   change exceeds the change from removing an unrelated dev chain of the same fold). Reason: the
+   coordinator's starvation ruling (L111) withdrew the queued waiter at 01:36 and the hold was
+   lifted at 04:05, 25 minutes before the close. Time needed: 5 x 15 to 24 min of training
+   (measured 893 to 1,440 s per model at est-ram 1.4 GB, one at a time), then `w_selfcopy.py
+   posterior` + `w_endpoint_report.py` + `w_bound_addendum.py` (about 3 min), then a ledger
+   addendum: about 2 h of wall on tonight's box. What it would decide: whether 2P5H's -0.246 A
+   (the one large value) is larger than the noise of removing any one chain from the corpus;
+   until then F3's control clause is OPEN and L108 says so.
+2. A second-seed retrain of 2P5J out of fold 4 (the replication of the one large Part B value):
+   about 18 min plus the 3-min re-run. Not run for the same reason.
+3. The amber prior partner's permuted-AMBER control at a non-identity cell: moot, the
+   leave-fold-out choice never left (0, 0); no time was needed and none was spent.
+4. The tie-break floor at 16 draws (PREREG fork; about 50 min) and on the AMBER-relaxed basis;
+   the ensembling control at a second seed; the provenance readout at 8 permutation draws:
+   each was the pre-declared replication or extension for a POSITIVE, and none of the three
+   was positive.
+5. The recall gradient's ORACLE mechanism check and a retrieval-only covariate to partial out
+   (about 5 min): the PREREG gated the check on a gradient at the MDE, which did not exist; the
+   addendum says how to run it next time.
+6. The triangle bound on the benchmark itself (needs no native, no RMSD, but the two benchmark
+   sequences and their universes): closed by L18b / L29 for this sprint; a coordinator's option.
+7. `attn` and coherence_penalised_training (deferred on memory by L51 / L77): never reached
+   lane W; nothing was started.
+
+**The two sentences this lane leaves for the report and the deck**, each with its artefact:
+"The 2/60 benchmark self-copy leak is bounded from the dev proxy at 0.008 A (direct, both
+channels, `s26/results/w_selfcopy_bound.json :: signed_bounds_gated/both_removed4`) and at
+0.028 A mean-CI / 0.151 A worst target by the own-native envelope under assumption A2 (the same
+file, `C_envelope_per_target`); it is MINOR under every reading on the built chain and the paired
+gain and cannot move the benchmark verdict either way; where the leak is measurable it HURTS
+the leaked target." And: "The pipeline's own convention noise is 0.004 A on the 126-mean and
+0.024 A as the paired MDE between two tie-breaks of the pool boundary
+(`s26/results/w_tiebreak_report.json`); a hundredths-level effect is real only as a paired
+contrast with the tie-break held fixed."
