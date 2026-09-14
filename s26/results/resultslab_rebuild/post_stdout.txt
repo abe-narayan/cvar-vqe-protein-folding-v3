@@ -1,0 +1,115 @@
+{
+ "checked": "2026-09-14T02:51:29",
+ "problems": [],
+ "notes": [
+  "results.json top-level provenance differs (expected for provenance/rule)",
+  "results.json top-level pool_gate_rule differs (expected for provenance/rule)",
+  "record timestamps: tracked ['2026-09-09T03:37:04+00:00'], rebuilt ['2026-09-14T08:36:31+00:00']",
+  "record git_commit: tracked ['a15406c82245'], rebuilt ['3391f3c4288c']",
+  "record module_hash: tracked ['69fa5f7e8cbccc64'], rebuilt ['52b6cf83d2e09c20']"
+ ],
+ "per_target": {
+  "n_records": 1008,
+  "n_values_exact": 2016,
+  "n_values_close_1e-9": 0,
+  "n_values_different": 0,
+  "worst_abs_diff": 0.0,
+  "first_diffs": []
+ },
+ "headline": {
+  "built_chain_mean": 3.2126212503925293,
+  "point_cloud_mean": 3.048329101217154,
+  "pool_gate": "WARN",
+  "n_pool_violations": 2,
+  "difficulty_gate": "PASS"
+ },
+ "pool_gate_rule_has_L7_text": true,
+ "gates": {
+  "production": {
+   "pool": "WARN",
+   "difficulty": "PASS"
+  },
+  "distogram": {
+   "pool": "WARN",
+   "difficulty": "PASS"
+  },
+  "amber_distogram": {
+   "pool": "WARN",
+   "difficulty": "PASS"
+  },
+  "legacy_distogram": {
+   "pool": "WARN",
+   "difficulty": "PASS"
+  },
+  "legacy_amber_distogram": {
+   "pool": "PASS",
+   "difficulty": "PASS"
+  },
+  "legacy_amber": {
+   "pool": "PASS",
+   "difficulty": "PASS"
+  },
+  "legacy": {
+   "pool": "PASS",
+   "difficulty": "PASS"
+  },
+  "amber": {
+   "pool": "PASS",
+   "difficulty": "PASS"
+  },
+  "_provenance_values": [
+   "genuine"
+  ]
+ },
+ "status": "GENERATED",
+ "contains_synthetic": false,
+ "structures": {
+  "n_before": 2142,
+  "n_after": 2142,
+  "byte_identical": 0,
+  "atom_records_identical": 2142,
+  "atom_records_differ": 0,
+  "new_files": 0,
+  "missing_after": 0,
+  "first_atom_diffs": []
+ },
+ "summary_files": {
+  "leaderboard.csv": {
+   "bytes_before": 5491,
+   "bytes_after": 5491,
+   "byte_identical": true
+  },
+  "leaderboard.json": {
+   "bytes_before": 12372,
+   "bytes_after": 11661,
+   "byte_identical": false
+  },
+  "pool_best.json": {
+   "bytes_before": 3969,
+   "bytes_after": 3969,
+   "byte_identical": true
+  },
+  "professor_brief.md": {
+   "bytes_before": 10867,
+   "bytes_after": 10867,
+   "byte_identical": true
+  },
+  "results.csv": {
+   "bytes_before": 519625,
+   "bytes_after": 529579,
+   "byte_identical": false
+  },
+  "results.json": {
+   "bytes_before": 1212998,
+   "bytes_after": 1213367,
+   "byte_identical": false
+  },
+  "target_map.json": {
+   "bytes_before": 16450,
+   "bytes_after": 16450,
+   "byte_identical": true
+  }
+ },
+ "verdict": "REPRODUCED"
+}
+VERDICT: REPRODUCED
