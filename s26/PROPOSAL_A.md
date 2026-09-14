@@ -112,3 +112,26 @@ states. What we publish instead is the trainability work, with these measurement
     "readout cannot see the difference"         S25: circuit vs exact Boltzmann -0.0302 A, 0.24x MDE, s26/results/q_mde_reference.json; A1: gibbs_T - fixed +0.0088 A, 0.11x
     "well-tested tool"                          s26/q_tests.py 17/17; simulator vs core.quantum and pennylane to 1e-12; production arm reproduced bit-for-bit on 126/126 (cache_check)
     "grown circuits' gradients do not decay"    s26/results/q_var.json slopes -0.079 / +0.006 / +0.035 / -0.008 at alpha = 1; ledger L35
+
+
+## ADDENDUM (2026-09-13 22:15, ledger L75): correction of two sentences; the verdict stands
+
+PR's L73 read the A1 records correctly. Section 3's "ADAPT with either pool selects no
+entangling operator on any of the 78 alpha = 1 targets under L-BFGS" and section 5's "When
+ADAPT is offered entangling operators it declines them on all 78 targets; there is nothing to
+entangle" are WRONG as stated. The records (`s26/results/a1/*.json`) show operators appended on
+60 of 78 (Tang pool) and 68 of 78 (2-local pool) alpha = 1 targets under L-BFGS, every one a
+multi-qubit string, and on 78 of 78 under Adam (304 and 642 multi-qubit strings of 1,092). The
+additions are inert: at most 1.2e-4 nats of free energy under L-BFGS (8.6e-4 under Adam),
+angles at most 0.018 rad under L-BFGS, and the state stays a product state to KL <= 4.1e-4.
+Correct sentence for section 3: "ADAPT with either pool appends operators on 60 to 78 of the
+78 alpha = 1 targets, and they are inert: they buy less than 1e-3 nats and leave the state a
+product state." Correct sentence for section 5: "When ADAPT is offered entangling operators
+it does append them, on 60 to 78 of the 78 targets, but they are inert: together they lower
+the objective by less than 0.001 nats, their angles stay below 0.02 radians under L-BFGS, and
+the state remains a product state to 0.0004 nats." No endpoint number changes; the verdict
+REPLACE stands on the same evidence. Notes block additions:
+    "appends them on 60 to 78 of 78"    s26/results/a1/*.json, adapt.V_lbfgs_zrank / L2_lbfgs_zrank .sequence (60 / 68 non-empty)
+    "less than 0.001 nats"              F(P=7) - F(final) max 1.2e-4 (L-BFGS), 8.6e-4 (Adam), from adapt.*.trace
+    "below 0.02 radians"                max |theta| over appended operators 0.018 rad (L-BFGS), adapt.*.theta
+    "product state to 0.0004 nats"      arms.adapt*_P21.kl_to_product max 4.1e-4 on the 78 alpha = 1 targets

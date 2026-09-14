@@ -378,3 +378,20 @@ scope: depth 3, this ansatz, this spectrum, with the algebra (A2) offering no pr
     s26/results/q_dla.json                A2 (running)
     s26/results/q_var.json                A4 (running)
     s26/jobs_done/q_*.json, a2_dla.json, a4_var.json   peak RSS and wall per job
+
+
+## 9. CORRECTION (2026-09-13 22:15, ledger L75): sections 0.1 and 1.3 overstated "no operator selected"
+
+Section 0.1 ("qubit-ADAPT sees it: at alpha = 1 neither pool selects an entangling operator
+and growth stops by its gradient criterion at P = 8 (pool V) or P = 10 (pool L2)") and section
+1.3 ("L-BFGS growth at alpha = 1: no operator selected, 78 of 78 targets") are RETRACTED. On the
+1A13 probe the L-BFGS runs appended IYIZZZZ (V) and three YZ-type strings (L2), all multi-qubit;
+on the 78 alpha = 1 targets operators were appended on 60 (V) and 68 (L2) of 78 under L-BFGS,
+every one multi-qubit, and on 78 of 78 under Adam. They are inert: F moves by at most 1.2e-4
+nats (L-BFGS) or 8.6e-4 (Adam), appended angles are at most 0.018 rad (L-BFGS), and the state
+stays a product state to KL <= 4.1e-4 (table in ledger L75). The ideal-ladder statements in
+sections 2.3 and 4.3 (nothing appended under L-BFGS; abelian selected sets) stand, and the
+difference is tie-averaging: on real targets E is not exactly affine, so the RY layer's
+residual gradient in a multi-qubit direction can exceed eps = 1e-3. The endpoint numbers and
+the verdict are unchanged. This is section 6's list, one entry longer: I read the ideal-ladder
+run into the real-target sentence without re-reading the records; PR did re-read them.
