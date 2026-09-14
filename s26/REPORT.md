@@ -2126,7 +2126,8 @@ of the invisible common mode). C4 is closed: the sixth through seventeenth route
 land where the first five did (S22 L7, S23 L7), and the S22 L10 bound (sample size, not
 features) stands as the explanation.
 
-**C5, the common-mode prediction.** Pending.
+**C5, the common-mode prediction.** Did not complete before the close; it keeps its
+pre-registration (L117).
 
 ### VII.4 The tournament entries
 
@@ -2600,7 +2601,32 @@ chain, branch selection, rotamer relief, the C3 replication and stage 2; W's ens
 provenance and Part B retrains; A's checks within the hour and the deliverables pass at about
 04:00; this report's final pass at 04:15 for a 04:45 close.
 
-### VII.6 S26 retractions (`s26/RETRACTIONS.md`)
+### VII.6 The three verdicts and the direction the evidence favours (L117)
+
+Each proposal was pre-registered with a falsifier before its first endpoint existed and judged
+by the campaign's rule that a proposal is not softened to survive; the coordinator's ruling
+(L117, 02:02) accepted the three lanes' verdicts with the evidence each rests on.
+
+| proposal | verdict | file | what decided it |
+|---|---|---|---|
+| A: qubit-ADAPT-VQE in place of the fixed ansatz | REPLACE (the prompt expected keep with edits) | `s26/PROPOSAL_A.md` | the deployed objective's optimum is a product state on every real target (KL to the product of marginals at most 7.9e-4 nats); an adaptive ansatz appends only inert operators; the fixed circuit's Lie algebra is already the full so(2^n) from depth 2; the grown circuits give no width-scaling argument; the endpoint is null at 0.23x and 0.36x its MDE with a 0.06 A resolution (L27, L35, L45, L47, L68, L69, L70, L75, L82) |
+| B: a learned folding model as the prior | REPLACE | `s26/PROPOSAL_B.md`; the replacement `s26/PROPOSAL_B_REPLACEMENT.md` (the trainability paper) | ESMFold cannot run on this box (L13); no feasible-scale model input beats the shipped prior (`noesm` +0.208, `esm8m` +0.242, `conly` +0.122, L62, L63, L99); the set where the pipeline beats sequence-only is not characterisable native-free (L106, L107) |
+| C: learn the ranking, then refine with physics | KEEP WITH EDITS | `s26/PROPOSAL_C.md`; `s26/C3_RESULT.md` | the edits: the model should learn a better prior, not a better ranker (the prior's derivative is steep, -2.15 A per unit toward truth, and its inputs on this machine are flat: nine rungs, none beats the shipped prior, L56 to L67, L72, L93, L99, L103, L105, L112); AMBER is a validity step only, worse than a random move of its own size (L39, L46, L87, L100); the routers are closed for the seventh and eighth time (L110, L115); C5 did not complete before the close and keeps its pre-registration |
+
+The direction the evidence favours, in the presenter's words (the slide 11 line, verbatim from
+L117): "If I could do one thing next, I would publish the trainability work first. Every figure
+in it already exists as a measured artefact, it needs no new machine, and it is the one part of
+this project whose result is positive and complete. The only open accuracy lever is the
+distance prior, and the honest next step there is a larger language model than this laptop can
+hold, so that comes second and needs a bigger machine. I would not spend more time on the
+circuit for accuracy: we now know why it cannot matter here." Why this order: the paper's
+inputs are all in hand (the S13 locality theorem and Pauli-spectrum prediction, the S25 width
+sweep scoped to depth 3 by A2, A2, A4, the product-state fact) and the Adversary has checked
+each; the prior lever is real (S24 L13) but every input this machine can compute is measured
+flat, so it is a resourcing decision rather than an experiment the presenter can run next week;
+and the circuit is closed as an accuracy lever by three independent facts.
+
+### VII.7 S26 retractions (`s26/RETRACTIONS.md`)
 
 Kept by the Adversary, one entry per retraction, the claim verbatim with the artefact that
 contradicts it; nothing superseded is deleted anywhere.
@@ -2655,14 +2681,14 @@ sprint. This part lists the S26 movements and the items that remain open at the 
 
 | item | what would close it | where |
 |---|---|---|
-| Whether a better distance predictor is obtainable from inputs this machine can compute (the only steep lever, -2.15 A per unit toward truth) | a C2 rung beating the shipped prior on the fold-clustered CI of the built chain | `s24/LEDGER.md` L13; `s26/PROPOSAL_C.md`; Part VII.3 |
+| Whether a better distance predictor is obtainable (the only steep lever, -2.15 A per unit toward truth); every input this machine can compute is measured flat (nine rungs) | a larger language model than this machine can hold, on a bigger machine; Proposal C's kept form (L117) | `s24/LEDGER.md` L13; `s26/PROPOSAL_C.md`; Part VII.3, VII.6 |
 | Proposal A's target-dependent Hamiltonian (A3) | the pre-registered A3 verdict (`a3_build` running) | Part VII.1 |
 | The rest of the C2 ladder (`raw` and the deferred rungs; the best rung so far is the shipped prior, L112) | a rung beating the shipped prior on the fold-clustered CI of the built chain, replicated | Part VII.3 |
 | C3 stage 2 (the relaxation on the best C2 rung), which is the stage-1 replication already run because the best rung is the shipped prior | nothing further unless `raw` or a deferred rung beats the shipped prior | S26 L39, L87, L112; Part VII.3 |
 | The 2/60 benchmark self-copy leak, now bounded MINOR (dev proxy 0.008 A with both channels measured on all four dev self-copies; own-native envelope 0.028 A mean CI to 0.151 A worst target on the built chain; 0.194 at the worst target on the selection basis); F3's control clause open (one of six control-out models) | by design only a fresh benchmark, which does not exist; the control-out models and a second seed of the 2P5H retrain if time allows | S26 L44, L49, L50, L55, L58, L108; Part VII.4 |
 | Where the target-specific third of the pool's coherent error comes from, and whether any native-free proxy is strong enough to act on it | a native-free proxy reaching the in-band ordering 2 A needs | `s19/LEDGER.md` L11, L14; `s17/LEDGER.md` L23 |
 | Publishing the trainability half | a manuscript from Part V.10 with V.9's scope correction | `s13/`, `s25/QUANTUM.md`; S26 L27 |
-| The tournament entries not yet run or not yet complete: the common-mode prediction (C5), rotamer relief, coherence-penalised training | their pre-registrations' falsifiers | `s26/TOURNAMENT.md`; `s26/PREREG_*.md`; Part VII.4 |
+| The tournament entries not run or not complete at the close: the common-mode prediction (C5, keeps its pre-registration), rotamer relief, coherence-penalised training | their pre-registrations' falsifiers | `s26/TOURNAMENT.md`; `s26/PREREG_*.md`; Part VII.4 |
 | The tie-break noise floor: measured (0.004 A on the 126-mean, 0.024 A paired MDE between conventions, built chain); not a lever | nothing; it is the floor every cross-run hundredths-level claim is read against | S26 L64, L71; Part VII.4 |
 | Strain as difficulty: measured as a calibration flag (partial rho +0.433 of `moved` with the built-chain error), forbidden as a lever by its pre-registration; provisional | the pool-spread control `a_strain_vs_spread` (whether `moved` is the top-75's own disagreement in disguise) | S26 L53, L81; Part VII.4 |
 | Sequence proximity to the training corpus below the 0.6 threshold: no gradient at the pre-registered MDE (rho -0.25), a weak effect of order -0.2 suggested and confounded with retrieval | a design that separates recall from retrieval; none registered | S26 L90; Part VII.4 |
@@ -3246,6 +3272,7 @@ artefact; "as asserted" means a passing test pins it.
 | C4: 2,839 s, 0.114 GB, -0.408, 1.43, -0.099, 12.7, +0.0684 (0.0269, 0.0754, 0.91x, 96%), +0.0707 (0.83x), +0.0267 (0.56x), +0.0237, +0.0244, +0.0206, +0.0594, -0.0012 (0.02x, 0.010), +0.0130, -0.203, +0.007 to +0.027, -0.10 to -0.21, 25, 15, 200, 100 | VII, VIII | `s26/results/p_c4.json`; `s26/LEDGER.md` L110, L115 | as stored / as cited |
 | L112 to L116: 72.7, 6.19, 567 s, 0.128 GB, 6ed3b367 | VII | `s26/results/p_best_rung_chains.json`, `p_best_rung_chains_rebuild_basis.json`; `s26/LEDGER.md` L112, L114, L116 | as cited |
 | integration tier: 8, 165.6 s, 1.139 GB, 11, 368, 2, -489.9138948277905, 4,620 s, seven, 75, 7ad4ef68 | VII, IX | `s26/results/pytest_slow_integration.xml`; `s26/TEST_RUN.md`; `s26/LEDGER.md` L111, L113 | as cited |
+| the three verdicts (A REPLACE, B REPLACE, C KEEP WITH EDITS) and the slide 11 line | VII | `s26/PROPOSAL_A.md`, `s26/PROPOSAL_B.md`, `s26/PROPOSAL_B_REPLACEMENT.md`, `s26/PROPOSAL_C.md`, `s26/C3_RESULT.md`; `s26/LEDGER.md` L117 | as cited |
 <!-- APPENDIX B ROWS -->
 
 ## APPENDIX C. THE S26 LEDGER (DRAFT: reproduced at the close)
