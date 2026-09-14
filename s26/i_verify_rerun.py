@@ -35,6 +35,7 @@ from __future__ import annotations
 
 import argparse
 import builtins
+import re
 import hashlib
 import json
 import math
@@ -83,9 +84,15 @@ AUDITS = {
                      "CPU", 0.6, ["project_arms.json"], "light",
                      "three-arm compare over cache keys; the fd arm key is not on disk any more, "
                      "so the production key is passed twice and that arm reads as identical"),
-    "determinism_audit": ("verify/determinism_audit.py", [], "AMBER", 1.8, [], "medium",
-                          "D1 cross-process (3 children on 1CS9, stage 4 included), D2 resume, "
-                          "D3 cache keys; writes determinism_audit.json, which is NOT tracked"),
+    "determinism_audit": ("verify/determinism_audit.py",
+                          ["--functions", "d3_key_types,d4_forged_collision,d5_config_key,d1_cross_process"],
+                          "AMBER", 1.8, [], "medium",
+                          "D1 cross-process (3 children on 1CS9, stage 4 included), D3/D4/D5 cache keys; "
+                          "D2 (resume) is NOT run: as written it moves the last two records of the "
+                          "PRODUCTION cache (bench_results/cache/1fc9f2dcf489e2fb) to a temp dir, "
+                          "re-runs smoke8 (which does not contain them) and then rmtree's the backup, "
+                          "i.e. it would delete two production records; writes determinism_audit.json, "
+                          "which is NOT tracked"),
     "hazard_audit": ("verify/hazard_audit.py", [], "AMBER", 1.6, [], "medium",
                      "the known hazards as live experiments; hazard_audit.json is NOT tracked"),
     "project_selfcheck": ("core/project.py", ["selfcheck"], "CPU", 0.6, [], "light",
@@ -145,9 +152,39 @@ class Redirect:
         self.writes = []
 
     def __enter__(self):
+        import shutil
+        self._shutil = shutil
         self._open, self._replace, self._rename = builtins.open, os.replace, os.rename
+        self._remove, self._unlink = os.remove, os.unlink
+        self._sh_move, self._sh_rmtree = shutil.move, shutil.rmtree
         os.makedirs(OUT, exist_ok=True)
         me = self
+
+        def refuse(what, path):
+            raise PermissionError(f"lane I guard: {what} of {path} refused -- it is under verify/ or "
+                                  f"bench_results/ (tracked evidence or the production cache)")
+
+        def remove_(path, *a, **k):
+            if _is_redirect_target(path) and me._exists(path):
+                refuse("delete", path)
+            if _is_redirect_target(path):
+                return me._remove(_redirected(path), *a, **k)
+            return me._remove(path, *a, **k)
+
+        def rmtree_(path, *a, **k):
+            if _is_redirect_target(path):
+                refuse("rmtree", path)
+            return me._sh_rmtree(path, *a, **k)
+
+        def move_(src, dst, *a, **k):
+            if _is_redirect_target(src) and me._exists(src):
+                refuse("move out", src)
+            if _is_redirect_target(dst):
+                target = _redirected(dst)
+                me.writes.append((os.path.abspath(str(dst)), target))
+                src2 = _redirected(src) if _is_redirect_target(src) else src
+                return me._sh_move(src2, target, *a, **k)
+            return me._sh_move(src, dst, *a, **k)
 
         def open_(file, mode="r", *a, **k):
             if isinstance(file, (str, os.PathLike)) and any(c in str(mode) for c in "wax+") \
@@ -158,26 +195,38 @@ class Redirect:
             return me._open(file, mode, *a, **k)
 
         def replace_(src, dst, *a, **k):
+            if _is_redirect_target(src) and me._exists(src):
+                refuse("move out", src)
             if _is_redirect_target(dst):
                 target = _redirected(dst)
                 me.writes.append((os.path.abspath(str(dst)), target))
-                src2 = _redirected(src) if _is_redirect_target(src) and not os.path.exists(src) else src
+                src2 = _redirected(src) if _is_redirect_target(src) else src
                 return me._replace(src2, target, *a, **k)
             return me._replace(src, dst, *a, **k)
 
         def rename_(src, dst, *a, **k):
+            if _is_redirect_target(src) and me._exists(src):
+                refuse("move out", src)
             if _is_redirect_target(dst):
                 target = _redirected(dst)
                 me.writes.append((os.path.abspath(str(dst)), target))
-                src2 = _redirected(src) if _is_redirect_target(src) and not os.path.exists(src) else src
+                src2 = _redirected(src) if _is_redirect_target(src) else src
                 return me._rename(src2, target, *a, **k)
             return me._rename(src, dst, *a, **k)
 
         builtins.open, os.replace, os.rename = open_, replace_, rename_
+        os.remove, os.unlink = remove_, remove_
+        shutil.move, shutil.rmtree = move_, rmtree_
         return self
+
+    def _exists(self, path):
+        """True if the ORIGINAL path exists on disk (a redirected write never creates it)."""
+        return os.path.exists(os.path.abspath(str(path)))
 
     def __exit__(self, *exc):
         builtins.open, os.replace, os.rename = self._open, self._replace, self._rename
+        os.remove, os.unlink = self._remove, self._unlink
+        self._shutil.move, self._shutil.rmtree = self._sh_move, self._sh_rmtree
         return False
 
 
@@ -263,9 +312,29 @@ def run(name):
     if VERIFY not in sys.path:
         sys.path.insert(0, VERIFY)
     err = None
+    funcs = None
+    if argv[:1] == ["--functions"]:
+        funcs = argv[1].split(",")
+        sys.argv = [os.path.join(ROOT, script)]
     with Redirect() as rd:
         try:
-            runpy.run_path(os.path.join(ROOT, script), run_name="__main__")
+            if funcs:
+                mod = runpy.run_path(os.path.join(ROOT, script), run_name="_verify_rerun_import")
+                out = {}
+                for fname in funcs:
+                    try:
+                        mod[fname](out)
+                    except Exception as exc:                             # noqa: BLE001
+                        out[fname + "_ERROR"] = f"{type(exc).__name__}: {str(exc)[:600]}"
+                    print(f"  {fname} done", flush=True)
+                out["_lane_I_note"] = ("run through s26/i_verify_rerun.py with functions "
+                                       + ",".join(funcs) + "; see the AUDITS note for what was skipped")
+                here = os.path.join(ROOT, os.path.dirname(script))
+                base = os.path.basename(script).replace(".py", ".json")
+                with open(os.path.join(here, base), "w") as fh:
+                    json.dump(out, fh, indent=2, sort_keys=True, default=str)
+            else:
+                runpy.run_path(os.path.join(ROOT, script), run_name="__main__")
         except SystemExit as e:
             if e.code not in (None, 0):
                 err = f"SystemExit({e.code})"
@@ -283,6 +352,15 @@ def run(name):
     for b in tracked:
         fresh = _redirected(os.path.join(VERIFY, b))
         tp = os.path.join(VERIFY, b)
+        if not os.path.exists(fresh):
+            # the runner may name its output by limit / partial count (core.project._outpath):
+            # take the freshest written JSON whose basename shares the tracked stem
+            stem = re.sub(r"_(partial|limit)\d+$", "", b[:-5])
+            cands = [w for i, w in rd.writes
+                     if os.path.basename(i).startswith(stem) and i.endswith(".json")
+                     and os.path.exists(w)]
+            if cands:
+                fresh = cands[-1]
         if os.path.exists(fresh) and os.path.exists(tp):
             rec["diffs"][b] = diff_json(tp, fresh)
             rec["diffs"][b]["fresh_path"] = os.path.relpath(fresh, ROOT)
@@ -304,9 +382,14 @@ def run(name):
     return 0 if err is None else 1
 
 
-def launch(only=None, skip=None, include_heavy=False):
+def launch(only=None, skip=None, include_heavy=False, after=()):
     names = [n for n in AUDITS if (not only or n in only) and (not skip or n not in skip)
              and (include_heavy or AUDITS[n][5] != "heavy")]
+    done_dir = os.path.join(ROOT, "s26", "jobs_done")
+    for j in after:
+        while not os.path.exists(os.path.join(done_dir, f"{j}.json")):
+            print(f"launch: waiting for job {j} to finish before the verify chain starts", flush=True)
+            time.sleep(30)
     for n in names:
         script, argv, tag, est, tracked, cost, note = AUDITS[n]
         cmd = [PY, os.path.join(ROOT, "s26", "jobrun.py"), "--agent", "I", "--tag", tag,
@@ -372,6 +455,7 @@ def main(argv=None):
     ap.add_argument("--only", default="")
     ap.add_argument("--skip", default="")
     ap.add_argument("--include-heavy", action="store_true")
+    ap.add_argument("--after", default="", help="comma-separated job names to wait for first")
     a = ap.parse_args(argv)
     if a.cmd == "list":
         for n, (s, argv_, tag, est, tr, cost, note) in AUDITS.items():
@@ -389,7 +473,7 @@ def main(argv=None):
         return 0
     if a.cmd == "launch":
         return launch(only=[x for x in a.only.split(",") if x], skip=[x for x in a.skip.split(",") if x],
-                      include_heavy=a.include_heavy)
+                      include_heavy=a.include_heavy, after=[x for x in a.after.split(",") if x])
     return report()
 
 
