@@ -1,0 +1,46 @@
+{
+ "audit": "leak_audit",
+ "script": "verify/leak_audit.py",
+ "argv": [],
+ "tag": "AMBER",
+ "est_ram_gb": 1.6,
+ "cost": "medium",
+ "note": "NaN-poisons 3 targets through run_target (stage 4 included)",
+ "tracked": [
+  "leak_audit.json"
+ ],
+ "started": "2026-09-14T02:05:28",
+ "wall_s": 118.0,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\leak_audit.json",
+   "written": "s26\\results\\verify\\verify__leak_audit.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "leak_audit.json": {
+   "n_tracked_leaves": 25,
+   "n_fresh_leaves": 25,
+   "identical": 24,
+   "close": 0,
+   "different": 1,
+   "run_property_different": 0,
+   "added": [],
+   "removed": [],
+   "diffs": [
+    {
+     "key": "backends.project",
+     "tracked": "\"s8.project\"",
+     "fresh": "\"core.project\""
+    }
+   ],
+   "run_property_diffs": [],
+   "n_added": 0,
+   "n_removed": 0,
+   "verdict": "DIFFERS",
+   "fresh_path": "s26\\results\\verify\\verify__leak_audit.json"
+  }
+ }
+}

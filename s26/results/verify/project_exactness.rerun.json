@@ -1,0 +1,61 @@
+{
+ "audit": "project_exactness",
+ "script": "core/project.py",
+ "argv": [
+  "exactness"
+ ],
+ "tag": "CPU",
+ "est_ram_gb": 0.8,
+ "cost": "heavy",
+ "note": "126 targets, shipped mode against s8.project",
+ "tracked": [
+  "project_exactness.json"
+ ],
+ "started": "2026-09-14T03:00:06",
+ "wall_s": 587.0,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\project_exactness.json.tmp",
+   "written": "s26\\results\\verify\\verify__project_exactness.json.tmp"
+  },
+  {
+   "intended": "verify\\project_exactness.json",
+   "written": "s26\\results\\verify\\verify__project_exactness.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "project_exactness.json": {
+   "n_tracked_leaves": 1896,
+   "n_fresh_leaves": 1898,
+   "identical": 1894,
+   "close": 0,
+   "different": 1,
+   "run_property_different": 1,
+   "added": [
+    "agg.complete",
+    "agg.requested"
+   ],
+   "removed": [],
+   "diffs": [
+    {
+     "key": "agg.s_per_target",
+     "tracked": "4.568959217458975",
+     "fresh": "4.650387336503223"
+    }
+   ],
+   "run_property_diffs": [
+    {
+     "key": "agg.seconds",
+     "tracked": "575.6888613998308",
+     "fresh": "585.9488043994061"
+    }
+   ],
+   "n_added": 2,
+   "n_removed": 0,
+   "verdict": "DIFFERS",
+   "fresh_path": "s26\\results\\verify\\verify__project_exactness.json"
+  }
+ }
+}

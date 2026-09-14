@@ -1,0 +1,97 @@
+{
+  "H1_abs_diff": 1239.043297946453,
+  "H1_bit_identical": false,
+  "H1_components_max_diff": 1239.0433065593243,
+  "H1_singlepoint_native": 212096397.13835454,
+  "H1_singlepoint_translated": 212097636.1816525,
+  "H2_all_energies_identical": true,
+  "H2_body_len": 11558,
+  "H2_by_thread_env": {
+    "default": {
+      "c": {
+        "angle": "576.0474672198787",
+        "bond": "6.437823242468335",
+        "nonbonded": "212096210.26602536",
+        "solvation": "-533.4768800693022",
+        "torsion": "137.8639187719067"
+      },
+      "e": "212096397.13835454"
+    },
+    "omp4": {
+      "c": {
+        "angle": "576.0474672198787",
+        "bond": "6.437823242468335",
+        "nonbonded": "212096210.26602536",
+        "solvation": "-533.4768800693022",
+        "torsion": "137.8639187719067"
+      },
+      "e": "212096397.13835454"
+    },
+    "omp8": {
+      "c": {
+        "angle": "576.0474672198787",
+        "bond": "6.437823242468335",
+        "nonbonded": "212096210.26602536",
+        "solvation": "-533.4768800693022",
+        "torsion": "137.8639187719067"
+      },
+      "e": "212096397.13835454"
+    }
+  },
+  "H2_found_calibrate_hydrogens": true,
+  "H2_mentions_threads_1": true,
+  "H2_n_env_ok": 3,
+  "H3_alignment_invariant": true,
+  "H3_max_abs_diff_alignment": 0.0,
+  "H3_pair_dists_bit_identical": true,
+  "H3_pair_dists_max_abs_diff": 0.0,
+  "H4_dot_total": "-8.243156777688423",
+  "H4_energy_mentions_float_accum": true,
+  "H4_numpy_scalar_total": "-8.243156777688423",
+  "H4_python_float_total": "-8.243156777688423",
+  "H4_they_can_differ": false,
+  "H5_alphabets_found": {
+    "ACDEFGHIKLMNPQRSTVWY": [
+      "core\\data.py"
+    ],
+    "ARNDCQEGHILKMFPSTWYV": [
+      "core\\data.py",
+      "core\\project.py"
+    ]
+  },
+  "H5_noncanonical": {
+    "ACDEFGHIKLMNPQRSTVWY": [
+      "core\\data.py"
+    ]
+  },
+  "H5_only_canonical": false,
+  "H6_argsort_stable": 12,
+  "H6_argsort_total": 30,
+  "H6_argsort_without_stable": [
+    "core\\data.py:38: Retrieval tie-breaking is pinned. `s7/audit.py` sorts candidates with a STABLE argsort and",
+    "core\\data.py:168: \"\"\"The pinned retrieval ordering: a STABLE argsort, so ties resolve by bank position.",
+    "core\\pipeline.py:11: STABLE argsort (the similarity has large tie sets and a",
+    "core\\pipeline.py:145: tie_break: str = \"stable\"        #: `np.argsort(kind=...)`; PINNED, changes the pool",
+    "core\\pipeline.py:699: order = np.argsort(-sim, kind=cfg.tie_break)",
+    "core\\pipeline.py:757: order = np.argsort(np.asarray(pool[\"sc\"], float), kind=cfg.tie_break)",
+    "core\\pipeline.py:894: nb_local = np.argsort(qs[\"block\"][centre], kind=cfg.tie_break)[:k]",
+    "core\\project.py:607: o = np.argsort(v)",
+    "core\\project.py:1332: o = np.argsort(vals)",
+    "core\\quantum.py:57: * ``cvar`` selects the tail with ``np.argpartition`` (O(N)) rather than ``np.argsort``.",
+    "core\\quantum.py:167: #: Below this many samples a full ``np.argsort`` beats the O(N) selection, because the",
+    "core\\quantum.py:189: ``order[:k]``.  CVaR needs a SELECTION, not an ordering, and ``np.argpartition`` does",
+    "core\\quantum.py:214: part = np.argpartition(e, k - 1)",
+    "core\\quantum.py:252: its positions, so ``np.partition`` beats ``np.argpartition`` -- no index array, no",
+    "core\\quantum.py:276: order = np.argsort(energies)",
+    "core\\quantum.py:2256: sel = np.argsort(e)[:n_elite]",
+    "core\\quantum.py:2275: tail = np.argsort(e)[:max(1, int(np.ceil(alpha * shots)))]",
+    "core\\quantum.py:2429: order = list(np.argsort(scores)[:refine_top])"
+  ],
+  "H6_membership_delta_if_unstable": 2,
+  "H7_expected_if_longer_norm": 0.6,
+  "H7_expected_if_shorter_norm": 1.0,
+  "H7_identity_short_vs_long": 0.6,
+  "H7_normalises_by_longer": true,
+  "H7_symmetric": true,
+  "H7_threshold": 0.6
+}

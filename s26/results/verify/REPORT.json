@@ -1,0 +1,834 @@
+{
+ "written": "2026-09-14T02:59:26",
+ "audits": [
+  {
+   "audit": "vqe_lfo_audit",
+   "script": "verify/vqe_lfo_audit.py",
+   "argv": [],
+   "tag": "CPU",
+   "est_ram_gb": 0.2,
+   "cost": "light",
+   "note": "reads s8/integrate_vqe.json; no model, no pipeline",
+   "tracked": [
+    "vqe_lfo_audit.json"
+   ],
+   "started": "2026-09-14T01:51:08",
+   "wall_s": 0.3,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\vqe_lfo_audit.json",
+     "written": "s26\\results\\verify\\verify__vqe_lfo_audit.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "vqe_lfo_audit.json": {
+     "n_tracked_leaves": 32,
+     "n_fresh_leaves": 32,
+     "identical": 32,
+     "close": 0,
+     "different": 0,
+     "run_property_different": 0,
+     "added": [],
+     "removed": [],
+     "diffs": [],
+     "run_property_diffs": [],
+     "n_added": 0,
+     "n_removed": 0,
+     "verdict": "IDENTICAL",
+     "fresh_path": "s26\\results\\verify\\verify__vqe_lfo_audit.json"
+    }
+   }
+  },
+  {
+   "audit": "cvar_audit",
+   "script": "verify/cvar_audit.py",
+   "argv": [],
+   "tag": "CPU",
+   "est_ram_gb": 0.6,
+   "cost": "light",
+   "note": "core.quantum on synthetic energies; pennylane import",
+   "tracked": [
+    "cvar_audit.json"
+   ],
+   "started": "2026-09-14T02:02:28",
+   "wall_s": 0.9,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\cvar_audit.json",
+     "written": "s26\\results\\verify\\verify__cvar_audit.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "cvar_audit.json": {
+     "n_tracked_leaves": 18,
+     "n_fresh_leaves": 18,
+     "identical": 18,
+     "close": 0,
+     "different": 0,
+     "run_property_different": 0,
+     "added": [],
+     "removed": [],
+     "diffs": [],
+     "run_property_diffs": [],
+     "n_added": 0,
+     "n_removed": 0,
+     "verdict": "IDENTICAL",
+     "fresh_path": "s26\\results\\verify\\verify__cvar_audit.json"
+    }
+   }
+  },
+  {
+   "audit": "ansatz_audit",
+   "script": "verify/ansatz_audit.py",
+   "argv": [],
+   "tag": "CPU",
+   "est_ram_gb": 0.6,
+   "cost": "light",
+   "note": "core.quantum circuit genuineness; pennylane import",
+   "tracked": [
+    "ansatz_audit.json"
+   ],
+   "started": "2026-09-14T02:02:36",
+   "wall_s": 3.3,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\ansatz_audit.json",
+     "written": "s26\\results\\verify\\verify__ansatz_audit.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "ansatz_audit.json": {
+     "n_tracked_leaves": 19,
+     "n_fresh_leaves": 19,
+     "identical": 19,
+     "close": 0,
+     "different": 0,
+     "run_property_different": 0,
+     "added": [],
+     "removed": [],
+     "diffs": [],
+     "run_property_diffs": [],
+     "n_added": 0,
+     "n_removed": 0,
+     "verdict": "IDENTICAL",
+     "fresh_path": "s26\\results\\verify\\verify__ansatz_audit.json"
+    }
+   }
+  },
+  {
+   "audit": "headline_audit",
+   "script": "verify/headline_audit.py",
+   "argv": [],
+   "tag": "CPU",
+   "est_ram_gb": 0.5,
+   "cost": "light",
+   "note": "recorded constants vs s9/synth_cache and bench_results; READ ONLY on the benchmark aggregate s9/final_report.json",
+   "tracked": [
+    "headline_audit.json"
+   ],
+   "started": "2026-09-14T02:02:44",
+   "wall_s": 0.6,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\headline_audit.json",
+     "written": "s26\\results\\verify\\verify__headline_audit.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "headline_audit.json": {
+     "n_tracked_leaves": 123,
+     "n_fresh_leaves": 131,
+     "identical": 123,
+     "close": 0,
+     "different": 0,
+     "run_property_different": 0,
+     "added": [
+      "harness_cfg.legacy",
+      "harness_cfg.legacy_top",
+      "harness_cfg.quantum",
+      "harness_cfg.report_single_start_fit",
+      "harness_cfg.vqe_iters",
+      "harness_cfg.vqe_layers",
+      "harness_cfg.vqe_qubits",
+      "harness_cfg.vqe_seed"
+     ],
+     "removed": [],
+     "diffs": [],
+     "run_property_diffs": [],
+     "n_added": 8,
+     "n_removed": 0,
+     "verdict": "DIFFERS",
+     "fresh_path": "s26\\results\\verify\\verify__headline_audit.json"
+    }
+   }
+  },
+  {
+   "audit": "legacy_audit",
+   "script": "verify/legacy_audit.py",
+   "argv": [],
+   "tag": "CPU",
+   "est_ram_gb": 0.9,
+   "cost": "medium",
+   "note": "real retrieval pool + the 11 Legacy terms, core vs root",
+   "tracked": [
+    "legacy_audit.json"
+   ],
+   "started": "2026-09-14T02:02:50",
+   "wall_s": 27.8,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\legacy_audit.json",
+     "written": "s26\\results\\verify\\verify__legacy_audit.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "legacy_audit.json": {
+     "n_tracked_leaves": 30,
+     "n_fresh_leaves": 30,
+     "identical": 30,
+     "close": 0,
+     "different": 0,
+     "run_property_different": 0,
+     "added": [],
+     "removed": [],
+     "diffs": [],
+     "run_property_diffs": [],
+     "n_added": 0,
+     "n_removed": 0,
+     "verdict": "IDENTICAL",
+     "fresh_path": "s26\\results\\verify\\verify__legacy_audit.json"
+    }
+   }
+  },
+  {
+   "audit": "amber_audit",
+   "script": "verify/amber_audit.py",
+   "argv": [],
+   "tag": "AMBER",
+   "est_ram_gb": 0.9,
+   "cost": "medium",
+   "note": "OpenMM System on 1A13; the pinned interaction energy",
+   "tracked": [
+    "amber_audit.json"
+   ],
+   "started": "2026-09-14T02:03:23",
+   "wall_s": 42.2,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\amber_audit.json",
+     "written": "s26\\results\\verify\\verify__amber_audit.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "amber_audit.json": {
+     "n_tracked_leaves": 31,
+     "n_fresh_leaves": 31,
+     "identical": 31,
+     "close": 0,
+     "different": 0,
+     "run_property_different": 0,
+     "added": [],
+     "removed": [],
+     "diffs": [],
+     "run_property_diffs": [],
+     "n_added": 0,
+     "n_removed": 0,
+     "verdict": "IDENTICAL",
+     "fresh_path": "s26\\results\\verify\\verify__amber_audit.json"
+    }
+   }
+  },
+  {
+   "audit": "amber_platform",
+   "script": "verify/amber_platform.py",
+   "argv": [],
+   "tag": "AMBER",
+   "est_ram_gb": 1.0,
+   "cost": "medium",
+   "note": "CPU vs OpenCL arms of the AMBER block; OpenCL may be unavailable",
+   "tracked": [
+    "amber_platform.json"
+   ],
+   "started": "2026-09-14T02:04:11",
+   "wall_s": 70.4,
+   "error": null,
+   "writes": [],
+   "tracked_unchanged": true,
+   "diffs": {
+    "amber_platform.json": {
+     "verdict": "NO FRESH OUTPUT",
+     "fresh_path": "s26\\results\\verify\\verify__amber_platform.json"
+    }
+   }
+  },
+  {
+   "audit": "leak_audit",
+   "script": "verify/leak_audit.py",
+   "argv": [],
+   "tag": "AMBER",
+   "est_ram_gb": 1.6,
+   "cost": "medium",
+   "note": "NaN-poisons 3 targets through run_target (stage 4 included)",
+   "tracked": [
+    "leak_audit.json"
+   ],
+   "started": "2026-09-14T02:05:28",
+   "wall_s": 118.0,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\leak_audit.json",
+     "written": "s26\\results\\verify\\verify__leak_audit.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "leak_audit.json": {
+     "n_tracked_leaves": 25,
+     "n_fresh_leaves": 25,
+     "identical": 24,
+     "close": 0,
+     "different": 1,
+     "run_property_different": 0,
+     "added": [],
+     "removed": [],
+     "diffs": [
+      {
+       "key": "backends.project",
+       "tracked": "\"s8.project\"",
+       "fresh": "\"core.project\""
+      }
+     ],
+     "run_property_diffs": [],
+     "n_added": 0,
+     "n_removed": 0,
+     "verdict": "DIFFERS",
+     "fresh_path": "s26\\results\\verify\\verify__leak_audit.json"
+    }
+   }
+  },
+  {
+   "audit": "grad_key_collision",
+   "script": "verify/grad_key_collision.py",
+   "argv": [],
+   "tag": "AMBER",
+   "est_ram_gb": 1.8,
+   "cost": "medium",
+   "note": "2 targets x 2 child processes; NOTE: it sets PROJECT_GRAD in the environment, which core/project.py no longer reads, so both children now run the same mode -- a differing JSON here is the audit being stale, not the code (see s26 L19)",
+   "tracked": [
+    "grad_key_collision.json"
+   ],
+   "started": "2026-09-14T02:07:45",
+   "wall_s": 2995.1,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\grad_key_collision.json",
+     "written": "s26\\results\\verify\\verify__grad_key_collision.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "grad_key_collision.json": {
+     "n_tracked_leaves": 46,
+     "n_fresh_leaves": 36,
+     "identical": 7,
+     "close": 0,
+     "different": 3,
+     "run_property_different": 26,
+     "added": [],
+     "removed": [
+      "mixed_provenance_demonstration.cache_dir",
+      "mixed_provenance_demonstration.per_target.1D6X.analytic_recomputed",
+      "mixed_provenance_demonstration.per_target.1D6X.delta",
+      "mixed_provenance_demonstration.per_target.1D6X.fd_cached",
+      "mixed_provenance_demonstration.per_target.1DEP.analytic_recomputed",
+      "mixed_provenance_demonstration.per_target.1DEP.delta",
+      "mixed_provenance_demonstration.per_target.1DEP.fd_cached",
+      "mixed_provenance_demonstration.result",
+      "mixed_provenance_demonstration.severity",
+      "mixed_provenance_demonstration.what_happened"
+     ],
+     "diffs": [
+      {
+       "key": "COLLISION",
+       "tracked": "true",
+       "fresh": "false"
+      },
+      {
+       "key": "config_has_a_field_for_the_gradient",
+       "tracked": "false",
+       "fresh": "true"
+      },
+      {
+       "key": "science_fields",
+       "tracked": "[\"amber\", \"amber_k\", \"amber_steps\", \"dev_mode\", \"k\", \"lam\", \"legacy\", \"legacy_top\", \"m\", \"maxiter\", \"min_sep\", \"multi_start\", \"n_folds\", \"penalty\", \"quantum\"...",
+       "fresh": "[\"amber\", \"amber_k\", \"amber_steps\", \"dev_mode\", \"k\", \"lam\", \"legacy\", \"legacy_top\", \"m\", \"maxiter\", \"min_sep\", \"multi_start\", \"n_folds\", \"penalty\", \"project_..."
+      }
+     ],
+     "run_property_diffs": [
+      {
+       "key": "targets.1CB3.DIFFERS",
+       "tracked": "true",
+       "fresh": "false"
+      },
+      {
+       "key": "targets.1CB3.GRAD_a",
+       "tracked": "\"fd\"",
+       "fresh": "\"exact\""
+      },
+      {
+       "key": "targets.1CB3.GRAD_b",
+       "tracked": "\"analytic\"",
+       "fresh": "\"exact\""
+      },
+      {
+       "key": "targets.1CB3.amber_ca.bit_identical",
+       "tracked": "false",
+       "fresh": "true"
+      },
+      {
+       "key": "targets.1CB3.amber_ca.max_abs_diff",
+       "tracked": "0.004553207033936246",
+       "fresh": "0.0"
+      },
+      {
+       "key": "targets.1CB3.ca.bit_identical",
+       "tracked": "false",
+       "fresh": "true"
+      },
+      {
+       "key": "targets.1CB3.ca.max_abs_diff",
+       "tracked": "0.0015158648845217115",
+       "fresh": "0.0"
+      },
+      {
+       "key": "targets.1CB3.fit_ca.bit_identical",
+       "tracked": "false",
+       "fresh": "true"
+      },
+      {
+       "key": "targets.1CB3.fit_ca.max_abs_diff",
+       "tracked": "0.001829708664606855",
+       "fresh": "0.0"
+      },
+      {
+       "key": "targets.1CB3.phi.bit_identical",
+       "tracked": "false",
+       "fresh": "true"
+      },
+      {
+       "key": "targets.1CB3.phi.max_abs_diff",
+       "tracked": "0.00022802871969396232",
+       "fresh": "0.0"
+      },
+      {
+       "key": "targets.1CB3.psi.bit_identical",
+       "tracked": "false",
+       "fresh": "true"
+      },
+      {
+       "key": "targets.1CB3.psi.max_abs_diff",
+       "tracked": "0.000269199492836103",
+       "fresh": "0.0"
+      },
+      {
+       "key": "targets.1CS9.DIFFERS",
+       "tracked": "true",
+       "fresh": "false"
+      },
+      {
+       "key": "targets.1CS9.GRAD_a",
+       "tracked": "\"fd\"",
+       "fresh": "\"exact\""
+      },
+      {
+       "key": "targets.1CS9.GRAD_b",
+       "tracked": "\"analytic\"",
+       "fresh": "\"exact\""
+      },
+      {
+       "key": "targets.1CS9.amber_ca.bit_identical",
+       "tracked": "false",
+       "fresh": "true"
+      },
+      {
+       "key": "targets.1CS9.amber_ca.max_abs_diff",
+       "tracked": "0.4507970761578708",
+       "fresh": "0.0"
+      },
+      {
+       "key": "targets.1CS9.ca.bit_identical",
+       "tracked": "false",
+       "fresh": "true"
+      },
+      {
+       "key": "targets.1CS9.ca.max_abs_diff",
+       "tracked": "0.4473562022963229",
+       "fresh": "0.0"
+      }
+     ],
+     "n_added": 0,
+     "n_removed": 10,
+     "verdict": "DIFFERS",
+     "fresh_path": "s26\\results\\verify\\verify__grad_key_collision.json"
+    }
+   }
+  },
+  {
+   "audit": "equiv_compare",
+   "script": "verify/equiv_compare.py",
+   "argv": [],
+   "tag": "CPU",
+   "est_ram_gb": 0.6,
+   "cost": "light",
+   "note": "per-target comparison of the two arms' cache directories (keys from core)",
+   "tracked": [
+    "equivalence.json"
+   ],
+   "started": "2026-09-14T02:58:14",
+   "wall_s": 0.8,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\equivalence.json",
+     "written": "s26\\results\\verify\\verify__equivalence.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "equivalence.json": {
+     "n_tracked_leaves": 929,
+     "n_fresh_leaves": 930,
+     "identical": 924,
+     "close": 0,
+     "different": 5,
+     "run_property_different": 0,
+     "added": [
+      "only_optimised"
+     ],
+     "removed": [],
+     "diffs": [
+      {
+       "key": "baseline_dir",
+       "tracked": "\"C:\\\\Users\\\\abena\\\\Protein-Folding-Algorithm\\\\bench_results\\\\cache\\\\29cc4e7cba2feeff\"",
+       "fresh": "\"C:\\\\Users\\\\abena\\\\Protein-Folding-Algorithm\\\\bench_results\\\\cache\\\\44a9305c80808776\""
+      },
+      {
+       "key": "baseline_key",
+       "tracked": "\"29cc4e7cba2feeff\"",
+       "fresh": "\"44a9305c80808776\""
+      },
+      {
+       "key": "n_optimised",
+       "tracked": "8",
+       "fresh": "126"
+      },
+      {
+       "key": "optimised_dir",
+       "tracked": "\"C:\\\\Users\\\\abena\\\\Protein-Folding-Algorithm\\\\bench_results\\\\cache\\\\40774ae7b037d259\"",
+       "fresh": "\"C:\\\\Users\\\\abena\\\\Protein-Folding-Algorithm\\\\bench_results\\\\cache\\\\1fc9f2dcf489e2fb\""
+      },
+      {
+       "key": "optimised_key",
+       "tracked": "\"40774ae7b037d259\"",
+       "fresh": "\"1fc9f2dcf489e2fb\""
+      }
+     ],
+     "run_property_diffs": [],
+     "n_added": 1,
+     "n_removed": 0,
+     "verdict": "DIFFERS",
+     "fresh_path": "s26\\results\\verify\\verify__equivalence.json"
+    }
+   }
+  },
+  {
+   "audit": "projection_divergence",
+   "script": "verify/projection_divergence.py",
+   "argv": [
+    "464a0ddb5f283e04",
+    "1fc9f2dcf489e2fb"
+   ],
+   "tag": "CPU",
+   "est_ram_gb": 0.6,
+   "cost": "light",
+   "note": "arms apart, from the baseline and production cache directories",
+   "tracked": [
+    "projection_divergence.json"
+   ],
+   "started": "2026-09-14T02:58:21",
+   "wall_s": 1.2,
+   "error": "Traceback (most recent call last):\n  File \"C:\\Users\\abena\\Protein-Folding-Algorithm\\s26\\i_verify_rerun.py\", line 337, in run\n    runpy.run_path(os.path.join(ROOT, script), run_name=\"__main__\")\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen runpy>\", line 287, in run_path\n  File \"<frozen runpy>\", line 98, in _run_module_code\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\abena\\Protein-Folding-Algorithm\\verify/projection_divergence.py\", line 101, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\abena\\Protein-Folding-Algorithm\\verify/projection_divergence.py\", line 59, in main\n    row[f\"{k}_arms_apart_rmsd\"] = float(geo.rmsd(x, y))\n                                        ~~~~~~~~^^^^^^\n  File \"C:\\Users\\abena\\Protein-Folding-Algorithm\\protein_geometry.py\", line 360, in rmsd\n    raise ValueError(f\"shape mismatch: {A.shape} vs {B.shape}\")\nValueError: shape mismatch: () vs (12, 3)\n",
+   "writes": [],
+   "tracked_unchanged": true,
+   "diffs": {
+    "projection_divergence.json": {
+     "verdict": "NO FRESH OUTPUT",
+     "fresh_path": "s26\\results\\verify\\verify__projection_divergence.json"
+    }
+   }
+  },
+  {
+   "audit": "project_arms",
+   "script": "verify/project_arms.py",
+   "argv": [
+    "464a0ddb5f283e04",
+    "1fc9f2dcf489e2fb",
+    "1fc9f2dcf489e2fb"
+   ],
+   "tag": "CPU",
+   "est_ram_gb": 0.6,
+   "cost": "light",
+   "note": "three-arm compare over cache keys; the fd arm key is not on disk any more, so the production key is passed twice and that arm reads as identical",
+   "tracked": [
+    "project_arms.json"
+   ],
+   "started": "2026-09-14T02:58:27",
+   "wall_s": 0.3,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\project_arms.json",
+     "written": "s26\\results\\verify\\verify__project_arms.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "project_arms.json": {
+     "n_tracked_leaves": 171,
+     "n_fresh_leaves": 171,
+     "identical": 47,
+     "close": 0,
+     "different": 124,
+     "run_property_different": 0,
+     "added": [],
+     "removed": [],
+     "diffs": [
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.amber_ca.bit_identical",
+       "tracked": "\"0/8\"",
+       "fresh": "\"119/119\""
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.amber_ca.worst_max_abs",
+       "tracked": "22.333503366363715",
+       "fresh": "0.0"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.avg_ca.bit_identical",
+       "tracked": "\"8/8\"",
+       "fresh": "\"126/126\""
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.ca.bit_identical",
+       "tracked": "\"0/8\"",
+       "fresh": "\"126/126\""
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.ca.worst_max_abs",
+       "tracked": "22.292044613202613",
+       "fresh": "0.0"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.fit_ca.bit_identical",
+       "tracked": "\"0/8\"",
+       "fresh": "\"126/126\""
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.fit_ca.worst_max_abs",
+       "tracked": "27.111554683975196",
+       "fresh": "0.0"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.n",
+       "tracked": "8",
+       "fresh": "126"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.phi.bit_identical",
+       "tracked": "\"0/8\"",
+       "fresh": "\"126/126\""
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.phi.worst_max_abs",
+       "tracked": "6.285326248455182",
+       "fresh": "0.0"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.pool_best.bit_identical",
+       "tracked": "\"8/8\"",
+       "fresh": "\"126/126\""
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.pool_best.mean_a",
+       "tracked": "1.4937286227941513",
+       "fresh": "1.7108244199364904"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.pool_best.mean_b",
+       "tracked": "1.4937286227941513",
+       "fresh": "1.7108244199364904"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.psi.bit_identical",
+       "tracked": "\"0/8\"",
+       "fresh": "\"126/126\""
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.psi.worst_max_abs",
+       "tracked": "6.394723398373359",
+       "fresh": "0.0"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_arm.bit_identical",
+       "tracked": "\"0/8\"",
+       "fresh": "\"126/126\""
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_arm.mean_a",
+       "tracked": "2.2547909976187617",
+       "fresh": "3.2147651542109985"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_arm.mean_b",
+       "tracked": "2.254138547875183",
+       "fresh": "3.2147651542109985"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_arm.mean_diff",
+       "tracked": "-0.000652449743578476",
+       "fresh": "0.0"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_arm.worst_abs",
+       "tracked": "0.012203695270506909",
+       "fresh": "0.0"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_avg.bit_identical",
+       "tracked": "\"8/8\"",
+       "fresh": "\"126/126\""
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_avg.mean_a",
+       "tracked": "2.2021026753314636",
+       "fresh": "3.048338093879532"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_avg.mean_b",
+       "tracked": "2.2021026753314636",
+       "fresh": "3.048338093879532"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_fit.bit_identical",
+       "tracked": "\"0/8\"",
+       "fresh": "\"126/126\""
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_fit.mean_a",
+       "tracked": "2.2771950158178234",
+       "fresh": "3.2040761603809194"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_fit.mean_b",
+       "tracked": "2.2771280318698253",
+       "fresh": "3.2040761603809194"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_fit.mean_diff",
+       "tracked": "-6.698394799808938e-05",
+       "fresh": "0.0"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_fit.worst_abs",
+       "tracked": "0.000689817474107457",
+       "fresh": "0.0"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_full.bit_identical",
+       "tracked": "\"0/8\"",
+       "fresh": "\"119/119\""
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_full.mean_a",
+       "tracked": "2.2653297329011086",
+       "fresh": "3.205106285321829"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_full.mean_b",
+       "tracked": "2.271911515453491",
+       "fresh": "3.205106285321829"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_full.mean_diff",
+       "tracked": "0.006581782552382176",
+       "fresh": "0.0"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.rmsd_full.worst_abs",
+       "tracked": "0.03526925739371167",
+       "fresh": "0.0"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.shipped.bit_identical",
+       "tracked": "\"8/8\"",
+       "fresh": "\"126/126\""
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.shipped.mean_a",
+       "tracked": "2.498066671192646",
+       "fresh": "3.4540004952559396"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.shipped.mean_b",
+       "tracked": "2.498066671192646",
+       "fresh": "3.4540004952559396"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.sub_order_identical",
+       "tracked": "\"8/8\"",
+       "fresh": "\"126/126\""
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.top_m_best.bit_identical",
+       "tracked": "\"8/8\"",
+       "fresh": "\"126/126\""
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.top_m_best.mean_a",
+       "tracked": "1.8640337884426117",
+       "fresh": "2.3061526409453816"
+      },
+      {
+       "key": "consolidation_faithful__baseline_vs_opt_fd.top_m_best.mean_b",
+       "tracked": "1.8640337884426117",
+       "fresh": "2.3061526409453816"
+      }
+     ],
+     "run_property_diffs": [],
+     "n_added": 0,
+     "n_removed": 0,
+     "verdict": "DIFFERS",
+     "fresh_path": "s26\\results\\verify\\verify__project_arms.json"
+    }
+   }
+  }
+ ],
+ "not_rerunnable": {
+  "recon_containment_audit.json": "written by a deleted script (leak_audit_mine.json, moved in the 2026-09-04 consolidation); no runner in verify/",
+  "project_inputs.json": "written by `core.project harvest` from the production cache; it is the INPUT the projection audits read, re-harvesting it is covered by project_exactness / project_equiv reading it"
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "n_targets": 24,
+ "arms": [
+  {
+   "arm": "ref",
+   "solves": 216,
+   "nit_mean": 181.06944444444446,
+   "nit_max": 300,
+   "nfev_mean": 255.7962962962963,
+   "nfev_sum": 55252,
+   "frac_hitting_maxiter": 0.18518518518518517
+  },
+  {
+   "arm": "ex",
+   "solves": 216,
+   "nit_mean": 181.06944444444446,
+   "nit_max": 300,
+   "nfev_mean": 255.7962962962963,
+   "nfev_sum": 55252,
+   "frac_hitting_maxiter": 0.18518518518518517
+  },
+  {
+   "arm": "fd",
+   "solves": 216,
+   "nit_mean": 180.65740740740742,
+   "nit_max": 300,
+   "nfev_mean": 254.13888888888889,
+   "nfev_sum": 54894,
+   "frac_hitting_maxiter": 0.18055555555555555
+  },
+  {
+   "arm": "an",
+   "solves": 216,
+   "nit_mean": 170.96296296296296,
+   "nit_max": 300,
+   "nfev_mean": 235.61111111111111,
+   "nfev_sum": 50892,
+   "frac_hitting_maxiter": 0.17592592592592593
+  }
+ ]
+}

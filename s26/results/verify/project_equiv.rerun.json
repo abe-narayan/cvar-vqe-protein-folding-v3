@@ -1,0 +1,301 @@
+{
+ "audit": "project_equiv",
+ "script": "core/project.py",
+ "argv": [
+  "equiv"
+ ],
+ "tag": "CPU",
+ "est_ram_gb": 0.8,
+ "cost": "heavy",
+ "note": "126 targets x four arms; the reference arm alone is ~8 s per target",
+ "tracked": [
+  "project_equiv.json"
+ ],
+ "started": "2026-09-14T03:10:01",
+ "wall_s": 1798.9,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\project_equiv.json.tmp",
+   "written": "s26\\results\\verify\\verify__project_equiv.json.tmp"
+  },
+  {
+   "intended": "verify\\project_equiv.json",
+   "written": "s26\\results\\verify\\verify__project_equiv.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "project_equiv.json": {
+   "n_tracked_leaves": 12949,
+   "n_fresh_leaves": 12951,
+   "identical": 12431,
+   "close": 0,
+   "different": 508,
+   "run_property_different": 10,
+   "added": [
+    "agg.complete",
+    "agg.requested"
+   ],
+   "removed": [],
+   "diffs": [
+    {
+     "key": "agg.s_per_target.ref",
+     "tracked": "10.233509180953703",
+     "fresh": "7.689821138097498"
+    },
+    {
+     "key": "agg.s_per_target.ex",
+     "tracked": "4.674835245236792",
+     "fresh": "3.8137957515889807"
+    },
+    {
+     "key": "agg.s_per_target.fd",
+     "tracked": "2.367491449206321",
+     "fresh": "2.1160124063506602"
+    },
+    {
+     "key": "agg.s_per_target.an",
+     "tracked": "0.6235212849250751",
+     "fresh": "0.61906772143104"
+    },
+    {
+     "key": "rows[0].t_ref",
+     "tracked": "7.243612399965059",
+     "fresh": "7.445828400028404"
+    },
+    {
+     "key": "rows[0].t_ex",
+     "tracked": "3.496815799968317",
+     "fresh": "3.9513764000148512"
+    },
+    {
+     "key": "rows[0].t_fd",
+     "tracked": "2.352735499967821",
+     "fresh": "2.6301505000446923"
+    },
+    {
+     "key": "rows[0].t_an",
+     "tracked": "0.5057675000280142",
+     "fresh": "0.9298726000124589"
+    },
+    {
+     "key": "rows[1].t_ref",
+     "tracked": "9.680596000049263",
+     "fresh": "9.970852200000081"
+    },
+    {
+     "key": "rows[1].t_ex",
+     "tracked": "4.774421499983873",
+     "fresh": "5.054604000004474"
+    },
+    {
+     "key": "rows[1].t_fd",
+     "tracked": "2.4140376000432298",
+     "fresh": "3.0481882000458427"
+    },
+    {
+     "key": "rows[1].t_an",
+     "tracked": "0.5553847000119276",
+     "fresh": "0.9945384999737144"
+    },
+    {
+     "key": "rows[2].t_ref",
+     "tracked": "3.898646000016015",
+     "fresh": "3.9479748000157997"
+    },
+    {
+     "key": "rows[2].t_ex",
+     "tracked": "1.7891898000380024",
+     "fresh": "2.094654799962882"
+    },
+    {
+     "key": "rows[2].t_fd",
+     "tracked": "0.7459605999756604",
+     "fresh": "1.050683899957221"
+    },
+    {
+     "key": "rows[2].t_an",
+     "tracked": "0.24330099998041987",
+     "fresh": "0.4319182999897748"
+    },
+    {
+     "key": "rows[3].t_ref",
+     "tracked": "7.190431700029876",
+     "fresh": "7.36246089998167"
+    },
+    {
+     "key": "rows[3].t_ex",
+     "tracked": "3.3138039999757893",
+     "fresh": "3.9427832000073977"
+    },
+    {
+     "key": "rows[3].t_fd",
+     "tracked": "1.6225321000092663",
+     "fresh": "1.82516210002359"
+    },
+    {
+     "key": "rows[3].t_an",
+     "tracked": "0.4676611000322737",
+     "fresh": "0.904094299999997"
+    },
+    {
+     "key": "rows[4].t_ref",
+     "tracked": "5.80820109997876",
+     "fresh": "5.961847500002477"
+    },
+    {
+     "key": "rows[4].t_ex",
+     "tracked": "2.6663476999965496",
+     "fresh": "3.1484376000007614"
+    },
+    {
+     "key": "rows[4].t_fd",
+     "tracked": "1.0327414000057615",
+     "fresh": "1.321999300038442"
+    },
+    {
+     "key": "rows[4].t_an",
+     "tracked": "0.38518079998902977",
+     "fresh": "0.5871490000281483"
+    },
+    {
+     "key": "rows[5].t_ref",
+     "tracked": "6.301013799966313",
+     "fresh": "6.387659500003792"
+    },
+    {
+     "key": "rows[5].t_ex",
+     "tracked": "2.8000206000288017",
+     "fresh": "3.275558200024534"
+    },
+    {
+     "key": "rows[5].t_fd",
+     "tracked": "0.9650981000158936",
+     "fresh": "1.2584574000211433"
+    },
+    {
+     "key": "rows[5].t_an",
+     "tracked": "0.3913207000005059",
+     "fresh": "0.5857165000052191"
+    },
+    {
+     "key": "rows[6].t_ref",
+     "tracked": "10.068781199981458",
+     "fresh": "9.146147699968424"
+    },
+    {
+     "key": "rows[6].t_ex",
+     "tracked": "5.252318599959835",
+     "fresh": "4.464200800051913"
+    },
+    {
+     "key": "rows[6].t_fd",
+     "tracked": "2.060413500003051",
+     "fresh": "2.0948117000516504"
+    },
+    {
+     "key": "rows[6].t_an",
+     "tracked": "0.6934842999908142",
+     "fresh": "0.9499919000081718"
+    },
+    {
+     "key": "rows[7].t_ref",
+     "tracked": "14.524422999995295",
+     "fresh": "10.71522549999645"
+    },
+    {
+     "key": "rows[7].t_ex",
+     "tracked": "6.29727440001443",
+     "fresh": "5.349322299996857"
+    },
+    {
+     "key": "rows[7].t_fd",
+     "tracked": "3.128776300000027",
+     "fresh": "3.0518479000311345"
+    },
+    {
+     "key": "rows[7].t_an",
+     "tracked": "0.9362428999738768",
+     "fresh": "0.9808207000023685"
+    },
+    {
+     "key": "rows[8].t_ref",
+     "tracked": "13.668564599996898",
+     "fresh": "10.087352700007614"
+    },
+    {
+     "key": "rows[8].t_ex",
+     "tracked": "5.7341017999569885",
+     "fresh": "5.323393600003328"
+    },
+    {
+     "key": "rows[8].t_fd",
+     "tracked": "3.405689200037159",
+     "fresh": "3.602061999961734"
+    },
+    {
+     "key": "rows[8].t_an",
+     "tracked": "1.0565385000081733",
+     "fresh": "1.233372299990151"
+    }
+   ],
+   "run_property_diffs": [
+    {
+     "key": "agg.seconds.ref",
+     "tracked": "1289.4221568001667",
+     "fresh": "968.9174634002848"
+    },
+    {
+     "key": "agg.seconds.ex",
+     "tracked": "589.0292408998357",
+     "fresh": "480.5382647002116"
+    },
+    {
+     "key": "agg.seconds.fd",
+     "tracked": "298.30392259999644",
+     "fresh": "266.6175632001832"
+    },
+    {
+     "key": "agg.seconds.an",
+     "tracked": "78.56368190055946",
+     "fresh": "78.00253290031105"
+    },
+    {
+     "key": "agg.speedup.ex",
+     "tracked": "2.1890630672772198",
+     "fresh": "2.0163169815514133"
+    },
+    {
+     "key": "agg.speedup.fd",
+     "tracked": "4.322511569950714",
+     "fresh": "3.6341096654341447"
+    },
+    {
+     "key": "agg.speedup.an",
+     "tracked": "16.41244561873041",
+     "fresh": "12.421615393420398"
+    },
+    {
+     "key": "agg.speedup_exact",
+     "tracked": "2.1890630672772198",
+     "fresh": "2.0163169815514133"
+    },
+    {
+     "key": "agg.speedup_fd",
+     "tracked": "4.322511569950714",
+     "fresh": "3.6341096654341447"
+    },
+    {
+     "key": "agg.speedup_analytic",
+     "tracked": "16.41244561873041",
+     "fresh": "12.421615393420398"
+    }
+   ],
+   "n_added": 2,
+   "n_removed": 0,
+   "verdict": "DIFFERS",
+   "fresh_path": "s26\\results\\verify\\verify__project_equiv.json"
+  }
+ }
+}

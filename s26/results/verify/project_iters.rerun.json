@@ -1,0 +1,146 @@
+{
+ "audit": "project_iters",
+ "script": "core/project.py",
+ "argv": [
+  "iters"
+ ],
+ "tag": "CPU",
+ "est_ram_gb": 0.8,
+ "cost": "medium",
+ "note": "24 targets by default (the tracked run's default)",
+ "tracked": [
+  "project_iters.json"
+ ],
+ "started": "2026-09-14T03:40:27",
+ "wall_s": 384.7,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\project_iters_n24.json.tmp",
+   "written": "s26\\results\\verify\\verify__project_iters_n24.json.tmp"
+  },
+  {
+   "intended": "verify\\project_iters_n24.json",
+   "written": "s26\\results\\verify\\verify__project_iters_n24.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "project_iters.json": {
+   "n_tracked_leaves": 22,
+   "n_fresh_leaves": 29,
+   "identical": 4,
+   "close": 0,
+   "different": 14,
+   "run_property_different": 4,
+   "added": [
+    "arms[3].arm",
+    "arms[3].solves",
+    "arms[3].nit_mean",
+    "arms[3].nit_max",
+    "arms[3].nfev_mean",
+    "arms[3].nfev_sum",
+    "arms[3].frac_hitting_maxiter"
+   ],
+   "removed": [],
+   "diffs": [
+    {
+     "key": "arms[0].solves",
+     "tracked": "90",
+     "fresh": "216"
+    },
+    {
+     "key": "arms[0].nit_mean",
+     "tracked": "161.33333333333334",
+     "fresh": "181.06944444444446"
+    },
+    {
+     "key": "arms[0].nfev_mean",
+     "tracked": "231.04444444444445",
+     "fresh": "255.7962962962963"
+    },
+    {
+     "key": "arms[0].frac_hitting_maxiter",
+     "tracked": "0.1",
+     "fresh": "0.18518518518518517"
+    },
+    {
+     "key": "arms[1].arm",
+     "tracked": "\"fd\"",
+     "fresh": "\"ex\""
+    },
+    {
+     "key": "arms[1].solves",
+     "tracked": "90",
+     "fresh": "216"
+    },
+    {
+     "key": "arms[1].nit_mean",
+     "tracked": "159.32222222222222",
+     "fresh": "181.06944444444446"
+    },
+    {
+     "key": "arms[1].nfev_mean",
+     "tracked": "225.23333333333332",
+     "fresh": "255.7962962962963"
+    },
+    {
+     "key": "arms[1].frac_hitting_maxiter",
+     "tracked": "0.1",
+     "fresh": "0.18518518518518517"
+    },
+    {
+     "key": "arms[2].arm",
+     "tracked": "\"an\"",
+     "fresh": "\"fd\""
+    },
+    {
+     "key": "arms[2].solves",
+     "tracked": "90",
+     "fresh": "216"
+    },
+    {
+     "key": "arms[2].nit_mean",
+     "tracked": "157.11111111111111",
+     "fresh": "180.65740740740742"
+    },
+    {
+     "key": "arms[2].nfev_mean",
+     "tracked": "218.48888888888888",
+     "fresh": "254.13888888888889"
+    },
+    {
+     "key": "arms[2].frac_hitting_maxiter",
+     "tracked": "0.13333333333333333",
+     "fresh": "0.18055555555555555"
+    }
+   ],
+   "run_property_diffs": [
+    {
+     "key": "n_targets",
+     "tracked": "10",
+     "fresh": "24"
+    },
+    {
+     "key": "arms[0].nfev_sum",
+     "tracked": "20794",
+     "fresh": "55252"
+    },
+    {
+     "key": "arms[1].nfev_sum",
+     "tracked": "20271",
+     "fresh": "55252"
+    },
+    {
+     "key": "arms[2].nfev_sum",
+     "tracked": "19664",
+     "fresh": "54894"
+    }
+   ],
+   "n_added": 7,
+   "n_removed": 0,
+   "verdict": "DIFFERS",
+   "fresh_path": "s26\\results\\verify\\verify__project_iters_n24.json"
+  }
+ }
+}

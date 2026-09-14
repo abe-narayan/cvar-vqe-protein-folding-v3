@@ -1,0 +1,25 @@
+{
+ "audit": "hazard_audit",
+ "script": "verify/hazard_audit.py",
+ "argv": [],
+ "tag": "AMBER",
+ "est_ram_gb": 1.6,
+ "cost": "medium",
+ "note": "the known hazards as live experiments; hazard_audit.json is NOT tracked",
+ "tracked": [],
+ "started": "2026-09-14T02:59:34",
+ "wall_s": 21.7,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\hazard_audit.json",
+   "written": "s26\\results\\verify\\verify__hazard_audit.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "_": {
+   "verdict": "no tracked JSON to diff"
+  }
+ }
+}

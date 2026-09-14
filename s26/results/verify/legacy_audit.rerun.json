@@ -1,0 +1,40 @@
+{
+ "audit": "legacy_audit",
+ "script": "verify/legacy_audit.py",
+ "argv": [],
+ "tag": "CPU",
+ "est_ram_gb": 0.9,
+ "cost": "medium",
+ "note": "real retrieval pool + the 11 Legacy terms, core vs root",
+ "tracked": [
+  "legacy_audit.json"
+ ],
+ "started": "2026-09-14T02:02:50",
+ "wall_s": 27.8,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\legacy_audit.json",
+   "written": "s26\\results\\verify\\verify__legacy_audit.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "legacy_audit.json": {
+   "n_tracked_leaves": 30,
+   "n_fresh_leaves": 30,
+   "identical": 30,
+   "close": 0,
+   "different": 0,
+   "run_property_different": 0,
+   "added": [],
+   "removed": [],
+   "diffs": [],
+   "run_property_diffs": [],
+   "n_added": 0,
+   "n_removed": 0,
+   "verdict": "IDENTICAL",
+   "fresh_path": "s26\\results\\verify\\verify__legacy_audit.json"
+  }
+ }
+}

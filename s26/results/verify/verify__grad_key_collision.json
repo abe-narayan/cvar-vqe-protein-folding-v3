@@ -1,0 +1,93 @@
+{
+  "COLLISION": false,
+  "config_has_a_field_for_the_gradient": true,
+  "same_cfg_key_for_both_gradients": true,
+  "science_fields": [
+    "amber",
+    "amber_k",
+    "amber_steps",
+    "dev_mode",
+    "k",
+    "lam",
+    "legacy",
+    "legacy_top",
+    "m",
+    "maxiter",
+    "min_sep",
+    "multi_start",
+    "n_folds",
+    "penalty",
+    "project_grad",
+    "quantum",
+    "reference_precision",
+    "report_single_start_fit",
+    "tie_break",
+    "torsion_window",
+    "vqe_iters",
+    "vqe_layers",
+    "vqe_qubits",
+    "vqe_seed"
+  ],
+  "targets": {
+    "1CB3": {
+      "DIFFERS": false,
+      "GRAD_a": "exact",
+      "GRAD_b": "exact",
+      "amber_ca": {
+        "bit_identical": true,
+        "max_abs_diff": 0.0
+      },
+      "avg_ca": {
+        "bit_identical": true,
+        "max_abs_diff": 0.0
+      },
+      "backend": "core.project",
+      "ca": {
+        "bit_identical": true,
+        "max_abs_diff": 0.0
+      },
+      "fit_ca": {
+        "bit_identical": true,
+        "max_abs_diff": 0.0
+      },
+      "phi": {
+        "bit_identical": true,
+        "max_abs_diff": 0.0
+      },
+      "psi": {
+        "bit_identical": true,
+        "max_abs_diff": 0.0
+      }
+    },
+    "1CS9": {
+      "DIFFERS": false,
+      "GRAD_a": "exact",
+      "GRAD_b": "exact",
+      "amber_ca": {
+        "bit_identical": true,
+        "max_abs_diff": 0.0
+      },
+      "avg_ca": {
+        "bit_identical": true,
+        "max_abs_diff": 0.0
+      },
+      "backend": "core.project",
+      "ca": {
+        "bit_identical": true,
+        "max_abs_diff": 0.0
+      },
+      "fit_ca": {
+        "bit_identical": true,
+        "max_abs_diff": 0.0
+      },
+      "phi": {
+        "bit_identical": true,
+        "max_abs_diff": 0.0
+      },
+      "psi": {
+        "bit_identical": true,
+        "max_abs_diff": 0.0
+      }
+    }
+  }
+}

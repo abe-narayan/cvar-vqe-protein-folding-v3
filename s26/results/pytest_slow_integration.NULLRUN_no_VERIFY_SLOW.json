@@ -1,0 +1,32 @@
+{
+ "name": "pytest_slow_integration",
+ "agent": "I",
+ "tag": "AMBER",
+ "pid": 37440,
+ "create_time": 1789370021.82723,
+ "cmd": [
+  "C:/Users/abena/miniforge_3/python.exe",
+  "-m",
+  "pytest",
+  "tests/test_integration.py",
+  "-q",
+  "-rs",
+  "-p",
+  "no:cacheprovider",
+  "-k",
+  "test_legacy_terms_match_the_shipped_module_on_a_real_pool or test_amber_is_real_ff14sb_gbn2_with_the_shipped_parameters or test_the_1a13_native_interaction_energy_is_bit_exact or test_single_point_energy_is_invariant_under_rigid_translation or test_nan_poisoning_the_native_changes_no_deployable_quantity or test_the_same_target_is_bit_identical_across_processes or test_the_result_does_not_depend_on_the_ambient_thread_count",
+  "--junitxml=s26/results/pytest_slow_integration.xml"
+ ],
+ "cwd": "C:\\Users\\abena\\Protein-Folding-Algorithm",
+ "start": "2026-09-14T00:13:41",
+ "start_ts": 1789370021.8225164,
+ "est_ram_gb": 1.8,
+ "log": "C:\\Users\\abena\\Protein-Folding-Algorithm\\s26\\logs\\pytest_slow_integration.log",
+ "spec": null,
+ "waited_s": 195.0,
+ "jobrun_pid": 29764,
+ "exit_code": 0,
+ "end": "2026-09-14T00:13:46",
+ "wall_s": 5.0,
+ "peak_rss_gb": 0.006
+}

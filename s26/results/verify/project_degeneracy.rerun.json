@@ -1,0 +1,250 @@
+{
+ "audit": "project_degeneracy",
+ "script": "core/project.py",
+ "argv": [
+  "degeneracy"
+ ],
+ "tag": "CPU",
+ "est_ram_gb": 0.8,
+ "cost": "heavy",
+ "note": "126 targets, objective gap between the best two starts",
+ "tracked": [
+  "project_degeneracy.json"
+ ],
+ "started": "2026-09-14T03:46:55",
+ "wall_s": 239.5,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\project_degeneracy.json.tmp",
+   "written": "s26\\results\\verify\\verify__project_degeneracy.json.tmp"
+  },
+  {
+   "intended": "verify\\project_degeneracy.json",
+   "written": "s26\\results\\verify\\verify__project_degeneracy.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "project_degeneracy.json": {
+   "n_tracked_leaves": 767,
+   "n_fresh_leaves": 769,
+   "identical": 256,
+   "close": 1,
+   "different": 510,
+   "run_property_different": 0,
+   "added": [
+    "agg.complete",
+    "agg.requested"
+   ],
+   "removed": [],
+   "diffs": [
+    {
+     "key": "agg.gap_median",
+     "tracked": "0.06665769745825689",
+     "fresh": "0.06428815619227479"
+    },
+    {
+     "key": "agg.gap_min",
+     "tracked": "1.1851245765998053e-09",
+     "fresh": "2.804459381736124e-09"
+    },
+    {
+     "key": "agg.n_gap_under_1e4",
+     "tracked": "23",
+     "fresh": "22"
+    },
+    {
+     "key": "agg.runner_up_dist_median",
+     "tracked": "0.84600201106656",
+     "fresh": "0.8767447079132815"
+    },
+    {
+     "key": "agg.runner_up_dist_max",
+     "tracked": "2.6061174526946895",
+     "fresh": "2.468616994488777"
+    },
+    {
+     "key": "agg.n_tied_1e3_far_0p5",
+     "tracked": "1",
+     "fresh": "3"
+    },
+    {
+     "key": "agg.n_tied_1e2_far_0p5",
+     "tracked": "8",
+     "fresh": "10"
+    },
+    {
+     "key": "rows[0].best",
+     "tracked": "0.5195771787229689",
+     "fresh": "0.5197169327647683"
+    },
+    {
+     "key": "rows[0].gap_to_runner_up",
+     "tracked": "0.0011067270120530548",
+     "fresh": "0.04292251081244769"
+    },
+    {
+     "key": "rows[0].spread",
+     "tracked": "1.8776938351082784",
+     "fresh": "1.876491384064896"
+    },
+    {
+     "key": "rows[0].runner_up_dist",
+     "tracked": "0.03783408552742756",
+     "fresh": "0.6583542333408575"
+    },
+    {
+     "key": "rows[1].best",
+     "tracked": "1.2481900457886193",
+     "fresh": "1.2478925901618894"
+    },
+    {
+     "key": "rows[1].gap_to_runner_up",
+     "tracked": "0.12595235779869096",
+     "fresh": "0.11371548447490798"
+    },
+    {
+     "key": "rows[1].spread",
+     "tracked": "0.37426988728024924",
+     "fresh": "0.1986739635582324"
+    },
+    {
+     "key": "rows[1].runner_up_dist",
+     "tracked": "1.7001884673806271",
+     "fresh": "1.586334025611811"
+    },
+    {
+     "key": "rows[2].best",
+     "tracked": "0.4244017923245492",
+     "fresh": "0.42440179354629276"
+    },
+    {
+     "key": "rows[2].gap_to_runner_up",
+     "tracked": "0.6226393320327602",
+     "fresh": "0.6214443868748734"
+    },
+    {
+     "key": "rows[2].spread",
+     "tracked": "2.5268186652657962",
+     "fresh": "2.525361003558339"
+    },
+    {
+     "key": "rows[2].runner_up_dist",
+     "tracked": "0.8474918944139459",
+     "fresh": "0.8466700113268739"
+    },
+    {
+     "key": "rows[3].best",
+     "tracked": "0.12553698725490367",
+     "fresh": "0.1255370040038106"
+    },
+    {
+     "key": "rows[3].gap_to_runner_up",
+     "tracked": "1.46160348823976e-08",
+     "fresh": "2.0057661009875716e-07"
+    },
+    {
+     "key": "rows[3].spread",
+     "tracked": "2.4899792130059706",
+     "fresh": "0.44987480419213854"
+    },
+    {
+     "key": "rows[3].runner_up_dist",
+     "tracked": "0.00014664476601069612",
+     "fresh": "0.00020528937681644853"
+    },
+    {
+     "key": "rows[4].best",
+     "tracked": "1.2724944284947226",
+     "fresh": "1.2734107609871597"
+    },
+    {
+     "key": "rows[4].gap_to_runner_up",
+     "tracked": "0.004689149423237948",
+     "fresh": "0.0007153496560863282"
+    },
+    {
+     "key": "rows[4].spread",
+     "tracked": "0.026758919199838305",
+     "fresh": "0.004073015490091203"
+    },
+    {
+     "key": "rows[4].runner_up_dist",
+     "tracked": "1.6029299865045805",
+     "fresh": "1.6454709110686245"
+    },
+    {
+     "key": "rows[5].best",
+     "tracked": "0.013613806240553049",
+     "fresh": "0.013613969937430739"
+    },
+    {
+     "key": "rows[5].gap_to_runner_up",
+     "tracked": "1.1851245765998053e-09",
+     "fresh": "2.804459381736124e-09"
+    },
+    {
+     "key": "rows[5].spread",
+     "tracked": "0.7983546881779795",
+     "fresh": "0.8001307236479949"
+    },
+    {
+     "key": "rows[5].runner_up_dist",
+     "tracked": "2.2661473778084834e-05",
+     "fresh": "8.244888838811436e-05"
+    },
+    {
+     "key": "rows[6].best",
+     "tracked": "1.59823619944632",
+     "fresh": "1.5987029288708694"
+    },
+    {
+     "key": "rows[6].gap_to_runner_up",
+     "tracked": "0.09061506477741643",
+     "fresh": "0.07341974156124853"
+    },
+    {
+     "key": "rows[6].spread",
+     "tracked": "0.42451585754375687",
+     "fresh": "0.4253324147705042"
+    },
+    {
+     "key": "rows[6].runner_up_dist",
+     "tracked": "1.2493822493843267",
+     "fresh": "1.4806959508177038"
+    },
+    {
+     "key": "rows[7].best",
+     "tracked": "0.4907210829314169",
+     "fresh": "0.4922717479115122"
+    },
+    {
+     "key": "rows[7].gap_to_runner_up",
+     "tracked": "0.3692418094783665",
+     "fresh": "0.3677093849687547"
+    },
+    {
+     "key": "rows[7].spread",
+     "tracked": "1.8160446441253817",
+     "fresh": "1.8135951053667447"
+    },
+    {
+     "key": "rows[7].runner_up_dist",
+     "tracked": "0.8800087342456067",
+     "fresh": "0.8700160420402892"
+    },
+    {
+     "key": "rows[8].best",
+     "tracked": "0.15815250828267358",
+     "fresh": "0.15814085833163163"
+    }
+   ],
+   "run_property_diffs": [],
+   "n_added": 2,
+   "n_removed": 0,
+   "verdict": "DIFFERS",
+   "fresh_path": "s26\\results\\verify\\verify__project_degeneracy.json"
+  }
+ }
+}

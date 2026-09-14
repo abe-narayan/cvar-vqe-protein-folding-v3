@@ -1,0 +1,121 @@
+{
+  "ALL_CLEAN": true,
+  "backends": {
+    "amber": "core.amber",
+    "data": "core.data",
+    "energy": "core.energy",
+    "geometry": "core.geometry",
+    "legacy": "core.energy",
+    "numerics": "core.geometry",
+    "predict": "core.predict",
+    "project": "core.project",
+    "quantum": "core.quantum"
+  },
+  "targets": {
+    "1CB3": {
+      "CLEAN": true,
+      "differences": {},
+      "n_bit_identical": 19,
+      "n_quantities_compared": 19,
+      "nan_leaked_into": [],
+      "only_baseline_keys": [],
+      "only_poisoned_keys": [],
+      "poisoned_fields": [
+        "ca",
+        "phi",
+        "psi"
+      ],
+      "quantities": [
+        "amber.ca",
+        "amber.e0",
+        "amber.e1",
+        "amber.moved",
+        "amber.phi",
+        "amber.psi",
+        "amber.strain_after",
+        "avg_ca",
+        "ca",
+        "fit_ca",
+        "fold",
+        "n",
+        "n_candidates",
+        "n_distinct",
+        "n_top",
+        "n_windows",
+        "phi",
+        "psi",
+        "sub"
+      ]
+    },
+    "1CEK": {
+      "CLEAN": true,
+      "differences": {},
+      "n_bit_identical": 19,
+      "n_quantities_compared": 19,
+      "nan_leaked_into": [],
+      "only_baseline_keys": [],
+      "only_poisoned_keys": [],
+      "poisoned_fields": [
+        "ca",
+        "phi",
+        "psi"
+      ],
+      "quantities": [
+        "amber.ca",
+        "amber.e0",
+        "amber.e1",
+        "amber.moved",
+        "amber.phi",
+        "amber.psi",
+        "amber.strain_after",
+        "avg_ca",
+        "ca",
+        "fit_ca",
+        "fold",
+        "n",
+        "n_candidates",
+        "n_distinct",
+        "n_top",
+        "n_windows",
+        "phi",
+        "psi",
+        "sub"
+      ]
+    },
+    "1CS9": {
+      "CLEAN": true,
+      "differences": {},
+      "n_bit_identical": 19,
+      "n_quantities_compared": 19,
+      "nan_leaked_into": [],
+      "only_baseline_keys": [],
+      "only_poisoned_keys": [],
+      "poisoned_fields": [
+        "ca",
+        "phi",
+        "psi"
+      ],
+      "quantities": [
+        "amber.ca",
+        "amber.e0",
+        "amber.e1",
+        "amber.moved",
+        "amber.phi",
+        "amber.psi",
+        "amber.strain_after",
+        "avg_ca",
+        "ca",
+        "fit_ca",
+        "fold",
+        "n",
+        "n_candidates",
+        "n_distinct",
+        "n_top",
+        "n_windows",
+        "phi",
+        "psi",
+        "sub"
+      ]
+    }
+  }
+}

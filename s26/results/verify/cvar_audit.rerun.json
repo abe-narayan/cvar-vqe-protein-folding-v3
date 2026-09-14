@@ -1,0 +1,40 @@
+{
+ "audit": "cvar_audit",
+ "script": "verify/cvar_audit.py",
+ "argv": [],
+ "tag": "CPU",
+ "est_ram_gb": 0.6,
+ "cost": "light",
+ "note": "core.quantum on synthetic energies; pennylane import",
+ "tracked": [
+  "cvar_audit.json"
+ ],
+ "started": "2026-09-14T02:02:28",
+ "wall_s": 0.9,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\cvar_audit.json",
+   "written": "s26\\results\\verify\\verify__cvar_audit.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "cvar_audit.json": {
+   "n_tracked_leaves": 18,
+   "n_fresh_leaves": 18,
+   "identical": 18,
+   "close": 0,
+   "different": 0,
+   "run_property_different": 0,
+   "added": [],
+   "removed": [],
+   "diffs": [],
+   "run_property_diffs": [],
+   "n_added": 0,
+   "n_removed": 0,
+   "verdict": "IDENTICAL",
+   "fresh_path": "s26\\results\\verify\\verify__cvar_audit.json"
+  }
+ }
+}

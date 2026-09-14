@@ -1,0 +1,49 @@
+{
+ "audit": "headline_audit",
+ "script": "verify/headline_audit.py",
+ "argv": [],
+ "tag": "CPU",
+ "est_ram_gb": 0.5,
+ "cost": "light",
+ "note": "recorded constants vs s9/synth_cache and bench_results; READ ONLY on the benchmark aggregate s9/final_report.json",
+ "tracked": [
+  "headline_audit.json"
+ ],
+ "started": "2026-09-14T02:02:44",
+ "wall_s": 0.6,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\headline_audit.json",
+   "written": "s26\\results\\verify\\verify__headline_audit.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "headline_audit.json": {
+   "n_tracked_leaves": 123,
+   "n_fresh_leaves": 131,
+   "identical": 123,
+   "close": 0,
+   "different": 0,
+   "run_property_different": 0,
+   "added": [
+    "harness_cfg.legacy",
+    "harness_cfg.legacy_top",
+    "harness_cfg.quantum",
+    "harness_cfg.report_single_start_fit",
+    "harness_cfg.vqe_iters",
+    "harness_cfg.vqe_layers",
+    "harness_cfg.vqe_qubits",
+    "harness_cfg.vqe_seed"
+   ],
+   "removed": [],
+   "diffs": [],
+   "run_property_diffs": [],
+   "n_added": 8,
+   "n_removed": 0,
+   "verdict": "DIFFERS",
+   "fresh_path": "s26\\results\\verify\\verify__headline_audit.json"
+  }
+ }
+}

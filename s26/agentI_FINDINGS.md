@@ -272,3 +272,63 @@ shipped mode bit-identical to the legacy baseline after the edits.
 `s26/i_test_report.py`; `s26/examine.py`, `s26/i_claim_check.py`, `s26/results/claims.json`,
 `s26/results/claim_check.json`, `examine.sh`, `examine.bat`; README section; ledger L6, L7, L8,
 L9, L10, L15, L16, L18, L19, L20, L21.
+
+---
+
+# EXTENDED WINDOW (L77, 22:05 to 04:30): EVERY TEST AND DIAGNOSTIC THAT COULD BE RUN
+
+Closure table for the six extended-window items (commit hashes are lane-I commits unless noted).
+
+| item | disposition | commit | artefacts | ledger |
+|---|---|---|---|---|
+| (1) opt-in test tier, `VERIFY_SLOW=1` on the 11 skips | DONE: 11 run, 11 passed; equivalence 3/3 (40.2 s, 0.313 GB), integration 8/8 (165.6 s, 1.139 GB). Two defects found on the way: the L92 relaunch had dropped the flag from my shell (one null run set aside, L98), and `tests/test_equivalence.py`'s summary parser could never have run its three arms (fixed, L102). Suite with the tier folded in: **370 tests, 368 passed, 0 failed, 2 skipped** (absent artefacts) | `7be8e4b0`, `7e08b968`, `7ad4ef68` (+ `a6ce3ab6`, swept in by PH) | `s26/TEST_RUN.md`, `s26/results/test_run.json`, `s26/results/pytest_slow_{equivalence,integration}.xml`, `s26/logs/pytest_slow_*`, the `.NULLRUN_*` / `.PARSER_SKIP_*` files set aside | L98, L102, L104, L113 |
+| (2) every `verify/` audit re-run, JSON beside the tracked one, diffed | VERIFY_DISPOSITION. Nothing tracked was overwritten (sha256 asserted per audit; deletion guards probed) | `b0912487`, `2505e575`, closing commit | `s26/i_verify_rerun.py`, `s26/results/verify/REPORT.md`, `REPORT.json`, `<audit>.rerun.json`, `verify__<name>.json`, `s26/logs/verify_*.log`, `s26/jobs_done/verify_*.json` | VERIFY_TABLE_LEDGER |
+| (3) frozen results-lab rebuild | DONE, **REPRODUCED**: 2016/2016 per-target RMSDs exact on both bases, every leaderboard number / gate / verdict identical (3.2126 / 3.0483, WARN 2, PASS), 2142/2142 PDB ATOM records identical, L7 WARN text present; `results/summary` committed, structures restored; the tracked leaderboard's three descriptive columns were written by uncommitted code and do not reproduce | `083c9b95` | `s26/i_resultslab_rebuild.py`, `s26/results/resultslab_rebuild/{snapshot_before.json,post_verdict.json,post_stdout.txt,summary_before/}`, `s26/logs/resultslab_rebuild.log` | L127 |
+| (4) final AST gate against `ae86a124` | DONE: 55 production modules, 50 identical, the 5 differing files exactly the L10 / L15 edits | `858a1be2` | `s26/results/ast_gate_ae86a124.txt` | L98 |
+| (5) `python s26/examine.py` on the final tree | DONE (job `i_examine_final`, 15 s, peak RSS 0.452 GB): 787 modules mapped; no drift across the 101 pinned entries, the sealed benchmark manifest still hashes to the S20 record; 21/21 claims re-read OK from their artefacts (production 3.2148 / 3.0483 / 3.2355 / 3.2041 means of the 126 cache records, the compare deltas, the leaderboard row and gate, the pinned hashes, the S8-13 transfer law, the S26 test totals) | closing commit | `s26/logs/i_examine_final.log`, `s26/results/claim_check.json`, `module_map.json` | closing entry |
+| (6) ledger entries and this table | DONE | closing commit | this section | L98, L102, L104, L113, L127, L128, VERIFY_TABLE_LEDGER, closing entry |
+
+## E1. The opt-in tier (item 1)
+
+Tiers: DEMONSTRATED. Job `pytest_slow_equivalence3` (AMBER, flag inside the command, tree `7e08b968`): 3 passed in 40.2 s, peak RSS 0.313 GB; both arms served from the on-disk caches (production `1fc9f2dcf489e2fb`, baseline `464a0ddb5f283e04`, mtimes 2026-09-04), which the test's docstring allows, so the tier certifies the equivalence of the two recorded arms up to the projection (`avg_ca` and seven scalars `==` on 8/8) and that the projection's divergence stays inside its pinned band. Job `pytest_slow_integration2` (AMBER, registered 01:33 after 4,620 s in the queue): 8 passed in 165.6 s, peak RSS 1.139 GB: Legacy terms column-for-column on a real pool; ff14SB/GBn2 parameters against a System built from the same XML; the pinned 1A13 interaction energy bit-exact; rigid-translation invariance; NaN-poisoning through `run_target` with stage 4 on 1CS9 and 1CB3; cross-process and 4-thread bit-identity through child processes.
+
+What damaged my expectations here: (a) the relaunch by another lane dropped `VERIFY_SLOW=1` because it lived in my shell, not in the command (L98); an environment a job needs belongs in its command. (b) The three equivalence arms had never run, in any recorded suite: `_run_arm` located the summary with `rfind("{")`, which on an `indent=2` dump is a nested brace, and the `except` turned the parse failure into a skip (L102). Every "13 skipped" on the record included three tests that could not run.
+
+## E2. The `verify/` audits (item 2)
+
+Runner: `s26/i_verify_rerun.py` executes each audit in-process with `builtins.open`, `os.replace`, `os.rename`, `os.remove`, `os.unlink`, `shutil.move`, `shutil.rmtree` wrapped: writes under `verify/` or `bench_results/` are redirected to `s26/results/verify/`, deletions and move-outs there are refused (six operations probed), the tracked file's sha256 is asserted unchanged after every run, and the fresh JSON is compared with the tracked one leaf by leaf. `determinism_audit` runs D1/D3/D4/D5 by function and not D2, which as written moves the last two PRODUCTION cache records to a temp dir, re-runs smoke8 (which does not contain them) and rmtree's the backup.
+
+VERIFY_TABLE_FINDINGS
+
+## E3. The rebuild (item 3)
+
+DEMONSTRATED, L127. Governed job `resultslab_rebuild` (the documented command unchanged; 4,472.9 s under seven concurrent jobs, peak RSS 0.11 GB, after 4,765 s in the queue). Bracketed by `s26/i_resultslab_rebuild.py`: `pre` snapshotted the tracked `results/summary` and the sha256 + ATOM-record sha256 of all 2,142 tracked PDBs; `post` compared. Verdict REPRODUCED on every number (`s26/results/resultslab_rebuild/post_verdict.json`). Byte-wise, the committed `results/summary` changed in: provenance blocks; per-record timestamp / git_commit / module_hash; `results.csv`'s `hamiltonians` (code -> name) and `distogram_used` ('' -> true/false), now consistent with `results.json`; `pool_gate_rule` now carries the L7 text. `leaderboard.json` lost three descriptive per-row keys (`selector`, `hamiltonians`, `distogram_used`) that no committed `schema.py` produces: the tracked build ran from a dirty working copy. Not hand-patched. `results/structures` restored to the tracked bytes (only `REMARK GIT_COMMIT` / `MODULE_SHA` differed).
+
+## E4. The AST gate (item 4)
+
+DEMONSTRATED, L98. `s26/i_ast_check.py --ref ae86a124` over `core/` (11), the 24 root modules and `s5/ s7/ s8/ s9/` (20): 50 AST-identical modulo docstrings; `core/amber.py`, `core/bench.py`, `core/cache.py`, `core/predict.py` differ by one removed import each (L10) and `core/data.py` by the `norm` keyword on `identity` / `identity_many` and the removed dead `_seq_index` (L15). `s26/results/ast_gate_ae86a124.txt`.
+
+## E5. Governor defect found on the way (L128)
+
+A job whose root process blocks in `subprocess.run` reads "running" to psutil after `suspend()`, so the governor re-suspended my `verify_grad_key_collision` tree on every hot sample (18 SUSPEND lines, 0 RESUME) and, Windows counting suspends per thread, the child needed 16 `resume()` calls; 28 minutes lost. `s26/i_tree_watchdog.py` guards lane I's own jobs only (resumes a stopped descendant when the root is running; never touches a governor-suspended root or another lane's job). Two-line fix proposed in L128 for the governor itself.
+
+## E6. Hygiene list for the next sprint (from what broke in this one)
+
+1. **A launcher's cap is read at every tick from the day it is written.** Seven waiters started before jobrun v2.3 read the cap of four at import and starved for two hours under a file cap of six (L92); the fix was one line, the cost was a lane's evening.
+2. **A file-based stop request instead of CTRL_BREAK.** The governor's kill path sends `CTRL_BREAK_EVENT` to a process group and waits 25 s for a checkpoint; on Windows the signal does not reach a grandchild reliably and a suspended tree cannot handle it at all. A job that polls `s26/stop/<name>` every few seconds and checkpoints on its own is deterministic and testable.
+3. **The supervisor's own state is the truth for suspensions.** The governor decided "suspended" from psutil's status of the ROOT process; a root blocked in `subprocess.run` reads running after `suspend()`, so it was re-suspended 18 times, never resumed, and the child accumulated 16 stacked suspends (L128). Keep the suspended set in the governor's state, act on that, and on resume loop until the tree runs.
+4. **A test's summary parser must fail, not skip.** `tests/test_equivalence.py` turned a parse failure into a skip, and the three opt-in arms had never run in any recorded suite (L102). A skip is a statement that the test does not apply; a parse failure is a defect.
+5. **A job's environment belongs in its command.** `VERIFY_SLOW=1` lived in my shell; the relaunch by another lane re-ran the command faithfully and the tier ran as eight skips in five seconds (L98).
+6. **Stage and commit in one call.** Eight lanes share one git index; four staged lane-I files were swept into another lane's commit (L104). Or give each lane a worktree.
+7. **A number enters the ledger only in a turn after its output was read.** L7's two wrong point-cloud numbers, corrected in L9.
+8. **A generated artefact is not hand-patched; a column no committed code produces is a finding.** The tracked leaderboard's three descriptive columns came from a dirty working copy (L127); the repair is the one-function schema fix and a rebuild, not an edit.
+9. **No audit under `verify/` may mutate a production cache.** `determinism_audit` D2 moves and then deletes two records of `bench_results/cache/1fc9f2dcf489e2fb` as written (E2); re-runs must redirect writes and refuse deletions under evidence directories (`s26/i_verify_rerun.py` does both).
+10. **An audit whose arms are cache keys must record the keys it needs and refuse silently vacuous comparisons.** `project_arms` with a repeated key reports identity by construction; `equiv_compare` recomputes keys that move whenever `Config` gains a field.
+11. **Estimate memory from a measured peak, never from a guess, and record it beside the result.** Every job in this lane carries its `peak_rss_gb` from `s26/jobs_done/`; the largest lane-I job of the window was the integration tier at 1.139 GB against an estimate of 1.8.
+
+## E7. What I did not do in the window, and why
+
+- Did not run the audits past the 03:30 deadline; the heavy 126-target projection audits that did not complete are recorded as NOT RUN with their cost class.
+- Did not hand-patch the rebuilt leaderboard's three missing descriptive columns: a generated artefact is not edited by hand; the one-function schema fix and a 75-minute rebuild are recommended instead (L127).
+- Did not run `determinism_audit` D2 (it would delete two production-cache records) nor `projection_divergence` on invented arms (its two smoke8 caches are gone; on baseline vs production it trips on 7 S11 baseline records whose AMBER declined at the 92% ceiling; `project_arms` fresh answers its question: 126/126 bit-identical).
+- Did not run the AMBER-inclusive `verify/run_equiv2.sh` (L19 stands).

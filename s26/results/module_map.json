@@ -1,6 +1,6 @@
 {
  "root": "C:\\Users\\abena\\Protein-Folding-Algorithm",
- "n_modules": 725,
+ "n_modules": 787,
  "skipped_dirs": [
   ".git",
   ".pytest_cache",
@@ -300,6 +300,8 @@
     "s21.qb3_run",
     "s23.agentB_h5_carestraint",
     "s26.ph_c3",
+    "s26.ph_relief",
+    "s26.ph_validity",
     "tests.test_amber",
     "tests.test_amber_frame_invariance",
     "tests.test_integration",
@@ -309,7 +311,7 @@
     "verify.amber_threads",
     "verify.hazard_audit"
    ],
-   "n_importers": 37,
+   "n_importers": 39,
    "backend_names": {
     "default": [
      "amber"
@@ -513,11 +515,17 @@
     "s26.p_ladder",
     "s26.p_ladder_test",
     "s26.p_probe_esm",
+    "s26.w_ensemble",
+    "s26.w_ensemble_test",
+    "s26.w_provenance",
+    "s26.w_provenance_test",
+    "s26.w_recall",
+    "s26.w_selfcopy",
     "tests.test_data",
     "tests.test_geometry",
     "tests.test_instrument"
    ],
-   "n_importers": 17,
+   "n_importers": 23,
    "backend_names": {
     "default": [
      "data"
@@ -659,11 +667,13 @@
     "s26.ph_cis",
     "s26.ph_lib",
     "s26.ph_reject",
+    "s26.ph_relief",
+    "s26.ph_validity",
     "s26.test_ph_synthetic",
     "tests.test_geometry",
     "tests.test_instrument"
    ],
-   "n_importers": 46,
+   "n_importers": 48,
    "backend_names": {
     "default": [
      "geometry",
@@ -765,6 +775,7 @@
     "s26.i_run_equiv2_arm",
     "s26.q_adapt",
     "s26.q_tests",
+    "s26.w_selfcopy",
     "tests.test_equivalence",
     "tests.test_integration",
     "tests.test_pipeline",
@@ -774,7 +785,7 @@
     "verify.leak_audit",
     "verify.vqe_lfo_audit"
    ],
-   "n_importers": 26,
+   "n_importers": 27,
    "backend_names": {}
   },
   "core.predict": {
@@ -826,11 +837,16 @@
     "s25.locrun",
     "s25.temper",
     "s26.e_trace",
+    "s26.p_c5",
+    "s26.p_coh",
     "s26.p_ladder",
     "s26.p_ladder_test",
+    "s26.w_amberprior",
+    "s26.w_ladder",
+    "s26.w_selfcopy",
     "tests.test_data"
    ],
-   "n_importers": 22,
+   "n_importers": 27,
    "backend_names": {
     "default": [
      "predict"
@@ -912,10 +928,11 @@
     "s24.c_probe3",
     "s24.c_probe4",
     "s25.resultslab.exportlib",
+    "s26.ph_branch",
     "tests.test_integration",
     "tests.test_project"
    ],
-   "n_importers": 40,
+   "n_importers": 41,
    "backend_names": {
     "default": [
      "project"
@@ -1067,6 +1084,7 @@
     "s25.q_verify",
     "s26.q_adapt",
     "s26.q_tests",
+    "s26.q_var_boot",
     "tests.test_amber",
     "tests.test_cvar",
     "tests.test_integration",
@@ -1074,7 +1092,7 @@
     "verify.ansatz_audit",
     "verify.cvar_audit"
    ],
-   "n_importers": 55,
+   "n_importers": 56,
    "backend_names": {
     "default": [
      "quantum"
@@ -5943,19 +5961,40 @@
     "s25.resultslab.schema",
     "s25.resultslab.test_export",
     "s25.temper",
+    "s26.a_strain_vs_spread",
     "s26.e_reproduce",
     "s26.e_trace",
     "s26.i_identity_audit",
+    "s26.p_b3",
+    "s26.p_c4",
+    "s26.p_c5",
+    "s26.p_coh",
+    "s26.p_deliver",
     "s26.p_ladder",
     "s26.p_ladder_test",
     "s26.p_probe_esm",
+    "s26.p_rung_report",
+    "s26.ph_branch",
     "s26.ph_c3",
+    "s26.ph_cis",
     "s26.ph_lib",
     "s26.ph_reject",
+    "s26.ph_strain",
+    "s26.pr_figures",
+    "s26.w_amberprior",
+    "s26.w_ensemble",
+    "s26.w_ensemble_test",
+    "s26.w_ladder",
+    "s26.w_provenance",
+    "s26.w_provenance_readout",
+    "s26.w_recall",
+    "s26.w_selfcopy",
+    "s26.w_selfcopy_test",
+    "s26.w_tiebreak",
     "tests.test_amber_frame_invariance",
     "tests.test_instrument"
    ],
-   "n_importers": 478,
+   "n_importers": 499,
    "backend_names": {}
   },
   "s12.key_corpus": {
@@ -14889,9 +14928,14 @@
     "s25.phys_form5",
     "s25.phys_suite",
     "s25.temper",
-    "s26.ph_lib"
+    "s26.ph_lib",
+    "s26.w_amberprior",
+    "s26.w_ensemble",
+    "s26.w_provenance_readout",
+    "s26.w_recall",
+    "s26.w_tiebreak"
    ],
-   "n_importers": 221,
+   "n_importers": 226,
    "backend_names": {}
   },
   "s16": {
@@ -15548,9 +15592,10 @@
     "s22.qcand_lib",
     "s24.d_harness",
     "s26.ph_c3",
+    "s26.ph_validity",
     "tests.test_amber_frame_invariance"
    ],
-   "n_importers": 39,
+   "n_importers": 40,
    "backend_names": {}
   },
   "s16.energy_repair": {
@@ -26774,21 +26819,49 @@
     "s25.resultslab.exportlib",
     "s25.resultslab.schema",
     "s25.resultslab.site",
+    "s26.a_c26_phi_mae",
+    "s26.a_dla_check",
+    "s26.a_reproduce_head",
+    "s26.a_strain_vs_spread",
+    "s26.e_report_check",
     "s26.e_reproduce",
     "s26.e_trace",
     "s26.i_identity_audit",
     "s26.i_test_report",
+    "s26.p_b3",
+    "s26.p_c4",
+    "s26.p_c5",
+    "s26.p_coh",
+    "s26.p_deliver",
     "s26.p_ladder",
+    "s26.p_rung_report",
+    "s26.ph_branch",
     "s26.ph_c3",
     "s26.ph_cis",
     "s26.ph_lib",
     "s26.ph_reject",
+    "s26.ph_relief",
+    "s26.ph_relief_reject",
+    "s26.ph_validity",
     "s26.q_adapt",
     "s26.q_dla",
+    "s26.q_dla_a1",
     "s26.q_mde",
-    "s26.q_var"
+    "s26.q_var",
+    "s26.q_var_boot",
+    "s26.w_amberprior",
+    "s26.w_bound_addendum",
+    "s26.w_ensemble",
+    "s26.w_identity_floor_stats",
+    "s26.w_ladder",
+    "s26.w_provenance",
+    "s26.w_provenance_readout",
+    "s26.w_recall",
+    "s26.w_selfcopy",
+    "s26.w_tiebreak",
+    "s26.w_tiebreak_report"
    ],
-   "n_importers": 40,
+   "n_importers": 68,
    "backend_names": {}
   },
   "s25.agentCLEAN_classify": {
@@ -27860,6 +27933,246 @@
    "n_importers": 0,
    "backend_names": {}
   },
+  "s26.a_append_checks": {
+   "path": "s26/a_append_checks.py",
+   "lines": 190,
+   "sha256": "50bcd35bb8a4935c32a78d5835837250bcec96867a38e08394a53b00c0bd09a5",
+   "doc": "s26/a_append_checks.py -- lane A: append the adversary-check ledger entries atomically.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "io",
+    "os",
+    "re",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.a_append_l43_l44": {
+   "path": "s26/a_append_l43_l44.py",
+   "lines": 118,
+   "sha256": "d4c19f51d280320eb111ffe67ef3bce791f26bff533d7089e2fb541ea75c0982",
+   "doc": "s26/a_append_l43_l44.py -- lane A: append the adversary checks of L43 and L44 atomically.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "io",
+    "os",
+    "re",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.a_append_l53_followup": {
+   "path": "s26/a_append_l53_followup.py",
+   "lines": 62,
+   "sha256": "38e14aae9e6d5ba5bb7df6f91fc16f3159481e8ad5786bedde62348804cdd80e",
+   "doc": "s26/a_append_l53_followup.py -- lane A: the L81 follow-up now that the pool-spread control has run.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "io",
+    "os",
+    "re",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.a_append_l64_l68": {
+   "path": "s26/a_append_l64_l68.py",
+   "lines": 113,
+   "sha256": "67f9e4f7fe1890c830893f6e7c6d44cdada23218317e399198bec393052c01aa",
+   "doc": "s26/a_append_l64_l68.py -- lane A: append the adversary checks of L68 and L64 atomically.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "io",
+    "os",
+    "re",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.a_append_l84_l93": {
+   "path": "s26/a_append_l84_l93.py",
+   "lines": 136,
+   "sha256": "bdb543135d0ec26f320a2e32114affab1307ee51f0335b5e15f66e80dab67711",
+   "doc": "s26/a_append_l84_l93.py -- lane A: adversary checks of L84-L91 and L93, four entries, atomic.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "io",
+    "os",
+    "re",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.a_append_proposals": {
+   "path": "s26/a_append_proposals.py",
+   "lines": 91,
+   "sha256": "a095882ac6b4b7ffe53949171af598ffbda332a4394e0da6dc3a33030468a670",
+   "doc": "s26/a_append_proposals.py -- lane A: adversary check of PROPOSAL_B.md, PROPOSAL_C.md and L117.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "io",
+    "os",
+    "re",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.a_append_rungs": {
+   "path": "s26/a_append_rungs.py",
+   "lines": 140,
+   "sha256": "d7855d32e1656190f02ad2ea354129093db668839fccdd05e875f6c2227c12d0",
+   "doc": "s26/a_append_rungs.py -- lane A: append four adversary entries atomically (rungs; L52; L53; L70 correction).",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "io",
+    "os",
+    "re",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.a_c26_phi_mae": {
+   "path": "s26/a_c26_phi_mae.py",
+   "lines": 95,
+   "sha256": "1545bafd63a66c32414b3ab545c4cce3673a2153a8629f2f0f6e15554aa04436",
+   "doc": "s26/a_c26_phi_mae.py -- lane A (Adversary): re-derive claim C26 from the S13 torsion cache.",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 40,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.a_dla_check": {
+   "path": "s26/a_dla_check.py",
+   "lines": 177,
+   "sha256": "48a7d4b1cc4046159dc90c5d0dd390ab313f39d90115eae6ee1f1475a20f1822",
+   "doc": "s26/a_dla_check.py -- lane A (Adversary): independent re-derivation of lane Q's A2 (L27).",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 146,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "itertools",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.a_reproduce_head": {
+   "path": "s26/a_reproduce_head.py",
+   "lines": 40,
+   "sha256": "286700372bad5698aea6b0371d9f1135f019965cfe014a70f10401139ad07f62",
+   "doc": "s26/a_reproduce_head.py -- lane A (Adversary): re-run lane E's s26/e_reproduce.py on HEAD.",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 22,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "importlib",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.a_strain_vs_spread": {
+   "path": "s26/a_strain_vs_spread.py",
+   "lines": 97,
+   "sha256": "eeefd6270b427a66ffbc179d41ed14c938f2070bb0be664357611c6009153a1b",
+   "doc": "s26/a_strain_vs_spread.py -- lane A: adversary check of L53 (strain difficulty).",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 19,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 20,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "glob",
+    "json",
+    "numpy",
+    "os",
+    "scipy",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.a_update_docs": {
+   "path": "s26/a_update_docs.py",
+   "lines": 71,
+   "sha256": "95fb7698ffb4e8e52d1b41721f5f1c8b2abdcf3a8d1fbac40dc75bb08c98ad7e",
+   "doc": "s26/a_update_docs.py -- lane A: append the slide-qualifier table to agentA_FINDINGS.md,",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "datetime",
+    "io",
+    "os",
+    "re"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
   "s26.e_claims": {
    "path": "s26/e_claims.py",
    "lines": 368,
@@ -27911,6 +28224,37 @@
     "os",
     "subprocess",
     "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.e_report_check": {
+   "path": "s26/e_report_check.py",
+   "lines": 697,
+   "sha256": "2a9e20688d147ead310aaa1327bbd9020c97b9b8ff4c74d78319455f651053f3",
+   "doc": "s26/e_report_check.py -- every number in s26/REPORT.md Appendix B against its artefact.",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 685,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "fnmatch",
+    "glob",
+    "hashlib",
+    "io",
+    "json",
+    "math",
+    "os",
+    "re",
+    "sys",
+    "time"
    ],
    "imported_by": [],
    "n_importers": 0,
@@ -28037,8 +28381,8 @@
   },
   "s26.examine": {
    "path": "s26/examine.py",
-   "lines": 66,
-   "sha256": "f2dc7cdbb6ffa098253e72a0e37e24e95f4ba4526b344b5346be7e0d0d7770b5",
+   "lines": 76,
+   "sha256": "705948de5fa1f4440bc71a3d4b920f3a4893cebe66b1087f2a0101e69f3b8613",
    "doc": "s26/examine.py -- the repository's `make examine` (there is no Makefile; `examine.sh` and",
    "imports_repo": [],
    "imports_third_party": [
@@ -28047,6 +28391,7 @@
     "e_claims",
     "e_hashes",
     "e_module_map",
+    "e_report_check",
     "i_claim_check",
     "os",
     "sys"
@@ -28057,8 +28402,8 @@
   },
   "s26.governor": {
    "path": "s26/governor.py",
-   "lines": 413,
-   "sha256": "cc6f007c684be8d1822bdea1bbd207482b3b2412fb0f277d7d0b919db031be7f",
+   "lines": 471,
+   "sha256": "4962bf9300f1f92551a5d7ef64fada1ee477c9fda5babd2fd684285a5ff715f4",
    "doc": "s26/governor.py - the Sprint 26 resource governor.",
    "imports_repo": [],
    "imports_third_party": [
@@ -28193,6 +28538,28 @@
    "n_importers": 0,
    "backend_names": {}
   },
+  "s26.i_resultslab_rebuild": {
+   "path": "s26/i_resultslab_rebuild.py",
+   "lines": 261,
+   "sha256": "be78521315facbcdaad3ffb6af7d5eef144f6f5aae8e51c263b99bc480926b24",
+   "doc": "s26/i_resultslab_rebuild.py -- the frozen results-lab rebuild, bracketed so it can be judged.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "glob",
+    "hashlib",
+    "json",
+    "os",
+    "shutil",
+    "subprocess",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
   "s26.i_run_equiv2_arm": {
    "path": "s26/i_run_equiv2_arm.py",
    "lines": 56,
@@ -28220,8 +28587,8 @@
   },
   "s26.i_test_report": {
    "path": "s26/i_test_report.py",
-   "lines": 173,
-   "sha256": "6630c5545de9294657eefa2dd6c1268c8c15a34350bb8c6f0488726db17e04e9",
+   "lines": 197,
+   "sha256": "dd4738788c85dd2016b1b2dc51fc7a0236f8941c45f370f3492afec839aa40b9",
    "doc": "s26/i_test_report.py -- per-file test counts, skip reasons and peak RSS for the S26 record.",
    "imports_repo": [
     {
@@ -28245,10 +28612,73 @@
    "n_importers": 0,
    "backend_names": {}
   },
+  "s26.i_tree_watchdog": {
+   "path": "s26/i_tree_watchdog.py",
+   "lines": 82,
+   "sha256": "2bcfb69c17ce76d74a702ebae2d2ed7ae5209936eb76a2808ab46365d2d87a3a",
+   "doc": "s26/i_tree_watchdog.py -- keep a lane's job trees consistent with the governor's view.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "glob",
+    "json",
+    "os",
+    "psutil",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.i_verify_rerun": {
+   "path": "s26/i_verify_rerun.py",
+   "lines": 481,
+   "sha256": "1ad90a308cc4707441d4ebb3d886858c7f2c395f2622d2b4edfc16a792c29d01",
+   "doc": "s26/i_verify_rerun.py -- re-run the standalone audits under verify/ WITHOUT touching their",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "builtins",
+    "hashlib",
+    "json",
+    "math",
+    "os",
+    "re",
+    "runpy",
+    "shutil",
+    "subprocess",
+    "sys",
+    "time",
+    "traceback"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.i_verify_table": {
+   "path": "s26/i_verify_table.py",
+   "lines": 92,
+   "sha256": "2ad27fd37f64f5541066a51dc494ad6e4db25915f07a0b6b6a365fbab5aa624a",
+   "doc": "s26/i_verify_table.py -- the 20-audit table for the ledger and the findings, from",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "glob",
+    "i_verify_rerun",
+    "json",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
   "s26.jobrun": {
    "path": "s26/jobrun.py",
-   "lines": 170,
-   "sha256": "19f290b185b59ee42015bad5b1a28ace67d1583cd0a8058c8624cb23b0ad6c91",
+   "lines": 209,
+   "sha256": "bd76134bb7e3e4fa7a5daa3b948f56b5ecd514fc0f24c89ea3888ed2b66930cf",
    "doc": "s26/jobrun.py - launch one job under the S26 governor.",
    "imports_repo": [],
    "imports_third_party": [
@@ -28258,9 +28688,254 @@
     "os",
     "pathlib",
     "psutil",
+    "random",
     "subprocess",
     "sys",
     "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.p_b3": {
+   "path": "s26/p_b3.py",
+   "lines": 207,
+   "sha256": "c00a55e2a9999cb9327a8c80147af5b906945f12d4c22ba2878cdeec280eb055",
+   "doc": "s26/p_b3.py -- PREREG_B3: where does the pipeline gain over sequence-only, and is that set",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 44,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 45,
+     "lazy": false
+    },
+    {
+     "module": "s26.p_stats",
+     "as_written": "s26.p_stats",
+     "line": 46,
+     "lazy": false
+    },
+    {
+     "module": "s26.p_ladder",
+     "as_written": "s26.p_ladder",
+     "line": 47,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "glob",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [
+    "s26.p_c4",
+    "s26.p_c5"
+   ],
+   "n_importers": 2,
+   "backend_names": {}
+  },
+  "s26.p_c4": {
+   "path": "s26/p_c4.py",
+   "lines": 261,
+   "sha256": "2f9b6c132151f5db8c492677f9550fe34c0914306fbba8dc157a20ab9d365ad3",
+   "doc": "s26/p_c4.py -- PREREG_C4: routers for the per-target set size m* and scale s* on a feature set",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 47,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 48,
+     "lazy": false
+    },
+    {
+     "module": "s26.p_stats",
+     "as_written": "s26.p_stats",
+     "line": 49,
+     "lazy": false
+    },
+    {
+     "module": "s26.p_ladder",
+     "as_written": "s26.p_ladder",
+     "line": 50,
+     "lazy": false
+    },
+    {
+     "module": "s26.p_b3",
+     "as_written": "s26.p_b3",
+     "line": 51,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.p_c5": {
+   "path": "s26/p_c5.py",
+   "lines": 241,
+   "sha256": "1723d98e74a3f3e3703394a38f32796502f30e0219f56db8467e4493343a8052",
+   "doc": "s26/p_c5.py -- PREREG_C5: predict the common-mode direction on held-out folds and subtract it.",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 36,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 37,
+     "lazy": false
+    },
+    {
+     "module": "s26.p_stats",
+     "as_written": "s26.p_stats",
+     "line": 38,
+     "lazy": false
+    },
+    {
+     "module": "s26.p_ladder",
+     "as_written": "s26.p_ladder",
+     "line": 39,
+     "lazy": false
+    },
+    {
+     "module": "s26.p_b3",
+     "as_written": "s26.p_b3",
+     "line": 40,
+     "lazy": false
+    },
+    {
+     "module": "core.predict",
+     "as_written": "core.predict",
+     "line": 41,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.p_coh": {
+   "path": "s26/p_coh.py",
+   "lines": 180,
+   "sha256": "d588876a2faf161a055fe19da9d59dafadfae3db5d18cf7848286f16e1c39523",
+   "doc": "s26/p_coh.py -- PREREG_coherence: retrain the shipped MLP with (a) a short-favouring per-pair",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 31,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 32,
+     "lazy": false
+    },
+    {
+     "module": "s26.p_ladder",
+     "as_written": "s26.p_ladder",
+     "line": 33,
+     "lazy": false
+    },
+    {
+     "module": "core.predict",
+     "as_written": "core.predict",
+     "line": 34,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.p_deliver": {
+   "path": "s26/p_deliver.py",
+   "lines": 89,
+   "sha256": "54913ac514df945107eef05e69eb8f89ed9138eb8240b1f60ae8085ebd8d4977",
+   "doc": "s26/p_deliver.py -- hand the best C2 rung's BUILT CHAINS to lane PH for C3 stage 2.",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 35,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 36,
+     "lazy": false
+    },
+    {
+     "module": "s26.p_ladder",
+     "as_written": "s26.p_ladder",
+     "line": 37,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.p_fix_l120": {
+   "path": "s26/p_fix_l120.py",
+   "lines": 67,
+   "sha256": "fdbba494c88d3da3727d7f1bceb4f16901a84a4b1b839576fe1d9021e1651058",
+   "doc": "One-off: apply the ledger-L120 corrections to PROPOSAL_C.md / PROPOSAL_B.md / findings, and post the answer.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "datetime",
+    "json",
+    "os",
+    "re"
    ],
    "imported_by": [],
    "n_importers": 0,
@@ -28316,9 +28991,15 @@
     "torch"
    ],
    "imported_by": [
-    "s26.p_ladder_test"
+    "s26.p_b3",
+    "s26.p_c4",
+    "s26.p_c5",
+    "s26.p_coh",
+    "s26.p_deliver",
+    "s26.p_ladder_test",
+    "s26.p_rung_report"
    ],
-   "n_importers": 1,
+   "n_importers": 7,
    "backend_names": {}
   },
   "s26.p_ladder_test": {
@@ -28357,6 +29038,31 @@
     "os",
     "sys",
     "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.p_ledger_rung": {
+   "path": "s26/p_ledger_rung.py",
+   "lines": 63,
+   "sha256": "8259758d88718b0d34bdbf68fcb942207e70ead5e63ad2c9cfc1d4bcdf1867e7",
+   "doc": "s26/p_ledger_rung.py -- post one rung's report to s26/LEDGER.md as the next free L<n>.",
+   "imports_repo": [
+    {
+     "module": "s26.p_rung_report",
+     "as_written": "s26.p_rung_report",
+     "line": 23,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "datetime",
+    "os",
+    "re",
+    "sys"
    ],
    "imported_by": [],
    "n_importers": 0,
@@ -28417,6 +29123,46 @@
    "n_importers": 0,
    "backend_names": {}
   },
+  "s26.p_rung_report": {
+   "path": "s26/p_rung_report.py",
+   "lines": 139,
+   "sha256": "af4a2683cf41da1afe9a1f1eaa7fa18167f4ded2ddcfe54abbabad6ee78dbe09",
+   "doc": "s26/p_rung_report.py -- the ledger block for ONE rung of the C2 ladder against the shipped posterior.",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 27,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 28,
+     "lazy": false
+    },
+    {
+     "module": "s26.p_ladder",
+     "as_written": "s26.p_ladder",
+     "line": 29,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "glob",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [
+    "s26.p_ledger_rung"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
   "s26.p_stats": {
    "path": "s26/p_stats.py",
    "lines": 115,
@@ -28427,8 +29173,12 @@
     "__future__",
     "numpy"
    ],
-   "imported_by": [],
-   "n_importers": 0,
+   "imported_by": [
+    "s26.p_b3",
+    "s26.p_c4",
+    "s26.p_c5"
+   ],
+   "n_importers": 3,
    "backend_names": {}
   },
   "s26.ph_append_census": {
@@ -28447,52 +29197,46 @@
    "n_importers": 0,
    "backend_names": {}
   },
-  "s26.ph_c3": {
-   "path": "s26/ph_c3.py",
-   "lines": 347,
-   "sha256": "0b3475db8daa00b371b5a66cd21efcb5cc65e63cbd23024d1ce85435440b1f9e",
-   "doc": "s26/ph_c3.py -- C3, THE MATCHED-RANDOM CONTROL FOR AMBER REFINEMENT (lane PH, S26).",
+  "s26.ph_branch": {
+   "path": "s26/ph_branch.py",
+   "lines": 243,
+   "sha256": "011d684abff3dd21ba565baa5ac186f7b1c761dc935f5819ebfa44637e2c125f",
+   "doc": "s26/ph_branch.py -- PHYSICS CHOOSES THE PROJECTION BRANCH (lane PH, S26).",
    "imports_repo": [
     {
      "module": "s26.ph_lib",
      "as_written": "s26.ph_lib",
-     "line": 61,
+     "line": 31,
      "lazy": false
+    },
+    {
+     "module": "s26.ph_reject",
+     "as_written": "s26.ph_reject",
+     "line": 32,
+     "lazy": false
+    },
+    {
+     "module": "core.project",
+     "as_written": "core.project",
+     "line": 75,
+     "lazy": true
     },
     {
      "module": "s12.instrument",
      "as_written": "s12.instrument",
-     "line": 187,
+     "line": 76,
+     "lazy": true
+    },
+    {
+     "module": "s26.ph_c3",
+     "as_written": "s26.ph_c3",
+     "line": 128,
      "lazy": true
     },
     {
      "module": "s24.stats_lib",
      "as_written": "s24.stats_lib",
-     "line": 204,
-     "lazy": true
-    },
-    {
-     "module": "core.geometry",
-     "as_written": "core.geometry",
-     "line": 254,
-     "lazy": true
-    },
-    {
-     "module": "core.amber",
-     "as_written": "core.amber",
-     "line": 255,
-     "lazy": true
-    },
-    {
-     "module": "torsion_lib2",
-     "as_written": "torsion_lib2",
-     "line": 256,
-     "lazy": true
-    },
-    {
-     "module": "s16.energy_lib",
-     "as_written": "s16.energy_lib",
-     "line": 257,
+     "line": 181,
      "lazy": true
     }
    ],
@@ -28512,10 +29256,101 @@
    "n_importers": 1,
    "backend_names": {}
   },
+  "s26.ph_c3": {
+   "path": "s26/ph_c3.py",
+   "lines": 357,
+   "sha256": "cb15f2ff12142ce80aadbcbe5d3082d32a00a7047f431e467834fb2f735e0eb7",
+   "doc": "s26/ph_c3.py -- C3, THE MATCHED-RANDOM CONTROL FOR AMBER REFINEMENT (lane PH, S26).",
+   "imports_repo": [
+    {
+     "module": "s26.ph_lib",
+     "as_written": "s26.ph_lib",
+     "line": 61,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 188,
+     "lazy": true
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 205,
+     "lazy": true
+    },
+    {
+     "module": "core.geometry",
+     "as_written": "core.geometry",
+     "line": 263,
+     "lazy": true
+    },
+    {
+     "module": "core.amber",
+     "as_written": "core.amber",
+     "line": 264,
+     "lazy": true
+    },
+    {
+     "module": "torsion_lib2",
+     "as_written": "torsion_lib2",
+     "line": 265,
+     "lazy": true
+    },
+    {
+     "module": "s16.energy_lib",
+     "as_written": "s16.energy_lib",
+     "line": 266,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [
+    "s26.ph_branch",
+    "s26.test_ph_synthetic"
+   ],
+   "n_importers": 2,
+   "backend_names": {}
+  },
+  "s26.ph_c3_verify": {
+   "path": "s26/ph_c3_verify.py",
+   "lines": 76,
+   "sha256": "463e2dede5ac90f057a6e644a03f2f850c559dbfbc7380f68cb9fd5e95585454",
+   "doc": "s26/ph_c3_verify.py -- C3 stage 2 reduction check (lane PH, coordinator's ruling of 2026-09-14).",
+   "imports_repo": [
+    {
+     "module": "s26.ph_lib",
+     "as_written": "s26.ph_lib",
+     "line": 26,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
   "s26.ph_cis": {
    "path": "s26/ph_cis.py",
-   "lines": 256,
-   "sha256": "5958a387f1777c3635e437de77060c90da249e83fa7d56722abd9ccc8e5ae00f",
+   "lines": 309,
+   "sha256": "b7398b931ca3619b41ab3643126f4eae425673617b74b79ce2a8770c14f37328",
    "doc": "s26/ph_cis.py -- THE CIS-PEPTIDE GAP (lane PH, S26).  Pre-registered in s26/PREREG_cis.md.",
    "imports_repo": [
     {
@@ -28541,6 +29376,12 @@
      "as_written": "s24.stats_lib",
      "line": 208,
      "lazy": true
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 259,
+     "lazy": true
     }
    ],
    "imports_third_party": [
@@ -28552,6 +29393,108 @@
     "os",
     "scipy",
     "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.ph_entry_branch": {
+   "path": "s26/ph_entry_branch.py",
+   "lines": 104,
+   "sha256": "ed677e9a8df2d0af44f98618008c8410fc2923ef8c13e512b82aa3b3d9ae1a6e",
+   "doc": "s26/ph_entry_branch.py -- ledger entry for branch_select from the report log and artefact. One-shot.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "json",
+    "numpy",
+    "os",
+    "subprocess",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.ph_entry_chain": {
+   "path": "s26/ph_entry_chain.py",
+   "lines": 141,
+   "sha256": "e73e7e52690476f484c1a6cf8157f8ac61fedfa6817ae2a6aceeac11a6e2de3d",
+   "doc": "s26/ph_entry_chain.py -- builds the built-chain steric-reject ledger entry from the report log",
+   "imports_repo": [],
+   "imports_third_party": [
+    "json",
+    "numpy",
+    "os",
+    "re",
+    "subprocess",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.ph_entry_cloud": {
+   "path": "s26/ph_entry_cloud.py",
+   "lines": 132,
+   "sha256": "9f1f7ed79b8224cd5be38019daf088347878f7da5632b3348ef8c792d73f25f5",
+   "doc": "s26/ph_entry_cloud.py -- builds the point-cloud steric-reject ledger entry from the report log,",
+   "imports_repo": [],
+   "imports_third_party": [
+    "os",
+    "re",
+    "subprocess",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.ph_entry_strain": {
+   "path": "s26/ph_entry_strain.py",
+   "lines": 100,
+   "sha256": "a80344d08ac143e103d06c634644a50dbb7e811dd3063bf3f23ba5716853ad74",
+   "doc": "s26/ph_entry_strain.py -- ledger entry for strain_difficulty, from the two artefacts. One-shot.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "json",
+    "numpy",
+    "os",
+    "subprocess",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.ph_entry_validity": {
+   "path": "s26/ph_entry_validity.py",
+   "lines": 88,
+   "sha256": "11aacc8c173c38ece61bed7e3aa54c2a8e15b94e00805afa3dac0da205dec1ac",
+   "doc": "s26/ph_entry_validity.py -- ledger entry for the heavy-atom validity axis. One-shot.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "json",
+    "os",
+    "subprocess",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.ph_ledger": {
+   "path": "s26/ph_ledger.py",
+   "lines": 66,
+   "sha256": "d96c17b241b2796a10c3347c3517e007bbfbfab08315198e3fef38bb277afb7b",
+   "doc": "s26/ph_ledger.py -- collision-safe ledger append for lane PH.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "os",
+    "re",
+    "sys",
+    "time"
    ],
    "imported_by": [],
    "n_importers": 0,
@@ -28606,18 +29549,24 @@
     "typing"
    ],
    "imported_by": [
+    "s26.ph_branch",
     "s26.ph_c3",
+    "s26.ph_c3_verify",
     "s26.ph_cis",
     "s26.ph_reject",
+    "s26.ph_relief",
+    "s26.ph_relief_reject",
+    "s26.ph_strain",
+    "s26.ph_validity",
     "s26.test_ph_synthetic"
    ],
-   "n_importers": 4,
+   "n_importers": 10,
    "backend_names": {}
   },
   "s26.ph_reject": {
    "path": "s26/ph_reject.py",
-   "lines": 554,
-   "sha256": "b60b15def90bc109d65a1be5eac53427d97ca911aec5e86bca366f1987ee6e36",
+   "lines": 577,
+   "sha256": "e221b29137c54a2b3d4ca390da7fc23eac09229a5f9d49f1448944ee7a140f97",
    "doc": "s26/ph_reject.py -- AMBER AS A STERIC REJECT FILTER, NOT A RANKER (lane PH, S26).",
    "imports_repo": [
     {
@@ -28629,25 +29578,25 @@
     {
      "module": "core.geometry",
      "as_written": "core.geometry",
-     "line": 198,
+     "line": 205,
      "lazy": true
     },
     {
      "module": "sidechains",
      "as_written": "sidechains",
-     "line": 199,
+     "line": 206,
      "lazy": true
     },
     {
      "module": "s12.instrument",
      "as_written": "s12.instrument",
-     "line": 351,
+     "line": 358,
      "lazy": true
     },
     {
      "module": "s24.stats_lib",
      "as_written": "s24.stats_lib",
-     "line": 484,
+     "line": 491,
      "lazy": true
     }
    ],
@@ -28663,15 +29612,319 @@
     "time"
    ],
    "imported_by": [
+    "s26.ph_branch",
+    "s26.ph_relief",
+    "s26.ph_relief_reject",
+    "s26.test_ph_synthetic"
+   ],
+   "n_importers": 4,
+   "backend_names": {}
+  },
+  "s26.ph_relief": {
+   "path": "s26/ph_relief.py",
+   "lines": 242,
+   "sha256": "b43dea0106b5379117257662d73a8e9424730b8d8f19c941c3aa532f6699680a",
+   "doc": "s26/ph_relief.py -- ROTAMER RELIEF OF THE AMBER SINGLE POINT (lane PH, S26).",
+   "imports_repo": [
+    {
+     "module": "s26.ph_lib",
+     "as_written": "s26.ph_lib",
+     "line": 32,
+     "lazy": false
+    },
+    {
+     "module": "s26.ph_reject",
+     "as_written": "s26.ph_reject",
+     "line": 33,
+     "lazy": false
+    },
+    {
+     "module": "core.amber",
+     "as_written": "core.amber",
+     "line": 78,
+     "lazy": true
+    },
+    {
+     "module": "torsion_lib2",
+     "as_written": "torsion_lib2",
+     "line": 79,
+     "lazy": true
+    },
+    {
+     "module": "core.geometry",
+     "as_written": "core.geometry",
+     "line": 125,
+     "lazy": true
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 202,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "openmm",
+    "os",
+    "scipy",
+    "sys",
+    "time"
+   ],
+   "imported_by": [
     "s26.test_ph_synthetic"
    ],
    "n_importers": 1,
    "backend_names": {}
   },
+  "s26.ph_relief_reject": {
+   "path": "s26/ph_relief_reject.py",
+   "lines": 88,
+   "sha256": "6cc9942f7b1aa1d5f0d58e3072d00a608a63fec776944773255416b1b65247a8",
+   "doc": "s26/ph_relief_reject.py -- rotamer_relief B(iii): arm S (reject from the shipped top-75, no refill)",
+   "imports_repo": [
+    {
+     "module": "s26.ph_lib",
+     "as_written": "s26.ph_lib",
+     "line": 22,
+     "lazy": false
+    },
+    {
+     "module": "s26.ph_reject",
+     "as_written": "s26.ph_reject",
+     "line": 23,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 31,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.ph_strain": {
+   "path": "s26/ph_strain.py",
+   "lines": 139,
+   "sha256": "dde2c6ab4528bd4ebadb415cfb93dbf7b1fc6bab172d4f20920517a35d71ae3b",
+   "doc": "s26/ph_strain.py -- THE RELAXATION'S OWN STRAIN AS A NATIVE-FREE DIFFICULTY SIGNAL (lane PH).",
+   "imports_repo": [
+    {
+     "module": "s26.ph_lib",
+     "as_written": "s26.ph_lib",
+     "line": 23,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 75,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "scipy",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.ph_validity": {
+   "path": "s26/ph_validity.py",
+   "lines": 131,
+   "sha256": "9d259ea21af274d34d4257f7fddff08d7e904b46987a7dca068b6ce4724d6abb",
+   "doc": "s26/ph_validity.py -- THE HEAVY-ATOM VALIDITY AXIS OF THE PRODUCTION RELAXATION (lane PH).",
+   "imports_repo": [
+    {
+     "module": "s26.ph_lib",
+     "as_written": "s26.ph_lib",
+     "line": 26,
+     "lazy": false
+    },
+    {
+     "module": "core.geometry",
+     "as_written": "core.geometry",
+     "line": 36,
+     "lazy": true
+    },
+    {
+     "module": "s16.energy_lib",
+     "as_written": "s16.energy_lib",
+     "line": 49,
+     "lazy": true
+    },
+    {
+     "module": "core.amber",
+     "as_written": "core.amber",
+     "line": 55,
+     "lazy": true
+    },
+    {
+     "module": "torsion_lib2",
+     "as_written": "torsion_lib2",
+     "line": 56,
+     "lazy": true
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 100,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.pr_build_deck": {
+   "path": "s26/pr_build_deck.py",
+   "lines": 637,
+   "sha256": "001f0a476feffc109d7321d6db780a67328cefaada512b9966d2cf338c58e076",
+   "doc": "PR lane, Sprint 26: build `vqe_research_overview.pptx` (repository root) from artefacts.",
+   "imports_repo": [
+    {
+     "module": "s26.pr_values",
+     "as_written": "s26.pr_values",
+     "line": 36,
+     "lazy": false
+    },
+    {
+     "module": "s26.pr_figures",
+     "as_written": "s26.pr_figures",
+     "line": 603,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "PIL",
+    "__future__",
+    "argparse",
+    "json",
+    "os",
+    "pptx",
+    "re",
+    "sys"
+   ],
+   "imported_by": [
+    "s26.pr_changes"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
+  "s26.pr_changes": {
+   "path": "s26/pr_changes.py",
+   "lines": 176,
+   "sha256": "ef3374f0283bbca7926149d9ac79283da14ef4eebdf5c4ec6dfef0888b115fa4",
+   "doc": "PR lane, Sprint 26: write `s26/PRESENTATION_CHANGES.md` from the build's own records.",
+   "imports_repo": [
+    {
+     "module": "s26.pr_build_deck",
+     "as_written": "s26.pr_build_deck.BANNED",
+     "line": 169,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "datetime",
+    "json",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.pr_figures": {
+   "path": "s26/pr_figures.py",
+   "lines": 191,
+   "sha256": "0cef921c682b341cac2d4850ece9c22bf2d2c9666ea60c197c1d114f332c4fec",
+   "doc": "PR lane, Sprint 26: figures for `vqe_research_overview.pptx`, regenerated from artefacts.",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 32,
+     "lazy": false
+    },
+    {
+     "module": "s26.pr_values",
+     "as_written": "s26.pr_values",
+     "line": 33,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "matplotlib",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [
+    "s26.pr_build_deck"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
+  "s26.pr_values": {
+   "path": "s26/pr_values.py",
+   "lines": 672,
+   "sha256": "f5434e172389d6b0d5d133a470ba19d752d0d5ea87fc95d97d459e8f6427c378",
+   "doc": "PR lane (Presentation), Sprint 26: the registry of every number that appears on a slide",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "collections",
+    "glob",
+    "json",
+    "math",
+    "numpy",
+    "os"
+   ],
+   "imported_by": [
+    "s26.pr_build_deck",
+    "s26.pr_figures"
+   ],
+   "n_importers": 2,
+   "backend_names": {}
+  },
   "s26.q_adapt": {
    "path": "s26/q_adapt.py",
-   "lines": 1106,
-   "sha256": "9e35bdc2da106d04527268b1eb8f63d1b179aee34777152bf5b82f0ea8bae14a",
+   "lines": 1114,
+   "sha256": "ee8e5483ca61e215dda39a90167b48c6008c6a5de0c6bcd9c9918fce00a4a7aa",
    "doc": "s26/q_adapt.py -- qubit-ADAPT-VQE on the DEPLOYED CVaR free energy.  Lane Q, Sprint 26.",
    "imports_repo": [
     {
@@ -28701,7 +29954,7 @@
     {
      "module": "s24.stats_lib",
      "as_written": "s24.stats_lib",
-     "line": 1028,
+     "line": 1036,
      "lazy": true
     }
    ],
@@ -28720,10 +29973,29 @@
    ],
    "imported_by": [
     "s26.q_dla",
+    "s26.q_dla_a1",
     "s26.q_tests",
-    "s26.q_var"
+    "s26.q_var",
+    "s26.q_var_boot"
    ],
-   "n_importers": 3,
+   "n_importers": 5,
+   "backend_names": {}
+  },
+  "s26.q_chain_a3": {
+   "path": "s26/q_chain_a3.py",
+   "lines": 44,
+   "sha256": "9ec287c83b095a565900212fb699fe9f56521c1493ca70357223fbf5b0c4fc1c",
+   "doc": "s26/q_chain_a3.py -- launch the two A3 build shards through jobrun once both A1 shards are done.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "os",
+    "subprocess",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
    "backend_names": {}
   },
   "s26.q_dla": {
@@ -28756,9 +30028,67 @@
     "time"
    ],
    "imported_by": [
+    "s26.q_dla_a1",
     "s26.q_tests"
    ],
-   "n_importers": 1,
+   "n_importers": 2,
+   "backend_names": {}
+  },
+  "s26.q_dla_a1": {
+   "path": "s26/q_dla_a1.py",
+   "lines": 141,
+   "sha256": "18c8e718c1e9719190f5704224fc68b9970be6ad82f8f5f630af55a76f50b55f",
+   "doc": "s26/q_dla_a1.py -- the DLA dimension of the ADAPT-grown circuit at every growth step, on the",
+   "imports_repo": [
+    {
+     "module": "s26.q_adapt",
+     "as_written": "s26.q_adapt.Pauli",
+     "line": 23,
+     "lazy": false
+    },
+    {
+     "module": "s26.q_dla",
+     "as_written": "s26.q_dla.lie_closure",
+     "line": 24,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 43,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "matplotlib",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.q_figures": {
+   "path": "s26/q_figures.py",
+   "lines": 215,
+   "sha256": "b95210057e6e153b44b83eb286cab3346f56b99739d0973156f0d39f4d436abe",
+   "doc": "s26/q_figures.py -- the two slide figures for lane Q, from the results JSON only.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "math",
+    "matplotlib",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
    "backend_names": {}
   },
   "s26.q_mde": {
@@ -28864,14 +30194,59 @@
     "sys",
     "time"
    ],
+   "imported_by": [
+    "s26.q_var_boot"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
+  "s26.q_var_boot": {
+   "path": "s26/q_var_boot.py",
+   "lines": 190,
+   "sha256": "844823ab194fae3ea45ab35bd848f020051aeae38d0e8ddd429ea4d3a6f9fbcd",
+   "doc": "s26/q_var_boot.py -- bootstrap CIs on the A4 slopes (PREREG_A4 addendum 2, the L47 caveat).",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 28,
+     "lazy": false
+    },
+    {
+     "module": "s26.q_adapt",
+     "as_written": "s26.q_adapt.PauliCircuit",
+     "line": 29,
+     "lazy": false
+    },
+    {
+     "module": "s26.q_var",
+     "as_written": "s26.q_var.CELLS",
+     "line": 30,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 97,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
    "imported_by": [],
    "n_importers": 0,
    "backend_names": {}
   },
   "s26.test_ph_synthetic": {
    "path": "s26/test_ph_synthetic.py",
-   "lines": 140,
-   "sha256": "d942d7db23856fa1d1a6127afb2a7f7d6b5f475fbb3a47a80c1c6305ede72314",
+   "lines": 171,
+   "sha256": "bbbc48c2c2772c3c168fb40b91c4b840eaa84d4ecef165054b4d7137bdc236e2",
    "doc": "s26/test_ph_synthetic.py -- unit tests for the PH lane on SYNTHETIC data only.",
    "imports_repo": [
     {
@@ -28897,6 +30272,18 @@
      "as_written": "core.geometry",
      "line": 53,
      "lazy": true
+    },
+    {
+     "module": "s26.ph_branch",
+     "as_written": "s26.ph_branch",
+     "line": 130,
+     "lazy": true
+    },
+    {
+     "module": "s26.ph_relief",
+     "as_written": "s26.ph_relief",
+     "line": 142,
+     "lazy": true
     }
    ],
    "imports_third_party": [
@@ -28906,6 +30293,556 @@
     "os",
     "sys",
     "tempfile"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_amberprior": {
+   "path": "s26/w_amberprior.py",
+   "lines": 267,
+   "sha256": "3aaa0821fcf543819d60ef82f4fed008fe7b24384ae021cc937ef8d3fa917d78",
+   "doc": "s26/w_amberprior.py -- AMBER as a distribution inside the prior: the energy-weighted pool",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 45,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 46,
+     "lazy": false
+    },
+    {
+     "module": "core.predict",
+     "as_written": "core.predict",
+     "line": 47,
+     "lazy": false
+    },
+    {
+     "module": "s15.seed",
+     "as_written": "s15.seed",
+     "line": 101,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "p_ladder",
+    "scipy",
+    "sys",
+    "time",
+    "w_selfcopy"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_bound_addendum": {
+   "path": "s26/w_bound_addendum.py",
+   "lines": 109,
+   "sha256": "4da53d4d5a781a1e49fbcce1ad037fd63278b104e5d12aaf880205089c89ba98",
+   "doc": "s26/w_bound_addendum.py -- the two L55 caveats applied to s26/results/w_selfcopy_bound.json",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 33,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_endpoint_report": {
+   "path": "s26/w_endpoint_report.py",
+   "lines": 39,
+   "sha256": "b920cec108b7574ac7f64df038089fe9fd4ee2841ca04263b6ff792711dc57a6",
+   "doc": "s26/w_endpoint_report.py -- the gated half of s26/PREREG_selfcopy_bound.md in one governed",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "os",
+    "sys",
+    "time",
+    "w_selfcopy"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_ensemble": {
+   "path": "s26/w_ensemble.py",
+   "lines": 242,
+   "sha256": "c3002d4cfa9efbe75f2518bc90d3f1116b7828c82d8f08730e0e049c1304dbcc",
+   "doc": "s26/w_ensemble.py -- test-time ensembling over retrieval variants at FIXED K.  Lane W (lane",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 41,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 42,
+     "lazy": false
+    },
+    {
+     "module": "core.data",
+     "as_written": "core.data",
+     "line": 43,
+     "lazy": false
+    },
+    {
+     "module": "s15.seed",
+     "as_written": "s15.seed",
+     "line": 98,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "Bio",
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time",
+    "w_selfcopy"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_ensemble_test": {
+   "path": "s26/w_ensemble_test.py",
+   "lines": 72,
+   "sha256": "18ca23d1c8fd0e4e0ed627443a44aed62ead94e4bd3bcb5a1de988a94c13c31c",
+   "doc": "s26/w_ensemble_test.py -- synthetic tests for s26/w_ensemble.py.  Random arrays only.",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 17,
+     "lazy": false
+    },
+    {
+     "module": "core.data",
+     "as_written": "core.data",
+     "line": 18,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "numpy",
+    "os",
+    "sys",
+    "w_ensemble"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_identity_floor_stats": {
+   "path": "s26/w_identity_floor_stats.py",
+   "lines": 61,
+   "sha256": "35f50f0f5f0be6301f40f92f34ee51fbd0d7c06dfe45b4bb358b7dc209eb57b0",
+   "doc": "s26/w_identity_floor_stats.py -- the two paired contrasts registered in",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 24,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_ladder": {
+   "path": "s26/w_ladder.py",
+   "lines": 101,
+   "sha256": "8cb56c65151f59d4b00a12e38b9f0a765f0a74da6efcca5998dd3dfb881ac468",
+   "doc": "s26/w_ladder.py -- the own-native (leaked) fold models placed on the S24 prior ladder:",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 28,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 29,
+     "lazy": false
+    },
+    {
+     "module": "core.predict",
+     "as_written": "core.predict",
+     "line": 30,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "p_ladder",
+    "sys",
+    "time",
+    "w_selfcopy"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_provenance": {
+   "path": "s26/w_provenance.py",
+   "lines": 168,
+   "sha256": "525ba75a22c62c67e59754f5e718db950892ebd4b552dccc8be3082164c8bde8",
+   "doc": "s26/w_provenance.py -- window provenance: whole-peptide / terminal / interior / fragment",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 31,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 32,
+     "lazy": false
+    },
+    {
+     "module": "core.data",
+     "as_written": "core.data",
+     "line": 33,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time",
+    "w_selfcopy"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_provenance_readout": {
+   "path": "s26/w_provenance_readout.py",
+   "lines": 136,
+   "sha256": "3712721e85f650ebaa70f2e79f796d32c117f3416ea92d43b2b6dfe9646be073",
+   "doc": "s26/w_provenance_readout.py -- H_P3 of s26/PREREG_window_provenance.md: the class-weighted",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 35,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 36,
+     "lazy": false
+    },
+    {
+     "module": "s15.seed",
+     "as_written": "s15.seed",
+     "line": 56,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time",
+    "w_selfcopy"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_provenance_test": {
+   "path": "s26/w_provenance_test.py",
+   "lines": 49,
+   "sha256": "81a510883dba137a01812047255d6a0f2445401683e50cdbf6101e262dc3059c",
+   "doc": "s26/w_provenance_test.py -- synthetic test of the class rule in s26/w_provenance.py.",
+   "imports_repo": [
+    {
+     "module": "core.data",
+     "as_written": "core.data",
+     "line": 17,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "numpy",
+    "os",
+    "sys",
+    "w_provenance"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_recall": {
+   "path": "s26/w_recall.py",
+   "lines": 162,
+   "sha256": "f743651ac650b6193fc04e530e8da6f7579e333da731dea36b6acacb0f5dd35d",
+   "doc": "s26/w_recall.py -- the partial-recall gradient: sequence proximity of each dev target to its",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 27,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 28,
+     "lazy": false
+    },
+    {
+     "module": "core.data",
+     "as_written": "core.data",
+     "line": 29,
+     "lazy": false
+    },
+    {
+     "module": "s15.seed",
+     "as_written": "s15.seed",
+     "line": 95,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "p_ladder",
+    "scipy",
+    "sys",
+    "time",
+    "w_selfcopy"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_selfcopy": {
+   "path": "s26/w_selfcopy.py",
+   "lines": 952,
+   "sha256": "95fce168a9df833bb9fe9defc0c622585b5535ba38a689d397bb967c884cf571",
+   "doc": "s26/w_selfcopy.py -- the 2/60 benchmark self-copy leak, bounded from the dev-set proxy.",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 61,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 62,
+     "lazy": false
+    },
+    {
+     "module": "core.data",
+     "as_written": "core.data",
+     "line": 63,
+     "lazy": false
+    },
+    {
+     "module": "core.predict",
+     "as_written": "core.predict",
+     "line": 64,
+     "lazy": false
+    },
+    {
+     "module": "core.pipeline",
+     "as_written": "core.pipeline",
+     "line": 247,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "hashlib",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "p_ladder",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_selfcopy_test": {
+   "path": "s26/w_selfcopy_test.py",
+   "lines": 185,
+   "sha256": "a76678bb59b05ad29d2f47a0b9a4acf4923b141900679eac45657fd896beba20",
+   "doc": "s26/w_selfcopy_test.py -- synthetic unit tests for s26/w_selfcopy.py.  No native, no",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 22,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "numpy",
+    "os",
+    "sys",
+    "tempfile",
+    "w_selfcopy"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_tiebreak": {
+   "path": "s26/w_tiebreak.py",
+   "lines": 187,
+   "sha256": "7fce93f9c95387d5da57814f7a462bfcdfed807d98bbf531da339a053519b3ff",
+   "doc": "s26/w_tiebreak.py -- the production endpoint's noise floor from BLOSUM tie-breaking at the",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 34,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 35,
+     "lazy": false
+    },
+    {
+     "module": "s15.seed",
+     "as_written": "s15.seed",
+     "line": 58,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time",
+    "w_selfcopy"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_tiebreak_report": {
+   "path": "s26/w_tiebreak_report.py",
+   "lines": 95,
+   "sha256": "208d6965841aa0025536b333e68cc12c8509ec4f52a4bade219e65ea25ed72ab",
+   "doc": "s26/w_tiebreak_report.py -- the ledger-facing numbers of the tie-break floor from",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 25,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_tiebreak_test": {
+   "path": "s26/w_tiebreak_test.py",
+   "lines": 62,
+   "sha256": "7cdb9803a2788880c7ef02bf149672c5a64611c8bcdbff71a32f7cdaf94f6687",
+   "doc": "s26/w_tiebreak_test.py -- synthetic tests for s26/w_tiebreak.py's draw logic.  Random",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "numpy",
+    "os",
+    "sys",
+    "w_tiebreak"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.w_train_chain": {
+   "path": "s26/w_train_chain.py",
+   "lines": 44,
+   "sha256": "133d2337ee7a5b576cc34e7b73db7a48f5460a8c4c4c3f43b1a619114e59d2a9",
+   "doc": "s26/w_train_chain.py -- Part B of s26/PREREG_selfcopy_bound.md: the channel-B retrains, in the",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "os",
+    "sys",
+    "time",
+    "w_selfcopy"
    ],
    "imported_by": [],
    "n_importers": 0,
@@ -30308,32 +32245,32 @@
   },
   "tests.test_equivalence": {
    "path": "tests/test_equivalence.py",
-   "lines": 376,
-   "sha256": "e6878546389a73799cd7ddf7fcc3a8b978aa9d9b9a014e09a1061bc3b62bab63",
+   "lines": 382,
+   "sha256": "17a16747d1fd07d40c9141820450abf1d736df489d8b1acfd50baebc2226ca7b",
    "doc": "Old path versus `core/`: the integrated pipeline must produce the SAME floats.",
    "imports_repo": [
     {
      "module": "core",
      "as_written": "core",
-     "line": 40,
+     "line": 41,
      "lazy": false
     },
     {
      "module": "core.pipeline",
      "as_written": "core.pipeline",
-     "line": 41,
+     "line": 42,
      "lazy": false
     },
     {
      "module": "s9.final",
      "as_written": "s9.final",
-     "line": 153,
+     "line": 159,
      "lazy": true
     },
     {
      "module": "protein_geometry",
      "as_written": "protein_geometry",
-     "line": 268,
+     "line": 274,
      "lazy": true
     }
    ],
@@ -30345,6 +32282,7 @@
     "numpy",
     "os",
     "pytest",
+    "re",
     "subprocess",
     "sys"
    ],
@@ -30773,6 +32711,8 @@
     "s21.tailprice",
     "s23.agentB_h5_carestraint",
     "s26.ph_c3",
+    "s26.ph_relief",
+    "s26.ph_validity",
     "s7.amber_native",
     "s8.integrate",
     "s9.final",
@@ -30785,7 +32725,7 @@
     "verify.amber_threads",
     "verify.hazard_audit"
    ],
-   "n_importers": 46,
+   "n_importers": 48,
    "backend_names": {}
   },
   "verify.amber_affinity": {

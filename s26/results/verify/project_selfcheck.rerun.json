@@ -1,0 +1,22 @@
+{
+ "audit": "project_selfcheck",
+ "script": "core/project.py",
+ "argv": [
+  "selfcheck"
+ ],
+ "tag": "CPU",
+ "est_ram_gb": 0.6,
+ "cost": "light",
+ "note": "builder vs reference, gradient vs finite differences; prints only",
+ "tracked": [],
+ "started": "2026-09-14T03:00:01",
+ "wall_s": 0.6,
+ "error": null,
+ "writes": [],
+ "tracked_unchanged": true,
+ "diffs": {
+  "_": {
+   "verdict": "no tracked JSON to diff"
+  }
+ }
+}

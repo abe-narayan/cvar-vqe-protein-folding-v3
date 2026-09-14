@@ -1,0 +1,23 @@
+{
+ "audit": "amber_platform",
+ "script": "verify/amber_platform.py",
+ "argv": [],
+ "tag": "AMBER",
+ "est_ram_gb": 1.0,
+ "cost": "medium",
+ "note": "CPU vs OpenCL arms of the AMBER block; OpenCL may be unavailable",
+ "tracked": [
+  "amber_platform.json"
+ ],
+ "started": "2026-09-14T02:04:11",
+ "wall_s": 70.4,
+ "error": null,
+ "writes": [],
+ "tracked_unchanged": true,
+ "diffs": {
+  "amber_platform.json": {
+   "verdict": "NO FRESH OUTPUT",
+   "fresh_path": "s26\\results\\verify\\verify__amber_platform.json"
+  }
+ }
+}

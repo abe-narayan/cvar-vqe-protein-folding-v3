@@ -1,0 +1,24 @@
+{
+ "name": "pytest_slow_equivalence2",
+ "agent": "I",
+ "tag": "AMBER",
+ "pid": 38904,
+ "create_time": 1789370317.6769536,
+ "cmd": [
+  "C:/Users/abena/miniforge_3/python.exe",
+  "-c",
+  "import os, sys, pytest; os.environ['VERIFY_SLOW'] = '1'; sys.exit(pytest.main(['tests/test_equivalence.py', '-q', '-rs', '-p', 'no:cacheprovider', '-k', 'test_everything_up_to_the_projection_is_bit_identical or test_the_projection_selects_a_different_degenerate_branch or test_no_stage_is_skipped_in_the_consolidated_arm', '--junitxml=s26/results/pytest_slow_equivalence.xml']))"
+ ],
+ "cwd": "C:\\Users\\abena\\Protein-Folding-Algorithm",
+ "start": "2026-09-14T00:18:37",
+ "start_ts": 1789370317.6723742,
+ "est_ram_gb": 1.2,
+ "log": "C:\\Users\\abena\\Protein-Folding-Algorithm\\s26\\logs\\pytest_slow_equivalence2.log",
+ "spec": null,
+ "waited_s": 140.0,
+ "jobrun_pid": 37336,
+ "exit_code": 0,
+ "end": "2026-09-14T00:22:08",
+ "wall_s": 210.6,
+ "peak_rss_gb": 0.632
+}

@@ -1,0 +1,168 @@
+{
+ "audit": "grad_key_collision",
+ "script": "verify/grad_key_collision.py",
+ "argv": [],
+ "tag": "AMBER",
+ "est_ram_gb": 1.8,
+ "cost": "medium",
+ "note": "2 targets x 2 child processes; NOTE: it sets PROJECT_GRAD in the environment, which core/project.py no longer reads, so both children now run the same mode -- a differing JSON here is the audit being stale, not the code (see s26 L19)",
+ "tracked": [
+  "grad_key_collision.json"
+ ],
+ "started": "2026-09-14T02:07:45",
+ "wall_s": 2995.1,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\grad_key_collision.json",
+   "written": "s26\\results\\verify\\verify__grad_key_collision.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "grad_key_collision.json": {
+   "n_tracked_leaves": 46,
+   "n_fresh_leaves": 36,
+   "identical": 7,
+   "close": 0,
+   "different": 3,
+   "run_property_different": 26,
+   "added": [],
+   "removed": [
+    "mixed_provenance_demonstration.cache_dir",
+    "mixed_provenance_demonstration.per_target.1D6X.analytic_recomputed",
+    "mixed_provenance_demonstration.per_target.1D6X.delta",
+    "mixed_provenance_demonstration.per_target.1D6X.fd_cached",
+    "mixed_provenance_demonstration.per_target.1DEP.analytic_recomputed",
+    "mixed_provenance_demonstration.per_target.1DEP.delta",
+    "mixed_provenance_demonstration.per_target.1DEP.fd_cached",
+    "mixed_provenance_demonstration.result",
+    "mixed_provenance_demonstration.severity",
+    "mixed_provenance_demonstration.what_happened"
+   ],
+   "diffs": [
+    {
+     "key": "COLLISION",
+     "tracked": "true",
+     "fresh": "false"
+    },
+    {
+     "key": "config_has_a_field_for_the_gradient",
+     "tracked": "false",
+     "fresh": "true"
+    },
+    {
+     "key": "science_fields",
+     "tracked": "[\"amber\", \"amber_k\", \"amber_steps\", \"dev_mode\", \"k\", \"lam\", \"legacy\", \"legacy_top\", \"m\", \"maxiter\", \"min_sep\", \"multi_start\", \"n_folds\", \"penalty\", \"quantum\"...",
+     "fresh": "[\"amber\", \"amber_k\", \"amber_steps\", \"dev_mode\", \"k\", \"lam\", \"legacy\", \"legacy_top\", \"m\", \"maxiter\", \"min_sep\", \"multi_start\", \"n_folds\", \"penalty\", \"project_..."
+    }
+   ],
+   "run_property_diffs": [
+    {
+     "key": "targets.1CB3.DIFFERS",
+     "tracked": "true",
+     "fresh": "false"
+    },
+    {
+     "key": "targets.1CB3.GRAD_a",
+     "tracked": "\"fd\"",
+     "fresh": "\"exact\""
+    },
+    {
+     "key": "targets.1CB3.GRAD_b",
+     "tracked": "\"analytic\"",
+     "fresh": "\"exact\""
+    },
+    {
+     "key": "targets.1CB3.amber_ca.bit_identical",
+     "tracked": "false",
+     "fresh": "true"
+    },
+    {
+     "key": "targets.1CB3.amber_ca.max_abs_diff",
+     "tracked": "0.004553207033936246",
+     "fresh": "0.0"
+    },
+    {
+     "key": "targets.1CB3.ca.bit_identical",
+     "tracked": "false",
+     "fresh": "true"
+    },
+    {
+     "key": "targets.1CB3.ca.max_abs_diff",
+     "tracked": "0.0015158648845217115",
+     "fresh": "0.0"
+    },
+    {
+     "key": "targets.1CB3.fit_ca.bit_identical",
+     "tracked": "false",
+     "fresh": "true"
+    },
+    {
+     "key": "targets.1CB3.fit_ca.max_abs_diff",
+     "tracked": "0.001829708664606855",
+     "fresh": "0.0"
+    },
+    {
+     "key": "targets.1CB3.phi.bit_identical",
+     "tracked": "false",
+     "fresh": "true"
+    },
+    {
+     "key": "targets.1CB3.phi.max_abs_diff",
+     "tracked": "0.00022802871969396232",
+     "fresh": "0.0"
+    },
+    {
+     "key": "targets.1CB3.psi.bit_identical",
+     "tracked": "false",
+     "fresh": "true"
+    },
+    {
+     "key": "targets.1CB3.psi.max_abs_diff",
+     "tracked": "0.000269199492836103",
+     "fresh": "0.0"
+    },
+    {
+     "key": "targets.1CS9.DIFFERS",
+     "tracked": "true",
+     "fresh": "false"
+    },
+    {
+     "key": "targets.1CS9.GRAD_a",
+     "tracked": "\"fd\"",
+     "fresh": "\"exact\""
+    },
+    {
+     "key": "targets.1CS9.GRAD_b",
+     "tracked": "\"analytic\"",
+     "fresh": "\"exact\""
+    },
+    {
+     "key": "targets.1CS9.amber_ca.bit_identical",
+     "tracked": "false",
+     "fresh": "true"
+    },
+    {
+     "key": "targets.1CS9.amber_ca.max_abs_diff",
+     "tracked": "0.4507970761578708",
+     "fresh": "0.0"
+    },
+    {
+     "key": "targets.1CS9.ca.bit_identical",
+     "tracked": "false",
+     "fresh": "true"
+    },
+    {
+     "key": "targets.1CS9.ca.max_abs_diff",
+     "tracked": "0.4473562022963229",
+     "fresh": "0.0"
+    }
+   ],
+   "n_added": 0,
+   "n_removed": 10,
+   "verdict": "DIFFERS",
+   "fresh_path": "s26\\results\\verify\\verify__grad_key_collision.json"
+  }
+ }
+}

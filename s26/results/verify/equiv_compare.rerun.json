@@ -1,0 +1,68 @@
+{
+ "audit": "equiv_compare",
+ "script": "verify/equiv_compare.py",
+ "argv": [],
+ "tag": "CPU",
+ "est_ram_gb": 0.6,
+ "cost": "light",
+ "note": "per-target comparison of the two arms' cache directories (keys from core)",
+ "tracked": [
+  "equivalence.json"
+ ],
+ "started": "2026-09-14T02:58:14",
+ "wall_s": 0.8,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\equivalence.json",
+   "written": "s26\\results\\verify\\verify__equivalence.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "equivalence.json": {
+   "n_tracked_leaves": 929,
+   "n_fresh_leaves": 930,
+   "identical": 924,
+   "close": 0,
+   "different": 5,
+   "run_property_different": 0,
+   "added": [
+    "only_optimised"
+   ],
+   "removed": [],
+   "diffs": [
+    {
+     "key": "baseline_dir",
+     "tracked": "\"C:\\\\Users\\\\abena\\\\Protein-Folding-Algorithm\\\\bench_results\\\\cache\\\\29cc4e7cba2feeff\"",
+     "fresh": "\"C:\\\\Users\\\\abena\\\\Protein-Folding-Algorithm\\\\bench_results\\\\cache\\\\44a9305c80808776\""
+    },
+    {
+     "key": "baseline_key",
+     "tracked": "\"29cc4e7cba2feeff\"",
+     "fresh": "\"44a9305c80808776\""
+    },
+    {
+     "key": "n_optimised",
+     "tracked": "8",
+     "fresh": "126"
+    },
+    {
+     "key": "optimised_dir",
+     "tracked": "\"C:\\\\Users\\\\abena\\\\Protein-Folding-Algorithm\\\\bench_results\\\\cache\\\\40774ae7b037d259\"",
+     "fresh": "\"C:\\\\Users\\\\abena\\\\Protein-Folding-Algorithm\\\\bench_results\\\\cache\\\\1fc9f2dcf489e2fb\""
+    },
+    {
+     "key": "optimised_key",
+     "tracked": "\"40774ae7b037d259\"",
+     "fresh": "\"1fc9f2dcf489e2fb\""
+    }
+   ],
+   "run_property_diffs": [],
+   "n_added": 1,
+   "n_removed": 0,
+   "verdict": "DIFFERS",
+   "fresh_path": "s26\\results\\verify\\verify__equivalence.json"
+  }
+ }
+}

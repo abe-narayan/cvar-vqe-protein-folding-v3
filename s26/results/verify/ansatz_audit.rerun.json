@@ -1,0 +1,40 @@
+{
+ "audit": "ansatz_audit",
+ "script": "verify/ansatz_audit.py",
+ "argv": [],
+ "tag": "CPU",
+ "est_ram_gb": 0.6,
+ "cost": "light",
+ "note": "core.quantum circuit genuineness; pennylane import",
+ "tracked": [
+  "ansatz_audit.json"
+ ],
+ "started": "2026-09-14T02:02:36",
+ "wall_s": 3.3,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\ansatz_audit.json",
+   "written": "s26\\results\\verify\\verify__ansatz_audit.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "ansatz_audit.json": {
+   "n_tracked_leaves": 19,
+   "n_fresh_leaves": 19,
+   "identical": 19,
+   "close": 0,
+   "different": 0,
+   "run_property_different": 0,
+   "added": [],
+   "removed": [],
+   "diffs": [],
+   "run_property_diffs": [],
+   "n_added": 0,
+   "n_removed": 0,
+   "verdict": "IDENTICAL",
+   "fresh_path": "s26\\results\\verify\\verify__ansatz_audit.json"
+  }
+ }
+}

@@ -1,0 +1,40 @@
+{
+ "audit": "amber_audit",
+ "script": "verify/amber_audit.py",
+ "argv": [],
+ "tag": "AMBER",
+ "est_ram_gb": 0.9,
+ "cost": "medium",
+ "note": "OpenMM System on 1A13; the pinned interaction energy",
+ "tracked": [
+  "amber_audit.json"
+ ],
+ "started": "2026-09-14T02:03:23",
+ "wall_s": 42.2,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\amber_audit.json",
+   "written": "s26\\results\\verify\\verify__amber_audit.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "amber_audit.json": {
+   "n_tracked_leaves": 31,
+   "n_fresh_leaves": 31,
+   "identical": 31,
+   "close": 0,
+   "different": 0,
+   "run_property_different": 0,
+   "added": [],
+   "removed": [],
+   "diffs": [],
+   "run_property_diffs": [],
+   "n_added": 0,
+   "n_removed": 0,
+   "verdict": "IDENTICAL",
+   "fresh_path": "s26\\results\\verify\\verify__amber_audit.json"
+  }
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "audit": "determinism_audit",
+ "script": "verify/determinism_audit.py",
+ "argv": [
+  "--functions",
+  "d3_key_types,d4_forged_collision,d5_config_key,d1_cross_process"
+ ],
+ "tag": "AMBER",
+ "est_ram_gb": 1.8,
+ "cost": "medium",
+ "note": "D1 cross-process (3 children on 1CS9, stage 4 included), D3/D4/D5 cache keys; D2 (resume) is NOT run: as written it moves the last two records of the PRODUCTION cache (bench_results/cache/1fc9f2dcf489e2fb) to a temp dir, re-runs smoke8 (which does not contain them) and then rmtree's the backup, i.e. it would delete two production records; writes determinism_audit.json, which is NOT tracked",
+ "tracked": [],
+ "started": "2026-09-14T02:58:33",
+ "wall_s": 59.8,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\determinism_audit.json",
+   "written": "s26\\results\\verify\\verify__determinism_audit.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "_": {
+   "verdict": "no tracked JSON to diff"
+  }
+ }
+}
