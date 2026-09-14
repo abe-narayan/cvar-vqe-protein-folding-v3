@@ -75,7 +75,7 @@ def _run_arm(manifest, backends_env, tmp):
     assert cp.returncode == 0, cp.stdout[-3000:] + cp.stderr[-3000:]
     # The harness prints its summary with indent=2, so the LAST "{" in stdout is a nested
     # dict's opening brace and never parses; the top-level object is the last line that is
-    # exactly "{" (S26 L99: this line skipped all three arms on the first governed run of
+    # exactly "{" (S26 L102: this line skipped all three arms on the first governed run of
     # the opt-in tier, after both arms had already completed with rc 0).
     starts = [m.start() for m in re.finditer(r"(?m)^[{]\r?$", cp.stdout)]
     blob = cp.stdout[starts[-1]:] if starts else cp.stdout[cp.stdout.rfind("{"):]
