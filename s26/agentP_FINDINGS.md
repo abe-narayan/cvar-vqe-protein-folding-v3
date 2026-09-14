@@ -199,3 +199,17 @@ cos 0.18 to 0.25) for five rungs that are null-to-worse: a large move at low cos
 onto the truth direction and loses on the orthogonal component. S25 L12's caveat is reproduced
 from the training side, on achievable rungs. I expected the sign of gam_eff to track the sign of
 the endpoint; it does not.
+
+## 10. B3 result (ledger L106, L107; `s26/results/p_b3.json`)
+
+DEMONSTRATED (D10): the set where the pipeline beats sequence-only is NOT characterisable
+native-free by the pre-registered standard. sign(arm - tors): held-out balanced accuracy 0.522
+vs permutation null 95th pct 0.578 (p 0.263); sign(arm - helix): 0.557 vs 0.566 (p 0.093).
+Regression of the size: R2 0.244 (vs tors; MSE reduction 0.83x MDE, NOT MEASURED) and 0.404
+(vs helix; -1.142, 1.19x MDE, fold CI [-1.495, -0.700], 5/5, BETTER, Type-M zone). Descriptive
+weights (ridge alpha 10, full data, standardised): ss_E -0.61 (rho -0.64), dg_sd_mean +0.39,
+dg_ent_max -0.27, aa_C -0.27, dg_multimodal +0.25, con_lr +0.23; rho(ss_H, d) +0.46, rho(n, d)
+-0.13. The pool's strand content sets how much a constant helix loses; nothing sets the sign.
+ORACLE stratum: FAIL18 d_tors +0.463 (the torsion predictor wins), other108 -0.725.
+
+Proposal B verdict per the campaign rule: REPLACE (`s26/PROPOSAL_B.md`).
