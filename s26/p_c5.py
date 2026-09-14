@@ -45,7 +45,7 @@ OUT = os.path.join(RES, "p_c5.json")
 SHELLS = PR.SHELLS
 BANDS = ((9, 11), (12, 13), (14, 16))
 GRID = 16
-ALPHAS_A = (0.25, 0.5, 1.0)
+ALPHAS_A = (0.5,)   # reduced from (0.25, 0.5, 1.0) at 01:35 for the 04:30 close; one agent-day budget
 
 
 # ------------------------------------------------------------------ geometry helpers
