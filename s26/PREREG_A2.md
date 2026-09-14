@@ -134,3 +134,7 @@ counts); P2b fails if the median lies outside [100, 2000] or any target reaches 
 Memory and time: 126 x 4 x <= 15 closures at n = 7, each < 0.05 s; under 5 minutes, < 0.3 GB.
 Launch `python s26/jobrun.py --agent Q --tag CPU --name a2_dla_a1 --est-ram 0.3 -- python
 s26/q_dla_a1.py`; checkpoint per record (atomic JSON rewrite every 10 records).
+
+## ADDENDUM 3 (2026-09-14 04:05, after the addendum-2 run; ledger L138)
+
+`s26/results/q_dla_a1.json` complete (126 records). P2a, P2b, P2c, P2d all HELD as stated.

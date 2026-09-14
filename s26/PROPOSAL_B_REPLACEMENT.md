@@ -78,7 +78,8 @@ plateau, and does not call a large gradient trainability.
     F2  Pauli-weight spectra with the Binomial(m,1/2) reference   s13/results/walsh_xval.json, geo_pauli.json, geo_pauli_v1_rawonly.json
     F3  measured vs predicted gradient variance (78 points)       s13/results/geo_pauli.json
     F4  the kernel v(w; n, depth)                                 s13/results/geo_kernel.json
-    F5  log2 Var vs n, five cells, fitted slopes                  s25/results/q_plateau.json
+    F5  log2 Var vs n, five cells, fitted slopes, at depth 3      s25/results/q_plateau.json
+        (no exponential plateau at n <= 13 AT DEPTH 3; the algebra is maximal, C8)
     F6  Var[grad CVaR]/Var[grad mean] vs n                        s25/results/q_plateau.json
     F7  depth sweep at n = 7                                      s25/results/q_plateau.json
     F8  dim(DLA) vs n: fixed ansatz by depth, pools, ADAPT sets,  s26/results/q_dla.json  ->  s26/figures/a2_dla_dimension.png
@@ -89,7 +90,7 @@ plateau, and does not call a large gradient trainability.
     F11 KL(Gibbs || product) by energy variant                    s26/results/probe/1A13.json (one target; full table after A3)
     F12 dim of the Lie closure of the ADAPT-grown set at every growth step on the 126 A1
         records (median and min..max per cell): the algebra of the SET grows while the
-        angles are inert at alpha = 1; s26/results/q_dla_a1.json -> s26/figures/a2_dla_grown_ladder.png (PENDING)
+        angles are inert at alpha = 1; s26/results/q_dla_a1.json -> s26/figures/a2_dla_grown_ladder.png (ledger L138)
     F9b F9 now carries 95% bootstrap CIs on every slope (error bars) and on grown - fixed per
         cell; s26/results/q_var_boot.json (grown L2 - fixed at alpha=0.25, T=0.3: -0.056 [-0.182, +0.087])
     T1  set-equality cells                                        s25/results/q_verify.json

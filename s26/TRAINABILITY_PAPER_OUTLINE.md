@@ -92,7 +92,8 @@ C12. New (S26): the deployed Gibbs target is a product state (E affine in the re
         `s13/results/geo_pauli.json`
     F4  the kernel v(w; n, depth): non-monotone, peak at w = 2, flat at depth >= 3;
         `s13/results/geo_kernel.json`
-    F5  log2 Var[dF/dtheta_0] vs n for the five cells, fitted slopes; `s25/results/q_plateau.json`
+    F5  log2 Var[dF/dtheta_0] vs n for the five cells at depth 3 (P = 3n), fitted slopes:
+        no exponential plateau at n <= 13 at depth 3, this ansatz, this spectrum; `s25/results/q_plateau.json`
     F6  Var[grad CVaR_alpha] / Var[grad mean] vs n (the ratio table);
         `s25/results/q_plateau.json` (`nonlinearity_variance_ratio`)
     F7  depth sweep at n = 7; `s25/results/q_plateau.json` (`depth_sweep_n7`)
@@ -106,7 +107,7 @@ C12. New (S26): the deployed Gibbs target is a product state (E affine in the re
         energy variant; `s26/results/probe/1A13.json` (one target; full table after A3)
     F12 dim of the Lie closure of the ADAPT-grown set at every growth step on the 126 A1
         records (median and min..max per cell): the algebra of the SET grows while the
-        angles are inert at alpha = 1; s26/results/q_dla_a1.json -> s26/figures/a2_dla_grown_ladder.png (PENDING)
+        angles are inert at alpha = 1; s26/results/q_dla_a1.json -> s26/figures/a2_dla_grown_ladder.png (ledger L138)
     F9b F9 now carries 95% bootstrap CIs on every slope (error bars) and on grown - fixed per
         cell; s26/results/q_var_boot.json (grown L2 - fixed at alpha=0.25, T=0.3: -0.056 [-0.182, +0.087])
     T1  the set-equality cells (n_cells, exact zeros, violations); `s25/results/q_verify.json`

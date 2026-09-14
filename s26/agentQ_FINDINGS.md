@@ -246,6 +246,19 @@ with pool V is confined to it by construction; the L2 arm is not.
     alpha = 0.25, T = 0.3   V: 7 -> 16 (one string, IIIYZZZ);  L2: 7 -> 1025 at P = 21,
                             12.6% of so(128), for both optimisers.
 
+### 2.3b Per growth step on the 126 A1 records (ledger L138; `s26/results/q_dla_a1.json`)
+
+    final dim of the grown set's closure, median [min, max]   (targets at dim 7 / with a multi-qubit string appended)
+      Adam-best  V: alpha=1  7 [7, 82] (48 / 30)      alpha=0.25   16 [7, 289] (12 / 36)
+                 L2: alpha=1 11 [7, 139] (15 / 63)    alpha=0.25 1025 [513, 2017] (0 / 48)
+      L-BFGS-B   V: alpha=1 58 [7, 530] (18 / 60)     alpha=0.25   16 [9, 161] (0 / 48)
+                 L2: alpha=1 37 [7, 513] (10 / 68)    alpha=0.25 1025 [258, 2017] (0 / 48)
+    no target reaches so(128); all four addendum-2 predictions held.
+
+The algebra counts the appended strings, not their effect: at alpha = 1 the inert additions
+of L75 carry closures of up to 530 while the state stays a product. For a grown circuit the
+DLA dimension is not a diagnostic of what the circuit does. Figure `s26/figures/a2_dla_grown_ladder.png`.
+
 ### 2.4 What it means for the S25 slopes
 
 The algebra at the deployed cell is maximal, so nothing algebraic protects the ansatz from a
@@ -474,7 +487,7 @@ scope: depth 3, this ansatz, this spectrum, with the algebra (A2) offering no pr
     s26/results/q_var.json                A4 (complete; ledger L35)  -> s26/figures/a4_variance_slopes.png
     s26/results/a1/<pdb>.json             A1 per-target records, 126 (built, labelled after L33)
     s26/results/a1_stats.json             A1 contrasts (ledger L68, corrected by L75); s26/logs/a1_stats.log
-    s26/results/q_dla_a1.json             per-growth-step DLA on the A1 records (running) -> s26/figures/a2_dla_grown_ladder.png
+    s26/results/q_dla_a1.json             per-growth-step DLA on the A1 records (ledger L138) -> s26/figures/a2_dla_grown_ladder.png
     s26/results/q_var_boot.json           A4 slope bootstrap CIs (complete; ledger L119)
     s26/results/a3/<pdb>.json             A3 per-target records, 126 (ledger L125); s26/results/a3_stats.json
     s26/results/a1s1/<pdb>.json           A1 seed-1 / reversed-order replication (after A3)
@@ -495,3 +508,28 @@ difference is tie-averaging: on real targets E is not exactly affine, so the RY 
 residual gradient in a multi-qubit direction can exceed eps = 1e-3. The endpoint numbers and
 the verdict are unchanged. This is section 6's list, one entry longer: I read the ideal-ladder
 run into the real-target sentence without re-reading the records; PR did re-read them.
+
+## 10. CLOSING SUMMARY (2026-09-14 04:10)
+
+    A1  ADAPT vs fixed, built chain, n = 126:  -0.0138 A (0.23x MDE 0.0588) and -0.0222 A (0.36x MDE 0.0608);
+        fold CIs span zero; null at the registered threshold; underpowered below 0.06 A.  Ledger L68, corrected by L75.
+    A2  dim(DLA) of the deployed ansatz = so(2^n) from depth 2 at n = 7 (8128); depth 1 abelian; n = 6, 9 need depth 4;
+        Tang pools generate so(2^(n-1)+1); 2-local odd-Y pool generates so(2^n).  L27.  Per growth step on the real
+        records: the set's algebra counts appended strings, not their effect (dim 7 to 530 with inert angles).  L138.
+    A3  target-dependent, order-preserving Hamiltonians: null at matched entropy (+0.003 A, 0.04x); worse unmatched
+        (+0.09 to +0.11 A, 0.7 to 0.8x MDE, fold CIs above zero 5/5, Type-M zone); 124/126 distinct states.  L125.
+    A4  grown circuits: product circuits at alpha = 1 (no decay, +0.30 to +0.66 above the fixed slope, CIs exclude
+        zero); at alpha = 0.25 the L2 circuit decays like the fixed one (-0.056 [-0.182, +0.087]).  L35, L119.
+    The mechanism: the deployed Gibbs target is a product state on every target (KL <= 7.9e-4); seven RY angles
+    reach it (0.0002 nats); the 21-parameter circuit misses by 0.90 nats; reaching it moves the built chain by a
+    third of the MDE.  Proposal A: REPLACE (s26/PROPOSAL_A.md); Proposal B replacement outline carries A2 to A4.
+    Replication of A1 (seed 1, reversed order): s26/results/a1s1/, see the ledger entry posted at the close.
+
+## 11. WHAT I WOULD TELL THE NEXT LANE Q
+
+- Read the register index. E is affine in it; that one fact explains the product-state target, the inert
+  growth, the abelian ADAPT sets on the ladder, and why deeper circuits never ordered anything.
+- Re-read the records before writing a count into a sentence (L75). The ideal ladder and the real targets
+  differ by tie-averaging, and tie-averaging was enough to falsify two of my zrank predictions (L125).
+- The readout responds to the entropy of the weights (S25) and, this sprint, to nothing else that was varied:
+  ansatz family (A1), Hamiltonian spectrum at matched entropy (A3). The selector-side levers are spent.
