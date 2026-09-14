@@ -1410,3 +1410,67 @@
 2026-09-14T00:24:20 SUSPEND  p_train_raw_fold2 agent=P tag=CPU rss=1.77GB
 2026-09-14T00:24:40 RESUME   p_train_raw_fold2 agent=P tag=CPU
 2026-09-14T00:24:45 SAMPLE   ram=81.8% (13.71GB used, 3.04GB free) cpu=95.8% (15s mean 70.4%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:25:45 SAMPLE   ram=85.6% (14.34GB used, 2.41GB free) cpu=92.7% (15s mean 90.0%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:25:50 SUSPEND  p_train_raw_fold2 agent=P tag=CPU rss=1.82GB
+2026-09-14T00:26:10 RESUME   p_train_raw_fold2 agent=P tag=CPU
+2026-09-14T00:26:45 SAMPLE   ram=82.2% (13.76GB used, 2.98GB free) cpu=79.6% (15s mean 82.1%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:27:45 SAMPLE   ram=81.6% (13.68GB used, 3.07GB free) cpu=78.8% (15s mean 81.5%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:28:45 SAMPLE   ram=81.5% (13.65GB used, 3.10GB free) cpu=80.8% (15s mean 80.8%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:28:50 REAP     p_eval_pairnet (pid 17144) is gone; registration removed
+2026-09-14T00:29:30 REAP     pytest_slow_equivalence3 (pid 26052) is gone; registration removed
+2026-09-14T00:29:45 SAMPLE   ram=81.0% (13.57GB used, 3.18GB free) cpu=76.0% (15s mean 75.0%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:30:30 SUSPEND  a_strain_vs_spread agent=A tag=CPU rss=0.12GB
+2026-09-14T00:30:45 SAMPLE   ram=82.5% (13.81GB used, 2.94GB free) cpu=87.8% (15s mean 83.3%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:31:20 RESUME   a_strain_vs_spread agent=A tag=CPU
+2026-09-14T00:31:45 SAMPLE   ram=83.5% (13.99GB used, 2.76GB free) cpu=92.8% (15s mean 86.1%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:31:55 SUSPEND  a_strain_vs_spread agent=A tag=CPU rss=0.12GB
+2026-09-14T00:32:25 RESUME   a_strain_vs_spread agent=A tag=CPU
+2026-09-14T00:32:30 REAP     a_strain_vs_spread (pid 35824) is gone; registration removed
+2026-09-14T00:32:45 SAMPLE   ram=87.2% (14.61GB used, 2.14GB free) cpu=98.9% (15s mean 98.2%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:32:45 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.06GB
+2026-09-14T00:32:50 SUSPEND  p_train_raw_fold2 agent=P tag=CPU rss=1.59GB
+2026-09-14T00:33:05 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:33:10 RESUME   p_train_raw_fold2 agent=P tag=CPU
+2026-09-14T00:33:25 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.22GB
+2026-09-14T00:33:45 SAMPLE   ram=82.9% (13.88GB used, 2.87GB free) cpu=69.0% (15s mean 69.0%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:33:45 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:34:00 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.22GB
+2026-09-14T00:34:20 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:34:35 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.21GB
+2026-09-14T00:34:45 SAMPLE   ram=84.0% (14.06GB used, 2.69GB free) cpu=80.6% (15s mean 83.7%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:35:05 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:35:20 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.24GB
+2026-09-14T00:35:40 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:35:45 SAMPLE   ram=84.8% (14.21GB used, 2.54GB free) cpu=96.2% (15s mean 77.8%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:35:55 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.23GB
+2026-09-14T00:36:15 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:36:30 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.20GB
+2026-09-14T00:36:35 SUSPEND  p_train_raw_fold2 agent=P tag=CPU rss=1.61GB
+2026-09-14T00:36:45 SAMPLE   ram=83.2% (13.93GB used, 2.82GB free) cpu=44.3% (15s mean 62.8%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:36:50 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:36:55 RESUME   p_train_raw_fold2 agent=P tag=CPU
+2026-09-14T00:37:15 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.21GB
+2026-09-14T00:37:35 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:37:45 SAMPLE   ram=82.7% (13.84GB used, 2.91GB free) cpu=96.4% (15s mean 86.5%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:37:50 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.21GB
+2026-09-14T00:38:10 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:38:25 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.22GB
+2026-09-14T00:38:45 SAMPLE   ram=83.1% (13.92GB used, 2.83GB free) cpu=68.2% (15s mean 70.4%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:38:45 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:39:00 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.21GB
+2026-09-14T00:39:25 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:39:40 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.21GB
+2026-09-14T00:39:45 SAMPLE   ram=84.4% (14.14GB used, 2.61GB free) cpu=78.8% (15s mean 91.6%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:40:00 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:40:15 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.22GB
+2026-09-14T00:40:35 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:40:45 SAMPLE   ram=83.4% (13.97GB used, 2.78GB free) cpu=97.8% (15s mean 90.9%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:40:50 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.22GB
+2026-09-14T00:41:10 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:41:25 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.23GB
+2026-09-14T00:41:45 SAMPLE   ram=83.6% (14.00GB used, 2.75GB free) cpu=68.7% (15s mean 69.8%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:41:45 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:42:05 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.22GB
+2026-09-14T00:42:25 RESUME   w_train_out_9BAF_f0 agent=W tag=CPU
+2026-09-14T00:42:40 SUSPEND  w_train_out_9BAF_f0 agent=W tag=CPU rss=1.24GB
+2026-09-14T00:42:45 SAMPLE   ram=82.6% (13.84GB used, 2.91GB free) cpu=70.0% (15s mean 88.1%) jobs=6 amber=0 queued=0 lanes=8

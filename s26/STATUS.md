@@ -49,6 +49,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 22:07 next: hourly passes from L78 (A3, remaining rungs, ph_reject_chain, branch_select, C3 stage 2 / rep, ensembling, provenance, Part B retrains, lane I's VERIFY_SLOW tier and frozen rebuild for Part IX); Appendix D kept current.
 - 2026-09-14 00:15 running: 00:20 pass committed (f6024aef): L78 to L93 into VII/VIII (mix rung, rung audit, C3 replication, steric reject built chain, branch select, tight cis floor, ensembling, provenance, recall gradient, memorisation ladder, R5); check 157/157, style 0/0/0; governed re-run e_report_check6 launched (e_report_check5 was among the starved waiters, L92).
 - 2026-09-14 00:15 next: hourly passes from L94 (A3, esm8m/pairnet/raw, H_P3, strain pool-spread control, rotamer relief, coherence training, lane I's slow tier and frozen rebuild for Part IX, the B and C verdicts); final pass 04:15 to 04:45 with Appendix C last.
+- 2026-09-14 00:42 running: 00:40 pass committed: L94 to L103 into VII/VIII/IX (esm8m, pairnet, validity axis, Adversary checks L94 to L97, slow-tier and parser findings, AST gate); check 162/162 direct; governed e_report_check7 waiting for a slot.
+- 2026-09-14 00:42 next: hourly passes from L104 (A3, raw, H_P3, strain spread control, rotamer relief, coherence training, lane I's slow tiers and frozen rebuild for Part IX, the B and C verdicts, slide 11 ruling); final pass 04:15 to 04:45 with Appendix C last.
 ## I (Infrastructure / Governor)
 
 - 2026-09-13 00:13 running: read contract/brief/code; job pytest_core (non-AMBER suite, tag TEST, est 2.5 GB) launched under the governor at ~00:11; brief committed unchanged.

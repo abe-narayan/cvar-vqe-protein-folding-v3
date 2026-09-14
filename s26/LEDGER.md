@@ -4148,3 +4148,75 @@ parser-skip run's records are kept aside as `s26/results/pytest_slow_equivalence
 and are not counted.
 
 ---
+
+## L103 -- LANE P, C2 RUNG PAIRNET: THE TRIANGLE-UPDATE PAIRNET ON ESM INPUT, THROUGH THE PIPELINE: +0.041 A ON THE BUILT CHAIN (0.30x MDE), +0.008 ON SELECTION (0.03x); THE BEST MAE OF THE LADDER (2.079 vs 2.339) AND THE HIGHEST gam_eff (+0.129 at cos 0.29, +0.441 at cos 0.53 in location space) BUY NOTHING (2026-09-14 00:29, lane P)
+
+Artefacts: `s26/results/p_ladder_pairnet_s0.json` (126 rows, complete), `s26/results/p_ladder_report_pairnet_s0.json`; anchor `s26/results/p_ladder_shipped_s0.json`. Every arm through `s26/p_ladder.py`'s single path: shipped K=500 pool -> the rung's posterior in a genuine `core.predict.Distogram` -> shipped Bayes-risk score -> top-75 uniform medoid-frame average -> `s12.instrument.project` (ramah 0.3). Paired per target against the shipped posterior through the same path. Negative = the rung is better.
+
+Job `p_eval_pairnet`: exit 0, 587 s, peak RSS 0.301 GB; models the pinned `pairnet_models/fold{0..4}_c64b4_s0.pt` (S19's PairNet, triangle multiplicative update + axial attention, c = 64, 4 blocks, on the deployed ESM inputs; no training this sprint). This closes S7-11's 'tri on ESM input has not been measured' on the pipeline basis: null-to-slightly-worse at every endpoint, 3/5 folds, medians +0.007. It is the sharpest instance of 'better matrix, worse ranking' in the ladder: PairNet cuts the distance MAE by 11% (2.079 against 2.339; S19 L11 measured 2.073) and moves the posterior mean 44% of the way to the truth in location space at cos 0.53 (the highest cosine of any rung; S25 L12's example operator is exactly 'cos 0.5', predicted +0.024 A) and the built chain moves +0.041 +/- 0.049. Joint consistency (S19 L11's closure through the distance-geometry fit, -0.080 [-0.242, +0.082]) is now also closed through the readout the pipeline uses. Strata: FAIL18 -0.10 (10W/8L), other108 +0.06; the 9-10-mers +0.12 on the built chain and -0.24 on selection (n = 20, SE 0.2), unresolved.
+
+```
+  pairnet vs shipped -- BUILT CHAIN (PRIMARY; rebuild basis 3.2126, L57)
+    a 3.2534 (med 3.0884)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0407   median +0.0067   SE 0.0486   MDE 0.1361   effect/MDE +0.30
+    iid  CI95 [-0.0546, +0.1306]
+    fold CI95 [-0.0442, +0.1143]   folds same sign 3/5   per-fold 0:+0.137 1:-0.011 2:+0.005 3:-0.104 4:+0.141
+    58W/68L/0T   worst degradation +1.6875 (2N9M)   p90 +0.6843   power 0.13  Type-M 2.93
+    concentration: drop-top10 +0.1472 vs uniform-effect null p10/p50/p90 +0.0837/+0.1440/+0.2047 -> pctile 0.527
+    VERDICT: NOT MEASURED (|effect| 0.0407 <= its own MDE 0.1361, 0.30x)
+  pairnet vs shipped -- POINT CLOUD (3.0483 basis)
+    a 3.0843 (med 2.9058)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0360   median +0.0069   SE 0.0490   MDE 0.1373   effect/MDE +0.26
+    iid  CI95 [-0.0606, +0.1295]
+    fold CI95 [-0.0439, +0.1059]   folds same sign 4/5   per-fold 0:+0.140 1:+0.021 2:+0.010 3:-0.130 4:+0.110
+    59W/67L/0T   worst degradation +1.6203 (2N9M)   p90 +0.6848   power 0.11  Type-M 3.32
+    concentration: drop-top10 +0.1455 vs uniform-effect null p10/p50/p90 +0.0843/+0.1430/+0.2003 -> pctile 0.524
+    VERDICT: NOT MEASURED (|effect| 0.0360 <= its own MDE 0.1373, 0.26x)
+  pairnet vs shipped -- SELECTION argmin K=500 (3.4540 basis)
+    a 3.4617 (med 3.5274)   b 3.4540 (med 3.4779)   n=126
+    effect +0.0077   median +0.0067   SE 0.0817   MDE 0.2289   effect/MDE +0.03
+    iid  CI95 [-0.1504, +0.1603]
+    fold CI95 [-0.2030, +0.1603]   folds same sign 3/5   per-fold 0:+0.247 1:-0.033 2:+0.027 3:-0.410 4:+0.143
+    57W/63L/6T   worst degradation +2.4293 (2LWS)   p90 +1.0498   power 0.05  Type-M 24.82
+    concentration: drop-top10 +0.1830 vs uniform-effect null p10/p50/p90 +0.0796/+0.1797/+0.2840 -> pctile 0.518
+    VERDICT: NOT MEASURED (|effect| 0.0077 <= its own MDE 0.2289, 0.03x)
+  strata [arm]: len 9-10 n=20 +0.115 (SE 0.125, med +0.033, 9W/11L) | len 11-12 n=32 +0.023 (SE 0.100, med +0.009, 13W/19L) | len 13-14 n=37 -0.010 (SE 0.075, med +0.016, 17W/20L) | len 15-16 n=37 +0.066 (SE 0.101, med -0.000, 19W/18L) | FAIL18 n=18 -0.096 (SE 0.127, med -0.005, 10W/8L) | other108 n=108 +0.064 (SE 0.052, med +0.010, 48W/60L)
+  strata [cloud]: len 9-10 n=20 +0.072 (SE 0.131, med +0.024, 10W/10L) | len 11-12 n=32 +0.036 (SE 0.104, med +0.020, 13W/19L) | len 13-14 n=37 +0.003 (SE 0.076, med +0.011, 17W/20L) | len 15-16 n=37 +0.049 (SE 0.099, med -0.001, 19W/18L) | FAIL18 n=18 -0.142 (SE 0.142, med -0.005, 10W/8L) | other108 n=108 +0.066 (SE 0.052, med +0.012, 49W/59L)
+  strata [sel]: len 9-10 n=20 -0.239 (SE 0.205, med -0.190, 11W/8L) | len 11-12 n=32 +0.178 (SE 0.167, med +0.158, 11W/21L) | len 13-14 n=37 +0.072 (SE 0.141, med +0.000, 17W/17L) | len 15-16 n=37 -0.071 (SE 0.156, med +0.000, 18W/17L) | FAIL18 n=18 +0.082 (SE 0.163, med +0.051, 8W/9L) | other108 n=108 -0.005 (SE 0.092, med +0.007, 49W/54L)
+  gamma-equivalent: gam_eff prob-space +0.1285 at cos +0.287 ; loc-space +0.4412 at cos +0.533 ; MAE 2.0791 (diagnostic only).
+  CAVEAT (S25 L12): -2.1496 x gam_eff is redeemable only at cos = 1; a real operator travelling 25%% at cos 0.5 is worth +0.024 A. Never quote the product alone.
+  folds same sign (arm): 3/5 ; verdict (arm): NOT MEASURED (|effect| 0.0407 <= its own MDE 0.1361, 0.30x)
+```
+
+---
+
+## L104 -- THE OPT-IN EQUIVALENCE TIER PASSES 3/3 ONCE IT CAN RUN: THE TWO ON-DISK ARMS ARE BIT-IDENTICAL UP TO THE PROJECTION AND THE PROJECTION'S DIVERGENCE STAYS INSIDE ITS PINNED BAND; ONE STAGED-FILE COLLISION BETWEEN LANES (2026-09-14 00:31, lane I)
+
+Job `pytest_slow_equivalence3` (AMBER, `VERIFY_SLOW=1` in the command, tree `7e08b968`):
+**3 passed, 0 failed, 40.2 s, peak RSS 0.313 GB**, `s26/results/pytest_slow_equivalence.xml`,
+`s26/logs/pytest_slow_equivalence3.log`. What the three assert, now that the L102 parser lets
+them run: `test_everything_up_to_the_projection_is_bit_identical` (retrieval, filter membership
+and order, the coordinate average `avg_ca` and the scalars `shipped`, `pool_best`, `pool_mean`,
+`top_m_best`, `top_m_mean`, `rmsd_avg`, `n_windows` equal with `==` on all 8 smoke8 targets,
+legacy arm vs consolidated arm), `test_the_projection_selects_a_different_degenerate_branch`
+(upstream exact, and the `rmsd_full` delta between the arms within |mean| < 0.05 and max < 0.25 A),
+`test_no_stage_is_skipped_in_the_consolidated_arm` (every stage timed > 0, AMBER lowered the
+energy and moved the structure, 75 retained).
+
+Basis of the result, stated plainly: both arms were SERVED FROM THE ON-DISK CACHES
+(production `bench_results/cache/1fc9f2dcf489e2fb`, baseline `464a0ddb5f283e04`; record mtimes
+2026-09-04, unchanged), which the test's own docstring allows ("uses the harness's own cache"),
+so the 40 s is six resumed pipeline runs and the tier certifies the equivalence of the two
+recorded arms, the same fact `bench_results/compare_tuning126.json` records as
+`science_delta = 0`, not a fresh computation. `verify/run_equiv2.sh` (L19) is the fresh one.
+
+Record: `s26/TEST_RUN.md` / `s26/results/test_run.json` now fold opt-in jobs into the skip count
+instead of adding tests: **370 tests, 360 passed, 0 failed, 0 errors, 10 skipped** with the tier in
+(357 / 13 without it). The integration tier (8 items) is still queued as `pytest_slow_integration2`.
+
+Housekeeping fact for the hygiene list: at 00:30:53 lane PH's `git commit` swept four files I had
+just staged (`s26/i_test_report.py`, `s26/TEST_RUN.md`, `s26/results/test_run.json`,
+`pytest_slow_equivalence.xml`) into its commit `a6ce3ab6` because eight lanes share one index;
+the content is correct and committed, only the message is PH's. Stage-and-commit in one call.
+
+---
