@@ -89,6 +89,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-14 01:37 next: rebuild post-comparison when it lands; 20-audit table when the chain ends (deadline 03:30 per the coordinator); examine.py; closure table.
 - 2026-09-14 02:57 running: verify chain at audit 9/20 (grad_key_collision, AMBER; stalled 02:26-02:54 by the governor's stacked-suspend defect, L128, unstuck by hand + s26/i_tree_watchdog.py); 8 audits done: 7 IDENTICAL / 1 with 8 added Config fields. Rebuild REPRODUCED and committed (083c9b95, L127: every number, 2142/2142 ATOM records; three descriptive leaderboard columns were never reproducible). Opt-in tier 11/11 (L113).
 - 2026-09-14 02:57 next: at 03:30 stop taking new audits, record the rest as not run (the heavy projection audits will not fit), ledger the 20-audit table, examine.py, closure table, final commit by ~03:50.
+- 2026-09-14 03:12 running: verify chain 16/20 done (5 IDENTICAL, 6 DIFFERS all explained, 3 no-JSON, 1 error by construction); project_equiv running since 03:10 (needs ~38 min uncontended), allowed until 04:00 per the coordinator; findings extended-window section drafted; table generator s26/i_verify_table.py ready.
+- 2026-09-14 03:12 next: at 04:00 stop the chain if equiv is not done; ledger table; examine.py on the final tree; closure table + hygiene list; final commit by ~04:20.
 
 ## Q (Quantum lane)
 - 2026-09-13 08:50 running: resumed after the session cut at 00:46; q_*.py, probes and reference MDEs committed (2fb2998b); PREREG_A2/A4 on disk; launching A2 (DLA, s26/q_dla.py) and A4 (variance, s26/q_var.py) under the governor per the coordinator ruling.
