@@ -90,6 +90,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 19:16 next: cloud ledger entry (ST.fmt verbatim, both bases, R-first, moved subset); then ph_reject.py chain (~3 h, cells), stage1 --rep, floor2, each as one governed job; stage 2 when P delivers; AMBER ideas when ranked.
 
 ## PR (Presentation lane)
+- 2026-09-13 19:25 running: read the brief, contract, state brief, ledger L0-L42, EXAMINATION C, proposals B/B-replacement/C, C3_RESULT, the paper outline, agentQ sections 2 and 4, s25/QUANTUM.md, professor_brief; verified every slide number against its artefact leaf (q_verify, q_plateau, q_alpha, q_gibbs, phys_suite, leaderboard, e_reproduce, priorladder, errdecomp, a_c26_phi_mae, q_dla, q_var, b1_feasibility, ph_c3_stage1). PROPOSAL_A.md not on disk at 19:22.
+- 2026-09-13 19:25 next: write s26/pr_notes.md (spoken text with artefact tokens), s26/pr_figures.py (T030/9KAR overlays, S25 width-sweep figure) and s26/pr_build_deck.py; build slides 1-7 and 11; commit (a); then slide 10 (b) and slide 9 (c).
 
 ## W (Wildcard)
 - 2026-09-13 09:15 running: w_selfcopy_retrieval (126 targets, channel A native-free, est 0.5 GB) and w_selfcopy_envelope (126 x 4 leaked fold models, est 0.6 GB) under jobrun. Done: reading list; PREREG_selfcopy_bound; IDEA x4 (selfcopy_proxy_bound, tiebreak_noise_floor, conformational_identity_floor, window_provenance); w_selfcopy.py + synthetic tests (ALL OK); census (0.064 GB) and two 1-target probes (0.104 / 0.298 GB); ledger entry.

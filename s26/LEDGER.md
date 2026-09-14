@@ -1445,3 +1445,114 @@ filter form of the functional lever (s24 D1-C, s19 Q3) stays closed and gains it
 instrument.
 
 ---
+
+## L44 -- LANE W: THE 2/60 BENCHMARK SELF-COPY LEAK, BOUNDED FROM THE DEV PROXY WITHOUT OPENING THE BENCHMARK: 0.002 A BY THE DEV-4 MEASUREMENT, 0.028 A (BUILT CHAIN) / 0.048 A (SELECTION) / 0.023 A (PAIRED GAIN) BY THE OWN-NATIVE ENVELOPE; PRE-REGISTERED CLASS MINOR; C27's +0.0004 DEV PRICE RE-DERIVED EXACTLY; A FOLD MODEL THAT TRAINED ON THE TARGET'S OWN NATIVE EMITS A CHAIN 0.70 A NEARER TO IT (2026-09-13, W)
+
+Pre-registration `s26/PREREG_selfcopy_bound.md` (L30); gated job `w_endpoint_report`
+(`s26/w_endpoint_report.py`: posterior, endpoint, report in one process; exit 0, 160 s, peak RSS
+0.302 GB, `s26/jobs_done/w_endpoint_report.json`); artefacts `s26/results/w_selfcopy_endpoint.json`
+(Parts A, B, C signed), `w_selfcopy_bound.json` (Part D), `w_selfcopy_floor.json` (Part E),
+`w_selfcopy_retrieval.json` and `w_selfcopy_envelope.json` (the native-free halves, complete
+126/126, exit 0, peak 0.116 / 0.318 GB, L41), `w_selfcopy_posterior.json`. No benchmark file,
+sequence, native or RMSD was read; the benchmark facts used are 2/60 and the mechanism (S24 L4).
+Reproduction gate: the "with" arm equals the production emission on all 126 (top-75 == `sub`
+126/126, cloud max abs 1.4e-14; means sel 3.4540 / cloud 3.0483 / arm 3.2126 / fit 3.2052, the arm
+being the re-projection rebuild figure of L9). Basis stated on every line; positive delta = the
+leaked emission is WORSE.
+
+**Part A, channel A (the self-window in the K = 500 pool), the four dev self-copies, PRODUCTION
+basis.** Signed delta = with minus without (self-window dropped, pool refilled from the next BLOSUM
+windows, S10-4's operator on exact copies):
+
+    target   in top-75   arm      cloud    fit      sel      | triangle bound arm | control percentile (arm)
+    1CEK        no      +0.0000  +0.0000  +0.0000  +0.0000  |  0.000             |  0.61
+    2FBU        no      +0.0000  +0.0000  +0.0000  +0.0000  |  0.000             |  0.61
+    2P5H        yes     -0.0683  -0.0114  -0.0193  +0.0000  |  0.202             |  0.89
+    6B9K        yes     +0.0071  +0.0069  +0.0046  +0.0000  |  0.034             |  0.71
+
+The self-window is never the score's argmin (sel 0.0000 on all four, and 0.0000 on all 122
+controls: the BLOSUM rank-0 window is never the argmin anywhere on the instrument). The matched
+control population (the rank-0 window dropped on the other 122 targets, 47 of which had it in
+the top-75): |delta arm| p50 0.000, p90 0.078, p95 0.147, max 0.511; the four self-copies sit at
+its 61st to 89th percentile. Registered F1 holds (|delta arm| < 0.10 and bound < 0.30 on all four).
+
+**C27's dev half re-derived (S10-4's operator: drop every >= 0.6 window, refill; 13 targets with
+such a window in the pool, the same 13 as S10-4, 21 in the universe): CLEAN minus PRODUCTION
++0.0004 on the lam = 0 chain, fold CI [-0.0001, +0.0010], iid [-0.0003, +0.0013], MDE 0.0012, 117
+ties; +0.0018 on the built chain [-0.0003, +0.0039]; +0.0003 on the cloud; 0.0000 on sel.**
+S10-4's +0.0004 [-0.0004, +0.0013] reproduces on the same basis (its "synthesis fit"), and its "0
+on the shipped argmin" reproduces exactly. The number now has an artefact (L28 C27, L31).
+
+**Part C, the envelope (ORACLE by construction): the four pinned fold models that had the target's
+OWN native among their training labels, against the clean model, everything else identical.**
+
+    basis   leaked-model mean minus clean   fold CI95            MDE     x MDE   W/L      folds   per model
+    arm     -0.6980 (median -0.2663)        [-0.8312, -0.5764]   0.246   2.83    112/14   5/5     -0.749 / -0.646 / -0.702 / -0.694 / -0.700
+    cloud   -0.7094                         [-0.8394, -0.5680]   0.244   2.91    110/16   5/5
+    sel     -1.2081 (median -0.9239)        [-1.4377, -0.9745]   0.315   3.83    112/12   5/5     -1.324 / -1.102 / -1.254 / -1.163 / -1.201
+    fit     -0.6932                         [-0.8234, -0.5615]   0.245   2.83    110/16   5/5
+    gain (arm - sel)  +0.5101               [+0.3698, +0.6838]   0.255   2.00    38/88    5/5
+
+The shipped MLP memorises at the pipeline endpoint: a fold model that saw the target's native emits
+a built chain 0.70 A nearer to it, changes half the top-75 (overlap 0.47) and the argmin on 97% of
+targets, and its argmin selection is 1.21 A nearer. The registered expectation (-0.2 to -0.8 A on
+arm) held; concentration at the uniform-effect null's 52nd percentile (not concentrated); the
+spread among the four leaked models (sd 0.07 A on arm) is small against the effect, so the effect
+is the inclusion of the native, not the corpus fifth. The leak inflates the argmin arm more than
+the built chain, so under a leak of this strength the paired gain of the architecture over the
+shipped argmin is biased AGAINST the architecture by +0.51 A per leaked target. This is also the
+first measurement behind EXAMINATION E4: per-target dev results may never be read across folds.
+
+**Part B (channel B, the carrier chain in the training labels), partial: one of ten retrains
+finished before the host killed `w_train_chain` (L40, L41).** 1CEK with 1A11 removed from fold 2's
+corpus (`s26/models/w_selfcopy/pca32_fold2_s0_out_1A11.pt`, 276 pairs fewer), reference lane P's
+`pca32_fold2_s0.pt` (which reproduces the pinned emission at 0.000): the carrier's presence is worth
+-0.0114 on the built chain, -0.0204 cloud, +0.0062 sel (posterior mean |dE[d]| 1.02 A per pair,
+top-75 overlap 0.76). Both channels removed on 1CEK: production is 0.0114 A BETTER on arm, 0.0177 on
+the gain. 1CEK is the one dev case whose copy is near-native (Part E, 0.595 A); the three others
+sit 2.3 to 4.1 A away. The control-out models and the other three carrier-out models wait for
+headroom (L42) and for the tournament.
+
+**Part E (ORACLE DIAGNOSTIC): the same sequence in a different deposit, 18 dev targets, 22 verbatim
+partners: median 2.908 A from the native (min 0.317, max 5.502; 18% under 1.0 A, 27% under 1.5 A;
+the natives' own ensemble spread is 1.044 A; the copy is worse than the target's pool MEAN on 5 of
+22 and beats the pool's best on 3 of 22).** F5 holds. A verbatim copy is not a near-native answer at
+this length; this is why channels A and B are small where they are measured.
+
+**Part D, the bound, (2 / 60) x the per-target quantity, assumptions A1 to A5 of the PREREG (same
+mechanism and direction; the benchmark 2 no worse than the dev 4 or than the envelope; same pipeline;
+no length correction; the envelope bounds help, harm is measured on the dev 4):**
+
+    source                                            arm       sel       paired gain   class (0.017 = one tenth of the benchmark CI half-width)
+    dev-4 channel A, signed max                        0.0023    0.0000    0.0023         IMMATERIAL
+    dev-4 channel A, native-free triangle max          0.0067    0.0000    0.0067         IMMATERIAL
+    both channels removed (1CEK only, n = 1)           0.0004    0.0002    0.0006         IMMATERIAL
+    own-native envelope, fold-CI limit (n = 126)       0.0277    0.0479    0.0228         MINOR
+
+**Pre-registered verdict: MINOR, bounded at 0.028 A on the built chain, 0.048 A on the selection
+basis and 0.023 A on the paired gain, because the envelope clause of Part D fires; every direct
+measurement on the dev proxy is IMMATERIAL (0.002 A or less).** The envelope is loose by
+construction: it prices a model trained on the target's OWN native, and the only measured carrier
+effect (1CEK, the near-native case) is 60x smaller. Against the benchmark's own CI half-width 0.170
+(S9-10: +0.0103 [-0.1596, +0.1803]) the bound cannot change the benchmark verdict (no validated
+gain) in either direction: the un-leaked paired gain lies in [+0.0103 - 0.023, +0.0103 + 0.023]
+under the envelope and within 0.003 of +0.0103 under the dev-proxy measurement. The caveat that
+attaches to every benchmark figure now reads: 2/60 self-copies, bounded at 0.028 A (built chain)
+by the own-native envelope and 0.002 A by the dev proxy, `s26/results/w_selfcopy_bound.json`.
+
+Also measured on the way, native-free, and recorded for `s26/IDEA_tiebreak_noise_floor.md`: a
+one-member change of the 75 flips the medoid frame (cloud moves 1.29 A on 5H1H, 0.74 on 6EY3; the
+same set in the original frame is 0.06 to 0.08 A away) and flips the projection branch (chain moves
+0.85 to 2.11 A on 1NIZ, 1CS9, 1M02, 1RSW, 2LNG, 2BP4 at cloud moves of 0.04 to 0.09 A); the signed
+deltas on those targets are 3 to 10x smaller than the triangle bounds, so the flips move the chain
+mostly orthogonally to the native. ORACLE insertion of the withheld same-fold carriers (8 targets,
+11 windows): 5 of 11 enter the top-75 (F2's first clause, "at least half", misses by one); |delta
+arm| < 0.10 on 7 of 8 targets; the largest move is 8ZG2, -0.277 A from a window that is itself
+5.06 A from the native (a branch flip, not the window's geometry).
+
+Deviations from the PREREG, stated: Part B has 1 of 10 models (the rest killed by the host, L40);
+the `both_removed4` key of `w_selfcopy_bound.json` therefore holds n = 1; no replication of Part
+C at a second seed is needed (deterministic, pinned models); Part A's control population is the
+replication of its operator. Question for the coordinator: the S10-4 number is now sourced on the
+`fit` basis; does the report quote the built-chain +0.0018 [-0.0003, +0.0039] beside it or in its
+place?
