@@ -5212,3 +5212,113 @@ superseded is deleted anywhere.
 
 ---
 
+## L131 -- ROTAMER RELIEF B (tournament 8): RELIEVING THE BUILDER's CHI1 HALVES THE CATASTROPHIC FRACTION (0.535 TO 0.233 ABOVE 1e4) AND LEAVES AN ENERGY THAT RANKS NOTHING (rho -0.002) AND STILL REJECTS HARMFULLY (+0.030 VS ANCHOR, +0.022 VS RANDOM, FOLD CIs EXCLUDING ZERO); CLOSED (2026-09-14, PH)
+
+`s26/ph_relief.py run | report` and `s26/ph_relief_reject.py`; artefacts
+`s26/results/ph_relief_run.json` (126/126; job `ph_relief_run`, AMBER, 6890 s, peak RSS 0.313 GB;
+gate G1 at 0.0 against `refine_coords` and the cache on 4 members of every target after the
+k = 4 fix of addendum 1), `ph_relief_report.json` (B ii, gated), `ph_relief_reject.json` (B iii,
+point cloud, 16 draws). Pre-registered in `s26/PREREG_rotamer_relief.md` sections 1 to 7 and
+addenda 1 to 2; tournament item 8 (L51). Part A is L23.
+
+THE OPERATOR, native-free: one greedy sweep over every residue with a chi1 (all but G, A, P;
+10 of 14 on 1A13), options {builder default, 60, 180, 300} degrees, the lowest genuine
+ff14SB/GBn2 single point kept per residue (no minimisation, backbone fixed); 41 single points
+and 0.67 s per member. `E_relief <= e_raw` by construction and asserted on 9,450 members.
+
+B(i), THE CENSUS (native-free): fraction of the shipped top-75 above 1e4 kcal/mol, raw
+0.535 (SE 0.026) to relieved 0.233 (SE 0.024); above 1e6,
+0.311 to 0.057. The registered falsifier ("not below half of the raw fraction, 0.27")
+does NOT fire: 0.233 < 0.27. More than half of the catastrophic single points on the shipped
+pool were the deterministic builder's chi1 choice, as L23 predicted from the contact classes
+(96.8% side-chain-involving). About a quarter of every pool remains above 1e4 after relief:
+those are the backbone-owned or multi-rotamer clashes a one-pass greedy sweep cannot reach.
+
+B(ii), DOES THE RELIEVED ENERGY RANK? (ORACLE evaluation, `rr` as the label): NO, and neither
+did the raw one. Spearman(E, ORACLE RMSD) within the top-75: raw +0.0000 (SE 0.0202),
+relieved -0.0018; in-band (members within 3 A of the best) raw +0.0043, relieved +0.0055.
+
+B(iii), THE REJECT ON THE RELIEVED ENERGY, arm S (reject from the shipped top-75, no refill),
+POINT CLOUD on both sides, matched-count random and permuted controls: at 1e4 the relieved
+threshold rejects 17.5 of 75 (raw 40.1); at 1e6, 4.3 (raw 23.3). `ST.fmt` verbatim:
+
+      rho(E_relief, ORACLE d) minus rho(E_raw, ORACLE d), whole top-75
+        a -0.0018 (med 0.0232)   b 0.0000 (med -0.0079)   n=126
+        effect -0.0019   median +0.0044   SE 0.0168   MDE 0.0471   effect/MDE -0.04
+        iid  CI95 [-0.0345, +0.0300]
+        fold CI95 [-0.0315, +0.0260]   folds same sign 2/5   per-fold 0:-0.038 1:-0.042 2:+0.054 3:+0.002 4:+0.009
+        62W/64L/0T   worst degradation +0.5945 (7JGX)   p90 +0.2374   power 0.05  Type-M 21.25
+        concentration: drop-top10 +0.0290 vs uniform-effect null p10/p50/p90 +0.0084/+0.0286/+0.0496 -> pctile 0.509
+        VERDICT: NOT MEASURED (|effect| 0.0019 <= its own MDE 0.0471, 0.04x)
+      in-band rho(E_relief) minus rho(E_raw)
+        a 0.0055 (med 0.0347)   b 0.0043 (med -0.0045)   n=126
+        effect +0.0012   median +0.0069   SE 0.0167   MDE 0.0467   effect/MDE +0.03
+        iid  CI95 [-0.0323, +0.0324]
+        fold CI95 [-0.0228, +0.0261]   folds same sign 2/5   per-fold 0:-0.034 1:-0.022 2:+0.049 3:-0.005 4:+0.014
+        62W/64L/0T   worst degradation +0.4460 (9BAF)   p90 +0.2436   power 0.05  Type-M 32.72
+        concentration: drop-top10 +0.0327 vs uniform-effect null p10/p50/p90 +0.0116/+0.0323/+0.0525 -> pctile 0.509
+        VERDICT: NOT MEASURED (|effect| 0.0012 <= its own MDE 0.0467, 0.03x)
+      point_cloud [all, n=126] S_relief@1e4 minus anchor
+        a 3.0781 (med 2.8640)   b 3.0483 (med 2.8373)   n=126
+        effect +0.0297   median +0.0000   SE 0.0144   MDE 0.0403   effect/MDE +0.74
+        iid  CI95 [+0.0044, +0.0608]
+        fold CI95 [+0.0188, +0.0404]   folds same sign 5/5   per-fold 0:+0.016 1:+0.043 2:+0.022 3:+0.020 4:+0.045
+        46W/54L/26T   worst degradation +1.2601 (1U62)   p90 +0.1078   power 0.54  Type-M 1.35
+        concentration: drop-top10 +0.0457 vs uniform-effect null p10/p50/p90 +0.0275/+0.0444/+0.0659 -> pctile 0.534
+        VERDICT: NOT MEASURED (|effect| 0.0297 <= its own MDE 0.0403, 0.74x)
+      point_cloud [all, n=126] S_relief@1e4 minus RANDS@1e4
+        a 3.0781 (med 2.8640)   b 3.0561 (med 2.8358)   n=126
+        effect +0.0220   median +0.0000   SE 0.0129   MDE 0.0360   effect/MDE +0.61
+        iid  CI95 [-0.0017, +0.0484]
+        fold CI95 [+0.0106, +0.0318]   folds same sign 5/5   per-fold 0:+0.004 1:+0.037 2:+0.021 3:+0.015 4:+0.032
+        46W/54L/26T   worst degradation +1.1635 (1U62)   p90 +0.0985   power 0.40  Type-M 1.56
+        concentration: drop-top10 +0.0380 vs uniform-effect null p10/p50/p90 +0.0224/+0.0368/+0.0552 -> pctile 0.540
+        VERDICT: NOT MEASURED (|effect| 0.0220 <= its own MDE 0.0360, 0.61x)
+      point_cloud [all, n=126] S_relief@1e4 minus S_raw@1e4
+        a 3.0781 (med 2.8640)   b 3.1563 (med 3.0432)   n=126
+        effect -0.0782   median -0.0166   SE 0.0250   MDE 0.0700   effect/MDE -1.12
+        iid  CI95 [-0.1307, -0.0317]
+        fold CI95 [-0.1291, -0.0319]   folds same sign 5/5   per-fold 0:-0.027 1:-0.011 2:-0.111 3:-0.173 4:-0.072
+        76W/38L/12T   worst degradation +0.9317 (6HVK)   p90 +0.0813   power 0.88  Type-M 1.07
+        concentration: drop-top10 -0.0174 vs uniform-effect null p10/p50/p90 -0.0437/-0.0183/+0.0054 -> pctile 0.520
+        VERDICT: BETTER [TYPE-M ZONE: magnitude inflated ~1.07x]
+      point_cloud [all, n=126] S_relief@1e6 minus anchor
+        a 3.0672 (med 2.8422)   b 3.0483 (med 2.8373)   n=126
+        effect +0.0188   median +0.0000   SE 0.0114   MDE 0.0320   effect/MDE +0.59
+        iid  CI95 [+0.0010, +0.0452]
+        fold CI95 [+0.0012, +0.0399]   folds same sign 5/5   per-fold 0:+0.001 1:+0.057 2:+0.002 3:+0.001 4:+0.032
+        38W/46L/42T   worst degradation +1.2577 (1U62)   p90 +0.0450   power 0.38  Type-M 1.61
+        concentration: drop-top10 +0.0264 vs uniform-effect null p10/p50/p90 +0.0117/+0.0248/+0.0425 -> pctile 0.554
+        VERDICT: NOT MEASURED (|effect| 0.0188 <= its own MDE 0.0320, 0.59x)
+
+READING. (1) The relief is real as a census fact: it halves the fraction of the pool the single
+point calls catastrophic, so "AMBER measures the builder's rotamers" (L23) is confirmed by
+intervention, not only by contact class. (2) It does not make the energy a ranker: rho 0.000 to
+-0.002 whole-set, +0.004 to +0.006 in-band, difference 0.04x MDE with 2/5 folds. A single point
+with its side chains relieved is still blind to which candidate is right, which is the S25
+landscape result (`rho_AMB_rmsd_inband` +0.09 there, on a different band definition) reaching
+the same place through a cleaner observable. (3) It does not make the reject helpful: S on the
+relieved energy at 1e4 is +0.030 A worse than the anchor (fold CI [+0.019, +0.040], 5/5 folds,
+0.74x MDE: the SIGN is measured by the CI, the size is underpowered) and +0.022 worse than
+rejecting the same count at random (fold CI [+0.011, +0.032], 5/5, 0.61x MDE, underpowered);
+it is less harmful than the raw reject by -0.078 (1.12x MDE, 5/5, Type-M) only because it
+rejects a third as many members. At 1e6 it is +0.019 vs the anchor (0.59x) and +0.017 vs random
+(0.58x), both underpowered nulls. The falsifier of section 5 (beat the anchor and the matched
+control past MDE on the built chain) cannot clear on the point cloud, so the built-chain half
+(1.4 h of projection) was NOT run: a point-cloud arm that is worse than the anchor with a fold
+CI excluding zero would need the projection to reverse its sign, which no arm in L86 did.
+Arm R (refill) was not run, as registered (it needs relieved energies beyond the top-75).
+
+POWER. B(ii): SE 0.017 on the rho difference, MDE 0.047: a ranking gain of 0.05 in rho would
+have shown; below that, underpowered. B(iii): SEs 0.010 to 0.014 at 1e4 and 1e6; the arm's harm
+vs the anchor at 1e4 is measured in sign (fold CI excludes zero on all of S_relief-vs-anchor,
+S_relief-vs-RANDS, S_relief-vs-PERMS) and its size is an upper bound. No positive result, no
+replication due; the direction replicates L43 / L86 on a different energy.
+
+DISPOSITION. rotamer_relief B CLOSED: the relief removes the builder's half of the singularity
+and leaves an energy that ranks nothing and rejects harmfully, which closes the last route by
+which an all-atom single point on retrieved windows could have entered the pipeline. For the
+report: "half of what the force field called impossible was the way the side chains had been
+placed; once that is fixed, the force field still cannot tell a good backbone from a bad one."
+
+---
