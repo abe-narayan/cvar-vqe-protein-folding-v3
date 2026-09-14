@@ -5322,3 +5322,156 @@ report: "half of what the force field called impossible was the way the side cha
 placed; once that is fixed, the force field still cannot tell a good backbone from a bad one."
 
 ---
+
+## L132 -- C5 COMPLETE: PREDICTING THE COMMON-MODE DIRECTION ON HELD-OUT FOLDS AND SUBTRACTING IT IS NULL (GLOBAL) TO HARMFUL (RIDGE +0.164 A, 1.79x MDE, 5/5 FOLDS); THE ORACLE CEILING IS -1.87 A (DISTANCE SPACE) AND -3.13 A (COORDINATE FRAME); THE RIDGE PREDICTOR IS WORSE THAN A RANDOM MOVE OF ITS OWN SIZE (2026-09-14 03:54, lane P)
+
+`s26/p_c5.py run`, `s26/results/p_c5.json` (complete: true, 126/126; job `p_c5_run`, exit 0, 5,284 s, peak RSS 0.09 GB),
+statistics `s26/results/p_c5_stats.json`; pre-registered in `s26/PREREG_C5.md` (alpha grid reduced to 0.5, declared in the
+commit of `p_c5.py`). Construction: per target the shipped top-75 cloud c; the common mode ebar = c - t after one rigid
+Kabsch fit (ORACLE, training folds only inside the fits). R1 = distance space, five SHELL means of D(c) - D(t), applied
+by stress descent initialised at c; R2 = the cloud's own principal-axis frame (native-free; round trip exact, rotation-
+invariant to 3e-15 in the selftest). GLOBAL = the training-fold mean correction per length band; RIDGE = nested
+leave-fold-out ridge from the 45 B3 features to the five R1 shell means (alpha chosen 100 to 10,000 per fold, i.e.
+near-constant predictions); RANDOM = a random direction of the same magnitude through the same operator; ORACLE =
+the true correction (the bound). Every arm through `s12.instrument.project`; built chain primary (rebuild basis
+3.2126), point cloud carried. Negative = better than the incumbent.
+
+```
+  C5 global_R1_a0.5 - incumbent [BUILT CHAIN]
+    a 3.2438 (med 2.9603)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0312   median +0.0320   SE 0.0185   MDE 0.0519   effect/MDE +0.60
+    iid  CI95 [-0.0046, +0.0668]
+    fold CI95 [+0.0157, +0.0495]   folds same sign 5/5   per-fold 0:+0.034 1:+0.040 2:+0.062 3:+0.012 4:+0.011
+    54W/72L/0T   worst degradation +0.5890 (7BX2)   p90 +0.2540   power 0.39  Type-M 1.58
+    concentration: drop-top10 +0.0708 vs uniform-effect null p10/p50/p90 +0.0501/+0.0694/+0.0894 -> pctile 0.539
+    VERDICT: NOT MEASURED (|effect| 0.0312 <= its own MDE 0.0519, 0.60x)
+
+  C5 global_R2_a0.5 - incumbent [BUILT CHAIN]
+    a 3.2036 (med 2.9685)   b 3.2126 (med 2.9661)   n=126
+    effect -0.0090   median -0.0060   SE 0.0140   MDE 0.0392   effect/MDE -0.23
+    iid  CI95 [-0.0358, +0.0177]
+    fold CI95 [-0.0331, +0.0185]   folds same sign 3/5   per-fold 0:+0.043 1:-0.037 2:+0.007 3:-0.021 4:-0.035
+    70W/56L/0T   worst degradation +0.5215 (2MSA)   p90 +0.1934   power 0.10  Type-M 3.75
+    concentration: drop-top10 +0.0166 vs uniform-effect null p10/p50/p90 -0.0022/+0.0160/+0.0344 -> pctile 0.516
+    VERDICT: NOT MEASURED (|effect| 0.0090 <= its own MDE 0.0392, 0.23x)
+
+  C5 ridge_R1 - incumbent [BUILT CHAIN]
+    a 3.3769 (med 3.1985)   b 3.2126 (med 2.9661)   n=126
+    effect +0.1643   median +0.1294   SE 0.0328   MDE 0.0920   effect/MDE +1.79
+    iid  CI95 [+0.1021, +0.2293]
+    fold CI95 [+0.1176, +0.2253]   folds same sign 5/5   per-fold 0:+0.105 1:+0.283 2:+0.186 3:+0.115 4:+0.142
+    40W/86L/0T   worst degradation +1.4057 (9BAF)   p90 +0.5774   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.2222 vs uniform-effect null p10/p50/p90 +0.1784/+0.2204/+0.2628 -> pctile 0.527
+    VERDICT: WORSE
+
+  C5 random_R1 - incumbent [BUILT CHAIN]
+    a 3.3477 (med 3.1257)   b 3.2126 (med 2.9661)   n=126
+    effect +0.1351   median +0.1268   SE 0.0363   MDE 0.1018   effect/MDE +1.33
+    iid  CI95 [+0.0654, +0.2080]
+    fold CI95 [+0.0292, +0.2463]   folds same sign 4/5   per-fold 0:+0.043 1:+0.197 2:+0.329 3:-0.032 4:+0.131
+    49W/77L/0T   worst degradation +2.0828 (6MK8)   p90 +0.6066   power 0.96  Type-M 1.02
+    concentration: drop-top10 +0.1952 vs uniform-effect null p10/p50/p90 +0.1472/+0.1936/+0.2416 -> pctile 0.515
+    VERDICT: WORSE
+
+  C5 random_R2_a0.5 - incumbent [BUILT CHAIN]
+    a 3.2249 (med 3.0150)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0123   median +0.0034   SE 0.0098   MDE 0.0274   effect/MDE +0.45
+    iid  CI95 [-0.0070, +0.0314]
+    fold CI95 [-0.0081, +0.0299]   folds same sign 3/5   per-fold 0:+0.023 1:-0.019 2:+0.023 3:-0.014 4:+0.038
+    60W/66L/0T   worst degradation +0.3933 (5H1H)   p90 +0.1343   power 0.24  Type-M 2.03
+    concentration: drop-top10 +0.0304 vs uniform-effect null p10/p50/p90 +0.0188/+0.0302/+0.0419 -> pctile 0.513
+    VERDICT: NOT MEASURED (|effect| 0.0123 <= its own MDE 0.0274, 0.45x)
+
+  C5 oracle_R1 - incumbent [BUILT CHAIN]
+    a 1.3377 (med 0.9955)   b 3.2126 (med 2.9661)   n=126
+    effect -1.8749   median -1.5004   SE 0.1300   MDE 0.3641   effect/MDE -5.15
+    iid  CI95 [-2.1296, -1.6178]
+    fold CI95 [-2.0919, -1.6021]   folds same sign 5/5   per-fold 0:-1.331 1:-1.916 2:-1.840 3:-2.171 4:-2.099
+    120W/6L/0T   worst degradation +0.2322 (2LER)   p90 -0.3580   power 1.00  Type-M 1.00
+    concentration: drop-top10 -1.5777 vs uniform-effect null p10/p50/p90 -1.7452/-1.5851/-1.4257 -> pctile 0.522
+    VERDICT: BETTER
+
+  C5 oracle_R2 - incumbent [BUILT CHAIN]
+    a 0.0834 (med 0.0616)   b 3.2126 (med 2.9661)   n=126
+    effect -3.1293   median -2.8729   SE 0.1534   MDE 0.4297   effect/MDE -7.28
+    iid  CI95 [-3.4275, -2.8439]
+    fold CI95 [-3.2715, -3.0057]   folds same sign 5/5   per-fold 0:-2.952 1:-3.096 2:-3.018 3:-3.400 4:-3.188
+    126W/0L/0T   worst degradation -0.1490 (1S9Z)   p90 -0.9687   power 1.00  Type-M 1.00
+    concentration: drop-top10 -2.8210 vs uniform-effect null p10/p50/p90 -3.0202/-2.8272/-2.6380 -> pctile 0.516
+    VERDICT: BETTER
+
+  C5 global_R1_a0.5 - incumbent [POINT CLOUD]
+    a 3.0843 (med 2.8019)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0360   median +0.0513   SE 0.0152   MDE 0.0427   effect/MDE +0.84
+    iid  CI95 [+0.0065, +0.0656]
+    fold CI95 [+0.0081, +0.0643]   folds same sign 4/5   per-fold 0:+0.048 1:+0.088 2:+0.051 3:+0.006 4:-0.003
+    47W/79L/0T   worst degradation +0.4770 (2MSA)   p90 +0.2234   power 0.66  Type-M 1.24
+    concentration: drop-top10 +0.0671 vs uniform-effect null p10/p50/p90 +0.0495/+0.0670/+0.0839 -> pctile 0.502
+    VERDICT: NOT MEASURED (|effect| 0.0360 <= its own MDE 0.0427, 0.84x)
+
+  C5 global_R2_a0.5 - incumbent [POINT CLOUD]
+    a 3.0647 (med 2.8423)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0164   median +0.0207   SE 0.0141   MDE 0.0396   effect/MDE +0.41
+    iid  CI95 [-0.0112, +0.0438]
+    fold CI95 [-0.0172, +0.0549]   folds same sign 3/5   per-fold 0:+0.082 1:+0.028 2:+0.032 3:-0.008 4:-0.042
+    55W/71L/0T   worst degradation +0.5433 (2MSA)   p90 +0.2299   power 0.21  Type-M 2.18
+    concentration: drop-top10 +0.0409 vs uniform-effect null p10/p50/p90 +0.0224/+0.0404/+0.0594 -> pctile 0.515
+    VERDICT: NOT MEASURED (|effect| 0.0164 <= its own MDE 0.0396, 0.41x)
+
+  C5 ridge_R1 - incumbent [POINT CLOUD]
+    a 3.1975 (med 3.0171)   b 3.0483 (med 2.8373)   n=126
+    effect +0.1492   median +0.1359   SE 0.0278   MDE 0.0780   effect/MDE +1.91
+    iid  CI95 [+0.0959, +0.2014]
+    fold CI95 [+0.0947, +0.2292]   folds same sign 5/5   per-fold 0:+0.102 1:+0.310 2:+0.152 3:+0.071 4:+0.123
+    36W/90L/0T   worst degradation +1.2111 (6BJF)   p90 +0.5080   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.2024 vs uniform-effect null p10/p50/p90 +0.1674/+0.2014/+0.2357 -> pctile 0.515
+    VERDICT: WORSE
+
+  C5 random_R2_a0.5 - incumbent [POINT CLOUD]
+    a 3.0673 (med 2.8066)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0190   median +0.0136   SE 0.0078   MDE 0.0219   effect/MDE +0.87
+    iid  CI95 [+0.0042, +0.0346]
+    fold CI95 [+0.0030, +0.0350]   folds same sign 4/5   per-fold 0:+0.040 1:+0.040 2:+0.017 3:-0.013 4:+0.013
+    50W/76L/0T   worst degradation +0.3575 (5H1H)   p90 +0.1132   power 0.68  Type-M 1.22
+    concentration: drop-top10 +0.0312 vs uniform-effect null p10/p50/p90 +0.0207/+0.0307/+0.0417 -> pctile 0.521
+    VERDICT: NOT MEASURED (|effect| 0.0190 <= its own MDE 0.0219, 0.87x)
+
+  C5 oracle_R2 - incumbent [POINT CLOUD]
+    a 0.0000 (med 0.0000)   b 3.0483 (med 2.8373)   n=126
+    effect -3.0483   median -2.8373   SE 0.1467   MDE 0.4110   effect/MDE -7.42
+    iid  CI95 [-3.3418, -2.7668]
+    fold CI95 [-3.2083, -2.9005]   folds same sign 5/5   per-fold 0:-2.772 1:-3.018 2:-2.979 3:-3.314 4:-3.156
+    126W/0L/0T   worst degradation -0.1959 (1S9Z)   p90 -1.1540   power 1.00  Type-M 1.00
+    concentration: drop-top10 -2.7422 vs uniform-effect null p10/p50/p90 -2.9345/-2.7430/-2.5646 -> pctile 0.501
+    VERDICT: BETTER
+```
+
+Reading. (1) The ceiling is large: subtracting the TRUE common mode gives 1.34 A (distance space, -1.87, 120W/6L)
+and 0.08 A (the coordinate frame, -3.13, 126W/0L; the R2 oracle is the native by construction, so its number is
+the size of the mode plus the projection's cost, not an achievable target). (2) The two achievable arms are null:
+GLOBAL R2 -0.009 (0.23x MDE, 3/5 folds, 70W/56L) and GLOBAL R1 +0.031 (0.60x, fold CI above zero at 5/5 but under
+the MDE gate). (3) The learned arm is HARMFUL: RIDGE R1 +0.164 A [fold +0.118, +0.225], 1.79x MDE, 5/5 folds,
+40W/86L, and its magnitude-matched random control is +0.135 [+0.029, +0.246], 1.33x, so the predicted shell profile
+is indistinguishable from a random shell profile of the same size (+0.029, inside the noise). The nested alphas
+went to the top of the grid on 3 of 5 folds: the ridge found nothing to fit and emitted a near-constant
+correction, which is the GLOBAL arm plus noise. (4) Power: the design resolves 0.04 to 0.05 A on the GLOBAL arms
+and 0.09 A on the ridge arm; a real gain of 0.05 A would have shown as a fold CI below zero on GLOBAL R2 and did not.
+Verdict: the pre-registered falsifier fires for both GLOBAL and RIDGE; C5 is refuted at one agent-day, as S16,
+S19 L14 ("the estimator is made of the bias") and S24 L7 predicted, now with the ceiling measured beside it on the
+same operator: the common mode is 1.9 to 3.1 A of built-chain error, and nothing native-free in these two
+representations touches it.
+
+---
+
+## L133 -- THE raw RUNG (1280-d ESM-2 WITH A LEARNED PROJECTION) IS NOT RUN: 4 OF 5 FOLDS TRAINED, FOLD 4 UNTRAINED, NO EVALUATION; MEMORY AND TIME (2026-09-14 03:54, lane P)
+
+`s26/models/p_ladder/raw_fold{0,1,2,3}_s0.pt` exist (jobs `p_train_raw_f1`, `p_train_raw_fold1/2/3`: 4,477 to 4,900 s
+per fold at peak RSS 1.93 to 1.96 GB; the first attempt was terminated at 19:11 with the governor dead, L42, and
+fold 3 was queued 40 min behind the job cap). At the 04:30 close fold 4 is untrained and the rung cannot be
+evaluated (a rung needs all five leave-fold-out models). No further launch: a fifth fold is 80 min of a 2 GB job
+and the evaluation another 10, past the close. What the record says instead: raw's inputs are bracketed by pca32f
+(32 components, +0.018 built chain, 0.13x MDE, L67) and pca128 (128 components, +0.076, 0.43x, L72), both null,
+and S7-11 measured raw on selection as indistinguishable from pca32 and pca128. The rung is recorded as NOT RUN,
+not as a result; its four checkpoints stay on disk for the next sprint.
+
+---

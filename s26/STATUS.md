@@ -91,6 +91,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-14 02:57 next: at 03:30 stop taking new audits, record the rest as not run (the heavy projection audits will not fit), ledger the 20-audit table, examine.py, closure table, final commit by ~03:50.
 - 2026-09-14 03:12 running: verify chain 16/20 done (5 IDENTICAL, 6 DIFFERS all explained, 3 no-JSON, 1 error by construction); project_equiv running since 03:10 (needs ~38 min uncontended), allowed until 04:00 per the coordinator; findings extended-window section drafted; table generator s26/i_verify_table.py ready.
 - 2026-09-14 03:12 next: at 04:00 stop the chain if equiv is not done; ledger table; examine.py on the final tree; closure table + hygiene list; final commit by ~04:20.
+- 2026-09-14 03:53 running: project_stability (20th audit, 77 targets, ~04:11); 19/20 done: 5 IDENTICAL, 11 DIFFERS all read (timings / keys / added fields / the repair of found defects), 3 no-JSON, 1 error by construction. examine.py final: 787 modules, no drift, 21/21 claims. Findings closure table + hygiene list written; ledger table script staged.
+- 2026-09-14 03:53 next: when stability lands: its reading, ledger table entry, fill the findings, final commit, two lines to the coordinator (~04:15).
 
 ## Q (Quantum lane)
 - 2026-09-13 08:50 running: resumed after the session cut at 00:46; q_*.py, probes and reference MDEs committed (2fb2998b); PREREG_A2/A4 on disk; launching A2 (DLA, s26/q_dla.py) and A4 (variance, s26/q_var.py) under the governor per the coordinator ruling.
@@ -141,6 +143,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-14 01:37 next: C4 remaining blocks and C5 entries as they land; raw folds 3-4 then raw eval if time; coherence rungs only if time; final findings sections; PROPOSAL_C addendum with C4/C5.
 - 2026-09-14 02:01 running: p_c5_run (8 projections per target, ~2 min/target under load; will not complete by 04:30; rows checkpoint every 10 targets), p_train_raw_fold3 queued behind the cap (79 min per fold; raw will not be evaluated). FINAL on disk: PROPOSAL_B.md (REPLACE), PROPOSAL_C.md (KEEP WITH EDITS), agentP_FINDINGS.md sections 1-11, delivery file p_best_rung_chains.json (production emission) + rebuild-basis cross-check, ledger L56-L116 (lane P entries).
 - 2026-09-14 02:01 next: if C5 completes, its ledger entry and a PROPOSAL_C addendum; otherwise nothing further from lane P before the close.
+- 2026-09-14 03:54 (clock read, not estimated) CLOSE: C5 complete and posted (refuted; ridge harmful +0.164, oracle ceiling -1.87 / -3.13); raw recorded NOT RUN (4/5 folds); PROPOSAL_C addendum 2 in (lane PR: slide 10 notes can be rebuilt from it); findings sections 12-14; no lane-P job running or queued.
+- 2026-09-14 03:54 next: nothing further from lane P before the close.
 
 ## A (Adversary)
 - 2026-09-13 09:15 running: nothing. Done: `s26/EXAMINATION_AUDIT.md` and ledger L31 (reproduction exact on HEAD; one MATERIAL: the 369/356 test count in EXAMINATION D / C35 / L28 against the artefact's 370/357; C26 re-derived from `s13/cache/tors_rows.npz`; C27 in git history at 5fa05cd).
