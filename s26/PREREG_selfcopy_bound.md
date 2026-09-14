@@ -322,3 +322,15 @@ the result to the Adversary. I will not open the benchmark to check.
   0.123 on the paired gain (2NBC); at the p95 target 0.083 / 0.115 / 0.082. Class under every
   reading: MINOR on the built chain and the paired gain; on the selection basis the worst-target
   reading crosses the 0.170 line. Every quotation of 0.028 now carries 0.151 and A2 beside it.
+
+## ADDENDUM 3 (2026-09-14 01:10) -- Part B on all four carrier-out models; F3 falsified by 2P5H; nothing above edited
+
+- Models: 1A11/f2 (L40), 2LMF/f4 (1049 s, 1.244 GB), 2P5J/f4 (1063 s, 1.250 GB), 1U6V/f0 (893 s,
+  1.248 GB); reference lane P's pca32 fold models. Gated re-run `w_endpoint_report2` (145 s,
+  0.309 GB), the L55 additions re-applied. Ledger entry after L105.
+- Carrier presence, built chain: +0.011 / -0.002 / -0.246 / -0.027 (1CEK / 2FBU / 2P5H / 6B9K).
+  F3's first clause (|delta arm| < 0.10 on all four) is FALSIFIED by 2P5H, in the HARMFUL direction
+  (the carrier's copy sits 2.33 A from the native, L52). The control clause is measured on one of
+  six control-out models so far (9BAF/f0); the rest are queued and will be reported by addendum.
+- The direct dev-proxy bound (both channels removed, n = 4): 0.0082 A on the built chain and the
+  paired gain, IMMATERIAL; the envelope rows unchanged; the class MINOR by the envelope.

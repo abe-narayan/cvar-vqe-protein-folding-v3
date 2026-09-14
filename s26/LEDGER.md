@@ -4321,3 +4321,56 @@ sign stays unpredictable (L106). "Helix content and the length" in L106 is struc
 strand content" is the sentence.
 
 ---
+
+## L108 -- ADDENDUM TO L44 / L58: PART B COMPLETE ON THE FOUR CARRIER-OUT MODELS. REMOVING THE CARRIER FROM THE FOLD MODEL'S TRAINING LABELS CHANGES THE BUILT CHAIN BY +0.011 / -0.002 / -0.246 / -0.027 A ON 1CEK / 2FBU / 2P5H / 6B9K: F3 IS FALSIFIED BY 2P5H, IN THE HARMFUL DIRECTION (THE LEAK MAKES THE LEAKED TARGET WORSE); THE DIRECT DEV-PROXY BOUND RISES FROM 0.002 TO 0.008 A, STILL IMMATERIAL; THE CLASS STAYS MINOR BY THE ENVELOPE (2026-09-14, W)
+
+Part B of `s26/PREREG_selfcopy_bound.md` is now measured on all four carrier-out models: 1A11 out
+of fold 2 (built before the host kill, L40), 2LMF out of fold 4 (job `w_train_out_2LMF`, 1049 s,
+peak 1.244 GB), 2P5J out of fold 4 (`w_train_out_2P5J`, 1063 s, 1.250 GB), 1U6V out of fold 0
+(`w_train_out_1U6V`, 893 s, 1.248 GB), each through lane P's exact pca32 training path with the
+one chain's pairs removed (276 / 231 / 120 / 120 pairs fewer); the reference for every fold is
+lane P's `pca32_fold<f>_s0.pt` (identical function, corpus and seed, nothing removed), which
+reproduces the pinned emission at 0.000 on all four targets. Gated re-run: job `w_endpoint_report2`
+(posterior, endpoint, report; exit 0, 145 s, peak 0.309 GB); the L55 additions re-applied by
+`s26/w_bound_addendum.py`; artefacts `s26/results/w_selfcopy_posterior.json`,
+`w_selfcopy_endpoint.json`, `w_selfcopy_bound.json` (regenerated, provenance stamped, the
+original kept under `provenance_original`). Parts A, C, D and E are unchanged. Basis on every
+line; delta = reference minus carrier-out: positive = the carrier's presence HELPED the target.
+
+    target  carrier  fold   posterior change (mean |dE[d]| per pair; top-75 overlap)   delta arm    cloud     fit       sel       paired gain
+    1CEK    1A11     2      1.024 A; 0.76                                              +0.0114     +0.0204   +0.0115   -0.0062   +0.0177
+    2FBU    2LMF     4      0.791 A; 0.89                                              -0.0021     -0.0002   -0.0021   -0.0040   +0.0019
+    2P5H    2P5J     4      1.382 A; 0.77                                              -0.2460     -0.1634   -0.2310   +0.0000   -0.2460
+    6B9K    1U6V     0      1.373 A; 0.91                                              -0.0265     -0.0318   -0.0188   +0.0000   -0.0265
+
+    both channels removed (self-window dropped AND carrier out of the model), production minus clean:
+    1CEK +0.0114   2FBU -0.0021   2P5H -0.2460   6B9K -0.0243   (arm)
+
+**F3 is falsified**: |delta arm| on 2P5H is 0.246 A, above the registered 0.10 A line; its
+control clause (carrier-out change against two control-out chains per fold) is measured so far on
+one control (9BAF out of fold 0, `w_train_out_9BAF_f0`, 1440 s, 1.247 GB) and the other five are
+queued; the clause is reported when they exist. The direction is the one L52 makes expected:
+2P5J's copy of 2P5H's sequence sits 2.33 A from 2P5H's native, and training the fold model on
+that carrier pulls the posterior toward the carrier's geometry (mean |dE[d]| 1.38 A per pair, the
+largest of the four) and the built chain 0.25 A AWAY from the native. On 1CEK, whose carrier
+segment is 0.60 A from the native, the carrier helps by 0.011; on 6B9K (carrier 4.13 A away) it
+hurts by 0.027; on 2FBU (3.28 A away) it is 0.002. So the training channel's sign follows the
+cross-deposit distance of the copy, which is what a memorising model does with a copy that is
+not the native: the leak is not a gift to the leaked target, it is a bias toward another
+deposit's conformation.
+
+**The bound, updated (Part D; `w_selfcopy_bound.json :: signed_bounds_gated/both_removed4`, now
+n = 4):** (2/60) x max |delta| with both channels removed = 0.0082 A on the built chain (2P5H),
+0.0082 on the paired gain, 0.0054 on the cloud, 0.0002 on selection: IMMATERIAL (below 0.017) on
+every basis, up from 0.0004 / 0.0006 at n = 1. The envelope rows are unchanged (mean-CI 0.028
+built chain / 0.048 selection / 0.023 gain; worst target 0.151 / 0.194 / 0.123 under A2, L58), so
+the pre-registered class stays MINOR by the envelope clause and IMMATERIAL by every direct
+measurement, now with all four dev self-copies measured on both channels. The sign matters for
+the benchmark verdict: where the direct measurement is not zero it is HARMFUL to the leaked
+target's built chain and neutral to its argmin, so the un-leaked benchmark paired gain would, if
+anything, be slightly more favourable to the architecture than the +0.0103 reported; by at most
+(2/60) x 0.246 = 0.008 A under A2. The caveat text (L55) stands with "dev-proxy price 0.008 A"
+in place of 0.002. Replication: not applicable to deterministic retrains at seed 0 (a second seed
+of the 2P5H retrain is the natural check of the one large value and is queued behind the
+control-out models if time allows). Deviation from the PREREG: Part B's controls are 1 of 6 at
+this entry; F3's control clause is open.
