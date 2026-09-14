@@ -2180,3 +2180,79 @@ L35, L46, L53. Slide 11's direction line is DRAFT until the coordinator's verdic
 `s26/PROPOSAL_A.md`; the builder swaps the placeholder for the proposal slide when the file exists.
 
 ---
+
+## L62 -- LANE P, C2 RUNG NOESM: REMOVING THE ESM BLOCK COSTS +0.208 A ON THE BUILT CHAIN (5/5 FOLDS, 1.01x MDE, TYPE-M ZONE) AND +0.330 A ON SELECTION, REPRODUCING S7-11's LOST -0.288 TO -0.34; AND ITS gam_eff IS POSITIVE WHILE IT IS WORSE (2026-09-13 20:01, lane P)
+
+Artefacts: `s26/results/p_ladder_noesm_s0.json` (126 rows, complete), `s26/results/p_ladder_report_noesm_s0.json`; anchor `s26/results/p_ladder_shipped_s0.json`. Every arm through `s26/p_ladder.py`'s single path: shipped K=500 pool -> the rung's posterior in a genuine `core.predict.Distogram` -> shipped Bayes-risk score -> top-75 uniform medoid-frame average -> `s12.instrument.project` (ramah 0.3). Paired per target against the shipped posterior through the same path. Negative = the rung is better.
+
+Job `p_eval_noesm2`: exit 0, 521 s, peak RSS 0.305 GB (`s26/jobs_done/p_eval_noesm2.json`); fold models `s26/models/p_ladder/noesm_fold{0..4}_s0.pt` (42-d physicochemical pair features, the shipped MLP and trainer; `p_train_noesm` 1,743 s, peak 0.63 GB). Reading: (1) the S7-11 figure whose artefact is lost (L11) is re-measured on the same instrument: the ESM block is worth -0.330 A [fold -0.448, -0.212] on selection, 5/5 folds, against S7-11's -0.288 [-0.484, -0.092] for pca32 and -0.34 for pca128; (2) on the built chain it is worth -0.208 A, 5/5 folds, at 1.01x its MDE (Type-M zone; the magnitude is uncertain, the sign is not), so the ESM channel survives the pipeline, which S17 L23's 'filter, not discriminator' did not settle for the readout; (3) the medians (+0.044 arm, +0.071 sel) are far below the means and the worst target is +3.65 A (8T61): the loss is concentrated on a few targets, but the uniform-effect null puts the drop-top-10 at its 50th percentile, so it is not a concentration artefact; (4) gam_eff is POSITIVE (+0.116 prob-space at cos 0.25; +0.343 loc-space at cos 0.34, amplitude ~1) for a rung that is WORSE at 5/5 folds and has worse MAE (2.548 vs 2.339): a large move at low cosine projects positively onto the truth direction while adding more orthogonal error than it removes. This is S25 L12's caveat reproduced from the training side, on an achievable rung, and it settles how gam_eff will be read for every rung below: never without the cosine and the amplitude, and never as a prediction of the endpoint.
+
+```
+  noesm vs shipped -- BUILT CHAIN (PRIMARY; rebuild basis 3.2126, L57)
+    a 3.4205 (med 3.4139)   b 3.2126 (med 2.9661)   n=126
+    effect +0.2078   median +0.0440   SE 0.0733   MDE 0.2054   effect/MDE +1.01
+    iid  CI95 [+0.0647, +0.3511]
+    fold CI95 [+0.0986, +0.3942]   folds same sign 5/5   per-fold 0:+0.115 1:+0.126 2:+0.200 3:+0.573 4:+0.075
+    47W/79L/0T   worst degradation +3.6485 (8T61)   p90 +0.9859   power 0.81  Type-M 1.12
+    concentration: drop-top10 +0.3348 vs uniform-effect null p10/p50/p90 +0.2551/+0.3322/+0.4153 -> pctile 0.514
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.12x]
+  noesm vs shipped -- POINT CLOUD (3.0483 basis)
+    a 3.2442 (med 3.1375)   b 3.0483 (med 2.8373)   n=126
+    effect +0.1959   median +0.0576   SE 0.0684   MDE 0.1917   effect/MDE +1.02
+    iid  CI95 [+0.0554, +0.3310]
+    fold CI95 [+0.0775, +0.3814]   folds same sign 5/5   per-fold 0:+0.112 1:+0.193 2:+0.153 3:+0.547 4:+0.035
+    47W/79L/0T   worst degradation +3.4270 (8T61)   p90 +1.0224   power 0.82  Type-M 1.11
+    concentration: drop-top10 +0.3171 vs uniform-effect null p10/p50/p90 +0.2411/+0.3155/+0.3936 -> pctile 0.509
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.11x]
+  noesm vs shipped -- SELECTION argmin K=500 (3.4540 basis)
+    a 3.7839 (med 3.6764)   b 3.4540 (med 3.4779)   n=126
+    effect +0.3299   median +0.0713   SE 0.0924   MDE 0.2589   effect/MDE +1.27
+    iid  CI95 [+0.1499, +0.5173]
+    fold CI95 [+0.2122, +0.4475]   folds same sign 5/5   per-fold 0:+0.149 1:+0.203 2:+0.521 3:+0.443 4:+0.332
+    48W/70L/8T   worst degradation +3.1238 (2LWS)   p90 +1.7459   power 0.95  Type-M 1.03
+    concentration: drop-top10 +0.5026 vs uniform-effect null p10/p50/p90 +0.3881/+0.4977/+0.6130 -> pctile 0.524
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.03x]
+  gamma-equivalent: gam_eff prob-space +0.1161 at cos +0.247 ; loc-space +0.3430 at cos +0.341 ; MAE 2.5483 (diagnostic only).
+  CAVEAT (S25 L12): -2.1496 x gam_eff is redeemable only at cos = 1; a real operator travelling 25%% at cos 0.5 is worth +0.024 A. Never quote the product alone.
+  folds same sign (arm): 5/5 ; verdict (arm): WORSE [TYPE-M ZONE: magnitude inflated ~1.12x]
+```
+
+---
+
+## L63 -- LANE P, C2 RUNG CONLY: THE CONTACT HEAD ALONE (55-d, NO EMBEDDING BLOCK) SITS BETWEEN noesm AND THE SHIPPED PRIOR: +0.122 A ON THE BUILT CHAIN (0.62x MDE, 4/5 FOLDS, NOT MEASURED); AGAINST noesm IT BUYS -0.218 A ON SELECTION (1.00x MDE, 4/5) AND -0.086 A ON THE BUILT CHAIN (0.51x) (2026-09-13 20:12, lane P)
+
+Artefacts: `s26/results/p_ladder_conly_s0.json` (126 rows, complete), `s26/results/p_ladder_report_conly_s0.json`; anchor `s26/results/p_ladder_shipped_s0.json`. Every arm through `s26/p_ladder.py`'s single path: shipped K=500 pool -> the rung's posterior in a genuine `core.predict.Distogram` -> shipped Bayes-risk score -> top-75 uniform medoid-frame average -> `s12.instrument.project` (ramah 0.3). Paired per target against the shipped posterior through the same path. Negative = the rung is better.
+
+Job `p_eval_conly`: exit 0, 621 s, peak RSS 0.305 GB; models `s26/models/p_ladder/conly_fold{0..4}_s0.pt` (physicochemical pair block + the 13 ESM-2 650M contact-head columns; `p_train_conly` peak 0.69 GB). PREREG_B2's first size-axis point. Reading: the rung is UNDERPOWERED against the shipped prior (0.62x MDE on the built chain, 0.42x on selection; power 0.41 / 0.22), not null; its medians (+0.018 arm, 0.000 sel with 15 exact ties) say most targets are unmoved and the mean is carried by a few (worst 1CEK +3.70 A, the target whose verbatim self-window is BLOSUM rank 1, S24 L4). Isolated against noesm (paired, same code path): the contact head alone is worth -0.218 A on selection [fold -0.374, -0.037], 4/5 folds, exactly at its MDE (1.00x, Type-M zone), and -0.086 A on the built chain [fold -0.212, +0.010], 0.51x MDE, 2/5 folds. So of the ESM channel's -0.330 A on selection (L62), about two thirds is in the 13 contact-head columns and the rest in the 32-d embedding block (pca32, next); on the built chain the split is not resolved at n = 126. S17 L23 measured the contact head as a RANKER (filter, not discriminator); as a PRIOR INPUT it carries selection skill that the ranking measurement could not see, and that is consistent with the record: a better filter moves the argmin over K = 500 and barely moves a top-75 average. gam_eff/cos for the record: +0.109 prob at cos 0.24, +0.343 loc at cos 0.37, same shape as noesm (a large low-cosine move), MAE 2.437.
+
+```
+  conly vs shipped -- BUILT CHAIN (PRIMARY; rebuild basis 3.2126, L57)
+    a 3.3349 (med 3.1110)   b 3.2126 (med 2.9661)   n=126
+    effect +0.1223   median +0.0176   SE 0.0708   MDE 0.1983   effect/MDE +0.62
+    iid  CI95 [-0.0113, +0.2620]
+    fold CI95 [-0.0350, +0.2674]   folds same sign 4/5   per-fold 0:+0.115 1:-0.177 2:+0.221 3:+0.379 4:+0.079
+    53W/73L/0T   worst degradation +3.7009 (1CEK)   p90 +0.8198   power 0.41  Type-M 1.55
+    concentration: drop-top10 +0.2519 vs uniform-effect null p10/p50/p90 +0.1750/+0.2472/+0.3239 -> pctile 0.529
+    VERDICT: NOT MEASURED (|effect| 0.1223 <= its own MDE 0.1983, 0.62x)
+  conly vs shipped -- POINT CLOUD (3.0483 basis)
+    a 3.1532 (med 2.8753)   b 3.0483 (med 2.8373)   n=126
+    effect +0.1049   median +0.0227   SE 0.0638   MDE 0.1788   effect/MDE +0.59
+    iid  CI95 [-0.0201, +0.2354]
+    fold CI95 [-0.0176, +0.2458]   folds same sign 4/5   per-fold 0:+0.096 1:-0.136 2:+0.196 3:+0.359 4:+0.026
+    50W/76L/0T   worst degradation +3.1669 (1CEK)   p90 +0.6442   power 0.38  Type-M 1.61
+    concentration: drop-top10 +0.2243 vs uniform-effect null p10/p50/p90 +0.1540/+0.2207/+0.2924 -> pctile 0.523
+    VERDICT: NOT MEASURED (|effect| 0.1049 <= its own MDE 0.1788, 0.59x)
+  conly vs shipped -- SELECTION argmin K=500 (3.4540 basis)
+    a 3.5656 (med 3.5772)   b 3.4540 (med 3.4779)   n=126
+    effect +0.1116   median +0.0000   SE 0.0950   MDE 0.2660   effect/MDE +0.42
+    iid  CI95 [-0.0761, +0.3032]
+    fold CI95 [-0.0975, +0.3008]   folds same sign 3/5   per-fold 0:+0.279 1:-0.288 2:+0.373 3:+0.191 4:-0.000
+    56W/55L/15T   worst degradation +4.4311 (1CEK)   p90 +1.5913   power 0.22  Type-M 2.15
+    concentration: drop-top10 +0.2906 vs uniform-effect null p10/p50/p90 +0.1683/+0.2864/+0.4050 -> pctile 0.520
+    VERDICT: NOT MEASURED (|effect| 0.1116 <= its own MDE 0.2660, 0.42x)
+  gamma-equivalent: gam_eff prob-space +0.1093 at cos +0.241 ; loc-space +0.3425 at cos +0.368 ; MAE 2.4373 (diagnostic only).
+  CAVEAT (S25 L12): -2.1496 x gam_eff is redeemable only at cos = 1; a real operator travelling 25%% at cos 0.5 is worth +0.024 A. Never quote the product alone.
+  folds same sign (arm): 4/5 ; verdict (arm): NOT MEASURED (|effect| 0.1223 <= its own MDE 0.1983, 0.62x)
+```
+
+---

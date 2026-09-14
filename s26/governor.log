@@ -802,3 +802,65 @@
 2026-09-13T19:51:33 RESUME   ph_branch_solutions agent=PH tag=CPU
 2026-09-13T19:52:03 REAP     e_report_check4 (pid 32040) is gone; registration removed
 2026-09-13T19:52:13 SAMPLE   ram=77.5% (12.99GB used, 3.76GB free) cpu=69.4% (15s mean 59.3%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T19:53:13 SAMPLE   ram=77.5% (12.98GB used, 3.77GB free) cpu=57.7% (15s mean 64.2%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T19:54:13 SAMPLE   ram=76.8% (12.86GB used, 3.89GB free) cpu=56.0% (15s mean 56.7%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T19:55:13 SAMPLE   ram=76.7% (12.85GB used, 3.90GB free) cpu=57.2% (15s mean 57.2%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T19:56:13 SAMPLE   ram=77.0% (12.89GB used, 3.86GB free) cpu=55.4% (15s mean 56.5%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T19:57:13 SAMPLE   ram=76.4% (12.79GB used, 3.96GB free) cpu=56.4% (15s mean 56.6%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T19:58:13 SAMPLE   ram=74.6% (12.50GB used, 4.25GB free) cpu=57.8% (15s mean 56.9%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T19:59:13 SAMPLE   ram=74.5% (12.48GB used, 4.27GB free) cpu=56.1% (15s mean 56.7%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:00:13 SAMPLE   ram=74.5% (12.48GB used, 4.27GB free) cpu=59.3% (15s mean 57.7%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:00:48 REAP     p_eval_noesm2 (pid 38164) is gone; registration removed
+2026-09-13T20:01:13 SAMPLE   ram=75.0% (12.56GB used, 4.19GB free) cpu=58.4% (15s mean 58.7%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:01:58 REAP     ph_branch_probe (pid 16772) is gone; registration removed
+2026-09-13T20:02:13 SAMPLE   ram=74.5% (12.48GB used, 4.27GB free) cpu=53.8% (15s mean 61.7%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:03:13 SAMPLE   ram=73.9% (12.37GB used, 4.38GB free) cpu=58.0% (15s mean 57.4%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:04:13 SAMPLE   ram=74.4% (12.46GB used, 4.29GB free) cpu=56.3% (15s mean 68.1%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:05:13 SAMPLE   ram=74.3% (12.45GB used, 4.30GB free) cpu=57.2% (15s mean 57.4%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:06:13 SAMPLE   ram=74.8% (12.52GB used, 4.23GB free) cpu=55.3% (15s mean 56.3%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:07:13 SAMPLE   ram=74.3% (12.45GB used, 4.30GB free) cpu=57.1% (15s mean 57.1%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:08:13 SAMPLE   ram=73.5% (12.32GB used, 4.43GB free) cpu=58.4% (15s mean 58.1%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:09:13 SAMPLE   ram=73.6% (12.33GB used, 4.42GB free) cpu=56.6% (15s mean 57.2%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:10:13 SAMPLE   ram=73.0% (12.23GB used, 4.52GB free) cpu=56.0% (15s mean 57.1%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:11:13 SAMPLE   ram=73.5% (12.31GB used, 4.44GB free) cpu=59.3% (15s mean 58.1%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:12:13 SAMPLE   ram=73.4% (12.30GB used, 4.45GB free) cpu=57.2% (15s mean 57.1%) jobs=4 amber=0 queued=0 lanes=7
+2026-09-13T20:12:18 REAP     p_eval_conly (pid 15380) is gone; registration removed
+2026-09-13T20:13:13 SAMPLE   ram=73.0% (12.23GB used, 4.52GB free) cpu=57.8% (15s mean 57.5%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:14:13 SAMPLE   ram=72.8% (12.20GB used, 4.55GB free) cpu=56.4% (15s mean 56.9%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:15:13 SAMPLE   ram=73.0% (12.23GB used, 4.52GB free) cpu=54.0% (15s mean 54.8%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:16:13 SAMPLE   ram=73.5% (12.31GB used, 4.44GB free) cpu=56.2% (15s mean 55.6%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:17:13 SAMPLE   ram=73.0% (12.23GB used, 4.52GB free) cpu=55.1% (15s mean 55.6%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:18:13 SAMPLE   ram=72.5% (12.15GB used, 4.60GB free) cpu=56.2% (15s mean 56.2%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:19:13 SAMPLE   ram=72.7% (12.17GB used, 4.58GB free) cpu=52.7% (15s mean 55.4%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:20:13 SAMPLE   ram=72.7% (12.17GB used, 4.58GB free) cpu=56.2% (15s mean 55.6%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:21:13 SAMPLE   ram=73.1% (12.24GB used, 4.51GB free) cpu=54.6% (15s mean 55.8%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:22:13 SAMPLE   ram=72.8% (12.19GB used, 4.56GB free) cpu=54.3% (15s mean 56.1%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:23:13 SAMPLE   ram=72.1% (12.07GB used, 4.68GB free) cpu=57.5% (15s mean 56.6%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:24:13 SAMPLE   ram=72.0% (12.06GB used, 4.69GB free) cpu=56.7% (15s mean 58.0%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:25:13 SAMPLE   ram=72.0% (12.06GB used, 4.68GB free) cpu=57.2% (15s mean 56.8%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:26:13 SAMPLE   ram=72.4% (12.13GB used, 4.62GB free) cpu=57.9% (15s mean 56.1%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:27:13 SAMPLE   ram=72.2% (12.09GB used, 4.66GB free) cpu=57.8% (15s mean 56.2%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:28:13 SAMPLE   ram=70.8% (11.86GB used, 4.89GB free) cpu=57.3% (15s mean 57.6%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:29:13 SAMPLE   ram=70.7% (11.84GB used, 4.91GB free) cpu=58.2% (15s mean 57.3%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:30:13 SAMPLE   ram=71.0% (11.90GB used, 4.85GB free) cpu=57.3% (15s mean 56.2%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:31:13 SAMPLE   ram=71.4% (11.96GB used, 4.79GB free) cpu=57.2% (15s mean 55.7%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:32:13 SAMPLE   ram=70.9% (11.88GB used, 4.87GB free) cpu=55.8% (15s mean 56.8%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:33:13 SAMPLE   ram=70.6% (11.83GB used, 4.92GB free) cpu=58.3% (15s mean 63.8%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:34:13 SAMPLE   ram=70.7% (11.84GB used, 4.91GB free) cpu=57.2% (15s mean 56.8%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:35:13 SAMPLE   ram=70.8% (11.86GB used, 4.88GB free) cpu=55.5% (15s mean 56.9%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:36:13 SAMPLE   ram=71.4% (11.95GB used, 4.80GB free) cpu=55.8% (15s mean 56.3%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:37:13 SAMPLE   ram=70.8% (11.86GB used, 4.89GB free) cpu=56.9% (15s mean 56.7%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:38:13 SAMPLE   ram=70.1% (11.75GB used, 5.00GB free) cpu=57.0% (15s mean 58.0%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:39:13 SAMPLE   ram=69.7% (11.67GB used, 5.08GB free) cpu=56.5% (15s mean 56.5%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:40:13 SAMPLE   ram=70.0% (11.73GB used, 5.02GB free) cpu=57.8% (15s mean 57.0%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:41:13 SAMPLE   ram=71.6% (12.00GB used, 4.75GB free) cpu=57.2% (15s mean 56.6%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:42:13 SAMPLE   ram=71.4% (11.95GB used, 4.80GB free) cpu=56.9% (15s mean 56.8%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:43:13 SAMPLE   ram=71.4% (11.96GB used, 4.79GB free) cpu=55.9% (15s mean 56.5%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:44:13 SAMPLE   ram=71.4% (11.97GB used, 4.78GB free) cpu=55.7% (15s mean 57.2%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:45:13 SAMPLE   ram=71.1% (11.92GB used, 4.83GB free) cpu=56.4% (15s mean 56.3%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:46:13 SAMPLE   ram=71.5% (11.97GB used, 4.78GB free) cpu=55.9% (15s mean 55.6%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:47:13 SAMPLE   ram=71.1% (11.90GB used, 4.85GB free) cpu=56.1% (15s mean 55.6%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:48:13 SAMPLE   ram=70.8% (11.86GB used, 4.89GB free) cpu=57.5% (15s mean 56.2%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:49:13 SAMPLE   ram=70.6% (11.83GB used, 4.92GB free) cpu=56.2% (15s mean 56.1%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:50:13 SAMPLE   ram=70.6% (11.83GB used, 4.92GB free) cpu=55.7% (15s mean 55.6%) jobs=4 amber=1 queued=0 lanes=7
+2026-09-13T20:51:13 SAMPLE   ram=71.6% (11.99GB used, 4.76GB free) cpu=58.6% (15s mean 58.8%) jobs=4 amber=1 queued=0 lanes=7
