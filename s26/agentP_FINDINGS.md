@@ -243,3 +243,34 @@ Proposal B verdict per the campaign rule: REPLACE (`s26/PROPOSAL_B.md`).
 The clock times "03:05" and "03:20" in section 11 were estimated, not read, and are about 80
 minutes fast: C5 started at about 01:45 and section 11 was written at about 02:00; raw fold 3
 was queued at about 01:25. The ledger entries' timestamps are machine-written and correct.
+
+## 12. C5 result and the close (ledger L132, L133; 2026-09-14 03:54)
+
+DEMONSTRATED (D12): predicting the common-mode direction native-free and subtracting it is null (GLOBAL R2
+-0.009, 0.23x MDE; GLOBAL R1 +0.031, 0.60x) to harmful (RIDGE R1 +0.164, 1.79x MDE, 5/5 folds, 40W/86L; its
+magnitude-matched random control +0.135, 1.33x). ORACLE DIAGNOSTIC: the true common mode subtracted is
+worth -1.87 A (distance space, 120W/6L) and -3.13 A (coordinate frame, 126W/0L) on the built chain. Artefacts
+`s26/results/p_c5.json`, `s26/results/p_c5_stats.json`. raw: NOT RUN (4 of 5 folds trained; L133).
+
+## 13. What damaged my own expectations (closing)
+
+- I expected the sign of gam_eff to track the sign of the endpoint. It does not: every null-to-worse rung has
+  positive gam_eff (+0.10 to +0.13, cos 0.18 to 0.29), and PairNet's cos 0.53 with an 11 percent MAE cut buys +0.041.
+- I expected the contact head to be worth little as a prior input (S17 L23 called it a filter); it carries
+  two thirds of the ESM channel's selection value (-0.218 vs noesm) and the 8M model carries none of it.
+- I expected the retrained recipe to differ from the pinned models by noise; it emits the pipeline's answer on
+  126/126 targets, which made the ladder cleaner than planned.
+- I expected the arm-choice oracle over {pipeline, sequence-only, helix} to carry per-target signal on FAIL18;
+  the across-target null accounts for 92 percent of it (L14), and B3's classifier is at chance.
+- I expected my own clock to be right. It ran 80 minutes fast for two hours and put a future stamp on a
+  proposal (L120/L124); the fix is in the record.
+
+## 14. What I did not do and why (closing)
+
+- raw rung: not evaluated (fold 4 untrained; 80-minute folds at 2 GB behind a 6-7 job cap; ledger L133).
+- Coherence rungs (PREREG_coherence, p_coh.py, synthetic-tested): not run; no slot before the close.
+- Replication (second seed, reversed fold order): never triggered; no rung cleared its MDE in the improving
+  direction with 5/5 folds.
+- `attn` (IDEA_better_prior_inputs): the box never emptied; the 650M forward pass with head weights was not probed.
+- C5 alpha grid reduced from three values to one (0.5) for the close, declared before the run.
+- No benchmark was opened; no pinned file was written; `esm_cache.npz` was loaded once, under jobrun, as a probe (L11).

@@ -1,6 +1,6 @@
 # PROPOSAL C -- LEARN A BETTER DISTANCE PRIOR (lane P, Sprint 26)
 
-Status: last edited 2026-09-14 02:12 (corrected per ledger L120; see addendum 1). C1, C2 (nine of ten rungs;
+Status: last edited 2026-09-14 03:54 (addendum 2: C5 final). C1, C2 (nine of ten rungs;
 raw: folds 0-2 of 5 trained, folds 3-4 remaining, evaluation NOT run), C3 (lane PH) and C4 final;
 C5 RUNNING at this stamp (see the C5 section and addendum 1). Verdict
 form per the campaign prompt.
@@ -181,3 +181,15 @@ targets, `s26/results/p_c5.json`, not a result until `complete: true`); raw is f
 trained, folds 3-4 remaining, evaluation not run. Nothing in the C1-C4 sections, the tables,
 the verdict, the script or the notes changed. A final C5 addendum follows when the run
 completes or at 04:15.
+
+## ADDENDUM 2 (2026-09-14 03:54) -- C5 FINAL: REFUTED; RAW NOT RUN
+
+`s26/results/p_c5.json` (complete: true, 126/126) and `s26/results/p_c5_stats.json`; ledger L132. Subtracting a
+predicted common-mode correction on held-out folds: GLOBAL (coordinate frame) -0.009 A on the built chain, 0.23x MDE,
+3/5 folds, NOT MEASURED; GLOBAL (distance space) +0.031, 0.60x, NOT MEASURED; RIDGE (distance space, nested
+leave-fold-out on 45 native-free features) +0.164 A, fold CI [+0.118, +0.225], 1.79x MDE, 5/5 folds, WORSE, and
+indistinguishable from a random correction of the same size (+0.135, 1.33x). ORACLE ceilings -1.87 A (distance
+space) and -3.13 A (coordinate frame): the common mode is most of the error and nothing native-free touches it
+(S16, S19 L14, S24 L7 confirmed on the same operator). Edit 3 of the verdict therefore reads: item C5 is CLOSED at
+one agent-day, its ceiling measured. The raw rung (1280-d input) is NOT RUN (4 of 5 folds trained; ledger L133);
+its inputs are bracketed by the null pca32f and pca128 rungs.
