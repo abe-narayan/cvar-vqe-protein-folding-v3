@@ -14,7 +14,8 @@ No stock words; no em dashes.
 | the 2/60 benchmark self-copy leak bounded from the dev proxy (mandatory, L25) | MEASURED AND POSTED (L44): pre-registered class MINOR by the own-native envelope (mean-CI limit 0.028 A built chain / 0.048 selection / 0.023 paired gain; worst single target 0.151 / 0.194 / 0.123 under assumption A2, L55), IMMATERIAL by every direct dev-proxy measurement (0.002 A or less); Part B 1 of 10 models, the rest wait for headroom and the tournament | `s26/PREREG_selfcopy_bound.md`, `s26/IDEA_selfcopy_proxy_bound.md`, `s26/w_selfcopy.py`, `s26/w_selfcopy_test.py`, `s26/w_train_chain.py`, `s26/w_endpoint_report.py`, `s26/results/w_selfcopy_{census,retrieval,envelope,posterior,floor,endpoint,bound}.json` |
 | at least three ideas nobody else proposed | FILED (three own, plus the mandatory one); the tie-break floor has PREREG, code, tests and a one-target probe; the identity floor is measured (Part E) | `s26/IDEA_tiebreak_noise_floor.md` + `PREREG_tiebreak_floor.md` + `w_tiebreak.py`, `s26/IDEA_conformational_identity_floor.md`, `s26/IDEA_window_provenance.md` |
 | the tournament's own ideas (L51: items 2 and 4) | item 2 conformational_identity_floor MEASURED AND POSTED (L52); item 4 tiebreak_noise_floor MEASURED AND POSTED (L64): floor 0.004 A on the 126-mean, 0.024 A paired MDE between two conventions, every hundredths-level recorded effect inside it | `s26/PREREG_identity_floor.md`, `s26/w_identity_floor_stats.py`, `s26/results/w_identity_floor.json`; `s26/PREREG_tiebreak_floor.md`, `s26/w_tiebreak.py`, `s26/w_tiebreak_report.py`, `s26/results/w_selfcopy_tiebreak_{draws,endpoint}.json`, `w_tiebreak_report.json` |
-| the top orphaned survivor: window_ensembling (lane P's idea, L51 item 6) | PREREG written before any real-target run, code and synthetic tests done (ALL OK), one-target probe and the 126-target run wait for the tie-break job to finish (one governed job at a time) | `s26/PREREG_window_ensembling.md`, `s26/w_ensemble.py`, `s26/w_ensemble_test.py` |
+| the top orphaned survivor: window_ensembling (lane P's idea, L51 item 6) | MEASURED AND POSTED (L84): refuted with power; ens3 minus shipped -0.0005 A (0.02x MDE), against the zero-information resample +0.0042 (0.14x); a gain of 0.028 A or more excluded; the fixed-K form of the mandatory direction is closed | `s26/PREREG_window_ensembling.md`, `s26/w_ensemble.py`, `s26/w_ensemble_test.py`, `s26/results/w_selfcopy_ensemble_{probe_1A13,clouds,endpoint}.json` |
+| the remaining orphans and extensions (L77) | preregs on disk before compute for window_provenance (census RUNNING), amber_prior_partner, partial_recall_gradient, memorisation_on_the_ladder; code written and synthetically checked for all four; Part B waits for the 1.9 GB headroom call | `s26/PREREG_{window_provenance,amber_prior_partner,partial_recall_gradient,memorisation_on_the_ladder}.md`, `s26/w_{provenance,amberprior,recall,ladder}.py` |
 | ideas found on the way (coordinator's request) | FILED: the partial-recall gradient below the 0.6 threshold; the own-native model placed on the S24 prior ladder | `s26/IDEA_partial_recall_gradient.md`, `s26/IDEA_memorisation_on_the_ladder.md` |
 | findings, ledger, status, commits | this file; L30, L44; STATUS 09:15, 09:31, 19:4x; commits `8d849504`, `213a5ebb` and the closing one | |
 
@@ -331,6 +332,56 @@ NOT MEASURED. On the selection basis the corpus-order convention's argmin is 0.0
 a random draw's at 0.75x MDE, fold CI [-0.039, -0.002], 13W/6L/107T: suggestive of the S25
 finding that the retrieval order is not neutral (rho(pool index, ORACLE RMSD) +0.054), not a
 result, and not a lever (a tie-break cannot be chosen native-free).
+
+---
+
+## 2c. THE ORPHAN: FIXED-K WINDOW ENSEMBLING, MEASURED (tournament item 6; ledger L84)
+
+`s26/PREREG_window_ensembling.md` (written before the probe); jobs `w_ensemble_probe` (1A13, 35 s,
+0.097 GB), `w_ensemble_clouds` (exit 0, 4351 s wall under a four-job load with two governor
+suspensions, peak 0.113 GB; `s26/results/w_selfcopy_ensemble_clouds.json`, complete 126/126,
+gate 126/126) and `w_ensemble_endpoint` (exit 0, 10 s, 0.057 GB;
+`w_selfcopy_ensemble_endpoint.json`). Basis: built chain PRIMARY (rebuild basis 3.2126), point
+cloud carried; no selection basis exists for an ensemble.
+
+### 2c.1 How it differs from widening K, and why the record predicted null. STATED BEFORE RUNNING.
+
+Widening K (S17 L12) draws ONE shortlist from a wider pool and the extra plausible windows
+displace near-native members out of that single top-75 (its ORACLE best 2.104 -> 2.572 A).
+Fixed-K ensembling keeps three shortlists of K = 500 (BLOSUM45 / 62 / 80), each cut to its own
+top-75 by the shipped score (the BLOSUM62 one is the production set, untouched), and averages
+the three CLOUDS in the production frame: no shortlist is widened and displacement cannot act.
+What can act is whether the three clouds' errors are parallel; S23 L9 (68% common-mode error
+shared by the whole universe) and S24 L3 (score selection makes bias parallel across sources,
+cosine 0.943 against 0.933 within-source) predicted that they are.
+
+### 2c.2 The three shortlists overlap at 0.83 to 0.88 and their clouds sit 0.14 to 0.20 A apart. DEMONSTRATED, native-free.
+
+Medians over 126: pool overlap 0.83 (45 vs 62) / 0.89 (80 vs 62); top-75 overlap 0.83 / 0.88;
+93 distinct members in the union of three; cloud separations 0.18 / 0.14 / 0.20 A; the ensemble
+moves the built chain 0.185 A from the production chain, the zero-information resample of the
+production top-75 (`boot3`) 0.249 A.
+
+### 2c.3 The ensemble is -0.0005 A on the built chain (0.02x MDE) and +0.0042 against its zero-information control (0.14x). REFUTED with power.
+
+    contrast (built chain)        effect     MDE      fold CI95              folds   W/L      verdict
+    ens3 minus shipped            -0.0005    0.0281   [-0.0194, +0.0162]     3/5     64/62    NOT MEASURED (0.02x)
+    ens3 minus boot3              +0.0042    0.0297   [-0.0178, +0.0300]     2/5     61/65    NOT MEASURED (0.14x)
+    b45 minus shipped             -0.0039    0.0405   [-0.0348, +0.0212]     2/5     60/66    NOT MEASURED
+    b80 minus shipped             +0.0237    0.0337   [+0.0052, +0.0402]     4/5     57/69    NOT MEASURED (0.70x; Type-M zone; the BLOSUM80 shortlist alone is if anything worse)
+    ensK minus shipped            -0.0153    0.0386   [-0.0380, +0.0047]     3/5     64/62    NOT MEASURED (0.40x)
+    union3 minus shipped          -0.0021    0.0191   [-0.0180, +0.0168]     3/5     67/59    NOT MEASURED
+    boot3 minus shipped           -0.0047    0.0273   [-0.0161, +0.0045]     3/5     67/59    NOT MEASURED
+    point cloud: ens3 minus shipped +0.0016 (0.09x); ens3 minus boot3 -0.0008 (0.04x); ensK minus shipped -0.0116 (0.52x, fold CI [-0.0179, -0.0045], 5/5 folds: suggestive on the cloud only, not carried by its own chain)
+
+H_E is refuted: the design excludes a gain of 0.028 A or more on the built chain (0.019 on the
+cloud), and the registered expectation (0.00 to +0.03) held. Mechanism as registered: averaging
+parallel errors returns the same error, and the ensemble's move of the emission is the size and
+the value of a resample of the production set. The one cell with a fold CI excluding zero in the
+helpful direction is the K-variant ensemble on the point cloud (-0.012, 0.52x MDE), the S17 L12
+direction (the consensus readout improves with K on the cloud; the built chain does not follow).
+The mandatory test-time-ensembling direction is closed in the fixed-K form with this power
+statement; the widening-K form was closed by S17 L12. No deviation from the PREREG.
 
 ---
 

@@ -131,3 +131,15 @@ b80, ens3, ensK, union3, boot3) at ~3.5 s = 25 s; 126 targets ~55 min CPU, check
 | control | boot3: three resampled clouds of the production top-75 (zero information, matched count) | S25's random-75 null (a different operator: it replaces the shortlist, not the ensemble) |
 | basis | built chain PRIMARY, point cloud carried | selection basis (undefined for an ensemble) |
 | projection | one projection of the ensemble cloud | projecting each cloud then averaging chains (an average of chains is not on the manifold) |
+
+## ADDENDUM 1 (2026-09-13 22:30) -- what ran; nothing above edited
+
+- Probe `w_ensemble_probe` (1A13; exit 0, 35 s, peak 0.097 GB): gate exact. Run `w_ensemble_clouds`
+  (exit 0, 4351 s wall under a four-job load, two governor suspensions, peak 0.113 GB; complete
+  126/126, gate 126/126). Endpoint `w_ensemble_endpoint` (exit 0, 10 s, 0.057 GB). Ledger L84;
+  findings section 2c.
+- Falsifier: H_E refuted; ens3 minus shipped -0.0005 A on the built chain (0.02x MDE 0.0281), ens3
+  minus boot3 +0.0042 (0.14x). Power: a gain of 0.028 A or more on the built chain, 0.019 on the
+  cloud, is excluded. The native-free prediction (three clouds within 0.3 A of each other in the
+  median) held: 0.14 to 0.20 A.
+- No deviation. The `sel` basis is not quoted (undefined for an ensemble), as declared.

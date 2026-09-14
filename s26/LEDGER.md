@@ -3074,3 +3074,97 @@ stall breaker) are unchanged and still bind before the cap does.
 
 ---
 
+
+## L84 -- TOURNAMENT ITEM 6, window_ensembling (P's idea, orphaned to W; THE MANDATORY TEST-TIME-ENSEMBLING DIRECTION): FIXED-K ENSEMBLING OF THREE BLOSUM KEYS IS -0.0005 A ON THE BUILT CHAIN (0.02x MDE) AND INDISTINGUISHABLE FROM A ZERO-INFORMATION RESAMPLE OF THE PRODUCTION SET (+0.0042, 0.14x); THE THREE CLOUDS SIT 0.14 TO 0.20 A APART AND THEIR ERRORS ARE PARALLEL, AS S23 L9 / S24 L3 PREDICT; A GAIN OF 0.028 A OR MORE IS EXCLUDED (2026-09-13, W)
+
+Pre-registered in `s26/PREREG_window_ensembling.md` (written 20:05, before the probe; falsifier,
+arms, controls, the widening-K distinction and the expected 0.00 to +0.03 A all fixed there).
+Native-free half: job `w_ensemble_clouds` (exit 0, 4351 s wall under a four-job load with two
+governor suspensions, peak RSS 0.113 GB; `s26/results/w_selfcopy_ensemble_clouds.json`, complete
+126/126; production gate top-75 == `sub` 126/126, cloud max abs 1.8e-15; BLOSUM62 sums asserted
+equal to the universe's `sim` and `core.data.top_k` to the pinned pool on every target). Gated
+half: job `w_ensemble_endpoint` (exit 0, 10 s, 0.057 GB; `s26/results/w_selfcopy_ensemble_endpoint.json`).
+Probe `w_ensemble_probe` (1A13, 35 s, 0.097 GB). Basis on every line: built chain `arm` PRIMARY
+(the rebuild basis 3.2126, L57), point cloud carried (3.0483); the selection basis does not exist
+for an ensemble. Negative = the arm is better than the shipped emission.
+
+**How fixed-K ensembling differs from widening K, in one sentence each.** Widening K (S17 L12)
+draws ONE shortlist from a wider pool, and the extra plausible windows displace near-native
+members out of that single top-75 (its ORACLE best 2.104 -> 2.572 A from K = 75 to the full
+universe); fixed-K ensembling keeps three shortlists of K = 500, each cut to its own top-75 by
+the shipped score (the BLOSUM62 one IS the production set, its ORACLE best 2.306 untouched), and
+averages the three CLOUDS in the production frame, so no shortlist is widened and displacement
+cannot act; what can act is only whether the three clouds' errors are parallel, and S23 L9 (68%
+of the pool's error is common-mode, shared by every member of the universe) and S24 L3 (score
+selection makes the bias parallel across sources, cosine 0.943 against a within-source 0.933)
+predicted that they are.
+
+**Native-free geometry (medians over 126).** The BLOSUM45 / BLOSUM80 pools overlap the BLOSUM62
+pool at 0.83 / 0.89 and their score-selected top-75s overlap the production top-75 at 0.83 /
+0.88 (93 distinct members in the union of three); the three clouds sit 0.18 (45 vs 62), 0.14
+(80 vs 62) and 0.20 A (45 vs 80) apart; the ensemble cloud moves the built chain 0.185 A from
+the production chain in the median (b45 0.33, b80 0.25, ensK 0.32, union3 0.15, boot3 0.25:
+the zero-information resample moves it as far as the ensemble does).
+
+**Endpoints (`ST.fmt` verbatim; the PRIMARY contrast and the two controls the falsifier names):**
+
+  ens3 minus shipped [arm]
+    a 3.2121 (med 2.9453)   b 3.2126 (med 2.9661)   n=126
+    effect -0.0005   median -0.0002   SE 0.0100   MDE 0.0281   effect/MDE -0.02
+    iid  CI95 [-0.0206, +0.0199]
+    fold CI95 [-0.0194, +0.0162]   folds same sign 3/5   per-fold 0:-0.021 1:-0.012 2:+0.022 3:-0.021 4:+0.023
+    64W/62L/0T   worst degradation +0.5570 (1D6X)   p90 +0.0615   power 0.05  Type-M 48.95
+    concentration: drop-top10 +0.0179 vs uniform-effect null p10/p50/p90 +0.0062/+0.0171/+0.0296 -> pctile 0.531
+    VERDICT: NOT MEASURED (|effect| 0.0005 <= its own MDE 0.0281, 0.02x)
+  ens3 minus shipped [cloud]
+    a 3.0499 (med 2.7932)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0016   median -0.0014   SE 0.0066   MDE 0.0185   effect/MDE +0.09
+    iid  CI95 [-0.0095, +0.0158]
+    fold CI95 [-0.0086, +0.0161]   folds same sign 2/5   per-fold 0:-0.005 1:+0.028 2:+0.007 3:-0.011 4:-0.008
+    68W/58L/0T   worst degradation +0.6286 (1U62)   p90 +0.0475   power 0.06  Type-M 9.87
+    concentration: drop-top10 +0.0112 vs uniform-effect null p10/p50/p90 +0.0028/+0.0105/+0.0198 -> pctile 0.540
+    VERDICT: NOT MEASURED (|effect| 0.0016 <= its own MDE 0.0185, 0.09x)
+  ens3 minus boot3 (the matched zero-information ensembling control) [arm]
+    a 3.2121 (med 2.9453)   b 3.2079 (med 3.0424)   n=126
+    effect +0.0042   median +0.0004   SE 0.0106   MDE 0.0297   effect/MDE +0.14
+    iid  CI95 [-0.0162, +0.0243]
+    fold CI95 [-0.0178, +0.0300]   folds same sign 2/5   per-fold 0:-0.028 1:-0.009 2:+0.048 3:-0.011 4:+0.017
+    61W/65L/0T   worst degradation +0.5241 (9BAF)   p90 +0.1299   power 0.07  Type-M 5.96
+    concentration: drop-top10 +0.0242 vs uniform-effect null p10/p50/p90 +0.0117/+0.0238/+0.0366 -> pctile 0.514
+    VERDICT: NOT MEASURED (|effect| 0.0042 <= its own MDE 0.0297, 0.14x)
+  ens3 minus boot3 (the matched zero-information ensembling control) [cloud]
+    a 3.0499 (med 2.7932)   b 3.0507 (med 2.8659)   n=126
+    effect -0.0008   median -0.0025   SE 0.0064   MDE 0.0178   effect/MDE -0.04
+    iid  CI95 [-0.0134, +0.0117]
+    fold CI95 [-0.0051, +0.0048]   folds same sign 3/5   per-fold 0:-0.006 1:+0.003 2:+0.009 3:-0.005 4:-0.004
+    72W/54L/0T   worst degradation +0.2384 (6CEJ)   p90 +0.0724   power 0.05  Type-M 19.64
+    concentration: drop-top10 +0.0125 vs uniform-effect null p10/p50/p90 +0.0047/+0.0119/+0.0197 -> pctile 0.541
+    VERDICT: NOT MEASURED (|effect| 0.0008 <= its own MDE 0.0178, 0.04x)
+
+**The secondaries, minus shipped (effect / MDE / fold CI / verdict), both bases:**
+
+    arm      b45 -0.0039 / 0.0405 / [-0.0348, +0.0212] NOT MEASURED   b80 +0.0237 / 0.0337 / [+0.0052, +0.0402] NOT MEASURED (0.70x, fold CI above zero, 4/5 folds, Type-M zone: the BLOSUM80 shortlist alone is if anything WORSE)
+             ensK -0.0153 / 0.0386 / [-0.0380, +0.0047] NOT MEASURED   union3 -0.0021 / 0.0191 / [-0.0180, +0.0168] NOT MEASURED   boot3 -0.0047 / 0.0273 / [-0.0161, +0.0045] NOT MEASURED
+    cloud    b45 +0.0009 / 0.0374 NOT MEASURED   b80 +0.0136 / 0.0250 / [+0.0024, +0.0258] NOT MEASURED (0.54x)   ensK -0.0116 / 0.0223 / [-0.0179, -0.0045] NOT MEASURED (0.52x, 5/5 folds, fold CI below zero: the K-ensemble's CLOUD is 0.012 A nearer, and its built chain -0.015 at 0.40x is not)
+             union3 +0.0013 / 0.0113 NOT MEASURED   boot3 +0.0023 / 0.0209 NOT MEASURED
+
+**Verdict.** H_E is refuted at this instrument: the ensemble neither beats the shipped chain
+(-0.0005, 0.02x MDE) nor its zero-information control (+0.0042, 0.14x). Power: the design
+excludes a gain of 0.028 A or more on the built chain (the MDE of ens3 minus shipped) and of
+0.019 A or more on the cloud; the registered expectation (0.00 to +0.03) held. The mechanism is
+the registered one: the three shortlists overlap at 0.83 to 0.88, their clouds sit 0.14 to 0.20 A
+apart, and averaging them moves the emission by exactly as much as a resample of the production
+set does (0.185 vs 0.249 A median chain move) with the same effect on accuracy (none): parallel
+errors average to themselves. The only cell with the fold CI excluding zero in the helpful
+direction is the K-variant ensemble on the CLOUD (-0.0116, 0.52x MDE, 5/5 folds), which its own
+built chain does not carry (-0.0153, 0.40x); it is quoted as suggestive and nothing more, and it
+is the S17 L12 direction (the consensus readout improves with K on the point cloud, and the
+built chain does not follow). The mandatory test-time-ensembling direction is closed in the
+fixed-K form with a power statement; the widening-K form was closed by S17 L12. Replication:
+`boot3` is seeded (`s15.seed.stable_rng`); a second seed and the reversed fold order are the
+pre-declared replication for a positive, and there is none to replicate; the ensemble itself
+has no random element. Deviations from the PREREG: none; the `sel` basis is undefined for an
+ensemble and is not quoted. Artefacts: `s26/PREREG_window_ensembling.md`, `s26/w_ensemble.py`,
+`s26/w_ensemble_test.py` (ALL OK), `s26/results/w_selfcopy_ensemble_probe_1A13.json`,
+`w_selfcopy_ensemble_clouds.json`, `w_selfcopy_ensemble_endpoint.json`,
+`s26/jobs_done/w_ensemble_{probe,clouds,endpoint}.json`.
