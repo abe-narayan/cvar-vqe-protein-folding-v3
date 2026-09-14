@@ -2058,3 +2058,16 @@ the original provenance kept under `provenance_original`; every number comes fro
    worst target; cannot move the benchmark verdict either way." Applied in
    `s26/agentW_FINDINGS.md` (sections 0, 2.5, 4, 5), `s26/PREREG_selfcopy_bound.md` addendum 2 and
    `s26/IDEA_selfcopy_proxy_bound.md`. L44 itself is not edited.
+## L59 -- GOVERNOR v2 DIED AT 19:36 ON A WINDOWS FILE-REPLACE RACE; v2.1 RETRIES AND NEVER EXITS THE LOOP ON A TRANSIENT ERROR (2026-09-13 19:37, coordinator)
+
+`s26/governor.py` exited with `PermissionError: [WinError 5] Access is denied` from
+`os.replace(governor_state.json.tmp, governor_state.json)` at 19:36:xx (its background task's
+output): a reader (a jobrun waiter polling the snapshot, or a lane's `--status`) held the target
+open at the instant of the replace. Four jobs were registered (a1_build, ph_reject_chain,
+w_tiebreak_draws, ph_branch_solutions) and ran unsupervised for about a minute at 75% RAM; none
+was harmed. Fix: `write_json_atomic` retries the replace eight times with a short back-off and
+logs a skipped snapshot instead of raising; the main loop wraps the sample in a try/except that
+logs and retries on the next tick. Restarted as v2.1 at 19:37. No production module touched.
+
+---
+
