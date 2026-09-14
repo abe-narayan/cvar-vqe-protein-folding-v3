@@ -2740,8 +2740,27 @@ beside R1 to R5 with the prior-sprint disposition table; the repository fixes (i
 defects 6a to 6d, `s24/cache_amber` tracked, the opt-in tier 11 of 11, the frozen rebuild 2016
 of 2016); the deck with the Adversary's qualifiers on the slides; the paper outline with one
 minor (the literal "at depth 3" in a caption); Rule 13 at 0 / 0 / 0 on every presenter-facing
-file and the deck dump. Not done by the Adversary before the close: the checks of L115 (C4) and
-L112 / L116 (the delivery file), both nulls or reproductions, recorded in its findings file. Lane I's extension
+file and the deck dump. The two checks the Adversary had listed as not done landed as L136: C4's eighteen routers
+(nested, permutation-nulled, both bases, no order statistic taken) and the C3 delivery file
+(the production emission, cross-checked by L116) both STAND, and L135's "not done" line is
+closed. Lane I's re-run of the standalone audits under the governor
+(`s26/i_verify_rerun.py`, records `s26/results/verify/`, table `s26/results/verify/REPORT.md`,
+each audit executed in-process with its writes redirected and the tracked JSON's sha256
+asserted unchanged; the 02:59 render, twelve audits): `vqe_lfo_audit`, `cvar_audit`,
+`ansatz_audit`, `legacy_audit` and `amber_audit` IDENTICAL leaf for leaf (32, 18, 19, 30 and 31
+leaves); `headline_audit` identical on 123 leaves with 8 added; `leak_audit` differing on one
+leaf, the projection backend's name (`s8.project` tracked, `core.project` fresh);
+`grad_key_collision` differing because the collision the tracked audit recorded (`COLLISION`
+true, the config had no field for the gradient) is fixed on the current tree (false; the field
+exists); `equiv_compare` and `project_arms` differing because the fresh runs compare the
+production cache `1fc9f2dcf489e2fb` on 126 targets against the 8-target keys the tracked files
+were built from (the fresh comparison bit-identical on 126 of 126 for `ca`, `fit_ca`, `phi` and
+`avg_ca`, worst 0.0, where the tracked 8-target run had 0 of 8 at up to 22 A on the pre-repair
+arm); `amber_platform` and `projection_divergence` with no fresh output (the second raising a
+shape mismatch); two not re-runnable (`recon_containment_audit.json`, written by a script
+deleted in the consolidation, and `project_inputs.json`, the harvested input the projection
+audits read). The audit's own final count lands in lane I's closing entry and this paragraph
+carries it when it does. Lane I's extension
 found two things about the test suite itself: the relaunched slow-test jobs had lost
 `VERIFY_SLOW=1` because it lived in the launching shell, not in the command (one null run set
 aside, both tiers relaunched with the flag inside the command, L98), and the opt-in equivalence
@@ -3101,7 +3120,9 @@ anything heavy.
     python s26/e_claims.py            # s26/results/claim_search.{json,txt}; benchmark files excluded
 
 `examine.sh` and `examine.bat` at the root call `examine.py`; there is no Makefile. Exit status
-is non-zero if any step reports a problem.
+is non-zero if any step reports a problem. The standalone audits under `verify/` re-run one at a
+time as `python s26/i_verify_rerun.py run <name>` (writes redirected to `s26/results/verify/`, the
+tracked JSON compared leaf by leaf; table `s26/results/verify/REPORT.md`; Part VII.5).
 
 ## APPENDIX A. GLOSSARY
 
@@ -3514,12 +3535,17 @@ artefact; "as asserted" means a passing test pins it.
 | deck final: 520, 249, 248, 249, 250 | VII | `s26/pr_values.json`; `s26/pr_verify.txt`; `s26/LEDGER.md` L126, L134 | as cited |
 | R7 to R10: 120 of 126, 1e-6, +0.2246, 0.88x, -0.612, -0.638, 1.5921, 2.2812, 2.0900, 2.7313 | VII | `s26/RETRACTIONS.md` R7 to R10; `bench_results/cache/1fc9f2dcf489e2fb/{1D6X,1KWE}.json :: rmsd_avg`; `s26/LEDGER.md` L9, L57, L101, L107 | as cited / as stored |
 | L135: 13 of 14, 29, 18, 137, 11 of 11 | VII | `s26/DELIVERABLES_CHECK.md`; `s26/LEDGER.md` L135 | as cited |
+| verify re-run: 32, 18, 19, 30, 31, 123, 8, 1, 126 of 126, 0 of 8, 22, twelve, 02:59 | VII, IX | `s26/results/verify/REPORT.md`, `s26/results/verify/REPORT.json`; `s26/results/verify/*.rerun.json` | as stored |
 <!-- APPENDIX B ROWS -->
 
-## APPENDIX C. THE S26 LEDGER (DRAFT: reproduced at the close)
+## APPENDIX C. THE S26 LEDGER
 
-Reproduced verbatim from `s26/LEDGER.md` at the close of the sprint; until then this slot
-points at the live file, whose tail at the time of the last report commit is noted here.
+`s26/LEDGER.md` reproduced verbatim at the close of the sprint, after the coordinator's
+sprint-close entry, as the campaign prompt requires. It is the record this report cites by
+entry number throughout. Being verbatim it is exempt from the report's own style rules (the
+check in `s26/e_report_check.py` scans the prose before this appendix): it contains no em or en
+dash and two occurrences of a banned word, both quotations (L60 names the word this report
+removed; L77's "robustness check" is the coordinator's phrase).
 
 <!-- APPENDIX C LEDGER (filled at close) -->
 

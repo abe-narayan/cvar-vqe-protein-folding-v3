@@ -21,9 +21,9 @@ Rule 1: the sealed benchmark record (`s9/final_report.json`, anything named `ben
 never opened; such a path is checked for existence only and the row says so.
 
 Verdict per row: PASS, MISSING PATH, or NUMBER NOT FOUND (with the numbers listed).  `--style`
-(default on) also runs the style check over the whole report: the six banned words, U+2014 and
-U+2013, and any sentence that contrasts two RMSD-like numbers without a basis label on the
-sentence.  Output: a table on stdout and `s26/results/e_report_check.json` with provenance.
+(default on) also runs the style check over the report's own prose (everything before Appendix C,
+which reproduces the ledger verbatim): the six banned words, U+2014 and U+2013, and any sentence
+that contrasts two RMSD-like numbers without a basis label on the sentence or its paragraph.  Output: a table on stdout and `s26/results/e_report_check.json` with provenance.
 
     python s26/e_report_check.py                # table + JSON, exit 1 on any failure
     python s26/e_report_check.py --quiet        # one line per failing row only
@@ -643,7 +643,11 @@ def main(argv=None):
     results = [check_row(k, ln, cells) for k, ln, cells in rows]
     counts = {s: sum(1 for r in results if r["status"] == s)
               for s in ("PASS", "MISSING PATH", "NUMBER NOT FOUND")}
-    style = None if a.no_style else style_check(text)
+    # the style rules apply to the report's own prose; Appendix C reproduces s26/LEDGER.md
+    # verbatim and is exempt (its two banned-word occurrences are declared in its preamble)
+    own_text = text.split("
+## APPENDIX C")[0]
+    style = None if a.no_style else style_check(own_text)
     if not a.quiet:
         print("%-4s %-17s %-6s %s" % ("row", "status", "line", "numbers / problem"))
     for r in results:
