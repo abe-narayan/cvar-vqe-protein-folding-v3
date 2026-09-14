@@ -135,9 +135,11 @@ claims retracted by internal audit (`s25/LEDGER.md` L5, L7, L9, L11, L15).
   +0.0010], MDE 0.0012) and +0.0018 A on the built chain [-0.0003, +0.0039], neither clearing
   its MDE (`s26/results/w_selfcopy_endpoint.json`; S26 ledger L44, L50). The benchmark effect is
   never measured, because measuring it would open the benchmark; it is bounded from the dev
-  proxy without opening it at 0.028 A built chain (0.048 single window, 0.023 on the paired
-  gain) by an ORACLE own-native envelope and at 0.002 A by the dev-4 measurement, MINOR as
-  pre-registered (`s26/results/w_selfcopy_bound.json`; L44; Part VII.4).
+  proxy without opening it: dev-proxy price 0.002 A; own-native envelope 0.028 A (the mean's
+  fold-CI limit) to 0.151 A (the worst single target) on the built chain, under the envelope's
+  assumption A2; MINOR under every reading on the built chain and on the paired gain; on the
+  selection basis the worst-target reading is 0.194 A; it cannot move the benchmark verdict
+  either way (`s26/results/w_selfcopy_bound.json`; L44, L55, L58; Part VII.4).
 
 ### II.2 The endpoint and the reporting bases
 
@@ -1820,7 +1822,19 @@ rung (sibling peak 1.85 GB) waits for headroom; the evaluations resume from
 S17 reproduces from `s17/results/inband.json`: a perfect ranker inside the shipped top-25 returns
 2.6087 A single window (Part III.4).
 
-**C2, the prior ladder.** Training rungs as under B2; evaluation pending.
+**C2, the prior ladder.** Training rungs as under B2. The anchor landed (L56, corrected by
+L57): the shipped posterior pushed through the ladder's own path (`s26/p_ladder.py`,
+`s26/results/p_ladder_shipped_s0.json`, 126 rows; job `p_eval_shipped2`, 416 s, peak RSS
+0.13 GB) reproduces the production cache per target at 0.00e+00 on the single-window selection
+(3.4540) and 7.25e-14 on the point cloud (3.0483), while its built chain lands at 3.2126, the
+leaderboard-rebuild basis, with 120 of 126 targets differing from `rmsd_arm` by more than 1e-6
+(mean abs 0.0107, max 0.1711 at 7JS6): the cloud enters the projection 1e-14 away from the
+persisted `avg_ca` and the multi-start L-BFGS lands in a different local optimum on most
+targets. Every rung and the anchor go through the same code path, so the ladder's paired
+contrasts are on one basis, the rebuild built chain 3.2126, stated in every C2 entry; the
+0.0022 A offset to the production figure is a basis difference, not an effect. The lam = 0
+chain lands at 3.2052 against the production 3.2041 for the same reason. Rung evaluations
+pending.
 
 **C3, the relaxation against matched controls.** Native-free half, L24 (Adversary L48: STANDS,
 every number recomputed: displacement 0.2198 A, SE 0.0084; e0 median 8.59e4 kcal/mol, 58.73%
@@ -1902,7 +1916,14 @@ at 1e5 and 1e6 R is 0.66x and 0.51x its MDE, so "the mildest threshold is null" 
 below a 0.13 A gain and measured against any harm above it. Disposition, pending the built-chain
 twin (`ph_reject_chain`, running): the steric reject at a physical threshold, with refill, is
 closed on the point cloud, with a sign; the filter form of the functional lever (S24 D1-C, S19 Q3)
-stays closed and gains its sixth instrument.
+stays closed and gains its sixth instrument. Adversary check, L54: STANDS WITH CAVEAT. The
+operators are native-free (the native enters only in the ORACLE scoring), ties and the fixed
+primary threshold are clean, and the conclusion is established; but the harm is tail-carried
+(R at 1e4 against the anchor has median +0.0027 against mean +0.2276, p90 +1.28, worst +4.15 at
+8T61: near zero on the median target, large on the minority whose whole pool has no survivor
+and on the deep refills), the two headline magnitudes +0.228 and +0.167 are Type-M-zone numbers
+whose direction rests on the measured 1e3 contrasts (+0.532, +0.196), S at 1e4 (+0.108) and RANDS
+(+0.037), and the refill-cost / choice-cost split rests on an underpowered +0.061.
 
 **The cis-peptide gap.** Census, L22 (Adversary L48: STANDS, with stale line numbers for the step
 gate, now `core/data.py:439` and `:725`): `s26/results/ph_cis_census.json`. Over the 1,507
@@ -1966,13 +1987,72 @@ chain). Bases named on every line; a positive delta means the leaked emission is
   benchmark's own CI half-width of 0.170 A the bound cannot change the benchmark verdict in either
   direction. The caveat that attaches to every benchmark figure now reads: 2/60 self-copies,
   bounded at 0.028 A (built chain) by the own-native envelope and 0.002 A by the dev proxy
-  (`s26/results/w_selfcopy_bound.json`).
+  (`s26/results/w_selfcopy_bound.json`). Adversary check, L55: STANDS WITH CAVEAT; every row of
+  the bound recomputes ((2/60) x 0.0683 = 0.0023, x 0.2016 = 0.0067, x 0.8312 = 0.0277, x 1.4377
+  = 0.0479, x 0.6838 = 0.0228); the artefact's `gain` verdict disagreed with the ledger (it lacked
+  the envelope's gain row) and the envelope limit is the fold-CI limit of a mean effect, not a
+  per-target bound. Both applied in L58 (`s26/w_bound_addendum.py`; the artefact now carries the
+  gain row and the per-target readings): the class MINOR holds under every reading of the
+  envelope on the built chain (mean-CI limit 0.0277, p95 target 0.0830, worst target 0.1512 at
+  2BP4), the point cloud (0.0280 / 0.0824 / 0.1587) and the paired gain (0.0228 / 0.0816 /
+  0.1232); on the selection basis (0.0479 / 0.1154 / 0.1944 at 9KAR) the worst-single-target
+  reading crosses the pre-registered 0.170 line, so for the benchmark's argmin mean alone a
+  single self-copy behaving like 9KAR could move that mean by up to 0.19 A under A2; the paired
+  gain, which is the benchmark's verdict, is MINOR under every reading (worst 0.123). The
+  wording to carry: "2/60 self-copies; dev-proxy price 0.002 A; own-native envelope 0.028 A
+  (mean CI) to 0.151 A (worst target) on the built chain, under A2; MINOR under every reading
+  on the built chain and the paired gain; the selection basis reaches 0.194 at the worst
+  target; cannot move the benchmark verdict either way."
 - Measured on the way, native-free: a one-member change of the 75 can flip the medoid frame
   (cloud moves 1.29 A on 5H1H, 0.74 on 6EY3) and the projection branch (chain moves 0.85 to
   2.11 A on six targets at cloud moves of 0.04 to 0.09 A), recorded for the tie-break floor idea.
 
-**Physics branch selection, strain as difficulty, rotamer relief, coherence-penalised training,
-window ensembling, the tie-break floor (`s26/PREREG_tiebreak_floor.md`).** Pending.
+**The tournament ranking (L51).** `s26/TOURNAMENT.md`, the Adversary's ranking, sets the run
+order under the evening's headroom: product_state_optimum rides A1; conformational_identity_floor,
+strain_difficulty and tiebreak_noise_floor next; A3 chained behind A1; branch_select when 1.5 GB
+is free; window_ensembling, rotamer_relief, window_provenance and amber_prior_partner as capacity
+allows; better_prior_inputs `attn` (3 to 3.5 GB) and coherence_penalised_training (1.25 GB)
+deferred on memory.
+
+**Conformational identity floor (tournament item 2, lane W, L52; ORACLE DIAGNOSTIC).** Part E of
+`s26/PREREG_selfcopy_bound.md` (falsifier F5: median above 1.5 A) and `s26/PREREG_identity_floor.md`
+for the two paired contrasts; `s26/results/w_selfcopy_floor.json` (22 pairs) and
+`w_identity_floor.json`. The same sequence in a different deposit sits a median 2.908 A from the
+target's native (mean 2.811, min 0.317 at 5V5B, max 5.502 at 7S3O; 4 of 22 below 1.0 A, 6 of 22
+below 1.5 A; per target over 18, median 3.055); the four cross-fold self-copies reproduce S24 L4
+(1CEK 0.595, 2FBU 3.278, 2P5H 2.334, 6B9K 4.126). Single window against the native on both
+sides, n = 18 targets: the copy is worse than the pool's own best window by +0.9677 A (fold CI
+[+0.7247, +1.2809], 3W/15L, 1.06x MDE, Type-M zone) and better than the pool's mean window by
+-1.4428 A (fold CI [-1.7172, -1.1896], 13W/5L, 1.14x MDE, Type-M zone); F5 holds. Sequence
+identity buys a window about 2.9 A from the native, no nearer than the built chain's 3.21 A mean
+by a margin the instrument can call at n = 18 and 1 A worse than the best window the pool
+already holds; the self-copy leak is small where it is measured because the copy is not the
+native (L44). Not done: a length-matched non-verbatim control population.
+
+**Strain as difficulty (tournament item 4, lane PH, L53; a calibration flag, not a lever).**
+`s26/PREREG_strain_difficulty.md` (committed before the run); `s26/ph_strain.py` ->
+`s26/results/ph_strain.json` and the registered replication `ph_strain_rep.json` (new bootstrap
+seed, reversed target order; 35 s each, peak RSS 0.1 GB); reads the 126 production records only;
+`rmsd_arm` (built chain) is read only as the ORACLE label of the emitted structure. Four
+native-free signals the production relaxation emits for free: the built chain's AMBER energy
+before relaxation (`log_e0`), the energy removed (`log_drop`), how far the chain moved
+(`moved`, the restraint RMSD on N/CA/C) and the strain left (`strain_after`). Partial Spearman
+with the built-chain error given n and Rg: `moved` +0.433 (fold CI [+0.247, +0.588], 5/5 folds,
+permutation p < 0.00025 against a Bonferroni bar of 0.0125); `log_e0` +0.241 and `log_drop`
++0.250 (4/5 folds, at the 0.25 bar); `strain_after` +0.133 (fold CI spanning zero). The
+falsifier cleared on `moved` with margin and the replication lands inside the first run's fold
+CI on every quantity (`moved` +0.433, fold CI [+0.248, +0.581]). Quartiles of `moved` (32
+targets each), mean built-chain error: below 0.159 A moved, 2.286 A; 0.159 to 0.218, 2.936;
+0.218 to 0.288, 3.758; 0.288 and above, 3.923. Without 9KAR and 2BP4 rho is +0.41; the top eight
+by `moved` hold easy and hard targets alike. The FAIL18 Fisher tests are null (best one-sided p
+0.113). It is the first native-free quantity in the record with a correlation above 0.4 to the
+per-target error of the emitted structure (the routers of S22 L7 and S23 L7 reached 0.24 to
+0.37 on the per-target sign); the pre-registration forbids turning it into a selector or a
+weight, and the record says every such conversion fails held out. Adversary check invited.
+
+**Physics branch selection, rotamer relief, coherence-penalised training, window ensembling,
+window provenance, the tie-break floor (`s26/PREREG_tiebreak_floor.md`; `w_tiebreak_draws`
+running).** Pending.
 
 ### VII.5 Operational findings of the sprint (for the record)
 
@@ -1981,8 +2061,9 @@ The governor v2 band held through the sprint until the host killed it for low me
 of four (L36); v2.2 refuses a stale governor snapshot for any job above 0.5 GB and any launch
 without est-ram + 0.5 GB free (L41). The campaign paused at the user's request from 09:30 to
 19:14 (L37, L42); a second report, `docs/REPORT_S26.md`, appeared during the pause and is
-reconciled in Appendix D. The Adversary's checks of L27, L39, L35, L22 to L24, L38 and L30 all
-stand (L45 to L49), two with caveats recorded above.
+reconciled in Appendix D. The governor v2 died again at 19:36 on a Windows file-replace race and v2.1 retries the
+snapshot write (L59). The Adversary's checks of L27, L39, L35, L22 to L24, L38, L30, L43 and L44
+all stand (L45 to L49, L54, L55), four with caveats recorded above.
 
 ## PART VIII. CLOSED AND OPEN
 
@@ -2018,10 +2099,11 @@ sprint. This part lists the S26 movements and the items that remain open at the 
 | Proposal B's feasible-scale rungs (B2) | the ladder's evaluation on the built chain | Part VII.2 |
 | C3 stage 2 (the relaxation on the best C2 rung) and the toward-member replication | `ph_c3_stage1_rep` and stage 2 | S26 L39; Part VII.3 |
 | The steric reject on the built chain | `ph_reject_chain` | S26 L43 |
-| The 2/60 benchmark self-copy leak, now bounded MINOR (0.028 A built chain by the envelope, 0.002 A by the dev proxy) | by design only a fresh benchmark, which does not exist; the bound tightens when channel B's remaining nine retrains land | S26 L44, L49, L50; Part VII.4 |
+| The 2/60 benchmark self-copy leak, now bounded MINOR (dev proxy 0.002 A; own-native envelope 0.028 A mean CI to 0.151 A worst target on the built chain; 0.194 at the worst target on the selection basis) | by design only a fresh benchmark, which does not exist; the bound tightens when channel B's remaining nine retrains land | S26 L44, L49, L50, L55, L58; Part VII.4 |
 | Where the target-specific third of the pool's coherent error comes from, and whether any native-free proxy is strong enough to act on it | a native-free proxy reaching the in-band ordering 2 A needs | `s19/LEDGER.md` L11, L14; `s17/LEDGER.md` L23 |
 | Publishing the trainability half | a manuscript from Part V.10 with V.9's scope correction | `s13/`, `s25/QUANTUM.md`; S26 L27 |
-| The tournament entries not yet run: routers (C4), the common-mode prediction (C5), physics branch selection, strain as difficulty, rotamer relief, coherence-penalised training, window ensembling, the tie-break floor | their pre-registrations' falsifiers | `s26/PREREG_*.md`; Part VII.4 |
+| The tournament entries not yet run: routers (C4), the common-mode prediction (C5), physics branch selection, rotamer relief, coherence-penalised training, window ensembling, window provenance, the tie-break floor | their pre-registrations' falsifiers | `s26/TOURNAMENT.md`; `s26/PREREG_*.md`; Part VII.4 |
+| Strain as difficulty: measured as a calibration flag (partial rho +0.433 of `moved` with the built-chain error), forbidden as a lever by its pre-registration | the Adversary's check; a use as a confidence label in the presentation | S26 L53; Part VII.4 |
 
 ## PART IX. OPERATING MANUAL
 
@@ -2557,6 +2639,11 @@ artefact; "as asserted" means a passing test pins it.
 | 1,507, 1.91, 0.34, 5.8, 17.4, 42.8, 0.53%, 0.13%, 0 of 126, 1,966, 2,352,893, 3.5045, 439, 725 | VII | `s26/results/ph_cis_census.json`; `s26/LEDGER.md` L22, L48 | as stored / as cited |
 | 0.347 (0.029), 0.272, 0.752, 1.474, 0.340, 32 of 126, +0.828, +0.083, -0.036, 0.166, -0.1804 [-0.2266, -0.1022], 86W/40L, 0.25 | VII | `s26/results/ph_cis_floor.json`; `s26/LEDGER.md` L38, L48 | as stored / as cited |
 | 160 s, 0.302 GB, 1.4e-14, 3.4540, 3.0483, 3.2126, 3.2052; -0.0683, +0.0071, 0.0000, 122, 47, 0.078, 0.147, 0.511, 61st to 89th; +0.0004 [-0.0001, +0.0010], 0.0012, 117, +0.0018 [-0.0003, +0.0039], +0.0003; -0.6980 [-0.8312, -0.5764], 112/14, -0.7094, -1.2081 [-1.4377, -0.9745], -0.6932, 0.47, 97%, +0.5101; -0.0114, -0.0204, +0.0062; 18, 22, 2.908, 0.317, 5.502, 18%, 1.044; 0.0023, 0.0067, 0.0004, 0.0277, 0.0479, 0.0228, 0.028, 0.048, 0.023, 0.002, 0.170; 1.29, 0.74, 0.85, 2.11, 0.04, 0.09 | II, VII, VIII | `s26/results/w_selfcopy_endpoint.json`, `w_selfcopy_bound.json`, `w_selfcopy_floor.json`; `s26/LEDGER.md` L44, L50; `s26/jobs_done/w_endpoint_report.json` | as stored / as cited |
+| 0.0683, 0.2016, 0.8312, 1.4377, 0.6838, 0.0830, 0.1512, 0.0280, 0.0824, 0.1587, 0.0816, 0.1232, 0.1154, 0.1944, 0.194, 0.151, 0.123, 0.19, 0.05 | II, VII, VIII | `s26/results/w_selfcopy_bound.json :: signed_bounds_gated`; `s26/LEDGER.md` L55, L58 | as stored / as cited |
+| 416 s, 0.13 GB, 0.00e+00, 7.25e-14, 3.2126, 3.2052, 120 of 126, 0.0107, 0.1711, 7JS6, 0.0022 | VII | `s26/results/p_ladder_shipped_s0.json`; `s26/LEDGER.md` L56, L57; `s26/jobs_done/p_eval_shipped2.json` | as cited |
+| +0.0027, +1.28, +4.15, 8T61, +0.532, +0.196, +0.108, +0.037, +0.061 | VII | `s26/LEDGER.md` L54 (from `s26/results/ph_reject_report.json`) | as cited |
+| 2.908, 2.811, 0.317, 5.502, 4 of 22, 6 of 22, 3.055, 0.595, 3.278, 2.334, 4.126, +0.9677 [+0.7247, +1.2809], 3W/15L, 1.06x, -1.4428 [-1.7172, -1.1896], 13W/5L, 1.14x, 18, 22 | VII | `s26/results/w_selfcopy_floor.json`, `s26/results/w_identity_floor.json`; `s26/LEDGER.md` L52 | as stored / as cited |
+| +0.433 [+0.247, +0.588], +0.241, +0.250, +0.133, 0.00025, 0.0125, [+0.248, +0.581], 0.159, 0.218, 0.288, 2.286, 2.936, 3.758, 3.923, +0.41, 0.113, 35 s, 0.1 GB, 32 | VII, VIII | `s26/results/ph_strain.json`, `s26/results/ph_strain_rep.json`; `s26/LEDGER.md` L53 | as stored / as cited |
 <!-- APPENDIX B ROWS -->
 
 ## APPENDIX C. THE S26 LEDGER (DRAFT: reproduced at the close)
