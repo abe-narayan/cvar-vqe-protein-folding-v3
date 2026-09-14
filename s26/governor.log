@@ -1188,3 +1188,145 @@
 2026-09-13T23:30:39 SUSPEND  w_train_out_2LMF agent=W tag=CPU rss=1.24GB
 2026-09-13T23:30:44 SAMPLE   ram=85.5% (14.32GB used, 2.43GB free) cpu=79.6% (15s mean 92.8%) jobs=6 amber=0 queued=0 lanes=8
 2026-09-13T23:30:54 RESUME   w_amberprior_endpoint agent=W tag=CPU
+2026-09-13T23:31:09 SUSPEND  w_amberprior_endpoint agent=W tag=CPU rss=0.13GB
+2026-09-13T23:31:24 RESUME   w_train_out_2LMF agent=W tag=CPU
+2026-09-13T23:31:39 SUSPEND  w_train_out_2LMF agent=W tag=CPU rss=1.23GB
+2026-09-13T23:31:44 SAMPLE   ram=85.3% (14.28GB used, 2.47GB free) cpu=77.7% (15s mean 90.9%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:31:54 RESUME   w_amberprior_endpoint agent=W tag=CPU
+2026-09-13T23:31:59 RESUME   w_train_out_2LMF agent=W tag=CPU
+2026-09-13T23:32:14 SUSPEND  w_amberprior_endpoint agent=W tag=CPU rss=0.13GB
+2026-09-13T23:32:19 SUSPEND  w_train_out_2LMF agent=W tag=CPU rss=1.24GB
+2026-09-13T23:32:34 RESUME   w_amberprior_endpoint agent=W tag=CPU
+2026-09-13T23:32:39 RESUME   w_train_out_2LMF agent=W tag=CPU
+2026-09-13T23:32:44 SAMPLE   ram=85.6% (14.34GB used, 2.41GB free) cpu=98.5% (15s mean 82.7%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:32:54 SUSPEND  w_amberprior_endpoint agent=W tag=CPU rss=0.13GB
+2026-09-13T23:32:59 SUSPEND  w_train_out_2LMF agent=W tag=CPU rss=1.22GB
+2026-09-13T23:33:14 RESUME   w_amberprior_endpoint agent=W tag=CPU
+2026-09-13T23:33:19 RESUME   w_train_out_2LMF agent=W tag=CPU
+2026-09-13T23:33:29 SUSPEND  w_amberprior_endpoint agent=W tag=CPU rss=0.13GB
+2026-09-13T23:33:34 SUSPEND  w_train_out_2LMF agent=W tag=CPU rss=1.23GB
+2026-09-13T23:33:44 SAMPLE   ram=85.5% (14.32GB used, 2.43GB free) cpu=75.2% (15s mean 80.7%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:33:49 RESUME   w_amberprior_endpoint agent=W tag=CPU
+2026-09-13T23:33:54 RESUME   w_train_out_2LMF agent=W tag=CPU
+2026-09-13T23:34:04 SUSPEND  w_amberprior_endpoint agent=W tag=CPU rss=0.13GB
+2026-09-13T23:34:09 SUSPEND  w_train_out_2LMF agent=W tag=CPU rss=1.23GB
+2026-09-13T23:34:24 RESUME   w_amberprior_endpoint agent=W tag=CPU
+2026-09-13T23:34:29 RESUME   w_train_out_2LMF agent=W tag=CPU
+2026-09-13T23:34:39 SUSPEND  w_amberprior_endpoint agent=W tag=CPU rss=0.13GB
+2026-09-13T23:34:44 SAMPLE   ram=85.5% (14.32GB used, 2.43GB free) cpu=98.7% (15s mean 99.4%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:34:44 SUSPEND  w_train_out_2LMF agent=W tag=CPU rss=1.23GB
+2026-09-13T23:34:49 SUSPEND  p_train_raw_fold1 agent=P tag=CPU rss=1.06GB
+2026-09-13T23:34:59 RESUME   w_amberprior_endpoint agent=W tag=CPU
+2026-09-13T23:35:04 RESUME   w_train_out_2LMF agent=W tag=CPU
+2026-09-13T23:35:09 RESUME   p_train_raw_fold1 agent=P tag=CPU
+2026-09-13T23:35:19 SUSPEND  w_amberprior_endpoint agent=W tag=CPU rss=0.13GB
+2026-09-13T23:35:24 SUSPEND  w_train_out_2LMF agent=W tag=CPU rss=1.24GB
+2026-09-13T23:35:39 RESUME   w_amberprior_endpoint agent=W tag=CPU
+2026-09-13T23:35:44 SAMPLE   ram=87.2% (14.60GB used, 2.15GB free) cpu=87.2% (15s mean 74.9%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:35:44 RESUME   w_train_out_2LMF agent=W tag=CPU
+2026-09-13T23:35:49 REAP     p_eval_mix (pid 5124) is gone; registration removed
+2026-09-13T23:35:54 SUSPEND  ph_validity agent=PH tag=AMBER rss=0.26GB
+2026-09-13T23:35:59 SUSPEND  w_amberprior_endpoint agent=W tag=CPU rss=0.13GB
+2026-09-13T23:36:04 SUSPEND  w_train_out_2LMF agent=W tag=CPU rss=1.22GB
+2026-09-13T23:36:19 RESUME   w_amberprior_endpoint agent=W tag=CPU
+2026-09-13T23:36:24 RESUME   w_train_out_2LMF agent=W tag=CPU
+2026-09-13T23:36:44 SAMPLE   ram=87.2% (14.61GB used, 2.14GB free) cpu=98.2% (15s mean 95.6%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-13T23:36:44 SUSPEND  ph_validity agent=PH tag=AMBER rss=0.26GB
+2026-09-13T23:36:49 SUSPEND  w_amberprior_endpoint agent=W tag=CPU rss=0.13GB
+2026-09-13T23:36:54 SUSPEND  w_train_out_2LMF agent=W tag=CPU rss=1.23GB
+2026-09-13T23:37:04 RESUME   ph_validity agent=PH tag=AMBER
+2026-09-13T23:37:09 RESUME   w_amberprior_endpoint agent=W tag=CPU
+2026-09-13T23:37:14 RESUME   w_train_out_2LMF agent=W tag=CPU
+2026-09-13T23:37:29 SUSPEND  ph_validity agent=PH tag=AMBER rss=0.26GB
+2026-09-13T23:37:34 SUSPEND  w_amberprior_endpoint agent=W tag=CPU rss=0.13GB
+2026-09-13T23:37:44 SAMPLE   ram=85.9% (14.38GB used, 2.37GB free) cpu=88.8% (15s mean 89.0%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:38:44 SAMPLE   ram=86.1% (14.43GB used, 2.32GB free) cpu=86.4% (15s mean 86.2%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:39:44 SAMPLE   ram=86.8% (14.54GB used, 2.21GB free) cpu=83.8% (15s mean 85.0%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:40:44 SAMPLE   ram=85.2% (14.27GB used, 2.48GB free) cpu=85.4% (15s mean 84.6%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:41:44 SAMPLE   ram=85.8% (14.37GB used, 2.38GB free) cpu=90.8% (15s mean 88.9%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:42:44 SAMPLE   ram=86.2% (14.43GB used, 2.32GB free) cpu=83.6% (15s mean 83.8%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:43:44 SAMPLE   ram=86.7% (14.52GB used, 2.23GB free) cpu=86.1% (15s mean 85.9%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:44:29 SUSPEND  w_train_out_2LMF agent=W tag=CPU rss=1.20GB
+2026-09-13T23:44:39 RESUME   w_amberprior_endpoint agent=W tag=CPU
+2026-09-13T23:44:44 SAMPLE   ram=85.6% (14.35GB used, 2.40GB free) cpu=70.2% (15s mean 69.2%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:44:44 RESUME   ph_validity agent=PH tag=AMBER
+2026-09-13T23:44:49 RESUME   w_train_out_2LMF agent=W tag=CPU
+2026-09-13T23:44:54 REAP     w_train_out_2LMF (pid 6636) is gone; registration removed
+2026-09-13T23:45:29 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.21GB
+2026-09-13T23:45:44 SAMPLE   ram=87.6% (14.67GB used, 2.08GB free) cpu=65.6% (15s mean 69.9%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-13T23:45:49 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:46:04 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.23GB
+2026-09-13T23:46:24 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:46:39 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.23GB
+2026-09-13T23:46:44 SAMPLE   ram=87.0% (14.58GB used, 2.17GB free) cpu=70.4% (15s mean 88.6%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-13T23:46:59 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:47:14 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.24GB
+2026-09-13T23:47:34 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:47:44 SAMPLE   ram=85.6% (14.34GB used, 2.41GB free) cpu=96.9% (15s mean 87.7%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-13T23:47:49 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.20GB
+2026-09-13T23:48:04 ADOPT    ph_validity was suspended before this governor started; adopted
+2026-09-13T23:48:04 RESUME   ph_validity agent=PH tag=AMBER
+2026-09-13T23:48:09 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:48:19 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.23GB
+2026-09-13T23:48:24 SUSPEND  ph_validity agent=PH tag=AMBER rss=0.26GB
+2026-09-13T23:48:44 SAMPLE   ram=85.8% (14.37GB used, 2.38GB free) cpu=71.6% (15s mean 79.7%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:48:44 RESUME   ph_validity agent=PH tag=AMBER
+2026-09-13T23:49:44 SAMPLE   ram=87.3% (14.62GB used, 2.13GB free) cpu=83.8% (15s mean 84.3%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-13T23:50:04 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:50:14 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.24GB
+2026-09-13T23:50:19 SUSPEND  ph_validity agent=PH tag=AMBER rss=0.27GB
+2026-09-13T23:50:34 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:50:39 RESUME   ph_validity agent=PH tag=AMBER
+2026-09-13T23:50:44 SAMPLE   ram=85.3% (14.29GB used, 2.46GB free) cpu=100.0% (15s mean 89.5%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-13T23:50:49 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.22GB
+2026-09-13T23:50:54 SUSPEND  ph_validity agent=PH tag=AMBER rss=0.27GB
+2026-09-13T23:51:09 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:51:14 RESUME   ph_validity agent=PH tag=AMBER
+2026-09-13T23:51:24 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.24GB
+2026-09-13T23:51:29 SUSPEND  ph_validity agent=PH tag=AMBER rss=0.27GB
+2026-09-13T23:51:44 SAMPLE   ram=86.7% (14.52GB used, 2.23GB free) cpu=69.1% (15s mean 68.2%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:51:44 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:51:49 RESUME   ph_validity agent=PH tag=AMBER
+2026-09-13T23:51:59 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.24GB
+2026-09-13T23:52:04 SUSPEND  ph_validity agent=PH tag=AMBER rss=0.27GB
+2026-09-13T23:52:19 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:52:34 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.21GB
+2026-09-13T23:52:44 SAMPLE   ram=87.4% (14.64GB used, 2.11GB free) cpu=91.2% (15s mean 87.0%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:53:04 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:53:44 SAMPLE   ram=85.0% (14.24GB used, 2.50GB free) cpu=91.4% (15s mean 90.9%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-13T23:54:14 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.22GB
+2026-09-13T23:54:24 RESUME   ph_validity agent=PH tag=AMBER
+2026-09-13T23:54:34 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:54:44 SAMPLE   ram=85.6% (14.34GB used, 2.41GB free) cpu=98.9% (15s mean 93.0%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-13T23:54:49 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.23GB
+2026-09-13T23:55:44 SAMPLE   ram=87.4% (14.64GB used, 2.11GB free) cpu=79.6% (15s mean 81.2%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-13T23:55:54 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:56:09 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.23GB
+2026-09-13T23:56:34 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:56:44 SAMPLE   ram=85.5% (14.32GB used, 2.43GB free) cpu=98.4% (15s mean 91.8%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-13T23:56:49 SUSPEND  w_train_out_2P5J agent=W tag=CPU rss=1.23GB
+2026-09-13T23:57:09 RESUME   w_train_out_2P5J agent=W tag=CPU
+2026-09-13T23:57:44 SAMPLE   ram=77.4% (12.96GB used, 3.79GB free) cpu=81.0% (15s mean 80.8%) jobs=5 amber=1 queued=0 lanes=8
+2026-09-13T23:58:44 SAMPLE   ram=77.6% (13.00GB used, 3.75GB free) cpu=84.2% (15s mean 82.5%) jobs=5 amber=1 queued=0 lanes=8
+2026-09-13T23:59:44 SAMPLE   ram=77.6% (12.99GB used, 3.76GB free) cpu=81.7% (15s mean 81.4%) jobs=5 amber=1 queued=0 lanes=8
+2026-09-14T00:00:44 SAMPLE   ram=78.1% (13.08GB used, 3.67GB free) cpu=81.8% (15s mean 81.6%) jobs=5 amber=1 queued=0 lanes=8
+2026-09-14T00:01:44 SAMPLE   ram=78.0% (13.07GB used, 3.68GB free) cpu=81.7% (15s mean 81.6%) jobs=5 amber=1 queued=0 lanes=8
+2026-09-14T00:02:44 SAMPLE   ram=77.7% (13.02GB used, 3.73GB free) cpu=80.3% (15s mean 81.2%) jobs=5 amber=1 queued=0 lanes=8
+2026-09-14T00:02:49 REAP     w_train_out_2P5J (pid 30784) is gone; registration removed
+2026-09-14T00:03:44 SAMPLE   ram=70.7% (11.84GB used, 4.91GB free) cpu=61.1% (15s mean 58.3%) jobs=4 amber=1 queued=0 lanes=8
+2026-09-14T00:04:44 SAMPLE   ram=78.1% (13.08GB used, 3.67GB free) cpu=98.0% (15s mean 86.9%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-14T00:04:54 SUSPEND  w_recall_endpoint agent=W tag=CPU rss=0.11GB
+2026-09-14T00:04:59 SUSPEND  w_train_out_1U6V agent=W tag=CPU rss=1.23GB
+2026-09-14T00:05:14 RESUME   w_recall_endpoint agent=W tag=CPU
+2026-09-14T00:05:19 RESUME   w_train_out_1U6V agent=W tag=CPU
+2026-09-14T00:05:24 REAP     w_recall_endpoint (pid 40620) is gone; registration removed
+2026-09-14T00:05:44 SAMPLE   ram=78.6% (13.17GB used, 3.58GB free) cpu=92.4% (15s mean 86.4%) jobs=5 amber=1 queued=0 lanes=8
+2026-09-14T00:05:55 SUSPEND  w_ladder agent=W tag=CPU rss=0.27GB
+2026-09-14T00:06:00 SUSPEND  w_train_out_1U6V agent=W tag=CPU rss=1.22GB
+2026-09-14T00:06:14 RESUME   w_ladder agent=W tag=CPU
+2026-09-14T00:06:19 RESUME   w_train_out_1U6V agent=W tag=CPU
+2026-09-14T00:06:29 SUSPEND  w_train_out_1U6V agent=W tag=CPU rss=1.24GB
+2026-09-14T00:06:44 SAMPLE   ram=78.8% (13.21GB used, 3.54GB free) cpu=58.7% (15s mean 64.4%) jobs=5 amber=1 queued=0 lanes=8
+2026-09-14T00:06:49 RESUME   w_train_out_1U6V agent=W tag=CPU
+2026-09-14T00:07:44 SAMPLE   ram=78.3% (13.11GB used, 3.64GB free) cpu=89.9% (15s mean 92.6%) jobs=5 amber=1 queued=0 lanes=8
+2026-09-14T00:08:44 SAMPLE   ram=78.5% (13.14GB used, 3.60GB free) cpu=87.2% (15s mean 89.3%) jobs=5 amber=1 queued=0 lanes=8
