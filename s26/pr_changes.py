@@ -41,12 +41,16 @@ SLIDES = {
     7: ("Where the remaining accuracy lives", "Left: the accuracy ladder with the basis on every bar (controls, production, ORACLE). "
         "Right: closed by measurement (selection, physics as selector, physics as relaxer with the Type-M flag, physics as steric "
         "filter, search) and open (the prior; the common mode). A basis line under the figure.", ["s26/figures/pr_ladder.png"]),
-    8: ("Direction A: ADAPT-VQE on this Hamiltonian (PENDING)", "PLACEHOLDER until s26/PROPOSAL_A.md exists. Left: lane Q's A4 figure "
-        "with the matched-P slopes and the grown/fixed ratio. Right: the A2 algebra, the product-state target, A1 status, verdict PENDING.",
-        ["s26/figures/a4_variance_slopes.png"]),
-    9: ("Direction B: a learned folding model as the prior, and its replacement", "Left: what the proposal says; B1 final (three "
-        "independent blockers); B2 pending; B3 pending with the persisted arms; verdict PENDING B2/B3, REPLACE if null. Right: the "
-        "replacement paper's claim chain, the two claims it will not make, the venue statement.", []),
+    8: ("Direction A: let the circuit grow (qubit-ADAPT-VQE). Verdict: REPLACE", "What we learned by letting the circuit grow (the "
+        "diagnosis), from s26/PROPOSAL_A.md (L68, accepted L69). Left: lane Q's A4 figure and the A1 endpoint block (the two primaries "
+        "with SE, MDE, x MDE, fold CI, W/L; NOT MEASURED at the registered threshold; the 0.06 A resolution; all 12 arms; the exact "
+        "Gibbs state as a control). Right: what the proposal says; the product-state diagnosis (KL to the product of marginals, the "
+        "7-rotation state, the fixed circuit's 0.90 nats, the inert L-BFGS growth on the 78 alpha = 1 targets, the full DLA, the "
+        "product circuits of A4); verdict REPLACE and what replaces it (slide 9).", ["s26/figures/a4_variance_slopes.png"]),
+    9: ("Direction B, and what we publish: the trainability paper", "What we publish, kept distinct from slide 8's diagnosis (L69). "
+        "Left: what the proposal says; B1 final (three independent blockers); B2 pending; B3 pending with the persisted arms; verdict "
+        "PENDING B2/B3, REPLACE if null. Right: the paper's claim chain with its Sprint 26 additions (the DLA census, the product-state "
+        "target, the non-decaying grown circuits, the A1 null), the two claims it will not make, the venue statement.", []),
     10: ("Direction C: learn a better distance prior; physics for validity, not accuracy", "Left: what the proposal says; C1 final "
          "(closures reproduced); C2 running (rungs, falsifier, anchor and its basis). Right: C3 final (the seven-contrast result with "
          "the Type-M flag and the 124-of-126 validity wording); C4 and C5 pending; verdict PENDING.", []),
@@ -72,6 +76,8 @@ FIXES = """
 | the C2 ladder's built-chain basis | L56's title | slide 10 names the rebuild basis 3.2126 for the anchor and every C2 contrast (L57) | `s26/results/p_ladder_report_shipped_s0.json :: arm/mean` |
 | "the same within error" for the grown -0.302 vs fixed -0.243 slopes | L35 | slide 8 says both are far from a 2-design's -1 and that no CI on the difference is on disk (L47) | `s26/results/q_var.json` |
 | the product-circuit reading | L35 attributed to q_var.json | slide 8 grounds it in the adapt sets of `s26/results/q_dla.json`, as L47 requires | `s26/results/q_dla.json :: results/adapt_sets` |
+| "ADAPT ... selects no entangling operator on any of the 78 alpha = 1 targets under L-BFGS" / "declines them on all 78 targets" | `s26/PROPOSAL_A.md` sections 3 and 5; L68 ("stops with no operator selected on 78 of 78") | the per-target records say the growth is inert, not absent: it halts by the eps = 1e-3 gradient criterion on 156 of 156 (pool, target) cells, but adds 0 operators on only 18 (pool V) and 10 (pool L2) of the 78 targets, at most 11, and the operators it adds lower the free energy by at most 1.2e-4 nats (median 9e-6) while the 7-rotation state is already within 7.9e-4 nats of the Gibbs optimum; slide 8 and its notes say that, with the counts | `s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank/{stopped, sequence, trace}` |
+| the A1 basis | "built chain" in L68 | slide 8 names it `rmsd_q_synth` (the production projection of the WEIGHTED average over the 128 candidates, 3.2280 A for the deployed selector) and distinguishes it from the production top-75 arm 3.2148 | `s26/results/a1_stats.json :: means/fixed_zrank_it50/rmsd_q_synth`; `s26/results/q_mde_reference.json` |
 | the steric reject +0.228 / +0.167 | L43 | quoted with the Type-M flag and "tail-carried, median +0.003" (L54) | `s26/results/ph_reject_report.json :: report/point_cloud/1e4` |
 | the strain signal (Spearman +0.433) | L53 | quoted in the notes as a calibration flag, never as a gain, as L53 asks | `s26/results/ph_strain.json` |
 
@@ -92,12 +98,12 @@ time (status SOURCED, SOURCED_BY_TEST or DERIVED with the arithmetic stated).
 
 ## DRAFT and PENDING items
 
-- Slide 8 is a PLACEHOLDER marked PENDING: `s26/PROPOSAL_A.md` did not exist at build time; the builder replaces the
-  placeholder with the proposal slide when the file appears (`s26/pr_build_deck.py`, `builders[8]`).
+- Slide 8 is in its proposal form (verdict REPLACE, L68, accepted L69 subject to the Adversary's check of L68); the
+  builder falls back to the PENDING placeholder only if `s26/PROPOSAL_A.md` is absent (`s26/pr_build_deck.py`, `builders[8]`).
 - Slide 9's verdict is PENDING B2/B3 (lane P); the replacement form is shown as lane Q wrote it.
 - Slide 10's verdict is PENDING C2 to C5 (lane P); C1 and C3 are final.
-- Slide 11's note naming the direction the evidence favours is DRAFT until the coordinator's verdict entry in
-  `s26/LEDGER.md`; it was drafted from `s26/PROPOSAL_B.md`, `PROPOSAL_B_REPLACEMENT.md`, `PROPOSAL_C.md` and the ledger.
+- Slide 11's note naming the direction the evidence favours is DRAFT until the coordinator's entry on all three verdicts
+  (A is REPLACE by L68 / L69; B and C pending lane P); it was drafted from the PROPOSAL files and the ledger.
 """
 
 

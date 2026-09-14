@@ -369,6 +369,45 @@ def slide_07(prs, V):
     return s
 
 
+def slide_08(prs, V):
+    s = new_slide(prs, "Direction A: let the circuit grow (qubit-ADAPT-VQE). Verdict: REPLACE", 8,
+                  "from s26/PROPOSAL_A.md (lane Q; L68, accepted L69); A1 basis: built chain, rmsd_q_synth on both sides; A4 figure: lane Q, s26/results/q_var.json")
+    add_picture(s, os.path.join(FIG, "a4_variance_slopes.png"), 0.5, 1.4, 6.9, 2.85)
+    add_text(s, 0.55, 4.35, 6.85, 2.65, [
+        (f"A1, the endpoint: ADAPT under the same 21-parameter budget (realised {F(V,'A1_P21_ADAM_MIN')} by the Adam primaries, "
+         f"{F(V,'A1_P21_LBFGS_MIN')} to {F(V,'A1_P21_LBFGS_MAX')} by L-BFGS) vs the deployed fixed circuit, paired on {F(V,'A1_N')} targets", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"2-local pool: {F(V,'A1_L2_EFFECT','+.4f')} A, SE {F(V,'A1_L2_SE','.4f')}, MDE {F(V,'A1_L2_MDE','.4f')}, {F(V,'A1_L2_X','.2f')} x MDE, "
+         f"fold CI {F(V,'A1_L2_CI','+.3f')}, {F(V,'A1_L2_W')}W/{F(V,'A1_L2_L')}L", {}),
+        (f"Tang pool: {F(V,'A1_V_EFFECT','+.4f')} A, SE {F(V,'A1_V_SE','.4f')}, MDE {F(V,'A1_V_MDE','.4f')}, {F(V,'A1_V_X','.2f')} x MDE, "
+         f"fold CI {F(V,'A1_V_CI','+.3f')}, {F(V,'A1_V_W')}W/{F(V,'A1_V_L')}L", {}),
+        (f"NOT MEASURED: null at the registered threshold, resolution {F(V,'A1_L2_MDE','.2f')} A; all {F(V,'A1_N_ARMS')} ADAPT arms between "
+         f"{F(V,'A1_ARMS_EFF_MIN','+.3f')} and {F(V,'A1_ARMS_EFF_MAX','+.3f')} A at {F(V,'A1_ARMS_X_MIN','.2f')} to {F(V,'A1_ARMS_X_MAX','.2f')} x MDE, "
+         f"but one observation, not twelve (their per-target deltas correlate at {F(V,'A1_ARM_CORR_MEAN','.3f')}; L70)", {}),
+        (f"the exact Gibbs state in place of the circuit: {F(V,'A1_GIBBS_EFFECT','+.4f')} A ({F(V,'A1_GIBBS_X','.2f')} x) overall; "
+         f"{F(V,'A1_GIBBS_ALPHA1','+.4f')} on the {F(V,'A1_N_ALPHA1')} alpha = 1 targets where it is the optimum, {F(V,'A1_GIBBS_ALPHA025','+.4f')} on the "
+         f"{F(V,'A1_N_ALPHA025')} alpha = 0.25 targets where it is not (L70)", {}),
+    ], size=11, spacing=2)
+    add_text(s, 7.65, 1.4, 5.25, 5.6, [
+        ("What the proposal says", dict(bold=True, color=ACCENT, bullet=False)),
+        ("grow the ansatz one operator at a time on the same CVaR free energy (qubit-ADAPT, pools V and L2); a problem-shaped circuit "
+         "should represent the trained state better, and a better state a better structure", {}),
+        ("What we learned by letting it grow (the diagnosis)", dict(bold=True, color=ACCENT, bullet=False)),
+        (f"the optimum at alpha = 1 is a product state on every target: KL to the product of its marginals at most "
+         f"{F(V,'A1_KL_PRODUCT_MAX','.1e')} nats over {F(V,'A1_N_RECORDS')} records; 7 rotations reach it to {F(V,'A1_KL_RY7_MEAN','.1e')} nats; "
+         f"the fixed 21-parameter circuit stops {F(V,'A1_KL_FIXED_MEAN','.2f')} nats short", {}),
+        (f"offered entangling operators on the {F(V,'A1_N_ALPHA1')} alpha = 1 targets, ADAPT's growth halts by its gradient test on all of them; "
+         f"the operators added first (0 on {F(V,'A1_LBFGS_ZERO_OPS_V')} / {F(V,'A1_LBFGS_ZERO_OPS_L2')} targets, at most {F(V,'A1_LBFGS_MAX_OPS')}) "
+         f"lower the objective by at most {F(V,'A1_LBFGS_DF_ABSMAX','.1e')}: inert growth", {}),
+        (f"the algebra: dim(DLA) = {F(V,'DLA_SO128')} = so(128) from depth 2; nothing for an adaptive ansatz to add (A2)", {}),
+        (f"grown circuits at alpha = 1 are product circuits whose variance does not decay (A4, left); at alpha = 0.25 the grown circuit "
+         f"decays at {F(V,'A4_L2_A025_T03','.3f')} vs the fixed {F(V,'A4_FIXED_A025_T03','.3f')} per qubit", {}),
+        ("Verdict: REPLACE. The mechanism is absent, not weak: a better ansatz has nothing to be better at, and the readout cannot "
+         "see the difference between two well-trained states. What replaces it is the trainability paper (slide 9), with A2, A4 and "
+         "the product-state result as its Sprint 26 additions.", dict(bold=True)),
+    ], size=11, spacing=3)
+    return s
+
+
 def slide_08_pending(prs, V):
     s = new_slide(prs, "Direction A: ADAPT-VQE on this Hamiltonian (PENDING)", 8,
                   "PENDING: wording and verdict from s26/PROPOSAL_A.md when lane Q posts it; the facts shown are measured (A2 L27, A4 L35; Adversary L45, L47)")
@@ -398,8 +437,8 @@ def slide_08_pending(prs, V):
 
 
 def slide_09(prs, V):
-    s = new_slide(prs, "Direction B: a learned folding model as the prior, and its replacement", 9,
-                  "from s26/PROPOSAL_B.md (lane P, DRAFT; B1 final) and s26/PROPOSAL_B_REPLACEMENT.md (lane Q); the A2 and A4 figures are on slides 6 and 8")
+    s = new_slide(prs, "Direction B, and what we publish: the trainability paper", 9,
+                  "from s26/PROPOSAL_B.md (lane P, DRAFT; B1 final) and s26/PROPOSAL_B_REPLACEMENT.md (lane Q); the paper replaces A (L68, L69) and, if B2/B3 are null, B")
     add_text(s, 0.6, 1.4, 6.1, 5.6, [
         ("What the proposal says", dict(bold=True, color=ACCENT, bullet=False)),
         ("Replace or augment the shipped distance prior with the output of a large pretrained folding model, because the prior's "
@@ -418,7 +457,7 @@ def slide_09(prs, V):
         ("Verdict: PENDING B2/B3. If null: REPLACE with the trainability paper (right).", dict(bold=True)),
     ], size=11.5, spacing=3)
     add_text(s, 6.95, 1.4, 5.95, 5.6, [
-        ("The replacement: publish the trainability result", dict(bold=True, color=ACCENT, bullet=False)),
+        ("What we publish: the trainability paper (in place of A, and of B if B2/B3 are null)", dict(bold=True, color=ACCENT, bullet=False)),
         ("chain geometry fixes which residues a distance term can depend on (exact theorem); that fixes the energy's Pauli spectrum "
          "once raw AMBER's clash spike is conditioned away", {}),
         (f"the spectrum times the circuit's own kernel predicts the measured gradient variance with no free parameter: median "
@@ -426,8 +465,9 @@ def slide_09(prs, V):
         ("at depth >= 3 the kernel is flat in Pauli weight: the force field's locality is not what limits training; the width is", {}),
         (f"the Lie algebra is the full so(2^n) from depth 2 (dim {F(V,'DLA_SO128')} at n = 7): nothing algebraic protects the ansatz at scale; "
          f"n = {F(V,'SWEEP_N_MIN')}..{F(V,'SWEEP_N_MAX')} at depth 3 is the shallow regime", {}),
-        (f"the deployed Gibbs target is a product state (KL to its product of marginals {F(V,'PROD_KL_1A13','.1e')} on 1A13); an ADAPT-grown "
-         "circuit on it grows no entanglement, so its gradients do not decay because there is nothing to train", {}),
+        (f"Sprint 26 additions (slides 6 and 8): the DLA census; the product-state target (KL to the product of marginals at most "
+         f"{F(V,'A1_KL_PRODUCT_MAX','.1e')} nats on {F(V,'A1_N_RECORDS')} targets); grown circuits that do not decay because there is nothing to "
+         f"train; the A1 null ({F(V,'A1_V_EFFECT','+.3f')} A at {F(V,'A1_V_X','.2f')} x MDE)", {}),
         (f"the optimiser trains ({F(V,'Q_GAP_MIN','.0%')} to {F(V,'Q_GAP_MAX','.0%')} of the gap) and the readout cannot tell "
          f"({F(V,'Q_CIRC_VS_GIBBS_X','.2f')} x MDE); the tail is a subset of the classical prefix ({F(V,'Q_CELLS')} cells, {F(V,'Q_VIOLATIONS')} violations)", {}),
         ("Two claims the paper will not make", dict(bold=True, color=ACCENT, bullet=False)),
@@ -565,8 +605,7 @@ def main():
     prs = Presentation()
     prs.slide_width = Inches(W); prs.slide_height = Inches(H)
     builders = {1: slide_01, 2: slide_02, 3: slide_03, 4: slide_04, 5: slide_05, 6: slide_06, 7: slide_07, 9: slide_09, 10: slide_10, 11: slide_11}
-    if not os.path.exists(os.path.join(ROOT, 's26', 'PROPOSAL_A.md')):
-        builders[8] = slide_08_pending   # the 'until then' state of step (d)
+    builders[8] = slide_08 if os.path.exists(os.path.join(ROOT, 's26', 'PROPOSAL_A.md')) else slide_08_pending
     pending = {8: ("Direction A: ADAPT-VQE on this Hamiltonian", "s26/PROPOSAL_A.md")}
     spoken_by_slide = {}
     manifest = {}

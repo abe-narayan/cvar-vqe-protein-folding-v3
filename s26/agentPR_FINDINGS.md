@@ -21,7 +21,7 @@ title, so the edits can be carried onto the real file if the presenter supplies 
   11 slides, 0 U+2014, 0 U+2013, 0 occurrences of any of the six banned words, the only
   non-ASCII character U+2022 (`s26/pr_verify.txt`).
 - Slides 1 to 7 and 11 (step a): every number read from an artefact at build time by
-  `s26/pr_values.py` (237 registered tokens, `s26/pr_values.json`), 30 of the 35 claims of
+  `s26/pr_values.py` (296 registered tokens, `s26/pr_values.json`), 30 of the 35 claims of
   `s26/EXAMINATION.md` section C re-read at their leaves. Slide 4 carries the two
   ORACLE-superposed CA overlays: 1S9Z (T030, n = 16, built chain 0.181981 A) and 9KAR (n = 15,
   7.437696 A), the built chain `ca` from `bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json`
@@ -33,16 +33,21 @@ title, so the edits can be carried onto the real file if the presenter supplies 
   the accuracy ladder with the basis on every bar.
 - Slide 10 (step b) from `s26/PROPOSAL_C.md` and `s26/C3_RESULT.md` with the Adversary's L46
   wording; slide 9 (step c) from `s26/PROPOSAL_B.md` and `s26/PROPOSAL_B_REPLACEMENT.md`;
-  slide 8 (step d, the "until then" state) a PENDING placeholder with the measured A2 / A4
-  facts and lane Q's A4 figure; the builder swaps it for the proposal slide when
-  `s26/PROPOSAL_A.md` exists. Spoken word counts: 234 / 248 / 244 on slides 8 / 9 / 10, all
-  under 250; the ALSO and SOURCES blocks in the notes are not spoken.
-- Slide 11's notes carry the direction line, marked DRAFT (step e): the evidence favours
-  direction C in its learn-the-prior form as the accuracy study (the prior is the only lever
-  measured as steep, `s24/results/priorladder.json`, -2.15 A per unit), paired with direction A
-  as a scientific study rather than an accuracy study (the product-circuit result,
-  `s26/results/q_dla.json` adapt sets and `s26/results/q_var.json`); direction B as stated
-  cannot be measured on this machine (`s26/results/b1_feasibility.json`).
+  slide 8 (step d) first as a PENDING placeholder and, once `s26/PROPOSAL_A.md` landed (L68,
+  verdict REPLACE, accepted L69), in its proposal form: the two-minute script adapted from the
+  proposal's section 5, the A1 primaries (-0.0138 / -0.0222 A at 0.23x / 0.36x MDE, fold CIs
+  [-0.071, +0.044] / [-0.085, +0.042], 58W/68L / 61W/65L, resolution 0.06 A, all from
+  `s26/results/a1_stats.json`), the product-state facts recomputed over the 126 records of
+  `s26/results/a1/`, and lane Q's A4 figure. Per L69, slide 8 is the diagnosis (what we learned
+  by letting the circuit grow) and slide 9 is what we publish (the trainability paper, retitled
+  and given its Sprint 26 additions). Spoken word counts: 247 / 247 / 244 on slides 8 / 9 / 10,
+  all under 250; the ALSO and SOURCES blocks in the notes are not spoken.
+- Slide 11's notes carry the direction line, marked DRAFT until the coordinator rules on all
+  three verdicts (step e): the evidence favours direction C in its learn-the-prior form as the
+  accuracy study (the prior is the only lever measured as steep, `s24/results/priorladder.json`,
+  -2.15 A per unit), paired with the trainability paper as the publication (A is REPLACE by L68 /
+  L69: the optimum is a product state and the A1 null is 0.36x MDE, `s26/results/a1_stats.json`);
+  direction B as stated cannot be measured on this machine (`s26/results/b1_feasibility.json`).
 - Basis rule (L28 item 3, L29 item 2) applied: the seven-configuration suite, the random-75
   null 3.4251 and the Legacy +0.330 / AMBER +0.455 verdicts are named point-cloud everywhere
   they appear; the production 3.2148 is named built chain; the C2 anchor is named the
@@ -85,7 +90,30 @@ verdict form and its PENDING state.
   `s12/results/agg_dec_v2*.json` and `s17/results/inband.json`: identical.
 - L53's quartile means 2.286 / 2.936 / 3.758 / 3.923 recomputed from `s26/results/ph_strain.json`.
 - L46's three C3 contrasts and the cosine -0.0491 read from `s26/results/ph_c3_stage1.json`.
+- L68's product-state facts recomputed over the 126 A1 records: KL(Gibbs || product) mean
+  1.4e-4, max 7.9e-4; on the 78 alpha = 1 targets the fixed circuit's KL to Gibbs 0.9027 (max
+  0.984) and the 7-parameter RY layer's 1.5e-4 (max 7.9e-4); the 12 ADAPT arms -0.0128 to
+  -0.0245 A at 0.21x to 0.40x MDE, all negative; selection -0.0385 to -0.0478 at up to 0.47x.
 - The overlays' RMSDs (0.181981, 7.437696) recomputed through `s12.instrument.ca_rmsd`.
+
+## 4b. One statement of PROPOSAL_A.md that the artefact words differently (for lane Q and the Adversary's check of L68)
+
+The proposal (sections 3 and 5) and L68 say ADAPT "selects no entangling operator on any of the
+78 alpha = 1 targets under L-BFGS" / "declines them on all 78 targets" / "stops with no operator
+selected on 78 of 78". The per-target records (`s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank`)
+say: the growth halts by the eps = 1e-3 pool-gradient criterion on 156 of 156 (pool, target)
+cells, but before the halt it ADDS operators on 60 of 78 targets (pool V; 0 added on 18) and 68
+of 78 (pool L2; 0 added on 10), at most 11, the first of them entangling strings (1A13, pool V:
+IYIZZZZ at pool-gradient norm 1.29e-3, just above eps); every one of those additions lowers the
+free energy by at most 1.2e-4 nats (median 9e-6) from a 7-rotation state that is already within
+7.9e-4 nats of the Gibbs optimum. The proposal's substance holds (the growth is inert; there is
+nothing to entangle that the readout or the objective can see) and the deck says it in the
+artefact's words, with the counts; the literal "no operator selected" does not. Flagged in the
+ledger; lane Q's file is not edited. The Adversary's L70 caveats are on the slide, recomputed
+from the same records: the twelve arms' per-target delta vectors correlate at 0.955 on average
+(min 0.919), so they are one observation; the 21 parameters are a budget (the Adam primaries
+realise 21, L-BFGS 7 to 21); the Gibbs control's +0.0088 is -0.0271 on the 78 alpha = 1 targets
+and +0.0671 on the 48 alpha = 0.25 targets where the Gibbs state is not the CVaR optimum.
 
 ## 5. What damaged my own expectations
 
@@ -100,6 +128,10 @@ verdict form and its PENDING state.
    sets' abelian closure and `n_distinct_ops`); L47 caught the attribution before I wrote it.
 4. A verification pass that prints the banned words by name puts them into every file that
    pastes it. The checks now print them masked.
+5. I expected PROPOSAL_A.md's "declines entangling operators on all 78 targets" to be a literal
+   count in the records. It is a reading of the stop criterion; the records show inert growth
+   (operators added on 60 / 68 of 78 targets, worth at most 1.2e-4 nats). The slide carries the
+   records' version (section 4b).
 
 ## 6. What I did not do and why
 
@@ -111,8 +143,8 @@ verdict form and its PENDING state.
   results JSON (`s26/figures/a2_dla_dimension.png`, `a4_variance_slopes.png`, 1368 x 874 and
   2040 x 843 at 189.99 dpi) and the task names them as such; my own figures (overlays, width
   sweep, ladder) are regenerated on every build.
-- I did not build slide 8's proposal form: `s26/PROPOSAL_A.md` does not exist (checked 19:22 and
-  at every build). The placeholder carries only measured facts and is marked PENDING.
+- Slide 8's proposal form was built once `s26/PROPOSAL_A.md` landed (21:39); before that the
+  placeholder carried only measured facts and was marked PENDING (commit cb90ffb3).
 - I did not read `docs/REPORT_S26.md` beyond its Part X presentation guide and Appendix D, and
   copied nothing from it: no external citation, no personal detail; every number on a slide is
   traced by me to an artefact or a ledger entry.
@@ -122,7 +154,7 @@ verdict form and its PENDING state.
 ## 7. Artefacts and memory
 
     vqe_research_overview.pptx            the deck (11 slides)
-    s26/pr_values.py -> s26/pr_values.json the registry (237 tokens: value, path, basis, status, note)
+    s26/pr_values.py -> s26/pr_values.json the registry (296 tokens: value, path, basis, status, note)
     s26/pr_figures.py -> s26/figures/pr_overlay_1S9Z.png, pr_overlay_9KAR.png, pr_width_sweep.png, pr_ladder.png
     s26/pr_notes.md                        spoken text with {TOKEN} placeholders
     s26/pr_build_deck.py                   the build and the verification (pr_verify.txt, pr_verify_dump.txt, pr_manifest.json)

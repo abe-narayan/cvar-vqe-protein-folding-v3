@@ -405,6 +405,89 @@ def load_values():
         status="DERIVED", note=", ".join(rungs_trained))
     put("C2_N_RUNGS", 11, "s26/PREREG_C2.md / s26/PROPOSAL_C.md: rungs shipped, noesm, conly, pca32, pca32f, pca128, raw, esm8m, wide, pairnet, mix", status="LEDGER")
 
+    # ------------------------------------------------------------------ Proposal A: A1 (L68) and the product-state facts on the real targets
+    a1 = _j("s26/results/a1_stats.json")
+    ac = a1["contrasts"]
+    def a1put(tok, key, field, **kw):
+        put(tok, ac[key][field], f"s26/results/a1_stats.json :: contrasts/'{key}'/{field}", **kw)
+    for pool, tag in (("adaptL2", "L2"), ("adaptV", "V")):
+        key = f"rmsd_q_synth:{pool}_adam_best_zrank_P21-fixed_zrank_it50"
+        a1put(f"A1_{tag}_EFFECT", key, "effect", basis="built_chain (rmsd_q_synth: the production projection of the weighted average, both sides)", note="L68 primary")
+        a1put(f"A1_{tag}_SE", key, "se"); a1put(f"A1_{tag}_MDE", key, "mde"); a1put(f"A1_{tag}_X", key, "effect_over_mde")
+        a1put(f"A1_{tag}_CI", key, "ci95_fold"); a1put(f"A1_{tag}_W", key, "n_better"); a1put(f"A1_{tag}_L", key, "n_worse")
+        a1put(f"A1_{tag}_FOLDS", key, "folds_same_sign"); a1put(f"A1_{tag}_VERDICT", key, "verdict")
+    adapt_arm = [k for k in ac if k.startswith("rmsd_q_synth:adapt")]
+    put("A1_N_ARMS", len(adapt_arm), "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adapt*' (count)", status="DERIVED")
+    put("A1_ARMS_ALL_NEG", all(ac[k]["effect"] < 0 for k in adapt_arm), "s26/results/a1_stats.json :: every 'rmsd_q_synth:adapt*' effect < 0", status="DERIVED")
+    put("A1_ARMS_EFF_MIN", min(ac[k]["effect"] for k in adapt_arm), "s26/results/a1_stats.json :: min effect over the 12 ADAPT arms (built chain)", status="DERIVED")
+    put("A1_ARMS_EFF_MAX", max(ac[k]["effect"] for k in adapt_arm), "s26/results/a1_stats.json :: max effect over the 12 ADAPT arms (built chain)", status="DERIVED")
+    put("A1_ARMS_X_MIN", min(abs(ac[k]["effect_over_mde"]) for k in adapt_arm), "s26/results/a1_stats.json :: min |effect/MDE| over the 12 ADAPT arms", status="DERIVED")
+    put("A1_ARMS_X_MAX", max(abs(ac[k]["effect_over_mde"]) for k in adapt_arm), "s26/results/a1_stats.json :: max |effect/MDE| over the 12 ADAPT arms", status="DERIVED")
+    sel_arm = [k for k in ac if k.startswith("rmsd_sel:adapt")]
+    put("A1_SEL_EFF_MIN", min(ac[k]["effect"] for k in sel_arm), "s26/results/a1_stats.json :: min effect over the 12 ADAPT arms (selection basis)", status="DERIVED", basis="s8_selection")
+    put("A1_SEL_EFF_MAX", max(ac[k]["effect"] for k in sel_arm), "s26/results/a1_stats.json :: max effect over the 12 ADAPT arms (selection basis)", status="DERIVED", basis="s8_selection")
+    put("A1_SEL_X_MAX", max(abs(ac[k]["effect_over_mde"]) for k in sel_arm), "s26/results/a1_stats.json :: max |effect/MDE| over the 12 ADAPT arms (selection)", status="DERIVED")
+    a1put("A1_GIBBS_EFFECT", "rmsd_q_synth:gibbs_T-fixed_zrank_it50", "effect", basis="built_chain (rmsd_q_synth)", note="the exact Gibbs state in place of the trained circuit")
+    a1put("A1_GIBBS_X", "rmsd_q_synth:gibbs_T-fixed_zrank_it50", "effect_over_mde")
+    a1put("A1_RANDH_EFFECT", "rmsd_q_synth:randH_adaptL2-fixed_zrank_it50", "effect", basis="built_chain (rmsd_q_synth)", note="matched-entropy random control")
+    a1put("A1_RANDH_CI", "rmsd_q_synth:randH_adaptL2-fixed_zrank_it50", "ci95_fold")
+    a1put("A1_RANDH_X", "rmsd_q_synth:randH_adaptL2-fixed_zrank_it50", "effect_over_mde")
+    put("A1_FIXED_MEAN", a1["means"]["fixed_zrank_it50"]["rmsd_q_synth"], "s26/results/a1_stats.json :: means/fixed_zrank_it50/rmsd_q_synth", basis="built_chain (rmsd_q_synth)", note="the deployed selector's arm")
+    put("A1_N", int(a1["n"]), "s26/results/a1_stats.json :: n")
+    qm = _j("s26/results/q_mde_reference.json")["contrasts"]["rmsd_q_synth-rmsd_arm"]
+    put("QSYNTH_VS_ARM", qm["effect"], "s26/results/q_mde_reference.json :: contrasts/'rmsd_q_synth-rmsd_arm'/effect", basis="built_chain", note="the whole quantum synthesis against the classical top-75 arm")
+    put("QSYNTH_VS_ARM_X", qm["effect_over_mde"], "s26/results/q_mde_reference.json :: contrasts/'rmsd_q_synth-rmsd_arm'/effect_over_mde")
+    import glob
+    recs = [_j(os.path.relpath(f, ROOT)) for f in sorted(glob.glob(os.path.join(ROOT, "s26", "results", "a1", "*.json")))]
+    put("A1_N_RECORDS", len(recs), "s26/results/a1/<pdb>.json (count)", status="DERIVED")
+    klp = [r["product_diagnostics"]["zrank"]["kl_gibbs_to_product"] for r in recs]
+    put("A1_KL_PRODUCT_MAX", float(max(klp)), "s26/results/a1/*.json :: product_diagnostics/zrank/kl_gibbs_to_product (max over 126)", status="DERIVED", note="L68: 7.9e-4")
+    put("A1_KL_PRODUCT_MEAN", float(np.mean(klp)), "s26/results/a1/*.json :: product_diagnostics/zrank/kl_gibbs_to_product (mean over 126)", status="DERIVED", note="L68: 1.4e-4")
+    a1r = [r for r in recs if r["alpha"] == 1.0]
+    put("A1_N_ALPHA1", len(a1r), "s26/results/a1/*.json :: alpha == 1.0 (count)", status="DERIVED", note="the VQE_LFO folds 0, 3, 4")
+    kf = [r["arms"]["fixed_zrank_it50"]["kl_to_gibbs"] for r in a1r]
+    put("A1_KL_FIXED_MEAN", float(np.mean(kf)), "s26/results/a1/*.json :: arms/fixed_zrank_it50/kl_to_gibbs (mean over the 78 alpha = 1 targets)", status="DERIVED", note="L68: 0.9027; S25's 0.902 reproduced")
+    put("A1_KL_FIXED_MAX", float(max(kf)), "s26/results/a1/*.json :: arms/fixed_zrank_it50/kl_to_gibbs (max over the 78)", status="DERIVED")
+    k7 = [r["arms"]["adaptV_lbfgs_zrank_P7"]["kl_to_gibbs"] for r in a1r]
+    put("A1_KL_RY7_MEAN", float(np.mean(k7)), "s26/results/a1/*.json :: arms/adaptV_lbfgs_zrank_P7/kl_to_gibbs (mean over the 78)", status="DERIVED", note="a 7-parameter RY layer, L-BFGS-B; L68: 0.0002")
+    put("A1_KL_RY7_MAX", float(max(k7)), "s26/results/a1/*.json :: arms/adaptV_lbfgs_zrank_P7/kl_to_gibbs (max over the 78)", status="DERIVED")
+    def growth(pool):
+        stops = [r["adapt"][pool]["stopped"] for r in a1r]
+        nadd = [len(r["adapt"][pool]["sequence"]) for r in a1r]
+        dF = [r["adapt"][pool]["trace"][-1]["F"] - r["adapt"][pool]["trace"][0]["F"] for r in a1r]
+        return stops, nadd, dF
+    sV, nV, dV = growth("V_lbfgs_zrank"); sL, nL, dL = growth("L2_lbfgs_zrank")
+    put("A1_LBFGS_STOP_EPS", int(sum(1 for s in sV + sL if s == "eps")), "s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank/stopped == 'eps' (count over 2 x 78)", status="DERIVED",
+        note="growth halted by the pool-gradient criterion (eps 1e-3) on every alpha = 1 target, both pools")
+    put("A1_LBFGS_ZERO_OPS_V", int(sum(1 for n in nV if n == 0)), "s26/results/a1/*.json :: adapt/V_lbfgs_zrank/sequence empty (count over 78)", status="DERIVED")
+    put("A1_LBFGS_ZERO_OPS_L2", int(sum(1 for n in nL if n == 0)), "s26/results/a1/*.json :: adapt/L2_lbfgs_zrank/sequence empty (count over 78)", status="DERIVED")
+    put("A1_LBFGS_MAX_OPS", int(max(nV + nL)), "s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank/sequence length (max over 2 x 78)", status="DERIVED")
+    put("A1_LBFGS_DF_MIN", float(min(dV + dL)), "s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank/trace: F(final) - F(P = 7), most negative over 2 x 78", status="DERIVED",
+        note="the largest free-energy change any grown operator produced under L-BFGS at alpha = 1")
+    put("A1_LBFGS_DF_MEDIAN", float(np.median(dV + dL)), "s26/results/a1/*.json :: the same, median", status="DERIVED")
+    # the Adversary's L70 caveats, recomputed from the same records
+    lab_arms = [k for k in recs[0]["label"]["arms"] if k.startswith("adapt")]
+    fixed_v = np.array([r["label"]["arms"]["fixed_zrank_it50"]["rmsd_q_synth"] for r in recs])
+    D = np.array([[r["label"]["arms"][k]["rmsd_q_synth"] - r["label"]["arms"]["fixed_zrank_it50"]["rmsd_q_synth"] for r in recs] for k in lab_arms])
+    Cm = np.corrcoef(D); iu = np.triu_indices(len(lab_arms), 1)
+    put("A1_ARM_CORR_MEAN", float(Cm[iu].mean()), "s26/results/a1/*.json :: label/arms/adapt*/rmsd_q_synth minus fixed, per-target delta vectors: mean pairwise correlation over the 12 arms",
+        status="DERIVED", note="L70 caveat 1: 0.955; the twelve arms are one observation")
+    put("A1_ARM_CORR_MIN", float(Cm[iu].min()), "s26/results/a1/*.json :: the same, min pairwise correlation", status="DERIVED")
+    alph = np.array([r["alpha"] for r in recs])
+    gv = np.array([r["label"]["arms"]["gibbs_T"]["rmsd_q_synth"] for r in recs])
+    put("A1_GIBBS_ALPHA1", float((gv - fixed_v)[alph == 1.0].mean()), "s26/results/a1/*.json :: label/arms/gibbs_T minus fixed_zrank_it50, rmsd_q_synth, mean over the 78 alpha = 1 targets",
+        status="DERIVED", basis="built_chain (rmsd_q_synth)", note="L70 caveat 3: -0.0271")
+    put("A1_GIBBS_ALPHA025", float((gv - fixed_v)[alph == 0.25].mean()), "s26/results/a1/*.json :: the same over the 48 alpha = 0.25 targets (the Gibbs state is not the CVaR optimum there)",
+        status="DERIVED", basis="built_chain (rmsd_q_synth)", note="L70 caveat 3: +0.0671")
+    put("A1_N_ALPHA025", int((alph == 0.25).sum()), "s26/results/a1/*.json :: alpha == 0.25 (count)", status="DERIVED")
+    pl21 = [r["arms"][k]["P_actual"] for r in recs for k in ("adaptL2_lbfgs_zrank_P21", "adaptV_lbfgs_zrank_P21")]
+    pa21 = [r["arms"][k]["P_actual"] for r in recs for k in ("adaptL2_adam_best_zrank_P21", "adaptV_adam_best_zrank_P21")]
+    put("A1_P21_LBFGS_MIN", int(min(pl21)), "s26/results/a1/*.json :: arms/adapt*_lbfgs_zrank_P21/P_actual (min)", status="DERIVED", note="L70 caveat 2: the 21 is a budget")
+    put("A1_P21_LBFGS_MAX", int(max(pl21)), "s26/results/a1/*.json :: arms/adapt*_lbfgs_zrank_P21/P_actual (max)", status="DERIVED")
+    put("A1_P21_ADAM_MIN", int(min(pa21)), "s26/results/a1/*.json :: arms/adapt*_adam_best_zrank_P21/P_actual (min)", status="DERIVED", note="the primaries realise the full budget (repeats of one rotation merge)")
+    put("A1_LBFGS_DF_ABSMAX", float(max(abs(x) for x in dV + dL)), "s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank/trace: |F(final) - F(P = 7)|, max over 2 x 78", status="DERIVED",
+        note="the largest free-energy change any grown operator produced under L-BFGS at alpha = 1 (all changes are decreases)")
+
     # ------------------------------------------------------------------ Proposal B: B3's persisted arms (L14)
     tz = np.load(os.path.join(ROOT, "s13", "cache", "tors_rows.npz"), allow_pickle=True)
     trows = json.loads(str(tz["a_pepPos"]))

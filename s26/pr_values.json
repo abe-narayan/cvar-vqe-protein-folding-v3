@@ -1600,6 +1600,428 @@
   "basis": "",
   "note": ""
  },
+ "A1_L2_EFFECT": {
+  "value": -0.013804010978127654,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rmsd_q_synth: the production projection of the weighted average, both sides)",
+  "note": "L68 primary"
+ },
+ "A1_L2_SE": {
+  "value": 0.020987893840737574,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/se",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_L2_MDE": {
+  "value": 0.05879968338421039,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_L2_X": {
+  "value": -0.23476335557674916,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_L2_CI": {
+  "value": [
+   -0.0705134071560539,
+   0.044153798708205086
+  ],
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_L2_W": {
+  "value": 58,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/n_better",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_L2_L": {
+  "value": 68,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/n_worse",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_L2_FOLDS": {
+  "value": 3,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_L2_VERDICT": {
+  "value": "NOT MEASURED (|effect| 0.0138 <= its own MDE 0.0588, 0.23x)",
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptL2_adam_best_zrank_P21-fixed_zrank_it50'/verdict",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_V_EFFECT": {
+  "value": -0.022153263520291847,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rmsd_q_synth: the production projection of the weighted average, both sides)",
+  "note": "L68 primary"
+ },
+ "A1_V_SE": {
+  "value": 0.02170449491961757,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/se",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_V_MDE": {
+  "value": 0.060807312966800586,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_V_X": {
+  "value": -0.3643190668922836,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_V_CI": {
+  "value": [
+   -0.08536809287906452,
+   0.04242081658590607
+  ],
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_V_W": {
+  "value": 61,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/n_better",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_V_L": {
+  "value": 65,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/n_worse",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_V_FOLDS": {
+  "value": 3,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/folds_same_sign",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_V_VERDICT": {
+  "value": "NOT MEASURED (|effect| 0.0222 <= its own MDE 0.0608, 0.36x)",
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adaptV_adam_best_zrank_P21-fixed_zrank_it50'/verdict",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_N_ARMS": {
+  "value": 12,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:adapt*' (count)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_ARMS_ALL_NEG": {
+  "value": true,
+  "path": "s26/results/a1_stats.json :: every 'rmsd_q_synth:adapt*' effect < 0",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_ARMS_EFF_MIN": {
+  "value": -0.024450457627957556,
+  "path": "s26/results/a1_stats.json :: min effect over the 12 ADAPT arms (built chain)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_ARMS_EFF_MAX": {
+  "value": -0.012768378325693308,
+  "path": "s26/results/a1_stats.json :: max effect over the 12 ADAPT arms (built chain)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_ARMS_X_MIN": {
+  "value": 0.20709487695789358,
+  "path": "s26/results/a1_stats.json :: min |effect/MDE| over the 12 ADAPT arms",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_ARMS_X_MAX": {
+  "value": 0.3985824789324049,
+  "path": "s26/results/a1_stats.json :: max |effect/MDE| over the 12 ADAPT arms",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_SEL_EFF_MIN": {
+  "value": -0.04781159900483631,
+  "path": "s26/results/a1_stats.json :: min effect over the 12 ADAPT arms (selection basis)",
+  "status": "DERIVED",
+  "basis": "s8_selection",
+  "note": ""
+ },
+ "A1_SEL_EFF_MAX": {
+  "value": -0.038486758867899575,
+  "path": "s26/results/a1_stats.json :: max effect over the 12 ADAPT arms (selection basis)",
+  "status": "DERIVED",
+  "basis": "s8_selection",
+  "note": ""
+ },
+ "A1_SEL_X_MAX": {
+  "value": 0.4738013975898156,
+  "path": "s26/results/a1_stats.json :: max |effect/MDE| over the 12 ADAPT arms (selection)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_GIBBS_EFFECT": {
+  "value": 0.0088193936099326,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:gibbs_T-fixed_zrank_it50'/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rmsd_q_synth)",
+  "note": "the exact Gibbs state in place of the trained circuit"
+ },
+ "A1_GIBBS_X": {
+  "value": 0.10801669728891385,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:gibbs_T-fixed_zrank_it50'/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_RANDH_EFFECT": {
+  "value": 0.03370013155838529,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:randH_adaptL2-fixed_zrank_it50'/effect",
+  "status": "SOURCED",
+  "basis": "built_chain (rmsd_q_synth)",
+  "note": "matched-entropy random control"
+ },
+ "A1_RANDH_CI": {
+  "value": [
+   0.01224294278123844,
+   0.05814894455848459
+  ],
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:randH_adaptL2-fixed_zrank_it50'/ci95_fold",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_RANDH_X": {
+  "value": 0.3432317287450418,
+  "path": "s26/results/a1_stats.json :: contrasts/'rmsd_q_synth:randH_adaptL2-fixed_zrank_it50'/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_FIXED_MEAN": {
+  "value": 3.228048656334377,
+  "path": "s26/results/a1_stats.json :: means/fixed_zrank_it50/rmsd_q_synth",
+  "status": "SOURCED",
+  "basis": "built_chain (rmsd_q_synth)",
+  "note": "the deployed selector's arm"
+ },
+ "A1_N": {
+  "value": 126,
+  "path": "s26/results/a1_stats.json :: n",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "QSYNTH_VS_ARM": {
+  "value": 0.013283502123379051,
+  "path": "s26/results/q_mde_reference.json :: contrasts/'rmsd_q_synth-rmsd_arm'/effect",
+  "status": "SOURCED",
+  "basis": "built_chain",
+  "note": "the whole quantum synthesis against the classical top-75 arm"
+ },
+ "QSYNTH_VS_ARM_X": {
+  "value": 0.2614928767594804,
+  "path": "s26/results/q_mde_reference.json :: contrasts/'rmsd_q_synth-rmsd_arm'/effect_over_mde",
+  "status": "SOURCED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_N_RECORDS": {
+  "value": 126,
+  "path": "s26/results/a1/<pdb>.json (count)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_KL_PRODUCT_MAX": {
+  "value": 0.0007900525639577593,
+  "path": "s26/results/a1/*.json :: product_diagnostics/zrank/kl_gibbs_to_product (max over 126)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L68: 7.9e-4"
+ },
+ "A1_KL_PRODUCT_MEAN": {
+  "value": 0.00013990084655576105,
+  "path": "s26/results/a1/*.json :: product_diagnostics/zrank/kl_gibbs_to_product (mean over 126)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L68: 1.4e-4"
+ },
+ "A1_N_ALPHA1": {
+  "value": 78,
+  "path": "s26/results/a1/*.json :: alpha == 1.0 (count)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "the VQE_LFO folds 0, 3, 4"
+ },
+ "A1_KL_FIXED_MEAN": {
+  "value": 0.9027286124943251,
+  "path": "s26/results/a1/*.json :: arms/fixed_zrank_it50/kl_to_gibbs (mean over the 78 alpha = 1 targets)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L68: 0.9027; S25's 0.902 reproduced"
+ },
+ "A1_KL_FIXED_MAX": {
+  "value": 0.9835529144004111,
+  "path": "s26/results/a1/*.json :: arms/fixed_zrank_it50/kl_to_gibbs (max over the 78)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_KL_RY7_MEAN": {
+  "value": 0.0001516943479087445,
+  "path": "s26/results/a1/*.json :: arms/adaptV_lbfgs_zrank_P7/kl_to_gibbs (mean over the 78)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "a 7-parameter RY layer, L-BFGS-B; L68: 0.0002"
+ },
+ "A1_KL_RY7_MAX": {
+  "value": 0.0007927755939013282,
+  "path": "s26/results/a1/*.json :: arms/adaptV_lbfgs_zrank_P7/kl_to_gibbs (max over the 78)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_LBFGS_STOP_EPS": {
+  "value": 156,
+  "path": "s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank/stopped == 'eps' (count over 2 x 78)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "growth halted by the pool-gradient criterion (eps 1e-3) on every alpha = 1 target, both pools"
+ },
+ "A1_LBFGS_ZERO_OPS_V": {
+  "value": 18,
+  "path": "s26/results/a1/*.json :: adapt/V_lbfgs_zrank/sequence empty (count over 78)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_LBFGS_ZERO_OPS_L2": {
+  "value": 10,
+  "path": "s26/results/a1/*.json :: adapt/L2_lbfgs_zrank/sequence empty (count over 78)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_LBFGS_MAX_OPS": {
+  "value": 11,
+  "path": "s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank/sequence length (max over 2 x 78)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_LBFGS_DF_MIN": {
+  "value": -0.00012328232535496753,
+  "path": "s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank/trace: F(final) - F(P = 7), most negative over 2 x 78",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "the largest free-energy change any grown operator produced under L-BFGS at alpha = 1"
+ },
+ "A1_LBFGS_DF_MEDIAN": {
+  "value": -9.445044495848265e-06,
+  "path": "s26/results/a1/*.json :: the same, median",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_ARM_CORR_MEAN": {
+  "value": 0.9552349054913252,
+  "path": "s26/results/a1/*.json :: label/arms/adapt*/rmsd_q_synth minus fixed, per-target delta vectors: mean pairwise correlation over the 12 arms",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L70 caveat 1: 0.955; the twelve arms are one observation"
+ },
+ "A1_ARM_CORR_MIN": {
+  "value": 0.9186991032804477,
+  "path": "s26/results/a1/*.json :: the same, min pairwise correlation",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_GIBBS_ALPHA1": {
+  "value": -0.02705480039656452,
+  "path": "s26/results/a1/*.json :: label/arms/gibbs_T minus fixed_zrank_it50, rmsd_q_synth, mean over the 78 alpha = 1 targets",
+  "status": "DERIVED",
+  "basis": "built_chain (rmsd_q_synth)",
+  "note": "L70 caveat 3: -0.0271"
+ },
+ "A1_GIBBS_ALPHA025": {
+  "value": 0.0671149588704904,
+  "path": "s26/results/a1/*.json :: the same over the 48 alpha = 0.25 targets (the Gibbs state is not the CVaR optimum there)",
+  "status": "DERIVED",
+  "basis": "built_chain (rmsd_q_synth)",
+  "note": "L70 caveat 3: +0.0671"
+ },
+ "A1_N_ALPHA025": {
+  "value": 48,
+  "path": "s26/results/a1/*.json :: alpha == 0.25 (count)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_P21_LBFGS_MIN": {
+  "value": 7,
+  "path": "s26/results/a1/*.json :: arms/adapt*_lbfgs_zrank_P21/P_actual (min)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "L70 caveat 2: the 21 is a budget"
+ },
+ "A1_P21_LBFGS_MAX": {
+  "value": 21,
+  "path": "s26/results/a1/*.json :: arms/adapt*_lbfgs_zrank_P21/P_actual (max)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": ""
+ },
+ "A1_P21_ADAM_MIN": {
+  "value": 21,
+  "path": "s26/results/a1/*.json :: arms/adapt*_adam_best_zrank_P21/P_actual (min)",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "the primaries realise the full budget (repeats of one rotation merge)"
+ },
+ "A1_LBFGS_DF_ABSMAX": {
+  "value": 0.00012328232535496753,
+  "path": "s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank/trace: |F(final) - F(P = 7)|, max over 2 x 78",
+  "status": "DERIVED",
+  "basis": "",
+  "note": "the largest free-energy change any grown operator produced under L-BFGS at alpha = 1 (all changes are decreases)"
+ },
  "B3_TORS_MINUS_ARM": {
   "value": 0.5556927740686186,
   "path": "s13/cache/tors_rows.npz['a_pepPos'][*]/rmsd_build minus bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json :: rmsd_arm (paired mean)",

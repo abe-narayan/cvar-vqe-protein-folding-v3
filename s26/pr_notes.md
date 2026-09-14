@@ -215,49 +215,66 @@ flag, not a lever (L53): how far the relaxation moves the chain predicts its err
 {STRAIN_RHO_MOVED:+.3f} partial on n and Rg, fold CI {STRAIN_RHO_MOVED_CI}; quartile means
 {STRAIN_QUARTILE_MEANS} A.
 
-## Slide 8 -- Direction A: ADAPT-VQE on this Hamiltonian (PENDING s26/PROPOSAL_A.md)
+## Slide 8 -- Direction A: let the circuit grow (qubit-ADAPT-VQE). Verdict: REPLACE
 
 ### spoken
-PENDING: this slide is a placeholder until lane Q's proposal file lands; every fact on it is
-measured. Direction A was: replace the fixed ansatz with ADAPT-VQE. Two things are already
-known. First, the algebra. The fixed ansatz generates the full so(128) at seven qubits from
-depth two, so ADAPT cannot add expressivity the fixed circuit lacks; the Tang minimal pool
-generates only {DLA_POOL_V_N7:,} dimensions of it. Second, the target. At alpha equal to one,
-the state the optimiser is asked to reach is a product state: the divergence between the Gibbs
-state and the product of its marginals is {PROD_KL_1A13:.1e} nats on a real target. A
-seven-parameter layer of single-qubit rotations reaches it to {PROD_KL_RY7:.1e} nats; the
-deployed 21-parameter circuit stops at {PROD_KL_FIXED:.3f}. So an ADAPT-grown circuit on this
-Hamiltonian selects {A4_A1_DISTINCT_MIN} to {A4_A1_DISTINCT_MAX} distinct operators and repeats
-one single-qubit rotation: it is a product circuit. Its gradient variance does not decay with
-width, and it is {A4_RATIO_MIN:.1f} to {A4_RATIO_MAX:.0f} times the fixed ansatz's. That is not
-trainability; there is nothing to train. The one non-trivial grown family, alpha 0.25 with the
-two-local pool, decays at {A4_L2_A025_T03:.3f} per qubit against the fixed {A4_FIXED_A025_T03:.3f};
-both are far from the minus one of a two-design, and no interval on their difference is on disk.
-The endpoint experiment is running and I expect a null, because the set-equality theorem
-bounds every readout by the classical prefix.
+We tested letting the circuit grow itself. qubit-ADAPT-VQE starts from one layer of
+single-qubit rotations and adds, one at a time, whichever operator would lower the objective
+fastest. We ran it on all {A1_N} development peptides with the deployed objective, seed and
+readout, and compared the built chains pairwise. The answer is no change: {A1_L2_EFFECT:.3f} to
+{A1_V_EFFECT:.3f} angstroms, a quarter to a third of what the comparison can resolve, with
+fold-clustered intervals straddling zero. All {A1_N_ARMS} variants point the same way, but they
+are one observation, not twelve, and none clears its bar; the resolution is {A1_L2_MDE:.2f}
+angstroms. Why? The energy
+is the same rank ladder on every peptide, and its optimum at the deployed setting is a product
+state, within {A1_KL_PRODUCT_MAX:.1e} nats of the product of its marginals on all {A1_N} targets.
+Seven rotations represent it to {A1_KL_RY7_MEAN:.1e} nats. Offered entangling operators on the
+{A1_N_ALPHA1} targets there, ADAPT's growth stops by its own gradient test on every
+one, and the operators it adds first lower the objective by at most {A1_LBFGS_DF_ABSMAX:.1e}. There
+is nothing to entangle. The deployed 21-parameter circuit stops {A1_KL_FIXED_MEAN:.2f} nats short
+of that optimum, and using the optimum itself moves the structure by {A1_GIBBS_EFFECT:+.4f}
+angstroms, a tenth of the resolution. Its Lie algebra is already the full real algebra from
+depth two: shallowness, not structure. So Proposal A is replaced. The adaptive circuit is a
+correct, tested tool; it confirmed the diagnosis instead of curing it. What we publish is on
+the next slide.
 
 ### also
-PENDING: the wording and verdict come from `s26/PROPOSAL_A.md` (lane Q) when it exists; A1
-(fixed vs ADAPT-grown, built chain primary) was at 33 of 126 targets at 19:20 (`s26/STATUS.md`).
-A2 (L27, Adversary L45 STANDS): dim(DLA) at n = 7 is {DLA_N7_L1} at depth 1, {DLA_N7_L2} at depth
-2 and {DLA_N7_L3} at depth 3 against dim so(128) = {DLA_SO128}; pool V {DLA_POOL_V_N7}, pool L2
-{DLA_POOL_L2_N7}; ADAPT-selected sets at alpha = 1 stay abelian (dim {ADAPT_A1_DIM}), at alpha =
-0.25 with pool L2 reach {ADAPT_A025_L2_DIM}; symbolic closure equals the dense SVD rank on
-{DLA_NUMERIC_AGREE} cells. A4 (L35, Adversary L47 STANDS WITH CAVEAT): matched-P slopes, log2
-Var per qubit, grown V / L2: {A4_V_LIN:+.3f} / {A4_L2_LIN:+.3f} (alpha 1, T 0), {A4_V_A1_T03:+.3f} /
-{A4_L2_A1_T03:+.3f} (alpha 1, T 0.3), {A4_V_A025_T03:+.3f} / {A4_L2_A025_T03:+.3f} (alpha 0.25,
-T 0.3) against the fixed {SLOPE_LIN:.3f} / {SLOPE_A1_T03:.3f} / {SLOPE_A025_T03:.3f}; grown/fixed
-variance ratio {A4_RATIO_MIN:.2f} to {A4_RATIO_MAX:.0f} over {A4_N_MATCHED} matched rows; the
-alpha = 0.25 L2 family grows {A4_L2_A025_DISTINCT_MIN} to {A4_L2_A025_DISTINCT_MAX} distinct
-2-local strings; S25's n = 7 rows reproduce at relative deviation {A4_REPRO_WORST_REL}. Per L47
-the product-circuit reading rests on `s26/results/q_dla.json` (adapt sets), not on `q_var.json`.
-The product-state target: KL(Gibbs || product of marginals) {PROD_KL_IDEAL:.1e} on the ideal
-ladder and {PROD_KL_1A13:.1e} on 1A13 (`s26/results/probe/1A13.json`). What A gives Proposal A:
-no width-scaling argument (L35); on this diagonal, nearly target-independent Hamiltonian the
-honest form of direction A is ADAPT as a diagnostic, or a Hamiltonian that is not diagonal,
-which this project does not have.
+Verdict REPLACE (`s26/PROPOSAL_A.md`, lane Q; L68; accepted by the coordinator in L69, subject
+to the Adversary's check of L68): the mechanism is absent, not weak. A1 basis: built chain,
+`rmsd_q_synth` (the production projection of the weighted average over the 128 candidates) on
+both sides; the deployed selector's arm is {A1_FIXED_MEAN:.4f} A on that basis against the
+production top-75 arm {ARM_MEAN:.4f} A, and the whole quantum synthesis is worth
+{QSYNTH_VS_ARM:+.4f} A ({QSYNTH_VS_ARM_X:.2f} x MDE) against the classical arm, so the resolution
+is about four times the component's own footprint. Primaries (`s26/results/a1_stats.json`):
+ADAPT 2-local pool minus fixed {A1_L2_EFFECT:+.4f} (SE {A1_L2_SE:.4f}, MDE {A1_L2_MDE:.4f},
+{A1_L2_X:.2f} x, fold CI {A1_L2_CI}, {A1_L2_W}W/{A1_L2_L}L, {A1_L2_FOLDS}/5 folds); ADAPT Tang pool
+minus fixed {A1_V_EFFECT:+.4f} (SE {A1_V_SE:.4f}, MDE {A1_V_MDE:.4f}, {A1_V_X:.2f} x, fold CI
+{A1_V_CI}, {A1_V_W}W/{A1_V_L}L). All {A1_N_ARMS} ADAPT arms (two pools, two optimisers, 7 / 14 / 21
+parameters) are between {A1_ARMS_EFF_MIN:+.4f} and {A1_ARMS_EFF_MAX:+.4f} A at {A1_ARMS_X_MIN:.2f}
+to {A1_ARMS_X_MAX:.2f} x MDE; on the selection readout {A1_SEL_EFF_MIN:+.4f} to {A1_SEL_EFF_MAX:+.4f}
+A at up to {A1_SEL_X_MAX:.2f} x MDE with 45 to 59 exact ties (the shape of S25's headline: a
+direction the instrument cannot size). The twelve arms are one observation, not twelve: their per-target delta vectors correlate
+at {A1_ARM_CORR_MEAN:.3f} on average (min {A1_ARM_CORR_MIN:.3f}; Adversary L70 caveat 1). The 21
+parameters are a budget: the Adam primaries realise {A1_P21_ADAM_MIN} (repeats of one rotation
+merge), L-BFGS {A1_P21_LBFGS_MIN} to {A1_P21_LBFGS_MAX} (L70 caveat 2). Controls: the exact Gibbs
+state in place of the circuit {A1_GIBBS_EFFECT:+.4f} ({A1_GIBBS_X:.2f} x) overall, {A1_GIBBS_ALPHA1:+.4f}
+on the {A1_N_ALPHA1} alpha = 1 targets where it is the optimum and {A1_GIBBS_ALPHA025:+.4f} on the
+{A1_N_ALPHA025} alpha = 0.25 targets where it is not (L70 caveat 3); the matched-entropy random Hamiltonian
+{A1_RANDH_EFFECT:+.4f} ({A1_RANDH_X:.2f} x, fold CI {A1_RANDH_CI}, 5/5 folds). Product-state facts
+from the {A1_N_RECORDS} per-target records (`s26/results/a1/*.json`, no native): KL(Gibbs ||
+product of marginals) mean {A1_KL_PRODUCT_MEAN:.1e}, max {A1_KL_PRODUCT_MAX:.1e}; on the
+{A1_N_ALPHA1} alpha = 1 targets the fixed circuit's KL to Gibbs is {A1_KL_FIXED_MEAN:.4f} (max
+{A1_KL_FIXED_MAX:.3f}; S25's 0.902 reproduced) and the 7-parameter RY layer's {A1_KL_RY7_MEAN:.1e}
+(max {A1_KL_RY7_MAX:.1e}). Growth under L-BFGS at alpha = 1: stopped by the eps = 1e-3 gradient
+criterion on {A1_LBFGS_STOP_EPS} of 156 (pool, target) cells; the number of operators added
+before the stop is 0 on {A1_LBFGS_ZERO_OPS_V} (pool V) and {A1_LBFGS_ZERO_OPS_L2} (pool L2) of the
+78 targets and at most {A1_LBFGS_MAX_OPS}; the free-energy change they produce is a decrease of
+{A1_LBFGS_DF_ABSMAX:.1e} at most (median {A1_LBFGS_DF_MEDIAN:.1e}). This is the artefact's form of
+the proposal's "declines them on all 78 targets": the growth is inert, not absent. The A4 figure
+(slide 8) is lane Q's; the product-circuit reading rests on the adapt sets of
+`s26/results/q_dla.json` (L47). Slide 9 carries what is published in A's place.
 
-## Slide 9 -- Direction B: a learned folding model as the prior, and its replacement
+## Slide 9 -- Direction B, and what we publish: the trainability paper
 
 ### spoken
 Direction B was: use a large pretrained folding model as the distance prior. Step one asked
@@ -266,17 +283,17 @@ checkpoints are not on disk and total {B1_DOWNLOAD_GB:.2f} gigabytes. The code n
 that are absent, and one of them wants Python 3.9 or lower; this box runs 3.13 on a CPU. And
 the model needs at least {B1_RESIDENT_GB:.2f} gigabytes resident against {B1_HEADROOM_GB:.1f} gigabytes
 of headroom; even at half precision everywhere it is {B1_FP16_GB:.1f}. Two feasible-scale checks
-are pending: the contact head alone as a prior input, and an 8-million-parameter language
-model against the 650-million one. A third asks whether the targets where the pipeline beats a
-sequence-only predictor form a set I can recognise without the native. The pipeline wins there
+are pending: the contact head alone, and an 8-million-parameter language model against the
+650-million one. A third asks whether the targets where the pipeline beats a sequence-only
+predictor are recognisable without the native. The pipeline wins there
 by {B3_TORS_MINUS_ARM:.2f} angstroms, {B3_TORS_L} targets to {B3_TORS_W}. If those
-checks are null, B is replaced by a paper. The paper says what a force field's Pauli spectrum
+checks are null, B is replaced by the same paper that replaces A. The paper says what a force field's Pauli spectrum
 does and does not predict. Chain geometry fixes which residues a distance can depend on; that
 is an exact theorem. That fixes the energy's Pauli spectrum, once the raw force field's clash
 spike is conditioned away. The spectrum times the circuit's own kernel predicts the measured
 gradient variance with no free parameter: the median ratio is {PAULI_RATIO_LEGACY:.3f} over
-{PAULI_N_CELLS} cells. This sprint added the algebra and the product-circuit result. The paper
-will not claim an advantage, and it will not call a small gradient a plateau.
+{PAULI_N_CELLS} cells. This sprint added the algebra, the product-state target and the ADAPT null. The
+paper will not claim an advantage, and it will not call a small gradient a plateau.
 
 ### also
 B1 verdict: "{B1_VERDICT}" (`s26/results/b1_feasibility.json`, L13). The one part of a large
@@ -363,11 +380,13 @@ I will not claim a quantum advantage. I will not call a small gradient a barren 
 will not report an effect below its own minimum detectable size.
 
 ### also
-DRAFT (until the coordinator's verdict entry in `s26/LEDGER.md`): if asked "which would you do
-first?", the evidence favours direction C in its learn-the-prior form as the accuracy study,
-because the prior is the only lever the record measured as steep ({PRIOR_SLOPE:.2f} A per unit,
-`s24/results/priorladder.json`) and every selection, ranking, physics and search lever is closed
-by measurement; paired with direction A as a scientific study rather than an accuracy study,
-because on this diagonal Hamiltonian an ADAPT-grown circuit is a product circuit
-(`s26/results/q_var.json`, L35) and the set-equality theorem bounds any readout by the classical
-prefix. Direction B as stated cannot be measured on this machine (`s26/results/b1_feasibility.json`).
+DRAFT (until the coordinator's entry on all three verdicts; A is REPLACE by L68 / L69, B and C
+are pending lane P): if asked "which would you do first?", the evidence favours direction C in
+its learn-the-prior form as the accuracy study, because the prior is the only lever the record
+measured as steep ({PRIOR_SLOPE:.2f} A per unit, `s24/results/priorladder.json`) and every
+selection, ranking, physics and search lever is closed by measurement; paired with the
+trainability paper as the publication, because on this diagonal Hamiltonian the optimum is a
+product state and an adaptive ansatz confirms it (A1 null at {A1_V_X:.2f} x MDE,
+`s26/results/a1_stats.json`; product circuits, `s26/results/q_dla.json`). Direction A as an
+accuracy proposal is replaced (L68, L69); direction B as stated cannot be measured on this
+machine (`s26/results/b1_feasibility.json`).

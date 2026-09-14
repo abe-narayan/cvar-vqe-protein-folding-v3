@@ -2748,3 +2748,40 @@ Job `p_eval_pca128`: exit 0, 576 s, peak RSS 0.799 GB; models `s26/models/p_ladd
 ```
 
 ---
+
+## L73 -- LANE PR: SLIDE 8 REBUILT IN PROPOSAL FORM FROM PROPOSAL_A.md (VERDICT REPLACE, L68 / L69) WITH THE ADVERSARY'S L70 CAVEATS ON THE SLIDE; SLIDES 8 AND 9 KEPT DISTINCT (DIAGNOSIS / PUBLICATION); ONE WORDING OF PROPOSAL_A.md THAT THE A1 RECORDS STATE DIFFERENTLY (2026-09-13 21:55, PR)
+
+`vqe_research_overview.pptx` rebuilt (`python s26/pr_build_deck.py --no-figures`, then `s26/pr_changes.py`):
+slide 8 now carries Proposal A's two-minute script adapted from `s26/PROPOSAL_A.md` section 5 (248 spoken
+words) with every number read from `s26/results/a1_stats.json` (primaries: 2-local pool -0.0138 A, SE 0.0210,
+MDE 0.0588, 0.23x, fold CI [-0.071, +0.044], 58W/68L; Tang pool -0.0222, SE 0.0217, MDE 0.0608, 0.36x,
+[-0.085, +0.042], 61W/65L; NOT MEASURED; resolution 0.06 A; all 12 ADAPT arms -0.0128 to -0.0245 at 0.21x to
+0.40x; the exact Gibbs state +0.0088 at 0.11x) and from the 126 records of `s26/results/a1/` (KL(Gibbs ||
+product of marginals) mean 1.4e-4, max 7.9e-4; on the 78 alpha = 1 targets the fixed circuit's KL to Gibbs
+0.9027, max 0.984, the 7-parameter RY layer's 1.5e-4, max 7.9e-4). Lane Q's A4 figure stays on slide 8; slide 9
+is retitled "Direction B, and what we publish: the trainability paper" and names its Sprint 26 additions (the
+DLA census, the product-state target, the non-decaying grown circuits, the A1 null), so that 8 is the diagnosis
+and 9 the publication as L69 asks. The Adversary's L70 caveats are on slide 8, recomputed from the same records:
+the twelve arms' per-target delta vectors correlate at 0.955 on average (min 0.919), one observation not
+twelve; the 21 parameters are a budget (the Adam primaries realise 21, L-BFGS 7 to 21); the Gibbs control is
+-0.0271 on the 78 alpha = 1 targets and +0.0671 on the 48 alpha = 0.25 targets. A1's basis is named on the
+slide: `rmsd_q_synth`, the production projection of the weighted average over the 128 candidates (3.2280 A for
+the deployed selector), not the production top-75 arm 3.2148. Verification (`s26/pr_verify.txt`, pasted into
+`s26/PRESENTATION_CHANGES.md`): 11 slides, 0 U+2014, 0 U+2013, 0 banned words, spoken words 248 / 247 / 244 on
+slides 8 / 9 / 10. Registry 296 tokens (`s26/pr_values.json`).
+
+One statement of `s26/PROPOSAL_A.md` (sections 3 and 5) and of L68 that the records word differently, for lane
+Q and the Adversary: "ADAPT ... selects no entangling operator on any of the 78 alpha = 1 targets under
+L-BFGS" / "declines them on all 78 targets" / "stops with no operator selected on 78 of 78". In
+`s26/results/a1/*.json :: adapt/{V,L2}_lbfgs_zrank`, the growth halts by the eps = 1e-3 pool-gradient criterion
+on 156 of 156 (pool, target) cells, but before the halt it ADDS operators on 60 of 78 targets (pool V; 0 added on
+18) and 68 of 78 (pool L2; 0 on 10), at most 11, the first of them entangling strings (1A13, pool V: IYIZZZZ at
+pool-gradient norm 1.29e-3, just above eps); each such addition lowers the free energy by at most 1.2e-4 nats
+(median 9e-6) from a 7-rotation state already within 7.9e-4 nats of the Gibbs optimum. The substance of the
+claim holds (the growth is inert: nothing the objective or the readout can see), and the deck says it in the
+records' words with the counts; the literal "no operator selected" does not hold. L70's caveat 2 ("on the 78
+alpha = 1 targets L-BFGS grows nothing") reads the same way on the records: realised P for the L-BFGS P21 arms
+runs 7 to 21. Lane Q's file is not edited. Slide 11's direction line stays DRAFT until the coordinator rules on
+all three verdicts; lane P's B and C verdicts will trigger one more rebuild.
+
+---
