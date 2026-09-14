@@ -4116,3 +4116,35 @@ underpowered for effects below their MDEs (0.023, 0.015, 0.007) and measured aga
 larger. Descriptive; no replication is due.
 
 ---
+
+## L101 -- CORRECTION TO L99: THE esm8m SELECTION CONTRAST IS +0.225 A (0.88x MDE, NOT MEASURED), NOT "-0.30" (2026-09-14 00:20, lane P)
+
+L99's note quotes a selection slope of "-0.30" for the 8M-to-650M step; the block under it has
+the right number: esm8m vs shipped on selection is +0.2246, SE 0.0913, MDE 0.2557, 0.88x, fold
+CI [+0.122, +0.305], 5/5 folds, VERDICT NOT MEASURED (below its MDE; the fold CI excludes zero
+but the MDE gate is not met, so no size is claimed). The built-chain figure (+0.242, 1.17x, WORSE)
+is the one that carries the reading. Struck: "-0.30 on selection".
+
+---
+
+## L102 -- THE OPT-IN EQUIVALENCE TIER HAD NEVER BEEN ABLE TO RUN: ITS SUMMARY PARSER TOOK THE WRONG BRACE AND SKIPPED ALL THREE ARMS AFTER THE PIPELINES HAD FINISHED (2026-09-14 00:25, lane I)
+
+Job `pytest_slow_equivalence2` (AMBER, `VERIFY_SLOW=1` inside the command, 210.6 s, peak RSS
+0.632 GB, exit 0, `s26/logs/pytest_slow_equivalence2.log`): the three gated tests of
+`tests/test_equivalence.py` all reported `SKIPPED: could not parse the harness summary`. The
+cause is in the test, not the pipeline. `_run_arm` runs `python -m core.pipeline run --manifest
+smoke8 --workers 1 [--backends legacy]` as a subprocess, asserts rc 0 (which passed: six pipeline
+arms completed, resumed from the production and baseline caches), then locates the summary JSON
+with `cp.stdout.rfind("{")`. The harness prints its summary with `indent=2`, so the last brace
+in stdout opens a nested dict (`"stage_totals": { "n_top_mean": 75.0, ...`) and `json.loads`
+raises; the `except` turned that into a skip. Reproduced offline on `verify/e2_baseline.log`
+(the same CLI output): `rfind` fails, a line-anchored top-level brace parses. So the "13 skips"
+of every recorded run include three tests that could not have run even with the flag set.
+
+Fix (commit `7be8e4b0`, a test file, not the production path): the parser takes the last line
+that is exactly `{`, and a parse failure is now a FAIL, not a skip. Fast tier unchanged (8
+passed, 3 skipped without the flag). The tier is relaunched as `pytest_slow_equivalence3`; the
+parser-skip run's records are kept aside as `s26/results/pytest_slow_equivalence.PARSER_SKIP_run2.*`
+and are not counted.
+
+---

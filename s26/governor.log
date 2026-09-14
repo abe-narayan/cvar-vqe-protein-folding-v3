@@ -1389,3 +1389,24 @@
 2026-09-14T00:15:45 SAMPLE   ram=80.7% (13.52GB used, 3.23GB free) cpu=99.6% (15s mean 99.9%) jobs=6 amber=1 queued=0 lanes=8
 2026-09-14T00:15:45 SUSPEND  a2_dla_a1 agent=Q tag=CPU rss=0.06GB
 2026-09-14T00:15:50 SUSPEND  a2_dla_a1 agent=Q tag=CPU rss=0.06GB
+2026-09-14T00:15:55 SUSPEND  a2_dla_a1 agent=Q tag=CPU rss=0.06GB
+2026-09-14T00:16:00 SUSPEND  a2_dla_a1 agent=Q tag=CPU rss=0.06GB
+2026-09-14T00:16:05 SUSPEND  a2_dla_a1 agent=Q tag=CPU rss=0.06GB
+2026-09-14T00:16:20 SUSPEND  a2_dla_a1 agent=Q tag=CPU rss=0.06GB
+2026-09-14T00:16:25 SUSPEND  a2_dla_a1 agent=Q tag=CPU rss=0.06GB
+2026-09-14T00:16:44 SAMPLE   ram=81.3% (13.62GB used, 3.13GB free) cpu=83.1% (15s mean 89.9%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-14T00:17:45 SAMPLE   ram=79.6% (13.34GB used, 3.42GB free) cpu=82.2% (15s mean 83.3%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-14T00:18:35 REAP     ph_validity (pid 34648) is gone; registration removed
+2026-09-14T00:18:45 SAMPLE   ram=79.4% (13.29GB used, 3.46GB free) cpu=88.4% (15s mean 82.4%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-14T00:19:45 SAMPLE   ram=76.2% (12.77GB used, 3.98GB free) cpu=77.0% (15s mean 74.4%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-14T00:20:45 SAMPLE   ram=76.4% (12.79GB used, 3.96GB free) cpu=69.2% (15s mean 69.6%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-14T00:21:45 SAMPLE   ram=76.4% (12.79GB used, 3.96GB free) cpu=70.9% (15s mean 72.3%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-14T00:22:04 REAP     pytest_slow_equivalence2 (pid 38904) is gone; registration removed
+2026-09-14T00:22:19 REAP     e_report_check5 (pid 2220) is gone; registration removed
+2026-09-14T00:22:45 SAMPLE   ram=77.4% (12.96GB used, 3.79GB free) cpu=86.3% (15s mean 78.5%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:23:30 SUSPEND  p_train_raw_fold2 agent=P tag=CPU rss=1.64GB
+2026-09-14T00:23:45 SAMPLE   ram=81.7% (13.68GB used, 3.07GB free) cpu=71.4% (15s mean 67.5%) jobs=6 amber=0 queued=0 lanes=8
+2026-09-14T00:23:50 RESUME   p_train_raw_fold2 agent=P tag=CPU
+2026-09-14T00:24:20 SUSPEND  p_train_raw_fold2 agent=P tag=CPU rss=1.77GB
+2026-09-14T00:24:40 RESUME   p_train_raw_fold2 agent=P tag=CPU
+2026-09-14T00:24:45 SAMPLE   ram=81.8% (13.71GB used, 3.04GB free) cpu=95.8% (15s mean 70.4%) jobs=6 amber=0 queued=0 lanes=8
