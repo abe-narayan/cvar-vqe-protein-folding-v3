@@ -29,11 +29,11 @@ Last pass: 2026-09-13 19:45 (after L51). Status vocabulary: OK / PARTIAL / MISSI
 | file | banned words | em dashes (U+2014) | pass |
 |---|---|---|---|
 | `s26/REPORT.md` | 0 | 0 | 2026-09-13 19:45 |
-| `s26/TOURNAMENT.md` | 0 (one "genuinely" removed, `e3ea9f33`) | 0 | 19:45 |
+| `s26/TOURNAMENT.md` | 0 (one rule-13 word removed, `e3ea9f33`) | 0 | 19:45 |
 | `s26/RETRACTIONS.md` | 0 | 0 | 19:45 |
 | `s26/EXAMINATION_AUDIT.md` | 0 | 0 | 19:45 |
 | `s26/agentA_FINDINGS.md` | 0 | 0 | 19:45 |
-| `s26/LEDGER.md` (A's entries) | 0 (one "robust" removed) | 0 | 19:45 |
+| `s26/LEDGER.md` (A's entries) | 0 (one rule-13 word removed) | 0 | 19:45 |
 | deck / PRESENTATION_CHANGES | not on disk | -- | -- |
 
 ## Numbers that must not reach a slide or the report without their qualifier
