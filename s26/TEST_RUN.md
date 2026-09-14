@@ -124,12 +124,23 @@ skip reasons (`-rs`):
 |---|---:|---:|---:|---:|---:|---:|
 | `test_equivalence.py` | 3 | 3 | 0 | 0 | 0 | 0 |
 
+## job `pytest_slow_integration2`
+
+- command: `C:/Users/abena/miniforge_3/python.exe -c import os, sys, pytest; os.environ['VERIFY_SLOW'] = '1'; sys.exit(pytest.main(['tests/test_integration.py', '-q', '-rs', '-p', 'no:cacheprovider', '-k', 'test_legacy_terms_match_the_shipped_module_on_a_real_pool or test_amber_is_real_ff14sb_gbn2_with_the_shipped_parameters or test_the_1a13_native_interaction_energy_is_bit_exact or test_single_point_energy_is_invariant_under_rigid_translation or test_nan_poisoning_the_native_changes_no_deployable_quantity or test_the_same_target_is_bit_identical_across_processes or test_the_result_does_not_depend_on_the_ambient_thread_count', '--junitxml=s26/results/pytest_slow_integration.xml']))`
+- commit: `7e08b968`  note: the VERIFY_SLOW=1 opt-in tier of tests/test_integration.py (7 tests, 8 items: Legacy terms on a real pool, ff14SB/GBn2 parameters against a System built from the same XML, the pinned 1A13 interaction energy bit-exact, rigid-translation invariance, NaN-poisoning on 1CS9 and 1CB3 through run_target with stage 4, cross-process and thread-count determinism through child processes); started 01:33 after 4620 s in the queue
+- start 2026-09-14T01:33:43  end 2026-09-14T01:36:28  wall 165.6 s  exit 0  peak RSS 1.139 GB  tag AMBER  est 1.8 GB
+- totals: 8 tests, 8 passed, 0 failed, 0 errors, 0 skipped (0 memory-guard)
+
+| file | tests | passed | failed | errors | skipped | memory-guard skips |
+|---|---:|---:|---:|---:|---:|---:|
+| `test_integration.py` | 8 | 8 | 0 | 0 | 0 | 0 |
+
 ## Combined (jobs marked as counting toward the suite total)
 
 **370 tests: 357 passed, 0 failed, 0 errors, 13 skipped (0 memory-guard skips).**
 
-Opt-in tier (`VERIFY_SLOW=1`, the same tests the suite counts as skipped): 3 run, 3 passed, 0 failed, 0 errors, 0 still skipped.
+Opt-in tier (`VERIFY_SLOW=1`, the same tests the suite counts as skipped): 11 run, 11 passed, 0 failed, 0 errors, 0 still skipped.
 
-**Unique tests with the opt-in tier folded in: 370 tests, 360 passed, 0 failed, 0 errors, 10 skipped.**
+**Unique tests with the opt-in tier folded in: 370 tests, 368 passed, 0 failed, 0 errors, 2 skipped.**
 
-Rendered 2026-09-14 00:30 by `s26/i_test_report.py`.
+Rendered 2026-09-14 01:36 by `s26/i_test_report.py`.
