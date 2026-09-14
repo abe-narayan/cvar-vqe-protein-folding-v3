@@ -76,6 +76,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 ## A (Adversary)
 - 2026-09-13 09:15 running: nothing. Done: `s26/EXAMINATION_AUDIT.md` and ledger L31 (reproduction exact on HEAD; one MATERIAL: the 369/356 test count in EXAMINATION D / C35 / L28 against the artefact's 370/357; C26 re-derived from `s13/cache/tors_rows.npz`; C27 in git history at 5fa05cd).
 - 2026-09-13 09:15 next: re-check lane E's correction when it lands; then section 2 checks of L27 (DLA, `s26/q_dla.py`) and L22 to L24 (PH censuses); discipline reading (stats_lib docstrings, S25/S16/S21 ledgers, FINDINGS corrections).
+- 2026-09-13 19:27 done: ledger checks L45-L49 (L27 STANDS; L39, L35 STAND WITH CAVEAT; L22-L24+L38 STAND; L30 sound); `s26/TOURNAMENT.md` (16 ideas, no clean kills, ranked; product_state_optimum and conformational_identity_floor top; orphans for W: window_ensembling then amber_prior_partner); `s26/RETRACTIONS.md` (R1-R4); `s26/agentA_FINDINGS.md`.
+- 2026-09-13 19:27 next: adversary checks of L43 (reject point cloud, harmful) and L44 (2/60 bound, MINOR); then each new endpoint result within the hour; the deliverables check before close.
 
 ## PH (Physics lane)
 - 2026-09-13 08:41 running: nothing (gate closed). Done: reading list; PREREG_amber_reject/cis/c3_control; five IDEA files; ph_lib/ph_cis/ph_reject/ph_c3 + synthetic tests; census jobs ph_cis_census (0.038 GB), ph_reject_census (0.117 GB), ph_c3_nativefree; ledger L22-L24; findings and Part IV notes; commit 5dc7a3a6.
