@@ -149,3 +149,12 @@ number on an unrelaxed candidate is almost entirely the distance between its two
 and that distance is set by how the side chains were placed, not by the backbone. It belongs in
 the pipeline as a validity check, which is what it is, and not as a judge of which candidate is
 right, which it is not.
+
+---
+## ADDENDUM (2026-09-14 02:10) -- for section 7 and the speaker notes, per L121 and L123
+
+Do not write "how far the physics moves the chain predicts its error". Write: "the pool's own
+disagreement predicts the emitted chain's error (Spearman +0.45 with the built-chain RMSD,
+partial on length and Rg, fold CI [+0.28, +0.61], 5/5 folds; `s26/results/a_strain_vs_spread.json`),
+and the relaxation's displacement tracks that disagreement at rho 0.76 and adds nothing given it
+(L121). The physics reports what the pool already said."

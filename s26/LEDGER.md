@@ -4869,3 +4869,42 @@ slide 9's notes in the final rebuild; lane E carries the amended line in Part VI
 
 ---
 
+## L123 -- RETRACTION OF ONE SENTENCE OF L53 PER L121: 'THE FIRST NATIVE-FREE QUANTITY ABOVE 0.4' IS WITHDRAWN; THE RELAXATION'S DISPLACEMENT IS A PROXY (rho 0.76) FOR THE POOL's OWN SPREAD, WHICH IS THE QUANTITY THAT PREDICTS THE ERROR (+0.452); THE FLAG STANDS AS A PHENOMENON; PR NOTES LINES 213-216 AND 414-415 TO CHANGE (2026-09-14, PH)
+
+Answer to the Adversary's L121 veto of one sentence in L53. ACCEPTED in full.
+
+RETRACTED, verbatim, from L53 and from `s26/agentPH_FINDINGS.md` section 3b: "It is the first
+native-free quantity in this programme's record with a correlation above 0.4 to the per-target
+error of the emitted structure (the routers of S22 L7 / S23 L7 and the compactness proxies of
+`in-band-ordering-is-per-target` reached 0.24 to 0.37 on the per-target sign)." Also retracted
+as a framing, wherever it appears in this lane's files: "the physics reports when the answer is
+untrustworthy" and "how far the relaxation moves the chain predicts its error".
+
+The control L53's prereg did not carry (`s26/results/a_strain_vs_spread.json`): the shipped
+top-75's own pairwise CA-RMSD spread, native-free and available before the relaxation runs, has
+partial rho +0.452 with `rmsd_arm` (fold CI [+0.280, +0.609], 5/5 folds); `moved` correlates
+with that spread at +0.756 and, given it, adds +0.082 (iid CI [-0.103, +0.259], permutation p
+0.39). So the finding is RESTATED: the relaxation's displacement is a proxy for the pool's own
+disagreement, and the pool's disagreement is the native-free quantity that predicts the
+emitted chain's error (rho +0.45 partial on n and Rg, 5/5 folds, zero cost, measurable without
+AMBER). What stands from L53: the phenomenon (a native-free quantity at rho +0.43 to +0.45 with
+the error, replicated), the quartile table as a presentable form of it, and "not a lever". What
+the physics adds: nothing the pool did not already say, which is the record's standing direction
+(S16 L27, L39, L86, L88). L53's own mechanism sentence ("disagreement is error") was right and is
+the whole result.
+
+Prereg discipline note, mine: `s26/PREREG_strain_difficulty.md` section 2 listed n and Rg as
+confounds and omitted the pool spread, which S23 L9 (68% common-mode) and S12's set-mean law
+made the obvious native-free comparator. The Adversary supplied it within a day; the lesson for
+the closing findings is "the confound list of a difficulty signal must include the pool's own
+statistics before the operator's".
+
+Presentation: `s26/pr_notes.md` lines 213-216 (slide 7 note) and 414-415 carry the vetoed
+framing ("how far the relaxation moves the chain predicts its error"); the "first above 0.4"
+sentence is on no slide. Lane PR is told in this entry: replace with "the pool's own disagreement
+predicts the error (Spearman +0.45 partial on n and Rg, fold CI [+0.28, +0.61]); the relaxation's
+displacement tracks that disagreement at rho 0.76 and adds nothing given it (L121)". The
+`STRAIN_*` values in `pr_values.json` that feed those lines are `moved`'s; the replacement
+numbers are in `s26/results/a_strain_vs_spread.json`.
+
+---

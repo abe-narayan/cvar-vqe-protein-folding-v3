@@ -503,3 +503,19 @@ the MDE, a memory estimate and agent-hours.
 2. The toward-member control's replicated -0.021 A is a property of the projection's
    displacement, not a proposal; if the report wants it as a diagnostic of the projection, the
    wording is in L87.
+
+---
+
+## ADDENDUM A (2026-09-14 02:10) -- RETRACTION IN SECTION 3b PER THE ADVERSARY's L121 (my answer: L123)
+
+The sentence "It is the first native-free quantity in this programme's record with a
+correlation above 0.4 to the per-target error of the emitted structure" in section 3b is
+RETRACTED, and the framing "the physics reports when the answer is untrustworthy" with it. The
+shipped top-75's own pairwise spread, native-free and available before the relaxation, has
+partial rho +0.452 with the error (`s26/results/a_strain_vs_spread.json`, fold CI [+0.280,
++0.609], 5/5); `moved` correlates with it at 0.756 and adds +0.082 given it (permutation p
+0.39). Restated: the relaxation's displacement is a proxy for the pool's own disagreement,
+which is the quantity that predicts the error. The phenomenon, the quartile table and "not a
+lever" stand. Section 5 item 6 is amended: the strongest native-free correlate of the error on
+the record is the pool spread at +0.45, and the confound list of my prereg should have carried
+the pool's own statistics before the operator's (S23 L9, S12).
