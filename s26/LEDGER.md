@@ -3934,3 +3934,185 @@ foreshadowed null, measured with the falsifier. STANDS.
 
 ---
 
+## L98 -- THE RELAUNCHED SLOW-TEST JOBS LOST VERIFY_SLOW=1: ONE NULL RUN SET ASIDE, BOTH TIERS RELAUNCHED WITH THE FLAG INSIDE THE COMMAND; THE AST GATE PASSES; THE REBUILD IS QUEUED (2026-09-14 00:17, lane I)
+
+L92's relaunch re-ran my two slow-test commands exactly, but `VERIFY_SLOW=1` had been in the
+launching shell's environment, not in the command, so the relaunched jobs ran without it:
+`pytest_slow_integration` (00:13:41) exited 0 in 5 s with all 8 items SKIPPED (a null run, its
+records set aside as `s26/results/pytest_slow_integration.NULLRUN_no_VERIFY_SLOW.{json,xml}`,
+not counted), and the waiting `pytest_slow_equivalence` would have done the same, so I
+terminated that waiter (pid 2664) and my own chain launcher that was gated on those names.
+Relaunched at 00:17 as `pytest_slow_equivalence2` (AMBER, est 1.2 GB) and
+`pytest_slow_integration2` (AMBER, est 1.8 GB) with the flag set inside the command
+(`python -c "os.environ['VERIFY_SLOW']='1'; pytest.main([...])"`), so no relaunch can drop it
+again; the verify chain launcher re-gated on the new names. Lesson for the hygiene list beside
+L92's: a job's environment belongs in its command.
+
+Also done without the box: the final AST gate, `s26/i_ast_check.py --ref ae86a124` over every
+production module (`core/` 11, the 24 root modules, `s5/ s7/ s8/ s9/` 20 = 55 files,
+docstrings stripped): **50 AST-identical; 5 differ, and the five are exactly the ledgered edits**
+(`core/amber.py`, `core/bench.py`, `core/cache.py`, `core/predict.py`: one unused import each,
+L10; `core/data.py`: the `norm` keyword on `identity` / `identity_many` and the removed dead
+`_seq_index`, L15). Table: `s26/results/ast_gate_ae86a124.txt` (commit `[see git log]`).
+The frozen results-lab rebuild is queued as governed job `resultslab_rebuild` (CPU, est 1.2 GB)
+behind `s26/i_resultslab_rebuild.py pre` (snapshot of the tracked `results/summary` and the
+sha256 + ATOM-record sha256 of all 2,142 tracked PDBs); its `post` comparator was self-checked on
+the untouched tree (2016/2016 RMSD values exact, 2142/2142 PDBs byte-identical).
+
+---
+
+## L99 -- LANE P, C2 RUNG ESM8M: THE 8M LANGUAGE MODEL IN PLACE OF THE 650M IS WORSE THAN THE SHIPPED PRIOR BY +0.242 A ON THE BUILT CHAIN (1.17x MDE, 5/5 FOLDS) AND NO BETTER THAN NO ESM AT ALL (+0.034 vs noesm, 0.15x): THE ESM CHANNEL'S VALUE IS IN THE 650M MODEL, NOT IN 'ANY LANGUAGE MODEL' (2026-09-14 00:19, lane P)
+
+Artefacts: `s26/results/p_ladder_esm8m_s0.json` (126 rows, complete), `s26/results/p_ladder_report_esm8m_s0.json`; anchor `s26/results/p_ladder_shipped_s0.json`. Every arm through `s26/p_ladder.py`'s single path: shipped K=500 pool -> the rung's posterior in a genuine `core.predict.Distogram` -> shipped Bayes-risk score -> top-75 uniform medoid-frame average -> `s12.instrument.project` (ramah 0.3). Paired per target against the shipped posterior through the same path. Negative = the rung is better.
+
+Job `p_eval_esm8m` (killed by the stall breaker at 110/126, L74) resumed as `p_eval_esm8m2`: exit 0, 251 s, peak RSS 0.445 GB; the result file completed with `complete: true` on the resumed run and is used only in that form. Models `s26/models/p_ladder/esm8m_fold{0..4}_s0.pt`: esm2_t6_8M_UR50D reps (320-d, PCA-32 refit per fold) and ITS OWN contact head, shipped architecture (`p_train_esm8m` peak 1.85 GB). PREREG_B2's downward size point. Read as the monotone test PREREG_B2 declared: esm8m is worse than pca32 (the 650M) by +0.242 A [fold +0.113, +0.385], 5/5 folds, 1.17x MDE (Type-M zone: the sign is established, the magnitude is inflated ~1.06x), and indistinguishable from noesm (+0.034, 0.15x MDE, median -0.016) and from conly on selection (+0.113, 0.46x). So the size axis is NOT flat: an 8M model carries none of the ESM channel and the 650M carries all of it that this instrument can see; the ladder cannot say whether 3B would carry more (infeasible here, L13), only that the slope from 8M to 650M is about -0.24 A per 1.9 decades of parameters on the built chain and -0.30 on selection. This corrects the reading S7-11's 'any reduction of it' invited: it is any reduction of the 650M representation, not any language model. gam_eff +0.107 prob at cos 0.24 (positive while worse, the sixth instance). Strata: worse in every length band and on other108; on FAIL18 -0.37 (12W/6L, SE 0.28), the same pattern as every other worse rung (findings section 9, H1).
+
+```
+  esm8m vs shipped -- BUILT CHAIN (PRIMARY; rebuild basis 3.2126, L57)
+    a 3.4544 (med 3.3360)   b 3.2126 (med 2.9661)   n=126
+    effect +0.2418   median +0.0442   SE 0.0740   MDE 0.2074   effect/MDE +1.17
+    iid  CI95 [+0.1006, +0.3937]
+    fold CI95 [+0.1134, +0.3853]   folds same sign 5/5   per-fold 0:+0.165 1:+0.201 2:+0.470 3:+0.385 4:+0.036
+    52W/74L/0T   worst degradation +3.9336 (1CEK)   p90 +1.0899   power 0.90  Type-M 1.06
+    concentration: drop-top10 +0.3418 vs uniform-effect null p10/p50/p90 +0.2441/+0.3351/+0.4368 -> pctile 0.535
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.06x]
+  esm8m vs shipped -- POINT CLOUD (3.0483 basis)
+    a 3.2595 (med 3.0590)   b 3.0483 (med 2.8373)   n=126
+    effect +0.2111   median +0.0407   SE 0.0688   MDE 0.1928   effect/MDE +1.09
+    iid  CI95 [+0.0829, +0.3486]
+    fold CI95 [+0.0765, +0.3424]   folds same sign 4/5   per-fold 0:+0.175 1:+0.220 2:+0.403 3:+0.328 4:-0.015
+    53W/73L/0T   worst degradation +3.4867 (1CEK)   p90 +1.1721   power 0.87  Type-M 1.08
+    concentration: drop-top10 +0.3071 vs uniform-effect null p10/p50/p90 +0.2193/+0.3046/+0.3948 -> pctile 0.516
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.08x]
+  esm8m vs shipped -- SELECTION argmin K=500 (3.4540 basis)
+    a 3.6786 (med 3.5757)   b 3.4540 (med 3.4779)   n=126
+    effect +0.2246   median +0.0355   SE 0.0913   MDE 0.2557   effect/MDE +0.88
+    iid  CI95 [+0.0470, +0.4071]
+    fold CI95 [+0.1221, +0.3046]   folds same sign 5/5   per-fold 0:+0.276 1:+0.231 2:+0.330 3:+0.293 4:+0.037
+    57W/65L/4T   worst degradation +3.9038 (1CEK)   p90 +1.6314   power 0.69  Type-M 1.21
+    concentration: drop-top10 +0.3882 vs uniform-effect null p10/p50/p90 +0.2703/+0.3837/+0.4991 -> pctile 0.519
+    VERDICT: NOT MEASURED (|effect| 0.2246 <= its own MDE 0.2557, 0.88x)
+  strata [arm]: len 9-10 n=20 +0.136 (SE 0.081, med +0.096, 6W/14L) | len 11-12 n=32 +0.153 (SE 0.137, med -0.007, 16W/16L) | len 13-14 n=37 +0.263 (SE 0.167, med +0.025, 17W/20L) | len 15-16 n=37 +0.355 (SE 0.143, med +0.063, 13W/24L) | FAIL18 n=18 -0.069 (SE 0.109, med -0.018, 10W/8L) | other108 n=108 +0.294 (SE 0.084, med +0.052, 42W/66L)
+  strata [cloud]: len 9-10 n=20 +0.092 (SE 0.093, med +0.011, 9W/11L) | len 11-12 n=32 +0.140 (SE 0.131, med +0.025, 14W/18L) | len 13-14 n=37 +0.249 (SE 0.154, med +0.064, 15W/22L) | len 15-16 n=37 +0.299 (SE 0.128, med +0.046, 15W/22L) | FAIL18 n=18 -0.083 (SE 0.101, med -0.016, 9W/9L) | other108 n=108 +0.260 (SE 0.078, med +0.049, 44W/64L)
+  strata [sel]: len 9-10 n=20 +0.012 (SE 0.171, med +0.056, 9W/10L) | len 11-12 n=32 +0.210 (SE 0.165, med +0.085, 14W/18L) | len 13-14 n=37 +0.353 (SE 0.191, med +0.000, 17W/18L) | len 15-16 n=37 +0.224 (SE 0.180, med +0.036, 17W/19L) | FAIL18 n=18 +0.128 (SE 0.156, med +0.053, 6W/10L) | other108 n=108 +0.241 (SE 0.103, med +0.034, 51W/55L)
+  gamma-equivalent: gam_eff prob-space +0.1139 at cos +0.230 ; loc-space +0.3579 at cos +0.375 ; MAE 2.4666 (diagnostic only).
+  CAVEAT (S25 L12): -2.1496 x gam_eff is redeemable only at cos = 1; a real operator travelling 25%% at cos 0.5 is worth +0.024 A. Never quote the product alone.
+  folds same sign (arm): 5/5 ; verdict (arm): WORSE [TYPE-M ZONE: magnitude inflated ~1.06x]
+```
+
+---
+
+## L100 -- THE VALIDITY AXIS OF THE PRODUCTION RELAXATION, MEASURED: HEAVY-ATOM CLASHES 0.44 PER TARGET (34 TARGETS) TO 0.008 (1), CLOSEST PAIR 2.36 TO 2.78 A, AT 1.3% BOND / 2.5% ANGLE STRAIN AND 6.6 DEG OF OMEGA, NO RAMACHANDRAN GAIN; RE-RUN BIT-IDENTICAL TO THE CACHE ON 126/126 (2026-09-14, PH)
+
+`s26/ph_validity.py run | report`, `s26/results/ph_validity.json` (complete 126/126), job
+`s26/jobs_done/ph_validity.json` (exit 0, 2568 s, peak RSS 0.274 GB, AMBER; held 620 s at the
+cap). Pre-registered in `s26/PREREG_validity_axis.md` before the run. Native-free: the panel
+(`s16.energy_lib.panel`) reads no native; folds enter only the CI.
+
+GATE, per target: the production relaxation (`refine_coords(k=10, steps=0)` on the built chain
+from the cached `phi`, `psi`, exactly `core.pipeline._relax_inner`) re-run here reproduces the
+cached `amber_ca` and `amber_e1` on 126 of 126 targets to max |dCA| = 0.0 A and max |dE| = 0.0
+kcal/mol. The panel below therefore describes the DEPLOYED emission before and after its own
+relaxation, not a re-implementation. Zero-information reference: the constant alpha-helix
+(phi -63, psi -42; rama 1.000 and zero clashes by construction, S16 L27), printed beside both.
+
+    axis              built chain   relaxed chain   constant helix
+    n_clash_2A        built   0.4444   relaxed   0.0079   helix   0.0000
+    n_clash_2p6A      built   3.4524   relaxed   0.1190   helix   0.0000
+    min_heavy         built   2.3629   relaxed   2.7846   helix   3.0792
+    bond_strain       built   0.0000   relaxed   0.0130   helix   0.0000
+    angle_strain      built   0.0000   relaxed   0.0246   helix   0.0000
+    rama_favoured     built   0.9302   relaxed   0.9114   helix   1.0000
+    rama_outlier      built   0.0242   relaxed   0.0327   helix   0.0000
+    cis_frac          built   0.0000   relaxed   0.0033   helix   0.0000
+    chirality_L_frac  built   1.0000   relaxed   1.0000   helix   1.0000
+    omega_dev         built   0.0000   relaxed   6.6120   helix   0.0000
+    targets with any heavy-atom pair below 2.0 A: built 34, relaxed 1;  relaxed bond_strain above 0.05 on 2 targets (2BP4, 9KAR)
+
+`ST.fmt` verbatim, relaxed minus built (negative = lower after), the seven axes that move:
+
+      n_clash_2A: relaxed minus built (negative = lower after)
+        a 0.0079 (med 0.0000)   b 0.4444 (med 0.0000)   n=126
+        effect -0.4365   median +0.0000   SE 0.0760   MDE 0.2129   effect/MDE -2.05
+        iid  CI95 [-0.5873, -0.2937]
+        fold CI95 [-0.5546, -0.3172]   folds same sign 5/5   per-fold 0:-0.560 1:-0.522 2:-0.240 3:-0.565 4:-0.333
+        34W/0L/92T   worst degradation +0.0000 (1A13)   p90 +0.0000   power 1.00  Type-M 1.00
+        concentration: drop-top10 -0.2586 vs uniform-effect null p10/p50/p90 -0.3448/-0.2586/-0.1724 -> pctile 0.473
+        VERDICT: BETTER
+      n_clash_2p6A: relaxed minus built (negative = lower after)
+        a 0.1190 (med 0.0000)   b 3.4524 (med 1.0000)   n=126
+        effect -3.3333   median -1.0000   SE 0.3606   MDE 1.0103   effect/MDE -3.30
+        iid  CI95 [-4.0556, -2.6429]
+        fold CI95 [-3.9916, -2.7385]   folds same sign 5/5   per-fold 0:-3.880 1:-3.783 2:-2.400 3:-4.217 4:-2.633
+        81W/0L/45T   worst degradation +0.0000 (1A1P)   p90 +0.0000   power 1.00  Type-M 1.00
+        concentration: drop-top10 -2.5517 vs uniform-effect null p10/p50/p90 -3.0086/-2.5517/-2.1293 -> pctile 0.497
+        VERDICT: BETTER
+      min_heavy: relaxed minus built (negative = lower after)
+        a 2.7846 (med 2.8160)   b 2.3629 (med 2.4744)   n=126
+        effect +0.4217   median +0.3380   SE 0.0326   MDE 0.0912   effect/MDE +4.62
+        iid  CI95 [+0.3586, +0.4871]
+        fold CI95 [+0.3680, +0.4783]   folds same sign 5/5   per-fold 0:+0.489 1:+0.412 2:+0.376 3:+0.508 4:+0.345
+        11W/115L/0T   worst degradation +1.8827 (1I93)   p90 +0.8626   power 1.00  Type-M 1.00
+        concentration: drop-top10 +0.4631 vs uniform-effect null p10/p50/p90 +0.4197/+0.4625/+0.5075 -> pctile 0.507
+        VERDICT: WORSE
+      bond_strain: relaxed minus built (negative = lower after)
+        a 0.0130 (med 0.0106)   b 0.0000 (med 0.0000)   n=126
+        effect +0.0129   median +0.0106   SE 0.0012   MDE 0.0034   effect/MDE +3.78
+        iid  CI95 [+0.0110, +0.0157]
+        fold CI95 [+0.0112, +0.0150]   folds same sign 5/5   per-fold 0:+0.012 1:+0.016 2:+0.011 3:+0.015 4:+0.011
+        0W/126L/0T   worst degradation +0.1206 (2BP4)   p90 +0.0130   power 1.00  Type-M 1.00
+        concentration: drop-top10 +0.0132 vs uniform-effect null p10/p50/p90 +0.0116/+0.0131/+0.0151 -> pctile 0.545
+        VERDICT: WORSE
+      angle_strain: relaxed minus built (negative = lower after)
+        a 0.0246 (med 0.0234)   b 0.0000 (med 0.0000)   n=126
+        effect +0.0246   median +0.0234   SE 0.0005   MDE 0.0013   effect/MDE +18.37
+        iid  CI95 [+0.0236, +0.0255]
+        fold CI95 [+0.0239, +0.0254]   folds same sign 5/5   per-fold 0:+0.026 1:+0.025 2:+0.023 3:+0.024 4:+0.024
+        0W/126L/0T   worst degradation +0.0501 (1D6X)   p90 +0.0309   power 1.00  Type-M 1.00
+        concentration: drop-top10 +0.0252 vs uniform-effect null p10/p50/p90 +0.0245/+0.0252/+0.0259 -> pctile 0.508
+        VERDICT: WORSE
+      omega_dev: relaxed minus built (negative = lower after)
+        a 6.6120 (med 5.6118)   b 0.0000 (med 0.0000)   n=126
+        effect +6.6120   median +5.6118   SE 0.4332   MDE 1.2135   effect/MDE +5.45
+        iid  CI95 [+5.8798, +7.5240]
+        fold CI95 [+6.0008, +7.2286]   folds same sign 5/5   per-fold 0:+7.583 1:+6.470 2:+5.445 3:+6.420 4:+7.032
+        0W/126L/0T   worst degradation +48.0241 (1D6X)   p90 +9.6210   power 1.00  Type-M 1.00
+        concentration: drop-top10 +6.9076 vs uniform-effect null p10/p50/p90 +6.3454/+6.8782/+7.5429 -> pctile 0.524
+        VERDICT: WORSE
+      rama_favoured: relaxed minus built (negative = lower after)
+        a 0.9114 (med 1.0000)   b 0.9302 (med 1.0000)   n=126
+        effect -0.0188   median +0.0000   SE 0.0080   MDE 0.0225   effect/MDE -0.84
+        iid  CI95 [-0.0355, -0.0037]
+        fold CI95 [-0.0334, +0.0013]   folds same sign 4/5   per-fold 0:-0.020 1:+0.020 2:-0.035 3:-0.014 4:-0.037
+        27W/16L/83T   worst degradation +0.1818 (2LM8)   p90 +0.0833   power 0.65  Type-M 1.24
+        concentration: drop-top10 +0.0003 vs uniform-effect null p10/p50/p90 -0.0083/+0.0003/+0.0086 -> pctile 0.500
+        VERDICT: NOT MEASURED (|effect| 0.0188 <= its own MDE 0.0225, 0.84x)
+
+READING, the numbers "validity step" rests on. (1) The relaxation removes the builder's
+clashes: heavy-atom pairs below 2.0 A fall from 0.444 per target (34 targets affected) to
+0.008 (1 target), fold CI [-0.555, -0.317], 34W/0L/92T; contacts below 2.6 A fall from 3.45
+to 0.12 per target, 81W/0L/45T; the closest heavy-atom pair moves from 2.36 to 2.78 A, 115 of
+126 targets. The registered falsifier ("clashes not halved") does not fire. (2) It pays in
+covalent geometry, which the built chain had ideal by construction: bond strain 0.0 to 1.3%
+relative (0/126 unchanged; 12% on 2BP4), angle strain 0.0 to 2.5%, omega non-planarity 0.0 to
+6.6 degrees mean (48 degrees on 1D6X; the cis fraction rises to 0.3%, two targets). (3) It buys
+no Ramachandran: favoured 0.930 to 0.911, outliers 0.024 to 0.033, both NOT MEASURED. This is
+the S16 L27 finding on the production input: the restraint k = 10 on N/CA/C holds the backbone
+torsions where they were and lets the force field fix the packing by bending bonds and
+angles. (4) The constant helix beats the relaxed chain on every axis (0 clashes, 3.08 A minimum
+separation, ideal covalent geometry, rama 1.000): a validity statistic a zero-information
+reference maximises is not evidence about the force field, so the defensible statement is
+the conjunction, as S16 wrote it: "removes the builder's clashes (34 targets to 1) while moving
+the CA trace 0.220 A and holding the torsions, at a covalent price of 1.3% bond and 2.5% angle
+strain and 6.6 degrees of omega".
+
+THE SENTENCE, for `s26/C3_RESULT.md` and the presentation: the relaxation is a validity step
+that turns 34 emissions with a sub-2 A heavy-atom overlap into 1, and 125 of 126 energies above
+the 1000 kcal/mol gate into converged ones, at the price of 0.021 A of accuracy, 1.3% bond and
+2.5% angle strain, 6.6 degrees of peptide-bond non-planarity, and a broken virtual bond on 2BP4
+and 9KAR. POWER: n = 126, SEs 0.0005 to 0.36 on the axes; every claimed change is above 2x its
+MDE with 5/5 folds; the three nulls (rama favoured 0.84x, outliers 0.55x, cis 0.46x) are
+underpowered for effects below their MDEs (0.023, 0.015, 0.007) and measured against anything
+larger. Descriptive; no replication is due.
+
+---

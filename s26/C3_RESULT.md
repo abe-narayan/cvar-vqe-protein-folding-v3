@@ -93,3 +93,19 @@ STAGE 1 REPLICATION"): every contrast inside the first run's fold CI. Toward-mem
 do-nothing -0.0207 [-0.0250, -0.0166], 94W/32L; AMBER minus random +0.0100 [+0.0059, +0.0175]
 (still Type-M, 1.02x MDE); AMBER minus toward-member +0.0414 [+0.0331, +0.0501]. The
 "provisional" label in the table above is lifted; nothing else changes.
+
+---
+## ADDENDUM 3 (2026-09-14 00:25) -- THE HEAVY-ATOM VALIDITY AXIS, THE NUMBER "VALIDITY STEP" RESTS ON
+
+`s26/results/ph_validity.json` (126/126; the re-run reproduces the cache bit-for-bit on every
+target), ledger entry "THE VALIDITY AXIS OF THE PRODUCTION RELAXATION". Built chain to relaxed
+chain: heavy-atom pairs below 2.0 A 0.444 per target (34 targets) to 0.008 (1 target); contacts
+below 2.6 A 3.45 to 0.12; closest pair 2.36 to 2.78 A; bond strain 0.0 to 1.3% (12% on 2BP4),
+angle strain 0.0 to 2.5%, omega non-planarity 0.0 to 6.6 degrees (48 on 1D6X); Ramachandran
+favoured 0.930 to 0.911 (not measured). The constant alpha-helix reference has zero clashes,
+ideal geometry and rama 1.000, so the defensible claim is the conjunction: the relaxation
+removes the builder's clashes while holding the torsions and moving the CA trace 0.220 A, at
+a covalent price. The sentence for the presentation: "a validity step that turns 34 emissions
+with a sub-2 A heavy-atom overlap into 1 and 125 of 126 energies above the 1000 kcal/mol gate
+into converged ones, at the price of 0.021 A of accuracy, 1.3% bond and 2.5% angle strain,
+6.6 degrees of peptide-bond non-planarity, and a broken virtual bond on 2BP4 and 9KAR."
