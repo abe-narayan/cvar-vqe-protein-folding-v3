@@ -1250,3 +1250,26 @@ Each resumes from its checkpoint; none restarts.
 
 ---
 
+## L42 -- RESUMING AT 2026-09-13 19:14: A SECOND REPORT WAS FOUND IN docs/ (NOT WRITTEN BY ANY S26 LANE); LANES RELAUNCHED UNDER A 1.4 GB HEADROOM; PR SPAWNED (2026-09-13, coordinator)
+
+1. `docs/REPORT_S26.md` (181 KB, Parts I to X, Appendices A to D, mtime 14:25) and
+   `docs/REPORT_S26_SUMMARY.md` (14:24) appeared on disk during the pause, while every S26 lane
+   was dead (session limit, 10:10 to 19:10). They were not written by any lane of this campaign
+   and are not in git; their header names HEAD `b7f1f280`, so they were written from this
+   branch by another session or by the user. They cite external sources (arXiv abstracts, an
+   author page) that no S26 lane fetched. They are left untouched and uncommitted by the
+   coordinator; the user decides whether they are tracked. The campaign's report deliverable
+   remains `s26/REPORT.md`; lane E cross-checks the two, takes any artefact-sourced number or
+   presenter material it lacks, cites the docs file when it does, and never copies an external
+   claim or a personal detail into a deliverable.
+2. Every lane is relaunched from its own transcript with the instruction to resume from its
+   STATUS line and the checkpoints on disk. Headroom rule until the user's own load drops: one
+   governed job at a time whose measured or probed peak is under 1.0 GB; the `raw` rung
+   (sibling peak 1.85 GB) and lane W's Part B retrains (1.3 GB) wait; jobrun v2.2 blocks any
+   launch without est-ram + 0.5 GB free.
+3. Lane PR (Presentation) is spawned now: `s26/C3_RESULT.md` (L39) fixes Proposal C's AMBER
+   sentence, A2/A4 (L27, L35) fix the slide 6/8 figures, and the slides 1 to 7 and 11 depend
+   only on the Phase 0 claim ledger. Seven lanes active (E, Q, P, PH, W, A, PR).
+
+---
+
