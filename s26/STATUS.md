@@ -82,6 +82,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 22:15 next: A3 label/stats/ledger when the build lands.
 - 2026-09-13 22:50 running: A3 (a3_build) building; queued on the jobrun gate: a2_dla_a1 (per-growth-step DLA on the 126 A1 records) and a4_var_boot (bootstrap CIs on the A4 slopes); preregs for both and for the A1 seed-1 / reversed-order replication are addenda filed before the runs; findings sections 6 to 8 and the figure lists updated.
 - 2026-09-13 22:50 next: ledger entries for (a) and (b) when they land; A1 replication as one governed process after A3's build; A3 label/stats/ledger.
+- 2026-09-14 00:15 running: A3 (a3_build) at 62/126 under suspend/resume; a2_dla_a1 and a4_var_boot were relaunched by the coordinator under jobrun v2.3 (L92; my pre-v2.3 waiters were starved and terminated, nothing computed twice) and wait on the six-slot file cap. Not launching third copies.
+- 2026-09-14 00:15 next: ledger entries for (a) and (b) when their done-files land; A1 seed-1 replication as one governed process after A3; A3 label/stats/ledger.
 ## P (Prior / Learning lane)
 - 2026-09-13 00:20 running: read LANE_CONTRACT, state brief, S24 ledger (all), S25/S23/S22/S17/S19 sections, S7/S8/S9/S10 findings, S12 dossier+agg, core/predict, data, distogram, esm_features, pairnet, s7/repr_select, priorladder, instrument, stats_lib, errdecomp; probes p_probe_esm (CPU, 1.0 GB) then p_probe_esmcache (ESM, 2.5 GB) launched under jobrun.
 - 2026-09-13 00:20 next: write PREREG_C1..C5, PREREG_B1..B3, three IDEA files, s26/p_ladder.py + synthetic unit test, C2 one-fold training-time probe, B1 feasibility json, agentP_FINDINGS.md; no endpoint runs before sign-off.
@@ -113,6 +115,8 @@ will do next. Timestamp every entry (local time). Never edit another lane's line
 - 2026-09-13 21:45 next: L62/L63 (P rungs noesm, conly) and L65-L67, L52/L53 (W floor, PH strain), then each new endpoint within the hour; RETRACTIONS current (no new retraction from L56-L71).
 - 2026-09-13 22:20 done: L79 (rungs L62/63/65/66/67/72 STAND; L66 selection wording caveat), L80 (L52), L81 (L53 provisional pending a_strain_vs_spread, queued at the job cap), L82 (my L70 caveat 2 corrected per L75); RETRACTIONS R5; slide-qualifier table in agentA_FINDINGS.
 - 2026-09-13 22:20 next: the spread control result into an L81 follow-up; then every new entry within the hour (reject chain, A3, esm8m/mix/pairnet/raw, branch_select, rotamer_relief B, ensembling, W survivors, I's slow tier and lab rebuild); final Part 10 pass ~04:00.
+- 2026-09-14 00:15 done: L94-L97 (L84 STANDS; L85 STANDS WITH CAVEAT pending H_P3; L86/L87 STAND WITH CAVEAT, toward-member = partial reversal of the projection move; L88 STANDS, 56% transfer lands on production; L89/L90/L91/L93 STAND); qualifier table and DELIVERABLES_CHECK updated. Spread control still queued at the cap (relaunched, L92).
+- 2026-09-14 00:15 next: the spread result into an L81 follow-up when it launches; A3, esm8m/pairnet/raw, rotamer_relief B, H_P3, W's retrains, I's slow tier and lab rebuild as they post; final Part 10 pass ~04:00.
 
 ## PH (Physics lane)
 - 2026-09-13 08:41 running: nothing (gate closed). Done: reading list; PREREG_amber_reject/cis/c3_control; five IDEA files; ph_lib/ph_cis/ph_reject/ph_c3 + synthetic tests; census jobs ph_cis_census (0.038 GB), ph_reject_census (0.117 GB), ph_c3_nativefree; ledger L22-L24; findings and Part IV notes; commit 5dc7a3a6.

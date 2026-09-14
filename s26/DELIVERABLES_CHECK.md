@@ -5,7 +5,7 @@ final pass before close is short. Each row: exists / meets the stated standard /
 missing. Banned-word and em-dash greps (rule 13) are run over every presenter-facing file each
 pass: `grep -nE "genuinely|honestly|leverage|robust|delve|underscore"` and a count of U+2014.
 
-Last pass: 2026-09-13 22:20 (after L82; sprint extended to ~04:30, L77).
+Last pass: 2026-09-14 00:15 (after L97).
 
 | # | deliverable | exists | standard met | missing / note |
 |---|---|---|---|---|
@@ -50,5 +50,7 @@ Last pass: 2026-09-13 22:20 (after L82; sprint extended to ~04:30, L77).
   under every reading; quote both with A2 named (L55).
 - A1: "twelve of twelve arms negative" is one correlated observation (mean pairwise corr 0.955); quote it with the 0.23x / 0.36x MDE and the 0.06 A resolution (L70).
 - The tie-break floor 0.024 A applies across runs that do not share the tie-break; paired within-run contrasts (C3 etc.) are not inside it (L71).
+- The cis/omega floor: "0.35 A" is the own-torsion upper bound (L38); the tight floor is 0.083 A (L89); the projection's 0.166 A cost is displacement, not representation.
+- The toward-member 0.02 A improvement (L87) is a measured reversal of part of the projection's displacement, not a physics result and not a proposal (L95); the branch-degeneracy 0.08 A is an ORACLE order statistic (L96).
 - "No exponential plateau": always "at depth 3" (R2).
 - 3.2148 (cache) vs 3.2126 (leaderboard rebuild): quote one and name it (EXAMINATION H).

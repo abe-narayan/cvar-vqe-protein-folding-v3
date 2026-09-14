@@ -106,6 +106,9 @@ Q's H2b; R4 lane PH's cis-ensemble prediction).
 | 8 | A1: ADAPT is null, -0.014 / -0.022 A at 0.23x / 0.36x MDE | the comparison resolves 0.06 A; "twelve of twelve arms negative" is one observation (pairwise correlation 0.955); the 21-parameter match is a budget with realised counts 7 to 21; growth at alpha = 1 is inert, not absent (L75) | L70, L75, L82 |
 | 8 | the fixed circuit stops 0.90 nats short; ADAPT reaches the Gibbs state | on the 78 alpha = 1 targets; on the 48 alpha = 0.25 targets the Gibbs state is not the CVaR optimum (gibbs_T is +0.067 there) | L70 caveat 3 |
 | 10 | the C2 anchor 3.2126 and the rung contrasts | rebuild basis (L57); noesm +0.208 is Type-M with the sign at 5/5; every other rung so far is under its MDE ("not measured", MDE beside it); any best rung at the close is an order statistic (`best_of_k_within`) | L79 |
+| 7 (notes) | the constant-omega representation floor 0.35 A (L38) | the own-torsion UPPER bound; the tight floor (native projected through the production projection) is 0.083 A, 0.043 with the prior off; the projection's 0.166 A cost is its displacement, not representation | L89, L97 |
+| 7, 10 (notes) | a zero-information move toward a pool member improves the built chain by 0.02 A (L87) | measured and replicated (1.77x MDE, 5/5), but a partial reversal of the projection's own 0.166 A displacement toward the cloud the members surround; not physics, not a proposal; the same step toward the cloud itself was not run | L95 |
+| 7 (notes) | the projection-branch degeneracy is worth 0.08 A to a perfect chooser (L88) | an ORACLE order statistic; the 56% split-half transfer is against the random pick and lands on the production choice, so no fixed-start rule beats the objective | L96 |
 | 11 | -- | no number of mine; the tie-break floor 0.024 A, if quoted, applies across runs that do not share the tie-break, not to paired within-run contrasts | L71 |
 
 ## OPEN (queue as of 2026-09-13 22:20)
