@@ -91,3 +91,14 @@ and calibrates the hydrogen frames on the representation's reference states, so 
 representations give two legitimate single points that differ by the hydrogen placement. The
 fix is one constant (k = 4, the cache's instrument); the gate is unchanged and must now pass at
 0.0 against both `refine_coords` and the cache, or the run stops. Nothing else changed.
+
+---
+## ADDENDUM 2 (2026-09-14 01:00) -- THE PROBE PASSED; THE RUN IS LAUNCHED
+
+`ph_relief_probe2` (exit 0, 211 s, peak RSS 0.266 GB): gate G1 at 0.0 relative difference
+against both `refine_coords` and the cache on 4 comparisons; 10 residues with a chi1 on 1A13,
+41 single points per member, 0.67 s per member; extrapolated 126 x 75 = 1.76 h. On the five
+probe members the relief moved 7327 kcal/mol to 236 on one member and 370 to 249 on another,
+and left the three clean members within 5 kcal/mol. Run launched at 01:00 as `ph_relief_run`,
+est-ram 0.4 GB, `--tag AMBER`, per-target cells, with 3.8 GB free (rule satisfied: 0.27 + 0.5
+under the free reading).
