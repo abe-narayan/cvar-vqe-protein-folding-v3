@@ -135,3 +135,15 @@ REPLACE stands on the same evidence. Notes block additions:
     "less than 0.001 nats"              F(P=7) - F(final) max 1.2e-4 (L-BFGS), 8.6e-4 (Adam), from adapt.*.trace
     "below 0.02 radians"                max |theta| over appended operators 0.018 rad (L-BFGS), adapt.*.theta
     "product state to 0.0004 nats"      arms.adapt*_P21.kl_to_product max 4.1e-4 on the 78 alpha = 1 targets
+
+## ADDENDUM 2 (2026-09-14, ledger L125): A3 closes the last selector-side lever
+
+The other half of the diagnosis, run after this file was written: making the Hamiltonian
+target-dependent (four order-preserving variants, three of them entropy-matched to the
+deployed state) changes the emitted structure by +0.003 A (0.04x MDE) when the entropy is
+matched, and makes it worse by +0.09 to +0.11 A (0.7 to 0.8x MDE, fold CIs above zero on 5/5
+folds, Type-M zone) when it is not. The readout responds to the entropy of the weights and to
+nothing else that was varied. The verdict REPLACE stands; the sentence for the presenter is
+"we also tried giving the circuit a different energy on every peptide, and the answer moved
+only when we made the weights sharper, and then it moved the wrong way" (sources:
+s26/results/a3_stats.json, ledger L125).

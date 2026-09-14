@@ -62,6 +62,12 @@ plateau, and does not call a large gradient trainability.
         78 to 89% of the gap closed; 0.902 nats and 45% of   s25/results/q_alpha.json,
         mass from the optimum; endpoint 0.24x MDE            s26/results/q_mde_reference.json
     C11 set-equality theorem: 2,592 cells, 0 violations      s25/results/q_verify.json
+    C13 NEW (A3): a target-dependent, order-preserving          s26/results/a3_stats.json, ledger L125
+        Hamiltonian makes the trained states target-dependent
+        (124/126 distinct) and the emitted structure does not
+        move (+0.003 A, 0.04x MDE) once the entropy is matched;
+        unmatched, sharper states are worse (+0.09 to +0.11 A,
+        0.7 to 0.8x MDE, Type-M zone)
     C12 NEW: the deployed Gibbs target is a product state;   s26/results/probe/1A13.json,
         KL 7e-17 ideal, 5.4e-5 real; a 7-parameter RY layer  s26/q_tests.py
         reaches it, the 21-parameter circuit does not

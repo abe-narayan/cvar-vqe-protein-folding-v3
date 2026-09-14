@@ -257,9 +257,66 @@ depth 3, P = 3n against dim so(2^n), and is to be quoted with "at depth 3" attac
 not evidence of a favourable algebra. The small-DLA route of Cerezo et al. 2025 does not apply;
 the circuit is simulable because n = 7 (S21 L4), not because of its structure.
 
-## 3. A3 -- target-dependent Hamiltonians. PENDING the phase gate (endpoint half).
+## 3. A3 -- TARGET-DEPENDENT HAMILTONIANS (S25 L17). COMPLETE. NULL WHEN THE ENTROPY IS MATCHED; WORSE, IN THE TYPE-M ZONE, WHEN IT IS NOT.
 
-Pre-registered in `s26/PREREG_A3.md`.
+Pre-registered in `s26/PREREG_A3.md` (addendum records the outcome). Ledger L125 carries seven
+ST.fmt blocks verbatim. Artefacts: `s26/results/a3/<pdb>.json` (126, bit-for-bit against the
+production quantum cache, 126/126), `s26/results/a3_stats.json`, `s26/logs/a3_stats.log`,
+`s26/jobs_done/a3_build.json` (16,373 s, 0.352 GB), `a3_label.json` (45 s, 0.385 GB).
+
+### 3.1 The variants
+
+All strictly increasing in the shipped score over the same 128 candidates and re-standardised
+(asserted at build), so the classical order and the CVaR prefix are identical on every arm:
+zrank (deployed), zraw (moment z-score of the raw Bayes risk), asinh (S21 L33's Nt), soft
+(S13's rank-preserving tail compression). `Tmatch` runs the fixed circuit at the per-target
+temperature at which the variant's Gibbs entropy equals the deployed 4.914 bits (native-free
+bisection; zraw T' mean 0.565 [0.10, 1.13], asinh 0.401, soft 0.616).
+
+### 3.2 The endpoint (built chain vs fixed_zrank_it50 = 3.2280 A; effect, xMDE, fold CI, folds)
+
+    entropy-matched    zraw_Tmatch +0.0034 (0.04x) [-0.045,+0.034] 4/5   asinh_Tmatch +0.0145 (0.18x)   soft_Tmatch -0.0037 (0.05x)
+    unmatched, T=0.3   zraw +0.1053 (0.77x) [+0.037,+0.211] 5/5   asinh +0.0864 (0.69x) [+0.024,+0.178] 5/5   soft +0.1116 (0.81x) [+0.045,+0.214] 5/5
+    750 Adam steps     zraw +0.1096 (0.80x)   asinh +0.0755 (0.61x)   soft +0.1095 (0.79x)
+    ADAPT-L2 on zraw   +0.035 to +0.038 (0.30x to 0.32x), fold CIs span zero
+    selection readout  zraw +0.0885 (0.55x) [+0.048,+0.145] 5/5; zraw_Tmatch +0.0132 (0.11x); ADAPT-L2 zraw P21 +0.1034 (0.67x)
+    subsets            zraw_Tmatch: alpha=1 -0.0121 (0.11x, n=78); alpha=0.25 +0.0285 (0.30x, n=48, TWO folds, fold CI not quoted)
+                       zraw: alpha=1 +0.1521 (0.73x); alpha=0.25 +0.0292 (0.24x)
+
+Falsifiers: "null" FIRED for every Tmatch arm; "harmful" did NOT fire for the unmatched arms
+(0.69x to 0.81x MDE with fold CIs above zero on 5/5 folds: the Type-M zone, direction as
+predicted, magnitude not trustworthy); "helps" did not fire. Power: the Tmatch comparisons
+resolve 0.08 A and the unmatched ones 0.14 A; the Tmatch nulls are underpowered below 0.08 A.
+
+### 3.3 The property half (no native)
+
+    distinct trained states (sym KL > 0.01 nats)   zrank 14/78, 26/48   zraw 32/78, 48/48   zraw_Tmatch 78/78, 46/48 (124/126)
+    pairwise sym KL, alpha = 1                     zrank median 0.010, p90 0.060, max 0.54   zraw_Tmatch median 1.34, p90 6.77, max 12.2
+    distinct ADAPT-L2 sequences                    zrank 58/78, 38/48   zraw 78/78, 48/48
+    Gibbs entropy at T = 0.3, bits                 zrank 4.914 (every target)   zraw 3.10 [0.01, 5.99]   asinh 4.28   soft 2.83
+    trained-state entropy, bits                    zrank 5.91   zraw 2.81   zraw_Tmatch 5.19   asinh 3.42   soft 2.60
+    KL(Gibbs || product)                           zrank max 8e-4   zraw mean 0.050, max 0.263   asinh 0.035 / 0.174   soft 0.047 / 0.214
+
+Two zrank predictions FAILED and are recorded as such (L125): I predicted at most 3 distinct
+states and at most 2 distinct ADAPT sequences per cell under the deployed E; measured 14 / 26
+and 58 / 38. The spectrum differs from the ideal ladder by up to 1.18% of its range (identical
+on 1 of 126), and that is enough to move a 50-step Adam trajectory by a median 0.010 nats
+(tail 0.54) and to reorder ADAPT's argmax over pool gradients of order 1e-3. "Two trained
+states" (S25 L17) is right about the spectrum and about what the endpoint sees; at a 0.01-nat
+resolution the deployment holds a tight family of states (0.010 nats apart) against the
+1.34 nats of the entropy-matched target-dependent variant.
+
+### 3.4 The L17 answer
+
+The Hamiltonian can be made target-dependent while preserving the selection semantics, and at
+the deployed entropy it makes the selector's states target-dependent (124 of 126 distinct).
+The emitted structure does not change (+0.003 A, 0.04x MDE). Without the entropy match the
+same gaps sharpen the state (2.8 bits against 5.9) and the built chain is worse by +0.09 to
++0.11 A on all three variants, fold CIs above zero on 5/5 folds, at 0.7 to 0.8x the MDE. The
+readout responds to the entropy of the weights and to nothing else that was varied; the
+Hamiltonian's spectrum was the last untried lever on the selector's side, and it moves the
+answer only through that entropy. `IDEA_l17_target_dependent_hamiltonian.md` is closed by
+measurement: not helpful. No cell of VQE_LFO changes.
 
 ## 4. A4 -- GRADIENT VARIANCE OF GROWN CIRCUITS. COMPLETE. DEMONSTRATED (property, no native).
 
@@ -404,7 +461,6 @@ scope: depth 3, this ansatz, this spectrum, with the algebra (A2) offering no pr
   from two widths and were not pursued; HYPOTHESIS.
 - Nothing on hardware, noise or shot cost: every number is exact simulation, and the outline
   says what a submission would still need.
-- A3's endpoint half runs after this file's last edit; its section is written when it lands.
 
 ## 8. ARTEFACTS
 
@@ -420,7 +476,7 @@ scope: depth 3, this ansatz, this spectrum, with the algebra (A2) offering no pr
     s26/results/a1_stats.json             A1 contrasts (ledger L68, corrected by L75); s26/logs/a1_stats.log
     s26/results/q_dla_a1.json             per-growth-step DLA on the A1 records (running) -> s26/figures/a2_dla_grown_ladder.png
     s26/results/q_var_boot.json           A4 slope bootstrap CIs (complete; ledger L119)
-    s26/results/a3/<pdb>.json             A3 per-target records (building)
+    s26/results/a3/<pdb>.json             A3 per-target records, 126 (ledger L125); s26/results/a3_stats.json
     s26/results/a1s1/<pdb>.json           A1 seed-1 / reversed-order replication (after A3)
     s26/jobs_done/q_*.json, a2_dla.json, a4_var.json, a1_build.json, a1_label.json   peak RSS and wall per job
 
