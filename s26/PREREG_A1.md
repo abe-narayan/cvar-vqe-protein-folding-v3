@@ -187,3 +187,10 @@ inside +-0.5x their own MDE with fold CIs spanning zero, as on seed 0; the seed-
 estimates (-0.0138, -0.0222) lie inside the seed-1 iid CIs. Falsifier: either primary outside
 +-0.5x MDE with a fold CI excluding zero on seed 1 (then the seed-0 null is not stable and the
 discrepancy is reported as such). Launched after A3's build, as the coordinator ordered.
+
+## ADDENDUM 3 (2026-09-14 04:12, after the addendum-2 run; ledger L139)
+
+The addendum-2 falsifier FIRED: at seed 1 both primaries are outside +-0.5x MDE (0.71x, 0.79x)
+with fold CIs excluding zero. The second prediction held (seed-0 points inside the seed-1 iid
+CIs). A1 is NOT MEASURED on either seed; the seed difference sits in the fixed comparator
+(3.228 -> 3.261 A), not in the ADAPT arms (3.214 -> 3.216). Verdict unchanged (L139).

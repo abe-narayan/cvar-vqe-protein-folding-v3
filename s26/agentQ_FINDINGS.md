@@ -176,6 +176,24 @@ ADAPT differs from the fixed circuit only by reaching the product optimum.
 
 ### 1.5 Verdict carried to `s26/PROPOSAL_A.md`: REPLACE.
 
+### 1.6 The seed-1, reversed-order replication (ledger L139; `s26/results/a1s1_stats.json`)
+
+    built chain vs fixed_zrank_it50    seed 0                 seed 1
+      adaptL2 P21                      -0.0138 (0.23x)        -0.0449 (0.71x) fold [-0.096,-0.004] 4/5 72W/54L
+      adaptV  P21                      -0.0222 (0.36x)        -0.0523 (0.79x) fold [-0.109,-0.005] 4/5 77W/49L
+      comparator mean                  3.2280                 3.2610   (the fixed circuit moved +0.033 A with its seed)
+      ADAPT means                      3.2142 / 3.2059        3.2161 / 3.2087   (+0.002 / +0.003)
+
+The addendum-2 falsifier fired: the seed-0 "null" is not stable; at seed 1 the primaries are
+in the Type-M zone with fold CIs excluding zero. Neither seed clears its MDE, so A1 is NOT
+MEASURED on either, and section 1.1's "null at the registered threshold" is a seed-0 statement.
+The spread between seeds is the fixed circuit's (0.90 nats short of its optimum in a
+seed-dependent place); the ADAPT arms converge to the same product state whatever the start.
+By S20 L-B fewer than four seeds is NOT MEASURED for a variational arm; a four-seed run is the
+next step and was not run. Verdict unchanged: nothing says a grown ansatz emits a measurably
+better structure; the deployed fixed circuit is a seed-sensitive under-optimiser of a target
+that seven parameters reach.
+
 ## 2. A2 -- THE DYNAMICAL LIE ALGEBRA. COMPLETE. DEMONSTRATED (exact; property, no native).
 
 `s26/q_dla.py` -> `s26/results/q_dla.json`; `s26/jobs_done/a2_dla.json`: 85.3 s, peak RSS
@@ -456,9 +474,8 @@ scope: depth 3, this ansatz, this spectrum, with the algebra (A2) offering no pr
 
 ## 7. WHAT I DID NOT DO AND WHY
 
-- No replication of A1 was owed: both primaries fired the "null" falsifier. The seed-1 and
-  reversed-order run (PREREG_A1 addendum 2) is a robustness check under L77's extended scope
-  and launches after A3 as one governed process; it is not a contract requirement.
+- The seed-1, reversed-order replication ran under L77's scope (not owed by the contract for a
+  null) and did not reproduce the seed-0 null (section 1.6, L139). A four-seed run was not run.
 - The complex pool L2C is implemented and tested (pennylane cross-check at n <= 6) but is not
   an arm: the deployed amplitudes are real and a complex pool would confound "grown" with
   "complex".
@@ -490,7 +507,7 @@ scope: depth 3, this ansatz, this spectrum, with the algebra (A2) offering no pr
     s26/results/q_dla_a1.json             per-growth-step DLA on the A1 records (ledger L138) -> s26/figures/a2_dla_grown_ladder.png
     s26/results/q_var_boot.json           A4 slope bootstrap CIs (complete; ledger L119)
     s26/results/a3/<pdb>.json             A3 per-target records, 126 (ledger L125); s26/results/a3_stats.json
-    s26/results/a1s1/<pdb>.json           A1 seed-1 / reversed-order replication (after A3)
+    s26/results/a1s1/<pdb>.json           A1 seed-1 / reversed-order replication, 126 (ledger L139); s26/results/a1s1_stats.json
     s26/jobs_done/q_*.json, a2_dla.json, a4_var.json, a1_build.json, a1_label.json   peak RSS and wall per job
 
 ## 9. CORRECTION (2026-09-13 22:15, ledger L75): sections 0.1 and 1.3 overstated "no operator selected"
@@ -511,8 +528,9 @@ run into the real-target sentence without re-reading the records; PR did re-read
 
 ## 10. CLOSING SUMMARY (2026-09-14 04:10)
 
-    A1  ADAPT vs fixed, built chain, n = 126:  -0.0138 A (0.23x MDE 0.0588) and -0.0222 A (0.36x MDE 0.0608);
-        fold CIs span zero; null at the registered threshold; underpowered below 0.06 A.  Ledger L68, corrected by L75.
+    A1  ADAPT vs fixed, built chain, n = 126:  seed 0 -0.0138 / -0.0222 A (0.23x / 0.36x MDE, fold CIs span zero);
+        seed 1 -0.0449 / -0.0523 A (0.71x / 0.79x, fold CIs exclude zero, Type-M zone). NOT MEASURED on either seed;
+        the seed spread is the fixed comparator's (3.228 -> 3.261), the ADAPT arms are seed-stable.  L68, L75, L139.
     A2  dim(DLA) of the deployed ansatz = so(2^n) from depth 2 at n = 7 (8128); depth 1 abelian; n = 6, 9 need depth 4;
         Tang pools generate so(2^(n-1)+1); 2-local odd-Y pool generates so(2^n).  L27.  Per growth step on the real
         records: the set's algebra counts appended strings, not their effect (dim 7 to 530 with inert angles).  L138.
@@ -523,7 +541,7 @@ run into the real-target sentence without re-reading the records; PR did re-read
     The mechanism: the deployed Gibbs target is a product state on every target (KL <= 7.9e-4); seven RY angles
     reach it (0.0002 nats); the 21-parameter circuit misses by 0.90 nats; reaching it moves the built chain by a
     third of the MDE.  Proposal A: REPLACE (s26/PROPOSAL_A.md); Proposal B replacement outline carries A2 to A4.
-    Replication of A1 (seed 1, reversed order): s26/results/a1s1/, see the ledger entry posted at the close.
+    Replication of A1 (seed 1, reversed order): s26/results/a1s1/, ledger L139.
 
 ## 11. WHAT I WOULD TELL THE NEXT LANE Q
 

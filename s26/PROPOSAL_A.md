@@ -147,3 +147,15 @@ nothing else that was varied. The verdict REPLACE stands; the sentence for the p
 "we also tried giving the circuit a different energy on every peptide, and the answer moved
 only when we made the weights sharper, and then it moved the wrong way" (sources:
 s26/results/a3_stats.json, ledger L125).
+
+## ADDENDUM 3 (2026-09-14 04:12, ledger L139): the seed-1 replication, and one sentence corrected
+
+Section 3's "the registered 'ADAPT is null' falsifier fired" is a seed-0 statement. At seed 1
+(reversed fold order) the same two contrasts are -0.045 and -0.052 A at 0.71x and 0.79x their
+MDE with fold CIs excluding zero (Type-M zone): neither seed clears the MDE, the direction is
+the same on both, and the size is set by where the seed-sensitive fixed circuit lands (3.228 A
+at seed 0, 3.261 A at seed 1) while the ADAPT arms stay put (3.214, 3.216). Correct sentence:
+"On two seeds the grown circuit's structures are 0.014 to 0.052 angstroms closer on average,
+between a quarter and four fifths of what the comparison can resolve, and the spread between
+the seeds comes from the deployed circuit, not from the grown one." The verdict REPLACE stands.
+Sources: s26/results/a1s1_stats.json, s26/results/a1_stats.json, ledger L68, L75, L139.
