@@ -579,25 +579,34 @@ rejects).
 4. I expected the own-native envelope to be a formality that the direct measurements would
    make redundant. It is the binding clause of my own Part D rule: 0.028 A against the 0.017 A
    line (0.151 A at the worst single target, L55), so the pre-registered class is MINOR even
-   though every direct measurement is 0.002 A or less. The rule was written to be conservative
+   though every direct measurement is 0.008 A or less. The rule was written to be conservative
    and it is; I report the class it gives and the reason the envelope is loose, not a softer
    class.
-7. The artefact and the ledger disagreed on the paired gain (L55 caveat 1): `report()` had no
-   envelope row for the gain basis, so the JSON said IMMATERIAL where the ledger, from the gain
-   row I had computed in-session, said MINOR. A number computed outside the artefact's own
-   function is a number the artefact does not carry; fixed by `s26/w_bound_addendum.py`.
 5. The triangle bound is rigorous and loose by an order of magnitude on this operator (p95
    bound 1.44 A against p95 signed 0.15 A on the controls): the discrete flips move the chain
    orthogonally to the native. A native-free bound that never reads the native cannot know
    the direction of the move; it was the right tool before the gate and the wrong headline
    after it.
-6. Part B's chain died with the host's memory kill after one model. The one model it made is
-   the informative one (1CEK, the near-native copy), by luck of the pre-registered order, not
-   by design.
+6. Part B's chain died with the host's memory kill after one model. The one model it made was
+   the near-native case (1CEK) by luck of the pre-registered order; when the other three were
+   built one at a time, the largest effect was on 2P5H, and it was HARMFUL to the leaked target
+   (-0.246 A, F3 falsified in the direction nobody had registered). I had written F3 as a bound
+   on |delta| as if the leak could only help; a memorising model with a copy that sits 2.3 A
+   from the native pulls the answer toward the copy.
+7. The artefact and the ledger disagreed on the paired gain (L55 caveat 1): `report()` had no
+   envelope row for the gain basis, so the JSON said IMMATERIAL where the ledger, from the gain
+   row I had computed in-session, said MINOR. A number computed outside the artefact's own
+   function is a number the artefact does not carry; fixed by `s26/w_bound_addendum.py`, which
+   also had to be re-run after every Part B re-run so the fix is not lost.
 8. I over-estimated the tie-break's reach: I predicted about 8 of the 75 averaged members
    would change per draw and measured 3.6, because the score's top-75 is drawn mostly from
    the non-tied prefix. The floor is smaller than I guessed on membership and exactly where I
    guessed on the mean (0.004 A against a registered 0.003 to 0.010).
+9. I nearly wrote the floor as a verdict on C3's relaxation. It is not: C3 was measured as a
+   paired contrast with the pool held fixed, and that design excludes the tie-break noise by
+   construction. The floor speaks to contrasts across runs and instruments, and the entry says
+   so in its own words before anyone reads the table the other way (the Adversary's L71 caveat
+   is exactly that the title needs the body's qualifier).
 10. The recall covariate I proposed cannot separate memorisation from retrieval, because the
    fold model's training corpus is the retrieval library. I named S22/S23's router failures in
    the idea file and missed the confound in my own design; the PREREG addendum says how to fix it
@@ -607,10 +616,27 @@ rejects).
    axis (gam_loc 0.77 at cos 0.91) while their 17-bin probability vectors move only 0.28 at cos
    0.58; the two currencies disagree about the same operator, and the endpoint follows the
    location. I had assumed a single "how far toward the native" number exists.
-9. I nearly wrote the floor as a verdict on C3's relaxation. It is not: C3 was measured as a
-   paired contrast with the pool held fixed, and that design excludes the tie-break noise by
-   construction. The floor speaks to contrasts across runs and instruments, and the entry says
-   so in its own words before anyone reads the table the other way.
+12. The ensembling orphan taught me nothing new and that was the point: I wrote in the PREREG
+   that the three clouds would sit within 0.3 A of each other and that averaging them would do
+   what a resample of the production set does, and both held to the second decimal (0.14 to 0.20
+   A apart; 0.185 against 0.249 A of chain movement; -0.0005 against +0.0042 A of accuracy). A
+   registered null that lands where it was registered is worth the 75 minutes because the
+   direction is mandatory and is now closed with a power statement instead of an argument.
+13. The provenance census surprised me in the direction I did not expect: I thought whole and
+   terminal peptide windows would be the good ones; in the pool ANY peptide-derived window is
+   0.42 A nearer the native than a fragment window, and the position in the parent does not
+   matter (0.13x MDE). The score then removes three quarters of that gap, and the achievable
+   readout cannot convert the rest. The interesting fact is about the corpus, not about the
+   readout.
+14. The amber prior partner refuted itself before its own controls could act: the
+   leave-fold-out choice took lam = 0 on every fold, so the permutation seeds were never
+   consumed and the "AMBER versus the unweighted histogram" contrast is an exact tie. I had
+   planned the controls for a signal that the choice rule never produced; the cell table is the
+   result, and it says the mixture is monotonically worse in lam with beta doing nothing.
+15. The box, not the science, set the night's pace: the readout took 9,321 s of wall for
+   2,016 projections under a six-job load, and one Part B waiter sat at the door for 23 minutes
+   before the coordinator's starvation ruling withdrew it. Every job checkpointed and none was
+   lost, which is what the contract's rules were for.
 
 ---
 
@@ -623,32 +649,61 @@ rejects).
 - Did not compute the triangle bound on the benchmark itself, although it needs no native
   and no RMSD, because it needs the two benchmark sequences and their universes, which
   L18b/L29 close for this sprint. Named in L30 as a coordinator's option only.
-- Launched Part B's retrains once (`w_train_chain`, after sign-off, est-ram 1.5 GB); the host
-  killed the governor and the chain after the first model (L40). Nine models remain unbuilt and
-  wait for the coordinator's headroom call and the tournament (L42); Part B is reported at
-  n = 1 and its control clause as not measured.
+- Did not finish Part B's control clause: the four carrier-out models are built and measured
+  (L108); of the six control-out models one is built (9BAF out of fold 0) and the other five
+  wait behind the coordinator's starvation ruling (L111) and the sprint's close. F3's control
+  clause is therefore open, and the entry says so. A second-seed retrain of 2P5J (the one
+  large value) was not run for the same reason.
 - Did not use length-matched non-dev control chains for Part B, because naming one risks
   naming a benchmark peptide; dev-target 16-mers are the controls, and the length mismatch is
   stated.
-- Did not edit `s26/w_selfcopy.py` after its jobs started; the gated half runs through the
-  driver `s26/w_endpoint_report.py`, and the superposed chain gate stays an in-session check
-  recorded in section 1.3.
-- Did not run the 126-target tie-break floor (`w_tiebreak.py draws`) or the provenance census:
-  neither is ranked, and L42 allows one sub-1 GB job at a time for ranked work only.
+- Did not edit `s26/w_selfcopy.py` after its first jobs started; every later step runs through
+  a driver (`w_endpoint_report.py`, `w_bound_addendum.py`, `w_tiebreak.py`, `w_ensemble.py`,
+  `w_provenance*.py`, `w_amberprior.py`, `w_recall.py`, `w_ladder.py`) that imports it.
 - Did not quote the envelope's 0.028 A as the leak's size: it is an upper bound from an
   operator stronger than the leak (own-native training), stated as such beside the direct
-  0.002 A, and since L55 beside its worst-target reading 0.151 A under A2.
+  0.008 A and, since L55, beside its worst-target reading 0.151 A under A2.
+- Did not project the non-chosen cells of the amber prior partner on the built chain (15 h at
+  the loaded box's rate); the declared staging chooses on the cloud and projects the chosen
+  cell only, and since the chosen cell is the identity on every fold, no built-chain number
+  exists for any mixture and none is claimed.
+- Did not run the tie-break floor at 16 draws or on the AMBER-relaxed basis, the ensembling
+  control at a second seed, or the provenance readout with 8 permutation draws: each is the
+  pre-declared replication or extension for a positive, and none of the three was positive.
+- Did not run the recall gradient's ORACLE mechanism check (the posterior's MAE against
+  I_short): the PREREG gated it on a gradient at the MDE, which did not exist; the addendum
+  says it should run unconditionally next time.
+- Did not use `docs/REPORT_S26.md` or `docs/REPORT_S26_SUMMARY.md` (L42: not written by any
+  lane, untracked) for any number.
+- Did not write the report or the deck: lanes E and PR own them; every number this lane
+  contributes is in the ledger entries L30, L44, L52, L58, L64, L84, L85, L90, L91, L105, L108
+  and L109 with its artefact path, and in this file.
 
 ---
 
 ## 6. ARTEFACT INDEX
 
-`s26/PREREG_selfcopy_bound.md` (+ addendum 1), `s26/PREREG_tiebreak_floor.md` (+ addendum 1);
-`s26/IDEA_selfcopy_proxy_bound.md`, `IDEA_tiebreak_noise_floor.md`,
-`IDEA_conformational_identity_floor.md`, `IDEA_window_provenance.md`; `s26/w_selfcopy.py`,
-`s26/w_selfcopy_test.py`, `s26/w_train_chain.py`, `s26/w_endpoint_report.py`, `s26/w_tiebreak.py`,
-`s26/w_tiebreak_test.py`; `s26/results/w_selfcopy_{census,retrieval,envelope,posterior,floor,endpoint,bound}.json`,
-`w_selfcopy_retrieval_probe_1CEK.json`, `w_selfcopy_envelope_probe_1CEK.json`,
-`w_selfcopy_tiebreak_probe_1CEK.json`; `s26/models/w_selfcopy/pca32_fold2_s0_out_1A11.pt`
-(untracked, `*.pt` under `s26/models/`); `s26/jobs_done/w_*.json`; `s26/logs/w_*.log`; ledger
-L30, L44; STATUS 09:15, 09:31, 19:4x.
+Pre-registrations (each with its addenda): `s26/PREREG_selfcopy_bound.md` (1 to 3),
+`PREREG_tiebreak_floor.md` (1, 2), `PREREG_identity_floor.md`, `PREREG_window_ensembling.md` (1),
+`PREREG_window_provenance.md` (1, 2), `PREREG_amber_prior_partner.md` (1, 2),
+`PREREG_partial_recall_gradient.md` (1), `PREREG_memorisation_on_the_ladder.md` (1).
+Ideas: `s26/IDEA_selfcopy_proxy_bound.md`, `IDEA_tiebreak_noise_floor.md`,
+`IDEA_conformational_identity_floor.md`, `IDEA_window_provenance.md`,
+`IDEA_partial_recall_gradient.md`, `IDEA_memorisation_on_the_ladder.md`.
+Code: `s26/w_selfcopy.py` (+ `w_selfcopy_test.py`), `w_train_chain.py`, `w_endpoint_report.py`,
+`w_bound_addendum.py`, `w_identity_floor_stats.py`, `w_tiebreak.py` (+ `w_tiebreak_test.py`),
+`w_tiebreak_report.py`, `w_ensemble.py` (+ `w_ensemble_test.py`), `w_provenance.py`
+(+ `w_provenance_test.py`), `w_provenance_readout.py`, `w_amberprior.py`, `w_recall.py`,
+`w_ladder.py`.
+Results (`s26/results/`): `w_selfcopy_{census,retrieval,envelope,posterior,floor,endpoint,bound}.json`,
+`w_identity_floor.json`, `w_selfcopy_tiebreak_{draws,endpoint}.json`, `w_tiebreak_report.json`,
+`w_selfcopy_ensemble_{clouds,endpoint}.json`, `w_selfcopy_provenance_{census,oracle,readout}.json`,
+`w_selfcopy_amberprior_{clouds,endpoint}.json`, `w_amberprior_cells_cloud.json`,
+`w_selfcopy_recall_{covariates,endpoint}.json`, `w_selfcopy_ladder.json`, and the one-target
+probes `w_selfcopy_{retrieval,envelope,tiebreak,ensemble,amberprior}_probe_*.json`.
+Models (untracked, `*.pt` under `s26/models/w_selfcopy/`): `pca32_fold2_s0_out_1A11.pt`,
+`pca32_fold4_s0_out_2LMF.pt`, `pca32_fold4_s0_out_2P5J.pt`, `pca32_fold0_s0_out_1U6V.pt`,
+`pca32_fold0_s0_out_9BAF.pt`.
+Job records and logs: `s26/jobs_done/w_*.json`, `s26/logs/w_*.log`.
+Ledger (lane W): L30, L44, L52, L58, L64, L84, L85, L90, L91, L105, L108, L109. STATUS lines
+under `## W (Wildcard)`.
