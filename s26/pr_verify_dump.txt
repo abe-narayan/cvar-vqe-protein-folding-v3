@@ -27,8 +27,8 @@ The library behind retrieval: 787 peptides and 6,003 protein fragments (ledger L
 
 SOURCES (not spoken; token = value <- artefact path [basis]):
 COMMON_MODE = 0.67577 <- s23/results/errdecomp.json :: rows[*]/f_common (mean over 126) (DERIVED)
-CORPUS_FRAGMENTS = 6003 <- same (LEDGER)
-CORPUS_PEPTIDES = 787 <- s26/results/p_probe_esm.json (ledger L11: 787 peptides + 6,003 fragments = 6,790 unique training sequences) (LEDGER)
+CORPUS_FRAGMENTS = 6003 <- s26/results/p_probe_esm.json :: n_fragments
+CORPUS_PEPTIDES = 787 <- s26/results/p_probe_esm.json :: n_peptides
 HELIX = 4.06475 <- s12/results/s14_ladder.json :: rows/L0_constant_helix/mean [built_chain]
 HELIX_MINUS_ARM = 0.849989 <- s12/results/s14_ladder.json :: rows/L0_constant_helix/mean minus bench_results/baseline_tuning126.json :: science/rmsd_arm/mean [built_chain] (DERIVED)
 LEAK_DEV_PRICE_ARM = 0.00175041 <- s26/results/w_selfcopy_endpoint.json :: -A/ge06_mean_delta_all126/arm (clean minus production) [built_chain] (DERIVED)
@@ -65,8 +65,8 @@ ARM_MEAN = 3.21477 <- bench_results/baseline_tuning126.json :: science/rmsd_arm/
 AVG_MEAN = 3.04834 <- bench_results/baseline_tuning126.json :: science/rmsd_avg/mean [point_cloud]
 BOND_AVG_MEAN = 2.96139 <- s26/results/e_reproduce.json :: summary/virtual_bond/avg_ca_mean_bond [point_cloud]
 BOND_AVG_WORST = 0.64918 <- s26/results/e_reproduce.json :: summary/virtual_bond/avg_ca_worst_bond [point_cloud]
-CORPUS_FRAGMENTS = 6003 <- same (LEDGER)
-CORPUS_PEPTIDES = 787 <- s26/results/p_probe_esm.json (ledger L11: 787 peptides + 6,003 fragments = 6,790 unique training sequences) (LEDGER)
+CORPUS_FRAGMENTS = 6003 <- s26/results/p_probe_esm.json :: n_fragments
+CORPUS_PEPTIDES = 787 <- s26/results/p_probe_esm.json :: n_peptides
 FULL_MEAN = 3.23546 <- bench_results/baseline_tuning126.json :: science/rmsd_full/mean [relaxed]
 GAP_ARM_MINUS_AVG = 0.166427 <- s26/results/e_reproduce.json :: summary/projection_gap_arm_minus_avg/mean [built_chain minus point_cloud]
 N_TARGETS = 126 <- bench_results/baseline_tuning126.json :: science/n

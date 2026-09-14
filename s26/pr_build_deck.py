@@ -526,7 +526,8 @@ def verify(V, spoken_by_slide):
     checks.append(f"U+2014 em dashes: {em}; U+2013 en dashes: {en}")
     low = dump.lower()
     for w in BANNED:
-        checks.append(f"banned word '{w}': {len(re.findall(w, low))} occurrences")
+        masked = w[0] + "*" + w[2:]          # the word itself must not appear in any presenter-facing file
+        checks.append(f"banned word '{masked}': {len(re.findall(w, low))} occurrences")
     non_ascii = sorted({c for c in dump if ord(c) > 127})
     checks.append("non-ASCII characters present: " + " ".join(f"U+{ord(c):04X}" for c in non_ascii))
     for i, slide in enumerate(prs.slides, 1):

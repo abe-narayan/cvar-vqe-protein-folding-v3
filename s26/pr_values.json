@@ -1672,17 +1672,17 @@
  },
  "CORPUS_PEPTIDES": {
   "value": 787,
-  "path": "s26/results/p_probe_esm.json (ledger L11: 787 peptides + 6,003 fragments = 6,790 unique training sequences)",
-  "status": "LEDGER",
+  "path": "s26/results/p_probe_esm.json :: n_peptides",
+  "status": "SOURCED",
   "basis": "",
-  "note": ""
+  "note": "ledger L11"
  },
  "CORPUS_FRAGMENTS": {
   "value": 6003,
-  "path": "same",
-  "status": "LEDGER",
+  "path": "s26/results/p_probe_esm.json :: n_fragments",
+  "status": "SOURCED",
   "basis": "",
-  "note": ""
+  "note": "ledger L11; n_train_seqs_unique 6,790"
  },
  "SELFCOPY_DEV": {
   "value": "4/126",

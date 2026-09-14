@@ -1,12 +1,12 @@
 deck: vqe_research_overview.pptx
 slide count: 11 (expected 11)
 U+2014 em dashes: 0; U+2013 en dashes: 0
-banned word 'genuinely': 0 occurrences
-banned word 'honestly': 0 occurrences
-banned word 'leverage': 0 occurrences
-banned word 'robust': 0 occurrences
-banned word 'delve': 0 occurrences
-banned word 'underscore': 0 occurrences
+banned word 'g*nuinely': 0 occurrences
+banned word 'h*nestly': 0 occurrences
+banned word 'l*verage': 0 occurrences
+banned word 'r*bust': 0 occurrences
+banned word 'd*lve': 0 occurrences
+banned word 'u*derscore': 0 occurrences
 non-ASCII characters present: U+2022
 slide  1: text yes, notes yes, spoken words 121
 slide  2: text yes, notes yes, spoken words 212

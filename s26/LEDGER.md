@@ -2146,3 +2146,37 @@ built chain, C3 stage 2, the tie-break floor and the remaining tournament entrie
 Appendix C at the close.
 
 ---
+
+## L61 -- LANE PR: THE DECK IS BUILT FROM ARTEFACTS (11 SLIDES; SLIDES 1-7, 9, 10, 11 FILLED; SLIDE 8 A PENDING PLACEHOLDER WITH THE A2/A4 FACTS); 237 REGISTERED NUMBERS, EACH WITH ITS PATH; FOUR NUMBERS TYPED FROM THE CLAIM LEDGER, SEVEN KEPT OFF THE SLIDES (2026-09-13 19:55, PR)
+
+`vqe_research_overview.pptx` (repository root) did not exist (L2), so it is BUILT by `s26/pr_build_deck.py`
+(python-pptx 1.0.2; dark theme; one accent; figures on white plates at 190 dpi; title, body and notes on every
+slide) from `s26/pr_values.py` (every number read from its artefact at build time; the record is
+`s26/pr_values.json`, 237 tokens with value, path, basis, status), `s26/pr_notes.md` (the spoken text with
+`{TOKEN}` placeholders; each notes frame ends with a SOURCES list) and `s26/pr_figures.py` (the two
+ORACLE-superposed CA overlays for 1S9Z = T030 and 9KAR, their RMSDs recomputed through `s12.instrument` and
+equal to the record at 1e-9: 0.181981 / 7.437696; the S25 width and depth sweeps rebuilt from
+`s25/results/q_plateau.json`; the accuracy ladder with the basis on every bar). Lane Q's A2 and A4 figures sit on
+slides 6 and 8. Commits 71efb76d (a), a6738b35 (b), e93fc98c (c), cb90ffb3 (d placeholder). Verification
+(`s26/pr_verify.txt`, pasted into `s26/PRESENTATION_CHANGES.md`): 11 slides; 0 U+2014, 0 U+2013; 0 banned words;
+spoken words 234 / 248 / 244 on slides 8 / 9 / 10 (limit 250). Build peak RSS 0.12 GB, run directly.
+
+Basis rule (L28 item 3, L29 item 2) applied throughout: the suite, the random-75 3.4251 and the Legacy / AMBER
+verdicts are named point cloud; 3.2148 built chain; the C2 anchor the rebuild basis 3.2126 (L57); the S25
+quantum contrasts the selection basis. The Adversary's caveats are in the wording: +0.0111 with the Type-M flag
+and "a validity step on 124 of 126" (L46); the product circuit grounded in `q_dla.json` and no CI claimed on the
+-0.302 vs -0.243 slopes (L47); the steric reject with the flag and "tail-carried" (L54); the strain signal as a
+calibration flag, never a gain (L53); the benchmark caveat in L58's words on slide 4's notes.
+
+Not sourced to a results artefact and labelled as such: the benchmark +0.0103 [-0.1596, +0.1803] 31W/29L (typed
+from claim C06; `s9/final_report.json` not opened; the two means SOURCED_BY_TEST), the 4.4 GB headroom (L13,
+a governor reading), the 11-rung count (the PREREG), the MDE factor (the contract). Kept off every slide: the
++0.0030 benchmark leak price (C27; the caveat uses lane W's bound instead), the z_moment triple (C34), the 0.524
+cosine (C24), the 355/13 count (C35), the lost ESM -0.288 (L11), the S13 Pauli mean weights 2.236 / 3.015 (not
+reproduced by me from `geo_pauli.json`; the median measured/predicted ratio 0.9969 over 104 cells is what slide
+9 quotes), and the S12 operator-law coefficients. The phi statistic is on slide 2 with
+`s26/results/a_c26_phi_mae.json` (L32). Ledger numbers recomputed on the way and found identical: L14, L26,
+L35, L46, L53. Slide 11's direction line is DRAFT until the coordinator's verdict entry. Slide 8 waits for
+`s26/PROPOSAL_A.md`; the builder swaps the placeholder for the proposal slide when the file exists.
+
+---
