@@ -56,8 +56,13 @@ def test_union_and_boot_clouds():
     assert np.allclose(b1, b2)                       # seeded
     b3 = E.boot_cloud(top, np.random.default_rng(6))
     assert not np.allclose(b1, b3)
-    assert I.ca_rmsd(b1, C) < 1.0                    # a resample of the same set stays near the cloud
-    print("  union / boot OK")
+    # a resample's cloud is nearer to the cloud than a typical member is (random-walk members here
+    # are far more diverse than a real top-75, so the test is scale-relative, not an absolute A)
+    member_dist = np.mean([I.ca_rmsd(w, C) for w in top])
+    for b in (b1, b3):
+        assert I.ca_rmsd(b, C) < member_dist, (I.ca_rmsd(b, C), member_dist)
+    print("  union / boot OK (boot-cloud distance %.2f / %.2f against member distance %.2f)"
+          % (I.ca_rmsd(b1, C), I.ca_rmsd(b3, C), member_dist))
 
 
 if __name__ == "__main__":

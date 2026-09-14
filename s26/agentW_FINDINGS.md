@@ -13,7 +13,9 @@ No stock words; no em dashes.
 |---|---|---|
 | the 2/60 benchmark self-copy leak bounded from the dev proxy (mandatory, L25) | MEASURED AND POSTED (L44): pre-registered class MINOR by the own-native envelope (mean-CI limit 0.028 A built chain / 0.048 selection / 0.023 paired gain; worst single target 0.151 / 0.194 / 0.123 under assumption A2, L55), IMMATERIAL by every direct dev-proxy measurement (0.002 A or less); Part B 1 of 10 models, the rest wait for headroom and the tournament | `s26/PREREG_selfcopy_bound.md`, `s26/IDEA_selfcopy_proxy_bound.md`, `s26/w_selfcopy.py`, `s26/w_selfcopy_test.py`, `s26/w_train_chain.py`, `s26/w_endpoint_report.py`, `s26/results/w_selfcopy_{census,retrieval,envelope,posterior,floor,endpoint,bound}.json` |
 | at least three ideas nobody else proposed | FILED (three own, plus the mandatory one); the tie-break floor has PREREG, code, tests and a one-target probe; the identity floor is measured (Part E) | `s26/IDEA_tiebreak_noise_floor.md` + `PREREG_tiebreak_floor.md` + `w_tiebreak.py`, `s26/IDEA_conformational_identity_floor.md`, `s26/IDEA_window_provenance.md` |
-| the top orphaned tournament survivor | WAITING (no `s26/TOURNAMENT.md` yet) | |
+| the tournament's own ideas (L51: items 2 and 4) | item 2 conformational_identity_floor MEASURED AND POSTED (L52); item 4 tiebreak_noise_floor RUNNING (`w_tiebreak_draws`, 126 x 8 draws, checkpointed) | `s26/PREREG_identity_floor.md`, `s26/w_identity_floor_stats.py`, `s26/results/w_identity_floor.json`; `s26/PREREG_tiebreak_floor.md`, `s26/w_tiebreak.py` |
+| the top orphaned survivor: window_ensembling (lane P's idea, L51 item 6) | PREREG written before any real-target run, code and synthetic tests done (ALL OK), one-target probe and the 126-target run wait for the tie-break job to finish (one governed job at a time) | `s26/PREREG_window_ensembling.md`, `s26/w_ensemble.py`, `s26/w_ensemble_test.py` |
+| ideas found on the way (coordinator's request) | FILED: the partial-recall gradient below the 0.6 threshold; the own-native model placed on the S24 prior ladder | `s26/IDEA_partial_recall_gradient.md`, `s26/IDEA_memorisation_on_the_ladder.md` |
 | findings, ledger, status, commits | this file; L30, L44; STATUS 09:15, 09:31, 19:4x; commits `8d849504`, `213a5ebb` and the closing one | |
 
 ---
@@ -291,18 +293,52 @@ channels removed where measured).
    order 0.02 A on the built chain; the 126-target run (50 min CPU, est-ram 0.5 GB) is not
    launched until the tournament ranks it (L42's headroom rule).
 3. `s26/IDEA_conformational_identity_floor.md`: same sequence, different deposit, 18 targets
-   / 22 partners; the record has four numbers (S24 L4) and no distribution. 1 min, gated.
+   / 22 partners; the record had four numbers (S24 L4) and no distribution. MEASURED (L52,
+   tournament item 2; section 1.7 and `s26/results/w_identity_floor.json`): median 2.908 A over
+   22 pairs (3.055 over 18 targets); the copy is +0.97 A worse than the pool's best window
+   (fold CI [+0.72, +1.28], 1.06x MDE, Type-M zone) and -1.44 A better than its mean (fold CI
+   [-1.72, -1.19], 1.14x MDE, Type-M zone), n = 18, ORACLE on both sides. F5 holds.
 4. `s26/IDEA_window_provenance.md`: whole-peptide / terminal / interior / fragment windows in
-   the top-75; census first; plausibility 0.15.
+   the top-75; census first; plausibility 0.15. Ranked 9 (L51); runs as capacity allows, after
+   the orphans.
+5. `s26/IDEA_partial_recall_gradient.md` (found on the way to L44): does the fold model's
+   memorisation (0.70 A at identity 1.0) have a gradient below the 0.6 threshold? Native-free
+   covariates (max longer- and shorter-normalised identity to the training corpus, longest
+   shared k-mer) against `rmsd_arm`; MDE 0.25 in rho at n = 126; registered expectation: no
+   gradient (a clean bill for the fold threshold with a power statement). Cites S22 L3/L7 and
+   S23 L3/L7: every router feature so far was a functional of the pool, the posterior or the
+   emission, never of the training corpus relative to the query.
+6. `s26/IDEA_memorisation_on_the_ladder.md` (found on the way to L44): the own-native models
+   are the first real TRAINED operator far from the origin of the S24 prior ladder; measure
+   their gam_eff and cos and test whether the ladder's transfer function (-2.15 A per unit
+   gamma, with the S25 L12 direction discount) predicts the measured -0.70 A. Registered
+   expectation: it under-prices trained priors by 2 to 3 MDE. ORACLE diagnostic, 5 minutes.
 
 Also filed for the record: the medoid-frame and projection-branch flips (section 1.6) are
 the mechanism the tie-break floor would measure; the L44 control population already shows the
 same one-member change moving the chain 0.5 A on 5% of targets.
 
+Orphan taken (L51 item 6): lane P's `IDEA_window_ensembling.md`. `s26/PREREG_window_ensembling.md`
+states how fixed-K ensembling differs from widening K (S17 L12: one shortlist widened, the near-
+native members displaced; here three shortlists of K = 500 each cut to their own top-75, no
+shortlist widened, three clouds averaged in the production frame) and why the record predicts
+null-to-worse anyway (S23 L9: 68% common-mode error shared by all three clouds; S24 L3: score
+selection makes bias parallel across sources, cosine 0.943 against a within-source 0.933; S12:
+the m-ladder is flat and m = 75 its argmin). Arms: shipped, b45, b80, ens3 (PRIMARY), ensK,
+union3, boot3 (the zero-information ensembling control: three resampled clouds of the production
+top-75); falsifier: ens3 minus shipped beyond its MDE with the fold CI excluding zero on 5/5 folds
+AND beating boot3; expected 0.00 to +0.03 A against an MDE of about 0.05. Code `s26/w_ensemble.py`
+(reuses `w_selfcopy.emit`; BLOSUM45/80 from Biopython re-ordered to `core.data.ALPHABET`, the
+BLOSUM62 sums asserted equal to the universe's `sim` and `top_k` equal to the pinned pool),
+synthetic tests `s26/w_ensemble_test.py` ALL OK. Probe and run after the tie-break job.
+
 Rejected after reading, with the closing entry: ensemble-spread floor (S7 / S12, 1.044 A,
 does not predict the gap); iterated Procrustes / GPA frames (S23 L4, FINDINGS 4225); distogram
-to MDS (S8-10); Rg prediction-vs-pool disagreement as a router (S21 L27/L28 signal, S23 L? router
-null); test-time window ensembling (lane P's `IDEA_window_ensembling.md`).
+to MDS (S8-10); Rg prediction-vs-pool disagreement as a router (S21 L27/L28 signal, S23 L7 router
+null); BLOSUM rank as an additive score term inside the pool (S17 audit: BLOSUM ordering has
+skill, small and decaying; S8-6 bounds fixing retrieval at 0.016 A; and L44's census says the
+rank-0 window is never the argmin, so the term would act on a candidate the score already
+rejects).
 
 ---
 
