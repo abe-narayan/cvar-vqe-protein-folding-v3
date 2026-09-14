@@ -81,3 +81,20 @@ Agent-hours: 1 code, 1 run, 1 write-up.
 | draw law | uniform subsets of the tie class, same size as production | weighting by anything |
 | number of draws | 8 (28 paired MDEs) | 16 (doubles the cost; add as an addendum if the 8-draw sd of m_tie is itself uncertain by more than 30%) |
 | basis | built chain PRIMARY; cloud and sel carried | AMBER-relaxed emission |
+
+## ADDENDUM 1 (2026-09-13 19:45) -- the one-target probe; nothing above edited; no launch
+
+- Synthetic tests `s26/w_tiebreak_test.py`: ALL OK (job `w_tiebreak_test`, 5 s).
+- Probe `w_tiebreak_probe` (1CEK, 8 draws; exit 0, 35 s, peak RSS 0.098 GB;
+  `s26/results/w_selfcopy_tiebreak_probe_1CEK.json`): boundary tie class 130 windows, 44 inside
+  the production pool; production gate true (top-75 == `sub`); per draw the pool overlap with the
+  production pool is 0.932 to 0.946, 3 to 7 of the 75 averaged members change, the argmin never
+  changes, and the built chain moves 0.008 / 0.030 / 0.024 / 0.023 / 0.021 / 0.011 / 0.031 / 0.008 A
+  (triangle bounds; the lam = 0 chain the same to 1e-3). The registered prediction "about 8 of 75
+  change" is 3 to 7 on this target.
+- Scale of the full run from the probe: 126 x 8 x ~3.5 s = 50 min CPU, est-ram 0.5 GB.
+- The L44 control population (one member of the 75 replaced) already shows the two discrete
+  operators this floor would price: the medoid frame and the projection branch, with signed
+  moves up to 0.51 A on the built chain on 5% of targets.
+- Launch condition: only if the Adversary ranks the idea and the coordinator confirms headroom
+  (L42: one sub-1 GB job at a time). Not launched.

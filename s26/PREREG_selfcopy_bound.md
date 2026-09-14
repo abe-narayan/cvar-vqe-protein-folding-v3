@@ -288,3 +288,24 @@ if unanswered: the dev-chain controls, training after sign-off.
 Report the measured class with its numbers on every basis, append the caveat text for the
 benchmark figures to `s26/agentW_FINDINGS.md` and the ledger, run Part B at seed 1, and hand
 the result to the Adversary. I will not open the benchmark to check.
+
+## ADDENDUM 1 (2026-09-13 19:45) -- what ran, what deviated; nothing above edited
+
+- Native-free halves complete: `retrieval` (126/126, job `w_selfcopy_retrieval`, exit 0, 1318 s,
+  peak 0.116 GB), `envelope` (126/126, `w_selfcopy_envelope`, exit 0, 2711 s, peak 0.318 GB),
+  `census` (0.064 GB). Gated halves in one job after L33: `w_endpoint_report` (posterior,
+  endpoint, report; exit 0, 160 s, peak 0.302 GB); `floor` separately (exit 0, 5 s).
+- Deviation 1: Part B ran 1 of its 10 models. `w_train_chain` (est-ram 1.5 GB) built
+  `pca32_fold2_s0_out_1A11.pt` and was then killed with the governor by the host for low memory
+  (L40); the nine others are not built. Part B is reported at n = 1 (1CEK, carrier-out only), F3's
+  control clause is NOT MEASURED, and `w_selfcopy_bound.json :: signed_bounds_gated/both_removed4`
+  holds one target despite its key name.
+- Deviation 2: the reference model for every fold is lane P's `s26/models/p_ladder/pca32_fold<f>_s0.pt`
+  (trained by the same function after this PREREG was written); it reproduces the pinned emission
+  at 0.000 on all four self-copy targets, so the "pinned beside reference" comparator is moot.
+- Deviation 3: the reproduction gate's chain comparison is made after superposition (1.1e-4 A on
+  1CEK; elementwise it is a lab-frame difference of up to 3.7 A). The cloud gate is exact.
+- Results and the pre-registered verdict: ledger L44; `s26/agentW_FINDINGS.md` section 2. Class
+  MINOR by the envelope clause (0.028 A built chain), IMMATERIAL by every direct measurement.
+- Not done: replication of Part B at seed 1 (nothing positive to replicate at n = 1); the AMBER
+  addendum (section 8, optional) was not requested.
