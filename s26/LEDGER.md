@@ -4705,3 +4705,39 @@ unchanged, "a validity step, not an accuracy step", with the L46 caveats. Record
 `s26/C3_RESULT.md` addendum 4 for lanes P and PR.
 
 ---
+
+## L119 -- LANE Q, A4 BOOTSTRAP (THE L47 CAVEAT): THE -0.302 vs -0.243 SLOPE DIFFERENCE IS -0.056 WITH 95% CI [-0.182, +0.087] OVER THE THETA DRAWS; THE alpha = 1 GROWN CIRCUITS' "NO DECAY" CARRIES AN INTERVAL THAT EXCLUDES THE FIXED SLOPE BY +0.23 TO +0.72; EVERY q_var.json ROW REPRODUCED AT RELATIVE 0.0 (2026-09-14, lane Q)
+
+`s26/q_var_boot.py` -> `s26/results/q_var_boot.json`; `s26/jobs_done/a4_var_boot.json`:
+3,928 s, peak RSS 0.09 GB. Pre-registered as `s26/PREREG_A4.md` addendum 2 before the run.
+Property measurement (deployed energy shape, no target, no native).
+
+Method, exactly. Every (cell, n) row of A4 re-measured with the same draws (seed 1000 + n,
+theta ~ N(0, 0.6^2), counts 250/250/250/250/200/120/80), storing each draw's dF/dtheta_0;
+the recomputed variance equals `q_var.json`'s `var_g0` at relative deviation 0.0 on all 35
+fixed rows and all 70 grown rows (the grown circuits re-grown from seed 0 and their operator
+sequences asserted equal). Percentile bootstrap: within each n the draws are resampled with
+replacement, the variance recomputed, the 7-point log2 slope refitted; 2,000 resamples, seed
+2026; grown slopes on matched-P rows only (L35); grown - fixed from independent resamples.
+
+    log2 Var[dF/dtheta_0] per qubit, point [95% CI]         grown - fixed, point [95% CI]
+    cell                  fixed                  grown V                 grown L2                 V                        L2
+    alpha=1,    T=0       -0.649 [-0.714,-0.596]  -0.079 [-0.126,-0.044]  +0.006 [-0.017,+0.026]   +0.571 [+0.500,+0.642]   +0.658 [+0.596,+0.722]
+    alpha=0.25, T=0       -0.252 [-0.318,-0.187]  degenerate              degenerate
+    alpha=0.10, T=0       -0.047 [-0.171,+0.201]  degenerate              degenerate
+    alpha=1,    T=0.3     -0.311 [-0.356,-0.267]  +0.035 [-0.034,+0.103]  -0.008 [-0.064,+0.038]   +0.346 [+0.265,+0.428]   +0.301 [+0.232,+0.369]
+    alpha=0.25, T=0.3     -0.243 [-0.294,-0.193]  -0.246 [-0.326,-0.127]  -0.302 [-0.415,-0.171]   +0.006 [-0.097,+0.123]   -0.056 [-0.182,+0.087]
+    (grown V at alpha=1, T=0.3 and alpha=0.25, T=0.3: 5 and 6 matched rows; the rest 7)
+
+Predictions (PREREG_A4 addendum 2): P4a held (the alpha = 0.25, T = 0.3 grown-L2 minus
+fixed CI [-0.182, +0.087] includes zero; L35's "within the error" is now a stored interval);
+P4b held on four of five cells (fixed CIs narrower than +-0.15) and failed on alpha = 0.10,
+T = 0 (+0.20 on the upper side; the slope there is -0.047, flat, and its interval is wide
+because the T = 0 CVaR gradient at alpha = 0.10 is supported on 13 of 128 states); P4c held
+(every alpha = 1 grown - fixed CI excludes zero, lower bounds +0.23 to +0.60).
+
+What it changes in L35: nothing in direction; the two quantitative statements now carry
+intervals. "The alpha = 0.25 grown circuit decays like the fixed ansatz" is a difference of
+-0.056 [-0.182, +0.087]; "the alpha = 1 grown circuits do not decay" is a difference from the
+fixed slope of +0.30 to +0.66 with every interval excluding zero. Figure
+`s26/figures/a4_variance_slopes.png` regenerated with the intervals as error bars.

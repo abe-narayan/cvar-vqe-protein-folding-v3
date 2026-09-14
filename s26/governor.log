@@ -1701,3 +1701,23 @@
 2026-09-14T02:02:06 RESUME   p_train_raw_fold3 agent=P tag=CPU
 2026-09-14T02:02:20 REAP     e_report_check9 (pid 15976) is gone; registration removed
 2026-09-14T02:02:21 SUSPEND  p_train_raw_fold3 agent=P tag=CPU rss=1.92GB
+2026-09-14T02:02:31 REAP     ph_c3_verify (pid 37476) is gone; registration removed
+2026-09-14T02:02:31 REAP     verify_cvar_audit (pid 17448) is gone; registration removed
+2026-09-14T02:02:41 REAP     verify_ansatz_audit (pid 5192) is gone; registration removed
+2026-09-14T02:02:41 RESUME   p_train_raw_fold3 agent=P tag=CPU
+2026-09-14T02:02:46 REAP     verify_headline_audit (pid 27108) is gone; registration removed
+2026-09-14T02:02:46 SAMPLE   ram=80.2% (13.44GB used, 3.31GB free) cpu=89.5% (15s mean 80.1%) jobs=6 amber=1 queued=0 lanes=8
+2026-09-14T02:02:56 SUSPEND  verify_legacy_audit agent=I tag=CPU rss=0.13GB
+2026-09-14T02:03:01 SUSPEND  p_train_raw_fold3 agent=P tag=CPU rss=1.71GB
+2026-09-14T02:03:16 RESUME   verify_legacy_audit agent=I tag=CPU
+2026-09-14T02:03:31 SUSPEND  verify_amber_audit agent=I tag=AMBER rss=0.27GB
+2026-09-14T02:03:36 SUSPEND  p_c5_run agent=P tag=CPU rss=0.09GB
+2026-09-14T02:03:46 SAMPLE   ram=81.5% (13.65GB used, 3.10GB free) cpu=76.8% (15s mean 80.7%) jobs=7 amber=1 queued=0 lanes=8
+2026-09-14T02:03:51 RESUME   verify_amber_audit agent=I tag=AMBER
+2026-09-14T02:03:56 RESUME   p_c5_run agent=P tag=CPU
+2026-09-14T02:04:01 RESUME   p_train_raw_fold3 agent=P tag=CPU
+2026-09-14T02:04:11 SUSPEND  verify_amber_platform agent=I tag=AMBER rss=0.02GB
+2026-09-14T02:04:16 SUSPEND  p_train_raw_fold3 agent=P tag=CPU rss=1.85GB
+2026-09-14T02:04:21 SUSPEND  p_c5_run agent=P tag=CPU rss=0.09GB
+2026-09-14T02:04:31 RESUME   verify_amber_platform agent=I tag=AMBER
+2026-09-14T02:04:36 RESUME   p_train_raw_fold3 agent=P tag=CPU
