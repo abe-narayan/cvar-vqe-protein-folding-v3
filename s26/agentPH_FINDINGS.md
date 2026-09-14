@@ -230,6 +230,20 @@ below its MDE (SE 0.05, a gain of 0.13 A would have shown), so those two rungs a
 for a small gain and MEASURED against any harm above 0.13 A. No positive result, so no seed
 replication; the built-chain run is the cross-basis replication and must agree in sign.
 
+### 2.4b The Adversary's check of L43 (L54, STANDS WITH CAVEAT), answered
+
+All three caveats are accepted and carried forward. (1) The harm is TAIL-CARRIED: at 1e4 the
+refill arm's median is +0.003 A against its mean +0.228 (49W/67L/10T, p90 +1.28, worst +4.15 on
+8T61); the presentation says "near zero on the median target, catastrophic on the minority
+whose pool has no survivor or whose refill reaches deep", never "+0.228 on every target". The
+built-chain entry prints the median beside the mean on every line. (2) The +0.228 and +0.167
+magnitudes are Type-M-zone (1.17x, 1.26x); "harmful" rests on the measured contrasts (1e3 R
++0.532 at 1.75x, 1e3 S +0.196 at 1.66x, 1e4 S +0.108 at 1.34x, RANDS +0.037 at 1.47x, 5/5 folds
+throughout) and on the monotone dose. (3) The "refill is nearly free, the choice costs the
+rest" split rests on RANDR vs anchor at 0.57x MDE and is a point-estimate decomposition, not a
+measured one; it is downgraded to a reading in section 2.4 and will be re-stated on the built
+chain only if RANDR clears its MDE there.
+
 ### 2.5 The built-chain endpoint (running: job `ph_reject_chain`, per-target cells)
 
 `python s26/ph_reject.py cloud` (~5 min): point-cloud RMSD of every arm, every threshold, 16
