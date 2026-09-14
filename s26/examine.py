@@ -16,6 +16,9 @@ Three steps, all cheap (no database, model or ESM bank is loaded):
     python s26/examine.py --no-map      # hashes and claims only
     python s26/examine.py --no-claims   # map and hashes only
     python s26/examine.py --search      # plus lane E's tree-wide claim search (slower)
+    python s26/examine.py --report-check  # plus lane E's s26/e_report_check.py: every Appendix B
+                                          # number of s26/REPORT.md against its artefact, and the
+                                          # style check (banned words, dashes, unlabelled bases)
 
 Exit status is non-zero if any step reports a problem.
 """
@@ -41,6 +44,9 @@ def main(argv=None):
     ap.add_argument("--search", action="store_true",
                     help="also run lane E's s26/e_claims.py, which finds WHERE each number "
                          "of EXAMINATION.md is cited and stored (slower: a tree-wide grep)")
+    ap.add_argument("--report-check", action="store_true",
+                    help="also run lane E's s26/e_report_check.py: every Appendix B number of "
+                         "s26/REPORT.md against its artefact, plus the style check")
     a = ap.parse_args(argv)
     rc = 0
     if not a.no_map:
@@ -59,6 +65,11 @@ def main(argv=None):
         import e_claims                                      # lane E's search, called as-is
         print("\n== claim search (s26/e_claims.py) ==")
         rc |= int(e_claims.main() or 0)
+    if a.report_check:
+        import e_report_check                                # lane E's report check, called as-is
+        print("
+== report check (s26/e_report_check.py) ==")
+        rc |= int(e_report_check.main([]) or 0)
     return rc
 
 
