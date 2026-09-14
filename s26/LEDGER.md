@@ -5636,3 +5636,228 @@ the leaked target." And: "The pipeline's own convention noise is 0.004 A on the 
 0.024 A as the paired MDE between two tie-breaks of the pool boundary
 (`s26/results/w_tiebreak_report.json`); a hundredths-level effect is real only as a paired
 contrast with the tie-break held fixed."
+
+## L138 -- LANE Q, A2 PER GROWTH STEP ON THE 126 A1 RECORDS: THE ALGEBRA OF THE GROWN SET TRACKS THE APPENDED STRINGS, NOT WHAT THE CIRCUIT DOES (dim 7 EXACTLY WHERE NOTHING WAS APPENDED, UP TO 530 WHERE INERT MULTI-QUBIT STRINGS WERE); THE alpha = 0.25 L2 SETS REACH A MEDIAN 1025 OF 8128 AT P = 21; ALL FOUR ADDENDUM-2 PREDICTIONS HELD (2026-09-14, lane Q)
+
+`s26/q_dla_a1.py` -> `s26/results/q_dla_a1.json` (126 records, every ADAPT run's exact Lie
+closure at every growth step) and `s26/figures/a2_dla_grown_ladder.png`. Pre-registered as
+`s26/PREREG_A2.md` addendum 2 before the run. Property measurement: reads only the operator
+lists in `s26/results/a1/<pdb>.json`; no native, no score. The job's `jobs_done` record is
+absent: it was relaunched by the coordinator at 00:10 (L92), computed all 126 records (file
+provenance 00:14 local), and its wrapper lost the child before the final summary write; the
+summary was recomputed from the stored ladders in-process (seconds, no closures) at 04:03.
+
+    per (pool, re-optimiser, cell): final dim of the closure, median [min, max]; targets at dim 7;
+    targets with nothing appended; targets with a multi-qubit string appended; targets reaching so(128) = 8128
+      V  Adam-best   alpha=1 (78)       7 [7, 82]      dim7 48   nothing 0    multi 30   so128 0
+      V  Adam-best   alpha=0.25 (48)   16 [7, 289]     dim7 12   nothing 0    multi 36   so128 0
+      L2 Adam-best   alpha=1 (78)      11 [7, 139]     dim7 15   nothing 0    multi 63   so128 0
+      L2 Adam-best   alpha=0.25 (48) 1025 [513, 2017]  dim7 0    nothing 0    multi 48   so128 0
+      V  L-BFGS-B    alpha=1 (78)      58 [7, 530]     dim7 18   nothing 18   multi 60   so128 0
+      V  L-BFGS-B    alpha=0.25 (48)   16 [9, 161]     dim7 0    nothing 0    multi 48   so128 0
+      L2 L-BFGS-B    alpha=1 (78)      37 [7, 513]     dim7 10   nothing 10   multi 68   so128 0
+      L2 L-BFGS-B    alpha=0.25 (48) 1025 [258, 2017]  dim7 0    nothing 0    multi 48   so128 0
+
+Predictions: P2a held (under L-BFGS at alpha = 1, dim = 7 on exactly the 18 (V) and 10 (L2)
+targets where nothing was appended, above 7 on every other); P2b held (alpha = 0.25, L2:
+median 1025 at P = 21, inside [100, 2000]; no target reaches 8128); P2c held (pool V never
+above 530 against its whole-pool 2080, L27); P2d held (Adam-best at alpha = 1: dim 7 on
+exactly the 48 = 78 - 30 (V) and 15 = 78 - 63 (L2) targets without a multi-qubit string).
+
+Reading. The dynamical Lie algebra is a property of the generator set. On the 78 alpha = 1
+targets the grown sets whose appended strings are inert (L75: worth <= 1.2e-4 nats, angles
+<= 0.018 rad, the state a product to KL <= 4.1e-4) have closures of up to 530 dimensions,
+while the fixed ansatz at the same P has 8128 and does no more with it. For a grown circuit
+the DLA dimension does not track what the circuit does; it counts what could be done if the
+appended angles were not near zero. The only sets with a large algebra AND non-trivial
+angles are the alpha = 0.25 L2 sets (13.7 distinct 2-local strings, 1025 of 8128), and A1
+measured their endpoint at +0.0000 A against the fixed circuit on those 48 targets (L68).
+This is the per-growth-step item the prompt asked for under A2; it adds to
+`a2_dla_dimension.png` the real-target ladders (figure `a2_dla_grown_ladder.png`) and closes
+the A2 deliverable.
+
+## L139 -- LANE Q, A1 REPLICATION (SEED 1, REVERSED FOLD ORDER): THE SEED-0 "NULL" IS NOT STABLE ACROSS SEEDS. AT SEED 1 THE TWO PRIMARIES ARE -0.045 / -0.052 A AT 0.71x / 0.79x MDE WITH FOLD CIs EXCLUDING ZERO (TYPE-M ZONE); THE SEED-0 POINTS LIE INSIDE THE SEED-1 CIs; THE DIFFERENCE IS THE COMPARATOR'S SEED SENSITIVITY (FIXED 3.228 -> 3.261 A) NOT THE ADAPT ARMS' (3.214 -> 3.216); A1 IS NOT MEASURED ON EITHER SEED; THE VERDICT STANDS (2026-09-14 04:12, lane Q)
+
+Pre-registered as `s26/PREREG_A1.md` addendum 2 (before the run). `s26/q_adapt.py --build --tag
+a1s1 --seed 1 --order fold_rev --fixed-iters 50 --optimisers adam_best`, one governed process:
+`s26/jobs_done/a1s1_build.json`; label `a1s1_label.json` (25 s, 0.396 GB); stats
+`s26/results/a1s1_stats.json`, `s26/logs/a1s1_stats.log`; records `s26/results/a1s1/<pdb>.json`
+(126). The bit-for-bit check against the seed-0 production cache holds for the classical arm
+(`ca` 0.0 on 126 of 126) and, as it must, not for the seed-1 quantum arm (`q_ca` differs; the
+check is seed-0-specific by construction). Basis: built chain on both sides. Seed 1 changes the
+fixed circuit's initial angles, ADAPT's initial RY layer and the random controls' draws; the
+reversed fold order changes nothing numerical (each target is independent).
+
+### The two PRIMARY contrasts at seed 1, verbatim
+
+  rmsd_q_synth: adaptL2_adam_best_zrank_P21 - fixed_zrank_it50
+    a 3.2161 (med 3.0983)   b 3.2610 (med 3.2022)   n=126
+    effect -0.0449   median -0.0121   SE 0.0227   MDE 0.0635   effect/MDE -0.71
+    iid  CI95 [-0.0935, -0.0033]
+    fold CI95 [-0.0960, -0.0037]   folds same sign 4/5   per-fold 0:-0.145 1:+0.009 2:-0.009 3:-0.016 4:-0.054
+    72W/54L/0T   worst degradation +0.5512 (1NIZ)   p90 +0.1914   power 0.51  Type-M 1.40
+    concentration: drop-top10 +0.0069 vs uniform-effect null p10/p50/p90 -0.0139/+0.0059/+0.0250 -> pctile 0.527
+    VERDICT: NOT MEASURED (|effect| 0.0449 <= its own MDE 0.0635, 0.71x)
+
+  rmsd_q_synth: adaptV_adam_best_zrank_P21 - fixed_zrank_it50
+    a 3.2087 (med 3.0874)   b 3.2610 (med 3.2022)   n=126
+    effect -0.0523   median -0.0151   SE 0.0235   MDE 0.0659   effect/MDE -0.79
+    iid  CI95 [-0.1017, -0.0107]
+    fold CI95 [-0.1087, -0.0054]   folds same sign 4/5   per-fold 0:-0.156 1:-0.051 2:+0.026 3:-0.030 4:-0.050
+    77W/49L/0T   worst degradation +0.4790 (1NIZ)   p90 +0.2181   power 0.60  Type-M 1.29
+    concentration: drop-top10 +0.0019 vs uniform-effect null p10/p50/p90 -0.0208/+0.0005/+0.0212 -> pctile 0.539
+    VERDICT: NOT MEASURED (|effect| 0.0523 <= its own MDE 0.0659, 0.79x)
+
+### Beside seed 0
+
+    built chain, arm - fixed_zrank_it50        seed 0 (L68)                         seed 1
+      adaptL2 P21                              -0.0138 (0.23x) fold [-0.071,+0.044]   -0.0449 (0.71x) fold [-0.096,-0.004] 4/5  72W/54L
+      adaptV  P21                              -0.0222 (0.36x) fold [-0.085,+0.042]   -0.0523 (0.79x) fold [-0.109,-0.005] 4/5  77W/49L
+      adaptL2 P7 (the trained RY layer)        -0.0128 (0.21x)                        -0.0498 (0.76x) fold [-0.104,-0.000]
+      gibbs_T (exact optimum, no circuit)      +0.0088 (0.11x)                        -0.0241 (0.28x) fold [-0.095,+0.057]
+      uniform128                               +0.0135 (0.14x)                        -0.0194 (0.17x)
+      randH_fixed / randH_adaptL2              +0.0230 / +0.0337                      +0.0696 (0.51x) / +0.0045
+    arm means, built chain                     seed 0            seed 1
+      fixed_zrank_it50 (the comparator)        3.2280            3.2610      (+0.033 A with the seed)
+      adaptL2_adam_best_zrank_P21              3.2142            3.2161      (+0.002)
+      adaptV_adam_best_zrank_P21               3.2059            3.2087      (+0.003)
+      rmsd_arm (classical top-75, seed-free)   3.2148            3.2148
+    selection readout, seed 1: L2 P21 -0.0561 (0.65x) fold [-0.143,-0.008] 5/5; V P21 -0.0615 (0.69x) 5/5.
+
+### The registered falsifier FIRED, and what the records say it means
+
+Addendum 2 predicted both primaries inside +-0.5x MDE with fold CIs spanning zero; at seed 1
+they are at 0.71x and 0.79x with fold CIs excluding zero. The second half of the prediction
+held: the seed-0 points (-0.0138, -0.0222) lie inside the seed-1 iid CIs ([-0.094, -0.003] and
+[-0.102, -0.011]). Neither seed clears its MDE (0.059 to 0.066 A); seed 0 is below 0.5x and
+seed 1 is in the Type-M zone, so by the standing rule A1 is NOT MEASURED on either seed, and
+L68's "null at the registered threshold" is a seed-0 statement that does not hold at seed 1.
+By S20 L-B's rule (fewer than 4 seeds is NOT MEASURED for a variational arm; ansatz-seed
+sensitivity 0.200 A within-target) two seeds do not settle it either way.
+
+The mechanism is in the arm means: the ADAPT arms are seed-stable (they converge to the same
+product Gibbs state at alpha = 1 whatever the start, L68 1.3) and moved 0.002 to 0.003 A; the
+fixed 21-parameter circuit, which stops 0.90 nats short of that optimum in a seed-dependent
+place, moved +0.033 A. The contrast grew because the comparator landed worse at seed 1, not
+because ADAPT emitted a better structure. Direction consistent on both seeds (24 of 24 ADAPT
+arms negative over the two seeds); magnitude 0.2x to 0.8x MDE and set by the fixed circuit's
+initialisation.
+
+What changes: L68's headline "null at the registered threshold" becomes "NOT MEASURED on two
+seeds: 0.23x / 0.36x at seed 0, 0.71x / 0.79x at seed 1, direction consistent, magnitude
+governed by the comparator's seed". `s26/PROPOSAL_A.md` gets addendum 3 with that sentence.
+The verdict REPLACE stands: nothing here says a grown ansatz emits a measurably better
+structure; it says the deployed fixed circuit is a seed-sensitive under-optimiser of a
+product-state target, which the 7-parameter RY layer (P7, -0.050 A at seed 1, same as P21)
+already reaches. A four-seed run would be the next step and is not run tonight.
+
+## L140 -- ADVERSARY CHECK OF L139 AND L138: "NOT MEASURED ON EITHER SEED" IS THE RIGHT READING; REPLACE STANDS ON SEED-INDEPENDENT FACTS; R11 ENTERED FOR L68's "NULL"; ONE QUALIFIER FOR SLIDE 8 (AND 5), ONE SENTENCE FOR SLIDE 4 (2026-09-14, A)
+
+L139 (A1, seed 1, reversed fold order; `s26/results/a1s1_stats.json`, `a1s1/<pdb>.json`).
+1. The reading. Seed 0: 0.23x / 0.36x MDE, fold CIs span zero -- UNDERPOWERED (below 0.7x).
+   Seed 1: -0.045 / -0.052 A at 0.71x / 0.79x, fold CIs [-0.096, -0.004] and [-0.109, -0.005],
+   4/5 folds -- the TYPE-M ZONE (0.7 to 1.3x), which the contract says is not a result: the
+   sign is measured, the magnitude is inflated (Type-M 1.40 / 1.29). "NOT MEASURED on either
+   seed" is therefore the contract's own vocabulary and is correct; the precise pair of words is
+   "underpowered at seed 0, Type-M at seed 1". L68's "null at the registered threshold"
+   (PREREG_A1's +-0.5x MDE) was true at seed 0 and does not hold at seed 1; lane Q says so and
+   corrects PROPOSAL_A section 3 by addendum 3. Entered as R11 (a scope correction, not a
+   withdrawn number).
+2. Two seeds are not two replicates of one effect. The ADAPT arms are seed-stable (3.214 to
+   3.216, they converge to the same product Gibbs state), so the two seed contrasts are ONE
+   ADAPT value against TWO draws of the fixed comparator (3.228 / 3.261); the between-seed
+   change of the contrast (+0.031 / +0.030) is the comparator's initialisation, exactly as L139
+   diagnoses. So "24 of 24 arms negative over two seeds" is about two draws, not twenty-four
+   (the twelve arms within a seed correlate at 0.955, L70), and no pooling across seeds is
+   licensed. By S20 L-B's rule a variational arm needs four seeds before its endpoint is
+   called; two do not settle it and L139 says so.
+3. The comparator's seed variance is a fact about the deployed selector worth a qualifier:
+   the fixed 21-parameter circuit's readout moves 0.033 A between two seeds (3.228 -> 3.261)
+   while the production top-75 arm is seed-free (3.2148 on both, the selector is off in
+   production). It belongs on slide 8 (and on slide 5 if it quotes the fixed circuit's 3.228 or
+   the readout insensitivity), not on slide 4, whose 3.2148 does not run the selector.
+4. The verdict. REPLACE stands: it rests on seed-independent, exact facts (the optimum is a
+   product state on every target, L68 / L75; the DLA is the full so(2^n) from depth 2, L27 /
+   L45; the grown circuits give no width-scaling argument, L35 / L119; the appended operators
+   are inert, L75 / L138) and on an endpoint that is not measured on either seed. What seed 1
+   adds is a sentence about the DEPLOYED circuit, not about growth: a better-optimised state of
+   the same product target (reached by the 7-parameter RY layer, P7 -0.050 at seed 1, the same
+   as P21, and by the exact Gibbs state, gibbs_T -0.024) sits 0.02 to 0.05 A nearer at 0.3 to
+   0.8x MDE, because the fixed circuit is a seed-sensitive under-optimiser. That supports
+   "replace", not "grow".
+Verdict: STANDS. Owner's correction (addendum 3) accepted.
+
+Line to lane PR (a qualifier must reach a slide): on slide 8, beside the A1 numbers: "A1 is
+not measured on two seeds (0.2x to 0.8x of what the comparison resolves); the grown circuits
+are seed-stable (3.214 / 3.216 A) and the deployed fixed circuit moves 0.033 A between seeds
+(3.228 / 3.261), so the size of the contrast is set by the deployed circuit's seed, not by
+growth." On slide 5, if the fixed circuit's readout is quoted: "on two seeds its built chain
+is 3.228 and 3.261 A". On slide 4: "3.2148 does not run the selector and is seed-free."
+Sources: `s26/results/a1_stats.json`, `a1s1_stats.json`, ledger L68, L139.
+
+L138 (A2 per growth step; `s26/results/q_dla_a1.json`, 126 records). Property measurement
+over the stored operator lists, no native, no score; the four pre-registered predictions
+(addendum 2) held exactly: dim 7 on precisely the targets where nothing was appended (18 V, 10
+L2 under L-BFGS at alpha = 1; 48 and 15 under Adam-best), up to 530 where inert multi-qubit
+strings were appended, median 1025 at P = 21 for L2 at alpha = 0.25, never so(128). The reading
+is right and matters for the paper: the DLA is a property of the generator set and counts what
+could be done, not what the circuit does; for a grown circuit with near-zero appended angles it
+over-states expressivity, and the only large-algebra sets with real angles (alpha = 0.25, L2)
+measured +0.0000 A at the endpoint (L68). Provenance irregularity, stated by Q: the job's
+`jobs_done` record is absent (the wrapper lost the child after the records were written, L92)
+and the summary was recomputed in-process from the stored per-target ladders; the 126 record
+files carry their own provenance (00:14). Verdict: STANDS WITH THAT NOTE.
+
+---
+
+## L141 -- EVERY STANDALONE AUDIT UNDER verify/ RE-RUN UNDER THE GOVERNOR WITH ITS TRACKED JSON UNTOUCHED: 20 OF 20 RAN; THE SCIENCE REPRODUCES IN EVERY AUDIT THAT HAS A COMPARABLE TRACKED RECORD; THE DIFFERENCES ARE TIMINGS, CACHE KEYS, FIELDS ADDED SINCE, AND TWO AUDITS THAT NOW RECORD THE REPAIR OF THE DEFECT THEY FOUND (2026-09-14 04:13, lane I)
+
+Runner `s26/i_verify_rerun.py` (commits `b0912487`, `2505e575`): each audit executed in-process
+with writes under `verify/` and `bench_results/` redirected to `s26/results/verify/`, deletions
+and move-outs there refused (six operations probed), the tracked file's sha256 asserted unchanged
+after every run, the fresh JSON diffed leaf by leaf. One job per audit through `jobrun` (peak RSS
+from `s26/jobs_done/verify_*.json`, logs `s26/logs/verify_*.log`, per-audit records
+`s26/results/verify/<audit>.rerun.json`, fresh JSONs `verify__<name>.json`, report
+`s26/results/verify/REPORT.md`). `determinism_audit` ran D1/D3/D4/D5 by function; its D2 was not
+run because, as written, it moves the last two PRODUCTION cache records to a temp dir, re-runs
+smoke8 (which does not contain them) and deletes the backup.
+
+| # | audit | tag | tracked JSON | verdict | leaves identical / different / added / removed | wall | peak RSS | reading |
+|---:|---|---|---|---|---|---:|---:|---|
+| 1 | `vqe_lfo_audit` | CPU | vqe_lfo_audit.json | **IDENTICAL** | 32 / 0 / 0 / 0 | 0.3 s | 0.002 GB |  |
+| 2 | `cvar_audit` | CPU | cvar_audit.json | **IDENTICAL** | 18 / 0 / 0 / 0 | 0.9 s | 0.003 GB |  |
+| 3 | `ansatz_audit` | CPU | ansatz_audit.json | **IDENTICAL** | 19 / 0 / 0 / 0 | 3.3 s | 0.005 GB |  |
+| 4 | `headline_audit` | CPU | headline_audit.json | **DIFFERS** | 123 / 0 / 8 / 0 | 0.6 s | 0.002 GB | all 123 recorded leaves identical; the 8 added leaves are `harness_cfg.*` fields `Config` gained since the tracked run (quantum, legacy, vqe_*, report_single_start_fit); no value changed |
+| 5 | `legacy_audit` | CPU | legacy_audit.json | **IDENTICAL** | 30 / 0 / 0 / 0 | 27.8 s | 0.127 GB |  |
+| 6 | `amber_audit` | AMBER | amber_audit.json | **IDENTICAL** | 31 / 0 / 0 / 0 | 42.2 s | 0.265 GB |  |
+| 7 | `amber_platform` | AMBER | amber_platform.json | **NO FRESH OUTPUT** |  | 70.4 s | 0.304 GB | the script prints a table and writes no JSON (the tracked file is a hand-assembled summary of three probes); from the printed table the CPU arm reproduces the golden 1A13 interaction bit-exactly (-489.9138948277905, 726 evaluations) and the OpenCL arms differ run to run as the tracked verdict says they must (hybrid_double -489.874 vs the recorded -489.84..-489.95) |
+| 8 | `leak_audit` | AMBER | leak_audit.json | **DIFFERS** | 24 / 1 / 0 / 0 | 118.0 s | 0.581 GB | ALL_CLEAN stands on 24/25 leaves; the one difference is `backends.project`: the tracked run predates `core.project` (`s8.project`), the fresh run records `core.project` |
+| 9 | `grad_key_collision` | AMBER | grad_key_collision.json | **DIFFERS** | 7 / 3 / 0 / 10 | 2995.1 s | 0.578 GB | differs in the direction the fix implies: tracked `COLLISION: true`, no Config field; fresh `COLLISION: false`, `config_has_a_field_for_the_gradient: true`, and its two arms are bit-identical because `PROJECT_GRAD` in the environment no longer selects anything (both children run `exact`); the audit is stale the way `run_equiv2.sh` was (L19), 26 run-property leaves are timings |
+| 10 | `equiv_compare` | CPU | equivalence.json | **DIFFERS** | 924 / 5 / 1 / 0 | 0.8 s | 0.003 GB | same verdict, BIT-IDENTICAL on all 8 targets including every AMBER quantity; the 5 differing leaves are the arm keys and directory names (tracked `29cc..`/`4077..` are gone; fresh compares the current baseline key `44a9..`, 8 records, against the production cache `1fc9..`, 126 records), hence `n_optimised` 8 -> 126 and the added `only_optimised` list |
+| 11 | `projection_divergence` | CPU | projection_divergence.json | **ERROR** |  | 1.2 s | 0.002 GB | ERROR by construction: its two smoke8 arm caches (fd vs analytic) no longer exist, and against the baseline vs production keys it trips (`shape mismatch`) on 7 S11 baseline records whose `amber_ca` is null because AMBER declined at the 92% ceiling in that run; its question is answered by the fresh `project_arms` (126/126 bit-identical) |
+| 12 | `project_arms` | CPU | project_arms.json | **DIFFERS** | 47 / 124 / 0 / 0 | 0.3 s | 0.008 GB | differs in the informative direction: the tracked S11 run (scan-builder era) had `ca` bit-identical on 0/8 with 22.3 A worst apart; the fresh run, baseline vs the shipped exact mode over the two on-disk caches, has `ca`, `fit_ca`, `avg_ca` bit-identical on 126/126 and `amber_ca` on 119/119 (the 7 null-AMBER baseline records excluded); the `fd` and `analytic` arms were passed as the production key (those caches are gone), so those two comparisons are identical by construction and carry no information |
+| 13 | `determinism_audit` | AMBER | (none) | **no tracked JSON** |  | 59.8 s | 0.579 GB | no tracked JSON; fresh: bit-identical across processes and under 4 threads (D1), no key collisions (D3), `CacheCollision` raises (D4), config key complete (D5); D2 not run (it would delete two production-cache records) |
+| 14 | `hazard_audit` | AMBER | (none) | **no tracked JSON** |  | 21.7 s | 0.525 GB | no tracked JSON; fresh: H2 thread-env energies identical 3/3, H3 alignment-invariant and pair distances bit-identical, H6 stable argsort, H7 longer-normalised and symmetric; H1 single-point pair differs by 1239 kcal/mol on 2.1e8 of builder strain (relative 5.8e-6, inside the 1e-5 bar of the integration test); H5 flags the alternate alphabet string in core/data.py, which is `ALPHABET_ALT`, present by design and never used to encode |
+| 15 | `project_selfcheck` | CPU | (none) | **no tracked JSON** |  | 0.6 s | 0.003 GB | no tracked JSON (prints only): builder vs reference 1.732e-13 A, analytic vs central gradient 6.828e-06 on |g| = 1.540 |
+| 16 | `project_exactness` | CPU | project_exactness.json | **DIFFERS** | 1894 / 1 / 2 / 0 | 587.0 s | 0.092 GB | 126/126 bit-identical, worst |d| 0.0, exactly as tracked; the 1 different leaf is `agg.s_per_target` (4.57 -> 4.65 s, a timing), the run-property leaf is `agg.seconds`, the 2 added leaves are `agg.complete` / `agg.requested` (bookkeeping added with the `_outpath` fix) |
+| 17 | `project_equiv` | CPU | project_equiv.json | **DIFFERS** | 12431 / 508 / 2 / 0 | 1798.9 s | 0.275 GB | the four-arm table reproduces on every science leaf: agg.ref / ex / fd / an (synthesis 3.2148 / 3.2148 / 3.2145 / 3.2057, fit, projection_cost, fval) and avg_rmsd 3.048338 identical; all 508 differing leaves are the per-target and aggregate TIMINGS (t_ref / t_ex / t_fd / t_an, s_per_target; 504 + 4) and the 10 run-property leaves are seconds / speedups (exact-mode speedup 2.19x tracked -> 2.02x under seven concurrent jobs); 2 added bookkeeping leaves (complete, requested) |
+| 18 | `project_degeneracy` | CPU | project_degeneracy.json | **DIFFERS** | 256 / 510 / 2 / 0 | 239.5 s | 0.09 GB | not like for like at the per-target level, same shape in aggregate: the tracked run measured the four starts under the module default of its day (analytic), the fresh run under the shipped exact mode, so no per-target best objective is identical (max |d| 0.179 in objective units); the degeneracy the audit exists to measure reproduces: 43 / 33 targets with a best-to-runner-up gap under 1e-2 / 1e-3 in both runs, 12 same-point ties in both, gap median 0.0667 -> 0.0643, runner-up distance median 0.846 -> 0.877 A, genuine branch ties (gap < 1e-3, structures > 0.5 A apart) 1 -> 3 |
+| 19 | `project_iters` | CPU | project_iters.json | **DIFFERS** | 4 / 14 / 7 / 0 | 384.7 s | 0.273 GB | not like for like: the tracked file is a 10-target run with three arms (ref / fd / an, 90 solves each, 10.0-13.3% of solves hitting maxiter=300, nit mean 157-161) from before the exact mode existed; the fresh CLI default is 24 targets with four arms (ref / ex / fd / an, 216 solves each: 18.5 / 18.5 / 18.1 / 17.6% hitting maxiter, nit mean 171-181), written as project_iters_n24.json; the audit's question (is maxiter binding?) reads the same way at both sizes: a minority of starts hit the cap, and the ref and ex arms are identical solve for solve |
+| 20 | `project_stability` | CPU | project_stability_partial77.json | **DIFFERS** | 469 / 2 / 0 / 1 | 1308.6 s | 0.273 GB | IDENTICAL on every science leaf (469/469): the reference against itself under a rigid motion on the same 77 targets reproduces the tracked partial exactly (d(arm) median 0.0323 A, worst 1.6246 A, |dfval| max 0.0890, 62 / 46 / 18 targets moved by more than 1e-3 / 0.01 / 0.1 A); the 2 different leaves and 1 removed leaf are bookkeeping: the tracked file was a run of 126 stopped by the RAM gate at 77 (`stopped_by`, `complete: false`, `requested: 126`), the fresh one was asked for 77 and completed |
+
+20 audits: 5 IDENTICAL, 11 DIFFERS (each explained), 3 with no tracked JSON to diff, 1 ERROR by construction, 0 NOT RUN. Not re-runnable: `recon_containment_audit.json` (written by a deleted script), `project_inputs.json` (the harvested input the projection audits read).
+
+Reading of the whole: every audit whose tracked JSON records a comparable experiment reproduces
+its science (`vqe_lfo`, `cvar`, `ansatz`, `legacy`, `amber_audit` bit-for-bit; `headline` on all
+123 recorded leaves; `leak` ALL_CLEAN; `equiv_compare` BIT-IDENTICAL on 8/8; `project_exactness`
+126/126; `project_equiv` on every science leaf of the four-arm table; `project_degeneracy` in its
+aggregate shape). Two audits now record the repair of what they found: `grad_key_collision`
+(COLLISION true -> false, the mode is in the cache key) and `project_arms` (0/8 -> 126/126
+bit-identical once the shipped exact mode replaced the scan builder). Two are not like for like
+at the per-target level because the module default changed under them (`project_iters` size and
+arms, `project_degeneracy` mode) and say so. `projection_divergence` cannot run on the current
+caches (its arms are gone) and its question is answered by `project_arms`. Three audits print
+and write no tracked JSON; their fresh outputs are recorded. `amber_platform`'s tracked JSON is a
+hand-assembled summary with no writer.
+
+---

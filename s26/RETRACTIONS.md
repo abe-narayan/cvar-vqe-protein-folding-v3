@@ -228,3 +228,25 @@ rule for itself is recorded there: a number enters the ledger only after its too
 | S16 L27's AMBER-relaxation finding (matched random move as accurate) | `s16/` | CONFIRMED and SHARPENED on the production input: worse than a random move (+0.0111, Type-M) and than a move toward a pool member (+0.0385), replicated (L39, L46, L87); the toward-member move is a partial reversal of the projection's displacement (L95) | `s26/results/ph_c3_stage1.json`, `ph_c3_stage1_rep.json` |
 | the routers (five constructions fail, S22 L7 / S23 L7) | `s22/`, `s23/` | EXTENDED: twelve m* and six s* routers on four new feature blocks null-to-harmful (L110, L115) | `s26/results/p_c4.json` |
 | L38's own-torsion floor 0.347 A (this sprint) | L38 | SCOPED: an upper bound; the tight floor is 0.083 A (L89) | `s26/results/ph_cis_floor2.json` |
+
+---
+
+## R11 -- L68's "NULL AT THE REGISTERED THRESHOLD" IS SCOPED TO SEED 0 (L139, L140) (S26 internal)
+
+Claim, verbatim: "qubit-ADAPT-VQE in place of the fixed ansatz is null at the registered
+threshold on the built chain (-0.014 / -0.022 A, 0.23x / 0.36x MDE, fold CIs span zero)" (L68
+title) and "'ADAPT is null' fires on both primaries" (L68; `s26/PROPOSAL_A.md` section 3).
+
+Contradicted by: `s26/results/a1s1_stats.json` (seed 1, reversed fold order, L139): the same
+two primaries are -0.045 / -0.052 A at 0.71x / 0.79x MDE with fold CIs excluding zero
+([-0.096, -0.004], [-0.109, -0.005], 4/5 folds), outside PREREG_A1's +-0.5x "null" band; the
+seed-0 points lie inside the seed-1 CIs; the between-seed change is the fixed comparator's
+(3.228 -> 3.261 A), the ADAPT arms being seed-stable (3.214 / 3.216).
+
+Discriminating experiment (run): the pre-registered seed-1 replication (PREREG_A1 addendum 2).
+
+Now stands: A1 is NOT MEASURED on either seed (underpowered at seed 0, Type-M zone at seed 1),
+its direction is consistent, and its magnitude is governed by the deployed circuit's seed; the
+verdict REPLACE rests on the seed-independent facts (the product-state optimum, the full-so(2^n)
+DLA, the inert growth). Corrected in `s26/PROPOSAL_A.md` addendum 3 and by the slide-8
+qualifier of L140. The number is not withdrawn; the "null" label is scoped to seed 0.
