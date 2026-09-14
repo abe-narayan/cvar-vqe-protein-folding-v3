@@ -342,30 +342,52 @@ scope: depth 3, this ansatz, this spectrum, with the algebra (A2) offering no pr
 
 1. I expected ADAPT to grow entangling operators and to be judged on whether entanglement
    helps. On the deployed Hamiltonian at alpha = 1 there is nothing to entangle: the target is
-   a product state. That was available from the definition of `_zrank` and the register index.
-2. I expected the brief's re-optimiser (Adam, lr 0.15) to be usable as written. Its first step
-   is a fixed 0.15 rad in every direction; ADAPT's stop criterion never fires under it. The
-   prereg carries the best-iterate rule as a documented deviation rather than pretending.
-3. I expected the Tang minimal pools to generate so(2^n) (they are "complete"). At n = 4, 5, 6
-   they generate so(2^(n-1)+1), an algebra transitive on the real sphere but far smaller than
-   so(2^n). Completeness in Tang's sense (rank 2^n - 1 of the overlap matrix) is weaker than
-   controllability.
+   a product state (section 0.1, then 126 of 126 real targets in 1.3). That was available from
+   the definition of `_zrank` and the register index the whole time.
+2. I expected the brief's re-optimiser (Adam, lr 0.15) to be usable as written. Its first
+   step is a fixed 0.15 rad in every direction; ADAPT's stop criterion never fires under it
+   (section 0.3). The prereg carries the best-iterate rule as a documented deviation.
+3. I expected the Tang minimal pools to generate so(2^n) (they are "complete"). They generate
+   so(2^(n-1)+1) at n = 4..9 (A2, L27). Completeness (overlap-matrix rank 2^n - 1) is weaker
+   than controllability.
+4. I predicted a proper subalgebra for the fixed ansatz at n = 7, depth 3 (PREREG_A2 H2b,
+   guess 4095). It is the whole so(128) from depth 2. Recorded as falsified in L27.
+5. I expected the alpha = 0.25 subset, where ADAPT-L2 reaches a lower free energy than the
+   fixed circuit, to be where any endpoint signal lived. It is the one cell that is exactly
+   zero (+0.0000, fold CI [-0.008, +0.008], n = 48; section 1.4). A lower objective emitted
+   the same structure.
+6. I wrote "selects no entangling operator on 78 of 78 targets" into L68 and PROPOSAL_A.md
+   from the ideal-ladder run without re-reading the real-target records; PR's L73 re-read them
+   and the appended count is 60 to 78 of 78, every string multi-qubit, all inert (<= 1.2e-4
+   nats). Corrected in L75 and section 9. The error had the direction of my own hypothesis,
+   which is the direction the record says errors are hardest to see.
+7. I expected the DLA to be the right diagnostic for "what the grown circuit does". The L75
+   table shows why it is not: the algebra is a property of the generator SET, and a set of
+   inert multi-qubit strings has a large algebra while the state stays a product. The
+   per-growth-step DLA on the real records (PREREG_A2 addendum 2, running) is pre-registered
+   to show exactly that.
 
 ## 7. WHAT I DID NOT DO AND WHY
 
-- No endpoint (no RMSD to a native) was computed: the phase gate. The harness's `--label`
-  refuses without the ledger line.
-- No A1/A3 build beyond the 1-target probe and the 3-target fixed-only reproduction check:
-  the contract allows 1-target probes before sign-off; the 3-target check reads no native and
-  was the brief's own pre-sign-off assertion.
-- The complex pool L2C is implemented and tested (pennylane cross-check) but is not an arm:
-  the deployed amplitudes are real and a complex pool would confound "grown" with "complex".
-- `pytest tests/` was not run by this lane (lane I owns it); `s26/q_tests.py` was run under
-  `jobrun` instead.
-- No literature was fetched beyond one paper (Tang et al. 2021, for the exact pool
-  definitions); the related-work list is the record's own from S13 to S22.
-- The re-derivation of 0.2's console numbers into an artefact is left to A2's ADAPT-set sweep
-  (it stores F_final per cell); until it lands they are console numbers and are labelled so.
+- No replication of A1 was owed: both primaries fired the "null" falsifier. The seed-1 and
+  reversed-order run (PREREG_A1 addendum 2) is a robustness check under L77's extended scope
+  and launches after A3 as one governed process; it is not a contract requirement.
+- The complex pool L2C is implemented and tested (pennylane cross-check at n <= 6) but is not
+  an arm: the deployed amplitudes are real and a complex pool would confound "grown" with
+  "complex".
+- The L-BFGS-B arms are secondary, as registered; they carry the same endpoint numbers as the
+  Adam arms (section 1.2) and stop early on 78 of 78 alpha = 1 targets after inert additions.
+- The squared-risk (posterior-mean) functional is not an A3 variant: it changes the candidate
+  ORDER and the brief asked for order-preserving Hamiltonians (IDEA_l17 item 5).
+- `pytest tests/` was not run by this lane (lane I owns it); `s26/q_tests.py` (17 tests) was
+  run under `jobrun` instead.
+- No literature was fetched beyond Tang et al. 2021 (for the exact pool definitions); the
+  related-work list is the record's own from S13 to S22.
+- The A2 exceptions at n = 6 and n = 9 (depth 4 needed; "multiples of 3") are an observation
+  from two widths and were not pursued; HYPOTHESIS.
+- Nothing on hardware, noise or shot cost: every number is exact simulation, and the outline
+  says what a submission would still need.
+- A3's endpoint half runs after this file's last edit; its section is written when it lands.
 
 ## 8. ARTEFACTS
 
@@ -375,10 +397,15 @@ scope: depth 3, this ansatz, this spectrum, with the algebra (A2) offering no pr
     s26/results/probe_property.json       property summary of the probe
     s26/results/q_dla_smoke_n456.json     DLA at n <= 6 (synthetic)
     s26/results/q_var_smoke_n46.json      A4 smoke (n = 4, 6; S25 n=7 reproduction passed)
-    s26/results/q_dla.json                A2 (running)
-    s26/results/q_var.json                A4 (running)
-    s26/jobs_done/q_*.json, a2_dla.json, a4_var.json   peak RSS and wall per job
-
+    s26/results/q_dla.json                A2 (complete; ledger L27)  -> s26/figures/a2_dla_dimension.png
+    s26/results/q_var.json                A4 (complete; ledger L35)  -> s26/figures/a4_variance_slopes.png
+    s26/results/a1/<pdb>.json             A1 per-target records, 126 (built, labelled after L33)
+    s26/results/a1_stats.json             A1 contrasts (ledger L68, corrected by L75); s26/logs/a1_stats.log
+    s26/results/q_dla_a1.json             per-growth-step DLA on the A1 records (running) -> s26/figures/a2_dla_grown_ladder.png
+    s26/results/q_var_boot.json           A4 slope bootstrap CIs (running)
+    s26/results/a3/<pdb>.json             A3 per-target records (building)
+    s26/results/a1s1/<pdb>.json           A1 seed-1 / reversed-order replication (after A3)
+    s26/jobs_done/q_*.json, a2_dla.json, a4_var.json, a1_build.json, a1_label.json   peak RSS and wall per job
 
 ## 9. CORRECTION (2026-09-13 22:15, ledger L75): sections 0.1 and 1.3 overstated "no operator selected"
 
