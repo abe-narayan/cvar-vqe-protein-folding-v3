@@ -1,5 +1,5 @@
 {
- "written": "2026-09-14T02:59:26",
+ "written": "2026-09-14T04:13:11",
  "audits": [
   {
    "audit": "vqe_lfo_audit",
@@ -823,6 +823,899 @@
      "n_removed": 0,
      "verdict": "DIFFERS",
      "fresh_path": "s26\\results\\verify\\verify__project_arms.json"
+    }
+   }
+  },
+  {
+   "audit": "determinism_audit",
+   "script": "verify/determinism_audit.py",
+   "argv": [
+    "--functions",
+    "d3_key_types,d4_forged_collision,d5_config_key,d1_cross_process"
+   ],
+   "tag": "AMBER",
+   "est_ram_gb": 1.8,
+   "cost": "medium",
+   "note": "D1 cross-process (3 children on 1CS9, stage 4 included), D3/D4/D5 cache keys; D2 (resume) is NOT run: as written it moves the last two records of the PRODUCTION cache (bench_results/cache/1fc9f2dcf489e2fb) to a temp dir, re-runs smoke8 (which does not contain them) and then rmtree's the backup, i.e. it would delete two production records; writes determinism_audit.json, which is NOT tracked",
+   "tracked": [],
+   "started": "2026-09-14T02:58:33",
+   "wall_s": 59.8,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\determinism_audit.json",
+     "written": "s26\\results\\verify\\verify__determinism_audit.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "_": {
+     "verdict": "no tracked JSON to diff"
+    }
+   }
+  },
+  {
+   "audit": "hazard_audit",
+   "script": "verify/hazard_audit.py",
+   "argv": [],
+   "tag": "AMBER",
+   "est_ram_gb": 1.6,
+   "cost": "medium",
+   "note": "the known hazards as live experiments; hazard_audit.json is NOT tracked",
+   "tracked": [],
+   "started": "2026-09-14T02:59:34",
+   "wall_s": 21.7,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\hazard_audit.json",
+     "written": "s26\\results\\verify\\verify__hazard_audit.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "_": {
+     "verdict": "no tracked JSON to diff"
+    }
+   }
+  },
+  {
+   "audit": "project_selfcheck",
+   "script": "core/project.py",
+   "argv": [
+    "selfcheck"
+   ],
+   "tag": "CPU",
+   "est_ram_gb": 0.6,
+   "cost": "light",
+   "note": "builder vs reference, gradient vs finite differences; prints only",
+   "tracked": [],
+   "started": "2026-09-14T03:00:01",
+   "wall_s": 0.6,
+   "error": null,
+   "writes": [],
+   "tracked_unchanged": true,
+   "diffs": {
+    "_": {
+     "verdict": "no tracked JSON to diff"
+    }
+   }
+  },
+  {
+   "audit": "project_exactness",
+   "script": "core/project.py",
+   "argv": [
+    "exactness"
+   ],
+   "tag": "CPU",
+   "est_ram_gb": 0.8,
+   "cost": "heavy",
+   "note": "126 targets, shipped mode against s8.project",
+   "tracked": [
+    "project_exactness.json"
+   ],
+   "started": "2026-09-14T03:00:06",
+   "wall_s": 587.0,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\project_exactness.json.tmp",
+     "written": "s26\\results\\verify\\verify__project_exactness.json.tmp"
+    },
+    {
+     "intended": "verify\\project_exactness.json",
+     "written": "s26\\results\\verify\\verify__project_exactness.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "project_exactness.json": {
+     "n_tracked_leaves": 1896,
+     "n_fresh_leaves": 1898,
+     "identical": 1894,
+     "close": 0,
+     "different": 1,
+     "run_property_different": 1,
+     "added": [
+      "agg.complete",
+      "agg.requested"
+     ],
+     "removed": [],
+     "diffs": [
+      {
+       "key": "agg.s_per_target",
+       "tracked": "4.568959217458975",
+       "fresh": "4.650387336503223"
+      }
+     ],
+     "run_property_diffs": [
+      {
+       "key": "agg.seconds",
+       "tracked": "575.6888613998308",
+       "fresh": "585.9488043994061"
+      }
+     ],
+     "n_added": 2,
+     "n_removed": 0,
+     "verdict": "DIFFERS",
+     "fresh_path": "s26\\results\\verify\\verify__project_exactness.json"
+    }
+   }
+  },
+  {
+   "audit": "project_equiv",
+   "script": "core/project.py",
+   "argv": [
+    "equiv"
+   ],
+   "tag": "CPU",
+   "est_ram_gb": 0.8,
+   "cost": "heavy",
+   "note": "126 targets x four arms; the reference arm alone is ~8 s per target",
+   "tracked": [
+    "project_equiv.json"
+   ],
+   "started": "2026-09-14T03:10:01",
+   "wall_s": 1798.9,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\project_equiv.json.tmp",
+     "written": "s26\\results\\verify\\verify__project_equiv.json.tmp"
+    },
+    {
+     "intended": "verify\\project_equiv.json",
+     "written": "s26\\results\\verify\\verify__project_equiv.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "project_equiv.json": {
+     "n_tracked_leaves": 12949,
+     "n_fresh_leaves": 12951,
+     "identical": 12431,
+     "close": 0,
+     "different": 508,
+     "run_property_different": 10,
+     "added": [
+      "agg.complete",
+      "agg.requested"
+     ],
+     "removed": [],
+     "diffs": [
+      {
+       "key": "agg.s_per_target.ref",
+       "tracked": "10.233509180953703",
+       "fresh": "7.689821138097498"
+      },
+      {
+       "key": "agg.s_per_target.ex",
+       "tracked": "4.674835245236792",
+       "fresh": "3.8137957515889807"
+      },
+      {
+       "key": "agg.s_per_target.fd",
+       "tracked": "2.367491449206321",
+       "fresh": "2.1160124063506602"
+      },
+      {
+       "key": "agg.s_per_target.an",
+       "tracked": "0.6235212849250751",
+       "fresh": "0.61906772143104"
+      },
+      {
+       "key": "rows[0].t_ref",
+       "tracked": "7.243612399965059",
+       "fresh": "7.445828400028404"
+      },
+      {
+       "key": "rows[0].t_ex",
+       "tracked": "3.496815799968317",
+       "fresh": "3.9513764000148512"
+      },
+      {
+       "key": "rows[0].t_fd",
+       "tracked": "2.352735499967821",
+       "fresh": "2.6301505000446923"
+      },
+      {
+       "key": "rows[0].t_an",
+       "tracked": "0.5057675000280142",
+       "fresh": "0.9298726000124589"
+      },
+      {
+       "key": "rows[1].t_ref",
+       "tracked": "9.680596000049263",
+       "fresh": "9.970852200000081"
+      },
+      {
+       "key": "rows[1].t_ex",
+       "tracked": "4.774421499983873",
+       "fresh": "5.054604000004474"
+      },
+      {
+       "key": "rows[1].t_fd",
+       "tracked": "2.4140376000432298",
+       "fresh": "3.0481882000458427"
+      },
+      {
+       "key": "rows[1].t_an",
+       "tracked": "0.5553847000119276",
+       "fresh": "0.9945384999737144"
+      },
+      {
+       "key": "rows[2].t_ref",
+       "tracked": "3.898646000016015",
+       "fresh": "3.9479748000157997"
+      },
+      {
+       "key": "rows[2].t_ex",
+       "tracked": "1.7891898000380024",
+       "fresh": "2.094654799962882"
+      },
+      {
+       "key": "rows[2].t_fd",
+       "tracked": "0.7459605999756604",
+       "fresh": "1.050683899957221"
+      },
+      {
+       "key": "rows[2].t_an",
+       "tracked": "0.24330099998041987",
+       "fresh": "0.4319182999897748"
+      },
+      {
+       "key": "rows[3].t_ref",
+       "tracked": "7.190431700029876",
+       "fresh": "7.36246089998167"
+      },
+      {
+       "key": "rows[3].t_ex",
+       "tracked": "3.3138039999757893",
+       "fresh": "3.9427832000073977"
+      },
+      {
+       "key": "rows[3].t_fd",
+       "tracked": "1.6225321000092663",
+       "fresh": "1.82516210002359"
+      },
+      {
+       "key": "rows[3].t_an",
+       "tracked": "0.4676611000322737",
+       "fresh": "0.904094299999997"
+      },
+      {
+       "key": "rows[4].t_ref",
+       "tracked": "5.80820109997876",
+       "fresh": "5.961847500002477"
+      },
+      {
+       "key": "rows[4].t_ex",
+       "tracked": "2.6663476999965496",
+       "fresh": "3.1484376000007614"
+      },
+      {
+       "key": "rows[4].t_fd",
+       "tracked": "1.0327414000057615",
+       "fresh": "1.321999300038442"
+      },
+      {
+       "key": "rows[4].t_an",
+       "tracked": "0.38518079998902977",
+       "fresh": "0.5871490000281483"
+      },
+      {
+       "key": "rows[5].t_ref",
+       "tracked": "6.301013799966313",
+       "fresh": "6.387659500003792"
+      },
+      {
+       "key": "rows[5].t_ex",
+       "tracked": "2.8000206000288017",
+       "fresh": "3.275558200024534"
+      },
+      {
+       "key": "rows[5].t_fd",
+       "tracked": "0.9650981000158936",
+       "fresh": "1.2584574000211433"
+      },
+      {
+       "key": "rows[5].t_an",
+       "tracked": "0.3913207000005059",
+       "fresh": "0.5857165000052191"
+      },
+      {
+       "key": "rows[6].t_ref",
+       "tracked": "10.068781199981458",
+       "fresh": "9.146147699968424"
+      },
+      {
+       "key": "rows[6].t_ex",
+       "tracked": "5.252318599959835",
+       "fresh": "4.464200800051913"
+      },
+      {
+       "key": "rows[6].t_fd",
+       "tracked": "2.060413500003051",
+       "fresh": "2.0948117000516504"
+      },
+      {
+       "key": "rows[6].t_an",
+       "tracked": "0.6934842999908142",
+       "fresh": "0.9499919000081718"
+      },
+      {
+       "key": "rows[7].t_ref",
+       "tracked": "14.524422999995295",
+       "fresh": "10.71522549999645"
+      },
+      {
+       "key": "rows[7].t_ex",
+       "tracked": "6.29727440001443",
+       "fresh": "5.349322299996857"
+      },
+      {
+       "key": "rows[7].t_fd",
+       "tracked": "3.128776300000027",
+       "fresh": "3.0518479000311345"
+      },
+      {
+       "key": "rows[7].t_an",
+       "tracked": "0.9362428999738768",
+       "fresh": "0.9808207000023685"
+      },
+      {
+       "key": "rows[8].t_ref",
+       "tracked": "13.668564599996898",
+       "fresh": "10.087352700007614"
+      },
+      {
+       "key": "rows[8].t_ex",
+       "tracked": "5.7341017999569885",
+       "fresh": "5.323393600003328"
+      },
+      {
+       "key": "rows[8].t_fd",
+       "tracked": "3.405689200037159",
+       "fresh": "3.602061999961734"
+      },
+      {
+       "key": "rows[8].t_an",
+       "tracked": "1.0565385000081733",
+       "fresh": "1.233372299990151"
+      }
+     ],
+     "run_property_diffs": [
+      {
+       "key": "agg.seconds.ref",
+       "tracked": "1289.4221568001667",
+       "fresh": "968.9174634002848"
+      },
+      {
+       "key": "agg.seconds.ex",
+       "tracked": "589.0292408998357",
+       "fresh": "480.5382647002116"
+      },
+      {
+       "key": "agg.seconds.fd",
+       "tracked": "298.30392259999644",
+       "fresh": "266.6175632001832"
+      },
+      {
+       "key": "agg.seconds.an",
+       "tracked": "78.56368190055946",
+       "fresh": "78.00253290031105"
+      },
+      {
+       "key": "agg.speedup.ex",
+       "tracked": "2.1890630672772198",
+       "fresh": "2.0163169815514133"
+      },
+      {
+       "key": "agg.speedup.fd",
+       "tracked": "4.322511569950714",
+       "fresh": "3.6341096654341447"
+      },
+      {
+       "key": "agg.speedup.an",
+       "tracked": "16.41244561873041",
+       "fresh": "12.421615393420398"
+      },
+      {
+       "key": "agg.speedup_exact",
+       "tracked": "2.1890630672772198",
+       "fresh": "2.0163169815514133"
+      },
+      {
+       "key": "agg.speedup_fd",
+       "tracked": "4.322511569950714",
+       "fresh": "3.6341096654341447"
+      },
+      {
+       "key": "agg.speedup_analytic",
+       "tracked": "16.41244561873041",
+       "fresh": "12.421615393420398"
+      }
+     ],
+     "n_added": 2,
+     "n_removed": 0,
+     "verdict": "DIFFERS",
+     "fresh_path": "s26\\results\\verify\\verify__project_equiv.json"
+    }
+   }
+  },
+  {
+   "audit": "project_degeneracy",
+   "script": "core/project.py",
+   "argv": [
+    "degeneracy"
+   ],
+   "tag": "CPU",
+   "est_ram_gb": 0.8,
+   "cost": "heavy",
+   "note": "126 targets, objective gap between the best two starts",
+   "tracked": [
+    "project_degeneracy.json"
+   ],
+   "started": "2026-09-14T03:46:55",
+   "wall_s": 239.5,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\project_degeneracy.json.tmp",
+     "written": "s26\\results\\verify\\verify__project_degeneracy.json.tmp"
+    },
+    {
+     "intended": "verify\\project_degeneracy.json",
+     "written": "s26\\results\\verify\\verify__project_degeneracy.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "project_degeneracy.json": {
+     "n_tracked_leaves": 767,
+     "n_fresh_leaves": 769,
+     "identical": 256,
+     "close": 1,
+     "different": 510,
+     "run_property_different": 0,
+     "added": [
+      "agg.complete",
+      "agg.requested"
+     ],
+     "removed": [],
+     "diffs": [
+      {
+       "key": "agg.gap_median",
+       "tracked": "0.06665769745825689",
+       "fresh": "0.06428815619227479"
+      },
+      {
+       "key": "agg.gap_min",
+       "tracked": "1.1851245765998053e-09",
+       "fresh": "2.804459381736124e-09"
+      },
+      {
+       "key": "agg.n_gap_under_1e4",
+       "tracked": "23",
+       "fresh": "22"
+      },
+      {
+       "key": "agg.runner_up_dist_median",
+       "tracked": "0.84600201106656",
+       "fresh": "0.8767447079132815"
+      },
+      {
+       "key": "agg.runner_up_dist_max",
+       "tracked": "2.6061174526946895",
+       "fresh": "2.468616994488777"
+      },
+      {
+       "key": "agg.n_tied_1e3_far_0p5",
+       "tracked": "1",
+       "fresh": "3"
+      },
+      {
+       "key": "agg.n_tied_1e2_far_0p5",
+       "tracked": "8",
+       "fresh": "10"
+      },
+      {
+       "key": "rows[0].best",
+       "tracked": "0.5195771787229689",
+       "fresh": "0.5197169327647683"
+      },
+      {
+       "key": "rows[0].gap_to_runner_up",
+       "tracked": "0.0011067270120530548",
+       "fresh": "0.04292251081244769"
+      },
+      {
+       "key": "rows[0].spread",
+       "tracked": "1.8776938351082784",
+       "fresh": "1.876491384064896"
+      },
+      {
+       "key": "rows[0].runner_up_dist",
+       "tracked": "0.03783408552742756",
+       "fresh": "0.6583542333408575"
+      },
+      {
+       "key": "rows[1].best",
+       "tracked": "1.2481900457886193",
+       "fresh": "1.2478925901618894"
+      },
+      {
+       "key": "rows[1].gap_to_runner_up",
+       "tracked": "0.12595235779869096",
+       "fresh": "0.11371548447490798"
+      },
+      {
+       "key": "rows[1].spread",
+       "tracked": "0.37426988728024924",
+       "fresh": "0.1986739635582324"
+      },
+      {
+       "key": "rows[1].runner_up_dist",
+       "tracked": "1.7001884673806271",
+       "fresh": "1.586334025611811"
+      },
+      {
+       "key": "rows[2].best",
+       "tracked": "0.4244017923245492",
+       "fresh": "0.42440179354629276"
+      },
+      {
+       "key": "rows[2].gap_to_runner_up",
+       "tracked": "0.6226393320327602",
+       "fresh": "0.6214443868748734"
+      },
+      {
+       "key": "rows[2].spread",
+       "tracked": "2.5268186652657962",
+       "fresh": "2.525361003558339"
+      },
+      {
+       "key": "rows[2].runner_up_dist",
+       "tracked": "0.8474918944139459",
+       "fresh": "0.8466700113268739"
+      },
+      {
+       "key": "rows[3].best",
+       "tracked": "0.12553698725490367",
+       "fresh": "0.1255370040038106"
+      },
+      {
+       "key": "rows[3].gap_to_runner_up",
+       "tracked": "1.46160348823976e-08",
+       "fresh": "2.0057661009875716e-07"
+      },
+      {
+       "key": "rows[3].spread",
+       "tracked": "2.4899792130059706",
+       "fresh": "0.44987480419213854"
+      },
+      {
+       "key": "rows[3].runner_up_dist",
+       "tracked": "0.00014664476601069612",
+       "fresh": "0.00020528937681644853"
+      },
+      {
+       "key": "rows[4].best",
+       "tracked": "1.2724944284947226",
+       "fresh": "1.2734107609871597"
+      },
+      {
+       "key": "rows[4].gap_to_runner_up",
+       "tracked": "0.004689149423237948",
+       "fresh": "0.0007153496560863282"
+      },
+      {
+       "key": "rows[4].spread",
+       "tracked": "0.026758919199838305",
+       "fresh": "0.004073015490091203"
+      },
+      {
+       "key": "rows[4].runner_up_dist",
+       "tracked": "1.6029299865045805",
+       "fresh": "1.6454709110686245"
+      },
+      {
+       "key": "rows[5].best",
+       "tracked": "0.013613806240553049",
+       "fresh": "0.013613969937430739"
+      },
+      {
+       "key": "rows[5].gap_to_runner_up",
+       "tracked": "1.1851245765998053e-09",
+       "fresh": "2.804459381736124e-09"
+      },
+      {
+       "key": "rows[5].spread",
+       "tracked": "0.7983546881779795",
+       "fresh": "0.8001307236479949"
+      },
+      {
+       "key": "rows[5].runner_up_dist",
+       "tracked": "2.2661473778084834e-05",
+       "fresh": "8.244888838811436e-05"
+      },
+      {
+       "key": "rows[6].best",
+       "tracked": "1.59823619944632",
+       "fresh": "1.5987029288708694"
+      },
+      {
+       "key": "rows[6].gap_to_runner_up",
+       "tracked": "0.09061506477741643",
+       "fresh": "0.07341974156124853"
+      },
+      {
+       "key": "rows[6].spread",
+       "tracked": "0.42451585754375687",
+       "fresh": "0.4253324147705042"
+      },
+      {
+       "key": "rows[6].runner_up_dist",
+       "tracked": "1.2493822493843267",
+       "fresh": "1.4806959508177038"
+      },
+      {
+       "key": "rows[7].best",
+       "tracked": "0.4907210829314169",
+       "fresh": "0.4922717479115122"
+      },
+      {
+       "key": "rows[7].gap_to_runner_up",
+       "tracked": "0.3692418094783665",
+       "fresh": "0.3677093849687547"
+      },
+      {
+       "key": "rows[7].spread",
+       "tracked": "1.8160446441253817",
+       "fresh": "1.8135951053667447"
+      },
+      {
+       "key": "rows[7].runner_up_dist",
+       "tracked": "0.8800087342456067",
+       "fresh": "0.8700160420402892"
+      },
+      {
+       "key": "rows[8].best",
+       "tracked": "0.15815250828267358",
+       "fresh": "0.15814085833163163"
+      }
+     ],
+     "run_property_diffs": [],
+     "n_added": 2,
+     "n_removed": 0,
+     "verdict": "DIFFERS",
+     "fresh_path": "s26\\results\\verify\\verify__project_degeneracy.json"
+    }
+   }
+  },
+  {
+   "audit": "project_iters",
+   "script": "core/project.py",
+   "argv": [
+    "iters"
+   ],
+   "tag": "CPU",
+   "est_ram_gb": 0.8,
+   "cost": "medium",
+   "note": "24 targets by default (the tracked run's default)",
+   "tracked": [
+    "project_iters.json"
+   ],
+   "started": "2026-09-14T03:40:27",
+   "wall_s": 384.7,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\project_iters_n24.json.tmp",
+     "written": "s26\\results\\verify\\verify__project_iters_n24.json.tmp"
+    },
+    {
+     "intended": "verify\\project_iters_n24.json",
+     "written": "s26\\results\\verify\\verify__project_iters_n24.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "project_iters.json": {
+     "n_tracked_leaves": 22,
+     "n_fresh_leaves": 29,
+     "identical": 4,
+     "close": 0,
+     "different": 14,
+     "run_property_different": 4,
+     "added": [
+      "arms[3].arm",
+      "arms[3].solves",
+      "arms[3].nit_mean",
+      "arms[3].nit_max",
+      "arms[3].nfev_mean",
+      "arms[3].nfev_sum",
+      "arms[3].frac_hitting_maxiter"
+     ],
+     "removed": [],
+     "diffs": [
+      {
+       "key": "arms[0].solves",
+       "tracked": "90",
+       "fresh": "216"
+      },
+      {
+       "key": "arms[0].nit_mean",
+       "tracked": "161.33333333333334",
+       "fresh": "181.06944444444446"
+      },
+      {
+       "key": "arms[0].nfev_mean",
+       "tracked": "231.04444444444445",
+       "fresh": "255.7962962962963"
+      },
+      {
+       "key": "arms[0].frac_hitting_maxiter",
+       "tracked": "0.1",
+       "fresh": "0.18518518518518517"
+      },
+      {
+       "key": "arms[1].arm",
+       "tracked": "\"fd\"",
+       "fresh": "\"ex\""
+      },
+      {
+       "key": "arms[1].solves",
+       "tracked": "90",
+       "fresh": "216"
+      },
+      {
+       "key": "arms[1].nit_mean",
+       "tracked": "159.32222222222222",
+       "fresh": "181.06944444444446"
+      },
+      {
+       "key": "arms[1].nfev_mean",
+       "tracked": "225.23333333333332",
+       "fresh": "255.7962962962963"
+      },
+      {
+       "key": "arms[1].frac_hitting_maxiter",
+       "tracked": "0.1",
+       "fresh": "0.18518518518518517"
+      },
+      {
+       "key": "arms[2].arm",
+       "tracked": "\"an\"",
+       "fresh": "\"fd\""
+      },
+      {
+       "key": "arms[2].solves",
+       "tracked": "90",
+       "fresh": "216"
+      },
+      {
+       "key": "arms[2].nit_mean",
+       "tracked": "157.11111111111111",
+       "fresh": "180.65740740740742"
+      },
+      {
+       "key": "arms[2].nfev_mean",
+       "tracked": "218.48888888888888",
+       "fresh": "254.13888888888889"
+      },
+      {
+       "key": "arms[2].frac_hitting_maxiter",
+       "tracked": "0.13333333333333333",
+       "fresh": "0.18055555555555555"
+      }
+     ],
+     "run_property_diffs": [
+      {
+       "key": "n_targets",
+       "tracked": "10",
+       "fresh": "24"
+      },
+      {
+       "key": "arms[0].nfev_sum",
+       "tracked": "20794",
+       "fresh": "55252"
+      },
+      {
+       "key": "arms[1].nfev_sum",
+       "tracked": "20271",
+       "fresh": "55252"
+      },
+      {
+       "key": "arms[2].nfev_sum",
+       "tracked": "19664",
+       "fresh": "54894"
+      }
+     ],
+     "n_added": 7,
+     "n_removed": 0,
+     "verdict": "DIFFERS",
+     "fresh_path": "s26\\results\\verify\\verify__project_iters_n24.json"
+    }
+   }
+  },
+  {
+   "audit": "project_stability",
+   "script": "core/project.py",
+   "argv": [
+    "stability",
+    "77"
+   ],
+   "tag": "CPU",
+   "est_ram_gb": 0.8,
+   "cost": "heavy",
+   "note": "the tracked file is a PARTIAL (77-target) run kept under its own name; re-run with limit 77 so the comparison is like for like",
+   "tracked": [
+    "project_stability_partial77.json"
+   ],
+   "started": "2026-09-14T03:50:57",
+   "wall_s": 1308.6,
+   "error": null,
+   "writes": [
+    {
+     "intended": "verify\\project_stability_n77.json.tmp",
+     "written": "s26\\results\\verify\\verify__project_stability_n77.json.tmp"
+    },
+    {
+     "intended": "verify\\project_stability_n77.json",
+     "written": "s26\\results\\verify\\verify__project_stability_n77.json"
+    }
+   ],
+   "tracked_unchanged": true,
+   "diffs": {
+    "project_stability_partial77.json": {
+     "n_tracked_leaves": 472,
+     "n_fresh_leaves": 471,
+     "identical": 469,
+     "close": 0,
+     "different": 2,
+     "run_property_different": 0,
+     "added": [],
+     "removed": [
+      "agg.stopped_by"
+     ],
+     "diffs": [
+      {
+       "key": "agg.complete",
+       "tracked": "false",
+       "fresh": "true"
+      },
+      {
+       "key": "agg.requested",
+       "tracked": "126",
+       "fresh": "77"
+      }
+     ],
+     "run_property_diffs": [],
+     "n_added": 0,
+     "n_removed": 1,
+     "verdict": "DIFFERS",
+     "fresh_path": "s26\\results\\verify\\verify__project_stability_n77.json"
     }
    }
   }

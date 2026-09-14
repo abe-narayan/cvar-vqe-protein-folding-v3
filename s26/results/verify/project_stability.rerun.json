@@ -1,0 +1,60 @@
+{
+ "audit": "project_stability",
+ "script": "core/project.py",
+ "argv": [
+  "stability",
+  "77"
+ ],
+ "tag": "CPU",
+ "est_ram_gb": 0.8,
+ "cost": "heavy",
+ "note": "the tracked file is a PARTIAL (77-target) run kept under its own name; re-run with limit 77 so the comparison is like for like",
+ "tracked": [
+  "project_stability_partial77.json"
+ ],
+ "started": "2026-09-14T03:50:57",
+ "wall_s": 1308.6,
+ "error": null,
+ "writes": [
+  {
+   "intended": "verify\\project_stability_n77.json.tmp",
+   "written": "s26\\results\\verify\\verify__project_stability_n77.json.tmp"
+  },
+  {
+   "intended": "verify\\project_stability_n77.json",
+   "written": "s26\\results\\verify\\verify__project_stability_n77.json"
+  }
+ ],
+ "tracked_unchanged": true,
+ "diffs": {
+  "project_stability_partial77.json": {
+   "n_tracked_leaves": 472,
+   "n_fresh_leaves": 471,
+   "identical": 469,
+   "close": 0,
+   "different": 2,
+   "run_property_different": 0,
+   "added": [],
+   "removed": [
+    "agg.stopped_by"
+   ],
+   "diffs": [
+    {
+     "key": "agg.complete",
+     "tracked": "false",
+     "fresh": "true"
+    },
+    {
+     "key": "agg.requested",
+     "tracked": "126",
+     "fresh": "77"
+    }
+   ],
+   "run_property_diffs": [],
+   "n_added": 0,
+   "n_removed": 1,
+   "verdict": "DIFFERS",
+   "fresh_path": "s26\\results\\verify\\verify__project_stability_n77.json"
+  }
+ }
+}
