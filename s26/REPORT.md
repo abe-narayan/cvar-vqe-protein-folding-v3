@@ -76,7 +76,7 @@ against a matched control on the same 126 targets.
 The programme did not reach its accuracy targets. On the 60-target sealed benchmark, opened
 once, the synthesis architecture scored 2.9610 A against the shipped baseline's 2.9507 A (both
 single-window selection arms on the S9 instrument), a paired difference of +0.0103 A with 95% CI
-[-0.1596, +0.1803], 31 wins to 29 losses (`docs/FINDINGS.md:4479-4607`, S9-10; the two means are
+[-0.1596, +0.1803], 31 wins to 29 losses (`docs/FINDINGS.md:4501-4629`, S9-10; the two means are
 asserted within 5e-4 A of the committed record `s9/final_report.json` by
 `tests/test_pipeline.py::test_the_committed_benchmark_report_still_holds_its_reference_numbers`,
 passed in `s26/TEST_RUN.md`; this lane did not open the record). On the 126-target development
@@ -91,7 +91,7 @@ output, are what Parts IV to VIII are about.
 
 This part is written so that a reader could design a valid experiment on this repository
 without further help. The rules are the ones the programme learned by breaking them; the
-retraction count that taught them is 23 corrections in `docs/FINDINGS.md:60-118` plus five S25
+retraction count that taught them is 23 corrections in `docs/FINDINGS.md:60-140` plus five S25
 claims retracted by internal audit (`s25/LEDGER.md` L5, L7, L9, L11, L15).
 
 ### II.1 The targets
@@ -116,7 +116,7 @@ claims retracted by internal audit (`s25/LEDGER.md` L5, L7, L9, L11, L15).
 - **benchmark60, sealed.** 60 targets in `results/benchmark_manifest.json`, cluster-disjoint
   from tuning126 (`tests/test_pipeline.py::test_tuning_instrument_is_disjoint_from_the_benchmark`).
   It was opened exactly once, by S9-10, on pre-registered constants
-  (`docs/FINDINGS.md:4479-4607`); the CLI refuses to run it without
+  (`docs/FINDINGS.md:4501-4629`); the CLI refuses to run it without
   `--i-am-spending-the-benchmark`
   (`tests/test_equivalence.py::test_the_benchmark_is_refused_without_the_explicit_flag`), and
   `tests/test_equivalence.py::test_benchmark60_cached_record_reproduces_and_is_not_rerun`
@@ -130,7 +130,7 @@ claims retracted by internal audit (`s25/LEDGER.md` L5, L7, L9, L11, L15).
   benchmark targets carry such a self-copy in their own fold model's training set
   (`s24/LEDGER.md` L4; `s26/results/i_identity_audit.json`, S26 ledger L15). At the looser
   >= 0.6 identity criterion 13 of 60 benchmark targets have such a pool window
-  (`docs/FINDINGS.md:4571`, S9-10), priced at +0.0030 A in S10-4. The dev price, re-derived in S26
+  (`docs/FINDINGS.md:4593`, S9-10), priced at +0.0030 A in S10-4. The dev price, re-derived in S26
   with an artefact: clean minus production +0.0004 A on the lam = 0 chain (fold CI [-0.0001,
   +0.0010], MDE 0.0012) and +0.0018 A on the built chain [-0.0003, +0.0039], neither clearing
   its MDE (`s26/results/w_selfcopy_endpoint.json`; S26 ledger L44, L50). The benchmark effect is
@@ -221,7 +221,7 @@ Every comparison is paired per target through `s24.stats_lib.compare(a, b, folds
   N = 200).
 - **Tied argmins are averaged.** `np.argmin` returns the first index of a tie, and the candidate
   order is the retrieval order, which is not neutral; a tied signal once "won" by 1.386 A by
-  reading that order (`docs/FINDINGS.md:2751`, "A methodological correction that changed the
+  reading that order (`docs/FINDINGS.md:2773`, "A methodological correction that changed the
   answer"; `s24.stats_lib.argmin_tied`). A selector's outcome is the mean RMSD over its tied
   argmin set.
 - **Grid oracles are order statistics.** A per-target minimum over K arms is mostly best-of-K;
@@ -272,7 +272,7 @@ What it discards: everything about the target that is not a function of its sequ
 can be wrong: the language model was trained on evolutionary sequence statistics, not on
 peptide structures; the sequence channel is weak at this length (Part I). What it is worth:
 ESM features against one-hot residue identity buy 0.288 A on selection
-(`docs/FINDINGS.md:1970-2037`, S7 finding 11; `docs/STATE_BRIEF_2026-09-12.md` 5.7).
+(`docs/FINDINGS.md:1992-2059`, S7 finding 11; `docs/STATE_BRIEF_2026-09-12.md` 5.7).
 
 ### III.2 The distogram (the prior)
 
@@ -316,8 +316,8 @@ reference did (`core.pipeline._q`).
 
 What it discards: every window outside the top 500, and every conformation not present in the
 library. Where it can be wrong: BLOSUM similarity is a weak key; fixing retrieval outright, by
-purchasing perfect retrieval with the native, was worth 0.016 A (`docs/FINDINGS.md:2379-2611`,
-S8-6), and structure and sequence are decoupled at this length (`docs/FINDINGS.md:477`, S5
+purchasing perfect retrieval with the native, was worth 0.016 A (`docs/FINDINGS.md:2401-2633`,
+S8-6), and structure and sequence are decoupled at this length (`docs/FINDINGS.md:499`, S5
 finding 9). The stable sort matters because similarity sums are small integers with large tie
 sets, and an unstable order moves up to 47 of the 500 members (`README.md`, "Layout"). ORACLE
 ceilings, single window: the best window in the pool averages 1.7108 A (`science/pool_best/mean`),
@@ -342,7 +342,7 @@ discards, on average, the 1.7108 A pool member for a set whose best is 0.6 A wor
 it keeps nothing under 5.34 A while the pool holds a 1.40 A window. A perfect ranker inside the
 shipped top-25 would return 2.6087 A single window (`s17/results/inband.json :: cells/25`,
 band_best; reproduced in `s26/PREREG_C1.md`); inside the near-native band the score itself is
-worse than a coin flip (`docs/FINDINGS.md:2739-2987`, S8-8).
+worse than a coin flip (`docs/FINDINGS.md:2761-3009`, S8-8).
 
 ### III.5 The selector (off in production)
 
@@ -609,7 +609,7 @@ minimiser is asked to repair what the builder could not draw (`s17/LEDGER.md` L2
 ### IV.8 What the physics is for
 
 The record's settled role for both energies is a validity stage, not an accuracy stage:
-`docs/FINDINGS.md:3663` (S8-12, "AMBER is a validity stage, not an accuracy stage");
+`docs/FINDINGS.md:3685` (S8-12, "AMBER is a validity stage, not an accuracy stage");
 `s17/LEDGER.md` L24 (the validity frontier splits in two, and the incumbent's restraint set
 wins); `s18/LEDGER.md` L15, L17 (`leg_contact` fails as a term in the objective and is harmful
 on the deployed one); `s21/LEDGER.md` L24, L33 (the Legacy-to-AMBER continuation is degenerate
@@ -758,7 +758,7 @@ noise, which is what proves the disagreement is bias (`s25/QUANTUM.md` 4.2):
 
 | instrument | cosine with the exact gradient | norm ratio |
 |---|---|---|
-| S5, the first measurement (`docs/FINDINGS.md:368-403`) | -0.023 | not recorded |
+| S5, the first measurement (`docs/FINDINGS.md:390-425`) | -0.023 | not recorded |
 | S9, 10 qubits, 1024 amplitudes enumerated (`core/quantum.py:42`) | +0.655634 | 0.758 |
 | the consolidation audit, exact / sampled (`verify/cvar_audit.json`) | +0.6847 / +0.685 | not recorded |
 | S25 re-verification, n = 7, L = 3, alpha = 0.15, deployed energy shape | +0.566586 | 0.519 |
@@ -768,8 +768,8 @@ noise, which is what proves the disagreement is bias (`s25/QUANTUM.md` 4.2):
 A third figure, +0.524 over 36 checks on the S8 instrument, lives only in project memory and is
 not in Appendix B (`s26/EXAMINATION.md` C24). There is no universal constant; what reproduces is
 the sign, the order of magnitude and the mechanism. The defect was first found and priced in
-S5 (`docs/FINDINGS.md:368`, "A defect in the shipped CVaR gradient") and re-audited against two
-references in S8-9 (`docs/FINDINGS.md:3147`) and S9-5 (`docs/FINDINGS.md:4197`).
+S5 (`docs/FINDINGS.md:390`, "A defect in the shipped CVaR gradient") and re-audited against two
+references in S8-9 (`docs/FINDINGS.md:3169`) and S9-5 (`docs/FINDINGS.md:4219`).
 
 ### V.6 The tail-subset-of-prefix theorem
 
@@ -1051,15 +1051,15 @@ produces worse physics.
 
 ### V.11 The quantum record across the sprints
 
-- S5: the CVaR gradient defect found and priced (`docs/FINDINGS.md:368`); a VQE over segment
-  choices with its encoding and limits stated (`docs/FINDINGS.md:404`).
+- S5: the CVaR gradient defect found and priced (`docs/FINDINGS.md:390`); a VQE over segment
+  choices with its encoding and limits stated (`docs/FINDINGS.md:426`).
 - S6: VQE/CVaR assembly gives a narrow pool whose narrowness cannot be exploited
-  (`docs/FINDINGS.md:1021`).
+  (`docs/FINDINGS.md:1043`).
 - S8-9: CVaR-VQE over the discrete hypothesis set, and the integrated four-component system
-  priced component by component (`docs/FINDINGS.md:3240`, `:3299`); the gradient audited against
+  priced component by component (`docs/FINDINGS.md:3262`, `:3299`); the gradient audited against
   two references (`:3147`).
 - S9-5: refinement's failure located in selection; the four-component ablation conclusive; the
-  gradient defect fixed and priced against an exact reference (`docs/FINDINGS.md:4154-4213`).
+  gradient defect fixed and priced against an exact reference (`docs/FINDINGS.md:4176-4235`).
 - S12: the mandated quantum component, "a verified problem, and a classical win"
   (`s12/SPRINT12_DOSSIER.md` section XVIII): 20 of 20 alpha x T arms lose, and the VQE's eight
   most probable states never beat the eight best classical ones.
@@ -1126,14 +1126,19 @@ deployed Hamiltonian the optimum at alpha = 1 is a product state on every real t
 21-parameter fixed circuit stops 0.90 nats short, an adaptive ansatz free to entangle appends
 operators worth less than 1e-3 nats and leaves a product state, and reaching the optimum exactly
 moves the built chain by -0.014 to -0.022 A, a third of what the comparison resolves (MDE 0.059 to
-0.061). Proposal A's verdict is REPLACE (L69). **A3.** Pending.
+0.061). Proposal A's verdict is REPLACE (L69). **A3, a target-dependent Hamiltonian (L125).** A
+raw-score Hamiltonian at the deployed entropy makes the trained states target-dependent (124 of
+126 distinct, a median 1.34 nats apart against 0.010 under the rank ladder) and the emitted
+structure does not change (+0.0034 A, 0.04x MDE); without the entropy match the sharper states
+are worse by +0.09 to +0.11 A at 0.7 to 0.8x the MDE: the readout responds to the entropy of the
+weights and to nothing else that was varied.
 
 ## PART VI. THE TWENTY-TWO SPRINTS AS A STORY
 
 Sprints 1 to 4 predate the record kept here; their tree is in git history at `5fa05cd` and their
 one surviving claim (that physics ranks real geometry) was re-measured and overturned in S5 and
 S7. From S5 the record is `docs/FINDINGS.md` (S5 to S11, with its corrections ledger at lines
-60 to 118 and its index at 119 to 211), the sprint dossiers `s12/` to `s15/`, and the live
+60 to 140 (the S26 block appended at L130) and its index at 141 to 233), the sprint dossiers `s12/` to `s15/`, and the live
 ledgers `s14/LEDGER.md` to `s26/LEDGER.md`. `docs/CONDENSED_REPORT.md` condenses S5 to S13 and
 `docs/STATE_BRIEF_2026-09-12.md` section 7 gives one line per sprint. Each section below has the
 same six fields. "Falsifier" names the pre-registered condition where one existed; formal
@@ -1141,7 +1146,7 @@ pre-registration began in S15, and before that the field names the test that dec
 sprint. Numbers are quoted from the named section or ledger entry, which names its artefact;
 Appendix B lists them as cited.
 
-### VI.1 Sprint 5: the wall is located (`docs/FINDINGS.md:123`, sections at 248 to 780)
+### VI.1 Sprint 5: the wall is located (`docs/FINDINGS.md:145`, sections at 248 to 780)
 
 Question. A K = 500 retrieval pool holds a 1.71 A member on average and the shipped selector
 returns 3.45 A (both single window): where between the two is the accuracy lost, and can a
@@ -1168,7 +1173,7 @@ control: AMBER is worse, not better.
 
 Open. In-band discrimination, carried to S6.
 
-### VI.2 Sprint 6: selection is measured out (`docs/FINDINGS.md:140`, sections at 781 to 1331)
+### VI.2 Sprint 6: selection is measured out (`docs/FINDINGS.md:162`, sections at 781 to 1331)
 
 Question. Can any ranker, learned or physical, order the near-native band of a pool?
 
@@ -1193,7 +1198,7 @@ Retracted. The +0.320 combiner effect (section 12).
 
 Open. The inter-generator agreement lead (closed in S7 as a difficulty thermometer).
 
-### VI.3 Sprint 7: the predictor is the constraint (`docs/FINDINGS.md:155`, sections at 1332 to 2088)
+### VI.3 Sprint 7: the predictor is the constraint (`docs/FINDINGS.md:177`, sections at 1332 to 2088)
 
 Question. Is the distance predictor improvable, and does anything rank the truth first?
 
@@ -1216,7 +1221,7 @@ Retracted. "ESM adds nothing" and "random fragments beat retrieval" (sections 11
 
 Open. The aggregation metric, carried to S8.
 
-### VI.4 Sprint 8: the full architectural attack (`docs/FINDINGS.md:169`, sections S8-1 to S8-14 at 2089 to 3899)
+### VI.4 Sprint 8: the full architectural attack (`docs/FINDINGS.md:191`, sections S8-1 to S8-14 at 2089 to 3899)
 
 Question. With the ranker line closed, does any architectural change (representation, pool
 construction, retrieval key, generation, synthesis, physics) move the endpoint?
@@ -1234,7 +1239,7 @@ worth 0.016 A (S8-6); inverse folding is the least misspecified objective and st
 (S8-7); inside the near-native band the score is worse than a coin flip and consensus is the
 only discriminator, giving the first arm in three sprints with a CI excluding zero, a score
 filter plus consensus medoid at -0.172 A [-0.316, -0.027] single window, 74W/47L (S8-8,
-`docs/FINDINGS.md:2893-2935`); the channels' errors are
+`docs/FINDINGS.md:2915-2957`); the channels' errors are
 decorrelated and it buys 0.01 A (S8-9); generation is worth nothing as candidates but exposes a
 second law (S8-10, corrected by S8-13: the transfer law is the identity map where we operate);
 synthesis beats selection at 3.204 A, replicated on dev (S8-11); AMBER is a validity stage, not
@@ -1249,7 +1254,7 @@ correction at 2612).
 
 Open. Synthesis, taken to the benchmark in S9.
 
-### VI.5 Sprint 9: the benchmark pass (`docs/FINDINGS.md:186`, sections S9-1 to S9-10 at 3900 to 4607)
+### VI.5 Sprint 9: the benchmark pass (`docs/FINDINGS.md:208`, sections S9-1 to S9-10 at 3900 to 4607)
 
 Question. Does the synthesis architecture's tuning gain transfer to the sealed benchmark?
 
@@ -1272,7 +1277,7 @@ Retracted. The tuning gain as a transferable effect.
 
 Open. Why the non-replication (S10).
 
-### VI.6 Sprint 10: adjudication and bounds (`docs/FINDINGS.md:198`, sections S10-1 to S10-5 at 4608 to 5159)
+### VI.6 Sprint 10: adjudication and bounds (`docs/FINDINGS.md:220`, sections S10-1 to S10-5 at 4608 to 5159)
 
 Question. Was the non-replication contamination or concentration, and where is the remaining
 headroom?
@@ -1295,7 +1300,7 @@ Retracted. S10-1's identity audit (void, S10-4).
 
 Open. Recognition, named as the barrier.
 
-### VI.7 Sprint 11: performance engineering and consolidation (`docs/FINDINGS.md:205`, S11-1 at 5160, S11-2 at 5219)
+### VI.7 Sprint 11: performance engineering and consolidation (`docs/FINDINGS.md:227`, S11-1 at 5160, S11-2 at 5219)
 
 Question. Do the four mandated components run, and can the codebase be consolidated without
 changing a number?
@@ -1805,8 +1810,14 @@ consoles on Windows, so a governor kill is a hard kill after 25 s and the loss i
 each job's own checkpoint granularity (per target or per fold in every S26 job); v2.3 adopts
 suspensions made before its start and reads the launch cap from a file, raised from four to
 six (L83), after which seven waiters that had read the old cap at import were found starved
-for two hours and relaunched (L92). The box was shared with the user's own load all night, so
-memory, not CPU, set the parallelism (headroom 1.4 GB after the pause, L41).
+for two hours and relaunched (L92); lane I was starved for 75 minutes by other lanes' relaunch
+cadence (jobrun has no priority) and the cap went to seven with non-critical launches held
+(L111); and v2.4, the last change of the sprint, keeps the governor's own record of what it
+suspended after lane I found that a job whose root blocks in a subprocess reads "running" to
+psutil after a suspend, so v2.3 re-suspended one audit's tree 18 times and never resumed it,
+and Windows counts suspends per thread so the child then needed 16 resume calls (L128, L129).
+The box was shared with the user's own load all night, so memory, not CPU, set the parallelism
+(headroom 1.4 GB after the pause, L41).
 
 **The interruptions.** Four, none of which lost a number: the API session limit cut every lane
 from 00:46 to 08:40 (L17); the user paused the campaign at 09:30 at a usage limit, the host
@@ -1925,8 +1936,39 @@ than weak: the Hamiltonian is a constant ladder whose optimum is a product state
 ansatz's algebra is already the full so(2^n), the grown circuits give no width-scaling argument,
 and the endpoint is null at a stated resolution of 0.06 A.
 
-**A3, a target-dependent Hamiltonian.** Pending (`a3_build`, suspended by v2.1 and never resumed
-by v2.2, adopted and resumed by v2.3, L83).
+**A3, a target-dependent Hamiltonian (L125; the S25 L17 question).** `s26/PREREG_A3.md` (filed
+09:00); build `s26/q_adapt.py --build --tag a3` with the variants `zrank`, `zraw`, `asinh`, `soft`
+and ADAPT on `zrank` and `zraw` (`s26/jobs_done/a3_build.json`, 16,373 s, peak RSS 0.352 GB);
+label after the gate (45 s); stats `s26/results/a3_stats.json`; records `s26/results/a3/<pdb>.json`
+(126, each bit-for-bit against the production quantum cache). Every variant is a strictly
+increasing function of the shipped score over the same 128 candidates, re-standardised, so the
+classical order and the CVaR prefix are the same on every arm; `Tmatch` runs the fixed circuit
+at the per-target temperature at which the variant's Gibbs entropy equals the deployed 4.914
+bits, chosen native-free. Built chain on both sides against the deployed selector
+`fixed_zrank_it50` (3.2280): entropy-matched, `zraw` +0.0034 (SE 0.0273, 0.04x MDE, fold CI
+[-0.0446, +0.0337]), `asinh` +0.0145 (0.18x), `soft` -0.0037 (0.05x); unmatched at T = 0.3, the
+sharper states are worse on all three variants, `zraw` +0.1053 (0.77x, fold CI [+0.0367, +0.2112],
+5/5 folds), `asinh` +0.0864 (0.69x), `soft` +0.1116 (0.81x), the Type-M zone; ADAPT on `zraw`
++0.0345 to +0.0378 (0.30x to 0.32x); single-window `zraw` +0.0885 (0.55x). The registered
+"null" fired for every entropy-matched arm, "helps" did not fire, "harmful" did not fire for
+the unmatched arms (three variants, one direction, none past its MDE). The property half, no
+native: under the rank ladder the trained states are a tight family (14 of 78 distinct at
+alpha = 1 by a 0.01-nat criterion, pairwise median 0.010 nats; lane Q's prediction of at most 3
+distinct states was falsified, and "two trained states" holds for the spectrum and the endpoint
+but not at a 0.01-nat resolution), while under the entropy-matched raw score 124 of 126 are
+distinct, a median 1.34 nats apart; the Gibbs entropy at T = 0.3 is 4.914 bits on every target
+under `zrank` and 3.10 (range 0.01 to 5.99) under `zraw`; the matched temperatures average
+0.565; KL(Gibbs || product) is at most 8e-4 under `zrank` and 0.050 mean (max 0.263) under
+`zraw`; ADAPT's operator sets are 57 distinct on 78 targets under `zrank` (the commonest, {Y_0,
+Y_3}, on 10) because the argmax is taken over pool gradients of order 1e-3. The L17 answer: the
+Hamiltonian can be made target-dependent while preserving the selection semantics, and at the
+deployed entropy that makes the trained states target-dependent (124 of 126 distinct) and the
+emitted structure does not change (+0.003 A, 0.04x MDE); without the entropy match the same
+gaps sharpen the state (2.8 bits against 5.9) and the built chain is worse by +0.09 to +0.11 A
+with fold CIs above zero on 5/5 folds at 0.7 to 0.8x the MDE. The readout responds to the
+entropy of the weights (S25 section 6.2) and to nothing else varied here; the spectrum was the
+last untried lever on the selector's side and it moves the answer only through that entropy.
+IDEA_l17 is closed: measured, not helpful; no cell of `VQE_LFO` changes.
 
 ### VII.2 Proposal B: the scaled generation lane (lane P)
 
@@ -2034,8 +2076,14 @@ re-projection of the same rung
 (`p_deliver_shipped`, 567 s) is saved beside it as `p_best_rung_chains_rebuild_basis.json`
 (mean 3.2126, the L57 basis) as the cross-check that the ladder's anchor and the production
 chains are the same object up to the projection's multi-start sensitivity; it overwrote the
-delivery file for six minutes and was moved (L116). Pending: `raw` (its training stopped by hand
-at the 21:50 stall, L74), the deferred `coherence_penalised_training` (1.25 GB)
+delivery file for six minutes and was moved (L116). The `raw` rung (the 1280-d ESM-2 embedding
+with a learned projection) is recorded as NOT RUN (L133): four of five fold models exist
+(`s26/models/p_ladder/raw_fold{0,1,2,3}_s0.pt`, 4,477 to 4,900 s per fold at peak RSS 1.93 to 1.96
+GB; the first attempt was terminated at 19:11 with the governor dead and fold 3 queued 40 minutes
+behind the cap), fold 4 is untrained at the 04:30 close and a rung needs all five; its inputs
+are bracketed by `pca32f` (+0.018, 0.13x) and `pca128` (+0.076, 0.43x), both null, and S7-11
+measured raw on selection as indistinguishable from both. The deferred
+`coherence_penalised_training` (1.25 GB)
 and `attn` (3 to 3.5 GB, only if the box empties); length- and FAIL18-stratified tables for every
 rung; a replication for any rung clearing its MDE; the best-rung delivery file for C3 stage 2;
 the final `PROPOSAL_B.md` and `PROPOSAL_C.md` (L77).
@@ -2144,8 +2192,29 @@ of the invisible common mode). C4 is closed: the sixth through seventeenth route
 land where the first five did (S22 L7, S23 L7), and the S22 L10 bound (sample size, not
 features) stands as the explanation.
 
-**C5, the common-mode prediction.** Did not complete before the close; it keeps its
-pre-registration (L117).
+**C5, the common-mode prediction (L132).** `s26/PREREG_C5.md` (alpha grid reduced to 0.5, declared
+in the commit); `s26/p_c5.py run` -> `s26/results/p_c5.json` (complete, 126/126; job `p_c5_run`,
+5,284 s, peak RSS 0.09 GB), statistics `p_c5_stats.json`. Construction: per target the shipped
+top-75 cloud c and the common mode c - t after one rigid fit (ORACLE, training folds only inside
+the fits); R1 = five shell means of D(c) - D(t) in distance space, applied by stress descent; R2
+= the cloud's own principal-axis frame (native-free); GLOBAL = the training-fold mean correction
+per length band; RIDGE = a nested leave-fold-out ridge from the 45 B3 features to the five R1
+shell means; RANDOM = a random direction of the same magnitude; ORACLE = the true correction.
+Every arm through the production projection; built chain (rebuild basis 3.2126) on both sides,
+point cloud carried; negative = better than the incumbent. GLOBAL R2 -0.0090 (SE 0.0140, 0.23x
+MDE, fold CI [-0.0331, +0.0185]); GLOBAL R1 +0.0312 (0.60x, fold CI above zero at 5/5 but under
+the MDE gate); RIDGE R1 +0.1643 (SE 0.0328, 1.79x, fold CI [+0.1176, +0.2253], 5/5, 40W/86L,
+WORSE) against its magnitude-matched random control +0.1351 (1.33x): the predicted shell profile
+is indistinguishable from a random one of the same size (the nested alphas went to the top of
+the grid on 3 of 5 folds, so the ridge emitted a near-constant correction); RANDOM R2 +0.0123
+(0.45x). The ceiling: subtracting the true common mode gives -1.8749 A in distance space
+(120W/6L) and -3.1293 in the coordinate frame (126W/0L; the R2 oracle is the native by
+construction, so its number is the size of the mode plus the projection's cost, not a target).
+Point cloud: GLOBAL R1 +0.0360 (0.84x), GLOBAL R2 +0.0164, RIDGE R1 +0.1492 (1.91x, WORSE),
+ORACLE R2 -3.0483. The pre-registered falsifier fires for both GLOBAL and RIDGE; C5 is refuted at
+one agent-day, as S16, S19 L14 and S24 L7 predicted, now with the ceiling measured beside it on
+the same operator: the common mode is 1.9 to 3.1 A of built-chain error and nothing native-free
+in these two representations touches it (`s26/PROPOSAL_C.md` addendum 2).
 
 ### VII.4 The tournament entries
 
@@ -2163,15 +2232,15 @@ updated at the close):
 | strain_difficulty (PH) | 4, 0.50 | MEASURED as a calibration flag and RESTATED: the pool's own disagreement (the top-75's pairwise spread) predicts the emitted chain's error at partial rho +0.452; the relaxation's displacement (+0.433) is its proxy at rho 0.76 and adds +0.08 given it; the "first native-free quantity above 0.4" sentence retracted; not a lever | L53, L81, L121, L123 | built chain (ORACLE label) |
 | branch_select (PH) | 5, 0.20 | CLOSED as an accuracy step: +0.0055 against the production choice (0.18x MDE); the relaxed energy picks the branch as well as the objective and no better (-0.102 against random) | L88, L96 | built chain |
 | window_ensembling (P, run by W) | 6, 0.15 | CLOSED in the fixed-K form: -0.0005 against shipped (0.02x), +0.0042 against a zero-information resample | L84, L94 | built chain (rebuild) |
-| l17_target_dependent_hamiltonian = A3 (Q) | 7, 0.15 | pending at the time of writing | | |
-| rotamer_relief B (PH) | 8, 0.15 | pending at the time of writing (Part A, the census, is L23: 96.8% of the condemned members are condemned by a side-chain contact) | L23 | |
+| l17_target_dependent_hamiltonian = A3 (Q) | 7, 0.15 | CLOSED, measured and not helpful: a target-dependent Hamiltonian at the deployed entropy makes the trained states target-dependent (124 of 126 distinct) and the readout does not notice (+0.0034 A, 0.04x MDE); the sharper unmatched states are worse (+0.09 to +0.11, 0.7 to 0.8x) | L125 | built chain (`rmsd_q_synth`) |
+| rotamer_relief B (PH) | 8, 0.15 | CLOSED: relieving the builder's chi1 halves the catastrophic fraction (0.535 to 0.233 above 1e4) and leaves an energy that ranks nothing (rho -0.002) and still rejects harmfully (+0.030 against the anchor, +0.022 against random, 5/5 folds); Part A is L23 | L23, L131 | point cloud (reject); single window (ranking, ORACLE) |
 | window_provenance (W) | 9, 0.15 | census MEASURED (73% of every pool and top-75 is fragment windows, 0.6% whole peptides); the ORACLE class gap 0.42 A in the pool; the achievable readout H_P3 CLOSED (+0.0066 against uniform, 0.15x) | L85, L94, L109 | single window (census contrast); built chain (H_P3) |
 | amber_prior_partner (P, run by W) | 10, 0.10 | CLOSED: the leave-fold-out choice is lam = 0 on every fold; every mixture cell worse; the last AMBER form in the record | L105 | point cloud (cells); built chain (chosen arm) |
 | amber_reject (PH) | delivered on the point cloud before the ranking | CLOSED on both bases: the physical-threshold reject with refill is +0.228 (point cloud) and +0.248 (built chain) worse than the shipped top-75, harmful at 1e3 and 1e4, underpowered null at 1e5 and 1e6 | L23, L43, L54, L86, L95 | point cloud; built chain |
 | cis_peptide (PH) | delivered before the ranking | CLOSED as a lever: 0 cis on the instrument; the own-torsion floor 0.347 A is an upper bound and the tight floor is 0.083 A (0.043 with the prior off) | L22, L38, L48, L89, L97 | ideal chain against the native (ORACLE) |
 | selfcopy_proxy_bound (W) | delivered before the ranking | DELIVERED: the 2/60 benchmark leak bounded MINOR without opening the benchmark (dev proxy 0.008 A; envelope 0.028 A mean CI, 0.151 A worst target, built chain) | L30, L44, L49, L55, L58, L108 | built chain and the others, each named |
-| better_prior_inputs (P) | deferred on memory (`attn` 3 to 3.5 GB) | the C2 ladder's other inputs measured flat (VII.3); `attn` not run | L112 | built chain (rebuild) |
-| coherence_penalised_training (P) | deferred on memory (1.25 GB) | not run at the time of writing | | |
+| better_prior_inputs (P) | deferred on memory (`attn` 3 to 3.5 GB) | the C2 ladder's other inputs measured flat (VII.3); `attn` NOT RUN; `raw` NOT RUN (four of five folds trained, L133) | L112, L133 | built chain (rebuild) |
+| coherence_penalised_training (P) | deferred on memory (1.25 GB) | NOT RUN; recorded as such | L51, L77 | |
 | trainability_paper (Q) | not an experiment | the outline delivered (`s26/TRAINABILITY_PAPER_OUTLINE.md`); the direction the evidence favours (VII.6) | L117 | |
 | partial_recall_gradient (W, an L77 extension) | added under the extension | no gradient at the pre-registered MDE; a weak proximity effect of order rho -0.2 suggested, confounded with retrieval | L90, L97 | built chain (ORACLE label) |
 | memorisation_on_the_ladder (W, an L77 extension) | added under the extension | ORACLE calibration of the prior-ladder currency: the discounted currency under-prices a large trained move | L91, L97 | point cloud and built chain, ORACLE |
@@ -2604,8 +2673,36 @@ best-of-k null (k_eff 9.7), split-half transfer -0.022. The last AMBER form in t
 distribution inside the prior, is closed on this instrument; registered expectation (0.00 +/-
 0.03, lam = 0 on most folds) held.
 
-**Rotamer relief, coherence-penalised training, the provenance readout test H_P3, the
-pool-spread control for strain difficulty.** Pending.
+**Rotamer relief B (tournament item 8, lane PH, L131).** `s26/PREREG_rotamer_relief.md`;
+`s26/ph_relief.py run | report` and `ph_relief_reject.py` -> `s26/results/ph_relief_run.json`
+(126/126; AMBER job `ph_relief_run`, 6,890 s, peak RSS 0.313 GB), `ph_relief_report.json`,
+`ph_relief_reject.json`. The operator, native-free: one greedy sweep over every residue with a
+chi1 (all but glycine, alanine and proline), options {the builder's default, 60, 180, 300
+degrees}, the lowest ff14SB/GBn2 single point kept per residue, backbone fixed, no minimisation;
+41 single points and 0.67 s per member; the relieved energy is at most the raw one on all 9,450
+members. Census: the fraction of the shipped top-75 above 1e4 kcal/mol falls from 0.535 (SE
+0.026) to 0.233 (SE 0.024), and above 1e6 from 0.311 to 0.057; the registered falsifier (not
+below half of the raw fraction, 0.27) does not fire: more than half of the catastrophic single
+points were the builder's chi1 choice, as L23 predicted, and about a quarter of every pool stays
+above 1e4 (backbone-owned or multi-rotamer clashes a one-pass sweep cannot reach). Does the
+relieved energy rank (ORACLE evaluation)? No, and neither did the raw one: Spearman with the true
+RMSD within the top-75, raw +0.0000 (SE 0.0202), relieved -0.0018; in-band +0.0043 and +0.0055;
+the difference -0.0019 at 0.04x MDE. Does it reject helpfully? No: at 1e4 the relieved threshold
+rejects 17.5 of 75 (raw 40.1), and the shrink arm on the relieved energy is +0.0297 worse than
+the anchor on the point cloud (fold CI [+0.0188, +0.0404], 5/5 folds, 0.74x MDE: the sign
+measured, the size underpowered), +0.0220 worse than rejecting the same count at random
+([+0.0106, +0.0318], 5/5, 0.61x), and less harmful than the raw reject by -0.0782 (1.12x, Type-M)
+only because it rejects a third as many members; at 1e6 +0.0188 against the anchor (0.59x). The
+built-chain half was not run: a point-cloud arm worse than the anchor with a fold CI excluding
+zero would need the projection to reverse its sign, which no arm in L86 did; the refill arm was
+not run, as registered. Closed: the relief removes the builder's half of the singularity and
+leaves an energy that ranks nothing and rejects harmfully, the last route by which an all-atom
+single point on retrieved windows could have entered the pipeline. For the report: half of what
+the force field called impossible was the way the side chains had been placed; once that is
+fixed, the force field still cannot tell a good backbone from a bad one.
+
+**Coherence-penalised training and `better_prior_inputs attn`.** Not run: deferred on memory all
+night (1.25 GB and 3 to 3.5 GB against a headroom that never freed) and recorded as such.
 
 ### VII.5 Operational findings of the sprint (for the record)
 
@@ -2623,9 +2720,19 @@ L70 caveats and flagged the one L68 wording the A1 records state differently (L7
 L75's final wording (L76; verification 0 dashes, 0 banned words). The Adversary's checks of L27,
 L39, L35, L22 to L24, L38, L30, L43, L44, L68 and L64 all stand (L45 to L49, L54, L55, L70, L71),
 six with caveats recorded above, and the Adversary's checks of the six C2 rungs (L79), the
-identity floor (L80), strain (L81, provisional), ensembling and provenance (L94), the reject on
-the built chain and the C3 replication (L95), branch selection (L96) and the tight floor, the
-recall gradient, the memorisation ladder and the mix rung (L97) likewise. Lane I's extension
+identity floor (L80), strain (L81, then L121), ensembling and provenance (L94), the reject on
+the built chain and the C3 replication (L95), branch selection (L96), the tight floor, the
+recall gradient, the memorisation ladder and the mix rung (L97), and the two verdict files and
+the ruling (L120) likewise. The deck's final build (L126, L134): slides 9 and 10 from the final
+`PROPOSAL_B.md` and `PROPOSAL_C.md`, slide 11 with L117 as amended by L122, L123's strain
+wording, L119's intervals and one A3 sentence on slide 8, C5's closure and the `raw` rung's
+status on slide 10; 520 registered numbers each read from an artefact at build time; nothing
+live, DRAFT or pending; verification 0 dashes, 0 banned words, spoken words 249 / 248 / 249 on
+slides 8 / 9 / 10 against a limit of 250. The coordinator appended a "Sprint 26 additions"
+table to `docs/FINDINGS.md`'s corrections ledger (L130): R2's scope, S7-11's lost artefact
+re-measured (L62), S10-4's leak prices re-sourced with the 2/60 bound, the suite's basis named,
+S16's relaxation finding confirmed and sharpened, the routers extended, and S26's own corrections
+(R1, R5, L123, L101, L107, L57, L9); no sprint body edited. Lane I's extension
 found two things about the test suite itself: the relaunched slow-test jobs had lost
 `VERIFY_SLOW=1` because it lived in the launching shell, not in the command (one null run set
 aside, both tiers relaunched with the flag inside the command, L98), and the opt-in equivalence
@@ -2644,7 +2751,17 @@ another lane had just staged (L104). The final AST gate against `ae86a124` passe
 50 of 55 production files AST-identical with docstrings stripped and the 5 that differ exactly
 the ledgered edits (`s26/results/ast_gate_ae86a124.txt`, L98); the frozen results-lab rebuild is
 queued (`resultslab_rebuild`) with its comparator self-checked on the untouched tree (2016 of
-2016 RMSD values exact, 2142 of 2142 PDBs byte-identical). Lane I was then starved for 75
+2016 RMSD values exact, 2142 of 2142 PDBs byte-identical). The rebuild ran (L127; 4,472.9 s under
+seven concurrent jobs after 4,765 s in the queue, peak RSS 0.11 GB; the documented command
+unchanged): REPRODUCED. Every per-target RMSD on both bases, 2016 of 2016 values, exactly equal;
+every leaderboard mean, median, secondary mean, gate, correlation, paired effect, MDE, fold CI,
+W/L and verdict identical for all eight configurations (production 3.2126 built chain / 3.0483
+point cloud, pool gate WARN with 2 violations, difficulty gate PASS); every one of the 2,142 PDBs
+identical in its ATOM records, differing only in the git-commit and module-hash remarks; the
+one finding, that the tracked leaderboard's three descriptive columns (`selector`,
+`hamiltonians`, `distogram_used`) were written by uncommitted code and rebuild as null (Part
+IX.6). `results/summary/results.json`, `results.csv` and `leaderboard.json` were committed
+(`083c9b95`); `results/structures` restored to the tracked bytes. Lane I was then starved for 75
 minutes by the other lanes' relaunch cadence (jobrun has no priority); the cap went to seven and
 non-critical launches were held (L111), and the integration tier ran: 8 passed, 0 failed
 (165.6 s, peak RSS 1.139 GB): the 11 Legacy terms on a real pool column for column, the AMBER
@@ -2753,7 +2870,10 @@ sprint. This part lists the S26 movements and the items that remain open at the 
 | ESMFold (B1) on this box | infeasible on three independent grounds | S26 L13; Part VII.2 |
 | Proposal B: a native-free characterisation of the set where the pipeline beats sequence-only (B3) | the sign classifier is at its permutation null against both comparators; only the size of the gain over a helix is partly predictable, by the pool's strand content; verdict REPLACE | S26 L14, L106, L107; Part VII.2 |
 | AMBER as a distribution inside the prior (the last AMBER form in the record) | the leave-fold-out choice is lam = 0 on every fold; every mixture cell worse, beta without a consistent sign | S26 L105; Part VII.4 |
-| Proposal A: an adaptive (ADAPT) ansatz in place of the fixed one, as an accuracy or trainability lever | A1 null at the registered threshold (0.23x and 0.36x MDE, fold CIs spanning zero, resolution 0.06 A); the optimum is a product state on every real target; the fixed algebra is already maximal (A2); no width-scaling argument (A4); verdict REPLACE | S26 L68, L69, L70, L75; Part VII.1 |
+| Proposal A: an adaptive (ADAPT) ansatz in place of the fixed one, as an accuracy or trainability lever | A1 null at the registered threshold (0.23x and 0.36x MDE, fold CIs spanning zero, resolution 0.06 A); the optimum is a product state on every real target; the fixed algebra is already maximal (A2); no width-scaling argument (A4, with intervals L119); verdict REPLACE | S26 L68, L69, L70, L75, L119; Part VII.1 |
+| A target-dependent Hamiltonian for the selector (A3, the S25 L17 question) | at matched entropy the trained states become target-dependent and the emitted structure does not change (+0.0034 A, 0.04x MDE); the sharper unmatched states are worse; the readout responds to the weights' entropy and nothing else | S26 L125; Part VII.1 |
+| Native-free prediction and subtraction of the pool's common mode (C5) | global corrections null (0.23x and 0.60x MDE), the learned correction harmful (+0.164 A, 1.79x, 5/5 folds) and indistinguishable from a random correction of the same size; the ceiling 1.9 to 3.1 A measured beside it | S26 L132; Part VII.3 |
+| An all-atom single point on retrieved windows after relieving the builder's rotamers (rotamer relief B) | the relief halves the catastrophic fraction and leaves an energy that ranks nothing and rejects harmfully; the last route for an all-atom single point on windows | S26 L131; Part VII.4 |
 | More prior capacity (`wide`), a per-fold PCA (`pca32f`), 128 ESM components (`pca128`), a pool-histogram mixture (`mix`), a triangle-update PairNet on the same inputs (`pairnet`) as prior levers; a smaller language model (`esm8m`) or none (`noesm`) as alternatives | null-to-worse on the built chain (`wide` +0.032, `pca32f` +0.018, `pca128` +0.076, `pairnet` +0.041, all under 0.5x MDE; `mix` chooses lam = 0 on 5/5 folds); removing or shrinking the ESM channel is worse (`noesm` +0.208, `esm8m` +0.242, both 5/5 folds, Type-M zone) | S26 L62, L63, L66, L67, L72, L93, L99, L103; Part VII.3 |
 
 ### VIII.2 Open
@@ -2761,12 +2881,10 @@ sprint. This part lists the S26 movements and the items that remain open at the 
 | item | what would close it | where |
 |---|---|---|
 | Whether a better distance predictor is obtainable (the only steep lever, -2.15 A per unit toward truth); every input this machine can compute is measured flat (nine rungs) | a larger language model than this machine can hold, on a bigger machine; Proposal C's kept form (L117, L122) | `s24/LEDGER.md` L13; `s26/PROPOSAL_C.md`; Part VII.3, VII.6 |
-| Proposal A's target-dependent Hamiltonian (A3) | the pre-registered A3 verdict (`a3_build` running) | Part VII.1 |
-| The rest of the C2 ladder (`raw` and the deferred rungs; the best rung so far is the shipped prior, L112) | a rung beating the shipped prior on the fold-clustered CI of the built chain, replicated | Part VII.3 |
 | The 2/60 benchmark self-copy leak, now bounded MINOR (dev proxy 0.008 A with both channels measured on all four dev self-copies; own-native envelope 0.028 A mean CI to 0.151 A worst target on the built chain; 0.194 at the worst target on the selection basis); F3's control clause open (one of six control-out models) | by design only a fresh benchmark, which does not exist; the control-out models and a second seed of the 2P5H retrain if time allows | S26 L44, L49, L50, L55, L58, L108; Part VII.4 |
 | Where the target-specific third of the pool's coherent error comes from, and whether any native-free proxy is strong enough to act on it | a native-free proxy reaching the in-band ordering 2 A needs | `s19/LEDGER.md` L11, L14; `s17/LEDGER.md` L23 |
 | Publishing the trainability half | a manuscript from Part V.10 with V.9's scope correction | `s13/`, `s25/QUANTUM.md`; S26 L27 |
-| The tournament entries not run or not complete at the close: the common-mode prediction (C5, keeps its pre-registration), rotamer relief, coherence-penalised training | their pre-registrations' falsifiers | `s26/TOURNAMENT.md`; `s26/PREREG_*.md`; Part VII.4 |
+| Not run at the close, recorded as such: the `raw` rung (four of five folds trained), `coherence_penalised_training` and `better_prior_inputs attn` (deferred on memory) | their pre-registrations' falsifiers, on a machine with the headroom | `s26/TOURNAMENT.md`; `s26/PREREG_*.md`; S26 L133; Part VII.3, VII.4 |
 | The tie-break noise floor: measured (0.004 A on the 126-mean, 0.024 A paired MDE between conventions, built chain); not a lever | nothing; it is the floor every cross-run hundredths-level claim is read against | S26 L64, L71; Part VII.4 |
 | A native-free difficulty flag: the pool's own disagreement predicts the emitted chain's error (partial rho +0.452 given n and Rg, 5/5 folds); the relaxation's displacement is its proxy; forbidden as a lever by the pre-registration and by the record (every conversion of a difficulty signal into a selector failed held out) | a use as a confidence label only | S26 L53, L81, L121, L123; Part VII.4 |
 | Sequence proximity to the training corpus below the 0.6 threshold: no gradient at the pre-registered MDE (rho -0.25), a weak effect of order -0.2 suggested and confounded with retrieval | a design that separates recall from retrieval; none registered | S26 L90; Part VII.4 |
@@ -2902,7 +3020,14 @@ in every PDB header; the build refuses files without one), `providers.register` 
 synthetic bindings under real configuration names, and every exported structure reproduces its
 own RMSD through the instrument to within PDB quantisation (`s25/LEDGER.md` L10, L11). Outputs:
 `results/summary/leaderboard.json` (rows with `mean` on `built_chain_bb` and `mean_secondary`
-on the point cloud), `results/summary/target_map.json` (T001 to T126), `results/site/`.
+on the point cloud), `results/summary/target_map.json` (T001 to T126), `results/site/`. The S26
+frozen rebuild (governed job `resultslab_rebuild`, L127) reproduced every number: 2016 of 2016
+per-target RMSDs exactly, every leaderboard statistic and verdict for all eight configurations,
+and all 2,142 PDBs in their ATOM records; the three descriptive leaderboard columns `selector`,
+`hamiltonians` and `distogram_used` are not produced by any committed `schema.py` and rebuild as
+null (the per-record values are intact in `results.json` and the spec), so a rebuild's overview
+table shows them empty until `schema.leaderboard()` copies them from the records; not
+hand-patched.
 
 ### IX.7 Adding a sprint
 
@@ -2946,7 +3071,7 @@ anything heavy.
 
     python s26/examine.py             # module map, pinned-hash check, claim ledger (OK / MISMATCH / ABSENT)
     python s26/examine.py --search    # plus the tree-wide claim search (slower)
-    python s26/e_module_map.py        # s26/results/module_map.json (725 modules at the last check; grows with the sprint's scripts)
+    python s26/e_module_map.py        # s26/results/module_map.json (787 modules on the final tree; the count grows with the sprint's scripts)
     python s26/e_hashes.py            # s26/results/pinned_hashes.json (--check to compare)
     python s26/e_claims.py            # s26/results/claim_search.{json,txt}; benchmark files excluded
 
@@ -3195,7 +3320,7 @@ artefact; "as asserted" means a passing test pins it.
 | 2.2261, 2.8334, -2.1496, 0.822 | III | `s24/results/priorladder.json :: rows[*]/MASS1.0, rows[*]/MASS0.1, rows[*]/MASS0.0` (means over 126 rows) | derived: (2.833382 - 3.048338)/0.1 = -2.1496; 3.048338 - 2.226080 = 0.8223 |
 | 4.0648 | I, II, III | `s12/results/s14_ladder.json :: rows/L0_constant_helix/mean` | 4.064753929494389 |
 | 2.9610, 2.9507 | I | `s9/final_report.json :: dist/full/mean, dist/shipped/mean`, asserted within 5e-4 by `tests/test_pipeline.py::test_the_committed_benchmark_report_still_holds_its_reference_numbers` (not opened by this lane) | as asserted |
-| +0.0103 [-0.1596, +0.1803], 31W/29L | I | `docs/FINDINGS.md:4479-4607` (S9-10), naming `s9/final_report.json` | as cited |
+| +0.0103 [-0.1596, +0.1803], 31W/29L | I | `docs/FINDINGS.md:4501-4629` (S9-10), naming `s9/final_report.json` | as cited |
 | 2.9614, 3.8122, 22.3%, 0.649, 80 of 126, 3.803955, 1.8e-15, 3.867 | II, III | `s26/results/e_reproduce.json :: summary/virtual_bond, n_rows` | as stored |
 | +0.1664, +0.0977, [+0.0049, +0.3379], 16 of 126 | II, III | `s26/results/e_reproduce.json :: summary/projection_gap_arm_minus_avg, n_rows` | as stored |
 | 0.0342, 0.0958, 0.2051 | II | `s26/results/q_mde_reference.json` | as stored |
@@ -3205,15 +3330,15 @@ artefact; "as asserted" means a passing test pins it.
 | 5370, -1290.6, 0.19, 52.0; 6.0e12, 1262.4, 0.61, 1166.1; 1172.7 (2BP4) | III | `s26/results/e_trace_1S9Z.json`, `e_trace_9KAR.json` (relax stage); `bench_results/cache/1fc9f2dcf489e2fb/2BP4.json` | as stored |
 | 7193, 9814, -1..19, -6..32, 144, 420, 105, 91, 183, 17 centres, 760, 488, 483, 0.6926..7.2688, 2.2420..5.1791, 401 98 193 161 284 260 372 373 381 382, 44/449, 3.75, 1.97, 1.16, 8, 128, 5.05..21.07, 0.23..2.70, 5.62..23.44, 7.58, 5.34, 1.40 | III | `s26/results/e_trace_1S9Z.json`, `s26/results/e_trace_9KAR.json` | as stored |
 | 3.3135, 3.3443 | III | `s8/integrate_vqe.json :: arms/vqe_LFO/sel, arms/medoid128/sel` (reproduced by `tests/test_pipeline.py::test_the_four_components_all_execute_and_reproduce_their_published_numbers`) | as stored |
-| 0.288 | III | `docs/FINDINGS.md:1970-2037` (S7 finding 11; its per-target artefact, s7/repr_tune.json, is lost, S26 ledger L11) | as cited |
-| -0.172 [-0.316, -0.027], 74W/47L | VI | `docs/FINDINGS.md:2901` (S8-8 table) | as cited |
+| 0.288 | III | `docs/FINDINGS.md:1992-2059` (S7 finding 11; its per-target artefact, s7/repr_tune.json, is lost, S26 ledger L11) | as cited |
+| -0.172 [-0.316, -0.027], 74W/47L | VI | `docs/FINDINGS.md:2923` (S8-8 table) | as cited |
 | 8.3 to 23.3 | IV | `s15/LEDGER.md` row 0.8 (`s15/results/audit_amber_cost_sweep.json`) | as cited |
-| 0.016 | III | `docs/FINDINGS.md:2379` (S8-6 heading) | as cited |
+| 0.016 | III | `docs/FINDINGS.md:2401` (S8-6 heading) | as cited |
 | +0.142 | III | `ARCHITECTURE.md` section 2.5 | as cited |
 | +0.0207 | III, IV | `bench_results/baseline_tuning126.json :: science/rmsd_full/mean, science/rmsd_arm/mean` | derived: 3.2354598538973844 - 3.214765154210998 = 0.0207 |
-| 1.386 | II | `docs/FINDINGS.md:2751-2760` (S8-8) | as cited |
+| 1.386 | II | `docs/FINDINGS.md:2773-2782` (S8-8) | as cited |
 | 470, 13, 47 of 500 | II, III | `tests/test_data.py:305`; `README.md` (fold repin; layout) | as asserted |
-| 23, 5 | II | `docs/FINDINGS.md:60-118`; `s25/LEDGER.md` L5, L7, L9, L11, L15 | as cited |
+| 23, 5 | II | `docs/FINDINGS.md:60-140`; `s25/LEDGER.md` L5, L7, L9, L11, L15 | as cited |
 | 4/126, 2/60 | II | `s24/LEDGER.md` L4; `s26/results/i_identity_audit.json` | as cited |
 | a40581ad...422d, 8002 | II | `s26/results/pinned_hashes.json` | as stored |
 | 1000 | III | `core/amber.py:1282`; `s8/integrate.py:292` | as in source |
@@ -3245,7 +3370,7 @@ artefact; "as asserted" means a passing test pins it.
 | 0.0761 bits | V | `s25/results/q_alpha.json` (alpha = 1, T = 0.1 cell) | as cited (`s25/QUANTUM.md` 3.4) |
 | VQE_LFO table, 78 of 126, 0.6190 | V | `core/pipeline.py:113`; `s25/results/q_alpha.json :: results/share_of_targets_with_no_tail_constraint, results/n` | derived: 0.6190476190476191*126 = 78 |
 | 1.000000000, 4.597e-10, 4.663e-10, 42 | V | `s25/results/q_verify.json :: results` | derived: 2*21 = 42 |
-| +0.655634 / 0.758, +0.566586 / 0.519, +1.000000, +0.994 | V | `core/quantum.py:42` (S9 instrument); `s25/results/q_verify.json :: results` (S25 re-verification); `docs/FINDINGS.md:3160` (the sampled estimator, S8-9) | as stored |
+| +0.655634 / 0.758, +0.566586 / 0.519, +1.000000, +0.994 | V | `core/quantum.py:42` (S9 instrument); `s25/results/q_verify.json :: results` (S25 re-verification); `docs/FINDINGS.md:3182` (the sampled estimator, S8-9) | as stored |
 | 2592, 1620, 0, 0, 1424 (54.9%), 972 / 972; 3888, 29.9%; 17574, 58.8%; 2016 / 2016 | V | `s25/results/q_verify.json`; S24 harness and coordinator runs as cited in `s25/QUANTUM.md` section 5; `s22/LEDGER.md` (Gate 1) | as stored / as cited |
 | 3.4540, 3.3414, 3.2835, 3.3135 | V | `s8/integrate_vqe.json` (S8 instrument rungs) | as stored |
 | alpha-effect table: -0.1126 (0.0792), -0.1067 (0.0644), +0.0279 (0.0518), -0.0011 (0.0477), +0.0126 (0.0268), +0.0039 (0.0240) | V | `s25/results/q_alpha.json` | as stored |
@@ -3267,11 +3392,11 @@ artefact; "as asserted" means a passing test pins it.
 | 0.000e+00, 0.2500, 0.008 to 0.037, 1.7e16, 0.088, +0.333 | V | `s13/SPRINT13_DOSSIER.md` section 11 | as cited |
 | +0.209 to +0.301, +0.27 to +0.62 | V | `s16/LEDGER.md` L17, L29 (`s16/integrate.py`; `s16/qphase_FINDINGS.md` section 3) | as cited |
 | 20 of 20 | V | `s12/SPRINT12_DOSSIER.md` section XVIII | as cited |
-| 2.406, 1.925 | VI | `docs/FINDINGS.md:2287` (S8-5); `docs/CONDENSED_REPORT.md:176` (correction) | as cited |
-| 3.204 | VI | `docs/FINDINGS.md:3603` (S8-11) | as cited |
-| 0.5 per pair, 0.044 | VI | `docs/FINDINGS.md:3810` (S8-14) | as cited |
-| 2.7x | VI | `docs/FINDINGS.md:4726` (S10-2) | as cited |
-| 1.62 | VI | `docs/FINDINGS.md:5219` (S11-2) | as cited |
+| 2.406, 1.925 | VI | `docs/FINDINGS.md:2309` (S8-5); `docs/CONDENSED_REPORT.md:176` (correction) | as cited |
+| 3.204 | VI | `docs/FINDINGS.md:3625` (S8-11) | as cited |
+| 0.5 per pair, 0.044 | VI | `docs/FINDINGS.md:3832` (S8-14) | as cited |
+| 2.7x | VI | `docs/FINDINGS.md:4748` (S10-2) | as cited |
+| 1.62 | VI | `docs/FINDINGS.md:5241` (S11-2) | as cited |
 | 3.184, 3.203, -0.019 [-0.058, +0.020], 63W/63L, 3.043 to 3.026, 2.534, 1.004, 5.425, 6.019, 10/18, 6/108, 1.2e-6, 1.486 | VI | `s12/SPRINT12_DOSSIER.md` sections I, IV, XVII | as cited |
 | 1.16, 0.04, 0.893, 882, -1.743, -0.029 | VI | `s12/SPRINT12_DOSSIER.md` section III; `docs/CONDENSED_REPORT.md:61-65` | as cited |
 | 1.594, 88%, 0.388, +0.043, -0.088, 32nd to 40th, +0.139, 3.764 / 3.667 / 3.920, 10.4, 3.770, 262,144, 9 | VI | `s13/SPRINT13_DOSSIER.md` sections 1 to 5; `docs/CONDENSED_REPORT.md:84-116` | as cited |
@@ -3288,7 +3413,7 @@ artefact; "as asserted" means a passing test pins it.
 | 5.5 GB, 555 MB, 1.5 GB, 61, 63k | IX | `README.md` ("Data this repository does not carry"); `docs/STATE_BRIEF_2026-09-12.md` section 8 | as cited |
 | 0.18198112330908295 | IX | `s26/results/e_reproduce.json` (row 1S9Z, `rmsd_arm`); `s26/results/e_trace_1S9Z.json` | as stored |
 | 1.692, 0.872, 0.324, 11, 3, 8, 2, 601a39c7 | IX | `s26/TEST_RUN.md`; `s26/results/test_run.json` | as stored |
-| 725 | IX | `s26/results/module_map.json :: n_modules` | 725 |
+| 787 | IX | `s26/results/module_map.json :: n_modules` (regenerated by lane I on the final tree, d0ec972c) | 787 |
 | 2.9661, 0.1824, 8.2342, 28.6%, 50.8%, 0.7150, 0.1643 | II, D | `results/summary/leaderboard.json :: rows[0]/median, rows[0]/best, rows[0]/worst, rows[0]/frac_under_2, rows[0]/frac_under_3, rows[0]/corr_with_pool_best, rows[0]/basis_delta_mean` (pointed to by `docs/REPORT_S26.md` B.1) | as stored |
 | +0.0061, 0.19x, 61W/65L | IV, D | `results/summary/leaderboard.json :: rows[1]/paired_effect, rows[1]/effect_over_mde, rows[1]/wins, rows[1]/losses` | as stored |
 | +0.7070 (2.14x), +0.8322 (2.67x), +0.0097 (0.43x), +0.1668 (0.91x), +0.0833 (0.70x), +0.6259 (1.89x), +0.2047 (1.07x) | IV, D | `s25/results/phys_suite.json :: vs_incumbent` (point cloud against point cloud) | as stored |
@@ -3297,11 +3422,11 @@ artefact; "as asserted" means a passing test pins it.
 | 1.75, 51, +0.054 | III, D | `s25/LEDGER.md` L6, L12 | as cited |
 | 5.551e-17 | V, D | `s25/results/q_verify.json :: results` | as stored |
 | 0.1 nats, fired | V, D | `s25/results/q_gibbs.json :: results/falsifier` | as stored |
-| -0.023 | V, D | `docs/FINDINGS.md:368-403` (S5 section 6) | as cited |
+| -0.023 | V, D | `docs/FINDINGS.md:390-425` (S5 section 6) | as cited |
 | 0.6847, 0.685 | V, D | `verify/cvar_audit.json :: D_tail_baseline_cosine_vs_paramshift, D_sampled_tail_cosine` | as stored |
 | 8.371, 2537.568, 303.137 | IX, D | `bench_results/compare_tuning126.json :: end_to_end_speedup, wall_s` | as stored |
 | 3.989, 3.213 | VI, D | `s12/SPRINT12_DOSSIER.md` section I | as cited |
-| 13 of 60, +0.0030 | II, D | `docs/FINDINGS.md:4571` (S9-10); S10-4 (artefact in git history at `5fa05cd`, S26 ledger L31) | as cited |
+| 13 of 60, +0.0030 | II, D | `docs/FINDINGS.md:4593` (S9-10); S10-4 (artefact in git history at `5fa05cd`, S26 ledger L31) | as cited |
 | A4 slopes -0.649 / -0.079 / +0.006, -0.252, -0.047, -0.311 / +0.024 / -0.008, -0.243 / -0.239 / -0.302 | V, VII | `s26/results/q_var.json :: results/slopes` | as stored |
 | +0.035, -0.246, 1.63, 2.5 to 370, 31 of 32, 1 to 3, 12 to 25, 4 to 21, 2.4e-2, 14 of 14, 3 of 7, 2,765 s, 0.08 GB | VII | `s26/LEDGER.md` L35; `s26/jobs_done/a4_var.json` | as cited |
 | 6 of 6, 1025 / 8128 = 0.126 | V, VII | `s26/results/a_dla_check.json`; `s26/LEDGER.md` L45 | as cited |
@@ -3355,6 +3480,13 @@ artefact; "as asserted" means a passing test pins it.
 | C3 stage 2 verify: 3.2147652, 0.0 on 126 of 126, 5 s | VII, VIII | `s26/results/ph_c3_stage2_verify.json`; `s26/LEDGER.md` L118 | as stored / as cited |
 | strain spread control: +0.452 [+0.280, +0.609], +0.451 [+0.286, +0.608], +0.433 [+0.247, +0.581], +0.241 [+0.054, +0.376], 0.007, +0.082 [-0.103, +0.259], [+0.011, +0.171], 0.39, +0.052, +0.756, 0.0005, 2,000 | VII, VIII | `s26/results/a_strain_vs_spread.json`; `s26/LEDGER.md` L121, L123 | as stored / as cited |
 | L120: 192, 214, 0.5216, 0.5782, 0.5565, 0.5662, 0.4043, -0.2183 [-0.383, -0.030], -0.0856, +0.0340, 12.0, 2.76, af05d987, 80, 30 of 126 | VII | `s26/results/a_ladder_isolations.json`; `s26/results/p_b3.json`; `s26/LEDGER.md` L120, L124 | as cited |
+| A3: 16,373 s, 0.352 GB, 45 s, 0.385 GB, 4.914, 3.2280, +0.0034 (0.0273, 0.04x, [-0.0446, +0.0337]), +0.0145 (0.18x), -0.0037 (0.05x), +0.1053 (0.77x, [+0.0367, +0.2112]), +0.0864 (0.69x), +0.1116 (0.81x), +0.0345, +0.0378, 0.30x, 0.32x, +0.0885 (0.55x), 14 of 78, 0.010, 3, 124 of 126, 1.34, 3.10, 0.01, 5.99, 0.565, 8e-4, 0.050, 0.263, 57, 10, 2.8, 5.9, +0.09 to +0.11, 0.7 to 0.8x, 0.041, 1.18%, 0.54 | V, VII, VIII | `s26/results/a3_stats.json`; `s26/results/a3/<pdb>.json`; `s26/jobs_done/a3_build.json`, `a3_label.json`; `s26/LEDGER.md` L125 | as stored / as cited |
+| C5: 5,284 s, 0.09 GB, 45, 0.5, -0.0090 (0.0140, 0.23x, [-0.0331, +0.0185]), +0.0312 (0.60x), +0.1643 (0.0328, 1.79x, [+0.1176, +0.2253], 40W/86L), +0.1351 (1.33x), +0.0123 (0.45x), -1.8749 (120W/6L), -3.1293 (126W/0L), +0.0360 (0.84x), +0.0164, +0.1492 (1.91x), -3.0483, 3 of 5, 1.9 to 3.1 | VII, VIII | `s26/results/p_c5.json`, `p_c5_stats.json`; `s26/LEDGER.md` L132 | as stored / as cited |
+| raw: 4,477 to 4,900 s, 1.93 to 1.96 GB, 4 of 5, 80, 10 | VII, VIII | `s26/LEDGER.md` L133 | as cited |
+| rotamer relief B: 6,890 s, 0.313 GB, 41, 0.67 s, 9,450, 0.535 (0.026), 0.233 (0.024), 0.311, 0.057, 0.27, +0.0000 (0.0202), -0.0018, +0.0043, +0.0055, -0.0019 (0.04x), 17.5, 40.1, 4.3, 23.3, +0.0297 ([+0.0188, +0.0404], 0.74x), +0.0220 ([+0.0106, +0.0318], 0.61x), -0.0782 (1.12x), +0.0188 (0.59x), +0.017 (0.58x), 1.4 h, 10 of 14 | VII, VIII | `s26/results/ph_relief_run.json`, `ph_relief_report.json`, `ph_relief_reject.json`; `s26/LEDGER.md` L131 | as stored / as cited |
+| rebuild: 4,472.9 s, 4,765 s, 0.11 GB, 2016 of 2016, 2,142, 8, 1008, 2, 083c9b95 | VII, IX | `s26/results/resultslab_rebuild/post_verdict.json`; `s26/LEDGER.md` L127 | as cited |
+| governor v2.4: 18, 0, 16, 28, 13.3, 46, 32 | VII | `s26/LEDGER.md` L128, L129 | as cited |
+| deck final: 520, 249, 248, 249, 250 | VII | `s26/pr_values.json`; `s26/pr_verify.txt`; `s26/LEDGER.md` L126, L134 | as cited |
 <!-- APPENDIX B ROWS -->
 
 ## APPENDIX C. THE S26 LEDGER (DRAFT: reproduced at the close)
@@ -3384,7 +3516,7 @@ artefact and is a row of Appendix B; the docs file is cited as the pointer.
 | the score's per-pair target quantised to 17 values, up to 1.75 A of location error at long separation; 51 achievable arms, corr(gamma_eff, endpoint delta) +0.054 | `s25/LEDGER.md` L6, L12 | III.2 |
 | statevector check 5.551e-17 (this report had rounded to 5.6e-17) | `s25/results/q_verify.json :: results` | V.2 |
 | the S25 Gibbs falsifier (KL below 0.1 nats) fired against the draft | `s25/results/q_gibbs.json :: results/falsifier` | V.7 |
-| the S5 measurement of the gradient defect, cosine -0.023, and the consolidation audit's exact / sampled tail cosines 0.6847 / 0.685 | `docs/FINDINGS.md:368-403`; `verify/cvar_audit.json` | V.5 |
+| the S5 measurement of the gradient defect, cosine -0.023, and the consolidation audit's exact / sampled tail cosines 0.6847 / 0.685 | `docs/FINDINGS.md:390-425`; `verify/cvar_audit.json` | V.5 |
 | the entangler-deletion contrast's source, -0.013 [-0.095, +0.077] | `s20/LEDGER.md` L1 | V.7, Appendix B |
 | the optimised arm's end-to-end speed-up, 8.371x (2537.568 s to 303.137 s, both cold, 1 against 8 workers) | `bench_results/compare_tuning126.json :: wall_s, end_to_end_speedup` | IX.4 |
 | B1's feasibility numbers | `s26/results/b1_feasibility.json`; `s26/LEDGER.md` L13 | VII.2 |
@@ -3396,7 +3528,7 @@ artefact and is a row of Appendix B; the docs file is cited as the pointer.
 | 3.2126 (their headline's leaderboard rebuild) against 3.2148 (this report's production cache); 0.1643 against 0.1664 for the projection gap; T030 0.18242 against 0.18198 | Not a disagreement: the same built chain on two emission paths (the results lab re-projects the stored cloud and round-trips through PDB quantisation, up to 0.171 A per target, `s26/LEDGER.md` L14; `s26/EXAMINATION.md` H). Both reports say so. This report quotes the cache number as the production result and names the rebuild beside it. |
 | `bench_results/compare_tuning126.json :: science.rmsd_arm` (theirs) against `bench_results/baseline_tuning126.json :: science/rmsd_arm/mean` (this report) | The same values: `compare_tuning126.json :: science_delta` is 0.0 on every science key except two at 4.4e-16. Either path is valid. |
 | 5.6e-17 (this report, from `s25/QUANTUM.md`) against 5.551e-17 (theirs) | The artefact says 5.551e-17; corrected here. |
-| the benchmark leak count: "13 of 60 targets have a pool window at >= 0.6 identity" (their B.2, from `docs/FINDINGS.md:4571`) against the 2/60 of this report | Two criteria, both true: 13/60 is the >= 0.6 identity count of S9-10 (priced +0.0030 A in S10-4, artefact in git history at `5fa05cd`, L31); 2/60 is the verbatim self-copy defect of S24 L4 that lane W bounded (L44). This report keeps 2/60 as the declared leak and now names the 13/60 criterion beside it (II.1). The two benchmark target ids printed in `docs/FINDINGS.md` and in their table are not repeated here. |
+| the benchmark leak count: "13 of 60 targets have a pool window at >= 0.6 identity" (their B.2, from `docs/FINDINGS.md:4593`) against the 2/60 of this report | Two criteria, both true: 13/60 is the >= 0.6 identity count of S9-10 (priced +0.0030 A in S10-4, artefact in git history at `5fa05cd`, L31); 2/60 is the verbatim self-copy defect of S24 L4 that lane W bounded (L44). This report keeps 2/60 as the declared leak and now names the 13/60 criterion beside it (II.1). The two benchmark target ids printed in `docs/FINDINGS.md` and in their table are not repeated here. |
 | "each fold model saw ~100 of the other 125 dev natives": their citation `s20/LEDGER.md` L-B against this report's `s24/LEDGER.md` L8 | The sentence is at `s24/LEDGER.md:668` (entry L8); the S20 entry carries the fold-CI discussion. This report's citation stands. |
 | the blind pipeline: their 3.989 against shipped 3.213 (all 126) beside this report's 3.749 against 2.745 (the 108 ordinary targets) and 5.425 against 6.019 (FAIL18) | Both from `s12/SPRINT12_DOSSIER.md` section I on different subsets; the 126-target pair is added to VI.8 for completeness. |
 | ESM against one-hot, -0.288 A: their Appendix D9 records that the per-target artefact `s7/repr_tune.json` is lost (`s26/LEDGER.md` L11) | Agreed; this report's row cites `docs/FINDINGS.md` S7-11 and now carries the lost-artefact caveat. |
@@ -3417,7 +3549,7 @@ artefact and is a row of Appendix B; the docs file is cited as the pointer.
   as a measurement). A memory file is not an artefact; none of those numbers is quoted here
   except 6.43, which this report attributes to `docs/STATE_BRIEF_2026-09-12.md` section 8 as an
   operational estimate, not a measurement.
-- Their Appendix C (the corrections ledger) restates `docs/FINDINGS.md:60-118` and the sprint
+- Their Appendix C (the corrections ledger) restates `docs/FINDINGS.md:60-140` and the sprint
   ledgers; this report's Part VI carries the same corrections sprint by sprint and adds nothing
   from their table.
-- Their reading of `docs/FINDINGS.md:4571` names two benchmark targets; not repeated here.
+- Their reading of `docs/FINDINGS.md:4593` names two benchmark targets; not repeated here.
