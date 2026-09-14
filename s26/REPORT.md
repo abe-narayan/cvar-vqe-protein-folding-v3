@@ -2160,7 +2160,7 @@ updated at the close):
 | product_state_optimum (Q) | 1, 0.80 | MEASURED: the deployed objective's optimum is a product state on every real target (KL to the product of marginals at most 7.9e-4 nats); reaching it exactly moves the built chain by -0.014 to -0.022 A, a third of the MDE | L68, L70, L75 | built chain (`rmsd_q_synth`) |
 | conformational_identity_floor (W) | 2, 0.70 | MEASURED, ORACLE: the same sequence in another deposit sits a median 2.908 A from the native; +0.97 A worse than the pool's best window, -1.44 better than its mean, both Type-M at n = 18 | L52, L80 | single window |
 | tiebreak_noise_floor (W) | 3, 0.85 | MEASURED: the pipeline's own convention noise is 0.0039 A on the 126-mean and 0.0236 A as the paired MDE between two tie-break conventions | L64, L71 | built chain (rebuild) |
-| strain_difficulty (PH) | 4, 0.50 | MEASURED as a calibration flag, provisional: partial rho +0.433 between how far the relaxation moved the chain and its error; not a lever by its pre-registration | L53, L81 | built chain (ORACLE label) |
+| strain_difficulty (PH) | 4, 0.50 | MEASURED as a calibration flag and RESTATED: the pool's own disagreement (the top-75's pairwise spread) predicts the emitted chain's error at partial rho +0.452; the relaxation's displacement (+0.433) is its proxy at rho 0.76 and adds +0.08 given it; the "first native-free quantity above 0.4" sentence retracted; not a lever | L53, L81, L121, L123 | built chain (ORACLE label) |
 | branch_select (PH) | 5, 0.20 | CLOSED as an accuracy step: +0.0055 against the production choice (0.18x MDE); the relaxed energy picks the branch as well as the objective and no better (-0.102 against random) | L88, L96 | built chain |
 | window_ensembling (P, run by W) | 6, 0.15 | CLOSED in the fixed-K form: -0.0005 against shipped (0.02x), +0.0042 against a zero-information resample | L84, L94 | built chain (rebuild) |
 | l17_target_dependent_hamiltonian = A3 (Q) | 7, 0.15 | pending at the time of writing | | |
@@ -2416,9 +2416,22 @@ per-target error of the emitted structure (the routers of S22 L7 and S23 L7 reac
 weight, and the record says every such conversion fails held out. Adversary check, L81: STANDS
 WITH CAVEAT, provisional: "replicated" means the bootstrap and permutation draws (the Spearman is
 a deterministic function of 126 fixed rows), so say "CIs replicated"; and the pre-registration
-carried no pool-disagreement control (the top-75's own pairwise CA-RMSD spread), so whether
-`moved` is that spread in disguise waits on the Adversary's `a_strain_vs_spread` (relaunched,
-L92); the calibration-flag wording may be quoted now, the novelty sentence waits.
+carried no pool-disagreement control. That control ran (L121, `s26/a_strain_vs_spread.py` ->
+`s26/results/a_strain_vs_spread.json`; ORACLE label, native-free signals): the shipped top-75's
+own pairwise CA-RMSD spread, available before the relaxation runs, has partial rho +0.452 with
+the built-chain error given n and Rg (fold CI [+0.280, +0.609], permutation p below 0.0005, 5/5
+folds; the medoid's minimum +0.451); `moved` correlates with that spread at +0.756 and, given
+it, adds +0.082 (iid CI [-0.103, +0.259], permutation p 0.39). Lane PH accepted the veto in full
+(L123): the sentence "the first native-free quantity in this programme's record with a
+correlation above 0.4" is RETRACTED, together with the framings "the physics reports when the
+answer is untrustworthy" and "how far the relaxation moves the chain predicts its error"; the
+finding is restated as: the pool's own disagreement is the native-free quantity that predicts
+the emitted chain's error (rho +0.45 partial on n and Rg, 5/5 folds, zero cost, measurable
+without AMBER), and the relaxation's displacement is its proxy (rho 0.76) adding nothing given
+it. What stands from L53: the phenomenon, the quartile table as its presentable form, and "not
+a lever"; the physics adds nothing the pool did not already say. The pre-registration lesson,
+PH's own: the confound list of a difficulty signal must include the pool's own statistics
+before the operator's.
 
 **The tie-break noise floor (tournament item 4, lane W, L64; Adversary L71: STANDS WITH
 CAVEAT).** `s26/PREREG_tiebreak_floor.md`; native-free half `w_tiebreak_draws` (5,166 s under a
@@ -2670,7 +2683,26 @@ inputs are all in hand (the S13 locality theorem and Pauli-spectrum prediction, 
 sweep scoped to depth 3 by A2, A2, A4, the product-state fact) and the Adversary has checked
 each; the prior lever is real (S24 L13) but every input this machine can compute is measured
 flat, so it is a resourcing decision rather than an experiment the presenter can run next week;
-and the circuit is closed as an accuracy lever by three independent facts.
+and the circuit is closed as an accuracy lever by three independent facts. The Adversary's check
+of the two verdict files and of the ruling (L120): PROPOSAL_B STANDS (every number in its notes
+at its artefact; two minor sourcing gaps closed, the isolation contrasts now persisted as
+`s26/results/a_ladder_isolations.json`: `conly` minus `noesm` -0.2183 single window at 1.00x MDE
+and -0.0856 built chain at 0.51x, `esm8m` minus `noesm` +0.0340 built chain at 0.15x; the 8.76 GB
+of B1 stated as its derivation, 12.0 / 2 for the fp16 language model plus 2.76 for the fp32
+trunk); PROPOSAL_C STANDS after one material document fix (the file had carried a future
+"FINAL 03:30" stamp and a past-tense C5 outcome before C5 had finished, a clock error of about
+80 minutes in lane P's estimated times; corrected by a real-time header, a present-tense C5
+section and addendum 1, L124); and L117 STANDS WITH three wording caveats, accepted by the
+coordinator (L122): in the presenter's line "positive and complete" reads "exact and complete"
+(the trainability chain is a measured identity, not a gain); "the Adversary has checked each"
+applies to the S26 additions (A2, A4 with L119's intervals, the product-state fact) and not to
+the S13 inputs, which the paper cites from their artefacts without an S26 re-check; and the S13
+Pauli mean weights 2.236 / 3.015, which lane PR could not reproduce from `s13/results/
+geo_pauli.json` on the night, stay off every slide and are quoted in the paper outline only with
+their artefact path and that note (this report's Part V.10 quotes them from
+`s13/SPRINT13_DOSSIER.md` section 8 as cited, with the same note). The line's "the one part
+whose result is complete" is fair as a ranking of publishability, not as a statement that
+nothing else finished.
 
 ### VII.7 S26 retractions (`s26/RETRACTIONS.md`)
 
@@ -2683,6 +2715,7 @@ contradicts it; nothing superseded is deleted anywhere.
 | R2 | S25's "no barren plateau at any width measured" (the slopes of `s25/results/q_plateau.json`) | the slopes stand; the claim is scoped to depth 3, because the algebra is the full so(2^n) (A2); for `docs/FINDINGS.md` at the close | L27, L45; Part V.9 |
 | R3 | lane Q's H2b, dim(DLA) at (n = 7, L = 3) below 8128, guess 4095 (`s26/PREREG_A2.md`) | 8128 = so(128) from depth 2; falsified by lane Q itself | L27; Part V.9 |
 | R4 | lane PH's registered expectation of cis bonds in other ensemble models (`s26/PREREG_cis.md`) | 0 of 1,966 ensemble models, 0 of 126 natives, 0 of 2,352,893 windows | L22, L48; Part VII.4 |
+| L123 | L53's "the first native-free quantity in this programme's record with a correlation above 0.4 to the per-target error of the emitted structure", and the framings "the physics reports when the answer is untrustworthy" / "how far the relaxation moves the chain predicts its error" | the pool's own disagreement predicts the error (partial rho +0.452, 5/5 folds); the relaxation's displacement is its proxy (rho 0.76) and adds +0.08 given it; the phenomenon and the quartile table stand | L121, L123; Part VII.4 |
 | R5 (L75, L82) | L68's "L-BFGS growth at alpha = 1 stops with no operator selected on 78 of 78 targets" (and the same sentence in `s26/PROPOSAL_A.md` sections 3 and 5); the Adversary's L70 caveat 2 "L-BFGS grows nothing" | operators are appended on 60 to 78 of 78 targets and are inert (at most 1.2e-4 nats, angles below 0.02 rad, product state to 4.1e-4 nats); the verdict does not move | L73, L75, L76, L82; Part VII.1 |
 
 Not retractions, recorded there as sourcing corrections: C27's +0.0004 / +0.0030 (re-derived
@@ -2727,7 +2760,7 @@ sprint. This part lists the S26 movements and the items that remain open at the 
 
 | item | what would close it | where |
 |---|---|---|
-| Whether a better distance predictor is obtainable (the only steep lever, -2.15 A per unit toward truth); every input this machine can compute is measured flat (nine rungs) | a larger language model than this machine can hold, on a bigger machine; Proposal C's kept form (L117) | `s24/LEDGER.md` L13; `s26/PROPOSAL_C.md`; Part VII.3, VII.6 |
+| Whether a better distance predictor is obtainable (the only steep lever, -2.15 A per unit toward truth); every input this machine can compute is measured flat (nine rungs) | a larger language model than this machine can hold, on a bigger machine; Proposal C's kept form (L117, L122) | `s24/LEDGER.md` L13; `s26/PROPOSAL_C.md`; Part VII.3, VII.6 |
 | Proposal A's target-dependent Hamiltonian (A3) | the pre-registered A3 verdict (`a3_build` running) | Part VII.1 |
 | The rest of the C2 ladder (`raw` and the deferred rungs; the best rung so far is the shipped prior, L112) | a rung beating the shipped prior on the fold-clustered CI of the built chain, replicated | Part VII.3 |
 | The 2/60 benchmark self-copy leak, now bounded MINOR (dev proxy 0.008 A with both channels measured on all four dev self-copies; own-native envelope 0.028 A mean CI to 0.151 A worst target on the built chain; 0.194 at the worst target on the selection basis); F3's control clause open (one of six control-out models) | by design only a fresh benchmark, which does not exist; the control-out models and a second seed of the 2P5H retrain if time allows | S26 L44, L49, L50, L55, L58, L108; Part VII.4 |
@@ -2735,7 +2768,7 @@ sprint. This part lists the S26 movements and the items that remain open at the 
 | Publishing the trainability half | a manuscript from Part V.10 with V.9's scope correction | `s13/`, `s25/QUANTUM.md`; S26 L27 |
 | The tournament entries not run or not complete at the close: the common-mode prediction (C5, keeps its pre-registration), rotamer relief, coherence-penalised training | their pre-registrations' falsifiers | `s26/TOURNAMENT.md`; `s26/PREREG_*.md`; Part VII.4 |
 | The tie-break noise floor: measured (0.004 A on the 126-mean, 0.024 A paired MDE between conventions, built chain); not a lever | nothing; it is the floor every cross-run hundredths-level claim is read against | S26 L64, L71; Part VII.4 |
-| Strain as difficulty: measured as a calibration flag (partial rho +0.433 of `moved` with the built-chain error), forbidden as a lever by its pre-registration; provisional | the pool-spread control `a_strain_vs_spread` (whether `moved` is the top-75's own disagreement in disguise) | S26 L53, L81; Part VII.4 |
+| A native-free difficulty flag: the pool's own disagreement predicts the emitted chain's error (partial rho +0.452 given n and Rg, 5/5 folds); the relaxation's displacement is its proxy; forbidden as a lever by the pre-registration and by the record (every conversion of a difficulty signal into a selector failed held out) | a use as a confidence label only | S26 L53, L81, L121, L123; Part VII.4 |
 | Sequence proximity to the training corpus below the 0.6 threshold: no gradient at the pre-registered MDE (rho -0.25), a weak effect of order -0.2 suggested and confounded with retrieval | a design that separates recall from retrieval; none registered | S26 L90; Part VII.4 |
 
 ## PART IX. OPERATING MANUAL
@@ -3320,6 +3353,8 @@ artefact; "as asserted" means a passing test pins it.
 | the three verdicts (A REPLACE, B REPLACE, C KEEP WITH EDITS) and the slide 11 line | VII | `s26/PROPOSAL_A.md`, `s26/PROPOSAL_B.md`, `s26/PROPOSAL_B_REPLACEMENT.md`, `s26/PROPOSAL_C.md`, `s26/C3_RESULT.md`; `s26/LEDGER.md` L117 | as cited |
 | A4 bootstrap: 3,928 s, 0.09 GB, 35, 70, 2,000, -0.649 [-0.714, -0.596], -0.252 [-0.318, -0.187], -0.047 [-0.171, +0.201], -0.311 [-0.356, -0.267], -0.243 [-0.294, -0.193], +0.571 [+0.500, +0.642], +0.658 [+0.596, +0.722], +0.346 [+0.265, +0.428], +0.301 [+0.232, +0.369], -0.056 [-0.182, +0.087], +0.006 [-0.097, +0.123], 13 of 128, 0.23 to 0.60 | V, VII | `s26/results/q_var_boot.json`; `s26/jobs_done/a4_var_boot.json`; `s26/LEDGER.md` L119 | as stored / as cited |
 | C3 stage 2 verify: 3.2147652, 0.0 on 126 of 126, 5 s | VII, VIII | `s26/results/ph_c3_stage2_verify.json`; `s26/LEDGER.md` L118 | as stored / as cited |
+| strain spread control: +0.452 [+0.280, +0.609], +0.451 [+0.286, +0.608], +0.433 [+0.247, +0.581], +0.241 [+0.054, +0.376], 0.007, +0.082 [-0.103, +0.259], [+0.011, +0.171], 0.39, +0.052, +0.756, 0.0005, 2,000 | VII, VIII | `s26/results/a_strain_vs_spread.json`; `s26/LEDGER.md` L121, L123 | as stored / as cited |
+| L120: 192, 214, 0.5216, 0.5782, 0.5565, 0.5662, 0.4043, -0.2183 [-0.383, -0.030], -0.0856, +0.0340, 12.0, 2.76, af05d987, 80, 30 of 126 | VII | `s26/results/a_ladder_isolations.json`; `s26/results/p_b3.json`; `s26/LEDGER.md` L120, L124 | as cited |
 <!-- APPENDIX B ROWS -->
 
 ## APPENDIX C. THE S26 LEDGER (DRAFT: reproduced at the close)
