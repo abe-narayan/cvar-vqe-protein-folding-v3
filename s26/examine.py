@@ -67,8 +67,7 @@ def main(argv=None):
         rc |= int(e_claims.main() or 0)
     if a.report_check:
         import e_report_check                                # lane E's report check, called as-is
-        print("
-== report check (s26/e_report_check.py) ==")
+        print("\n== report check (s26/e_report_check.py) ==")
         rc |= int(e_report_check.main([]) or 0)
     return rc
 
