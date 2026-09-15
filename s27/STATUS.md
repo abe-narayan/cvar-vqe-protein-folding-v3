@@ -11,5 +11,6 @@
 ## B
 
 ## C
+- 2026-09-14 19:12 running: contract, brief, S27 report/prereg, router record (S22 L7, S23 L6/L7, S26 L110/L115) read; PREREG_S28_C.md written (no endpoint read). Next: s28_C_fail18.py features + nested logistic + permutation null; s28_C_readout.py; tests; 1-target probe under jobrun.
 
 ## D
