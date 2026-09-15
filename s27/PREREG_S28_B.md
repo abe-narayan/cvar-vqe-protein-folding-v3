@@ -293,3 +293,18 @@ Design, held fixed from the base prereg unless stated:
   `tests/test_s28_B2.py`, results `s27/results/s28_B2_*.json|jsonl`, ledger entries `(date,
   B2)`, findings under a B2 heading in `s27/s28_B_FINDINGS.md`.
 - Memory and cost: as the base (0.35 GB; the kNN graph is sparser but stored dense).
+
+## ADDENDUM 2 -- B2 ENDPOINT SCOPE (2026-09-14 23:10, written after S28-L25 and S28-L29 (property entries), before any B2 endpoint number and before the S28B built-chain verdict)
+
+F5-B2 as registered was not passed (first clause straddled, second clause failed, S28-L29).
+The one cell the mechanism licenses for an endpoint look is the one where the circuit
+collects its hopping: k = 10 (connected on every target measured; k = 5 is disconnected on
+some targets and is NOT run), J = 3, both seeds, on the point cloud: VQE R1 and R3, GS R3
+(labelled DEGENERATE on any target whose k = 10 graph has more than one component; the count
+is written per target), the PERM control at the same cell, and J = 0 (already in
+`s28_B_rows.jsonl`, bit-identical). No other k or J. Comparators: the same readout at J = 0
+(F1), PRODUCTION (DIS top-75 uniform; S28-L2(a)), PERM (F3); both seeds; FAIL18 / 108. The
+built chain only if a cell reaches 0.7x MDE on the point cloud against production or J = 0,
+and then paired against production on the chain. Registered prior: WORSE or null (the kNN
+ground state is a tight cluster of PR 53 around the argmin, the consistency mechanism). The
+job runs only after the S28B built-chain verdict entry is posted and lane D has checked it.
