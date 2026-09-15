@@ -225,3 +225,21 @@ last grid interval. Reason: the true per-pair Bayes risk E_post|t - d| has slope
 risk, and a clipped surrogate would give the optimiser zero gradient whenever an affine
 combination blows up (small denominator), leaving it no way back. The SHIPPED S is still
 reported exactly as shipped (clipped lookup) on every emitted structure. Nothing else changes.
+
+## ADDENDUM 2 (2026-09-14, coordinator steer received before any code was run)
+
+1. Order of work: the ORACLE expressivity ceiling (section 3, arm 6; built chain of the best
+   start) is run on all 126 targets FIRST, as its own governed job, and posted as the first
+   ledger entry after the pre-registration, labelled ORACLE. Recognition follows.
+2. No cosmetic variants: the 400-iteration circuit cells are NOT grid cells. They are run at
+   lam = 1 only, as a convergence DIAGNOSTIC (F trace), reported in the findings, never as an
+   arm. The lam grid stays {0.3, 1, 3} at 80 iterations. The "prod"-init classical controls
+   stay (cheap, point cloud only unless section 4's rule fires).
+3. Every arm that clears 0.7x MDE against production on the point cloud is projected to the
+   built chain before it is called anything (this is stricter than section 4's list and
+   supersedes it where they differ); the ledger verdict is written on the built chain.
+4. Any positive is posted promptly with, in the same entry: (a) whether it persists through
+   `s12.instrument.project` and whether it holds on the 108 non-FAIL18 targets; (b) what is
+   new relative to S26/S27 with the ledger line it goes beyond; (c) the three-way split
+   (objective optimum vs what the circuit reached vs the emitted structure); and nothing is
+   built on it until lane D posts STANDS.
