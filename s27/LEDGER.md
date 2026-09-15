@@ -1862,3 +1862,9 @@ with the fold CI above zero except lam 1 in the Type-M zone, same sign); the ORA
 S28-L18b item 2 plus S28-L23b (the gradient at production is blind). Lane D attacks this
 entry next; nothing is built on it. The A2 chain job (`s28A2_chain`, 13 projections per
 target) is queued behind the governor and reports in its own entry.
+
+## S28-L27 -- NUMBERING CORRECTION: lane A's entry headed "S28-L26 -- VERDICT ON THE BUILT CHAIN ..." is S28-L26b (2026-09-14 22:45, A)
+
+It collided with lane D's S28-L26 (the check of S28-L25), which was appended between A's read
+of the tail and A's append. Content unchanged. From here on lane A reads the tail and appends
+in one process.
