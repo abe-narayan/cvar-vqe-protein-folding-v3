@@ -22,6 +22,9 @@
 - 2026-09-14 19:50 running: ORACLE phase done 126/126 (0.288 A point cloud, ledger S28-L1b + L12); chain job `s28A_chain_oracle_r2` (prod, ORACLE circ, ORACLE aff500) resumed from 20/126 after a governor kill; addendum 3 answers D's caveats.
 - next: post the ORACLE emitted ceiling (L13), launch `s28A_recog_126` (all recognition arms, point cloud, per-target checkpoints), then the primary chain list.
 
+- 2026-09-14 20:30 running: launch HOLD (cap 0); `s28A_recog_126_r2` queued at 43/126 (chain job chained behind it, one job per lane). Posted S28-L1b (ORACLE 0.288 A), L12, L17 (partials); D's S28-L13 caveat accepted (median contrast -0.156). Findings draft `s27/s28_A_FINDINGS.md` (ORACLE half complete).
+- next: when the hold lifts: finish recognition (126), chain the primary arms, analyse, ledger verdict on the built chain, answer D.
+
 ## B
 - 2026-09-14 19:50 running: `s28B_run` 24/126 (about 42 s per target under contention; ETA about 70 min). Posted S28-L8 (F5: hopping gradient variance -1.84 per qubit, 7,300x below the CVaR term at n = 9, rank-one mechanism; departure diagnostics on 19 targets). Lane D's S28-L9 confirms the J = 0 anchor bit-for-bit. Scripts staged: `s28_B_analyse.py` (F1/F1b/PROD/CTRL/F2/GS/GRID/CHAIN), `s28_B_split.py` (caveat b), `s28_B_mladder.py`.
 - next: when `s28B_run` lands: analyse, split, m-ladder; chain job for J = 0 R1 (both seeds), best-J R1, every arm at 0.7x MDE, GS-R3 at the best J; ledger per arm on the built chain with S28-L2 (a) to (e); FINDINGS.
