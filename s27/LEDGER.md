@@ -1729,3 +1729,136 @@ entry says so; the mechanism reading waits for the rank-one decomposition; the m
 the representability fit before it is quoted as "optimisation quality").
 Artefacts: `s27/results/s28_B2_train.json`, `s28_B_train.json`, `s28_B_split.json`; my refits
 are `np.polyfit` on log2 of the per-n medians.
+
+## S28-L26 -- VERDICT ON THE BUILT CHAIN (126/126): THE AMPLITUDE READOUT IS WORSE THAN PRODUCTION AT EVERY lam (+0.23 TO +0.26 A, 1.3x TO 1.6x MDE, FOLD CI ABOVE ZERO); F1 DOES NOT FIRE, F2 IS MOOT; THE ORACLE CEILING OF THE SAME FAMILY IS 0.252 A EMITTED; EXPRESSIVITY IS NOT THE BARRIER, RECOGNITION IS, AND THE OBJECTIVE IS THE FAILING LEG (2026-09-14 22:40, A)
+
+Basis: BUILT CHAIN, `s12.instrument.project`, every arm and PRODUCTION projected by the same
+code path in the same job (`s28A_chain_primary_1`, 4262 s, peak RSS 0.311 GB, resumed after
+one governor suspension). Artefacts: `s27/results/s28_A_chain_rows.jsonl` (126 rows: prod,
+oracle_circ, circ_l0/0.3/1/3_i80; oracle_aff500 on 22), `s27/results/s28_A_summary.json`
+(`chain_means`, `contrasts`, `chain_lam_grid_bok`, `text`). Pre-registration
+`s27/PREREG_S28_A.md` sections 3 to 5, addenda 1 to 3.
+
+Anchor: production re-projected here is 3.2071 over 126 (point cloud 3.0483; projection price
++0.159). S27's DIS chain rows give 3.2126 on the same clouds (equal to 5.7e-14): mean
+difference -0.0056, 12/126 targets differ by more than 0.02 A and 3 by more than 0.1
+(2LNG -0.513, 9BFL -0.160, 2NDN -0.115): a branch flip of the multi-start projection under a
+1e-14 input perturbation, lane D's S28-L18 floor with a longer tail than its 22-target sample
+showed (max 0.51, not 0.02). It does not touch any contrast here (same code path both sides),
+and it is why S27's rows were not reused as the comparator.
+
+Means on the built chain (`chain_means`): production 3.2071; circuit lam 0.3 / 1 / 3 at 80
+iterations 3.4432 / 3.4330 / 3.4708; lam 0 (the deployed state read as signed weights) 6.1366;
+ORACLE circuit optimum 0.2516 (126/126 under 2 A, worst 0.970). Projection prices (chain minus
+cloud): production +0.159, circuit lam arms +0.033 to +0.060, the ORACLE optimum -0.037 (the
+projection moves a near-native signed combination TOWARD the native, S10-5's hull result seen
+again), lam 0 -80.9 (a 87 A cloud projected onto an ideal chain lands at 6.1 A).
+
+  circ_l0.3_i80 vs production (BUILT CHAIN)
+    a 3.4432 (med 3.2660)   b 3.2071 (med 2.9661)   n=126
+    effect +0.2362   median +0.1570   SE 0.0568   MDE 0.1591   effect/MDE +1.48
+    iid  CI95 [+0.1292, +0.3461]
+    fold CI95 [+0.1279, +0.3270]   folds same sign 5/5   per-fold 0:+0.314 1:+0.350 2:+0.310 3:+0.195 4:+0.054
+    52W/74L/0T   worst degradation +2.6150 (9BAF)   p90 +0.9704   power 0.99  Type-M 1.01
+    concentration: drop-top10 +0.3216 vs uniform-effect null p10/p50/p90 +0.2506/+0.3192/+0.3937 -> pctile 0.515
+    VERDICT: WORSE
+
+  circ_l1_i80 vs production (BUILT CHAIN)
+    a 3.4330 (med 3.2831)   b 3.2071 (med 2.9661)   n=126
+    effect +0.2260   median +0.1141   SE 0.0624   MDE 0.1749   effect/MDE +1.29
+    iid  CI95 [+0.0982, +0.3490]
+    fold CI95 [+0.0898, +0.3557]   folds same sign 4/5   per-fold 0:+0.206 1:+0.418 2:+0.349 3:+0.245 4:-0.022
+    48W/78L/0T   worst degradation +2.6684 (5MXS)   p90 +1.1138   power 0.95  Type-M 1.03
+    concentration: drop-top10 +0.3370 vs uniform-effect null p10/p50/p90 +0.2586/+0.3344/+0.4084 -> pctile 0.518
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.03x]
+
+  circ_l3_i80 vs production (BUILT CHAIN)
+    a 3.4708 (med 3.3342)   b 3.2071 (med 2.9661)   n=126
+    effect +0.2638   median +0.2035   SE 0.0590   MDE 0.1654   effect/MDE +1.59
+    iid  CI95 [+0.1495, +0.3757]
+    fold CI95 [+0.1146, +0.3692]   folds same sign 5/5   per-fold 0:+0.346 1:+0.390 2:+0.361 3:+0.285 4:+0.001
+    40W/86L/0T   worst degradation +2.8741 (2RUO)   p90 +1.1084   power 0.99  Type-M 1.00
+    concentration: drop-top10 +0.3626 vs uniform-effect null p10/p50/p90 +0.2828/+0.3595/+0.4367 -> pctile 0.525
+    VERDICT: WORSE
+
+  circ_l0_i80 vs production (BUILT CHAIN)
+    a 6.1366 (med 5.7725)   b 3.2071 (med 2.9661)   n=126
+    effect +2.9295   median +2.9339   SE 0.2400   MDE 0.6724   effect/MDE +4.36
+    iid  CI95 [+2.4729, +3.4112]
+    fold CI95 [+2.6722, +3.1849]   folds same sign 5/5   per-fold 0:+2.820 1:+2.433 2:+3.320 3:+2.831 4:+3.152
+    16W/110L/0T   worst degradation +11.8605 (8TXS)   p90 +5.9532   power 1.00  Type-M 1.00
+    concentration: drop-top10 +3.3145 vs uniform-effect null p10/p50/p90 +2.9936/+3.3130/+3.6346 -> pctile 0.503
+    VERDICT: WORSE
+
+  circuit, lam chosen leave-fold-out, HELD-OUT vs production (BUILT CHAIN)
+    a 3.4726 (med 3.2705)   b 3.2071 (med 2.9661)   n=126
+    effect +0.2656   median +0.0970   SE 0.0615   MDE 0.1724   effect/MDE +1.54
+    iid  CI95 [+0.1449, +0.3868]
+    fold CI95 [+0.1479, +0.3743]   folds same sign 5/5   per-fold 0:+0.314 1:+0.418 2:+0.349 3:+0.245 4:+0.054
+    50W/76L/0T   worst degradation +2.6684 (5MXS)   p90 +1.0648   power 0.99  Type-M 1.01
+    concentration: drop-top10 +0.3687 vs uniform-effect null p10/p50/p90 +0.2895/+0.3674/+0.4467 -> pctile 0.507
+    VERDICT: WORSE
+
+  ORACLE oracle_circ vs production (BUILT CHAIN)
+    a 0.2516 (med 0.2240)   b 3.2071 (med 2.9661)   n=126
+    effect -2.9555   median -2.7272   SE 0.1450   MDE 0.4064   effect/MDE -7.27
+    iid  CI95 [-3.2421, -2.6803]
+    fold CI95 [-3.0662, -2.8496]   folds same sign 5/5   per-fold 0:-2.798 1:-2.940 2:-2.859 3:-3.174 4:-3.011
+    126W/0L/0T   worst degradation -0.1218 (1S9Z)   p90 -0.9489   power 1.00  Type-M 1.00
+    concentration: drop-top10 -2.6615 vs uniform-effect null p10/p50/p90 -2.8536/-2.6621/-2.4811 -> pctile 0.501
+    VERDICT: BETTER
+
+F1 ("the formulation moves accuracy"): DOES NOT FIRE. Every lam arm is WORSE than production
+on the built chain with the fold CI above zero (lam 0.3: +0.236, 1.48x MDE, 5/5; lam 1: +0.226,
+1.29x, 4/5, Type-M zone; lam 3: +0.264, 1.59x, 5/5). The nested leave-fold-out choice (inner
+basis: the built chain; per-fold choices 0.3 / 1 / 1 / 1 / 0.3) is +0.266 at 1.54x MDE, 5/5,
+WORSE; the per-target minimum over the lam grid is 90% accounted for by its order-statistic
+null, k_eff 3.00, split-half transfer -7%: NOT A SIGNAL (`chain_lam_grid_bok`). No seed-1 run
+is owed (no positive). F2 ("the circuit matters") is MOOT; its point-cloud preview stands as
+S28-L18b item 4 with lane D's S28-L20 caveats answered here: (a) the circuit's advantage over
+the unconstrained a500 family is -0.19 at matched budget (80 evaluations) and -0.30 converged
+(2000), the budgets differ 25x and both are quoted; (b) the circuit-vs-random-27-subspace
+contrast is Type-M (1.13x MDE, 4/5 folds) and its SIGN is that the circuit is the less bad of
+the two signed families, nothing more.
+
+The coordinator's three questions for a positive, answered for the negative:
+(a) Through the projection: the harm persists (point cloud +0.335 / +0.337 / +0.390, chain
+    +0.236 / +0.226 / +0.264; the projection removes 0.1 A of it because the signed clouds are
+    uncontracted, mean virtual bond 3.40 to 3.54 before projection against production's 2.96,
+    so production pays +0.159 for the projection and the signed arms +0.03 to +0.06). FAIL18 /
+    108 on the chain (`ST.compare` per stratum; artefact rows): lam 0.3 is -0.073 on FAIL18
+    (SE 0.163, 0.16x MDE, 10W/8L, NOT MEASURED) and +0.288 on the 108 (1.73x MDE, fold CI
+    [+0.224, +0.352], 5/5, WORSE); lam 1: -0.073 (0.13x) / +0.276 (1.54x, WORSE); lam 3:
+    -0.026 (0.05x) / +0.312 (1.84x, WORSE). The harm is carried by the 108 targets where the
+    distogram is right; on the 18 where it is wrong the signed readout is a coin toss. S27 L9's
+    regime pattern, again, and again with no native-free switch.
+(b) New relative to S26/S27: the first SIGNED (non-convex) consumer of the pool on record
+    (S10-5's affine bound was ORACLE only; every S26/S27 readout was convex). It goes beyond
+    S27 section 6 (ranking information is anti-useful on an averaging readout) by showing that
+    the readout's convexity was not the binding constraint: given sign freedom, the objective
+    uses it to move AWAY from the native (S28-L18b item 2: S~ at the circuit optimum 1.34 <
+    production 1.67 < the ORACLE structure 2.09). And the family's ORACLE ceiling, 0.252 A
+    emitted on 126/126, is 2.955 A below production: EXPRESSIVITY IS NOT THE BARRIER.
+(c) The three-way split: (i) OBJECTIVE quality: the failing leg; the native-free S~ prefers
+    the circuit's optimum to production and production to a 0.29 A structure on 80% of
+    targets. (ii) OPTIMISATION quality: the optimiser works (lam = 0 reproduces
+    `run_cvar_vqe` bit-for-bit; S~ falls from 3.4 to 1.3 in 80 iterations; 400 iterations
+    lower it further and make the structure worse, +0.483 point cloud). (iii) The EMITTED
+    structure: worse at every lam on the chain, above. A positive here would not have been a
+    quantum result in any case: the convex simplex under the same objective lands at
+    production (3.056 point cloud), and every signed family is worse in proportion to how
+    well it minimises S~.
+
+What the objective would have to know (PREREG section 6, the brief's last question): the
+ORACLE structure exists in the family on every target and survives the projection; to pick
+it, an objective would have to score a 0.29 A signed combination below the contracted average
+and below the objective's own signed optimum. The shipped Bayes risk does the opposite on
+101/126 targets (S28-L1b). The objective's own error is the common-mode error of the pool
+(S23 L9): a per-pair posterior median that the average already sits at.
+
+Verdict on the built chain: REFUTED for accuracy (F1 silent, every arm worse beyond its MDE
+with the fold CI above zero except lam 1 in the Type-M zone, same sign); the ORACLE ceiling
+(0.252 A emitted, 126/126 under 2 A) is a DIAGNOSTIC and the sprint's mechanism statement is
+S28-L18b item 2 plus S28-L23b (the gradient at production is blind). Lane D attacks this
+entry next; nothing is built on it. The A2 chain job (`s28A2_chain`, 13 projections per
+target) is queued behind the governor and reports in its own entry.
