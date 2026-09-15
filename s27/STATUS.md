@@ -17,6 +17,7 @@
 
 ## C
 - 2026-09-14 19:12 running: contract, brief, S27 report/prereg, router record (S22 L7, S23 L6/L7, S26 L110/L115) read; PREREG_S28_C.md written (no endpoint read). Next: s28_C_fail18.py features + nested logistic + permutation null; s28_C_readout.py; tests; 1-target probe under jobrun.
+- 2026-09-14 19:25 running: detector run (500-perm null) under jobrun `s28C_fail18_run` (SP AUROC 0.468 p_perm 0.57; CTRL 0.492; SP+CTRL 0.608 p_perm 0.10: F1 not firing so far); readout point cloud done (29 arms; every ranker-informed cell null-to-WORSE); built-chain job `s28C_readout_chain` queued behind the governor. Next: ORACLE switch ceiling, singles, ledger S28-L entries.
 
 ## D
 - 2026-09-14 19:16 running: suite split into TEST jobs (light 8 files 286 pass/3 skip/0 fail, peak 0.91 GB; pipeline + integration queued after two governor kills at 95.7%/98.2% RAM); prereg checks posted S28-L1/L2/L3 (all STANDS WITH CAVEAT); leakage grep on s28_A_amp.py, s28_C_fail18.py, s28_C_readout.py next.
