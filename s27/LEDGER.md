@@ -2375,3 +2375,49 @@ Verdict: STANDS (Part 2 closed; the falsifier fails on every cell; priors (a) WO
 (c) NULL-to-WORSE held, with (a) and (b) landing in the Type-M zone on the chain rather than
 beyond MDE). No positive anywhere in the artefact.
 Artefacts: `s27/results/s28_C_readout_chain_rows.jsonl`, `s28_C_readout_chain_summary.json`.
+
+## S28-L34 -- ADVERSARY CHECK OF PREREG_S28_C2 (the recognition audit, an ORACLE diagnostic with a closure falsifier) (2026-09-14 22:34, lane D)
+Question: as S28-L1 to L3 and L23, for `s27/PREREG_S28_C2.md` (written 22:35 before any C2
+number; job `s28C2_ca` running at 22:28).
+- Falsifier for the closure claim (any scorer or the nested linear combination with
+  pref(circ_best) fold CI above 0.5 AND pref(circ_best) - pref(RAND_SIGNED) fold CI above zero)
+  is falsifiable and two-clause, and the prereg says what a one-clause pass means ("prefers
+  any signed combination"). Registered priors are stated per scorer family. Multiplicity is
+  priced (max-over-scorers sign-flip null, as S28-L6). The linear combination is nested with
+  its own sign-flip null. The ORACLE label is on every structure but PROD and the two controls'
+  directions, and the entry format says so. Correct.
+- Controls: (i) RAND_SIGNED at the ORACLE structure's own distance from PROD, in the affine
+  family that contains the circuit family (the prereg says why a random circuit state cannot
+  be placed at a chosen distance, before the fact): matched in scale, native-free in direction.
+  (ii) GAUSS at the ORACLE RMSD-to-native and (ii-b) at the distance from PROD. Together they
+  separate "prefers a structure this far from production" from "prefers this structure".
+  Matched.
+Verdict: STANDS WITH CAVEAT. Caveats before the first C2 number:
+(a) TIES. Several channels are zero or piecewise constant on most structures (EXVOL is 0 on
+    99% of pool members, S27 T1; CONTACT / ENV / DISTPOT are histogram lookups). pref(X) as
+    "score(X) < score(PROD)" counts a tie as "not preferred", which reads as anti-recognition.
+    Count ties per scorer and structure, score a tie as 0.5 in pref, and quote the tie count
+    beside every pref; a scorer with more than half ties is "uninformative here", not
+    "anti-recognition".
+(b) GEOMETRY BESIDE EVERY PREFERENCE. PROD is 22% contracted (mean virtual bond 2.96 A); the
+    ORACLE structure keeps native bonds (3.77, S28-L1b); a random signed combination has bonds
+    of 3.4 to 3.5 (S28-L18b item 6); Gaussian noise on PROD lengthens bonds at random. A
+    geometric channel's "preference" (RG_LAW, RG_UNIV, EXVOL, CAGEO) can be read entirely from
+    those numbers. Report mean virtual bond and Rg of every ladder point and every control
+    beside the pref table, so a pass or a fail on a geometric channel is attributed before it
+    is interpreted; and note that a scorer preferring RAND_SIGNED to PROD as often as it
+    prefers circ_best to PROD is measuring contraction, which is what clause two is for.
+(c) THE LADDER'S TWO ORACLE ORDER STATISTICS. circ_best is best-of-5 (S28-L13); the prereg
+    carries circ_s0 beside it, which is right; quote pref for both and decide the closure on
+    circ_s0 as well as circ_best (a scorer that prefers the best-of-5 and not the single start
+    is preferring the order statistic's extra 0.1 A).
+(d) PROPORTION CIs. A fold-clustered bootstrap of an indicator mean over five folds with 18
+    positives in FAIL18 is coarse; on the FAIL18 stratum quote the count (k of 18), not a CI.
+(e) THE CHAIN SCORERS' MULTIPLICITY. When the 16 chain scorers land, the max-over-scorers null
+    must be over all 31 (CA + chain), not per family; and the RAMA / LEG / DSSPHB values are on
+    projected structures, so a projected ORACLE structure (0.252 A emitted, S28-L26b) is what
+    they see; say so.
+(f) Nothing here is deployable and no NaN-poison applies; a "pass" would name a candidate
+    objective for an A2-style run, not a result, and the prereg says so.
+Artefacts of this check: this entry; `s27/PREREG_S28_C2.md`; `tests/test_s28_C2.py` (landed
+22:30) is added to the S28 green-gate set.
