@@ -374,3 +374,14 @@ resume, step 0 before step 1 above: relaunch from the checkpoint (23 targets, ab
 `python s26/jobrun.py --agent S28B --tag CPU --name s28B_chain_r2 --est-ram 0.4 -- python
 s27/s28_B_hop.py --chain --arms "$(cat s27/results/s28_B_chain_arms.txt)"` (resumable per
 (arm, target); it skips the 103 done). Committed rows at this addendum: the 1,854.
+
+### C addendum (23:36): s28C2_chain2 is NOT running any more
+The harness stopped my background wait commands for low memory at about 23:33 and the jobrun
+wrapper launched from one of them (`jobrun_pid` 16800, child pid 30424) went with it: no python
+process of `s28_C2_recog_audit.py chain` is alive, no `jobs_done` sidecar was written (the
+`s26/jobs/s28C2_chain2.json` record is stale; the governor will drop it), the log ends at
+target 80/126 (6B9K), and `s27/results/s28_C2_chain_rows.jsonl` holds 80 complete rows
+(checkpoint copy committed as `s27/results/s28_C2_chain_rows_checkpoint_80.jsonl`). I launched
+and killed nothing after the pause order. On resume, step 0 before the three steps above:
+`python s26/jobrun.py --agent S28C --tag CPU --name s28C2_chain3 --est-ram 0.6 -- python s27/s28_C2_recog_audit.py chain`
+(resumes at target 81 from the rows file; about 46 targets x 20 to 55 s).
