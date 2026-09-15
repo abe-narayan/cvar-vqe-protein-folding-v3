@@ -982,3 +982,42 @@ is supported and the SIZE is not (S26 L46's rule: say the sign, not the size). Q
 entry decides; nothing here pre-empts it.
 Artefacts: `s27/results/s28_C_readout_cloud_rows.jsonl`, `s28_C_readout_cloud_summary.json`;
 my recomputation printed by `s27/s28_D_attack.py` (not persisted; rerunnable in 20 s).
+
+## S28-L17 -- ORACLE EMITTED CEILING, PARTIAL 22/126 (built chain); RECOGNITION ARMS, PARTIAL 43/126 (point cloud): A PARTIAL NOTE, NOT A RESULT (2026-09-14 20:20, A)
+
+Times in S28-L12 and PREREG addendum 3 were stamped ahead of the clock (written about 19:45);
+nothing else changes. Both jobs below were killed by the governor at 95 to 97% RAM from the
+user's own load and relaunched from their per-target checkpoints (`s28A_recog_126_r2` queued
+behind the cap of 2; the chain job is chained to start when it finishes, one job per lane).
+
+ORACLE (theta chosen against the native; the family's ceiling, never a result), BUILT CHAIN,
+PARTIAL 22/126 (`s27/results/s28_A_chain_rows.jsonl`, sorted-pdb order 1A13..1KZ2):
+  ORACLE circuit optimum through `s12.instrument.project`: mean 0.2934 A (point cloud 0.2865 on
+  the same 22; projection price +0.0068), median 0.267, worst 0.955, 22/22 under 2 A, mean
+  virtual bond of the emitted chain 3.804 (ideal geometry, as it must be). Production on the same
+  22: chain 2.9325 (point cloud 2.8272, projection price +0.1052; S27's DIS chain rows agree on
+  these 22 to max |diff| 0.0186 A, so the paired comparator is re-projected here, not reused).
+  ORACLE affine-500 emitted: 0.1378 on 22 (S10-5: 0.064 on 126 in the joint-transform frame).
+  Reading (PARTIAL): the projection costs the signed combination 0.007 A and the convex average
+  0.105 A, because the signed combination is not contracted (S28-L1b). The complete 126-target
+  emitted ceiling is posted when the chain job lands.
+
+RECOGNITION (deployable, native-free), POINT CLOUD, PARTIAL 43/126
+(`s27/results/s28_A_recog_rows.jsonl`, sorted-pdb order 1A13..2LNG), mean paired d vs
+production on the same 43, no CI, no MDE, NOT A RESULT:
+  circuit lam 0 (the deployed CVaR-VQE state read as signed weights): +84.9 (median 23.0 A):
+    the signs are the initialisation's and the affine sum blows up, as registered (F1 prior);
+  circuit lam 0.3 / 1 / 3 at 80 iterations: +0.31 / +0.35 / +0.40 (means 3.24 / 3.27 / 3.33);
+    lam 1 at 400 iterations: +0.42 (convergence does not help);
+  a500 rand matched / converged (lam 1): +0.56 / +0.65; a75 rand: +0.43 / +0.52;
+  simplex rand matched: +0.03; simplex from production, converged: +0.003 (the objective does
+    not move production anywhere);
+  S-only a500 converged: +0.72; untrained draw 0: +12.2 (median 5.6).
+  Lane D's caveat (a), the scale of the terms, mean over 43: at theta0 CVaR -1.38, T H 2.01 and
+  lam S~ 1.02 / 3.41 / 10.23 for lam 0.3 / 1 / 3; at the optimum CVaR -1.53, T H 2.9 and lam S~
+  0.42 / 1.27 / 3.74. The grid spans minor to dominant; it is not one cell.
+  The mechanism, visible already: at lam 1 the optimiser drives S~ to 1.27, BELOW production's
+  1.67, while the RMSD rises 0.35 A; and the ORACLE structure sits at S~ 2.09 (S28-L1b). The
+  objective orders (circuit optimum) < (average) < (near-native): it is minimised, and its
+  minimiser is away from the native. This is S8-9's 37th percentile from the other side and is
+  the registered reason F1 was expected not to fire. Verdicts wait for 126/126 and the chain.
