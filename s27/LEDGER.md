@@ -50,3 +50,34 @@ DIS's under the bounded standardisation, within 0.87x to 1.09x under zrank. Fals
 `s27/REPORT.md` (tables from `make_tables.py`). Verdict: the shipped score stands; no candidate
 for the next architecture; the mechanism (L3) is the sprint's finding; follow-ups in §10.
 Caches `s27/cache/*.npz` (12 MB, regenerable in 13 min by `run_pool.py`) are not committed.
+
+---
+
+# SPRINT 28 (2026-09-14)
+
+## S28-L0 -- THE BRIEF, THE LANES, AND WHERE THE COORDINATOR THINKS THE LEVERAGE IS (coordinator)
+
+Brief: real movement on accuracy, or a real quantum result, or both; the CVaR-VQE stays the
+spine; 2 to 4 agents at all times; every claim with its control, paired statistic, MDE and fold
+CI; pre-registered falsifiers; the built chain is the reporting basis; below 0.7x MDE is not a
+result; benchmark60 closed; production frozen at a15406c; new work in `s27/`.
+Contract: `s27/S28_CONTRACT.md`. Briefs: `s27/briefs/S28A.md` to `S28D.md`.
+
+Where the leverage is, from the record: (1) every operator the project ships is CONVEX, and the
+ORACLE bound ladder (S10-5) puts the affine span of the same 500 windows at 0.064 A emitted
+against 0.853 for the convex hull and 2.954 for the average; signed weights are the one readout
+class never tried, and real quantum amplitudes are signed for free (lane A: the amplitude
+readout, with the deployed CVaR objective plus the emitted structure's own distogram score);
+(2) every Hamiltonian ever run here is diagonal, so the selector is provably a sort (S24/S25
+theorem, S27 T9); the first off-diagonal Hamiltonian, energy plus hopping on the pool's
+similarity graph, is the first setting in which the circuit is not trivially classical (lane B),
+with the gradient-variance-versus-J measurement as a quantum-side result in its own right;
+(3) FAIL18 carries the mean and every alternative helps there (S27 strata); a detector with
+a never-used feature class (the pool's statistical-potential distribution) and a readout that
+consumes ranking information without averaging it away are the classical lanes (lane C);
+(4) an Adversary (lane D) attacks every positive, keeps the suite green, and insists on the
+three-way split (Hamiltonian quality, VQE optimisation quality, emitted structure) for any
+quantum claim. Registered priors: A's plain-readout and unconstrained-classical arms null and
+worse; the circuit-family arm is the open question; B's hopping is expected worse (the S27
+consistency mechanism) and its trainability-vs-J table is the deliverable either way; C's
+detector null at the AUROC step. The governor (`s26/governor.py`) runs; the launch cap is 4.

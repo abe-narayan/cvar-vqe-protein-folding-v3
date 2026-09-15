@@ -1,7 +1,12 @@
 {
- "active": [],
- "updated": "2026-09-14T04:19:30",
- "note": "coordinator is the only writer of this file",
+ "active": [
+  "S28A",
+  "S28B",
+  "S28C",
+  "S28D"
+ ],
+ "updated": "2026-09-14T18:57:34",
+ "note": "S28 lanes (coordinator-only file)",
  "finished": [
   "E",
   "I",
