@@ -148,3 +148,24 @@ H11 (non-additive forms). For the two least-harmful complements (DISTPOT, ENV) a
 H12 (near-corpus statistical potential). DISTPOT and CONTACT refitted on the target's 2,000
   most BLOSUM-similar universe windows instead of all 13k (a sequence-conditioned statistical
   potential). Alone, with DIS at equal weight, and at 0.5. Falsifier as H1/H2. Prior: null.
+
+## ADDENDUM 2 (2026-09-14, written after wave 2, before any wave-3 number)
+
+Wave 2 left one channel with a consistent, sub-MDE negative effect in every form tried
+(SS_MATCH at half weight: -0.026 A at m = 75, 0.35x MDE, the same weight chosen on all five
+folds; -0.02 to -0.05 A across m = 5..100; -0.022 as an in-band re-ranker). Its partial rank
+correlation with the ORACLE RMSD is +0.017 and its rank correlation with DIS is 0.012: an
+orthogonal, weak signal. Wave 3 asks whether a better-founded version of the same idea
+(sequence-conditioned secondary-structure compatibility) carries more of it:
+
+H13 (SS_MATCH variants). (a) SS_MATCH2: the secondary-structure call from Kabsch-Sander
+  H-bonds on the ideal rebuild (helix = i -> i+4 bonded on two consecutive residues; strand =
+  any |i-j| >= 3 backbone H-bond) against per-residue helix / strand propensities FITTED on
+  the target's leakage-safe universe (the fraction of universe windows in which that residue
+  type sits in a helix / strand call), instead of Chou-Fasman; (b) SS_MATCH at w = 0.75 to
+  complete the weight grid (0.25, 0.5, 0.75, 1.0), nested choice re-run, `best_of_k_within`
+  over the four; (c) a FIXED a-priori gate: w_t = 0.5 * c_t / max_t c_t where c_t is the mean
+  absolute Chou-Fasman helix-minus-strand contrast of the sequence (a sequence with a strong
+  propensity leans more on the channel). Falsifier as H2. Prior: null at the MDE; if (a) is
+  larger than SS_MATCH by more than its MDE the mechanism is the H-bond call, if not it is the
+  propensity table.
