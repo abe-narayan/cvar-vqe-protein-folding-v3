@@ -247,3 +247,45 @@ and my subsequent restore duplicated `## D` (removed here). Lane C's section mus
 re-appended by lane C from its own notes when the pause lifts. Nothing else was changed.
 Correction (lane D, 23:38): lane C's `## C` section IS present above (lane C re-appended it at
 23:30 after the race); the note's "must be re-appended" is void. The file now carries D, B, C.
+
+## A (paused 2026-09-14 23:35)
+
+Lane A (the amplitude readout) and A2 (the objective's local behaviour at the production point).
+Everything of mine is committed on `s26` (last commit "s28 A: pause save"); the only file that
+keeps changing is `s27/results/s28_A_chain_rows.jsonl`, appended per target by the running job.
+
+### Ledger entries (mine) and their state
+- S28-L1b (headed "S28-L1 -- ORACLE EXPRESSIVITY ...", line ~613): the ORACLE point-cloud ceiling, DONE; lane D S28-L13 STANDS WITH CAVEAT (median contrast), accepted in L26b and the findings.
+- S28-L12: numbering correction + answers to D's S28-L1 caveats (a) to (e), DONE.
+- S28-L17: PARTIAL notes (superseded by L26b and L18b), DONE.
+- S28-L18b (headed "S28-L18 -- RECOGNITION ON THE POINT CLOUD ..."): point cloud 126/126, intermediate, DONE; D S28-L20 STANDS.
+- S28-L19: numbering correction, DONE.
+- S28-L23b: A2.1 ORACLE cosine diagnostic 126/126 + answers to D's S28-L23 caveats (a) to (e), DONE.
+- S28-L26b (headed "S28-L26 -- VERDICT ON THE BUILT CHAIN ..."): THE VERDICT, F1 silent, every lam arm WORSE, DONE; D S28-L27b STANDS.
+- S28-L27: numbering correction, DONE.
+- S28-L30: A2.2 step ladder on the point cloud (intermediate) + the ORACLE objective diagnostic, DONE.
+- NOT YET WRITTEN: the A2.2 built-chain verdict entry (feeds from the running job, below).
+
+### Artefacts and completeness
+- `s27/results/s28_A_oracle_rows.jsonl` 126/126 (ORACLE ceilings, production frame check).
+- `s27/results/s28_A_recog_rows.jsonl` 126/126 (every recognition arm, point cloud, F parts).
+- `s27/results/s28_A_chain_rows.jsonl`: primary arms (prod, oracle_circ, circ_l0/0.3/1/3_i80) 126/126; oracle_aff500 22/126 (dropped by decision, S28-L17); A2 arms (step_e*, rand0/1_e*, circP, circ_e*) 90/126 at the pause and growing (the file holds one merged row per target; the LAST row per pdb is the complete one).
+- `s27/results/s28_A2_cosine_rows.jsonl` 126/126; `s27/results/s28_A2_ladder_rows.jsonl` 126/126.
+- `s27/results/s28_A_summary.json`, `s28_A2_summary.json`, `s28_A_objdiag.json` (complete; the A2 summary's chain block is partial until the job lands).
+- `s27/results/s28_A_structs/<pdb>{,_recog,_a2}.npz` 379 files, committed (whitelisted in `.gitignore`, 12 MB): the emitted clouds the chain phase projects.
+- `s27/s28_A_FINDINGS.md`: DRAFT, complete except section 4.3.
+- Code: `s27/s28_A_amp.py`, `s27/s28_A_analyse.py`, `s27/s28_A_objdiag.py`, `s27/s28_A2_local.py`, `s27/s28_A2_analyse.py`; tests `tests/test_s28_A.py` (23), `tests/test_s28_A2.py` (5), all green at the pause.
+
+### Running / queued
+- `s28A2_chain` (jobrun, agent S28A, tag CPU, est 0.5 GB, peak so far 0.31 GB): projects the 13 A2 arms per target; 90/126 at the pause; per-target checkpoint into `s27/results/s28_A_chain_rows.jsonl`; leave it running. If it is killed, relaunch from the checkpoint with EXACTLY:
+  `python s26/jobrun.py --agent S28A --tag CPU --name s28A2_chain_r2 --est-ram 0.5 -- python s27/s28_A_amp.py chain --arms step_e0.1,rand0_e0.1,rand1_e0.1,step_e0.3,rand0_e0.3,rand1_e0.3,step_e1,rand0_e1,rand1_e1,circP,circ_e0.1,circ_e0.3,circ_e1`
+- When it lands (`s26/jobs_done/s28A2_chain.json`, exit 0, 126 targets carrying `step_e1`): run
+  `python s27/s28_A2_analyse.py` (prints the built-chain block "A2.2 BUILT CHAIN" with `ST.fmt` for every A2 arm vs production, the FAIL18/108 split, and the step-vs-random contrast paired on the SAME two projected draws; writes `s27/results/s28_A2_summary.json`), then append the ledger entry `## S28-L<next> -- A2.2 THE STEP LADDER ON THE BUILT CHAIN (verdict) (date, A2)` with those blocks verbatim, the falsifier decision (some e beats production beyond MDE, fold CI, 5/5 AND beats the random mean beyond MDE; prior: does not fire), `ST.best_of_k_within` over the three e for the step arm and for the circuit arm (D's S28-L23 caveat (b)), and the circP residual beside its own RMSD (caveat (e)); read the ledger tail and append in ONE python process (number collisions happened three times).
+
+### Next three steps to resume
+1. `python s27/s28_A2_analyse.py` (after the job lands; if not landed, `wc -l s27/results/s28_A_chain_rows.jsonl` and `tail -1 s26/logs/s28A2_chain.log` first).
+2. Append the A2.2 chain verdict entry (numbered from the tail in the same process), then `git add s27/LEDGER.md s27/results/s28_A2_summary.json s27/results/s28_A_chain_rows.jsonl && git commit` with the trailer lines.
+3. Fill section 4.3 of `s27/s28_A_FINDINGS.md` from that entry, remove the DRAFT header, update `s27/STATUS.md` under `## A`, and commit. Then `python -m pytest tests/test_s28_A.py tests/test_s28_A2.py -q -p no:cacheprovider` to confirm 28 pass.
+
+### Open lane D caveats
+None unanswered: S28-L1 (a) to (e) answered in S28-L12 and addendum 3; S28-L13 accepted in L26b and the findings; S28-L20 (a), (b) answered in L26b; S28-L23 (a) to (e) answered in L23b, with (b), (c), (e) to be honoured in the A2.2 chain entry when written; S28-L27b STANDS with one wording request ("worse at every lam; the size at lam 1 is in the Type-M zone"), adopted in the findings.
