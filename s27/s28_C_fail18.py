@@ -194,14 +194,29 @@ def logistic_fit(X, y, alpha, iters=50, tol=1e-9):
     beta = np.zeros(p + 1)
     pen = np.full(p + 1, float(alpha))
     pen[0] = 0.0
+
+    def loss(b):
+        eta = A @ b
+        # weighted log-loss, numerically stable: log(1+exp(eta)) - y*eta
+        ll = np.logaddexp(0.0, eta) - y * eta
+        return float((w * ll).sum() + 0.5 * (pen * b * b).sum())
+
+    cur = loss(beta)
     for _ in range(iters):
         eta = A @ beta
-        pr = 1.0 / (1.0 + np.exp(-eta))
+        pr = 1.0 / (1.0 + np.exp(-np.clip(eta, -500, 500)))
         g = A.T @ (w * (pr - y)) + pen * beta
         Hm = (A * (w * pr * (1 - pr))[:, None]).T @ A + np.diag(pen)
-        step = np.linalg.solve(Hm + 1e-12 * np.eye(p + 1), g)
-        beta = beta - step
-        if float(np.abs(step).max()) < tol:
+        step = np.linalg.solve(Hm + 1e-10 * np.eye(p + 1), g)
+        t = 1.0
+        nxt = beta - t * step
+        nl = loss(nxt)
+        while nl > cur + 1e-12 and t > 1e-4:          # damped Newton: halve until it descends
+            t *= 0.5
+            nxt = beta - t * step
+            nl = loss(nxt)
+        beta, prev, cur = nxt, cur, nl
+        if float(np.abs(t * step).max()) < tol or abs(prev - cur) < 1e-10 * max(1.0, abs(cur)):
             break
     return {"beta": beta, "mu": mu, "sd": sd}
 
