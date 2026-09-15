@@ -2540,3 +2540,77 @@ re-imposes ideal CA geometry on every structure, which is what CAGEO scores, so 
 vanish or grow there) and on lane D. Not a result; an ORACLE diagnostic naming the one candidate
 objective for a lane A2 run, with its mechanism stated. Nothing is built on it.
 
+
+## S28-L36 -- ADVERSARY CHECK OF S28-L35 (C2's recognition audit): CAGEO's CANDIDATE STATUS IS VETOED BY THE POOL-MEMBER CONTROL; IT PREFERS ANY REAL PROTEIN TRACE TO THE CONTRACTED AVERAGE AS OFTEN AS IT PREFERS THE 0.29 A ORACLE STRUCTURE (0.618 vs 0.611) AND RATES THE ORACLE STRUCTURE WORSE THAN 76% OF THE POOL; CONTACT SURVIVES AS MARGINAL (TYPE-M); THE CLOSURE CLAIM STANDS (2026-09-14 22:58, lane D)
+Question: S28-L35 names CAGEO as the one scorer that clears both registered clauses (pref(circ_best
+vs PROD) 0.611, fold CI [0.551, 0.691]; beats RAND_SIGNED by +0.190) and sits at the max-over-15
+null's 95th percentile. The most promising number on the board; the one experiment most likely
+to kill it: a control that has REAL local geometry and NO information about the native. Neither
+registered control is such a structure (a random signed combination has protein-like bonds but
+random virtual angles; Gaussian noise on the average has neither). The pool members are: the
+same scorer was computed on all 500 of them by S27 (`s27/cache/<pdb>.npz`, the functions C2's
+adapters reproduce to 1e-9), so the control needs no new evaluation.
+`s27/s28_D_c2_poolmember.py` -> `s27/results/s28_D_c2_poolmember.json` (126 targets, 12 of the
+15 scorers that have a pool channel of the same name; the three POOL adapters are pool-relative
+and excluded). For each scorer: pct(X) = the fraction of the 500 pool members that score better
+than X plus half the ties (X's percentile in its own pool; 0.5 = a typical member); and the
+paired contrast pref(circ_best vs PROD) - pref(random pool member vs PROD), where the second
+term is pct(PROD).
+    scorer      pref(cb vs PROD)  pref(pool member vs PROD)  diff     x MDE  fold CI            | cb beats a pool member h2h  NATIVE  RAND_SIGNED | pct(PROD) med  pct(cb)  pct(NATIVE)
+    CAGEO       0.611             0.618                      -0.007   -0.18  [-0.027, +0.013]   | 0.241                       0.313   0.066       | 1.00           0.759    0.687
+    CONTACT     0.579             0.442                      +0.137   +1.18  [+0.057, +0.212]   | 0.597                       0.589   0.504       | 0.40           0.403    0.411
+    ENV         0.532             0.412                      +0.119   +0.98  [+0.034, +0.187]   | 0.607                       0.607   0.534       | 0.39           0.393    0.393
+    DIS         0.206             0.126                      +0.080   +0.83  [+0.006, +0.149]   | 0.626                       0.632   0.406       | 0.05           0.374    0.368
+    DISTPOT     0.349             0.251                      +0.099   +0.89  [+0.048, +0.144]   | 0.577                       0.568   0.721       | 0.19           0.423    0.432
+    SS_MATCH    0.393             0.309                      +0.084   +1.07  [+0.073, +0.099]   | 0.608                       0.556   0.719       | 0.20           0.392    0.444
+    HP, RG_LAW, RG_UNIV, EXVOL, DIS_MEAN, CONTACT_LL: diff -0.08 to +0.08, none a candidate (file).
+The CAGEO contrast, `ST.fmt` verbatim (a POSITIVE effect would be the recognition direction):
+  CAGEO: pref(circ_best vs PROD) - pref(pool member vs PROD)
+    a 0.6111 (med 1.0000)   b 0.6179 (med 1.0000)   n=126
+    effect -0.0068   median +0.0000   SE 0.0138   MDE 0.0387   effect/MDE -0.18
+    fold CI95 [-0.0274, +0.0126]   folds same sign 2/5   per-fold 0:+0.013 1:+0.014 2:+0.008 3:-0.024 4:-0.039
+    46W/13L/67T   worst degradation +0.8740 (6WPB)   p90 +0.0020   power 0.08  Type-M 4.84
+    VERDICT: NOT MEASURED (|effect| 0.0068 <= its own MDE 0.0387, 0.18x)
+  CAGEO: pref(circ_s0 vs PROD) - pref(pool member vs PROD)
+    a 0.5873 (med 1.0000)   b 0.6179 (med 1.0000)   n=126
+    effect -0.0306   median +0.0000   SE 0.0192   MDE 0.0539   effect/MDE -0.57
+    fold CI95 [-0.0526, -0.0067]   folds same sign 4/5   per-fold 0:+0.013 1:-0.029 2:-0.032 3:-0.068 4:-0.039
+    49W/10L/67T   worst degradation +0.8740 (6WPB)   p90 +0.0000   power 0.36  Type-M 1.66
+    VERDICT: NOT MEASURED (|effect| 0.0306 <= its own MDE 0.0539, 0.57x)
+Reading. CAGEO scores the production average WORSE THAN EVERY ONE of its 500 pool members on more
+than half the targets (median pct(PROD) = 1.00; mean 0.618): a 22%-contracted CA trace is off
+the virtual-angle / virtual-torsion distribution CAGEO was fitted on. On those targets any real
+trace beats PROD, and the ORACLE structure (native bond lengths) is one such trace; on the
+other targets PROD is inside the distribution and the ORACLE structure loses. That is the whole
+0.611: a random pool member beats PROD on 0.618 of targets, the ORACLE structure on 0.611, the
+difference -0.007 at 0.18x MDE (the single start: -0.031, 0.57x, the wrong way). Head to head,
+with production absent, CAGEO rates the 0.29 A ORACLE structure BETTER than a random pool member
+on only 24% of targets and the NATIVE itself on 31%: among real traces CAGEO is
+anti-recognition, which is S27 T1 (CAGEO alone selects a 3.967 A set, worse than random) read
+back. Its +0.190 over RAND_SIGNED and 0.962 head-to-head are "protein-like local geometry vs a
+scrambled one", as the entry's own mechanism paragraph half says; they are not nativeness.
+VETOED: CAGEO is not a candidate objective; the first clause of the closure falsifier is met
+against production only because production is contracted, and the second clause is met against
+a control that has no real local geometry. The closure claim ("no scorer in the S27 library
+recognises the ORACLE structures") STANDS with the pool-member control added: no scorer prefers
+the ORACLE structure to production more often than it prefers an arbitrary pool member to
+production beyond its MDE. CONTACT is the closest (+0.137 at 1.18x MDE, Type-M zone, 5/5 folds;
+head-to-head 0.597; and it failed the registered single-start clause, S28-L35): "marginal, on
+the order statistic, Type-M under the pool-member control", not a candidate. ENV, DIS, DISTPOT,
+SS_MATCH are under MDE on this contrast. The head-to-head column also gives the honest version
+of "what an objective would have to know": every informative scorer rates the native-like
+structure better than a typical pool member by only 0.58 to 0.63 (DIS 0.626: the native at the
+37th percentile of its pool, S8-9, S28-L30), and rates the average better than 87% of the pool
+(DIS pct(PROD) 0.126). The average is the posterior's own fixed point; a 0.29 A structure is a
+typical-looking pool member to every scorer on record.
+Notes for C2: (a) the built-chain audit projects every structure onto ideal CA geometry, which
+removes the contraction that produced CAGEO's 0.611; expect CAGEO's preference to collapse
+there, and read that as this control's prediction, not as a new fact; (b) add pct(X) in the
+pool and the pool-member contrast to the chain entry for all 31 scorers (the S27 cache holds
+the CA channels; the chain channels need the pool's backbone values, which `s27/cache` also
+holds for RAMA, DSSPHB, ELEC and the LEG terms); (c) the multiplicity bar (p_max 0.050) is
+moot for CAGEO after this control and stays in force for CONTACT.
+Recorded: `s27/RETRACTIONS_S28.md` R3 (S28-L35's "closure falsified at the registered bar by
+CAGEO" -> vetoed by the pool-member control; the closure stands). Artefacts:
+`s27/results/s28_D_c2_poolmember.json`, `s27/s28_D_c2_poolmember.py`, `s27/results/s28_C2_ca_rows.jsonl`,
+`s27/cache/*.npz`.
