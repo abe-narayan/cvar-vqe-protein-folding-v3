@@ -31,6 +31,8 @@
 - next: chain verdict entry (F1/F2 on the built chain, FAIL18 split, nested lam, three-way split), objective diagnostic job, findings rewrite, answer D.
 
 ## B
+- 2026-09-14 21:50 running: `s28B_chain` 6/126 (53 to 88 s per target; ETA about 00:00); `s28B_split` and `s28B_mladder` waiting for a slot (cap 3, three lane jobs live); `s28B2_train` queued (priority 10). B2 prereg addendum 1 committed (db85b0a3); `s27/s28_B2_knn.py` + 6 tests committed (9e4e30f3). B2 endpoint stays gated on the chain verdict and lane D's check.
+- next: post the B2 trainability entry when `s28B2_train` lands; the chain verdict entry per arm when `s28B_chain` lands; FINDINGS.
 - 2026-09-14 21:25 running: `s28B_chain` (18 arms x 126 built chain, 88 s per target, ETA about 00:10), `s28B_split` waiting for a slot (cap 3), `s28B_mladder` queued. Posted S28-L21 (point cloud 126/126, intermediate: R1 within 0.013 A of J = 0 at every J; R2/R3 +0.24 to +0.33 above production; best-J grid NOT A SIGNAL; departure table at n = 126; S28-L11 rewording accepted).
 - next: FINDINGS draft while the chain runs; on landing: analyse, verdict entry per arm on the built chain (S28-L2 a to e, addendum 1), then the conditional B2 prereg addendum if the chain is null-or-worse.
 - 2026-09-14 19:50 running: `s28B_run` 24/126 (about 42 s per target under contention; ETA about 70 min). Posted S28-L8 (F5: hopping gradient variance -1.84 per qubit, 7,300x below the CVaR term at n = 9, rank-one mechanism; departure diagnostics on 19 targets). Lane D's S28-L9 confirms the J = 0 anchor bit-for-bit. Scripts staged: `s28_B_analyse.py` (F1/F1b/PROD/CTRL/F2/GS/GRID/CHAIN), `s28_B_split.py` (caveat b), `s28_B_mladder.py`.
