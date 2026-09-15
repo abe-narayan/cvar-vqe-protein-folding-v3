@@ -1195,3 +1195,47 @@ writing). Content unchanged. Lane D's S28-L18 is accepted as it stands: every ch
 lane A is between arms projected by the SAME code path in the SAME job (`s28_A_amp.py chain`,
 production re-projected from A's own frame, never S27's rows), and the per-target floor of up
 to 0.02 A (mean 0.003) is below every MDE A will quote on the chain.
+
+## S28-L20 -- ADVERSARY CHECK OF S28-L18b (lane A's recognition arms, point cloud, intermediate) (2026-09-14 20:58, lane D)
+Question: does S28-L18b's "every signed arm is worse" stand as an intermediate negative, and what
+must the built-chain verdict entry carry? Checks (all recomputed from
+`s27/results/s28_A_recog_rows.jsonl` and `s28_A_oracle_rows.jsonl :: prod`):
+- Reproduction: circ_l1_i80 vs production +0.3367 (SE 0.0606, MDE 0.1697, 1.98x, 36W/90L, 5/5),
+  circ_l0.3_i80 +0.3349 (2.23x), circ vs simplex_rand_m_l1 +0.3287 (2.07x): identical to the
+  entry to four decimals (bootstrap CIs differ in the third decimal by the label seeding).
+- Leakage / poison: the deployable path is native-free end to end (`tests/test_s28_D.py`,
+  S28-L10 item 2); the lam = 0 gate passes 126/126 (max |dp| 0.0); undefined readouts 0/2016.
+- Ties, concentration, seeds: no arm is positive, so none apply; the concentration null sits at
+  the 50th percentile on every WORSE contrast (the harm is spread, not carried by ten targets).
+- FAIL18 / other-108 split (mine; the entry has none): circ_l1_i80 is WORSE on the 108 (+0.386,
+  SE 0.061, 2.26x MDE, fold CI [+0.295, +0.458], 5/5, 27W/81L) and NULL on FAIL18 (+0.040,
+  SE 0.206, 0.07x, 9W/9L); circ_l0.3_i80 the same (+0.390 / +0.004). The convex simplex from a
+  random start at matched budget (simplex_rand_m_l1, 3.0563 overall, 0.09x) is -0.203 on
+  FAIL18 (SE 0.100, 0.72x MDE, fold CI [-0.275, -0.065], 3/4 folds, 14W/4L) and +0.043 on the
+  108 (0.50x): S27 L9's regime pattern (every alternative helps the 18 and costs the 108) read
+  back in a re-weighting of the whole pool; Type-M zone on n = 18, not a result, recorded so it
+  is not rediscovered.
+- Cosmetic-variant test (coordinator steer 3): the signed arms are NOT re-parameterisations of
+  the convex top-75 average: 47% negative weights, negative mass 5.7 to 6.5, mean virtual bond
+  3.40 to 3.54 against production's 2.96; they leave the hull and escape the contraction, and
+  the objective sends them the wrong way. The prod-init convex arms (a75 from production
+  -0.002; simplex from production +0.004 to +0.066) ARE re-parameterisations and sit at
+  production. New relative to S26/S27: yes, the first signed readout on record (S10-5's affine
+  bound was ORACLE only); it goes beyond S27 section 6 by testing a non-convex consumer.
+- The three-way split (coordinator steer 4), read for lane A: (i) OBJECTIVE quality: the
+  native-free S~ orders (circuit optimum 1.34) < (production 1.67) < (ORACLE structure 2.09),
+  so the objective's minimum is away from the native; this is the failing leg. (ii)
+  OPTIMISATION quality: the circuit reaches S~ 1.34 at 80 iterations and 1.26 at 400, above
+  the converged unconstrained optimum (1.06 to 1.08) and below production; the optimiser
+  works, and working harder makes the structure worse (+0.483 at 400 iterations, 2.7x MDE).
+  (iii) the emitted structure: worse at every lam. A gain would not have been a quantum result
+  in any case: the convex simplex under the same objective lands at production, and the
+  signed families are worse in proportion to how well they minimise S~.
+Verdict: STANDS as an intermediate negative on the point cloud (F1's prior held on this basis).
+Two caveats for the chain entry: (a) quote the matched-budget a500 (3.5755, -0.19 in the
+circuit's favour) beside the converged one (3.6869, -0.30) when saying the circuit is the least
+bad signed family; the budgets differ 25x; (b) the "least bad vs the random 27-subspace"
+contrast is Type-M (1.13x, 4/5 folds): say the sign. The built-chain entry decides F1 and is
+attacked in its turn.
+Artefacts: `s27/results/s28_A_recog_rows.jsonl`, `s28_A_summary.json`; the strata above are
+`ST.compare` on the FAIL18 mask (`s12.instrument.FAIL18`).
