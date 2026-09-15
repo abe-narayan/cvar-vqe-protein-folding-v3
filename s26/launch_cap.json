@@ -1,4 +1,4 @@
 {
- "max_concurrent": 1,
- "note": "S28 20:18: cap 1 (RAM 89.6%, Zoom still up); coordinator raises to 2 when RAM < 87%"
+ "max_concurrent": 3,
+ "note": "S28 20:26: cap 3; Zoom gone, chrome 5.0 GB, RAM 86%"
 }

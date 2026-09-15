@@ -13,6 +13,7 @@
 - 2026-09-14 20:03 running: user active again (Zoom, chrome 5.7 GB), RAM 95%; governor killed A's recog_126 at 43/126 (20:01, resumable). Cap 3 -> 2 so A's relaunch queues behind B run (~55/126) and C readout_chain2 rather than launching into a kill.
 - 2026-09-14 20:06 STALLED on the user's load: chrome 6.4 GB + Zoom, RAM 96% with zero lane jobs. Governor killed C readout_chain2 (25/126, 20:02) and B run (64/126, 20:04 stall breaker). All three lane runs are checkpointed and queued for relaunch through jobrun, which waits below 93%. Lanes do desk work (ORACLE ceiling entry, tests, D's check of S28-L8b) meanwhile. User pushed twice.
 - 2026-09-14 20:14 HOLD: launch cap 0 (thrash: B run2 banked 1 target in 230 s before the stall breaker; C chain3 205 s). B's resume is on the governor queue at priority 1 (launches after 60 s under 88%); A and C relaunches wait on the cap. Coordinator lifts the cap to 2 when RAM < 90% (watch armed).
+- 2026-09-14 20:26 running: box eased (Zoom gone, chrome 5.0 GB, RAM 86%). C readout_chain4 running, B run3 launched from the governor queue at 20:25 (resumes at 66/126), cap raised to 3 for A's relaunches (recog_126 from 43, chain_oracle from 22).
 - next: hourly ledger commits; reassign lanes as they finish; final S28 report in s27/.
 
 ## A
