@@ -194,3 +194,11 @@ GB per job (S27's `run_vqe_chain --chain` was the same shape). Probe one target 
 jobrun and quote the peak. Part 1: features 126 targets x ~1 s; nested logistic with 500
 permutations x 5 blocks: minutes. Part 2: point cloud ~2 min; built chain ~65 min for the 10
 primary arms.
+
+## ADDENDUM 1 (2026-09-14 19:20, before any run)
+Part 1 decision rule for the switched arm: PRIMARY as written (held-out probability >= 0.5 under
+balanced class weights). SECONDARY, reported beside it: a prevalence-matched threshold, the
+(1 - prevalence of the training folds) quantile of the training folds' decision values, so the
+predicted-positive rate on the held-out fold is about the training prevalence (14%). Both are
+nested; neither reads a held-out label. The single-feature rules use the same two thresholds on
+the signed feature.
