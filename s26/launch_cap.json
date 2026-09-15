@@ -1,4 +1,4 @@
 {
- "max_concurrent": 2,
- "note": "S28 19:45: cap 2 while the user baseline sits at 95%+ (chrome 5.4 GB, TiWorker 1.0 GB); raise to 4 when RAM < 88% idle"
+ "max_concurrent": 3,
+ "note": "S28 19:50: cap 3; the 19:40-19:47 spike was a Windows servicing worker (1 GB), now gone; RAM 87% with two 0.3 GB lane jobs"
 }

@@ -9,6 +9,7 @@
 - 2026-09-14 19:36 running: coordinator killed D's test_pipeline tree (S28-L5); B's train job lost at 19:22 as collateral, B told to restart from checkpoint. RAM 87%.
 - 2026-09-14 19:43 (this line was first stamped 20:00 by a coordinator clock error; corrected 19:46) running: ledger at S28-L7b. C closed the FAIL18 detector on the new feature class (S28-L6: no block clears its permutation null; ORACLE switch ceiling 0.28x to 0.62x MDE on the built chain) and reproduced S27's chain rows bit-exactly (S28-L7); C readout_chain job running. A oracle_126 running. B run at 20/126 (~40 s per target, ~70 min left), train2 and rank1 landed, first B result entry pending. D: S28 lane tests green (s28D_pytest_D_v3 exit 0); heavy suite files deferred. RAM 84%. No positive on the board yet.
 - 2026-09-14 19:46 running: box at 96 to 98% from the user's own programs (chrome 5.4 GB, Windows servicing worker 1.0 GB, claude 1.5 GB); lane jobs hold 0.3 GB each. Governor killed A's chain_oracle job at 19:43 (exit 15, 20/126 done, resumable) as the newest job. Launch cap lowered 4 -> 2; lanes told to expect kills and restart from checkpoints; no new job until RAM < 90%.
+- 2026-09-14 19:50 running: spike was transient (Windows servicing worker gone; RAM 87%). A's restart was killed once more at 19:46 (155 s, 22/126 done). Cap raised 2 -> 3. B run 37/126, C readout_chain2 restarted, A to relaunch chain_oracle from checkpoint.
 - next: hourly ledger commits; reassign lanes as they finish; final S28 report in s27/.
 
 ## A
