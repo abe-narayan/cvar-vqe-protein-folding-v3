@@ -1,0 +1,1 @@
+vqe|s0|NONE|J0|R1,vqe|s1|NONE|J0|R1,vqe|s0|REAL|J1|R1,vqe|s1|REAL|J1|R1,vqe|s0|REAL|J0.1|R1,vqe|s0|REAL|J3|R2,vqe|s0|PERM|J0.1|R1,vqe|s0|PERM|J0.3|R3,vqe|s0|PERM|J1|R3,vqe|s0|RAND|J3|R2,vqe|s1|REAL|J0.1|R3,vqe|s1|PERM|J0.1|R3,vqe|s1|PERM|J0.3|R3,vqe|s0|REAL|J0.1|R3,vqe|s0|NONE|J0|R3,vqe|s1|NONE|J0|R3,gs|s-1|REAL|J1|R3,gs|s-1|REAL|J1|R2
