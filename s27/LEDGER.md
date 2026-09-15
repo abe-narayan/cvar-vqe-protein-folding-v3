@@ -1589,3 +1589,99 @@ SUITE STATUS 21:40: the six S28 test files (`tests/test_s28_A.py`, `test_s28_A2.
 integration and the two AMBER files remain deferred (S28-L5).
 Artefacts: `s27/results/s28_A2_cosine_rows.jsonl`, `s28_A2_summary.json`;
 `s26/jobs_done/s28D_pytest_lanes_v2.json`.
+
+## S28-L25 -- F5-B2: ON THE kNN SPREAD-SPECTRUM GRAPH THE HOPPING TERM'S GRADIENT VARIANCE DECAYS AT -1.0 PER QUBIT (GAUSSIAN: -1.7 TO -1.8) AND IS 30 TO 60x LARGER AT THE DEPLOYED WIDTH; THE PRE-REGISTERED BRIGHT LINE (-1.0) IS STRADDLED, NOT CLEARED; THE SECOND CLAUSE (HOPPING SHARE AT J = 1) IS RUNNING; THREE-WAY SPLIT MIDDLE LEG FOR S28B (2026-09-14 22:20, B2)
+
+Question (`s27/PREREG_S28_B.md` addendum 1, F5-B2): was the -1.7 to -1.8 per qubit decay of the
+hopping term's gradient variance (S28-L8b, S28-L11) the Gaussian graph's near-rank-one SPECTRUM?
+Property measurement, no RMSD, no native. Job `s28B2_train` (killed once by the governor at
+96.6% box RAM after 9 of 12 targets, re-queued by the governor itself, resumed from its
+per-target checkpoint; `s26/jobs_done/s28B2_train.json` exit 0, 131 s for the last 3 targets,
+peak RSS 0.33 GB; `s27/results/s28_B2_train_rows.jsonl` 720 rows, `s28_B2_train.json`).
+Code `s27/s28_B2_knn.py` (6 tests, `tests/test_s28_B2.py`).
+
+**The graph.** Symmetric binary kNN on the same pairwise CA-RMSD, degree-normalised
+D^-1/2 A D^-1/2, unit spectral norm, k = 10 (arm) and k = 5 (replication). Spectral report,
+median over the 12 trainability targets, n = 9 (the 500-window pool):
+lambda_2 / lambda_1 = 0.982 (k 10), 0.991 (k 5) against the Gaussian graph's 0.138; one
+connected component on every target; degrees 10..30 (k 10), 5..16 (k 5); the top eigenvector's
+participation ratio 0.94 / 0.92 of dim and overlap with the uniform state 0.985 / 0.980 (the
+Gaussian graph's 0.884 and 0.947); corr(degree, E) -0.27 / -0.18 (Gaussian -0.47 to -0.90). The
+spectrum is spread, as designed, and the graph is much less a typicality projector.
+
+**F5-B2, Var[dF/dtheta_0], the same draws, settings and targets as F5
+(`s28_B2_train.json :: summary`; Gaussian row from `s28_B_train.json`):**
+
+    cell                    n=4        n=5        n=6        n=7        n=8        n=9    slope 4..9   4..8
+    k10 hop-only (J=1)  4.729e-03  1.981e-03  1.123e-03  5.183e-04  2.674e-04  1.224e-04   -1.033   -1.022
+    k5  hop-only (J=1)  7.806e-03  4.107e-03  2.082e-03  1.054e-03  5.118e-04  2.478e-04   -0.997   -0.982
+    Gaussian hop-only   4.061e-03  7.284e-04  2.817e-04  5.898e-05  3.948e-05  4.157e-06   -1.844   -1.700
+    k10 full J=0        2.600e-02  3.174e-02  2.129e-02  2.092e-02  1.725e-02  3.051e-02   -0.043
+    k10 full J=1        3.062e-02  3.331e-02  2.233e-02  2.135e-02  1.793e-02  3.070e-02   -0.078
+    k10 full J=3        6.860e-02  4.695e-02  3.017e-02  2.521e-02  2.095e-02  3.190e-02   -0.265
+    k5  full J=3        9.696e-02  6.542e-02  4.026e-02  2.938e-02  2.358e-02  3.264e-02   -0.364
+    ratio full J=3 / J=0 at n = 9:  k10 1.046   k5 1.070   (Gaussian 1.005)
+
+- The hop-only decay rate HALVES: -1.03 (k 10) / -1.00 (k 5) per qubit against -1.84 (-1.70 on
+  the padding-free registers) for the Gaussian graph, and the per-qubit steps are regular
+  (k 10: -1.26, -0.82, -1.12, -0.95, -1.13). At n = 9 the hopping term's gradient variance is
+  1.22e-4 (k 10) / 2.48e-4 (k 5): 29x / 60x the Gaussian graph's 4.16e-6. Against the diagonal
+  terms' 3.05e-2 the ratio is now 250x (k 10) / 123x (k 5) at J = 1 and 28x / 14x at J = 3
+  (Gaussian: 7,300x / 820x).
+- THE PRE-REGISTERED BRIGHT LINE IS STRADDLED, NOT CLEARED. Addendum 1's first clause was
+  "shallower than -1.0 per qubit": k 5 reads -0.997 (4..9) / -0.982 (4..8), shallower by 0.003 /
+  0.018; k 10 reads -1.033 / -1.022, steeper by 0.033 / 0.022. With S28-L11's +-0.3 fit
+  uncertainty both are AT the line. What is measured cleanly is the change: the decay rate
+  halved and the n = 9 variance rose 30 to 60x when lambda_2 / lambda_1 went from 0.14 to 0.98
+  with everything else identical (same draws, same E, same targets, same circuit). That
+  supports the spectrum reading of S28-L11 in direction and size; it does not clear the
+  registered threshold, and I do not claim it does. No slope here is a plateau or its absence;
+  a -1.0 per qubit decay on a spread-spectrum observable at depth 3 is reported as a number.
+- The full objective's variance is still flat in n at every J (the CVaR and entropy terms
+  dominate at n = 9: the hopping contributes 4.6% (k 10) / 7.0% (k 5) of the variance at J = 3).
+- The second clause (the circuit collects more than half of its same-sign bound at J = 1) is
+  measured by job `s28B2_share` (queued; native-free, no readout), and will be appended as its
+  own entry with the Gaussian graph's share on the same targets beside it.
+
+**The three-way split's middle leg for S28B (S28-L2(b); `s27/results/s28_B_split.json`, job
+`s28B_split` + `s28B_split2` resumed from checkpoint, exit 0, peak RSS 0.441 GB; 126 targets x
+13 cells):** F = CVaR_0.18 - 0.5 H - J <A> (the circuit's objective) evaluated at the VQE
+optimum, at the exact ground state of H, and at the best of 16 untrained draws (draw 1 is the
+VQE's own initial theta), means over 126, REAL graph:
+
+    J     F_vqe s0   F_vqe s1   F_gs       F_untrained16   VQE < GS (frac, s0)   VQE < untrained   hop_vqe s0   hop_gs   coh s0
+    0     -4.5610    -4.5561    -1.7283    -4.0629         1.000                 1.000             0.000        0.000    0.001
+    0.1   -4.5608    -4.5565    -1.7757    -4.0627         1.000                 1.000            -0.001        0.002    0.001
+    0.3   -4.5611    -4.5585    -2.0654    -4.0625         1.000                 1.000            -0.000        0.021    0.002
+    1     -4.5663    -4.5854    -4.5779    -4.0615         0.468                 1.000             0.007        0.499    0.009
+    3     -5.5089    -5.2652    -7.3114    -4.0588         0.286                 1.000             0.318        0.911    0.339
+    (PERM and RAND within 0.1 of REAL on every column)
+
+Reading: at J <= 0.3 the exact ground state is one-hot and the entropy term makes it a poor
+point for the circuit's objective (the VQE state is lower on 126/126). At J = 1 the two tie
+(-4.566 / -4.585 vs -4.578; VQE lower on 47%). At J = 3 the exact ground state (PR 305, 8.5
+bits, hopping 0.911) has F = -7.31 against the circuit's -5.51 / -5.27: from the untrained
+best-of-16 (-4.06) the circuit closes 45% (seed 0) / 37% (seed 1) of the gap to a state with far
+lower F, and collects 0.32 of the 0.91 hopping the ground state collects, with sign coherence
+0.34. The VQE beats its own best-of-16 untrained draws on 126/126 targets at every J (it
+trains); it does not find the sign-coherent delocalised state at J = 3. Whether that state is
+representable by the 27-parameter circuit is not measured; what is measured is that the
+optimiser's reached F is 1.8 above it. This is the optimisation-quality leg for the S28B
+verdict entry; the Hamiltonian-quality and emitted-structure legs are written there.
+
+S28-L23 caveats: (b) every kNN graph on the 12 targets is CONNECTED at both k and every n
+(`s28_B2_train.json :: spectral.n_components` = 1 throughout), so lambda_1 = 1 is
+non-degenerate and no GS row needs the DEGENERATE label on this set; the count is carried per
+target into any endpoint run. (a) the top eigenvector's uniform overlap is 0.985 (k 10) /
+0.980 (k 5) at n = 9, so the typicality component is still present and is joined by a spread
+remainder; the rank-one / remainder decomposition of the kNN hop-only variance (`s28_B2_rank1.py`,
+job `s28B2_rank1`, queued) is reported in the next B2 entry so the reading is "the remainder
+carries X% of the variance", as asked.
+
+Verdict (property): the Gaussian graph's decay was the spectrum's (the rate halves and the
+n = 9 variance rises 30 to 60x on a spread spectrum, same draws), but the registered -1.0 line
+is straddled (k 5 -0.997, k 10 -1.033) and the first clause of F5-B2 is NOT cleanly passed;
+the second clause is pending. The B2 endpoint stays gated on the S28B built-chain verdict and
+lane D's check.
+Artefacts: `s27/results/s28_B2_train.json`, `s28_B2_train_rows.jsonl`, `s28_B_split.json`,
+`s28_B_split_rows.jsonl`, `s26/jobs_done/s28B2_train.json`, `s28B_split2.json`.
