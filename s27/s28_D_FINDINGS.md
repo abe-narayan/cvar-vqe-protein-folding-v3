@@ -97,4 +97,6 @@ its entry posts (not pre-empted here).
 
 | claim | say with it | source |
 |---|---|---|
-| (none yet) | | |
+| C: no feature block detects FAIL18 (best block SP+CTRL AUROC 0.608, p_perm 0.102) | the eighth router on record; the pooled AUROC mixes five models' scales, decide on the permutation percentile; the two best singles are length proxies; even the ORACLE switch is 0.28x / 0.62x MDE on the built chain, so the question is closed by its ceiling, not only by the detector | S28-L6, S28-L8 |
+| B: the hopping term's gradient variance is 7,300x below the CVaR term's at n = 9 and decays with width | quote -1.7 to -1.8 per qubit (not -1.84; the n = 9 register is padded and carries the steepest step); the diagonal same-spectrum control decays at the same rate on n = 4..8 (the -1.27 is an n = 9 outlier); never "barren plateau", never "cannot train": the circuit collects a third of its same-sign hopping bound at J = 3; the departure numbers are partial until n = 126 | S28-L8b, S28-L11 |
+| A: the amplitude family's ORACLE ceiling is 0.288 A point cloud | ORACLE, best of 5 starts (116% order statistic; single start 0.36 to 0.42); affine hulls are exactly complete by dimension counting (75 > 3n); the like-for-like contrast with a random 27-dim linear family is -0.156 A on the median (not -0.320); the native-free objective prefers the 3.05 A average to the 0.29 A ORACLE structure on 101/126 | S28-L1b, S28-L13 |
