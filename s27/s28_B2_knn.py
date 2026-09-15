@@ -218,6 +218,84 @@ def train_main():
     print("wrote", TRAIN_OUT)
 
 
+# ============================================ the second clause of F5-B2 (no RMSD)
+SHARE_ROWS = os.path.join(RESULTS, "s28_B2_share_rows.jsonl")
+SHARE_OUT = os.path.join(RESULTS, "s28_B2_share.json")
+
+
+def share_main():
+    """The VQE state's hopping value, same-sign bound and sign coherence on the kNN graph at
+    J in {0.3, 1, 3}, both k, both seeds, on the 12 trainability targets. Native-free: no
+    readout, no RMSD; the endpoint arms stay gated. Beside it the Gaussian graph's share from
+    `s28_B_rows.jsonl` on the same targets."""
+    from s25 import phys_lib as P
+    from s27 import run_pool as RP
+    pdbs = P.targets()
+    pick = pdbs[::11][:12]
+    done = B._done_pdbs(SHARE_ROWS)
+    t0 = time.time()
+    for pdb in pick:
+        if pdb in done:
+            continue
+        cand, ch, _ = RP.channels_for(pdb)
+        E = RP.zr(ch["DIS"])
+        enc = QC.Encoding(E)
+        D = B.pairwise_rmsd_matrix(cand.W)
+        rows = []
+        for k in KS:
+            g = knn_graph(D, k)
+            A = B.pad_graph(g["A"], enc.dim)
+            for J in J_GRID_B2[1:]:
+                for s in B.SEEDS:
+                    p, cv, Hn, hv, F, th, circ = B.run_hop_vqe(enc.E, A, J, seed=s, n=enc.n_qubits)
+                    psi = circ.state(th)
+                    gs = B.ground_state(enc.E, A, J)
+                    rows.append(dict(pdb=pdb, k=k, J=float(J), seed=s, hop=hv, hop_abs=B.hop_abs_bound(psi, A),
+                                     sign_coh=B.sign_coherence(psi), F=F, cvar=cv, entropy_nats=Hn,
+                                     pr=float(1.0 / np.sum(p ** 2)), hop_gs=gs["hop"] if "hop" in gs else B.hop_value(gs["psi"], A),
+                                     pr_gs=float(1.0 / np.sum(gs["p"] ** 2)), e0=gs["e0"],
+                                     lam2_over_lam1=g["lam2_over_lam1"]))
+        with open(SHARE_ROWS, "a", encoding="utf-8") as fh:
+            for r in rows:
+                fh.write(json.dumps(r) + "\n")
+        print(f"  {pdb} done ({(time.time()-t0)/60:.1f} min)", flush=True)
+    rows = B.load_rows(SHARE_ROWS)
+    # the Gaussian reference on the same targets
+    gauss = {}
+    if os.path.exists(B.ROWS):
+        for r in B.load_rows(B.ROWS):
+            if r["pdb"] in pick and r["source"] == "vqe" and r["graph"] == "REAL":
+                gauss.setdefault((r["J"], r["seed"]), []).append(r)
+    summ = {}
+    for k in KS:
+        for J in J_GRID_B2[1:]:
+            for s in B.SEEDS:
+                rs = [r for r in rows if r["k"] == k and r["J"] == J and r["seed"] == s]
+                if not rs:
+                    continue
+                share = float(np.mean([r["hop"] / r["hop_abs"] for r in rs if r["hop_abs"] > 0]))
+                summ[f"k{k}|J{J:g}|s{s}"] = dict(n=len(rs), hop=float(np.mean([r["hop"] for r in rs])),
+                                                 bound=float(np.mean([r["hop_abs"] for r in rs])), share=share,
+                                                 sign_coh=float(np.mean([r["sign_coh"] for r in rs])),
+                                                 hop_gs=float(np.mean([r["hop_gs"] for r in rs])),
+                                                 pr=float(np.median([r["pr"] for r in rs])),
+                                                 pr_gs=float(np.median([r["pr_gs"] for r in rs])))
+    gsum = {}
+    for (J, s), rs in gauss.items():
+        gsum[f"gauss|J{J:g}|s{s}"] = dict(n=len(rs), hop=float(np.mean([r["hop"] for r in rs])),
+                                          bound=float(np.mean([r["hop_abs"] for r in rs])),
+                                          share=float(np.mean([r["hop"] / r["hop_abs"] for r in rs if r["hop_abs"] > 0])),
+                                          sign_coh=float(np.mean([r["sign_coh"] for r in rs])))
+    ST.save_atomic(SHARE_OUT, dict(targets=pick, summary=summ, gaussian_same_targets=gsum, n_rows=len(rows)),
+                   module_file=__file__)
+    print(f"\n{'cell':16s} {'hop':>7} {'bound':>7} {'share':>7} {'coh':>6} {'hop_gs':>7} {'PR':>7} {'PR_gs':>7}")
+    for kx, d in summ.items():
+        print(f"{kx:16s} {d['hop']:7.3f} {d['bound']:7.3f} {d['share']:7.3f} {d['sign_coh']:6.3f} {d['hop_gs']:7.3f} {d['pr']:7.1f} {d['pr_gs']:7.1f}")
+    for kx, d in sorted(gsum.items()):
+        print(f"{kx:16s} {d['hop']:7.3f} {d['bound']:7.3f} {d['share']:7.3f} {d['sign_coh']:6.3f}")
+    print("wrote", SHARE_OUT)
+
+
 # ================================================================ endpoint (gated)
 def run_main(k: int, limit: int = 0):
     """Point-cloud endpoint with the kNN graph. GATED on the S28B built-chain verdict entry."""
@@ -257,11 +335,14 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--train", action="store_true")
     ap.add_argument("--run", action="store_true")
+    ap.add_argument("--share", action="store_true")
     ap.add_argument("--k", type=int, default=10)
     ap.add_argument("--limit", type=int, default=0)
     a = ap.parse_args()
     if a.train:
         train_main()
+    if a.share:
+        share_main()
     if a.run:
         run_main(a.k, a.limit)
 
