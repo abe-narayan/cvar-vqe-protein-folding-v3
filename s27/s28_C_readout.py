@@ -236,6 +236,82 @@ def run(mode, limit=0, arms=None):
     print("done:", path)
 
 
+# ============================================================================ analysis
+def _load_rows(path):
+    by = {}
+    with open(path, encoding="utf-8") as fh:
+        for line in fh:
+            r = json.loads(line)
+            by.setdefault(r["arm"], {})[r["pdb"]] = r
+    return by
+
+
+def analyse(mode, print_all=True):
+    """Every arm against production (paired, `ST.compare`), against its matched-random control,
+    the FAIL18 / non-FAIL18 strata, and `ST.best_of_k_within` on each family's grid."""
+    from s24 import stats_lib as ST
+    path = CLOUD_ROWS if mode == "cloud" else CHAIN_ROWS
+    key = "rmsd_cloud" if mode == "cloud" else "rmsd_chain"
+    basis = "POINT CLOUD" if mode == "cloud" else "BUILT CHAIN"
+    by = _load_rows(path)
+    pdbs = sorted(by["PROD"])
+    complete = [a for a in by if all(p in by[a] for p in pdbs)]
+    folds = np.array([int(by["PROD"][p]["fold"]) for p in pdbs])
+    fail = np.array([p in I.FAIL18 for p in pdbs])                  # ORACLE stratum label
+    prod = np.array([by["PROD"][p][key] for p in pdbs])
+    out = {"mode": mode, "basis": basis, "n": len(pdbs), "prod_mean": float(prod.mean()), "arms": {}}
+    if mode == "cloud":
+        rand = {}
+        with open(os.path.join(RESULTS, "pool_rows.jsonl"), encoding="utf-8") as fh:
+            for line in fh:
+                r = json.loads(line)
+                if r["config"] == "DIS":
+                    rand[r["pdb"]] = r["rand_mean"]
+        out["random75_mean"] = float(np.mean([rand[p] for p in pdbs]))
+    for a in complete:
+        if a == "PROD":
+            continue
+        v = np.array([by[a][p][key] for p in pdbs])
+        r = ST.compare(v, prod, folds, names=pdbs, label=f"{a} vs PROD ({basis})")
+        d = v - prod
+        rec = {"mean": float(v.mean()), "vs_prod": {k: x for k, x in r.items() if k != "concentration"},
+               "concentration": r["concentration"],
+               "fail18_effect": float(d[fail].mean()), "fail18_se": float(d[fail].std(ddof=1) / math.sqrt(fail.sum())),
+               "non_fail18_effect": float(d[~fail].mean()), "non_fail18_se": float(d[~fail].std(ddof=1) / math.sqrt((~fail).sum()))}
+        ctrl = a.replace("[CONS,", "[CONS~perm,").replace("[DISTPOT,", "[DISTPOT~perm,")
+        if ctrl != a and ctrl in complete:
+            vc = np.array([by[ctrl][p][key] for p in pdbs])
+            rc = ST.compare(v, vc, folds, names=pdbs, label=f"{a} vs its permuted-ranker control ({basis})")
+            rec["vs_control"] = {k: x for k, x in rc.items() if k != "concentration"}
+            rec["control_mean"] = float(vc.mean())
+        if "ess" in by[a][pdbs[0]]:
+            rec["ess_mean"] = float(np.mean([by[a][p]["ess"] for p in pdbs]))
+        if "n_members" in by[a][pdbs[0]]:
+            rec["n_members"] = int(by[a][pdbs[0]]["n_members"])
+        out["arms"][a] = rec
+        if print_all:
+            print(ST.fmt(r))
+            print(f"    FAIL18 {rec['fail18_effect']:+.4f} (SE {rec['fail18_se']:.4f})   non-FAIL18 {rec['non_fail18_effect']:+.4f} (SE {rec['non_fail18_se']:.4f})"
+                  + (f"   vs control: effect {rec['vs_control']['effect']:+.4f} MDE {rec['vs_control']['mde']:.4f} fold CI [{rec['vs_control']['ci95_fold'][0]:+.4f}, {rec['vs_control']['ci95_fold'][1]:+.4f}]" if "vs_control" in rec else ""))
+    # grid pricing per family (real-ranker cells only; the identity is in every grid)
+    fams = {"MEDNB": [f"MEDNB[CONS,k={k}]" for k in KS],
+            "TRIM_CONS": [f"TRIM[CONS,q={_fmt(q)}]" for q in QS],
+            "TRIM_DISTPOT": [f"TRIM[DISTPOT,q={_fmt(q)}]" for q in QS],
+            "DIVW": [f"DIVW[CONS,b={_fmt(b)},g={_fmt(g)}]" for b, g in DIVW_CELLS if not (b == 0 and g == 0)]}
+    out["grids"] = {}
+    for fam, cells in fams.items():
+        cells = [c for c in cells if c in complete]
+        if len(cells) < 2:
+            continue
+        Mx = np.column_stack([prod] + [np.array([by[c][p][key] for p in pdbs]) for c in cells])
+        w = ST.best_of_k_within(Mx)
+        out["grids"][fam] = {"cells": ["PROD"] + cells, **{k: v for k, v in w.items()}}
+        if print_all:
+            print(f"  grid {fam}: oracle-min gain {w['observed_gain']:+.4f}  split-half {w['split_half']:+.4f} ({100*w['split_half_frac']:.0f}%)  k_eff {w['k_eff']:.1f}  -> {w['verdict']}")
+    ST.save_atomic(os.path.join(RESULTS, f"s28_C_readout_{mode}_summary.json"), out, module_file=__file__)
+    return out
+
+
 def selftest():
     """Synthetic pool: identities reproduce the uniform average; the permuted control is a
     different operator; weights are a convex combination."""
@@ -263,15 +339,17 @@ def selftest():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("mode", choices=["selftest", "cloud", "chain"])
+    ap.add_argument("mode", choices=["selftest", "cloud", "chain", "analyse_cloud", "analyse_chain"])
     ap.add_argument("--limit", type=int, default=0)
-    ap.add_argument("--arms", default="")
+    ap.add_argument("--arms", default="", help="';'-separated arm names (names contain commas)")
     a = ap.parse_args()
     os.makedirs(RESULTS, exist_ok=True)
     if a.mode == "selftest":
         selftest()
+    elif a.mode.startswith("analyse_"):
+        analyse(a.mode.split("_", 1)[1])
     else:
-        arms = [x for x in a.arms.split(",") if x] if a.arms else (PRIMARY_CHAIN if a.mode == "chain" else None)
+        arms = [x for x in a.arms.split(";") if x] if a.arms else (PRIMARY_CHAIN if a.mode == "chain" else None)
         run(a.mode, a.limit, arms)
 
 
