@@ -263,3 +263,54 @@ reported exactly as shipped (clipped lookup) on every emitted structure. Nothing
     quoted numbers.
 (d) Arm (2), lam = 0: the signs are fixed by the initialisation trajectory (CVaR - T H is blind
     to the sign of psi); any difference from the average is a statement about random signs.
+
+## ADDENDUM 4 -- A2, THE OBJECTIVE'S LOCAL BEHAVIOUR AT THE PRODUCTION POINT (2026-09-14 21:30, written after S28-L18b (point cloud) and BEFORE any A2 number; brief `s27/briefs/S28A2.md`)
+
+New angle (contract rule 10): S15 measured the objective's global optimum and S8-9 its ranking
+of the native among pool members; S28-L18b measured its optimum over signed families. Nobody
+has measured its LOCAL behaviour at the pipeline's own output. Code `s27/s28_A2_local.py`,
+tests `tests/test_s28_A2.py`, results `s27/results/s28_A2_*.json`.
+
+A2.1 ORACLE DIAGNOSTIC (labelled in every sentence). At the production point cloud C0 (the DIS
+top-75 uniform average in its medoid frame, `s28_A_amp.Frame` + uniform readout, anchored
+3.048338): g = dS~/dC, the analytic gradient of the shipped Bayes risk read by linear
+interpolation (`s28_A_amp.Surrogate.value_grad`, tested against central finite differences),
+and the ORACLE direction u = (native Kabsch-aligned onto C0) - C0. Both -g and u have their
+rigid-body components removed (least-squares projection onto the 6-dimensional space of
+translations and infinitesimal rotations about C0's centroid; tested: a pure rigid field
+projects to zero). Reported per target: cos(-g_perp, u_perp); the distribution over 126
+(mean, median, fraction positive); the FAIL18 / 108 split with `ST.compare` of the cosine
+against zero is NOT a paired contrast, so the split is reported as means with SE and a sign
+test. The same cosine for the S27 CA channels: RG_LAW and EXVOL with analytic gradients;
+DISTPOT, CONTACT, ENV, CAGEO are step functions of the coordinates (histogram lookups) with
+zero gradient almost everywhere, so for them a SMOOTHED central-difference gradient at h = 0.5 A
+per coordinate is used and labelled "smoothed FD (step function)"; the distogram's cosine is
+placed among them. Prior: cosine near zero or negative on most targets (the distogram's errors
+are common-mode with the pool's, S23 L9); if positive on the 108 and negative on FAIL18, that is
+the sequence-conditioning sign flip seen from the objective's side, and is said so.
+
+A2.2 DEPLOYABLE STEP LADDER (native-free; never sees u). C(e) = C0 - e * g / rms(g) for
+e in {0.1, 0.3, 1.0} A of RMS displacement (rigid-body components removed from g first, so the
+step is pure shape), then the built chain `s12.instrument.project`, paired against production
+(re-projected in the same job, S28-L18/L19). Controls, matched in the operator's space:
+(i) a RANDOM DIRECTION of the same RMS displacement (Gaussian field, rigid-body removed,
+normalised; 8 draws from a stable per-target RNG; the MEAN over draws is the control and the
+best-of-8 is an order statistic reported against `best_of_k_null`); on the point cloud all 8
+draws, on the built chain draws 0 and 1 per e (16 projections per target is the budget's
+limit; stated); (ii) the SAME step restricted to the CIRCUIT FAMILY: theta_P = the native-free
+argmin over theta of rms(C(theta) - C0) (Adam, 300 iterations, 5 starts, the family's nearest
+point to production; its residual rms is reported, since the family need not contain C0), then
+one steepest-descent step on S~(C(theta)) in theta, scaled by a scalar line search so the
+C-space RMS displacement from C(theta_P) is e; paired against C(theta_P) itself (its own
+projected baseline) AND against production. Falsifier: some e beats production on the built
+chain beyond its MDE with the fold CI excluding zero on 5/5 folds AND beats the random-direction
+mean beyond its MDE. Prior: the step degrades at every e; the random direction degrades about
+equally; the circuit's one-step arm degrades from its own baseline. Any positive is replicated
+at seed 1 (the random control's draws) and answered by lane D before anything is built on it.
+Diagnostics: |g| (RMS), the S~ decrease per e, Rg and virtual bond of C(e), FAIL18 / 108 split.
+NaN-poison: the deployable ladder is run with `nat_ca` NaN and its emitted clouds must be
+bit-identical (test).
+
+Order of work (coordinator): addendum (this), code and tests, A2.1 on 126 targets as its own
+governed job and posted as an ORACLE DIAGNOSTIC entry, A2.2 on the point cloud, then its
+built chain only AFTER the primary chain job has landed and its verdict is posted.
