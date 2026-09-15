@@ -34,6 +34,8 @@
 - next: primary chain verdict entry (F1/F2, FAIL18 split, nested lam, three-way split, D's L20 caveats), then the A2.2 point-cloud entry, then the A2 chain job; findings rewrite.
 
 ## B
+- 2026-09-14 22:30 running: `s28B_chain` (built chain; throttled by the user's load); queued `s28B2_share` (F5-B2 second clause, no RMSD) and `s28B2_rank1` (S28-L23(a) decomposition). Posted S28-L25: kNN hop-only slope -1.00 / -1.03 per qubit (Gaussian -1.84), 30 to 60x the variance at n = 9, the registered -1.0 line straddled not cleared; the three-way split middle leg (VQE beats GS on F at J <= 0.3, ties at 1, is 1.8 above it at J = 3, beats untrained best-of-16 on 126/126 at every J); m-ladder eps <= 1e-13 on every arm.
+- next: the built-chain verdict entry per arm when the chain lands; the B2 share and decomposition entry; FINDINGS.
 - 2026-09-14 21:50 running: `s28B_chain` 6/126 (53 to 88 s per target; ETA about 00:00); `s28B_split` and `s28B_mladder` waiting for a slot (cap 3, three lane jobs live); `s28B2_train` queued (priority 10). B2 prereg addendum 1 committed (db85b0a3); `s27/s28_B2_knn.py` + 6 tests committed (9e4e30f3). B2 endpoint stays gated on the chain verdict and lane D's check.
 - next: post the B2 trainability entry when `s28B2_train` lands; the chain verdict entry per arm when `s28B_chain` lands; FINDINGS.
 - 2026-09-14 21:25 running: `s28B_chain` (18 arms x 126 built chain, 88 s per target, ETA about 00:10), `s28B_split` waiting for a slot (cap 3), `s28B_mladder` queued. Posted S28-L21 (point cloud 126/126, intermediate: R1 within 0.013 A of J = 0 at every J; R2/R3 +0.24 to +0.33 above production; best-J grid NOT A SIGNAL; departure table at n = 126; S28-L11 rewording accepted).
