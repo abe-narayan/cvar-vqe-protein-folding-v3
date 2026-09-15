@@ -11,6 +11,7 @@
 - 2026-09-14 19:46 running: box at 96 to 98% from the user's own programs (chrome 5.4 GB, Windows servicing worker 1.0 GB, claude 1.5 GB); lane jobs hold 0.3 GB each. Governor killed A's chain_oracle job at 19:43 (exit 15, 20/126 done, resumable) as the newest job. Launch cap lowered 4 -> 2; lanes told to expect kills and restart from checkpoints; no new job until RAM < 90%.
 - 2026-09-14 19:50 running: spike was transient (Windows servicing worker gone; RAM 87%). A's restart was killed once more at 19:46 (155 s, 22/126 done). Cap raised 2 -> 3. B run 37/126, C readout_chain2 restarted, A to relaunch chain_oracle from checkpoint.
 - 2026-09-14 20:03 running: user active again (Zoom, chrome 5.7 GB), RAM 95%; governor killed A's recog_126 at 43/126 (20:01, resumable). Cap 3 -> 2 so A's relaunch queues behind B run (~55/126) and C readout_chain2 rather than launching into a kill.
+- 2026-09-14 20:06 STALLED on the user's load: chrome 6.4 GB + Zoom, RAM 96% with zero lane jobs. Governor killed C readout_chain2 (25/126, 20:02) and B run (64/126, 20:04 stall breaker). All three lane runs are checkpointed and queued for relaunch through jobrun, which waits below 93%. Lanes do desk work (ORACLE ceiling entry, tests, D's check of S28-L8b) meanwhile. User pushed twice.
 - next: hourly ledger commits; reassign lanes as they finish; final S28 report in s27/.
 
 ## A
