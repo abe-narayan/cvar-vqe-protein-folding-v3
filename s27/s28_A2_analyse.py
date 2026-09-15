@@ -25,6 +25,7 @@ from s27 import s28_A2_local as L          # noqa: E402
 
 RESULTS = AN.RESULTS
 OUT = []
+AN.OUT = OUT          # share the transcript so `AN.contrast`'s ST.fmt blocks land in this summary's text
 
 
 def say(*a):

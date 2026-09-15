@@ -1916,3 +1916,220 @@ It was appended seconds after lane A's "S28-L27 -- NUMBERING CORRECTION" (both r
 at S28-L26b). Content unchanged; the ledger is append-only so the heading is not edited. Lane
 A's chain verdict is S28-L26b; my check of it is S28-L27b; my S28-L18 scope correction
 (RETRACTIONS_S28 R2) is in S28-L27b.
+
+## S28-L29 -- F5-B2, SECOND CLAUSE FAILS: ON THE kNN GRAPH THE CIRCUIT COLLECTS 3 TO 23% OF ITS SAME-SIGN HOPPING BOUND AT J = 1 (GAUSSIAN 8%), NOT MORE THAN HALF; AT J = 3, k = 10 IT COLLECTS 44 TO 68%; THE kNN HOP-ONLY VARIANCE IS 96 TO 99% REMAINDER AT n = 9 (GAUSSIAN: 97% RANK-ONE); THE k = 5 GRAPH IS DISCONNECTED ON SOME TARGETS (2026-09-14 23:05, B2)
+
+Question (`s27/PREREG_S28_B.md` addendum 1, F5-B2 second clause; S28-L23 caveats (a), (b)).
+Property measurements, no RMSD, no readout. Jobs `s28B2_share` (`s26/jobs_done/s28B2_share.json`
+exit 0, 552 s, peak RSS 0.341 GB; `s27/results/s28_B2_share.json`, 144 VQE runs on S27's 12
+trainability targets) and `s28B2_rank1` (`s26/jobs_done/s28B2_rank1.json` exit 0, 381 s,
+0.34 GB; `s27/results/s28_B2_rank1.json`). Code `s27/s28_B2_knn.py --share`, `s28_B2_rank1.py`.
+
+**The share of the same-sign bound the trained circuit collects, <psi|A|psi> / sum |psi_i|
+A_ij |psi_j|, with the sign coherence beside it (S28-L2(c)); the 9-qubit run settings; the
+Gaussian graph's numbers on the SAME 12 targets from `s28_B_rows.jsonl` (`share.json ::
+gaussian_same_targets`):**
+
+    graph  J    seed   hop     bound   share   coh     hop_gs   PR_vqe   PR_gs
+    k10    0.3  0/1    0.007/0.006  0.90  0.008/0.007  0.002/0.003  0.600  435/430  13.7
+    k10    1    0/1    0.029/0.111  0.90  0.033/0.120  0.004/0.084  0.825  414/411  29.0
+    k10    3    0/1    0.611/0.401  0.87/0.83  0.679/0.440  0.610/0.334  0.925  403/322  53.2
+    k5     0.3  0/1    0.021/0.014  0.89  0.025/0.016  0.006/0.002  0.719  432/427   8.9
+    k5     1    0/1    0.210/0.060  0.89  0.228/0.069  0.167/0.001  0.894  417/429  16.4
+    k5     3    0/1    0.368/0.289  0.81/0.80  0.419/0.343  0.260/0.167  0.942  252/272  24.6
+    gauss  0.3  0/1    0.005/-0.001 0.88/0.90  0.005/-0.001  0.008/0.002
+    gauss  1    0/1    0.079/0.078  0.89/0.90  0.083/0.082  0.086/0.084
+    gauss  3    0/1    0.312/0.236  0.91/0.90  0.334/0.249  0.336/0.251
+
+- THE SECOND CLAUSE FAILS. The registered test for "the spectrum was the mechanism" required
+  the circuit to collect more than half of its same-sign bound at J = 1 on the kNN graph. It
+  collects 3% / 12% (k 10, seeds 0 / 1) and 23% / 7% (k 5), against 8% / 8% for the Gaussian
+  graph on the same targets. With the first clause straddled (S28-L25: -1.033 / -0.997 against
+  the -1.0 line), F5-B2 as registered is NOT passed.
+- What the spread spectrum does buy is at J = 3: with k = 10 the circuit collects 68% / 44% of
+  its bound (Gaussian 33% / 25%), sign coherence 0.61 / 0.33, and the two seeds disagree by a
+  factor 1.5 (one basin is sign-coherent, one is not). The reading that fits both clauses: the
+  circuit collects the hopping only where the hopping term's gradient variance is within about
+  30x of the diagonal terms' (k 10, J = 3: 28x; Gaussian J = 3: 820x; every J = 1 cell: 120x
+  to 7,300x). The spectrum sets the decay rate (S28-L25) and the ratio at the deployed width
+  sets what the optimiser sees; halving the rate moved the ratio from 7,300x to 250x at J = 1,
+  which is not enough. This is measured on 12 targets and two seeds; the J = 3, k = 10 cell is
+  the only one the mechanism licenses for an endpoint look (addendum 2, below).
+- For a spread spectrum the share and the sign coherence separate (k 5, J 1, seed 0: 0.228
+  vs 0.167), as S28-L11(3) said they would; for the Gaussian graph they coincide (0.083 vs
+  0.086). Consistency, not a new number.
+- The exact ground state of the kNN Hamiltonian is a TIGHT cluster: PR 14 / 29 / 53 (k 10) and
+  9 / 16 / 25 (k 5) at J 0.3 / 1 / 3, against the Gaussian ground state's 1.3 / 62 / 305. Its
+  hopping is 0.60 to 0.94. The circuit's state stays near-uniform (PR 320 to 435 of 500) at
+  every k and J.
+
+**S28-L23(a), the rank-one / remainder decomposition of the kNN hop-only variance
+(`s28_B2_rank1.json :: summary`; same draws and registers as `s28_B_rank1.json`):**
+
+    observable                   n=4        n=5        n=6        n=7        n=8        n=9   slope
+    k10  A                  4.729e-03  1.981e-03  1.123e-03  5.183e-04  2.674e-04  1.224e-04  -1.033
+    k10  rank-one v1 v1^T   3.389e-03  6.615e-04  2.623e-04  5.513e-05  3.853e-05  4.438e-06  -1.784
+    k10  remainder          8.980e-04  1.254e-03  9.345e-04  4.517e-04  2.283e-04  1.182e-04  -0.658
+    k10  remainder share        0.191      0.631      0.784      0.882      0.872      0.965
+    k5   A                  7.806e-03  4.107e-03  2.082e-03  1.054e-03  5.118e-04  2.478e-04  -0.997
+    k5   rank-one           3.467e-03  6.583e-04  2.588e-04  5.486e-05  3.878e-05  4.571e-06  -1.781
+    k5   remainder          4.241e-03  3.393e-03  1.826e-03  9.941e-04  4.887e-04  2.451e-04  -0.852
+    k5   remainder share        0.538      0.834      0.891      0.948      0.955      0.986
+    (Gaussian, S28-L8b: rank-one 4.049e-06 of 4.157e-06 at n = 9, 97%; remainder 1.344e-07)
+
+The rank-one part of the kNN graph decays at -1.78 per qubit, the same rate as the Gaussian
+graph's whole variance (its top eigenvector is again 0.98 overlapped with the uniform state,
+S28-L23(a) as predicted); the REMAINDER carries 96.5% (k 10) / 98.6% (k 5) of the kNN
+variance at n = 9 and decays at -0.66 / -0.85 per qubit. So the reading, in the form lane D
+asked for: on the Gaussian graph 97% of the hopping gradient variance is the typicality
+projector and it decays at -1.8 per qubit; on the kNN graph 96 to 99% is the spread remainder
+and it decays at -0.7 to -0.9 per qubit; the measured -1.0 whole-graph slopes of S28-L25 are
+the mixture. The remainder's rate is the number that describes a spread-spectrum hopping term
+on this circuit at depth 3, and it is reported as a number and nothing else (contract rule 9).
+
+**S28-L23(b), connectivity.** k = 10: one component on every target at every n (max 1). k = 5:
+the symmetric 5-NN graph on the full pool is DISCONNECTED on some of the 12 targets (max
+components 2 / 3 / 4 at n = 7 / 8 / 9; the median is 1, which is what S28-L25 quoted).
+On a disconnected graph lambda_1 = 1 is degenerate and `eigh`'s ground state is an arbitrary
+combination of per-component Perron vectors: every k = 5 GS row on such a target is
+DEGENERATE by the S28-L23(b) rule, and the k = 5 endpoint replication is not run (addendum 2:
+k = 10 only, which is connected). The k = 5 share and variance rows above are unaffected
+(they read the VQE state and the observable, not the ground state) except `PR_gs` / `hop_gs`,
+which are labelled degenerate on those targets.
+
+Verdict (property): F5-B2 is NOT passed as registered (first clause straddled, second clause
+failed); the decomposition supports the spectrum reading of S28-L11 in the form "the remainder
+carries 96 to 99% at n = 9 and decays at -0.7 to -0.9 per qubit", and the share table says the
+hopping is collected only where its gradient variance is within about 30x of the diagonal
+terms' (k 10, J 3). The B2 endpoint scope is that one cell (addendum 2), gated as before on the
+Gaussian chain verdict and lane D's check.
+Artefacts: `s27/results/s28_B2_share.json`, `s28_B2_share_rows.jsonl`, `s28_B2_rank1.json`,
+`s28_B2_rank1_rows.jsonl`, `s26/jobs_done/s28B2_share.json`, `s28B2_rank1.json`.
+
+## S28-L30 -- A2.2 THE DEPLOYABLE STEP LADDER ON THE POINT CLOUD (INTERMEDIATE BASIS, 126/126, NO VERDICT): A STEP ALONG THE SHIPPED OBJECTIVE'S DESCENT DIRECTION DEGRADES AT EVERY e AND IS NO BETTER THAN A RANDOM DIRECTION OF THE SAME SIZE; THE OBJECTIVE FALLS ON 126/126; AND THE ORACLE OBJECTIVE DIAGNOSTIC: THE NATIVE SCORES WORSE THAN THE AVERAGE ON 99/126 AND SITS AT THE 36.9TH PERCENTILE OF ITS OWN POOL (2026-09-14 22:55, A2)
+
+Pre-registered `s27/PREREG_S28_A.md` ADDENDUM 4, A2.2. Artefacts: `s27/results/s28_A2_ladder_rows.jsonl`
+(126 rows), `s27/results/s28_A2_summary.json` (`contrasts`, `ladder_cloud`, `circP_residual_rms`,
+`text`), job `s26/jobs_done/s28A2_ladder_126.json` (436 s, peak RSS 0.26 GB); the ORACLE
+objective diagnostic `s27/results/s28_A_objdiag.json` (job `s28A_objdiag`, 30 s, 0.26 GB).
+Basis here: POINT CLOUD (intermediate); the built chain (job `s28A2_chain`, 13 projections per
+target, queued) decides, in its own entry. The deployable arms never see the native.
+
+Setup: C0 = production (3.048338); g = dS~/dC with rigid-body components removed; C(e) = C0 -
+e g / rms(g), e in 0.1, 0.3, 1.0 A of RMS displacement; the random-direction control (8 draws,
+rigid-body removed, same RMS displacement; the mean is the control); the circuit family's
+nearest point to C0 (theta_P; residual 0.114 A RMS mean, 0.104 median, 0.377 max: the
+27-parameter family passes within 0.1 A of production) and one steepest-descent step in theta
+scaled to the same e. Undefined readouts: none.
+
+Means (`ladder_cloud`): production 3.0483; gradient step 3.0541 / 3.0791 / 3.2851; random
+direction mean-of-8 3.0512 / 3.0705 / 3.2516 (best-of-8, an order statistic, 3.026 / 2.996 /
+3.024); the family's nearest point 3.0472; circuit one-step 3.0509 / 3.0706 / 3.2496.
+
+  gradient step e=0.1 A vs production (point cloud)
+    a 3.0541 (med 2.8509)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0058   median +0.0067   SE 0.0021   MDE 0.0059   effect/MDE +0.97
+    iid  CI95 [+0.0014, +0.0099]
+    fold CI95 [+0.0036, +0.0086]   folds same sign 5/5   per-fold 0:+0.005 1:+0.007 2:+0.011 3:+0.003 4:+0.003
+    50W/76L/0T   worst degradation +0.0527 (9L1M)   p90 +0.0371   power 0.77  Type-M 1.14
+    concentration: drop-top10 +0.0098 vs uniform-effect null p10/p50/p90 +0.0071/+0.0098/+0.0125 -> pctile 0.509
+    VERDICT: NOT MEASURED (|effect| 0.0058 <= its own MDE 0.0059, 0.97x)
+
+  gradient step e=0.3 A vs production (point cloud)
+    a 3.0791 (med 2.8766)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0308   median +0.0330   SE 0.0063   MDE 0.0178   effect/MDE +1.73
+    iid  CI95 [+0.0181, +0.0431]
+    fold CI95 [+0.0228, +0.0396]   folds same sign 5/5   per-fold 0:+0.028 1:+0.039 2:+0.046 3:+0.020 4:+0.023
+    39W/87L/0T   worst degradation +0.1956 (1S9Z)   p90 +0.1279   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.0430 vs uniform-effect null p10/p50/p90 +0.0351/+0.0429/+0.0508 -> pctile 0.503
+    VERDICT: WORSE
+
+  gradient step e=1 A vs production (point cloud)
+    a 3.2851 (med 3.0259)   b 3.0483 (med 2.8373)   n=126
+    effect +0.2368   median +0.2317   SE 0.0207   MDE 0.0580   effect/MDE +4.09
+    iid  CI95 [+0.1966, +0.2769]
+    fold CI95 [+0.2027, +0.2723]   folds same sign 5/5   per-fold 0:+0.229 1:+0.282 2:+0.288 3:+0.182 4:+0.208
+    20W/106L/0T   worst degradation +0.8630 (1S9Z)   p90 +0.5159   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.2782 vs uniform-effect null p10/p50/p90 +0.2519/+0.2777/+0.3025 -> pctile 0.510
+    VERDICT: WORSE
+
+  gradient step e=0.1 vs random direction mean-of-8 (point cloud)
+    a 3.0541 (med 2.8509)   b 3.0512 (med 2.8318)   n=126
+    effect +0.0029   median +0.0023   SE 0.0021   MDE 0.0059   effect/MDE +0.49
+    iid  CI95 [-0.0012, +0.0068]
+    fold CI95 [+0.0007, +0.0058]   folds same sign 5/5   per-fold 0:+0.001 1:+0.004 2:+0.008 3:+0.000 4:+0.001
+    55W/71L/0T   worst degradation +0.0567 (9L1M)   p90 +0.0347   power 0.28  Type-M 1.89
+    concentration: drop-top10 +0.0069 vs uniform-effect null p10/p50/p90 +0.0043/+0.0069/+0.0095 -> pctile 0.515
+    VERDICT: NOT MEASURED (|effect| 0.0029 <= its own MDE 0.0059, 0.49x)
+
+  gradient step e=0.3 vs random direction mean-of-8 (point cloud)
+    a 3.0791 (med 2.8766)   b 3.0705 (med 2.8430)   n=126
+    effect +0.0086   median +0.0077   SE 0.0063   MDE 0.0176   effect/MDE +0.49
+    iid  CI95 [-0.0038, +0.0209]
+    fold CI95 [+0.0023, +0.0170]   folds same sign 5/5   per-fold 0:+0.002 1:+0.013 2:+0.024 3:+0.002 4:+0.004
+    55W/71L/0T   worst degradation +0.1695 (9L1M)   p90 +0.1037   power 0.28  Type-M 1.87
+    concentration: drop-top10 +0.0210 vs uniform-effect null p10/p50/p90 +0.0130/+0.0208/+0.0288 -> pctile 0.514
+    VERDICT: NOT MEASURED (|effect| 0.0086 <= its own MDE 0.0176, 0.49x)
+
+  gradient step e=1 vs random direction mean-of-8 (point cloud)
+    a 3.2851 (med 3.0259)   b 3.2516 (med 2.9683)   n=126
+    effect +0.0336   median +0.0318   SE 0.0198   MDE 0.0556   effect/MDE +0.60
+    iid  CI95 [-0.0042, +0.0720]
+    fold CI95 [+0.0125, +0.0611]   folds same sign 5/5   per-fold 0:+0.013 1:+0.052 2:+0.080 3:+0.009 4:+0.016
+    53W/73L/0T   worst degradation +0.5544 (9L1M)   p90 +0.3240   power 0.39  Type-M 1.58
+    concentration: drop-top10 +0.0727 vs uniform-effect null p10/p50/p90 +0.0478/+0.0721/+0.0961 -> pctile 0.512
+    VERDICT: NOT MEASURED (|effect| 0.0336 <= its own MDE 0.0556, 0.60x)
+
+  circuit one-step e=0.3 vs the family's nearest point to production (point cloud)
+    a 3.0706 (med 2.8584)   b 3.0472 (med 2.8453)   n=126
+    effect +0.0233   median +0.0385   SE 0.0103   MDE 0.0290   effect/MDE +0.80
+    iid  CI95 [+0.0034, +0.0439]
+    fold CI95 [+0.0094, +0.0367]   folds same sign 4/5   per-fold 0:-0.002 1:+0.022 2:+0.045 3:+0.023 4:+0.027
+    47W/79L/0T   worst degradation +0.2664 (2MQ2)   p90 +0.1697   power 0.62  Type-M 1.28
+    concentration: drop-top10 +0.0409 vs uniform-effect null p10/p50/p90 +0.0274/+0.0407/+0.0543 -> pctile 0.505
+    VERDICT: NOT MEASURED (|effect| 0.0233 <= its own MDE 0.0290, 0.80x)
+
+  circuit one-step e=1 vs the family's nearest point to production (point cloud)
+    a 3.2496 (med 2.9032)   b 3.0472 (med 2.8453)   n=126
+    effect +0.2024   median +0.2585   SE 0.0333   MDE 0.0934   effect/MDE +2.17
+    iid  CI95 [+0.1345, +0.2687]
+    fold CI95 [+0.1536, +0.2456]   folds same sign 5/5   per-fold 0:+0.122 1:+0.217 2:+0.278 3:+0.170 4:+0.221
+    37W/89L/0T   worst degradation +0.8965 (2MQ2)   p90 +0.6667   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.2637 vs uniform-effect null p10/p50/p90 +0.2204/+0.2637/+0.3063 -> pctile 0.499
+    VERDICT: WORSE
+
+  the circuit family's nearest point to production vs production (point cloud)
+    a 3.0472 (med 2.8453)   b 3.0483 (med 2.8373)   n=126
+    effect -0.0011   median -0.0009   SE 0.0010   MDE 0.0028   effect/MDE -0.40
+    iid  CI95 [-0.0031, +0.0008]
+    fold CI95 [-0.0014, -0.0009]   folds same sign 5/5   per-fold 0:-0.001 1:-0.001 2:-0.002 3:-0.001 4:-0.001
+    71W/55L/0T   worst degradation +0.0394 (8IL1)   p90 +0.0104   power 0.20  Type-M 2.26
+    concentration: drop-top10 +0.0007 vs uniform-effect null p10/p50/p90 -0.0006/+0.0007/+0.0020 -> pctile 0.522
+    VERDICT: NOT MEASURED (|effect| 0.0011 <= its own MDE 0.0028, 0.40x)
+
+Reading (intermediate basis):
+1. The step degrades at every e: +0.006 (0.97x MDE, Type-M) / +0.031 (1.7x, WORSE) / +0.237
+   (4.1x, WORSE), 5/5 folds each; and it is NOT better than a random direction of the same
+   size: +0.003 / +0.009 / +0.034 against the random mean, under MDE at every e with the fold
+   CI above zero at every e. The objective's descent direction from production is worth
+   exactly what a random direction is worth, or a little less (S28-L23b's cosine -0.03, read
+   in Angstroms). S~ falls on 126/126 targets at e = 0.1 (1.674 -> 1.619) and on 113/126 at
+   e = 0.3: the objective is doing what it is asked, and the structure gets worse.
+2. The circuit family adds nothing at the local scale: its nearest point reproduces production
+   (-0.001, 0.4x MDE) and its one step degrades like the raw step (+0.004 / +0.023 / +0.202,
+   the last at 2.2x MDE, WORSE, 5/5). The family's inductive bias does not regularise the
+   objective's blindness at e <= 1 A any more than it did at the optimum (S28-L26b).
+3. FAIL18 / 108 on the point cloud: the step costs +0.015 / +0.050 / +0.215 on FAIL18 and
+   +0.004 / +0.028 / +0.240 on the 108 (raw means): the harm is everywhere, slightly larger on
+   FAIL18 at small e, as the cosine predicted. No regime helps.
+4. ORACLE OBJECTIVE DIAGNOSTIC (`s28_A_objdiag.json`; the native is read here and nowhere
+   deployable): the native posed in the frame scores S~ 2.089; the ORACLE circuit optimum
+   2.094 (a 0.29 A structure scores like the native); production 1.674; the pool's best-scoring
+   member 1.423; the pool mean 2.487. The native sits at the 36.9th percentile of its own pool
+   under the shipped objective (S8-9's "37th percentile", reproduced to the decimal on this
+   surrogate); production scores BELOW the native on 99/126 targets and below the pool's
+   best member on only 6/126. So the objective's ordering is (pool's best member) <
+   (production) < (native): from production, any descent walks toward the pool's best-scoring
+   member and away from the native, and that is what the ladder measures.
+5. Prior (addendum 4) held on every count. Falsifier (some e beats production AND the random
+   mean on the built chain) waits for the chain; nothing here is a verdict.
