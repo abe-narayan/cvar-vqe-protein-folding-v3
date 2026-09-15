@@ -1239,3 +1239,130 @@ contrast is Type-M (1.13x, 4/5 folds): say the sign. The built-chain entry decid
 attacked in its turn.
 Artefacts: `s27/results/s28_A_recog_rows.jsonl`, `s28_A_summary.json`; the strata above are
 `ST.compare` on the FAIL18 mask (`s12.instrument.FAIL18`).
+
+## S28-L21 -- HOPPING ON THE POINT CLOUD (INTERMEDIATE BASIS, 126/126, NO VERDICT): THE DEPLOYED READOUT MOVES BY AT MOST 0.013 A AT ANY J; THE TWO OTHER READOUTS ARE +0.24 TO +0.33 A ABOVE PRODUCTION AT EVERY J; THE EIGENSOLVER AT J = 1 RE-SELECTS THE DIS TOP-75; THE DEPARTURE TABLE AT n = 126 AND THE S28-L11 REWORDING OF F5; THE BUILT-CHAIN VERDICT WAITS FOR JOB s28B_chain (2026-09-14 21:20, B)
+
+Point cloud is the SCREENING basis (contract addendum 1, item 13); nothing here is a verdict.
+Run: `s28B_run` (64 targets) + `s28B_run2` (1) + `s28B_run3` (61), all resumed from
+`s27/results/s28_B_rows.jsonl` (4,914 rows = 126 targets x 39 arms, no duplicates at the
+64/65/66 boundaries); kills at 20:04 and 20:10 were the governor's stall breaker under the
+user's own load (`s26/governor.log`), peak RSS 0.35 GB, 27 to 45 s per target. Statistics
+`s27/s28_B_analyse.py` -> `s27/results/s28_B_summary.json` (every ST.fmt block under `fmt`).
+
+Anchors: J = 0 R1 seed 0 = 3.058016, seed 1 = 3.056181, bit-identical to
+`s27/results/vqe_rows.jsonl :: DIS` on 126/126 targets both seeds (`summary.json ::
+anchors.s27_bit_identical_s*`; lane D's own check S28-L9); DIS top-75 3.048338. The
+eigensolver at J <= 0.3 is the one-hot argmin and its R1/R2 read 3.4540, the S25 argmin
+selector's number.
+
+**Means (point cloud, A; `summary.json :: arms`), seed 0 / seed 1 for the VQE:**
+
+    arm            R1 tail          R2 weighted      R3 p-top-75      m       PR
+    VQE J=0        3.0580 / 3.0562  3.3697 / 3.3636  3.3096 / 3.3207  74 / 71  428 / 412
+    VQE REAL 0.1   3.0546 / 3.0558  3.3665 / 3.3643  3.3097 / 3.2999  74 / 71  428 / 414
+    VQE REAL 0.3   3.0564 / 3.0558  3.3657 / 3.3635  3.2876 / 3.2992  74 / 72  427 / 414
+    VQE REAL 1     3.0541 / 3.0533  3.3671 / 3.3661  3.2906 / 3.3215  74 / 72  427 / 415
+    VQE REAL 3     3.0594 / 3.0623  3.3813 / 3.3656  3.3207 / 3.3055  79 / 76  436 / 425
+    GS   REAL 0.1  3.4540 (m=1)     3.4520           3.0446            1        1.0
+    GS   REAL 1    3.2185 (m=5.5)   3.0447           3.0597            5.5      62
+    GS   REAL 3    3.0697 (m=32)    3.1645           3.0829           32.5     305
+    (PERM and RAND: within 0.01 of REAL on every VQE cell; GS PERM/RAND J = 1 R3 3.0452 /
+     3.0583; production DIS top-75 3.0483; random-75 null 3.4209, S27 `pool_rows.jsonl`)
+
+**F1 (each VQE arm vs the SAME readout at J = 0, same seed; 72 contrasts):** none clears its
+MDE with the fold CI excluding zero on both seeds. Nine cells sit at 0.7x MDE or better and
+all nine go to the chain (contract item 13). The largest, ST.fmt verbatim:
+
+  F1 vqe|s1|REAL|J0.1 R3 - vqe|s1|NONE|J0 R3 (point cloud)
+    a 3.2999 (med 3.1363)   b 3.3207 (med 3.1716)   n=126
+    effect -0.0208   median +0.0000   SE 0.0071   MDE 0.0199   effect/MDE -1.05
+    iid  CI95 [-0.0358, -0.0082]
+    fold CI95 [-0.0338, -0.0089]   folds same sign 5/5   per-fold 0:-0.045 1:-0.005 2:-0.026 3:-0.023 4:-0.006
+    58W/31L/37T   worst degradation +0.1038 (6A5J)   p90 +0.0321   power 0.83  Type-M 1.10
+    concentration: drop-top10 -0.0016 vs uniform-effect null p10/p50/p90 -0.0071/-0.0018/+0.0029 -> pctile 0.514
+    VERDICT: BETTER [TYPE-M ZONE: magnitude inflated ~1.10x]
+
+  and its two killers, same basis:
+  F1 vqe|s0|REAL|J0.1 R3 - vqe|s0|NONE|J0 R3: effect +0.0001, MDE 0.0133, 0.01x, fold CI
+    [-0.0076, +0.0086], 52W/39L/35T (the seed-0 twin: does not replicate);
+  F1 vqe|s1|PERM|J0.1 R3 - vqe|s1|NONE|J0 R3: effect -0.0219, 0.82x, fold CI [-0.0408,
+    -0.0082], 46W/34L/46T (the PERM control, correspondence destroyed, shows the same movement:
+    F3 says the specific graph contributed nothing).
+  The deployed readout's largest cell, F1 vqe|s0|REAL|J0.1 R1: effect -0.0034, MDE 0.0046,
+    0.74x, 22W/10L/94T (94 identical sets), seed 1 -0.0004 (0.17x): not a result.
+
+**S28-L2(a), every readout against PRODUCTION (DIS top-75 uniform, point cloud):** R1 at
+J = 0: +0.0097 (0.43x, fold CI [-0.0005, +0.0250], 60W/64L/2T); R1 at every J > 0: +0.005 to
++0.014, all inside MDE. R2 at J = 0: +0.3214 (1.41x, fold [+0.1661, +0.4629], 48W/78L, WORSE);
+R3 at J = 0: +0.2613 (1.33x, fold [+0.1315, +0.3879], 46W/80L, WORSE); at every J > 0, graph
+and seed R2 is +0.313 to +0.333 and R3 +0.226 to +0.282, all WORSE with the fold CI above zero.
+The R3 "gain" above is a readout that is 0.26 A above production climbing 0.02 A toward it.
+
+**F2 (VQE vs the exact ground state, same J, R2/R3):** at J = 1 and 3 the eigensolver is
+BETTER than the circuit on both readouts beyond MDE (R3 J = 1: +0.2309, 1.20x, fold [+0.0994,
++0.3575], 47W/79L; R2 J = 3: +0.2168, 1.87x); at J <= 0.3 GS-R2 is the argmin (3.45) and the
+circuit's R2 is inside MDE of it. The registered prior (eigensolver wins or ties) held.
+
+**The eigensolver as a selector (GS vs the deployed J = 0 R1, and vs production):** GS REAL
+J = 1 R3 = 3.0597: +0.0017 vs J = 0 R1 (0.07x) and +0.0114 vs production (0.45x, fold CI
+[+0.0011, +0.0223], 49W/65L/12T); its p-top-75 has Jaccard 0.960 with the DIS top-75, i.e. the
+hopping ground state at J = 1 RE-SELECTS the distogram's own top-75 (the probe's 0.92 to 0.97
+reading back at n = 126). GS REAL J = 1 R2 (p_gs-weighted over the whole pool) = 3.0447: -0.0037
+vs production (0.09x, fold CI [-0.0221, +0.0176], 79W/47L) and -0.0134 vs J = 0 R1 (0.31x):
+inside MDE. GS J = 3 R1 (m = 32.5) 3.0697, +0.012 vs J = 0 R1 (0.19x). No eigensolver readout
+is beyond its MDE against production.
+
+**F3/F4 (REAL vs PERM / RAND, same J, seed, readout):** 72 contrasts, none beyond MDE; the
+largest is R1 J = 1 seed 0 REAL - PERM = +0.0092 (0.57x, PERM better). The graph's specific
+similarity structure and its degree sequence are indistinguishable at this instrument.
+
+**S28-L2(e), the best J as an order statistic (`ST.best_of_k_within` over the 4 non-zero
+rungs, 18 (graph, seed, readout) cells):** every REAL and RAND cell reads "NOT A SIGNAL"
+(split-half transfers -14% to +15% of the oracle; k_eff 3.2 to 4.0); the two cells with a
+surviving residual are PERM R1/R2 seed 0 (-0.007 / -0.006 transfers, in a CONTROL). The best J
+for R1 by the point-cloud mean is J = 1 on both seeds (3.0541 / 3.0533; -0.0039 vs J = 0 at
+0.29x, fold [-0.0084, +0.0001], 35W/38L/53T); it goes to the chain as registered.
+
+**The departure table at n = 126 (S28-L11 caveat (e); native-free; `s28_B_rows.jsonl`; REAL,
+seed 0 / seed 1; `share` = <psi|A|psi> / sum |psi_i| A_ij |psi_j|, which for a near-rank-one A
+coincides with the sign coherence, a consistency check and not an independent number
+(S28-L11(3)):**
+
+    J     m            holes  PR        Jac(ptop75,DIS75)  mass on DIS75  TV vs J=0      hop            bound   share / coh
+    0     74.1 / 71.2  <=2    428/412   0.177 / 0.180      0.187 / 0.193  -              0              -       - / 0.00
+    0.1   74.3 / 71.2  <=2    428/414   0.177 / 0.180      0.186 / 0.193  0.025 / 0.027  -0.001/-0.001  0.90    0.00 / 0.00
+    0.3   74.1 / 71.9  <=2    427/414   0.180 / 0.179      0.187 / 0.191  0.050 / 0.047  -0.000/-0.001  0.90    0.00 / 0.00
+    1     73.7 / 71.8  <=1    427/415   0.181 / 0.177      0.188 / 0.191  0.098 / 0.088  0.007 / 0.029  0.89    0.01 / 0.03
+    3     79.3 / 76.3  <=2    436/425   0.163 / 0.164      0.177 / 0.182  0.155 / 0.152  0.318 / 0.238  0.91    0.34 / 0.25
+    GS 1  5.5          <=2    62        0.960              0.811          0.956          0.499          0.499   1.00 / 1.00
+    GS 3  32.5         <=2    305       0.842              0.373          0.994          0.911          0.911   1.00 / 1.00
+    (random-75 vs random-75 Jaccard 0.082; uniform mass on 75 of 500 = 0.150; `gate_set_equality`
+     passes 4,914/4,914 with `equality` true on every row, the operator's property, not a finding)
+
+The S28-L8b partial numbers restated at 126: the circuit collects 34% / 25% (seeds 0 / 1) of
+its same-sign bound at J = 3 (entry: 44% on 19 targets; S28-L11: 33% on 30), 0.7% / 3.2% at
+J = 1 (entry: "essentially none"); TV 0.155 / 0.152 at J = 3 (entry 0.135); Jaccard 0.163 /
+0.164 (entry 0.144); the eigensolver 0.499 / 0.911 at J = 1 / 3 (entry 0.503 / 0.910). Signs
+and orderings unchanged. The retained sets: the VQE's alpha-tail (R1) has mean pairwise RMSD
+2.48 A, the eigensolver's top-75 2.36 to 2.45, the VQE's p-top-75 (R3) 4.06 to 4.12: the
+near-uniform state's most probable 75 is a dispersed set, which is why R3 is 0.26 A worse than
+production and the eigensolver's R3 is not.
+
+**S28-L11 caveats (a) to (d), accepted and reworded here for the record:** (a) the hop-only
+slope is -1.7 to -1.8 per qubit (-1.844 over n = 4..9, -1.700 over the padding-free 4..8);
+(b) the "-1.27" diagonal-control rate is withdrawn: on the padding-free registers the
+diagonal same-spectrum control decays at -1.856, the same rate as A within the fit noise, so
+the decay is the near-rank-one spectrum's and the eigenvector's orientation does not
+measurably change it; (c) "gradient-invisible" and "cannot train" are withdrawn: the measured
+statements are the variance ratio (7,300x at J = 1, 820x at J = 3, n = 9, depth 3) and the
+slope, and the circuit collects a quarter to a third of its same-sign bound at J = 3;
+(d) "to 0.1%" is withdrawn: a 7,300x variance ratio is 1.2% in gradient magnitude.
+
+Built chain: job `s28B_chain` (18 arms x 126: J = 0 R1 both seeds; best-J R1 J = 1 both
+seeds; the nine 0.7x cells; the seed-0 twin and the J = 0 R3 comparators of the largest cell;
+GS REAL J = 1 R3 and R2) is running under jobrun with per-(arm, target) checkpoints
+(`s27/results/s28_B_chain_rows.jsonl`); the verdict entry is written on it. `s28B_split` (the
+three-way split's middle leg, S28-L2(b)) and `s28B_mladder` (the T9 decomposition) run beside
+it. No verdict here.
+Artefacts: `s27/results/s28_B_rows.jsonl`, `s28_B_summary.json`, `s28_B_chain_arms.txt`,
+`s26/jobs_done/s28B_run.json`, `s28B_run2.json`, `s28B_run3.json`.
