@@ -2133,3 +2133,45 @@ Reading (intermediate basis):
    member and away from the native, and that is what the ladder measures.
 5. Prior (addendum 4) held on every count. Falsifier (some e beats production AND the random
    mean on the built chain) waits for the chain; nothing here is a verdict.
+
+## S28-L31 -- ADVERSARY CHECK OF S28-L29 (B2's second clause and the rank-one decomposition) AND S28-L30 (A2.2, the step ladder on the point cloud) (2026-09-14 22:30, lane D)
+S28-L29 (B2, property). Checks: the registered second clause (more than half the same-sign
+bound at J = 1 on the kNN graph) fails at 3 to 23% against the Gaussian graph's 8% on the same
+12 targets; the first clause was straddled (S28-L25/L26); F5-B2 as registered is NOT passed
+and the entry says so. The decomposition I asked for in S28-L23(a)/S28-L26 is delivered: the
+kNN top eigenvector is again 0.98 uniform and its rank-one part decays at -1.78 per qubit (the
+Gaussian whole), while the remainder carries 96.5% (k 10) / 98.6% (k 5) of the variance at
+n = 9 and decays at -0.66 / -0.85. That is the correct form of the spectrum reading and it is
+consistent with S28-L11. My S28-L23(b) fired: the symmetric 5-NN graph is disconnected on some
+targets (up to 4 components at n = 9), the k = 5 ground states are labelled DEGENERATE and the
+k = 5 endpoint is dropped (addendum 2). Caveats: (a) "the circuit collects the hopping only
+where its gradient variance is within about 30x of the diagonal terms'" is a reading fitted
+to two graphs and three J on 12 targets and two seeds, with the k 10 / J 3 seeds disagreeing
+by 1.5x (0.68 / 0.44): a HYPOTHESIS, to be labelled so; (b) the k 10 / J 3 cell is the only
+endpoint cell the mechanism licenses and it is one cell chosen after looking at the property
+table, so its endpoint, if run, is a single pre-named arm with production as the comparator
+and no grid to price, and its prior (worse or null) stands. Verdict: STANDS WITH CAVEAT.
+S28-L30 (A2.2, point cloud, intermediate). Recomputed from `s27/results/s28_A2_ladder_rows.jsonl`
+(126 rows): step e = 0.1 / 0.3 / 1 vs production +0.0058 (0.97x, Type-M) / +0.0308 (1.73x, WORSE)
+/ +0.2368 (4.09x, WORSE), 5/5 folds each; vs the random-direction mean of 8: +0.0029 (0.49x) /
++0.0086 (0.49x) / +0.0336 (0.60x), fold CI above zero at every e but under MDE: the SIGN (the
+objective's direction is no better than random, slightly worse) is measured and the SIZE is
+not (S26 L46's rule); FAIL18 +0.015 / +0.050 / +0.215 and other-108 +0.004 / +0.028 / +0.240
+(raw means): the harm is everywhere. The one number in the ladder that LOOKS like a gain, the
+random directions' best-of-8 (2.996 at e = 0.3, 0.052 below production), is priced by me with
+`best_of_k_within` on the (126 x 8) matrix: 95 to 96% accounted by the across-target null,
+k_eff 7.5 to 7.6, split-half transfer -3% to -5% at every e: NOT A SIGNAL (eight exchangeable
+random directions; the entry labels it an order statistic and quotes the mean, correctly).
+The circuit family's nearest point to production reproduces production (-0.0011, 0.40x; residual
+0.114 A RMS) and its one step degrades like the raw step. The ORACLE objective diagnostic
+(`s28_A_objdiag.json`, complete: true) reproduces S8-9's percentile: the native at the 36.9th
+percentile of its own pool, production below the native on 99/126 and below the pool's
+best-scoring member on 6/126; the ordering (pool best) < (production) < (native) is the
+mechanism of the whole A lane in one table. Cosmetic-variant test: the step arm is a
+displacement of the production cloud, not a re-weighting of the top-75; new relative to S16
+(steering arms that chose "do nothing") in that it measures the objective's own descent
+direction at production. Verdict: STANDS as an intermediate negative; the chain entry decides
+and is attacked in its turn (production re-projected in the same job; the random control on
+the chain is the mean of the SAME two projected draws, S28-L23(c)).
+Artefacts: `s27/results/s28_B2_share.json`, `s28_B2_rank1.json`, `s28_A2_ladder_rows.jsonl`,
+`s28_A2_summary.json`, `s28_A_objdiag.json`; my pricing of the random best-of-8 is in this entry.
