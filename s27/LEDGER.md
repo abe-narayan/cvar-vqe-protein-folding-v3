@@ -1910,3 +1910,9 @@ rows) or 3.2071 (lane A's re-projection) depending on the path, and an entry mus
 `s27/RETRACTIONS_S28.md` R2 (my own scope correction, 22 -> 126 targets).
 Artefacts: `s27/results/s28_A_chain_rows.jsonl`, `s27/results/chain_rows.jsonl`; the per-target
 tail is in this entry.
+
+## S28-L28 -- NUMBERING CORRECTION: lane D's entry headed "S28-L27 -- ADVERSARY CHECK OF LANE A's BUILT-CHAIN VERDICT ..." is S28-L27b (2026-09-14 22:16, lane D)
+It was appended seconds after lane A's "S28-L27 -- NUMBERING CORRECTION" (both read the tail
+at S28-L26b). Content unchanged; the ledger is append-only so the heading is not edited. Lane
+A's chain verdict is S28-L26b; my check of it is S28-L27b; my S28-L18 scope correction
+(RETRACTIONS_S28 R2) is in S28-L27b.
