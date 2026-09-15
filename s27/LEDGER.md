@@ -2421,3 +2421,122 @@ Verdict: STANDS WITH CAVEAT. Caveats before the first C2 number:
     objective for an A2-style run, not a result, and the prereg says so.
 Artefacts of this check: this entry; `s27/PREREG_S28_C2.md`; `tests/test_s28_C2.py` (landed
 22:30) is added to the S28 green-gate set.
+## S28-L35 -- C2 RECOGNITION AUDIT, CA LEVEL (ORACLE DIAGNOSTIC, POINT CLOUD, 126/126, TWO CONTROL SEEDS, TIES AT 0.5): 9 OF 15 NATIVE-FREE SCORERS PREFER THE CONTRACTED PRODUCTION AVERAGE TO A 0.29 A ORACLE STRUCTURE WITH THE FOLD CI BELOW 0.5 (DIS ON 79%, THE CONSENSUS SCORERS ON 80 TO 98%); ONE, CAGEO (CA VIRTUAL-ANGLE/TORSION STATISTICS), PREFERS THE ORACLE STRUCTURE ON 61%, CLEARS BOTH REGISTERED CLAUSES ON THE BEST-OF-5 AND ON THE SINGLE START, REPLICATES ON A SECOND CONTROL SEED, AND SITS EXACTLY AT THE MAX-OVER-15 NULL'S 95TH PERCENTILE (p 0.050); CONTACT CLEARS BOTH BY 0.004 ON THE BEST-OF-5 ONLY; EVERY SCORER THAT ORDERS ANYTHING TELLS THE ORACLE STRUCTURE FROM A RANDOM SIGNED COMBINATION HEAD-TO-HEAD (DIS 89%, CAGEO 96%) AND STILL RATES THE AVERAGE BEST; THE LEARNED COMBINATION IS ANTI-PRODUCTION, NOT PRO-ORACLE; THE BUILT CHAIN IS RUNNING (2026-09-14 23:15, C2)
+EVERY STRUCTURE HERE EXCEPT PRODUCTION AND THE CONTROLS' DIRECTIONS IS ORACLE (chosen against the
+native); nothing is deployable; the falsifier is for the CLOSURE claim (`s27/PREREG_S28_C2.md`
+section 5, addendum 1). Question: which native-free scorer in the S27 library, if any, prefers the
+ORACLE structures the amplitude family expresses (S28-L1b) to the production average?
+Jobs `s28C2_ca_v2` (exit 0, 176 s, peak RSS 0.348 GB; probe `s28C2_ca_probe`; the v1 run `s28C2_ca`
+gave score-identical rows without the geometry fields S28-L34(b) asked for, asserted equal on 126/126 and
+replaced) and the second control seed `s28C2_ca_seed2_v2` (exit 0, 226 s, 0.343 GB). Artefacts `s27/results/s28_C2_ca_rows.jsonl`,
+`s28_C2_ca_summary.json`, `s28_C2_ca_rows_seed2.jsonl`, `s28_C2_ca_seed2_summary.json`. Code
+`s27/s28_C2_recog_audit.py`; tests `tests/test_s28_C2.py` (6 pass: the one-Context adapters reproduce
+the S27 pool-row channel values on pool members to 1e-9, CONS to the (k-1)/k identity; the controls land
+at the requested RMSD to 1e-6). Structures per target: PROD (asserted equal to the deployed average to
+1e-10), ORACLE circ_best (lane A's best-of-5), ORACLE circ_s0 (regenerated single start, RMSD asserted
+equal to A's `per_start[0]` to 1e-6 on 126/126), ORACLE sub0 (regenerated, asserted to `per_sub[0]`),
+NATIVE(aff500). Controls: RAND_SIGNED (random signed affine combination of the 500 posed windows at
+circ_best's distance from PROD; 4 draws), GAUSS_0.3 (PROD + noise at circ_best's RMSD to the native),
+GAUSS_MATCHED (PROD + noise at circ_best's distance from PROD).
+ORACLE mean RMSD of the ladder and the controls (point cloud): PROD 3.048  sub0 0.620  circ_s0 0.385  circ_best 0.288  NATIVE 0.000  RAND_SIGNED 3.871  GAUSS_0.3 3.064  GAUSS_MATCHED 4.170.
+Geometry beside every preference (S28-L34(b); mean virtual CA-CA bond / Rg, A): PROD 2.96/6.21  sub0 3.71/6.56  circ_s0 3.75/6.59  circ_best 3.77/6.59  NATIVE 3.81/6.60  RAND_SIGNED 3.76/6.74  GAUSS_0.3 3.00/6.22  GAUSS_MATCHED 5.39/7.11.
+The random signed control has the ORACLE structures' bond length (3.76 vs 3.71 to 3.77; production 2.96),
+so a preference for circ_best over RAND_SIGNED is not a bond-length preference; the matched Gaussian
+control has 5.39 A bonds and any geometric scorer's rejection of it is attributable to that.
+Ties (S28-L34(a)) count 0.5 in every pref; the tie count is in the table; EXVOL is tied on 93/126
+(uninformative here); CONTACT_LL, HP, POOLGO_POOL on 13; ENV 16; CONTACT 10; SS_MATCH 9; the rest 0.
+
+pref(X) = fraction of 126 targets on which the scorer scores X BELOW production (lower is better);
+h2h = the ORACLE structure scored below the control itself (production absent; addendum 1):
+```
+  scorer          pref(circ_best) [fold CI]   circ_s0  sub0   NATIVE | RAND_SIGNED GAUSS_0.3 GAUSS_M | ladder rho | vs RAND_SIGNED [fold CI]  seed2   circ_s0 vs RAND | h2h RAND  h2h GAUSS_M | FAIL18 k/18, 108 | ties | clauses
+  DIS             0.206 [0.116,0.293]   0.206   0.183  0.222  | 0.030       0.365     0.046 | -0.182     | +0.177 [+0.099,+0.250]  +0.167   +0.177 [+0.130,+0.230] | 0.887     0.909    |  1.0/18, 0.23 |   0 | anti
+  DIS_MEAN        0.151 [0.098,0.220]   0.151   0.151  0.143  | 0.048       0.391     0.040 | -0.312     | +0.103 [+0.056,+0.163]  +0.097   +0.103 [+0.048,+0.179] | 0.752     0.728    |  0.0/18, 0.18 |   0 | anti
+  CONTACT_LL      0.321 [0.213,0.421]   0.313   0.266  0.329  | 0.093       0.458     0.070 | -0.098     | +0.228 [+0.126,+0.309]  +0.234   +0.220 [+0.142,+0.276] | 0.717     0.765    |  3.0/18, 0.35 |  13 | anti
+  DISTPOT         0.349 [0.264,0.427]   0.349   0.413  0.373  | 0.548       0.487     0.730 | -0.179     | -0.198 [-0.279,-0.124]  -0.204   -0.198 [-0.338,-0.071] | 0.369     0.192    |  7.0/18, 0.34 |   0 | anti
+  CONTACT         0.579 [0.504,0.643]   0.548   0.540  0.567  | 0.438       0.493     0.460 | +0.082     | +0.141 [+0.075,+0.203]  +0.132   +0.109 [+0.022,+0.205] | 0.624     0.578    | 10.0/18, 0.58 |  10 | BOTH
+  ENV             0.532 [0.430,0.634]   0.524   0.552  0.516  | 0.458       0.498     0.501 | +0.019     | +0.073 [-0.033,+0.166]  +0.085   +0.065 [-0.041,+0.166] | 0.563     0.535    | 10.0/18, 0.53 |  16 | neither
+  HP              0.544 [0.474,0.605]   0.544   0.615  0.544  | 0.507       0.500     0.586 | +0.013     | +0.037 [-0.058,+0.119]  +0.045   +0.037 [-0.058,+0.119] | 0.557     0.506    | 11.0/18, 0.53 |  13 | neither
+  RG_LAW          0.357 [0.222,0.474]   0.373   0.349  0.357  | 0.317       0.429     0.214 | -0.183     | +0.040 [-0.079,+0.129]  +0.032   +0.056 [-0.051,+0.136] | 0.558     0.567    |  5.0/18, 0.37 |   0 | anti
+  RG_UNIV         0.468 [0.420,0.521]   0.460   0.476  0.468  | 0.349       0.536     0.403 | -0.003     | +0.119 [+0.080,+0.162]  +0.103   +0.111 [+0.080,+0.144] | 0.593     0.510    |  6.0/18, 0.49 |   0 | neither
+  EXVOL           0.464 [0.407,0.517]   0.468   0.433  0.480  | 0.290       0.458     0.195 | +0.027     | +0.175 [+0.111,+0.241]  +0.196   +0.179 [+0.109,+0.259] | 0.685     0.786    |  8.0/18, 0.47 |  93 | uninformative
+  CAGEO           0.611 [0.551,0.691]   0.587   0.563  0.619  | 0.421       0.412     0.306 | +0.420     | +0.190 [+0.136,+0.252]  +0.169   +0.167 [+0.121,+0.236] | 0.962     0.998    | 11.0/18, 0.61 |   0 | BOTH + on circ_s0
+  SS_MATCH        0.393 [0.333,0.444]   0.381   0.405  0.333  | 0.493       0.481     0.395 | -0.265     | -0.100 [-0.172,-0.056]  -0.065   -0.112 [-0.178,-0.067] | 0.373     0.450    |  7.0/18, 0.39 |   9 | anti
+  CONS_POOL       0.024 [0.000,0.057]   0.024   0.032  0.024  | 0.137       0.220     0.002 | -0.689     | -0.113 [-0.182,-0.055]  -0.117   -0.113 [-0.183,-0.063] | 0.379     0.700    |  1.0/18, 0.02 |   0 | anti
+  DMAP_CONS_POOL  0.135 [0.107,0.169]   0.135   0.135  0.135  | 0.173       0.310     0.030 | -0.377     | -0.038 [-0.071,+0.019]  -0.050   -0.038 [-0.071,+0.004] | 0.627     0.710    |  3.0/18, 0.13 |   0 | anti
+  POOLGO_POOL     0.202 [0.137,0.254]   0.187   0.242  0.202  | 0.369       0.516     0.173 | -0.461     | -0.167 [-0.212,-0.128]  -0.144   -0.183 [-0.231,-0.143] | 0.415     0.487    |  3.0/18, 0.21 |  13 | anti
+```
+Multiplicity (registered pricing): the best single, CAGEO at 0.611, against the max-over-15 sign-flip
+null (mean 0.570, p95 0.607): p_max 0.050, the observed value sits AT the null's 95th percentile.
+Nested pairwise-logistic combination of the 15 scorers (sign-augmented, no intercept, alpha by inner
+leave-one-fold-out): held-out sign accuracy 0.968 [fold CI 0.957, 0.984] against a per-target
+sign-flip null of mean 0.496 (p95 0.579); the SAME held-out rule also 'prefers' RAND_SIGNED on
+0.887 and GAUSS_MATCHED on 0.895 (contrasts +0.081 [+0.018, +0.145] and +0.073), and head-to-head it
+tells the ORACLE structure from a random signed combination on 0.526 [0.393, 0.626] (seed 2: 0.536): the
+rule it learned is 'not the contracted average', which any signed displacement satisfies.
+The one contrast that clears both registered clauses on both ORACLE starts, `ST.fmt` verbatim (paired
+indicators; a positive effect = the scorer prefers the ORACLE structure to production more often than
+it prefers a random signed combination at the same displacement):
+```
+  CAGEO: pref(ORACLE circ_best) - pref(RAND_SIGNED)
+    a 0.6111 (med 1.0000)   b 0.4206 (med 0.0000)   n=126
+    effect +0.1905   median +0.0000   SE 0.0314   MDE 0.0880   effect/MDE +2.16
+    iid  CI95 [+0.1290, +0.2540]
+    fold CI95 [+0.1360, +0.2521]   folds same sign 5/5   per-fold 0:+0.300 1:+0.174 2:+0.180 3:+0.207 4:+0.108
+    0W/35L/91T   worst degradation +1.0000 (1MF6)   p90 +1.0000   power 1.00  Type-M 1.00
+    VERDICT: WORSE
+  CAGEO: pref(ORACLE circ_s0) - pref(RAND_SIGNED)
+    a 0.5873 (med 1.0000)   b 0.4206 (med 0.0000)   n=126
+    effect +0.1667   median +0.0000   SE 0.0294   MDE 0.0824   effect/MDE +2.02
+    iid  CI95 [+0.1111, +0.2282]
+    fold CI95 [+0.1213, +0.2358]   folds same sign 5/5   per-fold 0:+0.300 1:+0.130 2:+0.140 3:+0.163 4:+0.108
+    0W/32L/94T   worst degradation +1.0000 (1MF6)   p90 +0.8750   power 1.00  Type-M 1.00
+    VERDICT: WORSE
+  CAGEO: pref(ORACLE circ_best) - pref(RAND_SIGNED) [SECOND CONTROL SEED, draws 4-7]
+    a 0.6111 (med 1.0000)   b 0.4425 (med 0.0000)   n=126
+    effect +0.1687   median +0.0000   SE 0.0305   MDE 0.0853   effect/MDE +1.98
+    iid  CI95 [+0.1091, +0.2302]
+    fold CI95 [+0.1304, +0.2252]   folds same sign 5/5   per-fold 0:+0.270 1:+0.141 2:+0.170 3:+0.152 4:+0.117
+    0W/31L/95T   worst degradation +1.0000 (1MF6)   p90 +1.0000   power 1.00  Type-M 1.00
+    VERDICT: WORSE
+```
+(The VERDICT word in those blocks is `ST.compare`'s RMSD convention, negative = better; here the
+contrast is a difference of preference indicators and a POSITIVE effect is the recognition direction.)
+
+Reading (all ORACLE diagnostic). (1) The registered prior holds for 9 of 15 scorers: the distogram
+family prefers the contracted average to a 0.29 A structure (DIS 0.206, exactly S28-L1b's 26/126;
+DIS_MEAN 0.151; CONTACT_LL 0.321), the consistency scorers prefer it by construction (CONS_POOL 0.024,
+DMAP_CONS_POOL 0.135, POOLGO_POOL 0.202: the average IS the pool's mode), RG_LAW (0.357), SS_MATCH
+(0.393) and DISTPOT (0.349, the open cell, resolved anti) are anti-recognition with the fold CI below
+0.5; EXVOL is uninformative (93 ties: the average and the ORACLE structure both have no clash); ENV,
+HP, RG_UNIV are coin tosses (0.47 to 0.54); CONTACT is 0.579 with the fold CI's lower end at 0.504,
+beats RAND_SIGNED (+0.141) and fails on the single start (0.548): it clears the registered bar by
+0.004 on the order statistic only, and is read as marginal, not as a candidate. Every scorer prefers
+production to the NATIVE itself at the same rate as to circ_best (the NATIVE column tracks the
+circ_best column within 0.02 on 14/15 scorers): what they dislike is not the ORACLE optimisation, it is
+nativeness relative to the average. (2) The exception is CAGEO, the universe-fitted CA
+virtual-angle/torsion potential: it prefers the ORACLE structure on 0.611 [0.551, 0.691] and the
+NATIVE on 0.619, orders the ladder (mean rho +0.42, the only scorer above +0.1), beats RAND_SIGNED by
++0.190 [+0.136, +0.252] (seed 2: +0.169 [+0.130, +0.225]), holds on FAIL18 (11 of 18) and the 108
+(0.61) alike, clears both registered clauses on the best-of-5 AND on the single start circ_s0 (0.587;
+vs RAND_SIGNED +0.166 [+0.116, +0.230]; S28-L34(c)); priced as the best of 15 it sits at the null's
+95th percentile (p_max 0.050). Its mechanism is visible in the head-to-head column: CAGEO scores the
+ORACLE structure below a random signed combination on 0.962 and below a matched Gaussian
+perturbation on 0.998, i.e. it recognises a CA trace with real-protein local geometry, and the
+contracted average (mean virtual bond 2.96 A, S25) still passes it on 39% of targets. (3) The
+head-to-head column is the sprint's mechanism seen from the scorer side: DIS tells the ORACLE
+structure from a random signed combination on 0.887 and from a Gaussian perturbation on 0.909,
+so the objective is not blind to structure among signed combinations; it rates the production
+average ABOVE both, because the average sits at the posterior's per-pair median by construction
+(S23 L9's common mode, S28-L26b(c)). What an objective would have to know, in one line: that the
+Bayes-risk minimiser of a 2x over-confident posterior (S25 L2) is a contracted structure, and that
+a 0.29 A structure with native bond lengths scores WORSE under it than that contraction.
+Verdict (CA level, intermediate; the built chain decides, job `s28C2_chain2` running, 8 projections
+per target; S28-L34(e): its multiplicity null will be over all 31 scorers): the closure claim 'no
+scorer in the S27 library recognises the ORACLE structures' is FALSIFIED AT THE REGISTERED BAR BY ONE
+SCORER, CAGEO (and marginally, on the order statistic only, by CONTACT), and CAGEO sits exactly at
+the multiplicity bar; its candidate status is conditional on the built chain (the projection
+re-imposes ideal CA geometry on every structure, which is what CAGEO scores, so its preference may
+vanish or grow there) and on lane D. Not a result; an ORACLE diagnostic naming the one candidate
+objective for a lane A2 run, with its mechanism stated. Nothing is built on it.
+

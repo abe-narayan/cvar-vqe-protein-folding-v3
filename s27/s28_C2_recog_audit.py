@@ -140,6 +140,13 @@ def load_A(pdb):
     return S, row
 
 
+def geom_of(C):
+    """Mean virtual CA-CA bond and radius of gyration (native-free descriptors)."""
+    C = np.asarray(C, float)
+    return dict(bond=float(np.linalg.norm(np.diff(C, axis=0), axis=1).mean()),
+                rg=float(np.sqrt(((C - C.mean(0)) ** 2).sum(1).mean())))
+
+
 def rmsd_between(A, B):
     return float(I.ca_rmsd(np.asarray(A, float), np.asarray(B, float)))
 
@@ -232,6 +239,7 @@ def ca_row(pdb, draw_offset=0):
     del u
     row = dict(pdb=pdb, n=int(cand.n), fold=int(cand.fold), names=names, meta=meta,
                oracle_rmsd={k: float(orr[k]) for k in names},
+               geom={k: geom_of(S[k]) for k in names},
                scores={nm: [float(x) for x in v] for nm, v in sc.items()},
                d_prod={k: rmsd_between(S[k], S["PROD"]) for k in names}, secs=float(time.time() - t0))
     return row, S
@@ -257,6 +265,8 @@ def chain_row(pdb, S=None, cand=None, dg=None):
                oracle_rmsd_cloud={k: rmsd_between(S[k], cand.nat_ca) for k in names},                  # ORACLE
                scores={nm: [float(x) for x in v] for nm, v in sc.items()},
                scores_ca_on_chain={nm: [float(x) for x in v] for nm, v in sc_ca.items()},
+               geom_chain={k: geom_of(CA[a]) for a, k in enumerate(names)},
+               geom_cloud={k: geom_of(S[k]) for k in names},
                secs=float(time.time() - t0))
     return row
 
@@ -388,24 +398,38 @@ def analyse(mode, n_null=200, n_max_null=500, print_all=True, tag=""):
     # per scorer
     def S(r, nm, k):
         return r["scores"][nm][r["names"].index(k)]
+
+    def below(a, b):
+        """1 if a < b, 0.5 on an exact tie (S28-L34(a)), 0 otherwise."""
+        return 1.0 if a < b else (0.5 if a == b else 0.0)
+    # geometry beside every preference (S28-L34(b))
+    gkey = "geom" if mode == "ca" else "geom_chain"
+    if gkey in rows[0]:
+        out["geom"] = {}
+        for k in LADDER + CONTROLS:
+            ks = [k] if k in LADDER else [nm2 for nm2 in rows[0]["names"] if nm2.startswith(k + "[")]
+            out["geom"][k] = dict(bond=float(np.mean([r[gkey][kk]["bond"] for r in rows for kk in ks])),
+                                  rg=float(np.mean([r[gkey][kk]["rg"] for r in rows for kk in ks])))
     pref_ind = {}
     for nm in scorers:
         rec = {}
         for k in LADDER[1:]:
-            ind = np.array([1.0 if S(r, nm, k) < S(r, nm, "PROD") else 0.0 for r in rows])
-            rec[k] = dict(pref=float(ind.mean()), wilson=wilson(int(ind.sum()), n), fold_ci=fold_ci(ind, folds, seed_parts=("pref", nm, k)),
-                          fail18=float(ind[fail].mean()), other=float(ind[~fail].mean()))
+            ind = np.array([below(S(r, nm, k), S(r, nm, "PROD")) for r in rows])
+            ties = int(sum(1 for r in rows if S(r, nm, k) == S(r, nm, "PROD")))
+            rec[k] = dict(pref=float(ind.mean()), wilson=wilson(float(ind.sum()), n), fold_ci=fold_ci(ind, folds, seed_parts=("pref", nm, k)),
+                          fail18=float(ind[fail].mean()), fail18_k=float(ind[fail].sum()), other=float(ind[~fail].mean()), ties=ties)
             pref_ind[(nm, k)] = ind
         for c in CONTROLS:
             draws = [nm2 for nm2 in rows[0]["names"] if nm2.startswith(c + "[")]
-            ind = np.array([np.mean([1.0 if S(r, nm, d) < S(r, nm, "PROD") else 0.0 for d in draws if d in r["names"]]) for r in rows])
+            ind = np.array([np.mean([below(S(r, nm, d), S(r, nm, "PROD")) for d in draws if d in r["names"]]) for r in rows])
+            ties = int(sum(1 for r in rows for d in draws if d in r["names"] and S(r, nm, d) == S(r, nm, "PROD")))
             rec[c] = dict(pref=float(ind.mean()), fold_ci=fold_ci(ind, folds, seed_parts=("pref", nm, c)),
-                          fail18=float(ind[fail].mean()), other=float(ind[~fail].mean()), n_draws=len(draws))
+                          fail18=float(ind[fail].mean()), other=float(ind[~fail].mean()), n_draws=len(draws), ties=ties)
             pref_ind[(nm, c)] = ind
         # HEAD-TO-HEAD (addendum 1): the ORACLE structure against the control itself, production absent
         for c in ("RAND_SIGNED", "GAUSS_MATCHED"):
             draws = [nm2 for nm2 in rows[0]["names"] if nm2.startswith(c + "[")]
-            ind = np.array([np.mean([1.0 if S(r, nm, "circ_best") < S(r, nm, d) else 0.0 for d in draws if d in r["names"]]) for r in rows])
+            ind = np.array([np.mean([below(S(r, nm, "circ_best"), S(r, nm, d)) for d in draws if d in r["names"]]) for r in rows])
             rec["h2h_" + c] = dict(pref=float(ind.mean()), fold_ci=fold_ci(ind, folds, seed_parts=("h2h", nm, c)),
                                    fail18=float(ind[fail].mean()), other=float(ind[~fail].mean()))
         out["pref"][nm] = rec
@@ -425,16 +449,22 @@ def analyse(mode, n_null=200, n_max_null=500, print_all=True, tag=""):
             r_ = ST.compare(pref_ind[(nm, "circ_best")], pref_ind[(nm, c)], folds, names=pdbs,
                             label=f"{nm}: pref(ORACLE circ_best) - pref({c})")
             cc[c] = {k: v for k, v in r_.items() if k != "concentration"}
+            r2_ = ST.compare(pref_ind[(nm, "circ_s0")], pref_ind[(nm, c)], folds, names=pdbs,
+                             label=f"{nm}: pref(ORACLE circ_s0) - pref({c})")
+            cc[c + "|circ_s0"] = {k: v for k, v in r2_.items() if k != "concentration"}
         out["contrast"][nm] = cc
     # falsifier check per scorer
     verdicts = {}
     for nm in scorers:
         p = out["pref"][nm]["circ_best"]; c = out["contrast"][nm]["RAND_SIGNED"]
+        p0 = out["pref"][nm]["circ_s0"]; c0 = out["contrast"][nm]["RAND_SIGNED|circ_s0"]
         clause1 = p["fold_ci"][0] > 0.5
         clause2 = c["ci95_fold"][0] > 0.0
         anti = p["fold_ci"][1] < 0.5
+        uninformative = p["ties"] > n / 2
         verdicts[nm] = dict(clause1_above_half=bool(clause1), clause2_beats_rand_signed=bool(clause2), anti_recognition=bool(anti),
-                            fires=bool(clause1 and clause2))
+                            uninformative_ties=bool(uninformative), fires=bool(clause1 and clause2 and not uninformative),
+                            fires_on_circ_s0=bool(p0["fold_ci"][0] > 0.5 and c0["ci95_fold"][0] > 0.0 and not uninformative))
     out["verdicts"] = verdicts
     # max-over-scorers sign-flip null for pref(circ_best)
     rng = SD.stable_rng("maxnull", mode, salt=SALT)
@@ -493,6 +523,8 @@ def analyse(mode, n_null=200, n_max_null=500, print_all=True, tag=""):
     ST.save_atomic(os.path.join(RESULTS, f"s28_C2_{mode}{('_' + tag) if tag else ''}_summary.json"), out, module_file=__file__)
     if print_all:
         print(f"  ORACLE ladder mean RMSD ({mode}): " + "  ".join(f"{k} {v:.3f}" for k, v in out["ladder_oracle_rmsd_mean"].items()))
+        if "geom" in out:
+            print("  geometry (mean virtual bond A / Rg A): " + "  ".join(f"{k} {v['bond']:.2f}/{v['rg']:.2f}" for k, v in out["geom"].items()))
         print("  scorer            pref(circ_best) [fold CI]        pref(circ_s0) pref(sub0) pref(NATIVE) | RAND_SIGNED GAUSS_0.3 GAUSS_M | rho_ladder | vs RAND_SIGNED (fold CI) | FAIL18/108 | verdict")
         for nm in scorers:
             p = out["pref"][nm]; c = out["contrast"][nm]["RAND_SIGNED"]; v = verdicts[nm]
@@ -500,8 +532,8 @@ def analyse(mode, n_null=200, n_max_null=500, print_all=True, tag=""):
                   f"{p['circ_s0']['pref']:.3f}  {p['sub0']['pref']:.3f}  {p['NATIVE']['pref']:.3f}   | "
                   f"{p['RAND_SIGNED']['pref']:.3f}  {p['GAUSS_0.3']['pref']:.3f}  {p['GAUSS_MATCHED']['pref']:.3f} | "
                   f"{out['ladder_rho'][nm]['mean']:+.3f} | {c['effect']:+.3f} [{c['ci95_fold'][0]:+.3f},{c['ci95_fold'][1]:+.3f}] | "
-                  f"{p['circ_best']['fail18']:.2f}/{p['circ_best']['other']:.2f} | "
-                  f"{'FIRES' if v['fires'] else ('anti' if v['anti_recognition'] else 'no')}")
+                  f"{p['circ_best']['fail18_k']:.0f}/18,{p['circ_best']['other']:.2f} | ties {p['circ_best']['ties']:3d} | "
+                  f"{'FIRES' if v['fires'] else ('anti' if v['anti_recognition'] else 'no')}{' (s0 too)' if v['fires_on_circ_s0'] else ''}")
         m = out["max_null"]; lc = out["linear_combination"]
         print(f"  best single {m['best_scorer']} pref {m['best_pref']:.3f}; max-over-{m['n_scorers']} sign-flip null mean {m['null_mean']:.3f} p95 {m['null_p95']:.3f} p_max {m['p_max']:.3f}")
         print(f"  linear combination: held-out sign accuracy {lc['held_out_sign_acc']:.3f} [fold CI {lc['fold_ci'][0]:.3f},{lc['fold_ci'][1]:.3f}]  null mean {lc['null_mean']:.3f} p95 {lc['null_p95']:.3f} p {lc['p']:.3f}  FAIL18 {lc['fail18']:.2f} other {lc['other']:.2f}")
