@@ -15,3 +15,5 @@
 - 2026-09-14 19:12 running: contract, brief, S27 report/prereg, router record (S22 L7, S23 L6/L7, S26 L110/L115) read; PREREG_S28_C.md written (no endpoint read). Next: s28_C_fail18.py features + nested logistic + permutation null; s28_C_readout.py; tests; 1-target probe under jobrun.
 
 ## D
+- 2026-09-14 19:16 running: suite split into TEST jobs (light 8 files 286 pass/3 skip/0 fail, peak 0.91 GB; pipeline + integration queued after two governor kills at 95.7%/98.2% RAM); prereg checks posted S28-L1/L2/L3 (all STANDS WITH CAVEAT); leakage grep on s28_A_amp.py, s28_C_fail18.py, s28_C_readout.py next.
+- next: NaN-poison on each lane script as it lands; first S27 reproduction (seed 101, pool row); attack the first positive within the hour.

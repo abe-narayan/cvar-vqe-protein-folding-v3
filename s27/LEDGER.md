@@ -81,3 +81,130 @@ quantum claim. Registered priors: A's plain-readout and unconstrained-classical 
 worse; the circuit-family arm is the open question; B's hopping is expected worse (the S27
 consistency mechanism) and its trainability-vs-J table is the deliverable either way; C's
 detector null at the AUROC step. The governor (`s26/governor.py`) runs; the launch cap is 4.
+
+## S28-L1 -- ADVERSARY CHECK OF PREREG_S28_A (the amplitude readout) (2026-09-14 19:15, lane D)
+Question: is every falsifier in `s27/PREREG_S28_A.md` falsifiable, and does every control match
+the operator's space? Read in full before any A result exists.
+Falsifiers: F1 (built chain, MDE, fold CI, 5/5, seed 1, nested lam, `best_of_k_within`) and F2
+(beats 4b and 4a-500 beyond MDE) are falsifiable and decide on the built chain. F3 is an ORACLE
+measurement with a stated threshold (2.306, the ORACLE best single member of the top-75) and is
+labelled as never a result. F4/F5 are priors on controls. Controls: (5) the untrained circuit
+read as signed weights is in the operator's own space (same family, same readout, mean over 16
+draws, best-of-16 flagged as an order statistic): matched. (4b) the random 27-dim linear
+subspace matches the parameter count, not the family (the circuit's family is a nonlinear
+manifold on the sphere; a linear subspace through the origin is a different 26-dim set): it is
+the brief's control and answers "does the parameter count do it", not "does a random nonlinear
+family do it"; say so when quoting F2. (4a-500/75, 4c) matched-objective, same code path: matched.
+Verdict: STANDS WITH CAVEAT. Caveats the lane must answer in its first result entry:
+(a) SCALE OF THE TWO TERMS. CVaR - T H on zrank energies is O(1); S~ (the Bayes risk summed over
+    ~n(n-3)/2 pairs) is O(10) to O(100). At lam = 0.3 the S~ term may already dominate F, in
+    which case the grid {0.3, 1, 3} is one cell three times (k_eff near 1) and "lam > 0" means
+    "minimise S~ over the circuit family". Report lam*S~ against CVaR - T H at theta0 and at the
+    optimum for every lam, per target; if S~ dominates at every lam the grid is degenerate and
+    the lane says so before any nested choice is quoted.
+(b) THE TARGET-ORDER REVERSAL IS VACUOUS HERE. Every target is seeded on its own (`seed`,
+    stable per-target RNGs), so processing the targets in reverse changes nothing; it is not a
+    replication and is not to be counted as one. The second seed is the replication.
+(c) NESTED lam: state the basis of the inner choice (built chain, since Job 2 projects all
+    three lam unconditionally) and print the per-fold chosen lam; if the chosen lam differs
+    across folds, k_eff and the split-half transfer are the numbers, not the held-out mean.
+(d) ARM (2) (lam = 0) has signs fixed by the init trajectory alone (CVaR - T H is blind to
+    signs); it is a control-like arm and the lane's prior says so. Any "lam = 0 differs from
+    the average" reading is a statement about random signs, not about the state.
+(e) DENOMINATOR FAILURES (|sum psi| < 1e-9) are reported, never repaired; the count per arm
+    goes in the summary, and a target whose readout is undefined is NOT dropped from the paired
+    comparison silently (say how it is scored, before the run).
+NaN-poison: I run it myself on `s27/s28_A_amp.py` when it lands (natives NaN, every deployable
+output bit-identical), and the leakage grep (`s27/s28_D_leakgrep.py --tag A`).
+Artefact of this check: this entry; the prereg at `s27/PREREG_S28_A.md`.
+
+## S28-L2 -- ADVERSARY CHECK OF PREREG_S28_B (energy plus hopping) (2026-09-14 19:15, lane D)
+Question: as S28-L1, for `s27/PREREG_S28_B.md` (base + addendum 0).
+Falsifiers: F1 (built chain, MDE, fold CI, 5/5, both seeds, beats PERM) falsifiable; F2 (VQE-R
+beats GS-R for R2/R3) falsifiable; F3/F4 conditional readings, fine; F5 (slope difference 0.3
+per qubit at J = 3 vs J = 0) falsifiable with no sign prior, and the lane has registered that no
+slope is a plateau or its absence. Controls: PERM (same spectrum, same degree multiset, the
+correspondence destroyed) and RAND (same degree SEQUENCE by Sinkhorn, the similarity structure
+destroyed) are both in the operator's space and separate the two things the probe found (the
+degree is anti-correlated with E; the graph is near rank one): matched, and a better pair of
+controls than the brief asked for. The section 5 reading (the tail-subset theorem holds for ANY
+p, so the gate passing at J > 0 is not a finding) is correct and I will hold the lane to it.
+Verdict: STANDS WITH CAVEAT. Caveats the lane must answer in its first result entry:
+(a) THE COMPARATOR FOR "HELPS" IS PRODUCTION, NOT ONLY J = 0. F1 compares each readout with
+    the SAME readout at J = 0. R2 and R3 at J = 0 are not deployed arms (R2 is a near-uniform
+    average over the whole pool; R3 is the p-top-75 of a near-uniform state) and may sit far
+    above the production built chain 3.2126. A readout that is worse than production at J = 0
+    and climbs back toward it at J > 0 is not a gain in the sprint's currency. Every F1 positive
+    is ALSO paired against production (DIS top-75 uniform, built chain) in the same entry.
+(b) THE THREE-WAY SPLIT'S MIDDLE LEG. The exact ground state of H = diag(E) - J A is the optimum
+    of <psi|H|psi> = E_p[E] - J <psi|A|psi>, i.e. of F at alpha = 1, T = 0, NOT of the objective
+    the circuit optimises (alpha 0.18, T 0.5). GS is the Hamiltonian-quality leg; it is not the
+    optimisation-quality leg. For that leg report, per target and per J: F at the VQE optimum,
+    F evaluated AT the GS state (a state the circuit could in principle represent), and F at
+    the best of 16 untrained draws; and for the hopping term alone the realised <psi|A|psi>
+    against its exact maximum 1.0 (A has unit spectral norm, the Perron vector attains it).
+(c) SIGN STRUCTURE IS THE QUANTUM-SIDE CONTENT. Since A >= 0 entrywise, the Perron vector is
+    positive and the hopping term rewards sign-aligned amplitudes; the sign coherence
+    (sum psi)^2 / (sum |psi|)^2 in section 5 is the number that says whether the circuit found
+    it. Report it beside every hopping value.
+(d) R3 AT GS, J = 0 is degenerate (74 exact-zero ties): reported, labelled, never compared; the
+    prereg says so and the ledger entry must repeat it wherever R3-GS appears.
+(e) "BEST J" over the 4 non-zero rungs is an order statistic: quote `best_of_k_within`'s
+    split-half transfer and k_eff beside it, as registered.
+NaN-poison and the leakage grep on `s27/s28_B_hop.py` when it lands; I also re-run J = 0 on one
+target against `s27/results/vqe_rows.jsonl :: DIS seed 0` bit-for-bit (the anchor the lane
+promises) before I read any J > 0 number of theirs.
+Artefact of this check: this entry; `s27/PREREG_S28_B.md`.
+
+## S28-L3 -- ADVERSARY CHECK OF PREREG_S28_C (FAIL18 detector; ranking-consuming readouts) (2026-09-14 19:15, lane D)
+Question: as S28-L1, for `s27/PREREG_S28_C.md` (base + addenda 1, 2).
+Falsifiers: Part 1 F1 (held-out AUROC above the 95th percentile of a 500-draw label-permutation
+null that re-runs the whole nested procedure) and F2 (switched arm, built chain, MDE, fold CI,
+5/5, beats the random-subset control, below the 5th percentile of its own permutation null) are
+falsifiable; the lane has written its own power statement (F2 expected underpowered at a prize
+of 0.015 to 0.03 A against an MDE near 0.03 to 0.05) and will write "underpowered", not "null".
+Part 2's falsifier (built chain, MDE, fold CI, beats the permuted-ranker control, split-half
+transfer >= 25%, point-cloud and chain signs agree) is falsifiable. Controls: Part 1 (i) a
+random switched subset of the same size, (ii) the routed endpoint under label permutation, (iii)
+the ORACLE switch as the labelled ceiling: matched. Part 2: permuted ranker within the 75, same
+k / same trim size / same gamma: matched in the operator's space. Identity checks (k = 74, q = 0,
+(beta, gamma) = (0, 0) reproduce production to 1e-9) are the right unit tests. Addendum 2's
+own statement that (a), (b), (c) are all convex combinations of the same 75 members is the
+honest framing: none of them escapes the averaging bottleneck of S27 section 6; they test the
+weight vector only. FAIL18 label verified: `s12/instrument.py :: FAIL18` is the 18 zero-recall
+targets asserted by `selfcheck`; it is ORACLE and the prereg uses it only as the nested label.
+Verdict: STANDS WITH CAVEAT. Caveats:
+(a) F1's second clause ("above the best comparison block by more than the null's inter-quantile
+    spread") names no quantiles. Fix it in an addendum before the AUROC is read: I will read it
+    as the null's 95th minus 50th percentile unless the lane states otherwise first.
+(b) POOLED HELD-OUT AUROC mixes decision values from five models fitted with different
+    penalties; per-fold offsets can move a pooled AUROC either way. The permutation null runs
+    the same procedure, so the TEST is calibrated; the AUROC VALUE is not comparable with a
+    single-model AUROC. Quote the per-fold mean beside it, as registered, and decide on the null
+    percentile, not on the value.
+(c) 18 positives over 5 folds is 3 to 4 per fold: any per-fold AUROC is near-meaningless on its
+    own; do not quote a single fold.
+(d) THE SWITCHED ARM READS S27's CHAIN ROWS. Fine, given the 6-target reproduction check, but
+    the check must print the six reproduced values and the max deviation.
+(e) Part 2 (a) with CONS: the "best CONS member of the top-75" is the top-75's medoid under a
+    whole-pool criterion; at k = 20 it is a 21-member average. The S22 L4 ladder minimum at 75
+    and S27 T5 say smaller m is worse; the lane's prior is WORSE. If it comes out better on the
+    point cloud, the built chain and the permuted-seed control decide, and I will run the
+    FAIL18/108 split myself.
+Leakage grep on `s27/s28_C_fail18.py` (landed 19:12) and `s27/s28_C_readout.py` when it lands;
+NaN-poison on every deployable arm.
+Artefact of this check: this entry; `s27/PREREG_S28_C.md`.
+
+## S28-L4 -- SUITE STATUS AT SPRINT START (2026-09-14 19:15, lane D)
+`pytest tests/ -q -p no:cacheprovider` on the non-AMBER files, under jobrun as TEST jobs. The
+full 10-file job (`s26/jobs_done/s28D_pytest_core.json`, peak RSS 2.026 GB) was KILLED by the
+governor at 19:05 at 95.7% RAM (the box sits at 84 to 87% before any S28 job; `s26/governor.log`
+lines 2220-2225). Split: the eight light files (`cvar data energy equivalence geometry
+instrument project quantum`) as `s28D_pytest_light`: exit 0, 95 s, peak 0.909 GB, 286 passed,
+3 skipped (the `VERIFY_SLOW` opt-ins in `test_equivalence.py`), 0 failed
+(`s26/logs/s28D_pytest_light.log`). `tests/test_pipeline.py` alone (`s28D_pytest_pipeline`, peak
+0.82 GB) was killed at 19:09 when the box hit 98.2% with an UNREGISTERED process holding the
+difference (governor.log 2230-2236); it and `tests/test_integration.py` are queued
+(`s26/queue/010_*`, `011_*`, priority 10/11) for the governor to launch under 88%. AMBER files:
+one TEST job each, later, one at a time. Counts so far: 286 pass / 3 skip / 0 fail of 289 on
+the light files; 81 (pipeline + integration) and 19 (AMBER) pending.
