@@ -2,8 +2,8 @@
 
 Lane C, Sprint 28, 2026-09-14. Pre-registration `s27/PREREG_S28_C.md` (base + addenda 1 to 3,
 all written before the number they govern). Code `s27/s28_C_fail18.py`, `s27/s28_C_readout.py`;
-tests `tests/test_s28_C.py` (11, all pass). Ledger entries S28-L6 (Part 1), S28-L7 (reproduction
-check), S28-L8 (Part 2, built chain). Every number below carries its artefact path. Bases are
+tests `tests/test_s28_C.py` (11, all pass). Ledger entries S28-L6 (Part 1), S28-L7/L7b (reproduction
+check), S28-L15 (Part 2, point cloud, intermediate), and the built-chain entry that follows it. Every number below carries its artefact path. Bases are
 named on both sides of every contrast; the BUILT CHAIN (`s12.instrument.project`) decides.
 
 ## 0. One paragraph
@@ -71,12 +71,18 @@ harms the false positives by the non-FAIL18 stratum of S27 L9, +0.010 / +0.064 p
 would be worth 0.01 to 0.02 A on the mean.
 
 ### 1.3 The production projection reproduces S27's chain rows (S28-L7)
-`s27/results/s28_C_reproduce.json` (job `s28C_reproduce`): [filled in S28-L7 when the queued job
-lands]. The readout job's PROD arm reproduces `chain_rows.jsonl :: DIS` on 1A13 to the last
-printed digit (2.6158612331525704 / 2.635339216442019 on both files,
-`s27/results/s28_C_readout_chain_rows.jsonl`).
+`s27/results/s28_C_reproduce.json` (job `s28C_reproduce`, exit 0, 60 s, peak RSS 0.322 GB): the
+DIS and DIS+DISTPOT top-75 averages of the first six targets (1A13, 1A1P, 1CB3, 1CEK, 1CS9,
+1D0W), re-emitted through `readout_uniform` + `readout_projected`, reproduce `chain_rows.jsonl`
+with a maximum absolute deviation of 0.0 on all twelve point-cloud and twelve built-chain values
+(S28-L7 prints them). The readout job's PROD arm reproduces `chain_rows.jsonl :: DIS` on 1A13 to
+the last printed digit (2.6158612331525704 / 2.635339216442019 on both files,
+`s27/results/s28_C_readout_chain_rows.jsonl`). Noise floor: the identity cell DIVW(0, 0) differs
+from PROD by 8e-15 A on the point cloud and 1.4e-5 A on the built chain (the multi-start
+projection amplifies floating-point input differences by about 1e9); built-chain contrasts
+therefore carry a numerical floor near 1e-5 A, four orders below any MDE here.
 
-### 1.4 Ranking-consuming readouts on the point cloud (intermediate basis; S28-L8 decides on the built chain)
+### 1.4 Ranking-consuming readouts on the point cloud (intermediate basis, S28-L15; the built-chain entry decides)
 `s27/results/s28_C_readout_cloud_rows.jsonl` (job `s28C_readout_cloud`, 29 arms x 126 targets)
 and `s27/results/s28_C_readout_cloud_summary.json`. Every arm keeps the production top-75 and
 changes only the weight vector (addendum 2). Production point cloud 3.0483; random-75 null 3.4209.
@@ -112,7 +118,7 @@ pattern in a readout rather than a Hamiltonian.
 - The FAIL18 / non-FAIL18 strata of every readout arm (1.4, section 3).
 
 ## 3. Built chain (the reporting basis)
-[S28-L8: filled from `s27/results/s28_C_readout_chain_rows.jsonl` and
+[Filled from `s27/results/s28_C_readout_chain_rows.jsonl` and
 `s27/results/s28_C_readout_chain_summary.json` when job `s28C_readout_chain` lands.]
 
 ## 4. REFUTED
