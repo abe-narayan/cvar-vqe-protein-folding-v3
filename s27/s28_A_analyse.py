@@ -52,6 +52,29 @@ def arm_vec(rows, pdbs, arm, key):
     return np.array([rows[p]["arms"].get(arm, {}).get(key, np.nan) if p in rows else np.nan for p in pdbs], float)
 
 
+def zero_info_vec(rows, pdbs, key):
+    """PREREG addendum 3 (e): the target's zero-information value, the mean over the untrained draws
+    (point cloud) or draw 0 (chain), used to score an UNDEFINED readout; never a repair."""
+    out = np.full(len(pdbs), np.nan)
+    for i, p in enumerate(pdbs):
+        if p not in rows:
+            continue
+        vals = [v.get(key, np.nan) for a, v in rows[p]["arms"].items() if a.startswith("untr_")]
+        vals = [v for v in vals if np.isfinite(v)]
+        out[i] = float(np.mean(vals)) if vals else np.nan
+    return out
+
+
+def arm_vec_e(rows, pdbs, arm, key, zero_info):
+    """`arm_vec` with rule (e) applied: undefined (NaN) deployable readouts scored at the
+    zero-information value.  Returns (vector, number substituted)."""
+    v = arm_vec(rows, pdbs, arm, key)
+    und = np.array([bool(rows[p]["arms"].get(arm, {}).get("undefined", False)) if p in rows else False for p in pdbs])
+    sub = und & np.isfinite(zero_info)
+    v = v.copy(); v[sub] = zero_info[sub]
+    return v, int(sub.sum())
+
+
 def contrast(a, b, folds, pdbs, label):
     ok = np.isfinite(a) & np.isfinite(b)
     if ok.sum() < 3:
@@ -175,10 +198,16 @@ def main():
         order += [a for a in arms if a not in order and not a.startswith("oracle")]
         order += [a for a in arms if a.startswith("oracle")]
         tab = {}
+        zi_chain = arm_vec(chn, pdbs, "untr_0", "rmsd_chain")
         for arm in order:
             v = arm_vec(chn, pdbs, arm, "rmsd_chain")
+            n_sub = 0
+            if not arm.startswith("oracle"):
+                v, n_sub = arm_vec_e(chn, pdbs, arm, "rmsd_chain", zi_chain)
             lab = ("ORACLE " if arm.startswith("oracle") else "") + arm + " vs production (BUILT CHAIN)"
             say("")
+            if n_sub:
+                say("  [rule (e): %d undefined readouts scored at the zero-information value]" % n_sub)
             r = contrast(v, pch, folds, pdbs, lab)
             summary["contrasts"]["chain:" + arm] = r
             tab[arm] = float(np.nanmean(v))
@@ -215,10 +244,15 @@ def main():
         pc = arm_vec(orc, pdbs, "prod", "rmsd_cloud") if orc else np.full(len(pdbs), np.nan)
         arms = sorted({a for r in rec.values() for a in r["arms"]})
         tab = {}
+        zi_cloud = zero_info_vec(rec, pdbs, "rmsd_cloud")
+        summary["n_undefined"] = {a: int(sum(bool(rec[p]["arms"].get(a, {}).get("undefined", False)) for p in rec)) for a in arms}
+        say("  undefined readouts per arm (rule (e)): %s" % {a: n for a, n in summary["n_undefined"].items() if n})
         # circuit arms first
         for arm in [a for a in arms if a.startswith("circ") or a.startswith("diag")]:
-            v = arm_vec(rec, pdbs, arm, "rmsd_cloud")
+            v, n_sub = arm_vec_e(rec, pdbs, arm, "rmsd_cloud", zi_cloud)
             say("")
+            if n_sub:
+                say("  [rule (e): %d undefined readouts scored at the zero-information value]" % n_sub)
             r = contrast(v, pc, folds, pdbs, arm + " vs production (point cloud)")
             summary["contrasts"]["cloud:" + arm] = r
             tab[arm] = dict(mean=float(np.nanmean(v)), median=float(np.nanmedian(v)), n_undefined=int(np.isnan(v).sum()))
