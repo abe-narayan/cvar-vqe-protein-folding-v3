@@ -238,3 +238,58 @@ the realised m, entropy, ESS, the hopping value and sign coherence, cost per tar
    quality) vs emitted structure. A gain that survives only with the eigensolver is not a
    quantum result and will be written as such. Nothing is built on a positive before lane D
    posts STANDS.
+
+## ADDENDUM 1 -- B2, A HOPPING GRAPH WITH A SPREAD SPECTRUM (2026-09-14 21:40, written after S28-L21 (point cloud, intermediate) and lane D's S28-L11, before any B2 number and before the S28B built-chain verdict)
+
+Brief: `s27/briefs/S28B2.md`. Conditions: (b) holds (S28-L11 confirms the near-rank-one
+mechanism: lambda_2 / lambda_1 = 0.11 to 0.14, the rank-one part of A carries 97% of the
+hop-only gradient variance, `s27/results/s28_B_rank1.json`); (a) is read on the point cloud
+(S28-L21: the deployed readout within 0.013 A of J = 0 at every J, the other readouts worse
+than production) and is confirmed or not by the built-chain verdict entry, which gates the
+B2 ENDPOINT arms. The B2 TRAINABILITY measurement (no RMSD) runs before that gate.
+
+The new angle, stated up front (contract rule 10): S28-L8b/S28-L11 found the hopping term's
+gradient variance decays at -1.7 to -1.8 per qubit BECAUSE the Gaussian similarity graph is a
+typicality projector (one eigenvalue 1.0, the next 0.11 to 0.14), and that a diagonal
+observable with the same spectrum decays at the same rate. That is a statement about the
+SPECTRUM. A graph with a spread spectrum (many eigenvalues of comparable size) is a different
+Hamiltonian in the one respect the mechanism names. Nothing else (finer J, other sigma) is run.
+
+Design, held fixed from the base prereg unless stated:
+- Graph: the symmetric k-nearest-neighbour graph on the same pairwise CA-RMSD matrix
+  (i ~ j if j is among i's k nearest or i among j's; binary weights), k in {5, 10};
+  degree-normalised, D^-1/2 A_knn D^-1/2, then scaled to unit spectral norm (the normalised
+  adjacency of a connected graph already has lambda_1 = 1; the rescale is the identity then and
+  is kept so the code path is one). Zero diagonal, zero padding rows. k = 10 is the ARM,
+  k = 5 its replication; no third k.
+- Reported per target beside the Gaussian graph's: lambda_2 / lambda_1, the top eigenvector's
+  participation ratio / dim, its overlap with the uniform state, the number of connected
+  components, the degree range after symmetrisation (>= k), and corr(degree, E).
+- Objective, circuit, settings, readouts (R1, R2, R3), seeds (0, 1), PERM and RAND controls
+  (RAND: a random symmetric k-regular-in-expectation graph is NOT used; RAND is the same
+  Sinkhorn degree-matched construction as the base prereg applied to the binary kNN degrees,
+  which for a near-regular graph is a random graph of the same density), as in the base.
+- J in {0.3, 1, 3} (the 0.1 rung dropped: invisible at every readout in S28-L21).
+- F5-B2, the trainability measurement FIRST (it does not depend on RMSD): hop-only gradient
+  variance at n = 4..9 (E the rank ladder over the DIS top-2^n, A_knn built on that sub-pool
+  with the same k) and the full objective at J in {0, 0.3, 1, 3}, 120 draws, S27's 12
+  trainability targets, median; the sign coherence / share of the same-sign bound the circuit
+  collects at each J on the endpoint rows when they exist. FALSIFIER for "the spectrum was the
+  mechanism": the kNN hop-only slope is SHALLOWER than -1.0 per qubit (Gaussian: -1.7 to -1.8)
+  AND the circuit collects more than half of its same-sign bound at J = 1 (Gaussian: 1% at
+  J = 1, 25 to 34% at J = 3). If the slope stays at or below -1.7 the mechanism reading was
+  wrong or incomplete and is said so. Registered prior: the slope is shallower (a sparse
+  graph's normalised adjacency has a spread spectrum, so the hopping term is no longer one
+  squared overlap) but the endpoint is null or worse (see next).
+- Endpoint (ONLY after the S28B built-chain verdict is posted and lane D has checked it): the
+  built chain for J = 0 R1, each J's R1, and any arm at 0.7x MDE on the point cloud, paired
+  against production (S28-L2(a)) and against J = 0, PERM and RAND, both seeds, FAIL18 / 108,
+  the best J priced as an order statistic. Registered prior: WORSE or null. Reason: a kNN
+  hopping ground state delocalises over the argmin's structural neighbours, which is the
+  consistency mechanism S27 section 6 measured as harmful (+0.29 A for DIS+CONS) and which the
+  Gaussian eigensolver at J = 1 turned into a re-selection of the DIS top-75 (S28-L21); a
+  sharper graph makes the retained cluster tighter, not more native.
+- Files: `s27/s28_B2_knn.py` (a graph builder reusing `s28_B_hop` for everything else),
+  `tests/test_s28_B2.py`, results `s27/results/s28_B2_*.json|jsonl`, ledger entries `(date,
+  B2)`, findings under a B2 heading in `s27/s28_B_FINDINGS.md`.
+- Memory and cost: as the base (0.35 GB; the kNN graph is sparser but stored dense).
