@@ -49,4 +49,4 @@ DIS's under the bounded standardisation, within 0.87x to 1.09x under zrank. Fals
 ## L10 -- CLOSE
 `s27/REPORT.md` (tables from `make_tables.py`). Verdict: the shipped score stands; no candidate
 for the next architecture; the mechanism (L3) is the sprint's finding; follow-ups in §10.
-Caches `s27/cache/*.npz` (16 MB, regenerable in 13 min by `run_pool.py`) are not committed.
+Caches `s27/cache/*.npz` (12 MB, regenerable in 13 min by `run_pool.py`) are not committed.
