@@ -450,3 +450,101 @@ Verdict: STANDS. Lane B's J > 0 rows are read against a comparator that is the S
    to the array order of the ties given the key).
 Artefacts: `s26/logs/s28D_pytest_lanes_v1.log`, `s26/logs/s28D_pytest_D_v3.log`,
 `s26/jobs_done/s28D_pytest_*.json`, `tests/test_s28_D.py`.
+
+## S28-L8 -- F5: THE HOPPING TERM'S GRADIENT VARIANCE DECAYS AT -1.84 PER QUBIT WHILE THE FULL OBJECTIVE'S STAYS FLAT; AT THE DEPLOYED WIDTH THE OFF-DIAGONAL TERM IS 7,300x BELOW THE CVaR TERM IN GRADIENT VARIANCE; THE MECHANISM IS A's NEAR-RANK-ONE SPECTRUM; DEPARTURE DIAGNOSTICS ON 19/126 (2026-09-14 19:45, B)
+
+Question (`s27/PREREG_S28_B.md` F5 and section 5): does the first non-diagonal term change the
+selector's trainability, and how far does the trained state depart from the classical prefix.
+Property measurement, no RMSD, no native. Restart note: `s28B_train` (killed, S28-L5, 3 targets,
+nothing written) was re-run as `s28B_train2` from a per-target checkpoint
+(`s27/s28_B_train.py`; `s26/jobs_done/s28B_train2.json` exit 0, wall 316 s, peak RSS 0.327 GB;
+same seeds, so the three recomputed targets are the same draws). Mechanism check `s28B_rank1`
+(`s26/jobs_done/s28B_rank1.json` exit 0, 236 s, 0.335 GB).
+
+**F5, Var[dF/dtheta_0] over theta ~ N(0, 0.6^2), depth 3, exact parameter shift, 120 draws,
+median over S27's 12 trainability targets, E = the standardised rank ladder over the DIS
+top-2^n (n = 9: the 500 + 12 padding of the run), A = their real graph at unit spectral norm
+(`s27/results/s28_B_train.json :: summary`):**
+
+    cell                 n=4        n=5        n=6        n=7        n=8        n=9    log2 slope/qubit
+    full J=0        2.600e-02  3.174e-02  2.129e-02  2.092e-02  1.725e-02  3.051e-02   -0.043
+    full J=0.1      2.607e-02  3.173e-02  2.130e-02  2.091e-02  1.727e-02  3.051e-02   -0.044
+    full J=0.3      2.643e-02  3.177e-02  2.135e-02  2.090e-02  1.733e-02  3.052e-02   -0.046
+    full J=1        3.016e-02  3.239e-02  2.167e-02  2.089e-02  1.753e-02  3.055e-02   -0.075
+    full J=3        6.265e-02  3.815e-02  2.418e-02  2.118e-02  1.833e-02  3.065e-02   -0.243
+    hop-only (J=1)  4.061e-03  7.284e-04  2.817e-04  5.898e-05  3.948e-05  4.157e-06   -1.844
+    linear diag     5.811e-02  3.124e-02  1.937e-02  2.436e-02  4.441e-03  4.495e-02   -0.285
+    ratio full J=3 / J=0:  2.409  1.202  1.136  1.012  1.062  1.005
+
+- The full objective (CVaR 0.18, T 0.5, plus hopping) is flat in n at every J. Falsifier F5
+  (slope at J = 3 differs from J = 0 by more than 0.3 per qubit) does NOT fire: -0.243 against
+  -0.043, a difference of 0.200. The J = 3 excess is 2.4x at n = 4 and 1.005x at n = 9: the
+  hopping term's contribution to the gradient variance vanishes with width.
+- The HOPPING TERM ALONE, the linear cost <psi|A|psi> with a non-diagonal observable, decays
+  from 4.06e-3 at n = 4 to 4.16e-6 at n = 9 (min/max over the 12 targets at n = 9: 3.96e-6 to
+  4.83e-6), fitted -1.844 per qubit. At the deployed width the CVaR-plus-entropy gradient
+  variance is 3.05e-2 against 4.16e-6 for the hopping term at J = 1: a factor 7,300 (at J = 3,
+  J^2 x 4.16e-6 = 3.7e-5, 820x). The circuit's gradient at n = 9 is, to 0.1%, the diagonal
+  objective's gradient. No slope here is called a plateau or its absence (contract rule 9); the
+  circuit is nowhere near a 2-design (P = 27 at n = 9, S25 `q_plateau.py` scope note).
+- The linear DIAGONAL control (alpha 1, T 0, J 0; S25's row) is flat (-0.285, with the n = 8
+  and n = 9 points moved by the register's E: n = 9 carries the 12 padding states at max + 10
+  sd, which widen E's range).
+
+**Mechanism (`s27/results/s28_B_rank1.json :: summary`; hop-only cost, same draws):**
+
+    observable                  n=4        n=5        n=6        n=7        n=8        n=9   slope
+    A (as above)           4.061e-03  7.284e-04  2.817e-04  5.898e-05  3.948e-05  4.157e-06  -1.844
+    rank-one part v1 v1^T  3.458e-03  6.479e-04  2.715e-04  5.678e-05  3.925e-05  4.049e-06  -1.802
+    residual A - v1 v1^T   1.340e-04  3.933e-05  7.822e-06  2.253e-06  4.599e-07  1.344e-07  -2.025
+    diag, same spectrum    2.578e-03  5.633e-04  3.440e-04  3.586e-05  1.641e-05  7.178e-05  -1.268
+    Perron PR / dim            0.970      0.937      0.968      0.920      0.884      0.884
+    |<uniform|v1>|^2           0.992      0.980      0.990      0.974      0.961      0.947
+    lambda_2 / lambda_1        0.113      0.114      0.112      0.129      0.139      0.138
+
+The rank-one part of A reproduces the whole decay (97% of the variance at n = 9, slope -1.80
+vs -1.84); the residual is 30x smaller. The Perron vector is 95 to 99% the uniform state, so
+the hopping term is, to within 5%, -(<uniform|psi>)^2: the squared overlap of the circuit's
+state with one fixed delocalised vector, which a generic state has at order 1/dim. A DIAGONAL
+observable with the same spectrum also decays (-1.27): the decay is a property of the
+near-rank-one SPECTRUM (one eigenvalue 1.0, the next 0.11 to 0.14), not of being off-diagonal.
+Reading: the pool's similarity graph, at the brief's sigma, is a typicality projector
+(S28-L2's "the graph is near rank one" confirmed at every register size), and a typicality
+projector is exactly the observable a CVaR-VQE at this width cannot train through its gradient.
+
+**Departure from the classical prefix (native-free, the 19 targets `s28B_run` had finished at
+19:44, `s27/results/s28_B_rows.jsonl` rows 1 to 741; PARTIAL, to be restated at n = 126):**
+- `gate_set_equality` passes 741/741 and `equality` holds on every row (holes 0 to 2, exact
+  zeros only). By the prereg's section 5 reading this is the tail-reading operator's property
+  and is NOT reported as a finding.
+- VQE, REAL graph, seed 0 (seed 1 within 0.02 on every column): realised m 75.4 (J 0) / 75.4 /
+  75.5 / 75.6 / 80.4 (J 3); entropy 8.86 to 8.88 of 9 bits; participation ratio 429 to 444 of
+  500; TV distance from the J = 0 state 0.010 / 0.043 / 0.069 / 0.135 at J = 0.1 / 0.3 / 1 / 3;
+  the p-top-75 set's Jaccard with the DIS top-75 0.172 / 0.172 / 0.175 / 0.144 (J 0: 0.170; two
+  random 75-subsets of 500 give 0.081); p-mass on the DIS top-75 0.185 / 0.184 / 0.184 / 0.174
+  (uniform: 0.150). The trained state is near-uniform at every J and its rung moves by +5 only
+  at J = 3.
+- Hopping value <psi|A|psi> at the VQE optimum, seed 0, REAL, with the S28-L2(c) sign
+  coherence beside it and the same-sign bound sum |psi_i| A_ij |psi_j| (max attainable 1.0):
+  J 0.1: 0.000 (coh 0.00, bound 0.909); J 0.3: 0.004 (0.01, 0.906); J 1: 0.053 (0.06, 0.903);
+  J 3: 0.399 (0.42, 0.914). The exact ground state reaches 0.503 at J 1 (coh 1.00, PR 58) and
+  0.910 at J 3 (coh 1.00, PR 305). The circuit's amplitudes stay sign-incoherent: at J = 3 it
+  forfeits 56% of the hopping its own p could collect, and at J <= 1 essentially all of it. This
+  is the optimisation-quality leg of the three-way split, measured before any RMSD: the
+  variational state does not find the Perron alignment, consistent with the 7,300x gradient
+  ratio above.
+- Exact ground state, REAL: localised (PR 1.0 to 1.3, m = 1) at J <= 0.3; at J = 1 PR 58,
+  m 5.6, its p-top-75 has Jaccard 0.962 with the DIS top-75; at J = 3 PR 305, m 32, Jaccard
+  0.877. PERM and RAND ground states at J = 1: Jaccard 0.867 and 0.940.
+- The VQE's p-top-75 set (R3) has mean pairwise RMSD 4.13 to 4.28 A against 2.37 for the
+  alpha-tail set (R1) and 2.30 to 2.34 for the eigensolver's top-75: the near-uniform state's
+  most probable 75 is a dispersed set.
+
+Verdict (property): the off-diagonal term is real, exact and correctly differentiated (14
+tests, `tests/test_s28_B.py`), and at the deployed width it is gradient-invisible: 7,300x
+below the diagonal terms in gradient variance, decaying at -1.84 per qubit because the pool
+graph is a near-rank-one typicality projector. The circuit's state at J > 0 is the J = 0 state
+plus a TV of 0.01 to 0.14, sign-incoherent, collecting 0 to 44% of the available hopping. The
+endpoint consequence (F1 to F4) is not yet read; it will be written on the built chain.
+Artefacts: `s27/results/s28_B_train.json`, `s28_B_train_rows.jsonl`, `s28_B_rank1.json`,
+`s28_B_rows.jsonl` (partial), `s27/s28_B_train.py`, `s28_B_rank1.py`, `s28_B_hop.py`.
