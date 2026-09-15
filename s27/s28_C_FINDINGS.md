@@ -128,10 +128,12 @@ pattern in a readout rather than a Hamiltonian.
   0.10, 0.20): the CONS outliers are useful to the average. Trimming by DISTPOT is
   indistinguishable from a random trim. (Built chain: section 3.)
 - H(Part 2c): "a diversity-preserving weighted average consumes ranking information". Ranker
-  weights alone (b = 1, g = 0) cost +0.089 (0.95x MDE, fold CI above zero) and are worse than
-  permuted weights of the same magnitude (+0.079, fold CI above zero); the repulsion term alone
-  is null (+0.007, 0.14x); adding the repulsion to the ranker weights does not rescue them
-  (b = 1, g = 1: +0.081). (Built chain: section 3.)
+  weights alone (b = 1, g = 0; ESS 40.7 of 75) cost +0.089 (0.95x MDE, fold CI above zero, the
+  Type-M zone) and are worse than permuted weights of the same magnitudes (same ESS 40.7:
+  +0.079, 0.82x MDE, fold CI [+0.012, +0.133]); the repulsion term alone is null (+0.007,
+  0.14x); adding the repulsion to the ranker weights does not rescue them (b = 1, g = 1:
+  +0.081, 0.84x). At b = 2 the cell is WORSE beyond its MDE (+0.161, 1.16x) and worse than its
+  control (+0.112, fold CI [+0.028, +0.193]). (Built chain: section 3.)
 
 ## 5. HYPOTHESIS
 - None advanced. The one direction the data points to (ENV_rho_dis, 0.659 held-out, unchanged

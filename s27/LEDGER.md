@@ -790,3 +790,159 @@ like-for-like contrasts above are `ST.compare` on the `per_start` / `per_sub` co
 recomputed 1.985926294615001 (abs diff 0.0); stored built chain 1.865046267114073, recomputed
 1.865046267114073 through `s12.instrument.project` (abs diff 0.0). Hour 1 (S28-L11's status
 line): seed 101, pool row 2L7T / LEG_steric, abs diff 0.0. Two of two exact.
+## S28-L15 -- PART 2 ON THE POINT CLOUD (INTERMEDIATE BASIS, PARTIAL BY DESIGN): EVERY READOUT THAT CONSUMES CONS's RANKING (MEDOID+NEIGHBOURS, RANKER TRIM, DIVERSITY-WEIGHTED AVERAGE) IS NULL-TO-WORSE THAN THE UNIFORM AVERAGE AND WORSE THAN ITS PERMUTED-RANKER CONTROL; DISTPOT's TRIM IS A RANDOM TRIM; THE BUILT-CHAIN VERDICT WAITS FOR JOB s28C_readout_chain3 (2026-09-14 20:06, lane C)
+Question (`s27/PREREG_S28_C.md` section 2, addendum 2): can a readout that keeps the production
+top-75 and consumes a ranker's in-pool information through the weight vector beat the uniform
+average? (a) MEDNB(k): the CONS-best member of the 75 plus its k nearest neighbours by CA-RMSD,
+uniform average; (b) TRIM(q): drop the ceil(q*75) worst by the ranker; (c) DIVW(beta, gamma):
+weights exp(-beta zrank) x (local density)^(-gamma). Controls: the same operator with the ranker
+rank-permuted within the 75 by a stable key (same set size, same weight magnitudes). Registered
+priors: (a) WORSE, (b) NULL, (c) NULL to WORSE. Stated before the run (addendum 2 item 3): all
+three are convex combinations of the same 75 members and test the weight vector only.
+THIS ENTRY IS THE POINT CLOUD ONLY (the coordinator's 20:05 steer: post the intermediate so lane D
+can start; the ledger verdict is written on the built chain in a later entry). Job
+`s28C_readout_cloud` (exit 0, 20 s, peak RSS 0.317 GB), 29 arms x 126 targets; artefacts
+`s27/results/s28_C_readout_cloud_rows.jsonl`, `s28_C_readout_cloud_summary.json`. PROD reproduces
+the anchor 3.048338; the identity cell DIVW(0, 0) reproduces it to 1e-13 A on all 126; random-75
+null 3.4209 (`pool_rows.jsonl :: rand_mean`).
+
+The primary cells against production (`ST.fmt` verbatim), each followed by its contrast against
+the permuted-ranker control (a positive number = the real ranker is worse than a random one):
+```
+  MEDNB[CONS,k=20] vs PROD (POINT CLOUD)
+    a 3.2458 (med 3.0840)   b 3.0483 (med 2.8373)   n=126
+    effect +0.1974   median +0.0909   SE 0.0500   MDE 0.1401   effect/MDE +1.41
+    iid  CI95 [+0.1014, +0.2943]
+    fold CI95 [+0.0912, +0.2912]   folds same sign 4/5   per-fold 0:+0.346 1:+0.158 2:-0.014 3:+0.272 4:+0.222
+    43W/83L/0T   worst degradation +2.0436 (8TXS)   p90 +0.8459   power 0.98  Type-M 1.01
+    concentration: drop-top10 +0.2927 vs uniform-effect null p10/p50/p90 +0.2283/+0.2906/+0.3516 -> pctile 0.518
+    VERDICT: WORSE
+  MEDNB[CONS,k=20] vs its permuted-ranker control (POINT CLOUD)
+    a 3.2458 (med 3.0840)   b 3.1774 (med 3.0034)   n=126
+    effect +0.0684   median +0.0000   SE 0.0594   MDE 0.1664   effect/MDE +0.41
+    iid  CI95 [-0.0460, +0.1870]
+    fold CI95 [-0.0362, +0.1620]   folds same sign 3/5   per-fold 0:+0.223 1:-0.067 2:-0.048 3:+0.050 4:+0.154
+    61W/62L/3T   worst degradation +2.7272 (8TXS)   p90 +0.7575   power 0.21  Type-M 2.19
+    VERDICT: NOT MEASURED (|effect| 0.0684 <= its own MDE 0.1664, 0.41x)
+    strata (ORACLE label): FAIL18 -0.0596 (SE 0.1103)   non-FAIL18 +0.2403 (SE 0.0545)
+  TRIM[CONS,q=0.1] vs PROD (POINT CLOUD)
+    a 3.0838 (med 2.9284)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0354   median +0.0131   SE 0.0116   MDE 0.0326   effect/MDE +1.09
+    iid  CI95 [+0.0138, +0.0591]
+    fold CI95 [+0.0183, +0.0494]   folds same sign 5/5   per-fold 0:+0.043 1:+0.045 2:+0.007 3:+0.022 4:+0.055
+    55W/71L/0T   worst degradation +0.7700 (1U62)   p90 +0.1707   power 0.86  Type-M 1.08
+    concentration: drop-top10 +0.0549 vs uniform-effect null p10/p50/p90 +0.0403/+0.0543/+0.0692 -> pctile 0.519
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.08x]
+  TRIM[CONS,q=0.1] vs its permuted-ranker control (POINT CLOUD)
+    a 3.0838 (med 2.9284)   b 3.0530 (med 2.8288)   n=126
+    effect +0.0307   median +0.0136   SE 0.0113   MDE 0.0316   effect/MDE +0.97
+    iid  CI95 [+0.0093, +0.0533]
+    fold CI95 [+0.0147, +0.0481]   folds same sign 5/5   per-fold 0:+0.022 1:+0.041 2:+0.017 3:+0.009 4:+0.059
+    49W/77L/0T   worst degradation +0.7949 (1U62)   p90 +0.1680   power 0.78  Type-M 1.14
+    VERDICT: NOT MEASURED (|effect| 0.0307 <= its own MDE 0.0316, 0.97x)
+    strata (ORACLE label): FAIL18 -0.0082 (SE 0.0349)   non-FAIL18 +0.0427 (SE 0.0122)
+  TRIM[DISTPOT,q=0.1] vs PROD (POINT CLOUD)
+    a 3.0532 (med 2.8589)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0048   median +0.0035   SE 0.0084   MDE 0.0235   effect/MDE +0.21
+    iid  CI95 [-0.0107, +0.0215]
+    fold CI95 [+0.0001, +0.0122]   folds same sign 3/5   per-fold 0:+0.003 1:+0.020 2:-0.001 3:+0.004 4:-0.000
+    59W/67L/0T   worst degradation +0.5949 (1U62)   p90 +0.0711   power 0.09  Type-M 4.17
+    concentration: drop-top10 +0.0191 vs uniform-effect null p10/p50/p90 +0.0090/+0.0186/+0.0294 -> pctile 0.524
+    VERDICT: NOT MEASURED (|effect| 0.0048 <= its own MDE 0.0235, 0.21x)
+  TRIM[DISTPOT,q=0.1] vs its permuted-ranker control (POINT CLOUD)
+    a 3.0532 (med 2.8589)   b 3.0507 (med 2.8161)   n=126
+    effect +0.0025   median -0.0000   SE 0.0088   MDE 0.0248   effect/MDE +0.10
+    iid  CI95 [-0.0148, +0.0203]
+    fold CI95 [-0.0017, +0.0075]   folds same sign 4/5   per-fold 0:-0.006 1:+0.006 2:+0.000 3:+0.011 4:+0.003
+    63W/63L/0T   worst degradation +0.5858 (1U62)   p90 +0.0783   power 0.06  Type-M 8.25
+    VERDICT: NOT MEASURED (|effect| 0.0025 <= its own MDE 0.0248, 0.10x)
+    strata (ORACLE label): FAIL18 -0.0174 (SE 0.0171)   non-FAIL18 +0.0086 (SE 0.0093)
+  DIVW[CONS,b=1,g=1] vs PROD (POINT CLOUD)
+    a 3.1297 (med 2.9823)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0813   median +0.0231   SE 0.0347   MDE 0.0973   effect/MDE +0.84
+    iid  CI95 [+0.0145, +0.1477]
+    fold CI95 [-0.0039, +0.1439]   folds same sign 4/5   per-fold 0:+0.169 1:+0.075 2:-0.083 3:+0.103 4:+0.134
+    56W/70L/0T   worst degradation +1.3122 (8T62)   p90 +0.5168   power 0.65  Type-M 1.24
+    concentration: drop-top10 +0.1474 vs uniform-effect null p10/p50/p90 +0.1027/+0.1449/+0.1884 -> pctile 0.534
+    VERDICT: NOT MEASURED (|effect| 0.0813 <= its own MDE 0.0973, 0.84x)
+  DIVW[CONS,b=1,g=1] vs its permuted-ranker control (POINT CLOUD)
+    a 3.1297 (med 2.9823)   b 3.0754 (med 2.8155)   n=126
+    effect +0.0543   median +0.0177   SE 0.0389   MDE 0.1090   effect/MDE +0.50
+    iid  CI95 [-0.0213, +0.1301]
+    fold CI95 [-0.0073, +0.1095]   folds same sign 3/5   per-fold 0:+0.120 1:-0.008 2:-0.041 3:+0.066 4:+0.117
+    57W/69L/0T   worst degradation +1.3852 (8T62)   p90 +0.6202   power 0.29  Type-M 1.85
+    VERDICT: NOT MEASURED (|effect| 0.0543 <= its own MDE 0.1090, 0.50x)
+    strata (ORACLE label): FAIL18 -0.1430 (SE 0.0934)   non-FAIL18 +0.1187 (SE 0.0363)   ESS of the weights 42.4 of 75
+  DIVW[CONS,b=1,g=0] vs PROD (POINT CLOUD)
+    a 3.1374 (med 2.9818)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0890   median +0.0324   SE 0.0336   MDE 0.0942   effect/MDE +0.95
+    iid  CI95 [+0.0253, +0.1555]
+    fold CI95 [+0.0201, +0.1451]   folds same sign 4/5   per-fold 0:+0.176 1:+0.060 2:-0.037 3:+0.103 4:+0.133
+    50W/76L/0T   worst degradation +1.2357 (8TXS)   p90 +0.5351   power 0.75  Type-M 1.16
+    concentration: drop-top10 +0.1539 vs uniform-effect null p10/p50/p90 +0.1115/+0.1521/+0.1941 -> pctile 0.525
+    VERDICT: NOT MEASURED (|effect| 0.0890 <= its own MDE 0.0942, 0.95x)
+  DIVW[CONS,b=1,g=0] vs its permuted-ranker control (POINT CLOUD)
+    a 3.1374 (med 2.9818)   b 3.0588 (med 2.8043)   n=126
+    effect +0.0786   median +0.0182   SE 0.0343   MDE 0.0960   effect/MDE +0.82
+    iid  CI95 [+0.0116, +0.1436]
+    fold CI95 [+0.0117, +0.1328]   folds same sign 4/5   per-fold 0:+0.142 1:+0.050 2:-0.043 3:+0.088 4:+0.143
+    54W/72L/0T   worst degradation +1.4118 (8T62)   p90 +0.5738   power 0.63  Type-M 1.26
+    VERDICT: NOT MEASURED (|effect| 0.0786 <= its own MDE 0.0960, 0.82x)
+    strata (ORACLE label): FAIL18 -0.1361 (SE 0.0894)   non-FAIL18 +0.1266 (SE 0.0352)   ESS of the weights 40.7 of 75
+  DIVW[CONS,b=0,g=1] vs PROD (POINT CLOUD)
+    a 3.0557 (med 2.8000)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0074   median -0.0012   SE 0.0183   MDE 0.0513   effect/MDE +0.14
+    iid  CI95 [-0.0294, +0.0429]
+    fold CI95 [-0.0285, +0.0486]   folds same sign 2/5   per-fold 0:-0.000 1:+0.082 2:-0.054 3:-0.002 4:+0.015
+    69W/57L/0T   worst degradation +1.0008 (6BJF)   p90 +0.1114   power 0.07  Type-M 5.89
+    concentration: drop-top10 +0.0412 vs uniform-effect null p10/p50/p90 +0.0223/+0.0396/+0.0592 -> pctile 0.546
+    VERDICT: NOT MEASURED (|effect| 0.0074 <= its own MDE 0.0513, 0.14x)
+    strata (ORACLE label): FAIL18 -0.0146 (SE 0.0171)   non-FAIL18 +0.0111 (SE 0.0212)   ESS of the weights 61.4 of 75
+```
+The rest of the grid (effect vs PROD, effect/MDE, fold CI; then the same for its control):
+```
+  MEDNB[CONS,k=10]         +0.2743  +1.63x  fold [+0.1657, +0.3776]  5/5   | control +0.2271  +1.66x  fold [+0.1599, +0.3047]
+  MEDNB[CONS,k=40]         +0.1017  +1.06x  fold [+0.0353, +0.1556]  4/5   | control +0.0604  +0.77x  fold [+0.0437, +0.0790]
+  TRIM[CONS,q=0.05]        +0.0145  +0.79x  fold [+0.0071, +0.0245]  5/5   | control +0.0031  +0.28x  fold [+0.0006, +0.0059]
+  TRIM[CONS,q=0.2]         +0.0565  +1.02x  fold [+0.0201, +0.0806]  4/5   | control +0.0027  +0.20x  fold [-0.0058, +0.0117]
+  TRIM[DISTPOT,q=0.05]     +0.0049  +0.34x  fold [-0.0007, +0.0110]  3/5   | control +0.0011  +0.10x  fold [-0.0024, +0.0042]
+  TRIM[DISTPOT,q=0.2]      +0.0021  +0.07x  fold [-0.0084, +0.0143]  3/5   | control +0.0005  +0.03x  fold [-0.0052, +0.0089]
+  DIVW[CONS,b=0.5,g=1]     +0.0340  +0.54x  fold [-0.0306, +0.0726]  4/5   | control +0.0156  +0.29x  fold [-0.0210, +0.0523]
+  DIVW[CONS,b=2,g=1]       +0.1613  +1.16x  fold [+0.0629, +0.2509]  4/5   | control +0.0493  +0.72x  fold [+0.0101, +0.0889]
+```
+Grid pricing (`ST.best_of_k_within` on each family's (target x cell) matrix, PROD as a cell):
+  MEDNB: oracle-min -0.2741, split-half -0.1428 (52%), k_eff 3.0 -> residual survives: -0.1428 transfers of -0.2741 oracle
+  TRIM_CONS: oracle-min -0.0746, split-half -0.0259 (35%), k_eff 3.2 -> residual survives: -0.0259 transfers of -0.0746 oracle
+  TRIM_DISTPOT: oracle-min -0.0436, split-half +0.0033 (-8%), k_eff 3.5 -> NOT A SIGNAL (split-half transfers -8% of the oracle)
+  DIVW: oracle-min -0.2144, split-half -0.0510 (24%), k_eff 4.4 -> NOT A SIGNAL (split-half transfers 24% of the oracle)
+In every family the choice that transfers between split halves is the identity (production);
+MEDNB's and TRIM[CONS]'s 'residual survives' is PROD being the best cell on most targets, not a
+readout being chosen.
+
+Reading (point cloud, intermediate). (a) MEDNB is WORSE at every k (+0.274 / +0.197 / +0.102,
+fold CI above zero, 4/5 to 5/5 folds); its random-seed control is also worse (+0.227 / +0.129 /
++0.060: a smaller m, S22 L4) and the CONS seed adds +0.04 to +0.07 on top (inside its MDE). (b)
+TRIM by CONS is WORSE beyond MDE at q = 0.10 and 0.20 (+0.035, +0.057; Type-M zone) and is worse
+than a RANDOM trim of the same size with the fold CI above zero at every q (+0.011 / +0.031 /
++0.054): the members a consensus ranker calls outliers are the ones the average needs. TRIM by
+DISTPOT is a random trim (+0.005 / +0.005 / +0.002 vs PROD, +0.004 / +0.003 / +0.002 vs its
+control, all inside 0.35x MDE). (c) DIVW: ranker weights alone (b = 1, g = 0; ESS 40.7) cost
++0.089 (0.95x MDE) and are worse than permuted weights of the same ESS by +0.079 (0.82x, fold
+CI [+0.012, +0.133]); the repulsion alone (b = 0, g = 1) is null (+0.007, 0.14x); the beta
+ladder at g = 1 is monotone worse (+0.034, +0.081, +0.161) and worse than its controls
+(+0.018, +0.054, +0.112); with the real CONS the repulsion partly cancels the ranker (ESS 42.4
+real vs 34.8 permuted at (1, 1)) because CONS-preferred members ARE the dense-cluster members.
+The FAIL18 / non-FAIL18 split repeats S27 L9's regime pattern in a readout: every CONS-informed
+cell is negative on FAIL18 (-0.06 to -0.17, SE 0.09 to 0.15, none beyond 1.4 SE) and positive on
+the 108 (+0.04 to +0.34).
+Verdict (point cloud, intermediate): no cell is a candidate; nothing is below -0.7x MDE, so no
+extra cell is projected (addendum 2 item 1). What is new relative to S27 section 6 and S23 L5:
+ranking information hurts not only through selection-then-average (S27) and a GEOMETRIC trim
+(S23 L5, +0.142) but through a ranker-based trim of 8 members (+0.031 over a random trim, fold
+CI excluding zero) and through the weight vector at fixed ESS (+0.079 over permuted weights):
+the harm is a property of the ranker's information, not of the operator that consumes it.
+Built chain: job `s28C_readout_chain` (killed by the governor 19:44:28 at 15/126, box-wide user
+load, S28-L5's pattern), relaunched as `s28C_readout_chain2` 19:47 (killed 20:02:30 at 25/126,
+96.2% RAM), relaunched as `s28C_readout_chain3` 20:04 from the per-target checkpoint
+(`s28_C_readout_chain_rows.jsonl`, 301 rows); the verdict entry follows when it lands.
+
