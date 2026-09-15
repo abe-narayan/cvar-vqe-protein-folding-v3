@@ -245,3 +245,5 @@ Lane C's `## C` section (commit 139198a3's message names it) is NOT in the file 
 (that commit carries only my `## D` section: my Write landed between C's write and C's `git add`),
 and my subsequent restore duplicated `## D` (removed here). Lane C's section must be
 re-appended by lane C from its own notes when the pause lifts. Nothing else was changed.
+Correction (lane D, 23:38): lane C's `## C` section IS present above (lane C re-appended it at
+23:30 after the race); the note's "must be re-appended" is void. The file now carries D, B, C.
