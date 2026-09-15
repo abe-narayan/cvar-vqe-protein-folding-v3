@@ -78,9 +78,14 @@ with a maximum absolute deviation of 0.0 on all twelve point-cloud and twelve bu
 (S28-L7 prints them). The readout job's PROD arm reproduces `chain_rows.jsonl :: DIS` on 1A13 to
 the last printed digit (2.6158612331525704 / 2.635339216442019 on both files,
 `s27/results/s28_C_readout_chain_rows.jsonl`). Noise floor: the identity cell DIVW(0, 0) differs
-from PROD by 8e-15 A on the point cloud and 1.4e-5 A on the built chain (the multi-start
-projection amplifies floating-point input differences by about 1e9); built-chain contrasts
-therefore carry a numerical floor near 1e-5 A, four orders below any MDE here.
+from PROD by 8e-15 A on the point cloud and 1.4e-5 A on the built chain on 1A13; lane D's
+S28-L18 measured the same floor across 22 targets at up to 0.02 A per target (0.003 A mean)
+when the multi-start projection flips a near-tied branch, and supersedes S28-L7's "1e-5"
+(`s27/RETRACTIONS_S28.md` R1, a scope correction). It does not touch the contrasts here: every
+readout arm and its PROD comparator are projected in the same job through the same code path
+(`s28_C_readout.py :: oracle_rows`), and PROD reproduces `chain_rows.jsonl :: DIS` bit-exactly
+on every target it has processed (max |diff| 0.0 on 49/49 at 20:45; the final count is in the
+built-chain entry).
 
 ### 1.4 Ranking-consuming readouts on the point cloud (intermediate basis, S28-L15; the built-chain entry decides)
 `s27/results/s28_C_readout_cloud_rows.jsonl` (job `s28C_readout_cloud`, 29 arms x 126 targets)
