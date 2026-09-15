@@ -1685,3 +1685,47 @@ the second clause is pending. The B2 endpoint stays gated on the S28B built-chai
 lane D's check.
 Artefacts: `s27/results/s28_B2_train.json`, `s28_B2_train_rows.jsonl`, `s28_B_split.json`,
 `s28_B_split_rows.jsonl`, `s26/jobs_done/s28B2_train.json`, `s28B_split2.json`.
+
+## S28-L26 -- ADVERSARY CHECK OF S28-L25 (F5-B2, the spread-spectrum graph's trainability; the S28B split's middle leg) (2026-09-14 21:55, lane D)
+Question: do the numbers say what the entry says, and is the "straddled, not cleared" reading
+the honest one? Recomputed from `s27/results/s28_B2_train.json :: summary` and
+`s28_B_train.json`:
+- Slopes: k5 hop-only -0.997 (4..9) / -0.982 (4..8), steps -0.93, -0.98, -0.98, -1.04, -1.05;
+  k10 -1.033 / -1.022, steps -1.26, -0.82, -1.12, -0.95, -1.13; n = 9 variance 59.6x (k5) and
+  29.4x (k10) the Gaussian graph's 4.157e-6. All as the entry states. The steps are regular
+  (no n = 9 excess as in the Gaussian row), so the fit uncertainty here is smaller than the
+  +-0.3 I attached to the Gaussian slope; the two k straddle -1.0 by 0.003 and 0.033. The
+  registered clause was a bright line and the entry does not claim it; correct.
+- What is cleanly measured: same draws, same E, same targets, same circuit, only the graph
+  changed (lambda_2 / lambda_1 from 0.14 to 0.98), and the hop-only decay rate halved while
+  the n = 9 variance rose 30 to 60x. That supports S28-L11's "the decay is the spectrum's" in
+  direction and size, as the entry says. The full objective stays flat at every J (hopping is
+  5 to 7% of the variance at J = 3): the hopping term is still a minor part of the gradient at
+  the deployed width, so the endpoint prior (null or worse) is unchanged.
+- The one thing the entry cannot yet say, and should not until the rank-one decomposition
+  lands (job `s28B2_rank1`, queued): the kNN top eigenvector is MORE uniform than the
+  Gaussian's (overlap 0.985 / 0.980 vs 0.947), so the typicality projector is still there;
+  the 30 to 60x must come from the remainder. If the remainder carries most of the variance the
+  reading is "a spread remainder is trainable where a rank-one projector is not"; if it does
+  not, the reading is wrong. Hold "the spectrum was the mechanism" until that number posts.
+- The middle leg (S28-L2(b)) for S28B, from `s28_B_split.json`: the VQE beats its own
+  best-of-16 untrained draws on 126/126 at every J (it trains); at J <= 0.3 the one-hot ground
+  state is a poor point for the circuit's OWN objective (entropy), so "VQE < GS on 126/126"
+  there is the entropy term, not skill; at J = 1 they tie; at J = 3 the exact ground state
+  (F -7.31, hopping 0.911, coherent) is 1.8 below the circuit's reached F (-5.51 / -5.27) and
+  the circuit collects 0.32 of the 0.91. The entry says "whether that state is representable by
+  the 27-parameter circuit is not measured". THAT IS THE MISSING PIECE OF THE LEG, and it is
+  cheap and native-free: fit theta to maximise |<GS|psi(theta)>|^2 (Adam, 16 starts, the same
+  loop) at J = 3 on the 12 trainability targets and report the best overlap and F at the
+  fitted state. Overlap near 1 makes the 1.8 gap an OPTIMISATION shortfall; overlap well below
+  1 makes it EXPRESSIVITY, and then the circuit is not failing to find a state it holds. Without
+  it "optimisation quality" is a gap of unknown provenance. Requested before the S28B verdict
+  entry quotes the leg.
+- Rule 9: "a -1.0 per qubit decay ... is reported as a number": compliant; no plateau wording.
+- Second clause (share at J = 1 > 0.5): pending (`s28B2_share`); the Gaussian's 1% at J = 1 is
+  the comparator on the same targets, as registered.
+Verdict: STANDS WITH CAVEAT (a property measurement; the bright line is straddled and the
+entry says so; the mechanism reading waits for the rank-one decomposition; the middle leg needs
+the representability fit before it is quoted as "optimisation quality").
+Artefacts: `s27/results/s28_B2_train.json`, `s28_B_train.json`, `s28_B_split.json`; my refits
+are `np.polyfit` on log2 of the per-n medians.
