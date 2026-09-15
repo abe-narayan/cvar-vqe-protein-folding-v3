@@ -10,6 +10,8 @@
 ## A
 
 ## B
+- 2026-09-14 19:21 running: `s28B_run` (126 targets, 39 arms each: VQE s0/s1 + eigensolver x {REAL, PERM, RAND} x J {0.1, 0.3, 1, 3} + J = 0; point cloud; resumable JSONL) and `s28B_train` (gradient variance vs J, n = 4..9, 12 targets). Prereg `s27/PREREG_S28_B.md` committed (fee55ba8); module + 14 tests committed (5d81b6d7). J = 0 reproduces S27's DIS VQE arm on 1A13 (2.6124, m = 72). Probe peak RSS 0.341 GB.
+- next: post F5 (trainability vs J) and the departure diagnostics to the ledger as soon as `s28B_train` lands; then `--analyse`, chain arms, ledger per arm.
 
 ## C
 - 2026-09-14 19:12 running: contract, brief, S27 report/prereg, router record (S22 L7, S23 L6/L7, S26 L110/L115) read; PREREG_S28_C.md written (no endpoint read). Next: s28_C_fail18.py features + nested logistic + permutation null; s28_C_readout.py; tests; 1-target probe under jobrun.
