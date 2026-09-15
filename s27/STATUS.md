@@ -38,6 +38,9 @@
 - 2026-09-14 23:05 running: BUILT-CHAIN VERDICT posted (S28-L26b, D STANDS at L27b): every lam arm WORSE (+0.23 to +0.26, 1.3 to 1.6x MDE), F1 silent; ORACLE ceiling 0.252 A emitted; A2.1 cosine (L23b) and A2.2 point cloud (L30) posted, prior held; findings written. A2 chain job `s28A2_chain` running (13 projections/target).
 - next: A2 built-chain verdict entry when the job lands; findings 4.3 filled; final commit.
 
+- 2026-09-14 23:45 running: A2 chain job `s28A2_chain` at 46/126 (13 projections/target under load); everything else posted (S28-L26b verdict, D STANDS; L23b, L30; findings).
+- next: A2 built-chain verdict entry and findings 4.3 when the job lands (about 100 min at the current rate).
+
 ## B
 - 2026-09-14 22:30 running: `s28B_chain` (built chain; throttled by the user's load); queued `s28B2_share` (F5-B2 second clause, no RMSD) and `s28B2_rank1` (S28-L23(a) decomposition). Posted S28-L25: kNN hop-only slope -1.00 / -1.03 per qubit (Gaussian -1.84), 30 to 60x the variance at n = 9, the registered -1.0 line straddled not cleared; the three-way split middle leg (VQE beats GS on F at J <= 0.3, ties at 1, is 1.8 above it at J = 3, beats untrained best-of-16 on 126/126 at every J); m-ladder eps <= 1e-13 on every arm.
 - next: the built-chain verdict entry per arm when the chain lands; the B2 share and decomposition entry; FINDINGS.
