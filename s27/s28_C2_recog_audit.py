@@ -381,6 +381,14 @@ def analyse(mode, n_null=200, n_max_null=500, print_all=True, tag=""):
         path = path.replace(".jsonl", f"_{tag}.jsonl")
     rows = [json.loads(l) for l in open(path, encoding="utf-8")]
     rows.sort(key=lambda r: r["pdb"])
+    if mode == "chain":
+        # S28-L34(e): one multiplicity null over ALL scorers seen on the projected chains, the 16
+        # backbone scorers plus the 15 CA scorers re-evaluated on the chains (suffix "@chain")
+        for r in rows:
+            merged = dict(r["scores"])
+            for nm, v in r.get("scores_ca_on_chain", {}).items():
+                merged[nm + "@chain"] = v
+            r["scores"] = merged
     pdbs = [r["pdb"] for r in rows]
     folds = np.array([int(r["fold"]) for r in rows])
     fail = np.array([p in I.FAIL18 for p in pdbs])
