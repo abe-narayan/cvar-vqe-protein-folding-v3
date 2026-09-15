@@ -73,3 +73,18 @@ channels, regenerated in 13 min if absent), `s24.d_harness.arm_vqe` (the genuine
 `s12.instrument.project` (the built chain), `s12.instrument.ca_rmsd`, `s24.stats_lib`.
 Production anchors: point cloud 3.048338 (DIS top-75), built chain 3.2126 (rebuild basis) /
 3.2148 (production cache), S25 VQE arm 3.0580, random-75 null 3.4209.
+
+## Addendum 1 (2026-09-14 19:10, coordinator; binds every lane from now)
+13. The sprint's only currency is a mechanism that changes the FINAL BUILT-CHAIN RMSD. The point
+    cloud is an intermediate: any arm at 0.7x MDE or better on the point cloud goes to the built
+    chain (`s12.instrument.project`) before it is called anything, and every ledger verdict is
+    written on the built chain.
+14. No cosmetic variants: no finer grids, extra seeds of a null, or re-parameterisations of the
+    convex top-75 average. Every positive's ledger entry answers, in the same entry: (a) does the
+    gain survive the averaging/readout bottleneck (S27 REPORT section 6) through the built chain,
+    and does it hold on the 108 non-FAIL18 targets or only on FAIL18; (b) what is new relative to
+    S26/S27, citing the ledger line it goes beyond; (c) for quantum arms, the three-way split:
+    exact objective optimum vs the circuit's reached state vs the emitted structure.
+15. No positive is accepted, built on, or reported until lane D has posted STANDS or STANDS WITH
+    CAVEAT on it; D attacks within the hour of the entry, starting with the built chain if only
+    the point cloud was quoted.
