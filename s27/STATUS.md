@@ -8,6 +8,8 @@
 - next: hourly ledger commits; reassign lanes as they finish; final S28 report in s27/.
 
 ## A
+- 2026-09-14 19:25 running: prereg + addenda committed (02f1b69b, +1); `s27/s28_A_amp.py`, `s27/s28_A_analyse.py`, `tests/test_s28_A.py` (21 pass); 1-target probe under jobrun OK (3.8 s, 1A13: frame dev 2.1e-14); job `s28A_oracle_126` (ORACLE expressivity ceilings, all 126) running.
+- next: ledger S28-L1 (ORACLE ceiling, labelled), then job `s28A_recog_126` (every recognition arm, point cloud), then the built-chain job for the primary list.
 
 ## B
 - 2026-09-14 19:21 running: `s28B_run` (126 targets, 39 arms each: VQE s0/s1 + eigensolver x {REAL, PERM, RAND} x J {0.1, 0.3, 1, 3} + J = 0; point cloud; resumable JSONL) and `s28B_train` (gradient variance vs J, n = 4..9, 12 targets). Prereg `s27/PREREG_S28_B.md` committed (fee55ba8); module + 14 tests committed (5d81b6d7). J = 0 reproduces S27's DIS VQE arm on 1A13 (2.6124, m = 72). Probe peak RSS 0.341 GB.
