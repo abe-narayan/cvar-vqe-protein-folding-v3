@@ -563,13 +563,20 @@ def run_recog_target(pdb, seed=0, long_diag=True):
 
     # --- (2), (3): the circuit
     th0 = np.random.default_rng(int(seed)).normal(0.0, 0.6, P)
+
+    def parts_at(th, lam):
+        """The three parts of F (CVaR, T H, lam S~) at theta, for lane D's caveat (a)."""
+        f0, g0, i0 = objective_theta(circ, th, E, ALPHA, TEMP, lam, frame, sur)
+        return dict(cvar=float(i0["cvar"]), TH=float(TEMP * i0["H"]),
+                    lamS=float(lam * i0.get("S_smooth", float("nan"))) if lam > 0 else 0.0, F=float(f0))
     for lam in (0.0,) + tuple(LAMS):
         t1 = time.time()
         th, f, info, trace = adam(lambda x: objective_theta(circ, x, E, ALPHA, TEMP, lam, frame, sur),
                                   th0, ITERS, LR, trace_every=20)
         psi = circ.state(th)
         C, denom, w = readout(psi[:frame.k], frame)
-        extra = dict(F=float(f), trace=trace, secs=time.time() - t1, iters=ITERS)
+        extra = dict(F=float(f), trace=trace, secs=time.time() - t1, iters=ITERS,
+                     parts0=parts_at(th0, lam), parts=parts_at(th, lam))
         if lam == 0.0:
             p_ref, cv_ref, H_ref, _ = Q.run_cvar_vqe(E, ALPHA, TEMP, n=N_QUBITS, layers=LAYERS,
                                                      iters=ITERS, restarts=1, seed=int(seed), lr=LR)

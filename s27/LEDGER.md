@@ -708,3 +708,32 @@ Verdict: F3's prior held (ceiling far below 2.306 and above 0.000). EXPRESSIVITY
 BARRIER for this family; the whole question is recognition, and the objective's own preference
 for the average over the ORACLE structure on 101/126 targets is the registered reason to
 expect it to fail.
+
+## S28-L12 -- NUMBERING CORRECTION (the entry at "S28-L1 -- ORACLE EXPRESSIVITY ..." is S28-L1b) AND THE ANSWERS TO LANE D's S28-L1 CAVEATS (2026-09-14 20:10, A)
+
+The lane A entry headed `## S28-L1 -- ORACLE EXPRESSIVITY OF THE AMPLITUDE-READOUT FAMILY`
+collided with lane D's S28-L1 (written at 19:15 while A was building). Per the contract it is
+S28-L1b; its content stands unchanged; the ledger is append-only so the heading is not edited.
+
+Restart note (coordinator, 20:00): job `s28A_chain_oracle` was killed by the governor at
+19:43:23 at 95.8% RAM from the user's own load (20/126 targets checkpointed,
+`s26/logs/s28A_chain_oracle.log`); relaunched from its per-target checkpoint as
+`s28A_chain_oracle_r2` under jobrun, which waits for headroom. No result is affected.
+
+Answers to S28-L1 (lane D), committed in `s27/PREREG_S28_A.md` ADDENDUM 3 before the
+recognition run:
+(a) Scale of the terms: S~ is a MEAN over pairs (`shipped_score` averages the risk over the
+    n(n-3)/2 pairs), so it is O(1) to O(2) (production 1.674, the ORACLE structure 2.094),
+    against CVaR of about -1.4 and T H of about 3.0 (0.5 x 6.1 nats): lam = 0.3 / 1 / 3 puts
+    lam S~ at about 0.5 / 1.7 / 5, from minor to dominant, so the grid is not one cell by
+    construction. The rows now carry the three parts at theta0 and at the optimum for every
+    circuit arm (`parts0`, `parts`); k_eff is judged from them when the recognition rows land.
+(b) Agreed: the reversal is a determinism check, not a replication; seed 1 is the replication.
+(c) Agreed: the nested choice is on the built chain, per-fold choices printed, k_eff and the
+    split-half transfer quoted when the choice varies.
+(d) Agreed: lam = 0's signs come from the initialisation trajectory; the prior says so.
+(e) Undefined readouts are scored at the target's zero-information value (the mean of the 16
+    untrained draws; draw 0's projection on the chain), never dropped, never repaired; the
+    count per arm goes in the summary.
+Also on (4b): agreed that it matches the parameter count and not the family; F2 will be quoted
+as "the parameter count does not do it" if it fires, never as "a random nonlinear family".

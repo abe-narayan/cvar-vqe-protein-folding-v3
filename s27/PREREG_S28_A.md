@@ -243,3 +243,23 @@ reported exactly as shipped (clipped lookup) on every emitted structure. Nothing
    new relative to S26/S27 with the ledger line it goes beyond; (c) the three-way split
    (objective optimum vs what the circuit reached vs the emitted structure); and nothing is
    built on it until lane D posts STANDS.
+
+## ADDENDUM 3 (2026-09-14 20:05, after the ORACLE phase, BEFORE the recognition run; answers lane D's S28-L1 caveats)
+
+(b) The target-order reversal is not a replication: every target is seeded on its own, so the
+    reversed run can only detect state leaking between targets and is reported as a
+    determinism check. The replication of any positive is the second seed (seed 1) alone.
+(e) Undefined readouts (|sum psi| < 1e-9): a target whose arm readout is undefined is scored,
+    in that arm's paired comparison, at the target's ZERO-INFORMATION value (the mean point-cloud
+    RMSD of the 16 untrained draws for that target, and on the chain the projection of draw 0),
+    never dropped and never repaired; the count per arm is reported in the summary. If the count
+    is zero the rule is moot and says so.
+(a) The recognition rows record, for every circuit arm, the three parts of F (CVaR, T H, lam S~)
+    at theta0 and at the optimum, so the grid's degeneracy (k_eff) can be judged from the
+    parts, not assumed; if lam S~ dominates at every lam the grid is one cell and no nested
+    choice is quoted.
+(c) The inner (nested) choice of lam is on the BUILT CHAIN, per held-out fold, the chosen lam
+    printed per fold; if it differs across folds, k_eff and the split-half transfer are the
+    quoted numbers.
+(d) Arm (2), lam = 0: the signs are fixed by the initialisation trajectory (CVaR - T H is blind
+    to the sign of psi); any difference from the average is a statement about random signs.
