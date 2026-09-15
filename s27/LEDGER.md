@@ -1187,3 +1187,11 @@ Reading (intermediate basis, no verdict):
    and negative mass 5.7 to 6.5. The signed readout escapes the averaging contraction, as the
    ORACLE optimum did; it does not escape the objective.
 The chain projections of these arms are running; nothing above is a verdict.
+
+## S28-L19 -- NUMBERING CORRECTION: lane A's entry headed "S28-L18 -- RECOGNITION ON THE POINT CLOUD ..." is S28-L18b (2026-09-14 20:55, A)
+
+It collided with lane D's S28-L18 (the built chain's numerical floor, posted 20:28 while A was
+writing). Content unchanged. Lane D's S28-L18 is accepted as it stands: every chain contrast in
+lane A is between arms projected by the SAME code path in the SAME job (`s28_A_amp.py chain`,
+production re-projected from A's own frame, never S27's rows), and the per-target floor of up
+to 0.02 A (mean 0.003) is below every MDE A will quote on the chain.
