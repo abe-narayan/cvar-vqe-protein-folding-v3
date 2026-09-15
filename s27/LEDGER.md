@@ -1410,3 +1410,54 @@ entry decides, with the caveats above (production as the comparator; best-of-nin
 no W/L quoted).
 Artefacts: `s27/results/s28_B_rows.jsonl`, `s28_B_summary.json`; my recomputations are
 rerunnable in under a minute with the command line above.
+
+## S28-L23 -- ADVERSARY CHECK OF THE SECOND-WAVE PREREGS: PREREG_S28_A addendum 4 (A2, the objective's local behaviour) and PREREG_S28_B addendum 1 (B2, a spread-spectrum hopping graph) (2026-09-14 21:22, lane D)
+Question: as S28-L1 to L3, for the two addenda written before any second-wave number (A2 at
+21:30, B2 at 21:40, both after the point-cloud intermediates and before the chain verdicts).
+A2 (addendum 4). Falsifier (some e beats production on the built chain beyond MDE, fold CI,
+5/5, AND beats the random-direction mean beyond MDE): falsifiable. Controls: (i) a random
+direction at the same RMS displacement, rigid-body removed, is the matched control in the
+operator's space; (ii) the circuit-family one-step arm against its own projected baseline is
+the right pairing for "does the family's bias help at the local scale". The ORACLE cosine is
+labelled in every sentence and never enters the ladder; the NaN-poison of the ladder is
+registered as a test. Verdict: STANDS WITH CAVEAT. Caveats before the first A2 number:
+(a) THE COSINE NEEDS ITS NULL. In 3n - 6 shape dimensions a random unit direction has
+    E|cos| about sqrt(2 / (pi (3n - 6))) = 0.12 to 0.18 for n = 9..16, not zero; "cosine
+    near zero" is only readable against the 8 random directions' cosines on the same target.
+    Report the ORACLE cosine beside the mean and the 95th percentile of the random directions'
+    |cos| per target, and the FAIL18 / 108 split of both.
+(b) e in {0.1, 0.3, 1.0} is a grid of three: any "best e" is priced with `best_of_k_within`
+    (k_eff, split-half), and the same for the circuit one-step arm's e.
+(c) LIKE FOR LIKE ON THE CHAIN. The random control is 8 draws on the point cloud and draws
+    0 and 1 on the chain; the chain contrast must pair the step against the mean of the SAME
+    two draws (not the point-cloud eight), and say so; a best-of-2 is an order statistic.
+(d) The step is taken from C0 in the point cloud and projected; production is the projection
+    of C0 itself in the same job (the S28-L18 floor applies only if the code paths differ; the
+    addendum re-projects production in the same job, which is right).
+(e) The circuit one-step arm's baseline C(theta_P) is the family's nearest point to C0 with a
+    non-zero residual (the family need not contain C0); quote that residual's RMSD to
+    production so "degrades from its own baseline" is not "starts below production".
+B2 (addendum 1). Condition (b) of the brief (the mechanism is the near-rank-one spectrum) is
+what S28-L11 found, and the addendum cites it correctly; condition (a) waits for the S28B chain
+verdict and gates only the endpoint arms, as it should. Falsifier for "the spectrum was the
+mechanism" (kNN hop-only slope shallower than -1.0 per qubit AND the circuit collects more than
+half its same-sign bound at J = 1) is concrete and two-sided (the addendum says what a slope at
+or below -1.7 would mean). Controls: PERM, RAND (Sinkhorn on the binary kNN degrees), J = 0,
+both seeds, production as the comparator: matched. Verdict: STANDS WITH CAVEAT. Caveats:
+(a) THE PERRON VECTOR IS STILL NEAR-UNIFORM. For D^-1/2 A D^-1/2 the top eigenvector is
+    proportional to sqrt(degree); on a near-regular kNN graph it is again 0.95+ overlapped with
+    the uniform state, so the "typicality projector" component does not go away, it is joined
+    by a spread remainder. Report the top eigenvector's uniform overlap beside lambda_2 /
+    lambda_1 (registered), and decompose the hop-only variance into the rank-one part and the
+    remainder as `s28_B_rank1.py` did for the Gaussian graph, so the reading is "the remainder
+    carries X% of the variance" and not "the spectrum is spread".
+(b) DISCONNECTED GRAPHS. A symmetric kNN graph at k = 5 on 500 windows can have more than one
+    component; then lambda_1 = 1 is degenerate (one Perron vector per component) and `eigh`'s
+    "ground state" at large J is an arbitrary combination. Count the components (registered)
+    and label every GS row on a disconnected graph DEGENERATE, as R3-GS at J = 0 is.
+(c) The endpoint prior (WORSE or null, the consistency mechanism) is the right one; the F1
+    comparator is production, per S28-L2(a), and the addendum says so.
+(d) The B2 endpoint and chain jobs are gated on the S28B chain verdict AND on my check of it
+    (contract addendum 1); no B2 endpoint number is read before both are posted.
+Artefacts of this check: this entry; `s27/PREREG_S28_A.md` (addendum 4), `s27/PREREG_S28_B.md`
+(addendum 1). The C2 prereg (`s27/PREREG_S28_C2.md`) is checked when it lands.
