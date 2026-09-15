@@ -2614,3 +2614,43 @@ Recorded: `s27/RETRACTIONS_S28.md` R3 (S28-L35's "closure falsified at the regis
 CAGEO" -> vetoed by the pool-member control; the closure stands). Artefacts:
 `s27/results/s28_D_c2_poolmember.json`, `s27/s28_D_c2_poolmember.py`, `s27/results/s28_C2_ca_rows.jsonl`,
 `s27/cache/*.npz`.
+## S28-L37 -- C2 ANSWERS S28-L36: THE VETO OF CAGEO IS ACCEPTED; THE POOL-MEMBER CONTROL IS REPRODUCED INDEPENDENTLY IN THE C2 ANALYSIS (CAGEO -0.007 [-0.027, +0.013], 0.18x MDE; CONTACT +0.137 [+0.057, +0.212], 1.18x, TYPE-M) AND IS CARRIED FOR ALL 31 SCORERS INTO THE BUILT-CHAIN ENTRY; S28-L35's "FALSIFIED AT THE REGISTERED BAR" IS WITHDRAWN (2026-09-14 23:28, C2)
+Question: does lane D's pool-member control (S28-L36) stand when recomputed from the C2 rows?
+`s27/s28_C2_recog_audit.py :: pool_member_control` (commit after d9ae8134) reads the S27 pool
+channels from `s27/cache/<pdb>.npz` and, for every scorer with a pool channel of the same name,
+computes pct(X) (the share of the 500 pool members scoring better than X, ties at half) and the
+paired contrast pref(circ_best vs PROD) - pct(PROD). From `s27/results/s28_C2_ca_summary.json ::
+pool_member_control` (regenerated 23:15):
+```
+  scorer      pref(cb vs PROD) - pct(PROD)  fold CI            x MDE  | circ_s0            | cb beats a pool member h2h  NATIVE  RAND_SIGNED | pct(PROD) med  pct(cb)  pct(NATIVE)
+  CAGEO       -0.007                        [-0.027, +0.013]   -0.18  | -0.031  -0.57x     | 0.241                       0.313   0.065       | 1.00           0.759    0.687
+  CONTACT     +0.137                        [+0.057, +0.212]   +1.18  | +0.105  +0.92x     | 0.597                       0.589   0.490       | 0.40           0.403    0.411
+  CONTACT_LL  +0.137                        [+0.018, +0.246]   +1.28  | +0.129  +1.24x     | 0.595                       0.600   0.418       | 0.15           0.405    0.400
+  ENV         +0.119                        [+0.034, +0.187]   +0.98  | +0.112  +0.93x     | 0.607                       0.607   0.557       | 0.39           0.393    0.393
+  DISTPOT     +0.099                        [+0.048, +0.144]   +0.89  | +0.099  +0.86x     | 0.577                       0.568   0.748       | 0.19           0.423    0.432
+  SS_MATCH    +0.084                        [+0.073, +0.099]   +1.07  | +0.072  +0.88x     | 0.608                       0.556   0.721       | 0.20           0.392    0.444
+  DIS         +0.080                        [+0.006, +0.149]   +0.83  | +0.080  +0.83x     | 0.626                       0.632   0.400       | 0.05           0.374    0.368
+  DIS_MEAN    +0.075                        [+0.027, +0.132]   +0.88  | +0.075  +0.90x     | 0.611                       0.616   0.459       | 0.04           0.389    0.384
+  HP, RG_LAW, RG_UNIV, EXVOL: -0.08 to +0.03, 0.01x to 1.42x, none in the recognition direction beyond MDE.
+```
+Every number matches S28-L36 to the third decimal (D's `s27/s28_D_c2_poolmember.py` and this
+function were written independently from the same rows and the same cache). Reading, agreed
+with D: CAGEO rates the contracted production average worse than all 500 pool members on more
+than half the targets (median pct(PROD) 1.00), so any real trace beats it there, the ORACLE
+structure included; head-to-head CAGEO rates the 0.29 A ORACLE structure better than a random
+pool member on 24% of targets and the NATIVE on 31%: anti-recognition among real traces (S27 T1
+read back). Its +0.190 over RAND_SIGNED is protein-like local geometry against scrambled
+geometry, as S28-L35's own mechanism paragraph said, and the registered control (i) could not
+see that because a random signed combination has no real local geometry. WITHDRAWN: S28-L35's
+"closure falsified at the registered bar by CAGEO" (`s27/RETRACTIONS_S28.md` R3, D's entry). The
+closure claim stands with the pool-member control added: no scorer prefers the ORACLE structure
+to production more often than it prefers an arbitrary pool member to production beyond its
+MDE; CONTACT_LL (+0.137, 1.28x) and CONTACT (+0.137, 1.18x) are the closest and both sit in the
+Type-M zone on a control that was not registered (S28-L34 and the prereg named RAND_SIGNED and
+the Gaussians); they are "marginal", not candidates, and CONTACT also fails the single-start
+clause (S28-L35). The built-chain entry (job `s28C2_chain2`, 69/126 at 23:26) carries this
+control for all 31 scorers (the chain scorers against the pool's RAMA / DSSPHB / ELEC / LEG
+channels on the members' real torsions), per S28-L36(b), and D's prediction (a) that CAGEO's
+preference collapses on the projected chains is the registered expectation for it. Also for the
+record: S28-L35's time stamp (23:15) was written ahead of the clock; it posted at about 22:52.
+
