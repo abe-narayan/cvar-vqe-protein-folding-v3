@@ -1366,3 +1366,47 @@ three-way split's middle leg, S28-L2(b)) and `s28B_mladder` (the T9 decompositio
 it. No verdict here.
 Artefacts: `s27/results/s28_B_rows.jsonl`, `s28_B_summary.json`, `s28_B_chain_arms.txt`,
 `s26/jobs_done/s28B_run.json`, `s28B_run2.json`, `s28B_run3.json`.
+
+## S28-L22 -- ADVERSARY CHECK OF S28-L21 (lane B's hopping arms, point cloud, intermediate) (2026-09-14 21:12, lane D)
+Question: does the intermediate stand, and is the most promising cell on the board dead?
+Every number recomputed from `s27/results/s28_B_rows.jsonl` (4,914 rows) with
+`s27/s28_D_attack.py --arm-expr "source|seed|graph|J"`.
+- The most promising number on the board at 21:00 was F1's largest cell, R3 (p-top-75) at
+  seed 1, REAL, J = 0.1 vs its J = 0 twin: -0.0208, SE 0.0071, MDE 0.0199, 1.05x, fold CI
+  [-0.0336, -0.0089], 5/5, 58W/31L/37T, Type-M zone (reproduced to four decimals). The one
+  experiment most likely to kill it was already in the rows and I confirm both killers: the
+  seed-0 twin is +0.0001 (0.01x, MDE 0.0133) and the PERM control at the same seed and J is
+  -0.0219 (0.82x, fold CI [-0.0408, -0.0082], 5/5): a control with the correspondence destroyed
+  moves as much, so the graph did nothing (F3); RAND is -0.0139 (0.42x). Against PRODUCTION the
+  same arm is +0.2516 (1.22x MDE, WORSE): a readout 0.26 A above production climbing 0.02 A
+  toward it, exactly S28-L2(a)'s trap, and the entry says so. DEAD on the point cloud; the
+  chain projection of the cell (registered) cannot revive it because the comparator is
+  production.
+- The deployed readout (R1): every J within 0.014 A of production and inside MDE; the largest
+  F1 cell (seed 0, J = 0.1, -0.0034, 0.74x) has 94 identical retained sets of 126 and a seed-1
+  twin at 0.17x. Not a result, and the entry does not call it one.
+- The eigensolver: GS REAL J = 1 R2 vs production -0.0037 (0.09x, MDE 0.0400, fold CI
+  [-0.0221, +0.0176]) with a LOPSIDED 79W/47L and median -0.018 against a mean of -0.004: W/L
+  and the median-vs-mean gap cannot diagnose a result (project memory: a raw W/L or drop-top
+  read is not a test; the concentration null sits at the 52nd percentile); FAIL18 -0.064
+  (0.55x), other-108 +0.006 (0.15x). Under MDE on every basis. It is in the chain list; the
+  chain decides and the W/L is not to be quoted as evidence.
+- Order statistics: the best J is priced ("NOT A SIGNAL" on every REAL and RAND cell); the
+  NINE F1 cells at 0.7x or better that go to the chain are nine of 72 correlated contrasts
+  (same seeds and readouts across J; k_eff 3.2 to 4.0 per family): a chain positive among them
+  is a best-of-nine and must be priced with `best_of_k_within` over the nine before it is
+  called anything.
+- Three-way split: (i) Hamiltonian quality: the exact ground state at J = 1 re-selects the DIS
+  top-75 (Jaccard 0.960) and at J = 3 a 305-state delocalised typicality mode (Jaccard 0.842,
+  mass on DIS75 0.373); its readouts are inside MDE of production; (ii) optimisation quality:
+  the circuit's state departs from J = 0 by TV 0.03 to 0.16 and collects 0 to 34% of its
+  same-sign hopping bound (the `s28B_split` F-values are pending); (iii) emitted structure:
+  no readout beyond MDE of its J = 0 twin on both seeds. No leg carries a gain; the F2 prior
+  (eigensolver wins or ties) held. Nothing quantum is claimed and nothing could be.
+- S28-L11's caveats (a) to (e) are all accepted and reworded in the entry; the departure
+  numbers are restated at 126 with signs and orderings unchanged.
+Verdict: STANDS as an intermediate negative (F1, F3, F4 silent; F2's prior held). The chain
+entry decides, with the caveats above (production as the comparator; best-of-nine pricing;
+no W/L quoted).
+Artefacts: `s27/results/s28_B_rows.jsonl`, `s28_B_summary.json`; my recomputations are
+rerunnable in under a minute with the command line above.
