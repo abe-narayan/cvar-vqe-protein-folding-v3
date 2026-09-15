@@ -1,4 +1,4 @@
 {
- "max_concurrent": 2,
- "note": "S28 20:03: cap 2; user active (Zoom 0.7 GB, chrome 5.7 GB), RAM 95%; third job would be killed"
+ "max_concurrent": 0,
+ "note": "S28 20:12 HOLD: cap 0 until RAM < 90% (user at 93-96%); coordinator lifts it"
 }
