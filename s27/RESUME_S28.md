@@ -358,3 +358,6 @@ lane B's split job) and the first measured departure question answered by an ide
    the S26 style: what moved, what closed, what is newly open, the one-paragraph answer to
    "did the quantum component earn anything this sprint?", every number with its artefact
    path. No further waves are planned; the report closes the sprint.
+
+### Post-pause note (23:34)
+The governor background task was stopped by the session harness for low memory just after the pause. The three chain jobs (`s28B_chain`, `s28A2_chain`, `s28C2_chain2`) keep running UNSUPERVISED (0.3 GB each; no re-queue on a kill). On resume: start the governor FIRST (`python s26/governor.py`, background), then check the three jobs as in step 3.
