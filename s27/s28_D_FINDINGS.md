@@ -26,7 +26,19 @@ on all four). Ledger S28-L9.
 D2. **S27 reproduces from its artefact at random.** Hour 1, seed 101 (`s27/s28_D_reproduce.py
 --seed 101 --kind pool`): row 7935 of 25578, 2L7T / LEG_steric, stored 2.9099985141915305,
 recomputed 2.9099985141915305, abs diff 0.0; the DIS top-75 anchor of the same target 3.3032989
-exact (`s27/results/s28_D_reproduce_pool_seed101.json`).
+exact (`s27/results/s28_D_reproduce_pool_seed101.json`). Hour 2, seed 102 (chain row 558 of
+1260, 2MP9 / DIS_MEAN): point cloud 1.985926294615001 and built chain 1.865046267114073 both
+exact through `s12.instrument.project` (`s28_D_reproduce_chain_seed102.json`). Hour 3, seed 103
+(vqe row 11140 of 20160, 3BTB / DIS+LEG_steric, seed 0 of the S27 run): the genuine CVaR-VQE
+re-run gives 4.96243989356248, m = 79, exact (`s28_D_reproduce_vqe_seed103.json`). Three of
+three bases reproduce to the last digit.
+
+D5. **The built chain's numerical floor (S28-L18).** The same production cloud (equal to 6
+decimals, 5.7e-14 in RMSD) projected by lane A and by S27 differs by up to 0.0186 A per target
+(1CS9), mean |diff| 0.0025, 17 of 22 targets above 1e-4: the multi-start projection's branch
+choice flips under 1e-13 input differences. Two sides of a chain contrast must share a code
+path, or the contrast carries this floor (`s27/RETRACTIONS_S28.md` R1, a scope correction of
+S28-L7's "1e-5").
 
 D3. **Lane A's deployable path is native-free, end to end.** `tests/test_s28_D.py ::
 test_lane_A_recognition_phase_is_bit_identical_under_nan_poison`: the whole recognition phase
