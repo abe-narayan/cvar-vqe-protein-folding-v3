@@ -2343,3 +2343,35 @@ production top-75 does not beat the uniform one on this instrument, and where th
 resolvable it is worse than a random weight vector of the same shape. A signed (non-convex) weight
 vector is lane A's question (S28-L26), not this one.
 
+
+## S28-L33 -- ADVERSARY CHECK OF S28-L32 (lane C's Part 2 verdict on the built chain) (2026-09-14 22:22, lane D)
+Question: does the closure stand, and is anything positive hidden in the strata, the controls or
+the grid? Recomputed before the entry posted with `s27/s28_D_attack.py --rows
+s27/results/s28_C_readout_chain_rows.jsonl --prod-arm PROD --basis chain` (1,513 rows):
+- Every primary contrast matches the entry to four decimals (MEDNB[CONS,k=20] +0.1487, 0.99x;
+  TRIM[CONS,q=0.1] +0.0308, 0.75x; TRIM[DISTPOT,q=0.1] +0.0216, 0.62x; DIVW(1,1) +0.0707, 0.66x;
+  DIVW(1,0) +0.0736, 0.70x; DIVW(0,1) +0.0152, 0.29x), and my FAIL18 / 108 strata match
+  (e.g. DIVW(1,0): FAIL18 -0.152 SE 0.093, 0.58x; other +0.111, 0.99x).
+- Shared code path: PROD in the chain job reproduces `chain_rows.jsonl :: DIS` at 0.0 on
+  126/126, so the S28-L18/L27b floor does not enter any of these contrasts. Correct.
+- Point cloud vs chain signs agree on every real-ranker cell (all positive); the projection
+  shrinks the harm (MEDNB +0.197 -> +0.149; TRIM[CONS] +0.035 -> +0.031) so two cells that
+  were WORSE beyond MDE on the point cloud are Type-M / under-MDE on the chain; the entry says
+  "every cell on the harmful side, none clears its MDE" and does not call them WORSE. Correct.
+- The "harm" statements (ranker trim worse than a random trim: +0.027, 0.66x, fold CI
+  [+0.019, +0.036], 5/5; DISTPOT trim +0.020, 0.52x, 5/5) are given as "sign measured, size not"
+  per S28-L16. Correct.
+- Grid pricing: the chain DIVW family (three cells + PROD) is NOT A SIGNAL (16% split-half); the
+  k and q families have one chain cell each and are priced on the point cloud, where the
+  transferring cell is the identity. Correct.
+- FAIL18 strata: every CONS-informed cell is negative on the 18 (-0.01 to -0.15, SE 0.03 to
+  0.12, none beyond 1.6 SE) and positive on the 108: S27 L9's pattern, no switch, as in every
+  lane this sprint. Nothing to build on.
+- Cosmetic-variant test: convex re-weightings of the production top-75 by the lane's own
+  statement; they test the consumer form and close it. New relative to S23 L5 / S27 section 6:
+  the ranker-based trim, the medoid-plus-neighbours hybrid and the density-rescaled weights
+  had not been run; they now have, and they do not help.
+Verdict: STANDS (Part 2 closed; the falsifier fails on every cell; priors (a) WORSE, (b) NULL,
+(c) NULL-to-WORSE held, with (a) and (b) landing in the Type-M zone on the chain rather than
+beyond MDE). No positive anywhere in the artefact.
+Artefacts: `s27/results/s28_C_readout_chain_rows.jsonl`, `s28_C_readout_chain_summary.json`.
