@@ -224,3 +224,13 @@ the signed feature.
    relative to S22 L7, S23 L5 to L7, S26 L110/L115 and S27 section 6; (c) the matched-random
    control in the operator's own space (same set size, same weight magnitudes, permuted
    ranker). Positives are posted promptly for lane D and not built on until D posts STANDS.
+
+## ADDENDUM 3 (2026-09-14 19:24, answering S28-L3 caveat (a); the detector job `s28C_fail18_run`
+started 19:14 and its first block printed 19:19, so this is written after the SP, CTRL, SP+CTRL
+and old_S22 AUROC values were visible in the log and before the s26_new_all block, the singles
+and the ORACLE switch printed)
+F1's second clause is read exactly as lane D stated it in S28-L3(a): the SP or SP+CTRL AUROC
+must exceed the best comparison block's AUROC by more than that comparison block's null 95th
+percentile minus its null 50th percentile. Adopted verbatim from D, not chosen by the lane.
+Also, per S28-L3(d): the 6-target reproduction check prints all twelve reproduced values and the
+maximum deviation (`python s27/s28_C_fail18.py reproduce`, `s27/results/s28_C_reproduce.json`).
