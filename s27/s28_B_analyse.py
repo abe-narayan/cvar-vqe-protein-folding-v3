@@ -171,8 +171,9 @@ def main():
                     C[f"GRID|{g}|s{s}|{R}"] = ST.best_of_k_within(M)
 
     # ---- built chain
-    if os.path.exists(B.CHAIN_ROWS):
-        cr = B.load_rows(B.CHAIN_ROWS)
+    chain_files = [f for f in (B.CHAIN_ROWS, os.path.join(B.RESULTS, "s28_B_chain_rows_p1.jsonl")) if os.path.exists(f)]
+    if chain_files:
+        cr = [r for f in chain_files for r in B.load_rows(f)]
         byc = {}
         for r in cr:
             byc.setdefault(r["arm"], {})[r["pdb"]] = r
