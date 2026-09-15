@@ -609,3 +609,102 @@ endpoint arms F1 to F4 are not read here and nothing in this check pre-empts the
 Artefacts: this entry's numbers are recomputed from `s27/results/s28_B_train.json`,
 `s28_B_rank1.json`, `s28_B_rows.jsonl` (1170 rows); the refits are `np.polyfit` on log2 of the
 per-n medians.
+
+## S28-L1 -- ORACLE EXPRESSIVITY OF THE AMPLITUDE-READOUT FAMILY: 0.288 A POINT CLOUD, 126/126 UNDER 2 A (2026-09-14, A)
+
+EVERY NUMBER IN THIS ENTRY IS ORACLE (theta chosen against the native). It is the family's
+ceiling, not a result. Pre-registered `s27/PREREG_S28_A.md` section 3 arm (6), falsifier F3.
+Artefacts: `s27/results/s28_A_oracle_rows.jsonl` (126 rows), `s27/results/s28_A_summary.json`
+(`text` holds the ST.fmt blocks), job `s26/jobs_done/s28A_oracle_126.json` (693 s, peak RSS
+0.322 GB). Code `s27/s28_A_amp.py`, tests `tests/test_s28_A.py` (21 pass).
+
+Question: can the family C(theta) = sum_i psi_i(theta) W_i / sum_i psi_i(theta) (the deployed
+9-qubit, depth-3, 27-parameter real-amplitude RY/CNOT circuit read as SIGNED affine weights over
+the 500 pool windows, posed on the DIS-top-75 medoid) reach past the convex average at all?
+
+Soundness first: the frame reproduces the deployed average. Uniform psi on the DIS top-75 gives
+the S25/S27 point-cloud anchor 3.048338 on all 126 targets, max |dev| 5.7e-14
+(`s28_A_summary.json :: prod_frame_max_dev`).
+
+ORACLE point-cloud CA-RMSD, mean over 126 (`s28_A_summary.json :: oracle_cloud`):
+| family (all ORACLE) | mean | median | <2 A |
+|---|---|---|---|
+| production uniform top-75 average (deployable, for scale) | 3.0483 | 2.8373 | 0.294 |
+| ORACLE best single member of the top-75 | 2.3062 | | |
+| ORACLE best single member of the pool | 1.7108 | | |
+| ORACLE random 27-dim affine subspace of the 500 windows, mean of 8 | 0.6083 | 0.5235 | 1.000 |
+| ORACLE circuit family, MEAN over 5 starts | 0.7441 | 0.6655 | 1.000 |
+| **ORACLE circuit family, best of 5 starts** | **0.2884** | **0.2364** | **1.000** |
+| ORACLE affine hull of the top-75 (least squares, fixed frame) | 0.0000 | | |
+| ORACLE affine hull of all 500 | 0.0000 | | |
+
+The affine-hull rows are zero by DIMENSION COUNTING, not by skill: a structure has 3n <= 48
+coordinates and 75 generic windows span the whole space, so any affine family with >= 3n+1
+members contains every structure exactly. This is why S10-5's affine-500 bound was 0.035 A.
+The ceiling that means something is the 27-PARAMETER one: the circuit's curved family reaches
+0.288 A (best of 5) against 0.608 for a random linear subspace of the same parameter count.
+Per length (n = 9..16): circuit 0.12 / 0.11 / 0.20 / 0.21 / 0.23 / 0.37 / 0.47 / 0.46; random
+27-subspace 0.00 / 0.00 / 0.19 / 0.50 / 0.63 / 0.88 / 1.09 / 0.97 (for n <= 10 the 26 affine
+degrees of freedom exceed the 3n-6 shape degrees of freedom and both families are complete).
+
+The best-of-5 is an order statistic: `best_of_k_within` on the (126 x 5) start matrix reads
+observed -0.456 vs valid null -0.527 (116% accounted), k_eff 3.38; start seed 4 is a bad basin
+on every target (mean 1.973) and seeds 0/2/3 sit at 0.36 to 0.42; the single-start ceiling is
+0.36 to 0.42 A, and the best-of-5 figure 0.288 carries a best-of-K premium of about 0.1 A.
+
+The four contrasts, ST.fmt verbatim (all ORACLE, point cloud):
+  ORACLE circuit ceiling vs production (point cloud)
+    a 0.2884 (med 0.2364)   b 3.0483 (med 2.8373)   n=126
+    effect -2.7600   median -2.5805   SE 0.1351   MDE 0.3785   effect/MDE -7.29
+    iid  CI95 [-3.0288, -2.5065]
+    fold CI95 [-2.8944, -2.6193]   folds same sign 5/5   per-fold 0:-2.500 1:-2.766 2:-2.700 3:-2.984 4:-2.850
+    126W/0L/0T   worst degradation -0.1291 (1S9Z)   p90 -1.0208   power 1.00  Type-M 1.00
+    concentration: drop-top10 -2.4764 vs uniform-effect null p10/p50/p90 -2.6512/-2.4794/-2.3139 -> pctile 0.509
+    VERDICT: BETTER
+  ORACLE circuit ceiling vs ORACLE random-27-subspace ceiling (point cloud)
+    a 0.2884 (med 0.2364)   b 0.6083 (med 0.5235)   n=126
+    effect -0.3199   median -0.3059   SE 0.0273   MDE 0.0766   effect/MDE -4.18
+    iid  CI95 [-0.3748, -0.2653]
+    fold CI95 [-0.3439, -0.2940]   folds same sign 5/5   per-fold 0:-0.311 1:-0.268 2:-0.309 3:-0.360 4:-0.346
+    98W/28L/0T   worst degradation +0.2214 (5W52)   p90 +0.0921   power 1.00  Type-M 1.00
+    concentration: drop-top10 -0.2716 vs uniform-effect null p10/p50/p90 -0.3074/-0.2716/-0.2360 -> pctile 0.500
+    VERDICT: BETTER
+  ORACLE circuit ceiling vs ORACLE affine-75 ceiling (point cloud)
+    a 0.2884 (med 0.2364)   b 0.0000 (med 0.0000)   n=126
+    effect +0.2884   median +0.2364   SE 0.0173   MDE 0.0484   effect/MDE +5.96
+    iid  CI95 [+0.2560, +0.3234]
+    fold CI95 [+0.2655, +0.3105]   folds same sign 5/5   per-fold 0:+0.272 1:+0.251 2:+0.279 3:+0.329 4:+0.307
+    0W/126L/0T   worst degradation +0.8495 (7JS6)   p90 +0.5771   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.3087 vs uniform-effect null p10/p50/p90 +0.2858/+0.3086/+0.3320 -> pctile 0.501
+    VERDICT: WORSE
+  ORACLE circuit ceiling vs ORACLE best single member of top-75 (point cloud)
+    a 0.2884 (med 0.2364)   b 2.3062 (med 2.2616)   n=126
+    effect -2.0178   median -2.0210   SE 0.1115   MDE 0.3125   effect/MDE -6.46
+    iid  CI95 [-2.2343, -1.8094]
+    fold CI95 [-2.1217, -1.8883]   folds same sign 5/5   per-fold 0:-1.787 1:-1.953 2:-2.054 3:-2.154 4:-2.125
+    126W/0L/0T   worst degradation -0.0928 (1S9Z)   p90 -0.5213   power 1.00  Type-M 1.00
+    concentration: drop-top10 -1.7760 vs uniform-effect null p10/p50/p90 -1.9159/-1.7786/-1.6450 -> pctile 0.508
+    VERDICT: BETTER
+
+Sign structure and geometry of the ORACLE optimum (`oracle_circ` fields): 49% of the weights
+are negative, negative mass sum |w_-| = 10.6 (a convex combination has 0), effective members
+1/sum w^2 = 0.78 (below one: the weights are large and cancelling), denominator sum psi 0.77.
+Rg 6.59 against the pool's 6.80 and production's 6.21; mean virtual CA-CA bond 3.77 against
+the pool's 3.81 and production's 2.96: THE SIGNED COMBINATION IS NOT CONTRACTED. The convex
+average shrinks the chain by 22% (S25); the ORACLE signed combination keeps native bond lengths.
+
+What the native-free objective term thinks of it (the recognition question, previewed with an
+ORACLE structure): S~ (the surrogate distogram Bayes risk, PREREG 2.3) at the ORACLE optimum is
+2.094 against 1.674 at production, and the ORACLE structure scores LOWER (better) on only
+25/126 targets; the shipped S says 2.095 vs 1.683, 26/126. The objective prefers the contracted
+average to a structure 0.29 A from the native on 80% of targets. Recognition arms are running;
+this number says what they are up against (S8-9's 37th percentile, seen from the other side).
+
+Built chain: pending; the projection job was killed by the governor at 95.8% RAM after 20/126
+(`s26/governor.log` 19:43:23) and is relaunched from its checkpoint as `s28A_chain_oracle_r2`.
+The ORACLE emitted ceiling is posted as the next entry, not quoted here.
+
+Verdict: F3's prior held (ceiling far below 2.306 and above 0.000). EXPRESSIVITY IS NOT THE
+BARRIER for this family; the whole question is recognition, and the objective's own preference
+for the average over the ORACLE structure on 101/126 targets is the registered reason to
+expect it to fail.
