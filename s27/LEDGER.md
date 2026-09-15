@@ -1461,3 +1461,98 @@ both seeds, production as the comparator: matched. Verdict: STANDS WITH CAVEAT. 
     (contract addendum 1); no B2 endpoint number is read before both are posted.
 Artefacts of this check: this entry; `s27/PREREG_S28_A.md` (addendum 4), `s27/PREREG_S28_B.md`
 (addendum 1). The C2 prereg (`s27/PREREG_S28_C2.md`) is checked when it lands.
+
+## S28-L23b -- A2.1 ORACLE DIAGNOSTIC: AT THE PRODUCTION POINT THE SHIPPED OBJECTIVE'S STEEPEST-DESCENT DIRECTION HAS COSINE -0.03 (SE 0.02) WITH THE DIRECTION TO THE NATIVE, 56/126 POSITIVE; -0.14 ON FAIL18; NO S27 CHANNEL DOES BETTER (2026-09-14 21:40, A2; re-appended 21:58 after a write race with S28-L23 lost the first copy)
+
+EVERY COSINE HERE IS ORACLE (u is the direction from the production cloud to the native).
+Pre-registered `s27/PREREG_S28_A.md` ADDENDUM 4, A2.1. Artefacts:
+`s27/results/s28_A2_cosine_rows.jsonl` (126 rows), `s27/results/s28_A2_summary.json`
+(`cosine`, `text`), job `s26/jobs_done/s28A2_cosine_126.json` (60 s, peak RSS 0.298 GB). Code
+`s27/s28_A2_local.py`, tests `tests/test_s28_A2.py` (5 pass: analytic gradients vs finite
+differences, rigid-body removal, the circuit step's displacement, NaN-poison of the ladder).
+
+Setup: C0 = the DIS top-75 uniform average in its medoid frame (anchored 3.048338); g = dS~/dC
+(the shipped Bayes risk read by linear interpolation, analytic); u = (native Kabsch-aligned
+onto C0) - C0; rigid-body components (3 translations, 3 infinitesimal rotations about the
+centroid) projected out of both; cos(-g, u) per target. RG_LAW and EXVOL analytic; DISTPOT,
+CONTACT, ENV, CAGEO are histogram lookups (zero gradient almost everywhere) and get a smoothed
+central difference at h = 0.5 A, labelled so; NaN where the smoothed gradient is zero (EXVOL has
+active pairs on 16/126, CONTACT on 77, ENV on 92).
+
+  DIS (analytic)
+  all 126                                  mean -0.034  SE 0.021  median -0.043  positive 56/126  sign-test p 0.247
+  FAIL18                                   mean -0.143  SE 0.066  median -0.164  positive 6/18  sign-test p 0.238
+  other 108                                mean -0.016  SE 0.022  median -0.022  positive 50/108  sign-test p 0.501
+
+  RG_LAW (analytic)
+  all 126                                  mean +0.034  SE 0.033  median +0.021  positive 66/126  sign-test p 0.656
+  FAIL18                                   mean +0.138  SE 0.143  median +0.286  positive 12/18  sign-test p 0.238
+  other 108                                mean +0.017  SE 0.030  median +0.004  positive 54/108  sign-test p 1
+
+  EXVOL (analytic)
+  all 126                                  mean -0.035  SE 0.030  median -0.038  positive 7/16  sign-test p 0.804
+  FAIL18                                   mean -0.089  SE 0.046  median -0.101  positive 1/4  sign-test p 0.625
+  other 108                                mean -0.016  SE 0.036  median +0.006  positive 6/12  sign-test p 1
+
+  DISTPOT (smoothed FD, step function)
+  all 126                                  mean -0.002  SE 0.015  median -0.011  positive 60/126  sign-test p 0.656
+  FAIL18                                   mean -0.052  SE 0.049  median -0.057  positive 6/18  sign-test p 0.238
+  other 108                                mean +0.007  SE 0.015  median +0.001  positive 54/108  sign-test p 1
+
+  CONTACT (smoothed FD, step function)
+  all 126                                  mean +0.030  SE 0.017  median +0.048  positive 44/77  sign-test p 0.254
+  FAIL18                                   mean +0.052  SE 0.044  median +0.065  positive 7/13  sign-test p 1
+  other 108                                mean +0.026  SE 0.019  median +0.046  positive 37/64  sign-test p 0.26
+
+  ENV (smoothed FD, step function)
+  all 126                                  mean -0.006  SE 0.020  median -0.006  positive 45/92  sign-test p 0.917
+  FAIL18                                   mean -0.082  SE 0.048  median -0.068  positive 4/15  sign-test p 0.118
+  other 108                                mean +0.009  SE 0.021  median +0.017  positive 41/77  sign-test p 0.649
+
+  CAGEO (smoothed FD, step function)
+  all 126                                  mean +0.010  SE 0.013  median +0.014  positive 74/126  sign-test p 0.0609
+  FAIL18                                   mean +0.043  SE 0.022  median +0.030  positive 15/18  sign-test p 0.00754
+  other 108                                mean +0.004  SE 0.015  median +0.010  positive 59/108  sign-test p 0.387
+
+  random-direction reference: mean |cos| of a random shape field with u = 0.140 (the scale of a meaningless cosine at 3n-6 dof)
+  |grad S~| RMS per atom: mean 0.0488 A^-1; |u| RMS (distance to the native in the frame): mean 3.048 A
+  Spearman(cos_DIS, production RMSD) = -0.372 (n=126)
+
+Lane D's S28-L23 caveat (a), the cosine's null: 16 random shape fields per target (rigid-body
+removed) give mean |cos| 0.140 with u over 126 (D's estimate sqrt(2/(pi(3n-6))) = 0.12 to
+0.18); the ORACLE cosine of the distogram, -0.034 with SE 0.021, is inside that null in
+magnitude and below it in sign. The per-target random |cos| values (16 per target) are in
+`cos_random_ref` in every row, so the 95th percentile and the FAIL18 / 108 split of the null
+are recomputable from the artefact.
+
+Reading (ORACLE diagnostic):
+1. The distogram's gradient at the pipeline's own output carries no directional information
+   about the native: mean cosine -0.034 (SE 0.021), median -0.043, 56/126 positive (sign test
+   p 0.25). Steepest descent on the shipped objective from production is, on average, a random
+   direction with a slight lean AWAY from the native. This is the LOCAL statement behind
+   S28-L18b's global one (the objective's minimiser is away from the native) and behind S15's
+   3.321 and S8-9's 37th percentile: not only is the optimum in the wrong place, the first step
+   is uninformative.
+2. The regime split, as the prior said to check: on FAIL18 the cosine is -0.143 (SE 0.066,
+   6/18 positive), on the 108 -0.016 (SE 0.022, 50/108). Where the distogram is wrong its
+   gradient points away from the native; where it is right the gradient is orthogonal.
+   Spearman(cos_DIS, production RMSD) = -0.372 over 126: the worse the target, the more the
+   objective's descent direction opposes the native. That is the sequence-conditioning sign
+   flip (memory: blind beats shipped on FAIL18) seen from the objective's side, and it is NOT
+   "positive on the 108": the 108 are at zero, not above it.
+3. No S27 channel is locally informative either: RG_LAW +0.034 (SE 0.033), DISTPOT -0.002,
+   CONTACT +0.030, ENV -0.006, CAGEO +0.010 (SE 0.013; 74/126 positive, sign test p 0.06;
+   15/18 on FAIL18, p 0.008, at a mean of +0.04, one of 21 sign tests in this table and a
+   magnitude a third of the random reference: recorded, not a result). The distogram is the
+   most informative ranker on this pool (S27) and its gradient is as blind as the rest.
+4. What this predicts for A2.2 (deployable): a step of e A along -g should cost about what a
+   random direction of the same size costs, and more on FAIL18; the prior stands.
+Answers to the rest of S28-L23's caveats, before any A2.2 number: (b) any best e over the grid
+of three is priced with `best_of_k_within`, for the step arm and the circuit arm; (c) on the
+chain the step is paired against the mean of the SAME two random draws (0 and 1) that are
+projected, said so in the entry, and a best-of-2 is an order statistic; (d) production is
+re-projected in the same job; (e) the circuit arm's baseline C(theta_P) is quoted with its
+residual RMS to C0 and its own RMSD to the native, and its step is read against that baseline.
+A2.2 (point cloud, job `s28A2_ladder_126`) is running; its built chain runs after the primary
+chain job (`s28A_chain_primary_1`, suspended by the governor at 64/126 at 21:28, resumed) has
+landed and its verdict is posted.
