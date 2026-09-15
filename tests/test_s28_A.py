@@ -283,3 +283,34 @@ def test_adam_matches_run_cvar_vqe_arithmetic_on_trace():
     th, f, info, tr = A.adam(lambda x: A.objective_theta(circ, x, enc.E, 0.2, 0.5, 0.0, fr, sur), th0, 40, 0.15, trace_every=20)
     assert [t for t, _ in tr] == [0, 20, 40]
     assert tr[-1][1] <= tr[0][1]                      # the free energy fell
+
+
+def test_replace_retry_survives_transient_permission_error(tmp_path, monkeypatch):
+    """Windows refuses os.replace on an open target; the store retries (S26 L59's guard)."""
+    src = tmp_path / "a.tmp"; dst = tmp_path / "a.npz"
+    src.write_bytes(b"x"); dst.write_bytes(b"old")
+    real = os.replace
+    calls = {"n": 0}
+
+    def flaky(a, b):
+        calls["n"] += 1
+        if calls["n"] <= 2:
+            raise PermissionError(5, "Access is denied")
+        return real(a, b)
+    monkeypatch.setattr(A.os, "replace", flaky)
+    A.replace_retry(str(src), str(dst), tries=4, wait=0.0)
+    assert dst.read_bytes() == b"x" and calls["n"] == 3
+    src.write_bytes(b"y"); calls["n"] = -10
+    with pytest.raises(PermissionError):
+        A.replace_retry(str(src), str(dst), tries=3, wait=0.0)
+
+
+def test_structs_store_merges_across_phase_files(tmp_path, monkeypatch):
+    monkeypatch.setattr(A, "STRUCTS", str(tmp_path))
+    cand = type("c", (), dict(seq="ACDE", fold=1, n=4))()
+    A._save_structs("XXXX", dict(prod=np.ones((4, 3))), cand)
+    A._save_structs("XXXX", dict(circ=np.zeros((4, 3))), cand, suffix="_recog")
+    A._save_structs("XXXX", dict(other=np.full((4, 3), 2.0)), cand, suffix="_recog")   # merge within a phase
+    assert sorted(os.listdir(tmp_path)) == ["XXXX.npz", "XXXX_recog.npz"]
+    with np.load(tmp_path / "XXXX_recog.npz") as z:
+        assert set(z.files) >= {"circ", "other", "seq", "fold", "n"}

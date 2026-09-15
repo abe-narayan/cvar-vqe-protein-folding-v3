@@ -647,7 +647,7 @@ def run_recog_target(pdb, seed=0, long_diag=True):
                     S_smooth=float(sur.value_grad(C)[0]) if np.isfinite(C).all() else float("nan"))
         finish("untr_%d" % d, C, denom, w, info)
     row["secs"] = time.time() - t0
-    _save_structs(pdb, structs, cand, merge=True)
+    _save_structs(pdb, structs, cand, merge=True, suffix="_recog")
     return row
 
 
@@ -658,30 +658,50 @@ def oracle_rmsd_of(C, cand):
     return float(I.ca_rmsd(C, cand.nat_ca))
 
 
-def _save_structs(pdb, structs, cand, merge=True):
+def _save_structs(pdb, structs, cand, merge=True, suffix=""):
+    """Atomic per-target structure store.  Each PHASE writes its own file (`suffix`), so no two
+    jobs ever read-modify-write the same npz; `run_chain_target` merges them on read."""
     os.makedirs(STRUCTS, exist_ok=True)
-    f = os.path.join(STRUCTS, f"{pdb}.npz")
+    f = os.path.join(STRUCTS, f"{pdb}{suffix}.npz")
     old = {}
     if merge and os.path.exists(f):
-        z = np.load(f)
-        old = {k: z[k] for k in z.files}
+        with np.load(f) as z:                      # a context manager: Windows cannot replace an open file
+            old = {k: np.array(z[k]) for k in z.files}
     old.update({k: np.asarray(v, float) for k, v in structs.items()})
     old["seq"] = np.array(cand.seq); old["fold"] = np.array(int(cand.fold)); old["n"] = np.array(int(cand.n))
     tmp = f + f".tmp{os.getpid()}.npz"
     np.savez_compressed(tmp, **old)
-    os.replace(tmp, f)
+    replace_retry(tmp, f)
+
+
+def replace_retry(tmp, f, tries=8, wait=0.5):
+    """`os.replace` with retries on PermissionError (Windows refuses to replace an open file;
+    `s26/governor.py :: write_json_atomic` has the same guard, S26 L59)."""
+    for k in range(int(tries)):
+        try:
+            os.replace(tmp, f)
+            return
+        except PermissionError:
+            if k == tries - 1:
+                raise
+            time.sleep(wait)
 
 
 def run_chain_target(pdb, arms):
     """Phase 3: the BUILT CHAIN of stored structures through the production projection.  ORACLE
     scoring of the emitted chain against the native, post hoc."""
-    z = np.load(os.path.join(STRUCTS, f"{pdb}.npz"))
+    z = {}
+    for suffix in ("", "_recog"):
+        f = os.path.join(STRUCTS, f"{pdb}{suffix}.npz")
+        if os.path.exists(f):
+            with np.load(f) as zz:
+                z.update({k: np.array(zz[k]) for k in zz.files})
     seq, fold = str(z["seq"]), int(z["fold"])
     u = I.load_univ(pdb)
     nat = u["nat_ca"]
     out = {}
     for a in arms:
-        if a not in z.files:
+        if a not in z:
             out[a] = dict(rmsd_chain=float("nan"), missing=True)
             continue
         C = np.asarray(z[a], float)
