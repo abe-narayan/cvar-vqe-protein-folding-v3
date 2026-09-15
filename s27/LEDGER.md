@@ -1868,3 +1868,45 @@ target) is queued behind the governor and reports in its own entry.
 It collided with lane D's S28-L26 (the check of S28-L25), which was appended between A's read
 of the tail and A's append. Content unchanged. From here on lane A reads the tail and appends
 in one process.
+
+## S28-L27 -- ADVERSARY CHECK OF LANE A's BUILT-CHAIN VERDICT (the entry headed "S28-L26 -- VERDICT ON THE BUILT CHAIN", a number collision with my S28-L26; read as S28-L26b) AND A SCOPE CORRECTION OF MY S28-L18 (2026-09-14 22:12, lane D)
+Question: does the refutation stand, and is anything in it a hidden positive? Every number
+recomputed from `s27/results/s28_A_chain_rows.jsonl` (126 rows) with `ST.compare`,
+`s12.instrument.FAIL18` and `ST.best_of_k_within`.
+- Contrasts on the built chain, production re-projected in the same job: circ lam 0.3 +0.2362
+  (SE 0.0568, MDE 0.1591, 1.48x, fold CI [+0.128, +0.327], 5/5, 52W/74L), lam 1 +0.2260 (1.29x,
+  4/5, Type-M zone), lam 3 +0.2638 (1.59x, 5/5): identical to the entry to four decimals.
+- FAIL18 / 108 (mine agrees with the entry): lam 0.3 -0.073 on FAIL18 (0.16x, 10W/8L, NOT
+  MEASURED) and +0.288 on the 108 (1.73x, fold CI [+0.224, +0.352], WORSE); lam 1 -0.073 /
+  +0.276 (1.54x); lam 3 -0.026 / +0.312 (1.84x). The harm is carried by the 108; the 18 are a
+  coin toss. S27 L9's regime pattern, no switch.
+- The lam grid as an order statistic: observed -0.303, null -0.273, 90% accounted, k_eff 3.00,
+  split-half -7%: NOT A SIGNAL. The nested held-out arm is WORSE (+0.266, 1.54x, 5/5). Correct.
+- Leakage / poison: the chain phase projects stored clouds and reads the native only in the
+  scorer (S28-L10 item 3; `tests/test_s28_D.py`); the recognition phase is native-free end to
+  end (S28-L10 item 2). The ORACLE arm is labelled in every line it appears.
+- Cosmetic-variant test: not a re-parameterisation of the convex average (S28-L20); new
+  relative to S26/S27; the entry's (b) is the right statement.
+- Three-way split: the entry's (c) matches S28-L20's reading; the failing leg is the objective.
+- Type-M: lam 1 at 1.29x is in the zone with the same sign as the other two at 1.48x and
+  1.59x; the entry flags it. Say "worse at every lam; the size at lam 1 is in the Type-M zone".
+Verdict: STANDS (REFUTED for accuracy; F1 silent; F2 moot; the ORACLE ceiling 0.252 A emitted
+is a diagnostic and labelled so). Nothing positive is hidden in the strata, the grid or the
+controls. No seed-1 run is owed.
+
+SCOPE CORRECTION OF MY S28-L18 (the built chain's numerical floor). S28-L18 measured the
+production cloud re-projected by lane A against S27's chain rows on the 22 targets then
+available: max |diff| 0.0186, mean 0.0025. On all 126 (`s28_A_chain_rows.jsonl :: prod` vs
+`chain_rows.jsonl :: DIS`, clouds equal to 5.7e-14): mean difference -0.0056, 12 targets above
+0.02, 3 above 0.1, and 2LNG at -0.513, 9BFL -0.160, 2NDN -0.115. The floor's TAIL is 0.5 A on
+one target in 126, not 0.02; the mean of 126 moves by 0.006 A (3.2071 vs 3.2126). The reading
+of S28-L18 stands and sharpens: the multi-start projection's branch choice flips under
+floating-point input differences, and on a few targets the branches are 0.1 to 0.5 A apart
+(S26 L88's degeneracy seen from the reproducibility side). Consequences: (a) any built-chain
+contrast whose two sides come from different code paths carries a per-target floor with a
+0.5 A tail and a mean floor near 0.006 A; (b) the production anchor itself is 3.2126 (S27's
+rows) or 3.2071 (lane A's re-projection) depending on the path, and an entry must say which;
+(c) both are inside every MDE quoted in this sprint, so no verdict changes. Recorded as
+`s27/RETRACTIONS_S28.md` R2 (my own scope correction, 22 -> 126 targets).
+Artefacts: `s27/results/s28_A_chain_rows.jsonl`, `s27/results/chain_rows.jsonl`; the per-target
+tail is in this entry.
