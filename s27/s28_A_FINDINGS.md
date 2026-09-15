@@ -1,3 +1,5 @@
+DRAFT (paused 2026-09-14 23:30 on the user's order): complete except section 4.3, the A2 step ladder on the built chain (job `s28A2_chain` running, 88/126 at the pause).
+
 # S28 LANE A FINDINGS -- THE AMPLITUDE READOUT (a CVaR-VQE read as a SIGNED combination), AND A2 (the objective's local behaviour at the production point)
 
 Sprint 28, 2026-09-14. Pre-registration `s27/PREREG_S28_A.md` (addenda 1 to 4, every one

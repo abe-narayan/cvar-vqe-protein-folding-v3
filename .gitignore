@@ -153,3 +153,5 @@ s26/governor_state.json.tmp
 # smoke8: legacy baseline, project_grad = exact / fd / analytic) is a deliverable, so it is
 # whitelisted past the blanket *.log rule above. The per-arm verify/e2_*.log files stay ignored.
 !s26/results/run_equiv2.log
+# S28 lane A per-target structure checkpoints (12 MB), whitelisted on the coordinator's pause order 2026-09-14
+!s27/results/s28_A_structs/*.npz

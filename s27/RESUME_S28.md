@@ -265,3 +265,75 @@ gate below.
 The B2 endpoint runs only after the S28B built-chain verdict entry is posted AND lane D has
 checked it (S28-L23(d), contract addendum 1 item 15). Scope is addendum 2 exactly; no k or J
 beyond k = 10, J = 3. Nothing else is queued or planned for this lane.
+
+## C (paused 2026-09-14 23:30; appended after a write race with lane D's section, whose content stands)
+
+### Ledger entries that are mine
+S28-L6 (Part 1, FAIL18 detector: refuted at F1; ORACLE switch ceiling), S28-L7 and S28-L7b
+(reproduction check, correction of its wall time), S28-L15 (Part 2, point cloud, intermediate),
+S28-L32 (Part 2 verdict on the built chain; D: STANDS at S28-L33), S28-L35 (C2 CA-level audit;
+its "closure falsified by CAGEO" is withdrawn), S28-L37 (accepts D's S28-L36 veto, pool-member
+control reproduced). Pre-registrations: `s27/PREREG_S28_C.md` (base + addenda 1 to 3),
+`s27/PREREG_S28_C2.md` (base + addendum 1). Findings: `s27/s28_C_FINDINGS.md` (Parts 1 and 2
+complete; C2 sections C2.0 to C2.2b written; C2.3 is a draft header, no chain number read).
+
+### Artefacts and completeness
+| path | state |
+|---|---|
+| `s27/results/s28_C_features.json` | 126/126, complete |
+| `s27/results/s28_C_fail18.json` | complete (blocks, singles, singles_max_null, oracle_switch) |
+| `s27/results/s28_C_null_pred_*.npy` (5) | per-permutation predictions; only needed for a switched arm, which was not run |
+| `s27/results/s28_C_reproduce.json` | 12 values, max deviation 0.0 |
+| `s27/results/s28_C_per_target.md` | the per-target table (FAIL18 first); `python s27/s28_C_fail18.py table` regenerates it |
+| `s27/results/s28_C_readout_cloud_rows.jsonl` / `_summary.json` | 29 arms x 126, complete |
+| `s27/results/s28_C_readout_chain_rows.jsonl` / `_summary.json` | 12 arms x 126 (+1 probe row), complete, no duplicates |
+| `s27/results/s28_C2_ca_rows.jsonl` / `s28_C2_ca_summary.json` | 126/126 (control draws 0-3, with geometry), complete; the summary has ties-at-0.5, geometry, circ_s0 contrasts, head-to-head, the linear combination, the pool-member control |
+| `s27/results/s28_C2_ca_rows_seed2.jsonl` / `s28_C2_ca_seed2_summary.json` | 126/126 (control draws 4-7), complete (its summary predates the pool-member-control code; `python s27/s28_C2_recog_audit.py analyse_ca --tag seed2` regenerates it with that control) |
+| `s27/results/s28_C2_chain_rows.jsonl` | LIVE, written by job `s28C2_chain2` (70/126 at 23:27); not committed while the job runs |
+| `s27/results/s28_C2_chain_rows_checkpoint_70.jsonl` | committed copy of the first 70 rows |
+| `s27/results/s28_C2_chain_rows_prepatch_partial11.jsonl` | 11 rows from the first chain launch (module without the geometry fields), superseded, kept for the record |
+| `tests/test_s28_C.py` (11), `tests/test_s28_C2.py` (6) | all pass |
+
+### C2 CA-audit result state
+POSTED: S28-L35 (seed 0 = draws 0-3; the table is from `s28_C2_ca_summary.json` after the
+ties / geometry / circ_s0 patch; seed-2 contrasts beside it from `s28_C2_ca_seed2_summary.json`).
+ANSWERED: S28-L36 (D's pool-member veto) in S28-L37, the control reproduced to the third decimal
+from `s28_C2_ca_summary.json :: pool_member_control`. Standing reading: the closure claim ("no
+scorer in the S27 library recognises the ORACLE structures") stands; CAGEO vetoed; CONTACT /
+CONTACT_LL marginal (Type-M on the pool-member control, which was not registered); the learned
+linear combination is anti-production (prefers random signed combinations on 0.89; head-to-head
+ORACLE vs random 0.53).
+
+### s28C2_chain2
+Job `s28C2_chain2` (jobrun, agent S28C, tag CPU, est 0.6 GB; the CA jobs peaked at 0.35 GB),
+8 projections per target, per-target checkpoint in `s27/results/s28_C2_chain_rows.jsonl`,
+resumable. If it is killed, relaunch with
+`python s26/jobrun.py --agent S28C --tag CPU --name s28C2_chain3 --est-ram 0.6 -- python s27/s28_C2_recog_audit.py chain`
+(it skips the pdbs already in the rows file). When 126 rows exist:
+`python s27/s28_C2_recog_audit.py analyse_chain`
+writes `s27/results/s28_C2_chain_summary.json` and prints the CA-level tables for 31 scorers
+(the 16 backbone scorers on the projected chains + the 15 CA scorers re-evaluated on them,
+suffix `@chain`; one max-over-31 sign-flip null; the pool-member control for every scorer with
+a pool channel, the chain ones against the pool members' real-torsion values in `s27/cache`;
+geometry of every projected structure; ties at 0.5; circ_s0 contrasts). It feeds the C2
+built-chain ledger entry (next number after the ledger tail; "C2 RECOGNITION AUDIT, BUILT
+CHAIN ...") and section C2.3 of `s27/s28_C_FINDINGS.md`. Registered expectation (S28-L36(a)):
+CAGEO's preference collapses on the projected chains.
+
+### Lane D's S28-L34 caveats and their state
+(a) ties at 0.5 with tie counts: DONE (S28-L35 table carries tie counts).
+(b) geometry beside every preference: DONE at the CA level (bond / Rg of every ladder point and
+    control in S28-L35); the chain rows carry `geom_chain` / `geom_cloud` and `analyse_chain`
+    prints them.
+(c) closure decided on circ_s0 as well: DONE (circ_s0 contrasts and clause check in the summary
+    and the entry).
+(d) FAIL18 stratum as k of 18: DONE (`fail18_k`; the entry's table).
+(e) chain multiplicity over all 31 scorers: IMPLEMENTED in `analyse_chain` (the `@chain`
+    merge), not yet run (waits for the job).
+S28-L36(b) (pool-member control on the chain for all 31): IMPLEMENTED in
+`pool_member_control`, runs inside `analyse_chain`, not yet run.
+
+### Next three steps, as commands
+1. `python s27/s28_C2_recog_audit.py analyse_chain` (after `wc -l s27/results/s28_C2_chain_rows.jsonl` reads 126; if the job died, relaunch with the jobrun line above first).
+2. Post the built-chain C2 entry: `grep -n '^## S28-L' s27/LEDGER.md | tail -1` for the number; compose from `s27/results/s28_C2_chain_summary.json` (pref table for 31 scorers, pool-member control, max-over-31 null, the linear combination and its controls, geometry, FAIL18 k/18; `ST.fmt` verbatim for any contrast that clears a clause); append; `git add s27/LEDGER.md s27/results/s28_C2_chain_rows.jsonl s27/results/s28_C2_chain_summary.json && git commit` with the two trailer lines.
+3. Fill `s27/s28_C_FINDINGS.md` section C2.3 from the same summary (the closure verdict on the built chain; what damaged expectations; what was not done: AMB deferred, the seed-2 pool-member control), update `s27/STATUS.md` under `## C`, and commit.
