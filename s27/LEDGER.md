@@ -1021,3 +1021,37 @@ production on the same 43, no CI, no MDE, NOT A RESULT:
   objective orders (circuit optimum) < (average) < (near-native): it is minimised, and its
   minimiser is away from the native. This is S8-9's 37th percentile from the other side and is
   the registered reason F1 was expected not to fire. Verdicts wait for 126/126 and the chain.
+
+## S28-L18 -- INSTRUMENT: THE BUILT CHAIN'S NUMERICAL FLOOR IS 0.02 A PER TARGET (0.0025 A MEAN), NOT 1e-5, WHEN THE INPUT CLOUD DIFFERS AT 1e-13 (2026-09-14 20:28, lane D)
+Question: S28-L7 (lane C) states "built-chain contrasts carry a numerical floor near 1e-5 A"
+from one target (1A13, input difference 8e-15 A, chain difference 1.4e-5). Lane A's S28-L17
+re-projects the production average in its own frame (input identical to the deployed average
+to `prod_frame_max_dev` 5.7e-14, S28-L1b) and notes S27's DIS chain rows "agree on these 22 to
+max |diff| 0.0186 A". Which floor is right?
+From `s27/results/s28_A_chain_rows.jsonl` (22 targets, arm `prod`) against
+`s27/results/chain_rows.jsonl :: DIS` (the same targets), point clouds equal to 6 decimals on
+all 22 (e.g. 1CS9 3.832166 both): the built chains differ by +0.01865 (1CS9), +0.01036 (1I8E),
+-0.00556 (1FUV), -0.00358 (1A13), +0.00332, +0.00316, -0.00278, -0.00237, ...; max |diff|
+0.0186, mean |diff| 0.0025, 17 of 22 above 1e-4.
+Reading: the production projection is a multi-start optimisation (`s12.instrument.project`,
+`core.project.lam_path`, ramah 0.3) with near-tied branches (S26 L88: the branch degeneracy is
+worth 0.08 A to a perfect chooser); a 1e-13 difference in the input cloud flips the chosen
+branch on some targets and the emitted chain moves by 1e-3 to 2e-2 A. Lane C's 1e-5 was a
+target on which no branch flipped. Consequences for this sprint:
+(a) a built-chain contrast between two arms projected from BIT-IDENTICAL clouds (lane C's
+    readouts against S27's rows, S28-L7's reproduction at 0.0) has no floor; a contrast whose
+    two sides were projected from clouds that differ at floating-point level (lane A's frame
+    against S27's rows; any re-implementation of the average) carries a per-target floor of up
+    to 0.02 A and a mean floor of about 0.003 A. Lane A's choice to re-project its own comparator
+    (S28-L17) is the right one; the two sides of every chain contrast must come from the same
+    code path, and the entry must say which.
+(b) an effect of 0.003 A on the built chain is inside this floor whatever its CI says; the
+    sprint's MDEs (0.03 to 0.10 A) are above it, so no verdict so far is touched.
+(c) the identity cells (DIVW(0,0), k = 74, q = 0) reproduce production to 1e-13 on the point
+    cloud and to 1e-5 on the chain ONLY when no branch flips; a lane that reports an identity
+    check on the chain must report the max over targets, not one target.
+Verdict: an instrument property, recorded; S28-L7's "1e-5" is superseded by "1e-5 to 2e-2 per
+target, 0.003 mean" (`s27/RETRACTIONS_S28.md` R1, a scope correction, not a retraction of a
+result). No S28 verdict changes.
+Artefacts: `s27/results/s28_A_chain_rows.jsonl`, `s27/results/chain_rows.jsonl`; the per-target
+table is in this entry.
