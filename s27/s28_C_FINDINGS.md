@@ -286,5 +286,27 @@ scorer in the library that reads local CA geometry rather than pair distances or
 which is why it is the one that does not prefer the contraction; whether that survives the
 projection (which re-imposes ideal CA geometry on every structure) is the built-chain question.
 
-## C2.3 Built chain
-[filled from `s27/results/s28_C2_chain_summary.json` when job `s28C2_chain2` lands.]
+## C2.2b The pool-member control (S28-L36, lane D; reproduced in S28-L37)
+CAGEO's candidate status is VETOED: a random pool member (a real protein trace with no
+information about the native) beats the contracted production average under CAGEO as often
+(0.618) as the ORACLE structure does (0.611); the paired contrast is -0.007 [-0.027, +0.013],
+0.18x MDE (single start -0.031); head-to-head CAGEO rates the ORACLE structure better than a
+random pool member on 24% of targets and the NATIVE on 31%. CAGEO's +0.19 over RAND_SIGNED is
+protein-like local geometry against scrambled geometry, not nativeness. The closure claim
+stands with this control: no scorer prefers the ORACLE structure to production more often than
+it prefers an arbitrary pool member to production beyond its MDE (CONTACT_LL +0.137 at 1.28x and
+CONTACT +0.137 at 1.18x are the closest, both Type-M, both on a control that was not
+registered; CONTACT also fails the single-start clause). `s27/results/s28_C2_ca_summary.json ::
+pool_member_control`. S28-L35's "closure falsified at the registered bar" is withdrawn
+(`s27/RETRACTIONS_S28.md` R3).
+
+## C2.3 Built chain (DRAFT HEADER; PAUSED 2026-09-14 23:30 ON THE USER'S ORDER)
+Job `s28C2_chain2` was at 70/126 targets when the lane was paused (checkpoint copy
+`s27/results/s28_C2_chain_rows_checkpoint_70.jsonl`; the live file
+`s27/results/s28_C2_chain_rows.jsonl` keeps growing while the job runs). When it lands:
+`python s27/s28_C2_recog_audit.py analyse_chain` writes `s27/results/s28_C2_chain_summary.json`
+(31 scorers: the 16 backbone scorers on the projected chains plus the 15 CA scorers re-evaluated
+on them, one max-over-31 null, the pool-member control for every scorer with a pool channel,
+geometry of every projected structure). Lane D's registered expectation (S28-L36(a)): CAGEO's
+preference collapses on the projected chains because the projection removes the contraction
+that produced it. No chain number has been read.
