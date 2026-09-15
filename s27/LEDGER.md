@@ -354,3 +354,8 @@ built chain: FAIL18 (n = 18) DIS 6.019, DIS+DISTPOT 5.879, DIS+ENV 5.687; the ot
 Verdict: the chain rows are the production projection's own output; S28-L6's ceiling stands on
 them. Operations, no scientific claim.
 
+## S28-L7b -- CORRECTION TO S28-L7: THE JOB'S WALL TIME (2026-09-14 19:36, lane C)
+S28-L7 quotes job `s28C_reproduce` at "189 s"; `s26/jobs_done/s28C_reproduce.json` says wall
+60.2 s, peak RSS 0.322 GB (the 189 s figure was a guess written before the sidecar was read;
+contract rule 11, corrected openly). No other number in S28-L7 changes.
+
