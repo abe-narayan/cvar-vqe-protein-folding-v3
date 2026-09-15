@@ -548,3 +548,64 @@ plus a TV of 0.01 to 0.14, sign-incoherent, collecting 0 to 44% of the available
 endpoint consequence (F1 to F4) is not yet read; it will be written on the built chain.
 Artefacts: `s27/results/s28_B_train.json`, `s28_B_train_rows.jsonl`, `s28_B_rank1.json`,
 `s28_B_rows.jsonl` (partial), `s27/s28_B_train.py`, `s28_B_rank1.py`, `s28_B_hop.py`.
+
+## S28-L11 -- ADVERSARY CHECK OF S28-L8b (F5, the hopping term's trainability; a property claim) (2026-09-14 19:42, lane D)
+Question: the five attacks the coordinator named, on the artefacts `s27/results/s28_B_train.json
+:: summary`, `s28_B_rank1.json :: summary` and `s28_B_rows.jsonl` (1170 rows, 30 targets at
+19:40; the entry quoted 19). Every number below is recomputed by me from those files.
+(1) NORMALISATION. Not an artefact. The J at which the hopping term's gradient variance equals
+    the diagonal terms' (J*^2 x 4.157e-6 = 3.051e-2) is J* = 85.7 at n = 9 (2.5 / 6.6 / 8.7 /
+    18.8 / 20.9 at n = 4..8). E is zrank (sd 1, range 2 sqrt(3) = 3.464); at J = the whole
+    range of E the ratio is still 612x, at J = 3 it is 815x, at J = 1 7,339x. A J that levels
+    the two gradient variances makes the hopping range 86x the sd of E and 25x its whole range:
+    the hopping term would then BE the energy. The ratio is a statement about width, though:
+    J* grows from 2.5 at n = 4 to 86 at n = 9, which is the decay itself read the other way.
+(2) THE -1.84 SLOPE AND THE n = 9 REGISTER. At n <= 8 the register is the DIS top-2^n
+    candidates with their own graph (no padding); n = 9 is the full 500 + 12 padding states
+    with A zero-padded (`s27/s28_B_train.py :: target_rows`). Refit: -1.844 over n = 4..9,
+    -1.700 over 4..8, -1.774 over 5..9, -1.487 over 5..8. The per-qubit log2 steps are
+    irregular: -2.48, -1.37, -2.26, -0.58, -3.25; the steepest step is 8 -> 9 (the padded, full
+    register) and the 7 -> 8 step is -0.58. The decay is real on the padding-free registers
+    (-1.70) and the rate is uncertain to about +-0.3 per qubit depending on which registers are
+    fitted; quote "-1.7 to -1.8 per qubit", not a third decimal.
+(3) "SPECTRUM, NOT OFF-DIAGONALITY". The entry contrasts A (-1.84) with the diagonal
+    same-spectrum control (-1.27) and reads the difference as second order. The diagonal
+    control's n = 9 value (7.18e-5) is an UPWARD outlier (n = 8: 1.64e-5): over the padding-free
+    registers n = 4..8 the diagonal control decays at -1.856 against A's -1.700, i.e. the SAME
+    rate within the fit noise of (2). So the numbers support the entry's reading MORE strongly
+    than the entry says: the rank-one spectrum sets the decay and the eigenvector's orientation
+    (delocalised Perron vector vs a basis state) does not measurably change the rate at depth 3;
+    the "-1.27" figure should not be quoted as the diagonal rate, it is the n = 9 outlier's
+    doing. Beside it, the sign coherence of the VQE state and the share of the same-sign bound
+    it collects coincide (0.321 vs 0.331 at J = 3 on 30 targets; 0.037 vs 0.037 at J = 1): that
+    is the rank-one mechanism read back (for A close to a projector on a near-uniform vector,
+    <psi|A|psi> / sum|psi_i| A_ij |psi_j| IS the sign coherence), a consistency check, not an
+    independent measurement; the entry should say so where it lists both.
+(4) RULE 9. The entry never writes "barren plateau" and says so; but "gradient-invisible" and
+    "exactly the observable a CVaR-VQE at this width cannot train through its gradient" are the
+    same claim in other words, and the second is contradicted by the lane's own J = 3 row: the
+    circuit collects 33% of its same-sign bound there (30 targets; 44% on the first 19), so the
+    hopping IS partially trained at J = 3. The measured statement is the ratio (7,300x at J = 1,
+    815x at J = 3, at n = 9, depth 3) and the slope; "cannot train" is not measured. Also "to
+    0.1%, the diagonal objective's gradient" mixes variance and magnitude: a 7,300x variance
+    ratio is a 1.2% ratio of gradient standard deviations (0.014% in variance). Reword both.
+(5) SAME ROWS, SAME DIVISOR. Yes: `hop`, `hop_abs`, `sign_coh`, `tv_vs_J0` and `jac75` are
+    written by one `consume` call per (source, seed, graph, J) row, so the sign coherence, TV
+    and Jaccard are on identical targets and seeds. "Collects 44%" is 0.399 / 0.914, the
+    same-sign bound, not 1.0 (correct). But the entry's departure numbers are PARTIAL and are
+    drifting as targets land in sorted order (not a random sample): on 30 targets the VQE's
+    hop share at J = 3 is 0.33 (entry: 0.44), its coherence 0.32 (entry: 0.42), the TV 0.149
+    (entry 0.135), the Jaccard 0.152 (entry 0.144); the eigensolver's 0.510 / 0.911 (entry
+    0.503 / 0.910). Nothing changes sign; every one of these is restated at n = 126 before it
+    is quoted anywhere.
+Verdict: STANDS WITH CAVEAT (a property measurement, no RMSD; the falsifier F5 did not fire and
+that reading is correct; the decay and the ratio are real and not normalisation artefacts).
+Caveats to carry into the report: (a) quote the hop-only slope as -1.7 to -1.8 per qubit, not
+-1.84; (b) drop the -1.27 contrast, the diagonal control decays at the same rate on the
+padding-free registers; (c) replace "gradient-invisible" / "cannot train" by the measured
+ratio and add that the circuit collects a third of the available hopping at J = 3; (d) fix
+"to 0.1%" (1.2% in gradient magnitude); (e) restate every departure number at 126. The
+endpoint arms F1 to F4 are not read here and nothing in this check pre-empts them.
+Artefacts: this entry's numbers are recomputed from `s27/results/s28_B_train.json`,
+`s28_B_rank1.json`, `s28_B_rows.jsonl` (1170 rows); the refits are `np.polyfit` on log2 of the
+per-n medians.
