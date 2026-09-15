@@ -1,4 +1,4 @@
 {
- "max_concurrent": 3,
- "note": "S28 19:50: cap 3; the 19:40-19:47 spike was a Windows servicing worker (1 GB), now gone; RAM 87% with two 0.3 GB lane jobs"
+ "max_concurrent": 2,
+ "note": "S28 20:03: cap 2; user active (Zoom 0.7 GB, chrome 5.7 GB), RAM 95%; third job would be killed"
 }
