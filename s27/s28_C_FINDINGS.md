@@ -218,3 +218,73 @@ resolvable it is worse than a random weight vector of the same shape.
 - Extending the grid beyond addendum 2 (k, q, beta): every cell's transferable choice is the
   identity; more cells would be cosmetic variants of a weighted convex average (coordinator
   steer, addendum 2 item 3).
+
+---
+
+# C2 -- THE RECOGNITION AUDIT (second-wave brief `s27/briefs/S28C2.md`; ORACLE DIAGNOSTIC THROUGHOUT)
+
+Pre-registration `s27/PREREG_S28_C2.md` (base + addendum 1, before the number each governs).
+Code `s27/s28_C2_recog_audit.py`; tests `tests/test_s28_C2.py` (6 pass). Ledger S28-L35 (CA level)
+and the built-chain entry that follows it. Every structure except production and the controls'
+DIRECTIONS is chosen against the native; every number from them is ORACLE; nothing is deployable.
+
+## C2.0 One paragraph
+Which native-free scorer in the S27 library prefers the 0.29 A ORACLE structures the amplitude
+family expresses (S28-L1b) to the 3.05 A production average? At the CA level, 9 of 15 prefer the
+average with the fold CI below 0.5 (DIS on 79%, the consistency scorers on 80 to 98%, DISTPOT,
+RG_LAW, SS_MATCH), EXVOL is uninformative (93 ties), ENV / HP / RG_UNIV are coin tosses, CONTACT
+clears the registered bar by 0.004 on the best-of-5 only, and ONE scorer, CAGEO (the universe-fitted
+CA virtual-angle / virtual-torsion potential), prefers the ORACLE structure on 61% [0.55, 0.69], beats
+the random-signed control by +0.19 [+0.14, +0.25] (second seed +0.17), does so on the single start
+as well, holds on FAIL18 (11/18) and the 108 (0.61), and sits exactly at the 95th percentile of the
+max-over-15 sign-flip null (p 0.050). Head-to-head against a random signed combination at the same
+displacement (production absent) DIS prefers the ORACLE structure on 89% and CAGEO on 96%: the
+scorers are not blind to structure among signed combinations; they rate the contracted average
+above both. The learned linear combination reaches 0.97 held-out but is anti-production (it prefers
+random signed combinations on 0.89 and cannot tell ORACLE from random head-to-head, 0.53).
+
+## C2.1 ORACLE DIAGNOSTIC: the CA-level table (S28-L35)
+`s27/results/s28_C2_ca_summary.json`, `s28_C2_ca_seed2_summary.json` (jobs `s28C2_ca_v2`, 176 s,
+peak RSS 0.348 GB; `s28C2_ca_seed2_v2`, 226 s, 0.343 GB). ORACLE mean RMSD of the ladder: PROD
+3.048, sub0 0.620, circ_s0 0.385, circ_best 0.288, NATIVE 0.000; controls RAND_SIGNED 3.871,
+GAUSS_0.3 3.064, GAUSS_MATCHED 4.170. Geometry (mean virtual bond / Rg): PROD 2.96 / 6.21, the
+ORACLE ladder 3.71 to 3.81 / 6.56 to 6.60, RAND_SIGNED 3.76 / 6.74 (bond-matched to the ORACLE
+structures), GAUSS_MATCHED 5.39 / 7.11. Ties count 0.5.
+
+| scorer | pref(circ_best) [fold CI] | circ_s0 | NATIVE | RAND_SIGNED | vs RAND_SIGNED [fold CI] (seed 2) | h2h vs RAND | ladder rho | FAIL18 k/18 | reading |
+|---|---:|---:|---:|---:|---|---:|---:|---:|---|
+| DIS | 0.206 [0.116, 0.293] | 0.206 | 0.222 | 0.030 | +0.177 [+0.099, +0.250] (+0.167) | 0.887 | -0.18 | 1 | anti |
+| DIS_MEAN | 0.151 [0.098, 0.220] | 0.151 | 0.143 | 0.048 | +0.103 [+0.056, +0.163] (+0.097) | 0.752 | -0.31 | 0 | anti |
+| CONTACT_LL | 0.321 [0.213, 0.421] | 0.313 | 0.329 | 0.093 | +0.228 [+0.126, +0.309] (+0.234) | 0.717 | -0.10 | 3 | anti |
+| DISTPOT | 0.349 [0.264, 0.427] | 0.349 | 0.373 | 0.548 | -0.198 [-0.279, -0.124] (-0.204) | 0.369 | -0.18 | 7 | anti |
+| CONTACT | 0.579 [0.504, 0.643] | 0.548 | 0.567 | 0.438 | +0.141 [+0.075, +0.203] (+0.132) | 0.624 | +0.08 | 10 | marginal (best-of-5 only) |
+| ENV | 0.532 [0.430, 0.634] | 0.524 | 0.516 | 0.458 | +0.073 [-0.033, +0.166] (+0.085) | 0.563 | +0.02 | 10 | neither |
+| HP | 0.544 [0.474, 0.605] | 0.544 | 0.544 | 0.507 | +0.037 [-0.058, +0.119] (+0.045) | 0.557 | +0.01 | 11 | neither |
+| RG_LAW | 0.357 [0.222, 0.474] | 0.373 | 0.357 | 0.317 | +0.040 [-0.079, +0.129] (+0.032) | 0.558 | -0.18 | 5 | anti |
+| RG_UNIV | 0.468 [0.420, 0.521] | 0.460 | 0.468 | 0.349 | +0.119 [+0.080, +0.162] (+0.103) | 0.593 | -0.00 | 6 | neither |
+| EXVOL | 0.464 [0.407, 0.517] | 0.468 | 0.480 | 0.290 | +0.175 [+0.111, +0.241] (+0.196) | 0.685 | +0.03 | 8 | uninformative (93 ties) |
+| CAGEO | 0.611 [0.551, 0.691] | 0.587 | 0.619 | 0.421 | +0.190 [+0.136, +0.252] (+0.169) | 0.962 | +0.42 | 11 | BOTH clauses, on circ_s0 too |
+| SS_MATCH | 0.393 [0.333, 0.444] | 0.381 | 0.333 | 0.493 | -0.100 [-0.172, -0.056] (-0.065) | 0.373 | -0.27 | 7 | anti |
+| CONS_POOL | 0.024 [0.000, 0.057] | 0.024 | 0.024 | 0.137 | -0.113 [-0.182, -0.055] (-0.117) | 0.379 | -0.69 | 1 | anti |
+| DMAP_CONS_POOL | 0.135 [0.107, 0.169] | 0.135 | 0.135 | 0.173 | -0.038 [-0.071, +0.019] (-0.050) | 0.627 | -0.38 | 3 | anti |
+| POOLGO_POOL | 0.202 [0.137, 0.254] | 0.187 | 0.202 | 0.369 | -0.167 [-0.212, -0.128] (-0.144) | 0.415 | -0.46 | 3 | anti |
+
+Multiplicity: best single CAGEO 0.611 against the max-over-15 sign-flip null (mean 0.570, p95
+0.607): p_max 0.050. Linear combination (nested pairwise logistic): 0.968 held-out [0.957, 0.984]
+against a sign-flip null of 0.496; the same rule prefers RAND_SIGNED on 0.887 and GAUSS_MATCHED
+on 0.895; head-to-head ORACLE vs RAND_SIGNED 0.526 [0.393, 0.626]: anti-production, not recognition.
+
+## C2.2 What the audit says about the objective (mechanism, ORACLE diagnostic)
+The NATIVE column tracks the circ_best column within 0.02 on 14/15 scorers: the library's
+dislike is of nativeness relative to the average, not of the ORACLE optimisation. DIS tells the
+ORACLE structure from a random signed combination on 89% and from a Gaussian perturbation on 91%,
+and rates the average above both: the average sits at the posterior's per-pair median by
+construction (S23 L9, S28-L26b(c)). What an objective would have to know: that the Bayes-risk
+minimiser of a 2x over-confident posterior (S25 L2) is a contracted structure, and that a 0.29 A
+structure with native bond lengths scores worse under it than that contraction. CAGEO is the one
+scorer in the library that reads local CA geometry rather than pair distances or pool typicality,
+which is why it is the one that does not prefer the contraction; whether that survives the
+projection (which re-imposes ideal CA geometry on every structure) is the built-chain question.
+
+## C2.3 Built chain
+[filled from `s27/results/s28_C2_chain_summary.json` when job `s28C2_chain2` lands.]
