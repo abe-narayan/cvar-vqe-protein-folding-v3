@@ -30,6 +30,9 @@
 - 2026-09-14 21:00 running: recognition 126/126 done (S28-L18b, point cloud, no verdict: every signed arm worse than production, +0.33 to +0.39 at 2-2.4x MDE; objective minimised away from the native); chain job `s28A_chain_primary_1` running (prod, ORACLE, circuit lam 0/0.3/1/3), ~1 h at current load.
 - next: chain verdict entry (F1/F2 on the built chain, FAIL18 split, nested lam, three-way split), objective diagnostic job, findings rewrite, answer D.
 
+- 2026-09-14 22:00 running: chain job `s28A_chain_primary_1` at 74/126 (suspended once at 94.7% RAM, resumed); A2.1 ORACLE cosine posted (S28-L23b: cos -0.034 SE 0.021, -0.143 on FAIL18; no S27 channel informative); A2.2 ladder point-cloud job `s28A2_ladder_126` running (3.6 s/target).
+- next: primary chain verdict entry (F1/F2, FAIL18 split, nested lam, three-way split, D's L20 caveats), then the A2.2 point-cloud entry, then the A2 chain job; findings rewrite.
+
 ## B
 - 2026-09-14 21:50 running: `s28B_chain` 6/126 (53 to 88 s per target; ETA about 00:00); `s28B_split` and `s28B_mladder` waiting for a slot (cap 3, three lane jobs live); `s28B2_train` queued (priority 10). B2 prereg addendum 1 committed (db85b0a3); `s27/s28_B2_knn.py` + 6 tests committed (9e4e30f3). B2 endpoint stays gated on the chain verdict and lane D's check.
 - next: post the B2 trainability entry when `s28B2_train` lands; the chain verdict entry per arm when `s28B_chain` lands; FINDINGS.
