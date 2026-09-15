@@ -460,6 +460,48 @@ def switch(block="SP+CTRL", alt="DIS+DISTPOT", rule="05", n_rand=N_RAND, seed=0,
     return out
 
 
+def singles_max_null(n_perm=N_PERM, seed=0, res=None):
+    """The best single feature is an order statistic over the 26 singles (contract rule 6,
+    `grid-oracles-are-order-statistics`): price it against the distribution of the MAXIMUM
+    held-out AUROC over the same 26 signed rules under label permutation.  Also a labelled
+    diagnostic: the top singles residualised on length n (native-free), to see whether they
+    are length proxies."""
+    res = res or json.load(open(OUT))
+    pdbs, folds, X, B = blocks()
+    fail = set(I.FAIL18)                                   # ORACLE label
+    y = np.array([1.0 if p in fail else 0.0 for p in pdbs])
+    names = list(SP_NAMES) + list(CTRL_NAMES)
+    rng = np.random.default_rng(seed + 7)
+    obs = {nm: res["singles"][nm]["auroc"] for nm in names}
+    best = max(obs, key=obs.get)
+    mx = np.empty(n_perm)
+    for t in range(n_perm):
+        yp = y[rng.permutation(len(y))]
+        mx[t] = max(auroc(yp, nested_single(X[nm], yp, folds)[0]) for nm in names)
+    out = {"best_single": best, "best_auroc": obs[best], "max_null_mean": float(mx.mean()),
+           "max_null_p50": float(np.percentile(mx, 50)), "max_null_p95": float(np.percentile(mx, 95)),
+           "p_max": float((mx >= obs[best]).mean()), "n_singles": len(names), "n_perm": n_perm}
+    print(f"  best single {best} AUROC {obs[best]:.3f}; max-over-{len(names)} null mean {mx.mean():.3f} "
+          f"p50 {np.percentile(mx, 50):.3f} p95 {np.percentile(mx, 95):.3f}; p_max {out['p_max']:.3f}")
+    # length-residualised diagnostic for the top five
+    n = X["n"]
+    diag = {}
+    for nm in sorted(obs, key=obs.get, reverse=True)[:5]:
+        if nm == "n":
+            continue
+        x = X[nm]
+        A = np.column_stack([np.ones(len(n)), n])
+        resid = x - A @ np.linalg.lstsq(A, x, rcond=None)[0]
+        dec, _ = nested_single(resid, y, folds)
+        rho = float(np.corrcoef(x, n)[0, 1])
+        diag[nm] = {"auroc_residual_on_n": auroc(y, dec), "corr_with_n": rho}
+        print(f"    {nm:20s} corr(x, n) {rho:+.3f}   held-out AUROC after residualising on n {auroc(y, dec):.3f}")
+    out["length_residual_diag"] = diag
+    res["singles_max_null"] = out
+    ST.save_atomic(OUT, res, module_file=__file__)
+    return out
+
+
 def selftest():
     """Synthetic: a planted signal must clear its permutation null; random labels must not.
     No RMSD, no native read."""
@@ -484,7 +526,7 @@ def selftest():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("mode", choices=["features", "selftest", "run", "switch", "reproduce"])
+    ap.add_argument("mode", choices=["features", "selftest", "run", "switch", "reproduce", "singles_null"])
     ap.add_argument("--n-perm", type=int, default=N_PERM)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--reverse-folds", action="store_true")
@@ -512,6 +554,8 @@ def main():
             tag=f"_seed{a.seed}{'_rev' if a.reverse_folds else ''}" if (a.reverse_folds or a.seed) else "")
     elif a.mode == "switch":
         switch(block=a.block, alt=a.alt, rule=a.rule, seed=a.seed)
+    elif a.mode == "singles_null":
+        singles_max_null(n_perm=a.n_perm, seed=a.seed)
 
 
 if __name__ == "__main__":

@@ -226,3 +226,96 @@ Question: none (operations). Record of two kills and one coordinator decision.
 3. Lane B restarts `s28B_train` from its checkpoint. No result number is affected.
 Verdict: operations; nothing scientific closed or opened.
 Artefacts: `s26/governor.log`, `s26/jobs_done/s28B_train.json`, `s26/logs/s28B_train.log`.
+## S28-L6 -- FAIL18 DETECTOR ON THE STATISTICAL-POTENTIAL FEATURE CLASS: NO BLOCK CLEARS ITS LABEL-PERMUTATION NULL, THE BEST SINGLE IS INSIDE THE MAX-OVER-26 NULL, AND THE ORACLE SWITCH CEILING ON THE BUILT CHAIN IS 0.28x TO 0.62x ITS MDE; PART 1 CLOSED ON BOTH GROUNDS (2026-09-14 19:40, lane C)
+Question (`s27/PREREG_S28_C.md` section 1): can FAIL18 membership be detected native-free from
+a feature class no router has seen (the pool's DISTPOT / ENV / CONTACT distribution and its
+agreement with the distogram, block SP, 21 features), and would a switch to DIS+DISTPOT or
+DIS+ENV on the detected targets move the built chain? Falsifier F1: held-out AUROC above the
+95th percentile of a 500-draw label-permutation null (the whole nested procedure re-run per
+draw) AND above the best comparison block by more than that block's null p95 minus p50
+(addendum 3, D's reading). Registered prior: NULL at F1.
+Job `s28C_fail18_run` (exit 0, 602 s, peak RSS 0.331 GB); features `s28C_features` (25 s, 0.329 GB).
+Artefacts: `s27/results/s28_C_features.json` (126 rows, complete), `s27/results/s28_C_fail18.json`.
+
+Nested leave-fold-out ridge logistic (balanced weights, alpha by inner AUROC), pooled held-out
+AUROC, per-fold mean beside it (S28-L3(b),(c)), 500-draw label-permutation null per block:
+```
+  block         p   AUROC  per-fold  null p50  null p95  p_perm  balacc@0.5  pred+/TP (prevalence rule)  F1
+  SP           21   0.468   0.468     0.484     0.629    0.572     0.435      18/ 1                   no
+  CTRL          5   0.492   0.507     0.494     0.638    0.508     0.542      18/ 2                   no
+  SP+CTRL      26   0.608   0.536     0.489     0.635    0.102     0.495      24/ 4                   no
+  old_S22      15   0.591   0.640     0.507     0.661    0.190     0.634      18/ 6                   no
+  s26_new_all  25   0.531   0.547     0.494     0.631    0.354     0.519      14/ 4                   no
+```
+No block is above its null's 95th percentile. The new class alone (SP) is at 0.468, below its
+null median; SP+CTRL at 0.608 is the best block (p_perm 0.102) and its per-fold mean is 0.536;
+the S22 router set through the same harness is 0.591 (p_perm 0.190), so the harness is not
+the reason (a real signal would show on the comparison blocks too, and none does). F1's second
+clause is moot: SP+CTRL exceeds old_S22 by 0.017, less than old_S22's null p95 - p50 = 0.154.
+
+Singles (sign nested on the training folds, held-out AUROC, own 500-draw null): the five largest
+  DISTPOT_spread   0.706 (raw 0.294, own-null p95 0.643, p 0.006)
+  cons_mean        0.686 (raw 0.686, own-null p95 0.648, p 0.010)
+  ENV_rho_dis      0.659 (raw 0.341, own-null p95 0.647, p 0.042)
+  n                0.654 (raw 0.654, own-null p95 0.633, p 0.026)
+  ENV_skew         0.648 (raw 0.352, own-null p95 0.638, p 0.042)
+Priced as an order statistic over the 26 singles (max-AUROC null, 500 draws): best single
+DISTPOT_spread 0.706 against a max-over-26 null of mean 0.649, p95 0.720: p_max
+0.076, NOT above the null. Length diagnostic (native-free): DISTPOT_spread has corr -0.43 with n and
+falls to 0.593 after residualising on n; cons_mean (corr +0.75 with n) falls to 0.406: both are
+length proxies. ENV_rho_dis keeps 0.653 after residualising on n but is one of 26 and inside the max null.
+
+The switched arm is NOT run (addendum 2 item 2: F1 did not fire). The ORACLE switch (switch exactly
+the 18 FAIL18 targets; the ceiling a perfect detector would collect), built chain first, from
+`s27/results/chain_rows.jsonl` (its 6-target reproduction check is S28-L7 when the queued job lands):
+```
+  ORACLE switch FAIL18->DIS+DISTPOT vs production (rmsd_chain)
+    a 3.1925 (med 2.9661)   b 3.2126 (med 2.9661)   n=126
+    effect -0.0201   median +0.0000   SE 0.0254   MDE 0.0712   effect/MDE -0.28
+    iid  CI95 [-0.0792, +0.0204]
+    fold CI95 [-0.0592, +0.0086]   folds same sign 2/5   per-fold 0:+0.000 1:-0.013 2:+0.017 3:+0.004 4:-0.092
+    9W/9L/108T   worst degradation +0.6436 (2N5C)   p90 +0.0000   power 0.12  Type-M 3.10
+    concentration: drop-top10 +0.0211 vs uniform-effect null p10/p50/p90 +0.0094/+0.0202/+0.0331 -> pctile 0.538
+    VERDICT: NOT MEASURED (|effect| 0.0201 <= its own MDE 0.0712, 0.28x)
+  ORACLE switch FAIL18->DIS+ENV vs production (rmsd_chain)
+    a 3.1652 (med 2.9661)   b 3.2126 (med 2.9661)   n=126
+    effect -0.0474   median +0.0000   SE 0.0271   MDE 0.0760   effect/MDE -0.62
+    iid  CI95 [-0.1056, -0.0025]
+    fold CI95 [-0.1229, +0.0074]   folds same sign 3/5   per-fold 0:+0.000 1:-0.040 2:+0.019 3:-0.001 4:-0.184
+    11W/7L/108T   worst degradation +0.4229 (2NB7)   p90 +0.0000   power 0.42  Type-M 1.54
+    concentration: drop-top10 +0.0110 vs uniform-effect null p10/p50/p90 +0.0024/+0.0097/+0.0178 -> pctile 0.584
+    VERDICT: NOT MEASURED (|effect| 0.0474 <= its own MDE 0.0760, 0.62x)
+  ORACLE switch FAIL18->DIS+DISTPOT vs production (rmsd_cloud)
+    a 3.0211 (med 2.8373)   b 3.0483 (med 2.8373)   n=126
+    effect -0.0273   median +0.0000   SE 0.0244   MDE 0.0682   effect/MDE -0.40
+    iid  CI95 [-0.0821, +0.0107]
+    fold CI95 [-0.0681, +0.0039]   folds same sign 3/5   per-fold 0:+0.000 1:-0.030 2:+0.009 3:-0.000 4:-0.099
+    10W/8L/108T   worst degradation +0.6063 (5W52)   p90 +0.0000   power 0.20  Type-M 2.25
+    concentration: drop-top10 +0.0152 vs uniform-effect null p10/p50/p90 +0.0053/+0.0138/+0.0243 -> pctile 0.574
+    VERDICT: NOT MEASURED (|effect| 0.0273 <= its own MDE 0.0682, 0.40x)
+  ORACLE switch FAIL18->DIS+ENV vs production (rmsd_cloud)
+    a 2.9911 (med 2.8373)   b 3.0483 (med 2.8373)   n=126
+    effect -0.0572   median +0.0000   SE 0.0292   MDE 0.0819   effect/MDE -0.70
+    iid  CI95 [-0.1232, -0.0104]
+    fold CI95 [-0.1356, -0.0038]   folds same sign 4/5   per-fold 0:+0.000 1:-0.039 2:-0.003 3:-0.013 4:-0.198
+    13W/5L/108T   worst degradation +0.3808 (8T63)   p90 +0.0000   power 0.50  Type-M 1.41
+    concentration: drop-top10 +0.0062 vs uniform-effect null p10/p50/p90 -0.0032/+0.0051/+0.0125 -> pctile 0.575
+    VERDICT: NOT MEASURED (|effect| 0.0572 <= its own MDE 0.0819, 0.70x)
+```
+On FAIL18 alone (ORACLE stratum, n = 18) the built-chain effect is -0.141 (SE 0.180) for DIS+DISTPOT
+(9W/9L) and -0.332 (SE 0.180) for DIS+ENV (11W/7L); the point-cloud strata of S27 L9 (-0.191, -0.401)
+shrink by 0.05 to 0.07 A through the projection.
+
+Verdict: REFUTED at F1 (registered prior confirmed: the new feature class does not separate
+FAIL18; the eighth router construction on record, S22 L7, S23 L7, S26 L110/L115, lands where the
+first seven did, on a label none of them had). And CLOSED BY ITS CEILING: even the ORACLE switch
+is 0.28x (DISTPOT) and 0.62x (ENV) of its own MDE on the built chain, with 108 exact ties by
+construction; a detector that was 100% accurate would be UNDERPOWERED at n = 126 on this basis,
+and a 50%-accurate one would be worth 0.01 to 0.02 A. What is new relative to S27 L9: the
+FAIL18 prize was quoted there on the point cloud (-0.191 / -0.401 per FAIL18 target); on the
+built chain it is -0.141 / -0.332 per target and -0.020 / -0.047 on the mean, below the MDE.
+Not done: a second permutation seed and a reversed fold order (the positive-only rule; there is
+no positive; the nested ridge is deterministic given the folds, so a reversed order changes only
+the permutation stream). Trailer note: commit a153630f carries a mistyped Claude-Session line
+(one character short); its content is the damped-Newton edit and is unchanged.
+
