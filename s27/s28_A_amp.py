@@ -691,7 +691,7 @@ def run_chain_target(pdb, arms):
     """Phase 3: the BUILT CHAIN of stored structures through the production projection.  ORACLE
     scoring of the emitted chain against the native, post hoc."""
     z = {}
-    for suffix in ("", "_recog"):
+    for suffix in ("", "_recog", "_a2"):
         f = os.path.join(STRUCTS, f"{pdb}{suffix}.npz")
         if os.path.exists(f):
             with np.load(f) as zz:
