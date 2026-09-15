@@ -30,8 +30,10 @@ exact (`s27/results/s28_D_reproduce_pool_seed101.json`). Hour 2, seed 102 (chain
 1260, 2MP9 / DIS_MEAN): point cloud 1.985926294615001 and built chain 1.865046267114073 both
 exact through `s12.instrument.project` (`s28_D_reproduce_chain_seed102.json`). Hour 3, seed 103
 (vqe row 11140 of 20160, 3BTB / DIS+LEG_steric, seed 0 of the S27 run): the genuine CVaR-VQE
-re-run gives 4.96243989356248, m = 79, exact (`s28_D_reproduce_vqe_seed103.json`). Three of
-three bases reproduce to the last digit.
+re-run gives 4.96243989356248, m = 79, exact (`s28_D_reproduce_vqe_seed103.json`). Hour 4,
+seed 104 (pool row 6MBM / DIS+0.25*LEG_steric): 1.355825475263309 exact. Hour 5, seed 105
+(chain row 2EFZ / DIS): cloud 3.3839895802341893 and chain 3.6427301222769004 exact. Five of
+five across the three bases reproduce to the last digit.
 
 D5. **The built chain's numerical floor (S28-L18).** The same production cloud (equal to 6
 decimals, 5.7e-14 in RMSD) projected by lane A and by S27 differs by up to 0.0186 A per target
@@ -74,7 +76,17 @@ its entry posts (not pre-empted here).
 
 ## REFUTED
 
-(none yet)
+R-D1. **My own S28-L18 scope ("max 0.02 A per target", 22 targets).** On 126 targets the
+built chain's branch-flip tail reaches 0.513 A (2LNG), 12 targets above 0.02, mean -0.0056
+(`s27/results/s28_A_chain_rows.jsonl :: prod` vs `chain_rows.jsonl :: DIS`). The reading (two
+sides of a chain contrast must share a code path) stands; the size was under-measured on 22
+targets (`s27/RETRACTIONS_S28.md` R2, S28-L27b).
+
+Lane claims I recorded as refuted by their own falsifiers (no veto needed): lane A's F1 (every
+lam arm worse on the built chain, S28-L26b/L27b); lane C's Part 1 (no block clears its
+permutation null; the ORACLE ceiling is under MDE, S28-L6/L8) and Part 2 (every cell on the
+harmful side, S28-L32/L33); B2's F5-B2 as registered (first clause straddled, second failed,
+S28-L25/L29/L26/L31).
 
 ## OPEN (my queue)
 
