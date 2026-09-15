@@ -361,3 +361,5 @@ lane B's split job) and the first measured departure question answered by an ide
 
 ### Post-pause note (23:34)
 The governor background task was stopped by the session harness for low memory just after the pause. The three chain jobs (`s28B_chain`, `s28A2_chain`, `s28C2_chain2`) keep running UNSUPERVISED (0.3 GB each; no re-queue on a kill). On resume: start the governor FIRST (`python s26/governor.py`, background), then check the three jobs as in step 3.
+
+### A addendum (23:40): the harness's background wrapper for `s28A2_chain` was stopped by the session (low memory); the jobrun child itself is still registered in `s26/jobs/s28A2_chain.json` and advancing (94/126 at 23:40). No relaunch was made. On resume, if `s26/jobs/s28A2_chain.json` is gone without `s26/jobs_done/s28A2_chain.json` at exit 0, use the relaunch command above; the checkpoint is per target either way.
