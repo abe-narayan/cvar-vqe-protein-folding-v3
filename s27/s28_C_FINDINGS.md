@@ -23,7 +23,9 @@ grounds. Part 2: three readouts that keep the production top-75 and consume CONS
 DISTPOT's) ranking through the weight vector (medoid-plus-k-neighbours, a ranker-based trim, a
 diversity-preserving weighted average) are all null-to-WORSE than the uniform average on the
 point cloud, and worse than their permuted-ranker controls wherever the contrast is
-measurable; the built-chain verdicts are in section 3 (job `s28C_readout_chain`).
+measurable; on the built chain (the reporting basis, S28-L32) every cell is on the harmful side at
+0.29x to 0.99x its MDE, none clears it, and the two ranker trims are worse than random trims with the
+fold CI above zero. Part 2 is refuted as registered.
 
 ## 1. DEMONSTRATED
 
@@ -122,9 +124,37 @@ pattern in a readout rather than a Hamiltonian.
 - The ORACLE switch ceiling (1.2). It reads FAIL18 membership; it is the prize, never a result.
 - The FAIL18 / non-FAIL18 strata of every readout arm (1.4, section 3).
 
-## 3. Built chain (the reporting basis)
-[Filled from `s27/results/s28_C_readout_chain_rows.jsonl` and
-`s27/results/s28_C_readout_chain_summary.json` when job `s28C_readout_chain` lands.]
+## 3. Built chain (the reporting basis; S28-L32)
+`s27/results/s28_C_readout_chain_rows.jsonl` (jobs `s28C_readout_chain` to `_chain4`; three governor
+kills at 15, 25 and 25 targets under box-wide user load, resumed from the per-target checkpoint; 1,513
+rows, no duplicate (pdb, arm)) and `s27/results/s28_C_readout_chain_summary.json`. Both sides of every
+contrast are projected in the same job through the same code path; PROD reproduces
+`chain_rows.jsonl :: DIS` bit-exactly on 126/126. Production built chain 3.2126.
+
+| cell | mean | effect vs PROD | effect/MDE | fold CI | folds | its control vs PROD | cell vs control | FAIL18 (n=18) | other 108 |
+|---|---:|---:|---:|---|---|---|---|---:|---:|
+| MEDNB[CONS,k=20] | 3.3613 | +0.1487 | 0.99 | [+0.0342, +0.2367] | 4/5 | +0.1072 (0.80x) | +0.0415 (0.24x, fold [-0.062, +0.134]) | -0.117 (SE 0.123) | +0.193 (SE 0.058) |
+| TRIM[CONS,q=0.1] | 3.2434 | +0.0308 | 0.75 | [+0.0108, +0.0461] | 4/5 | +0.0038 (0.17x) | +0.0270 (0.66x, fold [+0.019, +0.035]) | -0.016 (SE 0.033) | +0.039 (SE 0.016) |
+| TRIM[DISTPOT,q=0.1] | 3.2343 | +0.0216 | 0.62 | [+0.0029, +0.0397] | 4/5 | +0.0014 (0.06x) | +0.0203 (0.52x, fold [+0.010, +0.036]) | -0.010 (SE 0.021) | +0.027 (SE 0.014) |
+| DIVW[CONS,b=1,g=1] | 3.2833 | +0.0707 | 0.66 | [-0.0237, +0.1426] | 4/5 | +0.0517 (0.80x) | +0.0190 (0.16x, fold [-0.075, +0.086]) | -0.146 (SE 0.098) | +0.107 (SE 0.041) |
+| DIVW[CONS,b=1,g=0] | 3.2862 | +0.0736 | 0.70 | [-0.0174, +0.1427] | 4/5 | +0.0188 (0.47x) | +0.0548 (0.53x, fold [-0.048, +0.123]) | -0.152 (SE 0.093) | +0.111 (SE 0.040) |
+| DIVW[CONS,b=0,g=1] | 3.2278 | +0.0152 | 0.29 | [-0.0112, +0.0354] | 4/5 | PROD | n/a | -0.009 (SE 0.027) | +0.019 (SE 0.021) |
+
+Every real-ranker cell is on the harmful side and none clears its own MDE (0.29x to 0.99x): the
+verdict is NOT MEASURED in the harmful direction on all six, with the point-cloud sign preserved on
+6/6 and the magnitude shrunk by 0.01 to 0.05 A through the projection. The permuted-ranker controls
+are less harmful than the real cells in every pair; the two ranker trims are worse than a random trim
+of the same size with the fold CI above zero (CONS +0.027 at 0.66x MDE; DISTPOT +0.020 at 0.52x): by
+S28-L16's rule the sign is measured and the size is not. The repulsion-only cell is null (+0.015,
+0.29x). Grid pricing on the chain for the DIVW family ((1,0), (0,1), (1,1), PROD):
+oracle-min -0.1760, split-half -0.0284 (16%), k_eff 3.9, NOT A SIGNAL (split-half transfers 16% of the oracle); the k and q grids are
+priced on the point cloud (section 1.4), where the transferring cell is the identity.
+Strata (ORACLE label): the CONS-informed cells are negative on FAIL18 (-0.12 to -0.15, at most 1.7
+SE) and positive on the 108 (+0.04 to +0.19, 2.4 to 3.3 SE); the controls are positive on both.
+
+Verdict: the Part 2 falsifier fails on every cell. A ranker-informed convex weight vector over the
+production top-75 does not beat the uniform one on this instrument, and where the contrast is
+resolvable it is worse than a random weight vector of the same shape.
 
 ## 4. REFUTED
 - H(Part 1): "the pool's statistical-potential distribution separates FAIL18". AUROC inside the
@@ -132,19 +162,22 @@ pattern in a readout rather than a Hamiltonian.
   prior (null) confirmed. The eighth router construction on record lands where the seven before
   it did (S22 L7, S23 L7, S26 L110/L115), now on the FAIL18 label itself.
 - H(Part 2a): "the CONS medoid of the top-75 plus its k nearest neighbours beats the uniform
-  average". WORSE at every k on the point cloud, beyond MDE, 4/5 to 5/5 folds. (Built chain:
-  section 3.)
+  average". WORSE at every k on the point cloud, beyond MDE, 4/5 to 5/5 folds; on the built chain k = 20 is
+  +0.149 at 0.99x MDE (fold CI [+0.034, +0.237]), harmful and not measured.
 - H(Part 2b): "a ranker-based outlier trim preserves the average's variance reduction". Trimming
   the CONS-worst members is WORSE than trimming random members (fold CI above zero at q = 0.05,
   0.10, 0.20): the CONS outliers are useful to the average. Trimming by DISTPOT is
-  indistinguishable from a random trim. (Built chain: section 3.)
+  indistinguishable from a random trim on the point cloud and +0.020 worse than one on the built chain
+  (0.52x MDE, fold CI above zero: sign, not size). Built chain for the CONS trim: +0.031 vs PROD
+  (0.75x), +0.027 vs a random trim (0.66x, fold CI [+0.019, +0.035], 5/5 folds).
 - H(Part 2c): "a diversity-preserving weighted average consumes ranking information". Ranker
   weights alone (b = 1, g = 0; ESS 40.7 of 75) cost +0.089 (0.95x MDE, fold CI above zero, the
   Type-M zone) and are worse than permuted weights of the same magnitudes (same ESS 40.7:
   +0.079, 0.82x MDE, fold CI [+0.012, +0.133]); the repulsion term alone is null (+0.007,
   0.14x); adding the repulsion to the ranker weights does not rescue them (b = 1, g = 1:
   +0.081, 0.84x). At b = 2 the cell is WORSE beyond its MDE (+0.161, 1.16x) and worse than its
-  control (+0.112, fold CI [+0.028, +0.193]). (Built chain: section 3.)
+  control (+0.112, fold CI [+0.028, +0.193]). Built chain: (1,0) +0.074 (0.70x), (1,1) +0.071
+  (0.66x), (0,1) +0.015 (0.29x); all harmful-side, none measured; the DIVW chain grid is NOT A SIGNAL.
 
 ## 5. HYPOTHESIS
 - None advanced. The one direction the data points to (ENV_rho_dis, 0.659 held-out, unchanged
