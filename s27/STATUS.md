@@ -6,6 +6,7 @@
 - 2026-09-14 19:05 running: four lanes spawned 19:02 (A, B, C, D). Box: user baseline ~10 GB (chrome 4.5, claude 2.1, Code 1.9); RAM 88 to 91% before any lane job; jobrun will serialise jobs needing more than ~1 GB. Lanes: keep est-ram honest, checkpoint every 10 min, expect waits.
 - 2026-09-14 19:10 running: user steer relayed to all four lanes and written as contract addendum 1 (built chain only, no cosmetic variants, D attacks every positive before acceptance).
 - 2026-09-14 19:30 running: A oracle_126, B run + train, C fail18_run + readout_chain under jobrun; B waiting on its jobs (watch armed on s26/jobs_done). Box hit 95.7% under D's test_pipeline fork tree (killed twice by the governor); D told to DEFER test_pipeline / test_integration / AMBER tests to a coordinator-announced quiet window after the 126-target jobs land.
+- 2026-09-14 19:36 running: coordinator killed D's test_pipeline tree (S28-L5); B's train job lost at 19:22 as collateral, B told to restart from checkpoint. RAM 87%.
 - next: hourly ledger commits; reassign lanes as they finish; final S28 report in s27/.
 
 ## A

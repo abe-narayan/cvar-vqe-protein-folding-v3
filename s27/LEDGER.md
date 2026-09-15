@@ -208,3 +208,21 @@ difference (governor.log 2230-2236); it and `tests/test_integration.py` are queu
 (`s26/queue/010_*`, `011_*`, priority 10/11) for the governor to launch under 88%. AMBER files:
 one TEST job each, later, one at a time. Counts so far: 286 pass / 3 skip / 0 fail of 289 on
 the light files; 81 (pipeline + integration) and 19 (AMBER) pending.
+
+## S28-L5 -- COORDINATOR KILL OF s28D_pytest_pipeline; s28B_train LOST AS COLLATERAL (2026-09-14 19:35, coordinator)
+Question: none (operations). Record of two kills and one coordinator decision.
+1. `s28B_train` (lane B, gradient variance vs J) was killed by the governor at 19:22:32 as the
+   NEWEST job at 95.7% RAM (`s26/governor.log` 19:20:07 to 19:22:57; `s26/jobs_done/
+   s28B_train.json` exit 15, wall 180 s, peak 0.33 GB; 3 targets done per
+   `s26/logs/s28B_train.log`). The resident that pushed the box over was lane D's
+   `s28D_pytest_pipeline` (pytest with multiprocessing children; tree 1.46 GB at 19:22:17), an
+   older job the governor's newest-first rule does not touch.
+2. At 19:33 the coordinator terminated `s28D_pytest_pipeline` (pid 5576 and children 14992,
+   28332) by pid; RAM 93.9% before, 87.3% after. `tests/test_pipeline.py`,
+   `tests/test_integration.py` and the AMBER test files are DEFERRED to a coordinator-announced
+   quiet window after the A/B/C 126-target jobs land; they passed at the S26 close and touch no
+   S28 code. The light-file suite (286 pass / 3 skip / 0 fail, S28-L4) plus the S28 lane test
+   files are the green gate meanwhile.
+3. Lane B restarts `s28B_train` from its checkpoint. No result number is affected.
+Verdict: operations; nothing scientific closed or opened.
+Artefacts: `s26/governor.log`, `s26/jobs_done/s28B_train.json`, `s26/logs/s28B_train.log`.
