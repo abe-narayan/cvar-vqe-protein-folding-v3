@@ -363,3 +363,14 @@ lane B's split job) and the first measured departure question answered by an ide
 The governor background task was stopped by the session harness for low memory just after the pause. The three chain jobs (`s28B_chain`, `s28A2_chain`, `s28C2_chain2`) keep running UNSUPERVISED (0.3 GB each; no re-queue on a kill). On resume: start the governor FIRST (`python s26/governor.py`, background), then check the three jobs as in step 3.
 
 ### A addendum (23:40): the harness's background wrapper for `s28A2_chain` was stopped by the session (low memory); the jobrun child itself is still registered in `s26/jobs/s28A2_chain.json` and advancing (94/126 at 23:40). No relaunch was made. On resume, if `s26/jobs/s28A2_chain.json` is gone without `s26/jobs_done/s28A2_chain.json` at exit 0, use the relaunch command above; the checkpoint is per target either way.
+
+### B addendum (23:35): s28B_chain DIED with the session
+At 23:33 the harness killed my background shell (low memory) and with it the jobrun wrapper and
+its child (pid 11488, no longer alive; no `s26/jobs_done/s28B_chain.json` written; the stale
+registration `s26/jobs/s28B_chain.json` clears itself). It was NOT the governor. The chain
+checkpoint is intact: `s27/results/s28_B_chain_rows.jsonl` 1,854 rows = 103 of 126 targets x
+18 arms (last `[chain 103/126] 7N2I`). Per the pause order nothing is relaunched now. On
+resume, step 0 before step 1 above: relaunch from the checkpoint (23 targets, about 30 min):
+`python s26/jobrun.py --agent S28B --tag CPU --name s28B_chain_r2 --est-ram 0.4 -- python
+s27/s28_B_hop.py --chain --arms "$(cat s27/results/s28_B_chain_arms.txt)"` (resumable per
+(arm, target); it skips the 103 done). Committed rows at this addendum: the 1,854.
