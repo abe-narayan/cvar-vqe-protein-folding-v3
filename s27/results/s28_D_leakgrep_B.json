@@ -1,0 +1,416 @@
+{
+ "tag": "B",
+ "files": [
+  {
+   "file": "s27/s28_B_hop.py",
+   "exists": true,
+   "n_hits": 42
+  }
+ ],
+ "hits": [
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 11,
+   "token": "native",
+   "fn": "<module>",
+   "text": "500 windows, native-free) and H = diag(E) - J A is a tight-binding Hamiltonian on the pool. The"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 27,
+   "token": "native",
+   "fn": "<module>",
+   "text": "`select_target` sees `W`, `E`, the tie key and the graphs; it never receives a native. Natives"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 28,
+   "token": "nat_ca",
+   "fn": "<module>",
+   "text": "are read only in `oracle_rmsd`. `tests/test_s28_B.py` NaN-poisons `nat_ca` / `oracle_rr` and"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 28,
+   "token": "oracle_rr",
+   "fn": "<module>",
+   "text": "are read only in `oracle_rmsd`. `tests/test_s28_B.py` NaN-poisons `nat_ca` / `oracle_rr` and"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 28,
+   "token": "rmsd",
+   "fn": "<module>",
+   "text": "are read only in `oracle_rmsd`. `tests/test_s28_B.py` NaN-poisons `nat_ca` / `oracle_rr` and"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 28,
+   "token": "oracle",
+   "fn": "<module>",
+   "text": "are read only in `oracle_rmsd`. `tests/test_s28_B.py` NaN-poisons `nat_ca` / `oracle_rr` and"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 79,
+   "token": "native",
+   "fn": "<module>",
+   "text": "# ================================================================= the pool graph (native-free)"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 80,
+   "token": "rmsd",
+   "fn": "pairwise_rmsd_matrix",
+   "text": "def pairwise_rmsd_matrix(W: np.ndarray) -> np.ndarray:"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 83,
+   "token": "rmsd",
+   "fn": "pairwise_rmsd_matrix",
+   "text": "`core.backend(\"numerics\").kabsch_rmsd_batch` gives one row per call (the brief's route);"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 88,
+   "token": "rmsd",
+   "fn": "pairwise_rmsd_matrix",
+   "text": "kb = core.backend(\"numerics\").kabsch_rmsd_batch"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 321,
+   "token": "rmsd",
+   "fn": "set_descriptors",
+   "text": "return dict(mean_pair_rmsd=mpr, overlap_dis75=ov)"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 324,
+   "token": "native",
+   "fn": "set_descriptors",
+   "text": "# ===================================================================== per-target, native-free"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 328,
+   "token": "rmsd",
+   "fn": "build_graphs",
+   "text": "D = pairwise_rmsd_matrix(W)"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 377,
+   "token": "native",
+   "fn": "select_target",
+   "text": "pool. Never receives a native. Returns one row per (source, seed, graph, J).\"\"\""
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 439,
+   "token": "rmsd",
+   "fn": "oracle_rmsd",
+   "text": "def oracle_rmsd(cand, C) -> float:"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 439,
+   "token": "oracle",
+   "fn": "oracle_rmsd",
+   "text": "def oracle_rmsd(cand, C) -> float:"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 440,
+   "token": "native",
+   "fn": "oracle_rmsd",
+   "text": "\"\"\"The ONLY place a native is read. ORACLE evaluation of an ACHIEVABLE selection.\"\"\""
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 441,
+   "token": "nat_ca",
+   "fn": "oracle_rmsd",
+   "text": "if cand.nat_ca is None:"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 443,
+   "token": "nat_ca",
+   "fn": "oracle_rmsd",
+   "text": "return float(I.ca_rmsd(np.asarray(C, float), cand.nat_ca))"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 443,
+   "token": "rmsd",
+   "fn": "oracle_rmsd",
+   "text": "return float(I.ca_rmsd(np.asarray(C, float), cand.nat_ca))"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 453,
+   "token": "rmsd",
+   "fn": "run_target",
+   "text": "r_dis75 = oracle_rmsd(cand, I.coordinate_average(cand.W[dis_top])[0])"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 453,
+   "token": "oracle",
+   "fn": "run_target",
+   "text": "r_dis75 = oracle_rmsd(cand, I.coordinate_average(cand.W[dis_top])[0])"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 456,
+   "token": "rmsd",
+   "fn": "run_target",
+   "text": "basis=\"point_cloud\", label=\"ACHIEVABLE\", rmsd_dis75=r_dis75,"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 459,
+   "token": "rmsd",
+   "fn": "run_target",
+   "text": "r[R][\"rmsd\"] = oracle_rmsd(cand, np.asarray(r[R][\"C\"], float))"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 459,
+   "token": "oracle",
+   "fn": "run_target",
+   "text": "r[R][\"rmsd\"] = oracle_rmsd(cand, np.asarray(r[R][\"C\"], float))"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 460,
+   "token": "oracle_rr",
+   "fn": "run_target",
+   "text": "r[\"oracle_pool_best\"] = float(np.min(cand.oracle_rr)) if cand.oracle_rr is not None else float(\"nan\")"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 460,
+   "token": "oracle",
+   "fn": "run_target",
+   "text": "r[\"oracle_pool_best\"] = float(np.min(cand.oracle_rr)) if cand.oracle_rr is not None else float(\"nan\")"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 521,
+   "token": "rmsd",
+   "fn": "train_main",
+   "text": "D = pairwise_rmsd_matrix(cand.W)"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 610,
+   "token": "rmsd",
+   "fn": "run_main",
+   "text": "f\"vqe0={j0['R1']['rmsd']:.3f} dis75={j0['rmsd_dis75']:.3f} m0={j0['m']} \""
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 649,
+   "token": "rmsd",
+   "fn": "chain_main",
+   "text": "label=\"ACHIEVABLE\", rmsd_cloud=oracle_rmsd(cand, C),"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 649,
+   "token": "oracle",
+   "fn": "chain_main",
+   "text": "label=\"ACHIEVABLE\", rmsd_cloud=oracle_rmsd(cand, C),"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 650,
+   "token": "rmsd",
+   "fn": "chain_main",
+   "text": "rmsd_chain=oracle_rmsd(cand, ca), fail18=bool(pdb in FAIL18),"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 650,
+   "token": "oracle",
+   "fn": "chain_main",
+   "text": "rmsd_chain=oracle_rmsd(cand, ca), fail18=bool(pdb in FAIL18),"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 673,
+   "token": "rmsd",
+   "fn": "vec",
+   "text": "return np.array([by[arm][p][R][\"rmsd\"] for p in pdbs])"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 684,
+   "token": "rmsd",
+   "fn": "compact",
+   "text": "out[\"anchors\"][\"dis75_mean\"] = float(np.mean([by[\"vqe|s0|NONE|J0\"][p][\"rmsd_dis75\"] for p in pdbs]))"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 687,
+   "token": "native",
+   "fn": "compact",
+   "text": "# per-arm means and native-free diagnostics"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 707,
+   "token": "rmsd",
+   "fn": "compact",
+   "text": "R1_mean_pair_rmsd=float(np.mean([r[\"R1\"][\"mean_pair_rmsd\"] for r in rs])),"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 708,
+   "token": "rmsd",
+   "fn": "compact",
+   "text": "R3_mean_pair_rmsd=float(np.mean([r[\"R3\"][\"mean_pair_rmsd\"] for r in rs])),"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 782,
+   "token": "rmsd",
+   "fn": "compact",
+   "text": "a = np.array([d[p][\"rmsd_chain\"] for p in pc]); k = np.array([d[p][\"rmsd_cloud\"] for p in pc])"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 787,
+   "token": "rmsd",
+   "fn": "compact",
+   "text": "base = np.array([byc[ref][p][\"rmsd_chain\"] for p in pc])"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 791,
+   "token": "rmsd",
+   "fn": "compact",
+   "text": "a = np.array([d[p][\"rmsd_chain\"] for p in pc])"
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "line": 793,
+   "token": "rmsd",
+   "fn": "compact",
+   "text": "b = base if comp == ref else np.array([byc[comp][p][\"rmsd_chain\"] for p in pc]) if comp in byc else base"
+  }
+ ],
+ "by_function": [
+  {
+   "file": "s27\\s28_B_hop.py",
+   "fn": "<module>",
+   "tokens": [
+    "nat_ca",
+    "native",
+    "oracle",
+    "oracle_rr",
+    "rmsd"
+   ],
+   "n": 7
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "fn": "build_graphs",
+   "tokens": [
+    "rmsd"
+   ],
+   "n": 1
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "fn": "chain_main",
+   "tokens": [
+    "oracle",
+    "rmsd"
+   ],
+   "n": 4
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "fn": "compact",
+   "tokens": [
+    "native",
+    "rmsd"
+   ],
+   "n": 8
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "fn": "oracle_rmsd",
+   "tokens": [
+    "nat_ca",
+    "native",
+    "oracle",
+    "rmsd"
+   ],
+   "n": 6
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "fn": "pairwise_rmsd_matrix",
+   "tokens": [
+    "rmsd"
+   ],
+   "n": 3
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "fn": "run_main",
+   "tokens": [
+    "rmsd"
+   ],
+   "n": 1
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "fn": "run_target",
+   "tokens": [
+    "oracle",
+    "oracle_rr",
+    "rmsd"
+   ],
+   "n": 7
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "fn": "select_target",
+   "tokens": [
+    "native"
+   ],
+   "n": 1
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "fn": "set_descriptors",
+   "tokens": [
+    "native",
+    "rmsd"
+   ],
+   "n": 2
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "fn": "train_main",
+   "tokens": [
+    "rmsd"
+   ],
+   "n": 1
+  },
+  {
+   "file": "s27\\s28_B_hop.py",
+   "fn": "vec",
+   "tokens": [
+    "rmsd"
+   ],
+   "n": 1
+  }
+ ]
+}

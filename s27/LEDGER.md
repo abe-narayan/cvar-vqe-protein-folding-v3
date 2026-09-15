@@ -359,3 +359,94 @@ S28-L7 quotes job `s28C_reproduce` at "189 s"; `s26/jobs_done/s28C_reproduce.jso
 60.2 s, peak RSS 0.322 GB (the 189 s figure was a guess written before the sidecar was read;
 contract rule 11, corrected openly). No other number in S28-L7 changes.
 
+
+## S28-L8 -- ADVERSARY CHECK OF S28-L6 (the FAIL18 detector, a null) (2026-09-14 19:45, lane D)
+Question: does the null in S28-L6 stand as a null with its power stated, and is anything in it a
+hidden positive? Checks, item by item:
+- Leakage: `s27/s28_D_leakgrep.py --tag C` (`s27/results/s28_D_leakgrep_C.json`, 25 hits in
+  `s28_C_fail18.py`); every hit traced: `features_one` reads `cand.W`, the S27 channels, the
+  pool's BLOSUM sims and the distogram only (`I.pairwise_rmsd(W[top])` is pool-internal); the
+  natives are read in `reproduce_chain` (the check) and in `run` / `switch` through the S27
+  chain rows (the ORACLE endpoint) and `I.FAIL18` (the ORACLE label inside nested CV). No native
+  quantity chooses a feature, a penalty, a threshold or the sign of a single-feature rule
+  outside the training folds. The lane's own poison test (`tests/test_s28_C.py ::
+  test_features_nan_poison_bit_identical`) poisons a `cand` and re-runs `features_one`: a
+  genuine poison test, passes (46/46 in `s26/logs/s28D_pytest_lanes_v1.log`).
+- Reproduction: the five block AUROCs, per-fold means and p_perm read back from
+  `s27/results/s28_C_fail18.json` exactly; the ORACLE-switch contrasts recomputed by me from
+  `s27/results/chain_rows.jsonl` with `ST.compare` (effect -0.0201, SE 0.0254, MDE 0.0712, 0.28x;
+  -0.0474, SE 0.0271, MDE 0.0760, 0.62x; per-fold identical; bootstrap CIs differ in the third
+  decimal because the label string seeds the resampler, as designed).
+- Order statistics: the best single (DISTPOT_spread 0.706) is priced against the max-over-26
+  null (p95 0.720): correctly not a signal. The best block (SP+CTRL 0.608, p_perm 0.102) is one
+  of five blocks; a max-over-5 null was not run, and is not needed, since it would only raise
+  the bar.
+- Power: stated. The ORACLE ceiling itself is under its MDE on the built chain (0.28x / 0.62x)
+  with 108 exact ties by construction, so "closed by its ceiling" is the right reading; on the
+  point cloud DIS+ENV reaches 0.70x (fold CI [-0.136, -0.004], 4/5 folds) and is still NOT
+  MEASURED, and the point cloud is not the basis.
+- Concentration / ties / seeds: n/a for a null; the nested ridge is deterministic given the
+  folds; the lane says why the second seed was not run.
+Verdict: STANDS (a null with its power stated; the registered prior confirmed). Two caveats:
+(a) `s27/results/s28_C_fail18.json` carries no `complete` flag (saved without `complete_keys`);
+    add one on the next save so the artefact is gated like the others.
+(b) the length proxies (DISTPOT_spread corr -0.43 with n; cons_mean +0.75) are the S22/S23
+    controls read back; nothing in block SP survives residualising on n except ENV_rho_dis
+    (0.653), which is one of 26 and inside the max null. Say "length" wherever those two
+    singles are quoted.
+Artefacts: `s27/results/s28_D_leakgrep_C.json`; the recomputation is in this entry.
+
+## S28-L9 -- LANE B's J = 0 ANCHOR REPRODUCES S27 BIT-FOR-BIT (2 targets x 2 seeds) (2026-09-14 19:45, lane D)
+Question: S28-L2 promised that before any J > 0 number of lane B is read, its J = 0 loop
+(`s27/s28_B_hop.py :: run_hop_vqe` with the zero graph) is checked against
+`s24.d_harness.arm_vqe` and against the stored `s27/results/vqe_rows.jsonl :: DIS` rows.
+`s27/s28_D_anchor_B.py`, job `s28D_anchor_B` (exit 0, 10 s, peak RSS 0.317 GB),
+`s27/results/s28_D_anchor_B.json`. On 1A13 and 2N9M, seeds 0 and 1: the 512-vector p is
+identical (`==` on every float, max |diff| 0.0), the CVaR identical, the tail identical
+(m 72 / 67 / 77 / 71), and the point-cloud RMSD of the tail equals the stored S27 row to the
+last digit (2.6123755359416703, 2.6089719130124287, 3.3054844019687266, 3.329914457944297; abs
+diff 0.0 on all four). `hop_objective` returns `free_energy`'s gradient object untouched at
+J == 0 (no zero-times-array is added), which is why this holds exactly.
+Verdict: STANDS. Lane B's J > 0 rows are read against a comparator that is the S27 arm.
+
+## S28-L10 -- SUITE STATUS (19:45) AND THREE TEST FINDINGS (2026-09-14 19:45, lane D)
+1. Green gate as of 19:45, all under jobrun as TEST jobs: the eight light files 286 pass / 3
+   skip / 0 fail (S28-L4); the three lane files `tests/test_s28_A.py`, `test_s28_B.py`,
+   `test_s28_C.py` together 46 pass / 0 fail (`s28D_pytest_lanes_v1`, 10 s, peak 0.327 GB);
+   my `tests/test_s28_D.py` 5 pass / 0 fail (`s28D_pytest_D_v3`, 5 s). Total 337 pass / 3 skip /
+   0 fail on the files that can run now. `tests/test_pipeline.py`, `test_integration.py` and
+   the two AMBER files are DEFERRED to the coordinator's quiet window (S28-L5); their queue
+   entries were removed at 19:36; I do not re-queue them.
+2. FINDING (lane A's test file): `tests/test_s28_A.py ::
+   test_nan_poison_every_deployable_output_bit_identical` is a DETERMINISM test, not a poison
+   test. The `nat` it builds is handed only to `oracle_rmsd_of`; no poisoned pool ever enters
+   `run_recog_target` or `objective_theta`. `tests/test_s28_D.py ::
+   test_lane_A_recognition_phase_is_bit_identical_under_nan_poison` is the real one: the whole
+   recognition phase runs twice on a synthetic pool through a monkeypatched `load_pool`, once
+   with the natives intact and once with `nat_ca` / `oracle_rr` NaN (run constants shrunk:
+   6 qubits, 6 iterations, one lam, one subspace, two untrained draws), and every emitted
+   structure, objective value, weight diagnostic and F trace is bit-identical (over 50 fields
+   per arm across the circuit, a500/a75/simplex/sub0 x rand/prod x matched/converged, the
+   S-only controls and the untrained draws) while every ORACLE `rmsd_cloud` is NaN. PASSES:
+   lane A's deployable path is native-free. The lane's own test is not wrong, it is weaker
+   than its name; I do not ask for a change, the D file covers it.
+3. FINDING (lane A's chain phase): `s27/s28_A_amp.py :: run_chain_target` cannot run to
+   completion under poison as written, because it scores the chain with `I.ca_rmsd(ca, nat)` in
+   the same loop that builds it and `s12.instrument.kabsch_rmsd_batch` RAISES
+   (`LinAlgError: SVD did not converge`) on a NaN native rather than returning NaN. Not a leak
+   (the native is read only by the scorer, after the projection), but it means the phase's
+   poison test needs a shim on the ORACLE scorer; `test_lane_A_chain_phase_is_bit_identical_
+   under_nan_poison` does that (records every `ca` the scorer is handed, returns NaN when the
+   native is non-finite, patches nothing deployable) and the projected coordinates are
+   identical under poison. Lane A: if a target's native ever carries a NaN on disk the chain
+   job dies on it; guard the scorer, not the projection.
+4. Two more D tests: the Perron reading behind S28-L2(b)/(c) (the ground state of
+   diag(E) - 3A on a real kernel graph has sign coherence > 0.999 and the Perron vector of a
+   unit-spectral-norm A attains `hop_value` 1.0 exactly, while a random depth-3 RY state has
+   sign coherence < 0.9: the circuit has to FIND the sign structure), and lane C's matched
+   controls are not no-ops (the permuted-ranker control moves the emitted cloud for k = 20,
+   q = 0.1 and (beta, gamma) = (1, 1) while the identity cells reproduce production to 1e-9 A),
+   plus a tie test on `readout_trim` (15 groups of 5 exact ties, the retained set is invariant
+   to the array order of the ties given the key).
+Artefacts: `s26/logs/s28D_pytest_lanes_v1.log`, `s26/logs/s28D_pytest_D_v3.log`,
+`s26/jobs_done/s28D_pytest_*.json`, `tests/test_s28_D.py`.

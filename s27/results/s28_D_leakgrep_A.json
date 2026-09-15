@@ -1,0 +1,754 @@
+{
+ "tag": "A",
+ "files": [
+  {
+   "file": "s27/s28_A_amp.py",
+   "exists": true,
+   "n_hits": 87
+  }
+ ],
+ "hits": [
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 9,
+   "token": "native",
+   "fn": "<module>",
+   "text": "labelled apart: EXPRESSIVITY (ORACLE: the family's ceiling, theta chosen against the native) and"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 10,
+   "token": "native",
+   "fn": "<module>",
+   "text": "RECOGNITION (deployable: the native-free objective).  Classical controls replace ONLY the map"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 16,
+   "token": "oracle",
+   "fn": "<module>",
+   "text": "python s27/s28_A_amp.py oracle  [--limit N] [--reverse]   # frame, production, ORACLE ceilings"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 21,
+   "token": "nat_ca",
+   "fn": "<module>",
+   "text": "ORACLE reads of `nat_ca` happen only inside functions whose names begin `oracle_`.  Everything"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 21,
+   "token": "oracle",
+   "fn": "<module>",
+   "text": "ORACLE reads of `nat_ca` happen only inside functions whose names begin `oracle_`.  Everything"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 22,
+   "token": "native",
+   "fn": "<module>",
+   "text": "else is native-free, and the NaN-poison test in `tests/test_s28_A.py` asserts it."
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 66,
+   "token": "oracle",
+   "fn": "<module>",
+   "text": "+ [\"untr_0\", \"oracle_circ\", \"oracle_aff500\"])"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 96,
+   "token": "rmsd",
+   "fn": "__init__",
+   "text": "P = I.pairwise_rmsd(W[top])"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 399,
+   "token": "oracle",
+   "fn": "oracle_kabsch",
+   "text": "def oracle_kabsch(C, nat):"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 400,
+   "token": "rmsd",
+   "fn": "oracle_kabsch",
+   "text": "\"\"\"ORACLE.  (rmsd, R, residual) with residual = R Cc - Nc; d rmsd / dC = residual @ R / (n rmsd).\"\"\""
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 409,
+   "token": "rmsd",
+   "fn": "oracle_kabsch",
+   "text": "rmsd = float(np.sqrt((res ** 2).sum() / len(C)))"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 410,
+   "token": "rmsd",
+   "fn": "oracle_kabsch",
+   "text": "return rmsd, R, res"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 413,
+   "token": "rmsd",
+   "fn": "oracle_rmsd_grad",
+   "text": "def oracle_rmsd_grad(C, nat):"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 413,
+   "token": "oracle",
+   "fn": "oracle_rmsd_grad",
+   "text": "def oracle_rmsd_grad(C, nat):"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 415,
+   "token": "rmsd",
+   "fn": "oracle_rmsd_grad",
+   "text": "rmsd, R, res = oracle_kabsch(C, nat)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 415,
+   "token": "oracle",
+   "fn": "oracle_rmsd_grad",
+   "text": "rmsd, R, res = oracle_kabsch(C, nat)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 416,
+   "token": "rmsd",
+   "fn": "oracle_rmsd_grad",
+   "text": "g = (res @ R) / (len(C) * max(rmsd, 1e-12))"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 417,
+   "token": "rmsd",
+   "fn": "oracle_rmsd_grad",
+   "text": "return rmsd, g"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 420,
+   "token": "oracle",
+   "fn": "oracle_circuit_ceiling",
+   "text": "def oracle_circuit_ceiling(circ, frame: Frame, nat, starts=ORACLE_STARTS, iters=ORACLE_ITERS,"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 422,
+   "token": "native",
+   "fn": "oracle_circuit_ceiling",
+   "text": "\"\"\"ORACLE.  Minimise the point-cloud RMSD of C(theta) to the native over theta; best of `starts`.\"\"\""
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 434,
+   "token": "rmsd",
+   "fn": "fg",
+   "text": "r, gC = oracle_rmsd_grad(C, nat)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 434,
+   "token": "oracle",
+   "fn": "fg",
+   "text": "r, gC = oracle_rmsd_grad(C, nat)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 442,
+   "token": "rmsd",
+   "fn": "fg",
+   "text": "r = float(I.ca_rmsd(C, nat)) if np.isfinite(C).all() else float(\"nan\")"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 446,
+   "token": "rmsd",
+   "fn": "fg",
+   "text": "return dict(rmsd_cloud=best[0], per_start=per, rmsd_mean_starts=float(np.nanmean(per)),"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 450,
+   "token": "oracle",
+   "fn": "oracle_affine_ls",
+   "text": "def oracle_affine_ls(frame: Frame, nat, idx=None):"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 452,
+   "token": "native",
+   "fn": "oracle_affine_ls",
+   "text": "against the native posed on the frame's reference.  Returns (rmsd after re-superposition, C, w).\"\"\""
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 452,
+   "token": "rmsd",
+   "fn": "oracle_affine_ls",
+   "text": "against the native posed on the frame's reference.  Returns (rmsd after re-superposition, C, w).\"\"\""
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 461,
+   "token": "rmsd",
+   "fn": "oracle_affine_ls",
+   "text": "return float(I.ca_rmsd(C, nat)), C, w"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 464,
+   "token": "oracle",
+   "fn": "oracle_subspace_ls",
+   "text": "def oracle_subspace_ls(frame: Frame, nat, B):"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 476,
+   "token": "rmsd",
+   "fn": "oracle_subspace_ls",
+   "text": "return float(I.ca_rmsd(C, nat)), C, w"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 487,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "def run_oracle_target(pdb, seed=0):"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 506,
+   "token": "rmsd",
+   "fn": "run_oracle_target",
+   "text": "rmsd_cloud=oracle_rmsd_of(Cp, cand),"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 506,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "rmsd_cloud=oracle_rmsd_of(Cp, cand),"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 507,
+   "token": "rmsd",
+   "fn": "run_oracle_target",
+   "text": "rmsd_cloud_deployed=oracle_rmsd_of(Cd, cand)))"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 507,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "rmsd_cloud_deployed=oracle_rmsd_of(Cd, cand)))"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 509,
+   "token": "native",
+   "fn": "run_oracle_target",
+   "text": "# pool descriptors (native-free) and ORACLE pool labels"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 512,
+   "token": "oracle_rr",
+   "fn": "run_oracle_target",
+   "text": "row[\"oracle_pool_best\"] = float(np.min(cand.oracle_rr))"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 512,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "row[\"oracle_pool_best\"] = float(np.min(cand.oracle_rr))"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 513,
+   "token": "oracle_rr",
+   "fn": "run_oracle_target",
+   "text": "row[\"oracle_top75_best\"] = float(np.min(cand.oracle_rr[top]))"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 513,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "row[\"oracle_top75_best\"] = float(np.min(cand.oracle_rr[top]))"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 516,
+   "token": "nat_ca",
+   "fn": "run_oracle_target",
+   "text": "oc = oracle_circuit_ceiling(circ, frame, cand.nat_ca)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 516,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "oc = oracle_circuit_ceiling(circ, frame, cand.nat_ca)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 517,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "structs[\"oracle_circ\"] = oc.pop(\"C\"); oc.pop(\"theta\")"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 519,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "oc[\"S_shipped\"] = sur.shipped(structs[\"oracle_circ\"])"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 520,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "oc[\"S_smooth\"] = float(sur.value_grad(structs[\"oracle_circ\"])[0]) if np.isfinite(structs[\"oracle_circ\"]).all() else float(\"nan\")"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 521,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "row[\"arms\"][\"oracle_circ\"] = oc"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 522,
+   "token": "nat_ca",
+   "fn": "run_oracle_target",
+   "text": "r5, C5, w5 = oracle_affine_ls(frame, cand.nat_ca)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 522,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "r5, C5, w5 = oracle_affine_ls(frame, cand.nat_ca)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 523,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "structs[\"oracle_aff500\"] = C5"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 524,
+   "token": "rmsd",
+   "fn": "run_oracle_target",
+   "text": "row[\"arms\"][\"oracle_aff500\"] = _row_for(\"oracle_aff500\", C5, sur, dict(rmsd_cloud=r5, S_smooth=sur.value_grad(C5)[0], **weight_diag(w5)))"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 524,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "row[\"arms\"][\"oracle_aff500\"] = _row_for(\"oracle_aff500\", C5, sur, dict(rmsd_cloud=r5, S_smooth=sur.value_grad(C5)[0], **weight_diag(w5)))"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 525,
+   "token": "nat_ca",
+   "fn": "run_oracle_target",
+   "text": "r75, C75, w75 = oracle_affine_ls(frame, cand.nat_ca, top)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 525,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "r75, C75, w75 = oracle_affine_ls(frame, cand.nat_ca, top)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 526,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "structs[\"oracle_aff75\"] = C75"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 527,
+   "token": "rmsd",
+   "fn": "run_oracle_target",
+   "text": "row[\"arms\"][\"oracle_aff75\"] = _row_for(\"oracle_aff75\", C75, sur, dict(rmsd_cloud=r75, S_smooth=sur.value_grad(C75)[0], **weight_diag(w75)))"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 527,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "row[\"arms\"][\"oracle_aff75\"] = _row_for(\"oracle_aff75\", C75, sur, dict(rmsd_cloud=r75, S_smooth=sur.value_grad(C75)[0], **weight_diag(w75)))"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 531,
+   "token": "nat_ca",
+   "fn": "run_oracle_target",
+   "text": "rs, Cs, ws = oracle_subspace_ls(frame, cand.nat_ca, B)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 531,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "rs, Cs, ws = oracle_subspace_ls(frame, cand.nat_ca, B)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 533,
+   "token": "rmsd",
+   "fn": "run_oracle_target",
+   "text": "row[\"arms\"][\"oracle_sub\"] = dict(rmsd_cloud=float(np.mean(subs)), per_sub=subs)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 533,
+   "token": "oracle",
+   "fn": "run_oracle_target",
+   "text": "row[\"arms\"][\"oracle_sub\"] = dict(rmsd_cloud=float(np.mean(subs)), per_sub=subs)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 534,
+   "token": "native",
+   "fn": "run_oracle_target",
+   "text": "# native-free: the ORACLE structure's objective value is a diagnostic of the objective (\u00a76)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 554,
+   "token": "rmsd",
+   "fn": "finish",
+   "text": "r = dict(rmsd_cloud=oracle_rmsd_of(C, cand), S_shipped=sur.shipped(C), denom=float(denom),"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 554,
+   "token": "oracle",
+   "fn": "finish",
+   "text": "r = dict(rmsd_cloud=oracle_rmsd_of(C, cand), S_shipped=sur.shipped(C), denom=float(denom),"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 645,
+   "token": "rmsd",
+   "fn": "oracle_rmsd_of",
+   "text": "def oracle_rmsd_of(C, cand):"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 645,
+   "token": "oracle",
+   "fn": "oracle_rmsd_of",
+   "text": "def oracle_rmsd_of(C, cand):"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 647,
+   "token": "nat_ca",
+   "fn": "oracle_rmsd_of",
+   "text": "if cand.nat_ca is None or not np.isfinite(np.asarray(C, float)).all():"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 649,
+   "token": "nat_ca",
+   "fn": "oracle_rmsd_of",
+   "text": "return float(I.ca_rmsd(C, cand.nat_ca))"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 649,
+   "token": "rmsd",
+   "fn": "oracle_rmsd_of",
+   "text": "return float(I.ca_rmsd(C, cand.nat_ca))"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 668,
+   "token": "native",
+   "fn": "run_chain_target",
+   "text": "scoring of the emitted chain against the native, post hoc.\"\"\""
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 672,
+   "token": "nat_ca",
+   "fn": "run_chain_target",
+   "text": "nat = u[\"nat_ca\"]"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 676,
+   "token": "rmsd",
+   "fn": "run_chain_target",
+   "text": "out[a] = dict(rmsd_chain=float(\"nan\"), missing=True)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 680,
+   "token": "rmsd",
+   "fn": "run_chain_target",
+   "text": "out[a] = dict(rmsd_chain=float(\"nan\"), undefined=True)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 685,
+   "token": "rmsd",
+   "fn": "run_chain_target",
+   "text": "out[a] = dict(rmsd_chain=float(I.ca_rmsd(ca, nat)), rmsd_cloud=float(I.ca_rmsd(C, nat)),"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 721,
+   "token": "oracle",
+   "fn": "phase",
+   "text": "if mode == \"oracle\":"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 722,
+   "token": "oracle",
+   "fn": "phase",
+   "text": "row = run_oracle_target(pdb, seed=seed)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 724,
+   "token": "rmsd",
+   "fn": "phase",
+   "text": "row[\"arms\"][\"prod\"][\"rmsd_cloud\"], row[\"arms\"][\"oracle_circ\"][\"rmsd_cloud\"],"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 724,
+   "token": "oracle",
+   "fn": "phase",
+   "text": "row[\"arms\"][\"prod\"][\"rmsd_cloud\"], row[\"arms\"][\"oracle_circ\"][\"rmsd_cloud\"],"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 725,
+   "token": "oracle",
+   "fn": "phase",
+   "text": "\" \".join(\"%.2f\" % v for v in row[\"arms\"][\"oracle_circ\"][\"per_start\"]),"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 726,
+   "token": "rmsd",
+   "fn": "phase",
+   "text": "row[\"arms\"][\"oracle_aff500\"][\"rmsd_cloud\"], row[\"arms\"][\"oracle_aff75\"][\"rmsd_cloud\"],"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 726,
+   "token": "oracle",
+   "fn": "phase",
+   "text": "row[\"arms\"][\"oracle_aff500\"][\"rmsd_cloud\"], row[\"arms\"][\"oracle_aff75\"][\"rmsd_cloud\"],"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 727,
+   "token": "rmsd",
+   "fn": "phase",
+   "text": "row[\"arms\"][\"oracle_sub\"][\"rmsd_cloud\"], row[\"prod_frame_max_dev\"])"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 727,
+   "token": "oracle",
+   "fn": "phase",
+   "text": "row[\"arms\"][\"oracle_sub\"][\"rmsd_cloud\"], row[\"prod_frame_max_dev\"])"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 732,
+   "token": "rmsd",
+   "fn": "phase",
+   "text": "a[\"circ_l0_i80\"][\"rmsd_cloud\"], a[\"circ_l0.3_i80\"][\"rmsd_cloud\"], a[\"circ_l1_i80\"][\"rmsd_cloud\"],"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 733,
+   "token": "rmsd",
+   "fn": "phase",
+   "text": "a[\"circ_l3_i80\"][\"rmsd_cloud\"], a[\"a500_rand_m_l1\"][\"rmsd_cloud\"], a[\"a75_rand_m_l1\"][\"rmsd_cloud\"],"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 734,
+   "token": "rmsd",
+   "fn": "phase",
+   "text": "a[\"sub0_rand_m_l1\"][\"rmsd_cloud\"], a[\"simplex_rand_m_l1\"][\"rmsd_cloud\"], a[\"untr_0\"][\"rmsd_cloud\"],"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 742,
+   "token": "rmsd",
+   "fn": "phase",
+   "text": "msg = \" \".join(\"%s %.3f\" % (a, row[\"arms\"][a].get(\"rmsd_chain\", float(\"nan\"))) for a in todo)"
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "line": 753,
+   "token": "oracle",
+   "fn": "main",
+   "text": "ap.add_argument(\"mode\", choices=[\"oracle\", \"recog\", \"chain\", \"analyse\"])"
+  }
+ ],
+ "by_function": [
+  {
+   "file": "s27\\s28_A_amp.py",
+   "fn": "<module>",
+   "tokens": [
+    "nat_ca",
+    "native",
+    "oracle"
+   ],
+   "n": 7
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "fn": "__init__",
+   "tokens": [
+    "rmsd"
+   ],
+   "n": 1
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "fn": "fg",
+   "tokens": [
+    "oracle",
+    "rmsd"
+   ],
+   "n": 4
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "fn": "finish",
+   "tokens": [
+    "oracle",
+    "rmsd"
+   ],
+   "n": 2
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "fn": "main",
+   "tokens": [
+    "oracle"
+   ],
+   "n": 1
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "fn": "oracle_affine_ls",
+   "tokens": [
+    "native",
+    "oracle",
+    "rmsd"
+   ],
+   "n": 4
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "fn": "oracle_circuit_ceiling",
+   "tokens": [
+    "native",
+    "oracle"
+   ],
+   "n": 2
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "fn": "oracle_kabsch",
+   "tokens": [
+    "oracle",
+    "rmsd"
+   ],
+   "n": 4
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "fn": "oracle_rmsd_grad",
+   "tokens": [
+    "oracle",
+    "rmsd"
+   ],
+   "n": 6
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "fn": "oracle_rmsd_of",
+   "tokens": [
+    "nat_ca",
+    "oracle",
+    "rmsd"
+   ],
+   "n": 5
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "fn": "oracle_subspace_ls",
+   "tokens": [
+    "oracle",
+    "rmsd"
+   ],
+   "n": 2
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "fn": "phase",
+   "tokens": [
+    "oracle",
+    "rmsd"
+   ],
+   "n": 13
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "fn": "run_chain_target",
+   "tokens": [
+    "nat_ca",
+    "native",
+    "rmsd"
+   ],
+   "n": 5
+  },
+  {
+   "file": "s27\\s28_A_amp.py",
+   "fn": "run_oracle_target",
+   "tokens": [
+    "nat_ca",
+    "native",
+    "oracle",
+    "oracle_rr",
+    "rmsd"
+   ],
+   "n": 31
+  }
+ ]
+}

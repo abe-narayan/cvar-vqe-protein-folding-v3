@@ -1,0 +1,429 @@
+{
+ "tag": "C",
+ "files": [
+  {
+   "file": "s27/s28_C_fail18.py",
+   "exists": true,
+   "n_hits": 25
+  },
+  {
+   "file": "s27/s28_C_readout.py",
+   "exists": true,
+   "n_hits": 16
+  }
+ ],
+ "hits": [
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 8,
+   "token": "nat_ca",
+   "fn": "<module>",
+   "text": "previous routers used (block CTRL).  Nothing in `features_one` reads `nat_ca`, `oracle_rr` or an"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 8,
+   "token": "oracle_rr",
+   "fn": "<module>",
+   "text": "previous routers used (block CTRL).  Nothing in `features_one` reads `nat_ca`, `oracle_rr` or an"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 8,
+   "token": "oracle",
+   "fn": "<module>",
+   "text": "previous routers used (block CTRL).  Nothing in `features_one` reads `nat_ca`, `oracle_rr` or an"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 15,
+   "token": "native",
+   "fn": "<module>",
+   "text": "python s27/s28_C_fail18.py features            # native-free, cached to s27/results"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 71,
+   "token": "nat_ca",
+   "fn": "features_one",
+   "text": "S27 channels; `sim` the pool's BLOSUM sims; `dg` the distogram.  Never `nat_ca` / `rr`.\"\"\""
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 71,
+   "token": "rr",
+   "fn": "features_one",
+   "text": "S27 channels; `sim` the pool's BLOSUM sims; `dg` the distogram.  Never `nat_ca` / `rr`.\"\"\""
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 110,
+   "token": "rmsd",
+   "fn": "features_one",
+   "text": "P = I.pairwise_rmsd(W[top])"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 298,
+   "token": "rmsd",
+   "fn": "switched_endpoint",
+   "text": "def switched_endpoint(pred_fail, pdbs, by, alt, basis=\"rmsd_chain\"):"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 320,
+   "token": "nat_ca",
+   "fn": "reproduce_chain",
+   "text": "rc = float(I.ca_rmsd(C, cand.nat_ca))"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 320,
+   "token": "rmsd",
+   "fn": "reproduce_chain",
+   "text": "rc = float(I.ca_rmsd(C, cand.nat_ca))"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 321,
+   "token": "nat_ca",
+   "fn": "reproduce_chain",
+   "text": "rk = float(I.ca_rmsd(ca, cand.nat_ca))"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 321,
+   "token": "rmsd",
+   "fn": "reproduce_chain",
+   "text": "rk = float(I.ca_rmsd(ca, cand.nat_ca))"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 322,
+   "token": "rmsd",
+   "fn": "reproduce_chain",
+   "text": "out.append(dict(pdb=pdb, config=cfg, rmsd_cloud=rc, rmsd_chain=rk,"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 323,
+   "token": "rmsd",
+   "fn": "reproduce_chain",
+   "text": "ref_cloud=by[cfg][pdb][\"rmsd_cloud\"], ref_chain=by[cfg][pdb][\"rmsd_chain\"],"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 324,
+   "token": "rmsd",
+   "fn": "reproduce_chain",
+   "text": "d_cloud=abs(rc - by[cfg][pdb][\"rmsd_cloud\"]),"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 325,
+   "token": "rmsd",
+   "fn": "reproduce_chain",
+   "text": "d_chain=abs(rk - by[cfg][pdb][\"rmsd_chain\"])))"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 390,
+   "token": "oracle",
+   "fn": "run",
+   "text": "res[\"oracle_switch\"] = {}"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 392,
+   "token": "rmsd",
+   "fn": "run",
+   "text": "for basis in (\"rmsd_chain\", \"rmsd_cloud\"):"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 396,
+   "token": "oracle",
+   "fn": "run",
+   "text": "res[\"oracle_switch\"][f\"{alt}|{basis}\"] = {k: v for k, v in r.items() if k != \"concentration\"} | {\"concentration\": r[\"concentration\"]}"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 399,
+   "token": "oracle",
+   "fn": "run",
+   "text": "res[\"oracle_switch\"][f\"{alt}|{basis}\"][\"fail18_effect\"] = float(d[y > 0.5].mean())"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 400,
+   "token": "oracle",
+   "fn": "run",
+   "text": "res[\"oracle_switch\"][f\"{alt}|{basis}\"][\"fail18_se\"] = float(d[y > 0.5].std(ddof=1) / math.sqrt(18))"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 418,
+   "token": "rmsd",
+   "fn": "switch",
+   "text": "for basis in (\"rmsd_chain\", \"rmsd_cloud\"):"
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 450,
+   "token": "native",
+   "fn": "selftest",
+   "text": "No RMSD, no native read.\"\"\""
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 489,
+   "token": "rmsd",
+   "fn": "main",
+   "text": "print(f\"  {r['pdb']} {r['config']:12s} cloud {r['rmsd_cloud']:.6f} (ref {r['ref_cloud']:.6f}, d {r['d_cloud']:.1e})  \""
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "line": 490,
+   "token": "rmsd",
+   "fn": "main",
+   "text": "f\"chain {r['rmsd_chain']:.6f} (ref {r['ref_chain']:.6f}, d {r['d_chain']:.1e})\")"
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 21,
+   "token": "nat_ca",
+   "fn": "<module>",
+   "text": "within the 75 by a stable per-target key.  NATIVE-FREE: no function here reads `nat_ca` or"
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 22,
+   "token": "oracle_rr",
+   "fn": "<module>",
+   "text": "`oracle_rr`; the ORACLE endpoint is evaluated only in `oracle_rows`."
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 22,
+   "token": "oracle",
+   "fn": "<module>",
+   "text": "`oracle_rr`; the ORACLE endpoint is evaluated only in `oracle_rows`."
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 134,
+   "token": "rr",
+   "fn": "ranker_within",
+   "text": "rr = np.empty(len(r))"
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 135,
+   "token": "rr",
+   "fn": "ranker_within",
+   "text": "rr[order] = np.arange(len(r), dtype=float)"
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 136,
+   "token": "rr",
+   "fn": "ranker_within",
+   "text": "return rr"
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 164,
+   "token": "rmsd",
+   "fn": "emit",
+   "text": "P = I.pairwise_rmsd(W75)"
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 184,
+   "token": "oracle",
+   "fn": "oracle_rows",
+   "text": "def oracle_rows(pdb, arms, mode):"
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 185,
+   "token": "nat_ca",
+   "fn": "oracle_rows",
+   "text": "\"\"\"ORACLE: `nat_ca` is read here and nowhere else.  Point cloud for every arm; the built"
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 190,
+   "token": "rmsd",
+   "fn": "oracle_rows",
+   "text": "P = I.pairwise_rmsd(W75)"
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 196,
+   "token": "nat_ca",
+   "fn": "oracle_rows",
+   "text": "rmsd_cloud=float(I.ca_rmsd(C, cand.nat_ca)), **info)"
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 196,
+   "token": "rmsd",
+   "fn": "oracle_rows",
+   "text": "rmsd_cloud=float(I.ca_rmsd(C, cand.nat_ca)), **info)"
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 199,
+   "token": "nat_ca",
+   "fn": "oracle_rows",
+   "text": "row[\"rmsd_chain\"] = float(I.ca_rmsd(ca, cand.nat_ca))"
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 199,
+   "token": "rmsd",
+   "fn": "oracle_rows",
+   "text": "row[\"rmsd_chain\"] = float(I.ca_rmsd(ca, cand.nat_ca))"
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 230,
+   "token": "oracle",
+   "fn": "run",
+   "text": "rows = oracle_rows(pdb, todo, mode)"
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "line": 246,
+   "token": "rmsd",
+   "fn": "selftest",
+   "text": "P = I.pairwise_rmsd(W)"
+  }
+ ],
+ "by_function": [
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "fn": "<module>",
+   "tokens": [
+    "nat_ca",
+    "native",
+    "oracle",
+    "oracle_rr"
+   ],
+   "n": 4
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "fn": "features_one",
+   "tokens": [
+    "nat_ca",
+    "rmsd",
+    "rr"
+   ],
+   "n": 3
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "fn": "main",
+   "tokens": [
+    "rmsd"
+   ],
+   "n": 2
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "fn": "reproduce_chain",
+   "tokens": [
+    "nat_ca",
+    "rmsd"
+   ],
+   "n": 8
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "fn": "run",
+   "tokens": [
+    "oracle",
+    "rmsd"
+   ],
+   "n": 5
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "fn": "selftest",
+   "tokens": [
+    "native"
+   ],
+   "n": 1
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "fn": "switch",
+   "tokens": [
+    "rmsd"
+   ],
+   "n": 1
+  },
+  {
+   "file": "s27\\s28_C_fail18.py",
+   "fn": "switched_endpoint",
+   "tokens": [
+    "rmsd"
+   ],
+   "n": 1
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "fn": "<module>",
+   "tokens": [
+    "nat_ca",
+    "oracle",
+    "oracle_rr"
+   ],
+   "n": 3
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "fn": "emit",
+   "tokens": [
+    "rmsd"
+   ],
+   "n": 1
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "fn": "oracle_rows",
+   "tokens": [
+    "nat_ca",
+    "oracle",
+    "rmsd"
+   ],
+   "n": 7
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "fn": "ranker_within",
+   "tokens": [
+    "rr"
+   ],
+   "n": 3
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "fn": "run",
+   "tokens": [
+    "oracle"
+   ],
+   "n": 1
+  },
+  {
+   "file": "s27\\s28_C_readout.py",
+   "fn": "selftest",
+   "tokens": [
+    "rmsd"
+   ],
+   "n": 1
+  }
+ ]
+}
