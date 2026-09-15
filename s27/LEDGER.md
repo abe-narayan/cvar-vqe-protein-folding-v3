@@ -1055,3 +1055,135 @@ target, 0.003 mean" (`s27/RETRACTIONS_S28.md` R1, a scope correction, not a retr
 result). No S28 verdict changes.
 Artefacts: `s27/results/s28_A_chain_rows.jsonl`, `s27/results/chain_rows.jsonl`; the per-target
 table is in this entry.
+
+## S28-L18 -- RECOGNITION ON THE POINT CLOUD (INTERMEDIATE BASIS, 126/126, NO VERDICT): EVERY SIGNED ARM IS WORSE THAN PRODUCTION; THE OBJECTIVE IS MINIMISED AND ITS MINIMISER IS AWAY FROM THE NATIVE; THE BUILT-CHAIN VERDICT WAITS FOR JOB s28A_chain_primary (2026-09-14 20:50, A)
+
+Artefacts: `s27/results/s28_A_recog_rows.jsonl` (126 rows, every arm of PREREG section 3),
+`s27/results/s28_A_summary.json` (`cloud`, `contrasts`, `text`), jobs
+`s26/jobs_done/s28A_recog_126.json` (killed at 43/126, 713 s) and `s28A_recog_126_r2.json`
+(resumed to 126/126, 1420 s, peak RSS 0.336 GB). The lam = 0 soundness gate: my loop's `p`
+equals `core.quantum.run_cvar_vqe`'s bit-for-bit on all 126 targets (max |dp| 0.00e+00).
+Undefined readouts (|sum psi| < 1e-9): 0 in every arm, 0 of 2016 untrained draws; rule (e) moot.
+Basis: POINT CLOUD, an intermediate; no arm is called anything here; the verdict is written on
+the built chain (S28-L1b's ORACLE emitted ceiling and the circuit arms are in job
+`s28A_chain_primary_1`, running).
+
+Means (point cloud, `s28_A_summary.json :: cloud`): production 3.0483; circuit lam 0.3 / 1 / 3
+at 80 iterations 3.3832 / 3.3850 / 3.4382; circuit lam 0 87.03 (median 13.94); lam 1 at 400
+iterations 3.5315; untrained circuit mean of 16 draws 22.16 (best-of-16, an order statistic,
+3.088); a500 rand matched / converged (lam 1) 3.5755 / 3.6869; a75 rand 3.4880 / 3.5387;
+random 27-subspace mean of 8 (rand, matched, lam 1) 3.5445; simplex rand matched (lam 1) 3.0563;
+simplex from production, converged (lam 1) 3.0522; a75 from production (lam 0.3) 3.0460;
+S-only a500 converged 3.7530; S-only simplex from production 3.2383.
+
+  circ_l0.3_i80 vs production (point cloud)
+    a 3.3832 (med 3.1282)   b 3.0483 (med 2.8373)   n=126
+    effect +0.3349   median +0.2074   SE 0.0535   MDE 0.1500   effect/MDE +2.23
+    iid  CI95 [+0.2353, +0.4403]
+    fold CI95 [+0.2058, +0.4537]   folds same sign 5/5   per-fold 0:+0.469 1:+0.471 2:+0.392 3:+0.280 4:+0.114
+    32W/94L/0T   worst degradation +2.1461 (9BAF)   p90 +1.0105   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.4246 vs uniform-effect null p10/p50/p90 +0.3590/+0.4220/+0.4898 -> pctile 0.519
+    VERDICT: WORSE
+
+  circ_l1_i80 vs production (point cloud)
+    a 3.3850 (med 3.1263)   b 3.0483 (med 2.8373)   n=126
+    effect +0.3367   median +0.2331   SE 0.0606   MDE 0.1697   effect/MDE +1.98
+    iid  CI95 [+0.2198, +0.4556]
+    fold CI95 [+0.1739, +0.4771]   folds same sign 5/5   per-fold 0:+0.395 1:+0.539 2:+0.443 3:+0.328 4:+0.051
+    36W/90L/0T   worst degradation +2.4460 (5MXS)   p90 +1.2211   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.4401 vs uniform-effect null p10/p50/p90 +0.3678/+0.4393/+0.5104 -> pctile 0.508
+    VERDICT: WORSE
+
+  circ_l3_i80 vs production (point cloud)
+    a 3.4382 (med 3.2587)   b 3.0483 (med 2.8373)   n=126
+    effect +0.3899   median +0.3201   SE 0.0583   MDE 0.1633   effect/MDE +2.39
+    iid  CI95 [+0.2764, +0.5028]
+    fold CI95 [+0.2176, +0.5300]   folds same sign 5/5   per-fold 0:+0.562 1:+0.509 2:+0.505 3:+0.353 4:+0.087
+    35W/91L/0T   worst degradation +2.6900 (2RUO)   p90 +1.1795   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.4855 vs uniform-effect null p10/p50/p90 +0.4093/+0.4829/+0.5602 -> pctile 0.520
+    VERDICT: WORSE
+
+  circ_l0_i80 vs production (point cloud)
+    a 87.0262 (med 13.9399)   b 3.0483 (med 2.8373)   n=126
+    effect +83.9779   median +11.6371   SE 24.7247   MDE 69.2687   effect/MDE +1.21
+    iid  CI95 [+44.8255, +142.4829]
+    fold CI95 [+55.3432, +115.7913]   folds same sign 5/5   per-fold 0:+139.418 1:+48.708 2:+59.327 3:+59.954 4:+103.779
+    4W/122L/0T   worst degradation +2703.3080 (6B9K)   p90 +188.7409   power 0.92  Type-M 1.05
+    concentration: drop-top10 +91.1882 vs uniform-effect null p10/p50/p90 +58.5632/+88.4532/+129.5828 -> pctile 0.541
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.05x]
+
+  diag_circ_l1_i400 vs production (point cloud)
+    a 3.5315 (med 3.4231)   b 3.0483 (med 2.8373)   n=126
+    effect +0.4832   median +0.3641   SE 0.0636   MDE 0.1781   effect/MDE +2.71
+    iid  CI95 [+0.3600, +0.6087]
+    fold CI95 [+0.3485, +0.5945]   folds same sign 5/5   per-fold 0:+0.629 1:+0.568 2:+0.572 3:+0.456 4:+0.243
+    29W/97L/0T   worst degradation +2.5526 (2MK7)   p90 +1.4327   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.5852 vs uniform-effect null p10/p50/p90 +0.5062/+0.5829/+0.6660 -> pctile 0.515
+    VERDICT: WORSE
+
+  untrained circuit (mean of 16 draws) vs production (point cloud)
+    a 22.1615 (med 13.5413)   b 3.0483 (med 2.8373)   n=126
+    effect +19.1131   median +10.8237   SE 2.9939   MDE 8.3876   effect/MDE +2.28
+    iid  CI95 [+14.2443, +25.3897]
+    fold CI95 [+15.6080, +22.4128]   folds same sign 5/5   per-fold 0:+13.999 1:+21.211 2:+14.749 3:+21.787 4:+23.353
+    0W/126L/0T   worst degradation +313.6326 (2MLQ)   p90 +33.1158   power 1.00  Type-M 1.00
+    concentration: drop-top10 +20.4835 vs uniform-effect null p10/p50/p90 +16.6128/+20.0990/+24.4410 -> pctile 0.547
+    VERDICT: WORSE
+
+  circ_l1_i80 vs random-27-subspace control (mean of 8, matched budget) (point cloud)
+    a 3.3850 (med 3.1263)   b 3.5445 (med 3.4406)   n=126
+    effect -0.1595   median -0.0661   SE 0.0503   MDE 0.1410   effect/MDE -1.13
+    iid  CI95 [-0.2589, -0.0626]
+    fold CI95 [-0.2500, -0.0583]   folds same sign 4/5   per-fold 0:-0.271 1:+0.010 2:-0.093 3:-0.119 4:-0.283
+    74W/52L/0T   worst degradation +0.9635 (8T61)   p90 +0.3167   power 0.89  Type-M 1.07
+    concentration: drop-top10 -0.0399 vs uniform-effect null p10/p50/p90 -0.0934/-0.0421/+0.0096 -> pctile 0.524
+    VERDICT: BETTER [TYPE-M ZONE: magnitude inflated ~1.07x]
+
+  circ_l1_i80 vs a500_rand_c_l1 (point cloud)
+    a 3.3850 (med 3.1263)   b 3.6869 (med 3.8446)   n=126
+    effect -0.3019   median -0.1372   SE 0.0633   MDE 0.1772   effect/MDE -1.70
+    iid  CI95 [-0.4294, -0.1850]
+    fold CI95 [-0.4069, -0.1845]   folds same sign 5/5   per-fold 0:-0.436 1:-0.131 2:-0.168 3:-0.327 4:-0.413
+    85W/41L/0T   worst degradation +1.8996 (2EFZ)   p90 +0.3955   power 1.00  Type-M 1.00
+    concentration: drop-top10 -0.1612 vs uniform-effect null p10/p50/p90 -0.2467/-0.1627/-0.0864 -> pctile 0.507
+    VERDICT: BETTER
+
+  circ_l1_i80 vs simplex_rand_m_l1 (point cloud)
+    a 3.3850 (med 3.1263)   b 3.0563 (med 2.7179)   n=126
+    effect +0.3287   median +0.2082   SE 0.0566   MDE 0.1587   effect/MDE +2.07
+    iid  CI95 [+0.2230, +0.4394]
+    fold CI95 [+0.2066, +0.4489]   folds same sign 5/5   per-fold 0:+0.309 1:+0.481 2:+0.471 3:+0.335 4:+0.105
+    35W/91L/0T   worst degradation +3.1255 (7BX2)   p90 +1.0374   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.4187 vs uniform-effect null p10/p50/p90 +0.3423/+0.4142/+0.4888 -> pctile 0.527
+    VERDICT: WORSE
+
+Reading (intermediate basis, no verdict):
+1. Every signed arm is worse than production. The circuit at lam 0.3 / 1 / 3 is +0.335 / +0.337
+   / +0.390 A at 2.0 to 2.4x MDE, fold CI above zero, 5/5 folds; lam 0 (the deployed state read
+   as signed weights) is +84 A because its signs are the initialisation's (D's caveat (d)); the
+   untrained circuit is +19 A. F1's registered prior held on this basis.
+2. The optimiser works and that is the problem. At lam 1 the surrogate falls from 3.41 at theta0
+   to 1.34 at the optimum (`parts`), BELOW production's 1.674 and far below the ORACLE
+   structure's 2.094 (S28-L1b); 400 iterations lower S~ further (1.263) and RAISE the RMSD to
+   3.53 (+0.483, 2.7x MDE). Across the classical families the ordering is the same: the
+   converged unconstrained affine optimum has the lowest S~ (1.06 to 1.08) and the worst RMSD
+   (3.69 to 3.77). The objective term is minimised, and its minimiser is not near the native:
+   S15's "optimising a structure against the distogram objective gives 3.321" and S8-9's 37th
+   percentile, reproduced for the emitted structure's own score, on the amplitude family.
+3. The grid is not degenerate (D's caveat (a)): lam S~ at the optimum is 0.42 / 1.27 / 3.74
+   against CVaR -1.53 and T H 2.7 to 2.9; the three cells give three different structures
+   (S~ 1.475 / 1.338 / 1.296) and the same verdict.
+4. F2 preview (moot unless F1 fires on the chain): among SIGNED families at the same objective
+   and budget the circuit is the least bad (vs the random 27-subspace mean-of-8 -0.16 A at
+   1.13x MDE, Type-M zone; vs unconstrained a500 converged -0.30 at 1.7x MDE; vs S-only a500
+   -0.37 at 2.0x). It is WORSE than the CONVEX simplex under the same objective (+0.329 at 2.07x
+   MDE, 5/5): the convex family, started at random, lands at 3.056, production's value. So the
+   parameter count does not do it (D's S28-L1 wording), and neither does the circuit's family:
+   the sign freedom itself is what the objective misuses.
+5. The prod-init controls show the objective does not move production anywhere useful: a75 from
+   production at lam 0.3 is 3.0460 (-0.002), the simplex from production 3.052 to 3.115.
+6. Geometry: every signed optimum is uncontracted (mean virtual bond 3.40 to 3.54, Rg 6.6 to
+   6.7, against production's 2.96 / 6.21 and the pool's 3.81 / 6.80), with 47% negative weights
+   and negative mass 5.7 to 6.5. The signed readout escapes the averaging contraction, as the
+   ORACLE optimum did; it does not escape the objective.
+The chain projections of these arms are running; nothing above is a verdict.
