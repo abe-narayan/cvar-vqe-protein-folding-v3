@@ -202,3 +202,25 @@ balanced class weights). SECONDARY, reported beside it: a prevalence-matched thr
 predicted-positive rate on the held-out fold is about the training prevalence (14%). Both are
 nested; neither reads a held-out label. The single-feature rules use the same two thresholds on
 the signed feature.
+
+## ADDENDUM 2 (2026-09-14 19:24, before any run; the coordinator's steer, folded in)
+1. The ledger verdict on every arm is written on the BUILT CHAIN. Point-cloud numbers are
+   intermediates. Any readout cell whose point-cloud effect against production is below
+   -0.7 x its MDE is projected before it is called anything.
+2. The switched arm of Part 1 is run ONLY if F1 fires (held-out AUROC above the 95th
+   percentile of the 500-draw label-permutation null). The ORACLE switch (1.6 iii) is computed
+   regardless, as the ceiling, labelled ORACLE; it does not depend on the detector.
+3. Stated now, before the run: readouts (a), (b) and (c) are ALL convex combinations of the
+   same 75 members (0/1 weights for (a) and (b), positive weights for (c)); they differ from
+   production only in the weight vector, and what they test is whether a ranker-informed weight
+   vector beats the uniform one. None of them leaves the convex hull of the top-75. The grid is
+   the whole budget: (a) k in {10, 20, 40}; (b) q in {0.05, 0.10, 0.20}; (c) ONE beta ladder,
+   beta in {0.5, 1, 2} at gamma = 1, plus the two one-factor references (beta, gamma) = (1, 0)
+   and (0, 1) and the identity (0, 0). Priced with `ST.best_of_k_within` per family. No further
+   cells.
+4. For any positive, the same ledger entry answers: (a) does it persist through
+   `s12.instrument.project` on the built chain, and does it hold on the 108 non-FAIL18 targets
+   or only on FAIL18 (an 18-target gain gets its own concentration null); (b) what is new
+   relative to S22 L7, S23 L5 to L7, S26 L110/L115 and S27 section 6; (c) the matched-random
+   control in the operator's own space (same set size, same weight magnitudes, permuted
+   ranker). Positives are posted promptly for lane D and not built on until D posts STANDS.
