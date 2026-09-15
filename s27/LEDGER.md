@@ -1556,3 +1556,36 @@ residual RMS to C0 and its own RMSD to the native, and its step is read against 
 A2.2 (point cloud, job `s28A2_ladder_126`) is running; its built chain runs after the primary
 chain job (`s28A_chain_primary_1`, suspended by the governor at 64/126 at 21:28, resumed) has
 landed and its verdict is posted.
+
+## S28-L24 -- ADVERSARY CHECK OF S28-L23b (A2.1, the ORACLE cosine at the production point) AND SUITE STATUS 21:40 (2026-09-14 21:40, lane D)
+Question: is S28-L23b an ORACLE diagnostic with its null, and does its regime reading rest on
+anything the shared-referent floor could manufacture?
+- Labelling: every cosine is ORACLE, said in the first line and in every reading. Correct.
+- The null (S28-L23 caveat a): supplied, 16 random shape fields per target, mean |cos| 0.140,
+  inside my estimate 0.12 to 0.18; the distogram's -0.034 (SE 0.021) is inside the null in
+  magnitude. The per-target null values are in the rows (`cos_random_ref`), so the 95th
+  percentile is recomputable. Correct.
+- Multiple comparisons: 21 sign tests in the table; the one at p = 0.008 (CAGEO on FAIL18,
+  mean +0.04, a third of the random reference) is flagged as one of 21 and not called a result.
+  Correct.
+- The shared-referent floor (project memory: two quantities measured against a common
+  reference correlate by construction). Spearman(cos_DIS, production RMSD) = -0.372: both sides
+  read the native. The floor here is zero by symmetry: the cosine is scale-free in u, and for a
+  random shape field the cosine with u is independent of |u|, so a common referent alone gives
+  no correlation between cos and RMSD; the -0.372 is a property of the distogram's gradient
+  (it opposes u more where u is long). Say "not a floor artefact, by symmetry of a random
+  direction" when it is quoted. It is still ORACLE and still a correlation of n = 126.
+- The regime reading ("negative on FAIL18, zero on the 108, not positive on the 108") is what
+  the numbers say (FAIL18 -0.143 SE 0.066, 6/18; other -0.016 SE 0.022, 50/108); the prior's
+  "positive on the 108" half did not happen and the entry says so.
+- The prediction for A2.2 (a step along -g costs what a random step costs, more on FAIL18) is
+  registered before A2.2's numbers; I hold A2 to it.
+Verdict: STANDS (an ORACLE diagnostic with its null; nothing deployable claimed).
+SUITE STATUS 21:40: the six S28 test files (`tests/test_s28_A.py`, `test_s28_A2.py`,
+`test_s28_B.py`, `test_s28_B2.py`, `test_s28_C.py`, `test_s28_D.py`) as one TEST job
+`s28D_pytest_lanes_v2`: exit 0, 64 passed, 0 failed, 10 s, peak RSS 0.328 GB
+(`s26/logs/s28D_pytest_lanes_v2.log`). Green gate: 286 pass / 3 skip (light files, S28-L4) +
+64 pass (S28 files) = 350 pass / 3 skip / 0 fail on the files that can run; pipeline,
+integration and the two AMBER files remain deferred (S28-L5).
+Artefacts: `s27/results/s28_A2_cosine_rows.jsonl`, `s28_A2_summary.json`;
+`s26/jobs_done/s28D_pytest_lanes_v2.json`.
