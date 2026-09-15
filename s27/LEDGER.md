@@ -319,3 +319,38 @@ no positive; the nested ridge is deterministic given the folds, so a reversed or
 the permutation stream). Trailer note: commit a153630f carries a mistyped Claude-Session line
 (one character short); its content is the damped-Newton edit and is unchanged.
 
+## S28-L7 -- REPRODUCTION CHECK: THE PRODUCTION PROJECTION OF THE DIS AND DIS+DISTPOT TOP-75 AVERAGES REPRODUCES S27's CHAIN ROWS BIT-EXACTLY ON 6 TARGETS (12 VALUES, MAX DEVIATION 0.0); PER-TARGET TABLE WRITTEN (2026-09-14 19:33, lane C)
+Question: S28-L3(d). S28-L6's ORACLE switch reads `s27/results/chain_rows.jsonl`; are those rows
+what `s24.d_harness.readout_uniform` + `readout_projected` produce today from `s27/cache`?
+Job `s28C_reproduce` (exit 0, 189 s, peak RSS 0.316 GB; the wall is the projection's first-call
+warm-up). `s27/results/s28_C_reproduce.json`. The twelve values (point cloud / built chain, ours
+vs `chain_rows.jsonl`):
+```
+  1A13 DIS          cloud 2.615861 (ref 2.615861, d 0.0e+00)  chain 2.635339 (ref 2.635339, d 0.0e+00)
+  1A13 DIS+DISTPOT  cloud 2.717806 (ref 2.717806, d 0.0e+00)  chain 2.880555 (ref 2.880555, d 0.0e+00)
+  1A1P DIS          cloud 3.231359 (ref 3.231359, d 0.0e+00)  chain 3.445407 (ref 3.445407, d 0.0e+00)
+  1A1P DIS+DISTPOT  cloud 3.273895 (ref 3.273895, d 0.0e+00)  chain 3.571917 (ref 3.571917, d 0.0e+00)
+  1CB3 DIS          cloud 2.856257 (ref 2.856257, d 0.0e+00)  chain 2.934448 (ref 2.934448, d 0.0e+00)
+  1CB3 DIS+DISTPOT  cloud 2.854151 (ref 2.854151, d 0.0e+00)  chain 2.891775 (ref 2.891775, d 0.0e+00)
+  1CEK DIS          cloud 0.533100 (ref 0.533100, d 0.0e+00)  chain 0.525158 (ref 0.525158, d 0.0e+00)
+  1CEK DIS+DISTPOT  cloud 0.493491 (ref 0.493491, d 0.0e+00)  chain 0.493953 (ref 0.493953, d 0.0e+00)
+  1CS9 DIS          cloud 3.832166 (ref 3.832166, d 0.0e+00)  chain 4.203488 (ref 4.203488, d 0.0e+00)
+  1CS9 DIS+DISTPOT  cloud 4.015611 (ref 4.015611, d 0.0e+00)  chain 4.298465 (ref 4.298465, d 0.0e+00)
+  1D0W DIS          cloud 1.639520 (ref 1.639520, d 0.0e+00)  chain 1.641677 (ref 1.641677, d 0.0e+00)
+  1D0W DIS+DISTPOT  cloud 1.674764 (ref 1.674764, d 0.0e+00)  chain 1.683743 (ref 1.683743, d 0.0e+00)
+```
+Maximum absolute deviation 0.0 on all twelve (`d_cloud`, `d_chain` fields are exact zeros). The
+readout job's PROD arm on 1A13 also reproduces the same row to the last digit
+(`s27/results/s28_C_readout_chain_rows.jsonl`). One more number from the same rows, for
+S28-L8's noise floor: the DIVW identity cell (beta, gamma) = (0, 0) reproduces the production
+point cloud to 8e-15 A and the built chain to 1.4e-5 A on 1A13 (2.6353534 vs 2.6353392): the
+multi-start projection amplifies floating-point differences in its input by about 1e9, so
+built-chain contrasts carry a numerical floor near 1e-5 A, four orders below any MDE here.
+Per-target table (FAIL18 first, then the 108; built-chain DIS / DIS+DISTPOT / DIS+ENV, the
+SP+CTRL detector's held-out decision value and flags, readout chain columns as they land):
+`s27/results/s28_C_per_target.md` (`python s27/s28_C_fail18.py table`). Stratum means on the
+built chain: FAIL18 (n = 18) DIS 6.019, DIS+DISTPOT 5.879, DIS+ENV 5.687; the other 108: 2.745,
+2.765, 2.828. The detector flags 4 of 18 FAIL18 and 25 of 108 others at the 0.5 level.
+Verdict: the chain rows are the production projection's own output; S28-L6's ceiling stands on
+them. Operations, no scientific claim.
+

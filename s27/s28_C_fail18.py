@@ -502,6 +502,63 @@ def singles_max_null(n_perm=N_PERM, seed=0, res=None):
     return out
 
 
+def per_target_table(block="SP+CTRL"):
+    """The per-target table (FAIL18 vs the rest): built-chain RMSD of DIS, DIS+DISTPOT, DIS+ENV
+    (ORACLE endpoints from `chain_rows.jsonl`), the detector's held-out decision value and
+    flags, and the readout chain arms where available.  Written to
+    `s27/results/s28_C_per_target.md`."""
+    res = json.load(open(OUT))
+    pdbs, folds, X, B = blocks()
+    by = chain_table()
+    fail = set(I.FAIL18)
+    dec = np.asarray(res["blocks"][block]["dec"], float)
+    p05 = np.asarray(res["blocks"][block]["pred05"], bool)
+    ppm = np.asarray(res["blocks"][block]["predpm"], bool)
+    ro = {}
+    rpath = os.path.join(RESULTS, "s28_C_readout_chain_rows.jsonl")
+    if os.path.exists(rpath):
+        with open(rpath, encoding="utf-8") as fh:
+            for line in fh:
+                r = json.loads(line)
+                ro.setdefault(r["pdb"], {})[r["arm"]] = r["rmsd_chain"]
+    arms = ["MEDNB[CONS,k=20]", "TRIM[CONS,q=0.1]", "TRIM[DISTPOT,q=0.1]", "DIVW[CONS,b=1,g=1]"]
+    hdr = ("| pdb | n | fold | FAIL18 | DIS chain | DIS+DISTPOT chain | DIS+ENV chain | "
+           f"dec[{block}] | flag@0.5 | flag@prev | " + " | ".join(a + " chain" for a in arms) + " |")
+    sep = "|" + "---|" * (10 + len(arms))
+    rows = []
+    for i, p in enumerate(pdbs):
+        n = int(X["n"][i])
+        r = [p, str(n), str(int(folds[i])), "YES" if p in fail else "",
+             f"{by['DIS'][p]['rmsd_chain']:.3f}", f"{by['DIS+DISTPOT'][p]['rmsd_chain']:.3f}",
+             f"{by['DIS+ENV'][p]['rmsd_chain']:.3f}", f"{dec[i]:+.2f}", "F" if p05[i] else "",
+             "F" if ppm[i] else ""]
+        for a in arms:
+            v = ro.get(p, {}).get(a)
+            r.append(f"{v:.3f}" if v is not None else "")
+        rows.append((p in fail, p, "| " + " | ".join(r) + " |"))
+    L = ["# S28 lane C per-target table (built chain, ORACLE endpoints; FAIL18 first)", "",
+         f"Detector block {block}: held-out decision value (>= 0 is a FAIL flag under balanced weights); "
+         "flag@prev = prevalence-matched threshold. Readout columns from `s28_C_readout_chain_rows.jsonl` where run.", "",
+         "## FAIL18 (n = 18)", "", hdr, sep]
+    L += [r[2] for r in rows if r[0]]
+    L += ["", "## The other 108", "", hdr, sep]
+    L += [r[2] for r in rows if not r[0]]
+    # stratum summaries
+    def mean_of(cfg, sel):
+        return float(np.mean([by[cfg][p]["rmsd_chain"] for k, p in enumerate(pdbs) if sel(k, p)]))
+    L += ["", "## Stratum means (built chain)", "",
+          "| stratum | n | DIS | DIS+DISTPOT | DIS+ENV | mean dec | flagged@0.5 | flagged@prev |", "|---|---:|---:|---:|---:|---:|---:|---:|"]
+    for name, sel in (("FAIL18", lambda k, p: p in fail), ("other 108", lambda k, p: p not in fail)):
+        idx = [k for k, p in enumerate(pdbs) if sel(k, p)]
+        L.append(f"| {name} | {len(idx)} | {mean_of('DIS', sel):.3f} | {mean_of('DIS+DISTPOT', sel):.3f} | {mean_of('DIS+ENV', sel):.3f} | "
+                 f"{dec[idx].mean():+.2f} | {int(p05[idx].sum())} | {int(ppm[idx].sum())} |")
+    path = os.path.join(RESULTS, "s28_C_per_target.md")
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(chr(10).join(L) + chr(10))
+    print(chr(10).join(L[-4:]))
+    return path
+
+
 def selftest():
     """Synthetic: a planted signal must clear its permutation null; random labels must not.
     No RMSD, no native read."""
@@ -526,7 +583,7 @@ def selftest():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("mode", choices=["features", "selftest", "run", "switch", "reproduce", "singles_null"])
+    ap.add_argument("mode", choices=["features", "selftest", "run", "switch", "reproduce", "singles_null", "table"])
     ap.add_argument("--n-perm", type=int, default=N_PERM)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--reverse-folds", action="store_true")
@@ -556,6 +613,8 @@ def main():
         switch(block=a.block, alt=a.alt, rule=a.rule, seed=a.seed)
     elif a.mode == "singles_null":
         singles_max_null(n_perm=a.n_perm, seed=a.seed)
+    elif a.mode == "table":
+        per_target_table(block=a.block)
 
 
 if __name__ == "__main__":
