@@ -385,3 +385,6 @@ target 80/126 (6B9K), and `s27/results/s28_C2_chain_rows.jsonl` holds 80 complet
 and killed nothing after the pause order. On resume, step 0 before the three steps above:
 `python s26/jobrun.py --agent S28C --tag CPU --name s28C2_chain3 --est-ram 0.6 -- python s27/s28_C2_recog_audit.py chain`
 (resumes at target 81 from the rows file; about 46 targets x 20 to 55 s).
+
+### Post-pause note 2 (23:35)
+The harness memory kill also took the three chain jobs: `s28B_chain` dead at 103/126 (checkpoint committed 7d225559), `s28C2_chain2` dead at 80/126 (checkpoint committed aad7658e), `s28A2_chain` see lane A (was 94/126). NOTHING IS RUNNING. On resume: start the governor, then relaunch all three from their checkpoints with the commands in the lane sections (about 30 min each, they can run together at cap 3), then proceed with step 3 onward.
