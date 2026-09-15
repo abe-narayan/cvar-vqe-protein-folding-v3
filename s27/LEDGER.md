@@ -737,3 +737,56 @@ recognition run:
     count per arm goes in the summary.
 Also on (4b): agreed that it matches the parameter count and not the family; F2 will be quoted
 as "the parameter count does not do it" if it fires, never as "a random nonlinear family".
+
+## S28-L13 -- ADVERSARY CHECK OF S28-L1b (lane A's ORACLE expressivity ceiling) (2026-09-14 19:58, lane D)
+Question: is S28-L1b what it says it is (an ORACLE ceiling, labelled, priced, never a result),
+and does its one non-trivial reading ("the circuit's curved family reaches 0.288 A against
+0.608 for a random linear subspace of the same parameter count") survive a like-for-like
+contrast? Every number recomputed from `s27/results/s28_A_oracle_rows.jsonl` (126 rows;
+`per_start` (5) and `per_sub` (8) per target).
+- Labelling: every number is marked ORACLE, the entry says "never a result" in its first line,
+  and the built chain is deferred to its own entry. Correct.
+- Dimension counting: the entry states it (75 >= 3n + 1 makes every affine hull complete; the
+  random 27-subspace is complete at n <= 10). I had derived the same per-length table
+  independently before the entry posted (circuit 0.120 / 0.114 / 0.197 / 0.209 / 0.227 /
+  0.373 / 0.468 / 0.455 and subspace 0.000 / 0.000 / 0.193 / 0.496 / 0.634 / 0.878 / 1.089 /
+  0.972 for n = 9..16; Spearman with n 0.62 and 0.80): the entry's per-length row matches.
+- Order statistic: the best-of-5 starts is priced (`best_of_k_within`: 116% accounted, k_eff
+  3.38) and the entry says the single-start ceiling is 0.36 to 0.42. Correct.
+- LIKE FOR LIKE (the caveat). The headline contrast pairs the circuit's BEST of 5 local
+  optimisations (0.288) with the subspaces' MEAN of 8 exact least squares (0.608): an order
+  statistic against a mean. Paired on the same targets, `ST.compare`, all ORACLE, point cloud:
+    circuit MEAN-of-5 (0.744) vs subspace MEAN-of-8 (0.608):  +0.136, 2.31x MDE, fold CI
+      [+0.125, +0.145], 5/5, 39W/87L: the circuit is WORSE on the mean (start seed 4 sits in a
+      1.97 A basin on every target; per-start means 0.385 / 0.584 / 0.416 / 0.362 / 1.973);
+    circuit MEDIAN-of-5 (0.447) vs subspace MEDIAN-of-8 (0.603): -0.156, 2.27x MDE, fold CI
+      [-0.179, -0.130], 5/5, 94W/32L: the circuit's typical local optimum BEATS a random linear
+      subspace's exact optimum;
+    circuit BEST-of-5 (0.288) vs subspace BEST-of-8 (0.400): -0.112, 2.09x MDE, fold CI
+      [-0.137, -0.085], 5/5, 83W/43L (and vs the best of the first five subspaces, 0.434:
+      -0.146); the subspaces' best-of-8 is itself 111% accounted for by the order statistic
+      (k_eff 7.67, split-half 0.004: the eight subspaces are exchangeable, as they should be).
+  So the reading "a curved 27-parameter family is more expressive than a linear one at the same
+  count" holds on the median and on the best, by 0.11 to 0.16 A, not by 0.32 A, and fails on
+  the mean because of the one bad basin. Quote the median contrast, and say that the circuit's
+  optimum is a LOCAL one (Adam, 300 iterations) against the subspace's exact one, which makes
+  the median contrast conservative in the circuit's favour.
+- The recognition preview (S~ at the ORACLE optimum 2.094 vs 1.674 at production, the ORACLE
+  structure preferred on 25/126) is the number that matters for the deployable arms and is
+  correctly framed as the registered reason to expect recognition to fail: the native-free
+  objective ranks a 0.29 A structure behind the 3.05 A average on 80% of targets.
+- Contraction: the ORACLE signed combination keeps native bond lengths (3.77 vs 3.81 pool, 2.96
+  production). Noted; it is a property of an ORACLE optimum and says nothing yet about what a
+  native-free optimum will do (a signed combination can also expand).
+Verdict: STANDS WITH CAVEAT (ORACLE; the one comparative claim is to be restated on the
+median: -0.156 A, not -0.320). Nothing here is a result; F3's prior held.
+Artefacts: `s27/results/s28_A_oracle_rows.jsonl`, `s27/results/s28_A_summary.json`; the
+like-for-like contrasts above are `ST.compare` on the `per_start` / `per_sub` columns.
+
+## S28-L14 -- HOUR-2 REPRODUCTION OF S27 (seed 102, a built-chain row) (2026-09-14 19:58, lane D)
+`s27/s28_D_reproduce.py --seed 102 --kind chain` (job `s28D_reproduce_seed102`, exit 0, peak RSS
+0.321 GB; `s27/results/s28_D_reproduce_chain_seed102.json`): row 558 of 1260 of
+`s27/results/chain_rows.jsonl`, 2MP9 / DIS_MEAN: stored point cloud 1.985926294615001,
+recomputed 1.985926294615001 (abs diff 0.0); stored built chain 1.865046267114073, recomputed
+1.865046267114073 through `s12.instrument.project` (abs diff 0.0). Hour 1 (S28-L11's status
+line): seed 101, pool row 2L7T / LEG_steric, abs diff 0.0. Two of two exact.
