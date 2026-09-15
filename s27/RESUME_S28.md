@@ -289,3 +289,72 @@ keeps changing is `s27/results/s28_A_chain_rows.jsonl`, appended per target by t
 
 ### Open lane D caveats
 None unanswered: S28-L1 (a) to (e) answered in S28-L12 and addendum 3; S28-L13 accepted in L26b and the findings; S28-L20 (a), (b) answered in L26b; S28-L23 (a) to (e) answered in L23b, with (b), (c), (e) to be honoured in the A2.2 chain entry when written; S28-L27b STANDS with one wording request ("worse at every lam; the size at lam 1 is in the Type-M zone"), adopted in the findings.
+
+## Coordinator (paused 2026-09-14 23:40; re-appended after a write race lost the first copy)
+
+READ THIS SECTION FIRST on resume, then the four lane sections above, then `s27/S28_CONTRACT.md`
+(with addendum 1) and the tail of `s27/LEDGER.md` (last entry at the pause: S28-L37).
+Nothing has to be recomputed: every number is in `s27/results/`, every verdict in the ledger,
+every partial run is checkpointed per target.
+
+### Board at the pause (built chain unless stated; each entry checked by lane D)
+| Question | Ledger | Verdict | D |
+|---|---|---|---|
+| A signed-amplitude readout (CVaR-VQE state as signed affine weights + distogram Bayes-risk of the emitted structure) | S28-L26b | REFUTED: worse than production at every lam (+0.23 to +0.26 A, 1.3x to 1.6x MDE, fold CI above zero); ORACLE ceiling of the same family 0.252 A emitted on 126/126 | S28-L27b STANDS |
+| A ORACLE expressivity | S28-L1b | 0.288 A point cloud best-of-5 (0.36 to 0.42 single start) vs 0.608 random 27-dim subspace | S28-L13 STANDS WITH CAVEAT |
+| A2.1 ORACLE cosine at the production point | S28-L23b | -0.03 (SE 0.02), inside the random null; -0.14 on FAIL18; no S27 channel better | S28-L24 STANDS |
+| A2.2 step ladder | S28-L30 (point cloud) | degrades at every e, no better than a random direction; chain job `s28A2_chain` running (90/126) | S28-L31; chain pending |
+| B hopping H = diag(E) - J A, trainability | S28-L8b | hop-only variance -1.7 to -1.8 per qubit, 7,300x below the diagonal terms at n = 9; mechanism: near-rank-one graph | S28-L11 STANDS WITH CAVEAT (reworded S28-L21) |
+| B endpoint, point cloud | S28-L21 | deployed readout moves at most 0.013 A; R2/R3 +0.24 to +0.33 A above production; eigensolver at J = 1 re-selects the DIS top-75; tail = classical top-m to 1e-13 | S28-L22 STANDS (intermediate) |
+| B built chain (18 arms) | pending | `s28B_chain` running (99/126) | pending |
+| B2 kNN graph trainability | S28-L25, S28-L29 | decay halves (-1.0 per qubit, 30 to 60x variance) but the circuit collects 3 to 23% of its hopping at J = 1; second clause FAILED | S28-L26/L31 STANDS WITH CAVEAT |
+| B2 endpoint | prereg addendum 2 | scoped to k = 10, J = 3; GATED on the B chain verdict; NOT RUN | - |
+| C FAIL18 detector, new feature class | S28-L6 | CLOSED: no block clears its label-permutation null; ORACLE switch ceiling 0.28x to 0.62x MDE | S28-L8 STANDS |
+| C ranking-consuming readouts | S28-L32 | CLOSED: every cell on the harmful side, none clears MDE; ranker trims worse than random trims | S28-L33 STANDS |
+| C2 recognition audit, CA scorers | S28-L35, S28-L37 | 9/15 CA scorers prefer the contracted average to a 0.29 A ORACLE structure; CAGEO candidate VETOED (S28-L36, pool-member control); closure stands at the CA level; chain scorers `s28C2_chain2` running (70/126) | S28-L36; chain pending |
+| Instrument | S28-L18, S28-L27b | branch-flip floor of the projection: mean 0.006 A, tail 0.5 A on one target; inside every MDE | RETRACTIONS R1, R2 |
+
+No positive is on the board. Draft of the report's one paragraph: the circuit family can
+express near-native structures (ORACLE 0.25 A emitted) and the optimiser reaches the
+objective's optimum, but the shipped objective and every S27 channel are uninformative at the
+production point (cosine within the random null), the objective's minimiser is away from the
+native, and 9 of 15 native-free scorers prefer the contracted average to a 0.29 A structure;
+the hopping term is a real non-diagonal quantum object that the circuit cannot collect at the
+deployed width because the pool graph is a typicality projector, and a spread-spectrum graph
+halves the decay without making it trainable; ranking information cannot be consumed by any
+convex readout without harm. The quantum component earned no accuracy; it earned two measured
+properties that stand on their own (S28-L8b/L11/L25/L29; the three-way split S28-L21 and
+lane B's split job) and the first measured departure question answered by an identity
+(tail = classical top-m to 1e-13 at every J).
+
+### Machine state at the pause
+- Governor `s26/governor.py` v2.4 was a background task of the paused session. If the
+  terminal was closed it is NOT running: restart it (`python s26/governor.py`, background)
+  before any job. `s26/launch_cap.json` = 4. `s26/lanes.json` = S28A..S28D.
+- Jobs left RUNNING on purpose (per-target checkpoints; the governor re-queues on a kill):
+  `s28B_chain` (99/126, `s27/results/s28_B_chain_rows.jsonl`), `s28A2_chain` (90/126,
+  `s27/results/s28_A2_chain_rows.jsonl`), `s28C2_chain2` (70/126,
+  `s27/results/s28_C2_chain_rows.jsonl`). On resume: `s26/jobs_done/<name>.json` exit_code 0
+  and a complete row count means done; otherwise relaunch the SAME `cmd` from that file under
+  jobrun and it resumes from its checkpoint. The lane sections give the analysis commands.
+- Deferred (S28-L5): `tests/test_pipeline.py`, `tests/test_integration.py`, the two AMBER test
+  files: run in a quiet window with no lane job running, one at a time. Green gate at the
+  pause: 356 pass / 3 skip / 0 fail (lane D section 3).
+- The user's own programs held 84 to 98% RAM through the sprint; 8 lane jobs were killed as
+  collateral and every one resumed from its checkpoint. Nothing scientific was lost.
+
+### Exact resume procedure
+1. `git status` (expect clean apart from `s26/governor.log` and the three appending row
+   files), `git log --oneline -20`, read the ledger tail and the four lane sections.
+2. Start the governor if `s26/governor_state.json` is stale.
+3. For each of the three jobs: done -> run the lane's analysis command; not done -> relaunch.
+4. Re-spawn the four lanes (general-purpose agents) with the contract + addendum 1, this file
+   and their briefs, instructed to resume from their own section and never recompute anything
+   that has an artefact. Lane D first.
+5. Remaining work in order: (a) B built-chain verdict + D check; (b) A2 chain entry + D check;
+   (c) C2 chain-scorer entry + D check of the closure claim over all 31 scorers; (d) B2
+   endpoint only if its gate holds; (e) D's quiet window (pipeline, integration, AMBER tests,
+   `python s26/examine.py`); (f) every lane's FINDINGS finalised; (g) `s27/REPORT_S28.md` in
+   the S26 style: what moved, what closed, what is newly open, the one-paragraph answer to
+   "did the quantum component earn anything this sprint?", every number with its artefact
+   path. No further waves are planned; the report closes the sprint.
