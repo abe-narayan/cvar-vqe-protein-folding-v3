@@ -185,9 +185,10 @@ def gauss_perturb(prod, dist, pdb, draw, tag):
     return C, dict(s=float(s))
 
 
-def build_structures(pdb):
+def build_structures(pdb, draw_offset=0):
     """All structures for one target and their ORACLE RMSDs.  Reads the native (ORACLE) for the
-    labels and for the two regenerated ORACLE structures."""
+    labels and for the two regenerated ORACLE structures.  `draw_offset` selects the control
+    draws (0 to 3 registered; 4 to 7 the second seed)."""
     from s27 import s28_A_amp as A
     from core import quantum as Q
     cand, dis, top, dg = A.load_pool(pdb)
@@ -207,7 +208,7 @@ def build_structures(pdb):
     d_native = rmsd_between(S["circ_best"], cand.nat_ca)                        # ORACLE scale
     d_prod = rmsd_between(S["circ_best"], S["PROD"])                            # ORACLE scale
     meta = {"d_circ_best_native": d_native, "d_circ_best_prod": d_prod}
-    for d in range(N_DRAWS):
+    for d in range(draw_offset, draw_offset + N_DRAWS):
         S[f"RAND_SIGNED[{d}]"], m = rand_signed(frame, S["PROD"], d_prod, pdb, d)
         meta[f"rand_signed_{d}"] = m
         S[f"GAUSS_0.3[{d}]"], _ = gauss_perturb(S["PROD"], d_native, pdb, d, "03")
@@ -221,9 +222,9 @@ def names_in_order(S):
 
 
 # ============================================================================ per-target rows
-def ca_row(pdb):
+def ca_row(pdb, draw_offset=0):
     t0 = time.time()
-    cand, dg, frame, S, meta, orr = build_structures(pdb)
+    cand, dg, frame, S, meta, orr = build_structures(pdb, draw_offset)
     u = I.load_univ(pdb)
     names = names_in_order(S)
     W = np.stack([S[k] for k in names])
@@ -260,9 +261,11 @@ def chain_row(pdb, S=None, cand=None, dg=None):
     return row
 
 
-def run(mode, limit=0):
+def run(mode, limit=0, draw_offset=0):
     from s25 import phys_lib as P
     path = CA_ROWS if mode == "ca" else CHAIN_ROWS
+    if draw_offset:
+        path = path.replace(".jsonl", f"_seed{draw_offset // N_DRAWS + 1}.jsonl")
     done = set()
     if os.path.exists(path):
         with open(path, encoding="utf-8") as fh:
@@ -276,7 +279,7 @@ def run(mode, limit=0):
     for n, pdb in enumerate(pdbs):
         if pdb in done:
             continue
-        row = ca_row(pdb)[0] if mode == "ca" else chain_row(pdb)
+        row = ca_row(pdb, draw_offset)[0] if mode == "ca" else chain_row(pdb)
         with open(path, "a", encoding="utf-8") as fh:
             fh.write(json.dumps(row) + "\n")
         orr = row["oracle_rmsd"] if mode == "ca" else row["oracle_rmsd_chain"]
@@ -362,8 +365,10 @@ def nested_pairwise(Delta, folds, alphas=np.logspace(-2, 4, 13), return_models=F
     return dec, chosen
 
 
-def analyse(mode, n_null=200, n_max_null=500, print_all=True):
+def analyse(mode, n_null=200, n_max_null=500, print_all=True, tag=""):
     path = CA_ROWS if mode == "ca" else CHAIN_ROWS
+    if tag:
+        path = path.replace(".jsonl", f"_{tag}.jsonl")
     rows = [json.loads(l) for l in open(path, encoding="utf-8")]
     rows.sort(key=lambda r: r["pdb"])
     pdbs = [r["pdb"] for r in rows]
@@ -397,6 +402,12 @@ def analyse(mode, n_null=200, n_max_null=500, print_all=True):
             rec[c] = dict(pref=float(ind.mean()), fold_ci=fold_ci(ind, folds, seed_parts=("pref", nm, c)),
                           fail18=float(ind[fail].mean()), other=float(ind[~fail].mean()), n_draws=len(draws))
             pref_ind[(nm, c)] = ind
+        # HEAD-TO-HEAD (addendum 1): the ORACLE structure against the control itself, production absent
+        for c in ("RAND_SIGNED", "GAUSS_MATCHED"):
+            draws = [nm2 for nm2 in rows[0]["names"] if nm2.startswith(c + "[")]
+            ind = np.array([np.mean([1.0 if S(r, nm, "circ_best") < S(r, nm, d) else 0.0 for d in draws if d in r["names"]]) for r in rows])
+            rec["h2h_" + c] = dict(pref=float(ind.mean()), fold_ci=fold_ci(ind, folds, seed_parts=("h2h", nm, c)),
+                                   fail18=float(ind[fail].mean()), other=float(ind[~fail].mean()))
         out["pref"][nm] = rec
         # ladder rho (per target, over the 5 ladder points)
         from scipy.stats import spearmanr
@@ -455,7 +466,19 @@ def analyse(mode, n_null=200, n_max_null=500, print_all=True):
                 dc[fk == f] = pairwise_decision(m, Dc[fk == f])
             fr.append((dc < 0).astype(float))
         ind_c = np.mean(fr, axis=0)
-        lc_ctrl[c] = dict(pref=float(ind_c.mean()), fold_ci=fold_ci(ind_c, fk, seed_parts=("lc", c)))
+        r_ = ST.compare((dec < 0).astype(float), ind_c, fk, label=f"linear combination: pref(circ_best) - pref({c})")
+        # head-to-head for the combination: the rule applied to score(circ_best) - score(control)
+        h2h = []
+        for d in draws:
+            Dh = np.column_stack([[S(r, nm, "circ_best") - S(r, nm, d) for r in rows] for nm in scorers])[ok]
+            dh = np.zeros(len(Dh))
+            for f, m in models.items():
+                dh[fk == f] = pairwise_decision(m, Dh[fk == f])
+            h2h.append((dh < 0).astype(float))
+        ind_h = np.mean(h2h, axis=0)
+        lc_ctrl[c] = dict(pref=float(ind_c.mean()), fold_ci=fold_ci(ind_c, fk, seed_parts=("lc", c)),
+                          contrast_effect=float(r_["effect"]), contrast_fold_ci=r_["ci95_fold"],
+                          h2h_pref=float(ind_h.mean()), h2h_fold_ci=fold_ci(ind_h, fk, seed_parts=("lch2h", c)))
     null = np.empty(n_null)
     rng2 = SD.stable_rng("lcnull", mode, salt=SALT)
     for t in range(n_null):
@@ -467,7 +490,7 @@ def analyse(mode, n_null=200, n_max_null=500, print_all=True):
                                      null_p95=float(np.percentile(null, 95)), p=float((null >= acc).mean()),
                                      fold_ci=fold_ci(ind_lc[ok], folds[ok], seed_parts=("lc",)),
                                      fail18=float(ind_lc[fail & ok].mean()), other=float(ind_lc[~fail & ok].mean()))
-    ST.save_atomic(os.path.join(RESULTS, f"s28_C2_{mode}_summary.json"), out, module_file=__file__)
+    ST.save_atomic(os.path.join(RESULTS, f"s28_C2_{mode}{('_' + tag) if tag else ''}_summary.json"), out, module_file=__file__)
     if print_all:
         print(f"  ORACLE ladder mean RMSD ({mode}): " + "  ".join(f"{k} {v:.3f}" for k, v in out["ladder_oracle_rmsd_mean"].items()))
         print("  scorer            pref(circ_best) [fold CI]        pref(circ_s0) pref(sub0) pref(NATIVE) | RAND_SIGNED GAUSS_0.3 GAUSS_M | rho_ladder | vs RAND_SIGNED (fold CI) | FAIL18/108 | verdict")
@@ -482,7 +505,11 @@ def analyse(mode, n_null=200, n_max_null=500, print_all=True):
         m = out["max_null"]; lc = out["linear_combination"]
         print(f"  best single {m['best_scorer']} pref {m['best_pref']:.3f}; max-over-{m['n_scorers']} sign-flip null mean {m['null_mean']:.3f} p95 {m['null_p95']:.3f} p_max {m['p_max']:.3f}")
         print(f"  linear combination: held-out sign accuracy {lc['held_out_sign_acc']:.3f} [fold CI {lc['fold_ci'][0]:.3f},{lc['fold_ci'][1]:.3f}]  null mean {lc['null_mean']:.3f} p95 {lc['null_p95']:.3f} p {lc['p']:.3f}  FAIL18 {lc['fail18']:.2f} other {lc['other']:.2f}")
-        print("    the same held-out rule on the controls: " + "  ".join(f"{c} {v['pref']:.3f} [{v['fold_ci'][0]:.3f},{v['fold_ci'][1]:.3f}]" for c, v in lc["controls"].items()))
+        print("    the same held-out rule on the controls: " + "  ".join(f"{c} {v['pref']:.3f} [{v['fold_ci'][0]:.3f},{v['fold_ci'][1]:.3f}] (contrast {v['contrast_effect']:+.3f} [{v['contrast_fold_ci'][0]:+.3f},{v['contrast_fold_ci'][1]:+.3f}]; head-to-head {v['h2h_pref']:.3f} [{v['h2h_fold_ci'][0]:.3f},{v['h2h_fold_ci'][1]:.3f}])" for c, v in lc["controls"].items()))
+        print("  head-to-head (ORACLE circ_best scored below the control itself; production absent):")
+        for nm in scorers:
+            p = out["pref"][nm]
+            print(f"    {nm:16s} vs RAND_SIGNED {p['h2h_RAND_SIGNED']['pref']:.3f} [{p['h2h_RAND_SIGNED']['fold_ci'][0]:.3f},{p['h2h_RAND_SIGNED']['fold_ci'][1]:.3f}]   vs GAUSS_MATCHED {p['h2h_GAUSS_MATCHED']['pref']:.3f} [{p['h2h_GAUSS_MATCHED']['fold_ci'][0]:.3f},{p['h2h_GAUSS_MATCHED']['fold_ci'][1]:.3f}]")
     return out
 
 
@@ -514,14 +541,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("mode", choices=["selftest", "ca", "chain", "analyse_ca", "analyse_chain"])
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--draw-offset", type=int, default=0, help="0 = registered draws 0..3; 4 = the second control seed")
+    ap.add_argument("--tag", default="", help="analyse: rows file suffix (e.g. seed2)")
     a = ap.parse_args()
     os.makedirs(RESULTS, exist_ok=True)
     if a.mode == "selftest":
         selftest()
     elif a.mode.startswith("analyse_"):
-        analyse(a.mode.split("_", 1)[1])
+        analyse(a.mode.split("_", 1)[1], tag=a.tag)
     else:
-        run(a.mode, a.limit)
+        run(a.mode, a.limit, a.draw_offset)
 
 
 if __name__ == "__main__":
