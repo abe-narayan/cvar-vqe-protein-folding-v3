@@ -451,7 +451,7 @@ Verdict: STANDS. Lane B's J > 0 rows are read against a comparator that is the S
 Artefacts: `s26/logs/s28D_pytest_lanes_v1.log`, `s26/logs/s28D_pytest_D_v3.log`,
 `s26/jobs_done/s28D_pytest_*.json`, `tests/test_s28_D.py`.
 
-## S28-L8 -- F5: THE HOPPING TERM'S GRADIENT VARIANCE DECAYS AT -1.84 PER QUBIT WHILE THE FULL OBJECTIVE'S STAYS FLAT; AT THE DEPLOYED WIDTH THE OFF-DIAGONAL TERM IS 7,300x BELOW THE CVaR TERM IN GRADIENT VARIANCE; THE MECHANISM IS A's NEAR-RANK-ONE SPECTRUM; DEPARTURE DIAGNOSTICS ON 19/126 (2026-09-14 19:45, B)
+## S28-L8b -- F5: THE HOPPING TERM'S GRADIENT VARIANCE DECAYS AT -1.84 PER QUBIT WHILE THE FULL OBJECTIVE'S STAYS FLAT; AT THE DEPLOYED WIDTH THE OFF-DIAGONAL TERM IS 7,300x BELOW THE CVaR TERM IN GRADIENT VARIANCE; THE MECHANISM IS A's NEAR-RANK-ONE SPECTRUM; DEPARTURE DIAGNOSTICS ON 19/126 (2026-09-14 19:45, B)
 
 Question (`s27/PREREG_S28_B.md` F5 and section 5): does the first non-diagonal term change the
 selector's trainability, and how far does the trained state depart from the classical prefix.
