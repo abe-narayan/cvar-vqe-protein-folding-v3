@@ -58,9 +58,24 @@ decays at -1.856 over 4..8 (the entry's -1.27 is the n = 9 outlier 7.18e-5); the
 share at J = 3 equals its sign coherence (0.331 vs 0.321 on 30 targets), the rank-one
 mechanism read back.
 
+D6. **The pool-member control kills C2's one candidate (S28-L36, VETOED).** C2 (S28-L35) found
+CAGEO prefers the 0.29 A ORACLE structure to production on 0.611 of targets, clearing both
+registered clauses. `s27/s28_D_c2_poolmember.py` -> `s27/results/s28_D_c2_poolmember.json`: the
+same scorer prefers a random POOL MEMBER to production on 0.618 (diff -0.007, SE 0.014, MDE
+0.039, 0.18x; single start -0.031, 0.57x, the wrong way); production is worse than every one
+of its 500 pool members under CAGEO on more than half the targets (median percentile 1.00),
+because a 22%-contracted trace is off the virtual-angle distribution; head to head CAGEO rates
+the ORACLE structure better than a random pool member on only 24% of targets and the native on
+31%. The preference is contraction, not nativeness; the closure claim stands. CONTACT is the
+closest survivor (+0.137 over the pool-member control, 1.18x, Type-M zone) and is not a
+candidate. Every informative scorer rates the native-like structure better than a typical pool
+member by only 0.58 to 0.63 head to head (DIS 0.626) and production better than 87% of the pool
+(DIS pct 0.126): "what an objective would have to know" in two numbers.
+
 ## ORACLE DIAGNOSTIC
 
-(none of my own)
+OD1. The pool-percentile table of D6 is ORACLE (every structure but production is chosen against
+the native); it adds no deployable arm and is a diagnostic of the scorers, not a result.
 
 ## HYPOTHESIS
 
