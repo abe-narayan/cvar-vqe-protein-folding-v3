@@ -528,6 +528,7 @@ def analyse(mode, n_null=200, n_max_null=500, print_all=True, tag=""):
                                      null_p95=float(np.percentile(null, 95)), p=float((null >= acc).mean()),
                                      fold_ci=fold_ci(ind_lc[ok], folds[ok], seed_parts=("lc",)),
                                      fail18=float(ind_lc[fail & ok].mean()), other=float(ind_lc[~fail & ok].mean()))
+    pool_member_control(mode, out, rows, folds, fail, print_all=print_all)
     ST.save_atomic(os.path.join(RESULTS, f"s28_C2_{mode}{('_' + tag) if tag else ''}_summary.json"), out, module_file=__file__)
     if print_all:
         print(f"  ORACLE ladder mean RMSD ({mode}): " + "  ".join(f"{k} {v:.3f}" for k, v in out["ladder_oracle_rmsd_mean"].items()))
@@ -551,6 +552,78 @@ def analyse(mode, n_null=200, n_max_null=500, print_all=True, tag=""):
             p = out["pref"][nm]
             print(f"    {nm:16s} vs RAND_SIGNED {p['h2h_RAND_SIGNED']['pref']:.3f} [{p['h2h_RAND_SIGNED']['fold_ci'][0]:.3f},{p['h2h_RAND_SIGNED']['fold_ci'][1]:.3f}]   vs GAUSS_MATCHED {p['h2h_GAUSS_MATCHED']['pref']:.3f} [{p['h2h_GAUSS_MATCHED']['fold_ci'][0]:.3f},{p['h2h_GAUSS_MATCHED']['fold_ci'][1]:.3f}]")
     return out
+
+
+# ============================================================================ pool-member control (S28-L36)
+POOL_CHANNEL = {"DIS": "DIS", "DIS_MEAN": "DIS_MEAN", "CONTACT_LL": "CONTACT_LL", "DISTPOT": "DISTPOT",
+                "CONTACT": "CONTACT", "ENV": "ENV", "HP": "HP", "RG_LAW": "RG_LAW", "RG_UNIV": "RG_UNIV",
+                "EXVOL": "EXVOL", "CAGEO": "CAGEO", "SS_MATCH": "SS_MATCH", "RAMA": "RAMA", "DSSPHB": "DSSPHB",
+                "ELEC": "ELEC", "LEG": "LEG"}
+POOL_CHANNEL.update({"LEG_" + t: "LEG_" + t for t in HL.LEG_TERMS})
+
+
+def pool_member_control(mode, out, rows, folds, fail, print_all=True):
+    """Lane D's S28-L36 control: a real pool member (a genuine protein trace with no information
+    about the native).  For every scorer with a pool channel of the same name (the three
+    pool-relative adapters are excluded), pct(X) = the fraction of the 500 pool members that score
+    BETTER than X plus half the ties (X's percentile in its own pool; pool values from
+    `s27/cache/<pdb>.npz`, the S27 pool rows the adapters reproduce).  pref(pool member vs PROD)
+    = pct(PROD); the contrast pref(circ_best vs PROD) - pct(PROD) (paired, fold CI); head-to-head
+    vs a pool member = 1 - pct(circ_best).  On the chain the CA scorers evaluated on the
+    projected chains ("@chain") are compared with the pool members' CA-channel values."""
+    from s27 import run_pool as RP
+    cache = {}
+    for r in rows:
+        z = np.load(os.path.join(RP.CACHE, f"{r['pdb']}.npz"))
+        cache[r["pdb"]] = {k: np.asarray(z[k], float) for k in z.files if k != "cost_ms"}
+    scorers = out["scorers"]
+    res = {}
+    for nm in scorers:
+        base = nm.replace("@chain", "")
+        if base not in POOL_CHANNEL:
+            continue
+        ch = POOL_CHANNEL[base]
+        pct = {k: [] for k in LADDER + CONTROLS}
+        for r in rows:
+            pool = cache[r["pdb"]][ch]
+            for k in LADDER + CONTROLS:
+                ks = [k] if k in LADDER else [nm2 for nm2 in r["names"] if nm2.startswith(k + "[")]
+                vals = []
+                for kk in ks:
+                    x = r["scores"][nm][r["names"].index(kk)]
+                    vals.append(float((pool < x).mean() + 0.5 * (pool == x).mean()))
+                pct[k].append(float(np.mean(vals)))
+        pct = {k: np.array(v) for k, v in pct.items()}
+        ind_cb = np.array([out_pref_ind(out, rows, nm, "circ_best")])[0]
+        ind_s0 = np.array([out_pref_ind(out, rows, nm, "circ_s0")])[0]
+        c1 = ST.compare(ind_cb, pct["PROD"], folds, label=f"{nm}: pref(circ_best vs PROD) - pref(pool member vs PROD)")
+        c2 = ST.compare(ind_s0, pct["PROD"], folds, label=f"{nm}: pref(circ_s0 vs PROD) - pref(pool member vs PROD)")
+        res[nm] = dict(pool_channel=ch,
+                       pct_median={k: float(np.median(v)) for k, v in pct.items()},
+                       pct_mean={k: float(v.mean()) for k, v in pct.items()},
+                       pref_pool_member_vs_prod=float(pct["PROD"].mean()),
+                       contrast_circ_best={k: v for k, v in c1.items() if k != "concentration"},
+                       contrast_circ_s0={k: v for k, v in c2.items() if k != "concentration"},
+                       h2h_circ_best_beats_pool_member=float((1 - pct["circ_best"]).mean()),
+                       h2h_native_beats_pool_member=float((1 - pct["NATIVE"]).mean()),
+                       h2h_rand_signed_beats_pool_member=float((1 - pct["RAND_SIGNED"]).mean()),
+                       fail18_contrast=float((ind_cb - pct["PROD"])[fail].mean()))
+    out["pool_member_control"] = res
+    if print_all:
+        print("  pool-member control (S28-L36): pref(cb vs PROD) - pct(PROD) [fold CI], x MDE | h2h cb beats a pool member, NATIVE, RAND_SIGNED | pct(PROD) med, pct(cb), pct(NATIVE)")
+        for nm, v in res.items():
+            c = v["contrast_circ_best"]; c0 = v["contrast_circ_s0"]
+            print(f"    {nm:20s} {c['effect']:+.3f} [{c['ci95_fold'][0]:+.3f},{c['ci95_fold'][1]:+.3f}] {c['effect_over_mde']:+.2f}x  (circ_s0 {c0['effect']:+.3f} {c0['effect_over_mde']:+.2f}x) | "
+                  f"{v['h2h_circ_best_beats_pool_member']:.3f}  {v['h2h_native_beats_pool_member']:.3f}  {v['h2h_rand_signed_beats_pool_member']:.3f} | "
+                  f"{v['pct_median']['PROD']:.2f}  {v['pct_mean']['circ_best']:.3f}  {v['pct_mean']['NATIVE']:.3f}")
+    return res
+
+
+def out_pref_ind(out, rows, nm, k):
+    """Rebuild the (0, 0.5, 1) preference indicator of structure k over PROD for scorer nm."""
+    def S(r, nm, k):
+        return r["scores"][nm][r["names"].index(k)]
+    return np.array([1.0 if S(r, nm, k) < S(r, nm, "PROD") else (0.5 if S(r, nm, k) == S(r, nm, "PROD") else 0.0) for r in rows])
 
 
 # ============================================================================ selftest
