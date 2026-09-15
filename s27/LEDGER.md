@@ -946,3 +946,39 @@ load, S28-L5's pattern), relaunched as `s28C_readout_chain2` 19:47 (killed 20:02
 96.2% RAM), relaunched as `s28C_readout_chain3` 20:04 from the per-target checkpoint
 (`s28_C_readout_chain_rows.jsonl`, 301 rows); the verdict entry follows when it lands.
 
+
+## S28-L16 -- ADVERSARY CHECK OF S28-L15 (lane C's Part 2 readouts, point cloud, intermediate) (2026-09-14 20:08, lane D)
+Question: is S28-L15 a null-to-worse with nothing hidden, and are its "harm" magnitudes
+stated at the size the instrument resolves? Checks:
+- Independent recomputation: before the entry posted I ran `s27/s28_D_attack.py --rows
+  s27/results/s28_C_readout_cloud_rows.jsonl --prod-arm PROD --basis cloud` over all 29 arms;
+  every primary contrast agrees with the entry to the fourth decimal (MEDNB[CONS,k=20] +0.1974,
+  1.41x; TRIM[CONS,q=0.1] +0.0354, 1.09x; DIVW[CONS,b=1,g=0] +0.0890, 0.95x; DIVW[CONS,b=1,g=1]
+  +0.0813, 0.84x; TRIM[DISTPOT,q=0.1] +0.0048, 0.21x; DIVW[CONS,b=0,g=1] +0.0074, 0.14x) and my
+  FAIL18 / 108 strata match the entry's (e.g. DIVW b=1,g=1: FAIL18 -0.143, other +0.119).
+- Leakage: `s27/results/s28_D_leakgrep_C.json`; `emit`, `readout_mednb`, `readout_trim`,
+  `divw_weights`, `ranker_within` read `cand.W`, the channels and stable keys only; natives in
+  `oracle_rows` alone. `tests/test_s28_C.py :: test_readout_arms_nan_poison_bit_identical`
+  poisons `cand` for all 29 arms (genuine); `tests/test_s28_D.py` adds that the permuted
+  controls are not no-ops and that `readout_trim` is invariant to the array order of exact ties.
+- Ties: `ranker_within` breaks exact ranker ties by a stable key. One residual: `readout_mednb`
+  orders the seed's neighbours with `np.argsort(P[seed])` and exact CA-RMSD ties (duplicate
+  windows) would fall to array order at the k-th cut; it cannot move a verdict this far from
+  zero, noted for the record, not a veto.
+- Grid pricing: done per family; the reading that the transferring cell is the identity is
+  right (MEDNB's "residual survives" is PROD winning most targets).
+- Cosmetic-variant test (coordinator steer 3): all three readouts are convex combinations of
+  the production top-75 (the lane said so in addendum 2 before running); they re-weight the
+  same set and cannot escape the S27 section 6 averaging bottleneck; what is new is the
+  consumer form (ranker trim, medoid-plus-neighbours, density-rescaled weights), none run
+  before. Not a re-run of a closed question.
+Verdict: STANDS as a point-cloud intermediate null-to-worse (nothing is a candidate; nothing
+is below -0.7x MDE). ONE CAVEAT on the "harm" magnitudes: "worse than a RANDOM trim by +0.031"
+(0.97x MDE), "worse than permuted weights of the same ESS by +0.079" (0.82x) and "+0.011" at
+q = 0.05 (0.28x) are Type-M-zone or under-MDE contrasts; their fold CIs exclude zero and the
+signs hold on 5/5 and 4/5 folds, so the DIRECTION (a real ranker hurts more than a random one)
+is supported and the SIZE is not (S26 L46's rule: say the sign, not the size). Quote them as
+"the sign is measured at 5/5 folds; the magnitude is inside the Type-M zone". The built-chain
+entry decides; nothing here pre-empts it.
+Artefacts: `s27/results/s28_C_readout_cloud_rows.jsonl`, `s28_C_readout_cloud_summary.json`;
+my recomputation printed by `s27/s28_D_attack.py` (not persisted; rerunnable in 20 s).
