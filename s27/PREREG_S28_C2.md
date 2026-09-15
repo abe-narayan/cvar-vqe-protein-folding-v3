@@ -121,3 +121,20 @@ ORACLE RMSDs; the pairwise logistic recovers a planted preference and not a rand
 - Re-optimising the circuit under a scorer that passes: that is lane A2's job if any passes.
 - AMBER: deferred (box at 93 to 96% from the user's load all evening; one AMBER process is not
   guaranteed to fit); recorded in "what I did not do" if it stays deferred.
+
+## ADDENDUM 1 (2026-09-14 22:50, written after the CA-level `analyse_ca` printed and before any
+number of the additions below was read)
+The CA audit's linear combination prefers the ORACLE structure on a held-out 0.968 but also
+"prefers" the random signed control on 0.887 and the matched Gaussian control on 0.895: a rule
+that is mostly ANTI-PRODUCTION (it recognises the contracted average, not the ORACLE
+structure). To separate the two readings, two statistics are added, for every scorer and for
+the linear combination: (a) HEAD-TO-HEAD, pref(circ_best over RAND_SIGNED) = the fraction of
+targets on which the scorer scores the ORACLE structure below the random signed combination at
+the same distance from production (production does not enter; this is recognition AMONG signed
+combinations), with the fold CI, and the same against GAUSS_MATCHED; (b) the paired contrast
+pref_lc(circ_best) - pref_lc(control) for the linear combination, as already registered for the
+single scorers. The second seed of the controls (draws 4 to 7, `s28_C2_ca_rows_seed2.jsonl`)
+is run for every scorer, as section 5 requires for a positive (CAGEO clears both registered
+clauses at seed 0: pref 0.611, fold CI [0.551, 0.691]; vs RAND_SIGNED +0.190 [+0.136, +0.252];
+its max-over-15 sign-flip null p is 0.072, at the 95th percentile). The falsifier is unchanged;
+these are the readings the ledger entry must carry beside it.
