@@ -1,4 +1,4 @@
 {
- "max_concurrent": 4,
- "note": "S28: four lanes, one governed job each"
+ "max_concurrent": 2,
+ "note": "S28 19:45: cap 2 while the user baseline sits at 95%+ (chrome 5.4 GB, TiWorker 1.0 GB); raise to 4 when RAM < 88% idle"
 }
