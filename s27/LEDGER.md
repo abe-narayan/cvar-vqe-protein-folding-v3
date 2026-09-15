@@ -2175,3 +2175,171 @@ and is attacked in its turn (production re-projected in the same job; the random
 the chain is the mean of the SAME two projected draws, S28-L23(c)).
 Artefacts: `s27/results/s28_B2_share.json`, `s28_B2_rank1.json`, `s28_A2_ladder_rows.jsonl`,
 `s28_A2_summary.json`, `s28_A_objdiag.json`; my pricing of the random best-of-8 is in this entry.
+## S28-L32 -- PART 2 VERDICT ON THE BUILT CHAIN (126/126): NO READOUT THAT CONSUMES RANKING INFORMATION BEATS THE UNIFORM AVERAGE; EVERY CELL IS ON THE HARMFUL SIDE (+0.015 TO +0.149 A, 0.29x TO 0.99x MDE, NONE CLEARS ITS MDE); THE RANKER TRIMS ARE WORSE THAN RANDOM TRIMS WITH THE FOLD CI ABOVE ZERO (SIGN MEASURED, SIZE NOT); THE FALSIFIER FAILS ON EVERY CELL; PART 2 CLOSED (2026-09-14 22:20, lane C)
+Question (`s27/PREREG_S28_C.md` section 2, addendum 2; S28-L15 was the point-cloud intermediate; S28-L16
+is lane D's check of it): does any readout that keeps the production top-75 and consumes CONS's (or
+DISTPOT's) ranking through the weight vector beat production on the BUILT CHAIN beyond its MDE with
+the fold CI excluding zero on 5/5 folds, beat its permuted-ranker control by the same standard, survive
+grid pricing, and agree in sign with the point cloud? Registered priors: (a) WORSE, (b) NULL, (c) NULL
+to WORSE. All three are convex combinations of the same 75 members (addendum 2 item 3, before the run).
+Jobs: `s28C_readout_chain` (killed by the governor 19:44:28 at 15/126, exit 15, 1169 s), `..._chain2`
+(killed 20:02:30 at 25/126, exit 15, 918 s), `..._chain3` (killed 20:09:51 before a target completed,
+exit 15, 206 s), `..._chain4` (exit 0, 7054 s, peak RSS 0.319 GB; box-wide user load, S28-L5's pattern).
+Resume boundaries checked: `s27/results/s28_C_readout_chain_rows.jsonl` has 1,513 rows, 1,513 distinct
+(pdb, arm) pairs, 126 per arm for the 12 primary arms plus the probe's identity row on 1A13; no duplicate.
+Both sides of every contrast come from the same code path in the same job (`oracle_rows`); the PROD arm
+reproduces `s27/results/chain_rows.jsonl :: DIS` bit-exactly on 126/126 (max |diff| 0.0 on both bases),
+so S28-L18's branch-flip floor does not enter (D's case (a)). Artefacts: the rows file and
+`s27/results/s28_C_readout_chain_summary.json`; point cloud `s28_C_readout_cloud_*` (S28-L15).
+PROD built chain 3.2126 (anchor 3.2126), point cloud 3.048338 (anchor 3.048338).
+
+BUILT CHAIN, each primary cell against production (`ST.fmt` verbatim), then against its permuted-ranker
+control (same set size, same weight magnitudes; positive = the real ranker is worse than a random one):
+```
+  MEDNB[CONS,k=20] vs PROD (BUILT CHAIN)
+    a 3.3613 (med 3.2385)   b 3.2126 (med 2.9661)   n=126
+    effect +0.1487   median +0.0356   SE 0.0537   MDE 0.1504   effect/MDE +0.99
+    iid  CI95 [+0.0484, +0.2546]
+    fold CI95 [+0.0342, +0.2367]   folds same sign 4/5   per-fold 0:+0.249 1:+0.084 2:-0.053 3:+0.238 4:+0.214
+    50W/76L/0T   worst degradation +2.2136 (8TXS)   p90 +0.8818   power 0.79  Type-M 1.13
+    concentration: drop-top10 +0.2558 vs uniform-effect null p10/p50/p90 +0.1876/+0.2501/+0.3185 -> pctile 0.544
+    VERDICT: NOT MEASURED (|effect| 0.1487 <= its own MDE 0.1504, 0.99x)
+  MEDNB[CONS,k=20] vs its permuted-ranker control (BUILT CHAIN)
+    a 3.3613 (med 3.2385)   b 3.3199 (med 3.1285)   n=126
+    effect +0.0415   median +0.0000   SE 0.0610   MDE 0.1709   effect/MDE +0.24
+    iid  CI95 [-0.0802, +0.1585]
+    fold CI95 [-0.0622, +0.1344]   folds same sign 3/5   per-fold 0:+0.208 1:-0.094 2:-0.085 3:+0.051 4:+0.104
+    60W/63L/3T   worst degradation +2.7310 (8TXS)   p90 +0.7165   power 0.10  Type-M 3.57
+    VERDICT: NOT MEASURED (|effect| 0.0415 <= its own MDE 0.1709, 0.24x)
+    strata (ORACLE label): FAIL18 -0.1170 (SE 0.1226)   non-FAIL18 +0.1930 (SE 0.0583)
+  TRIM[CONS,q=0.1] vs PROD (BUILT CHAIN)
+    a 3.2434 (med 3.0804)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0308   median +0.0021   SE 0.0146   MDE 0.0409   effect/MDE +0.75
+    iid  CI95 [+0.0028, +0.0595]
+    fold CI95 [+0.0108, +0.0461]   folds same sign 4/5   per-fold 0:+0.045 1:-0.009 2:+0.034 3:+0.024 4:+0.052
+    60W/66L/0T   worst degradation +0.6995 (8TXS)   p90 +0.1985   power 0.56  Type-M 1.34
+    concentration: drop-top10 +0.0573 vs uniform-effect null p10/p50/p90 +0.0388/+0.0562/+0.0752 -> pctile 0.527
+    VERDICT: NOT MEASURED (|effect| 0.0308 <= its own MDE 0.0409, 0.75x)
+  TRIM[CONS,q=0.1] vs its permuted-ranker control (BUILT CHAIN)
+    a 3.2434 (med 3.0804)   b 3.2164 (med 2.9480)   n=126
+    effect +0.0270   median +0.0041   SE 0.0147   MDE 0.0412   effect/MDE +0.66
+    iid  CI95 [-0.0023, +0.0563]
+    fold CI95 [+0.0188, +0.0355]   folds same sign 5/5   per-fold 0:+0.038 1:+0.022 2:+0.039 3:+0.014 4:+0.022
+    52W/74L/0T   worst degradation +0.7000 (1U62)   p90 +0.2040   power 0.45  Type-M 1.48
+    VERDICT: NOT MEASURED (|effect| 0.0270 <= its own MDE 0.0412, 0.66x)
+    strata (ORACLE label): FAIL18 -0.0157 (SE 0.0331)   non-FAIL18 +0.0385 (SE 0.0161)
+  TRIM[DISTPOT,q=0.1] vs PROD (BUILT CHAIN)
+    a 3.2343 (med 2.9758)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0216   median +0.0034   SE 0.0124   MDE 0.0348   effect/MDE +0.62
+    iid  CI95 [-0.0023, +0.0465]
+    fold CI95 [+0.0029, +0.0397]   folds same sign 4/5   per-fold 0:+0.025 1:-0.008 2:+0.001 3:+0.051 4:+0.037
+    57W/69L/0T   worst degradation +0.6916 (1D6X)   p90 +0.1433   power 0.41  Type-M 1.54
+    concentration: drop-top10 +0.0424 vs uniform-effect null p10/p50/p90 +0.0261/+0.0415/+0.0578 -> pctile 0.529
+    VERDICT: NOT MEASURED (|effect| 0.0216 <= its own MDE 0.0348, 0.62x)
+  TRIM[DISTPOT,q=0.1] vs its permuted-ranker control (BUILT CHAIN)
+    a 3.2343 (med 2.9758)   b 3.2140 (med 2.9772)   n=126
+    effect +0.0203   median +0.0009   SE 0.0139   MDE 0.0389   effect/MDE +0.52
+    iid  CI95 [-0.0052, +0.0477]
+    fold CI95 [+0.0098, +0.0364]   folds same sign 5/5   per-fold 0:+0.007 1:+0.020 2:+0.016 3:+0.053 4:+0.010
+    62W/64L/0T   worst degradation +0.6736 (9BAF)   p90 +0.1773   power 0.31  Type-M 1.78
+    VERDICT: NOT MEASURED (|effect| 0.0203 <= its own MDE 0.0389, 0.52x)
+    strata (ORACLE label): FAIL18 -0.0096 (SE 0.0206)   non-FAIL18 +0.0268 (SE 0.0141)
+  DIVW[CONS,b=1,g=1] vs PROD (BUILT CHAIN)
+    a 3.2833 (med 3.1363)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0707   median +0.0191   SE 0.0383   MDE 0.1073   effect/MDE +0.66
+    iid  CI95 [-0.0042, +0.1447]
+    fold CI95 [-0.0237, +0.1426]   folds same sign 4/5   per-fold 0:+0.130 1:+0.046 2:-0.116 3:+0.112 4:+0.165
+    58W/68L/0T   worst degradation +1.5859 (8TXS)   p90 +0.5418   power 0.45  Type-M 1.47
+    concentration: drop-top10 +0.1433 vs uniform-effect null p10/p50/p90 +0.0898/+0.1392/+0.1872 -> pctile 0.533
+    VERDICT: NOT MEASURED (|effect| 0.0707 <= its own MDE 0.1073, 0.66x)
+  DIVW[CONS,b=1,g=1] vs its permuted-ranker control (BUILT CHAIN)
+    a 3.2833 (med 3.1363)   b 3.2644 (med 2.9684)   n=126
+    effect +0.0190   median +0.0056   SE 0.0425   MDE 0.1190   effect/MDE +0.16
+    iid  CI95 [-0.0625, +0.1031]
+    fold CI95 [-0.0747, +0.0855]   folds same sign 3/5   per-fold 0:+0.091 1:-0.013 2:-0.149 3:+0.051 4:+0.099
+    60W/66L/0T   worst degradation +1.5374 (8TXS)   p90 +0.5547   power 0.07  Type-M 5.34
+    VERDICT: NOT MEASURED (|effect| 0.0190 <= its own MDE 0.1190, 0.16x)
+    strata (ORACLE label): FAIL18 -0.1456 (SE 0.0979)   non-FAIL18 +0.1068 (SE 0.0407)   ESS of the weights 42.4 of 75
+  DIVW[CONS,b=1,g=0] vs PROD (BUILT CHAIN)
+    a 3.2862 (med 3.1527)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0736   median +0.0171   SE 0.0375   MDE 0.1051   effect/MDE +0.70
+    iid  CI95 [+0.0017, +0.1470]
+    fold CI95 [-0.0174, +0.1427]   folds same sign 4/5   per-fold 0:+0.138 1:+0.035 2:-0.090 3:+0.106 4:+0.161
+    55W/71L/0T   worst degradation +1.4846 (8TXS)   p90 +0.5397   power 0.50  Type-M 1.41
+    concentration: drop-top10 +0.1459 vs uniform-effect null p10/p50/p90 +0.0956/+0.1435/+0.1903 -> pctile 0.530
+    VERDICT: NOT MEASURED (|effect| 0.0736 <= its own MDE 0.1051, 0.70x)
+  DIVW[CONS,b=1,g=0] vs its permuted-ranker control (BUILT CHAIN)
+    a 3.2862 (med 3.1527)   b 3.2314 (med 3.0030)   n=126
+    effect +0.0548   median +0.0100   SE 0.0373   MDE 0.1044   effect/MDE +0.53
+    iid  CI95 [-0.0179, +0.1276]
+    fold CI95 [-0.0482, +0.1231]   folds same sign 4/5   per-fold 0:+0.122 1:+0.059 2:-0.148 3:+0.093 4:+0.135
+    59W/67L/0T   worst degradation +1.4730 (8TXS)   p90 +0.6061   power 0.31  Type-M 1.77
+    VERDICT: NOT MEASURED (|effect| 0.0548 <= its own MDE 0.1044, 0.53x)
+    strata (ORACLE label): FAIL18 -0.1516 (SE 0.0929)   non-FAIL18 +0.1111 (SE 0.0400)   ESS of the weights 40.7 of 75
+  DIVW[CONS,b=0,g=1] vs PROD (BUILT CHAIN)
+    a 3.2278 (med 2.9735)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0152   median +0.0037   SE 0.0187   MDE 0.0523   effect/MDE +0.29
+    iid  CI95 [-0.0217, +0.0517]
+    fold CI95 [-0.0112, +0.0354]   folds same sign 4/5   per-fold 0:+0.001 1:+0.033 2:-0.029 3:+0.028 4:+0.040
+    57W/69L/0T   worst degradation +0.9980 (6BJF)   p90 +0.1772   power 0.13  Type-M 3.02
+    concentration: drop-top10 +0.0494 vs uniform-effect null p10/p50/p90 +0.0281/+0.0477/+0.0696 -> pctile 0.541
+    VERDICT: NOT MEASURED (|effect| 0.0152 <= its own MDE 0.0523, 0.29x)
+    strata (ORACLE label): FAIL18 -0.0091 (SE 0.0272)   non-FAIL18 +0.0192 (SE 0.0213)   ESS of the weights 61.4 of 75
+```
+The controls against production, built chain (effect, effect/MDE, fold CI, folds same sign):
+```
+  MEDNB[CONS~perm,k=20]      +0.1072  +0.80x  fold [+0.0531, +0.1649]  5/5   FAIL18 +0.0409  non-FAIL18 +0.1183
+  TRIM[CONS~perm,q=0.1]      +0.0038  +0.17x  fold [-0.0152, +0.0204]  3/5   FAIL18 -0.0141  non-FAIL18 +0.0067
+  TRIM[DISTPOT~perm,q=0.1]   +0.0014  +0.06x  fold [-0.0180, +0.0187]  2/5   FAIL18 -0.0012  non-FAIL18 +0.0018
+  DIVW[CONS~perm,b=1,g=0]    +0.0188  +0.47x  fold [-0.0045, +0.0409]  4/5   FAIL18 +0.0521  non-FAIL18 +0.0132
+  DIVW[CONS~perm,b=1,g=1]    +0.0517  +0.80x  fold [+0.0390, +0.0627]  5/5   FAIL18 +0.0540  non-FAIL18 +0.0514
+```
+Point cloud beside the built chain for the six real-ranker cells (effect, /MDE, fold CI):
+```
+  cell                       point cloud                          | built chain
+  MEDNB[CONS,k=20]           +0.1974  +1.41x  [+0.0912, +0.2912]  | +0.1487  +0.99x  [+0.0342, +0.2367]
+  TRIM[CONS,q=0.1]           +0.0354  +1.09x  [+0.0183, +0.0494]  | +0.0308  +0.75x  [+0.0108, +0.0461]
+  TRIM[DISTPOT,q=0.1]        +0.0048  +0.21x  [+0.0001, +0.0122]  | +0.0216  +0.62x  [+0.0029, +0.0397]
+  DIVW[CONS,b=1,g=1]         +0.0813  +0.84x  [-0.0039, +0.1439]  | +0.0707  +0.66x  [-0.0237, +0.1426]
+  DIVW[CONS,b=1,g=0]         +0.0890  +0.95x  [+0.0201, +0.1451]  | +0.0736  +0.70x  [-0.0174, +0.1427]
+  DIVW[CONS,b=0,g=1]         +0.0074  +0.14x  [-0.0285, +0.0486]  | +0.0152  +0.29x  [-0.0112, +0.0354]
+```
+Grid pricing (`ST.best_of_k_within`, PROD as a cell). Point cloud, the full grids (S28-L15):
+  MEDNB: oracle-min -0.2741, split-half -0.1428 (52%), k_eff 3.0 -> residual survives: -0.1428 transfers of -0.2741 oracle
+  TRIM_CONS: oracle-min -0.0746, split-half -0.0259 (35%), k_eff 3.2 -> residual survives: -0.0259 transfers of -0.0746 oracle
+  TRIM_DISTPOT: oracle-min -0.0436, split-half +0.0033 (-8%), k_eff 3.5 -> NOT A SIGNAL (split-half transfers -8% of the oracle)
+  DIVW: oracle-min -0.2144, split-half -0.0510 (24%), k_eff 4.4 -> NOT A SIGNAL (split-half transfers 24% of the oracle)
+  built chain DIVW (cells (1,0), (0,1), (1,1) + PROD): oracle-min -0.1760, split-half -0.0284 (16%), k_eff 3.9 -> NOT A SIGNAL (split-half transfers 16% of the oracle)
+(the k and q families have one chain cell each; their grids are priced on the point cloud, where the
+transferring cell is the identity, S28-L15/L16).
+
+Reading. The falsifier fails on every cell: nothing is below zero on either basis. On the built chain
+every real-ranker cell sits on the harmful side and none clears its own MDE (MEDNB k=20 +0.149 at
+0.99x, fold CI [+0.034, +0.237]; TRIM[CONS] q=0.1 +0.031 at 0.75x, fold CI [+0.011, +0.046];
+TRIM[DISTPOT] q=0.1 +0.022 at 0.62x; DIVW (1,1) +0.071 at 0.66x; (1,0) +0.074 at 0.70x; (0,1) +0.015
+at 0.29x): NOT MEASURED in the harmful direction, the point-cloud WORSE verdicts of S28-L15 having
+shrunk by 0.01 to 0.05 A through the projection (MEDNB +0.197 -> +0.149; TRIM[CONS] +0.035 -> +0.031;
+DIVW (1,0) +0.089 -> +0.074), with the sign unchanged on all six. Against their permuted-ranker
+controls, S28-L16's quoting rule applies: the SIGN is measured and the SIZE is not. TRIM[CONS] q=0.1 is
+worse than a random trim of 8 by +0.027 (0.66x MDE, fold CI [+0.019, +0.035], 5/5 folds) and TRIM[DISTPOT]
+q=0.1 by +0.020 (0.52x, fold CI [+0.010, +0.036], 5/5); the MEDNB seed (+0.042, 0.24x) and the DIVW ranker
+weights (+0.055 at (1,0), 0.52x; +0.019 at (1,1), 0.16x) are inside their MDEs with the fold CI spanning
+zero. The repulsion term alone ((0,1), no ranker) is null on both bases (+0.007 cloud, +0.015 chain).
+Strata (ORACLE label): every CONS-informed cell is negative on FAIL18 (-0.12 to -0.15, SE 0.09 to 0.12,
+at most 1.7 SE) and positive on the 108 (+0.04 to +0.19, 2.4 to 3.3 SE), S27 L9's regime pattern
+again; the controls are positive on both strata. An 18-target gain is not claimed (nothing clears
+anything), so no concentration null is owed for one.
+Contract addendum 1: (13) the verdict is on the built chain; (14) no positive, so (a) to (c) are moot,
+and for the record (a) the harm survives the projection with the same sign on 6/6 cells, on the 108 and
+not on FAIL18, (b) what is new relative to S27 section 6 and S23 L5: the harm of ranking information is
+now measured through three consumer forms that had not been run (a ranker-based trim, a medoid-plus-
+neighbours hybrid, density-rescaled weights at fixed ESS) and its sign is the same in all three;
+(15) nothing for D to STAND. S28-L16's residual on `readout_mednb`'s neighbour ties (array order at
+the k-th cut for exact CA-RMSD ties) stands as noted; MEDNB is 0.99x MDE worse and no verdict rests on
+it. Verdict: Part 2 REFUTED as registered ((a) WORSE on the point cloud, harmful-not-measured on the
+chain; (b) and (c) NULL to harmful). The 'consumer of ranking information' question S27 section 10
+items 1 and 3 opened is closed for the convex family: a ranker-informed weight vector over the
+production top-75 does not beat the uniform one on this instrument, and where the contrast is
+resolvable it is worse than a random weight vector of the same shape. A signed (non-convex) weight
+vector is lane A's question (S28-L26), not this one.
+
