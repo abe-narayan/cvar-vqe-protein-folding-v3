@@ -475,3 +475,83 @@ so the mean, the median and the win-count have three *different* null values (1.
 statistic you are quoting; the cost is four lines and 20,000 draws.
 
 Reproduction: `s29/results/s29_M_F2_supply_rows.jsonl`, arm `PROD`, seed 30.
+
+## S30-L5 -- ASSUMPTION B2's NUMBER SURVIVES; **THE REASON GIVEN FOR IT IS BACKWARDS.** THE PRINTED VERDICT "NO FIELD'S MEAN |cos| CLEARS THE RANDOM REFERENCE 0.140" IS FALSE ON THE QUANTITY IT NAMES -- **21 OF 21 FIELDS CLEAR IT, BY 11 TO 19 SIGMA** -- AND THE SIGNED MEAN IT ACTUALLY TESTS IS BEING READ AGAINST A NULL FOR A DIFFERENT STATISTIC. AGAINST THE RIGHT NULL (+0.0014 ± 0.0144), **11 OF 21 FIELDS HAVE FOLD CIs EXCLUDING ZERO AND THE BEST IS +7.7 SIGMA**. THE FIELDS ARE NOT NOISE. THEY ARE REAL AND WORTH 0.0195 Å BECAUSE **√(1−ρ²) SQUARES THEM** (2026-09-20 12:51, D)
+
+**Verdict: B2 stands at its stated value (best exploitable ρ = 0.1128 ≤ 0.14). Its argument must
+be replaced. The corrected framing is more useful to this sprint than the one it replaces.**
+
+### The defect, in the code
+
+`s29/s29_D_fields.py:243,263`:
+
+```python
+ref   = np.mean([np.mean(np.abs(r["cos_random_ref"])) for r in rows])   # 0.1398
+beats = bool(abs(cmp0["effect"]) - 1.96 * cmp0["se"] > ref)             # cmp0["effect"] = the 126-TARGET SIGNED MEAN
+```
+
+`ref` is the expected **magnitude of one random direction on one target**. `cmp0["effect"]` is a
+**mean over 126 targets**. They differ in scale by ~√126. Two errors compound:
+
+1. **The label is wrong.** The verdict string says "no field's **mean |cos|** clears the random
+   reference 0.140" but the code compares `abs(signed mean)`. The quantity the sentence names,
+   `mean_abs`, runs **0.2505 to 0.3249 -- and clears 0.1398 on 21 of 21 fields.**
+2. **The null is wrong for either quantity.** From the same stored reference draws
+   (`s29_D_fields_rows.jsonl`, 16 per target):
+   - null for the 126-target **signed mean**: **+0.0014 ± 0.0144** (|mean| p95 0.0261)
+   - null for the 126-target **mean |cos|**: **0.1398 ± 0.0099** (p95 0.1548)
+
+### What the right nulls say
+
+| field | signed mean | z vs signed null | fold CI excl. 0 | mean \|cos\| | z vs \|cos\| null |
+|---|---|---|---|---|---|
+| CHAN_DISTPOT | +0.1128 | **+7.7** | yes [+0.088,+0.137] | 0.2998 | +16.2 |
+| MSET_250 | +0.1118 | **+7.6** | yes [+0.043,+0.175] | 0.2837 | +14.6 |
+| MSET_150 | +0.0946 | +6.4 | yes | 0.2872 | +15.0 |
+| CHAN_RG_LAW | +0.0933 | +6.4 | yes | 0.2942 | +15.7 |
+| CHAN_CONTACT | +0.0933 | +6.4 | yes | 0.2970 | +15.9 |
+| ... | | | **11 of 21** | | **21 of 21** |
+| MEDOID | −0.0097 | −0.8 | no | 0.2505 | +11.2 |
+
+Eleven of twenty-one fields have fold-clustered CIs excluding zero. Under multiplicity, one would
+be expected. `any_beats_reference` is the empty list; the correct count is 11.
+
+**Internal structured control, so this is not an i.i.d.-null artefact.** The honest objection to a
++7.7 σ figure against Gaussian random directions is `zero-information-control-must-be-plausible`:
+a Gaussian direction may be a *worse* measure rather than an uninformative one. The survey answers
+itself -- three of its own 21 *structured* fields (MEDOID −0.0097, MSET_50 −0.0187, EXPAND −0.0208)
+sit at the signed null. So a signed mean of +0.11 is not a generic property of "any real
+displacement field"; DISTPOT is doing something those three are not.
+
+### The corrected claim, and why it is the more useful one
+
+- **WITHDRAW:** "no native-free displacement field beats a random direction; B2 survives because
+  the class is empty."
+- **REPLACE WITH:** *Native-free displacement fields carry a real, strongly significant alignment
+  with the direction to the native -- 11 of 21 with fold CIs excluding zero, the best at +7.7 σ.
+  B2 survives anyway, because the exploitable signed cosine is only 0.1128 and the achievable gain
+  goes as 1 − √(1−ρ²) ≈ ρ²/2. That is **0.0195 Å.** Reaching 3.00 Å needs ρ = 0.358: 3.2× the
+  cosine, and **10× the ρ².** The barrier is not that the signal is absent. It is that the
+  geometry squares it.*
+
+Every Å figure in §11 is unchanged -- 0.0195 Å, the 2.708 Å sign-oracle ceiling, the B3 residual
+bands. What changes is the sentence a reader takes away, and it changes the sprint's search: you
+are not looking for the first field with any signal, you are looking for one with **3.2× the
+cosine of the best of twenty-one**, and no amount of combining fields whose ρ ≈ 0.1 gets there
+(`decorrelated-errors-exist-but-are-unusable`: fusion gain goes as the square of the weaker
+channel).
+
+### The forward defect this closes, which is why it is lane D's problem
+
+The same 0.140 constant is printed by the cost-RMSD meter beside every cosine, as
+`random-direction |cos| mean 0.140`. **A lane reading its new cost's +0.09 cosine against it would
+discard a field that is 6 σ from the signed null.** That is the "if the meter cannot see a cost's
+merits, that is a finding about the meter" case, found before any lane hit it. Fixed in
+`s30/s30_D_meter.py` extension **(E5)**: both nulls are computed and printed with their names, and
+the gate uses the target-mean null.
+
+**Third instance today of `unstated-operators-align-with-your-hypothesis`**: this mis-comparison,
+like S30-L4's two, points toward "recognition is closed."
+
+Reproduction: `s29/results/s29_D_fields.json`, `s29_D_fields_rows.jsonl`; nulls from the 16 stored
+`cos_random_ref` draws per target.
