@@ -325,7 +325,79 @@ the raw material, not a defect.**
 
 ## 5. What the CVaR-VQE contributed
 
-[PENDING]
+*(Charter items 12–19. Audited by lane W against the code and the artefacts, not against the
+sprint's own prose; full working in `s30/QUANTUM_W.md`.)*
+
+### 5.1 The honest summary
+
+Sprint 30 ran **no CVaR-VQE**. It *did* run a 9-qubit depth-3 statevector circuit on all 126
+targets with exact parameter-shift Jacobians and 300 Adam iterations — but only to regenerate the
+meter's ORACLE rungs (`s30/results/s30_D_ladder_structs/`, 126 files, asserted to 1e-6 against
+S28's stored values). **"No VQE" and "no quantum compute" are different claims and only the first
+is true**; a report sentence saying the sprint spent no quantum compute would be false as written.
+
+The production anchor does not pass through the quantum stage at all: `core/pipeline.py:241`
+(`PROD = Config()`) with `core/pipeline.py:179` (`quantum: bool = False`), and the governing
+comment at `:173-178` says it outright — *"AMBER participates, Legacy is only imported for scoring,
+and VQE/CVaR do not participate at all."*
+
+What the sprint contributed to the quantum spine is **three closures and a theorem**: **T1**, which
+shows the CVaR tail is always a prefix of the order induced by `∇V` at the optimum, so the deployed
+stage's structural output is the single integer `m`; **T1b plus two independent quadric
+measurements**, which price the only two Hamiltonian classes that could have changed that order and
+find both reachable but non-transferable — **closed before either was built**, the first time this
+project's cheap pre-check fired *ahead* of the spend rather than after; and **the bit accounting**,
+which shows the encoding is not where the loss is.
+
+The reason none of it was carried into a circuit is **S30-L19**: on a kind-matched, budget-matched
+ladder, ordering survives on 2 of 43 native-free channels and **preference fails on all 43**, with a
+mechanism (local ΔR² −0.089 against global +0.600) that makes the null a theorem on this instrument.
+
+> **An objective cannot be pointed at a target nothing can see.**
+
+### 5.2 The single row that answers items 12 and 16 at once
+
+From this sprint's own cache, means over n = 126:
+
+```
+rung                                                    built chain      CA cloud
+circ_best   same circuit, ORACLE objective, best of 5       0.2516        0.2884
+circ_s0     ORACLE objective, 1 start (regenerated S30)     0.3175        0.3854
+PROD        the deployed uniform average                    3.2071        3.0483
+circ_opt    THE SAME CIRCUIT, DEPLOYED native-free score    3.4330        3.3850
+```
+
+*(`PROD` here is the meter's own re-projection; see §1.1 on the ±0.002 Å projection spread.)*
+
+> **The same circuit reaches 0.2516 Å when its objective is the native and 3.4330 Å when its
+> objective is the shipped score — worse than the classical average it was meant to improve.** The
+> circuit is not the problem. The objective is, and it has been all along.
+
+### 5.3 Item by item
+
+| # | item | answer |
+|---|---|---|
+| 12 | What did CVaR-VQE contribute? | **Nothing as an endpoint contribution.** Its residual role, from T1: **α supplies τ; it is not doing selection.** Lane L's finite-shot CVaR bias hypothesis was tested and **refuted, in the opposite direction to its guess** (S30-L8) |
+| 13 | What Hamiltonian was used? | **NONE.** Charter §14 withdrew the obligation. Two candidate classes (T1b halfspace; second-moment quadric) were priced and **closed before either was built** — S30-L12 and S30-L15 independently, two samplers, same sign |
+| 14 | Why different from the diagonal rank-ladder? | **No new Hamiltonian to be different** — and S30 established the rank-ladder's diagonality **is not the defect**. `s30/THEORY.md:450-453` removes Hamiltonian structure, ansatz, optimiser, pool and search from the list. Referent: `H = diag(zrank(top-128 scores))`, `core/pipeline.py:838`, the same ladder on every target to **1.18% of range** |
+| 15 | What did the quantum state represent? | **Partly applicable.** T1's trichotomy: under the deployed formulation the state determines **exactly one integer, `m`**. The codebook result says the 7-bit register realises 36.6 bits at `d = 32.88` (0.95× at the corrected `d = 6`; §4.2) and **delivers under one** |
+| 16 | Could a classical control reproduce it? | **The honest form is "is there any positive for a classical control to reproduce?" and the answer is NO.** Every decisive classical control runs *against* the quantum stage: one sort reproduces the tail exactly; Frank–Wolfe is the correct counterpart and is polynomial; argmin dominates the sparse readout at every budget; `PROD` beats `circ_opt` |
+| 17 | Trainability | **NOT APPLICABLE, not measured this sprint.** S28/S29 positions cited in `QUANTUM_W.md` rather than restated |
+| 18 | Gradient variance | **NOT APPLICABLE, not measured** — but S30 measured the governing input of `Var[∂F/∂θ] = r_stable/D²`, namely `r_stable`, **on 126 real pools in 76 seconds** over data already on disk. Carry lane Q's scope fix: **`r_stable = 1.859` is pair-distance space; coordinate space is 3.404** and does not fire the threshold |
+| 19 | DLA / ansatz structure | **NOT APPLICABLE, not measured.** S29's scope correction stands: the algebra is **not** maximal at n = 9, L = 3 |
+
+### 5.4 A defect in shipped code, found while answering item 12
+
+`core/pipeline.py:821` — the `quantum_stage` docstring — still asserts *"the CVaR tail is worth
++0.113 Å by preventing the collapse, and that is the component's measured role."* **S25-L5 withdrew
+that number** (`s25/LEDGER.md:233-244`: *"never a measured effect … by this project's own fixed rule
+that is a NULL"*) and replaced it with **−0.1405 Å at 0.68× MDE**.
+
+> Anyone answering item 12 from the source file rather than the ledger gets a **withdrawn positive**
+> presented as the component's measured role. This is the **sixth** instance of prose asserting a
+> state that does not hold, and **the first located in shipped code rather than in a report.** It
+> is not fixed here — `core/` was read-only for this audit — and it is listed in §11 as open.
+
 
 ## 6. Statistical discipline and multiplicity
 
