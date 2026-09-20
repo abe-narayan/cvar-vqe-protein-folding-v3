@@ -124,7 +124,79 @@ What changed is the **map**:
 
 ## 5. Why, at the level of mechanism
 
-[PENDING]
+Four mechanisms account for everything in this report. They are not four findings; they are one
+geometric fact seen from four sides.
+
+### 5.1 Every operator is a displacement, and its whole value is one cosine
+
+The production answer is a point in coordinate space. Every native-free thing the project can do to
+it — re-rank, re-weight, re-average, shrink, expand, project — moves it. Write the move as a
+displacement *d* and the direction to the native as *u*. Then, exactly:
+
+```
+RMSD_new = RMSD_prod · √(1 − ρ²)        ρ = cos(d, u)
+```
+
+That is not a model; it is Pythagoras with the optimal step size substituted in. It means the
+**entire** value of any operator is one number, and it makes the whole search for "a better
+operator" into the search for one large cosine. Reaching 3.00 Å needs ρ = 0.358 and 2.50 Å needs
+ρ = 0.628, against a random-shape reference of 0.1398. Twenty-one measured fields top out at
+**0.1128**. (S29-L23, S29-L35)
+
+### 5.2 The motion is real but lateral — and lane B photographed it
+
+The most vivid demonstration is incidental. Lane B's ground-state readout emits a cloud that moves
+**0.22 to 1.45 Å away from production** while its RMSD changes by **under 0.1 Å**. A large
+displacement that barely changes the distance to the native *is* a near-zero cosine, made visible
+without computing one. The operators are not weak; they are **sideways**. (S29-L49)
+
+This also falsified lane T's S29-L11 prediction 3 as lane B had operationalised it, while
+confirming the law behind it — lane B reported both halves rather than the convenient one.
+
+### 5.3 Why no operator can find the right direction: the sign is an incidental parameter
+
+To move toward the native you need to know, per target, *which way*. That per-target sign is an
+**incidental parameter** in the sense of Neyman & Scott (1948): a nuisance parameter whose count
+grows with the sample, so it is **not estimable** from other targets' answers — not hard to
+estimate, not estimable. The standard remedy is a conditional likelihood that *eliminates* it
+rather than estimating it, which is exactly lane D's band design. (S29-L31)
+
+Lane O then measured this four independent times, and the agreement is the strongest evidence in
+the report:
+
+```
+scalar                  ORACLE per-target   ORACLE global      leave-fold-out
+prefix m within 128         −0.2879            −0.0018             +0.0079
+prefix m over K=500         −0.4421            −0.0018             +0.0079
+typicality step t           −0.3061         **+0.0000 exactly**    +0.0000
+PC1 family η                −0.4543         **+0.0000 exactly**    +0.0071
+```
+
+Large per-target gains; a **global** value of 0.0–0.6% of them; and leave-fold-out on the wrong
+side of zero every time. Two of the four ORACLE global optima are *exactly zero* — with the native
+in hand, one global scalar cannot beat doing nothing. That is the theorem showing up as arithmetic
+in four places, and it is why "tune one number better" has failed every time this project has tried
+it. (S29-L47)
+
+### 5.4 Why the architecture cannot spend information even if it had it
+
+The terminal operator is a uniform average over a prefix, and it consumes the set **mean**:
+`d_out = 1.16·d_set_mean + 0.04·d_set_best` (R² = 0.89). The 0.04 coefficient is the entire channel
+through which any ranking skill can reach the output — so a *perfect* rank-1 signal is worth about
+**−0.03 Å** through the shipped m = 75 average, against −1.74 Å through argmin.
+
+This is why the architecture's ORACLE ceiling is 2.9027 Å while the same 128 candidates contain a
+member at 2.1435 Å: the averaging readout cannot express the answer, and the operator that could is
+the one that punishes a bad objective. The two halves of §0 item 3 are the same decision seen from
+both ends, and together they explain why several sprints of ranking work returned flat.
+
+### 5.5 The one place the mechanism does *not* reach
+
+§12.0: compactness loading does not explain in-band skill, and at least one channel carries skill
+that partialling out size does not remove. The four mechanisms above are about operators on a fixed
+information set. They say nothing about whether a *new* channel exists — and the late measurement
+says the class is not empty. That is the honest boundary of this report's explanation.
+
 
 ## 6. What the VQE contributed, with controls
 
