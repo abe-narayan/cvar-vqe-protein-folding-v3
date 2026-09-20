@@ -340,3 +340,30 @@ deployable improvement to production's own solver and it is reported as the lane
 result, with the second tie-key seed and lane D's attack owed before any claim. MS-OBJ is
 POST-HOC relative to sections 5 and 6 and is labelled so; it is counted in the lane's
 multiplicity as one further contrast (K = 6).
+
+## ADDENDUM 5 (2026-09-20 00:50; CHRONOLOGY, so the write-up cannot be read as hindsight)
+
+Lane T's achievable native-free bound (**S29-L23**, 00:43) prices every native-free operator as a
+displacement worth exactly one cosine, `RMSD = RMSD_prod * sqrt(1 - rho^2)`, and reports every
+field the project has built at or below **rho = 0.04** against the **0.358** that 3.00 A requires
+and the **0.628** that 2.50 A requires, with a random-shape-field reference of 0.140. Every arm
+of this lane -- BOND, SPAN, ISO, CTRL-INV, CTRL-GLOBAL -- is a displacement of exactly that kind,
+so the bound predicts all of them null or harmful.
+
+**The chronology matters and is recorded here, not argued later.** This lane's falsifiers
+F-P1/F-P2/F-P3 and its registered null prior (0.0 to 0.3x MDE) were written at **00:10**, before
+S29-L23 existed, and were derived from S23 L1's non-uniform contraction and the geometry of the
+projection -- not from T's bound. S29-L22 result 4 (the monotone shape distortion, 00:37) then
+independently predicted BOND harmful by mechanism, again before the bound was published.
+
+**Consequences for the second ledger entry, fixed now:**
+1. The falsifiers are honoured **exactly as registered**. The prior is not revised, the MDE
+   thresholds are not moved, and no arm is dropped because a bound now predicts it null.
+2. The entry is written as a **PRE-REGISTERED CONFIRMATION, not a discovery**: it says plainly
+   that two independent arguments (T's cosine bound, S29-L23; this lane's own separation profile,
+   S29-L22 result 4) predicted the outcome in advance, and it gives the dates.
+3. **If any arm nevertheless clears its falsifier**, that is evidence AGAINST the bound and is
+   reported as such -- loudly, with the second tie-key seed run before any claim -- rather than
+   explained away. A bound that forbids a measured effect is the bound's problem.
+4. The lane's value in that case is the same either way: the projection was the one stage the
+   sprint had not audited, and it is now audited on the reporting basis with matched controls.
