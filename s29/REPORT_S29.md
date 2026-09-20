@@ -32,7 +32,7 @@ three numbers that did not exist before, all on the charter's own endpoint:
    (`s29/results/s29_D_fields.json`, n = 126), **not one beats the random-shape reference of
    0.1398** — `beats_random_reference` is `False` on all 21, best is CHAN_DISTPOT at +0.1128 — and
    the best field, stepped by an amount chosen *with the native in hand*, moves the point cloud from
-   3.0483 to 3.0289: a gain of **0.0195 Å**. The bound is ≈ 3.18–3.21 Å.
+   3.0483 to 3.0289: a gain of **0.0195 Å**. Stated at three levels (lane T): **≥ 3.210 Å** for every field the project has built, **≥ 3.181 Å** for a random-strength field handed a perfect sign, and **≥ 2.98 Å** for the best structured field (PC1) handed a perfect ORACLE *per-target* sign.
    **Scope, and it is not a formality (§12.0):** this is a bound over the operators we *built* and
    measured. Its assumption B2 — that ρ ≤ 0.14 for *every* field constructible from the present
    information — was attacked and survived on 21 fields, but a measurement made late in the sprint
@@ -45,8 +45,13 @@ three numbers that did not exist before, all on the charter's own endpoint:
    is **2.9027 Å built chain** (n = 126, vs production 3.2105, −0.3079, MDE 0.0982, **3.14× MDE**).
    The charter's 2.5 Å is therefore unreachable through this architecture *even with an oracle*.
 
-3. **The readout, not the search and not the pool, is what binds (S29-L44).**
-   Holding the candidate set fixed at the top-128 the quantum stage actually sees:
+3. **Two different things bind, at two different levels — and conflating them is easy, so this
+   report separates them explicitly (S29-L44, S29-L47, S29-L23).**
+   *For anything native-free*, the binding constraint is the **cosine**: the pool is not the limit
+   (its hull expresses 1.12 Å), the circuit is not (0.25 Å), the optimiser is not, and even a free
+   readout over the top-75 is not (hull 2.00 Å). What is missing is a native-free vector with
+   ρ > 0.14. *For the deployed architecture with an oracle*, the binding constraint is the
+   **readout**. Holding the candidate set fixed at the top-128 the quantum stage actually sees:
 
    | | built chain, n = 126 |
    |---|---|
@@ -58,6 +63,11 @@ three numbers that did not exist before, all on the charter's own endpoint:
    Choosing *m* and choosing *which member* cost the **same 7 bits** and are worth −0.3079 and
    −1.0670 against production. Same information budget, **3.5× the payoff**, differing only in what
    it is spent on. The architecture spends its information on the wrong question.
+
+   The two levels compose, and that is the report's practical conclusion: **a better channel is
+   necessary but not sufficient**, because the operator that would have to spend it is an average,
+   and an average cannot spend a ranking (§5.4). Any route to 2.5 Å needs *both* a native-free
+   vector with a real cosine *and* a terminal operator that can consume one.
 
 And the reason those 7 bits cannot simply be supplied: **the per-target sign is an incidental
 parameter** in the sense of Neyman & Scott (1948) — not estimable from other targets' answers as a
@@ -551,43 +561,77 @@ This is the result that makes the sprint's own conclusion less complete, so it g
 
 Lane L's objection was that the project's only positive in-band signals might all be compactness
 proxies in disguise — in which case the class would be closed and assumption B2 would be airtight.
-I stated in writing that I expected the measurement to confirm it. **It does not.**
+I said in writing that I expected the measurement to confirm it. Lane T registered a prior of
+**3 to 1 in the same direction**. Both of us were wrong, and at n = 126 it is not close.
 
-Lane T measured all 32 S27 channels against member radius of gyration — native-free, 500 members ×
-40 pools, every fold CI excluding zero. The absolute loadings are as large as I predicted:
-
-```
-LEG_compactness 0.957   RG_LAW 0.928   POOLGO 0.667   LEG_solvation 0.601
-LEG 0.583   DSSPHB 0.583   LEG_contact −0.549   LEG_hbond_local 0.538
-DMAP_CONS 0.526   TORS_CONS 0.513   CAGEO 0.460   DIS 0.429
-```
-
-**And the inference from them fails.** Against the pre-registered falsifier
-(`s29/PREREG_S29_T.md` §3):
+Lane T measured all 32 S27 channels against member radius of gyration — native-free, 126 targets ×
+500 members × 32 channels, pre-registered in `s29/PREREG_S29_T.md` (committed 02:13:31, before any
+full result existed). **The absolute loadings are exactly as predicted**, every fold CI excluding
+zero:
 
 ```
-Spearman(|ρ_Rg|, |ρ_inband|)      = 0.36   against a registered bar of 0.40   → does not fire
-median share of skill removed,      0.041   against a bar of 0.40             → does not fire
-  partialling Rg out of the top 8
+LEG_compactness +0.956 (110.7× MDE)   RG_LAW +0.921 (16.9×)   POOLGO +0.672 (15.3×)
+LEG_solvation   +0.621 (8.8×)         LEG    +0.606 (16.7×)   DSSPHB +0.587 (14.3×)
+(CONTACT and ENV fall below 0.7× their own MDE and are reported NOT MEASURED, not ranked)
 ```
 
-Partialling out compactness removes **4%** of the skill of the eight most skilled channels, and
-those eight are DSSPHB, TORS_CONS, DMAP_CONS, LEG_hbond_local, LEG, RAMA, LEG_torsion, POOLGO —
-hydrogen bonding, torsion consensus and distance-map consensus, **not size**. The complementary
-clause F2 *fires*: CONTACT_LL carries in-band skill while not being a compactness measure.
+**And the inference from them fails, decisively.** Against the pre-registered falsifier:
 
-**Verdict, as registered: the objection fails and the row stays open.** There exists at least one
-channel with in-band ordering skill that compactness does not explain — which is exactly the class
-B2 needs to be empty for the bound to be airtight over *all* native-free operators. The bound's
-measured half is untouched (21 fields, none beats 0.1398, and those cosines are measured directly).
-What is not established is the claim that no such channel could exist, and I had been asserting it.
+```
+F1a  Spearman(|ρ_Rg|, |ρ_inband|) across 32 channels = +0.083   bar +0.40   → does not fire
+F1b  share of skill removed by partialling Rg out of the top 8 = 9%   bar 40%   → does not fire
+```
 
-Two honest qualifications: this is n = 40, and the F1 Spearman at 0.36 against a 0.40 bar is close
-enough that the full 126 could move it either way (the run is cheap — 65 s — and is being finished).
-And lane T repaired F2 mid-analysis, because |ρ(X,Rg)| ≤ 0.30 cannot detect RG_UNIV and RG_LAW,
-which are pure functions of Rg and V-shaped in it; the repair partials out rank(Rg) *and*
-rank(|Rg − median Rg|), was argued from construction (`s27/ham_lib.py:20-22`) rather than from its
-effect, and can only *remove* hits — i.e. it handicaps its author and favours my prior.
+At n = 40 F1a read +0.396, a hair under its bar; at n = 126 it collapses to **+0.083**. The
+direction held and the margin vanished — which is why the other 86 targets were worth running.
+
+The kill is sharper than the falsifier required (ORACLE diagnostics, labelled):
+
+- **The most compactness-loaded channels carry the least in-band skill**: LEG_compactness +0.043,
+  RG_LAW +0.087, LEG_solvation +0.073.
+- **Member Rg itself orders the in-band set at only +0.075**, against +0.412 over the whole pool —
+  i.e. size is a realism detector, not an in-band discriminator. That is the same shape as the
+  sprint's recognition finding (§9.1), arriving independently.
+- **9 of 31 channels** keep \|ρ_inband\| ≥ 0.15 after partialling out *both* rank(Rg) and
+  rank(\|Rg − median Rg\|), fold CIs excluding zero — DMAP_CONS +0.316, DIS +0.275, DIS_MEAN
+  +0.229, CONTACT_LL +0.221, CAGEO +0.216, TORS_CONS +0.204, LEG_torsion +0.181, DSSPHB +0.166,
+  RAMA +0.158 — against ≈ 1.6 expected by chance. Nothing rests on a single channel.
+
+**The one survivor that matters, physically.** Of the two channels that clear F2's own gate:
+
+- **CONTACT_LL** (ρ_Rg −0.240, partialled in-band +0.221) is the negative log-likelihood of the
+  candidate's 8 Å contact map under the distogram. Its skill is a contact *pattern*, not a size —
+  but it is a distogram **re-reading**, inside class M, still bounded by theorem 2, carrying no
+  information the distogram lacks, and S27 already priced it deployably at **+0.52 Å worse** as a
+  selector. The less interesting survivor.
+- **LEG_torsion** (ρ_Rg +0.182, partialled in-band **+0.181**, fold CI [+0.053, +0.236]) is the
+  Legacy energy's backbone-torsion term: **local conformation, a function of the structure and not
+  of the distogram — therefore outside class M and not bounded by theorem 2.** This is the physics
+  family's own channel, with in-band skill that is demonstrably not compactness, and it is the
+  reason row 3 stays open.
+
+**Two caveats that must travel with this result, both lane T's own:**
+
+1. It refutes the *general argument*. It does **not** show that a width or entropy term
+   specifically would be orthogonal — no such channel exists here to measure, and the one named in
+   the literature review would have to be rebuilt from scratch (§12.4).
+2. **In-band skill is not deployable value.** Ranking information is anti-useful on an averaging
+   readout (§5.4), and by the bound any channel reaches the endpoint only as a cosine, where
+   everything the project owns measures 0.04. Row 3 stays open in the precise sense that *the
+   argument for closing it has failed*, not that the route is shown to work.
+
+Caveat 2 is where this section meets §0 item 3, and the junction is the most useful thing in the
+report for the next sprint: **a new channel is necessary but not sufficient, because the readout
+that would have to spend it is the one that cannot.** Any S30 attempt on LEG_torsion needs the
+channel *and* a terminal operator that can consume a ranking — and §12.1 is exactly that operator.
+
+Procedural note, since the falsifier was repaired mid-analysis: F2 as registered used
+\|ρ(X,Rg)\| ≤ 0.30 to mean "not a compactness measure", which cannot detect RG_UNIV and RG_LAW —
+pure functions of Rg, V-shaped in it, so partialling rank(Rg) alone misses them. The repair adds
+rank(\|Rg − median Rg\|), was argued from the channel definitions in `s27/ham_lib.py:20-22` rather
+than from its effect, and can only *remove* hits — i.e. it handicaps its author and favours the
+prior it went on to contradict. The n = 40 partial read and its artefacts were committed
+beforehand. Both disclosures are in S29-L50.
 
 ### 12.1 The one class the ladder did not close by ceiling
 
@@ -655,7 +699,7 @@ So the ranked candidates for S30, each with the evidence that would settle it:
 | # | candidate | what would settle it | cost |
 |---|---|---|---|
 | 1 | **The free-energy stage (S8, rebuilt)** | It is the only native-free selector class with peptide-length precedent in the literature, and the one sub-class the recognition audit never covered. Settled by running lane D's band design on it: does it have in-band skill after partialling out compactness? | A lane-week — a full OpenMM ensemble stage under the one-AMBER-process rule, rebuilt from a prose spec |
-| 1= | **The non-compactness in-band channels** (§12.0) | CONTACT_LL, DSSPHB, TORS_CONS and DMAP_CONS carry in-band skill that partialling out Rg does not remove. Settled by finishing the measurement at n = 126 and then asking whether any of them survives lane D's band design as a *deployable* ranker | Cheap: the measurement is 65 s; the band test is days |
+| 1= | **LEG_torsion, and the 8 other non-compactness channels** (§12.0) | LEG_torsion is the Legacy backbone-torsion term: local conformation, **outside class M**, so not bounded by theorem 2, with partialled in-band skill +0.181 [+0.053, +0.236]. Settled by whether it survives lane D's band design as a *deployable* ranker **and** whether a terminal operator exists that can spend a ranking at all (§12.1) — it needs both | Days; the measurement exists, the band machinery exists |
 | 2 | **A sparse weighted readout with a native-free support rule** | The only ladder class not closed by ceiling (§12.1). Settled by whether any native-free rule picks a 2–5 member support better than chance — noting it needs ~18 bits, not 7 | Days; the ladder machinery exists |
 | 3 | **A genuinely new information channel** | Not a new operator on the same pool. The bound explicitly does not cover this, and it is the only thing that could move the ceiling rather than the approach to it | Unknown; this is a research question, not an engineering one |
 
