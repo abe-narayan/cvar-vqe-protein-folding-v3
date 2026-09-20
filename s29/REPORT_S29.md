@@ -32,7 +32,11 @@ three numbers that did not exist before, all on the charter's own endpoint:
    (`s29/results/s29_D_fields.json`, n = 126), **not one beats the random-shape reference of
    0.1398** — `beats_random_reference` is `False` on all 21, best is CHAN_DISTPOT at +0.1128 — and
    the best field, stepped by an amount chosen *with the native in hand*, moves the point cloud from
-   3.0483 to 3.0289: a gain of **0.0195 ± 0.001 Å** (the figure is a closed form; see §9.4 for its measured model error). Stated at three levels (lane T): **≥ 3.210 Å** for every field the project has built, **≥ 3.181 Å** for a random-strength field handed a perfect sign, and **≥ 2.98 Å** for the best structured field (PC1) handed a perfect ORACLE *per-target* sign.
+   3.0483 to 3.0289: a gain of **0.0195 ± 0.001 Å** (a closed form; §9.4 gives its measured model
+   error). Stated at three levels: **≥ 3.210 Å** for every field the project has built,
+   **≥ 3.181 Å** for a random-strength field handed a perfect sign, and **≥ 2.98 Å** for the best
+   structured field handed a perfect ORACLE *per-target* sign — a level no method could reach, and
+   it still misses the interim target.
    **Scope, and it is not a formality (§12.0):** this is a bound over the operators we *built* and
    measured. Its assumption B2 — that ρ ≤ 0.14 for *every* field constructible from the present
    information — was attacked and survived on 21 fields, but a measurement made late in the sprint
