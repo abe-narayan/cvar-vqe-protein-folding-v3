@@ -166,6 +166,51 @@ def main():
         out["classes"]["REAL_targets"] = dict(coherent_both=int(((c0 == "coherent") & (c1 == "coherent")).sum()),
                                               coherent_either=int(((c0 == "coherent") | (c1 == "coherent")).sum()),
                                               coherent_neither=int(((c0 != "coherent") & (c1 != "coherent")).sum()))
+
+    # ---- the built chain (addendum 2: only for a cell at 0.7x MDE on the point cloud; paired
+    # against production on the chain). Production = S27 `chain_rows.jsonl :: DIS`, re-projected
+    # in this lane's process and identical on 126/126 (`s28_B_prodcheck.json`). The J = 0 twin
+    # on the chain is the Gaussian run's `vqe|s*|NONE|J0|R3` row (`s28_B_chain_rows.jsonl`):
+    # the J = 0 state is bit-identical between the two runs (anchor above), so it is reused.
+    chain_path = os.path.join(B.RESULTS, "s28_B2_chain_rows_k10.jsonl")
+    if os.path.exists(chain_path):
+        byc = {}
+        for r in B.load_rows(chain_path):
+            byc.setdefault(r["arm"], {})[r["pdb"]] = r
+        gch = {}
+        for r in B.load_rows(B.CHAIN_ROWS):
+            gch.setdefault(r["arm"], {})[r["pdb"]] = r
+        prod_chain = {r["pdb"]: r["rmsd_chain"] for r in B.load_rows(os.path.join(B.RESULTS, "chain_rows.jsonl")) if r["config"] == "DIS"}
+        pc = np.array([prod_chain[p] for p in pdbs])
+        out["chain"] = dict(production_chain_mean=float(pc.mean()))
+        for arm, d_ in byc.items():
+            if not all(p in d_ for p in pdbs):
+                out["chain"][arm] = dict(n=len(d_), partial=True)
+                continue
+            a_ = np.array([d_[p]["rmsd_chain"] for p in pdbs])
+            k_ = np.array([d_[p]["rmsd_cloud"] for p in pdbs])
+            src, seed, graph, J, R = arm.split("|")
+            e = dict(n=n, mean_chain=float(a_.mean()), mean_cloud=float(k_.mean()),
+                     fail18_chain=float(a_[fail].mean()), other_chain=float(a_[~fail].mean()))
+            e["vs_production"] = compact(ST.compare(a_, pc, folds=folds, names=pdbs, label=f"B2 CHAIN {arm} - production DIS top-75 (built chain, S27 chain_rows DIS)"))
+            e["vs_production_nonfail18"] = compact(ST.compare(a_[~fail], pc[~fail], folds=folds[~fail], names=[p for p, f in zip(pdbs, fail) if not f], label=f"B2 CHAIN {arm} - production (built chain, 108 non-FAIL18)"))
+            e["vs_production_fail18"] = compact(ST.compare(a_[fail], pc[fail], folds=folds[fail], names=[p for p, f in zip(pdbs, fail) if f], label=f"B2 CHAIN {arm} - production (built chain, FAIL18)"))
+            twin = f"{src}|{seed}|NONE|J0|{R}"
+            if twin in gch and all(p in gch[twin] for p in pdbs):
+                b_ = np.array([gch[twin][p]["rmsd_chain"] for p in pdbs])
+                e["vs_same_readout_J0"] = compact(ST.compare(a_, b_, folds=folds, names=pdbs, label=f"B2 CHAIN F1 {arm} - {twin} (built chain; the J = 0 twin from s28_B_chain_rows.jsonl, bit-identical state)"))
+            ref = f"vqe|{seed}|NONE|J0|R1"
+            if ref in gch and all(p in gch[ref] for p in pdbs):
+                b_ = np.array([gch[ref][p]["rmsd_chain"] for p in pdbs])
+                e["vs_J0_R1"] = compact(ST.compare(a_, b_, folds=folds, names=pdbs, label=f"B2 CHAIN {arm} - {ref} (built chain)"))
+            # the registered class split on the chain (addendum 3)
+            c_ = cls(f"{src}|{seed}|{graph}|{J}")
+            for name in ("coherent", "incoherent"):
+                m_ = c_ == name
+                if m_.sum() >= 8:
+                    sub = [p for p, k in zip(pdbs, m_) if k]
+                    e[f"class_{name}_vs_production"] = compact(ST.compare(a_[m_], pc[m_], folds=folds[m_], names=sub, label=f"B2 CHAIN CLASS {name} (n {m_.sum()}) {arm} - production (built chain; registered addendum 3)"))
+            out["chain"][arm] = e
     ST.save_atomic(OUT, out, module_file=__file__)
     A = out["anchors"]
     print(f"n={n}  DIS top-75 {A['dis75_mean']:.6f}  J0 bit-identical to the Gaussian run: {A['J0_bit_identical_s0']} {A['J0_bit_identical_s1']}")
@@ -199,6 +244,22 @@ def main():
         print("  ", s_)
     if not out["screen"]:
         print("   none: no built chain is run (prereg addendum 2)")
+    if "chain" in out:
+        print(f"\nBUILT CHAIN (production chain mean {out['chain']['production_chain_mean']:.4f}):")
+        for arm, e in out["chain"].items():
+            if arm == "production_chain_mean":
+                continue
+            if e.get("partial"):
+                print(f"  {arm:24s} PARTIAL {e['n']}/126")
+                continue
+            pr_ = e["vs_production"]; pn = e["vs_production_nonfail18"]; pf = e["vs_production_fail18"]
+            sr = e.get("vs_same_readout_J0"); v = e.get("vs_J0_R1")
+            print(f"  {arm:24s} chain {e['mean_chain']:.4f} cloud {e['mean_cloud']:.4f} fail18 {e['fail18_chain']:.3f} other {e['other_chain']:.3f}"
+                  f" | vsPROD {pr_['effect']:+.4f} x{pr_['x_mde']:+.2f} [{pr_['ci_fold'][0]:+.4f},{pr_['ci_fold'][1]:+.4f}] {pr_['folds_same_sign']}/5 {pr_['verdict'].split(' [')[0]}"
+                  f" (108 {pn['effect']:+.4f} x{pn['x_mde']:+.2f}; FAIL18 {pf['effect']:+.4f} x{pf['x_mde']:+.2f})"
+                  + (f" | F1 same-readout J0 {sr['effect']:+.4f} x{sr['x_mde']:+.2f} [{sr['ci_fold'][0]:+.4f},{sr['ci_fold'][1]:+.4f}] {sr['folds_same_sign']}/5" if sr else "")
+                  + (f" | vsJ0R1 {v['effect']:+.4f} x{v['x_mde']:+.2f}" if v else "")
+                  + "".join(f" | class {nm} vsPROD {e['class_' + nm + '_vs_production']['effect']:+.4f} x{e['class_' + nm + '_vs_production']['x_mde']:+.2f}" for nm in ("coherent", "incoherent") if f"class_{nm}_vs_production" in e))
     print("wrote", OUT)
 
 

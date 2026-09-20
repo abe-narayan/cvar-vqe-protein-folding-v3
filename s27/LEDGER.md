@@ -3529,3 +3529,164 @@ numbers are unchanged after the sprint. Nothing in S28 touched production code.
 Artefacts: `s26/jobs_done/s28D_pytest_{light,lanes_v4,pipeline_q,integration_q,amber_q,amber_frame_q,integration_slow,equivalence_slow}.json`
 and the matching `s26/logs/*.log`; `s26/logs/s28D_examine_close.log`, `s26/results/module_map.json`,
 `s26/results/claim_check.json`, `s26/results/pinned_hashes.json`.
+
+## S28-L46 -- B2 ENDPOINT AT THE ADDENDUM-2 SCOPE (k = 10, J = 3, 126/126, POINT CLOUD; THE TWO R3 CELLS AT 0.7x MDE ALSO ON THE BUILT CHAIN): ON THE SPREAD-SPECTRUM GRAPH THE DEPLOYED READOUT IS INSIDE 0.42x MDE OF J = 0 AND 0.37x (REAL) / 0.80x (PERM) OF PRODUCTION; R3 IS +0.28 TO +0.29 A WORSE THAN PRODUCTION ON THE POINT CLOUD AND +0.31 TO +0.31 A ON THE BUILT CHAIN, AS AT J = 0; REAL VS PERM WITHIN 0.31x; THE kNN EIGENSOLVER IS THE PREDICTED TIGHT CLUSTER (PR 53, m 14.5) AND SITS +0.54x FROM PRODUCTION; THE CIRCUIT MOVES FURTHER THAN ON THE GAUSSIAN GRAPH (TV 0.29 / 0.35) AND LANDS IN THE COHERENT BASIN ON 49 / 33 OF 126 CELLS, WITH NO MEASURABLE DIFFERENCE TO THE ENDPOINT ON EITHER CLASS (REGISTERED SPLIT, ADDENDUM 3); F1 DOES NOT FIRE, THE PRIOR (WORSE OR NULL) HELD; B2 CLOSED (2026-09-19 21:40, B2)
+
+Question (`s27/PREREG_S28_B.md` addenda 1 to 3; brief `s27/briefs/S28B2.md`; gate S28-L43 last paragraph, opened for exactly this cell; S28-L44): does the one cell the mechanism licenses, the k = 10 kNN spread-spectrum graph at J = 3 where the circuit collects its hopping, emit a better structure than production or than J = 0, on the deployed readout (R1) or on the p-top-75 readout (R3)? Registered prior: WORSE or null (the kNN ground state is a tight cluster around the argmin, the S27 consistency mechanism).
+
+**Provenance.** `run_main` restricted to the addendum-2 scope with a test (commit d5af0816: k = 10 only, J in {0, 3}, graphs REAL and PERM, the component count on every row, GS rows flagged DEGENERATE on a disconnected graph, module state restored); prereg addendum 3 (the coherence-class split) committed BEFORE the job (e7bf2c9c). Job `s28B2_run` (jobrun, agent S28B, tag CPU; `s26/jobs_done/s28B2_run.json` exit 0, 632 s, peak RSS 0.347 GB): `s27/results/s28_B2_rows_k10.jsonl`, 1,134 rows = 126 x 9 (VQE seeds 0 / 1 and the exact ground state at J = 0, and at J = 3 on REAL and PERM), no duplicates. The k = 10 graph is CONNECTED on 126/126 targets (`n_components` = 1 on every row; no GS row is DEGENERATE; S28-L23(b)); lambda_2 / lambda_1 median 0.977, the top eigenvector's uniform overlap 0.984 (the Gaussian graph's 0.138 / 0.947, S28-L25). Anchors: the J = 0 rows equal the Gaussian run's `s28_B_rows.jsonl :: vqe|s*|NONE|J0` bit-for-bit (R1 RMSD, m and F) on 126/126, both seeds (`s28_B2_summary.json :: anchors`); production = DIS top-75 uniform (point cloud 3.048338; built chain S27 `chain_rows.jsonl :: DIS` 3.2126, re-projected in this lane's process and identical on 126/126, `s28_B_prodcheck.json`, S28-L41 / S28-L43). Statistics `python s27/s28_B2_analyse.py` -> `s27/results/s28_B2_summary.json` (every `ST.fmt` under `fmt`).
+
+**Arms (point cloud, n = 126; `summary.json :: arms`; native-free columns except the RMSDs, which are ORACLE evaluations of achievable selections):**
+
+    arm                 R1       R3       m      PR    Jac(ptop75,DIS75)  TV vs J=0   bound   classes coherent / mixed / incoherent
+    vqe|s0|NONE|J0     3.0580   3.3096    74.1    427   0.177                -         0.000   -
+    vqe|s1|NONE|J0     3.0562   3.3207    71.2    412   0.180                -         0.000   -
+    vqe|s0|REAL|J3     3.0582   3.3365    76.7    344   0.137              0.289       0.858   49 / 1 / 76
+    vqe|s1|REAL|J3     3.0577   3.3345    71.7    277   0.137              0.350       0.814   33 / 3 / 90
+    vqe|s0|PERM|J3     3.0685   3.3250    76.2    348   0.137              0.288       0.856   34 / 0 / 92
+    vqe|s1|PERM|J3     3.0525   3.3278    71.1    277   0.138              0.349       0.810   27 / 0 / 99
+    gs|s-1|REAL|J3     3.1251   3.0923    14.5     53   0.577              0.984       0.931   1.000 coherent (exact)
+    gs|s-1|PERM|J3     3.0834   3.1127    23.8     41   0.239              0.990       0.872   1.000 coherent (exact)
+    (GS J = 0: the one-hot argmin, DEGENERATE, never compared. Targets coherent on both seeds (REAL) 15, on either 67, on neither 59; Gaussian graph at J = 3: 43 / 32 coherent, 10 / 65 / 61, S28-L41.)
+
+**Per-class means (addendum 3; class rule from the trained state's own sign coherence: coherent > 0.5, incoherent <= 0.1, mixed between; `summary.json :: classes`):**
+
+    cell             class        n    hop     bound   coh     F        m
+    vqe|s0|REAL|J3   coherent     49   +0.936  0.945   0.985   -7.334  87.6
+    vqe|s0|REAL|J3   mixed         1   +0.176  0.694   0.113   -4.896  62.0
+    vqe|s0|REAL|J3   incoherent   76   +0.111  0.804   0.001   -4.803  69.8
+    vqe|s1|REAL|J3   coherent     33   +0.873  0.908   0.946   -7.110  87.7
+    vqe|s1|REAL|J3   mixed         3   +0.253  0.692   0.187   -5.075  70.3
+    vqe|s1|REAL|J3   incoherent   90   +0.111  0.784   0.002   -4.793  65.8
+    vqe|s0|PERM|J3   coherent     34   +0.956  0.956   0.999   -7.402  89.1
+    vqe|s0|PERM|J3   incoherent   92   +0.094  0.819   0.002   -4.760  71.5
+    vqe|s1|PERM|J3   coherent     27   +0.932  0.938   0.993   -7.316  87.6
+    vqe|s1|PERM|J3   incoherent   99   +0.112  0.775   0.001   -4.791  66.6
+    (Gaussian graph, S28-L41: coherent cells hop 0.935 / coh 0.99 / F -7.34 / m 88.7; incoherent hop -0.001 / F -4.56 / m 74.4)
+
+The class counts are the statement (S28-L43 condition 2): on the kNN graph at J = 3 the circuit lands in the sign-coherent basin on 49 / 33 of 126 cells (seeds 0 / 1; PERM 34 / 27), against 43 / 32 on the Gaussian graph, with 1 / 3 mixed cells (coherence 0.11 to 0.19; the Gaussian graph had none). S28-L29's "the circuit collects 44 to 68% of its bound at k = 10, J = 3" (12 targets) is to be read the same way as S28-L41's R4: a mixture. New on the spread spectrum: the INCOHERENT class is not the J = 0 state. It collects hopping 0.111 / 0.111 at coherence 0.001 (share and coherence separate on a spread spectrum, S28-L29), F -4.803 / -4.793 against the J = 0 value -4.56, and its TV from J = 0 is what lifts the arm mean to 0.29 / 0.35 (Gaussian 0.155 / 0.152). Reported as numbers; no trainability word is attached (rule 9).
+
+**The registered contrasts (point cloud; effect = arm - comparator; `ST.fmt` verbatim for the deployed readout and the R3 readout on REAL, both seeds):**
+
+    B2 F1 vqe|s0|REAL|J3 R1 - vqe|s0|NONE|J0 R1 (point cloud, kNN k10)
+      a 3.0582 (med 2.8659)   b 3.0580 (med 2.8460)   n=126
+      effect +0.0002   median -0.0002   SE 0.0104   MDE 0.0292   effect/MDE +0.01
+      iid  CI95 [-0.0215, +0.0195]
+      fold CI95 [-0.0126, +0.0133]   folds same sign 2/5   per-fold 0:-0.009 1:+0.010 2:-0.005 3:-0.020 4:+0.020
+      63W/62L/1T   worst degradation +0.3738 (5H1H)   p90 +0.0620   power 0.05  Type-M 150.89
+      concentration: drop-top10 +0.0199 vs uniform-effect null p10/p50/p90 +0.0098/+0.0194/+0.0296 -> pctile 0.529
+      VERDICT: NOT MEASURED (|effect| 0.0002 <= its own MDE 0.0292, 0.01x)
+
+    B2 F1 vqe|s1|REAL|J3 R1 - vqe|s1|NONE|J0 R1 (point cloud, kNN k10)
+      a 3.0577 (med 2.8812)   b 3.0562 (med 2.8534)   n=126
+      effect +0.0015   median +0.0017   SE 0.0101   MDE 0.0284   effect/MDE +0.05
+      iid  CI95 [-0.0188, +0.0216]
+      fold CI95 [-0.0253, +0.0266]   folds same sign 3/5   per-fold 0:+0.044 1:-0.039 2:+0.022 3:-0.031 4:+0.004
+      59W/65L/2T   worst degradation +0.5106 (6EY3)   p90 +0.1011   power 0.05  Type-M 15.91
+      concentration: drop-top10 +0.0233 vs uniform-effect null p10/p50/p90 +0.0120/+0.0225/+0.0336 -> pctile 0.541
+      VERDICT: NOT MEASURED (|effect| 0.0015 <= its own MDE 0.0284, 0.05x)
+
+    B2 PROD vqe|s0|REAL|J3 R1 - DIS top-75 uniform (point cloud)
+      a 3.0582 (med 2.8659)   b 3.0483 (med 2.8373)   n=126
+      effect +0.0098   median +0.0001   SE 0.0094   MDE 0.0264   effect/MDE +0.37
+      iid  CI95 [-0.0088, +0.0286]
+      fold CI95 [-0.0037, +0.0204]   folds same sign 4/5   per-fold 0:+0.028 1:+0.013 2:+0.004 3:-0.015 4:+0.016
+      58W/65L/3T   worst degradation +0.4529 (6EY3)   p90 +0.1013   power 0.18  Type-M 2.40
+      concentration: drop-top10 +0.0270 vs uniform-effect null p10/p50/p90 +0.0164/+0.0263/+0.0373 -> pctile 0.531
+      VERDICT: NOT MEASURED (|effect| 0.0098 <= its own MDE 0.0264, 0.37x)
+
+    B2 PROD vqe|s1|REAL|J3 R1 - DIS top-75 uniform (point cloud)
+      a 3.0577 (med 2.8812)   b 3.0483 (med 2.8373)   n=126
+      effect +0.0093   median +0.0033   SE 0.0089   MDE 0.0250   effect/MDE +0.37
+      iid  CI95 [-0.0087, +0.0269]
+      fold CI95 [-0.0134, +0.0374]   folds same sign 2/5   per-fold 0:+0.059 1:-0.020 2:+0.021 3:-0.016 4:-0.000
+      50W/74L/2T   worst degradation +0.4423 (6EY3)   p90 +0.0791   power 0.18  Type-M 2.39
+      concentration: drop-top10 +0.0283 vs uniform-effect null p10/p50/p90 +0.0185/+0.0274/+0.0370 -> pctile 0.550
+      VERDICT: NOT MEASURED (|effect| 0.0093 <= its own MDE 0.0250, 0.37x)
+
+    B2 F1 vqe|s0|REAL|J3 R3 - vqe|s0|NONE|J0 R3 (point cloud, kNN k10)
+      a 3.3365 (med 3.2006)   b 3.3096 (med 3.1597)   n=126
+      effect +0.0269   median +0.0146   SE 0.0220   MDE 0.0616   effect/MDE +0.44
+      iid  CI95 [-0.0158, +0.0697]
+      fold CI95 [-0.0056, +0.0569]   folds same sign 3/5   per-fold 0:+0.030 1:-0.018 2:-0.012 3:+0.080 4:+0.050
+      60W/66L/0T   worst degradation +0.6502 (1N9U)   p90 +0.3125   power 0.23  Type-M 2.08
+      concentration: drop-top10 +0.0687 vs uniform-effect null p10/p50/p90 +0.0417/+0.0689/+0.0958 -> pctile 0.498
+      VERDICT: NOT MEASURED (|effect| 0.0269 <= its own MDE 0.0616, 0.44x)
+
+    B2 F1 vqe|s1|REAL|J3 R3 - vqe|s1|NONE|J0 R3 (point cloud, kNN k10)
+      a 3.3345 (med 3.1517)   b 3.3207 (med 3.1716)   n=126
+      effect +0.0138   median +0.0197   SE 0.0244   MDE 0.0685   effect/MDE +0.20
+      iid  CI95 [-0.0333, +0.0624]
+      fold CI95 [-0.0161, +0.0436]   folds same sign 3/5   per-fold 0:+0.007 1:+0.062 2:-0.024 3:-0.020 4:+0.040
+      58W/68L/0T   worst degradation +1.1451 (5MML)   p90 +0.2872   power 0.09  Type-M 4.26
+      concentration: drop-top10 +0.0582 vs uniform-effect null p10/p50/p90 +0.0272/+0.0574/+0.0889 -> pctile 0.516
+      VERDICT: NOT MEASURED (|effect| 0.0138 <= its own MDE 0.0685, 0.20x)
+
+    B2 PROD vqe|s0|REAL|J3 R3 - DIS top-75 uniform (point cloud)
+      a 3.3365 (med 3.2006)   b 3.0483 (med 2.8373)   n=126
+      effect +0.2881   median +0.2367   SE 0.0722   MDE 0.2024   effect/MDE +1.42
+      iid  CI95 [+0.1520, +0.4327]
+      fold CI95 [+0.1398, +0.4171]   folds same sign 5/5   per-fold 0:+0.506 1:+0.304 2:+0.025 3:+0.330 4:+0.282
+      45W/81L/0T   worst degradation +3.1954 (8TXS)   p90 +1.1413   power 0.98  Type-M 1.01
+      concentration: drop-top10 +0.4147 vs uniform-effect null p10/p50/p90 +0.3207/+0.4124/+0.5097 -> pctile 0.510
+      VERDICT: WORSE
+
+    B2 PROD vqe|s1|REAL|J3 R3 - DIS top-75 uniform (point cloud)
+      a 3.3345 (med 3.1517)   b 3.0483 (med 2.8373)   n=126
+      effect +0.2862   median +0.2220   SE 0.0752   MDE 0.2107   effect/MDE +1.36
+      iid  CI95 [+0.1428, +0.4362]
+      fold CI95 [+0.1360, +0.4223]   folds same sign 4/5   per-fold 0:+0.443 1:+0.458 2:-0.011 3:+0.305 4:+0.256
+      50W/76L/0T   worst degradation +3.8693 (8TXS)   p90 +1.1565   power 0.97  Type-M 1.02
+      concentration: drop-top10 +0.4081 vs uniform-effect null p10/p50/p90 +0.3096/+0.4054/+0.5046 -> pctile 0.516
+      VERDICT: WORSE
+
+- F1 (same readout at J = 0): R1 +0.0002 (+0.01x), +0.0105 (+0.42x), +0.0015 (+0.05x), -0.0037 (-0.15x) (s0 REAL, s0 PERM, s1 REAL, s1 PERM); R3 +0.0269 (+0.44x), +0.0154 (+0.25x), +0.0138 (+0.20x), +0.0071 (+0.11x). None beyond 0.44x MDE; F1 does not fire on any cell.
+- S28-L2(a), production: R1 +0.0098 (+0.37x), +0.0202 (+0.80x), +0.0093 (+0.37x), +0.0041 (+0.19x), all inside MDE (J = 0 R1: +0.0097 / +0.0078); R3 +0.2881 (+1.42x), +0.2767 (+1.32x), +0.2862 (+1.36x), +0.2794 (+1.32x), WORSE with the fold CI above zero on every cell, as at J = 0 (R3: +0.2613 / +0.2724).
+- F3, REAL vs PERM at the same seed and readout: -0.0103 (-0.31x), +0.0115 (+0.19x), +0.0052 (+0.18x), +0.0067 (+0.11x) (s0 R1, s0 R3, s1 R1, s1 R3): silent. The specific kNN structure and its permutation are indistinguishable at this instrument, as on the Gaussian graph.
+- The exact ground state (Hamiltonian quality): GS REAL J = 3 R3 = 3.0923, +0.0440 (+0.54x MDE 0.0822, fold CI [-0.0089, +0.1448], 2/5, 55W/71L/0T, NOT MEASURED (|effect| 0.0440 <= its own MDE 0.0822, 0.54x)) vs production and +0.0343 (+0.42x) vs J = 0 R1: it is the predicted tight cluster (PR 53, m 14.5, Jaccard 0.577 with the DIS top-75; the Gaussian ground state at J = 3 was PR 305, Jaccard 0.842) and it emits production within MDE, on FAIL18 +0.239 (+0.88x) and on the 108 +0.012 (+0.14x). It is under the 0.7x screen and is not projected.
+- F2, VQE R3 vs GS R3 at J = 3: +0.2442 (+0.99x, fold CI [+0.0802, +0.3973], 5/5) / +0.2422 (+0.95x, [+0.1006, +0.3632], 4/5): the eigensolver is on the better side by 0.24 A with the fold CI above zero and the size at 0.95x to 0.99x MDE (Type-M zone: sign measured, size not); the registered prior (the eigensolver wins or ties) held in sign.
+- FAIL18 vs the 108: R1 cells within 0.35x / 0.41x of production on the 108 / FAIL18; R3 cells +0.418 to +0.421 on the 108 (WORSE, 1.99x to 2.06x) and -0.520 to -0.491 on FAIL18 (about 1x MDE at n = 18): S27 L9's readout regime again (the J = 0 R3 rows: -0.464 / -0.539 on FAIL18), not J and not the graph.
+
+**The registered class split (addendum 3; each class its own n, SE and MDE; changes no verdict; `summary.json :: contrasts.CLASS|*`):**
+
+    cell                     class       n    R1 vs J=0          R1 vs production    R3 vs J=0          R3 vs production
+    vqe|s0|REAL|J3           coherent     49  -0.0030 (-0.05x)  +0.0236 (+0.42x)  +0.0147 (+0.15x)  +0.4017 (+1.23x)
+    vqe|s0|REAL|J3           incoherent   76  +0.0029 (+0.11x)  +0.0002 (+0.01x)  +0.0344 (+0.43x)  +0.2173 (+0.83x)
+    vqe|s1|REAL|J3           coherent     33  +0.0235 (+0.34x)  +0.0256 (+0.44x)  +0.0527 (+0.35x)  +0.0845 (+0.27x)
+    vqe|s1|REAL|J3           incoherent   90  -0.0064 (-0.21x)  +0.0039 (+0.14x)  +0.0006 (+0.01x)  +0.3557 (+1.33x)
+    vqe|s0|PERM|J3           coherent     34  +0.0096 (+0.23x)  +0.0192 (+0.40x)  +0.0177 (+0.14x)  +0.1837 (+0.61x)
+    vqe|s0|PERM|J3           incoherent   92  +0.0108 (+0.35x)  +0.0205 (+0.69x)  +0.0145 (+0.21x)  +0.3111 (+1.18x)
+    vqe|s1|PERM|J3           coherent     27  -0.0155 (-0.21x)  -0.0027 (-0.07x)  -0.0353 (-0.20x)  +0.2871 (+0.63x)
+    vqe|s1|PERM|J3           incoherent   99  -0.0005 (-0.02x)  +0.0060 (+0.23x)  +0.0187 (+0.29x)  +0.2773 (+1.15x)
+    Landing in the coherent basin makes no measurable difference to the endpoint: every R1 class contrast is inside its MDE (0.69x at most) and the R3 class contrasts vs production are the same WORSE readout on both classes. Prior (addendum 3: no measurable difference) held.
+
+**The built chain (addendum 2: the two R3 REAL cells reached 0.7x MDE on the point cloud against production, in the WORSE direction, and go to the chain so the verdict is not one-sided; base prereg section 7). Job `s28B2_chain` (`s27/s28_B2_knn.py --chain`, reusing `s28_B_hop.chain_main` = `readout_projected` on the B2 rows; exit 0, 1046 s, peak 0.319 GB; `s27/results/s28_B2_chain_rows_k10.jsonl`, 252 rows = 126 x 2). Production = S27 `chain_rows.jsonl :: DIS` 3.2126 (identical in-process, S28-L41); the J = 0 R3 twin on the chain is the Gaussian run's `vqe|s*|NONE|J0|R3` row of `s28_B_chain_rows.jsonl` (the J = 0 state is bit-identical between the runs, so the row is reused, not recomputed):**
+
+    arm                      chain    cloud   FAIL18  108    | vs production (chain)                              108 / FAIL18                  | F1 vs J = 0 R3 twin (chain)          | class coherent / incoherent vs production
+    vqe|s0|REAL|J3|R3        3.5188  3.3365  5.609  3.170  | +0.3062 +1.45x [+0.155,+0.430] 5/5 WORSE        +0.426 (+1.99x) / -0.411 (-0.79x) | +0.0276 +0.35x [+0.001,+0.054] 4/5   | +0.385 (+1.12x) / +0.258 (+0.95x)
+    vqe|s1|REAL|J3|R3        3.5251  3.3345  5.591  3.181  | +0.3125 +1.45x [+0.149,+0.427] 5/5 WORSE        +0.436 (+1.99x) / -0.428 (-0.84x) | -0.0039 -0.05x [-0.027,+0.017] 3/5   | +0.158 (+0.50x) / +0.366 (+1.32x)
+
+    B2 CHAIN vqe|s0|REAL|J3|R3 - production DIS top-75 (built chain, S27 chain_rows DIS)
+      a 3.5188 (med 3.4777)   b 3.2126 (med 2.9661)   n=126
+      effect +0.3062   median +0.1670   SE 0.0752   MDE 0.2106   effect/MDE +1.45
+      iid  CI95 [+0.1566, +0.4492]
+      fold CI95 [+0.1547, +0.4299]   folds same sign 5/5   per-fold 0:+0.509 1:+0.259 2:+0.027 3:+0.362 4:+0.362
+      45W/81L/0T   worst degradation +3.1998 (8TXS)   p90 +1.2658   power 0.98  Type-M 1.01
+      concentration: drop-top10 +0.4356 vs uniform-effect null p10/p50/p90 +0.3373/+0.4344/+0.5278 -> pctile 0.508
+      VERDICT: WORSE
+
+    B2 CHAIN vqe|s1|REAL|J3|R3 - production DIS top-75 (built chain, S27 chain_rows DIS)
+      a 3.5251 (med 3.4957)   b 3.2126 (med 2.9661)   n=126
+      effect +0.3125   median +0.1874   SE 0.0767   MDE 0.2148   effect/MDE +1.45
+      iid  CI95 [+0.1665, +0.4629]
+      fold CI95 [+0.1489, +0.4275]   folds same sign 5/5   per-fold 0:+0.471 1:+0.406 2:+0.002 3:+0.376 4:+0.319
+      47W/79L/0T   worst degradation +4.0776 (8TXS)   p90 +1.2223   power 0.98  Type-M 1.01
+      concentration: drop-top10 +0.4392 vs uniform-effect null p10/p50/p90 +0.3382/+0.4344/+0.5324 -> pctile 0.524
+      VERDICT: WORSE
+
+On the built chain the two cells are +0.3062 to +0.3125 A WORSE than production (1.45x to 1.45x MDE, fold CI above zero) and within 0.35x MDE of their J = 0 R3 twin (S28-L41: J = 0 R3 on the chain +0.2786 / +0.3164 vs production). The chain verdict is the point-cloud verdict.
+
+**What is new against S28-L41 (contract addendum 1 item 14(b)), and what it does not change.** The kNN graph is a different Hamiltonian in the one respect the S28-L11 mechanism named (lambda_2 / lambda_1 0.98 against 0.14) and its ground state is the opposite object (a PR-53 cluster around the argmin, Jaccard 0.58 with the DIS top-75, against the Gaussian's PR-305 typicality mode); the circuit's state departs further from J = 0 (TV 0.29 / 0.35 against 0.16), reaches the coherent basin on 49 / 33 cells against 43 / 32, and its incoherent basin collects some hopping without sign alignment, which the Gaussian graph's cannot. None of it reaches the endpoint: the deployed readout is the E-prefix tail at every cell (`gate_set_equality` passes on every row, the operator's property), R3 is the same 0.28 A-worse readout as at J = 0 on both classes, and the eigensolver's cluster emits production within MDE. The registered prior (WORSE or null) held; the three-way split reads as in S28-L41 (Hamiltonian quality: production; optimisation: basin selection, now on 39% / 26% of the cells; emitted structure: production or worse). Nothing quantum is claimed.
+
+Verdict: REFUTED as registered (F1 does not fire on R1 or R3, either seed; F3 silent; F2's prior held in sign, Type-M in size; the registered class split shows no measurable difference); the prior (WORSE or null) held: null for R1, WORSE for R3. B2 is CLOSED at the addendum-2 scope; nothing further is licensed (no other k or J; the k = 5 replication was dropped for disconnected graphs, S28-L29). `s27/s28_B_FINDINGS.md` carries it under a B2 heading.
+Artefacts: `s27/results/s28_B2_rows_k10.jsonl` (1,134), `s28_B2_summary.json`, `s28_B2_chain_rows_k10.jsonl` (252), `s28_B2_share.json` (S28-L29), `s28_B_prodcheck.json`, `s28_B_chain_rows.jsonl` (the J = 0 R3 twins); `s26/jobs_done/s28B2_run.json`, `s28B2_chain.json`; code `s27/s28_B2_knn.py` (`run_main`, `chain_main`), `s27/s28_B2_analyse.py`; tests `tests/test_s28_B2.py` (8 pass); `s27/PREREG_S28_B.md` addenda 1 to 3.

@@ -6,11 +6,12 @@ checkpointed), `s28_B_rank1.py` (mechanism), `s28_B_split.py` (three-way split),
 (T9 decomposition), `s28_B_analyse.py` (statistics), `s28_B_chain_part.py` (optional half-split
 chain runner, unused), `s28_B_represent.py` (the representability fit, S28-L26), `s28_B_prodcheck.py`
 (production re-projected in this lane's process), `s28_B2_knn.py`, `s28_B2_rank1.py` (B2). Tests
-`tests/test_s28_B.py` (16 pass), `tests/test_s28_B2.py` (6 pass); lane D's `tests/test_s28_D.py` adds the Perron reading.
+`tests/test_s28_B.py` (16 pass), `tests/test_s28_B2.py` (8 pass); lane D's `tests/test_s28_D.py` adds the Perron reading.
 Results `s27/results/s28_B_*.json|jsonl`, `s28_B2_*.json|jsonl`. Ledger: S28-L8b (F5), S28-L21
 (point cloud, intermediate), S28-L25 (B2 trainability), S28-L29 (B2 share and decomposition),
-S28-L41 (THE VERDICT on the built chain, with the representability fit); lane D's checks
-S28-L2, S28-L9, S28-L11, S28-L22, S28-L23, S28-L26, S28-L31, S28-L38. Tiers as in S12 to S25:
+S28-L41 (THE VERDICT on the built chain, with the representability fit), S28-L44 (answers
+S28-L43), S28-L46 (the B2 endpoint, closed); lane D's checks S28-L2, S28-L9, S28-L11, S28-L22,
+S28-L23, S28-L26, S28-L31, S28-L38, S28-L43. Tiers as in S12 to S25:
 DEMONSTRATED / ORACLE DIAGNOSTIC / HYPOTHESIS / REFUTED / OPEN. Every number carries its
 artefact path.
 
@@ -266,8 +267,40 @@ basin makes no measurable difference to the endpoint.
 - The 7-qubit production selector (top-128, VQE_LFO table) was not re-run: the S25 suite's
   9-qubit setting is the registered instrument and the tail-reading theorem's scope is
   identical.
-- The B2 endpoint (k = 10, J = 3 only, prereg addendum 2) is gated on lane D's check of
-  S28-L41; it is written up under a B2 heading below when it runs.
+- The B2 endpoint ran at the addendum-2 scope only (section 5); no other k or J, no RAND
+  graph, no chain beyond the two cells the 0.7x rule named.
 - The representability fit was run on the 12 trainability targets only (S28-L26's request);
   the bimodality count is on all 126 from the endpoint rows.
 - The k = 5 B2 replication is dropped on the endpoint (disconnected graphs on some targets).
+
+---
+
+## 5. B2 -- THE SPREAD-SPECTRUM (kNN) GRAPH'S ENDPOINT AT THE ADDENDUM-2 SCOPE (S28-L46). REFUTED as registered; the prior (WORSE or null) held; B2 CLOSED.
+
+`s28_B2_rows_k10.jsonl` (1,134 rows = 126 x 9; job `s28B2_run`), `s28_B2_chain_rows_k10.jsonl`
+(252 = 126 x 2; `s28B2_chain`), `s28_B2_summary.json`. Scope: k = 10 (connected on 126/126, no
+DEGENERATE ground state), J in {0, 3}, graphs REAL and PERM, seeds 0 and 1, VQE R1 / R3, GS R3;
+the J = 0 rows are bit-identical to the Gaussian run's on 126/126, both seeds. The coherence-class
+split was registered as prereg addendum 3 BEFORE the job (S28-L43's condition).
+
+- Deployed readout R1 at J = 3: within 0.0105 A of J = 0 (0.42x MDE at most) and within
+  0.0202 A of production (0.80x at most, the PERM cell; REAL 0.37x). Null.
+- R3 at J = 3: +0.28 to +0.29 A WORSE than production on the point cloud (1.32x to
+  1.42x, fold CI above zero), as at J = 0; on the built chain (the two REAL cells, projected
+  because they reached 0.7x MDE in the WORSE direction) +0.3062 / +0.3125 A (1.45x / 1.45x,
+  5/5) and within 0.35x MDE of their J = 0 R3 twin.
+- REAL vs PERM (F3): -0.0103 (-0.31x), +0.0115 (+0.19x), +0.0052 (+0.18x), +0.0067 (+0.11x): silent.
+- The kNN eigensolver is the predicted tight cluster (PR 53, m 14.5, Jaccard 0.577 with the
+  DIS top-75) and emits production within MDE (+0.0440, +0.54x); F2 (VQE R3 vs GS R3): the
+  eigensolver on the better side by 0.24 A, fold CI above zero, 0.99x / 0.95x (sign only).
+- Classes (addendum 3): the circuit lands in the sign-coherent basin on 49 / 33 of 126
+  cells (Gaussian 43 / 32), 1 / 3 mixed; the incoherent class is not the J = 0 state on
+  this graph (hopping 0.111 at coherence 0.001, F -4.80: share and coherence
+  separate on a spread spectrum). No class contrast of R1 leaves its MDE; R3 is the same WORSE
+  readout on both classes: landing in the coherent basin makes no measurable difference.
+- S28-L29's "collects 44 to 68% of its bound" is a mixture (S28-L43 / R4), stated here as counts.
+
+What is new against S28-L41 and what it does not change: a different H in the one respect the
+mechanism named (lambda_2 / lambda_1 0.98 vs 0.14), a ground state that is the opposite object
+(PR 53 cluster vs PR 305 typicality mode), a circuit that departs further from J = 0 (TV 0.29 /
+0.35 vs 0.16); none of it reaches the endpoint. Nothing further is licensed at this scope.
