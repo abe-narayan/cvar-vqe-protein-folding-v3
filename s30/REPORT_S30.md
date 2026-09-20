@@ -1123,9 +1123,9 @@ found them empty. But **the theorem does not depend on chain length — only the
 worth retesting where a chain can actually knot. *This project's instrument cannot ask the question:
 the benchmark is 9–16mers and all 204 clusters are spent.*
 
-**E2's restraint constant.** The AMBER relax at k = 30 is confirmed (−0.0406, 3.56× MDE,
-length-matched, 5/5 folds) and **still has no native-free rule that selects its restraint
-constant.** It was picked on dev-set RMSD. Until that rule exists it is not deployable, independent
+**E2's restraint constant.** The AMBER relax at k = 30 has a whole-sample gain of **−0.0221 Å** (0.69% of baseline). What lane G confirmed at **−0.0406, 3.56× MDE, 5/5 folds** is the **dispersion contrast** — high-minus-low divergence within chain-length
+tertiles — i.e. that the effect *concentrates*, not its size. **Both numbers describe the arm and they are different quantities; an earlier draft used the contrast as the gain.** It
+**still has no native-free rule that selects its restraint constant.** It was picked on dev-set RMSD. Until that rule exists it is not deployable, independent
 of its size.
 
 ### 11.3 Open defects, all located, none fixed here
@@ -1392,8 +1392,10 @@ results are worth anything.
 
 **A withdrawal is a claim too, and it can be wrong in the same ways.** Appendix A recorded lane L
 lowering "the AMBER-relax benefit concentrates on divergent pools" from 2:1 to roughly even. Lane G
-then measured it: **confirmed at −0.0406 Å, 3.56× MDE, 5/5 folds** on a length-matched split, with
-**97.2%** of the gain in the high-dispersion half and a permutation null at p = 0.000. Lane G had
+then measured it and **confirmed the concentration**: the high-minus-low dispersion contrast within
+chain-length tertiles is **−0.0406 Å, 3.56× MDE, 5/5 folds**, with **97.2%** of the gain in the
+high-dispersion half and a permutation null at p = 0.000. *(The arm's own whole-sample gain is
+−0.0221 Å — the contrast measures where the gain sits, not how big it is.)* Lane G had
 *also* registered 2:1 against, and lost.
 
 > **Two lanes agreeing did not make a prior.** Lane L moved on lane F's null, which was about a
