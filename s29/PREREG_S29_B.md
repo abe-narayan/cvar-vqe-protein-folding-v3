@@ -433,3 +433,97 @@ common-mode-removed operator's eigenvectors are sign-mixed (section 3.2) -- a *s
 statement about the encoding, which is the charter's finding 9 made precise and which points at
 lane X's configuration space rather than at another matrix. That is the closure this lane would
 post, and it is worth more than another Hamiltonian.
+
+---
+
+# ADDENDUM 1 (2026-09-20 00:09 Pacific, registered before any number of this lane)
+
+The coordinator has directed me to lane T's **S29-L11** (theory section 3, posted 00:06). I had
+not read it when sections 0 to 9 above were written and committed (`1c345f07`); the entry
+pre-dates my commit on the clock, so I claim independence of **reasoning**, not of clock, and I
+note the convergence rather than the priority: S29-L11(d)'s pole symmetry is section 3.2's
+sign-mixing lemma, and S29-L11(b)'s `r_stable <= 3 N_res - 6 <= 42` cap is section 3.3's bound.
+Three things change, all registered here before measuring.
+
+## A1. Measurement 1 becomes an independent-implementation check of a derived law
+S29-L11 supplies the law `Var[dF/dtheta_0] ~= r_stable(M)/D^2` with three no-parameter checks
+(S28's Gaussian to 7%, S28-B2's kNN 46x, lane D's J* = 85.7 as 88) and, from lane T's own job,
+the answer to my bright line: slopes **-2.305 (A_c)** and **-1.900 (G)** against A's **-1.830**,
+n = 9 variances 3.599e-6 / 5.051e-6 / 4.447e-6. **My B1 is therefore already answered NO**, as
+section 3.3 predicted it would be, and a build justified by "the spectrum is no longer degenerate"
+is dead. B1 stands exactly as registered and will be reported as REFUTED with the numbers; nothing
+about it is rewritten after the fact.
+
+What measurement 1 now is: an **independent implementation** of the same quantities in
+`s29/s29_B_compat.py` (my own A_c and G builders, my own hop-only gradient-variance estimator with
+a finite-difference cross-check of the parameter-shift rule), compared row for row against lane
+T's 216 rows, plus the law check. A derived law with three independent checks deserves a fourth
+from code that does not share lane T's.
+Adopted **verbatim** as additional registered falsifiers (S29-L11 predictions 1 and 2):
+- **T1**: on A_c and G the hop-only slope is -2.3 +- 0.3 and -1.9 +- 0.3, not flat, and both n = 9
+  variances are within 1.5x of the Gaussian's -- **falsified if either slope is above -1.3 or
+  either n = 9 variance exceeds 3e-5**.
+- **T2**: for any unit-spectral-norm observable, `Var[dF/dtheta_0] = r_stable/D^2` within 2x at
+  n >= 7, and `J* = D sqrt(0.0305/r_stable)` (for G at n = 9: Var 6.4e-6, J* 71) -- **falsified by
+  any observable at n >= 7 departing by over 3x**. My independent rows decide both.
+- My own prediction, registered: my A_c and G builders will reproduce lane T's `var_g0` to within
+  the draw noise of a shared seed law (they use the same 120 draws at seed 1009), and my A rows
+  will reproduce `s27/results/s28_B_train.json :: hop_only|J1` at n = 4..8 exactly, as lane T's
+  did. A disagreement is a bug in one of the two implementations and will be chased, not averaged.
+
+## A2. Measurement 2's primary readout is SIGNED, and the pole symmetry is the thing under test
+S29-L11(d) is right and section 3.2 says the same: every deployed readout is a function of
+p = psi^2, the ground state of a centered M is a signed contrast, so a p-readout cancels it to
+first order. Measurement 2 is therefore amended:
+- **PRIMARY readout: R4, the signed amplitude readout**, reusing S28 lane A's operator unchanged
+  (`s27/s28_A_amp.py :: Frame`, `readout`, `weight_diag`, `struct_diag`): affine weights
+  w = psi/sum(psi) over the real candidates, in the DIS-top-75 medoid frame, undefined and
+  recorded as such when |sum psi| < 1e-9. Lane A's arms were refuted for **accuracy under the
+  shipped objective** (S28-L27b), not as a readout, and this is the first Hamiltonian for which
+  the signed readout is the mechanism-matched one. Its emitted `rg` and `bond` are reported beside
+  every RMSD (an affine combination does not preserve scale).
+- **CO-PRIMARY: R3 (p-top-75)**, kept in order to test **S29-L11 prediction 3** directly: with a
+  p-readout, the J -> large ground state of diag(E) - J A_c emits the pool mean to within the
+  projection floor on **>= 80%** of targets. Registered falsifier for prediction 3: fewer than 80%
+  of targets within the floor at the largest |J| on the grid. (I take "the projection floor" to be
+  0.05 A of CA-RMSD between the emitted cloud and the top-75 uniform average, and I state that
+  choice here rather than after seeing the numbers.)
+- **The one-parameter collapse, tested directly.** S29-L11(d) predicts the family emits
+  `production +- eta PC1(pool)`. I will regress each cell's R4 emitted cloud on the two-term model
+  `c_prod + eta * PC1(pool)` (PC1 = the pool's first shape mode in the same frame, from the
+  deviation covariance whose Gram is G) and report the fitted eta, the R^2 of that fit, and the
+  residual norm. **Registered prediction: R^2 >= 0.9 on a majority of cells.** If it is low, the
+  family is richer than one parameter and that is the finding.
+
+## A3. The sign is the whole question, and it is measured as such
+Under the signed readout, everything rests on the sign of eta, which section 2 of lane T's theory
+says the marginals do not supply. Registered, before measuring:
+- Report the **ORACLE best-of-sign** RMSD (min over +-eta) beside the **realised** sign the state
+  itself produces. The gap between them is the price of the sign.
+- Test whether the state's own sign carries ORACLE skill at all: the sign of
+  `sum_i psi_i <Delta_i, PC1>` against the sign that reduces RMSD, as a binomial test against 0.5
+  over targets, with the tie rule of memory `tie-breaking-leaks-the-pool-order` (average the
+  outcome over a tied argmin set; never `np.argmin` on a tied signal).
+- **A cell that beats production only under the ORACLE-chosen sign is NOT a GO.** It is the
+  per-target sign problem restated (memory `in-band-ordering-is-per-target`), it is reported in
+  those words, and no endpoint run is spent on it. This is added to the gate of section 5.5 as
+  **condition 5**.
+
+## A4. The 126-target run waits for lane O's ceiling
+S29-L11 prediction 4 asks lane O for `min_eta mean ORACLE RMSD(c + eta PC1(pool))` at the best
+global eta chosen leave-fold-out; predicted **under 0.15 A** better than production. That number
+is the ORACLE ceiling of this entire lane's family under the signed readout. Registered reading
+rule, before it arrives:
+- **above 0.30 A**: lane T's prediction fails, the family is worth much more than the theory
+  thinks, and I say so loudly in the entry;
+- **under 0.15 A**: my measurement-2 gate is effectively pre-decided, and I say **that** in the
+  entry, in the same sentence as any cell that clears, before spending an endpoint run;
+- between: read on the measurement.
+**Nothing of this lane launches at 126 until that number is on the board.** The 12-target
+measurement 2 runs now, because it is minutes and because it decides whether 126 is worth asking.
+
+## A5. What has NOT changed
+The gate of section 5.5 (now with condition 5), the J grid, the control set (PERM, SPEC,
+eigensolver, untrained, product-state, matched budget, both seeds), the registered priors
+(measurement 1's B1 refuted; measurement 2's gate does not open), the ORACLE labelling, the
+multiplicity accounting, and section 9's closure statement.
