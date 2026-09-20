@@ -670,3 +670,106 @@ Multiplicity: 0 endpoint comparisons. The only new number is the derived 0.008 A
 as arithmetic on existing artefacts with its caveat.
 Artefacts: `s29/lit/L_2_correlated_error.md`; `s29/lit/L_INDEX.md`; inputs `s23/results/errdecomp.json`,
 `s27/results/chain_rows.jsonl` (the 3.0483 anchor).
+
+## S29-L9 -- THE DATA-PATH MAP, THE CONVENIENCE-CHOICE LIST, AND THE HARNESS AUDIT: NINE CHECKS, ALL PASS, ONE DECLARED NON-BIT-EXACTNESS THAT MOVES NOTHING; AND THE DISTOGRAM MEMORISES ITS TRAINING PEPTIDES BY 8x (2026-09-20 00:04, M)
+
+Question (charter section 1 items 5 to 7, and section 9's "evaluation-harness failure -- yes, check
+this too"): reconstruct the full data path and state where information is created, transformed,
+compressed and destroyed; list every choice made for convenience rather than for a stated scientific
+reason; and check the evaluation harness itself. Falsifier, pre-stated in the brief: "the harness is
+sound" may be written only if every check passes; anything that fails is reported as a failure.
+
+**Deliverable 1, `s29/DATAPATH.md`** -- 13 stages, every function cited by file and line, every
+object's shape and unit, the compression factor or entropy count at each step. Measured counts:
+183 features per pair (42 base + 141 ESM), 372,881 MLP parameters, per-fold training sets of
+6,609 to 6,640 chains of which **90.5% are the fold-SHARED fragment bank** (`fold_fragments` removes
+0 to 15 of 6,003 per fold, so leave-fold-out constrains 9.5% of the training data), universes of
+7,016 to 39,410 windows (median 17,088), log2 C(17088,500) = 3,252 bits of retrieval choice resolved
+by a key whose rank correlation with true RMSD over the universe is +0.066 (`s8/generate.py`
+RESULT 2), log2 C(500,75) = 300.6 bits of set choice, and 3n-6 = 21 to 42 cloud degrees of freedom
+collapsing to 2n-2 torsions. Two statements every lane should carry: (i) **the 3.2126 anchor never
+passes through the quantum stage** (`s27/run_vqe_chain.py:124-130` is the classical top-75;
+production `Config.quantum = False`, `core/pipeline.py:179`, and the production cache record carries
+`quantum: null`, `n_top: 75`); (ii) the only stage that CREATES three-dimensional coordinates is
+retrieval -- everything after it is a selection, an average or a projection of deposited geometry.
+Where the 68% common-mode error (S23 L9) enters: stage 3 (the predictor's coherent "typical peptide"
+error) and stage 5 (the pool's shared bias); stages 4/6/7 transmit it (S24 L5/L6); stage 10 cannot
+remove it, by S23 L9's exact identity. Where it could in principle be observed: only against a
+referent that does not share it -- never from a within-pool statistic.
+
+**Deliverable 2, `s29/CONVENIENCE_CHOICES.md`** -- 31 entries, each with file, line, the
+alternatives, the ledger line that tested it, or, where nothing tested it, a cheap decisive test.
+**17 of 31 are UNTESTED.** The five with the largest reach: C1, the 17 bins and their edges (the
+record tested only the CONSUMPTION of those bins -- S25 L6/L12's DEQUANT family is worth 0.003 A
+with full leakage -- never the binning itself; the two outer centres, 4.0 and 25.0, are invented by
+`CENTRES[0] = edge - 0.5` and `CENTRES[-1] = edge + 2.0`); C2, the soft-bin sigma 0.6 and the
+`separation_weights` function that exists and is never called on the deployed path; C6's open half
+(every alternative retrieval key ever tested was another native-free QUALITY score, and S17 L12
+names the untested class -- a coverage-preserving shortlist -- in its own conclusion); C13, the
+top-128 truncation, whose ORACLE ceiling is NOT in the record and is one line to compute; C24, the
+medoid frame, the one readout choice with no measurement anywhere and the frame in which S23 L9's
+common-mode decomposition is defined. Tested, and therefore not redesign targets: the uniform
+readout (S23 L5/L8, S28-L21 -- the p-weighted readouts are +0.24 to +0.33 A WORSE at n = 126),
+m = 75 (leave-fold-out, S22 L4/L7), zrank (S25 L17), the ansatz depth and chi (S21 L16), alpha =
+0.18 (pinned by a native-free tail-size probe), the L1 functional form (S25 L12), ramah@0.3
+(declared post hoc, +0.004 A), the four multi-start conformations (S9-2). **T = 0.5 has no recorded
+criterion anywhere in `s25/PREREG_PHYS.md` or the S25 ledger** -- the one harness number with no
+stated derivation.
+
+**Deliverable 3, the audit** (`s29/s29_M_harness.py`; job `m_harness_audit3`, exit 0, wall 65.2 s,
+peak RSS 0.549 GB, `s26/logs/m_harness_audit3.log`; artefact `s29/results/s29_M_harness_audit.json`,
+source sha256 4f10460fce236435):
+
+    [1] ca_rmsd vs an independent 5-line Kabsch written from the definition, 10 targets x 6 pairs
+        plus a rigid-motion invariance check: worst |diff| 3.675e-14; a mirrored copy scores
+        differently, so reflections are forbidden in both                                    PASS
+    [2] native: universe nat_ca vs peptide_db 0.000e+00 A on all 126; vs a FRESH parse of the
+        deposited PDB 0.000e+00 A on 10/10                                                   PASS
+    [3] benchmark leak: a static grep over the whole import closure hits only core/data.py's two
+        path CONSTANTS and one docstring; an in-process POISON (builtins.open, os.path.exists and
+        np.load all raise on the sealed artefacts) live through 6 full target rebuilds and 126
+        cold distograms: 0 forbidden reads                                                   PASS
+    [4] ST.pinned_folds == the universes == peptide_folds.json on all 126; 10 targets served by
+        fold_model(own fold) with their own sequence absent from that fold's training set     PASS
+    [5] anchor: chain_rows DIS chain 3.2126 / cloud 3.0483 at n = 126; a FRESH re-projection on 6
+        targets reproduces both at worst 0.000e+00 A                                          PASS
+    [6] MDE: the literal MDE_K = 2.8016 (`s24/stats_lib.py:56`); the fold CI resamples FOLDS with
+        replacement (lines 119-127), 4,000 draws, beside a separate iid bootstrap; reproduced
+        SE 0.026133 and MDE 0.073215 = 2.8016 x SE exactly                                    PASS
+    [7] 126 targets, 126 distinct pdb ids, 126 distinct sequences, lengths 9..16, 126 universe
+        files, pdb-sorted (histogram 9:9 10:11 11:13 12:19 13:23 14:14 15:16 16:21)           PASS
+    [8] cold distogram on ALL 126 with the poison live: in-process determinism exactly 0.0e+00,
+        but the s12 cache is NOT bit-identical to a fresh recomputation -- max|prob| 1.97e-06,
+        max|risk| 1.34e-04 (relative 5.63e-06), max|score| 1.91e-06 against a score sd of ~1.25.
+        Consequence MEASURED rather than assumed: the 500-candidate score ORDER differs on 2/126,
+        the top-75 SET on 0/126, and the emitted point-cloud RMSD by 0.00e+00 A on 126/126    PASS
+    [9] EMPIRICAL leave-fold-out (ORACLE DIAGNOSTIC; reads the native distances, tunes nothing):
+        mean NLL of the DEPLOYED own-fold model 3.28777 against 1.21275 for the four models that
+        SAW that fold; delta +2.07502, SE 0.15166 = 4.88x MDE, correct sign on all five folds
+        (per-fold deployed NLL 3.064 / 3.125 / 3.621 / 3.472 / 3.181)                         PASS
+
+**Verdict: the harness is sound.** The check-8 non-bit-exactness is declared here rather than
+buried: an S29 arm whose operator reads the score's ORDER below the top-75 cut -- a full-pool rank
+correlation, a reranker's tail, an order-statistic null -- should recompute the posterior instead of
+reading the s12 cache, or accept a 2-in-126 chance that its order differs from another lane's. No
+result in the record is affected (the SET and the emitted RMSD are identical on 126/126).
+
+**Two corrections to the brief.** `s25/qcand_lib.py` does not exist -- the `Encoding` class is
+`s22/qcand_lib.py:120` (an older one is at `s14/vqe_encoding.py:50`). And `catrace_prior.npz` is not
+a native store: it holds one key, `nlp`, a (24, 36) pseudo-angle log-density table
+(`core/geometry.py:884`); the pinned native is the universe's `nat_ca`.
+
+**The finding that falls out of check 9, and it is for the other lanes.** The models that trained on
+a peptide assign its true distance bins **e^2.075 = 8.0x** more probability than the held-out model
+that actually ships. The distogram memorises its training peptides heavily (372,881 parameters
+against 787 peptides plus 6,003 fragments, dropout deliberately 0, `core/predict.py:335`, where the
+docstring records that regularisation improves the distance matrix and WORSENS the ranking). Two
+consequences: (i) any in-sample diagnostic computed on the corpus -- calibration, sharpness, MAE, a
+fitted residual correction -- describes memorisation and must be recomputed out-of-fold before it
+means anything about the deployed model; (ii) the sequence channel the record prices is the
+3.288-nat held-out model, not the 1.213-nat in-sample one.
+
+Comparisons (multiplicity): **0 endpoint comparisons.** This entry contains no deployable contrast;
+check 9 is an ORACLE diagnostic of the instrument, not of an arm.
+Artefacts: `s29/DATAPATH.md`, `s29/CONVENIENCE_CHOICES.md`, `s29/s29_M_harness_audit.md`,
+`s29/s29_M_harness.py`, `s29/results/s29_M_harness_audit.json`, `s26/logs/m_harness_audit3.log`.
