@@ -31,6 +31,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 import sys
 import time
@@ -451,6 +452,227 @@ def cmd_probe():
     return summ
 
 
+# ============================================================ analysis
+def _rand_subset_null(d, k, n_boot=2000, seed_parts=("s29P", "rand18")):
+    """The random-k null a stratum claim needs: the percentile of the observed k-subset mean
+    among 2000 random k-subsets of the same paired differences."""
+    rng = ST._rng(*seed_parts)
+    d = np.asarray(d, float)
+    n = len(d)
+    draws = np.array([d[rng.choice(n, k, replace=False)].mean() for _ in range(n_boot)])
+    return draws
+
+
+def _max_over_k_null(D, n_boot=4000, seed_parts=("s29P", "maxK")):
+    """The max-over-K null for the lane's K deployable contrasts, preserving the cross-arm
+    correlation: sign-flip the per-target paired differences JOINTLY across arms (a valid
+    randomisation under the global null of no effect) and take the max |effect|/MDE."""
+    D = np.asarray(D, float)            # (n_targets, K) paired differences arm - PROD
+    rng = ST._rng(*seed_parts)
+    n, K = D.shape
+    out = np.empty(n_boot)
+    for t in range(n_boot):
+        s = rng.choice([-1.0, 1.0], n)[:, None]
+        X = D * s
+        eff = X.mean(0)
+        mde = ST.MDE_K * X.std(0, ddof=1) / math.sqrt(n)
+        out[t] = np.max(np.abs(eff) / mde)
+    return out
+
+
+def cmd_analyse(rows_paths=None, out=None):
+    import math as _m
+    fac = json.load(open(FACTORS, encoding="utf-8"))
+    ref = s27_dis_rows()
+    order = fac["order"]
+    if rows_paths is None:
+        rows_paths = sorted(
+            [os.path.join(RESULTS, f) for f in os.listdir(RESULTS)
+             if f.startswith("s29_P_rows_shard") and f.endswith(".jsonl")])
+    rows = []
+    for p in rows_paths:
+        rows.extend(load_rows(p))
+    cell = {}
+    for r in rows:
+        cell[(r["pdb"], r["arm"])] = r        # a later row of the same key supersedes (resume)
+    arm_names = sorted({a for (_, a) in cell})
+    have = [p for p in order if all((p, a) in cell for a in arm_names)]
+    L = []
+
+    def say(s=""):
+        L.append(s)
+        print(s, flush=True)
+
+    say("LANE P -- THE PROJECTION PRICE. BASIS: BUILT CHAIN (`s12.instrument.project`).")
+    say("  rows %d over %d files; %d arms; complete targets %d / %d"
+        % (len(rows), len(rows_paths), len(arm_names), len(have), len(order)))
+    if len(have) < len(order):
+        say("  INCOMPLETE -- missing %s"
+            % [p for p in order if p not in have][:8])
+    pdbs = have
+    folds = np.array([cell[(p, "PROD")]["fold"] for p in pdbs])
+    ns = np.array([cell[(p, "PROD")]["n"] for p in pdbs])
+
+    def col(arm, key="rmsd_chain"):
+        return np.array([cell[(p, arm)][key] for p in pdbs])
+
+    # ---- the gate, re-asserted on the full run
+    prod = col("PROD")
+    dref = np.abs(prod - np.array([float(ref[p]["rmsd_chain"]) for p in pdbs]))
+    say("  GATE (PROD vs `chain_rows.jsonl :: DIS`): max |diff| %.3e, identical on %d/%d"
+        % (dref.max(), int((dref == 0).sum()), len(pdbs)))
+    say("")
+
+    rand_cols = [f"CTRL-RAND{d}" for d in range(N_RAND)]
+    grid_cols = ["PROD" if s == 1.0 else f"ORACLE-GRID{s:.2f}" for s in ORACLE_GRID]
+    M_grid = np.column_stack([col(a) for a in grid_cols])
+    oracle_scale = M_grid.min(1)                                   # ORACLE
+    oracle_argmin = np.array([ORACLE_GRID[k] for k in M_grid.argmin(1)])
+    M_rand = np.column_stack([col(a) for a in rand_cols])
+    rand_mean = M_rand.mean(1)
+    rand_best = M_rand.min(1)                                      # order statistic
+
+    # ---- means table
+    say("MEAN BUILT-CHAIN RMSD AND THE PROJECTION PRICE PER ARM")
+    say("  %-16s %8s %8s %8s %9s %8s %8s %8s %8s"
+        % ("arm", "chain", "cloud_in", "price", "s_mean", "bond_in", "rg_in", "bond_out", "rg_out"))
+    named = [("PROD", prod), ("BOND", col("BOND")), ("SPAN", col("SPAN")), ("ISO", col("ISO")),
+             ("CTRL-GLOBAL", col("CTRL-GLOBAL")), ("CTRL-INV", col("CTRL-INV")),
+             ("CTRL-LAM", col("CTRL-LAM")), ("BOND-LAMFIX", col("BOND-LAMFIX")),
+             ("CTRL-RAND(mean8)", rand_mean), ("CTRL-RAND(best8 ORDER STAT)", rand_best),
+             ("ORACLE-SCALE", oracle_scale)]
+    for nm, v in named:
+        src = nm if (nm, ) and nm in arm_names else None
+        if src:
+            say("  %-16s %8.4f %8.4f %+8.4f %9.4f %8.3f %8.3f %8.3f %8.3f"
+                % (nm, v.mean(), col(src, "rmsd_cloud_in").mean(),
+                   v.mean() - col(src, "rmsd_cloud_in").mean(), col(src, "s").mean(),
+                   col(src, "bond_in").mean(), col(src, "rg_in").mean(),
+                   col(src, "bond_out").mean(), col(src, "rg_out").mean()))
+        else:
+            say("  %-16s %8.4f  (derived over columns)" % (nm, v.mean()))
+    if "FLOOR" in arm_names:
+        fl = np.abs(col("FLOOR") - prod)
+        say("")
+        say("BRANCH-FLIP FLOOR ON THIS CODE PATH (arm FLOOR: C * (1 + 1e-13), same projection)")
+        say("  mean |diff| %.4f   max %.4f (%s)   > 0.02 A on %d/%d   > 0.1 A on %d   "
+            "mean signed %+.4f"
+            % (fl.mean(), fl.max(), pdbs[int(np.argmax(fl))], int((fl > 0.02).sum()), len(fl),
+               int((fl > 0.1).sum()), (col("FLOOR") - prod).mean()))
+    say("")
+
+    # ---- the contrasts
+    C = {}
+    say("EVERY ARM AGAINST PRODUCTION (BUILT CHAIN, one code path, one input, n=%d)" % len(pdbs))
+    for nm, v in named:
+        if nm == "PROD":
+            continue
+        o = ST.compare(v, prod, folds=folds, names=pdbs,
+                       label="P %s - PROD (BUILT CHAIN)%s" % (nm, "  [ORACLE]" if "ORACLE" in nm else ""))
+        C[nm] = o
+        say(ST.fmt(o)); say("")
+    for nm in ("BOND", "SPAN", "ISO", "CTRL-GLOBAL"):
+        o = ST.compare(col(nm), rand_mean, folds=folds, names=pdbs,
+                       label="P %s - CTRL-RAND mean-of-8 (matched-magnitude derangement of g)" % nm)
+        C[nm + "|RAND"] = o
+        say(ST.fmt(o)); say("")
+    o = ST.compare(col("BOND-LAMFIX"), col("BOND"), folds=folds, names=pdbs,
+                   label="P BOND-LAMFIX - BOND (the effective-lambda leg of the 2x2)")
+    C["LAMFIX|BOND"] = o
+    say(ST.fmt(o)); say("")
+
+    # ---- multiplicity
+    dep = ("BOND", "SPAN", "ISO", "CTRL-GLOBAL")
+    D = np.column_stack([col(a) - prod for a in dep])
+    obs = np.max(np.abs(D.mean(0)) / (ST.MDE_K * D.std(0, ddof=1) / _m.sqrt(len(pdbs))))
+    null = _max_over_k_null(D)
+    say("MULTIPLICITY: max |effect|/MDE over the %d deployable contrasts %s" % (len(dep), list(dep)))
+    say("  observed %.2f   sign-flip max-over-K null p50 %.2f p90 %.2f p95 %.2f   p_value %.3f"
+        % (obs, np.percentile(null, 50), np.percentile(null, 90), np.percentile(null, 95),
+           float((null >= obs).mean())))
+    say("")
+
+    # ---- strata
+    F18 = set(I.FAIL18)
+    mask = np.array([p in F18 for p in pdbs])
+    say("STRATA: FAIL18 (%d here) vs the other %d, with the RANDOM-18 NULL for every claim"
+        % (int(mask.sum()), int((~mask).sum())))
+    for nm in ("BOND", "SPAN", "ISO", "ORACLE-SCALE"):
+        v = dict(named)[nm] if nm == "ORACLE-SCALE" else col(nm)
+        d = v - prod
+        for lab, mm in (("FAIL18", mask), ("other108", ~mask)):
+            o = ST.compare(v[mm], prod[mm], folds=folds[mm], names=[p for p, q in zip(pdbs, mm) if q],
+                           label="P %s - PROD, %s%s" % (nm, lab, "  [ORACLE]" if "ORACLE" in nm else ""))
+            C["%s|%s" % (nm, lab)] = o
+            say("  %s %s effect %+.4f  SE %.4f  MDE %.4f  %+.2fx  fold CI [%+.4f, %+.4f]  "
+                "folds %d/%d  %dW/%dL  %s"
+                % (nm, lab, o["effect"], o["se"], o["mde"], o["effect_over_mde"],
+                   o["ci95_fold"][0], o["ci95_fold"][1], o["folds_same_sign"], o["n_folds"],
+                   o["n_better"], o["n_worse"], o["verdict"]))
+        draws = _rand_subset_null(d, int(mask.sum()))
+        pc = float((draws <= d[mask].mean()).mean())
+        say("    random-18 null for %s: observed FAIL18 effect %+.4f sits at percentile %.3f "
+            "of 2000 random 18-subsets (null p10/p50/p90 %+.4f/%+.4f/%+.4f)"
+            % (nm, d[mask].mean(), pc, np.percentile(draws, 10), np.percentile(draws, 50),
+               np.percentile(draws, 90)))
+    say("")
+
+    # ---- the ORACLE s-curve and its order-statistic price
+    say("THE s-CURVE [ORACLE grid; every number here reads the native and is a CEILING, not a result]")
+    say("  %-8s %8s %8s" % ("s", "mean", "median"))
+    for s, a in zip(ORACLE_GRID, grid_cols):
+        v = col(a)
+        say("  %-8.2f %8.4f %8.4f" % (s, v.mean(), np.median(v)))
+    bok = ST.best_of_k_within(M_grid)
+    say("  ORACLE-SCALE (per-target argmin over the %d-point grid) mean %.4f; priced: observed "
+        "%+.4f, valid null %+.4f (%.0f%%), k_eff %.2f, split-half %+.4f -> %s"
+        % (len(ORACLE_GRID), oracle_scale.mean(), bok["observed_gain"], bok["null_across_targets"],
+           100 * bok["share_accounted"], bok["k_eff"], bok["split_half"], bok["verdict"]))
+    cnt = {s: int((oracle_argmin == s).sum()) for s in ORACLE_GRID}
+    say("  argmin histogram %s" % cnt)
+    bokr = ST.best_of_k_within(M_rand)
+    say("  CTRL-RAND best-of-8 priced: observed %+.4f, valid null %+.4f (%.0f%%), split-half "
+        "%+.4f -> %s" % (bokr["observed_gain"], bokr["null_across_targets"],
+                         100 * bokr["share_accounted"], bokr["split_half"], bokr["verdict"]))
+    say("")
+
+    # ---- g diagnostics
+    from scipy.stats import spearmanr
+    g = np.array([fac["per_target"][p]["g"] for p in pdbs])
+    sp = np.array([fac["per_target"][p]["s_span"] for p in pdbs])
+    iso = np.array([fac["per_target"][p]["s_iso"] for p in pdbs])
+    cloud = col("PROD", "rmsd_cloud_in")
+    say("REALISED FACTORS (native-free) AND WHAT THEY TRACK")
+    say("  g      mean %.4f sd %.4f  min %.4f max %.4f" % (g.mean(), g.std(ddof=1), g.min(), g.max()))
+    say("  s_span mean %.4f sd %.4f ; s_iso mean %.4f sd %.4f"
+        % (sp.mean(), sp.std(ddof=1), iso.mean(), iso.std(ddof=1)))
+    for nm, x in (("n", ns), ("prod cloud RMSD", cloud), ("prod chain RMSD", prod),
+                  ("ORACLE s* [ORACLE]", oracle_argmin)):
+        say("  spearman  g vs %-20s %+.3f   s_span %+.3f   s_iso %+.3f"
+            % (nm, spearmanr(g, x).statistic, spearmanr(sp, x).statistic, spearmanr(iso, x).statistic))
+    say("")
+
+    summ = dict(kind="lane P: the projection price, 126 targets, built chain",
+                n=len(pdbs), pdbs=pdbs, arms=arm_names,
+                gate_max_diff=float(dref.max()), gate_identical=int((dref == 0).sum()),
+                means={nm: float(v.mean()) for nm, v in named},
+                price={nm: float(v.mean() - col(nm, "rmsd_cloud_in").mean())
+                       for nm, v in named if nm in arm_names},
+                oracle_argmin_hist={str(k): v for k, v in cnt.items()},
+                oracle_grid_bok=bok, ctrl_rand_bok=bokr,
+                maxk_observed=float(obs), maxk_null_p95=float(np.percentile(null, 95)),
+                maxk_p=float((null >= obs).mean()),
+                contrasts={k: v for k, v in C.items()},
+                floor=(dict(mean=float(np.abs(col("FLOOR") - prod).mean()),
+                            max=float(np.abs(col("FLOOR") - prod).max()),
+                            n_above_0p02=int((np.abs(col("FLOOR") - prod) > 0.02).sum()))
+                       if "FLOOR" in arm_names else None),
+                text="\n".join(L))
+    ST.save_atomic(out or os.path.join(RESULTS, "s29_P_summary.json"), summ, module_file=__file__)
+    print("wrote", out or os.path.join(RESULTS, "s29_P_summary.json"))
+    return summ
+
+
 # ============================================================ selftest
 def selftest():
     rng = np.random.default_rng(0)
@@ -478,6 +700,8 @@ def main(argv=None):
     r.add_argument("--shard", type=int, default=0)
     r.add_argument("--nshards", type=int, default=1)
     r.add_argument("--limit", type=int, default=None)
+    an = sub.add_parser("analyse")
+    an.add_argument("--out", default=None)
     sub.add_parser("selftest")
     a = ap.parse_args(argv)
     if a.cmd == "factors":
@@ -487,6 +711,8 @@ def main(argv=None):
         sys.exit(0 if s["gate_pass"] else 3)
     elif a.cmd == "run":
         cmd_run(a.shard, a.nshards, limit=a.limit)
+    elif a.cmd == "analyse":
+        cmd_analyse(out=a.out)
     elif a.cmd == "selftest":
         selftest()
 
