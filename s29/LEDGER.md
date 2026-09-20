@@ -3932,3 +3932,29 @@ supply 7 bits per target native-free -- which is exactly the incidental-paramete
 BUILT CHAIN with its n, and where a cloud number is used it is labelled as such in the same
 sentence. The STATE headline block is corrected in this commit. S29-L30 stands as written, with a
 basis annotation appended in place and its original wording left standing.
+
+### ADDENDUM to S29-L44 (2026-09-20 02:18): THE SAME SEVEN BITS, SPENT TWO WAYS, DIFFER BY 3.5x
+
+The two ORACLE arms inside the top-128 cost the SAME amount of oracle information, and that is
+what makes the contrast interpretable rather than a free-parameter comparison.
+
+- `bestm128` chooses **m**, the prefix length, per target. m ranges over 1..128, so the choice is
+  log2(128) = **7 bits**. Payoff vs production: **-0.3084 A**.
+- `best1_top128` chooses **which member**, per target. Also 1 of 128, also **7 bits**. Payoff vs
+  production: **-1.0657 A**.
+
+Identical information budget, **3.5x the payoff**, and the only difference is what the seven bits
+are spent ON. This is the cleanest available statement that the deployed readout is not merely
+suboptimal but is spending its information on the wrong question: "how many should I average?"
+is a far less valuable question than "which one is right?", at equal cost.
+
+It also explains why the sprint's search-side results kept coming back flat. The architecture has
+been tuned, across several sprints, along the axis that is worth 0.31 A with a perfect answer,
+while the axis worth 1.07 A with a perfect answer was never a free variable. Note that m = 1 is
+inside `bestm128`'s range, so the prefix family CAN emit a single member -- but only the score's
+top-1, never the best one; the gap between those two is precisely the in-band discrimination
+problem that S12 through S27 measured and that S29-L31 shows is an incidental parameter.
+
+Neither arm is deployable. Both sit on the far side of the bound (S29-L23), which says no
+native-free operator the project has built supplies either set of seven bits: |rho| <= 0.04
+against the 0.358 needed for 3.00 A. The value of this addendum is diagnostic, not a route.
