@@ -396,3 +396,82 @@ I will extend it.
 
 Artefacts: `s30/s30_D_meter.py`, `s30/results/s30_D_meter_*.json`; anchors asserted by
 `s30/s30_D_meter.py verify`.
+
+## S30-L4 -- S29'S "THE DEPLOYED SCORE IS AT CHANCE" **SURVIVES AND IS STRENGTHENED**; ITS SUPPORTING PARAGRAPH DOES NOT. "BELOW THE RANDOM BASELINE ON 82 OF 126" IS WHAT A RANDOM RANKING ITSELF DOES (NULL EXPECTS **78.8**, z = +0.60), AND THE MEDIAN GAP OF −0.575 BITS IS −0.416 UNDER THE NULL. **7 − log₂ r IS RIGHT-SKEWED: ITS MEDIAN SITS 0.416 BITS BELOW ITS OWN MEAN, SO ANY MEDIAN OR WIN-COUNT READ AGAINST THE ANALYTIC MEAN READS "WORSE THAN CHANCE" BY CONSTRUCTION** (2026-09-20 12:48, D)
+
+**Verdict: the headline is right, the "and the mean flatters it" paragraph must be withdrawn.
+Five statistics, all at chance. The shipped score's ranking is indistinguishable from uniform --
+not worse than it.**
+
+### What the report says
+
+`s29/REPORT_S29.md` §0 item 3 and §11:
+
+> The deployed score delivers **1.442 of 7 bits**. A uniform random ranking delivers **1.405**
+> (the exact null, 7 − (1/128)·Σ log₂ r). The difference is +0.0366 at **0.10× MDE**...
+> **And the mean flatters it.** The *median* paired difference is **−0.575 bits** — the deployed
+> score is **below the random baseline on 82 of 126 targets**, and the median rank of the
+> ORACLE-best member of its own top-128 is **72 of 128 against a chance median of 64.5**...
+> **the median is the honest summary: the shipped score is at chance ... and on the typical
+> target slightly worse than chance.**
+
+I reproduced every number in that quote from `s29/results/s29_M_F2_supply_rows.jsonl` (mean
+1.4415, median 0.8301, median paired difference −0.5749, 82 of 126, median rank 72.0, and
+`ST.compare` returns +0.0366, SE 0.1372, 0.10× MDE, fold CI [−0.225, +0.311], 2/5 folds, to the
+digit). So this is a critique of the *inference*, on the same data, not of the arithmetic.
+
+### The defect: three statistics, each compared to the wrong null
+
+1.405 is the null's **MEAN**. It is not the null's median, and it is not the null's win rate.
+7 − log₂ r for r uniform on {1..128} is **right-skewed**: its mean is 1.4050 and its **median is
+0.9888**. So under the null itself:
+
+- a random ranking scores **below 1.405 on 62.5% of targets** — 78.8 of 126, not 63;
+- a random ranking's **median** "paired difference against 1.405" is **−0.4162 bits**, not 0.
+
+Against a simulated uniform-ranking null (20,000 draws of 126 ranks, two-sided):
+
+| statistic | observed | null p2.5 / p50 / p97.5 | two-sided p |
+|---|---|---|---|
+| mean bits | 1.4415 | 1.180 / 1.402 / 1.650 | **0.75** |
+| median bits | 0.8301 | 0.762 / 0.989 / 1.259 | **0.16** |
+| targets below 1.405 | 82 | 68 / 79 / 89 | **0.61** |
+| median rank | 72.0 | 53.5 / 64.5 / 75.5 | **0.19** |
+| mean rank | 66.18 | 58.1 / 64.5 / 70.9 | **0.60** |
+
+and two omnibus tests of the whole rank distribution: **KS D = 0.0685, p = 0.571**;
+chi-square on 8 equal rank bins **8.35, p = 0.303**.
+
+Not one of the three "worse than chance" statistics is significant. 82 of 126 is +0.60 binomial
+sd from what a random ranking does to itself. The median rank of 72 against "a chance median of
+64.5" compares a sample median to a population median without its sampling distribution: the
+median of 126 uniform draws has a 95% interval of [53.5, 75.5], and 72 is inside it.
+
+### What is true instead, and it is a cleaner claim
+
+> The deployed score's ranking of production's own top-128 is **statistically indistinguishable
+> from a uniform random ranking on every statistic tested** — mean, median, win-count, mean rank,
+> median rank, and the full distribution by KS and chi-square. It is at chance. It is **not**
+> below chance, and "on the typical target slightly worse than chance" is withdrawn.
+
+This does not weaken §0. It removes an overstatement that a rival group would have found, and it
+makes the surviving claim stronger: "at chance" now rests on an omnibus test of the rank
+distribution, not on a mean whose CI happens to straddle zero.
+
+### Why this happened, and the standing rule it earns
+
+Three project-memory rules fire at once here:
+
+- `control-must-match-the-operators-space` -- the median and the win-count were read against a
+  control computed in the *mean's* space. The project's most repeated error, now instance 4.
+- `median-vs-mean-is-the-free-warning` -- the rule says print the median **and the null
+  percentiles as one verdict**. The median was printed; the null's own median was not computed.
+- `unstated-operators-align-with-your-hypothesis` -- all three mis-comparisons pointed the same
+  way, toward "recognition is closed," which is the conclusion the section was arguing for.
+
+**Standing rule for S30, for any lane using bits as a currency:** 7 − log₂ r is a log transform,
+so the mean, the median and the win-count have three *different* null values (1.4050, 0.9888,
+62.5%). Never compare one of them to another's baseline. Simulate the null for the exact
+statistic you are quoting; the cost is four lines and 20,000 draws.
+
+Reproduction: `s29/results/s29_M_F2_supply_rows.jsonl`, arm `PROD`, seed 30.
