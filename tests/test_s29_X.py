@@ -226,3 +226,28 @@ def test_shape_and_participation_ratio(space):
     assert 0.0 <= ro["r3_mass"] <= 1.0 + 1e-9
     W = X.random_weight_control(space, ro["tail_idx"], ro["pr"], "prtest", n_draws=2)
     assert len(W) == 2 and all(np.isfinite(C).all() for C in W)
+
+
+def test_cvar_optimal_law_is_optimal_and_is_boltzmann_at_alpha_one(space):
+    """Lane T's M6 (S29-L15 Q1): the exact minimiser of CVaR_alpha - T*S over the simplex,
+    and its alpha = 1 limit is the Boltzmann law (T's own assertion, reproduced here)."""
+    p, t = X.cvar_optimal_law(space.E, X.ALPHA, X.TEMP)
+    assert abs(float(p.sum()) - 1.0) < 1e-12 and (p >= 0).all()
+
+    def F(q):
+        v, _, _ = Q.cvar_exact(space.E, q, X.ALPHA)
+        qq = q[q > 0]
+        return v - X.TEMP * float(-(qq * np.log(qq)).sum())
+    f0 = F(p)
+    rng = np.random.default_rng(0)
+    for _ in range(40):
+        assert F(rng.dirichlet(np.full(space.M, 0.5))) >= f0 - 1e-9
+    p1, _ = X.cvar_optimal_law(space.E, 1.0, 1.0)
+    assert X.total_variation(p1, X.gibbs(space.E, 1.0)) < 1e-12
+
+
+def test_total_variation_bounds(space):
+    p = X.gibbs(space.E, 1.0)
+    q = X.gibbs(space.E, 5.0)
+    assert 0.0 <= X.total_variation(p, q) <= 1.0
+    assert X.total_variation(p, p) == 0.0
