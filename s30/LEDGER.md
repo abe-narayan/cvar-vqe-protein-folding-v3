@@ -1710,6 +1710,9 @@ agreed on a prior of this kind at 3 to 1 we were both wrong at n = 126.
 
 ## S30-L17 -- THE SCORE HAS **NO IN-POOL RANKING SKILL ON THE TAIL**: ρ = **+0.1066** (FOLD CI INCLUDING ZERO) AGAINST **+0.6446** ON THE 108, RANDOM-18 NULL **p = 0**. IT IS ALMOST ENTIRELY THE DISTOGRAM'S OWN ERROR (ρ = **−0.799**), THE CHAIN IS FULLY MEDIATED, AND THE ERROR THAT MATTERS IS **SHAPE, NOT SCALE** -- LANE L'S SCALE-SEPARABLE TERM IS **REFUTED AS THE MECHANISM** (PARTIAL −0.067, p = 0.46, AGAINST SHAPE'S −0.641). "CONFIDENTLY WRONG" ALSO REFUTED: ERROR×CONFIDENCE IS **WORSE** THAN ERROR ALONE (2026-09-20 13:03, F)
 
+> **Cross-reference repair, 2026-09-20 13:07, F.** This entry was written as S30-L4 and cited its sibling as "S30-L3"; the coordinator's collision fix renumbered that sibling to **S30-L16** (and this entry to L17) without rewriting the bodies, so four in-text references here pointed at lane D's S30-L3 instead. They now read S30-L16. Only the number changed; no claim, figure or wording was altered, and no other lane's entry was touched.
+
+
 Pre-registration `s30/PREREG_S30_F3.md`, committed **eb719398 at 12:58:34**, before this file's
 code existed. Code `s30/s30_F_score.py`; output `s30/results/s30_F_score.json`.
 
@@ -1718,7 +1721,7 @@ builds **no router and no detector**, by design — the question is *what the sc
 not whether we can spot it. The seven closed router feature families are enumerated in the prereg
 and every one of them is measured here and reported whether flattering or not.
 
-Reproduction gate as S30-L3: the score order is recomputed from the posterior and its top-75
+Reproduction gate as S30-L16: the score order is recomputed from the posterior and its top-75
 equals production's `sub` set-wise on 126/126. Same declared caveat about deep order below the cut
 (`s29/LEDGER.md:751`).
 
@@ -1742,7 +1745,7 @@ body it orders it at +0.64. This is the mechanism behind S30-L2's filter inversi
 level of the score itself rather than of the stage.
 
 **It replicates, in degree, on both filter-independent tails** (+0.3798 and +0.3438, both well
-below the 108's +0.6446). That is the opposite of S30-L3's widening effect, which did not
+below the 108's +0.6446). That is the opposite of S30-L16's widening effect, which did not
 replicate at all — so **skill degradation is a genuine property of hard targets**, while FAIL18 is
 its extreme. This is the first tail statement in this lane that survives on all three definitions,
 and it should be quoted in preference to the FAIL18-only rows.
@@ -1784,7 +1787,7 @@ spearman(distogram MAE, filter set-mean benefit)       -0.631
    ... rho_pool vs benefit controlling for MAE         +0.844  (p = 2.1e-35: survives intact)
 ```
 
-Joined to S30-L3 (benefit ↔ effect of widening, +0.81) and to `operator-consumes-set-mean`
+Joined to S30-L16 (benefit ↔ effect of widening, +0.81) and to `operator-consumes-set-mean`
 (d_out = 1.16·d_set_mean), the whole path from prior error to emitted RMSD is now measured
 end to end:
 
@@ -1850,7 +1853,7 @@ result says why. **No router was built here and none should be built from this t
 table is for is the opposite purpose: any future detector must report its correlation with these
 columns, and a feature that lands inside them is not new.
 
-The one thing that is genuinely changed for a future detector is S30-L3 §5's economics: the
+The one thing that is genuinely changed for a future detector is S30-L16 §5's economics: the
 ORACLE gate prize is −0.1193 Å at 1.29× MDE, about 2.5× the −0.0474 Å that lane C's detector was
 dismissed against — so the "even a perfect detector is too small to measure" half of that closure
 is specific to lane C's operator and must not be quoted generally.
