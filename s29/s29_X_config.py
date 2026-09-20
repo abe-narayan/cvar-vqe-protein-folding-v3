@@ -301,6 +301,24 @@ def mixer_value(psi: np.ndarray, xors: Sequence[np.ndarray]) -> float:
     return float(sum(float(psi @ psi[x]) for x in xors))
 
 
+def f_value(circ, theta: np.ndarray, E: np.ndarray, alpha: float, T: float,
+            gamma: float, xors: Sequence[np.ndarray]):
+    """F only, from ONE statevector -- no gradient, so a draw costs one simulation.
+
+    This is what makes the BESTOFN control (prereg addendum 3) conservative in the trained
+    arm's favour: 80 draws cost ~80 circuit evaluations against the trained arm's
+    80 x (2P + 1).  Returns (F, p, psi).
+    """
+    psi = circ.state(theta)
+    p = psi ** 2
+    p = p / p.sum()
+    v, _, _ = Q.cvar_exact(E, p, alpha)
+    lp = np.log(np.maximum(p, 1e-15))
+    S = float(-(p * lp).sum())
+    Mv = mixer_value(psi / max(np.linalg.norm(psi), 1e-300), xors) if gamma else 0.0
+    return float(v - T * S - gamma * Mv), p, psi
+
+
 def f_and_grad(circ, theta: np.ndarray, E: np.ndarray, alpha: float, T: float,
                gamma: float, xors: Sequence[np.ndarray]):
     """F = CVaR_alpha(E; p) - T S(p) - gamma <psi|sum X_k|psi>, and its EXACT gradient.
@@ -1017,10 +1035,82 @@ def selftest(pdb: str = "2P5H") -> None:
     assert np.max(np.abs(fd - g[:3])) < 1e-5
 
 
+def bestofn_path(pdb: str) -> str:
+    return os.path.join(RESULTS, f"s29_X_bestofn_{pdb}.json")
+
+
+def run_bestofn(pdb: str, n_draws: int = ITERS, chain: bool = True) -> Dict:
+    """PREREG ADDENDUM 3: best-of-N from the UNTRAINED circuit at a matched budget.
+
+    N draws of theta_0 from the SAME circuit, each scored on the objective F at Gamma_gap
+    (NATIVE-FREE: F selects, never an RMSD), the lowest-F draw read out through R1/R2/R3 and
+    projected.  The single-draw UNTRAINED arm is reported beside it, because the project
+    memory forbids a single draw as the control for a trained arm.
+    """
+    t0 = time.time()
+    cand, dg, rama = load_target(pdb)
+    sp = Space(pdb, cand, dg, rama)
+    xors = [xor_index(sp.M, sp.q, k) for k in range(sp.q)]
+    circ = Q.StatevectorCircuit(sp.q, LAYERS)
+    out = dict(pdb=pdb, n=sp.n, fold=int(sp.fold), q=sp.q, M=sp.M, n_draws=int(n_draws),
+               gamma_gap=sp.gamma_gap, arms=[])
+    Fs, best, best_p = [], None, None
+    for i in range(int(n_draws)):
+        rng = SD.stable_rng(pdb, "bestofN", i, salt=SALT)
+        th = rng.normal(0.0, 0.6, circ.n_params())
+        f, p, _ = f_value(circ, th, sp.E, ALPHA, TEMP, sp.gamma_gap, xors)
+        Fs.append(f)
+        if best is None or f < best:
+            best, best_p = f, p
+    out["F_best"] = float(best)
+    out["F_mean"] = float(np.mean(Fs))
+    out["F_sd"] = float(np.std(Fs, ddof=1))
+    ro = tail_readouts(sp, best_p, "BESTOFN")
+    out["m"] = ro["m"]
+    out["entropy"] = ro["entropy"]
+    out["pr"] = ro["pr"]
+    out["r3_mass"] = ro["r3_mass"]
+    for R in ("R1", "R2", "R3"):
+        emit(sp, f"BESTOFN|{R}", ro[R], out, chain, dict(m=ro["m"], readout=R,
+                                                         F=float(best), n_draws=int(n_draws)))
+    out["secs"] = float(time.time() - t0)
+    return out
+
+
+def analyse_bestofn(pdbs: Optional[Sequence[str]] = None) -> Dict:
+    """BESTOFN against the single untrained draw and against the trained arm (chain first)."""
+    pdbs = list(pdbs or PROBE_TARGETS)
+    have = [p for p in pdbs if os.path.exists(bestofn_path(p)) and os.path.exists(target_path(p))]
+    if not have:
+        return dict(n=0)
+    B = {p: {a["arm"]: a for a in json.load(open(bestofn_path(p)))["arms"]} for p in have}
+    P = {p: {a["arm"]: a for a in json.load(open(target_path(p)))["arms"]} for p in have}
+    folds = ST.pinned_folds(have)
+    out = dict(n=len(have), pdbs=have, fmt={}, arms={})
+    for R in ("R1", "R2", "R3"):
+        for basis in ("rmsd_chain", "rmsd_cloud"):
+            b = basis.split("_")[1]
+            v = np.array([B[p][f"BESTOFN|{R}"][basis] for p in have], float)
+            out["arms"][f"BESTOFN|{R}|{basis}"] = float(v.mean())
+            for other in (f"UNTRAINED_s0|{R}", f"VQE_g1_s0|{R}", f"VQE_g0_s0|{R}"):
+                if all(other in P[p] for p in have):
+                    w = np.array([P[p][other][basis] for p in have], float)
+                    lab = f"BESTOFN|{R} - {other} ({b})"
+                    r = ST.compare(v, w, folds=folds, names=have, label=lab,
+                                   seed_parts=("s29X",))
+                    out["fmt"][lab] = ST.fmt(r)
+    path = os.path.join(RESULTS, "s29_X_bestofn.json")
+    with open(path, "w") as fh:
+        json.dump(out, fh, indent=1, default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", action="store_true")
+    ap.add_argument("--bestofn", action="store_true")
     ap.add_argument("--analyse", action="store_true")
+    ap.add_argument("--analyse-bestofn", action="store_true")
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--targets", type=str, default="")
@@ -1053,6 +1143,25 @@ def main() -> None:
             os.replace(tmp, f)
             print(f"  {pdb}: q={out['q']} M={out['M']} arms={len(out['arms'])} "
                   f"({(time.time()-t0)/60:.1f} min)", flush=True)
+    if a.bestofn:
+        for pdb in pdbs:
+            f = bestofn_path(pdb)
+            if os.path.exists(f) and not a.force:
+                print(f"  {pdb}: cached", flush=True)
+                continue
+            t0 = time.time()
+            out = run_bestofn(pdb, chain=not a.no_chain)
+            tmp = f + ".tmp"
+            with open(tmp, "w") as fh:
+                json.dump(out, fh, indent=1,
+                          default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
+            os.replace(tmp, f)
+            print(f"  {pdb}: BESTOFN F {out['F_best']:.3f} (mean {out['F_mean']:.3f} "
+                  f"sd {out['F_sd']:.3f}) m={out['m']} ({(time.time()-t0)/60:.1f} min)", flush=True)
+    if a.analyse_bestofn:
+        o = analyse_bestofn(pdbs)
+        for k in sorted(o.get("fmt", {})):
+            print(o["fmt"][k]); print()
     if a.analyse:
         o = analyse(pdbs)
         for k in sorted(o.get("fmt", {})):

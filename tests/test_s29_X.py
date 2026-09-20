@@ -251,3 +251,15 @@ def test_total_variation_bounds(space):
     q = X.gibbs(space.E, 5.0)
     assert 0.0 <= X.total_variation(p, q) <= 1.0
     assert X.total_variation(p, p) == 0.0
+
+
+def test_f_value_matches_f_and_grad(space):
+    """`f_value` is the gradient-free path used by the BESTOFN control (prereg addendum 3);
+    it must return exactly the same F as the full path."""
+    circ = Q.StatevectorCircuit(space.q, X.LAYERS)
+    xors = [X.xor_index(space.M, space.q, k) for k in range(space.q)]
+    th = np.random.default_rng(23).normal(0.0, 0.6, circ.n_params())
+    for gam in (0.0, space.gamma_gap):
+        f0 = X.f_and_grad(circ, th, space.E, X.ALPHA, X.TEMP, gam, xors)[0]
+        f1 = X.f_value(circ, th, space.E, X.ALPHA, X.TEMP, gam, xors)[0]
+        assert f0 == f1
