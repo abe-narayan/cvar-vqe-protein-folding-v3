@@ -682,6 +682,24 @@ def cmd_analyse(rows_paths=None, out=None):
                          100 * bokr["share_accounted"], bokr["split_half"], bokr["verdict"]))
     say("")
 
+    # ---- the contraction check (charter section 16): is a winner just a more compact blob?
+    nat_rg, nat_bond = [], []
+    for p in pdbs:
+        z = np.load(os.path.join(ROOT, "s8", "generate_univ", f"{p}.npz"), allow_pickle=True)
+        T = np.asarray(z["nat_ca"], float)          # ORACLE, diagnostic only
+        nat_rg.append(rg(T)); nat_bond.append(mean_bond(T))
+    nat_rg = np.array(nat_rg); nat_bond = np.array(nat_bond)
+    say("CONTRACTION CHECK [ORACLE reference]: native mean Rg %.4f, native mean bond %.4f"
+        % (nat_rg.mean(), nat_bond.mean()))
+    say("  %-16s %9s %9s %9s" % ("arm", "rg_out", "rg_out/nat", "|log ratio|"))
+    for nm, _ in named:
+        if nm in arm_names:
+            ro = col(nm, "rg_out")
+            say("  %-16s %9.4f %9.4f %9.4f"
+                % (nm, np.nanmean(ro), np.nanmean(ro / nat_rg),
+                   np.nanmean(np.abs(np.log(ro / nat_rg)))))
+    say("")
+
     # ---- the mechanism: does a geometrically consistent cloud admit a better ideal-chain fit?
     say("MECHANISM (NATIVE-FREE): THE PROJECTION RESIDUAL")
     say("  fit_resid  = CA-RMSD(emitted chain, the cloud THAT ARM was fitted to)")
