@@ -246,7 +246,7 @@ killed it, so the reader can check rather than take it on report:
 | The projection stage's bond-length correction | +0.7222 Å, **inside the 8-draw random band** [+0.6504, +0.8152] — worth what a random displacement of the same size is worth | FALSIFIED |
 | Within-band ordering (F2) | Fails on 58/70 — conditioning on realism *removes* skill | FALSIFIED |
 | A cost function that orders the ladder **better** (F1) | LOG − SWAPCTL = +0.0202 at **0.14× MDE**; error-direction cosine with production **0.924** | NOT MEASURED |
-| Configuration-space encoding (§6.4) | best non-ORACLE arm **+0.1972 Å** vs production on its own 12 targets, and that arm is the **untrained** circuit | WORSE |
+| Chimera / configuration state space (§6.4) | ORACLE **+0.6533 Å worse than the pool it was cut from**; pre-registered primary +0.4572 Å at 1.18× MDE; 87% of recombination's apparent value is an order statistic | WORSE |
 | The shell-profile supply gap (F2) | fitted cosine 0.090 vs the 0.140 line, and **beaten by its own zero-information twin** (−0.0319, fold CI excludes 0) | CLOSED |
 
 ### 3.2 Claims made in this sprint that did not survive it
@@ -688,72 +688,59 @@ objective — the arms in §6.1 show F falling by half or more — and the *emit
 not separable from best-of-N. The training is real; its endpoint value is not measurable.
 [n = 11 at the time of writing; lane X's final report carries the full set.]
 
-### 6.4 The divergent lane: a different encoding, and the same answer
+### 6.4 The divergent lane: is the candidate pool the wrong state space?
 
-The charter required a permanent divergent role. Lane X built a **configuration-space** encoding —
-a different state space from the deployed candidate-index register — and ran 94 arms over 12
-targets, with registers up to 2^15 = 32,768 states.
+The charter required a permanent divergent role, and its question was the sharpest available: *is
+the pool itself the wrong object?* Lane X built a state space in which a basis state is a
+**chimera** — the chain cut into contiguous Rosetta 3-mer segments, each segment taking its
+torsions from one of the 8 retrieved parents. Three qubits per segment, q ∈ {9, 12, 15}, and
+2^q = 8^S **exactly**, so the register is padding-free and the entire space (512 to 32,768
+configurations) is **exhaustively enumerable** — every classical control in the lane is exact
+rather than sampled. The Hamiltonian adds a genuine transverse field (a transition between
+chimeras differing in one fragment index), the objective is the CVaR tail *ensemble* rather than an
+argmin, and the readout is projected to the built chain. Nothing was tuned on an RMSD.
 
-**First, the comparator, because without it the ladder is uninterpretable.** Lane X's targets are
-harder than the benchmark average, and quoting its arms against the full-benchmark production mean
-would have flattered them:
+**The answer is no, and the mechanism is measured.**
+
+1. **The new space is poorer than the pool it was cut from.** Its ORACLE best is **+0.6533 Å
+   worse** than the ORACLE best of the pool the fragments came from, 5/5 folds. Recombining
+   retrieved parents into chimeras *loses* reachable accuracy rather than gaining it. This is the
+   opposite of the intuition that motivated the lane.
+2. **87% of recombination's apparent value is an order statistic.** Against the parents themselves
+   a chimera looks worth −0.807 Å — but against a **matched scrambled null** it is worth
+   −0.109 Å. Almost all of the apparent gain is best-of-many, not recombination. This is the
+   project's own grid-oracle law, caught by a control the lane built for the purpose.
+3. **The pre-registered primary fires backwards.** The CVaR tail ensemble is **+0.4572 Å worse**
+   than production at 1.18× MDE, so the registered go rule triggers in the negative direction.
+4. **The transverse field passes its gate for a degenerate reason.** A local transverse field does
+   clear lane T's TV gate — but only by driving the state to |+⟩^q, an *eigenvector of the mixer*,
+   and its entire endpoint channel reduces to the same single number *m* that §6.2 already priced
+   at nothing.
+5. **And at matched budget, best-of-N from the untrained circuit is indistinguishable from the
+   trained VQE — 0.07× MDE — while the optimiser plainly works.** On the built chain the same
+   control reads +0.0095 (0.25×) against UNTRAINED and +0.0279 (0.39×) against the trained arm
+   (§6.3).
+
+For scale, and against the right comparator — lane X's 12 targets are harder than the benchmark
+average, so quoting its arms against the full-benchmark mean would flatter them:
 
 ```
-production, all 126 targets                cloud 3.0483   chain 3.2105
-production, lane X's 12 targets            cloud 3.2529   chain 3.3866
+production, all 126 targets              cloud 3.0483   chain 3.2105
+production, lane X's own 12 targets      cloud 3.2529   chain 3.3866
+lane X's best non-ORACLE arm             cloud 3.4501            → +0.1972 vs production
+   … and that arm is the UNTRAINED circuit, ahead of every trained variant
 ```
 
-Against the right comparator:
+**Why this is not a re-run.** The lane's own pre-registration argues the point: S13 closed the
+per-residue torsion-bin lattice by exhaustive enumeration; S19–S21 closed the basin latent (a prior
+fitted to the pool's own marginals), where exact argmin ties a zero-evaluation pool and the latent
+as a *source* is +0.390 worse; S28-L21 closed the candidate-index register. This is a fourth,
+structurally different space — and it closes the same way, with the added information that it is
+*worse than its own source*.
 
-```
-ORACLE best chimera (the family's ceiling)       2.1801   − 1.0728 vs production
-UNTRAINED_s0 | R3   (best non-ORACLE arm)        3.4501   **+0.1972 vs production**
-VQE_g1_s1    | R3                                3.4748
-VQE_g1_s0    | R3                                3.5860
-VQE_prod_s0  | R3                                3.6222
-VQE_g0_s0    | R3                                3.6251
-```
-
-Three things follow, and they compose into the same conclusion the rest of the report reaches by
-other routes:
-
-1. **The family is expressive.** Its ORACLE chimera reaches 2.1801 Å on targets where production
-   manages 3.2529 — more than a full Ångström of headroom **with the native in hand**. Expressivity
-   is not what is missing here either.
-2. **Training the circuit does not help.** The best non-oracle arm on the board is the
-   **untrained** circuit, ahead of every trained variant. This held at 5 targets and still holds at
-   12. Lane X's best-of-N control (§6.3) settles the matter properly: at matched sample budget the
-   untrained circuit is statistically indistinguishable from the trained one on the built chain.
-3. **And the whole family is worse than production anyway**, by +0.1972 Å on the point cloud.
-
-So a genuinely different state space, with a larger register and an order of magnitude more arms,
-reproduces the finding rather than escaping it: the expressive ceiling is far below production, the
-optimiser reaches its objective, and the emitted structure does not improve. That is the divergent
-lane doing its job — the most useful thing it could have returned was a disagreement, and it did not
-find one.
-
-*Attribution: the figures above are my own recomputation from lane X's committed artefacts
-(`s29_X_probe.json`, n = 12, 94 arms; production restricted to the same targets from lane O's
-`s29_O_chain_rows*.jsonl`). Lane X's own entry, with its multiplicity accounting for the 94 arms
-and its reading of why only the R3 readout separates them, had not landed when this section was
-written; where it differs, lane X's reading governs.*
-
-**Controls.** The full control set behind the arms above is lane X's: permutation controls (PERM),
-spectral controls (SPEC), random-weight draws at eight depths (RANDW), exact ground states by
-eigensolver (GS), simulated annealing (SA), Gibbs sampling at matched and unit temperature, exact
-argmin and exact top-m readouts, and the untrained-circuit and best-of-N arms discussed above. The
-94-arm count is itself a multiplicity problem and is handled as one (§1.2): per-target maxima are
-priced with `best_of_k_within` and only the pre-specified primary arm is read as a result.
-
-**A defect found and fixed in our own code, mid-result.** `s29_B_tta.py::subset_target` carried the
-comment *"average over the tied argmin set rather than reading array order"* and then took `tie[0]`
-— array order, which on a DIS-sorted pool is the best-ranked member, biasing the rule **toward the
-prefix**, the very hypothesis under test. This is the project's own named failure mode
-(`tie-breaking-leaks-the-pool-order`, where an argmin on a tied signal once invented a 1.386 Å
-winner). Fixed in `7b2e83e1`: one global argmin over all pairs, ties broken by a stable per-target
-RNG, tie-set size recorded on every row, and a regression test whose name states the invariant. The
-maximum tie set at n = 126 is 4, so the fix was not cosmetic — though it changed no number on the
-original 12, which lane D verified independently (S29-L38). The pre-fix rows are kept, not deleted.
+That is a divergent lane doing its job. The most useful thing it could have returned was a
+disagreement with the rest of the report. It looked for one in a space nobody had tried, with exact
+enumeration rather than sampling, and did not find it.
 
 ## 7. The final built-chain RMSD, with full statistics
 
