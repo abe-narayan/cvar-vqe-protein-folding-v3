@@ -161,11 +161,12 @@ def main(argv=None):
     o["A2_realism_flatness"] = {k: mean_ci([r["realism_flatness"].get(k) for r in rows], folds, k)
                                 for k in ("RAMA", "EXVOL", "RG_DEV")}
     # --- SI audit: the size-matched twin must make the pure Rg functions constant
-    o["SI_audit"] = {k: dict(rel_sd_SI=float(np.mean([r["si_audit"][k]["rel_sd"] for r in rows
-                                                      if k in r.get("si_audit", {})])),
-                             rel_sd_raw=float(np.mean([r["si_audit"][k]["raw_rel_sd"] for r in rows
-                                                       if k in r.get("si_audit", {})])))
-                     for k in ("RG_LAW", "RG_UNIV")}
+    o["SI_audit"] = {k: dict(
+        rel_sd_SI=float(np.mean([r["si_audit"][k]["sd_SI_over_raw_scale"] for r in rows
+                                 if k in r.get("si_audit", {})])),
+        rel_sd_raw=float(np.mean([r["si_audit"][k]["sd_raw_over_raw_scale"] for r in rows
+                                  if k in r.get("si_audit", {})])))
+        for k in ("RG_LAW", "RG_UNIV")}
     # --- D3 anchor confound, measured BEFORE the verdict is read
     ac = np.array([r["anchor_confound"] for r in rows], float)
     o["D3_anchor_confound"] = dict(mean=float(np.nanmean(ac)), median=float(np.nanmedian(ac)),

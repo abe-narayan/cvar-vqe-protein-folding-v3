@@ -441,10 +441,14 @@ def target_row(pdb, seed=0):
     for nm in ("RG_LAW", "RG_UNIV"):
         k2 = nm + "_SI"
         if k2 in ch:
-            v = np.asarray(ch[k2], float)
-            sc = float(np.std(v) / (abs(np.mean(v)) + 1e-12))
-            row["si_audit"][nm] = dict(rel_sd=sc,
-                                       raw_rel_sd=float(np.std(ch[nm]) / (abs(np.mean(ch[nm])) + 1e-12)))
+            v = np.asarray(ch[k2], float); raw = np.asarray(ch[nm], float)
+            # measured against the RAW channel's own scale.  RG_UNIV_SI is identically ~0 after
+            # the rescale (every candidate sits at the universe median), so its own mean is not
+            # a yardstick -- dividing by it would report float noise as a failure.
+            scale = abs(np.mean(raw)) + np.std(raw) + 1e-12
+            row["si_audit"][nm] = dict(sd_SI_over_raw_scale=float(np.std(v) / scale),
+                                       sd_raw_over_raw_scale=float(np.std(raw) / scale),
+                                       mean_SI=float(np.mean(v)), mean_raw=float(np.mean(raw)))
     row["si_rho_rg"] = {}
     for nm in SI_CHANNELS:
         k2 = nm + "_SI"
