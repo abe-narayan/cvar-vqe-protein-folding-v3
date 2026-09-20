@@ -3605,3 +3605,67 @@ Verdict: **CLAIM 1 STANDS (mechanism, reproduced independently and under a secon
 CLAIM 2 STANDS AS NOT MEASURED, in both directions, and should be taken to n = 126 for 16
 minutes of compute.** One defect recorded in the tie rule; it is conservative for lane B's claim
 and must be fixed before reuse.
+
+## S29-L39 -- MY OWN POST-MORTEM OF THE WITHDRAWN COROLLARY 2b, RUN ON 126: THE VERDICT IS (ii), (A4), NOT SATURATION -- THE SIGN LAW FAILS ON THE UNSATURATED AND SATURATED SUBSETS ALIKE -- BUT SATURATION FULLY EXPLAINS beta's MAGNITUDE, AND IN THE LINEAR REGIME WHERE MY DERIVATION ACTUALLY APPLIES beta IS 0.947 TO 0.961, ESSENTIALLY AT THE DEGENERATE POINT beta = 1 WHERE THE KEPT TERM VANISHES: COROLLARY 2b IS NOT MERELY WRONG, IT IS VACUOUS IN ITS OWN VALID REGIME; AND THE SHIPPED OBJECTIVE IS MOSTLY OUTSIDE ITS LINEAR REGIME (69% OF PAIRS SATURATED AT THE PRODUCTION CLOUD) (2026-09-20 01:50, T)
+
+The coordinator assigned this to me rather than to lane D, whose queue was five deep. Design
+registered in S29-L32 BEFORE the result: the beta law recomputed on the UNSATURATED pairs only,
+with the SATURATED subset as the matched control, on all three tau definitions, using lane D's own
+implementation (`s29_D_theory_check`) for every shared piece -- production cloud, median map, tau,
+shipped weights, kappa -- so that the author of the failed claim does not re-derive a favourable
+variant of the quantity that failed. ORACLE: cos_DIS from `s27/results/s28_A2_cosine_rows.jsonl`,
+a diagnostic. Job `s26/jobs_done/s29T_beta_unsat.json`; artefact
+`s29/results/s29_T_beta_unsat.json`; code `s29/s29_T_beta_unsat.py`.
+
+RESULT 1, THE SHIPPED OBJECTIVE IS MOSTLY OUTSIDE ITS OWN LINEAR REGIME (a fact about the
+objective, worth having independently). Median over 126 of the share of pairs with |2F-1| above a
+threshold, at the production cloud: 0.804 at 0.3, **0.691 at 0.5**, 0.535 at 0.7; median |phi'| per
+target 0.662; FAIL18 higher than the rest (0.719 vs 0.684 at the 0.5 threshold). My earlier
+three-target estimate (3.8% to 53.8% at the 0.9 threshold) understated it. The median target has
+about 20 of roughly 60 scored pairs in the linear band.
+
+RESULT 2, THE DISCRIMINATING TEST, threshold 0.5, coin-toss CI [0.413, 0.587]:
+
+    tau      unsat beta   unsat agree | sat beta   sat agree | contrast
+    LIB75      0.961        0.456     |  0.615      0.492    |  -0.036
+    UNIV       0.958        0.448     |  0.596      0.484    |  -0.036
+    POOL       0.947        0.472     |  0.470      0.468    |  +0.004
+
+**The sign law fails on both subsets alike**: every agreement is inside the coin-toss CI and every
+contrast is within 0.036 of zero, on all three tau definitions and at all three thresholds (0.3,
+0.5, 0.7; the full grid is in the artefact). **VERDICT (ii): the terms (A4) sets to zero decide the
+sign, not the linearisation.**
+
+RESULT 3, AND IT IS THE SHARPER ONE, WHICH I DID NOT EXPECT. Saturation fully explains beta's
+MAGNITUDE. On the linear-regime pairs -- the only place my derivation claims to apply -- beta is
+**0.947 to 0.961 with 31 to 37% of targets above 1**, i.e. essentially AT the theorem's degenerate
+point beta = 1, where the kept term sum w kappa var(a)(1 - beta) vanishes and the predicted sign is
+indeterminate. The beta of 0.47 to 0.62 that fired lane D's falsifier lives on the SATURATED pairs,
+where the coefficient is w*sign(a - b) and is not a function of the regression slope at all.
+**So corollary 2b cannot be rescued by narrowing its scope: in its own valid regime it is not
+wrong, it is VACUOUS** -- the term I kept is zero to measurement precision and the terms I dropped
+carry the whole sign. That is a cleaner death than the one the falsifier delivered, it is mine to
+report, and it leaves theorem 2's central claim exactly where it was (no term in n, hence second
+order; the bound of S29-L23 rests on the magnitude and is untouched).
+
+CONSEQUENCE ALREADY APPLIED. Section 1.4's band-weighting figure: with 69% of pairs saturated the
+honest central value is nearer 1.6x than 2.7x (the file now says so). Section 2.3b carries the
+table above; `s29/THEORY_SUMMARY.md` section 2 carries the verdict in three sentences.
+
+THE MEASUREMENT THIS LICENSES, REGISTERED BEFORE ITS RESULT AND NOW RUNNING (`--full`, artefact
+`s29_T_beta_full.json`, job `s29T_beta_full`): the four terms of
+var(a) - cov(a,b) - cov(a,n) + cov(b,n) in the w*kappa metric, per target, with n = d(t) - tau the
+NATIVE's deviation from typical (ORACLE, diagnostic). Two questions, stated now: (a) does the FULL
+expression's sign predict the measured cosine where the truncated one does not -- which would say
+the bookkeeping was right and only (A4) was wrong, a repair of the theory rather than a second
+withdrawal; (b) is cov(a,n) > cov(b,n), i.e. does the POOL's deviation track the native better than
+the POSTERIOR's median map does. If (b) holds at n = 126 it is the one pointer this sprint has
+produced that none of its closures touch, and it argues for operators that read the pool's own
+dispersion rather than the posterior's marginals. I will post it either way, including if the full
+expression predicts no better than the truncated one, in which case the honest statement is that
+the second-order model is the wrong model for this cosine and section 8's bound stands on its
+measured magnitudes alone -- which is where it already stands.
+Multiplicity: 0 endpoint comparisons; 18 (tau, threshold, subset) cells reported together, none
+selected; the primary cell was registered as threshold 0.5 before the run.
+Artefacts: `s29/results/s29_T_beta_unsat.json`, `s29/s29_T_beta_unsat.py`,
+`s26/jobs_done/s29T_beta_unsat.json`; `s29/THEORY.md` 2.3b and 1.4; `s29/THEORY_SUMMARY.md`.

@@ -84,16 +84,21 @@ the small quantities and carries information about the pool, never about the nat
 **The post-mortem (section 2.3b, S29-L29).** `beta < 1` is the pool's idiosyncratic 32% appearing
 in `a` and not in `b`; substituted into the formula it predicts a *positive* cosine while the
 measurement is negative, so a dropped term dominates. Two candidates: **(i) the linearisation** --
-`phi' = 2F - 1` saturates, and at production `|2F-1| >= 0.5` on a median 53% of pairs (6 targets; the 126-target run is in flight), where the
-coefficient is `w sign(a-b)` and the expectation stops being a function of `beta` at all; **(ii)
-(A4) is an idealisation** -- in full `E[(a-b)(a-n)] = var(a) - cov(a,b) - cov(a,n) + cov(b,n)`, and
-the measured sign reads `cov(a,n) > cov(b,n)`: **the pool's deviation tracks the native better than
-the posterior's median map does.** The discriminating test (the `beta` law on unsaturated pairs
-only, with the saturated subset as the matched control) is `s29/s29_T_beta_unsat.py`, built on lane
-D's own implementation so that the author of the failed claim does not re-derive a favourable
-variant. Reading (ii), if it wins, is the one pointer this sprint produced that none of its
-closures touch, and it argues for operators that read **the pool's own dispersion** rather than the
-posterior's marginals.
+`phi' = 2F - 1` saturates, and at production `|2F-1| >= 0.5` on a median **69%** of pairs
+(126 targets, S29-L33; median `|phi'|` 0.662; FAIL18 71.9%), where the coefficient is
+`w sign(a-b)` and the expectation stops being a function of `beta` at all; **(ii) (A4) is an
+idealisation** -- in full `E[(a-b)(a-n)] = var(a) - cov(a,b) - cov(a,n) + cov(b,n)`.
+**THE DISCRIMINATING TEST IS RUN AND THE VERDICT IS (ii)** (S29-L33, my own job on lane D's
+implementation): the sign law fails on the unsaturated and saturated subsets alike (agreement
+0.448 to 0.472 against 0.468 to 0.492, every cell inside the coin-toss CI, contrasts within 0.036
+of zero). **And saturation fully explains beta's magnitude:** on the linear-regime pairs -- the only
+place the derivation claims to apply -- `beta` is 0.947 to 0.961 with a third of targets above 1,
+i.e. essentially at the degenerate point where the kept term vanishes. **So corollary 2b is not
+merely wrong, it is VACUOUS in its own valid regime**: the kept term is zero to measurement
+precision and the dropped `cov(.,n)` terms carry the whole sign. Reading (ii) -- `cov(a,n) >
+cov(b,n)`, the pool tracking the native better than the posterior's median map does -- is the one
+pointer this sprint produced that none of its closures touch, and it argues for operators that read
+**the pool's own dispersion** rather than the posterior's marginals.
 
 ---
 

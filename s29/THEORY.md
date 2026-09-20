@@ -167,11 +167,39 @@ Substituting (2.6) and (A2) into (2.4), using `r = n - a` to first order,
 > cov(a,b)`: the POOL's deviation tracks the native's better than the POSTERIOR's does. That is
 > consistent with the pool being made of real structures and the median map not being one, and it
 > is second order either way.
-> **The cheap follow-up that would localise it (lane D, minutes, on the artefacts it already
-> built):** recompute the `beta` law on the UNSATURATED pairs only (`|2F-1| < 0.5`). If the sign
-> agreement rises above the coin-toss CI there, (i) is the mechanism and the corollary is a
-> statement about the risk's linear regime; if it does not, (ii) is, and the interesting half is
-> that `cov(a,n) > cov(b,n)` -- a first-order channel, already priced at 0.776 A in total.
+> **THE FOLLOW-UP, RUN BY ME ON ALL 126 (S29-L33; `s29/s29_T_beta_unsat.py`, built on lane D's own
+> implementation so that the author of the failed claim does not re-derive a favourable variant;
+> job `s26/jobs_done/s29T_beta_unsat.json`). THE VERDICT IS (ii), AND (i) IS SETTLED IN A WAY I DID
+> NOT EXPECT.**
+>
+>     saturated share of pairs at production (median over 126):  |2F-1| >= 0.3  0.804
+>                                                                         0.5  0.691   (FAIL18 0.719)
+>                                                                         0.7  0.535
+>     mean |phi'| per target, median: 0.662
+>
+>     beta and the sign law, threshold 0.5, the SATURATED subset as the matched control:
+>       tau      unsat beta   unsat agree | sat beta   sat agree | contrast   coin-toss CI
+>       LIB75      0.961        0.456     |  0.615      0.492    |  -0.036    [0.413, 0.587]
+>       UNIV       0.958        0.448     |  0.596      0.484    |  -0.036
+>       POOL       0.947        0.472     |  0.470      0.468    |  +0.004
+>
+> **The sign law fails on both subsets alike** -- every agreement is inside the coin-toss CI and
+> every contrast is within 0.036 of zero -- so **(ii), not (i)**: the terms (A4) sets to zero are
+> what decide the sign.
+> **But saturation fully explains beta's MAGNITUDE, and that is the sharper finding.** Where `phi'`
+> is in its linear regime -- the only place my derivation claims to apply -- `beta` is **0.947 to
+> 0.961 with 31 to 37% of targets above 1**, i.e. essentially AT the theorem's degenerate point
+> `beta = 1`, where `sum w kappa var(a)(1 - beta)` vanishes and the predicted sign is indeterminate.
+> The `beta = 0.47 to 0.62` that fired my falsifier lives on the saturated pairs, where the
+> coefficient is not `w kappa (a - b)` at all. **So corollary 2b cannot be rescued by narrowing its
+> scope: in its own valid regime it is not wrong, it is VACUOUS** -- the kept term is zero to
+> measurement precision and the dropped terms carry the whole signal. That is a cleaner death than
+> the one lane D's falsifier delivered, and it is mine to report.
+> **The measurement this licenses, now running:** the four terms of
+> `var(a) - cov(a,b) - cov(a,n) + cov(b,n)` in the `w kappa` metric, per target, with the question
+> stated before the answer -- does the FULL expression's sign predict the measured cosine where the
+> truncated one does not, and is `cov(a,n) > cov(b,n)` (the pool tracking the native better than the
+> posterior's median map does)? `s29_T_beta_unsat.py --full`, artefact `s29_T_beta_full.json`.
 
 > **Corollary 2c (non-separable objectives buy nothing by being non-separable).** For `f in M \ M0`
 > the same computation runs with `g = grad_D Phi`; the only new freedom is that `g_alpha` may
@@ -825,7 +853,8 @@ narrow**. In (1.1) the posterior enters twice, and the two entries behave comple
   shipped objective therefore over-weights **mid-range pairs by `(2.05/1.25)^2 = 2.7x` in the
   linear regime of the risk and by `(2.05/1.25) = 1.6x` where `phi'` is saturated** (only `w`
   survives there, not `w kappa`), so the true factor is between 1.6 and 2.7 and is target-
-  dependent: the saturated share runs 3.8% to 53.8% across three targets (2.3b). Either way it
+  dependent. **Measured on all 126 (2.3b): 69% of pairs are saturated at the 0.5 threshold and the
+  median `|phi'|` is 0.662, so the honest central value is nearer 1.6x than 2.7x.** Either way it
   over-weights the middle and under-weights the two ends.
 
 > **Correction to the standing programme (`s27/REPORT_S28.md` section 12, item 2: "calibrate the 2x

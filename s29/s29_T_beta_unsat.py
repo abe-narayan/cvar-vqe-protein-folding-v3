@@ -150,14 +150,101 @@ def summarise(rows, taus=TAUS):
     return out
 
 
+# ============================================================ the FULL second-order expression
+def full_terms(pdbs, taus=TAUS):
+    """The four terms of E[<g,r>] without (A4)'s truncation, and whether their sum predicts the
+    measured cosine's sign.
+
+    E[<g,r>] = -( var(a) - cov(a,b) - cov(a,n) + cov(b,n) ) in the w*kappa metric, with
+    n = d(t) - tau the NATIVE's deviation from typical (ORACLE, diagnostic only).  My registered
+    corollary 2b kept the first two terms and set the last two to zero; this measures all four, so
+    the question "was the bookkeeping wrong or was only (A4) wrong" is answered rather than argued.
+    """
+    from s12 import instrument as I
+    cosrows = {r["pdb"]: r for r in (json.loads(l) for l in
+               open(os.path.join(ROOT, "s27", "results", "s28_A2_cosine_rows.jsonl"),
+                    encoding="utf-8") if l.strip())}
+    rows = []
+    for q, pdb in enumerate(pdbs):
+        cand, C0, dg, i, j, D0, u, sur = D.target_pieces(pdb)
+        if cand.nat_ca is None or not np.isfinite(np.asarray(cand.nat_ca, float)).all():
+            continue
+        uu = I.load_univ(pdb)
+        m_grid, _ = D.median_map(dg)
+        coeff, w_ship = D.cdf_coeff_at(dg, D0)
+        phi = coeff / np.maximum(w_ship, 1e-30)
+        prob = np.asarray(dg["prob"], float); cen = np.asarray(dg["centres"], float)
+        kb = np.clip(np.searchsorted(cen, m_grid) - 1, 0, prob.shape[1] - 1)
+        kappa = 2.0 * prob[np.arange(prob.shape[0]), kb]
+        ww = np.maximum(w_ship * kappa, 0.0)
+        Dt = I.pair_dists(np.asarray(cand.nat_ca, float)[None], i, j)[0]      # ORACLE
+        rec = dict(pdb=pdb, fail18=bool(pdb in I.FAIL18),
+                   cos_DIS=float(cosrows[pdb]["cos"]["DIS"]) if pdb in cosrows else float("nan"),
+                   terms={})
+        for which in taus:
+            tau, _ = D.typical_map(pdb, uu, i, j, which)
+            a, b, nn = D0 - tau, m_grid - tau, Dt - tau
+            for tag, msk in (("all", np.ones(len(a), bool)), ("unsat", np.abs(phi) < 0.5)):
+                if msk.sum() < 5:
+                    continue
+                W = ww[msk]
+                va = float(W @ (a[msk] * a[msk])); cab = float(W @ (a[msk] * b[msk]))
+                can = float(W @ (a[msk] * nn[msk])); cbn = float(W @ (b[msk] * nn[msk]))
+                kept = va - cab                     # what corollary 2b used
+                drop = -can + cbn                   # what (A4) set to zero
+                rec["terms"][f"{which}_{tag}"] = dict(
+                    var_a=va, cov_ab=cab, cov_an=can, cov_bn=cbn,
+                    kept=kept, dropped=drop, full=kept + drop,
+                    ratio_drop_over_kept=float(abs(drop) / max(abs(kept), 1e-30)))
+        rows.append(rec)
+        if (q + 1) % 30 == 0:
+            print(f"  [{q+1}/{len(pdbs)}]", flush=True)
+    cos = np.array([r["cos_DIS"] for r in rows])
+    out = dict(check="the full second-order expression (no (A4) truncation)", n=len(rows),
+               oracle=True, cells={})
+    nn_ = len(rows); se = float(np.sqrt(0.25 / max(nn_, 1)))
+    ci = [0.5 - 1.96 * se, 0.5 + 1.96 * se]
+    out["coin_toss_ci"] = ci
+    for key in sorted({k for r in rows for k in r["terms"]}):
+        kept = np.array([r["terms"][key]["kept"] for r in rows if key in r["terms"]])
+        full = np.array([r["terms"][key]["full"] for r in rows if key in r["terms"]])
+        drop = np.array([r["terms"][key]["dropped"] for r in rows if key in r["terms"]])
+        cs = np.array([r["cos_DIS"] for r in rows if key in r["terms"]])
+        ok = np.isfinite(cs)
+        # E[<g,r>] = -(expression); cos has the sign of -<g,r>, i.e. the sign of the expression
+        out["cells"][key] = dict(
+            n=int(ok.sum()),
+            agree_kept_only=float((np.sign(cs[ok]) == np.sign(kept[ok])).mean()),
+            agree_full=float((np.sign(cs[ok]) == np.sign(full[ok])).mean()),
+            median_ratio_drop_over_kept=float(np.median(np.abs(drop) / np.maximum(np.abs(kept), 1e-30))),
+            frac_dropped_dominates=float((np.abs(drop) > np.abs(kept)).mean()),
+            median_cov_an=float(np.median([r["terms"][key]["cov_an"] for r in rows if key in r["terms"]])),
+            median_cov_bn=float(np.median([r["terms"][key]["cov_bn"] for r in rows if key in r["terms"]])),
+            frac_cov_an_gt_cov_bn=float(np.mean([r["terms"][key]["cov_an"] > r["terms"][key]["cov_bn"]
+                                                 for r in rows if key in r["terms"]])))
+    out["rows"] = rows
+    return out
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--full", action="store_true")
     a = ap.parse_args(argv)
     from s12 import instrument as I
     pdbs = [t["pdb"] for t in I.targets()]
     if a.limit:
         pdbs = pdbs[:a.limit]
+    if a.full:
+        outf = full_terms(pdbs)
+        ST.save_atomic(os.path.join(HERE, "results", "s29_T_beta_full.json"), outf)
+        for k in sorted(outf["cells"]):
+            c = outf["cells"][k]
+            print(f"  {k:16s} n={c['n']:3d} agree(kept) {c['agree_kept_only']:.3f} "
+                  f"agree(FULL) {c['agree_full']:.3f} |drop|/|kept| {c['median_ratio_drop_over_kept']:.2f} "
+                  f"drop dominates {c['frac_dropped_dominates']:.3f} cov_an>cov_bn {c['frac_cov_an_gt_cov_bn']:.3f}")
+        print("coin CI", [round(x,3) for x in outf["coin_toss_ci"]])
+        return 0
     rows = rows_for(pdbs)
     out = summarise(rows)
     out["rows"] = rows
@@ -168,7 +255,6 @@ def main(argv=None):
         print(f"  {k:22s} pairs {c['npairs_median']:6.1f}  beta {c['beta_median']:+.3f}  "
               f"agree {c['sign_agreement']:.3f}  clears {c['clears_coin_toss']}")
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())
