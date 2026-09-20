@@ -26,7 +26,7 @@ well-evidenced ceiling argument that redirects the next three sprints is worth m
 | 3 | Did it beat 3.21? | **No** |
 | 4 | Did it beat 3.0? | **No** |
 | 5 | Did it beat 2.5? | **No** |
-| 6 | Exact paired effect vs production? | **Zero — nothing was deployed.** The best *measured, applied* prior correction emits **+0.0554 Å WORSE**. The one confirmed deployable effect (AMBER relax at k = 30) is **−0.0406 Å**, 3.56× MDE, 5/5 folds on a length-matched split — **0.69% of baseline, and its restraint constant still has no native-free selection rule** |
+| 6 | Exact paired effect vs production? | **Zero — nothing was deployed.** Every *applied* prior correction is **NOT MEASURED or worse**: the three fitted arms emit **+0.0554, +0.1461, +0.1513 Å** at **0.68×, 0.91×, 0.95× MDE** (CA point cloud, against 3.0483). The AMBER relax at k = 30 is **−0.0221 Å**, the one confirmed effect — **0.69% of baseline**, *not deployable* (its restraint constant has no native-free selection rule, §11.2), and **not closed** (§3, §7.4) |
 | 7 | Fold-clustered CI? | Per comparison; every one is reported beside its effect. No sprint-wide constant |
 | 8 | MDE? | Per comparison, MDE = 2.8016 × SE. **Below 0.7× is not a result; 0.7–1.0× is NOT MEASURED** |
 | 9 | What happened on FAIL18? | **Unchanged.** And one of the sprint's own headlines died here: FAIL18 is defined by the filter's own recall, so claims about the filter's effect on it are partly forced arithmetic (§Appendix A) |
@@ -56,33 +56,54 @@ And the reason those five bits are unobtainable is **mechanistic, not a failed s
 
 > ### What can be predicted is coherent and therefore harmful; what would help is incoherent and therefore unpredictable.
 
-A corrector fitted on the distogram and pool emits **+0.0554 Å worse**; a synthetic i.i.d. one at
-**identical out-of-fold R² = 0.2355** emits **−0.2466 Å better**. *A 0.30 Å swing at matched
-accuracy.* The i.i.d. arm is **ORACLE-constructed and not deployable** — it is the price of a
-channel nobody has, never an achievement.
+A corrector fitted on the distogram and pool emits **+0.0554 Å worse (0.68× MDE — NOT MEASURED)**;
+a synthetic i.i.d. one at **identical out-of-fold R² = 0.2355** emits **−0.2466 Å better (1.77×
+MDE)**. *A 0.30 Å swing at matched accuracy* — and the sharper statement is that **all three fitted
+arms sit at zero-to-worse (0.68×, 0.91×, 0.95× MDE) while both matched-R² i.i.d. arms clear their
+MDE in the other direction.** The i.i.d. arms are **ORACLE-constructed and not deployable** — the
+price of a channel nobody has, never an achievement. All four numbers are **CA point cloud**
+against 3.0483; the measured cloud→chain transfer is 0.92.
 
 ### 0.3 The deliverable
 
-Not a number — **a gate**, cheap and native-free, that no measurement in this project's history
-would have passed:
+Not a number — **a development-time admission test** that replaces an endpoint run with one
+correlation, and that **no corrector this project has built would have passed**:
 
 ```
-coh = corr(a corrector's residual, the pool's common-mode pair error)
+coh = corr(a corrector's RESIDUAL, the pool's common-mode pair error)
+      -- both arguments require the native (s30_P_lr.py:58,78,202). THIS GATE IS ORACLE.
 
     uncorrected                               0.6931
-    every corrector this project owns          0.783 / 0.786 / 0.917   <- ALL RAISE IT
-    imposed-structure ORACLE arms only         0.587 / 0.537
+    the three fitted correctors                0.7857 / 0.7827 / 0.9172   <- ALL RAISE IT
+    imposed-structure ORACLE arms only         0.5865 / 0.5365
 
-    ADMIT iff coh < 0.6931.     R2 0.16 -> -0.126 A;  R2 0.24 -> -0.247 A
+    ADMIT iff coh < 0.6931.
+```
+
+> **It is ORACLE, and I first wrote "native-free" here. It is not.** `y = expected − d_nat` and
+> `mu = pool75_mean − d_nat`; the `d_nat` is printed in the definition in §12.2. **It therefore
+> cannot screen a corrector at inference.** What it *can* do is decide, on the 126 labelled dev
+> targets, whether a candidate is worth an endpoint experiment at all — one correlation instead of
+> a pipeline run — which is the expensive step this project keeps paying.
+
+**What passing it would be worth**, and the label travels with the number: the two matched-R²
+arms that clear the gate are **ORACLE-constructed and NOT DEPLOYABLE** — a price for a channel
+nobody has, never an achievement — and neither reaches the 2× MDE this sprint used as its survival
+standard:
+
+```
+R2 0.16 -> -0.126 A   1.23x MDE   [TYPE-M ZONE flagged in the artefact]
+R2 0.24 -> -0.247 A   1.77x MDE
+                      both CA point cloud; the measured cloud->chain transfer is 0.92
 ```
 
 **This is not "decorrelated from the distogram"** — orthogonality was priced at a 5.1% discount on
-the requirement. Incoherence is a different condition, and it separates a −0.25 Å corrector from a
+the requirement. Incoherence is a different condition, and it separates a −0.25 Å arm from a
 +0.06 Å one at identical accuracy.
 
 ### 0.4 How much of this report is negative, and why that is the point
 
-Twelve lanes, 28 ledger entries, ten pre-registrations. **Four of the ten registered falsifiers
+Thirteen lanes, 29 ledger entries, ten pre-registrations. **Four of the ten registered falsifiers
 fired against the lane that wrote them.** Directions closed this sprint: the field combination, the
 sparse weighted readout, subset objectives through an averaging readout, the second-moment escape
 (twice, independently), generative spaces, torsion encodings, common-mode correction, filter width,
@@ -159,8 +180,8 @@ instrument that measures it**, and the projection seed should be pinned before o
 
 ### 2.1 The lanes
 
-Twelve lanes ran, never more than eight concurrently, against the charter's floor of four whenever
-meaningful work was available. Ledger entries `S30-L0` … `S30-L27`, 28 in all.
+Thirteen lanes ran, never more than eight concurrently, against the charter's floor of four
+whenever meaningful work was available. Ledger entries `S30-L0` … `S30-L28`, 29 in all.
 
 | lane | remit | entries | outcome |
 |---|---|---|---|
@@ -188,6 +209,11 @@ then **failed**, and all three reported the failure as the result:
 - **Lane D** — its own falsifier for the combination question was not met (S30-L21).
 - **Lane T** — retracted its own headline on a null lane Q told it to run (**S30-L15 §3c**).
 - **Lane G** — **both** registered priors were directionally wrong, and it said so first (S30-L26).
+- **Lane F** — F2a and F2c, both refuted by its own measurements (§Appendix A.5).
+
+*Lane P's P1 is **not** in this list: it **held** (registered bar 1.96%, best arm 0.83%). The
+falsified prediction in lane P's work was **mine** — I put 3:1 on long-range R² also coming back
+≈ 0 and it is +0.1959.*
 
 Lane P registered its bars at **1.96% / 12.82% / 39.44%** R² before the regression existed and came
 in at **0.83%**. Lane G registered a power note stating a half-split *could not* reach its own MDE
@@ -483,8 +509,8 @@ circ_opt    THE SAME CIRCUIT, DEPLOYED native-free score    3.4330        3.3850
 
 `core/pipeline.py:821` — the `quantum_stage` docstring — still asserts *"the CVaR tail is worth
 +0.113 Å by preventing the collapse, and that is the component's measured role."* **S25-L5 withdrew
-that number** (`s25/LEDGER.md:233-244`: *"never a measured effect … by this project's own fixed rule
-that is a NULL"*) and replaced it with **−0.1405 Å at 0.68× MDE**.
+that number** (`s25/LEDGER.md:233-244`, with the replacement figure at `:280`: *"never a measured effect … by
+this project's own fixed rule that is a NULL"*) and replaced it with **−0.1405 Å at 0.68× MDE**.
 
 > Anyone answering item 12 from the source file rather than the ledger gets a **withdrawn positive**
 > presented as the component's measured role. This is the **sixth** instance of prose asserting a
@@ -628,7 +654,7 @@ pre-registration where one exists.
 | 43 | The divergence effect is **chain length** | G | ρ(n, DISP) = +0.267 made it necessary to check | Partialling and a length-matched split | Partialling n **strengthens** it (−0.316 → −0.338, p₂ 0.000); ρ(n, d) = +0.036; the length-matched split is the strongest form of the result (S30-L26) |
 | 44 | **F-G2** — a chiral functional carries nativeness signal (the one family theorem G1 leaves open) | G | Fires at anchor contrast **≥ +0.10** with fold CI excluding zero **and** exceeding its own achiral twin by ≥ 0.7× the paired MDE | WRITHE, CHIRAL3, CHIRAL3_LONG on lane R's bit-identical ladder | Best: WRITHE **+0.0405 [−0.0255, +0.1015], 0.41× MDE, 3/5 folds**, against a max-over-3 sign-flip null whose **mean is +0.0408, p_max 0.430**. CHIRAL3 **−0.0363**, CHIRAL3_LONG **−0.0394** (wrong sign). WRITHE minus its achiral twin: **+0.0170, 0.29× MDE**, CI includes zero (S30-L26 Q2) |
 | 45 | Lane G's own registered **mechanism** for why F-G2 would fail — the chiral coordinate is near-constant at n = 9–16 | G | 4:1 that F-G2 does not fire, *because the class is degenerate* | The occupancy pre-check the coordinator required **before** any contrast | **REFUTED.** Occupancy WRITHE 0.685, CHIRAL3 **0.953**, CHIRAL3_LONG **0.965**, against **DIS 0.345 (pool) / 0.231 (ladder)**. The chiral axis is *more* fully exercised than the shipped cost is. **The negative is stronger for it** (S30-L26; `s30/results/s30_G_chiral.json :: PRECHECK_occupancy`) |
-| 46 | **WRITHE's preference contrast +0.1641** — the only channel all sprint to clear *both* of lane R's registered preference clauses | G | 2.17× MDE, 5/5 folds, max-null p = 0.000, `pref_near` 0.771 | Lane G's own kind-matched statistic, applied before it was quoted anywhere | **Cross-kind**: `pref_pool`'s control keeps **deposited** coordinates while the near rungs are **ideal rebuilds**. Kind-matched read: the rebuilt native sits at the **0.6061** percentile of its own ladder (\|WRITHE\| **0.6732**), both **worse than the 0.5 chance line**, against DIS's 0.2876. **Third instance of the cross-kind confound this sprint** (S30-L26) |
+| 46 | **WRITHE's preference contrast +0.1641** — the only channel all sprint to clear *both* of lane R's registered preference clauses | G | 2.17× MDE, 5/5 folds, max-null p = 0.000, `pref_near` 0.771 | Lane G's own kind-matched statistic, applied before it was quoted anywhere | **Cross-kind**: `pref_pool`'s control keeps **deposited** coordinates while the near rungs are **ideal rebuilds**. Kind-matched read: the rebuilt native sits at the **0.6061** percentile of its own ladder (\|WRITHE\| **0.6732**), both **worse than the 0.5 chance line**, against DIS's 0.2876. ****Second** instance of the cross-kind confound this sprint (S30-L26; the widening result was circular, which §A.7 records as a different defect)** |
 | 47 | **P1** — some native-free feature set prices the ORACLE displacement out of fold | P | Bars registered at **1.96% / 12.82% / 39.44%** R² before the regression existed | Everything thrown at `e` at once, 8 arms × 5 strata, sign-equivariant, leave-fold-out | Best arm **R² 0.0083**, excess over the matched-dimension control **+0.0095 at 0.75× MDE — NOT MEASURED**. Nothing clears the bar on any stratum. **P1–P5 all hold** (S30-L25 §1) |
 | 48 | A **global 5-number** separation profile is deployable | P | The ORACLE profile is worth −0.5740 Å | Applying the leave-fold-out global profile | **+0.0036 Å, 0.11× MDE**. The profile's per-target dispersion is **~9× its mean**, so a global constant is arithmetically a no-op (S30-L25 §3) |
 | 49 | The **pool** can estimate the prior's separation profile | P | The only genuinely non-tautological arm in the design | `NF_POOLPROF5` | **+0.0395 Å, wrong sign** — regressing the prior toward the pool *hurts*. `pool-error-is-68-percent-common-mode` arriving at the prior, a third independent site (S30-L25 §3) |
@@ -927,7 +953,7 @@ Built first, as §7 of the charter demanded, and extended mid-sprint with a `ver
 | native percentile | ~ 36.9 | **0.3676** [0.306, 0.405] | either |
 | ORACLE preference | ~ 0.07 | **0.0714** | built chain |
 
-Verified by `s30/s30_verify.py`, **22/22 matched, 0 mismatched, 0 missing**. The extension did not
+Verified by `s30/s30_verify.py`, **36/36 matched, 0 mismatched, 0 missing**. The extension did not
 move the instrument.
 
 ### 10.2 The shipped cost, on both bases
@@ -1175,8 +1201,13 @@ R2 = 0.24  ->  -0.247 A        a PRICE for a channel nobody has, never an achiev
 
 And the target is sized: **five ORACLE signs on long-range pairs are worth −0.3259 Å on the built
 chain (3.2126 → 2.8867, 2.05× MDE, 5/5 folds)** — which would clear the charter's primary target.
-**The prize is five bits per target.** The deployable sign currently performs at accuracy ≈ 0.60
-against a *free* baseline of 0.627; ≈ 0.8 is needed.
+**The prize is five bits per target** — one sign per separation bin, `SEP_EDGES` =
+[(2,2),(3,3),(4,4),(5,6),(7,99)]. And the deployable sign is **not merely weak, it is free**:
+matched like-for-like it scores **0.600 against an always-positive baseline of 0.556 on all pairs,
+and 0.643 against 0.627 at long range** — *above* the baseline in both spaces, but by a margin that
+buys nothing. ≈ 0.8 is needed. Lane P's own wording is the right one: **essentially all of it is
+free.** *(An earlier draft compared the all-pairs accuracy against the long-range-only baseline and
+reported a shortfall that does not exist in either space.)*
 
 ### 12.4 The secondary recommendation, and three measurements agree on it
 
@@ -1195,7 +1226,8 @@ agree in direction, which is more than any single one of them is worth.
 
 ### 12.5 What NOT to spend on
 
-Closed by theorem or by price, with the closure named: the field combination (rank, not count);
+Closed by theorem, by price, **or by measurement** — and §7 keeps the three apart deliberately,
+because a measurement-closed direction is the reopenable kind. With the closure named: the field combination (rank, not count);
 sparse weighted readouts (argmin dominates at every bit budget); subset objectives through an
 averaging readout (T1); the second-moment/quadric escape (twice, independently); generative spaces
 (closed *jointly* with the readout); torsion encodings (48 bits against 7); common-mode correction
@@ -1281,12 +1313,20 @@ Not a new stage — a **gate on an existing one**:
      |                      (every corrector this project owns lands here)
      |
      +-- coh <  0.6931  ->  admit and measure the endpoint.
-                            R2 0.16 -> -0.126 A;  R2 0.24 -> -0.247 A
+                            ORACLE arms reaching this: R2 0.16 -> -0.126 A (1.23x MDE, TYPE-M)
+                                                       R2 0.24 -> -0.247 A (1.77x MDE)
+                            NOT DEPLOYABLE -- a price, not an achievement. CA cloud basis.
 ```
 
-**This gate is the sprint's deliverable.** It is cheap, it is native-free, it discriminates a
-−0.25 Å corrector from a +0.06 Å one at identical out-of-fold accuracy, and **no measurement in
-this project's history would have passed it.**
+**This gate is the sprint's deliverable — and it is ORACLE** (`s30_P_lr.py:58,78,202`: both
+arguments of the correlation need `d_nat`). It is therefore a **development-time** test, run on the
+126 labelled dev targets, **not** an inference-time screen. Within that scope it is cheap, it
+discriminates a −0.25 Å arm from a +0.06 Å one at identical out-of-fold accuracy, and **none of the
+three correctors built here passes it** — all three raise `coh` to 0.78–0.92.
+
+*The two arms that do pass are ORACLE-constructed and not deployable; their gains are 1.23× and
+1.77× MDE on the CA cloud, below the 2× this sprint treated as the survival standard, and the
+artefact flags the smaller one as TYPE-M.*
 
 
 ---
