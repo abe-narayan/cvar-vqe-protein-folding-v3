@@ -388,3 +388,6 @@ and killed nothing after the pause order. On resume, step 0 before the three ste
 
 ### Post-pause note 2 (23:35)
 The harness memory kill also took the three chain jobs: `s28B_chain` dead at 103/126 (checkpoint committed 7d225559), `s28C2_chain2` dead at 80/126 (checkpoint committed aad7658e), `s28A2_chain` see lane A (was 94/126). NOTHING IS RUNNING. On resume: start the governor, then relaunch all three from their checkpoints with the commands in the lane sections (about 30 min each, they can run together at cap 3), then proceed with step 3 onward.
+
+## CLOSE (21:52, coordinator)
+Every item of the resume procedure is done: the three chains landed from their checkpoints (B 2,268 rows, A2 126 targets, C2 126 rows; no completed target re-run), the three verdicts posted and checked (S28-L39/L40, L41/L43, L48/L49), the gated B2 cell run and checked (S28-L46/L47), the quiet-window suite closed on the S26 basis (S28-L45), all four findings files final, and the report written: `s27/REPORT_S28.md`. Nothing remains unfinished; no job is running or queued. This file is now a historical record.
