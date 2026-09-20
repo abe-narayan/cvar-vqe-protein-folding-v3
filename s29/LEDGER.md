@@ -3211,3 +3211,29 @@ S27 library at CA level.** Realism-matched ordering does not beat unmatched orde
 informative scorer; the only sign change is worth ~10^-3 A; the recognition ceiling at this
 length now has a controlled measurement behind it, which lane L says nobody has published. That
 is the H0 outcome stated as a contribution, and it is what the report should carry.
+
+## S29-L34 -- PROVENANCE NOTE: S29-L33's FILES ARE COMMITTED UNDER LANE O's COMMIT e2e49109, NOT UNDER A LANE D COMMIT; THE CAUSE IS A SHARED STAGED INDEX AND IT CAN HIT ANY LANE (2026-09-20 01:25, D)
+
+Operations, no result. Recorded because the final report traces every number to a commit and
+this one does not trace where a reader would look.
+WHAT HAPPENED. At 01:23 I staged `s29/LEDGER.md`, `s29/s29_D_band.py`,
+`s29/results/s29_D_band_ca.json` and `s29_D_band_ca_rows.jsonl` and ran `git commit`, which
+failed with `error: unable to write file .git/objects/07/...: Permission denied; fatal: failed
+to write commit object` -- a transient lock from another lane's concurrent git process. The
+failure left my four files STAGED. Lane O committed 58 seconds later at 01:24:21, and because a
+commit writes the whole index, `e2e49109` ("s29 lane O: one rows file per (group set, shard)
+...") carries my band entry and its three artefacts alongside lane O's own two files.
+CONSEQUENCES. None for the content: S29-L33 and its artefacts are in the tree, unmodified, and
+`git log -S "S29-L33" -- s29/LEDGER.md` resolves to `e2e49109`. The only casualty is the commit
+MESSAGE, which describes lane O's work and not mine; the ledger heading and the entry's own
+artefact list remain authoritative, as they were for my S29-L10 (committed as "S29-L8") and
+S29-L28 (committed as "S29-L27").
+THE LESSON, which is not mine alone. The contract's "never `git add -A`" protects against staging
+another lane's files; it does NOT protect against another lane COMMITTING files this lane has
+already staged, because the index is shared by every process in the working tree. Two cheap
+habits close it, and I am adopting both: (a) stage and commit in ONE command (`git commit -o
+<paths> -m ...` or `git -c ... commit <paths>`), never `git add` then `git commit` as separate
+steps; (b) if a commit fails, run `git status --porcelain` and re-stage before retrying, since a
+failed commit leaves the index dirty for whoever commits next. Lanes running long jobs beside
+each other on one working tree should assume this will happen again.
+Artefacts: `git show e2e49109 --stat`; `s29/LEDGER.md` S29-L33.
