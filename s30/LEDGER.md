@@ -2419,3 +2419,229 @@ chosen because the quantity being measured was large on them.
 
 Reproduction: `s12/instrument.py:271-278`; my run reads `u["rr"][pool_idx]` and
 `shipped_record(pdb)["sub"]` only, no distogram, seed 3030, 200 draws per target.
+
+## S30-L18 -- FOR LANE P, BEFORE IT BUILDS: ITS TARGET IS **ALREADY LOCALISED** (A PER-TARGET SEPARATION PROFILE, FIVE NUMBERS, WORTH **0.525 A ORACLE**, WITH **19-30% ALREADY RECOVERED NATIVE-FREE**) AND ONE OF ITS OBVIOUS ROUTES CARRIES AN EXPLICIT "NOBODY SHOULD SPEND ON THIS" FROM S19. PLUS TWO DERIVATIONS: **ORTHOGONALITY IS WORTH A 5.1% DISCOUNT ON THE REQUIREMENT, NOT A ROUTE** -- DECORRELATION IS NOT THE LEVER, SKILL IS -- AND LANE F's ORACLE 0.169 IS **EXACTLY WHAT A ZERO-SKILL PARTNER AT c = 0.745 PRODUCES** (2026-09-20 13:25, L)
+Note: `s30/lit/L30_4_shared_bias.md`. Derivation script: `s30/lit/s30_L_orthogonality.py`
+(closed form; reads no project data). **Reading, derivation and arithmetic; no new measurement.**
+
+Commissioned by the coordinator on spawning lane P. Everything below was found by reading the
+record **before** searching outside it, which is how the first item was caught.
+
+### 1. THE RE-IMPORT WARNING, AND IT IS EXPLICIT IN THE RECORD
+
+I developed a proposal to project the distogram's predicted distance matrix onto the rank-3 EDM
+cone -- the constraint is real (for n=13, a symmetric hollow matrix has 78 free entries and a
+realisable 3-D structure has 3n-6 = 33, so **58% of the prediction's freedom is metric
+inconsistency**), it is parameter-free, and it uses no new information. **Then I grepped the
+codebase, and S19 has already measured it and left a named prohibition**
+(`s19/agentA_FINDINGS.md` section 1.2, `s19/a_topo.py`, `s19/a_coh.py`):
+
+| quantity | predicted field | native |
+|---|---|---|
+| triangle-inequality violations | 4.09 % | 0.02 % |
+| rank-3 EDM defect of `-1/2 J D^2 J` | **0.286** | 0.0018 |
+
+> *"**Independent pairwise marginals are not jointly realisable** is real, measured, and **NOT the
+> mechanism**. Nobody should spend on EDM projection, triangle repair, or joint-consistency
+> enforcement as a route to RMSD."*
+
+**A4 was refuted in the direction nobody expected**: a magnitude-matched *incoherent* field is
+WORSE on both realisability measures (0.340 defect, 10.85% violations) and lands **1.24 A
+BETTER**. Unrealisability is anti-correlated with harm. And `rho(EDM defect, RMSD) = +0.511`
+against `rho(residual RMS, RMSD) = +0.891`, so the defect adds nothing over error size -- **it is a
+magnitude proxy**. My 58%-of-freedom arithmetic is correct and is beside the point.
+
+**Third instance of this lane catching itself by reading the source** (after CAGEO in S30-L6 and
+the near-miss S29-L17 recorded). I am logging it because the hit rate matters: three proposals
+that survived the information test died on an existence-or-precedent check.
+
+### 2. THE FIVE-INSTANCE LAW THIS COMPLETES, AND IT IS THE SPRINT'S MOST TRANSFERABLE OUTPUT
+
+S19's result is not isolated. Assembled across the record and the literature:
+
+| # | operator | realism moved | accuracy moved | source |
+|---|---|---|---|---|
+| 1 | make the distance field realisable | EDM defect 0.286 -> **0.148**, kappa -> 0.914 | **more coherently wrong** | S19 sec 1.2 / 2 |
+| 2 | project the cloud to geometric consistency | fit residual 0.8135 -> **0.6191 A** | **structure worse**, ~+0.73 A vs production | S29-L57 |
+| 3 | repair averaging artefacts (MCORE) | clashes **63.0% -> 1.09%** of atoms | **3.28 -> 3.36 A**, 0.08 A worse | PMC2662860, n=2090 |
+| 4 | calibrate the posterior | calibration improves | **RMSD worse** | S25 L2 |
+| 5 | AMBER-relax the average, k=30 | valid geometry | **-0.022 A**, 5/5 folds | `averaging-space-beats-the-objective` |
+
+> **Every realism-enforcement operator this project or the literature has measured improves
+> realism and costs, or fails to help, accuracy. Five instances, two of them at n >= 126 and one
+> at n = 2090. There is exactly one exception, row 5, and S30-L13 gives its size a mechanism:
+> a constraint repair acts on the bonded geometry, whose share of all residue pairs is `2/n` --
+> 15.4% at n=13 against 1.0% at n=200 -- so it works here because the chain is short and it does
+> not scale with effort.**
+
+The theorem underneath is Blau & Michaeli (CVPR 2018) Thm 3, imported in S29-L12 and applied there
+to scorers only. **It applies to OPERATORS too, and rows 1-4 are that statement measured four
+times on four different objects.** Any future proposal of the form "make the intermediate object
+more valid / consistent / calibrated / physical" should be priced against this table before it is
+staffed.
+
+### 3. LANE P's TARGET IS ALREADY LOCALISED -- BUILD ON THIS, DO NOT REDISCOVER IT
+
+`s19/agentA_FINDINGS.md` sections 4, 5 and 6, all ORACLE, n = 126:
+
+- **The harm is COHERENCE, not magnitude and not unrealisability.** A perfectly coherent
+  matched-magnitude error is the **worst arm on the board** (3.749 vs real 3.610, +0.139
+  [+0.023, +0.253]). Destroying only cross-pair sign coherence, at exactly matched magnitude,
+  buys **-1.202 A [-1.408, -1.004], 112W/14L, 5/5 folds**.
+- **The harmful mode is named: a per-target separation profile -- FIVE NUMBERS PER TARGET.**
+  Nested variance explained: offset (1 param) 0.141, stretch (1) 0.226, separation profile (5)
+  0.361, per-residue additive (13) 0.430. But **variance explained does not price damage**:
+  removing the offset *hurts* (+0.174), removing the stretch *hurts* (+0.069), the per-residue
+  additive explains the most variance and owns **none** of the harm, and the separation profile
+  owns **+52.5% of the gap, worth -0.525 A** with the native in hand.
+- **The wall.** The best native-free estimator of that profile recovers **0.098-0.155 A of the
+  0.525 A -- 19 to 30% -- and only by regressing toward what the pipeline already does.**
+  S19's verdict: *"There is still no native-free estimator of coherence."*
+- **And the bias is SHARED across independent sources** (S19 sec 4: *"the harmful coherent
+  component is shared across independent [sources]"*; the incoherent component does not share at
+  all, 0.09-0.19 cross-family).
+
+**That last bullet is my S30-L7 escape E3, measured in S19 two sprints before I derived it, and
+the S24 provenance cosine (0.9432 against a 0.9330 within-source control) is a third independent
+arrival at the same fact.** Three arrivals: a theorem, a cross-family correlation measurement, and
+a provenance cosine.
+
+**And the five numbers are five INCIDENTAL parameters per target** (Neyman & Scott 1948, S29-L31).
+That composes with the above into the sharpest brief I can give lane P:
+
+> The prize is real and large (0.525 A ORACLE, the biggest in the record outside the prior
+> itself), the object is small and named (five numbers per target), 19-30% is already taken, and
+> the remainder is an incidental parameter. **S29-L31 names exactly two escapes: replication
+> within the instance, or a covariate OBSERVED AT INFERENCE. So lane P's only viable form is a
+> native-free covariate, observed at inference, that predicts the per-target separation profile
+> AND is not generated by the distogram or by the retrieval pool** -- because both share the bias
+> being estimated. That is a much narrower target than "find a decorrelated source", and it is
+> falsifiable at design time rather than after a run.
+
+### 4. DERIVATION: WHAT IS ORTHOGONALITY ACTUALLY WORTH? (`s30_L_orthogonality.py`)
+
+The brief asked for sources whose errors are *decorrelated* from the prior. I priced that request
+in closed form. With `rho_max^2 = (r1^2 - 2 c r1 r2 + r2^2)/(1 - c^2)` (the projection of `u` onto
+`span{v1,v2}`) and the project's anchors (best single field 0.1128; 0.358 needed for 3.00 A):
+
+```
+  to reach 3.00 A combined with our best field, a PERFECTLY ORTHOGONAL new channel
+  must itself carry rho = 0.3398.  Alone it would need 0.3580.
+  -> ORTHOGONALITY IS WORTH A 5.1% DISCOUNT ON THE REQUIREMENT (1.6% for 2.50 A)
+  -> the new channel must be 3.01x better than anything we own
+
+  gain is QUADRATIC in the NEW channel's own skill (c = 0: rho_max ~ r1 + r2^2/(2 r1)):
+     r2 = 0.1128 (as good as everything we own, perfectly orthogonal)  ->  -0.0206 A
+     r2 = 0.1398 (the random-shape reference)                          ->  -0.0317 A
+     r2 = 0.34                                                         ->  -0.1926 A
+  reaching 3.00 A by stacking needs k = 10.1 MUTUALLY ORTHOGONAL channels each as good
+  as our best.  Lane F measured the 21 we have at Gram stable rank 2.057.
+```
+
+> **DECORRELATION IS NOT THE LEVER. SKILL IS.** A source that is perfectly orthogonal to
+> everything we own and merely as good as our best buys **0.02 A**.
+
+**AND THE SCOPE LIMIT, WHICH MATTERS MORE THAN THE RESULT -- I do NOT want this used against lane
+P.** The bound above is the S29 section 5.1 displacement law, and that law governs operators in
+**POOL SPACE**, where everything is capped at a cosine. **Lane P is working on the PRIOR, where
+the record's derivative is -2.15 A per unit** (`prior-derivative-is-the-only-steep-lever`) and
+where the ORACLE prize is 0.525 A on one named mode. **Section 4 prices "add another field to the
+21"; it does not price "fix the distance prior's shape". Those are different levers and the flat
+one must not be quoted at the steep one.**
+
+### 5. DERIVATION: LANE F's ORACLE 0.169 IS A CANCELLATION ARTEFACT, NOT AN INFORMATION GAIN
+
+Same closed form, with the second field carrying **zero** skill (`r2 = 0`):
+`rho_max = r1 / sqrt(1 - c^2)`. A skill-free partner inflates the ORACLE combination purely by
+cancelling the part of `v1` orthogonal to `u`, fitted with the native.
+
+    lane F measured        0.169 ORACLE against 0.1128 best-single  = inflation 1.50x
+    a ZERO-SKILL partner at c = 0.745 produces exactly              = inflation 1.50x
+    and leave-fold-out the same combination gives 0.012, BELOW the best single field
+
+**So lane F's two numbers are jointly consistent with the 21 fields containing no combinable
+information at all**, and the ORACLE figure should be reported with that reading attached rather
+than as "0.169 is reachable in principle". This strengthens lane F's own conclusion rather than
+weakening it.
+
+### 6. FAMILY REJECTIONS FOR THE COORDINATOR'S ITEM 3 (bias unidentifiable from corrupted data)
+
+| family | the assumption it needs | why it fails here |
+|---|---|---|
+| **errors-in-variables**, two error-laden measurements identify the reliability ratio from their covariance | the two measurements' errors are **INDEPENDENT** | our two are the distogram profile and the pool profile, and **S19 sec 4 measured that they share the bias**. The assumption is not merely unverified, it is measured false |
+| **Reiersol (1950)**, EIV identified without an instrument when the latent is **non-normal** | a linear relation between two observed error-laden variables, plus higher moments | we do not have two observed error-laden variables in that relation -- we have one prediction and no second observable of the same quantity. **Does not transfer**; recorded because it is the standard answer to "identify without an instrument" and someone will propose it |
+| **multichannel blind deconvolution** (Xu et al. 1995 and successors) | the channels are **COPRIME** -- no common zeros | a shared bias IS a common factor; coprimeness is exactly what S19 sec 4 and S24's 0.9432 measure to be absent |
+| **single-channel blind deconvolution** | sparsity / non-negativity / known support | none of these hold for a distance-profile bias |
+| **instrument calibration** | a reference standard, i.e. an anchor | the anchor is the native (this is S30-L7's E1/E3 again, and S29-L4's control-variate rejection) |
+
+**The pattern across all five is one condition under five names**: every method that separates a
+shared bias from the truth needs **two views whose errors are independent**, and this instrument's
+two views are measured to share the bias. That is the same sentence as S30-L7's E3, arrived at
+from the measurement-error literature instead of from the likelihood.
+
+### 7. WHERE I COULD BE WRONG, AND ONE THING I UPDATED AGAINST MYSELF
+
+- Section 4's closed form assumes the optimal 2-field combination is taken **with the native in
+  hand**; leave-fold-out is strictly worse, so the 5.1% discount is an **upper bound** on what
+  orthogonality is worth, not an estimate. That direction favours my conclusion, which is the
+  direction I should be most suspicious of, and I state it for that reason.
+- Section 5's "exactly what a zero-skill partner at c = 0.745 produces" is a **consistency**
+  argument, not a proof: a genuinely skilful partner at higher `c` produces the same inflation.
+  It shows the ORACLE number does not *require* information, not that no information is present.
+  The leave-fold-out 0.012 is what makes the reading likely, and that is lane F's number, not mine.
+- I have **not** verified that S19's separation-profile result survives S29's benchmark pinning
+  (memory `benchmark-and-folds-must-be-pinned` records that correcting the identity clustering
+  silently moved 13 targets). S19 predates that correction. **Lane P should re-check the 0.525 A
+  on the pinned benchmark before building on it** -- I flag this rather than assume it, and it is
+  the single most load-bearing unverified number in this entry.
+- **Against myself:** S30-L13 predicted at 2:1 that the AMBER-relax benefit concentrates on
+  high-dispersion targets. Lane F then measured that pool Rg dispersion does not predict filter
+  failure (-0.128, CI includes zero). Different outcome variable, so not a refutation, but
+  same family and pointing the other way. **I have lowered that prediction to roughly even** and
+  would rather it be run by the artefact's owner than defended by me.
+
+### 8. ADDED AFTER LANE D's TEST LANDED: MY PREDICTION IS CONFIRMED AND **MY OWN CONSTRUCTIVE PROPOSAL IS DOWNGRADED BY IT**
+
+Lane D ran the four-line check I offered and it came back confirmed and harder than I asked:
+radial share of the Gram trace **0.5798**, cos(dominant principal direction, radial) **0.9472**
+(median 0.9840), stable rank **1.705 -> 2.642** with the radial direction removed, and the ORACLE
+payoff **cos(direction to the native, radial) = -0.0675 overall, -0.2524 on FAIL18**.
+
+**The causal chain is now complete across three lanes, and it is this sprint's strongest result:**
+
+    S30-L6 (L, algebra)   every fixed-reference distance potential contains a SEPARABLE
+                          pure-scale term -- forced, not fitted
+        ->  S30-L7 (D)    58.0% of the field library's Gram trace IS the radial direction,
+                          and 94.8% of its top eigenvalue is
+        ->  S30-L7 (D)    the direction to the native is ORTHOGONAL to radial (-0.068),
+                          and ANTI-ALIGNED on FAIL18 (-0.2524)
+        ->  lane F        shape, not scale, is 83% of the tail's error
+
+> **The library is built out of scorers whose algebra forces them to measure scale; the native is
+> not in the scale direction; and on the hard targets the scale direction points the wrong way.
+> The library cannot express shape because its rank is spent on scale, and the reason its rank is
+> spent on scale is the reference state.**
+
+**AND NOW THE PART THAT COSTS ME.** In S30-L6 I offered a size-matched reference state
+(`a_i = sqrt(5/3) Rg_i`) as a *constructive* alternative to statistical partialling. Lane D's
+entry contains the warning that kills the deployable half of that offer: *"Deflating the radial
+direction reallocates rank; it does not create any."* I initially wanted to argue that
+size-matching is not deflation because it **builds a different field** rather than projecting an
+existing one. **That argument is wrong, and my own algebra is what refutes it:** the score
+decomposes *additively and exactly* into a shape term plus a scale term, the field is the gradient
+of the score, so the field decomposes additively too, and **the size-matched field IS the deflated
+field.** Lane D's caveat therefore applies to my proposal in full.
+
+**What survives, precisely:** the two uses that never pass through the cosine --
+(i) a **band statistic** with provably zero uniform-scale loading, which is S29-L19's
+self-fulfilling-null warning answered by construction, and (ii) **lane R's ladder control**. Both
+stand. **What does not survive is any suggestion that a size-matched channel is a route to
+Angstroms**; it is the same 42% of the spectrum lane D already measured, relabelled. S30-L6's own
+section 5 hedged this correctly ("worth approximately nothing as a deployable ranker") and I am
+promoting that hedge to the headline where it belongs.
+
+**Where this leaves the direction, honestly.** A new field that is orthogonal to the radial
+direction is *necessary* (58% of the current rank is wasted) and *not sufficient* (section 4:
+orthogonality is a 5.1% discount; the field still needs rho ~ 0.34 of its own). Lane D's Gram tool
+is now a one-liner for checking a proposed field's radial orthogonality **before** it is built,
+and I would make that check a gate on any new channel this sprint funds.
