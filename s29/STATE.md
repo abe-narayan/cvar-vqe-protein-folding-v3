@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:56 Pacific.
+Last update: 2026-09-20 01:01 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -262,6 +262,30 @@ B's code, so agreement cannot come from a shared implementation error. Three out
    at every lam). The sensitivity is real, not a near-zero derivative: the mean norm of
    dC/dp_y over the tail directions is 55.7 A per unit probability. That is the mechanism
    result, and lane B got it by correcting my gate rather than obeying it.
+
+
+## Integration note 19 (2026-09-20 01:01): A DEADLOCK I CAUSED, AND THE FIX (governor v2.6)
+FIVE JOBS ACROSS FOUR LANES WERE STARVED FOR UP TO 40 MINUTES and I caused it. When I raised the
+governor's bands to run the box at the 94 to 95% the user asked for (v2.5: suspend above 94% RAM,
+hard 95.5, resume below 92), I did not touch CPU_RESUME, which was 80.0 from S26. The resume
+condition is RAM below 92 AND smoothed CPU below 80. With eight jobs deliberately pinning the CPU
+at 88 to 96%, THE CPU CLAUSE COULD NEVER FIRE, so any job the governor suspended stayed suspended
+for ever. Lane O's ladder shard 3 sat at 60 of 625 cells from 00:19 to 00:59; lane P's shard 0,
+lane D's band run, lane B's gradient job and lane X's configuration run were all stopped too, and
+none of the four lanes could see it because the processes were alive, registered and simply not
+scheduled.
+DIAGNOSIS AND FIX. Spotted by comparing shard progress across siblings (540, finished, 60, 420 of
+625) rather than by any alarm, which is itself a gap: nothing in the harness reports a job that is
+registered, alive and making no progress. Resumed all five by pid, raised CPU_RESUME to 97.0 with
+the reason written in the source, and restarted the governor (v2.6). RAM, not CPU, is the real
+constraint on this box; gating a resume on low CPU is incompatible with an instruction to run the
+CPU hot.
+COST: about 40 minutes of five jobs' wall time, no computation lost (every one is checkpointed and
+resumed where it stopped). RECORDED HERE because the sprint's standard applies to the coordinator:
+this is the second operational error of mine this hour, after the flatness gate that would have
+killed a live idea by measuring a constant.
+FOLLOW-UP FOR A LATER SPRINT, not now: the governor should log a STARVED warning when a suspended
+job's suspension exceeds some multiple of MIN_SUSPEND, and jobrun should surface it.
 
 ## Integration note 1 (2026-09-19 23:55, after S29-L1)
 Lane L's topic 1 closes the "import a QA method" route from outside: no published native-free

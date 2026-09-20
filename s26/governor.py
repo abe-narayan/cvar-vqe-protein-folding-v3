@@ -58,7 +58,9 @@ CEILING = 94.0        # % RAM (v2.5, S29: the user asked for 94-95%), or % CPU s
 HARD = 95.5           # % RAM sustained HARD_SECONDS (v2.5): kill the newest job (RAM only, v2)
 HARD_SECONDS = 15.0
 RESUME_BELOW = 92.0   # RAM band is 92-94 (v2.5); resume only once RAM is back under 90 ...
-CPU_RESUME = 80.0     # ... and smoothed CPU is under 80 (v2: the 90-93 CPU band thrashed)
+CPU_RESUME = 97.0     # v2.6 (S29): the box is deliberately run at 94-95% CPU on the user's
+                      # instruction, so a resume gated on CPU < 80 could NEVER fire and starved
+                      # five jobs across four lanes for 40 min. RAM is the real constraint here.
 CPU_WINDOW = 3        # samples in the CPU rolling mean (3 x 5 s = 15 s)
 MIN_SUSPEND = 20.0    # seconds a suspended job stays suspended before it may resume (v2)
 STALL_SECONDS = 180.0 # RAM parked in [RESUME_BELOW, CEILING) with jobs suspended: kill the fattest (v2.2)
