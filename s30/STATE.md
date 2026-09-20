@@ -337,6 +337,52 @@ quoted the **verdict string**. A verdict string is a claim about a computation a
 what reading the computation is worth.
 
 
+## NOTE 8 (2026-09-20 13:20, lane T's closing line): **THE WHOLE BOUND COLLAPSES TO ONE OUT-OF-FOLD REGRESSION**
+
+Lane T closed with a reformulation that turns the sprint's central question into a single cheap
+measurement. B2 -- "no native-free field reaches rho > 0.14" -- is restatable as one estimable
+number:
+
+> **rho_max = sqrt( R^2( e ~ S ) )**
+
+where `e` is the oracle error (production's answer to the native) and `S` is any native-free signal.
+The bound becomes a variance-explained threshold:
+
+```
+rho = 0.14   B2's ceiling, the best field ever built   <->   R^2 =  1.96%
+rho = 0.358  3.00 A, the charter's primary target      <->   R^2 = 12.8%
+rho = 0.628  2.50 A, the charter's ambitious target    <->   R^2 = 39.4%
+```
+
+**So the question the whole sprint has circled -- is there enough information anywhere -- becomes:
+can any native-free feature set explain 39.4% of the variance of the oracle error, out of fold?**
+That is **falsifiable by one regression rather than by a field survey**, and it subsumes the survey:
+throw everything available at `e` at once and read the number.
+
+**And the bar is lower than it looks, because the subspace is free.** Lane T measured that the error
+is **8x more concentrated in the pool's leading deviation directions than isotropy predicts** --
+six directions contain a rho = 0.779 point (1.91 A). The pool's own PCA is native-free and
+per-target, so regressing *within* that subspace costs nothing and drops the requirement to
+**0.855 bits for 3.00 A and 3.78 bits for 2.50 A**, against **0.076** from the best field on record.
+
+This is now the highest-value measurement left in the sprint and it is lane P's. Registered with it:
+the bars above, a **matched-dimension control R^2 beside every number** (lane D's per-target ORACLE
+combination hit rho = 0.949 where a random 21-dimensional subspace hit 0.809 -- almost all
+dimension, no signal), a re-run with distogram-derived features removed if anything clears, and a
+split by **shape versus scale** and by stratum, because lane F localised **83% of the tail's error
+to shape** and refuted scale as the mechanism.
+
+---
+
+## LANE T CLOSED. Final ledger: S30-L9, L14, L15. `s30/THEORY.md`, 550 lines, 10 sections.
+
+Durable, and nothing about them is an order statistic: **T1** and **T1b** (algebra); the
+**value-of-a-bit law** at R^2 0.9983; the **codebook 5.2x**; the **torsion 48-vs-7** arithmetic;
+**M5**'s subspace projection; the corrected **within-subspace dictionary**; and the combination
+formula **rho_comb = rho_0/sqrt(s_1)**, registered in advance and accurate to **0.008**.
+
+Withdrawn by its own hand: four claims, three toward its own hypothesis.
+
 ## NOTE 7 (2026-09-20 13:19, lane T): **IT RETRACTED ITS OWN HEADLINE**, ON A NULL LANE Q TOLD IT TO RUN
 
 Lane Q asked lane T to price its K = 5,000 direction search with `best_of_k_within` before
