@@ -1,0 +1,435 @@
+# PREREG S29 LANE B -- THE COMPATIBILITY HAMILTONIAN: A NON-DEGENERATE OFF-DIAGONAL TERM AND WHAT ITS GROUND STATE SELECTS
+
+Registered 2026-09-20 00:10 Pacific, before any number of this lane. Authority `s29/BRIEF.md`;
+operational form `s29/S29_CONTRACT.md` (+ `s27/S28_CONTRACT.md`); brief `s29/briefs/S29B.md`.
+Nothing below has been measured by this lane at registration time. What I have already read is
+listed in section 0.4 so that "pre-registered" means what it says.
+
+---
+
+## 0. THE RE-OPENING (contract rule 10)
+
+### 0.1 The closure being re-opened, by its ledger line
+`s27/LEDGER.md` **S28-L8b** (with its adversary check **S28-L11**, its endpoint **S28-L21** /
+**S28-L41**, and **S28-L43**): H = diag(E) - J A with A the Gaussian similarity graph
+A_ij = exp(-d_ij^2 / 2 sigma^2) at sigma = median off-diagonal CA-RMSD. Measured: the hop-only
+gradient variance decays at **-1.7 to -1.8 per qubit** (S28-L11 caveat (a): quote the range, not
+-1.844) and at n = 9 sits **7,300x** below the diagonal terms' 3.051e-2 at J = 1 (820x at J = 3);
+97% of that variance is the rank-one part v1 v1^T; the Perron vector is 95 to 99% the uniform
+state; lambda_2/lambda_1 = 0.113 to 0.139. The endpoint did not move (S28-L41: every deployed-
+readout arm within 0.46x MDE of production; R2/R3 +0.25 to +0.37 A worse). The follow-up on a
+spread-spectrum kNN graph (**S28-L25**, **S28-L29**, **S28-L46**, **S28-L47**) halved the decay
+rate to -1.0 per qubit and raised the n = 9 variance 30 to 60x, and the endpoint still did not
+move; B2 closed.
+
+### 0.2 Why the old closure may not apply
+S28's own mechanism sentence is a statement about **one similarity measure**, not about
+off-diagonality: "the decay is a property of the near-rank-one SPECTRUM ... not of being
+off-diagonal" (S28-L8b), and S28-L11(3) strengthened it (a diagonal control with the same
+spectrum decays at the same rate on the padding-free registers). The kNN follow-up spread the
+spectrum but kept the same *object* -- a non-negative similarity graph whose top eigenvector is
+still 0.98 overlapped with the uniform state (S28-L25), i.e. still a typicality projector with a
+flatter tail. Neither matrix ever had **structured** eigenvectors.
+
+### 0.3 The licence (lane T's measurement)
+On the same 12 trainability targets and the same sub-pools, lane T measured three matrices side
+by side (`s29/s29_T_spectra.py`, job `s26/jobs_done/s29T_spectra.json`, rows
+`s29/results/s29_T_spectra_rows.jsonl` (72 rows = 12 targets x n 4..9) and
+`s29/results/s29_T_grad_rows.jsonl` (216 rows = 12 x 3 matrices x 6 registers), analysis
+`s29/results/s29_T_spectra.json`): at n = 9 the raw Gaussian similarity A has
+lambda_2/lambda_1 = **0.138**, its double centering A_c = H A H gives **0.465**, and the signed
+agreement matrix G = Delta Delta^T gives **0.634** (the three figures quoted in `s29/briefs/S29B.md`
+from lane T's rows). Lane T's ledger entry for this measurement was **not yet posted** when this
+prereg was written; it is cited here by artefact path and the entry number will be added to this
+lane's first ledger entry when it lands. **The S28 closure was about one degenerate similarity
+measure.** This lane asks the question S28 could not: with an off-diagonal term whose eigenvectors
+carry structure, does the state change, and does what it emits change?
+
+### 0.4 What I have read before registering (honesty about "pre-registered")
+Read: the briefs, contracts and charter; S28-L8b / L11 / L21 / L25 / L29 / L41 / L43 / L46 / L47
+in full; `s27/s28_B_hop.py`, `s27/s28_B2_knn.py`, `s29/s29_T_spectra.py` in full; the *schema* and
+target list of `s29/results/s29_T_grad_rows.jsonl` (216 rows, 12 targets, keys only). **I have not
+read a single `var_g0` value of lane T's gradient rows**, and measurement 1's bright line below is
+registered blind to them. I have read the n = 4 spectral row of `1A13` and the n = 4 / n = 5
+medians in `s29_T_spectra.json` (they scrolled past while I was reading the script) and the three
+n = 9 ratios quoted in my brief (0.138 / 0.465 / 0.634). Measurement 1 therefore registers a
+bright line on quantities that are **already on disk**, computed by another lane against *its own*
+registered prediction; this is what the brief instructs ("extend lane T's rows, do not redo them")
+and it is stated here rather than dressed up. Nothing in measurement 2 or 3 exists on disk.
+
+### 0.5 A correction to the brief's gate constant, registered before it bites
+The brief's measurement-2 gate reads "not better than the uniform top-75 average (2.954 point
+cloud)". **2.954 is the S10-5 ORACLE ladder figure** (`docs/FINDINGS.md` S10-5, quoted in
+`s27/PREREG_S28_A.md` line 9 and `s27/LEDGER.md` S28-L0), from a different pool era. On *this*
+instrument the DIS top-75 uniform average on the point cloud is **3.048338** at n = 126
+(`s27/results/s28_B_rows.jsonl :: rmsd_dis75`, and `s27/results/s28_B_summary.json ::
+anchors.dis75_mean`) and **3.252928** on the 12 trainability targets, which are harder than
+average. Gating a 12-target probe against 2.954 would compare an operator against a number from
+another target set and another pool -- the project's most repeated error (memory:
+`control-must-match-the-operators-space`). **The gate below is PAIRED against each target's own
+DIS top-75 uniform average** and the 2.954 figure is reported beside it with this provenance.
+
+---
+
+## 1. THE NINE QUESTIONS (charter section 11; contract rule 15)
+
+1. **What a basis state means.** |i> is candidate i of the target's DIS top-500 retrieval pool --
+   one real 9-to-16-residue CA window, posed in the pool's frame. The encoding is the deployed
+   identity label (`s22.qcand_lib.Encoding`, candidate i at bit-string i), n = 9 qubits,
+   dim = 512 = 500 real candidates + 12 padding states whose E is set to max + 10 sd and whose
+   rows and columns in every M are zero. Unchanged from S28 deliberately: the point of this lane
+   is to change **one** thing, the off-diagonal term.
+2. **What the Hamiltonian means.** H = diag(E) - J M. E is the deployed standardised DIS rank
+   ladder (`s27.run_pool.zr(ch["DIS"])` through `Encoding`), the shipped cost. M is a
+   **compatibility** operator on the pool with the common mode removed:
+   - **A_c = H A H / ||.||_2**, H = I - 11^T/N, A the S28 Gaussian graph at unit spectral norm.
+     Double centering is classical MDS: A_c's eigenvectors are the pool's **principal coordinates**,
+     i.e. its principal modes of *disagreement*, and the typicality mode is gone by construction.
+   - **G = Delta Delta^T / n_res**, at unit spectral norm, with Delta_i the deviation of member i
+     from the pool mean in the medoid frame (the frame the deployed readout averages in;
+     `s12.instrument.superpose_batch`). G_ij is the inner product of two members' deviations from
+     the typical structure: positive when they depart the same way.
+   - **A** itself is carried as the S28 reference, not as an arm.
+   - **G_res** (the brief's optional third: Delta residualised on the posterior's own predicted
+     deviation) is **registered as NOT RUN in this pass**, with the reason in section 6.
+3. **Why it should correlate with useful structural information.** The identity
+   `<psi|G|psi> = || sum_i psi_i Delta_i ||^2 / n_res` (section 3.1) makes the hopping term
+   *exactly* the squared norm of the amplitude-weighted departure from the pool's typical
+   structure. The record says 68% of the pool's error is common-mode by exact identity (S23 L9,
+   memory `pool-error-is-68-percent-common-mode`), so the pool mean carries a bias that no
+   averaging removes; anything that can move the answer at all must move it **along the deviation
+   modes**, and G is the operator whose eigenvectors are those modes. A_c is the same statement
+   made on the similarity measure instead of the coordinates. This is the charter's "Hamiltonian
+   encoding the disagreement between the prior and the pool" (section 12) and it enters the
+   common-mode error as the thing that is **removed** rather than averaged in.
+4. **What the CVaR objective optimises, over what distribution.**
+   F(theta) = CVaR_0.18(E; p_theta) - 0.5 H(p_theta) - J <psi_theta|M|psi_theta>, the deployed
+   spine (`core.quantum.free_energy`) plus the hopping term with its exact parameter-shift
+   gradient, over p_theta = |psi_theta|^2 on the 512-state register. Unchanged from S28 except M.
+5. **What the ansatz can and cannot represent.** `core.quantum.StatevectorCircuit(9, 3)`, RY+CNOT,
+   **27 parameters**, real amplitudes only: it provably cannot represent a complex state, and
+   S28-L43 measured that it reaches the J = 3 Gaussian ground state at squared overlap **0.849**
+   (best of 16 starts, 0.796 to 0.880) -- the cap is expressivity of the state; the 2.8 gap in F
+   is optimisation by basin selection.
+6. **Whether the optimiser can reach the relevant states.** Measured in S28 and re-measured here:
+   the circuit lands in the sign-coherent basin on 43/32 of 126 cells (Gaussian, S28-L41) and
+   49/33 (kNN, S28-L46). The *bimodality* is the honest description; no trainability word is
+   attached to any slope in this lane (contract rule 9).
+7. **Whether the quantum output contains information unavailable to the classical baseline.**
+   The exact eigensolver ground state of the same H is the classical counterpart and is an arm,
+   not a footnote. If the eigensolver reproduces every effect, the answer is "no" and the entry
+   will say so in that word.
+8. **Whether a classical control can reproduce the effect.** Controls in section 5.4 / 5.5:
+   eigensolver; M rank-permuted; M replaced by a random matrix with the **same spectrum**
+   (S28-L43's control, which separates spectrum from structure); a classical top-m by v1^2;
+   untrained circuit; product-state restriction; matched budget; both seeds.
+9. **Whether it changes built-chain RMSD.** Only measurement 3 answers this, only if the
+   measurement-2 gate opens, and only through lane D's meter first (measurement 4).
+
+---
+
+## 2. FINDINGS ENGAGED (contract rule 13)
+
+**Attacks** charter finding **7** (was the failure "non-diagonal Hamiltonians don't help" or "that
+particular similarity measure was degenerate"? -- this lane answers it), finding **11** (the 68%
+common-mode error: G is the operator that removes it rather than averaging it in), and finding
+**9** in its weak form (Hamiltonian variation within a fixed encoding is low-dimensional -- true,
+and this lane tests exactly how low).
+
+**Accepts as binding** findings **1** (expressivity is not the bottleneck), **2**, **3** (the
+objective is the bottleneck), **4**, **5**, **6** and **10**.
+
+**Finding 8 (recognition), engaged explicitly as required.** This lane does **not** claim to
+repair recognition and its Hamiltonian contains no new information channel: E is the shipped cost
+and M is built from the pool's own geometry, which the pipeline already has. What it proposes is
+that the *aggregation* stage, not the recognition stage, is where the 68% common-mode error is
+paid, and that a correlated state over mutually compatible members is the operator class that
+could exploit it. My own registered prior (section 3.3) is that it **cannot**, for a reason that
+is provable rather than empirical, and measurement 2 is designed to say so in one afternoon rather
+than after an endpoint run. Under S29-L1 (lane L: no native-free QA method exists at this length)
+this is the honest framing: an aggregation experiment, not a recognition claim.
+
+---
+
+## 3. THE MATHEMATICS, AND MY PRIOR STATED AS A DERIVATION
+
+### 3.1 The hopping term of G is the squared coherent departure
+With Delta the (k x 3 n_res) matrix of members' deviations from the pool mean in the medoid frame,
+G = Delta Delta^T / n_res, so for any real amplitude vector psi
+
+    <psi|G|psi> = psi^T Delta Delta^T psi / n_res = || Delta^T psi ||^2 / n_res
+                = || sum_i psi_i Delta_i ||^2 / n_res.
+
+Maximising it (J > 0) asks for a set of members whose departures from typical **reinforce**;
+minimising it (J < 0) asks for a set whose departures **cancel**, which is what uniform averaging
+does by construction. Both signs are on the grid, and the J < 0 branch is the record's own
+consistency mechanism (S27 section 6: consistency mechanisms have been harmful here; memory
+`consensus-is-outlier-avoidance`) measured in the same experiment as its opposite.
+
+### 3.2 The sign-mixing lemma (why I expect the term cannot help through a sign-blind readout)
+**Claim.** Both A_c and G annihilate the uniform vector: A_c 1 = H A H 1 = 0 because H1 = 0; and
+G 1 = Delta (Delta^T 1) / n_res = 0 because deviations from the mean sum to zero
+(sum_i Delta_i = 0). Therefore every eigenvector v of either matrix with lambda != 0 satisfies
+1^T v = 0, and a nonzero vector orthogonal to 1 **has entries of both signs**.
+
+**Consequence.** As J -> +-infinity the ground state of diag(E) - J M tends to the extremal
+eigenvector of M, which is a **signed contrast**: amplitude on *both* extremes of a principal
+disagreement mode with opposite signs. The deployed readouts consume p = |psi|^2 and average the
+selected members **uniformly and sign-blindly**, so the support is symmetric about the mode and
+its coordinate average returns approximately the pool mean -- the very structure the term was
+supposed to depart from. The coherence lives in the **phases**, and the readout is where it is
+destroyed. The only thing that can tilt the support to one side is diag(E), and E is the shipped
+cost, which is anti-correlated with RMSD along the near-native half of the ladder (S29-L2:
+rho -0.402 chain / -0.182 CA).
+
+This lemma is the reason measurement 2 exists and is registered **before** it: it converts "does
+the term help?" into a cheap exact eigenproblem, and it also names the repair (a **signed**
+readout, R4 below), which is measured as a diagnostic in the same pass.
+
+### 3.3 The stable-rank bound on measurement 1's second clause, derived before measuring
+Lane T's section-3 derivation gives, as the 2-design leading term,
+Var_theta[dF/dtheta_k] ~= ||M - (tr M / D) I||_F^2 / D^2 = r_stable(M) / D^2 at unit spectral norm,
+r_stable = ||M||_F^2 / ||M||_2^2 <= rank(M). At n = 9, D = 512 and the diagonal terms' measured
+variance is 3.051e-2 (S28-L8b). "Within 30x of the diagonal terms'" therefore requires
+
+    r_stable(M) >= 512^2 * 3.051e-2 / 30 = **266**.
+
+**G cannot satisfy this by construction**: rank(G) <= 3 n_res and, after the mean and the rigid
+body, <= 3 n_res - 6, i.e. **at most 42** for the longest peptide here (n_res 9 to 16). So
+r_stable(G) <= 42 and the predicted n = 9 variance is at most 42/262144 = 1.6e-4, at least
+**190x** below the diagonal terms'. For A_c the bound is rank <= 511, so the clause is not
+impossible a priori, but it needs an effectively half-rank flat spectrum, which lambda_2/lambda_1
+= 0.465 with a decaying tail does not describe. **I predict the second clause of the bright line
+fails for both matrices**, and that the first clause (slopes shallower than -1.0 per qubit) is
+straddled or passed. The measurement then checks the 2-design relation itself (the circuit at
+depth 3, n = 9 has 27 parameters and is nowhere near a 2-design, S25 `q_plateau.py` scope note),
+which lane T's rows already carry as `ratio_meas_over_pred`.
+
+### 3.4 Should a coherent set along a principal disagreement mode be better or worse than the
+average? (the brief's explicit question; S27 section 6)
+**Worse, in expectation, and for a stated reason.** A one-sided coherent set emits
+mean + c * (a principal deviation mode). The native's own deviation from the pool mean is, on any
+given target, at some angle to that mode; the record's measurements of that class of operator are
+that the per-target **sign** is the unavailable quantity (memory `in-band-ordering-is-per-target`:
+0.986 within a target, 0.600 across; `error-shape-not-mae-decides-ranking`: full amplitude, wrong
+direction; S16: every native-free arm chose "do nothing"). A zero-mean signed displacement against
+a locally convex RMSD costs more when it is wrong than it gains when it is right, so the expected
+effect of a sign-blind operator along a disagreement mode is **worse than the average**, not
+neutral. Against that: S10-5's ORACLE ladder puts the affine span of the same 500 windows at
+0.064 A and the convex hull at 0.853 A, so the *headroom* along these modes is enormous; the
+question is entirely whether anything native-free can point along them. This lane's answer will be
+a measurement, and its prior is failure.
+
+---
+
+## 4. MEASUREMENT 1 -- SPECTRUM AND TRAINABILITY (no RMSD, no native, its own ledger entry)
+
+**Question.** Is S28's gradient decay a property of the *degenerate spectrum*, and does a
+non-degenerate off-diagonal term restore the hopping term's share of the gradient?
+
+**Inputs.** Lane T's rows, consumed, not recomputed (brief: "extend lane T's rows, do not redo
+them"): `s29/results/s29_T_spectra_rows.jsonl` (spectra) and `s29/results/s29_T_grad_rows.jsonl`
+(hop-only gradient variance, mode `hop_only`, 120 draws, seed 1009, init sd 0.6, depth 3, exact
+parameter shift -- S28's estimator line for line via `s27.s28_B_hop.measure_hop`), for
+M in {A, A_c, G} at n = 4..9 on S27's 12 trainability targets. Beside them: S28's diagonal cells
+from `s27/results/s28_B_train.json :: summary` (full J = 0 at n = 9: 3.051e-2; hop-only A:
+4.157e-6) and the kNN rates from `s27/results/s28_B2_train.json`.
+
+**Reported.** Per matrix and per n (median over the 12 targets): lambda_2/lambda_1,
+lambda_3/lambda_1, the stable rank and its traceless form, the top eigenvector's participation
+ratio and its squared overlap with the uniform state, the hop-only Var[dF/dtheta_0], the ratio to
+the diagonal terms', the fitted log2 slope over n = 4..9 **and** over the padding-free n = 4..8
+(S28-L11 caveat (a): quote a range, never a third decimal), and the measured/predicted variance
+ratio that tests section 3.3's relation.
+
+**B1, the pre-registered bright line** (the brief's wording, disambiguated). The claim
+"**the degeneracy was the mechanism of S28's gradient invisibility**" is
+- **SUPPORTED** iff, for **both** A_c and G: (i) the fitted log2 slope is **shallower than -1.0
+  per qubit** on the n = 4..9 fit, **and** (ii) the median n = 9 hop-only variance is **within 30x**
+  of the diagonal terms' 3.051e-2, i.e. **>= 1.017e-3**;
+- **REFUTED** (the brief's falsifier) if either clause fails for both matrices;
+- **PARTIAL** otherwise, and the entry says which clause failed for which matrix and quotes the
+  numbers without a verdict word.
+Registered prior (section 3.3): **clause (ii) fails for both; G's failure is a bound, not a
+measurement**. Contract rule 9: no slope in this entry is called a plateau or its absence, and no
+quantum-advantage word is used.
+
+**Extension this lane adds** (not a redo): the measured-over-predicted variance ratio per matrix
+and per n; the stable-rank-versus-variance scatter across all 216 rows; and the *count* of rows
+in which G's rank exceeds 3 n_res - 6 (must be zero; it is a correctness check on the builder).
+
+**Multiplicity.** Zero endpoint comparisons. This entry posts whether or not measurement 2 clears.
+
+---
+
+## 5. MEASUREMENT 2 -- WHAT THE EXACT GROUND STATE SELECTS (ORACLE DIAGNOSTIC, LABELLED)
+
+Every RMSD in this section is **ORACLE** (it reads the native to score an achievable selection)
+and **nothing in it chooses a deployable parameter**. The selection itself is native-free
+(`select` receives W, E, the tie key and M; the native enters only in `oracle_rmsd`).
+
+### 5.1 The object
+For each target, each M in {A_c, G, A} and each J on the grid below: the exact ground state of
+H = diag(E) - J M by `numpy.linalg.eigh` (512 x 512), p = v0^2, with the S28 global-sign fix.
+J = 0 is the one-hot argmin and is **excluded from every comparison** (degenerate; S28's rule).
+
+### 5.2 The J grid, fixed here and not revisited
+**J in {-3, -1, -0.3, -0.1, +0.1, +0.3, +1, +3}**, both signs (section 3.1: the negative branch is
+the cancelling/consensus direction, the positive branch the coherent one), magnitudes matched to
+S28's grid so the A rows are directly comparable to S28-L21. 8 J x 3 M = **24 cells per target**.
+
+### 5.3 Readouts and descriptors, per cell
+- **R3 (primary, production-matched)**: the uniform coordinate average over the **m = 75** most
+  probable real candidates, ties by the stable key (`s27.run_pool.topm`, contract rule 12). This
+  is the brief's "coordinate average over its top-m support" at production's own m.
+- **R2 (secondary)**: the p-weighted coordinate average over all 500 real candidates in the
+  p-weighted consensus-medoid frame (`s27.s28_B_hop.readout_weighted`).
+- **R4 (diagnostic, the mechanism-matched readout)**: the **signed** amplitude-weighted average
+  sum_i psi_i W_i / sum_i psi_i, in the medoid frame. This is the readout for which
+  <psi|G|psi> is the meaningful quantity (section 3.2). It is **undefined** when the state is
+  sign-antisymmetric, so it is recorded only where the sign coherence
+  (sum psi)^2/(sum |psi|)^2 >= 0.01, and the number of undefined cells is reported. Because an
+  affine combination does not preserve scale, R4 is reported **with** its emitted mean virtual
+  CA-CA bond and radius of gyration beside it (memory `averaging-space-beats-the-objective`:
+  averaging contracts the backbone 25.8%; contract addendum 1 rule 20's spirit).
+- **Descriptors (native-free)**: participation ratio 1/sum p^2; mean pairwise CA-RMSD of the R3
+  support (the cluster it selects); Jaccard and overlap of that support with the DIS top-75;
+  sign coherence; the spectral gap of H; the realised one-sidedness of the support along M's top
+  eigenvector.
+
+### 5.4 Controls in this measurement (the diagnostic set; the full set is section 6)
+- **PROD**: the same target's DIS top-75 uniform average -- the paired comparator.
+- **PERM**: M rank-permuted (P M P^T, same spectrum and degree multiset, correspondence with E
+  destroyed; `s27.s28_B_hop.permuted_graph` generalised to any symmetric M, seed
+  `run_pool.rng_for(pdb, "s29B_perm")`).
+- **SPEC**: M replaced by Q Lambda Q^T with Q a Haar orthogonal matrix and Lambda M's own
+  eigenvalues -- **the same spectrum, no structure** (S28-L43's control; seed
+  `rng_for(pdb, "s29B_spec")`). This is the control that separates "spread spectrum" from "these
+  particular eigenvectors", which is exactly the claim under test.
+
+### 5.5 THE GATE (pre-registered; the brief's stop rule, made paired and priced)
+Run on the **12 trainability targets** first (contract rule 16). Let d(cell) = mean over the 12
+targets of [R3 ORACLE RMSD of the cell] - [the same target's DIS top-75 uniform average], paired,
+through `s24.stats_lib.compare` with `pinned_folds`.
+
+**GO to measurement 3 iff all four hold:**
+1. some cell with M in {A_c, G} has **d <= -0.7 x MDE** of its own paired comparison;
+2. that cell's advantage survives the grid as an order statistic: `ST.best_of_k_within` over the
+   24-cell matrix reports a **positive split-half transfer** (memory `grid-oracles-are-order-statistics`);
+3. the same cell's **PERM and SPEC** controls do not reproduce it (control effect < half the real
+   effect), so the claim is about *these eigenvectors*, not about having a spread spectrum;
+4. the cell is not the J -> 0 limit (its participation ratio is > 1.5, i.e. it is not the argmin).
+
+**Otherwise: STOP.** The entry says "the term cannot help at the endpoint and here is the number",
+the endpoint run is not spent, and measurement 3 is not run. A GO is **a decision to spend
+compute, not a result** (S29-L4(d)): the entry prints power and the Type-M factor beside it and
+says so in the same sentence; with 12 targets the fold-clustered CI over 5 clusters of 2 to 3
+targets is quoted as **descriptive only**.
+
+If the gate opens, measurement 2 is repeated on all **126** targets before any endpoint run, and
+the 126-target version is the one quoted.
+
+**Registered prior for measurement 2: the gate does NOT open** (section 3.2 + 3.4). Specifically:
+every R3 cell lands within 0.3 A of PROD with the sign mostly positive (worse); R4 has a *larger*
+spread than R3 in both directions and a worse mean; and the ORACLE best-of-sign over R4 is much
+better than PROD while R4 itself is not, which is the per-target-sign problem restated.
+
+**Multiplicity.** 24 cells x 3 readouts x (REAL, PERM, SPEC) = up to 216 ORACLE diagnostic
+comparisons on 12 targets. None is an endpoint comparison; all are counted in the entry and the
+grid is priced with `best_of_k_within` before any cell is quoted.
+
+---
+
+## 6. MEASUREMENT 3 -- THE ENDPOINT (ONLY IF THE GATE OPENS)
+
+Registered now so that a GO cannot be followed by a freshly-invented design.
+
+**Arms.** The genuine CVaR-VQE (`s27.s28_B_hop.run_hop_vqe`, i.e. `core.quantum.run_cvar_vqe`
+with the hopping gradient added: alpha 0.18, T 0.5, depth 3, 80 iterations, lr 0.15, Adam), at the
+**one or two** (M, J) cells the gate opened, seeds 0 and 1, readouts **R1** (the deployed tail)
+and **R2**, on **12 targets first, then 126** only if the 12-target result clears 0.7x MDE.
+
+**Comparators.** Production (DIS top-75 uniform) and the same arm at J = 0, same seed, same
+readout (F1's shape in S28).
+
+**Controls, all pre-registered (contract rule 15's ten):** J = 0; M rank-permuted; M replaced by a
+random matrix with the same spectrum (SPEC); the exact eigensolver ground state (the classical
+spectral counterpart); the untrained circuit (best of 16 draws, the same draw law as S28-L43's
+representability fit); a **product-state restriction** (the same objective optimised over
+separable states, i.e. the depth-0 / no-CNOT circuit at matched parameter count); **matched
+budget** (the J = 0 arm given the same number of objective evaluations); both seeds; and the
+order-statistic pricing of any grid. A positive that does not survive all of these is reported as
+provisional and handed to lane D.
+
+**Falsifiers.** F-B1: the arm's built-chain mean is not better than production by 0.7x MDE with
+the fold-clustered CI excluding zero on **both** seeds -> refuted as registered. F-B2: the PERM or
+SPEC control reproduces at least half the effect -> the specific eigenvectors contributed nothing.
+F-B3: the eigensolver reproduces the effect -> the quantum stage contributed nothing and the entry
+says so in that word. **Registered prior: WORSE or null**, as in S28.
+
+**Reporting basis.** Built chain (`s24.d_harness.readout_projected`), point cloud as the screening
+basis only, both re-projected in this lane's own process against the S27 anchor
+(`s27/results/s28_B_prodcheck.json`'s 0.0-on-126/126 check is the standard to meet).
+
+**G_res, and why it is not run in this pass.** The brief's optional third matrix residualises each
+member's deviation on the posterior's own predicted deviation. The posterior here is a distogram,
+not a coordinate predictor, so "the posterior's predicted deviation" requires first materialising a
+predicted structure and then defining a deviation in the medoid frame -- a second construction with
+its own convenience choices, and by lane T's theorem 2 / contract addendum 1 rule 21 the marginal
+class it would live in is bounded. It is deferred until G itself has been measured, and if the
+gate does not open it is not built at all. Recorded here so its absence is a registered choice.
+
+---
+
+## 7. MEASUREMENT 4 -- THE METER (contract rule 19)
+
+Before any endpoint claim, every arm's cost goes through lane D's cost-RMSD meter
+(`s29/s29_D_cost_audit.py`). The object metered is the **structure-level** cost this lane's
+Hamiltonian induces, submitted as a callable `s29.s29_B_compat:cost_compat` under the meter's
+`f(W, ctx) -> (m,)` contract: for a stack of CA clouds it returns the shipped DIS cost of each
+cloud **minus J times the cloud's coherence with the pool's principal disagreement mode**, which
+is the term's contribution to how a structure is scored. The four numbers (ladder Spearman on the
+S28 ladder, gradient cosine at production with the random-direction reference, the native's
+percentile in the pool, the preference for the ORACLE structure with the pool-member control) are
+reported in the endpoint entry. Per contract addendum 1 rule 20, any cosine gain is reported with
+(a) the implied shrink, (b) the native percentile, (c) the emitted mean virtual bond and Rg.
+
+---
+
+## 8. BUILD, JOBS AND DISCIPLINE
+
+- Code `s29/s29_B_compat.py`, reusing `s27/s28_B_hop.py`'s machinery (pairwise matrix, graph,
+  padding, readouts, gate, ORACLE scoring) rather than re-deriving it. Tests
+  `tests/test_s29_B.py`: symmetry; zero diagonal where required; unit spectral norm for every
+  matrix; the centering identity A_c 1 = 0 and G 1 = 0 to 1e-10; rank(G) <= 3 n_res - 6;
+  G's nonzero spectrum equals that of Delta^T Delta / n_res (the pool's deviation covariance);
+  PERM and SPEC have M's spectrum to 1e-10; the ground state at J = 0 is the one-hot argmin; and
+  **NaN-poison** of `nat_ca` / `oracle_rr` leaves every native-free output bit-identical.
+- Results `s29/results/s29_B_*.json(l)`; findings `s29/s29_B_FINDINGS.md`; ledger entries
+  `## S29-L<n> -- ... (date time, B)` numbered from the tail in ONE python process, with the date
+  read by `date` in the same command as the append (memory `check-the-clock-before-stamping`).
+- Every job over a minute or 200 MB through `python s26/jobrun.py --agent S29B --tag CPU --name
+  <name> --est-ram <GB> --`, one target probed first with its peak RSS quoted, **per-target
+  checkpoints** in an append-only rows file, and the shards sized so the box fills toward 94% RAM
+  without breaching it. Jobs are waited on inside a background `until` loop, not by handing back.
+- Statistics `s24.stats_lib.compare`; the fold-clustered CI decides; below 0.7x MDE is not a
+  result; 0.7 to 1.3x is the Type-M zone and is labelled; `ST.fmt` verbatim wherever a contrast is
+  claimed; SE beside every mean (memory `mde-is-per-comparison-not-per-instrument`); ties never by
+  array order; every number carries its artefact path.
+- Lane D attacks every positive and will demand the **three-way split** -- Hamiltonian quality
+  (what the exact ground state selects), optimisation quality (how far the circuit gets toward it),
+  emitted structure (what the readout makes of it) -- on any arm that moves. The three legs are
+  measured in measurements 2, 3 and 3 respectively and are reported together, not on request.
+
+---
+
+## 9. WHAT WOULD MAKE ME SAY THE WHOLE DIRECTION IS DEAD
+
+If measurement 1 shows both A_c and G still 100x or more below the diagonal terms at n = 9 **and**
+measurement 2's gate does not open at any J of either sign, then: the off-diagonal route on the
+**candidate-index register** is closed, not because the similarity was degenerate (S28's reason,
+now measured to be one measure's property) but because the readout is sign-blind while every
+common-mode-removed operator's eigenvectors are sign-mixed (section 3.2) -- a *structural*
+statement about the encoding, which is the charter's finding 9 made precise and which points at
+lane X's configuration space rather than at another matrix. That is the closure this lane would
+post, and it is worth more than another Hamiltonian.
