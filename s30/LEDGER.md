@@ -1319,3 +1319,183 @@ Four pre-registered falsifiers; 10 F1 cells, 5 F2 rows x 7 lattice resolutions, 
 21 F4 budgets, 1 greedy control, 2 order-statistic prices, 1 stratum split of the reference curve.
 Only F1-F4 are read as results. The stratum split of the argmin curve was **not** pre-registered
 and is reported as an incidental finding with its SE and MDE attached, not as a lane result.
+
+## S30-L3 -- FILTER WIDTH IS **NOT** AVERAGING WIDTH: IT MOVES THE EMITTED STRUCTURE 4-15× AS MUCH, SO S29'S FLAT m SWEEP DOES NOT TRANSFER. BUT THERE IS **NO FREE LUNCH IN WIDTH** -- F2a REFUTED, THE BENEFIT/HARM TRADE-OFF IS CLEAN AND CONTINUOUS AND CROSSES AT ~55%/55%. F2b CLOSED **BY CEILING WITHOUT SPENDING THE CHAIN**: THE ORACLE GLOBAL BEST FILTER WIDTH **IS THE SHIPPED VALUE**. AND THE "WIDENING HELPS HARD TARGETS" READING IS **FALSE** -- IT DOES NOT REPLICATE ON EITHER FILTER-INDEPENDENT TAIL. ONE MECHANISM (ρ = +0.81) EXPLAINS ALL FOUR STRATA (2026-09-20 12:57, F)
+
+Pre-registration `s30/PREREG_S30_F2.md`, committed **e626a88e at 12:47:48**, before this file's
+code existed. Code `s30/s30_F_width.py`; rows `s30/results/s30_F_width_rows.jsonl` (126);
+analysis `s30/results/s30_F_width_cloud.json`.
+
+**Basis: every RMSD below is a POINT CLOUD figure.** No built chain was spent, and §4 says why
+that is a closure rather than an omission (contract rule 1).
+
+**Reproduction gate.** The score order was recomputed from the posterior rather than read from a
+stored order, and the recomputed top-75 equals the production record's `sub` **set-wise on
+126/126 targets**, aborting otherwise. Declared caveat: the posterior itself comes from the s12
+cache, and S29-L19's operational note (`s29/LEDGER.md:751`) warns that an operator reading the
+score's order *below* the top-75 cut carries a 2-in-126 chance of differing from a fresh
+recomputation. The gate certifies the top-75 **set**, not the deep order; every k > 75 row
+inherits that caveat.
+
+### 1. The confound this removed
+
+In production the top-75 is **both** the filter and the averaging set, so one number moves two
+mechanisms. S29 swept m as the **averaging** width and found it flat (−0.00047 Å per unit m).
+Separating them — filter to top-k by the shipped Bayes-risk score, then coordinate-average a
+**random** m-subset of those k, 8 seeds, m = 75 held fixed — gives:
+
+```
+axis                                            range of the emitted point-cloud mean
+filter width      k = 75 -> 500, m = 75 fixed        0.3790   (3.0483 -> 3.4273)
+averaging width   m = 25 -> 75,  k = 75 fixed        0.0256
+averaging width   m = 25 -> 150, k = 500 fixed       0.0927
+```
+
+**The filter width is worth 4× to 15× the averaging width, on the same instrument.** The
+coordinator's prior — that S29's flatness is a property of the averaging width and says nothing
+about the filter width — is confirmed by measurement rather than assumed. **F2c is refuted**
+(max |×MDE| over k = 1.59 at k = 500, 5/5 folds), and that is the durable methodological output
+of this entry: *the project has one published "m is flat" result and it does not license any
+statement about the filter.*
+
+### 2. F2a REFUTED -- width is a trade-off, not a free lunch
+
+The registered clause needed some k > 75 retaining **≥ 80%** of the 108's ORACLE set-mean benefit
+while shedding **≥ 50%** of FAIL18's ORACLE best-member harm. Nothing does (both columns ORACLE):
+
+```
+k     benefit retained on the 108     harm shed on FAIL18     fires
+100            97.9%                        8.1%               no
+128            95.0%                       20.6%               no
+150            92.1%                       26.4%               no
+200            84.2%                       41.6%               no
+250            73.2%                       50.5%               no
+300            60.3%                       59.6%               no
+400            33.6%                       78.0%               no
+500             0.0%                      100.0%               no
+```
+
+The two curves are smooth and cross near k ≈ 275 at about 55%/55%. There is no knee, no
+saturation of the benefit before the harm starts shedding, and therefore **no width at which the
+filter is nearly as good on the body and much less bad on the tail.** The hypothesis was worth
+testing and it is wrong.
+
+### 3. F2b CLOSED BY CEILING -- and the chain was not spent
+
+Emitted point-cloud mean against filter width, m = 75 (paired vs production at k = 75):
+
+```
+k       mean     vs prod    ×MDE   fold CI             folds   W/L        verdict
+75    3.0483    +0.0000       —          —             5/5        —       production
+100   3.0534    +0.0051    +0.13  [-0.0229,+0.0313]    3/5    58W/68L     NOT MEASURED
+128   3.0598    +0.0114    +0.18  [-0.0105,+0.0334]    3/5    62W/64L     NOT MEASURED
+150   3.0729    +0.0245    +0.30  [-0.0102,+0.0637]    3/5    63W/63L     NOT MEASURED
+200   3.0972    +0.0488    +0.43  [-0.0046,+0.1117]    4/5    67W/59L     NOT MEASURED
+250   3.1412    +0.0929    +0.67  [+0.0172,+0.1666]    4/5    58W/68L     NOT MEASURED
+300   3.1890    +0.1407    +0.81  [+0.0352,+0.2443]    4/5    53W/73L     WORSE
+400   3.2962    +0.2478    +1.18  [+0.1204,+0.3793]    4/5    46W/80L     WORSE (type-M)
+500   3.4273    +0.3790    +1.59  [+0.2243,+0.5217]    5/5    45W/81L     WORSE
+```
+
+**The ORACLE global argmin over k is k = 75 — the shipped value.** A deployable leave-fold-out k
+can at best tie production and cannot beat it, because the quantity it would be estimating has its
+optimum at the incumbent. F2b is therefore closed **by ceiling**, in the same way lane O closed its
+rungs, and no built-chain run was spent on it. The ordering is safe to carry to the chain without
+running it: lane O's D5 established that the projection price is a monotone increasing function of
+the cloud's own accuracy (corr +0.866), so every arm here — all of which have *worse* clouds than
+production — would pay *more* on the chain, not less. The chain cannot reverse this sign.
+
+This is the **fifth** instance of S29's single-global-scalar pattern (`s29_O_FINDINGS.md` U1 lists
+four). I pre-registered that I expected F2b to fail, for that reason, before running it.
+
+### 4. The result I did not expect, and the honesty check that changes how to read it
+
+Per stratum, effect of widening versus production (point cloud, m = 75):
+
+```
+k        FAIL18    other 108   worst18_poolmean   worst18_bestpool
+100     -0.0176     +0.0089        +0.0862            +0.0127
+200     -0.2349     +0.0961        +0.3088            -0.0209
+300     -0.4765     +0.2436        +0.5550            +0.0041
+400     -0.6193     +0.3924        +0.7313            -0.0081
+500     -0.5905     +0.5406        +0.9566            +0.1121
+```
+
+On FAIL18 widening helps monotonically to an interior optimum at k = 400 (**−0.6193**, random-18
+null p = 0; at k = 200 already p = 0.0026), and on the 108 it hurts monotonically. **Taken alone
+that row reads as "a wider filter rescues hard targets", and that reading is false.** On the two
+tails that are *not* defined by production — the same two S30-L2 used — the effect is absent
+(worst-18 by ORACLE best-in-pool: −0.02 to +0.11, no trend) or **reversed** (worst-18 by pool
+mean: +0.7313 at k = 400, the same sign as the body). Hardness as such does not predict that
+widening helps. Only the production-defined tail shows it.
+
+**A linear regression-to-the-mean control does not explain it either**, so it is not simply that
+FAIL18 is where production was unluckiest: fitting the per-target effect on production RMSD over
+the 108 and extrapolating gives a predicted **+0.069** at k = 400 against an observed **−0.619**,
+residual −0.688.
+
+**The mechanism that does explain all four strata, at ρ = +0.81.** Let x be the filter's ORACLE
+set-mean benefit (pool mean member RMSD minus top-75 mean member RMSD; positive = the filter
+improved the set mean). Then the per-target effect of widening is a function of x:
+
+```
+Pearson(x, effect of widening)      k=200 +0.574   k=300 +0.691   k=400 +0.774   k=500 +0.812
+Spearman                                  +0.515         +0.605         +0.703         +0.772
+
+stratum              x (ORACLE)     effect at k=400
+all                   +0.9026          +0.2478
+other 108             +1.0855          +0.3924
+FAIL18                -0.1947          -0.6193
+worst18_poolmean      +0.9355          +0.7313
+worst18_bestpool      +0.3515          -0.0081
+```
+
+**Widening helps exactly where the filter hurt the set mean, and hurts where it helped** — which
+is the `operator-consumes-set-mean` law (d_out = 1.16·d_set_mean + 0.04·d_set_best) read backwards.
+FAIL18 is largely that condition *by construction*, which is why it alone shows the gain; the
+worst-18-by-pool-mean have bad pools **but a filter that still works** (x = +0.94), so widening
+costs them. This dissolves the stratum table into one quantity and supersedes "widening helps hard
+targets" as the way to state it.
+
+### 5. The ORACLE-gated arm, and the one number that changes an old economic verdict
+
+Gating on the mechanism rather than on the label — widen to k = 400 only where the filter hurt the
+set mean (**16 of 126** targets; 8 of them FAIL18):
+
+```
+                                          effect    ×MDE   fold CI            folds   W/L
+on the 16 gated targets                  -0.9397   -2.38  [-1.1235,-0.7033]   4/4   16W/0L
+over all 126 (the endpoint value)        -0.1193   -1.29  [-0.1859,-0.0446]   4/5   16W/0L
+```
+
+**Both rows are ORACLE in every sense** — the gate reads the native to know x, and no native-free
+rule here supplies it. It is a router, and the router family is closed.
+
+**But the size is the point, and it revises an economic argument the project has been running on.**
+Lane C's FAIL18 detector (S28-L6) closed on *two* grounds, and the second was that the ORACLE prize
+was under the instrument: **−0.0474 Å built chain, 0.62× MDE**, with the note that a perfect
+detector would need ~330 targets to be measurable. **This gate's ORACLE prize is −0.1193 Å point
+cloud at 1.29× MDE — roughly 2.5× larger, and above its own MDE rather than below it.** That does
+not reopen the router family, whose features are closed on the *first* ground (no block clears its
+permutation null). It does mean the "even a perfect detector is not worth measuring" half of that
+closure is **specific to the operator lane C was switching** and must not be quoted as a general
+property of FAIL18 detection. A detector built on a feature family demonstrably outside the closed
+seven would now be aiming at a prize 2.5× the one that was dismissed as too small.
+
+### 6. What this lane does next, and what it will not do
+
+Not a ninth router: the eight closed constructions span length, the objective's own score
+distribution, posterior entropy, candidate-set geometry, compactness disagreement (`rg_z` — already
+closed at 2% of its own MDE, S23 L7), ESM contact statistics, and pool statistical-potential
+agreement. The next measurement is §3's question — *what is the distogram confidently wrong about
+on the pools where its own filter inverts* — and the cheapest decisive form of it is a per-target
+Spearman between the shipped score and ORACLE in-pool RMSD over all 500 members, split by stratum
+with the random-18 null. **That measurement does not exist in the record**: the pool-ranking
+measurements (S29-L33, S29-L50, S14) are unstratified, and the FAIL18-stratified measurements
+(S28-L23b's gradient cosine, S29-L2's ladder rho, S29-L20's axis cosine) are structure-level
+cosines over hand-built ladders, not within-pool ranking skill.
+
+Artefacts read for this entry: `s29/s29_O_FINDINGS.md` U1 and D5; `s29/LEDGER.md:751` (the
+recompute-the-posterior warning, adopted); `s27/LEDGER.md:229-321` and `s27/s28_C_FINDINGS.md:62-73`
+(lane C's ORACLE prize, the comparison in §5); project memory `operator-consumes-set-mean`,
+`grid-oracles-are-order-statistics`, `mde-is-per-comparison-not-per-instrument`.
