@@ -313,3 +313,30 @@ and the entry will say so, will price it against the max-over-5 sign-flip null, 
 contraction check (emitted Rg against the native's) and will owe a second tie-key seed before
 any endpoint claim. The registered falsifiers F-P1/F-P2/F-P3 for BOND, SPAN and ISO are
 unchanged.
+
+## ADDENDUM 4 (2026-09-20 00:28, before any 126-target number)
+
+**A derived, native-free, deployable readout that costs no extra projection: THE WIDER
+MULTI-START.** Every arm's emitted structure is an ideal-geometry chain, hence a FEASIBLE POINT
+of the shipped projection problem (minimise RMSD(chain, C) + 0.3 * ramah over ideal-geometry
+chains, where C is PRODUCTION's own unmodified cloud). Each row therefore also records
+`obj0` = that shipped objective evaluated for the arm's chain against production's cloud. This
+makes the whole arm set a wider multi-start of `core.project.fit_multi`, whose four generic
+starts demonstrably under-optimise (its own docstring; S26 L88 prices the branch degeneracy at
+0.08 A to a perfect chooser). Three readouts, all on the built chain:
+
+- **MS-OBJ** (deployable, native-free): the chain of the arm with the lowest `obj0`, ties
+  averaged over the argmin set with `ST.argmin_tied` (never broken by array order).
+- **MS-MEAN** (zero-information control): the mean outcome over the same arm set, i.e. the
+  expectation of picking an arm at random, matched in selection budget.
+- **MS-ORACLE** [ORACLE]: the minimum RMSD over the same arm set, the ceiling of selection.
+
+**Registered prediction, written before the numbers:** MS-OBJ strictly lowers the quantity
+production minimises (by construction, whenever any arm beats PROD's `obj0`) and **does NOT
+lower the built-chain RMSD** -- it is the projection-stage instance of "optimise the shipped
+objective harder, get a worse structure" (charter finding 3; S21's budget trap; S28-L26b).
+If MS-OBJ instead lowers RMSD beyond 1.0x MDE with the fold CI excluding zero, that is a
+deployable improvement to production's own solver and it is reported as the lane's primary
+result, with the second tie-key seed and lane D's attack owed before any claim. MS-OBJ is
+POST-HOC relative to sections 5 and 6 and is labelled so; it is counted in the lane's
+multiplicity as one further contrast (K = 6).

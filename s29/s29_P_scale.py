@@ -332,8 +332,25 @@ def build_factors(limit=None, verbose=True):
 def project_arm(C, cand, s, lam):
     """ONE projection.  The only place this lane calls the pipeline's stage 3b."""
     pr = I.project(rescale(C, s), cand.seq, cand.fold, lam=lam)
+    return pr
+
+
+def shipped_objective(pr, C, cand, pen=None):
+    """THE SHIPPED PROJECTION OBJECTIVE, evaluated for an emitted chain against PRODUCTION's own
+    cloud at the shipped lam: RMSD(chain, C) + 0.3 * ramah(phi, psi).
+
+    This is what `core.project.fit_multi` minimises over its four generic starts. Evaluating it
+    for every arm's emitted chain makes the whole arm set a WIDER MULTI-START of the production
+    projection: picking the arm with the lowest value is NATIVE-FREE and strictly improves the
+    shipped objective, so it is a deployable operator and not a diagnostic. NATIVE-FREE.
+    """
+    from core import project as pj
+    if pen is None:
+        pen = pj.make_penalty("ramah", cand.seq, int(cand.fold))
+    phi = np.asarray(pr["phi"], float)[None]
+    psi = np.asarray(pr["psi"], float)[None]
     ca = np.asarray(pr["ca"], float)
-    return ca
+    return float(I.ca_rmsd(ca, C) + LAM * float(np.asarray(pen(phi, psi)).ravel()[0]))
 
 
 def run_target(pdb, fac, ref, done, rows_path, floor=True, phase="all"):
@@ -357,25 +374,28 @@ def run_target(pdb, fac, ref, done, rows_path, floor=True, phase="all"):
     if floor and (pdb, "FLOOR") not in done:
         todo.append(("FLOOR", None, LAM))
     n_new = 0
+    from core import project as pj
+    pen = pj.make_penalty("ramah", cand.seq, int(cand.fold)) if todo else None
     for arm, s, lm in todo:
         t1 = time.time()
         if arm == "FLOOR":
-            Cp = C * (1.0 + FLOOR_EPS)
-            ca = I.project(Cp, cand.seq, cand.fold, lam=lm)["ca"]
-            cl = float(I.ca_rmsd(Cp, cand.nat_ca))
+            Cin = C * (1.0 + FLOOR_EPS)
+            pr = I.project(Cin, cand.seq, cand.fold, lam=lm)
             s_used = float("nan")
         else:
-            Cs = rescale(C, s)
-            ca = project_arm(C, cand, s, lm)
-            cl = float(I.ca_rmsd(Cs, cand.nat_ca))
+            Cin = rescale(C, s)
+            pr = project_arm(C, cand, s, lm)
             s_used = float(s)
-        ca = np.asarray(ca, float)
-        Cin = Cp if arm == "FLOOR" else Cs
+        ca = np.asarray(pr["ca"], float)
+        cl = float(I.ca_rmsd(Cin, cand.nat_ca))
         r = dict(pdb=pdb, n=int(cand.n), fold=int(cand.fold), arm=arm, s=s_used, lam=float(lm),
                  #: NATIVE-FREE mechanism quantities: how well the ideal-geometry chain fits the
                  #: cloud it was fitted to, and how far it lands from PRODUCTION's own cloud.
                  fit_resid=float(I.ca_rmsd(ca, Cin)),
                  fit_resid0=float(I.ca_rmsd(ca, C)),
+                 #: the SHIPPED objective of this arm's chain against PRODUCTION's cloud:
+                 #: native-free, and the quantity a wider multi-start would minimise.
+                 obj0=shipped_objective(pr, C, cand, pen),
                  rmsd_chain=float(I.ca_rmsd(ca, cand.nat_ca)),   # ORACLE: post-hoc scoring
                  rmsd_cloud_in=cl,
                  bond_in=mean_bond(Cin), rg_in=rg(Cin),
@@ -697,6 +717,38 @@ def cmd_analyse(rows_paths=None, out=None):
         "%+.4f -> %s" % (bokr["observed_gain"], bokr["null_across_targets"],
                          100 * bokr["share_accounted"], bokr["split_half"], bokr["verdict"]))
     say("")
+
+    # ---- THE WIDER MULTI-START (native-free, deployable): every arm's emitted chain is a
+    # feasible point of the SHIPPED projection problem (fit production's own cloud C at lam 0.3),
+    # so picking the one with the lowest shipped objective obj0 strictly improves production's
+    # own optimisation, with no native anywhere. Ties are averaged over the argmin set, never
+    # broken by array order.
+    ms_arms = [a for a in arm_names if not a.startswith("ORACLE-GRID")] if True else []
+    OBJ = np.column_stack([col(a, "obj0") for a in ms_arms])
+    CH = np.column_stack([col(a) for a in ms_arms])
+    if np.isfinite(OBJ).all():
+        ms_pick, ms_ties = [], []
+        for r in range(len(pdbs)):
+            v, k = ST.argmin_tied(OBJ[r], CH[r])
+            ms_pick.append(v); ms_ties.append(k)
+        ms_pick = np.array(ms_pick)
+        ms_mean_arm = CH.mean(1)                      # the zero-information selection control
+        ms_oracle = CH.min(1)                         # ORACLE selection over the same set
+        say("THE WIDER MULTI-START (native-free selection by the SHIPPED projection objective)")
+        say("  arms in the set %d; mean tie-set size %.2f; production's own objective is beaten "
+            "on %d / %d targets"
+            % (len(ms_arms), float(np.mean(ms_ties)),
+               int((OBJ.min(1) < col("PROD", "obj0") - 1e-12).sum()), len(pdbs)))
+        say("  mean shipped objective: PROD %.4f -> best-over-arms %.4f (a strict improvement "
+            "of the quantity production minimises)"
+            % (col("PROD", "obj0").mean(), OBJ.min(1).mean()))
+        for lab, v in (("MS-OBJ (native-free pick)", ms_pick),
+                       ("MS-MEAN (zero-information pick)", ms_mean_arm),
+                       ("MS-ORACLE [ORACLE] (pick by RMSD)", ms_oracle)):
+            o = ST.compare(v, prod, folds=folds, names=pdbs,
+                           label="P %s - PROD (BUILT CHAIN)" % lab)
+            C["MS|" + lab.split()[0]] = o
+            say(ST.fmt(o)); say("")
 
     # ---- the contraction check (charter section 16): is a winner just a more compact blob?
     nat_rg, nat_bond = [], []

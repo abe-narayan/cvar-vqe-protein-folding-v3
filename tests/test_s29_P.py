@@ -41,9 +41,24 @@ def test_prod_projection_equals_a_direct_project_call():
     from s27 import run_pool as RP
     C = _cloud("1A13")
     cand, _, _ = RP.channels_for("1A13")
-    a = P.project_arm(C, cand, 1.0, P.LAM)
+    a = np.asarray(P.project_arm(C, cand, 1.0, P.LAM)["ca"], float)
     b = np.asarray(I.project(C, cand.seq, cand.fold, lam=P.LAM)["ca"], float)
     assert np.array_equal(a, b)
+
+
+def test_shipped_objective_matches_the_projection_residual_plus_the_penalty():
+    """obj0 must BE the shipped objective, not an approximation of it."""
+    from s12 import instrument as I
+    from s27 import run_pool as RP
+    from core import project as pj
+    C = _cloud("1A13")
+    cand, _, _ = RP.channels_for("1A13")
+    pr = P.project_arm(C, cand, 1.0, P.LAM)
+    pen = pj.make_penalty("ramah", cand.seq, int(cand.fold))
+    direct = I.ca_rmsd(pr["ca"], C) + P.LAM * float(
+        np.asarray(pen(np.asarray(pr["phi"])[None], np.asarray(pr["psi"])[None])).ravel()[0])
+    assert abs(P.shipped_objective(pr, C, cand) - direct) < 1e-15
+    assert P.shipped_objective(pr, C, cand) >= I.ca_rmsd(pr["ca"], C) - 1e-15
 
 
 # --------------------------------------------------------------- 2. the Rg identity
