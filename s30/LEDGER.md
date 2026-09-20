@@ -3848,3 +3848,74 @@ average (production 3.0483). Those are different quantities: the law's own input
 1.16*3.5507 + 0.04*2.3062 = 4.21 A against production's actual 3.21, so it does not map cloud to
 chain and must not be used to transfer a cloud delta. **Use 0.92, measured here on two independent
 arms.**
+
+---
+
+## S30-L28 -- **THE LEDGER CONTRADICTS ITSELF IN SEVEN PLACES, AND ONE OF THE SEVEN IS LANE Y READING A FILE WHILE A JOB WAS WRITING IT.** THE REPORT IS RIGHT WHERE THEY DISAGREE; THE ENTRIES ARE ANNOTATED HERE RATHER THAN EDITED (2026-09-20 14:16, coordinator)
+
+Lane Y read all 3,649 lines of this ledger against the artefacts to build the report's §7 and §8.
+It found seven internal contradictions. Recorded in one place, per contract rule 15, with the
+original entries left standing. Full working in `s30/SYNTHESIS_Y.md` Appendix Y.
+
+**1. F1b was never withdrawn and rests on the same forced quantity as the row that was.** S30-L23
+withdrew F1c's FAIL18 row because `top_best - pool_best >= 1.5` holds **by definition** on those 18.
+**F1b's clauses 1 and 2 are computed from that identical quantity** (`G_filt` on FAIL18 = 2.3932;
+S30-L23 even quotes it while explaining the forcing), and clause 3 regresses it. S30-L2 §4 still
+reads *"F1b FIRES on all three registered clauses."* **Nothing published quotes F1b** -- the report
+does not -- but the withdrawal should have extended and did not. Logged in the report's §7.4 as
+**open, not established**, not as a positive.
+
+**2. The governing arithmetic and the measurement stratum are different target sets.** §1's
+counterfactual is on **worst-18-by-production** (6.2759); nearly every lane measured on **FAIL18**
+(6.0195). **Overlap 13/18** -- computed by lane Y, recorded nowhere before now. In FAIL18 but not
+worst-18: 1JBF, 1LB7, 2NB7, 3BTB, 9L1M. In worst-18 but not FAIL18: 2LM8, 2MAI, 2MFV, 2MSA, 7YFS.
+The report's §4.1 now gives both strata separately.
+
+**3. Lane X's S30-L10 §5 calls a different set FAIL18.** `s30_X_ensemble.py:96-97` is
+`argsort(-e)[:18]` -- worst-18-by-endpoint. Verdict unaffected (floor 0.6136 either way), but the
+headline sentence is about different targets than it names.
+
+**4. S30-L24 says "30 chain, 24 CA" comparisons; the artefact says 33** (re-run by lane Y and by me:
+`s30_D_meter_DIS_ca.json :: multiplicity.comparisons_emitted` = 33). **The report's §6.2 quotes
+30/33 and is correct; this ledger line is wrong.**
+
+**5. Two per-target stable ranks for the same object:** 1.6811 (S30-L21, n=**119**) against 1.7050
+(S30-L22, n=**126**). Both verified. Same quantity, different sample, no entry says so.
+
+**6. Five values circulate for "production, built chain":** 3.2105 (lane O, the endpoint), 3.2126
+(`chain_rows.jsonl::DIS`), 3.2071 (lane R, and the meter), 3.2148 (lane X), 3.2041
+(`s30_P_chain_rows.jsonl::rec_fit`). **Now resolved and it is its own finding** (report §1.1): the
+**CA cloud is identical to four decimals across records (3.0483)** while the chain differs, because
+**the cloud-to-chain projection is multi-start and its seed is not pinned.** Spread 0.0107 A against
+E2's whole effect of 0.0221 -- immaterial at the 3.00 A scale, **fatal for any future sub-0.01 A
+claim.**
+
+**7. AND THE ONE THAT IS LANE Y'S OWN, KEPT BECAUSE THE FAILURE MODE IS NEW.** Lane Y reported that
+`s30/results/s30_P_chain.json` *"does not exist"* and that `s30_P_chain_rows.jsonl` held *"112 of
+126"* rows -- and concluded in its §7.4 that lane P's built-chain endpoint was **unresolved** and my
+registered prediction neither confirmed nor refuted. **It had read the file while the job was still
+writing it.** The completed artefact holds **126 rows, 126 unique PDBs**, the JSON exists, and every
+arm is at n = 126 (PROD 3.2126, ORACLE_SEPPROF5 2.6791, ORACLEsign_LFOmag 2.8867).
+
+> **Checking a file rather than trusting prose is the right instinct and it is what this project
+> keeps having to relearn. But a file being written by a live job is not evidence about that job.**
+> Six of this project's instances are prose asserting a state that does not hold; this is the
+> mirror image -- a *measurement* of state, taken at a moment when the state was not yet true.
+> **Check the job, not just the file.**
+
+### Two controls this ledger credits with more than they ruled out
+
+- **The random-18 null (20,000 draws)** rules out *"FAIL18 is an ordinary 18-subset"*. It does
+  **not** rule out *"FAIL18 is defined by the quantity being measured on it"*, and `p = 0` was
+  quoted in support of the filter claim as though it did. S30-L23's sentence travels with every
+  appearance: *none of those defences reaches this one.*
+- **Lane T's best-of-5,000 random-75-subset null** was credited with *"the class is real, not
+  best-of-K"*. Lane T withdrew it in S30-L15 §3c: it asks structured-vs-unstructured, not **the same
+  direction twice**. Any surviving quote of HALFSPACE - FREE = -0.8568 must read **reachable, not
+  exploitable.**
+
+### And one undischarged gate, which is mine
+
+The **128 -> 512 register widening** (-1.9004 A on FAIL18, 2.77x MDE, S30-L11) still carries the
+circularity I flagged at 13:08 and called *"cheap"* and *"the gate on that whole direction."*
+**No ledger entry ever runs it.** It is in the report's §7.4 as open, with the gate named.
