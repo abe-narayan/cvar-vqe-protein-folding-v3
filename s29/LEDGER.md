@@ -4912,3 +4912,167 @@ Verdict: **the survey's 21 fields stand as reported; its Angstrom figure becomes
 and its cosine evidence is unaffected; B3 is confirmed with a measured scope curve rather than a
 sub-Angstrom sentence, and the bound's algebra is exact to better than 0.1% of the structure for
 any step under about 2 A.**
+
+## S29-L53 -- F2, THE SHELL PROFILE vs ASSUMPTION B2: **THE CLASS CLOSES ON A MEASURED SUPPLY GAP**, NOT ON AN ABSENT INSTANTIATION -- THE FITTED NATIVE-FREE RATIO'S DISPLACEMENT COSINE IS 0.0895, BELOW THE 0.140 LINE, AND IT IS **BEATEN BY ITS OWN ZERO-INFORMATION SHRINK TWIN** (-0.0319, FOLD CI [-0.0628, -0.0057]); AND -- THE NUMBER THE REPORT WANTS -- **THE DEPLOYED SCORE DELIVERS 1.44 OF THE READOUT'S 7 BITS AGAINST 1.41 FOR A RANDOM RANKING, 0.10x MDE: IT IS AT CHANCE FOR LOCATING THE BEST MEMBER OF ITS OWN TOP-128** (2026-09-20 03:10, M)
+
+Pre-registered in `s29/PREREG_S29_M_F2.md` + addenda 1, 2, 3, all before any number. Question
+(the coordinator, after lane T's S29-L23): the shell profile is the lowest-dimensional named
+quantity whose ORACLE version clears assumption B2 by a wide margin, so does any NATIVE-FREE
+predictor of it produce a displacement with cosine above 0.140? Run: `s29/s29_M_F2_supply.py --full`
+(job `m_f2_supply`, 0.8 min, 126 targets, six arms, **no projections** -- the cosine that decides B2
+does not need one) and `s29/s29_M_F2_gate.py` (job `m_f2_gate`). Artefacts
+`s29/results/s29_M_F2_supply_rows.jsonl`, `s29_M_F2_supply.json`, `s29_M_F2_gate.json`,
+`s29_M_F2_cells.npz`.
+
+## 1. THE REPRODUCTION GATE PASSES TO 0.0004 A -- AND THE 0.02 A THAT DID NOT RECONCILE HAD A CAUSE IN CODE
+
+The gate ran first, as registered, and it is the entry's warrant for everything below. Stage 0 scores
+with the SHIPPED per-pair weight `1/(sd+0.5)`; S12's section 6 did not. Both conventions, same
+objective, same pool, n = 126:
+
+    convention   PROD    ORACLE_PROF   gap      vs s12/obj_FINDINGS.md:306-331 (3.078 / 2.402 / 0.676)
+    weighted    3.0624     2.4254     0.6370    dPROD -0.0156   dORACLE +0.0234
+    uniform     3.0784     2.4023     0.6761    dPROD +0.0004   dORACLE +0.0003
+
+> **Under S12's own convention the instrument reproduces a seventeen-sprint-old pair of numbers to
+> four decimal places.** The cause of the weighted offset is identified in source, not guessed:
+> `s12/obj_common.py:93-97 score_l1` is called from `s12/obj_profile.py:156 evaluate` with
+> `w = None`, i.e. S12's profile arms carry a UNIFORM per-pair weight. Declared, not softened.
+
+## 2. THE ARMS (n = 126, point cloud, NO projections; ORACLE arms labelled)
+
+    arm            cloud     cos vs PROD    bits/7   native pct   cloud bond   overlap w/ PROD
+    PROD          3.0624       0.000        1.442      0.371        2.949         1.000
+    RATIO         3.2178       0.090        1.721      0.405        2.905         0.503
+    RSHRINK       3.3510       0.121        1.697      0.465        2.996         0.410
+    POOL          3.3375       0.122        1.699      0.476        2.974         0.412
+    ORACLE_PROF   2.4254       0.483        3.202      0.114        2.929         0.488
+    (RANDOM ranking baseline for bits: 1.405)
+
+**ORACLE_RATIO is ALGEBRAICALLY IDENTICAL to ORACLE_PROF** -- `q_pool * (q_true/q_pool) = q_true` --
+and the two columns agreed elementwise on all 126 targets. It is an identity, not a measurement, and
+it is reported as one column with the identity named (the failure mode `s25/QUANTUM.md` section 5
+exists to prevent: a 100% agreement on an algebraic identity carries no information).
+
+## 3. THE STOPPING RULE FIRES. B2 IS CONFIRMED ON THE QUANTITY THAT HAD THE BEST CHANCE OF BREAKING IT
+
+```
+  F2 B2 TEST  RATIO cosine - 0.140 (the bound assumption; POSITIVE = clears it)
+    a 0.0895 (med 0.0950)   b 0.1400   n=126
+    effect -0.0505   median -0.0450   SE 0.0357   MDE 0.1001   effect/MDE -0.50
+    fold CI95 [-0.1110, +0.0157]   folds same sign 4/5   69W/57L   power 0.29
+    VERDICT: NOT MEASURED (|effect| 0.0505 <= its own MDE 0.1001, 0.50x)
+
+  F2 PRIMARY  RATIO - RSHRINK displacement cosine (POSITIVE = the FIT beats its zero-information twin)
+    a 0.0895 (med 0.0950)   b 0.1214 (med 0.1195)   n=126
+    effect -0.0319   median -0.0062   SE 0.0297   MDE 0.0832   effect/MDE -0.38
+    fold CI95 [-0.0628, -0.0057]   folds same sign 4/5   65W/61L   power 0.19  Type-M 2.33
+    VERDICT: NOT MEASURED (|effect| 0.0319 <= its own MDE 0.0832, 0.38x)
+```
+
+The registered rule required the fitted arm to exceed **both** 0.140 **and** its shrink twin by more
+than 1.0x MDE. It clears neither, and against the twin the **sign is negative**: the fit is *worse*
+than a map with the same shrink and no information, with the fold CI excluding zero. **Pure
+typicality, with no fit at all, reaches 0.122 -- above the fitted arm.** Per the pre-registered
+stopping rule, **no deployable projection run was launched and no box was spent on one.**
+
+## 4. THE SUPPLY GAP, WHICH IS WHY -- AND THE INCUMBENT WINS AGAIN, FOR THE FIFTH TIME
+
+Leave-fold-out over the 5 pinned folds, ridge penalty chosen by nested CV inside the training folds
+only, 1,381 (target, shell) cells:
+
+    quantity                                   fitted r_hat    the distogram's own ratio r_disto
+    corr with the TRUE ratio                      +0.313                  +0.366
+    variance explained (LFO)                       0.093                   0.086
+    realised shrink s = sd(r-1)/sd(r_true-1)       0.384                   0.585
+    (the true ratio's own sd about 1 is 0.288)
+
+> **The fitted model is WORSE than the incumbent's own profile ratio at predicting the true profile
+> ratio** (+0.313 against +0.366), with every native-free feature the record recommends in it: the
+> distogram's own ratio, the compactness block (pool Rg mean/sd/skew, the distogram's implied Rg,
+> and their ratio -- the `prediction-pool-disagreement-is-a-native-free-signal` contrast), the pool's
+> shell spread, length, composition and the five physicochemical properties. **That is the fifth
+> independent instance of the same pattern**, after the four in `s12/obj_FINDINGS.md:306-331` where
+> the shipped profile (3.078) beat every alternative including the best-profile-MAE arm (2.394 ->
+> 3.089). `MAE does not price selected RMSD` now has an instance at the level of the profile's
+> *ratio* as well as its level.
+
+**And the percentile moved exactly as pre-registered.** Addendum 2 predicted, from contract
+addendum 5's surviving half, that a shrunk ratio map degrades the native's percentile, and cited
+S12's deployable shell-profile arm already sitting at 0.459 against the shipped 0.368
+(`s12/obj_FINDINGS.md:198`, `:191`). Measured here: PROD 0.371, **RATIO 0.405**, RSHRINK 0.465,
+POOL 0.476 -- the fitted arm sits between the incumbent and the zero-information twins, and the
+twins land where lane D's shrink grid ends (0.491). The prediction was registered before the run.
+
+## 5. THE NUMBER THE COORDINATOR ASKED FOR, STANDALONE: THE DEPLOYED SCORE IS AT CHANCE FOR ITS OWN TOP-128
+
+`bits_delivered = 7 - log2(r)`, `r` the rank of the ORACLE-best member of the **fixed production
+top-128** under the arm's own score, so only the RANKING varies and never the set. The matched null
+is a uniform random ranking, whose exact value is `7 - (1/128) sum_{r=1..128} log2 r = 1.4050`.
+
+```
+  F2 BITS  the SHIPPED score - a RANDOM ranking, bits of the readout's 7
+    a 1.4415 (med 0.8301)   b 1.4050   n=126
+    effect +0.0366   median -0.5749   SE 0.1372   MDE 0.3845   effect/MDE +0.10
+    fold CI95 [-0.2251, +0.3110]   folds same sign 2/5   power 0.06  Type-M 8.85
+    VERDICT: NOT MEASURED (|effect| 0.0366 <= its own MDE 0.3845, 0.10x)
+```
+
+> **The deployed score delivers 1.44 of the 7 bits, against 1.41 for a random ranking -- 0.10x MDE,
+> fold CI straddling zero, 2/5 folds. It is at chance.** The median target is *worse* than chance
+> (median paired difference **-0.575 bits**; the shipped score is below the random baseline on
+> **82 of 126 targets**), and the **median rank of the ORACLE-best member of its own top-128 is 72
+> of 128** against a chance median of 64.5. The positive mean is carried by a handful of targets
+> where it happens to rank the best member near the top (worst single target +5.60 bits) -- the
+> `median-vs-mean-is-the-free-warning` shape, and here the median is the honest summary.
+
+**READING CONVENTION, stated because ST's labels invert for this quantity** (as lane D flagged in
+S29-L6): higher bits are BETTER, so `ST.compare`'s W/L columns and the words "better/worse" in that
+block are its RMSD convention and are not the reading. 82W/44L above means the shipped score is
+worse on 82 targets.
+
+**Even ORACLE profile knowledge supplies only 3.202 of the 7 bits** -- so the readout's 7-bit gap is
+not a profile-shaped gap either.
+
+**AND THE BINDING SCOPE (prereg addendum 3, from the coordinator's own correction to S29-L44):**
+bits are reported in bits and are never multiplied into Angstroms through the deployed readout. The
+terminal operator consumes the retained set's MEAN (`operator-consumes-set-mean`: d_out = 1.16 x
+mean + 0.04 x best, R2 0.89; a perfect rank-1 is worth -1.74 A through argmin and -0.03 A through
+the m = 75 average), so **nothing in this section claims any part of S29-L44's 0.757 A is
+recoverable by ranking.** Realising bits would require a different terminal operator, which F2 does
+not propose, test or recommend.
+
+## 6. WHAT THIS CLOSES, AND WHAT IT DOES NOT
+
+**CLOSED: the shell-profile route, on a measured supply gap.** The coordinator's original framing
+("if nothing native-free supplies the 14 numbers, the class closes as an ORACLE ceiling with no
+deployable instantiation") was corrected before the run and the correction is what makes this
+citable: **five native-free instantiations already existed and were measured; a sixth was built here
+with the compactness features the record recommends; and the gap is not that the profile cannot be
+supplied but that no supply of it carries a displacement above the 0.140 line.** The ORACLE version
+is worth 0.483 of cosine -- 3.4x the line -- and the best achievable native-free version is 0.0895,
+which its own zero-information twin beats.
+
+**NOT closed by this entry:** assumption B2 in general. F2 tested ONE quantity, the per-separation
+mean distance profile, with one parameterisation (the ratio to the pool's own profile) and one model
+class (LFO ridge over the named feature blocks). A different structural quantity, or a genuinely new
+information source, is untouched by this measurement. What F2 removes is the specific hope that the
+lowest-dimensional named ORACLE quantity in the repository had a native-free twin.
+
+**A calibration note, since the prereg registered one.** Addendum 1's pre-run estimate was
+"0.16-0.24, genuinely close to the line", from 0.24-0.37 (native-free compactness proxies) times
+0.66 (the ORACLE cosine inferred by inverting the bound's identity on the RMSD ratio). Both inputs
+were optimistic: the ORACLE displacement cosine MEASURES 0.483, not 0.66, and the fitted arm reached
+0.0895, not 0.16. **The registered prediction was wrong in the direction that flatters the
+experiment, and the shrink twin is what caught it** -- exactly the role it was registered for after
+its rule-20 justification was withdrawn (contract addendum 5, S29-L37).
+
+Comparisons (multiplicity): **3 pre-specified contrasts** (RATIO vs 0.140; RATIO vs RSHRINK, the
+primary; shipped bits vs the random-rank null) plus the reproduction gate's two arms under two
+conventions. **0 endpoint comparisons and 0 projections** -- the stopping rule prevented them. All
+cosine, percentile and bits quantities are ORACLE diagnostics, labelled throughout; nothing here
+tunes or selects anything.
+Artefacts: `s29/s29_M_F2_supply.py`, `s29/s29_M_F2_gate.py`,
+`s29/results/s29_M_F2_supply_rows.jsonl`, `s29_M_F2_supply.json`, `s29_M_F2_gate.json`,
+`s29_M_F2_cells.npz`, `s26/logs/m_f2_supply.log`, `s26/logs/m_f2_gate.log`,
+`s29/PREREG_S29_M_F2.md` (+ addenda 1-3).
