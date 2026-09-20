@@ -337,6 +337,79 @@ quoted the **verdict string**. A verdict string is a claim about a computation a
 what reading the computation is worth.
 
 
+## NOTE 10 (2026-09-20 13:28, lane D closing): A CLAIM I REPORTED IS WITHDRAWN, LANE L's DERIVATION IS CONFIRMED HARDER THAN IT ASKED, AND THE METER WAS BLIND ON THE REPORTING BASIS
+
+### (a) I reported "the median target is worse than chance" and it is wrong
+
+S29's "the deployed score is at chance" **survives and is strengthened**. Its *supporting paragraph*
+— which I quoted to the user as "the mean flatters it; the median target is worse than chance" —
+**is withdrawn.** The statistic `7 − log2 r` is **right-skewed**: null mean 1.4050, null **median
+0.9888**, null **win rate 62.5%**. So "below the random baseline on 82 of 126" is simply *what a
+random ranking does to itself* — the null expects 78.8, z = +0.60 — and the −0.575 median gap is
+−0.416 under the null. Against a simulated null **all five statistics are at chance** (p = 0.16 to
+0.75), and the rank distribution passes KS (p = 0.571) and chi-square (p = 0.303).
+
+**The durable lesson, lane D's words:** *when a statistic is a nonlinear transform, its mean,
+median and win-rate have three different nulls — never read one against another's baseline.* I read
+the median against the mean's baseline and reported it twice.
+
+### (b) Lane L's radial prediction is CONFIRMED, and the payoff is better than the prediction
+
+Lane L derived that one of the Gram's two effective directions must be the scale/radial one, and
+offered the four-line test with its concession pre-stated. Measured:
+
+- the radial direction carries **58.0% of the Gram trace** [+0.545, +0.603]
+- the field set's **dominant principal direction IS the radial one** — cos **0.947**, median 0.984;
+  **94.8% of lambda_1 is radial**
+- removing it raises stable rank 1.705 -> 2.642 and drops lambda_1's share 61% -> 40%
+
+**And the payoff, which lane L did not predict:**
+
+> **cos(direction to the native, radial) = −0.0675 overall and −0.2524 on FAIL18.**
+
+**The field library spends the majority of its two available directions on a component that is
+orthogonal to the answer in general and ANTI-ALIGNED on the hard targets.** Lane D is careful that
+this does not license deflating scale: the residual 42% has no large eigenvalue, and S30-L6 already
+priced the whole span.
+
+### (c) The meter was blind on the reporting basis, and my brief asked for an impossible check
+
+Two defects in what I handed lane D:
+
+1. I told it to run `selftest` and confirm it reproduces S29's baselines. **`selftest` is a
+   synthetic 8-residue check** (gradient cosine ~ +1, tie conventions) that runs in 0.4 s and
+   **would pass on a meter whose every dev-set number had drifted.** The instruction could not have
+   been satisfied by that command. The reproduction check now exists separately as
+   `python s30/s30_D_meter.py verify`, asserted in code.
+2. The 0.3688 anchor I listed is **DIS_SURR's**, not the shipped cost's — `DIS` is 0.3676. I put it
+   beside five `DIS` numbers.
+
+**And the material one, which lane D found rather than inherited:** `--basis chain` was **unusable**
+— 0 of 126 ladder-cache files carried chain projections, so any chain run raised
+`FileNotFoundError`, and `chain-s28rows` only ever serves the 31 scorer names S28 already
+evaluated. **The instrument that gates every new cost could measure new costs only on the CA point
+cloud.** That is not cosmetic here: on the shipped cost the two bases differ in the **sign** of the
+headline charter ladder (**+0.2603 CA against −0.0921 chain**) and by 2.2x on the S28 ladder. Fixed.
+
+**All ten anchors reproduce to < 5e-4 on a cold re-run**, and the extended meter now carries
+per-target distributions, a fold-clustered FAIL18/108 contrast, matched random-signed structures as
+a first-class control, the aggregate cosine null, a PASS/BLOCK gate at the 0.7x/1.0x rule, and a
+multiplicity register. **The gate BLOCKs the shipped cost on its own ladder** — the honest verdict.
+
+One caveat every lane inherits: **fold 0 contains no FAIL18 target** (1:6, 2:2, 3:4, 4:6, 0:0), so
+every FAIL18/108 CI draws from four clusters and is wide by construction.
+
+A first CI on a split S29 printed as bare means: **under the shipped cost the native sits at the
+78.4th percentile of its own pool on FAIL18 against the 29.8th on the other 108** — +0.485,
+3.48x MDE, 4/4 folds.
+
+### (d) Two checklist entries earned today
+
+- **A matched control in the right space does not rescue a stratum defined by the outcome** (lane D,
+  from S30-L8).
+- **When a statistic is a nonlinear transform, its mean, median and win-rate have three different
+  nulls** (lane D, from S30-L4).
+
 ## NOTE 9 (2026-09-20 13:26, lane D, S30-L8): **THE SPRINT'S FIRST MECHANISM HAS ITS HEADLINE WITHDRAWN.** THE STRATUM *IS* THE OUTCOME
 
 The adversary has gone after lane F's S30-L2 — the entry I reported as the sprint's first real
