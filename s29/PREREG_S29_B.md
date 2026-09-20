@@ -649,3 +649,81 @@ average, and partly because R_alpha is a sharper-than-uniform average and the re
 theory entries, and I record it as agreement rather than as independent support. **If the endpoint
 improves, I hand it to lane D the same hour with the three-way split and do not write it up as a
 result first.**
+
+---
+
+# ADDENDUM 3 (2026-09-20 01:20 Pacific, registered before the endpoint run it governs)
+
+The coordinator has released the endpoint arm of measurement 5. Lane D's in-band band experiment
+has landed as **S29-L33** and the answer is NULL: F1 fires (information orthogonal to realism
+exists in the library, DIS +0.54 in-band) but F2 fails on 58 of 70 cells -- conditioning on realism
+REMOVES ordering rather than revealing it -- and the one genuine sign change (SS_MATCH, -0.009
+global to +0.060 in-band) is priced at order 1e-3 A by the squared-skill law, with lane D declining
+to propose an arm on it. **There is therefore no f with in-band skill to carry**, and prereg B2.5's
+contingency applies: the endpoint runs with the SHIPPED score as the registered negative.
+
+## B3.1 What changes, and what does not
+- **f is fixed**: the shipped distogram risk read through `s27/s28_A_amp.py :: Surrogate`, the same
+  object S29-L25 used. No alternative f is carried; the substitution clause of B2.5 lapses.
+- **The falsifier F5b is unchanged** (prereg B2.6): refuted as registered if no arm beats BOTH
+  production and its own lam = 0 by 0.7x MDE with the fold CI excluding zero on both seeds.
+- **The registered prediction is unchanged** (B2.7, and the coordinator's independently): the
+  mechanism works -- measured, S29-L27 -- and the endpoint does not move or moves the wrong way,
+  because f is bound by lane T's theorem 2 and S29-L25 has already measured that the sets this
+  objective prefers are WORSE than the energy prefix on 10/12 and worse than production on 8/12.
+
+## B3.2 The one thing that does change: 12 THEN 126, unconditionally
+The coordinator asks for "a clean 126-target run rather than a probe". Contract rule 16 still binds
+(a 12-target probe before any 126-target run), so both are run and the order is kept. The
+difference from B2.6 is that **the 126-target run is NOT gated on the 12-target result**: this
+entry is a registered NEGATIVE, and a negative needs the instrument, not a probe. If the 12-target
+probe were to come back POSITIVE the 126-target run happens anyway and lane D is told the same
+hour, before I write anything up. The probe is quoted as a probe and never as evidence for the
+instrument.
+
+## B3.3 The arms and the controls, fixed here
+- **Arms**: lam in {0, 0.1, 0.3, 1.0, 3.0}, seeds 0 and 1, the deployed settings otherwise
+  (alpha 0.18, T 0.5, depth 3, 80 Adam iterations, lr 0.15, n = 9, 500 + 12 padding).
+- **Readouts, both reported**: **R_alpha** (TTA-w, the p-weighted tail average -- the quantity the
+  objective steers, whose zero-lam anchor is +0.027 A / 0.43x MDE from production, S29-L27) and
+  **the deployed uniform average over the same tail SET** (TTA-u, which the objective does not
+  steer; carried to separate "the readout change hurt" from "the steering did not help").
+- **Controls, all pre-registered**:
+  (a) its own **lam = 0**, same seed, same readout (the F1-shaped contrast);
+  (b) **production** (DIS top-75 uniform);
+  (c) **M6, the fixed-profile control** (S29-L15): the target-independent rank-weight profile
+      p*(alpha, T) = the exact minimax optimum of the deployed objective over the rank ladder,
+      applied to each target's own DIS order -- no circuit, no optimiser, no per-target
+      computation. This is the control that matters and it is strictly stronger than "a classical
+      equivalent";
+  (d) the **untrained circuit**, best of 16 draws under each arm's own objective (the S28-L43 draw
+      law), which is the order-statistic control for "the optimiser did something";
+  (e) **matched budget**: the lam = 0 arm given the same number of objective evaluations;
+  (f) **both seeds**, as above.
+- **Basis**: point cloud for screening; the **BUILT CHAIN** for the verdict
+  (`s24.d_harness.readout_projected`), for every arm at or beyond 0.7x MDE against production or
+  against its own lam = 0 in EITHER direction (the S28 two-sided rule), plus production itself
+  re-projected in this lane's own process as the like-for-like anchor.
+- **Statistics**: `s24.stats_lib.compare`, fold-clustered CI decides, below 0.7x MDE is not a
+  result, the lam grid priced with `ST.best_of_k_within`, SE beside every mean.
+
+## B3.4 Two implementation commitments
+- **Commit hygiene (contract addendum 4, from lane D's S29-L34)**: from this point on this lane
+  commits with an explicit pathspec in ONE command, `git commit -m "..." -- <paths>`, and never
+  `git add` first, because eight lanes share one index and a failed commit leaves files staged for
+  whichever lane commits next. Where a commit message and a ledger heading disagree, the LEDGER
+  HEADING is authoritative and the discrepancy is recorded rather than rewritten.
+- **The production anchor** is the path lane P verified (`s29/s29_P_scale.py :: production_cloud`,
+  bit-exact against `s27/results/chain_rows.jsonl :: DIS` on 126/126): channels -> DIS -> lexsort
+  tie-key top-75 -> `readout_uniform`. This lane has already checked its own path against it
+  (`RP.topm(zr(DIS), 75, key)` equals `np.lexsort((key, DIS))[:75]` exactly; `readout_uniform`
+  equals `I.coordinate_average` at 0.0) and asserts bit-identity per target rather than writing a
+  fourth implementation.
+
+## B3.5 What this entry will say either way
+If the endpoint is null or worse: the pair (S29-L27, the objective can now see the 74 directions
+the readout consumes; this entry, seeing them buys nothing) is the sprint's thesis demonstrated
+CONSTRUCTIVELY rather than asserted -- the barrier is the information content of f, not the shape
+of the optimisation. If the endpoint improves: it goes to lane D the same hour with the three-way
+split (Hamiltonian/objective quality, optimisation quality, emitted structure) and is not written
+up as a result until D has attacked it.
