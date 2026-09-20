@@ -70,6 +70,47 @@ RANKING (production beats 87% of real traces, S28-L36). Two defects in my own me
 and fixed in the same patch (an all-NaN cosine axis crashed the renderer after the run had
 completed; a partially defined cosine was printed as a measurement), with regression tests.
 
+D6. **The within-realism-band measurement: F1 fires, F2 fails (S29-L33).** 126 targets, 500 pool
+members, 12 CA scorers, 3 pre-registered realism statistics, 2 arms. Positive within-band
+ordering exists on 50 of 70 cells (DIS +0.5075 [+0.462, +0.547] under R1; +0.5397 under R2;
+max-over-scorers p_max 0.000), so information orthogonal to realism is present and substantial.
+But rho_in > rho_across fails on 58 of 70: DIS is +0.568 globally and +0.508 / +0.540 / +0.361
+in-band under R1 / R2 / R3, with the paired fold CI below zero. **Conditioning on realism removes
+ordering skill rather than revealing any.** The one sign change is SS_MATCH (-0.009 -> +0.060
+[+0.045, +0.077], replicated on two realism definitions and both arms), worth ~1e-3 A by the
+square law. Compactness loading, measured: rho(R, Rg) = +0.460 (R1), -0.015 (R2, but a FOLDED
+function of Rg), +0.404 (R3). The registered Gaussian partial correlation OVERSTATES what
+survives narrow banding (DIS/R1 predicted +0.596, measured +0.508, width curve to +0.418).
+`s29/results/s29_D_band_ca.json`.
+
+D7. **Assumption B2 of the achievable bound survives 21 new displacement fields (S29-L35), and
+the limiting quantity is the SIGN, not the alignment.** No field's signed mean cosine clears the
+0.140 random reference with a 2-SE margin (best CHAN_DISTPOT +0.1128 [+0.088, +0.137]); the
+largest ORACLE gain through a global step is 0.019 A. But every field's PER-TARGET |cos| is
+0.251 to 0.325, about twice a random draw's, so with a perfect per-target sign the same fields
+reach 2.708 A (EXPAND) to 2.894 A (MEDOID) on the point cloud -- below lane T's 2.98 A margin,
+and reproducing the bound's structure across an operator class rather than one direction. EXPAND
+(pure de-contraction) has the largest unsigned alignment and a sign at 0.468: production is 22%
+contracted and expanding it points away from the native as often as toward it.
+`s29/results/s29_D_fields.json`.
+
+D8. **The shrink grid: the cosine half of the rule-20 mechanism is refuted, the percentile half
+confirmed (S29-L37).** Over s in 1.0 down to 0.3 the cosine goes -0.034 -> -0.056 (s = 0.6) ->
+-0.033: it never rises and never crosses zero. The native percentile worsens monotonically,
+0.369 -> 0.491, 9 of 9 steps. Over the same grid the S28 ladder rho IMPROVES (-0.186 -> -0.054)
+and pref(circ_best) nearly doubles -- a trade-off between meter numbers that a single-number gate
+would have been gamed by. Contract addendum 20 stands as a rule; its stated mechanism does not.
+
+D9. **Lane B's non-prefix subset optimum reproduces independently (S29-L38).** All 12 best pairs
+and values reproduce from my own single-pass code; the search is exhaustive (124,750 = C(500,2)
+on every target); the frame is the deployed readout's own at max |dev| 0.00e+00; and the verdict
+survives the EXACT shipped lookup as well as the piecewise-linear surrogate, with 0 sign flips
+(two small-gap targets change WHICH pair wins and neither becomes a prefix). 7JGX's +0.0000 gap
+is a genuine argmin at the prefix, not a code path. One defect recorded: lane B's tie rule takes
+the first tied index in ARRAY order despite its comment, which biases toward the prefix and is
+therefore conservative for its own claim; tie sets were size 1 or 2 and it changed nothing.
+`s29/results/s29_D_bcheck_pairs.json`.
+
 ## ORACLE DIAGNOSTIC
 
 OD1. The four meter numbers are ORACLE by construction (the ladder is scored against the
@@ -167,3 +208,11 @@ scale-only control. Registered as a prediction here so it can be wrong.
 | lane O's prereg: accepted for rungs 1 to 5 and 7, held for rung 6 | the three controls of S29-L3 must be in the same entry as any rung-6 positive; F6a's second clause compares a mean over 126 against a single-draw magnitude and cannot fire as written | S29-L3 |
 | lane X's prereg: accepted, probe may run | D1's ORACLE best is a minimum over up to 262,144 structures against a minimum over 8 and needs the scrambled-chimera control; P3 needs a participation-ratio-matched random-weight arm; any GO on 12 targets carries its power and Type-M and the words "GO, not a result" | S29-L4 |
 | the suite is green (378 / 3 / 0 on 17 light files) | the heavy files and the two AMBER files are NOT in this count and wait for the quiet window; the carry-over from S28-L45 covers only files neither lane has touched | S29-L5 |
+| the band experiment: F1 fires on 50/70 cells, F2 fails on 58/70 | say BOTH halves: positive within-band ordering exists AND conditioning removes skill rather than revealing it; name the realism definition in the same sentence (a result on one does not transfer, and R1/R3 are compactness-loaded at rho(R,Rg) +0.46/+0.40 while R2 is linearly clean but a FOLDED function of Rg); the design is the incidental-parameter elimination remedy and is SILENT BY CONSTRUCTION about the per-target sign | S29-L33 |
+| SS_MATCH goes from -0.009 global to +0.060 in-band | replicated on two realism definitions and both arms, so it is not a single cell; and at that size the square law prices it at ~1e-3 A -- a mechanism result, never an operator | S29-L33 |
+| B2 survives: no displacement field's signed mean cosine reaches 0.140 | **state the FAIL18 half in the same breath**: 10 of 21 fields clear a 20,000-draw random-18 null on the FAIL18 stratum where 1 is expected (CONS_TRIM +0.348 vs +0.046, p 0.0001), AND it does not move the bound, because at n = 18 the intervals are wide and even CONS_TRIM's lower bound of 0.128 sits under the 0.140 reference. A critic who reads only the first half has a case; a reader who gets both has the truth. Also say that eight of the 21 have signed means whose fold CI excludes ZERO -- they are small real alignments, not noise | S29-L35 |
+| the sign-oracle ceiling is 2.708 A | ORACLE in the sign AND the step; it is the bound's own formula fed the per-target \|cos\|, not a reachable arm; it sits BELOW lane T's 2.98 A margin and is reported as a refinement of the bound's description, not a challenge to it | S29-L35 |
+| the shrink grid refutes the cosine half of rule 20's mechanism | the percentile half is confirmed (0.369 -> 0.491, 9/9 steps), so the RULE stands and only its justification is withdrawn; and the same grid shows the ladder rho improving while the percentile degrades, which is why the meter has four numbers | S29-L37 |
+| lane B's claim 1 stands | reproduced under a SECOND functional (the exact shipped lookup) as well as the surrogate, because three of the twelve gaps are smaller than the two readings' typical difference; and the tie-rule defect is recorded as conservative-for-B, not as a flaw in the result | S29-L38 |
+| lane B's claim 2 (+0.4278 A at 0.59x MDE, n = 12) | read it in BOTH directions: not evidence the lift helps, and at power 0.38 not strong evidence it hurts either (Type-M 1.61 says the magnitude is inflated ~60% if it is noise-significant); n = 35 clears its own MDE and n = 126 costs 16 minutes | S29-L38 |
+| the deployed VQE arm vs a fixed target-independent prefix | -0.0097 A at 0.43x MDE on the point cloud (NOT MEASURED); the built chain is the registered primary and decides; T's "equals on 120/126" is false at the structure level (43/126 within the chain floor) and true only as an endpoint statement | S29-L26 |
