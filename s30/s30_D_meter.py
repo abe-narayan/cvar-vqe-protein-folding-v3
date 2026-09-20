@@ -563,10 +563,17 @@ def verify():
     """Re-run the shipped cost through the S29 instrument and ASSERT the six published anchors."""
     import tempfile
     bad = []
-    with tempfile.TemporaryDirectory() as td:
-        a = M.run_meter("DIS", basis="chain-s28rows", out=os.path.join(td, "a.json"), quiet=True)
-        b = M.run_meter("DIS", basis="ca", out=os.path.join(td, "b.json"), quiet=True)
-        s = M.run_meter("DIS_SURR", basis="ca", out=os.path.join(td, "c.json"), quiet=True)
+    #: verify reproduces S29's PUBLISHED numbers, so it must read S29's OWN ladder cache, not the
+    #: s30 one. Restored afterwards; S29's cache is read-only here and is never written.
+    saved = M.CACHE
+    M.CACHE = os.path.join(ROOT, "s29", "results", "s29_D_ladder_structs")
+    try:
+        with tempfile.TemporaryDirectory() as td:
+            a = M.run_meter("DIS", basis="chain-s28rows", out=os.path.join(td, "a.json"), quiet=True)
+            b = M.run_meter("DIS", basis="ca", out=os.path.join(td, "b.json"), quiet=True)
+            s = M.run_meter("DIS_SURR", basis="ca", out=os.path.join(td, "c.json"), quiet=True)
+    finally:
+        M.CACHE = saved
     checks = [
         ("ladder rho S28, chain", a["ladder_rho"]["S28"]["mean"], ANCHORS["ladder_rho_S28_chain"], 5e-4),
         ("ladder rho S28, CA", b["ladder_rho"]["S28"]["mean"], ANCHORS["ladder_rho_S28_ca"], 5e-4),
