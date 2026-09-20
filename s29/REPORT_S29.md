@@ -1290,6 +1290,27 @@ So the ranked candidates for S30, each with the evidence that would settle it:
 | 2 | **A sparse weighted readout with a native-free support rule** | The only ladder class not closed by ceiling (§12.1). Settled by whether any native-free rule picks a 2–5 member support better than chance — noting it needs ~18 bits, not 7 | Days; the ladder machinery exists |
 | 3 | **A genuinely new information channel** | Not a new operator on the same pool. The bound explicitly does not cover this, and it is the only thing that could move the ceiling rather than the approach to it | Unknown; this is a research question, not an engineering one |
 
+**Two constraints that apply to every row of that table, and that this sprint established rather
+than assumed.**
+
+First, **a channel is not enough on its own.** Any new information reaches the endpoint only through
+the terminal operator, and that operator consumes the set *mean*, so it can spend at most 0.04 of
+any ranking (§5.4). Candidates 1, 1= and 3 all require candidate 2 — or some other operator that
+can consume a ranking — to be worth their Angstroms. A sprint that produces a better channel and
+feeds it to the shipped average will measure approximately nothing, and will do so for a reason that
+is already known.
+
+Second, **aim at the tail, not the average.** The charter's target is a mean, half the benchmark
+already clears 3.0 Å, and the mean is held up by targets running to 8.24 Å (§7.1). An intervention
+that improves the median by 0.2 Å and leaves the tail alone moves the endpoint by roughly 0.1 Å.
+The free-energy stage is attractive partly because it is the kind of signal that could behave
+differently on a bad pool than on a good one.
+
+**One cheap prerequisite before any of it.** Lane M measured that the distogram memorises its
+training peptides by 8× (§1.4), so every *in-sample* corpus diagnostic in the project's record needs
+recomputing out-of-fold before it is used to choose a direction. That is hours of compute and it
+guards against building a sprint on a number that leakage produced.
+
 **And one thing that should not be attempted again**, because this sprint priced it: tuning any
 single global scalar. Four were measured; two have an ORACLE global optimum of *exactly zero*, and
 all four are on the wrong side of zero leave-fold-out. "Tune one number better" is not a strategy
