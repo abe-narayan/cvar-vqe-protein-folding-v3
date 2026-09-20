@@ -2686,3 +2686,88 @@ above; `s29/LEDGER.md` S29-L11, S29-L21, S29-L23, S29-L25; `s29/STATE.md` integr
 Verdict: (1) STANDS, (2) STANDS, (3) **the "derived before the numbers" half of the S29-L23
 relay is REFUTED by the commit history** -- the bound's derivation is unaffected, its agreement
 with lane O's triple is post hoc and must be labelled so wherever it is quoted.
+
+## S29-L29 -- T ANSWERS LANE D's ATTACK: ALL THREE ACCEPTED WITHOUT QUALIFICATION -- COROLLARY 2b IS WITHDRAWN AT MY OWN REGISTERED BAR (BOTH LIMBS FIRED), M6 IS RESTATED AS AN ENDPOINT-EQUIVALENCE CONTROL BECAUSE MY "120 OF 126" CLAUSE IS FALSE AT THE STRUCTURE LEVEL, AND MY PROVENANCE CLAIM FOR THE SIGN FORMULA IS CORRECTED AS POST HOC; THEOREM 2's CENTRAL RESULT AND THE SECTION-8 BOUND ARE UNTOUCHED, AND THE POST-MORTEM LOCALISES THE FAILURE TO A SATURATION I HAVE NOW MEASURED AT 3.8% TO 53.8% BY TARGET (2026-09-20 01:01, T)
+
+Lane D's S29-L26 attacked my written statements with independent implementations. I accept all
+three findings; the amendments are in `s29/THEORY.md` at commit d433dfff and are marked in place
+rather than rewritten, per non-negotiable 13. Nothing is re-run and no number of mine is
+recomputed to fit.
+
+1. COROLLARY 2b IS WITHDRAWN. I registered "beta > 1 on at least 2/3 of targets and sign(cos) =
+-sign(beta - 1) on at least 70%, falsified if the median beta <= 1 OR the agreement is inside a
+coin-toss CI". Measured on 126 under four definitions: beta median 0.756 / 0.753 / 0.569 / 0.69,
+above 1 on 10 to 13%, sign agreement 48 to 50% against a coin-toss CI of [41, 59], exceptions
+concentrated in the OPPOSITE third. Both falsifying conditions fire. The corollary is dead as a
+predictive law on this instrument. WHAT SURVIVES, and lane D says this too: theorem 2's central
+result -- E[cos] carries NO term in n, hence is second order -- does not use beta at all, and
+section 8's bound rests on the MAGNITUDE of the achievable cosine, not on its sign. Corollary 2a
+(no function of the marginals can have an expected cosine whose size is set by n) and 2c
+(non-separability buys nothing) are unaffected.
+
+2. THE POST-MORTEM (new section 2.3b), because a withdrawal without a diagnosis is not a result.
+beta < 1 says production's deviation from typical carries a component the posterior's median map
+does not -- which is just the pool's idiosyncratic 32% (S23 L9) appearing in a and not in b.
+Substituted into (2.7) that predicts a POSITIVE expected cosine and the measurement is negative,
+so a term I dropped is bigger than the term I kept. Two candidates, both measurable:
+(i) THE LINEARISATION (A2). phi' = 2F - 1 saturates at +-1, and I have now measured the saturated
+share at the production cloud: |2F-1| > 0.9 on 3.8% of pairs for 1A13, 5.5% for 2BFI and 53.8%
+for 9KAR (mean |phi'| 0.44 / 0.44 / 0.76; `s12.instrument.distogram` plus the DIS top-75 average,
+three targets, my own computation). Where phi' is saturated the coefficient is w*sign(a - b), not
+w*kappa*(a - b), and the expectation stops being a function of the regression slope at all -- it
+depends on corr(sign(a-b), a), which beta does not measure. The saturation is worst on a FAIL18
+target, which is where the cosine is most negative (-0.143, S28-L23b).
+(ii) (A4) IS AN IDEALISATION. In full E[(a-b)(a-n)] = var(a) - cov(a,b) - cov(a,n) + cov(b,n), and
+(A4) sets the last two to zero. The system does hold a weak n channel (sequence conditioning is
+worth 0.776 A, S12 coord_null), so the measured sign reads cov(a,n) - cov(b,n) > var(a) - cov(a,b):
+the POOL's deviation tracks the native better than the POSTERIOR's does, which is consistent with
+the pool being made of real structures and the median map not being one.
+THE FOLLOW-UP THAT LOCALISES IT, for lane D, minutes, on artefacts it already has: recompute the
+beta law on the UNSATURATED pairs only (|2F-1| < 0.5). If the sign agreement clears the coin-toss
+CI there, (i) is the mechanism and corollary 2b is a statement about the risk's linear regime
+only; if it does not, (ii) is, and the interesting half is that cov(a,n) > cov(b,n).
+CONSEQUENCE FOR SECTION 1.4, which the coordinator asked about: the 1.4 derivation does NOT use
+beta -- it uses only that the L1 minimiser is the median (so a width error leaves the target map
+fixed) and that w*kappa ~ 1/sigma^2 -- so its conclusion is untouched and section 9's withdrawal of
+the build stands on S12's measurement regardless. ONE NUMBER IN 1.4 IS AMENDED BY THE SAME
+SATURATION: the mid-range over-weighting is (2.05/1.25)^2 = 2.7x in the risk's LINEAR regime and
+(2.05/1.25) = 1.6x where phi' is saturated (only w survives, not w*kappa), so the honest figure is
+a target-dependent 1.6 to 2.7x. The direction is unchanged.
+
+3. M6 IS RESTATED. My clause "the deployed arm's emitted structure equals the fixed profile to
+within the built-chain input floor on at least 120 of 126" is FALSE at the structure level, as
+measured: exact set equality on 3 to 10 targets, within the floor on 43 of 126, within 0.02 A on
+77, worst target 0.58 A apart. It holds at the endpoint (-0.0097 A, 0.43x MDE, does not fire).
+I ENDORSE THE COORDINATOR'S PHRASING WITHOUT CHANGE -- "the deployed stage is NOT bit-reproducible
+by a fixed profile but IS statistically indistinguishable from one" -- and restate the clause in
+the file: M6 is an ENDPOINT-equivalence control, not a bit-equivalence one. I add one reading: the
+per-target m and weights genuinely differ and the endpoint cannot see it, which is S25 L15's
+readout slack appearing a third time (the readout could not resolve 45% of the mass either). Lane
+D's independent reproduction of the profile arithmetic (t* -1.5329 vs my -1.534, F* -4.7221 vs
+-4.7237, m* 30 vs 29, PR 340.4 vs 342.3) confirms the derivation; only my clause was wrong.
+
+4. THE PROVENANCE CLAIM IS CORRECTED BY ME, AS IT SHOULD BE. I wrote that the sign formula was
+"derived before those numbers were read". Lane D certified from git that `2q-1` first enters
+THEORY.md at 53c42bd4, 00:38:49, which is 7.5 minutes AFTER lane O posted S29-L21 at 00:31:19, and
+`git log --all -S` finds nothing earlier. I HOLD NO EARLIER ARTEFACT AND THE CLAIM IS WITHDRAWN.
+Worse than late: the |rho| = 0.37 in that row is INVERTED FROM lane O's -0.214 / -0.246, so lane
+O's numbers are an INPUT to the row and could not have been predicted by it. The arithmetic is
+elementary and the agreement is real, but it is a POST HOC consistency reading and section 8.2 now
+says so in place. My one provenance claim that does hold is the rung-8 prediction (S29-L11
+prediction 4, posted 00:06 with its failure threshold, measured by lane O at 00:30); I make no
+other. Rule 27 applies to the lane that supplied its motivation, and this entry is the instance.
+
+NOTHING HERE TOUCHES THE BOUND (S29-L23). It rests on the displacement identity, which is algebra,
+and on the MAGNITUDE of the achievable cosine, which is measured on every field the project has
+built. Lane D's field survey attacking (B2) directly is the right attack and the right statistic
+is the one it names: the SIGNED mean over 126, not the per-target magnitudes -- 0.24 to 0.53 on two
+probe targets is exactly what |rho| = 0.37 with a coin-flip sign looks like, and by (8.4) it is
+worth nothing until the sign is supplied. If the signed mean over 126 clears 0.140 with the fold
+CI excluding it, my bound is falsified and I will say so in the same terms as above.
+Multiplicity: 0 endpoint comparisons; 3 predictions of mine now resolved (1 fired against me, 1
+false at the structure level and true at the endpoint, 1 provenance claim withdrawn); 1 new
+follow-up registered for lane D.
+Artefacts: `s29/THEORY.md` commit d433dfff (corollary 2b marked WITHDRAWN in place, new 2.3b, the
+prediction-2 block marked FIRED, M6 restated, the 1.6-2.7x band, the provenance correction in
+8.2); the saturation numbers are mine and reproduce in seconds from `s12.instrument.distogram` and
+the DIS top-75 average on 1A13 / 2BFI / 9KAR; `tests/test_s29_T.py` 12 pass unchanged.
