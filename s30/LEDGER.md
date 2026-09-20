@@ -1499,3 +1499,114 @@ Artefacts read for this entry: `s29/s29_O_FINDINGS.md` U1 and D5; `s29/LEDGER.md
 recompute-the-posterior warning, adopted); `s27/LEDGER.md:229-321` and `s27/s28_C_FINDINGS.md:62-73`
 (lane C's ORACLE prize, the comparison in §5); project memory `operator-consumes-set-mean`,
 `grid-oracles-are-order-statistics`, `mde-is-per-comparison-not-per-instrument`.
+
+
+## S30-L12 -- THE SECOND-MOMENT (QUADRIC) TAIL CLASS **DOES NOT BEAT THE HALFSPACE CLASS IT WAS MEANT TO ESCAPE INTO**: A 17x VC EXPANSION (34 -> 595) BUYS **-0.0105 Å AT 0.16x MDE (NOT MEASURED)** AT ORACLE m AND IS **+0.2059 Å WORSE AT 1.81x MDE (W/L 37/89)** AT THE SHIPPED m=75. AND THE WHOLE APPARENT CEILING OF BOTH CLASSES IS AN ORDER STATISTIC: **225% OF THE LINEAR SEARCH'S GAIN IS ACCOUNTED FOR BY THE ACROSS-TARGET NULL AND THE SPLIT-HALF TRANSFER IS +0.032 Å (-3%)**. THE DISPERSION RULE THE CONSTRUCTION POINTS AT, MEASURED DIRECTLY, IS **3.3585 Å AT m=75 AGAINST PRODUCTION'S 3.0483** -- WORSE THAN WHAT SHIPS. MEASURED BEFORE A HAMILTONIAN WAS BUILT, AS INSTRUCTED (2026-09-20 13:01, Q)
+
+Code `s30/s30_Q_quadric.py`, `s30/s30_Q_quadric_analyse.py`. Rows
+`s30/results/s30_Q_quadric_rows.jsonl` (126), summary `s30/results/s30_Q_quadric.json`.
+POINT CLOUD; **every ceiling row is ORACLE**; the `rules` rows are native-free constructions with
+an ORACLE readout. No deployable parameter is chosen.
+
+## WHAT WAS ASKED AND HOW IT WAS MADE FALSIFIABLE
+
+The coordinator's construction (from lane T's theorem T1, S30-L9): with an **endogenous** order the
+cost is `c_x = <grad f(R_lambda), W_x>`, so candidates are sorted by projection onto one
+self-consistent direction and the reachable tails are **halfspace cuts**, VC dimension d+1 = 34.
+Adding a second-moment term `V = f(sum l W, sum l W W^T)` makes `grad V_x` **quadratic** in `W_x`,
+the cuts become **quadrics**, and the VC dimension jumps to (d+2)(d+1)/2 ~ 595 -- "the only
+construction that survives lane T's cap."
+
+**The measurement that decides it before any circuit exists:** enumerate what each class can
+actually reach on the real pools, with **the readout held fixed** (the uniform coordinate average
+of the selected prefix) so that the only thing varying is *which set*. 128 sampled directions per
+class per target, all prefix sizes m = 1..500, 126 targets.
+
+## THE RESULT: THE EXPANSION BUYS NOTHING
+
+```
+                                       ORACLE m        at the shipped m = 75
+  deployed exogenous prefix             2.6355                3.0483
+  LINEAR  (halfspace), best of 128      1.7356                2.2204
+  QUADRIC (2nd moment), best of 128     1.7251                2.4263
+  ORACLE-sorted prefix (upper ref)      1.3958                    --
+
+  QUADRIC minus LINEAR, ORACLE m      -0.0105  SE 0.0230  0.16x MDE  W/L 65/57   NOT MEASURED
+  QUADRIC minus LINEAR, m = 75        +0.2059  SE 0.0405  1.81x MDE  W/L 37/89   WORSE
+```
+
+A seventeen-fold expansion of the reachable-tail class is worth **0.16x MDE** where it is free to
+pick its own set size, and is **significantly harmful** at the set size the pipeline actually
+emits. The richer class is not merely not-better; at m = 75 it is reliably worse, losing on 89 of
+126 targets.
+
+**Independently corroborated by lane T's own quadric rows** (`s30/results/s30_T_quadric.json`,
+K = 5000 directions inside a 6-dimensional PC subspace at fixed M = 75 -- a different sampler, a
+different subspace, a different K): on both of its completed targets `quad_best` is worse than
+`half_best` (1A13 2.207 vs 2.117; 1A1P 2.340 vs 2.316). Two samplers, two lanes, same sign.
+
+## AND THE CEILING THAT IS THERE DOES NOT TRANSFER
+
+The headline "halfspace cuts reach 1.74" is a **best-of-128**, and pricing it kills it:
+
+```
+  best_of_k_within, LINEAR   observed -1.2003  across-target null -2.7006 (225% accounted)
+                             split-half +0.0323 (-3% transfer)   k_eff 78.8
+  best_of_k_within, QUADRIC  observed -1.1906  across-target null -2.4193 (203% accounted)
+                             split-half -0.0204 (2% transfer)
+```
+
+The across-target null **exceeds** the observed gain in both classes, and split-half transfer is at
+or on the wrong side of zero. **There is no transferable direction.** This is S29's U1
+incidental-parameter pattern again -- previously measured for a scalar step (rungs 6 and 8), now
+measured for a whole direction: per-target it looks like a large gain, across targets it is worth
+nothing. The cut class's expressiveness is real and unusable for the same reason every free scalar
+in this project has been.
+
+## THE STRUCTURED VERSION OF THE PROPOSAL, TESTED DIRECTLY
+
+The random-quadric sampler could be accused of missing the *right* quadric. So the specific
+quadratic form the second-moment functional's gradient produces was evaluated as a named
+native-free rule: `disp2(x) = ||W_x - mean(W)||^2`, the candidate's squared deviation from the
+pool mean -- "operators that read the pool's own dispersion."
+
+```
+  native-free rule        ORACLE m     at m = 75
+  dis_score (deployed)     2.6355        3.0483
+  disp2                    3.0606        3.3585      <- the dispersion rule
+  rg                       2.7858        3.5382
+  dist_to_medoid           3.1030        3.7246
+  PC1 / PC2 / PC3          ~3.0          4.0-4.2
+```
+
+**Every native-free rule direction tested is worse than the deployed score at both set sizes, and
+the dispersion rule is 0.31 Å worse than production at m = 75.** The two-routes-converging argument
+(S29's post-mortem and T's derivation both pointing at pool dispersion) is real as an argument and
+does not survive contact with the pools.
+
+## ONE THING THAT DID SURPRISE ME, AND A WORRY THAT WAS UNFOUNDED
+
+I expected the cut classes' ORACLE ceiling to be attained by degenerating to m = 1 -- i.e. for the
+"richer selection class" to collapse into the argmin readout, which would have made it a
+relabelling of a question already answered. **It does not.** The best prefix for a linear direction
+sits at **median m = 402**, with 81% of directions peaking at m >= 50 and only 4% at m <= 2. The
+class genuinely selects large sets. It simply cannot select them from outside the target.
+
+## SCOPE, STATED SO THE NEGATIVE IS NOT OVER-READ
+
+- 128 sampled directions in the full 3n space is not exhaustive, and neither is T's 5000 in 6
+  dimensions. But the order-statistic pricing is what closes this, not the ceiling: a larger search
+  inflates an untransferable number. To reopen it, someone must exhibit a **rule** that produces a
+  direction, not a larger search over directions.
+- This measures the SELECTION side with the readout held fixed. It says nothing about readouts --
+  which is S30-L11's subject, and there the argmin dominates.
+- The quadric family sampled is `A` of rank 3 with random signs plus a linear part. A structured
+  `A` derived from a trained objective is not tested here; the one structured form the construction
+  itself specifies (`disp2`) is, and it is negative.
+
+## COMPARISONS MADE (contract rule 26)
+
+Two classes x 8 best-of-K points x 2 set-size conventions, 2 order-statistic prices, 14 native-free
+rule directions (7 rules x 2 sign conventions), 3 stratum splits. The two contrasts read as results
+are QUADRIC-minus-LINEAR at ORACLE m and at m = 75; both were fixed as the decision before the run
+and both are reported with SE, MDE and W/L. No per-target maximum is read as a mean anywhere.
