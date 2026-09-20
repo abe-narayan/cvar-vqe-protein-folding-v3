@@ -1703,3 +1703,157 @@ Kabsch). The `2/n` bonded-fraction argument treats all pairs as equally weighted
 which no real force field does -- it is an order-of-magnitude argument for the sign flip, not a
 prediction of its size. And prediction 3 is mine, at 2 to 1, and the last time this lane and lane T
 agreed on a prior of this kind at 3 to 1 we were both wrong at n = 126.
+
+## S30-L4 -- THE SCORE HAS **NO IN-POOL RANKING SKILL ON THE TAIL**: ρ = **+0.1066** (FOLD CI INCLUDING ZERO) AGAINST **+0.6446** ON THE 108, RANDOM-18 NULL **p = 0**. IT IS ALMOST ENTIRELY THE DISTOGRAM'S OWN ERROR (ρ = **−0.799**), THE CHAIN IS FULLY MEDIATED, AND THE ERROR THAT MATTERS IS **SHAPE, NOT SCALE** -- LANE L'S SCALE-SEPARABLE TERM IS **REFUTED AS THE MECHANISM** (PARTIAL −0.067, p = 0.46, AGAINST SHAPE'S −0.641). "CONFIDENTLY WRONG" ALSO REFUTED: ERROR×CONFIDENCE IS **WORSE** THAN ERROR ALONE (2026-09-20 13:03, F)
+
+Pre-registration `s30/PREREG_S30_F3.md`, committed **eb719398 at 12:58:34**, before this file's
+code existed. Code `s30/s30_F_score.py`; output `s30/results/s30_F_score.json`.
+
+**Every predictor in this entry is ORACLE** (it reads the native's distances). This experiment
+builds **no router and no detector**, by design — the question is *what the score is wrong about*,
+not whether we can spot it. The seven closed router feature families are enumerated in the prereg
+and every one of them is measured here and reported whether flattering or not.
+
+Reproduction gate as S30-L3: the score order is recomputed from the posterior and its top-75
+equals production's `sub` set-wise on 126/126. Same declared caveat about deep order below the cut
+(`s29/LEDGER.md:751`).
+
+### 1. F3a FIRES -- and this quantity did not exist in the record
+
+Per-target Spearman between the shipped Bayes-risk score and ORACLE CA-RMSD, over each target's
+full 500-member pool. Positive = the score orders its own pool correctly.
+
+```
+stratum               n    rho_pool    rho_top75(in-band)
+all                 126     +0.5678        +0.0652
+other 108           108     +0.6446        +0.0743     fold CI [+0.5905,+0.7063]  5/5 folds
+FAIL18               18     +0.1066        +0.0103     fold CI [-0.0241,+0.1916]  3/4 folds
+worst18_poolmean     18     +0.3798        +0.2115
+worst18_bestpool     18     +0.3438        +0.0180
+random-18 null: obs +0.1066, null mean +0.5682, CI95 [+0.4067,+0.7170],  p = 0
+```
+
+**On the tail the score cannot order its own candidate pool — its fold CI includes zero.** On the
+body it orders it at +0.64. This is the mechanism behind S30-L2's filter inversion stated at the
+level of the score itself rather than of the stage.
+
+**It replicates, in degree, on both filter-independent tails** (+0.3798 and +0.3438, both well
+below the 108's +0.6446). That is the opposite of S30-L3's widening effect, which did not
+replicate at all — so **skill degradation is a genuine property of hard targets**, while FAIL18 is
+its extreme. This is the first tail statement in this lane that survives on all three definitions,
+and it should be quoted in preference to the FAIL18-only rows.
+
+A third non-circular corroboration: **12 of 126 targets have rho_pool ≤ 0** — the score is
+*anti*-informative inside its own pool — and **only 5 of the 12 are FAIL18** (2MQ2 −0.505,
+2O0S −0.373, 2NB7 −0.366, 6F3V −0.288, 3SGO −0.201, 7JS6 −0.196, 1CS9 −0.147, ...).
+
+### 2. F3b FIRES -- it is the distogram's own error, and rho_pool fully mediates
+
+```
+predictor of rho_pool          Spearman   resid(n)   fold CI              F18 mean  108 mean
+distogram MAE vs native  *      -0.799     -0.819   [-0.880,-0.668]        4.367     2.001
+shape error              *      -0.772     -0.797   [-0.839,-0.672]        3.630     1.884
+|scale error|            *      -0.578     -0.588   [-0.664,-0.482]        3.416     1.056
+|log scale ratio|        *      -0.564     -0.568   [-0.661,-0.453]        0.310     0.106
+posterior sd                    -0.525     -0.546   [-0.631,-0.411]        1.667     1.411
+F4 top-75 Rg sd                 -0.528     -0.530   [-0.602,-0.452]        0.464     0.353
+F5 rg disagreement              -0.428     -0.405   [-0.489,-0.383]        0.448     0.094
+F3 posterior entropy            -0.462     -0.456   [-0.600,-0.339]        1.468     1.435
+F2 score sd                     +0.615     +0.608   [+0.525,+0.688]        0.822     0.881
+F2 score gap                    -0.383     -0.391   [-0.484,-0.262]        0.402     0.346
+F4 pool Rg sd                   -0.128     -0.189   [-0.316,+0.036]        1.396     1.300
+F1 length n                     +0.154     +0.012   [-0.071,+0.391]       14.000    12.787
+                                                        (* = ORACLE predictor)
+```
+
+The distogram is **2.18× as wrong on the tail** (MAE 4.367 vs 2.001 Å), and its error explains the
+score's in-pool skill at **−0.799**, essentially unchanged when length is residualised out
+(−0.819) — so this is not S28-L6's length confound.
+
+**The chain is one mechanism, and rho_pool is the proximate variable:**
+
+```
+spearman(distogram MAE, rho_pool)                      -0.799
+spearman(rho_pool, filter set-mean benefit)            +0.888
+spearman(distogram MAE, filter set-mean benefit)       -0.631
+   ... controlling for rho_pool                        +0.299  (sign FLIPS: fully mediated)
+   ... rho_pool vs benefit controlling for MAE         +0.844  (p = 2.1e-35: survives intact)
+```
+
+Joined to S30-L3 (benefit ↔ effect of widening, +0.81) and to `operator-consumes-set-mean`
+(d_out = 1.16·d_set_mean), the whole path from prior error to emitted RMSD is now measured
+end to end:
+
+> **distogram error → the score's in-pool ranking skill → the filter's set-mean benefit → the
+> emitted structure.** The prior's error reaches the endpoint *through the filter's ranking*, not
+> through the averaging.
+
+That is a mechanistic account of `prior-derivative-is-the-only-steep-lever` (−2.15 Å per unit
+toward a perfect prior): this entry says *by what route* the derivative acts.
+
+### 3. F3c does NOT fire -- lane L's scale term is refuted as the mechanism
+
+The coordinator relayed lane L's derivation that every fixed-reference pair channel contains a
+separable term that is a pure function of scale, and asked whether hard pools fail for that
+algebraic reason. Decomposing the distogram's error into a signed additive offset (**scale**) and
+the residual after removing it (**shape**):
+
+```
+partial Spearman(rho_pool, |scale error|)  controlling shape    -0.067   p = 0.46    NULL
+partial Spearman(rho_pool, shape error)    controlling scale    -0.641   p = 6.5e-16
+```
+
+**The skill collapse is shape error, not scale error.** Two direct answers to the questions put
+to me:
+
+- **Is the filter's failure predicted by the pool's Rg dispersion? No.** F4 pool Rg sd is
+  **−0.128** with a fold CI **including zero** [−0.316, +0.036] — NOT MEASURED. Size dispersion
+  does not predict where the filter fails.
+- **Is scale error elevated on the tail? Yes, in ratio — and it still is not the mechanism.**
+  |scale error| is 3.23× on FAIL18 versus shape's 1.93×, but shape is **83.1%** of the tail's
+  total error (94.2% on the 108) and shape is what carries the correlation. Both facts belong in
+  any quotation of this row; the elevated ratio is real and the causal claim it invites is not.
+
+**Two caveats, both mine.** I could not reach lane L directly (a lane is not addressable from
+this lane), so the scale statistic is the one **I** guessed from a second-hand relay, not the one
+lane L's derivation specifies. If lane L's separable term is a different functional — a
+weighted or log-domain form, or one defined against the posterior's bins rather than its
+expectation — this refutation does not touch it, and I will re-run on their statistic on request.
+**Treat F3c as provisional until lane L confirms the statistic.** Second, this is a correlation
+over 126 targets among ORACLE quantities, not an intervention.
+
+### 4. F3d does NOT fire -- plain wrongness, not confident wrongness
+
+```
+error alone                        -0.799
+error x confidence (1/posterior sd) -0.729     gain -0.069 against a +0.10 bar
+```
+
+The interaction is **worse** than error alone. The project's "confidently wrong costs 2-3× absent"
+(`torsion-restraints-reach-the-target`) does not reach this stage: what predicts the filter's
+collapse is how wrong the distogram is, not how confidently. Reported as a refutation of my own
+framing — I proposed "what is the distogram *confidently* wrong about" and the answer is that the
+adverb is doing no work.
+
+### 5. What this does NOT license, stated before anyone asks
+
+The three best **native-free** correlates of rho_pool in the table — F2 score sd (+0.615),
+F4 top-75 Rg sd (−0.528), F5 rg disagreement (−0.428) — are **all inside the closed router
+families**, and F5 (`rg_z`) is the one S23-L7 closed at 2% of its own MDE. Correlating with an
+ORACLE diagnostic at 0.5–0.6 is not the same as delivering Ångströms through a gate, which is
+exactly the gap the eight closed constructions fell into, and S29-L31's incidental-parameter
+result says why. **No router was built here and none should be built from this table.** What the
+table is for is the opposite purpose: any future detector must report its correlation with these
+columns, and a feature that lands inside them is not new.
+
+The one thing that is genuinely changed for a future detector is S30-L3 §5's economics: the
+ORACLE gate prize is −0.1193 Å at 1.29× MDE, about 2.5× the −0.0474 Å that lane C's detector was
+dismissed against — so the "even a perfect detector is too small to measure" half of that closure
+is specific to lane C's operator and must not be quoted generally.
+
+Artefacts read: `s29/LEDGER.md:751` (recompute-the-posterior warning, adopted), `:3097-3151`
+(S29-L33's unstratified pool-ranking table, which this entry stratifies for the first time),
+`s27/LEDGER.md:1465-1542` (S28-L23b's gradient cosine −0.143/−0.016, the structure-level analogue
+of §1), `:229-321` (lane C's detector and its ORACLE prize); project memory
+`prior-derivative-is-the-only-steep-lever`, `operator-consumes-set-mean`,
+`torsion-restraints-reach-the-target`, `error-shape-not-mae-decides-ranking`.
