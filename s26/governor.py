@@ -58,7 +58,12 @@ CEILING = 94.0        # % RAM (v2.5, S29: the user asked for 94-95%), or % CPU s
 HARD = 95.5           # % RAM sustained HARD_SECONDS (v2.5): kill the newest job (RAM only, v2)
 HARD_SECONDS = 15.0
 RESUME_BELOW = 92.0   # RAM band is 92-94 (v2.5); resume only once RAM is back under 90 ...
-CPU_CEILING = 99.0    # v2.6: CPU gets its own ceiling; the box is meant to run hot
+CPU_CEILING = 101.0   # v2.6c (S29): CPU-triggered suspension is DISABLED. Eight jobs on eight
+                      # cores put smoothed CPU at 96-100% by design -- that IS the user's
+                      # 'keep utilisation high' instruction being followed -- and suspending a
+                      # job to pull CPU from 100 to 94 destroys throughput for no safety gain.
+                      # A saturated CPU has no failure mode; RAM does (OOM), so RAM alone
+                      # triggers suspend (CEILING 94) and kill (HARD 95.5).
 CPU_RESUME = 99.0     # v2.6 (S29): the box is deliberately run at 94-95% CPU on the user's
                       # instruction, so a resume gated on CPU < 80 could NEVER fire and starved
                       # five jobs across four lanes for 40 min. RAM is the real constraint here.

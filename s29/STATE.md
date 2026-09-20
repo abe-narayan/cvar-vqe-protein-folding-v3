@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 01:04 Pacific.
+Last update: 2026-09-20 01:11 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -168,6 +168,46 @@ third is the queued S8 free-energy item and is now the only structurally live ex
    headline changes from a ceiling to an opening.
 
 
+
+
+## THE UNIFIED FINDING HAS A THEOREM (2026-09-20 01:11, S29-L31): THE SIGN IS AN INCIDENTAL PARAMETER
+Lane L identified what the sprint has been circling: the missing per-target sign is an INCIDENTAL
+PARAMETER in the sense of Neyman & Scott (Econometrica 16:1-32, 1948) -- one nuisance parameter
+per target with a bounded number of observations per target. In their canonical case the MLE of
+the variance converges to HALF its true value: inconsistent, not merely inefficient. Mapped here,
+s(x) = f(x) + g(j) with f the structural part cross-target training estimates and g(j) the
+per-target sign. S14's 0.986 within-target against 0.600 across-target, with an overfitting gap of
+-0.0005 and a LEARNING CURVE THAT DECLINES WITH MORE TARGETS, is that theorem measured on this
+instrument.
+AND THE HALF THAT CLOSES THE LOOP. The standard remedy for an incidental parameter is to ELIMINATE
+it (conditional or fixed-effects likelihood), which is exactly the within-group pairwise design
+lane D is running -- and ELIMINATING IS NOT ESTIMATING. Conditional likelihood buys a consistent
+estimate of the shared f precisely by discarding all information about g(j). So the choice is:
+estimate f consistently and discard the sign, or estimate f inconsistently and contaminate it.
+Neither returns the sign. THE PER-TARGET SIGN IS NOT ESTIMABLE FROM OTHER TARGETS' ANSWERS AS A
+MATTER OF STATISTICAL THEORY, NOT OF MODEL CAPACITY. The literature names exactly two escapes:
+replication WITHIN the instance (an independent second source), or a covariate observed at
+inference. Three adjacent literatures do NOT transfer and are recorded so S30 does not spend time
+on them: phase retrieval (sign information is disproportionately VALUABLE, not RECOVERABLE), PCA
+sign ambiguity (a gauge fixed by convention; ours is a real latent state with a right answer), and
+one-bit compressed sensing (recovers a direction FROM many sign measurements, the converse).
+WHY THIS INSTRUMENT IS HARDER THAN THE PROTEIN CASE, stated cleanly for the first time: the
+field's per-target conditioner is MSA depth, and a 13-residue query has no family -- any hits are
+the fragment's parent proteins, which is the leakage the fold clustering exists to exclude. The
+conditioner is not weak here, it is ABSENT. Recycling is optimisation, not information (it feeds
+back the network's own outputs, so no external evidence enters); templates are leakage; confidence
+heads are functions of the model's own output and were measured to have no in-band skill at
+peptide length.
+LANE L PRICED ITS OWN PROPOSAL AND THE PRICE KILLS IT AS A ROUTE. Using lane T's formula at
+rho = 0.37, a sign classifier at 60% accuracy buys 0.009 A, at 70% 0.035 A, at 80% 0.080 A, at 90%
+0.144 A and at 100% 0.228 A: quadratic in (2q - 1), the squared-skill law again, and the whole
+direction ceilings at 2.985 A. Lane L had priced it about 4x too high in its own draft and
+corrected it rather than quietly fixing it. CONSEQUENCE, adopted: the per-target sign regression
+remains S30's cheapest decisive FIRST measurement and is decisive in both directions, but it is a
+MECHANISM measurement and not a route to the charter's target. S30's only plausible route to a
+materially better number is A BETTER DISTANCE PRIOR (-2.15 A per unit, S24 L13), one of the three
+classes lane T's section 7 names as able to break assumption B2. Those are two different projects
+and the report must not let the first stand in for the second.
 
 ## THE ARCHITECTURAL CEILING (2026-09-20 01:04, S29-L30, rung 9): 2.76 A WITH THE NATIVE IN HAND
 Nobody had ever measured the ORACLE ceiling of the TOP-128 PREFIX, which is the only part of the
