@@ -534,5 +534,36 @@
    "L": 47,
    "verdict": "BETTER [TYPE-M ZONE: magnitude inflated ~1.04x]"
   }
+ },
+ "incoherence": {
+  "UNCORRECTED_production": {
+   "coh_within_target": 0.6930959406368322,
+   "coh_pooled": 0.8411537632171008
+  },
+  "N1_plus_calibration": {
+   "coh_within_target": 0.7857449691171564,
+   "coh_pooled": 0.8899569121940998,
+   "R2_oof": 0.15578731522317746
+  },
+  "N2_plus_posterior_shape": {
+   "coh_within_target": 0.7827341801164783,
+   "coh_pooled": 0.8863114755127518,
+   "R2_oof": 0.15222115482258092
+  },
+  "N3_plus_pool": {
+   "coh_within_target": 0.9171667941971987,
+   "coh_pooled": 0.9657875490110249,
+   "R2_oof": 0.23545312895964132
+  },
+  "IIDmatched_R2_0.235": {
+   "coh_within_target": 0.5365156949870838,
+   "coh_pooled": 0.7354477815043725,
+   "R2_oof": 0.23491538408925616
+  },
+  "IIDmatched_R2_0.156": {
+   "coh_within_target": 0.5867579972748646,
+   "coh_pooled": 0.774921927279189,
+   "R2_oof": 0.16323231917004943
+  }
  }
 }

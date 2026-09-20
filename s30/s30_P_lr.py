@@ -194,6 +194,28 @@ def main():
         preds["IIDmatched_R2_%.3f" % r2] = (r2 * (y - y.mean())
                                             + np.sqrt(r2 * (1 - r2)) * sy
                                             * rng.standard_normal(len(y)) + y.mean())
+    # ---- THE INCOHERENCE STATISTIC, so "incoherent" is a number a candidate channel can be
+    #      tested against rather than an adjective.  mu_p = the POOL's COMMON-MODE pair error
+    #      (mean over production's 75 of d_m,p - d_nat,p) -- the quantity S30-L7 proved
+    #      non-identifiable from within the pool.  A corrector's RESIDUAL r = y - yhat is
+    #      COHERENT to the extent it correlates with mu.
+    mu = X[:, FEATS.index("pool75_mean")] - X[:, FEATS.index("expected")] + y
+
+    def coh(r):
+        out = []
+        for q in sorted(set(tgt.tolist())):
+            m = tgt == q
+            if r[m].std() > 1e-12 and mu[m].std() > 1e-12:
+                out.append(np.corrcoef(r[m], mu[m])[0, 1])
+        return float(np.mean(out)), float(np.corrcoef(r, mu)[0, 1])
+
+    res["incoherence"] = {}
+    res["incoherence"]["UNCORRECTED_production"] = dict(
+        zip(("coh_within_target", "coh_pooled"), coh(y)))
+    for bn, yh in preds.items():
+        res["incoherence"][bn] = dict(zip(("coh_within_target", "coh_pooled"), coh(y - yh)),
+                                      R2_oof=float(1 - ((y - yh) ** 2).sum()
+                                                   / ((y - y.mean()) ** 2).sum()))
     for bn, yh in preds.items():
         off, vals, base = 0, [], []
         for t in I.targets():
@@ -224,9 +246,13 @@ def main():
                   % (bn, b["R2_oof"], b.get("increment_over_N1", b["increment_over_previous"]),
                      b["sign_acc"], b["sign_acc_baseline_always_plus"]))
     for bn, a in res["applied"].items():
-        print("APPLIED %-26s %.4f vs prod %.4f  delta %+.4f  %.2fxMDE  %dW/%dL  %s"
+        c = res["incoherence"].get(bn, {})
+        print("APPLIED %-26s %.4f vs prod %.4f  delta %+.4f  %.2fxMDE  %dW/%dL  coh %+.4f  %s"
               % (bn, a["mean_cloud"], a["prod"], a["delta"], abs(a["x_mde"]), a["W"], a["L"],
-                 a["verdict"]))
+                 c.get("coh_within_target", float("nan")), a["verdict"]))
+    print("coherence of the UNCORRECTED error: %+.4f within target, %+.4f pooled"
+          % (res["incoherence"]["UNCORRECTED_production"]["coh_within_target"],
+             res["incoherence"]["UNCORRECTED_production"]["coh_pooled"]))
     for k, b in res["blocks"].items():
         print("%-32s n=%6d  R2 %+.4f  randfeat %+.4f  permrows %+.4f  excess %+.4f | "
               "sign %.3f vs always+ %.3f (%+.3f)"

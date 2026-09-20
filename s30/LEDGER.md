@@ -3646,3 +3646,170 @@ only the emptiness does.
 **MULTIPLICITY.** 3 registered chiral channels + 3 twins + DIS = 7 channels x 2 contrasts. The
 max-over-3 sign-flip null is reported for both contrasts. The one comparison that cleared its bar is
 withdrawn above on a kind argument, not on its p-value.
+
+## S30-L27 -- **THE PREDICTABLE PART OF THE PRIOR'S ERROR IS EXACTLY THE UNUSABLE PART.** AT AN **IDENTICAL OUT-OF-FOLD R^2 OF 0.2355**, A CORRECTOR FITTED ON THE DISTOGRAM AND THE POOL EMITS **+0.0554 A WORSE** WHILE A **SYNTHETIC, NOT-DEPLOYABLE, ORACLE-CONSTRUCTED** i.i.d. ONE OF THE SAME R^2 EMITS **-0.2466 BETTER** -- A **0.30 A SWING AT MATCHED ACCURACY**, AND THE DISCRIMINATOR IS NOW A **MEASURED NUMBER**: EVERY FITTED CORRECTOR **RAISES** ITS RESIDUAL'S COHERENCE WITH THE POOL'S COMMON MODE (0.693 -> 0.78-0.92) AND ONLY AN i.i.d. ONE **LOWERS** IT (-> 0.54-0.59). LONG-RANGE R^2 IS **+0.1959**, NOT ZERO, BUT NESTING KILLS IT: **+0.1406 CALIBRATION/SHARED-REFERENT, -0.0184 FOR THE WHOLE UNCOLLAPSED POSTERIOR, ONLY +0.0758 POOL** -- AND THE FITTED CORRECTOR AT **THREE TIMES** THAT R^2 STILL EMITS WORSE (2026-09-20 13:57, P)
+
+Code `s30/s30_P_sign.py`, `s30/s30_P_lr.py`; bars registered in each file's header before it ran,
+parent registration `s30/PREREG_S30_P.md` (097352c5). Results `s30/results/s30_P_sign.json`,
+`s30/results/s30_P_lr.json`. Continues S30-L25.
+
+The coordinator's objection to S30-L25 was correct and is recorded as his: **the aggregate
+continuous R^2 is the wrong statistic in two ways at once** -- diluted by the short-range pairs that
+carry only ~32% of the prize, and pricing MAGNITUDE when the prize is SIGN. Both were run, and his
+registered 3:1 prediction that the long-range R^2 would also be ~0 is **falsified on the raw
+statistic**.
+
+---
+
+### 0. READ THIS BEFORE QUOTING ANY NUMBER BELOW
+
+**THE i.i.d. ARM IS A PRICE, NOT AN ACHIEVEMENT. IT IS NOT DEPLOYABLE.** The arm labelled
+`IIDmatched` is **built from the native**: taking the ORACLE per-pair error `y = expected - d_nat`,
+its prediction is `yhat = R^2*(y - mean y) + sqrt(R^2*(1-R^2))*sd(y)*z + mean y` with `z` standard
+Gaussian noise drawn fresh -- i.e. a *synthetic* corrector whose accuracy is dialled to match the
+fitted one exactly and whose **error structure is imposed rather than obtained**. **Nobody has this
+channel.** `2.8017 A` is the price of a channel that does not exist, not a result; it is the
+mandatory matched-accuracy null from `error-coherence-decides-correctors`, promoted to a
+specification. Every sentence below that uses it says ORACLE.
+
+---
+
+### 1. (A) THE SIGN CHANNELS, AGAINST A **PLAUSIBLE** BASELINE -- AND THE BASELINE IS THE RESULT
+
+S30-L25 *inferred* the deployable sign accuracy at ~0.6 by matching an Angstrom value against a
+corruption ladder. Measured directly, per bin, out of fold, against "always predict positive" --
+the sign of the leave-fold-out global profile, which is the *plausible* zero-information predictor
+and not a coin flip (`zero-information-control-must-be-plausible`):
+
+```
+always-positive baseline, per bin:  0.556  0.571  0.579  0.643  0.627
+                                                                 ^ 0.627 is FREE at long range
+
+channel        bin4 acc   excess over baseline   xMDE     applied delta (point cloud)
+POOLDIS75        0.667          +0.040           0.25       +0.0487   WORSE
+LFO_LOGIT        0.643          +0.016           0.10       +0.0718   WORSE
+POSTSD           0.635          +0.008           0.36       +0.0401   WORSE
+POSTSKEW         0.563          -0.063           0.52       +0.0921   WORSE
+POSTMODE         0.563          -0.063           0.34       +0.0559   WORSE
+RGDIS            0.524          -0.103           0.55       +0.0843   WORSE
+POOLDIS500       0.516          -0.111           0.58       +0.1492   WORSE
+ORACLE sign      1.000                                      -0.3567   BETTER (2.29x, 5/5)
+```
+
+**Not one channel clears 1x MDE over the free baseline in any of the five bins, and every one emits
+worse than production.** The matched-accuracy i.i.d. sign ladder (ORACLE, the mandatory null)
+crosses zero at ~0.63-0.65 realised accuracy -- **exactly where the free baseline already sits**,
+which is also why S30-L25's LFO_GLOBALPROF5 came in at +0.0036. The inferred 0.6 is confirmed and
+refined: raw accuracy 0.60-0.67, and essentially all of it is free.
+
+### 2. (B) LONG-RANGE R^2 IS **NOT** ZERO -- AND NESTING IT IS THE WHOLE POINT
+
+Per-pair, out of fold on the pinned folds, response `expected - d_nat` (ORACLE), with a
+matched-dimension random-feature control and a row-permutation control beside every block:
+
+```
+LONG RANGE (|i-j| >= 7, n = 2904 pairs)       R2_oof    increment    sign acc (always+ 0.592)
+N0  separation prior only                     -0.0205    -0.0205        0.589
+N1  + calibration (expected)                  +0.1201    +0.1406        0.606
+N2  + the ENTIRE uncollapsed posterior        +0.1018    -0.0184        0.610
+N3  + pool                                    +0.1959    +0.0758        0.673
+random-feature control                        -0.0381
+row-permutation control                       -0.0254
+```
+
+Raw +0.1959 clears the charter's 12.82% primary bar numerically. **It does not survive nesting, and
+it must not be read against that bar anyway.** Two reasons, both load-bearing:
+
+1. **The 12.82% bar was registered for the AGGREGATE DISPLACEMENT R^2, and this is a long-range-
+   restricted PAIR-SPACE R^2. Those are different statistics with different relationships to the
+   displacement bound, and a restricted R^2 cannot be read as clearing a bar set for the
+   unrestricted one.** This is a category difference, not a clearance, and I am flagging it as one.
+2. The response and several features both contain `expected`, so a raw R^2 carries a
+   **shared-referent floor** (`shared-referent-floor`) on top of the distogram's own shrinkage --
+   and the random-feature control does **not** catch it, because random features contain no
+   `expected`. Decomposed: **+0.1406 is calibration, which the record already closed as a route**
+   (`error-shape-not-mae-decides-ranking`: slope +0.376, "post-hoc correction is closed"; S25-L2:
+   calibrating the posterior makes RMSD worse); and only **+0.0758 is genuinely new information,
+   from the pool.**
+
+**Any quotation of that +0.0758 must carry this clause in the same breath, by my own rule from this
+morning:** the fitted corrector at **three times** that R^2 (0.2355), **applied**, emits **3.1038 A
+against production's 3.0483 -- +0.0554 WORSE**. An implied-endpoint conversion is an upper bound
+attained only by a perfectly calibrated correction; always apply and measure.
+
+**The N2 negative, scoped so it does not read as a retraction.** "The entire uncollapsed posterior
+is worth -0.0184" bounds **one operator: using the posterior's shape to predict the prior's own
+error.** It says nothing about the standing project result that collapsing the posterior costs
+-2.253 A, which is about **torsion restraints used to build a structure**. Different operator,
+different object; both can be true and neither is retracted here.
+
+### 3. AND THE RESULT THAT EXPLAINS BOTH: **APPLY THEM, AND MEASURE THE COHERENCE**
+
+Each leave-fold-out per-pair prediction used as the correction `Delta_p`, through production's own
+downstream (rescore the same 500, keep 75, coordinate-average). Point cloud, production 3.0483, an
+INTERMEDIATE (built chain 3.2041, contract rule 1). `coh` is defined in section 4:
+
+```
+arm                                R2_oof    coh(residual, pool common mode)   applied delta
+UNCORRECTED (production)            0.000              +0.6931                    0  (baseline)
+N1 calibration          (fitted)    0.1558             +0.7857                 +0.1461  WORSE
+N2 + posterior shape    (fitted)    0.1522             +0.7827                 +0.1513  WORSE
+N3 + pool               (fitted)    0.2355             +0.9172                 +0.0554  WORSE
+IIDmatched  **ORACLE, NOT DEPLOYABLE**  0.1558         +0.5868                 -0.1260  BETTER 1.23x 79W/47L
+IIDmatched  **ORACLE, NOT DEPLOYABLE**  0.2355         +0.5365                 -0.2466  BETTER 1.77x 97W/29L
+```
+
+**A 0.30 A swing at identical out-of-fold R^2, and the sign of the effect is separated perfectly by
+`coh`:** every arm whose residual is MORE coherent with the pool's common mode than the uncorrected
+error (0.693) hurts; every arm that is LESS coherent helps. **Every corrector fitted on the
+distogram or the pool raises coherence (0.693 -> 0.783, 0.786, 0.917). Only the imposed-structure
+ORACLE arms lower it (-> 0.587, 0.537).**
+
+> **What can be predicted is coherent and therefore harmful; what would help is incoherent and
+> therefore unpredictable.**
+
+The mechanism is the project's own theorem arriving one level up. The predictable part of the
+distogram's error is the part **the pool also carries** -- the common mode S30-L7 proved
+non-identifiable from within the pool, where the likelihood depends on `(t, mu)` only through
+`t + mu`. Correcting it shifts the prior coherently, which shifts every candidate's score
+coherently, and a coordinate average cancels i.i.d. error but not coherent error. So the pool is
+closed **not by absence of information but by the information being of the wrong kind** -- a
+structural property of the set, which is a stronger closure than the outcome of a search.
+
+Fourth independent instance of "predictor accuracy does not price emitted RMSD" -- after MAE,
+in-band rank correlation and per-pair sign accuracy -- and the **first where the predictor is
+demonstrably good** (R^2 0.24 out of fold against a -0.04 control) **and still strictly harmful.**
+
+### 4. THE SPECIFICATION FOR A FOURTH SOURCE, AS A TESTABLE NUMBER AND NOT AN ADJECTIVE
+
+**Definition.** For target t and pair p let `mu_{t,p}` be the **pool's common-mode pair error**, the
+mean over production's retained 75 of `d_{m,p} - d_nat_{t,p}` -- exactly the quantity S30-L7 proved
+non-identifiable from within the pool. For a candidate corrector with residual
+`r_{t,p} = (expected - d_nat) - correction`, its **coherence** is
+
+```
+coh  =  mean over targets of  corr_p( r_{t,p} , mu_{t,p} )        (within-target; pooled also logged)
+```
+
+**Admission rule, read off the measured table and stated so a candidate can be tested before it is
+built:** a prior corrector is worth building **iff it LOWERS `coh` below the uncorrected error's own
++0.6931.** Every channel this project owns raises it. The ORACLE arms that lower it to 0.54-0.59
+are worth **-0.126 A at R^2 = 0.16 and -0.247 A at R^2 = 0.24**, through the shipped pipeline with
+nothing else changed.
+
+**This is NOT the same requirement as "decorrelated from the distogram", and the difference is the
+entire content.** Lane L priced decorrelation at a **5.1% discount** on the requirement -- it is not
+the lever. Incoherence is a condition on the **residual's alignment with the pool's shared bias**,
+not on a correlation between two channels' scores, and it is the condition that separates a -0.25 A
+corrector from a +0.06 A one at identical accuracy. **The quality bar is also far lower than the
+displacement bound suggests: R^2 = 0.16 suffices, against the 39.4% the bound nominally demands,
+because this corrects the PRIOR and acts through the filter rather than being a displacement
+added to the answer.**
+
+### 5. A CORRECTION TO MY OWN S30-L25 HEADLINE, ANNOTATED NOT REPLACED
+
+I wrote "the subspace is free, the sign is the whole problem". That is true and it is not the
+deepest statement available; the original wording stands (contract rule 15) and this is the
+annotation. The sign is unobtainable *because* the only visible component is the common mode, and
+the common mode is by S30-L7 exactly the component that carries no information about the native.
+The earlier sentence describes the symptom; section 3 gives the cause.
