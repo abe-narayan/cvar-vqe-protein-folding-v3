@@ -251,7 +251,71 @@ lower-is-better** (`d = a - b`, negative = a better) because its native statisti
 
 ## 9. Literature relied on and rejected
 
-[PENDING]
+The charter asked for literature read *"for most of the sprint, not only at the start"* and to
+**"read the equations, not the abstracts."** Lane L held the role permanently. The distinguishing
+feature of this sprint's literature use is that **three papers closed project directions that no
+experiment here had the power to close**, and one **contradicted a result we had measured** — which
+turned out to be the most useful thing any of them did.
+
+### 9.1 Relied on, and what each one settled
+
+| source | what it settled here |
+|---|---|
+| **Blau & Michaeli — the perception–distortion tradeoff** | Predicts the *cross-kind* half of S28-L48's "20 of 31 scorers prefer production to a 0.25 Å ORACLE structure". Lane R used it to withdraw the project's most-cited negative **before its own numbers existed** (S30-L1). If perception–distortion predicts a result from the construction alone, the result is not evidence about nativeness |
+| **Kennedy & O'Hagan (2001); Brynjarsdottir & O'Hagan, *Inverse Problems* 30:114007 (2014)** | Calibration parameter and discrepancy are **not jointly identifiable**, and a discrepancy term helps *only* given a strongly informative prior on its shape — with a *wrong* prior worse than none. This closes escape **E1** and is this project's own "confidently wrong costs 2–3× absent" arriving from a **second, independent literature** |
+| **Maehara, *Oper. Res. Lett.* 43:526 (2015)** | The CVaR of a stochastic submodular set function **is not submodular**, and **no polynomial-time multiplicative approximation exists unless P = NP**. The sharpest available statement about the sprint's one hard constraint |
+| **Wilder (AAAI 2018); Ohsaka & Yoshida (2017)** | The escape from Maehara is to stop asking for a single set and relax to a **portfolio — a distribution over sets** — restoring a `1 − 1/e` guarantee via continuous DR-submodular maximisation |
+| **Nemhauser–Wolsey–Fisher; Das & Kempe** | Both guarantees (`1 − 1/e`, `1 − e^(−γ)`) require **monotone**. S29-L25 states in its own words that `V` is *"neither additive nor monotone"*. **Monotonicity, not submodularity, is what we fail first** — so every submodularity guarantee in the plan was void |
+| **Goldberg (1984); Maurey's empirical method** | Fixed-`m` is the hard formulation (densest-`k`-subgraph); free-`m` is poly-time by max-flow. Maurey bounds any hull point within `R/√m`, which with the project's own dispersion `√63.82 = 7.99` gives **0.22 Å at m = 75** — i.e. the grid is not the constraint |
+| **ANDIS (Yu et al. 2019)** | *"Native recognition and decoy discrimination cannot be optimized simultaneously with the same parameter sets."* An explicit statement, from the field, of the trade this project keeps rediscovering |
+| **DOPE (Shen & Sali), incl. the authors' own DOPE-24 ablation** | The reference state's entire support for a 13-mer is [0, 15.05 Å] against a 15 Å table cutoff — the top 13% has **zero reference density**. The authors say plainly that DOPE *"is less accurate for smaller proteins"*; lane L turned that into the mechanism for the field's 40–50 residue wall |
+| **Klenin & Langowski** | The writhe/Gauss double-integral formulation lane G used to build the only channel class that theorem G1 leaves open |
+| **Abe et al., arXiv:2302.00704** | Already in the S29 index as the negative result on diversity interventions; used to reject diversity-aware selection without re-running it |
+
+### 9.2 The one that contradicted us, which was worth more than the ones that agreed
+
+*Improving consensus structure by eliminating averaging artifacts* (PMC2662860), 2090
+non-homologous single-domain proteins under 200 residues:
+
+```
+baseline averaging (COMBO)   63.0 %  of atoms in clashes < 3.6 A
+MCORE (their repair)          1.09 %                              <- a 58x reduction
+PULCHRA                       3.64 %
+RMSD, MCORE refined           3.36 A  against  3.28 A original    <- +0.08 A, WORSE
+```
+
+**Our E2 result (−0.022 Å) has the opposite sign from the published one at scale.** Lane L did not
+explain the discrepancy away — it derived why both can be true: **the bonded fraction of all pairs
+goes as ~2/n**, so a constraint repair is **~15% of the geometry at n = 13 and ~1% at n = 200**.
+The published result is the large-`n` limit of ours.
+
+> This is the sprint's model for how to use literature: a published number that **disagrees** with
+> a measured one is a constraint on the mechanism, not a reason to doubt either. It also re-caps E2
+> immediately after it escapes the identification invariance — perception–distortion catches what
+> the non-identifiability theorem lets through.
+
+### 9.3 Read and rejected, with reasons
+
+| rejected | why |
+|---|---|
+| **DPPs / facility location / diversity-aware selection** | `V` is constant on centroid-equivalence classes, so **there is no diversity structure to exploit**. Rejected by algebra, not by trial |
+| **Submodular maximisation guarantees** | Void — they require monotone, and `V` is not (above) |
+| **QUBO / Ising formulations** | Available and exact if `f` were quadratic in the centroid, but **moot**: the continuous relaxation is cheap, and Frank–Wolfe on the simplex runs in seconds and **strictly upper-bounds any circuit on this objective** |
+| **Portfolio/CVaR transfer from Wilder and Ohsaka & Yoshida** | **Mismatch stated rather than hidden:** their CVaR is over *exogenous* randomness; ours is over a distribution **the optimiser controls**, so the theorems do not transfer. What transfers is only the design lesson — relax the set, do not search it |
+| **Fine-grained sub-region Ramachandran tables** | No sequence channel to exploit at peptide length; `phi` is predicted at 36.1° by full sequence context against 36.4° sequence-blind |
+
+### 9.4 The reframe the literature produced
+
+Lane L's reading, set beside the project's own numbers — 2 members with ORACLE **weights** reach
+1.4315 Å against 75 members with ORACLE **membership** at 2.3055 Å, while choosing 2 of 500 costs
+~17.9 bits against 7 for the top-128 argmin — gives:
+
+> **Solving the set problem better is worth nothing. Exhaustive search already solved it
+> (S29-L25) and the answer was worse than production. What is scarce is the information needed to
+> SPECIFY a good set, and no solver supplies information.**
+
+Which is the same sentence the sprint's measurements arrived at independently, from the other side.
+
 
 ## 10. The cost/RMSD meter's baselines for every cost tested
 
