@@ -1,8 +1,11 @@
 # Sprint 30 — CVaR-VQE Protein Folding: the search for the first real accuracy breakthrough
 
-**Status: DRAFT IN PROGRESS.** Sections marked `[PENDING]` await lanes still running. The charter
-requires the report only after everything is finished; this file is assembled as results land so
-nothing is reconstructed from memory at the end.
+**Status: FINAL.** Every section is written from artefacts, not from memory. Two independent
+adversaries audited it under contract rule 28 (*the main team may not approve its own positive*):
+lane V on §1/§3/§4/Appendix A (**18 defects**, two of which inverted a headline) and lane Z on
+§0/§2/§5/§6/§9–§13 (**23 defects**, four severe, one of which mislabelled the sprint's deliverable).
+**All are fixed in place with the original error stated.** `s30/s30_verify.py` recomputes **36/36**
+headline numbers from the artefacts with 0 mismatches.
 
 Branch `s26` · benchmark: 126 dev targets, 9–16 aa · endpoint: **mean built-chain Cα RMSD**
 Ledger: `s30/LEDGER.md` · Running state: `s30/STATE.md` · Contract: `s30/S30_CONTRACT.md` (28 rules)
