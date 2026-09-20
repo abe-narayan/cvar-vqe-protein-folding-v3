@@ -39,7 +39,9 @@ well-evidenced ceiling argument that redirects the next three sprints is worth m
 worth more than a fragile 2.98 would have been.
 
 > **Five ORACLE signs on long-range pairs are worth −0.3259 Å on the built chain — 3.2126 → 2.8867,
-> 2.05× MDE, 5/5 folds. That clears the charter's primary target.** The prize is **five bits per
+> 2.05× MDE, 5/5 folds. That clears the charter's primary target.** *(Lane P's arm is measured
+> against the S27 projection's 3.2126 rather than the S29 `prod` row's 3.2105; the two differ by
+> 0.0021 Å because the projection seed is not pinned — §1.1. The **delta** is what transfers.)* The prize is **five bits per
 > target**, concentrated ~4× on the tail and 68% in `|i−j| ≥ 7`.
 
 And the reason those five bits are unobtainable is **mechanistic, not a failed search**:
