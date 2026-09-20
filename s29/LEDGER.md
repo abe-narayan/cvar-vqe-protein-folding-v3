@@ -3338,3 +3338,106 @@ Verdict: **S29-L23's assumption B2 STANDS against the widest field survey this r
 produce**, and the bound's headline is unmoved. Its DESCRIPTION should be amended in the report:
 the limiting quantity is not the absence of alignment (abs cos is 0.25 to 0.33, twice random) but
 the absence of its SIGN, and that is a sharper and more actionable statement of the same ceiling.
+
+## S29-L36 -- MEASUREMENT 1, THE QUANTUM-SIDE RESULT WHATEVER THE ENDPOINT DOES: AN INDEPENDENT IMPLEMENTATION REPRODUCES LANE T's 216 GRADIENT CELLS TO 2.0e-14 AND S28's OWN hop_only ROW TO 4e-16 AT n = 4..8, SO S29-L11's LAW HAS ITS FOURTH NO-PARAMETER CHECK; THE BRIGHT LINE B1 IS REFUTED ON BOTH CLAUSES (SLOPES -2.305 / -1.900 AGAINST -1.0, AND n = 9 VARIANCES 280x AND 200x BELOW THE 30x THRESHOLD); AND THE MECHANISM IS NOW VISIBLE AS TWO EXACT ZEROS AND A SATURATING RANK -- THE CENTERED MATRICES' TOP EIGENVECTOR HAS *ZERO* OVERLAP WITH THE UNIFORM STATE (0.0000 vs A's 0.9694) AND rank(G) SATURATES AT 30 WHILE THE REGISTER GROWS 128 -> 256 -> 500 (2026-09-20 01:32, B)
+Question (`s29/briefs/S29B.md` measurement 1; `s29/PREREG_S29_B.md` section 4 and ADDENDUM 1,
+registered before any `var_g0` value of any lane was read): is S28's gradient decay a property of
+the DEGENERATE spectrum, and does a non-degenerate off-diagonal term restore the hopping term's
+share of the gradient? Property measurement: no native, no RMSD, no readout. Contract rule 9
+applies throughout -- no slope here is called a plateau or its absence, and no trainability word is
+attached to any number.
+
+**WHY THIS IS AN INDEPENDENT IMPLEMENTATION AND NOT A RERUN.** Lane T's **S29-L11** derives
+Var[dF/dtheta_0] = r_stable(M)/D^2 at unit spectral norm and gives it three no-parameter checks
+(S28's Gaussian to 7%, S28-B2's kNN 46x, lane D's J* = 85.7 as 88). The coordinator asked for a
+fourth from code that does not share lane T's. `s29/s29_B_compat.py` has its own matrix builders
+(`gaussian_similarity`, `double_center`, `agreement_gram`), its own parameter-shift estimator
+(`hop_grad_paramshift`) and its own driver; only the circuit and the pairwise-RMSD backend are
+shared, because reimplementing Kabsch would test nothing. 18 tests, `tests/test_s29_B.py`.
+Jobs `s29B_probe_grad`, `s29B_grad_02`, `s29B_grad_12` (`s26/jobs_done/`, all exit 0, peak RSS
+0.32 to 0.35 GB), rows `s29/results/s29_B_grad_rows*.jsonl` (216 cells = 12 targets x 3 matrices x
+n = 4..9), analysis `s29/results/s29_B_grad.json`.
+
+**THE TWO CROSS-CHECKS.**
+- Against **lane T's** `s29/results/s29_T_grad_rows.jsonl`, paired on all 216 (pdb, matrix, n)
+  cells: **max relative difference 2.03e-14, median 1.27e-15**. Same 120 draws at seed 1009, so an
+  exact match was the registered expectation and a difference would have been a bug in one of the
+  two implementations.
+- Against **S28's own** `s27/results/s28_B_train.json :: hop_only|J1` for A: identical at
+  n = 4..8 to **4.3e-16 / 3.0e-16 / 3.9e-16 / 2.3e-16 / 6.9e-16**, and 7.0e-02 at n = 9
+  (4.4466e-06 against 4.1567e-06) -- the same 7% lane T reported, and for the same reason: S28's
+  n = 9 register orders the 500 candidates differently under the same graph.
+- The parameter-shift rule against central finite differences on the same draws: **1.46e-09**
+  maximum relative deviation.
+
+**THE TABLE (median over the 12 trainability targets; unit spectral norm throughout; the diagonal
+terms' n = 9 variance is 3.051e-2, S28-L8b):**
+
+    mat  n      var_g0     pred_var  meas/pred  r_stable  lam2/lam1  |<unif|v1>|^2   rank
+    A    4   4.0612e-03   4.3617e-03    0.943     1.117     0.0065      0.9921        16
+    A    7   5.8983e-05   6.3762e-05    0.927     1.045     0.1285      0.9739       128
+    A    8   3.9483e-05   1.5790e-05    2.460     1.035     0.1386      0.9608       256
+    A    9   4.4466e-06   3.9524e-06    1.120     1.036     0.1385      0.9694       500
+    A_c  4   9.5903e-03   3.1089e-02    0.335     7.959     0.2272      0.0000        15
+    A_c  7   1.2034e-04   1.3266e-04    0.981     2.174     0.4102      0.0000       127
+    A_c  8   2.1964e-05   2.3976e-05    0.908     1.571     0.3481      0.0000       255
+    A_c  9   3.5994e-06   6.0709e-06    0.605     1.591     0.4654      0.0000       499
+    G    4   3.1409e-03   5.2849e-03    0.532     1.353     0.4802      0.0000        14
+    G    7   9.9069e-05   8.9708e-05    1.108     1.470     0.5939      0.0000        30
+    G    8   2.0932e-05   2.4445e-05    0.868     1.602     0.5847      0.0000        30
+    G    9   5.0506e-06   6.3905e-06    0.681     1.675     0.6342      0.0000        30
+
+    matrix   slope 4..9   slope 4..8   var(n=9)     ratio to diagonal   J*(n=9)
+    A          -1.830       -1.700     4.4466e-06        6,861x           87.9
+    A_c        -2.305       -2.223     3.5994e-06        8,476x           70.9
+    G          -1.900       -1.825     5.0506e-06        6,041x           69.1
+
+**B1, THE PRE-REGISTERED BRIGHT LINE: REFUTED ON BOTH CLAUSES.** "The degeneracy was the mechanism
+of S28's gradient invisibility" required (i) slopes shallower than -1.0 per qubit for both A_c and
+G and (ii) their n = 9 variance within 30x of the diagonal terms', i.e. >= 1.017e-3. Measured:
+slopes **-2.305** and **-1.900**, both STEEPER than A's -1.830 rather than shallower; variances
+**3.60e-6** and **5.05e-6**, which are **283x and 201x BELOW the threshold** and 8,476x / 6,041x
+below the diagonal terms. Centering removes the lambda_2/lambda_1 degeneracy (0.1385 -> 0.4654 ->
+0.6342, the brief's 0.138 / 0.465 / 0.634 reproduced) and makes the decay WORSE. Lane T's
+predictions T1 and T2, adopted verbatim in my addendum 1, are **not falsified**: no slope is above
+-1.3, no n = 9 variance exceeds 3e-5, and the largest measured-over-predicted ratio at n >= 7 is
+2.46 (A at n = 8), inside T's 3x line. The registered prior of my prereg section 3.3 -- that clause
+(ii) fails for both and that G's failure is a BOUND rather than a measurement -- held.
+
+**THE MECHANISM, NOW TWO EXACT ZEROS AND A SATURATING RANK.** Three columns of the table are the
+whole story and none of them is a fitted slope:
+1. **|<uniform|v1>|^2 = 0.0000 EXACTLY for both A_c and G** at every register size, against
+   0.96 to 0.99 for A. That is the sign-mixing lemma measured: A_c 1 = G 1 = 0 by construction, so
+   the top eigenvector is orthogonal to the uniform state and therefore has entries of BOTH signs.
+   S28's A was a typicality projector; A_c and G are exactly not, and the price is that what they
+   encode lives in the SIGN, which every deployed readout discards (prereg section 3.2, lane T's
+   S29-L11(d) independently).
+2. **rank(G) SATURATES at 30** while the register grows 128 -> 256 -> 500. A Gram of structural
+   deviations has rank at most 3 n_res - 3 (exactly, since Kabsch removes the three translations
+   identically) and in practice 3 n_res - 6 = 30 at the median n_res = 12. By T's law a term is
+   gradient-visible at the deployed width only if its stable rank GROWS with the register; G's
+   cannot, by construction, and "within 30x of the diagonal terms" at D = 512 would need
+   r_stable >= 512^2 x 3.051e-2 / 30 = **266** against a measured 1.675 and a structural ceiling of
+   45. No re-weighting of a deviation Gram fixes that.
+3. **r_stable is 1.04 / 1.59 / 1.68** and the predicted variance r_stable/D^2 tracks the measured
+   one to within a factor 0.6 to 2.5 at n >= 7 on an independent implementation. A spread
+   lambda_2/lambda_1 is not a spread spectrum: a matrix with lambda_2/lambda_1 = 0.63 and a fast
+   tail still has Frobenius norm O(1) at unit spectral norm, which is exactly T's point and is now
+   measured twice.
+
+**WHAT THIS CLOSES.** The justification that spawned this lane -- "S28 closed one degenerate
+similarity measure, so a non-degenerate one may train" -- is **dead**, and it is dead for a reason
+that is structural rather than empirical. The half of the re-opening that survives is the other
+one: S28's closure genuinely was about one measure, the centered operators are genuinely different
+objects, and what makes them different is the SIGN structure, not the spectrum. Whether that sign
+structure can be consumed is measurement 2's question, and lane O's **S29-L21** has already priced
+the signed-readout family's ORACLE ceiling at exactly 0.0000 A.
+
+Multiplicity: 0 endpoint comparisons, 0 contrasts. 216 property cells and 3 registered bright lines
+(B1, T1, T2), all evaluated.
+Artefacts: `s29/results/s29_B_grad_rows.jsonl`, `s29_B_grad_rows.s0of2.jsonl`,
+`s29_B_grad_rows.s1of2.jsonl`, `s29/results/s29_B_grad.json`; `s26/jobs_done/s29B_probe_grad.json`,
+`s29B_grad_02.json`, `s29B_grad_12.json`; code `s29/s29_B_compat.py`, tests `tests/test_s29_B.py`
+(18 pass); lane T's `s29/results/s29_T_grad_rows.jsonl` and S28's `s27/results/s28_B_train.json`
+as the two anchors; prereg `s29/PREREG_S29_B.md` section 4 + addendum 1 (commits 1c345f07,
+9d745692), both before the job.
