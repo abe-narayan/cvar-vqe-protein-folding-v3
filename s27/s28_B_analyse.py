@@ -37,6 +37,11 @@ from s27 import s28_B_hop as B             # noqa: E402
 S27_VQE = os.path.join(B.RESULTS, "vqe_rows.jsonl")
 S27_CHAIN = os.path.join(B.RESULTS, "chain_rows.jsonl")
 SCREEN_X = 0.7
+#: the nine F1 cells at |effect| >= 0.7x MDE on the point cloud (S28-L21; `summary.json ::
+#: screen` at n = 126), projected to the chain and priced as a best-of-nine (S28-L22)
+NINE = ("vqe|s0|REAL|J0.1|R1", "vqe|s0|REAL|J3|R2", "vqe|s0|PERM|J0.1|R1", "vqe|s0|PERM|J0.3|R3",
+        "vqe|s0|PERM|J1|R3", "vqe|s0|RAND|J3|R2", "vqe|s1|REAL|J0.1|R3", "vqe|s1|PERM|J0.1|R3",
+        "vqe|s1|PERM|J0.3|R3")
 
 
 def compact(o):
@@ -204,7 +209,55 @@ def main():
                                                           label=f"CHAIN {arm} - {comp} (built chain, FAIL18)"))
             if prod_chain and np.isfinite(pc).all():
                 d["vs_production"] = compact(ST.compare(a, pc, folds=folds, names=pdbs, label=f"CHAIN {arm} - production DIS top-75 (built chain, S27 chain_rows DIS)"))
+                # contract addendum 1 item 14(a): the 108 non-FAIL18 targets beside FAIL18
+                d["vs_production_nonfail18"] = compact(ST.compare(a[~fail], pc[~fail], folds=folds[~fail],
+                                                                  names=[p for p, f in zip(pdbs, fail) if not f],
+                                                                  label=f"CHAIN {arm} - production (built chain, 108 non-FAIL18)"))
+                d["vs_production_fail18"] = compact(ST.compare(a[fail], pc[fail], folds=folds[fail],
+                                                               names=[p for p, f in zip(pdbs, fail) if f],
+                                                               label=f"CHAIN {arm} - production (built chain, FAIL18)"))
+            # F1's own comparator on the chain: the SAME readout at J = 0, same seed (present
+            # on the chain for R1 and R3; the J = 0 R2 twin was not projected and is absent)
+            src, seed, graph, J, R = arm.split("|")
+            twin = f"{src}|{seed}|NONE|J0|{R}"
+            if src == "vqe" and J != "J0" and twin in byc and twin != comp:
+                b = np.array([byc[twin][p]["rmsd_chain"] for p in pdbs])
+                d["vs_same_readout_J0"] = compact(ST.compare(a, b, folds=folds, names=pdbs, label=f"CHAIN F1 {arm} - {twin} (built chain)"))
+            # F3/F4 on the chain: the PERM / RAND twin at the same seed, J and readout, if projected
+            if src == "vqe" and graph == "REAL":
+                for ctrl in ("PERM", "RAND"):
+                    carm = f"{src}|{seed}|{ctrl}|{J}|{R}"
+                    if carm in byc and all(p in byc[carm] for p in pdbs):
+                        b = np.array([byc[carm][p]["rmsd_chain"] for p in pdbs])
+                        d[f"vs_{ctrl}"] = compact(ST.compare(a, b, folds=folds, names=pdbs, label=f"CHAIN CTRL {arm} - {carm} (built chain)"))
             out["chain"][arm] = d
+        # ---- S28-L22: the nine 0.7x screen cells are a best-of-nine; price the minimum over
+        # them as an order statistic (`ST.best_of_k_within` on the (n x 9) chain differences),
+        # against the same-seed J = 0 R1 and against production
+        nine = list(NINE)
+        if all(a in full for a in nine):
+            out["chain"]["best_of_nine"] = dict(cells=nine,
+                                               screen_reproduces_nine=(set(s_["arm"] for s_ in out["screen"]) == set(nine)))
+            for name, base_of in (("vs_J0_R1", lambda a: ref.replace("|s0|", "|s1|") if "|s1|" in a else ref),
+                                  ("vs_production", None)):
+                cols = []
+                for a in nine:
+                    va = np.array([byc[a][p]["rmsd_chain"] for p in pdbs])
+                    if base_of is None:
+                        if not (prod_chain and np.isfinite(pc).all()):
+                            cols = []
+                            break
+                        cols.append(va - pc)
+                    else:
+                        cols.append(va - np.array([byc[base_of(a)][p]["rmsd_chain"] for p in pdbs]))
+                if cols:
+                    M = np.stack(cols, 1)
+                    pr9 = ST.best_of_k_within(M)
+                    pr9["per_cell_mean"] = {a: float(M[:, i].mean()) for i, a in enumerate(nine)}
+                    pr9["best_cell"] = nine[int(np.argmin(M.mean(0)))]
+                    pr9["best_cell_mean"] = float(M.mean(0).min())
+                    pr9["mean_over_cells"] = float(M.mean())
+                    out["chain"]["best_of_nine"][name] = pr9
     ST.save_atomic(B.SUMMARY, out, module_file=__file__)
 
     # ---- print
@@ -240,11 +293,26 @@ def main():
     if "chain" in out:
         print(f"\nCHAIN (production chain mean {A.get('production_chain_mean')}):")
         for arm, d in out["chain"].items():
+            if arm == "best_of_nine":
+                continue
             v = d.get("vs_J0_R1"); pr_ = d.get("vs_production"); nf = d.get("vs_J0_R1_nonfail18")
+            pn = d.get("vs_production_nonfail18"); pf = d.get("vs_production_fail18")
+            sr = d.get("vs_same_readout_J0")
             print(f"  {arm:30s} chain {d['mean_chain']:.4f} cloud {d['mean_cloud']:.4f} fail18 {d['fail18_chain']:.3f} other {d['other_chain']:.3f}"
-                  + (f" | vsJ0 {v['effect']:+.4f} x{v['x_mde']:+.2f} [{v['ci_fold'][0]:+.4f},{v['ci_fold'][1]:+.4f}] {v['verdict']}" if v else "")
+                  + (f" | vsJ0R1 {v['effect']:+.4f} x{v['x_mde']:+.2f} [{v['ci_fold'][0]:+.4f},{v['ci_fold'][1]:+.4f}] {v['verdict']}" if v else "")
                   + (f" | non-FAIL18 {nf['effect']:+.4f} x{nf['x_mde']:+.2f}" if nf else "")
-                  + (f" | vsPROD {pr_['effect']:+.4f} x{pr_['x_mde']:+.2f} {pr_['verdict']}" if pr_ else ""))
+                  + (f" | vsPROD {pr_['effect']:+.4f} x{pr_['x_mde']:+.2f} [{pr_['ci_fold'][0]:+.4f},{pr_['ci_fold'][1]:+.4f}] {pr_['verdict']}" if pr_ else "")
+                  + (f" (108: {pn['effect']:+.4f} x{pn['x_mde']:+.2f}; FAIL18: {pf['effect']:+.4f} x{pf['x_mde']:+.2f})" if pn and pf else "")
+                  + (f" | F1 same-readout J0 {sr['effect']:+.4f} x{sr['x_mde']:+.2f} [{sr['ci_fold'][0]:+.4f},{sr['ci_fold'][1]:+.4f}] {sr['verdict']}" if sr else "")
+                  + "".join(f" | vs{c} {d['vs_'+c]['effect']:+.4f} x{d['vs_'+c]['x_mde']:+.2f}" for c in ("PERM", "RAND") if d.get("vs_" + c)))
+        b9 = out["chain"].get("best_of_nine")
+        if b9:
+            print("\nBEST-OF-NINE (S28-L22; the nine screen cells priced as an order statistic on the chain):")
+            for name in ("vs_J0_R1", "vs_production"):
+                if name in b9:
+                    q = b9[name]
+                    print(f"  {name:14s} best cell {q['best_cell']} mean {q['best_cell_mean']:+.4f}; mean over the nine {q['mean_over_cells']:+.4f}; "
+                          + json.dumps({k: (round(v, 4) if isinstance(v, float) else v) for k, v in q.items() if k not in ('per_target', 'per_cell_mean', 'best_cell', 'best_cell_mean', 'mean_over_cells')}))
     print("wrote", B.SUMMARY)
 
 

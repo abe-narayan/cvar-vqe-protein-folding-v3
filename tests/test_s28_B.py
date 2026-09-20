@@ -277,3 +277,44 @@ def test_gate_still_passes_at_J_positive_by_construction():
     r1 = B.readout_tail(enc, p, B.ALPHA)
     gate = H.gate_set_equality(E, r1["idx"], r1["m"])
     assert gate["pass_"]
+
+
+# ------------------------------------------------ the representability fit (S28-L26 request)
+def test_represent_overlap_gradient_is_the_projector_shift_rule():
+    """The fit's objective (g . psi)^2 is <psi| g g^T |psi>: `grad_overlap2` equals the
+    tested `grad_hop_paramshift` with A = g g^T (to 1e-12) and central finite differences."""
+    from s27 import s28_B_represent as R
+    rng = np.random.default_rng(11)
+    circ = Q.StatevectorCircuit(5, 3)
+    g = rng.normal(size=circ.dim)
+    g /= np.linalg.norm(g)
+    Pg = np.outer(g, g)
+    for _ in range(3):
+        th = rng.normal(0.0, 0.6, circ.n_params())
+        g_ov = R.grad_overlap2(circ, th, g)
+        g_ps = B.grad_hop_paramshift(circ, th, Pg)
+        assert np.max(np.abs(g_ov - g_ps)) < 1e-12
+        h = 1e-5
+        g_fd = np.array([(R.overlap2(circ.state(th + h * e), g) - R.overlap2(circ.state(th - h * e), g)) / (2 * h)
+                         for e in np.eye(circ.n_params())])
+        assert np.max(np.abs(g_ov - g_fd)) < 1e-6
+
+
+def test_represent_fit_recovers_a_representable_state_and_is_deterministic():
+    """A target that IS a circuit state (psi(theta*)) is recovered to overlap > 0.99 from 16
+    starts at n = 4; the fit is a pure function of its RNG seed (same draws, same result)."""
+    from s27 import s28_B_represent as R
+    circ = Q.StatevectorCircuit(4, 3)
+    rng = np.random.default_rng(5)
+    th_star = rng.normal(0.0, 0.6, circ.n_params())
+    g = circ.state(th_star)
+    fit = R.fit_overlap(circ, g, np.random.default_rng(0), 16, 200)
+    assert fit["best"] > 0.99
+    assert len(fit["finals"]) == 16 and max(fit["finals"]) == fit["best"]
+    assert 0.0 <= fit["untrained_best"] <= 1.0
+    fit2 = R.fit_overlap(circ, g, np.random.default_rng(0), 16, 200)
+    assert fit2["best"] == fit["best"] and np.array_equal(fit2["theta"], fit["theta"])
+    # the overlap is bounded by 1 and the fitted state is a unit vector
+    psi = circ.state(fit["theta"])
+    assert abs(np.linalg.norm(psi) - 1.0) < 1e-12
+    assert R.overlap2(psi, g) <= 1.0 + 1e-12
