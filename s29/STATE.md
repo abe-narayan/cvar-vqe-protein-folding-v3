@@ -1064,7 +1064,7 @@ the envelope argument needs no overlap assumption and holds at every point).
 THE CONTROL IT IMPLIES (now lane D's M6, and the sprint's sharpest): replace the entire quantum
 stage by the target-independent rank-weight profile p*(alpha, T), no circuit, no optimiser, no
 per-target computation, and run it to the built chain. T predicts agreement with the deployed
-arm on >= 120/126. This is the charter's "removing the quantum stage must degrade the result"
+arm on >= 120/126. **[CORRECTION 2026-09-20 03:23, lane D S29-L55: the >= 120/126 figure is an ENDPOINT statement only and must not be quoted as STRUCTURAL equivalence. At the structure level F-M6a fails: best 42/126 within the 0.006 A floor, 68/126 within 0.02 A, worst target 0.69 A. Original wording left standing.]** This is the charter's "removing the quantum stage must degrade the result"
 at its sharpest and the report carries it whatever else happens.
 THE ARCHITECTURE THE THEORY ENDORSES, and three lanes now agree on it. Lane L: non-classicality
 needs non-commuting terms AND a non-eigenvector target. Lane T Q2: DERIVED NO for that cell in

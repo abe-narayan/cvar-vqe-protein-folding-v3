@@ -354,8 +354,11 @@ tests/test_integration.py + test_equivalence.py (VERIFY_SLOW=1)
                                         total: 93 passed,  2 skipped,  0 failed
 ```
 
-The commitment made before running them was that a failure would appear here as a finding rather
-than being fixed and omitted. None failed.
+Taken with the light run at the sprint's first gate (S29-L5: 17 files, 378 passed, 3 skipped),
+**every test file in the tree has run this sprint with zero failures** — and the light run's 3 skips
+are exactly the `VERIFY_SLOW` opt-ins that the integration job above then exercised, so **no
+unexercised opt-in is left**. The commitment made before running them was that a failure would
+appear here as a finding rather than being fixed and omitted. None failed.
 
 *One process note, kept because the first attempt nearly went into this report as a claim it could
 not support.* The first VERIFY_SLOW run left a job record with **no exit code** and a log ending at
