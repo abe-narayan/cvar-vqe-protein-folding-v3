@@ -130,3 +130,293 @@ Multiplicity: 0 endpoint comparisons; no number in this entry is new measurement
 cited to its sprint or its paper.
 Artefacts: `s29/lit/L_1_native_free_qa.md` (15 papers with construction, assumption, check,
 information test, verdict; sections 5 to 9 are the synthesis), `s29/lit/L_INDEX.md`.
+
+## S29-L2 -- THE COST-RMSD METER IS BUILT AND THE S28 VALUES FOR THE SHIPPED COST REPRODUCE THROUGH IT (LADDER rho -0.402 CHAIN / -0.182 CA, COSINE -0.034, NATIVE PERCENTILE 0.369, PREFERENCE 0.071 CHAIN / 0.206 CA WITH THE POOL-MEMBER CONTROL AT 0.020 / 0.126); AND A CAVEAT THE FOUR NUMBERS CARRY: THE ANTI-CORRELATION IS A PROPERTY OF THE NEAR-NATIVE HALF OF THE LADDER, NOT OF THE COST OVER ALL STRUCTURES (2026-09-19 23:56, D)
+
+EVERY NUMBER IN THIS ENTRY IS ORACLE (the meter reads the native to score the ladder, to point
+the gradient and to place the native in its pool). The meter never tunes anything.
+Question (contract rule 19, brief S29D duty 2): does a single command exist that prices any
+proposed cost function on the four axes the charter names, and does it reproduce S28's values
+for the shipped cost through its own code path?
+Falsifier: any of the four S28 anchors not reproduced to the third decimal.
+
+Code `s29/s29_D_cost_audit.py`; tests `tests/test_s29_D.py` (7 pass); results
+`s29/results/s29_D_cost_audit_{DIS_ca,DIS_chain-s28rows,DIS_SURR_ca}.json`; ladder cache
+`s29/results/s29_D_ladder_structs/` (126 npz, 1.1 MB, built in 72 s). Commit 7c8547dd. No job
+needed: the cache build is 72 s at 0.3 GB and one meter run is 13 s.
+
+WHAT IT DOES. `python s29/s29_D_cost_audit.py meter --f <cost> [--basis ca|chain|chain-s28rows]`
+for `<cost>` either a name from the S27 channel library (DIS = the shipped lookup, DIS_SURR =
+the linear-interpolation surrogate S~, the 15 CA scorers, the 16 backbone scorers) or a python
+callable `module:function` with the contract `f(W, ctx) -> (m,)`, lower is better, over a stack
+of CA clouds. THE CONTEXT IS NaN-POISONED BY CONSTRUCTION (`ctx.nat_ca`, `ctx.oracle_rr` are
+NaN): a cost that reads a native quantity returns NaN or raises, and the meter REFUSES it,
+naming the failure. It reports, on the 126 targets with fold-clustered CIs:
+ (a) LADDER  the per-target Spearman rho(f, ORACLE RMSD) over three ladders (below);
+ (b) COSINE  cos(-grad f at production, the direction to the native), rigid body removed from
+     both (S28-L23b's machinery), analytic for S~/RG_LAW/EXVOL and batched central differences
+     (h = 1e-3 A; within 3e-4 of the analytic on S~) otherwise, with the 16-draw random-
+     direction reference per target;
+ (c) PCTILE  the native's percentile in its own 500-member pool under f (`s28_A_objdiag`);
+ (d) PREF    pref(ORACLE circ_best vs PROD) with the S28-L36 POOL-MEMBER CONTROL
+     (pref(random real pool trace vs PROD) = PROD's own pool percentile) and their paired
+     `ST.compare` contrast, plus the RAND_SIGNED contrast C2 registered as its clause 2.
+Nine rungs per target, in lane A's frame, cached with every S28 assertion re-run at build time:
+PROD (asserted equal to the deployed average to 1e-10), circ_opt (lane A's NATIVE-FREE
+recognition optimum, `circ_l1_i80`), RAND_SIGNED[0], GAUSS_MATCHED[0], GAUSS_0.3[0] (C2's
+controls, native-free directions and ORACLE scales), sub0, circ_s0, circ_best, NATIVE (ORACLE).
+circ_s0 and sub0 are regenerated and asserted against lane A's `per_start[0]` / `per_sub[0]`
+(max deviation < 1e-6 on 126/126) and every regenerated rung against C2's stored DIS scores
+(< 1e-5 on 126/126), so the cache IS C2's ladder and no pinned artefact was regenerated.
+
+REPRODUCTION OF THE FOUR S28 ANCHORS (the falsifier is silent; all to the third decimal):
+| anchor | S28 | through the meter | source |
+|---|---|---|---|
+| ladder rho, built chain | -0.402 (`s28_C2_chain_summary.json :: ladder_rho :: DIS@chain`, S28-L48) | -0.4023 SE 0.0401 fold [-0.477, -0.322], 11/126 positive | `--f DIS --basis chain-s28rows` |
+| ladder rho, CA level | -0.182 (S28-L35 table) | -0.1818 SE 0.0488 fold [-0.308, -0.053], 27/126 positive | `--f DIS --basis ca` |
+| gradient cosine at production | -0.034 SE 0.021, random reference 0.140 (S28-L23b) | -0.0339 SE 0.0214 fold [-0.059, -0.014], 56/126 positive, random reference 0.140, Spearman(cos, production RMSD) -0.372 | `--f DIS` (the shipped table is piecewise constant, so the gradient is S~'s, exactly as S28-L23b) |
+| native's pool percentile | 0.369, production below the native on 99/126 and below the pool's best on 6/126 (S28-L30, `s28_A_objdiag.json`) | 0.3688 fold [0.309, 0.406], 99/126, 6/126 on S~; 0.3676 [0.306, 0.405] under the shipped lookup | `--f DIS_SURR` / `--f DIS` |
+| pref(ORACLE circ_best vs PROD), chain | 0.071 (S28-L48) | 0.0714 fold [0.034, 0.109] | `--basis chain-s28rows` |
+| pref, CA level | 0.206 (S28-L35) | 0.2063 fold [0.116, 0.293] | `--basis ca` |
+| pool-member control, chain | pct(PROD) 0.020, contrast +0.051, 0.80x MDE (S28-L48/L49) | 0.0201, +0.0513, +0.80x, fold [+0.007, +0.090], 4/5 folds | `--basis chain-s28rows` |
+| pool-member control, CA | pct(PROD) 0.126, contrast +0.080, 0.83x MDE (S28-L36/L37) | 0.1265, +0.0799, +0.83x, fold [+0.006, +0.144], 4/5 folds | `--basis ca` |
+The head-to-head numbers of S28-L36 reproduce too (the ORACLE structure beats a random pool
+member under DIS on 0.626 at CA level and 0.632 on the chain, the native on 0.632 / 0.634).
+
+THE CAVEAT EVERY FUTURE QUOTE OF "rho = -0.40" MUST CARRY (new here, not in S28). The rho
+depends on WHICH ladder, and the sign flips between them. For the shipped cost:
+| ladder (rungs) | CA level | built chain |
+|---|---|---|
+| S28 (PROD, sub0, circ_s0, circ_best, NATIVE: production plus four near-native structures) | -0.182 [-0.308, -0.053] | -0.402 [-0.477, -0.322] |
+| CHARTER (circ_opt, RAND_SIGNED, PROD, GAUSS_MATCHED, circ_best, NATIVE: the brief's six rungs) | +0.260 [+0.201, +0.321] | -0.092 [-0.200, +0.016] |
+| FULL (all nine) | +0.118 [+0.064, +0.166] | -0.236 [-0.325, -0.146] |
+The shipped cost ORDERS THE BULK correctly at CA level (+0.26 over the charter's rungs: it
+rejects a random signed combination at 3.88 A and a matched Gaussian at 4.12 A, preferring
+production to each on 0.968 / 0.952 of targets) and ANTI-ORDERS the near-native half (-0.18 /
+-0.40). "Garbage rejection reads as skill" is the project's own standing warning
+(`decoy-bank-not-a-pool-proxy`); the S28 ladder is the one that excludes garbage, which is why
+it is the one that matters, and the charter's six rungs are NOT a stricter test than S28's --
+they are a weaker one. Any lane proposing a cost must beat the shipped cost on the S28 ladder,
+and a positive CHARTER rho with a negative S28 rho is the failure mode to expect, not a pass.
+Two further readings, both ORACLE: (i) on the chain the CHARTER rho is -0.478 on FAIL18 against
+-0.028 on the 108, the same regime split as the cosine (-0.143 / -0.016) and as S28-L23b's
+Spearman(cos, RMSD) = -0.372; (ii) the shipped cost prefers lane A's own native-free optimum
+(circ_opt, mean 3.385 A, 0.34 A WORSE than production) to production on 0.786 of targets and
+scores it below 0.969 of real pool traces: the objective's minimiser is a structure no real
+trace resembles, which is S28-L18b's global statement read as a preference.
+
+Verdict: the meter is built, reproduces every S28 anchor it was asked to reproduce, and is
+open for business. Every lane's proposed objective goes through it before an endpoint run:
+post the cost as `module:function` (native-free, batched) and quote all four numbers with
+their ladders named. The meter is a GATE, not a result: passing it is necessary, never
+sufficient, and nothing in it is deployable.
+Multiplicity: 0 endpoint comparisons (this entry runs none; `s29/STATE.md` count unchanged).
+Artefacts: `s29/s29_D_cost_audit.py`, `tests/test_s29_D.py`,
+`s29/results/s29_D_cost_audit_DIS_ca.json`, `..._DIS_chain-s28rows.json`, `..._DIS_SURR_ca.json`,
+`s29/results/s29_D_ladder_structs/`.
+
+## S29-L3 -- ADVERSARY CHECK OF PREREG_S29_O (the ORACLE ceiling ladder and the typicality-axis probe): THE LADDER IS SOUND AND ITS GATES ARE REAL; RUNG 6 HAS NO CONTROL IN THE OPERATOR'S SPACE AND F6a's SECOND CLAUSE COMPARES A MEAN AGAINST A SINGLE-DRAW MAGNITUDE; THREE CONTROLS REQUIRED BEFORE ANY POSITIVE IS READ (2026-09-19 23:56, D)
+
+Question (brief S29D duty 3): is each falsifier in `s29/PREREG_S29_O.md` falsifiable, and does
+each control match the operator's space? Checked against the charter's sections 14 and 16, the
+contract's rules 6, 7, 12, 16, 17, and the memory entries `control-must-match-the-operators-space`,
+`zero-information-control-must-be-plausible`, `grid-oracles-are-order-statistics`.
+
+WHAT IS RIGHT (stated first, because most of it is).
+1. The labelling is exact: one deployable arm (`lfo_LIB75`), everything else ORACLE, said in
+   section 0 and repeated per rung. The ORACLE ladder is a ceiling table by operator class and
+   is not read as a result.
+2. The reproduction gates are real gates, not decorations: production's 3.048338 to 1e-9 per
+   target against the S28 frame; rung 1 against S28-L1b's 2.3062 / 1.7108; rung 2 at m = 75
+   equal to production to 1e-9; LIB75 and BPRIME rebuilt from S24's own stable RNGs and gated
+   against `s24/results/biasalign.json` and `qmatch.json` to 1e-6 PER TARGET, with the run
+   stopping on failure. That is the right way to reuse an artefact whose structures were never
+   stored, and it is the strongest part of the prereg.
+3. Ties: rung 2's DIS order is `np.lexsort((key, DIS))` with the S27 stable key (rule 12), and
+   rung 1 reports tied `rr` values instead of taking an argmin silently.
+4. Order statistics are priced where they arise (rungs 2, 3, 4 and the per-target t*), with
+   `best_of_k_within` AND the split-half transfer, which is the construction that nulls itself
+   (`grid-oracles-are-order-statistics`: only split-half transfer arms survived that audit).
+5. The chain comparator is production RE-PROJECTED IN THE SAME JOB (`prod`), so the S28-L18
+   branch-flip floor (12/126 above 0.02 A, one at 0.5) cannot enter the one contrast that
+   matters. The prereg says so and cites the reason.
+6. The regime clause is the S28-L40 construction (a FAIL18 sign is a regime claim only at
+   random-18 p < 0.05), which is the right bar and is pre-registered rather than invented after.
+7. F6b is falsifiable and correctly ordered: the point cloud gates, the built chain decides,
+   and a chain effect below 0.7x MDE is NOT A RESULT.
+
+WHAT MUST CHANGE BEFORE ANY RUNG-6 POSITIVE IS READ (three items; all cheap).
+(a) THE STEP HAS NO CONTROL IN ITS OWN SPACE. The operator is "displace production by t|u| along
+    u"; its only comparator is production. S28-L39/L40 measured exactly this class and found the
+    shipped objective's own descent step INDISTINGUISHABLE from a random direction of the same
+    size (0.0x to 0.3x MDE at every e) -- the step "beat production" question is not the
+    question; "beat a displacement of the same size" is. Required beside `lfo_LIB75`, on the
+    same targets and the same basis: (i) RANDOM DIRECTION, >= 8 draws per target, rigid-body
+    removed, scaled to the SAME per-target RMS displacement as the LFO step, the MEAN of the
+    draws as the control (S28-L39's construction; a best-of-8 is an order statistic and is not
+    a control); (ii) SCALE-ONLY, X = C dilated about its centroid to the same RMS displacement.
+    (ii) is the decisive one on this axis: production is a 22%-contracted trace (S25; the
+    meter's own head-to-head has the shipped cost preferring production to 87% of real traces
+    on contraction alone, S28-L36), the blind average is contracted too, and u = C - B_sup is a
+    difference of two contracted structures, so "extrapolating along u" and "de-contracting"
+    are confounded until measured apart. Without (i) and (ii) a positive at t > 0 cannot be
+    told from "any displacement of this size helps", and the entry would have to say so.
+(b) F6a's SECOND CLAUSE COMPARES QUANTITIES IN DIFFERENT SPACES. "the mean cos is at or below
+    the measured mean |cos| of the random fields (about 0.14) with the fold CI including that
+    value": 0.14 is the typical magnitude of ONE random draw's cosine; the statistic being
+    tested is a MEAN OVER 126, whose random-reference distribution has SE about 0.14/sqrt(126)
+    = 0.012. As written the clause can essentially never fire (a mean near zero has a CI
+    nowhere near 0.14), so F6a reduces to its first clause. The first clause is the right test
+    -- but its reference must be MEASURED, not assumed: compute the mean over 126 of the
+    random fields' SIGNED cosines with its own fold CI and compare the observed mean against
+    THAT (`mde-is-per-comparison-not-per-instrument`; and when an analytic null and a measured
+    null disagree, the measurement is the null). Recommended wording: F6a fires if the fold CI
+    of mean cos(u, v) contains the random fields' signed-mean reference. Keep the mean |cos|
+    reported as the per-draw scale, and stop using it as a bar.
+(c) THE COSINE'S ZERO-INFORMATION CONTROL IS NOT PLAUSIBLE IN THE OPERATOR'S CLASS. A Gaussian
+    shape field is this space's "uniform on the torus" (`zero-information-control-must-be-plausible`:
+    a uniform control is a WORSE measure, not an uninformative one). u is a difference of two
+    pool-averaged protein structures: low-frequency, dominated by the contraction mode, nothing
+    like isotropic. The matched null costs one extra draw: u_null = B1_sup - B2_sup from TWO
+    independent blind LIB75 draws (the same `SD.stable_rng` construction at a second draw
+    index), superposed identically, rigid body removed, scaled to |u|; cos(u_null, v) is then
+    the cosine of a direction with u's geometry and NO conditioned-vs-blind content. If
+    cos(u, v) is not above cos(u_null, v) with the fold CI excluding it, the typicality axis
+    carries nothing beyond the geometry of pool-average differences. I regard this as the
+    single most informative addition to the prereg, and it is 20 minutes.
+FOUR SMALLER POINTS.
+(d) t* at a grid endpoint: T = {-1.0 .. +2.0} is fixed and pre-registered (good). If the
+    leave-fold-out argmin lands at +2.0 the grid is truncating the operator and the entry must
+    say "at the grid edge", not quote t* as an estimate.
+(e) `lfo_LIB75` is DEPLOYABLE in the project's sense (a scalar fitted on other targets'
+    natives), and its NaN-poison test is registered. Keep the poison at the HELD-OUT target
+    only, as written; poisoning the training folds would test nothing.
+(f) Rung 5's gate ("within 0.05 A of S10-5's 1.802 / 0.953; if BETTER the convention differed"):
+    a better ORACLE hull number is a better solver, never a result, and the entry should say
+    which convention differed rather than quoting the improvement.
+(g) Multiplicity: 4 endpoint comparisons + 2 stratum tests is the right count and is declared.
+    With the sprint at 0 endpoint comparisons before this lane, a rung-6 positive at 1x MDE
+    would be priced against max-over-4; say so in the entry rather than at review time.
+
+Verdict: PREREG ACCEPTED FOR THE ORACLE LADDER (rungs 1 to 5 and 7) AS WRITTEN. RUNG 6 IS
+ACCEPTED FOR THE MEASUREMENT AND HELD FOR ANY POSITIVE: no `lfo_LIB75` result is read as a
+result until (a) the random-direction and scale-only controls and (c) the blind-difference
+cosine null are in the same entry, and F6a is decided on (b)'s measured signed-mean reference.
+If the registered prior holds and rung 6 dies, none of this matters and the entry says so in
+one line; these three are the cost of the positive being believable if it does not.
+Multiplicity: this check runs no comparison. Artefacts: `s29/PREREG_S29_O.md` (read at
+2026-09-19 23:56), `s27/LEDGER.md` S28-L39/L40 (the step-vs-random construction), `s24/LEDGER.md` L2/L3.
+
+## S29-L4 -- ADVERSARY CHECK OF PREREG_S29_X (the configuration-space CVaR-VQE probe): FALSIFIERS ARE FALSIFIABLE AND THE CONTROL SET IS THE BEST IN THE RECORD; FOUR HOLES -- THE ORACLE-BEST CHIMERA IS AN 8^S ORDER STATISTIC WITH NO MATCHED PARENT CONTROL, D1's PRIOR IS UNFALSIFIABLE AS WORDED, THE R2-R1 CONTRAST IS SET-MATCHED BUT NOT WEIGHT-MATCHED, AND 12 TARGETS CANNOT CARRY A 0.7x-MDE GO (2026-09-19 23:56, D)
+
+Question (brief S29D duty 3): is each falsifier in `s29/PREREG_S29_X.md` falsifiable, and does
+each control match the operator's space? Checked against charter sections 11 (the nine
+questions and the ten controls), 14 and 16, contract rules 9, 10, 13, 15, 16, 17, and the
+memory entries `concentration-is-wrong-when-discrimination-binds` (the control discipline),
+`grid-oracles-are-order-statistics`, `exhaustive-enumeration-closes-the-search-half`.
+
+WHAT IS RIGHT.
+1. The closure table (section 1) is the model of what contract rule 10 asks: every closed line
+   cited with its ledger entry and a stated reason the closure may not apply. The set-equality
+   theorem is ACCEPTED AS BINDING up front, and the entry states in advance that the quantum
+   stage's whole possible contribution beyond m is R2 - R1 on the same set. That is the honest
+   framing S28 had to be argued into.
+2. The controls cover nine of charter section 11's ten (classical equivalent GIBBS, diagonalised
+   GS, permuted PERM, random/untrained, matched budget SA at 2^q, untrained circuit, simpler
+   ansatz = the product-state restriction, order statistic = the exact top-m at the VQE's
+   realised m, second seed). The tenth, "a classical equivalent at matched ENTROPY", is
+   included and is the right matching variable.
+3. The space is exactly enumerable (8^S <= 262,144), so every classical control is EXACT rather
+   than sampled: no search-quality confound can hide in this probe. That is the single best
+   design choice in the prereg.
+4. Priors are registered in the failing direction for every falsifier (P1 worse by 0.1 to 0.4 A;
+   P2 to P5 null), and the probe is 12 targets before the 126 (rule 16) with a GO rule stated.
+5. Nothing is tuned on RMSD (section 8), Gamma comes from a native-free median-gap rule, and
+   T = 1 is fixed by the posterior's own units with the S25 L2 reason for not calibrating it.
+6. The cost is offered to this meter as `s29.s29_X_config:cost_nll` (contract rule 19). Note
+   that H_diag is defined on TORSIONS/built chains, so it meters at `--basis ca` on the rebuilt
+   CA clouds; the meter will accept it as a callable and the ladder rho it returns is the
+   number that decides whether the objective is worth a VQE at all.
+
+FOUR HOLES.
+(a) D1's ORACLE BEST IS AN ORDER STATISTIC OVER 8^S AND ITS CONTROL IS NOT MATCHED. "chimera
+    ORACLE best vs the DIS top-8's best member": the left side is a minimum over up to 262,144
+    structures, the right a minimum over 8. A minimum over more things is smaller whatever the
+    space contains (`grid-oracles-are-order-statistics`; S23's -0.077 A "oracle" was 101%
+    accounted for by its own best-of-K null). The matched control is a RANDOM RECOMBINATION
+    SPACE of the same size and the same parents: the same 8 members, the same S segments, but
+    the segment-to-member assignment drawn from a null that destroys structural compatibility
+    -- e.g. each parent's segment torsions independently permuted ACROSS segment positions
+    (a "scrambled-chimera" space of identical cardinality and identical marginal fragment
+    content), ORACLE-minimised the same way. If the scrambled space's ORACLE best matches the
+    chimera space's, the 0.3 to 0.8 A is the order statistic, not recombination. Cheap: the
+    same enumeration code with a permuted index map.
+(b) D1's PRIOR IS NOT FALSIFIABLE AS WORDED. "if it is worth < 0.1 A the space is not richer
+    ... and the lane's remaining arms are formalities" names no action: formalities still get
+    run and still get quoted. Register the branch: below 0.1 A (against the matched control of
+    (a), not against the top-8), the lane reports D1 and STOPS, or states explicitly why the
+    remaining arms are worth the compute given the space is no richer than its parents.
+(c) P3 IS SET-MATCHED BUT NOT WEIGHT-MATCHED. R2 - R1 on the same tail set is the right
+    contrast, but a difference between a uniform average and a p-weighted average over the same
+    set is, mechanically, a difference in EFFECTIVE SET SIZE: the weighted average has lower
+    participation ratio and is therefore LESS averaged and LESS contracted. Two quantities must
+    be printed beside P3 or the sign cannot be read: the weights' participation ratio (1/sum
+    w^2) and the emitted structure's Rg or mean virtual bond. `averaging-space-beats-the-objective`
+    and S28-L36 both say contraction is the axis on which these comparisons move. The matched
+    control is a RANDOM-WEIGHT arm on the same set at the same participation ratio (Dirichlet
+    weights fitted to the realised PR, mean of >= 8 draws): if R2 - R1 is reproduced by random
+    weights of the same concentration, the quantum stage contributed concentration, not
+    information. This is the one control charter section 11 does not name and this comparison
+    needs.
+(d) 12 TARGETS CANNOT CARRY THE GO RULE THE WAY IT IS WRITTEN. "GO to the 126 iff effect <=
+    -0.7 x MDE" on n = 12: the MDE there is computed from 12 paired differences, so 0.7x MDE is
+    roughly a 1.4-sigma effect with power near 0.25; the Type-M factor at that power is above
+    2, and the prereg's own `ST.compare` will print it. A GO is a decision to spend compute,
+    not a claim, so a lenient bar is defensible -- but the entry must print power and Type-M
+    beside the GO and must say "GO, not a result" in the same sentence, and the 126-target run
+    must re-register its own falsifier rather than inheriting the probe's. Also: with folds
+    among 12 targets the fold-clustered CI is over at most 5 clusters of 2 to 3 targets and
+    should be quoted as descriptive only at this n (`ST.compare` will supply it; the verdict
+    line will read NOT MEASURED for anything smaller than a large effect, which is correct).
+TWO SMALLER POINTS.
+(e) The PERM control permutes the posterior's rows within sequence separation: good (it
+    preserves the separation-distance marginal, which is where most of the distogram's
+    information about a peptide sits). State the seed and report the permuted arm's H_diag
+    spectrum beside the real one, so "PERM did not reproduce it" is not confounded by PERM
+    having a flatter spectrum (the S28-L8b/L11 lesson about same-spectrum controls).
+(f) R3 caps at the top-512 configurations by probability. At q = 18 that is 0.2% of the space;
+    the entry must report the mass captured, or a "full-state" readout is a top-512 readout.
+
+Verdict: PREREG ACCEPTED, PROBE MAY RUN. D1 and P1 to P5 are all falsifiable and their priors
+are registered in the failing direction. No number from this lane is read as a positive until
+(a)'s scrambled-chimera control accompanies D1, (c)'s participation-ratio control accompanies
+P3, and any GO carries its power, its Type-M factor and the words "GO, not a result". (b) and
+(f) are wording. The lane's cost function goes through the meter (S29-L2) before any endpoint
+run, as rule 19 requires; the meter's S28-ladder rho is the number to look at, not the charter
+ladder's (see the caveat in S29-L2).
+Multiplicity: this check runs no comparison. Artefacts: `s29/PREREG_S29_X.md` (read at
+2026-09-19 23:56), `s27/LEDGER.md` S28-L21/L41/L43, `s21/LEDGER.md` L14/L17/L18.
+
+## S29-L5 -- SUITE STATUS AT LANE D's FIRST GATE: 17 LIGHT FILES, 381 TESTS, 378 PASSED / 3 SKIPPED / 0 FAILED IN 115 s AT 0.93 GB PEAK; THE HEAVY FILES AND THE TWO AMBER FILES WAIT FOR A QUIET WINDOW (2026-09-19 23:56, D)
+
+Question (brief S29D duty 3): is the suite green after the first S29 commits that touch
+`tests/` and `s29/`?
+`python s26/jobrun.py --agent S29D --tag TEST --name s29D_pytest_light --est-ram 1.2 -- python
+-m pytest <17 files> -q -p no:cacheprovider`: exit 0, wall 115.2 s, PEAK RSS 0.93 GB
+(`s26/jobs_done/s29D_pytest_light.json`, log `s26/logs/s29D_pytest_light.log`). 381 tests:
+378 passed, 3 skipped (the `VERIFY_SLOW` opt-ins in `tests/test_equivalence.py`), 0 failed,
+0 errors. Files: the eight light core files (cvar data energy equivalence geometry instrument
+project quantum), the seven S28 lane files, and the two S29 lane files that exist
+(`tests/test_s29_D.py` 7 pass, `tests/test_s29_O.py`). The box was at 61% RAM with no other
+job running; the governor did not touch it.
+DEFERRED, as in S28 (S28-L5): `tests/test_pipeline.py` (forks two workers, tree 1.46 GB),
+`tests/test_integration.py` with VERIFY_SLOW=1 inside the command, and the two AMBER files, one
+TEST job each -- they go in the quiet window the coordinator announces, not beside a lane's
+CPU job. Nothing outside `s29/` and `tests/` has changed on this branch since the S28 close,
+so the light-file result carries over from S28-L45's full-tree run (440 passed / 2 skipped)
+for every file neither lane has touched.
+Standing offer to every lane: if you leave an operator untested I write `tests/test_s29_<lane>.py`
+for it (identity parameters reproduce the deployed operator; NaN-poison). Lane O's file exists
+and is in this run; lane X's is registered in its prereg and is not yet on disk.
+Multiplicity: no comparison. Artefacts: `s26/jobs_done/s29D_pytest_light.json`,
+`s26/logs/s29D_pytest_light.log`.

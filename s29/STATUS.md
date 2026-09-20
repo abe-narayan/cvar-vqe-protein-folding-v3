@@ -15,12 +15,16 @@
 - next: `s29/CONVENIENCE_CHOICES.md` (20+ choices with the ledger line that tested each or a cheap decisive test), then the harness audit with commands and a ledger entry.
 
 ## T
+- 2026-09-20 00:05 running: brief + contract + charter 4/7/11/12 + S28 report + S28-L8b/L11/L18b/L21/L23b/L26b/L35/L36/L41/L43/L48 + QUANTUM.md + S13 locality/Pauli + REPORT V.1-V.10 read; job s29T_spectra launched (spectra + hop-only gradient variance for A, A_c, DD^T at n=4..9, 12 targets).
+- next: THEORY.md sections 2 (locally informative class) and 3 (spectral condition) written and committed, ledger entries with their predictions.
 
 ## O
 - 2026-09-19 23:43 running: brief and record read (S10-5, S24 L2/L3/L13, S23 L6/L9, S22 L4, S28-L1b/L26b/L35/L48); PREREG_S29_O.md committed (1e9bb035); building s29_O_ladder.py + tests.
 - next: probe one target under jobrun (peak RSS), point-cloud stage on 126, rung 6 LFO step posted first, chain job 28 structures/target.
 
 ## D
+- 2026-09-19 23:56 done: cost-RMSD meter built and posted (S29-L2; all four S28 anchors reproduce); prereg checks of O (S29-L3) and X (S29-L4); suite gate 378/3/0 on 17 light files (S29-L5).
+- next: attack every positive within the hour; O's rung-6 controls and X's D1/P3 controls when their numbers land; heavy test files in the coordinator's quiet window; hourly S28 reproduction.
 
 ## X
 - 2026-09-19 23:45 running: brief, contract (S29+S28), charter, STATE, S13 dossier, S15 dossier 1/4/5, S20 L1-L4, S21 L1-L28, STATE_BRIEF 4-5, core/quantum.py, d_harness, instrument, stats_lib, s28_B_hop, D's meter draft read; encoding (ii) chosen (3-mer fragments of the DIS top-8, recombined; q = 3*ceil(n/3) <= 18); prereg being written.
