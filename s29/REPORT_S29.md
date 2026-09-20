@@ -69,6 +69,10 @@ three numbers that did not exist before, all on the charter's own endpoint:
    and an average cannot spend a ranking (§5.4). Any route to 2.5 Å needs *both* a native-free
    vector with a real cosine *and* a terminal operator that can consume one.
 
+   And measured in that same currency, the deployed score has essentially none of the information:
+   **it delivers 1.442 of the 7 bits, against 1.405 for a random ranking — 0.10× MDE.** The shipped
+   score is **at chance for locating the best member of its own top-128** (§12.2).
+
 **A fourth thing, which reframes the question itself (§7.1).** The charter's target is a *mean*,
 and the mean is a tail statistic here. The **median is already 2.9661 Å** and **50.8% of the
 benchmark is already under 3.0 Å** on the endpoint metric; what holds the mean at 3.2105 is a tail
@@ -191,7 +195,7 @@ killed it, so the reader can check rather than take it on report:
 | Within-band ordering (F2) | Fails on 58/70 — conditioning on realism *removes* skill | FALSIFIED |
 | A cost function that orders the ladder **better** (F1) | LOG − SWAPCTL = +0.0202 at **0.14× MDE**; error-direction cosine with production **0.924** | NOT MEASURED |
 | Configuration-space encoding | [PENDING — lane X's 12-target arms] | |
-| The shell-profile supply gap (F2) | [PENDING — lane M] | |
+| The shell-profile supply gap (F2) | fitted cosine 0.090 vs the 0.140 line, and **beaten by its own zero-information twin** (−0.0319, fold CI excludes 0) | CLOSED |
 
 ### 3.2 Claims made in this sprint that did not survive it
 
@@ -300,25 +304,22 @@ tests/test_pipeline.py                         35 passed,  2 skipped    236 s   
 tests/test_amber.py                            16 passed                291 s   0.87 GB
 tests/test_amber_frame_invariance.py            3 passed                281 s   0.32 GB
 tests/test_integration.py + test_equivalence.py (VERIFY_SLOW=1)
-                                               39 dots, 0 F/E — REAPED, re-running
-                                 confirmed so far: 54 passed, 2 skipped, 0 failed
+                                               39 passed                140 s   1.14 GB
+                                        total: 93 passed,  2 skipped,  0 failed
 ```
 
-**One qualification, caught while writing this section rather than after.** The VERIFY_SLOW
-integration run's job record carries `reaped_by_governor` and **no exit code**, and its log ends at
-the `[100%]` progress line with **no pytest summary**. Thirty-nine dots with no `F` or `E` means
-every test that ran, passed — but without the summary line or an exit code, "39 passed" is not a
-claim this report is entitled to make from that artefact. Lane D relaunched it
-(`s29D_pytest_integration2`) and the confirmed figure replaces this paragraph when it lands. The
-other three files exited 0 with full summaries and are quoted without qualification.
+The commitment made before running them was that a failure would appear here as a finding rather
+than being fixed and omitted. None failed.
 
-*And a second correction inside the first, which is why this paragraph exists in this form:* my
-first reading was that the governor had **killed** the run. It had not. `REAP` in
-`s26/governor.log` reads "*is gone; registration removed*" — the governor observed a process that
-had already exited and cleaned up its registration. The same line appears for `m_f1_full`, whose
-output is complete and was analysed without incident. So the missing summary is unexplained rather
-than caused by a kill, and the honest statement is that the artefact is incomplete, not that
-something interrupted it.
+*One process note, kept because the first attempt nearly went into this report as a claim it could
+not support.* The first VERIFY_SLOW run left a job record with **no exit code** and a log ending at
+the `[100%]` progress line with **no pytest summary** — 39 dots and no `F` or `E`, but nothing that
+entitled anyone to write "39 passed". My first reading was that the governor had killed it; that was
+also wrong, since `REAP` in `s26/governor.log` reads "*is gone; registration removed*" and fires for
+processes that have already exited, including ones whose output is complete. Lane D simply re-ran
+it: **exit 0, 140 s, 1.14 GB**, which is what the table above quotes. The missing summary line was a
+log-flush artefact, not a test problem — but that could only be established by running it again,
+not by reasoning about it.
 
 The commitment made before running them was that a failure would appear here as a finding rather
 than being fixed and omitted. None failed, so there is nothing to report on that count — but the
@@ -967,37 +968,83 @@ be stated honestly: choosing 2 of 500 is ≈ 17.9 bits, *more* than the 7 bits t
 needs, not less. A low parameter count is not a low information requirement — that conflation is
 how an ORACLE ceiling gets mistaken for a route, and this report should not be read as proposing it.
 
-### 12.2 The shell-profile supply gap
+### 12.2 The shell-profile supply gap — **closed**, on a measured gap rather than an absence
 
-**The reproduction gate passed exactly, which is what makes the rest quotable.** Lane M registered
-that its F2 machinery had to reproduce S12's section-6 numbers through its own code before anything
-else ran, and that a discrepancy would itself be the finding. It reproduces to three decimals on
-all 126 targets:
+This was the last structurally live exit on the deployable side, and it is now closed — in the
+stronger of the two available ways.
+
+I had told lane M that if nothing native-free supplied the shell profile, the class would close as
+"an ORACLE ceiling with no deployable instantiation". Lane M declined that framing: **five**
+native-free rules already supply it, measured leave-fold-out since S12. So the question was never
+whether it can be supplied, but whether it can be supplied *better* — and the closure is a measured
+supply gap, which is citable in a way an absence is not.
+
+**The reproduction gate passed to four decimal places, and the residual had a cause in source.**
+Lane M registered that its machinery must reproduce S12's section-6 numbers before anything else
+ran, and that a discrepancy would itself be the finding:
 
 ```
-                      lane M (uniform)   S12 reference
-production                  3.0784           3.078
-ORACLE true profile         2.4023           2.402
-the gap                     0.6761           0.676
+convention    PROD     ORACLE_PROF    gap        vs S12 (3.078 / 2.402 / 0.676)
+weighted     3.0624      2.4254      0.6370      ΔPROD −0.0156   ΔORACLE +0.0234
+uniform      3.0784      2.4023      0.6761      ΔPROD +0.0004   ΔORACLE +0.0003
 ```
 
-So the ORACLE ceiling of the shell-profile class is **0.676 Å** and it is real.
+Under S12's own convention a **seventeen-sprint-old pair of numbers reproduces to four decimals**.
+The weighted offset is not hand-waved: `s12/obj_common.py:93-97 score_l1` is called from
+`s12/obj_profile.py:156 evaluate` with `w = None`, so S12's profile arms carry a uniform per-pair
+weight while the shipped scorer does not. Declared in source, not guessed.
 
-**The supply audit says that ceiling is not approachable from here.** At n = 126, the
-leave-fold-out fitted predictor correlates with the true profile at **0.313** — against the
-**incumbent** distogram's own profile at **0.366**. The ridge selected its maximum regularisation
-(λ = 1000) on all five folds, i.e. it found almost nothing to fit. Variance explained is 0.093 and
-0.086 respectively.
+**The ORACLE ceiling is real and it clears the bound's threshold.** The true profile produces a
+displacement cosine of **0.483** — comfortably above the 0.358 needed for 3.00 Å. That is exactly
+why the class was worth testing and why it was the last one standing.
 
-That is the MAE law arriving from a fourth direction: the arm with the best profile *error* is not
-the arm with the best *emitted RMSD*, and the incumbent wins both comparisons.
+**And no native-free predictor gets near it.**
 
-[PENDING — lane M's F2 displacement cosine and its verdict.] The question is not whether a native-free rule can supply the shell profile
-(five already do, measured leave-fold-out since S12) but whether any supplies it *better*, and by
-how much in the bound's currency. Note the sting already in the record: among those five, the arm
-with the **best profile MAE** (2.394) emits the **worse** RMSD (3.089), and the incumbent — the
-distogram's own profile — wins at 3.078. That is the project's MAE law arriving from a fourth
-independent direction.
+```
+arm            cloud     cos vs PROD    bits/7    native pct
+PROD          3.0624        0.000        1.442       0.371
+RATIO         3.2178        0.090        1.721       0.405
+RSHRINK       3.3510        0.121        1.697       0.465     ← zero-information twin
+POOL          3.3375        0.122        1.699       0.476     ← pure typicality, no fit
+ORACLE_PROF   2.4254        0.483        3.202       0.114     ORACLE
+                                  (random ranking baseline: 1.405 bits)
+```
+
+The fitted arm reaches **0.090**, below the 0.140 random-shape line — **and it is beaten by its own
+zero-information shrink twin** (−0.0319, fold CI [−0.0628, −0.0057]). A fitted predictor losing to
+its own null is the cleanest possible closure: the shrink twin exists precisely to detect an arm
+whose apparent signal is a shrink of the incumbent, and here it fires.
+
+**The number that ties this section to §0.** Lane M measured what the *deployed* score delivers in
+the readout's own currency — how many of the 7 bits needed to locate the best member of the fixed
+top-128 it actually supplies:
+
+> **The deployed score delivers 1.442 of 7 bits. A uniform random ranking delivers 1.405** (the
+> exact null, 7 − (1/128)·Σ log₂ r). The difference is +0.0366 at **0.10× MDE**, fold CI
+> [−0.225, +0.311], 2/5 folds.
+
+**And the mean flatters it.** The *median* paired difference is **−0.575 bits** — the deployed score
+is **below the random baseline on 82 of 126 targets**, and the median rank of the ORACLE-best member
+of its own top-128 is **72 of 128 against a chance median of 64.5**. The positive mean is carried by
+a few targets where the best member happens to land near the top. This is exactly the
+median-versus-mean warning shape the project keeps in its own memory, and here **the median is the
+honest summary: the shipped score is at chance for locating the best member of its own top-128, and
+on the typical target slightly worse than chance.**
+
+That is the missing half of §0's third item. The architecture leaves 0.7592 Å on the table because
+it cannot tell which member is right — and the score it would have to use for that is, measured in
+bits, indistinguishable from shuffling. Nor is the gap profile-shaped: **even ORACLE profile
+knowledge supplies only 3.20 of the 7 bits.**
+
+**What F2 does not close.** It tested *one* quantity, with one parameterisation and one model class.
+It removes the specific hope that the lowest-dimensional named ORACLE quantity in the repository had
+a native-free twin; it does not close assumption B2 in general — and §12.0 is the live reason that
+distinction matters.
+
+**One more registered-prior failure, lane M's own.** Its pre-run estimate was 0.16–0.24, "genuinely
+close to the line", and it was wrong in the direction that flatters the experiment on *both* inputs:
+the fitted arm measures 0.090, and the ORACLE displacement cosine measures 0.483 rather than the
+0.66 lane M had inferred by inverting an identity. It reported both.
 
 ### 12.3 Assumption B3's scope — **resolved**, and it is not a caveat any more
 
