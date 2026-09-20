@@ -300,9 +300,17 @@ tests/test_pipeline.py                         35 passed,  2 skipped    236 s   
 tests/test_amber.py                            16 passed                291 s   0.87 GB
 tests/test_amber_frame_invariance.py            3 passed                281 s   0.32 GB
 tests/test_integration.py + test_equivalence.py (VERIFY_SLOW=1)
-                                               39 passed                        
-                                        total: 93 passed,  2 skipped,  0 failed
+                                               39 dots, 0 F/E — REAPED, re-running
+                                 confirmed so far: 54 passed, 2 skipped, 0 failed
 ```
+
+**One qualification, caught while writing this section rather than after.** The VERIFY_SLOW
+integration run's job record carries `reaped_by_governor` and **no exit code**, and its log ends at
+the `[100%]` progress line with **no pytest summary**. Thirty-nine dots with no `F` or `E` means
+every collected test that ran, passed — but the process was killed before pytest reported, so
+"39 passed" is not a claim this report is entitled to make from that artefact. Lane D relaunched it
+(`s29D_pytest_integration2`) and the confirmed figure replaces this paragraph when it lands. The
+other three files exited 0 with full summaries and are quoted without qualification.
 
 The commitment made before running them was that a failure would appear here as a finding rather
 than being fixed and omitted. None failed, so there is nothing to report on that count — but the
