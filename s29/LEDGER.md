@@ -4108,3 +4108,50 @@ on a bad objective HURTS through argmin and is neutral through an average, and t
 *for an objective of the shipped quality*. A readout switch is therefore conditional on an
 objective the project does not have, which is the bound again. Nothing here is a route; it is a
 diagnosis of where the 2.5 A went.
+
+## S29-L46 -- THE SPRINT'S OWN LESSON APPLIED TO THE SPRINT: AN EXISTENCE CHECK ON **ALL 160** ARTEFACT PATHS THE S29 LEDGER CITES -- **ALL 160 RESOLVE**, AND THE ONE FULL PATH THAT LOOKED ABSENT IS A LANE CORRECTING THE BRIEF IN PLACE, NOT A THIRD INSTANCE; SEPARATELY, 36 RESULT FILES ACROSS SEVEN LANES WERE **UNCOMMITTED** UNTIL THIS BLOCK, INCLUDING THE ROWS S29-L44 CITES (2026-09-20 02:26, coordinator)
+
+S29-L41 and S29-L42 established that a path quoted in prose is a claim, not a citation, and that
+the contract's "every number carries its artefact path" rule is worth exactly what an existence
+check on that path is worth. Lane L's sharper version says to run the check DURING the reading.
+This entry runs it against our own ledger before the report is written, rather than letting a
+future sprint discover it the way this one discovered S8.
+
+**METHOD.** Extract every backticked token in `s29/LEDGER.md` that looks like a repository path
+with a known extension (160 distinct), test each against disk, resolve basename-only citations
+against a full recursive file index, and for anything still missing run the S29-L41 check --
+`git log --all --oneline -- <path>` -- to distinguish "moved" from "never existed".
+Script: scratchpad `audit_paths.py` / `resolve_names.py`.
+
+**RESULT.**
+
+    paths cited                                   160
+    resolve directly on disk                      130
+    resolve as basename-only citations             24   (e.g. `s29_T_spectra_rows.jsonl`
+                                                         -> s29/results/s29_T_spectra_rows.jsonl)
+    resolve via a recorded rename                   1   (s29_B_tta_subset_rows.jsonl
+                                                         -> _pre_tiefix.jsonl, S29-L45)
+    resolve in git history from an earlier sprint   1   (score_weights.json, Sprint 2)
+    cited precisely BECAUSE it does not exist       1   (see below)
+    genuinely dangling                              0
+
+**THE ONE THAT LOOKED LIKE A THIRD INSTANCE ISN'T.** `s25/qcand_lib.py` is absent from disk and
+from git history. But it appears in the ledger at line 757 inside the words *"`s25/qcand_lib.py`
+does not exist -- the `Encoding` class is `s22/qcand_lib.py:120`"*: a lane hit a wrong path in its
+own brief, ran the check, and corrected it in place. That is the mechanism working. It is worth
+recording that the audit's single hit was a lane's own successful catch, because it is evidence
+the habit propagated rather than evidence of a new failure.
+
+**WHAT THE AUDIT DID FIND, AND IT IS NOT NOTHING.** Thirty-six result files across lanes B, D, M,
+O, P, T and X were present on disk but **untracked by git**, including
+`s29/results/s29_O_chain_rows_*.jsonl` -- the rows S29-L44's entire corrected ceiling is computed
+from -- plus lane B's four 126-target subset shards, lane X's ten per-target probes, lane T's
+compactness table and lane D's B3 fields. A path that exists only in a working tree is one
+`git clean` from being S8. All 36 are now committed (`4f58d541`, `02d40615`). The 16 MB file
+initially failed to index with a permission error on the object write; that was a transient lock
+and it staged on retry -- recorded because "it failed once" is the kind of detail that otherwise
+disappears.
+
+**STANDING CONSEQUENCE.** This check is cheap and it is now a report gate: it runs again
+immediately before the S29 report is published, and the report cites its result. A ledger whose
+paths all resolve is the minimum condition for the report's numbers to be checkable by anyone else.
