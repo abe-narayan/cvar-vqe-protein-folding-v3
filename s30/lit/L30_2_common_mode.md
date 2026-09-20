@@ -159,8 +159,19 @@ exactly an E2. The project has run it: **AMBER-relaxing the average at k=30 is -
 `averaging-space-beats-the-objective`). That is the theorem's E2 exit being taken, working, and
 being worth 0.7% of baseline.
 
-**This is the most useful single line in the file: E2 is the only escape this project has ever
-gotten a signed, fold-consistent result out of, and its measured size is -0.022 A.** Anyone
+**CORRECTED BY S30-L13, and the correction matters: E2 escapes THIS theorem and is then
+immediately re-capped by the OTHER one.** A constraint repair is a realism operator, so Blau &
+Michaeli's perception-distortion theorem applies to it. The field has run the general version at
+scale -- MCORE (PMC2662860, 2090 proteins under 200 residues) takes averaging clashes from
+**63.0% of atoms to 1.09%** and RMSD from **3.28 A to 3.36 A, i.e. 0.08 A WORSE**. Removing 98% of
+the clashes costs accuracy. Our -0.022 A is the **opposite sign** from the published result, and
+the mechanism for the flip is arithmetic: a constraint repair acts on the bonded geometry, whose
+share of all residue pairs is `2/n` -- **15.4% at n=13 against 1.0% at n=200**. So E2 works here
+because the chain is short, and it does not scale with effort, because the bonded fraction is
+fixed by `n`.
+
+**The line that survives: E2 is still the only escape this project has ever gotten a signed,
+fold-consistent result out of; its measured size is -0.022 A; and it is now doubly capped.** Anyone
 proposing a geometry-repair, constraint-projection or physical-validity operator is proposing an
 E2 and should be priced against that number, not against the 68%.
 
