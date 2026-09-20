@@ -337,6 +337,59 @@ quoted the **verdict string**. A verdict string is a claim about a computation a
 what reading the computation is worth.
 
 
+## NOTE 6 (2026-09-20 13:17, lane D + lane T): **THE COMBINATION QUESTION IS ANSWERED. NO.** AND LANE T'S REGISTERED PREDICTION HELD
+
+The measurement I called the sprint's central one is in, and it closes the direction.
+
+**Lane T registered, before the numbers existed:** `rho_comb = rho_0 / sqrt(s_1)` — the combination's
+cosine is the best single field's divided by the root of the Gram's PC1 share, **and the count k
+cancels**. Its P5a put the 21x21 Gram's stable rank in [1.3, 3.5] and PC1 share in [0.45, 0.80];
+its P5b put the **leave-fold-out ORACLE-optimal combination at [0.11, 0.22], point estimate 0.15**,
+falsified above 0.25; its P5c warned the in-sample figure would inflate to 0.25-0.45 and must not
+be read as a ceiling.
+
+**Measured** (`s30/results/s30_D_gram.json`, n = 119 of 126, ORACLE):
+
+```
+Gram stable rank                    2.057      (T predicted [1.3, 3.5])
+Gram top-3 share                    0.600      (T predicted PC1 [0.45, 0.80])
+per-target stable rank              1.681
+
+best SINGLE field                   rho 0.1214
+ORACLE GLOBAL combination           rho 0.1693   implied 3.0253 A
+LEAVE-FOLD-OUT combination          rho 0.0124   implied 3.0694 A
+LFO equal-weight over the 11 sig.   rho 0.0948   implied 3.0558 A
+```
+
+**Three readings, in order of how much they matter.**
+
+1. **Even with the native in hand and one global weighting, the 21 fields combine to rho = 0.169.**
+   The bound needs **0.358 for 3.00 A**. The combination is not merely short, it is short by more
+   than a factor of two on a quantity that enters as its square.
+2. **Deployably it is worse than the best single field** — LFO 0.0124 against 0.1214. Fitting 21
+   coefficients leave-fold-out destroys the signal rather than combining it. That is the
+   incidental-parameter result arriving at the level of *weights*.
+3. **The orthogonality hope is dead on arithmetic.** Eleven fields at 0.11 would need a Gram of
+   full rank 11 (PC1 share 1/11 = 0.09) to reach 0.36. Measured PC1-and-friends: top-3 share
+   **0.600**, stable rank **2.057**. The fields span about two effective directions, not eleven.
+
+**And the per-target figure is a trap that the control caught.** The ORACLE *per-target* combination
+reaches **rho = 0.949** (implied 0.967 A) — which looks spectacular and is meaningless: the matched
+random 21-dimensional subspace control reaches **0.809** on the same targets. Fitting 21
+coefficients per target to a ~33-dimensional vector gets you most of the way there whatever the
+fields contain. **Excess over control: +0.1396.** Without that control this would have gone into
+the record as a 0.97 A result.
+
+**So lane D's own reframe — "the fields are real and worth 0.0195 A because sqrt(1-rho^2) squares
+them" — survives, and the follow-up I built on it does not.** The fields are real, they are
+significant at up to 7.7 sigma, they span two dimensions, and combining them buys nothing. I
+proposed the combination as the sprint's central measurement; it took an afternoon and the answer
+is no.
+
+**Lane T's prediction landing at 0.169 against a registered point estimate of 0.15, with the count
+cancelling as derived, is the strongest methodological result of the sprint so far** — a formula
+registered in advance that predicted a measurement to within 0.02 in a quantity nobody had computed.
+
 ## CORRECTION TO THE SYNTHESIS BELOW (2026-09-20 13:08, lane F): **THE WIDENING HALF IS CIRCULAR AND THE FILTER-WIDTH HALF IS CLOSED**
 
 Written within the hour of the synthesis it corrects. Both halves of my "two qubits" mechanism took
