@@ -32,7 +32,7 @@ three numbers that did not exist before, all on the charter's own endpoint:
    (`s29/results/s29_D_fields.json`, n = 126), **not one beats the random-shape reference of
    0.1398** — `beats_random_reference` is `False` on all 21, best is CHAN_DISTPOT at +0.1128 — and
    the best field, stepped by an amount chosen *with the native in hand*, moves the point cloud from
-   3.0483 to 3.0289: a gain of **0.0195 Å**. Stated at three levels (lane T): **≥ 3.210 Å** for every field the project has built, **≥ 3.181 Å** for a random-strength field handed a perfect sign, and **≥ 2.98 Å** for the best structured field (PC1) handed a perfect ORACLE *per-target* sign.
+   3.0483 to 3.0289: a gain of **0.0195 ± 0.001 Å** (the figure is a closed form; see §9.4 for its measured model error). Stated at three levels (lane T): **≥ 3.210 Å** for every field the project has built, **≥ 3.181 Å** for a random-strength field handed a perfect sign, and **≥ 2.98 Å** for the best structured field (PC1) handed a perfect ORACLE *per-target* sign.
    **Scope, and it is not a formality (§12.0):** this is a bound over the operators we *built* and
    measured. Its assumption B2 — that ρ ≤ 0.14 for *every* field constructible from the present
    information — was attacked and survived on 21 fields, but a measurement made late in the sprint
@@ -179,6 +179,7 @@ killed it, so the reader can check rather than take it on report:
 | 21 native-free displacement fields | `beats_random_reference` False on all 21; best 0.1128 vs 0.1398 | FALSIFIED |
 | The profile correction | +0.582 Å **even ORACLE-fitted** | FALSIFIED |
 | Within-band ordering (F2) | Fails on 58/70 — conditioning on realism *removes* skill | FALSIFIED |
+| A cost function that orders the ladder **better** (F1) | LOG − SWAPCTL = +0.0202 at **0.14× MDE**; error-direction cosine with production **0.924** | NOT MEASURED |
 | Configuration-space encoding | [PENDING — lane X's 12-target arms] | |
 | The shell-profile supply gap (F2) | [PENDING — lane M] | |
 
@@ -268,6 +269,59 @@ number recomputed from its artefact rather than copied from the entry that repor
 lane O's figures reproduced to every digit quoted. The second pass caught an error of mine that
 several re-readings of the prose had not.
 
+
+### 4.7 The direct answer to "does lower cost mean lower RMSD?"
+
+After S28 the standing question was whether cost-function reduction could be made to track RMSD
+reduction. **Lane M's F1 is the cleanest test of that the project has run, and the answer is no —
+not because the cost is bad, but because a better-ordering cost emits the same answer.**
+
+The setup was the strongest available. Lane D's meter had identified the pair log-score as the
+*first* cost in the project's record that is not **anti**-informative on the near-native ladder
+(+0.200 of ladder ρ above the shipped cost, 5/5 folds, S29-L6). If better cost ordering ever
+converts into better structures, this is the cost that should show it. Everything but the
+functional was held at production — same pool, same leave-fold-out posterior, same tie-safe top-75,
+same uniform average in the medoid frame, same projection — and the comparator reproduces the
+cached DIS channel bit-for-bit.
+
+```
+LOG − PROD      +0.0822   0.55× MDE   3/5 folds   power 0.34   NOT MEASURED
+LOG − SWAPCTL   +0.0202   0.14× MDE   fold CI [−0.1020, +0.1622]   57W/69L   power 0.07
+```
+
+**The log score's entire endpoint effect is indistinguishable from exchanging 20.6 of its 75
+members at random.** It swaps 20.6 members against production (overlap 0.726) and costs +0.0822 Å;
+swapping the same number at random costs +0.0621 Å; the difference — everything the functional's
+ordering buys — is 0.14× its own MDE.
+
+Three supports, in the order that matters:
+
+1. **It is the same answer, not a different one.** The parallel-bias cosine between LOG's and
+   production's error vectors against the native, rigid body removed, is **0.924** mean / 0.969
+   median, against a 0.177 random reference at 3n−6 dof. An operator that moves the answer
+   0.92-parallel to where it already was cannot move the error much, *whatever its ladder ρ*. That
+   single number explains the result without statistics.
+2. **The pair information is real, which makes the null stronger.** Destroying the
+   pair-to-posterior correspondence costs **+0.7295 Å** at 2.29× MDE, 5/5 folds, power 1.00, with
+   overlap collapsing to 0.199. The functional genuinely consumes that correspondence. Its ordering
+   is simply worth nothing *more* than the incumbent's at this readout.
+3. **The contraction is not the lever** — a third independent confirmation. LOG's cloud is
+   +0.0593 Å **less** contracted (1.34× MDE, 4/5 folds), the direction the original mechanism
+   predicted, and the endpoint is worse. L2RISK contracts **more** and is *also* worse (+0.044).
+   Two functionals move contraction in opposite directions and both move the endpoint the same way.
+
+**A calibration note that belongs in the record.** The pre-registration cited S7's pure-NLL arm at
++0.093 Å — measured through the **argmin** readout — and registered the prior as "+0.00 to +0.10".
+Measured here through the top-75 average and the built chain: **+0.082**. A twenty-sprint-old
+number predicted a new arm's endpoint to a hundredth of an Ångström across a different readout.
+The project's model of itself is accurate; it is the Ångströms that are not available.
+
+**Why this composes with everything else.** A better cost moves the answer only along a
+displacement whose cosine is ≈ 0.04 (§5.1), through a readout that can spend at most 0.04 of any
+ranking (§5.4), toward a per-target sign that is not estimable (§5.3). Four independent reasons,
+one outcome. The honest answer to the question is that **cost and RMSD will not be made to
+correlate through this architecture no matter how good the cost gets** — and §13 is about what
+would have to change for that sentence to stop being true.
 
 ## 5. Why, at the level of mechanism
 
@@ -472,16 +526,57 @@ SS_MATCH 0.0750   ENV 0.0730   PROJ 0.0694   MSET_5 0.0629   CAGEO 0.0565
 ... DIS_MEAN 0.0231   MEDOID −0.0097   MSET_50 −0.0187   EXPAND −0.0208
 ```
 
-`beats_random_reference` is **False on every one**. The implied point-cloud RMSD at each field's own
-ORACLE-chosen best step runs 3.0289 (best) to 3.0482 (worst) against production's 3.0483: the single
-best displacement field this project can construct, stepped with the native in hand, is worth
-**0.019 Å**. Assumption B2 survives a direct, pre-registered attack with 18 new candidates.
+`beats_random_reference` is **False on every one**. These are **21 displacement fields, none
+previously measured as a cosine, five of them operators the record has already priced by RMSD** —
+MSET_1 (the shipped argmin selector), MSET_500 (the full-pool average), MEDOID (the consensus
+medoid), CONS_TRIM and PROJ (the production projection, +0.164 Å). Those five act as within-file
+anchors tying a new axis to quantities the record can check independently.
 
-**And one assumption did not survive unqualified.** Lane D hardened its own B3 check from a ±3 Å to
-a ±6 Å bracket and the answer changed: the residual is *not* uniformly 1e−4. It grows with step
-size, reaching −0.93% mean and −2.6% max at a 2.03 Å step (MSET_25). So the bound's linearisation is
-sound for fields whose own best step is sub-Ångström — which is all of them except that one — and
-the report states B3 with that condition rather than flatly. [Final figure at n = 126: PENDING]
+The implied point-cloud RMSD at each field's own ORACLE-chosen best step runs 3.0289 (best) to
+3.0482 (worst) against production's 3.0483: the best displacement field this project can construct,
+stepped with the native in hand, is worth **0.0195 ± 0.001 Å**. Assumption B2 survives a direct,
+pre-registered attack with 21 candidates.
+
+**The ± is not decoration, and it was nearly quoted wrongly.** `implied_rmsd_at_best_step` is a
+*closed form* — `mean(rmsd_prod)·√(1 − mean_cos²)` — not a displaced-and-rescored cloud, so it
+inherits the linearisation error of assumption B3. Reading the per-field mean residuals naively
+(−1.1% for MSET_500) suggested the model error might *exceed* the 0.64% effect it prices. It does
+not: those means average over a tail of cells whose own optimum sits at 4–6 Å, and every field's
+actual mean best step is sub-Ångström (0.158–0.716 Å). Restricted to the steps that occur:
+
+```
+step band     n     mean |rel residual|
+0.0–0.5 Å    265          1.2e-04
+0.5–1.0 Å    128          7.5e-04
+1.0–2.0 Å    120          1.6e-03
+3.0–6.1 Å     64          2.5e-02
+```
+
+Interior cells with step ≤ 1 Å: mean |rel| 3.4e−04 and 95th percentile 1.4e−03 — **0.0010 Å mean and
+0.0044 Å at the 95th percentile** on a 3.05 Å structure. Against the 0.0195 Å gain that is 5% of the
+effect at the mean and 23% at the 95th percentile, not 110%.
+
+Two things make this cut *toward* the bound rather than against it. **"No field beats the random
+reference" never depended on the closed form at all** — it rests on measured cosines
+(0.1128 [+0.088, +0.137] against 0.1398), an angle measured directly. And **416 of 630 cells (66%)
+have a *negative* residual**: the measured optimum sits *below* the formula, because the step is
+chosen by minimising a measured 481-point curve and curvature lets it dip under a linear model. The
+formula therefore slightly **understates** what a field achieves — it loosens the bound
+conservatively.
+
+**And one assumption needed its scope measured rather than asserted.** Lane D hardened its own B3
+check from a ±3 Å to a ±6 Å bracket, which changed the answer, and then measured the scope at
+n = 126 rather than describing it. The residual is governed by **step size, not by field**:
+`corr(|rel residual|, step)` runs +0.32 (EXPAND) to +0.65 (PROJ), and |rel| first exceeds 10% of the
+effect at a median step of **1.77 Å**, 50% at 2.83 Å, and 100% at 3.19 Å.
+
+**Quotable scope condition: the bound's algebra is exact to better than 0.1% of the structure for
+any step under ≈ 2 Å — which covers every real arm in this record — and degrades by roughly an
+order of magnitude per Ångström beyond that.** (My own earlier wording, "sound for fields whose best
+step is sub-Ångström", was wrong: *every* field here has a sub-Ångström best step, so that cannot
+be the condition.) Also reported: 20 of 630 cells (3.2%) sit at the ±6 Å bracket edge and are
+excluded from every figure above — the 2.27e−1 maximum in the raw file is one of those and must
+never be quoted as a model error at a real step size.
 
 
 ## 10. The literature relied on, and rejected
@@ -691,11 +786,13 @@ with the **best profile MAE** (2.394) emits the **worse** RMSD (3.089), and the 
 distogram's own profile — wins at 3.078. That is the project's MAE law arriving from a fourth
 independent direction.
 
-### 12.3 Assumption B3's scope
+### 12.3 Assumption B3's scope — **resolved**, and it is not a caveat any more
 
-[PENDING — `s29D_fields_b3_126`.] The bound's linearisation is exact to ~1e−4 for sub-Ångström
-steps but degrades with step size, reaching −0.93% mean at a 2.03 Å step. Where exactly it stops
-being safe is being measured; until then, B3 is stated conditionally rather than flatly.
+Measured at n = 126 (§9.4): the bound's algebra is exact to better than 0.1% of the structure for
+any step under ≈ 2 Å, which covers every arm in this record, and degrades by roughly an order of
+magnitude per Ångström beyond that. Two thirds of cells have a *negative* residual, so the closed
+form slightly understates what a field achieves and therefore loosens the bound conservatively.
+B3 is no longer an open assumption; it is a measured curve with a stated domain.
 
 ### 12.4 Things we did not get to
 
