@@ -560,6 +560,17 @@ and the total enhancement across the prefix is 8.4x. Exact numbers at the deploy
     the deployed trained circuit -4.5610            74.1          8.836     407        (S28 rows,
                                                                                        seed 0, sd 0.022)
 
+**The same computation on the 12 targets' OWN registers** (each target's real `E`, padding
+included; `s29/results/s29_T_reach.json :: fgap`, job `s26/jobs_done/s29T_reach.json`): `F_opt`
+-4.7221, `F_uniform` -4.5320, `F_circuit` -4.5531; `m` 28.9 / 93.0 / 73.7; `PR` 339.1 against the
+circuit's 398.2. Two readings. (a) The rank-ladder values above are reproduced on real registers to
+three decimals, which is "E is the same ladder on every target" (S25 L17) confirmed from a third
+direction. (b) **The circuit closes only 11.1% of the free-energy gap between the uniform state and
+its own exact optimum at the DEPLOYED cell** -- against the 78 to 89% S25 measured at `alpha = 1`,
+which is a different cell (the tail constraint is what it struggles with). In `m` the same
+displacement is 30%. My Q1.2 phrase "closing about a third" was the `m` figure; the `F` figure is
+11% and is the less flattering one, so both are quoted here.
+
 So the optimum is a **near-uniform state with a modest enhancement on a short prefix** -- the
 brief's phrase is right in substance, with the correction that it is not "uniform ON a prefix" but
 "uniform above the VaR, enhanced below it". The circuit sits between the uniform state and the

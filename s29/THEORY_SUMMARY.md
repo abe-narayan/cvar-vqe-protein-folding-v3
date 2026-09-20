@@ -137,7 +137,10 @@ Rockafellar-Uryasev form of the LOWER tail,
 
 uniform above the VaR and exponentially enhanced below it (the code asserts the `alpha = 1` limit
 returns the Gibbs free energy). At the deployed cell: uniform `F = -4.5394`, `m = 92`; the exact
-optimum `F = -4.7237`, `m = 29`; the trained circuit `F = -4.5610`, `m = 74.1`.
+optimum `F = -4.7237`, `m = 29`; the trained circuit `F = -4.5610`, `m = 74.1`. On the 12 targets'
+OWN registers the same three are -4.5320 / -4.7221 / -4.5531 with `m` 93.0 / 28.9 / 73.7
+(`s29_T_reach.json :: fgap`), so **the circuit closes 11.1% of the free-energy gap to its own
+optimum** at this cell -- 30% measured in `m` -- against the 78 to 89% S25 measured at `alpha = 1`.
 
 `E` is the standardised rank ladder on every target (S25 L17), so `p*` depends on `(alpha, T)` and
 nothing else. **The deployed quantum stage is a target-independent weight profile over RANKS, and
