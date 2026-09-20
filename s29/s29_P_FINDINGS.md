@@ -179,6 +179,23 @@ curve is not going to.
 
 ## OPEN
 
+P11. **The 126 x 26 arm run (the registered falsifiers F-P1/F-P2/F-P3) is IN FLIGHT.** Launched
+00:31 as four concurrent shards over contiguous quarters of the pinned order, each with its own
+rows file and a per-(arm, target) checkpoint; phase `primary` (the 17 cells every falsifier
+needs) then phase `oracle` (the 9-point s-grid). Throughput is limited by the box, not by the
+lane: `s26/launch_cap.json` allows 8 concurrent jobs and 8 were already registered, so three of
+the four shards sat queued; the box is CPU-bound at 92-96% on 6.43 core-equivalents.
+
+**RESUME (nothing is ever recomputed; every cell is checkpointed):**
+
+    python s26/jobrun.py --agent S29P --tag CPU --name s29P_run_s<k> --est-ram 0.6 --         python s29/s29_P_scale.py run --shard <k> --nshards 4        # k = 0..3, idempotent
+    python s29/s29_P_scale.py analyse                                 # tolerates a partial grid
+
+`analyse` prints the primary-complete and grid-complete target counts separately, re-asserts the
+PROD gate per target, and refuses to form the ORACLE contrast until the grid is complete on every
+analysed target. The second ledger entry (the arm verdicts, the branch-flip floor, the FAIL18
+split with the random-18 null, the ORACLE s-curve and MS-OBJ) is owed from its output.
+
 ## WHAT DAMAGED MY OWN EXPECTATIONS
 
 ## WHAT I DID NOT DO AND WHY
