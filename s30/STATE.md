@@ -106,12 +106,17 @@ question narrows to channels with genuinely global reach.
 
 ## LANES
 
+Seven of a permitted eight; one slot held for what the results demand.
+
 | lane | remit | status |
 |---|---|---|
-| **R** | is nativeness recognizable from one structure at all (L11) | running |
-| **L** | literature, permanent | running |
-| **D** | adversary, permanent; owns the cost/RMSD meter | running |
+| **R** | is nativeness recognizable from one structure at all (L11) | running — plan approved, building the matched-kind ladder |
+| **F** | the failure tail; highest leverage on the endpoint by the opening arithmetic | running — first task is the pool-limited vs selection-limited diagnosis |
+| **Q** | L5 **and** L6 together: a subset objective is pointless through an averaging readout, a sparse readout is unusable without a support rule | running |
+| **X** | divergent, permanent: should the quantum stage select at all, or generate? | running |
 | **T** | theory: the bit accounting (L8) and when the CVaR tail stops being a prefix | running |
+| **D** | adversary, permanent; owns and extends the cost/RMSD meter | running |
+| **L** | literature, permanent | running |
 
 ## OPEN QUESTIONS I AM HOLDING
 
