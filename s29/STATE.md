@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 01:51 Pacific.
+Last update: 2026-09-20 01:54 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -523,6 +523,36 @@ stands.
 ALSO: `s29/THEORY_SUMMARY.md` exists (S29-L32) and now carries the verdict, and the smoke-test
 caveat is lifted everywhere -- every figure in THEORY.md, THEORY_SUMMARY.md and STATUS is from
 the 126-target run.
+
+
+## Integration note 22 (2026-09-20 01:54, S29-L40): THE REPAIR FAILS ITS OWN TEST, AND THE POINTER IS PRICED
+Lane T's four-term measurement closes its post-mortem with both registered questions answered.
+(a) THE REPAIR IS DIRECTIONAL AND INSUFFICIENT. Restoring the two dropped covariance terms moves
+    sign agreement from chance (57 to 64 of 126) to EXACTLY the coin-toss bar: 74/126 = 0.5873
+    against a bar of 74.0/126, so by lane T's own registered strict test it clears on NONE of
+    the six cells. Lane T's statement, which I adopt: the second-order model is not predictive
+    for this cosine at n = 126. What the measurement does is DIAGNOSE the withdrawn corollary's
+    death -- the truncation was indeed the error, the dropped terms are 0.77 to 1.24 times the
+    kept ones and dominate on 38 to 61% of targets -- without replacing it with anything.
+    Theorem 2's central claim is unaffected (it says no term in the native's deviation ENTERS;
+    it never predicted the sign) and the section 8 bound was never built on the sign.
+(b) THE POINTER IS REAL, WEAK, AND PRICED. cov(a, n) > cov(b, n) holds IN DIRECTION on every
+    reference map (median magnitudes 55.9 vs 51.4, 58.5 vs 47.2, 30.4 vs 22.3) and the
+    per-target count clears the coin-toss bar on 3 of 6 cells, sitting at or inside it on the
+    other three. With six DEPENDENT cells lane T calls it suggestive and not established, and
+    declines to quote a max-over-cells null because the cells are not independent enough for one
+    to mean anything. So THE POOL'S deviation from typical does track the native's slightly
+    better than the POSTERIOR'S median map does -- the one pointer no closure touches -- and its
+    price is already set by section 8: whatever the asymmetry is worth, it can only reach the
+    endpoint as a cosine, and every cosine the project has measured is about 0.04 against a
+    0.140 random reference and the 0.628 that 2.5 A requires. Lane T's recommendation, adopted:
+    worth ONE pre-registered measurement in a future sprint (an operator that displaces
+    production along the pool's dispersion direction, read through the meter's cosine with its
+    shrink signature), NOT worth a build in this one.
+The withdrawn corollary is now diagnosed from both sides, neither side argued: saturation
+explains the magnitude of the departure, the dropped terms explain the sign, and restoring them
+buys no prediction. Nothing in theory sections 3 to 9 depends on any of it, and the bound stands
+on its measured magnitudes exactly where it stood before the attack.
 
 ## Integration note 1 (2026-09-19 23:55, after S29-L1)
 Lane L's topic 1 closes the "import a QA method" route from outside: no published native-free
