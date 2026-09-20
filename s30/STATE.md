@@ -275,6 +275,67 @@ established *among the measured classes*. Its own dispersion escape is a stateme
 **operator**, and lane F has just located a large loss in a **stage**. Three lanes now point at
 three different components and the report must keep them distinct.
 
+
+## NOTE 5 (2026-09-20 12:53, lane D, S30-L5): **THE FIELDS ARE NOT NOISE.** B2's NUMBER STANDS; ITS ARGUMENT IS BACKWARDS
+
+The most consequential correction of the sprint, and it **inverts the strategy** rather than
+adjusting a number.
+
+**The defect, found by reading the code and not the prose** (`s29/s29_D_fields.py:243,263`).
+Two errors compound:
+1. The verdict string says "no field's **mean |cos|** clears the random reference 0.140" but the
+   code compares `abs(signed mean)`. The quantity the sentence names runs **0.2505-0.3249 and
+   clears 0.1398 on 21 of 21 fields.**
+2. The null is wrong for either quantity. `ref = 0.1398` is the magnitude of **one random direction
+   on one target**; `cmp0["effect"]` is a **mean over 126 targets**. They differ in scale by ~sqrt(126).
+
+**Against the right nulls** (from S29's own stored draws): null for the 126-target signed mean is
+**+0.0014 +- 0.0144**; for the mean |cos| it is 0.1398 +- 0.0099. Result: **11 of 21 fields have
+fold-clustered CIs excluding zero, best +7.7 sigma** (CHAN_DISTPOT +0.1128), where multiplicity
+predicts one. S29 recorded `any_beats_reference = []`; the correct count is **11**.
+
+**The objection answered from inside the survey.** A Gaussian random direction might be a *worse*
+measure rather than an uninformative one (`zero-information-control-must-be-plausible`). The survey
+answers itself: three of its own **structured** fields -- MEDOID -0.0097, MSET_50 -0.0187,
+EXPAND -0.0208 -- sit *at* the signed null. So +0.11 is not a generic property of structured
+directions.
+
+> **B2's number stands (best exploitable rho = 0.1128 <= 0.14). Its argument does not. The fields
+> are real and they are worth 0.0195 A because sqrt(1-rho^2) SQUARES them.**
+
+### WHY THIS CHANGES THE SPRINT
+
+Old reading: *nothing carries signal, there is nothing to build on.*
+New reading: **eleven directions carry highly significant signal, and each is individually
+worthless because the transfer function is quadratic near zero.**
+
+Those imply different next moves, and the second has a question nobody here has asked:
+
+> **What rho does the best COMBINATION of the 21 fields achieve?**
+
+If they were orthogonal, a combination reaches rho = sqrt(sum rho_i^2); eleven fields at ~0.10-0.11
+gives **~0.33-0.36**, against the **0.358 the bound requires for 3.00 A**. They are almost
+certainly not orthogonal -- all built from the same distogram and pool, and project memory
+(`decorrelated-errors-exist-but-are-unusable`) records fusion gains going as the **square** of the
+weaker channel's skill. But the arithmetic lands close enough to the threshold that it must be
+**measured, not assumed**, and the per-target displacement vectors already exist.
+
+**Requested of lane D, ahead of its queue:** (1) the **Gram matrix** of the 21 directions and its
+effective rank -- if it collapses to ~2 like the pair-distance matrix (stable rank 1.859) the
+combination buys nothing and this closes in an afternoon; (2) the **ORACLE-optimal combination's
+rho**, the ceiling of the whole field class, labelled ORACLE; (3) only if that ceiling clears ~0.3,
+whether a **native-free, global, leave-fold-out** weighting recovers a useful fraction -- per-target
+weights are not estimable (incidental parameter).
+
+In lane T's currency: rho 0.14 = 0.470 bits, rho 0.358 = 3.25 bits. **The question is whether
+eleven 0.04-bit channels can be combined into 3.25 bits, and the answer is governed by their RANK,
+not their count.**
+
+**The meta-lesson, one level up from the four dangling artefact paths:** this error survived a full
+sprint, a published report and a published artifact because everyone downstream -- me included --
+quoted the **verdict string**. A verdict string is a claim about a computation and is worth exactly
+what reading the computation is worth.
+
 ## WHAT I AM TREATING AS BINDING FROM S29 (until a lane breaks it)
 
 - Every native-free operator is a displacement; its whole value is one cosine. 3.00 Å needs
