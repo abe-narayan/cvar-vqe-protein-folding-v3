@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:24 Pacific.
+Last update: 2026-09-20 00:25 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -357,6 +357,42 @@ information about the native's deviation from typical, so its upside is the char
 "classically irreproducible contribution at unchanged RMSD" unless the configuration space's own
 posterior carries more than the pool's marginals -- lane X's premise, to be measured by the
 meter, not asserted.
+
+
+## Integration note 10 (2026-09-20 00:25, after S29-L16): THE IN-BAND EXPERIMENT IS NOVEL, AND ITS NULL IS WEAKER THAN IT LOOKS
+Lane L's topic 6 supplies the design, the bound, the prior and one scoping caution I have adopted
+as the sprint's position.
+DESIGN, published and human-validated: the PIRM 2018 challenge built this construction in
+transpose (fix distortion, rank by a NO-REFERENCE realism index validated by 35 raters who never
+saw the ground truth) and found the index well correlated with human judgement ACROSS bands
+(Spearman 0.83) and unreliable WITHIN them. That is this project's own +0.653 global / +0.091
+in-band split reproduced independently in another field on this exact design. Expect a small
+in-band effect and power for it; and because the tradeoff is steepest at the low-distortion end
+where we operate, the band must be narrow, which is the design's central tension.
+THE BOUND, exact: for jointly Gaussian (scorer, accuracy, realism) the in-band correlation is the
+PARTIAL correlation rho_SY.R = (rho_SY - rho_SR rho_RY)/sqrt((1-rho_SR^2)(1-rho_RY^2)), constant
+across the band, and its zero is exactly "the scorer's whole association with accuracy is
+MEDIATED by realism". So the answer is predictable in closed form before any run, and computing
+the three correlations IS the pre-registration. Report skill as a CURVE over band widths (global
+correlation at wide, partial at thin): one pre-registered object instead of k bands.
+THE PHYSICS, which makes it interpretable either way: banding on a statistic destroys that
+statistic's own discriminating power by construction, so an in-band experiment measures exactly
+what is ORTHOGONAL to realism -- a positive is direct evidence of the quantity H0 says the system
+lacks; a null says the library carries nothing beyond realism.
+THE CAUTION, ADOPTED AS THE SPRINT'S POSITION: every scorer in the S27 library was FITTED for the
+between-band task (ANDIS says it in our own field: native recognition and decoy discrimination
+"cannot be optimized simultaneously with the same parameter sets"). Therefore a null from the
+current library does NOT close the in-band question; it says the library is the wrong instrument,
+which is a weaker and different claim. Lane D states which claim it is making before running, and
+lane L is reading topic 7 (training a within-group ranker; the free-energy class) so the
+follow-up is designed before the result lands.
+NOVELTY, stated because it bears on the report: no published QA evaluation conditions on a
+native-free realism statistic before correlating with accuracy. The field's most careful
+methodological paper (Hamelryck et al.) documents the confound across 139 of 149 decoy sets and
+explicitly declines the matching fix. D's measurement is novel rather than derivative.
+HONEST PRIOR on its value: the record's squared-skill law means a small partial correlation buys
+nearly nothing in Angstroms, so a positive is a MECHANISM result first and a candidate operator
+second.
 
 ## Closed in S29
 - The non-commuting free-energy cell IN THE CANDIDATE-INDEX ENCODING (S29-L15 Q2, derived):
