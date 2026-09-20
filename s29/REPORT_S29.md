@@ -69,6 +69,16 @@ three numbers that did not exist before, all on the charter's own endpoint:
    and an average cannot spend a ranking (§5.4). Any route to 2.5 Å needs *both* a native-free
    vector with a real cosine *and* a terminal operator that can consume one.
 
+**A fourth thing, which reframes the question itself (§7.1).** The charter's target is a *mean*,
+and the mean is a tail statistic here. The **median is already 2.9661 Å** and **50.8% of the
+benchmark is already under 3.0 Å** on the endpoint metric; what holds the mean at 3.2105 is a tail
+reaching 8.24 Å, with p90 at 5.61 Å and a standard deviation (1.73) more than half the mean. So
+"get the mean below 2.5 Å" is not a request to make typical predictions better — **it is a request
+to fix the targets the pipeline fails on**, and the record already shows the shipped pipeline is
+*worse than a blind one* on its 18 hardest targets (5.425 blind vs 6.019 shipped). This does not
+soften any closure below — the bound is a per-target statement and every field was measured on
+every target — but it does say what shape an S30 intervention should have.
+
 And the reason those 7 bits cannot simply be supplied: **the per-target sign is an incidental
 parameter** in the sense of Neyman & Scott (1948) — not estimable from other targets' answers as a
 matter of statistical theory (S29-L31). Recognition was then closed three independent ways
