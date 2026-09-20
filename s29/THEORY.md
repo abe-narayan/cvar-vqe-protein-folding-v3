@@ -5,8 +5,9 @@ written first because the coordinator gates every build on them; then Q1 and Q2 
 two questions of 2026-09-20 00:20, taken ahead of the rest); then 1, 4, 5, 7 in the brief's order.
 **Section 6 (the entropy term) is answered inside Q1 and is not repeated.**
 
-    order in this file:  2  3  Q1  Q2  1  4  5  7  8   (8 = the achievable native-free bound,
-                                                        the coordinator question of 00:35)
+    order in this file:  2  3  Q1  Q2  1  4  5  7  8  9   (8 = the achievable native-free bound,
+                                                        the coordinator question of 00:35;
+                                                        9 = lane P s separation profile, 00:45)
     ledger entries:      S29-L7 (2), S29-L11 (3), S29-L15 (Q1, Q2), S29-L17 (1, 4), and the
                          entry for 5 and 7 posted with this file's final commit.
 
@@ -781,6 +782,10 @@ narrow**. In (1.1) the posterior enters twice, and the two entries behave comple
 > after calibration is a re-weighting effect, and it should be run as a **separation-band
 > re-weighting** (one or two parameters), not as a calibration, or it will be a slow way to
 > discover 1.4.
+>
+> **[WITHDRAWN as a build recommendation, section 9.2: that re-weighting was measured leave-fold-out
+> at +0.010 A in S12 and the fitted shell weights were retired from the shipped code once already.
+> The derivation stands; calibration is CLOSED, not redirected.]**
 
 ### 1.5 Prediction: the sign of `dS/d(scale)` at production (12 targets, minutes)
 
@@ -1248,3 +1253,122 @@ first-order class that is both unmeasured here and precedented at this length. I
 negative, the honest headline of S29 is (8.2) with its table, and the next sprint's question is
 not an architecture at all -- it is whether the distance prior can be improved, which is the only
 lever the record has ever measured with a steep slope.
+
+---
+
+## 9. LANE P's SEPARATION PROFILE: THE MECHANISM, AND MY SECTION 1.4 RECOMMENDATION WITHDRAWN
+
+(The coordinator's question of 2026-09-20 00:4x, on S29-L22.)
+
+### 9.1 The mechanism, in the form the report should use
+
+The identity of section 1.2 is `d_ij(C)^2 = mean_k d_ij(W_k)^2 - s_ij^2`, which compares the
+average to its own MEMBERS. Lane P measured the ratio to the NATIVE, and that ratio is the product
+of two separation profiles:
+
+    d_ij(C)        [ mean_k d_ij(W_k)^2 ]^{1/2}         s_ij^2
+    --------  =    --------------------------  x  sqrt( 1 - ------------------- )                (9.1)
+    d_ij(t)              d_ij(t)                          mean_k d_ij(W_k)^2
+
+       measured ratio  =  POOL BIAS at that separation  x  AVERAGING SHRINK at that separation
+
+The second factor is `<= 1` always and rises toward 1 with separation, because `s_ij^2` is the
+members' superposition residual and does not grow with `|i - j|` while `d_ij^2` does -- that is
+section 1.2's "averaging smooths", now read as a curve rather than at its two ends. The first
+factor is the pool's own length error, which is NOT an averaging effect at all: the pool is
+selected by a posterior that S25 L1 measured as predicting distances systematically **too long,
+increasingly so with separation** (signed error -0.048 A at separation 2-2 growing monotonically
+to -0.589 A at 9-15). So the two factors move in opposite directions with separation, and
+
+> **THE ONE-SENTENCE STATEMENT FOR THE REPORT.** Averaging does not contract the structure: by the
+> exact identity `d(C)^2 = <d_k^2> - s^2` the emitted distance is the members' RMS distance less
+> their own spread, so the distortion is a *separation-dependent shear* -- a large shrink where
+> distances are short and the spread is comparable to them (-23% at the virtual bond), fading to
+> nothing where distances are long -- multiplied by the pool's inherited over-extension at long
+> range, which the fading shrink no longer masks; the ratio therefore crosses 1.0 near
+> `|i - j| = 8` and ends above it, and "the 22% contraction" is the left-hand end of that curve,
+> not a property of the operator.
+
+**A zero-cost check for lane P, and it is an identity so it must pass exactly.** Compute the two
+factors of (9.1) separately on the clouds P already has: the shrink factor
+`d_ij(C)/[mean_k d_ij(W_k)^2]^{1/2}` is NATIVE-FREE and must be `<= 1` at every separation and
+monotonically rising; the pool-bias factor `[mean_k d_ij(W_k)^2]^{1/2}/d_ij(t)` is ORACLE and must
+carry the entire crossing. Their product must reproduce P's measured profile to floating point. If
+the crossing appears in the shrink factor, (9.1) is wrong and section 1.2 with it.
+
+**Why P's ORACLE-fitted profile correction could not help, derived.** A per-separation multiplicative
+profile is a vector in pair space, and pair space has `P` coordinates against a realisable set of
+dimension `3N - 6` (section 2, C2: at `N = 12`, 55 against 30). The only profile direction that is
+exactly realisable is the *uniform* one -- a global scale -- and that lever is closed twice over:
+worth `+0.0002 A` by nested CV and unreachable in principle per target, because `s* = <c,t>/|c|^2`
+depends on `ebar`, the component the pool cannot see (S23 L2, L6, L9). Every differential component
+of the profile is mostly outside the tangent space of the realisable set and is therefore mostly
+annihilated when the corrected map is returned to a structure. P's null is what (9.1) plus C2
+predicts, and it does not generalise to operators that move by *choosing different real windows*,
+which are realisable by construction.
+
+### 9.2 Is objective re-weighting the same operation? No -- and it is closed anyway
+
+**Different operation.** Re-weighting the objective's pairs by separation changes the SCORE of each
+of the 500 windows, hence which 75 are retained, hence the emitted average. The resulting
+displacement is a difference of real windows and is realisable by construction; no post-hoc profile
+edit can imitate it, because the post-hoc edit is confined to the profile subspace of pair space
+and is then mostly projected away (9.1's second paragraph). So the coordinator's "same operation
+seen twice" is **not** the right closure.
+
+**But it is closed by measurement, and the measurement predates this sprint.** S12's alternative-
+objective screen (`s12/obj_FINDINGS.md` section 4) ran exactly this operator on all 126 targets:
+
+    scorer                                    emitted (point cloud)
+    shipped Bayes risk                        3.048
+    1/sd-weighted L1                          3.047
+    **LFO per-shell weighted L1               3.058**   <- separation-band re-weighting, fitted
+                                                            leave-fold-out: +0.010 A, WORSE
+    shell-profile only (deployable)           3.163
+    ORACLE shell-profile only (n-2 numbers)   2.299     <- ORACLE, not an operator
+
+and the mechanism has been tried once already in the project's own history and retired: the fitted
+shell weights `score_weights.json` are "intentionally absent" because "refitting drives two of the
+six parameters to their clip bounds and loses on the benchmark (top-1 2.76 -> 2.91 A) while gaining
+65% on the dev objective" (`core/predict.py:377-383`) -- the canonical shape of optimising the
+objective and losing the structure.
+
+> **I WITHDRAW the build recommendation in section 1.4.** The derivation stands: a posterior
+> calibration can act on the Bayes-risk minimiser through the separation-band weights and through
+> nothing else, because a width error leaves the median map unchanged. The *conclusion* was wrong
+> to call that a live route. The correct closure is: **calibration is CLOSED, not redirected** --
+> its only channel has been fitted leave-fold-out (+0.010 A), fitted and retired once before, and
+> bounded by theorem 2 in any case, since a re-weighted objective is still in class M with
+> `g_alpha -> gamma_alpha g_alpha` and its expected informativeness is
+> `sum gamma w kappa var(a)(1 - beta)` -- a re-weighting of second-order terms, capped by
+> section 8 at the 0.03 A that a random-magnitude cosine buys.
+
+### 9.3 The one thing in that table worth the sprint's attention
+
+`ORACLE shell-profile only (n-2 numbers) = 2.299` against the shipped 3.048. **A scorer that knows
+only the NATIVE's per-separation distance profile -- 11 to 14 numbers, no pair detail -- selects a
+top-75 whose average is 0.75 A better than production**, and S12 measured the complement in the
+same file: the prediction's entire pair-specific detail is worth 0.155 A, so "the shipped distogram
+is, operationally, a predictor of a 12-to-14-number curve".
+
+That is the lowest-dimensional named instance of what would break assumption (B2) of section 8, and
+it is not a new idea but a new *target*: predict the native's separation profile better than the
+posterior does. Three things the record already says about it, which together set the price:
+
+* its leading component is COMPACTNESS, and the in-band axis is compactness at oracle correlation
+  +0.909 with the native's z-scored Rg (S29-L19);
+* the achievable native-free compactness proxies reach 0.24 to 0.37 against that 0.909
+  (`in-band-ordering-is-per-target`);
+* and the deployable version of the same scorer is 3.163, i.e. **worse than production**, so the
+  gap 3.163 -> 2.299 is exactly the value of the native information in those 11 to 14 numbers.
+
+**Cheapest falsifier, for lane M or P, on data they already hold (minutes, no new code path).** Fit,
+leave-fold-out, a predictor of the per-separation profile ratio from native-free features only
+(pool profile, posterior profile, length, predicted secondary-structure content), re-score the 500
+windows with the corrected profile, take the top-75, average and project. Registered prediction,
+from section 8: the leave-fold-out arm lands **inside 0.05 A of production** (the ORACLE profile is
+worth 0.75 A and the achievable skill ratio is 0.24 to 0.37 of an oracle, entering the displacement
+bound at `|rho|(2q-1)` with the sign the hard half); it is a genuine result only if it clears
+0.7x MDE with the fold CI excluding zero AND its cosine clears 0.140 with the shrink signature
+attached. If instead it lands near the ORACLE 0.75 A, section 8's (B2) is falsified and that is the
+sprint's result.
