@@ -628,6 +628,13 @@ the worst of the cluster.** Choosing *m* per target with a trained variational c
 distinguishable from fixing it at 75 and running no circuit at all. Lane B's independent version of
 the same control reports 0.31× MDE.
 
+**And lane D priced its own apparent positive out of existence before reporting it.** The m = 70
+cell looks 0.0075 Å *better* than production. Run through `best_of_k_within`: share-accounted 1.12,
+k_eff 4.67, **split-half transfer −5%**, with the argmin scattered to the sweep's ends (m30 on 50
+targets, m80 on 33). **Not a signal.** That contrast is also cross-code-path, so the projection's
+input-difference floor applies to it and not to the within-job table above — which is why the table
+is the evidence and the sweep is not.
+
 Lane D also priced the ladder itself rather than only its cells: **the whole m-ladder is flat at
 −0.00047 Å per unit of m**, and its best cell is an order statistic that transfers at **−5%**.
 So there is no per-target m worth finding, and the apparent best choice does not generalise — which
