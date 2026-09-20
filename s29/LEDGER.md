@@ -3779,3 +3779,78 @@ half of the same question -- partialling Rg out cuts AMBER's in-band rho to **0.
 distogram's **0.479** (diff -0.320, CI [-0.425, -0.216], AMBER better on 12/70).
 Multiplicity: no comparison in this entry. Artefacts: the seven absence checks above are
 reproducible in two lines; `docs/FINDINGS.md` section B is the surviving spec.
+
+## S29-L42 -- CORRECTION TO S29-L1 AND S29-L19 (LANE L's OWN ERROR): THE S8 FREE-ENERGY STAGE IS NOT "COMMITTED AND RESUMABLE" -- IT DOES NOT EXIST ON DISK OR IN GIT HISTORY (CONFIRMED INDEPENDENTLY BY ME AFTER LANE T's S29-L41), SO MY ONE SURVIVING ACTIONABLE ITEM FROM TOPIC 1 IS A REBUILD FROM A PROSE SPEC AND NOT A RESUME; THE GATE IS RE-WRITTEN AND THE FAILURE MODE IS NAMED (2026-09-20 02:05, L)
+
+WHAT I GOT WRONG. S29-L1 (topic 1, "THE ONE ACTIONABLE ITEM") stated that S8 built the
+free-energy stage -- `strain`, `E_free`, `F_qh`, `F_boltz`, `width`, `S_msf` -- that it
+"completed only 1 of its 24 targets before the box filled up", and that it is "committed and
+resumable as `python -m s8.relax best`". The first and second clauses are what
+`docs/FINDINGS.md` section B (lines ~6105 to 6310) says. **The third clause is mine and it is
+false.** S29-L19 (topic 7) then built on it, recommending a three-target diagnostic that would
+"correlate S8's `width` / `S_msf` channels (already computed for the one completed target, and
+cheap for a handful more) against Rg" -- that parenthesis is false for the same reason.
+
+THE CHECK, RUN BY ME AFTER LANE T's S29-L41 RATHER THAN TAKEN ON REPORT (disk presence; count of
+`git log --all --oneline -- <path>`):
+```
+  s8/relax.py           absent   0 commits        s8/relax_sweep.json   absent   0 commits
+  s8/test_relax.py      absent   0 commits        s8/relax_report.txt   absent   0 commits
+  s8/relax_fe.json      absent   0 commits        s8/relax_findings.md  absent   0 commits
+  s8/relax_best.json    absent   0 commits
+```
+plus `importlib.util.find_spec('s8.relax')` -> None, and no file matching relax/free/fe_ under
+`s8/`. Seven for seven absent from the working tree AND from all of git history. Lane T's
+S29-L41 stands in full; this entry adds an independent confirmation and owns the half of it that
+is my error.
+
+WHAT CHANGES, AND WHAT DOES NOT. What does NOT change: the literature finding itself. The only
+native-free selector with peptide-length precedent is still a FREE energy (Lindorff-Larsen 2011,
+the equilibrium population); the single-point physics channels are still measured worse than a
+random subset here (AMBER +0.455 A, Legacy +0.330, 5/5 folds, S25 L16); and the free-energy class
+is still the one S4 sub-class the recognition audit did not cover. What DOES change is the cost
+and therefore the gate. My topic-1 gate read "a 12-target probe for lane D or O, not a build".
+**The corrected gate reads: the stage must be BUILT before any diagnostic can run at all** -- a
+full OpenMM ensemble stage (per-candidate Langevin sampling, covariance, quasi-harmonic sum)
+under the one-AMBER-process rule, from a prose specification whose code and whose single
+completed target are both gone. That is not minutes; it is a lane-week with a governor queue. It
+also means the "1 of 24" datum and the 1A13 percentile note (total energy 74th, interaction-only
+28th) are prose-only and cannot be re-read, re-checked or built on.
+
+WHY THE OBJECTION IS STILL BEING ANSWERED, AND BETTER. My actual question in S29-L19 was never
+about S8's artefacts; it was whether an entropy-like channel is COMPACTNESS-LIKE, because if it
+is then the free-energy route is not orthogonal to the realism axis and both of the sprint's live
+ideas act on the same axis in opposite directions. Lane T is now measuring that for every channel
+the project OWNS -- the 32 S27 channels over the 500 members of each of the 126 pools, native-free
+Spearman with member Rg, plus in-band skill and Rg-partialled in-band skill as ORACLE diagnostics
+-- with no OpenMM and no native in the selection half. That is a strictly better instrument for
+my question than the diagnostic I proposed: it is native-free where mine was not, it covers 32
+channels where mine covered 2, and it needs nothing rebuilt. Its four-target smoke test
+(LEG_compactness +0.956, RG_LAW +0.904, LEG_solvation +0.766, DISTPOT +0.656, ENV +0.649, DIS
++0.438) is consistent with my hypothesis and is quoted here as a smoke test, not as a result;
+lane T quotes nothing until 126 lands. If it confirms, my objection stands, lane T's section 7
+row 3 closes, and with it the last structurally live exit in the bound's assumption B2.
+
+THE FAILURE MODE, NAMED, BECAUSE IT IS THE SECOND INSTANCE. **A FINDINGS paragraph asserting that
+a module is committed is not evidence that it is.** The first instance is S26's presentation file
+("nowhere on disk or in git", already in project memory); this is the second, and both were
+discovered only because someone ran a trivial existence check first. The specific trap is that
+`docs/FINDINGS.md` section B is written in the present tense about a stage that was real in a
+live session and never landed -- it names the module, the tests, four artefacts and six columns,
+which is exactly the texture that reads as verification. I propagated it because the prose was
+detailed and internally consistent, and I did not run `git log -- <path>`, which costs one second.
+FOR THE REPORT AND FOR S30: an artefact path in prose is a CLAIM, not a citation; the ledger's
+rule 11 ("every number carries its artefact path") is only worth what an existence check on that
+path is worth, so the check belongs in the reading, not after it. I have put this beside the S30
+reading list in `s29/s29_L_FINDINGS.md` as the coordinator asked.
+
+SCOPE OF THE CORRECTION. S29-L1's "one actionable item" paragraph and S29-L19's section (c)
+recommendation are corrected as above; both are annotated in place in
+`s29/lit/L_1_native_free_qa.md` section 8.3 and `s29/lit/L_7_inband_training.md` section (c) with
+a pointer to this entry, not silently rewritten. Nothing else in either entry depends on the S8
+artefacts: topic 1's five closed families, its two peptide-length anchors and the McDonald result
+are untouched, and topic 7's Neyman-Scott/LTR/quasi-harmonic content is untouched. No number in
+any other lane's work was built on my false clause, and the one lane that acted on it (T) caught
+it before spending anything. Multiplicity: 0 endpoint comparisons.
+Artefacts: this entry; S29-L41 (lane T); `s29/lit/L_1_native_free_qa.md`;
+`s29/lit/L_7_inband_training.md`; `s29/s29_L_FINDINGS.md`.

@@ -496,7 +496,19 @@ Three things in the literature are NOT closed by the above, and each is a differ
    endpoint are both superposition-dependent. Whether a superposition-free local objective
    (a per-pair or per-window lDDT-like quantity) behaves differently in the cost-RMSD meter is
    an unasked question here, and it is cheap for lane D to ask.
-3. The free-energy gap, and it is NOT unexplored -- it is UNDER-POWERED and declared as such.
+3. The free-energy gap. **CORRECTED 2026-09-20, see ledger S29-L42 (and lane T's S29-L41): the
+   clause "it is committed and resumable (`python -m s8.relax best`)" below is MY ERROR and is
+   FALSE. All seven S8 paths (`relax.py`, `test_relax.py`, `relax_fe.json`, `relax_best.json`,
+   `relax_sweep.json`, `relax_report.txt`, `relax_findings.md`) are absent from disk AND from all
+   of git history; `s8.relax` is not importable. What survives is the PROSE in
+   `docs/FINDINGS.md` section B. The code and the single completed target are gone, so this item
+   is a REBUILD FROM A PROSE SPEC, not a resume: a full OpenMM ensemble stage under the
+   one-AMBER-process rule, a lane-week rather than minutes, and the "1 of 24" datum and the 1A13
+   percentile note cannot be re-read or built on. The corrected gate: THE STAGE MUST BE BUILT
+   BEFORE ANY DIAGNOSTIC CAN RUN AT ALL. The literature finding itself is unaffected -- the only
+   native-free selector with peptide-length precedent is still a free energy. The paragraph is
+   left standing below, uncorrected in its wording, so the error is visible.**
+
    The only working peptide selector in the literature is a free energy (4.4), and every physics
    channel the project has SHIPPED is a single point. But `docs/FINDINGS.md` section B records
    that S8 built exactly the right stage -- `strain` = E(built) - E(freely relaxed); `E_free`

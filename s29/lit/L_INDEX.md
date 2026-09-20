@@ -29,6 +29,13 @@ leave-fold-out, built chain as the reporting basis, CPU only, 16 GB.
 
 Topic 1 running count: 15 entries, 4 KEPT (all as evidence or anchors; none importable as an
 operator), 11 REJECTED across 5 families.
+**CORRECTION (ledger S29-L42, after lane T's S29-L41):** topic 1's "one actionable item" -- the
+S8 free-energy stage -- was reported by me as "committed and resumable". That is FALSE: all seven
+S8 paths are absent from disk AND from git history, and only prose in `docs/FINDINGS.md` section B
+survives. The item is a REBUILD from a prose spec (a full OpenMM ensemble stage under the
+one-AMBER-process rule), not a resume, and the stage must be BUILT before any diagnostic can run.
+The literature finding is unaffected: the only native-free selector with peptide-length precedent
+is still a free energy.
 
 ## Topic 2 -- correlated error in ensembles (`L_2_correlated_error.md`, ledger S29-L8)
 

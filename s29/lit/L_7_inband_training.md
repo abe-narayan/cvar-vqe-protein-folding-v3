@@ -175,11 +175,24 @@ Legacy (a compactness model, top-75 Rg -0.758 A), RG_LAW, RG_UNIV, EXVOL and CAG
 If that is right, the free-energy class is not orthogonal to the realism axis at all -- it is
 another reading of it, and both of the coordinator's live ideas (the matched-realism band and the
 free-energy stage) would be acting on the SAME axis, in opposite directions. This is a
-hypothesis, not a measurement, and it is cheap to test before spending the AMBER budget:
-correlate S8's `width` / `S_msf` channels (already computed for the one completed target, and
-cheap for a handful more) against Rg and against the existing compactness channels. If the
-correlation is high, the free-energy route is not the orthogonal information source L_1 hoped
-for, and the queued experiment should be re-scoped before it runs.
+hypothesis, not a measurement, and it is cheap to test before spending the AMBER budget.
+
+**CORRECTED 2026-09-20, see ledger S29-L42 (and lane T's S29-L41).** My original recommendation
+here was to "correlate S8's `width` / `S_msf` channels (already computed for the one completed
+target, and cheap for a handful more) against Rg and against the existing compactness channels".
+The parenthesis is FALSE: the S8 free-energy stage does not exist on disk or in git history, so
+there are no `width` or `S_msf` values to correlate. The diagnostic as I specified it cannot be
+run without first rebuilding the stage from a prose spec.
+
+The QUESTION survives intact and is being answered better. What I actually wanted to know is
+whether an entropy-like channel is compactness-like. Lane T is measuring that on the channels the
+project OWNS: the 32 S27 channels over the 500 members of each of the 126 pools, native-free
+Spearman with member Rg, plus in-band skill and Rg-partialled in-band skill as ORACLE
+diagnostics -- native-free where my version was not, 32 channels where mine had 2, and nothing to
+rebuild. Its four-target smoke test (LEG_compactness +0.956, RG_LAW +0.904, LEG_solvation +0.766,
+DISTPOT +0.656, ENV +0.649, DIS +0.438) is consistent with the hypothesis; quoted as a smoke
+test, not a result. If the correlation is high, the free-energy route is not the orthogonal
+information source L_1 hoped for, and the queued experiment should be re-scoped before it runs.
 
 ### The caveat the coordinator asked me to restate, restated
 
