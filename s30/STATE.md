@@ -337,6 +337,62 @@ quoted the **verdict string**. A verdict string is a claim about a computation a
 what reading the computation is worth.
 
 
+## NOTE 11 (2026-09-20 13:28, lane R, S30-L19): **L11 IS ANSWERED. NATIVENESS IS NOT RECOGNISABLE FROM SINGLE-STRUCTURE GEOMETRY** — AND THE NULL IS A THEOREM, NOT A MISS
+
+The question I judged to sit underneath the sprint, answered on an instrument built to remove the
+confound that invalidated the project's previous attempt. **F-R1 does not fire at n = 126.**
+
+**The instrument.** Every rung is an ideal-geometry backbone built from (phi, psi) — identical bond
+lengths and angles at every rung, no projection, no coordinate average, no contraction. Perturbed
+residues draw torsions from the fold's **leakage-safe** Ramachandran table. Two ladders: anchored
+on the native's own torsions, and on a random real pool member. **Kind, local realism and
+perturbation budget are all matched; only nativeness varies.** Floor is the torsion rebuild at
+**0.347 A**, not 0, and it travels with every sentence.
+
+**The split verdict, which is more informative than a flat null.**
+
+- **ORDERING survives.** DIS reaches **+0.347**, **+0.134 above its own anchor control**,
+  p_max 0.000. Channels can order structures by nativeness at fixed budget.
+- **PREFERENCE does not, on ANY of 43 channels.** And the leave-fold-out combination exposes why in
+  one line: it prefers a **0.55 A structure to production on 93.0% of targets** — and prefers a
+  **random pool member on 100%** and a **3 A rung on 100%**. Its margin over the controls is
+  **−0.070 [−0.110, −0.028]**. It is not detecting nativeness; it is detecting *not-production*.
+- **LEG_torsion is at chance.** S29 section 12.0's last outside-class-M hope, the one channel the
+  compactness measurement left standing, does not survive a matched-kind ladder.
+
+**AND THE MECHANISM, WHICH IS THE PART THAT MAKES THIS DURABLE.** The derivation I asked lane R to
+make explicit came back measured: the RMSD signal is **absent from local features (delta-R^2
+−0.089) and abundant in global ones (+0.600)**.
+
+> **So the null for every per-residue channel is a THEOREM on this instrument, not an empirical
+> miss.** A structure can be locally perfect everywhere and globally wrong; matched local
+> statistics make local channels blind by construction, and the measurement confirms it.
+
+**Lane R discounts its own result correctly**: its registered prior was "F-R1 does not fire, about
+4 to 1", so the null confirms its own expectation and it said so rather than presenting a
+confirmation as a discovery.
+
+### WHAT THIS CLOSES
+
+The charter said a negative here "would be one of the most important results the project could
+produce", and it is the one that composes with everything else closed today. If nativeness cannot
+be *preferred* from a single structure's geometry, then no Hamiltonian, no encoding, no ansatz and
+no amount of search can be pointed at it — the objective would be optimising toward a target it
+cannot see. Combined with:
+
+- the field library spending **58% of its two directions on a radial component that is
+  anti-aligned with the answer on hard targets** (D, confirming L's derivation),
+- the combination of all 21 fields reaching **rho = 0.169 with the native in hand**,
+- **ordering** skill existing while **preference** does not,
+
+the picture is consistent: **there is orderable signal and it cannot be converted into a
+preference, and the preference is what a cost function needs.**
+
+**What is still open is exactly one thing:** lane P's out-of-fold `R^2(e ~ S)`. Lane R's D1 says the
+answer must live in **global** features if it lives anywhere, which is a constraint lane P should
+have — and lane P's basis is already built from the pool's principal directions, which are global by
+construction.
+
 ## NOTE 10 (2026-09-20 13:28, lane D closing): A CLAIM I REPORTED IS WITHDRAWN, LANE L's DERIVATION IS CONFIRMED HARDER THAN IT ASKED, AND THE METER WAS BLIND ON THE REPORTING BASIS
 
 ### (a) I reported "the median target is worse than chance" and it is wrong
