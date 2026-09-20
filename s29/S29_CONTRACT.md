@@ -150,3 +150,24 @@ path. 12. Ties never break by array order.
     three cases above), the entry's own heading and artefact list decide, and the discrepancy is
     recorded in a provenance note rather than corrected by rewriting history. The final report
     traces numbers to LEDGER ENTRIES and artefact paths, with commits as corroboration.
+
+## Addendum 5 (2026-09-20 01:36, coordinator; rule 20 corrected by measurement, S29-L37)
+30. RULE 20's JUSTIFICATION IS WITHDRAWN; THE RULE STANDS ON A DIFFERENT AND MEASURED FOOTING.
+    I adopted rule 20 on the claim that "a positive gradient cosine is purchasable with zero
+    information by shrinking the objective's target map toward typicality". Lane D measured the
+    registered nine-point shrink grid on 126 targets and ON THIS INSTRUMENT IT IS NOT: the
+    cosine does not rise, it falls to a minimum at s = 0.6 and returns, staying inside
+    [-0.056, -0.033] across the whole grid and never approaching zero. That failure and the
+    veto of corollary 2b (S29-L26) are the same failure, because the shrink prediction rested
+    on the sign law.
+    WHAT IS CONFIRMED, cleanly and monotonically, is the other half: shrinking the target map
+    toward typicality DEGRADES the native's percentile in its own pool, 0.3688 to 0.4910 over
+    the grid, 9 of 9 steps in the predicted direction. And the trade is real and measured: over
+    the SAME grid the near-native ladder correlation IMPROVES from -0.186 to -0.054 and the
+    preference for the ORACLE structure nearly doubles from 0.198 to 0.373, while recognition
+    gets worse. A single-number gate would have been gamed here; four numbers caught it.
+    THE RULE THEREFORE KEEPS ITS FORCE AND CHANGES ITS REASON: no single meter number is
+    sufficient, and the native percentile is the axis a shrink degrades. Every cosine gain
+    still ships with the shrink signature, the percentile, and the emitted bond and Rg -- the
+    meter prints all of them automatically, so the guard costs nothing. Do not quote "the
+    cosine is gameable by shrinking" anywhere; it is not supported on this instrument.
