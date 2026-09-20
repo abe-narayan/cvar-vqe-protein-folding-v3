@@ -619,6 +619,19 @@ def cmd_analyse(rows_paths=None, out=None):
                    label="P BOND-LAMFIX - BOND (the effective-lambda leg of the 2x2)")
     C["LAMFIX|BOND"] = o
     say(ST.fmt(o)); say("")
+    #: THE BRANCH-FLIP REFERENCE. FLOOR is a pure lottery draw: the same cloud perturbed at
+    #: 1e-13 relative, i.e. ZERO geometric change, re-projected. If FLOOR - PROD is not itself
+    #: zero, the multi-start's branch choice is biased and every arm's effect must be read
+    #: against FLOOR rather than against nothing.
+    if "FLOOR" in arm_names:
+        for nm in ("BOND", "SPAN", "ISO", "CTRL-GLOBAL", "CTRL-INV"):
+            if nm not in arm_names:
+                continue
+            o = ST.compare(col(nm), col("FLOOR"), folds=folds, names=pdbs,
+                           label="P %s - FLOOR (against a zero-geometry branch redraw, not "
+                                 "against production's particular branch)" % nm)
+            C[nm + "|FLOOR"] = o
+            say(ST.fmt(o)); say("")
 
     # ---- multiplicity
     #: CTRL-INV (1/g) is native-free, hence DEPLOYABLE, so it enters the multiplicity set
