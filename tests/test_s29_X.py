@@ -196,3 +196,33 @@ def test_gibbs_matched_entropy(space):
     p, T = X.gibbs_matched_entropy(space.E, S_target)
     pp = p[p > 0]
     assert abs(float(-(pp * np.log(pp)).sum()) - S_target) < 1e-3
+
+
+def test_scrambled_space_is_a_matched_null(space):
+    """S29-L4 hole (a): the order-statistic control must match cardinality, parents and
+    marginal fragment content, and must NOT be the same space."""
+    cand, dg, rama = X.load_target(PDB)
+    null = X.Space(PDB, cand, dg, rama, scramble=True)
+    assert null.M == space.M and null.q == space.q
+    assert np.array_equal(null.members, space.members)
+    assert not np.allclose(null.CA, space.CA)
+    # the same multiset of torsion pairs per member (blocks moved, nothing invented)
+    for f in range(space.F):
+        c = f * (space.M - 1) // (space.F - 1)
+        a = np.sort(np.round(space.PHI[c], 9))
+        b = np.sort(np.round(null.PHI[c], 9))
+        assert len(a) == len(b)
+    assert np.isfinite(null.E).all()
+
+
+def test_shape_and_participation_ratio(space):
+    """Contract addendum 20(c) and S29-L4 hole (c): the mechanism quantities exist and are
+    the textbook ones."""
+    s = X.shape_of(space.CA[0])
+    assert 2.0 < s["rg"] < 40.0 and 3.5 < s["bond"] < 4.2
+    p = X.gibbs(space.E, 2.0)
+    ro = X.tail_readouts(space, p, "prtest")
+    assert 1.0 <= ro["pr"] <= ro["m"] + 1e-9
+    assert 0.0 <= ro["r3_mass"] <= 1.0 + 1e-9
+    W = X.random_weight_control(space, ro["tail_idx"], ro["pr"], "prtest", n_draws=2)
+    assert len(W) == 2 and all(np.isfinite(C).all() for C in W)

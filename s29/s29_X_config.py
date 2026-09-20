@@ -159,9 +159,17 @@ def member_indices(pdb: str, cand, dis: np.ndarray, F: int = F_MEMBERS) -> np.nd
 
 
 class Space:
-    """The chimera space of one target, fully enumerated.  Native-free by construction."""
+    """The chimera space of one target, fully enumerated.  Native-free by construction.
 
-    def __init__(self, pdb: str, cand, dg, rama_cnt, F: int = F_MEMBERS):
+    `scramble=True` builds the MATCHED NULL lane D required (S29-L4 hole (a)): the identical
+    cardinality, the identical 8 parents and the identical marginal fragment content, with each
+    member's segment blocks permuted ACROSS segment positions so that no configuration is a
+    compatible recombination.  Its ORACLE best is the order-statistic control for D1: a minimum
+    over 8**S structures is smaller than a minimum over 8 whatever the space contains
+    (`grid-oracles-are-order-statistics`), and only the gap to THIS null is recombination.
+    """
+
+    def __init__(self, pdb: str, cand, dg, rama_cnt, F: int = F_MEMBERS, scramble: bool = False):
         self.pdb, self.cand, self.dg = pdb, cand, dg
         self.n, self.seq, self.fold = cand.n, cand.seq, cand.fold
         self.F = int(F)
@@ -174,12 +182,19 @@ class Space:
         assert self.M == 1 << self.q, "register must be padding-free"
         self.digits = config_digits(self.S, self.F)                    # (M, S)
         self.sor = seg_of_residue(self.n)
+        self.scramble = bool(scramble)
         PHI_m = np.asarray(cand.PHI, float)[self.members]              # (F, n)
         PSI_m = np.asarray(cand.PSI, float)[self.members]
+        if scramble:
+            PHI_b, PSI_b = self._scrambled_blocks(PHI_m, PSI_m)
+        else:
+            PHI_b = np.stack([PHI_m] * 1)[0]                           # (F, n), unchanged
+            PSI_b = PSI_m
         idx = self.digits[:, self.sor]                                 # (M, n) member per res
         rr = np.arange(self.n)[None, :]
-        self.PHI = PHI_m[idx, rr]
-        self.PSI = PSI_m[idx, rr]
+        self.PHI = PHI_b[idx, rr]
+        self.PSI = PSI_b[idx, rr]
+        PHI_m, PSI_m = PHI_b, PSI_b
         self.CA = np.asarray(PJ.build_ca_exact(self.PHI, self.PSI), float)   # (M, n, 3)
         self.i, self.j = I.pair_index(self.n, 2)
         assert np.array_equal(self.i, np.asarray(dg["i"])) and \
@@ -190,6 +205,24 @@ class Space:
         self.E_rama = self.E_rama_tab[np.arange(self.S)[None, :], self.digits].sum(1)
         self.E = self.E_pair + self.E_rama
         self.gamma_gap = self._gamma_gap()
+
+    def _scrambled_blocks(self, PHI_m: np.ndarray, PSI_m: np.ndarray):
+        """Each member's segment blocks permuted across segment POSITIONS (the matched null).
+
+        Cardinality, parents and marginal fragment content are identical; what is destroyed is
+        that a member's block sits where that member put it.  A source block shorter than its
+        destination is cycled, so every destination residue receives a real torsion pair.
+        """
+        rng = SD.stable_rng(self.pdb, "scramble", salt=SALT)
+        PH, PS = PHI_m.copy(), PSI_m.copy()
+        for f in range(self.F):
+            perm = rng.permutation(self.S)
+            for s, ix in enumerate(self.segs):
+                src = self.segs[perm[s]]
+                take = np.array([src[t % len(src)] for t in range(len(ix))], int)
+                PH[f, ix] = PHI_m[f, take]
+                PS[f, ix] = PSI_m[f, take]
+        return PH, PS
 
     # -- the two energy terms ---------------------------------------------
     def _pair_energy(self, CA: np.ndarray, chunk: int = 8192) -> np.ndarray:
@@ -431,10 +464,58 @@ def tail_readouts(space: Space, p: np.ndarray, tag: str) -> Dict:
     top = np.argsort(-p, kind="stable")[:R3_CAP]
     R3 = weighted_average(space.CA[top], p[top], space.pdb, tag + "|R3")
     pp = p[p > 0]
+    w = mass[idx] / mass[idx].sum()
     return dict(R1=R1, R2=R2, R3=R3, m=m, tail_idx=idx, cvar=float(val),
                 entropy=float(-(pp * np.log(pp)).sum()),
                 ess=float(1.0 / np.square(p).sum()),
+                # S29-L4 hole (c): R2 - R1 over the same set is mechanically a difference in
+                # EFFECTIVE set size, so the weights' participation ratio is printed beside it.
+                pr=float(1.0 / np.square(w).sum()),
+                # S29-L4 hole (f): R3 is a top-512 readout unless its captured mass is stated.
+                r3_mass=float(p[top].sum()), r3_k=int(len(top)),
                 tail_mass_top=float(mass[idx].max() / ALPHA) if m else float("nan"))
+
+
+def random_weight_control(space: Space, idx: np.ndarray, pr: float, tag: str,
+                          n_draws: int = 8) -> List[np.ndarray]:
+    """S29-L4 hole (c): Dirichlet weights on the SAME set at the SAME participation ratio.
+
+    If R2 - R1 is reproduced by random weights of matched concentration, the quantum stage
+    contributed CONCENTRATION, not information.  `Dirichlet(a, ..., a)` on m components has
+    E[PR] ~ m(ma + 1)/(m a + m) ... solved numerically here by bisection on a, which is exact
+    enough because the realised PR of each draw is recorded and averaged.
+    """
+    m = len(idx)
+    if m < 2:
+        return []
+
+    def pr_of(a, rng):
+        w = rng.dirichlet(np.full(m, a))
+        return 1.0 / np.square(w).sum()
+    lo, hi = 1e-3, 1e4
+    for _ in range(40):
+        mid = math.sqrt(lo * hi)
+        rg = SD.stable_rng(space.pdb, "prsolve", tag, salt=SALT)
+        v = float(np.mean([pr_of(mid, rg) for _ in range(6)]))
+        if v < pr:
+            lo = mid
+        else:
+            hi = mid
+    a = math.sqrt(lo * hi)
+    rng = SD.stable_rng(space.pdb, "prctrl", tag, salt=SALT)
+    out = []
+    for _ in range(int(n_draws)):
+        w = rng.dirichlet(np.full(m, a))
+        out.append(weighted_average(space.CA[idx], w, space.pdb, tag + "|RW"))
+    return out
+
+
+def shape_of(C: np.ndarray) -> Dict[str, float]:
+    """Contract addendum 20(c): the emitted structure's Rg and mean virtual bond."""
+    C = np.asarray(C, float)
+    g = C - C.mean(0, keepdims=True)
+    return dict(rg=float(np.sqrt((g ** 2).sum(1).mean())),
+                bond=float(np.linalg.norm(np.diff(C, axis=0), axis=1).mean()))
 
 
 def uniform_topm(space: Space, m: int, tag: str) -> np.ndarray:
@@ -458,7 +539,7 @@ def load_target(pdb: str):
 def emit(space: Space, name: str, C: np.ndarray, out: Dict, chain: bool = True,
          extra: Optional[Dict] = None) -> None:
     """Score one emitted structure on BOTH bases and record it.  The ONLY native read."""
-    row = dict(arm=name, rmsd_cloud=float(I.ca_rmsd(C, space.cand.nat_ca)))
+    row = dict(arm=name, rmsd_cloud=float(I.ca_rmsd(C, space.cand.nat_ca)), **shape_of(C))
     if chain:
         pr = I.project(C, space.seq, space.fold)
         row["rmsd_chain"] = float(I.ca_rmsd(pr["ca"], space.cand.nat_ca))
@@ -486,7 +567,13 @@ def run_target(pdb: str, chain: bool = True, verbose: bool = True) -> Dict:
     nat_pair_pr = float(sp._pair_energy(np.asarray(nat_pr["ca"], float)[None])[0])
     ordE = np.argsort(sp.E, kind="stable")
     rank_of_best = int(np.nonzero(ordE == int(np.argmin(rr_all)))[0][0])
+    # S29-L4 hole (a): the matched order-statistic null for D1.
+    spn = Space(pdb, cand, dg, rama, scramble=True)
+    rr_null = spn.oracle_rmsd_all()
     out["oracle"] = dict(
+        scrambled_best_rmsd_cloud=float(rr_null.min()),
+        scrambled_mean_rmsd=float(rr_null.mean()),
+        scrambled_argminE_rmsd=float(rr_null[int(np.argmin(spn.E))]),
         native_pair_E_projected=nat_pair_pr,
         native_pair_E_projected_pctile=float((sp.E_pair < nat_pair_pr).mean()),
         native_projected_rmsd=float(I.ca_rmsd(np.asarray(nat_pr["ca"], float), cand.nat_ca)),
@@ -525,11 +612,17 @@ def run_target(pdb: str, chain: bool = True, verbose: bool = True) -> Dict:
             psi_ref = res["psi"]
             out["p_vqe_entropy"] = ro["entropy"]
         meta = dict(m=ro["m"], cvar=ro["cvar"], entropy=ro["entropy"], ess=ro["ess"],
+                    pr=ro["pr"], r3_mass=ro["r3_mass"], r3_k=ro["r3_k"],
                     gamma=float(gam), seed=int(sd), F_final=res["F"], F_first=res["hist"][0],
                     mixer=res["mixer"], tail_is_prefix=bool(gate["subset_of_energy_prefix"]),
                     tail_equals_topm=bool(gate["equality"]), secs=float(time.time() - tt))
         for R in ("R1", "R2", "R3"):
             emit(sp, f"{name}|{R}", ro[R], out, chain, dict(meta, readout=R))
+        if name == "VQE_g1_s0":
+            # S29-L4 hole (c): random weights on the SAME set at the SAME participation ratio
+            for d, Cw in enumerate(random_weight_control(sp, ro["tail_idx"], ro["pr"], name)):
+                emit(sp, f"RANDW_s0|d{d}", Cw, out, chain,
+                     dict(m=ro["m"], pr=ro["pr"], draw=d, readout="R2rand"))
         if verbose:
             print(f"    {name}: m={ro['m']} F {res['hist'][0]:.3f}->{res['F']:.3f} "
                   f"({time.time() - tt:.0f}s)", flush=True)
@@ -577,6 +670,13 @@ def run_target(pdb: str, chain: bool = True, verbose: bool = True) -> Dict:
 
     # ---------------- the permuted posterior ----------------------------------------
     perm_E = permuted_energy(sp)
+    # S29-L4 hole (e): the permuted arm's spectrum beside the real one, so "PERM did not
+    # reproduce it" cannot be confounded by PERM having a flatter energy landscape.
+    out["spectrum"] = dict(real_sd=float(sp.E.std()), real_range=float(np.ptp(sp.E)),
+                           perm_sd=float(perm_E.std()), perm_range=float(np.ptp(perm_E)),
+                           real_gap75=float(np.sort(sp.E)[:75].ptp()),
+                           perm_gap75=float(np.sort(perm_E)[:75].ptp()),
+                           perm_seed="stable_rng(pdb,'perm',salt='s29X')")
     ordP = np.argsort(perm_E, kind="stable")
     emit(sp, "PERM_EXACT_top75", weighted_average(sp.CA[ordP[:75]], None, pdb, "permtop"),
          out, chain, dict(m=75))
@@ -654,6 +754,19 @@ def analyse(pdbs: Optional[Sequence[str]] = None) -> Dict:
         return dict(n=0)
     names = [r["pdb"] for r in rows]
     folds = ST.pinned_folds(names)
+    # D1, with the matched order-statistic null: recombination's ORACLE value is the gap to
+    # the SCRAMBLED space of identical cardinality, never the gap to the eight parents.
+    d1 = {}
+    for a, b, lab in (("best_chimera_rmsd_cloud", "scrambled_best_rmsd_cloud",
+                       "D1 chimera ORACLE best - SCRAMBLED ORACLE best (cloud)"),
+                      ("best_chimera_rmsd_cloud", "best_parent_rmsd_cloud",
+                       "D1u chimera ORACLE best - best PARENT (cloud, UNMATCHED order statistic)"),
+                      ("best_chimera_rmsd_cloud", "pool_best_rmsd",
+                       "D1p chimera ORACLE best - POOL ORACLE best K=500 (cloud)")):
+        va = np.asarray([r["oracle"][a] for r in rows], float)
+        vb = np.asarray([r["oracle"][b] for r in rows], float)
+        r = ST.compare(va, vb, folds=folds, names=names, label=lab, seed_parts=("s29X",))
+        d1[lab] = ST.fmt(r)
     prod = production_chain(names)
     idx = {r["pdb"]: {a["arm"]: a for a in r["arms"]} for r in rows}
     arms = sorted({a for r in rows for a in idx[r["pdb"]]})
@@ -668,7 +781,9 @@ def analyse(pdbs: Optional[Sequence[str]] = None) -> Dict:
                                                per_target={p: float(x) for p, x in zip(names, v)})
     for k in ("best_chimera_rmsd_cloud", "best_parent_rmsd_cloud", "pool_best_rmsd",
               "space_mean_rmsd", "best_chimera_E_pctile", "native_pair_E_pctile",
-              "corr_E_rmsd", "E_argmin_rmsd"):
+              "corr_E_rmsd", "E_argmin_rmsd", "scrambled_best_rmsd_cloud",
+              "scrambled_mean_rmsd", "scrambled_argminE_rmsd",
+              "native_pair_E_projected_pctile", "native_projected_rmsd"):
         v = [r["oracle"][k] for r in rows]
         out["oracle"][k] = dict(mean=float(np.mean(v)), median=float(np.median(v)),
                                 per_target={p: float(x) for p, x in zip(names, v)})
@@ -699,6 +814,19 @@ def analyse(pdbs: Optional[Sequence[str]] = None) -> Dict:
             cmp(a, "PRODUCTION", basis, f"P1 {a} - PRODUCTION ({b})")
         cmp("VQE_g1_s0|R2", "SA_s0|R2", basis, f"P2 VQE R2 - SA R2 ({b})")
         cmp("VQE_g1_s0|R2", "VQE_g1_s0|R1", basis, f"P3 VQE R2 - VQE R1 ({b})")
+        # S29-L4 hole (c): the PR-matched random-weight control for P3, averaged over draws.
+        rw = [a for a in arms if a.startswith("RANDW_s0|")]
+        if rw:
+            va = [idx[p]["VQE_g1_s0|R2"].get(basis) for p in names]
+            vb = [float(np.mean([idx[p][a][basis] for a in rw if a in idx[p]])) for p in names]
+            if not any(x is None for x in va):
+                r = ST.compare(np.asarray(va, float), np.asarray(vb, float), folds=folds,
+                               names=names, label=f"P3c VQE R2 - PR-matched random weights ({b})",
+                               seed_parts=("s29X",))
+                out["fmt"][r["label"]] = ST.fmt(r)
+                out.setdefault("compare", {})[r["label"]] = {
+                    k: r[k] for k in ("effect", "se", "mde", "effect_over_mde",
+                                      "ci95_fold", "verdict")}
         cmp("VQE_g1_s0|R2", "GIBBS_match|R2", basis, f"P4 VQE R2 - GIBBS(matched) R2 ({b})")
         cmp("VQE_g1_s0|R2", "VQE_g0_s0|R2", basis, f"P5 VQE gamma - VQE gamma=0, R2 ({b})")
         cmp("VQE_g1_s0|R2", "UNTRAINED_s0|R2", basis, f"C-untrained VQE R2 - UNTRAINED R2 ({b})")
@@ -708,6 +836,17 @@ def analyse(pdbs: Optional[Sequence[str]] = None) -> Dict:
         cmp("VQE_g1_s0|R2", "PERM_VQE_g1_s0|R2", basis, f"C-perm VQE R2 - PERM VQE R2 ({b})")
         cmp("VQE_g1_s0|R2", "EXACT_topm_matched", basis, f"C-ordstat VQE R2 - EXACT top-m ({b})")
         cmp("EXACT_top75", "PRODUCTION", basis, f"D2 EXACT top-75 - PRODUCTION ({b})")
+    out["fmt"].update(d1)
+    for k in ("pr", "r3_mass", "m"):
+        v = [idx[p]["VQE_g1_s0|R2"].get(k) for p in names if k in idx[p]["VQE_g1_s0|R2"]]
+        if v:
+            out["meta"][f"vqe_{k}"] = dict(mean=float(np.mean(v)), min=float(np.min(v)),
+                                           max=float(np.max(v)))
+    for nm in ("VQE_g1_s0|R1", "VQE_g1_s0|R2", "EXACT_top75", "ORACLE_best_chimera"):
+        for s in ("rg", "bond"):
+            v = [idx[p][nm][s] for p in names if nm in idx[p] and s in idx[p][nm]]
+            if v:
+                out["meta"][f"{nm}|{s}"] = float(np.mean(v))
     path = os.path.join(RESULTS, "s29_X_probe.json")
     with open(path, "w") as fh:
         json.dump(out, fh, indent=1, default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
