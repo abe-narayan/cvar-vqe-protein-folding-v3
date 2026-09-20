@@ -665,6 +665,48 @@ ranking work came back flat. NOT a route: argmin is the operator that punishes a
 (S12/S19), and m* = 75 is correct FOR an objective of the shipped quality. See S29-L44 addendum 2.
 This is the third lane correction of the coordinator this sprint, and the second in one hour.
 
+## Integration note 28 (2026-09-20 02:40, lane T's compactness measurement at n = 40): MY STANDING EXPECTATION WAS WRONG AND **B2's LAST EXIT STAYS OPEN**
+I told lane L, in writing, that "if the channels we own are as compactness-loaded as that suggests,
+your objection is confirmed, lane T's section 7 row 3 closes, and with it the last structurally
+live exit in the bound's assumption B2." **The measurement says the opposite, and the route stays
+open.** Recording it immediately, because it is the one result this sprint has produced that makes
+the sprint's own conclusion LESS complete rather than more.
+
+WHAT IS TRUE: the channels ARE heavily compactness-loaded in absolute terms. Native-free Spearman
+with member Rg, 32 S27 channels x 500 members x 40 pools, every fold CI excluding zero:
+LEG_compactness 0.957, RG_LAW 0.928, POOLGO 0.667, LEG_solvation 0.601, LEG 0.583, DSSPHB 0.583,
+LEG_contact -0.549, LEG_hbond_local 0.538, DMAP_CONS 0.526, TORS_CONS 0.513, CAGEO 0.460, DIS 0.429.
+That part of my expectation was right, and it is what the 4-target smoke test showed.
+
+WHAT DOES NOT FOLLOW, AND THIS IS THE POINT: **compactness loading does not track in-band skill.**
+Lane T's pre-registered F1 (PREREG_S29_T section 3) asked exactly the right question and does NOT
+fire on either clause:
+    Spearman(|rho_Rg|, |rho_inband|) = 0.36   against a registered bar of 0.40   -> does not fire
+    median share of skill removed, top 8      = 0.041 against a bar of 0.40      -> does not fire
+Partialling Rg out of the eight most skilled channels removes **4%** of their skill. The top 8 by
+in-band skill are DSSPHB, TORS_CONS, DMAP_CONS, LEG_hbond_local, LEG, RAMA, LEG_torsion, POOLGO --
+i.e. hydrogen bonding, torsion consensus and distance-map consensus, not size.
+And F2 FIRES: CONTACT_LL and RG_UNIV carry in-band skill while not being compactness measures;
+after lane T's own repair, CONTACT_LL survives. **Verdict as registered: the objection FAILS, row 3
+STAYS OPEN.**
+
+LANE T's REPAIR IS THE RIGHT KIND. F2 as written used |rho(X,Rg)| <= 0.30 to mean "not a compactness
+measure", but RG_UNIV and RG_LAW are pure functions of Rg by construction and V-shaped in it, so the
+repaired clause partials out rank(Rg) AND rank(|Rg - median Rg|). Lane T states that the repair can
+only REMOVE hits -- i.e. it favours MY prior, not lane T's -- and that it was made on the
+construction argument (`s27/ham_lib.py:20-22`), not on its effect. A repair that is argued from
+construction and that handicaps its author is the only kind that should be accepted after the fact.
+
+CONSEQUENCE FOR THE REPORT: section 12's "what remains unresolved" gains a real entry and section 13
+gains a candidate. There exists at least one channel with in-band ordering skill that is NOT
+explained by compactness -- which is precisely the class B2 needs to be empty for the bound to be
+airtight over ALL native-free operators. The bound's MEASURED half is untouched (21 fields, none
+beats 0.1398), but the claim that no such channel could exist is not established, and I should stop
+saying the exits are all closed.
+NOTE ON n: this is 40 targets, not 126. At n = 40 the fold CIs are real but the F1 Spearman (0.36
+against a 0.40 bar) is close enough to its bar that 126 could move it either way. Lane T has been
+asked to finish it.
+
 ## Integration note 27 (2026-09-20 02:33, lane O's closing report, S29-L47): ONE INCIDENTAL PARAMETER MEASURED FOUR WAYS
 Lane O's unifying measurement is the cleanest empirical statement of lane L's S29-L31, and it is
 four independent instruments agreeing rather than four near misses. For EVERY rung of the ladder
