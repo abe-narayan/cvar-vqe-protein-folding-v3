@@ -590,6 +590,11 @@ def cmd_analyse(rows_paths=None, out=None):
     def col(arm, key="rmsd_chain"):
         return np.array([cell[(p, arm)].get(key, np.nan) for p in pdbs])
 
+    def has(arm):
+        """Present on EVERY analysed target. `arm_names` is the union over targets, so an arm
+        left behind by an earlier phase on a handful of targets is in it but is not usable."""
+        return all((p, arm) in cell for p in pdbs)
+
     # ---- the gate, re-asserted on the full run
     prod = col("PROD")
     dref = np.abs(prod - np.array([float(ref[p]["rmsd_chain"]) for p in pdbs]))
@@ -621,14 +626,17 @@ def cmd_analyse(rows_paths=None, out=None):
         % ("arm", "chain", "cloud_in", "price", "price0", "s_mean", "bond_in", "rg_in",
            "bond_out", "rg_out"))
     cloud0 = col("PROD", "rmsd_cloud_in")
-    named = [("PROD", prod), ("BOND", col("BOND")), ("SPAN", col("SPAN")), ("ISO", col("ISO")),
-             ("CTRL-GLOBAL", col("CTRL-GLOBAL")), ("CTRL-INV", col("CTRL-INV")),
-             ("CTRL-LAM", col("CTRL-LAM")), ("BOND-LAMFIX", col("BOND-LAMFIX")),
-             ("CTRL-RAND(mean8)", rand_mean), ("CTRL-RAND(best8 ORDER STAT)", rand_best)]
+    #: the deferred pair (CTRL-LAM, BOND-LAMFIX) is absent while only the primary phase has run,
+    #: so the table is built from the arms that actually exist rather than from a fixed list.
+    named = [("PROD", prod)]
+    for nm in ("BOND", "SPAN", "ISO", "CTRL-GLOBAL", "CTRL-INV", "CTRL-LAM", "BOND-LAMFIX"):
+        if has(nm):
+            named.append((nm, col(nm)))
+    named += [("CTRL-RAND(mean8)", rand_mean), ("CTRL-RAND(best8 ORDER STAT)", rand_best)]
     if np.isfinite(oracle_scale).all():
         named.append(("ORACLE-SCALE", oracle_scale))
     for nm, v in named:
-        src = nm if (nm, ) and nm in arm_names else None
+        src = nm if has(nm) else None
         if src:
             say("  %-16s %8.4f %8.4f %+8.4f %+8.4f %8.4f %7.3f %7.3f %8.3f %7.3f"
                 % (nm, v.mean(), col(src, "rmsd_cloud_in").mean(),
@@ -639,7 +647,7 @@ def cmd_analyse(rows_paths=None, out=None):
         else:
             say("  %-16s %8.4f %8s %8s %+8.4f  (derived over columns)"
                 % (nm, v.mean(), "-", "-", v.mean() - cloud0.mean()))
-    if "FLOOR" in arm_names:
+    if has("FLOOR"):
         fl = np.abs(col("FLOOR") - prod)
         say("")
         say("BRANCH-FLIP FLOOR ON THIS CODE PATH (arm FLOOR: C * (1 + 1e-13), same projection)")
@@ -664,17 +672,18 @@ def cmd_analyse(rows_paths=None, out=None):
                        label="P %s - CTRL-RAND mean-of-8 (matched-magnitude derangement of g)" % nm)
         C[nm + "|RAND"] = o
         say(ST.fmt(o)); say("")
-    o = ST.compare(col("BOND-LAMFIX"), col("BOND"), folds=folds, names=pdbs,
-                   label="P BOND-LAMFIX - BOND (the effective-lambda leg of the 2x2)")
-    C["LAMFIX|BOND"] = o
-    say(ST.fmt(o)); say("")
+    if has("BOND-LAMFIX"):
+        o = ST.compare(col("BOND-LAMFIX"), col("BOND"), folds=folds, names=pdbs,
+                       label="P BOND-LAMFIX - BOND (the effective-lambda leg of the 2x2)")
+        C["LAMFIX|BOND"] = o
+        say(ST.fmt(o)); say("")
     #: THE BRANCH-FLIP REFERENCE. FLOOR is a pure lottery draw: the same cloud perturbed at
     #: 1e-13 relative, i.e. ZERO geometric change, re-projected. If FLOOR - PROD is not itself
     #: zero, the multi-start's branch choice is biased and every arm's effect must be read
     #: against FLOOR rather than against nothing.
-    if "FLOOR" in arm_names:
+    if has("FLOOR"):
         for nm in ("BOND", "SPAN", "ISO", "CTRL-GLOBAL", "CTRL-INV"):
-            if nm not in arm_names:
+            if not has(nm):
                 continue
             o = ST.compare(col(nm), col("FLOOR"), folds=folds, names=pdbs,
                            label="P %s - FLOOR (against a zero-geometry branch redraw, not "
@@ -687,7 +696,7 @@ def cmd_analyse(rows_paths=None, out=None):
     # so picking the one with the lowest shipped objective obj0 strictly improves production's
     # own optimisation, with no native anywhere. Ties are averaged over the argmin set, never
     # broken by array order.
-    ms_arms = [a for a in arm_names if not a.startswith("ORACLE-GRID")]
+    ms_arms = [a for a in arm_names if not a.startswith("ORACLE-GRID") and has(a)]
     OBJ = np.column_stack([col(a, "obj0") for a in ms_arms])
     CH = np.column_stack([col(a) for a in ms_arms])
     #: MS-OBJ / MS-MEAN / MS-ORACLE are DEFERRED with the grid phase (coordinator, 00:45): the
@@ -806,7 +815,7 @@ def cmd_analyse(rows_paths=None, out=None):
         % (nat_rg.mean(), nat_bond.mean()))
     say("  %-16s %9s %9s %9s" % ("arm", "rg_out", "rg_out/nat", "|log ratio|"))
     for nm, _ in named:
-        if nm in arm_names:
+        if has(nm):
             ro = col(nm, "rg_out")
             say("  %-16s %9.4f %9.4f %9.4f"
                 % (nm, np.nanmean(ro), np.nanmean(ro / nat_rg),
@@ -819,7 +828,7 @@ def cmd_analyse(rows_paths=None, out=None):
     say("  fit_resid0 = CA-RMSD(emitted chain, PRODUCTION's cloud) -- comparable across arms")
     say("  %-16s %10s %10s" % ("arm", "fit_resid", "fit_resid0"))
     for nm, _ in named:
-        if nm in arm_names:
+        if has(nm):
             say("  %-16s %10.4f %10.4f"
                 % (nm, np.nanmean(col(nm, "fit_resid")), np.nanmean(col(nm, "fit_resid0"))))
     say("")
@@ -834,8 +843,10 @@ def cmd_analyse(rows_paths=None, out=None):
     say("  g      mean %.4f sd %.4f  min %.4f max %.4f" % (g.mean(), g.std(ddof=1), g.min(), g.max()))
     say("  s_span mean %.4f sd %.4f ; s_iso mean %.4f sd %.4f"
         % (sp.mean(), sp.std(ddof=1), iso.mean(), iso.std(ddof=1)))
-    for nm, x in (("n", ns), ("prod cloud RMSD", cloud), ("prod chain RMSD", prod),
-                  ("ORACLE s* [ORACLE]", oracle_argmin)):
+    trk = [("n", ns), ("prod cloud RMSD", cloud), ("prod chain RMSD", prod)]
+    if oracle_argmin is not None and len(oracle_argmin) == len(pdbs):
+        trk.append(("ORACLE s* [ORACLE]", oracle_argmin))
+    for nm, x in trk:
         say("  spearman  g vs %-20s %+.3f   s_span %+.3f   s_iso %+.3f"
             % (nm, spearmanr(g, x).statistic, spearmanr(sp, x).statistic, spearmanr(iso, x).statistic))
     say("")
@@ -845,7 +856,7 @@ def cmd_analyse(rows_paths=None, out=None):
                 gate_max_diff=float(dref.max()), gate_identical=int((dref == 0).sum()),
                 means={nm: float(v.mean()) for nm, v in named},
                 price={nm: float(v.mean() - col(nm, "rmsd_cloud_in").mean())
-                       for nm, v in named if nm in arm_names},
+                       for nm, v in named if has(nm)},
                 n_grid=len(gridp),
                 oracle_argmin_hist={str(k): v for k, v in cnt.items()},
                 oracle_grid_bok=bok, ctrl_rand_bok=bokr,
@@ -855,7 +866,7 @@ def cmd_analyse(rows_paths=None, out=None):
                 floor=(dict(mean=float(np.abs(col("FLOOR") - prod).mean()),
                             max=float(np.abs(col("FLOOR") - prod).max()),
                             n_above_0p02=int((np.abs(col("FLOOR") - prod) > 0.02).sum()))
-                       if "FLOOR" in arm_names else None),
+                       if has("FLOOR") else None),
                 text="\n".join(L))
     ST.save_atomic(out or os.path.join(RESULTS, "s29_P_summary.json"), summ, module_file=__file__)
     print("wrote", out or os.path.join(RESULTS, "s29_P_summary.json"))
