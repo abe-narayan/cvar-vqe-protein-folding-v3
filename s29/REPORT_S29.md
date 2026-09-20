@@ -969,7 +969,30 @@ how an ORACLE ceiling gets mistaken for a route, and this report should not be r
 
 ### 12.2 The shell-profile supply gap
 
-[PENDING — lane M's F2.] The question is not whether a native-free rule can supply the shell profile
+**The reproduction gate passed exactly, which is what makes the rest quotable.** Lane M registered
+that its F2 machinery had to reproduce S12's section-6 numbers through its own code before anything
+else ran, and that a discrepancy would itself be the finding. It reproduces to three decimals on
+all 126 targets:
+
+```
+                      lane M (uniform)   S12 reference
+production                  3.0784           3.078
+ORACLE true profile         2.4023           2.402
+the gap                     0.6761           0.676
+```
+
+So the ORACLE ceiling of the shell-profile class is **0.676 Å** and it is real.
+
+**The supply audit says that ceiling is not approachable from here.** At n = 126, the
+leave-fold-out fitted predictor correlates with the true profile at **0.313** — against the
+**incumbent** distogram's own profile at **0.366**. The ridge selected its maximum regularisation
+(λ = 1000) on all five folds, i.e. it found almost nothing to fit. Variance explained is 0.093 and
+0.086 respectively.
+
+That is the MAE law arriving from a fourth direction: the arm with the best profile *error* is not
+the arm with the best *emitted RMSD*, and the incumbent wins both comparisons.
+
+[PENDING — lane M's F2 displacement cosine and its verdict.] The question is not whether a native-free rule can supply the shell profile
 (five already do, measured leave-fold-out since S12) but whether any supplies it *better*, and by
 how much in the bound's currency. Note the sting already in the record: among those five, the arm
 with the **best profile MAE** (2.394) emits the **worse** RMSD (3.089), and the incumbent — the
