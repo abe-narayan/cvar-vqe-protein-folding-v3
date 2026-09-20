@@ -86,8 +86,7 @@ def main() -> None:
                      v["n_above_gate"], v["n"]))
     passed = any(v["mean"] > 0.45 for v in tg.values()) if tg else False
     print("  GATE 1 (TV) : %s" % ("CLEARS 0.45" if passed else "FAILS -- the cell is empty"))
-    print("
-  HOW TO READ THE PASS -- the diagnostic that decides it (lane L, S29-L13: the")
+    print("\n  HOW TO READ THE PASS -- the diagnostic that decides it (lane L, S29-L13: the")
     print("  prepared object must NOT be an eigenvector; |+>^q is an eigenvector of H_mix):")
     print("    %-12s %10s %10s %10s" % ("arm", "S/Smax", "mixer/q", "m/(alpha M)"))
     for k, v in o.get("gate1_diagnostic", {}).items():
@@ -96,8 +95,7 @@ def main() -> None:
                  v["m_over_alphaM"]["mean"]))
     se = o.get("set_equality", {})
     if se:
-        print("
-  THE TAIL UNDER A NON-COMMUTING TERM (the S24/S28-L21 set-equality property):")
+        print("\n  THE TAIL UNDER A NON-COMMUTING TERM (the S24/S28-L21 set-equality property):")
         for k, v in se.items():
             print("    %-12s tail is an energy PREFIX on %d/%d, EQUALS the classical top-m on %d/%d"
                   % (k, v["is_prefix"], v["n"], v["equals_topm"], v["n"]))
