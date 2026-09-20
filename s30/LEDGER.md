@@ -2294,3 +2294,128 @@ Artefacts: `s30/s30_D_gram.py`, `s30/results/s30_D_gram.json`, `s30/results/s30_
 prereg `s30/PREREG_S30_D_gram.md`. The regenerated fields are asserted equal to
 `s29/results/s29_D_fields_rows.jsonl` cosines to 1e-9, so this prices the same 21 fields S30-L5 did.
 Multiplicity: 25 comparisons from this file (21 of them the rank curve).
+
+## S30-L7 -- **LANE L's PREDICTION IS CONFIRMED, AND HARDER THAN IT ASKED FOR.** THE RADIAL/SCALE DIRECTION CARRIES **58.0% OF THE GRAM TRACE**, AND THE FIELD SET'S DOMINANT PRINCIPAL DIRECTION **IS** THE RADIAL ONE AT cos = **0.947** (MEDIAN 0.984). REMOVING IT RAISES THE STABLE RANK 1.705 -> 2.642. AND THE PAYOFF: THE DIRECTION TO THE NATIVE IS **ORTHOGONAL** TO IT (cos −0.068), **−0.252 ON FAIL18** -- THE LIBRARY SPENDS THE MAJORITY OF ITS RANK ON THE ONE COMPONENT THAT POINTS ELSEWHERE (2026-09-20 13:24, D)
+
+**Verdict: lane L's algebra is validated on an independent measurement. Its consequence is worse
+than "one of the two directions is spent on scale" -- that direction is anti-aligned with the
+native on exactly the targets that matter.**
+
+Lane L predicted that a fixed-reference distance potential's separable scale term would make one
+of S30-L6's ~2 effective directions the radial field `x − centroid`. Test, on the 126 cached
+field sets (`s30/results/s30_D_gram/`), rigid body removed from both sides as everywhere else:
+
+| quantity | mean | median | fold CI | FAIL18 | other 108 |
+|---|---|---|---|---|---|
+| **radial share of the Gram trace** | **0.5798** | 0.5879 | [+0.545, +0.603] | 0.5528 | 0.5843 |
+| λ₁ share of the trace | 0.6117 | 0.6187 | [+0.588, +0.629] | 0.5777 | 0.6173 |
+| **cos(dominant principal direction, radial)** | **0.9472** | **0.9840** | [+0.924, +0.966] | 0.9469 | 0.9473 |
+| cos(2nd principal direction, radial) | 0.1502 | 0.0952 | [+0.126, +0.187] | | |
+| stable rank, as measured | 1.7050 | 1.6163 | [+1.64, +1.78] | 1.8515 | 1.6806 |
+| **stable rank, radial removed** | **2.6425** | 2.5467 | [+2.55, +2.75] | 2.7923 | 2.6176 |
+| λ₁ share, radial removed | 0.3962 | | [+0.384, +0.407] | | |
+| mean \|field·radial\| over the 21 fields | 0.6908 | 0.7155 | [+0.664, +0.709] | | |
+| **cos(direction to the NATIVE, radial)** | **−0.0675** | −0.0575 | [−0.126, −0.011] | **−0.2524** | −0.0367 |
+
+**Confirmed.** Lane L asked whether the radial direction captures "roughly half the spectrum": it
+captures **58.0%**, and **94.8% of the top eigenvalue is radial** (0.5798 / 0.6117). The
+rank-1.7 appearance of the field library is the scale direction: take it out and the stable rank
+rises to 2.64 while λ₁'s share falls from 61% to 40%.
+
+**The consequence, which is the reason it was worth four lines.** The last row is ORACLE and it is
+the one that matters. The direction to the native has a radial cosine of **−0.068** overall — the
+field library concentrates the majority of its two available directions on a component that is
+essentially orthogonal to where the native lies. On FAIL18 it is **−0.2524**: on the hard targets
+the radial direction is not merely useless, it is **anti-aligned**, and a method that moves along
+it moves away from the answer. That is consistent with lane F's finding that shape, not scale,
+carries the tail's error, and it supplies the mechanism: the library cannot express shape because
+its rank is spent on scale.
+
+**What this does NOT show.** It does not show that removing the scale component would help. The
+residual 42% of the spectrum is spread over a stable rank of 2.64 with no large eigenvalue, and
+S30-L6 already measured what the whole 21-dimensional span is worth through a global weighting
+(ρ = 0.1693, 0.046 Å on the built chain). Deflating the radial direction reallocates rank; it does
+not create any. A lane wanting to act on this must show the deflated set reaches a higher ρ, and
+the Gram tool is now a one-liner for checking a proposed new field's orthogonality to this
+direction **before** it is built.
+
+Reproduction: `s30/results/s30_D_gram/*.npz`, radial direction `remove_rigid(C0 − mean(C0), C0)`.
+
+---
+
+## S30-L8 -- **S30-L2's HEADLINE IS CONDITIONED ON ITS OWN NUMERATOR.** FAIL18 IS *DEFINED* IN `s12/instrument.py:277` AS THE TARGETS WHERE THE SCORE'S TOP-75 RETAINS **ZERO** POOL MEMBERS WITHIN 1.5 Å OF THE POOL OPTIMUM. I REPRODUCE THE +1.767 Å EXACTLY (−1.7622, OPPOSITE SIGN CONVENTION) AND AT LEAST **0.869 Å OF IT IS FORCED ARITHMETIC**; THE STRATUM keep=1 SHOWS **−0.036**. OUTSIDE THE 18, THE FILTER IS **+0.025 Å**, AND THE ALL-126 EFFECT IS **100% THE 18** (2026-09-20 13:24, D)
+
+**Verdict: F1a stands untouched. F1c's FAIL18 row must be withdrawn as an effect estimate. Lane F
+did the hard parts right -- prereg before the numbers, matched random subsets in each operator's
+own space, fold CIs, a random-18 null -- and none of those defences reaches this one, because the
+stratum itself is the outcome.**
+
+### The definition
+
+`s12/instrument.py:271-278`, the selfcheck that pins the constant:
+
+```python
+sub  = np.asarray(rec["sub"], int)              # the SCORE's top-75
+band = np.where(rr <= rr.min() + BAND)[0]       # pool members within BAND = 1.5 A of the pool best (ORACLE)
+if not np.isin(band, sub).any():
+    zero.append(t["pdb"])
+assert set(zero) == set(FAIL18)
+```
+
+**FAIL18 is the set of targets on which the 500 -> 75 filter retained no in-band member.** S30-L2
+then measures, on that set, how much worse the filter's retained set is than a random 75 in
+ORACLE best. The selection predicate is a lower bound on the measured quantity's first term.
+
+### Reproduction and decomposition (n = 126, 200 random-75 draws per target, seed 3030)
+
+I reproduce lane F's number independently: (ORACLE best of random-75) − (ORACLE best of top-75)
+= **−1.7622 Å** on FAIL18 against its +1.7674 in the opposite sign convention.
+
+| stratum, by `keep` = in-band members surviving the filter | n | effect |
+|---|---|---|
+| **keep = 0 — this stratum *is* FAIL18** | 18 | **−1.7622** |
+| keep = 1 | 3 | −0.0363 |
+| keep = 2–3 | 1 | −0.8654 |
+| keep = 4–8 | 8 | −0.0039 |
+| keep ≥ 9 | 96 | +0.0380 |
+
+**There is no gradient.** The effect is a step at the selection boundary, not a continuum in
+recall: one retained in-band member is enough to remove 98% of it. Among the 108 non-FAIL18
+targets, Spearman(keep, effect) = **−0.046**.
+
+**How much is forced.** By definition `top_best − pool_best ≥ 1.5` on these 18 (measured: 2.393).
+The random arm is unconstrained and measures `rand_best − pool_best = 0.631`. So the selection
+predicate alone forces |effect| ≥ 1.5 − 0.631 = **0.869 Å, 49% of the headline**. The remaining
+0.893 Å is not an unbiased estimate either: it is the expected *exceedance above a selection
+threshold*, which truncation inflates by an amount this design cannot measure.
+
+**Difficulty is not the explanation, and it is not the fix.** The 18 targets with the worst ORACLE
+pool best — a difficulty criterion **upstream** of the filter — give **−0.629 Å**, 36% of the
+headline, and only 8 of them are in FAIL18 (so even that is contaminated).
+
+**And the all-126 row is the 18.** Effect on all 126 = −0.2308; 18/126 × (−1.7622) = **−0.2517**.
+Outside the 18 the filter is **+0.0245 Å** — *better* than a random 75, not worse. Lane F reported
+that row honestly ("NOT MEASURED", CI spanning zero); the reading that must not survive is
+"the harmful thing the pipeline does on hard targets is located in one stage."
+
+### What survives, and it is not nothing
+
+- **F1a is untouched**: the ORACLE best member of the FAIL18 pools is 2.284 Å. That is a statement
+  about pools, involves no conditioning, and closes the pool-limited branch. It stands.
+- **The existence of 18 zero-recall targets is real** — but it is a *known* property, the one S12
+  used to define the set, not a new measurement of filter damage.
+- **What is not established** is that the filter is differentially harmful on hard targets. The
+  honest test defines the stratum on information the measurement does not reuse: split the pool,
+  define recall on one half and measure ORACLE best on the other; or stratify on an upstream
+  difficulty criterion, which gives −0.629 Å and would have to be priced against its own null.
+
+### The rule this earns
+
+`control-must-match-the-operators-space` is instance 5 of this sprint's most repeated error, but
+this is its other face and it needs its own name: **a matched control in the right space does not
+rescue a stratum defined by the outcome.** Lane F's random-75 control was drawn in exactly the
+right space and is not the problem. The problem is that the 18 rows it was averaged over were
+chosen because the quantity being measured was large on them.
+
+Reproduction: `s12/instrument.py:271-278`; my run reads `u["rr"][pool_idx]` and
+`shipped_record(pdb)["sub"]` only, no distogram, seed 3030, 200 draws per target.
