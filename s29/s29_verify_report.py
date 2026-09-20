@@ -142,6 +142,49 @@ check('M6 deployed - m75, effect', 0.0082, r['effect'])
 check('M6 deployed - m75, MDE', 0.0307, r['mde'])
 print('%-58s %.1f' % ('M6 mean deployed m (report: 74.1)', st.mean(r2['m_deployed'] for r2 in m6)))
 
+# ---------- lane P, the projection falsifier ----------
+print()
+print('=== section 9.2c: lane P, the projection falsifier ===')
+prow = []
+for f in glob.glob('s29/results/s29_P_rows_shard*.jsonl'):
+    for ln in open(f):
+        ln = ln.strip()
+        if ln:
+            try:
+                prow.append(json.loads(ln))
+            except Exception:
+                pass
+pby = {}
+for r in prow:
+    pby.setdefault(r['arm'], {})[r['pdb']] = r
+pprod = pby['PROD']
+pfold = {k: v['fold'] for k, v in pprod.items()}
+
+
+def parm(a):
+    A = pby[a]
+    common = sorted(set(A) & set(pprod))
+    return compare([A[q]['rmsd_chain'] for q in common],
+                   [pprod[q]['rmsd_chain'] for q in common],
+                   folds=[pfold[q] for q in common], names=common, label=a)
+
+
+check('P production, built chain', 3.2126, st.mean(v['rmsd_chain'] for v in pprod.values()))
+for a, e, m in [('BOND', 0.7222, 0.3220), ('SPAN', 0.1220, 0.0738), ('ISO', 0.0737, 0.0589),
+                ('FLOOR', -0.0077, 0.0137), ('CTRL-GLOBAL', 0.6578, 0.1870),
+                ('CTRL-INV', 0.1671, 0.1763)]:
+    r = parm(a)
+    check('P %s effect' % a, e, r['effect'])
+    check('P %s MDE' % a, m, r['mde'])
+rd = [parm(k)['effect'] for k in sorted(pby) if k.startswith('CTRL-RAND')]
+check('P random band, min', 0.6504, min(rd))
+check('P random band, max', 0.8152, max(rd))
+b = parm('BOND')['effect']
+inside = min(rd) <= b <= max(rd)
+print('%-58s %s %s' % ('P BOND inside the 8-draw random band (report: yes)', inside,
+                       'MATCH' if inside else '*** MISMATCH ***'))
+print('%-58s %d' % ('P random draws counted (report: 8)', len(rd)))
+
 print()
 print('=' * 80)
 print('MATCHED: %d    MISMATCHED: %d' % (len(ok), len(bad)))
