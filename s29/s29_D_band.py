@@ -54,6 +54,10 @@ MIN_CELL, MIN_DISTINCT_RMSD = 20, 10                 # the occupancy rule, fixed
 DEGEN_RHO, DEGEN_RANGE = 0.8, 0.20                   # the degeneracy rule, fixed in the prereg
 N_SHUFFLE = 200
 REALISMS = ("R1_CAGEO", "R2_GEOM", "R3_CONS")
+#: ADDENDUM 1 (L's point 2): the width curve is the headline object.  Widths of the R-percentile
+#: axis and the fixed window centres, both registered before any analysis.
+WIDTHS = (1.0, 0.5, 0.25, 0.10, 0.05)
+CENTRES = (0.1, 0.3, 0.5, 0.7, 0.9)
 #: the CA-level scorers the S27 cache carries per pool member (so no recomputation on 500 members)
 POOL_SCORERS = ["DIS", "DIS_MEAN", "CONTACT_LL", "DISTPOT", "CONTACT", "ENV", "HP", "RG_LAW",
                 "RG_UNIV", "EXVOL", "CAGEO", "SS_MATCH"]
@@ -180,11 +184,35 @@ def target_row(pdb, with_rungs=True):
                     degen = bool(abs(rho_sR) > DEGEN_RHO if np.isfinite(rho_sR) else False) or frac_rng < DEGEN_RANGE
                     rng = SD.stable_rng(pdb, "s29D_band_null", s, rname, b, salt=SALT)
                     null = _shuffle_null(rx, ry, rng)
+                    fin = np.isfinite(null)
                     cells.append(dict(band=b, n=nb, rho=rho, rho_scorer_vs_R=rho_sR, frac_range=frac_rng,
-                                      degenerate=degen, null_mean=float(np.nanmean(null)),
-                                      null_p95=float(np.nanpercentile(null, 95)),
-                                      null_p05=float(np.nanpercentile(null, 5))))
-                row["cells"].setdefault(arm, {}).setdefault(rname, {})[s] = dict(rho_across=rho_ac, bands=cells)
+                                      degenerate=degen,
+                                      null_mean=float(null[fin].mean()) if fin.any() else float("nan"),
+                                      null_p95=float(np.percentile(null[fin], 95)) if fin.any() else float("nan"),
+                                      null_p05=float(np.percentile(null[fin], 5)) if fin.any() else float("nan")))
+                #: ADDENDUM 1 (L's point 1): the closed form.  rho_SR is NATIVE-FREE; rho_SY and
+                #: rho_RY are ORACLE (they read the RMSD).  On ranks, so the Gaussian assumption
+                #: enters only through the copula.
+                rS, rY, rR = _ranks(sv), _ranks(y), _ranks(rv)
+                r_SY = _pearson_ranks(rS, rY); r_SR = _pearson_ranks(rS, rR); r_RY = _pearson_ranks(rR, rY)
+                den = np.sqrt(max((1 - r_SR ** 2) * (1 - r_RY ** 2), 1e-30))
+                partial = float((r_SY - r_SR * r_RY) / den) if den > 1e-15 else float("nan")
+                #: ADDENDUM 1 (L's point 2): the width curve, sliding windows on the R-percentile axis.
+                curve = {}
+                for w in WIDTHS:
+                    vals, ns = [], []
+                    for c0 in (CENTRES if w < 1.0 else (0.5,)):
+                        lo, hi = c0 - w / 2.0, c0 + w / 2.0
+                        mw = (rv >= lo) & (rv <= hi)
+                        nb = int(mw.sum())
+                        if nb < MIN_CELL or len(np.unique(y[mw])) < MIN_DISTINCT_RMSD:
+                            continue
+                        vals.append(_pearson_ranks(_ranks(sv[mw]), _ranks(y[mw]))); ns.append(nb)
+                    curve[str(w)] = dict(rho=float(np.mean(vals)) if vals else None,
+                                         n_windows=len(vals), mean_n=float(np.mean(ns)) if ns else 0.0)
+                row["cells"].setdefault(arm, {}).setdefault(rname, {})[s] = dict(
+                    rho_across=rho_ac, bands=cells, rho_SY=r_SY, rho_SR=r_SR, rho_RY=r_RY,
+                    partial_pred=partial, width_curve=curve)
     row["secs"] = time.time() - t0
     return row
 
@@ -270,8 +298,30 @@ def analyse(basis="ca", n_max_null=2000):
                 cmp_ac = ST.compare(x[ok], ac[ok], f_sub[ok], label=f"{s} | {rname} | {arm}: within-band rho - across-band rho",
                                     seed_parts=("s29Dband",)) if ok.sum() >= 3 else None
                 pooled_ind[s] = (x, np.array(idx))
+                pp = np.array([r["cells"][arm][rname][s].get("partial_pred", np.nan) for r in rows
+                               if r["cells"][arm][rname].get(s)], float)
+                wc = {}
+                for w in WIDTHS:
+                    v = [r["cells"][arm][rname][s]["width_curve"].get(str(w), {}).get("rho")
+                         for r in rows if r["cells"][arm][rname].get(s)
+                         and "width_curve" in r["cells"][arm][rname][s]]
+                    v = [q for q in v if q is not None and np.isfinite(q)]
+                    if len(v) >= 3:
+                        f_w = folds[[q for q, r in enumerate(rows) if r["cells"][arm][rname].get(s)
+                                     and "width_curve" in r["cells"][arm][rname][s]
+                                     and r["cells"][arm][rname][s]["width_curve"].get(str(w), {}).get("rho") is not None]]
+                        cw = ST.compare(np.array(v), np.zeros(len(v)), f_w, label=f"width {w}", seed_parts=("s29Dband",))
+                        wc[str(w)] = dict(rho=float(np.mean(v)), n=len(v), ci95_fold=cw["ci95_fold"], se=cw["se"])
+                    else:
+                        wc[str(w)] = dict(rho=None, n=len(v))
                 res[s] = dict(
                     n_targets=len(x), mean_rho_in=float(x.mean()), median_rho_in=float(np.median(x)),
+                    partial_pred_mean=float(np.nanmean(pp)) if np.isfinite(pp).any() else None,
+                    partial_pred_median=float(np.nanmedian(pp)) if np.isfinite(pp).any() else None,
+                    rho_SY_mean=float(np.nanmean([r["cells"][arm][rname][s].get("rho_SY", np.nan) for r in rows if r["cells"][arm][rname].get(s)])),
+                    rho_SR_mean=float(np.nanmean([r["cells"][arm][rname][s].get("rho_SR", np.nan) for r in rows if r["cells"][arm][rname].get(s)])),
+                    rho_RY_mean=float(np.nanmean([r["cells"][arm][rname][s].get("rho_RY", np.nan) for r in rows if r["cells"][arm][rname].get(s)])),
+                    width_curve=wc,
                     se=cmp_zero["se"], ci95_fold=cmp_zero["ci95_fold"], ci95_iid=cmp_zero["ci95_iid"],
                     folds_same_sign=cmp_zero["folds_same_sign"], mde=cmp_zero["mde"],
                     effect_over_mde=cmp_zero["effect_over_mde"], verdict_vs_zero=cmp_zero["verdict"],
@@ -317,16 +367,19 @@ def render(o):
     for arm, per_r in o["arms"].items():
         for rname, res in per_r.items():
             L.append(f"  -- arm {arm}, realism {rname} --")
-            L.append(f"     {'scorer':14s} {'rho_in':>8s} {'fold CI':>18s} {'xMDE':>6s} {'rho_across':>10s} {'in-across':>10s} "
-                     f"{'cells/t':>8s} {'degen/t':>8s} {'null':>7s} {'n':>4s}")
+            L.append(f"     {'scorer':14s} {'rho_in':>8s} {'fold CI':>18s} {'pred rho_SY.R':>13s} {'rho_SY':>7s} {'rho_SR':>7s} "
+                     f"{'rho_RY':>7s} | width curve rho at w=1.0/0.5/0.25/0.10/0.05 | {'degen/t':>7s} {'n':>4s}")
             for s, v in sorted(res.items()):
                 if s.startswith("_") or "mean_rho_in" not in v:
                     continue
                 ia = v["in_minus_across"]
+                wc = v.get("width_curve", {})
+                cur = " ".join(("%+.3f" % wc[str(w)]["rho"]) if wc.get(str(w), {}).get("rho") is not None else "  --  "
+                               for w in WIDTHS)
                 L.append(f"     {s:14s} {v['mean_rho_in']:+8.4f} [{v['ci95_fold'][0]:+.3f},{v['ci95_fold'][1]:+.3f}] "
-                         f"{v['effect_over_mde']:+6.2f} {v['mean_rho_across']:+10.4f} "
-                         f"{(ia['effect'] if ia else float('nan')):+10.4f} {v['mean_cells_per_target']:8.2f} "
-                         f"{v['mean_degenerate_per_target']:8.2f} {v['shuffle_null_mean']:+7.3f} {v['n_targets']:4d}")
+                         f"{(v.get('partial_pred_median') if v.get('partial_pred_median') is not None else float('nan')):+13.4f} "
+                         f"{v.get('rho_SY_mean', float('nan')):+7.3f} {v.get('rho_SR_mean', float('nan')):+7.3f} "
+                         f"{v.get('rho_RY_mean', float('nan')):+7.3f} | {cur} | {v['mean_degenerate_per_target']:7.2f} {v['n_targets']:4d}")
             mn = res.get("_max_null")
             if mn:
                 L.append(f"     max-over-{mn['n_scorers']} sign-flip null on {mn['n_targets']} targets: best {mn['best_scorer']} "
