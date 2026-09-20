@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:44 Pacific.
+Last update: 2026-09-20 00:45 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -124,6 +124,43 @@ itself, slope -2.15 A per unit); a learned residual with errors decorrelated fro
 predictor's (blocked by S19's error coherence); and a physics term on the emitted structure in
 its FREE-ENERGY form, which sits outside the marginal class so theorem 2 does not bind it. The
 third is the queued S8 free-energy item and is now the only structurally live exit in the sprint.
+
+
+## Integration note 16 (2026-09-20 00:45, after S29-L24): A WITHDRAWAL, THE REPORT'S SENTENCE, AND THE ONE LIVE EXPERIMENT
+1. LANE T WITHDREW ITS OWN SECTION 1.4 RECOMMENDATION. The separation-band re-weighting it
+   offered as the only live form of the calibration item is NOT the same operation as lane P's
+   cloud rescale (re-weighting the objective changes WHICH 75 real windows are retained, and a
+   difference of real windows is realisable by construction, where a per-separation correction
+   of a cloud is not). But it is closed anyway by a measurement that predates the sprint:
+   `s12/obj_FINDINGS.md` section 4, 126 targets -- leave-fold-out per-shell weighted L1 gives
+   3.058 against the shipped 3.048 (worse), the deployable shell-profile-only arm gives 3.163,
+   and `score_weights.json` was fitted and retired once already (refitting drove two of six
+   parameters to their clip bounds and lost 2.76 -> 2.91 A on the benchmark while gaining 65%
+   on the dev objective). CALIBRATION IS CLOSED, NOT REDIRECTED.
+2. THE SENTENCE THE REPORT WILL USE for lane P's curve, from lane T, and it replaces the word
+   "contraction" everywhere in my own notes and in the published S28 page: averaging does not
+   contract the structure; by the exact identity d(C)^2 = <d_k^2> - s^2 the emitted distance is
+   the members' RMS distance less their own spread, so the distortion is a SEPARATION-DEPENDENT
+   SHEAR -- a large shrink where distances are short and the spread is comparable to them
+   (-23% at the virtual bond) fading to nothing where distances are long -- multiplied by the
+   pool's inherited long-range over-extension (the posterior's own -0.048 to -0.589 A across
+   separations, S25 L1), which the fading shrink no longer masks; the ratio therefore crosses
+   1.0 near |i-j| = 8 and ends above it, and "the 22% contraction" is the left-hand end of that
+   curve rather than a property of the operator. T also gives lane P a free check: the shrink
+   factor is native-free and must be <= 1 and monotone, the pool-bias factor is ORACLE and must
+   carry the entire crossing, and their product must reproduce P's measured profile to floating
+   point.
+3. THE ONE LIVE EXPERIMENT, assigned to lane M after F1. Same S12 table: a scorer knowing ONLY
+   the native's per-separation profile -- 11 to 14 numbers, no pair detail -- reaches 2.299 A
+   against 3.048, while the deployable version is 3.163. It is the LOWEST-DIMENSIONAL NAMED
+   QUANTITY whose ORACLE version clears the bound's load-bearing threshold of 0.14 by a wide
+   margin, and its leading component is compactness, where the record's achievable native-free
+   proxies reach 0.24 to 0.37. The new angle over S12: fit the profile RATIO leave-fold-out from
+   native-free features chosen for compactness explicitly, rather than fitting the profile.
+   Registered prediction (T's, adopted): inside 0.05 A of production, and a result only if it
+   clears 0.7x MDE with the fold CI excluding zero AND its cosine clears 0.140 with the shrink
+   signature. If it lands near the ORACLE 0.75 A, assumption B2 is falsified and the sprint's
+   headline changes from a ceiling to an opening.
 
 ## Integration note 1 (2026-09-19 23:55, after S29-L1)
 Lane L's topic 1 closes the "import a QA method" route from outside: no published native-free
