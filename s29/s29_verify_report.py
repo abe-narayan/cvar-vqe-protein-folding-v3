@@ -111,6 +111,22 @@ try:
 except Exception as e:
     print('F1 artefacts:', e)
 
+# ---------- lane M F2 ----------
+print()
+print('=== section 12.2: lane M, F2 (the shell profile) ===')
+g = json.load(open('s29/results/s29_M_F2_gate.json'))
+check('F2 gate, uniform PROD (S12 says 3.078)', 3.0784, g['uniform']['PROD'])
+check('F2 gate, uniform ORACLE_PROF (S12 says 2.402)', 2.4023, g['uniform']['ORACLE_PROF'])
+check('F2 gate, uniform gap (S12 says 0.676)', 0.6761, g['uniform']['gap'])
+check('F2 gate, weighted PROD', 3.0624, g['weighted']['PROD'])
+check('F2 gate, weighted ORACLE_PROF', 2.4254, g['weighted']['ORACLE_PROF'])
+sup = json.load(open('s29/results/s29_M_F2_supply.json'))['supply']
+check('F2 supply, corr(r_hat, r_true)', 0.3129, sup['corr_rhat_rtrue'])
+check('F2 supply, corr(r_disto, r_true) [the INCUMBENT]', 0.3660, sup['corr_rdisto_rtrue'])
+lam = set(sup['ridge_lambda_per_fold'].values())
+print('%-58s %s %s' % ('F2 ridge lambda per fold (report: 1000 on all 5)', sorted(lam),
+                       'MATCH' if lam == {1000.0} else '*** MISMATCH ***'))
+
 print()
 print('=' * 80)
 print('MATCHED: %d    MISMATCHED: %d' % (len(ok), len(bad)))
