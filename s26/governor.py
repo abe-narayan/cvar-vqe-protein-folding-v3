@@ -58,7 +58,8 @@ CEILING = 94.0        # % RAM (v2.5, S29: the user asked for 94-95%), or % CPU s
 HARD = 95.5           # % RAM sustained HARD_SECONDS (v2.5): kill the newest job (RAM only, v2)
 HARD_SECONDS = 15.0
 RESUME_BELOW = 92.0   # RAM band is 92-94 (v2.5); resume only once RAM is back under 90 ...
-CPU_RESUME = 97.0     # v2.6 (S29): the box is deliberately run at 94-95% CPU on the user's
+CPU_CEILING = 99.0    # v2.6: CPU gets its own ceiling; the box is meant to run hot
+CPU_RESUME = 99.0     # v2.6 (S29): the box is deliberately run at 94-95% CPU on the user's
                       # instruction, so a resume gated on CPU < 80 could NEVER fire and starved
                       # five jobs across four lanes for 40 min. RAM is the real constraint here.
 CPU_WINDOW = 3        # samples in the CPU rolling mean (3 x 5 s = 15 s)
@@ -356,8 +357,12 @@ def main() -> None:
             time.sleep(SAMPLE)
             continue
         ram, cpu = s["ram_pct"], s["cpu_smooth"]
-        hot = max(ram, cpu)
-        which = "ram" if ram >= cpu else "cpu"
+        # v2.6 (S29): RAM and CPU get SEPARATE ceilings. The user asked for the box to run at
+        # 94-95% CPU, so a single CEILING shared with RAM made the governor suspend a job every
+        # time the instruction was being followed, then resume it seconds later (thrash).
+        # CPU is a throughput signal here, not a failure mode; RAM is the real constraint.
+        hot = ram if ram >= CEILING else (cpu if cpu > CPU_CEILING else 0.0)
+        which = "ram" if ram >= CEILING else "cpu"
 
         if t0 - last_sample_log >= 60.0:
             log("SAMPLE", f"ram={ram:.1f}% ({s['ram_used_gb']:.2f}GB used, {s['ram_avail_gb']:.2f}GB free) "
