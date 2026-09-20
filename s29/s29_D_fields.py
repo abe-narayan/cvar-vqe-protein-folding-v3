@@ -140,6 +140,74 @@ def run(pdbs):
     print("done:", ROWS)
 
 
+def second_order(pdbs):
+    """S29-L23 assumption B3: the bound is stated first order in the step size, with the rigid
+    body projected out.  For each field, take its OWN best step (the ORACLE s* that minimises the
+    RMSD along it) and compare the bound's predicted RMSD, RMSD_prod * sqrt(1 - rho^2), with the
+    RMSD actually measured after Kabsch re-alignment.  The gap is the neglected term AT THE
+    LARGEST STEP A REAL ARM TAKES, not at s = 0.14."""
+    rows = []
+    for q, pdb in enumerate(pdbs):
+        from s24 import d_harness as H
+        from s27 import run_pool as RP
+        cand, ch, _ = RP.channels_for(pdb)
+        n, k = int(cand.n), int(cand.k)
+        key = RP.rng_for(pdb, "tiekey").random(k)
+        dis = np.asarray(ch["DIS"], float)
+        order = np.lexsort((key, dis))
+        top = np.sort(order[:PROD_M])
+        C0, _ = H.readout_uniform(cand, top); C0 = np.asarray(C0, float)
+        u = A2.remove_rigid(A2.oracle_direction(C0, cand.nat_ca), C0)          # ORACLE
+        W = I.superpose_batch(np.asarray(cand.W, float), C0)
+        rec = dict(pdb=pdb, n=n, rmsd_prod=float(I.ca_rmsd(C0, cand.nat_ca)), fields={})
+        fields = {}
+        for m in (25, 150, 500):
+            Cm, _ = H.readout_uniform(cand, np.sort(order[:m]))
+            fields[f"MSET_{m}"] = np.asarray(Cm, float)
+        pr = I.project(C0, cand.seq, cand.fold)
+        fields["PROJ"] = np.asarray(pr["ca"], float)
+        cen = C0.mean(0); rg0 = float(np.sqrt(((C0 - cen) ** 2).sum(1).mean()))
+        rgp = float(np.sqrt(((W - W.mean(1, keepdims=True)) ** 2).sum(2).mean(1)).mean())
+        fields["EXPAND"] = cen + (C0 - cen) * (rgp / max(rg0, 1e-12))
+        for nm, C1 in fields.items():
+            d = A2.remove_rigid(np.asarray(C1, float) - C0, C0)
+            if A2.rms(d) < 1e-12:
+                continue
+            rho = A2.cosine(d, u)
+            dh = d / A2.rms(d)
+            #: the ORACLE best step along this field, on a fine grid (the largest step a real arm
+            #: could take, not a nominal one), and the RMSD actually measured there
+            ss = np.linspace(-3.0, 3.0, 241)
+            r = np.array([I.ca_rmsd(C0 + t * dh, cand.nat_ca) for t in ss])     # ORACLE
+            b = int(np.argmin(r))
+            pred = rec["rmsd_prod"] * float(np.sqrt(max(1 - rho ** 2, 0.0)))
+            rec["fields"][nm] = dict(cos=rho, disp_rms=A2.rms(d), best_step=float(ss[b]),
+                                     rmsd_at_best=float(r[b]), predicted_by_bound=pred,
+                                     residual=float(r[b] - pred),
+                                     rel_residual=float((r[b] - pred) / max(pred, 1e-12)))
+        rows.append(rec)
+        if (q + 1) % 6 == 0:
+            print(f"  [{q+1}/{len(pdbs)}]", flush=True)
+    out = dict(check="S29-L23 assumption B3: the neglected term at the ORACLE best step", n=len(rows), rows=rows)
+    names = sorted({k for r in rows for k in r["fields"]})
+    print(f"  {'field':12s} {'mean cos':>9s} {'best step':>10s} {'measured':>9s} {'bound pred':>11s} {'residual':>9s} {'rel':>7s}")
+    for nm in names:
+        v = [r["fields"][nm] for r in rows if nm in r["fields"]]
+        if not v:
+            continue
+        out[nm] = dict(n=len(v), mean_cos=float(np.mean([x["cos"] for x in v])),
+                       mean_best_step=float(np.mean([x["best_step"] for x in v])),
+                       mean_rmsd_at_best=float(np.mean([x["rmsd_at_best"] for x in v])),
+                       mean_predicted=float(np.mean([x["predicted_by_bound"] for x in v])),
+                       mean_residual=float(np.mean([x["residual"] for x in v])),
+                       mean_rel_residual=float(np.mean([x["rel_residual"] for x in v])))
+        d = out[nm]
+        print(f"  {nm:12s} {d['mean_cos']:+9.4f} {d['mean_best_step']:+10.3f} {d['mean_rmsd_at_best']:9.4f} "
+              f"{d['mean_predicted']:11.4f} {d['mean_residual']:+9.4f} {100*d['mean_rel_residual']:+6.1f}%")
+    ST.save_atomic(os.path.join(RESULTS, "s29_D_fields_b3.json"), out, module_file=__file__)
+    return out
+
+
 def analyse():
     rows = [json.loads(l) for l in open(ROWS, encoding="utf-8") if l.strip()]
     rows.sort(key=lambda r: r["pdb"])
@@ -189,13 +257,15 @@ def analyse():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("mode", choices=["run", "analyse"])
+    ap.add_argument("mode", choices=["run", "analyse", "b3"])
     ap.add_argument("--limit", type=int, default=0)
     a = ap.parse_args()
     from s25 import phys_lib as P
     pdbs = P.targets()[:a.limit] if a.limit else P.targets()
     if a.mode == "run":
         run(pdbs)
+    elif a.mode == "b3":
+        second_order(pdbs)
     else:
         analyse()
 
