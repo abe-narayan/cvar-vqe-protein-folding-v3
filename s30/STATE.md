@@ -79,6 +79,52 @@ set by how much RMSD variance is non-local. If that fraction is near zero for lo
 negative result becomes a theorem on this instrument rather than an empirical miss — and the live
 question narrows to channels with genuinely global reach.
 
+
+## NOTE 2 (2026-09-20 12:43, lane L, derived not cited): THE COMPACTNESS LOADING IS **ALGEBRAICALLY FORCED**, AND THERE IS A CONSTRUCTIVE FIX
+
+A statistical potential is `u(d) = -kT ln[P_obs(d)/P_ref(d)]`, so its total score contains a
+separable term `+kT * sum_pairs ln P_ref(d_ij)`. For DOPE's reference state -- non-interacting
+points in a ball of radius `a = sqrt(5/3)*Rg` -- `P_ref(d;a) = (1/a) g(d/a)` **exactly**. That term
+is a pure function of the structure's **scale**, forced by the construction rather than fitted.
+
+**The decisive number.** Contract a 13-mer uniformly by 10% -- pure scale, **zero shape change** --
+and a fixed-reference score moves **-0.256 kT per pair**. Over ~55 scored Ca pairs that is
+**~14 kT of reward for being smaller with no shape content at all.** A size-matched reference gives
+**exactly 0.000**, by scale invariance rather than by fitting.
+
+**A second effect specific to our length.** At n = 13 the reference state's entire support is
+[0, 15.05 A] while DOPE is tabulated to 15 A; at n = 9 the support is 13.09 A, so the top 13% of the
+tabulated range has **zero reference density**. This is the mechanism behind the authors' own
+"less accurate for smaller proteins", and behind the 40-50 residue wall S29-L1 found empirically.
+We are not approaching that wall -- we are inside it.
+
+**WHAT THIS CHANGES.** S29-L50 reported the compactness loadings (LEG_compactness +0.956,
+RG_LAW +0.921, LEG_solvation +0.621, LEG +0.606) as a measured pattern. They are **algebraically
+forced**. That is a stronger statement and a correction to how S29 framed its own result.
+
+**AND IT GIVES A CONSTRUCTIVE ALTERNATIVE TO PARTIALLING.** Rebuild a pair channel with a
+**per-candidate** reference `a_i = sqrt(5/3)*Rg_i`: provably scale-invariant, compactness-free
+**by construction**, no partialling needed. Nothing in `s27/ham_lib.py` does this -- every reference
+there is separation-only or quasi-chemical, which absorb chain connectivity and composition but
+**not size**. This matters for a verdict: a channel that survives statistical partialling has had a
+correlate removed post hoc and a sceptic can argue about what else went with it; a channel that is
+scale-invariant by construction leaves nothing to argue about. Relayed to lane R mid-build.
+
+**THE CONSTRAINT LANE L STATED UNPROMPTED, AND I AM HOLDING IT TO:** this creates **no new
+information**. It is a re-parameterisation of an existing structure->score map, so by the bound it
+reaches the endpoint only as a cosine, and the averaging readout spends at most 0.04 of any
+ranking. It is a **correctness fix and a band statistic**, not an Angstrom route. The published
+trade is explicit and runs against us in one direction -- ANDIS: native recognition and decoy
+discrimination cannot be optimised simultaneously, which *is* this trade.
+
+**PENDING FROM LANE L, AND I RATE IT HIGHER THAN THE ABOVE:** an exact non-identifiability proof
+that the pool's common-mode error is invisible **from within the pool**. If it lands it converts
+"68% common-mode" from a measured pathology into a structural impossibility for an operator class,
+makes lane O's *exactly zero* PC1 result a corollary, and either justifies lane X's whole premise
+or shows the escape must come from outside the pool. I have asked for the quantifier to be exact:
+invisible *from within the pool* is very different from invisible *to any method*, and the
+difference is where the sprint's remaining hope lives.
+
 ## WHAT I AM TREATING AS BINDING FROM S29 (until a lane breaks it)
 
 - Every native-free operator is a displacement; its whole value is one cosine. 3.00 Å needs
