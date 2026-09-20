@@ -653,6 +653,43 @@ def cmd_analyse(rows_paths=None, out=None):
             C[nm + "|FLOOR"] = o
             say(ST.fmt(o)); say("")
 
+    # ---- THE WIDER MULTI-START (native-free, deployable): every arm's emitted chain is a
+    # feasible point of the SHIPPED projection problem (fit production's own cloud C at lam 0.3),
+    # so picking the one with the lowest shipped objective obj0 strictly improves production's
+    # own optimisation, with no native anywhere. Ties are averaged over the argmin set, never
+    # broken by array order.
+    ms_arms = [a for a in arm_names if not a.startswith("ORACLE-GRID")] if True else []
+    OBJ = np.column_stack([col(a, "obj0") for a in ms_arms])
+    CH = np.column_stack([col(a) for a in ms_arms])
+    if np.isfinite(OBJ).all():
+        ms_pick, ms_ties = [], []
+        for r in range(len(pdbs)):
+            v, k = ST.argmin_tied(OBJ[r], CH[r])
+            ms_pick.append(v); ms_ties.append(k)
+        ms_pick = np.array(ms_pick)
+        ms_mean_arm = CH.mean(1)                      # the zero-information selection control
+        ms_oracle = CH.min(1)                         # ORACLE selection over the same set
+        say("THE WIDER MULTI-START (native-free selection by the SHIPPED projection objective)")
+        say("  arms in the set %d; mean tie-set size %.2f; production's own objective is beaten "
+            "on %d / %d targets"
+            % (len(ms_arms), float(np.mean(ms_ties)),
+               int((OBJ.min(1) < col("PROD", "obj0") - 1e-12).sum()), len(pdbs)))
+        say("  mean shipped objective: PROD %.4f -> best-over-arms %.4f (a strict improvement "
+            "of the quantity production minimises)"
+            % (col("PROD", "obj0").mean(), OBJ.min(1).mean()))
+        pen_share = col("PROD", "obj0") - col("PROD", "fit_resid0")
+        say("  the lam * ramah term contributes %.3e of PROD's objective (mean), max %.3e over "
+            "targets: the shipped hinge penalty is inactive at the optimum, so obj0 is the fit "
+            "residual to within that -- stated, not assumed"
+            % (pen_share.mean(), np.nanmax(np.abs(pen_share))))
+        for lab, v in (("MS-OBJ (native-free pick)", ms_pick),
+                       ("MS-MEAN (zero-information pick)", ms_mean_arm),
+                       ("MS-ORACLE [ORACLE] (pick by RMSD)", ms_oracle)):
+            o = ST.compare(v, prod, folds=folds, names=pdbs,
+                           label="P %s - PROD (BUILT CHAIN)" % lab)
+            C["MS|" + lab.split()[0]] = o
+            say(ST.fmt(o)); say("")
+
     # ---- multiplicity
     #: CTRL-INV (1/g) is native-free, hence DEPLOYABLE, so it enters the multiplicity set
     #: even though the prereg registered it as a direction control. Enlarging K is the
@@ -726,43 +763,6 @@ def cmd_analyse(rows_paths=None, out=None):
         "%+.4f -> %s" % (bokr["observed_gain"], bokr["null_across_targets"],
                          100 * bokr["share_accounted"], bokr["split_half"], bokr["verdict"]))
     say("")
-
-    # ---- THE WIDER MULTI-START (native-free, deployable): every arm's emitted chain is a
-    # feasible point of the SHIPPED projection problem (fit production's own cloud C at lam 0.3),
-    # so picking the one with the lowest shipped objective obj0 strictly improves production's
-    # own optimisation, with no native anywhere. Ties are averaged over the argmin set, never
-    # broken by array order.
-    ms_arms = [a for a in arm_names if not a.startswith("ORACLE-GRID")] if True else []
-    OBJ = np.column_stack([col(a, "obj0") for a in ms_arms])
-    CH = np.column_stack([col(a) for a in ms_arms])
-    if np.isfinite(OBJ).all():
-        ms_pick, ms_ties = [], []
-        for r in range(len(pdbs)):
-            v, k = ST.argmin_tied(OBJ[r], CH[r])
-            ms_pick.append(v); ms_ties.append(k)
-        ms_pick = np.array(ms_pick)
-        ms_mean_arm = CH.mean(1)                      # the zero-information selection control
-        ms_oracle = CH.min(1)                         # ORACLE selection over the same set
-        say("THE WIDER MULTI-START (native-free selection by the SHIPPED projection objective)")
-        say("  arms in the set %d; mean tie-set size %.2f; production's own objective is beaten "
-            "on %d / %d targets"
-            % (len(ms_arms), float(np.mean(ms_ties)),
-               int((OBJ.min(1) < col("PROD", "obj0") - 1e-12).sum()), len(pdbs)))
-        say("  mean shipped objective: PROD %.4f -> best-over-arms %.4f (a strict improvement "
-            "of the quantity production minimises)"
-            % (col("PROD", "obj0").mean(), OBJ.min(1).mean()))
-        pen_share = col("PROD", "obj0") - col("PROD", "fit_resid0")
-        say("  the lam * ramah term contributes %.3e of PROD's objective (mean), max %.3e over "
-            "targets: the shipped hinge penalty is inactive at the optimum, so obj0 is the fit "
-            "residual to within that -- stated, not assumed"
-            % (pen_share.mean(), np.nanmax(np.abs(pen_share))))
-        for lab, v in (("MS-OBJ (native-free pick)", ms_pick),
-                       ("MS-MEAN (zero-information pick)", ms_mean_arm),
-                       ("MS-ORACLE [ORACLE] (pick by RMSD)", ms_oracle)):
-            o = ST.compare(v, prod, folds=folds, names=pdbs,
-                           label="P %s - PROD (BUILT CHAIN)" % lab)
-            C["MS|" + lab.split()[0]] = o
-            say(ST.fmt(o)); say("")
 
     # ---- the contraction check (charter section 16): is a winner just a more compact blob?
     nat_rg, nat_bond = [], []
