@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 01:11 Pacific.
+Last update: 2026-09-20 01:25 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -169,6 +169,43 @@ third is the queued S8 free-energy item and is now the only structurally live ex
 
 
 
+
+
+## RECOGNITION IS NOW CLOSED THREE WAYS (2026-09-20 01:25, S29-L33)
+The within-realism-band measurement, the sprint's only open recognition question, has landed.
+Lane D designed it, ran it, and reports against its own registered criterion.
+THE DESIGN WAS VALIDATED FIRST, on the coordinator's relay of lane L's warning: of the three
+realism statistics, R1 (CAGEO percentile) and R3 (consensus percentile) ARE compactness-loaded
+(rho with Rg +0.460 and +0.404) and their cells are read with that stated; R2 (distance from the
+pool's median bond/Rg) is linearly orthogonal at -0.015 and is the clean definition. Lane D adds
+the caveat that makes the result honest: R2 is a FOLDED function of Rg, so banding on it removes
+the MAGNITUDE of the compactness deviation and leaves its SIGN free -- and the sign is exactly
+what S14 and rung 8 identify as the per-target information.
+F1 FIRES ON 50 OF 70 CELLS: information orthogonal to realism EXISTS in the library and is
+substantial (DIS +0.5397 in-band under the clean R2; max-over-scorers p 0.000 in every arm).
+This is NOT the flat null lane L's caution anticipated.
+F2 FAILS ON 58 OF 70, AND F2 IS THE ONE THAT MATTERS: conditioning on realism does not REVEAL
+hidden accuracy information, it REMOVES ordering that was already there. DIS goes +0.568 global
+to +0.508 in-band under R1 and +0.540 under R2, with the fold CI of the paired difference below
+zero on every informative scorer. The reading: a large part of what the library knows about
+accuracy IS realism, which is the perception-distortion theorem's content, and the part that is
+not is the same ordering the record already prices globally.
+ONE GENUINE SIGN CHANGE, PRICED AND DECLINED: SS_MATCH (secondary-structure compatibility) is the
+only scorer uninformative globally and informative in-band (-0.009 to +0.060, replicated across
+two realism definitions and both arms, 5/5 folds, 1.15x MDE). By the squared-skill law it is
+worth of order 1e-3 A. Lane D explicitly does not propose an arm on it and calls it a mechanism
+result. That is the correct handling.
+A METHODOLOGICAL CORRECTION FOR THE RECORD: the jointly-Gaussian closed form rho_SY.R, which lane
+L supplied and lane D pre-registered as its prediction, SYSTEMATICALLY OVERSTATES what survives
+narrow conditioning here (predicted +0.596 against +0.508 measured for DIS under R1; the width
+curve converges BELOW the prediction). On this instrument it is an UPPER BOUND, not an estimate,
+and any future use must be labelled so. The width curve itself behaved exactly as lane L
+predicted and is the right object to report.
+SO RECOGNITION IS CLOSED THREE WAYS, each independent: ACROSS realism levels by the
+perception-distortion theorem (no realism measure can prefer the distortion-optimal answer);
+WITHIN a realism band by this measurement (conditioning removes ordering rather than revealing
+it); and PER TARGET by the incidental-parameter theorem (the sign is not estimable from other
+targets' answers). The sprint has no open recognition question left.
 
 ## THE UNIFIED FINDING HAS A THEOREM (2026-09-20 01:11, S29-L31): THE SIGN IS AN INCIDENTAL PARAMETER
 Lane L identified what the sprint has been circling: the missing per-target sign is an INCIDENTAL
