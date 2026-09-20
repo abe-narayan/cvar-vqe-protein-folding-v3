@@ -358,11 +358,15 @@ def run_target(pdb, fac, ref, done, rows_path, floor=True):
             cl = float(I.ca_rmsd(Cs, cand.nat_ca))
             s_used = float(s)
         ca = np.asarray(ca, float)
+        Cin = Cp if arm == "FLOOR" else Cs
         r = dict(pdb=pdb, n=int(cand.n), fold=int(cand.fold), arm=arm, s=s_used, lam=float(lm),
+                 #: NATIVE-FREE mechanism quantities: how well the ideal-geometry chain fits the
+                 #: cloud it was fitted to, and how far it lands from PRODUCTION's own cloud.
+                 fit_resid=float(I.ca_rmsd(ca, Cin)),
+                 fit_resid0=float(I.ca_rmsd(ca, C)),
                  rmsd_chain=float(I.ca_rmsd(ca, cand.nat_ca)),   # ORACLE: post-hoc scoring
                  rmsd_cloud_in=cl,
-                 bond_in=mean_bond(rescale(C, s) if arm != "FLOOR" else C),
-                 rg_in=rg(rescale(C, s) if arm != "FLOOR" else C),
+                 bond_in=mean_bond(Cin), rg_in=rg(Cin),
                  bond_out=mean_bond(ca), rg_out=rg(ca),
                  secs=float(time.time() - t1))
         with open(rows_path, "a", encoding="utf-8") as fh:
