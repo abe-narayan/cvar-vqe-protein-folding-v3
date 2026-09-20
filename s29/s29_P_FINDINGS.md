@@ -50,6 +50,23 @@ about 3.5 in magnitude (1.10 vs 1.35).
 
 ## ORACLE DIAGNOSTIC
 
+P5. **[ORACLE] The RMSD-optimal cloud scale points the OTHER WAY from every native-free
+rescale, and S23 L2/L3 reproduce exactly on this lane's clouds.**
+`s29/results/s29_P_oracle_cloud_sstar.json`, S23 L6's closed form s* = sum(svd(Cc^T Tc)) /
+||Cc||^2 evaluated on the 126 cached clouds against their natives (ORACLE; computed with no
+projection): **s\* mean 0.9481, sd 0.2565, range 0.277 to 1.924, and 42.9% of targets want
+EXPANSION** -- S23 L2 reported 53/126 = 42.1% wanting expansion against 73/126 wanting
+contraction. The bimodality, the spread and the split all reproduce.
+**The native-free factors are orthogonal to it**: Spearman(s\*, g) **-0.117**, (s\*, s_SPAN)
+**-0.033**, (s\*, s_ISO) **+0.000** -- inside the +-0.11 band S23 L3 measured for eight other
+native-free candidates, and the sign of the only one outside it is NEGATIVE.
+**Mechanistically decisive, and registered before the 126-target run reports:** g is an
+expansion on 125 of 126 targets (mean 1.352) while the RMSD-optimal cloud scale is a
+contraction on 57% of them (mean 0.948). On the POINT-CLOUD basis BOND must therefore be
+harmful. The lane's question survives that only because the BUILT CHAIN's scale is fixed by
+covalent geometry, so the cloud-basis argument does not transfer -- which is exactly the
+distinction the prereg's section 2 rests on, now with a number attached.
+
 ## HYPOTHESIS
 
 ## REFUTED
