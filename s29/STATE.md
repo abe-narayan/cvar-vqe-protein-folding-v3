@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 01:34 Pacific.
+Last update: 2026-09-20 01:51 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -485,6 +485,44 @@ ALSO AMENDED BY THE SAME SATURATION: section 1.4's mid-range over-weighting is 2
 regime and 1.6x where the derivative is saturated, so the honest figure is a target-dependent 1.6
 to 2.7x. Direction unchanged. And lane T endorses my M6 phrasing without change and restates its
 clause in the file as an ENDPOINT-equivalence control rather than a bit-equivalence one.
+
+
+## Integration note 21 (2026-09-20 01:51, S29-L39): A CLEANER DEATH, AND A NEW FACT ABOUT THE SHIPPED OBJECTIVE
+Lane T ran its own post-mortem on all 126 targets, using LANE D's implementation so the author of
+the failed claim could not re-derive a favourable variant, with the design registered before the
+result. Three outcomes.
+1. THE VERDICT IS (A4), NOT SATURATION. The sign law fails on the unsaturated and saturated pairs
+   ALIKE -- every agreement inside the coin-toss CI [0.413, 0.587], every contrast within 0.036 of
+   zero, on all three reference maps and all three thresholds. So the terms assumption A4 sets to
+   zero are what decide the sign.
+2. AND A SHARPER FINDING LANE T DID NOT EXPECT: saturation fully explains beta's MAGNITUDE. On
+   the linear-regime pairs -- the only place the derivation claims to apply -- beta is 0.947 to
+   0.961 with a third of targets above 1, i.e. essentially AT the theorem's degenerate point
+   beta = 1, where the kept term vanishes and the predicted sign is INDETERMINATE. The beta of
+   0.47 to 0.62 that fired the falsifier lives on the SATURATED pairs, where the coefficient is
+   not a function of the regression slope at all. So corollary 2b cannot be rescued by narrowing
+   its scope: IN ITS OWN VALID REGIME IT IS NOT WRONG, IT IS VACUOUS -- the kept term is zero to
+   measurement precision and the dropped terms carry the whole sign. Lane T calls that a cleaner
+   death than the falsifier delivered and reports it as its own.
+3. A FACT ABOUT THE SHIPPED OBJECTIVE, INDEPENDENT OF THE THEORY AND WORTH THE REPORT: THE
+   SHIPPED COST IS MOSTLY OUTSIDE ITS OWN LINEAR REGIME. Median over 126 of the saturated share
+   at production is 80% at |2F-1| >= 0.3, 69% at 0.5 and 53% at 0.7; median |phi'| is 0.662; the
+   median target has about 20 of roughly 60 scored pairs in the linear band, and FAIL18 is worse
+   (72% against 68%). Lane T's earlier three-target estimate understated it. Consequence already
+   applied: section 1.4's mid-range band-weighting figure drops from 2.7x to about 1.6x, because
+   only the weight survives where the derivative saturates.
+STILL RUNNING, REGISTERED BEFORE ITS RESULT: the four covariance terms per target, which asks
+(a) whether the FULL expression's sign predicts the measured cosine where the truncated one does
+not -- a repair rather than a second withdrawal -- and (b) whether cov(a, n) > cov(b, n) at
+n = 126, i.e. whether THE POOL'S deviation tracks the native better than the POSTERIOR'S median
+map does. (b) is the pointer this sprint has produced that no closure touches, and lane T has
+committed to posting it either way, including the outcome where the full expression predicts no
+better, in which case the honest statement is that the second-order model is the wrong model for
+this cosine and the bound stands on its measured magnitudes alone, which is where it already
+stands.
+ALSO: `s29/THEORY_SUMMARY.md` exists (S29-L32) and now carries the verdict, and the smoke-test
+caveat is lifted everywhere -- every figure in THEORY.md, THEORY_SUMMARY.md and STATUS is from
+the 126-target run.
 
 ## Integration note 1 (2026-09-19 23:55, after S29-L1)
 Lane L's topic 1 closes the "import a QA method" route from outside: no published native-free
