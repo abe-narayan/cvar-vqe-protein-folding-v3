@@ -220,8 +220,17 @@ Ranked by what the record says each carries:
    coherent, S19).
 4. **A physics term on the emitted structure, in its FREE-energy form.** Outside the marginal class,
    so theorem 2 does not bound it; its single-point form is measured worse than random (S25 L16);
-   the free-energy form is the only class with peptide-length precedent (S29-L1) and S8's `F_qh`
-   machinery exists and was never finished.
+   the free-energy form is the only class with peptide-length precedent (S29-L1). **S8's `F_qh`
+   machinery does NOT exist -- absent from disk and from git history, so it is a rebuild, not a
+   resume (S29-L41).** And the objection that would have closed this row -- that an entropy term is
+   compactness-like, so the class is not orthogonal to the realism axis -- is **REFUTED at 126
+   (S29-L42), against my own registered prior**: compactness loading does not track in-band skill
+   (Spearman +0.083 against a 0.40 bar; partialling Rg out of the top eight removes 9% of it), the
+   most compactness-loaded channels carry the least skill, and 9 of 31 channels keep in-band skill
+   after removing both the monotone and the V-shaped dependence on Rg. The two channels that pass
+   the strict test are CONTACT_LL (a contact PATTERN, but a distogram re-reading, inside class M,
+   priced deployably at +0.52 A worse) and **LEG_torsion (LOCAL conformation, outside class M)**.
+   Row 3 stays open in the sense that the argument for closing it failed, not that the route works.
 5. **The pool's own dispersion**, promoted by reading (ii) of the post-mortem: it is a second moment
    and can predict the error's magnitude but not its sign, and both binding meter numbers need the
    sign -- unless `cov(a,n) > cov(b,n)` survives its test, in which case the pool, not the

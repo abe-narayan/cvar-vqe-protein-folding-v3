@@ -1164,11 +1164,64 @@ it carry `cov(., n) != 0` given the distogram?** Ranked by what the record says 
 |---|---|---|---|---|
 | 1 | **a better distance prior** (a larger/structure-trained predictor) | (A4) directly: it moves `m` toward `d(t)` | -2.15 A per unit of prior improvement, concave, the only steep lever (S24 `priorladder`); 0.1 of the way buys -0.215 A at 2.45x MDE | the only first-order lever in the record; blocked by hardware and leakage, not by theory |
 | 2 | **a learned residual** (predict the pool's common-mode error from features) | (A4) by construction, if it trains | S19: a corrector trained on the predictor's own features inherits its error structure; at 0.688 sign accuracy coherent mistakes emit **+0.31 A**; the error-coherence tax is the binding constraint, not the accuracy | first order in principle, and the only class where a new head could act; needs a feature set demonstrably decorrelated from the distogram's own errors |
-| 3 | **a physics term on the emitted structure** | outside class M entirely (it is not a function of the marginals), so Theorem 2 does not bound it | S25 L16: both energies measurably worse than a random subset (AMBER +0.455, Legacy +0.330, 5/5 folds); S13: CVaR at small alpha is exactly a steric-clash filter; BUT lane L's S29-L1 finds the only native-free selectors that work at 9 to 25 aa are free energies over a self-generated ensemble | the class is not excluded by any theorem here; it is excluded by every measurement of its single-point form. The untested form is a FREE energy (entropy included), and S8's `F_qh` machinery exists and was never finished |
+| 3 | **a physics term on the emitted structure** | outside class M entirely (it is not a function of the marginals), so Theorem 2 does not bound it | S25 L16: both energies measurably worse than a random subset (AMBER +0.455, Legacy +0.330, 5/5 folds); S13: CVaR at small alpha is exactly a steric-clash filter; lane L's S29-L1 finds the only native-free selectors that work at 9 to 25 aa are free energies over a self-generated ensemble | **ROW 3 STAYS OPEN, and the argument that would have closed it is REFUTED (S29-L42; section 7b below).** The class is not excluded by any theorem here; it is excluded by every measurement of its single-point form. S8's `F_qh` machinery does NOT exist (S29-L41) and would have to be rebuilt |
 | 4 | **a second, differently biased pool** | (A3) only: it lowers `rho_ab` | S24 L2/L3: 31% angular independence only when UNSELECTED, and then q = 1.231 (0.76 A worse); score selection restores cos 0.943; the union is worth +0.002 | second order by Theorem 2 -- at `rho = 0.65` the expected cosine is still at the random reference. Not worth a build |
 | 5 | **an ESM-attention pairwise map** | (A4) only if it adds `cov(., n)` beyond the distogram, which already consumes ESM-2 650M PCA-32 | S17: in-band content, length-gated, no shortlist value; S29-L1: AF2's own pLDDT has no within-target skill on 588 peptides of 10 to 40 aa | almost certainly redundant with the distogram; the cheap test is the partial correlation with `n` given DIS, not an endpoint run |
 | 6 | **the pool's own dispersion / prediction-pool disagreement** | neither: it is a second moment of the observable 32% | S23 L9; `prediction-pool-disagreement-is-a-native-free-signal` (signal demonstrated, Angstrom value NOT measured) | can predict the error's MAGNITUDE, never its SIGN, and the cosine and the percentile both need the sign |
 | 7 | **a joint over the same marginals** (triangle repair, embeddability, a learned map-level head) | (A1) formally, (A4) not at all | section 2 C2: the repair moves `g` partly into `ker(Jc^T)`, which the gradient annihilates exactly (45% of pair space at N = 12) | buys zero locally by construction; it can move the minimiser, which is section 1's projection question, not an information question |
+
+### 7b. The compactness objection to row 3, tested at 126 and REFUTED (S29-L42)
+
+Lane L's objection (topic 7) was that an entropy term at peptide length tracks basin width, which
+is compactness-like, so the free-energy class is not orthogonal to the realism axis and row 3 is
+not a live exit from (B2). The coordinator drew the same inference from the channel family's
+loadings. **It is wrong, and the measurement that kills it is the one I registered against my own
+prior** (`s29/PREREG_S29_T.md`, prior F1 at 3 to 1; the result is F2).
+
+**The setup, NATIVE-FREE and deployable:** the loadings are exactly as predicted. Spearman of each
+channel with its members' Rg, median over 126 pools of 500, every fold CI excluding zero:
+LEG_compactness **+0.956** (110.7x MDE), RG_LAW +0.921, POOLGO +0.672, LEG_solvation +0.621,
+LEG +0.606, DSSPHB +0.587. CONTACT and ENV are below 0.7x their own MDE and are reported NOT
+MEASURED rather than ranked (contract rule 13).
+
+**The kill, ORACLE diagnostics throughout.** Compactness loading does not track in-band skill.
+Across the 32 channels, `Spearman(|rho_Rg|, |rho_inband|) = +0.083` against my registered bar of
++0.40, and partialling Rg out of the top eight by skill removes **9%** of it (bar: 40%). The most
+compactness-loaded channels carry the LEAST in-band skill -- LEG_compactness +0.043, RG_LAW +0.087,
+LEG_solvation +0.073 -- and member Rg itself orders the in-band set at only **+0.075** (ORACLE),
+against +0.412 over the whole pool: the in-band/whole-pool split of `in-band-is-the-only-ranking-metric`,
+again. **The inference "these channels are size measures, therefore their skill is a size artefact"
+is the one the measurement kills.**
+
+**Robust beyond F2's own gate: 9 of 31 channels** keep `|rho_inband| >= 0.15` after partialling
+out both rank(Rg) and rank(|Rg - median Rg|), with fold CIs excluding zero -- DMAP_CONS +0.316,
+DIS +0.275, DIS_MEAN +0.229, CONTACT_LL +0.221, CAGEO +0.216, TORS_CONS +0.204, LEG_torsion +0.181,
+DSSPHB +0.166, RAMA +0.158. Nine of 31 is far above the ~1.6 a 95% interval yields by chance, so
+"in-band skill survives removing compactness" does not rest on F2's narrow `|rho_Rg| <= 0.30` gate
+or on any one channel.
+
+**Which channels survive F2, and what they physically are** -- the sentence S30 needs:
+
+* **CONTACT_LL** (`rho_Rg` -0.240, partialled in-band +0.221, fold CI [+0.150, +0.184]) is the
+  negative log-likelihood of the candidate's 8 A contact map under the distogram
+  (`s27/ham_lib.py:52`). Its skill is a **contact PATTERN**, not a size. **But it is a
+  distogram RE-READING** (`ham_lib`'s own category), so it is inside class M, Theorem 2 still
+  bounds it, it carries no information the distogram lacks -- and S27 priced it deployably at
+  **+0.52 A WORSE** as a selector with every DIS+CONTACT mix null-to-worse (S28-L49). It is the
+  less interesting survivor.
+* **LEG_torsion** (`rho_Rg` +0.182, partialled in-band +0.181, fold CI [+0.053, +0.236]) is the
+  Legacy energy's backbone-torsion term: **LOCAL conformation**, a function of the structure and
+  not of the distogram, so it is **outside class M** and Theorem 2 does not bound it. It is the
+  survivor that matters for row 3, because it is the physics family's own channel and its in-band
+  skill is demonstrably not compactness.
+
+**What this does and does not license.** It refutes the general argument that the physics/realism
+family's skill is a size artefact; it does **not** show that a width or entropy term specifically
+would be orthogonal, because no such channel exists here to measure (S29-L41). And in-band skill
+is not deployable value: ranking information is anti-useful on an averaging readout (S27 section
+6), and by section 8 any channel reaches the endpoint only as a cosine, where everything the
+project owns measures 0.04. **Row 3 stays open in the precise sense that the argument for closing
+it has failed, not in the sense that the route is shown to work.**
 
 **Where that leaves the sprint.** Rows 4 to 7 are the ones a quantum formulation naturally reaches
 for, and Theorem 2 prices them all at second order. Rows 1 to 3 are the only first-order classes,
