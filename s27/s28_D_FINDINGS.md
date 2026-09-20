@@ -32,8 +32,10 @@ exact through `s12.instrument.project` (`s28_D_reproduce_chain_seed102.json`). H
 (vqe row 11140 of 20160, 3BTB / DIS+LEG_steric, seed 0 of the S27 run): the genuine CVaR-VQE
 re-run gives 4.96243989356248, m = 79, exact (`s28_D_reproduce_vqe_seed103.json`). Hour 4,
 seed 104 (pool row 6MBM / DIS+0.25*LEG_steric): 1.355825475263309 exact. Hour 5, seed 105
-(chain row 2EFZ / DIS): cloud 3.3839895802341893 and chain 3.6427301222769004 exact. Five of
-five across the three bases reproduce to the last digit.
+(chain row 2EFZ / DIS): cloud 3.3839895802341893 and chain 3.6427301222769004 exact. Hour 6
+(after the five-day pause, 2026-09-19; seed 106, vqe row 11058 of 20160, 3BTB / DSSPHB):
+4.826544566817036 exact, m 76 = 76 (`s28_D_reproduce_vqe_seed106.json`, S28-L38). Six of
+six across the three bases reproduce to the last digit, on both sides of the pause.
 
 D5. **The built chain's numerical floor (S28-L18).** The same production cloud (equal to 6
 decimals, 5.7e-14 in RMSD) projected by lane A and by S27 differs by up to 0.0186 A per target
@@ -103,16 +105,21 @@ permutation null; the ORACLE ceiling is under MDE, S28-L6/L8) and Part 2 (every 
 harmful side, S28-L32/L33); B2's F5-B2 as registered (first clause straddled, second failed,
 S28-L25/L29/L26/L31).
 
-## OPEN (my queue)
+## OPEN (my queue, as of the resume 2026-09-19)
 
-- Lane A's first result entry (ORACLE ceiling, then the recognition arms): H1 above, the
-  lam*S~ vs CVaR scale (S28-L1 caveat a), the denominator failures, the nested lam.
-- Lane C's Part 2 built chain when it posts (my point-cloud pass with `s27/s28_D_attack.py`
-  found every ranker-informed cell null-to-WORSE; the permuted controls are inside their MDE).
-- Lane B's endpoint arms F1 to F4 (production comparator, S28-L2 caveat a; the three-way split).
-- Hour-2 reproduction (seed 102, a chain row); hour-3 (seed 103, a vqe row).
+- Lane B's built-chain verdict (18 arms): production as the comparator (S28-L2(a)), the nine
+  0.7x cells priced as a best-of-nine, FAIL18 / 108, the shared-code-path floor (its "vs
+  production" contrasts cross a code path, S28-L38), the three-way split with the
+  representability fit (`s27/s28_B_represent.py`, landed after the pause, not yet run at 12
+  targets), never GS R2's W/L as evidence.
+- Lane A2's built-chain entry: the step ladder vs production and vs the mean of the SAME two
+  projected random draws (S28-L23(c)); e-grid priced; the circP residual beside its RMSD.
+- Lane C2's built-chain entry: CAGEO's preference expected to collapse on ideal-geometry chains
+  (S28-L36 note a); the pool-member control for all 31 scorers; the max-over-31 null.
 - The deferred suite files (pipeline, integration, the two AMBER files) in the coordinator's
   quiet window; `python s26/examine.py` at the end.
+Closed from the earlier queue: lane A's entries (S28-L13, L20, L27b), lane C's Part 2 chain
+(S28-L33), lane B's point cloud (S28-L22), reproductions 102 to 106.
 
 ## What damaged my own expectations
 
@@ -128,6 +135,11 @@ S28-L25/L29/L26/L31).
 
 - Did not re-queue `tests/test_pipeline.py`, `test_integration.py` or the AMBER test files
   after the coordinator's 19:33 decision (S28-L5); they wait for the announced quiet window.
+  On the resume (2026-09-19) the box sat at 88 to 97% RAM under the user's own programs, the
+  governor killed two chain jobs in the first ten minutes, and the lane files alone (0.33 GB)
+  were suspended once; the heavy files stay deferred until the coordinator's quiet window.
+- Did not re-run the light non-AMBER files after the pause: no file outside `tests/test_s28_B.py`
+  changed between the pause gate and the resume (`git diff fafbc5bf --stat`, S28-L38).
 - Did not run any endpoint experiment of my own; every number here is a recomputation from a
   lane's artefact, a reproduction of S27, or a synthetic-data test.
 - Did not post on lane A's ORACLE ceilings before lane A's own entry (H1 is held here).
