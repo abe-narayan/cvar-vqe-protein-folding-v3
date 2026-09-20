@@ -136,6 +136,14 @@ def target_row(pdb, with_rungs=True):
             rung_cons = np.array([float(I.kabsch_rmsd_batch(W, x).mean()) for x in Wr])
     row = dict(pdb=pdb, n=n, k=k, fold=int(cand.fold), fail18=bool(pdb in I.FAIL18),
                scorers=scorers, rungs=rung_names, basis="ca", oracle=True, cells={})
+    #: ADDENDUM 2 (the coordinator, from lane L's S29-L19): if the realism statistic is
+    #: compactness-loaded, the band removes the very axis S14 measured as carrying in-band skill
+    #: (+0.909 with the native's z-scored Rg), and a null is uninterpretable.  rho(R, Rg) on the
+    #: pool is native-free and is computed for every R; the ORACLE reference rho(Rg, RMSD) is
+    #: computed beside it (labelled ORACLE) because it is the axis in question.
+    row["compactness"] = dict(rho_Rg_rmsd_ORACLE=_pearson_ranks(_ranks(rg), _ranks(rr)),
+                              rho_bond_rmsd_ORACLE=_pearson_ranks(_ranks(bond), _ranks(rr)),
+                              sd_rg=float(rg.std()), mean_rg=float(rg.mean()))
     # ---- the three realism statistics, on the pool and on the rungs
     R = {}
     R["R1_CAGEO"] = (pct_of(ch["CAGEO"], ch["CAGEO"]),
@@ -153,6 +161,18 @@ def target_row(pdb, with_rungs=True):
         R["R2_GEOM"] = (pct_of(R["R2_GEOM"][0], R["R2_GEOM"][0]), pct_of(R["R2_GEOM"][1], R["R2_GEOM"][0]))
     else:
         R["R2_GEOM"] = (pct_of(R["R2_GEOM"][0], R["R2_GEOM"][0]), None)
+    for rname in REALISMS:
+        rp = None
+        if rname == "R1_CAGEO":
+            rp = pct_of(ch["CAGEO"], ch["CAGEO"])
+        elif rname == "R2_GEOM":
+            _pb, _pr = pct_of(bond, bond), pct_of(rg, rg)
+            rp = pct_of(np.sqrt((_pb - 0.5) ** 2 + (_pr - 0.5) ** 2), np.sqrt((_pb - 0.5) ** 2 + (_pr - 0.5) ** 2))
+        else:
+            rp = pct_of(cons, cons)
+        row["compactness"][rname] = dict(rho_R_rg=_pearson_ranks(_ranks(rp), _ranks(rg)),
+                                         rho_R_bond=_pearson_ranks(_ranks(rp), _ranks(bond)),
+                                         rho_R_rmsd_ORACLE=_pearson_ranks(_ranks(rp), _ranks(rr)))
     for arm, use_rungs in (("pool", False), ("pool+rungs", True)):
         if use_rungs and not rung_names:
             continue

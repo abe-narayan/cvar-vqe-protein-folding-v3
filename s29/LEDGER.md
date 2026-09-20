@@ -2403,3 +2403,114 @@ chose any parameter; f, the subsets and the frame are native-free.
 Artefacts: `s29/results/s29_B_tta_subset_rows.jsonl`; `s26/jobs_done/s29B_tta_subset.json`;
 `s26/logs/s29B_tta_subset.log`; code `s29/s29_B_tta.py`, tests `tests/test_s29_B.py` (18 pass);
 prereg `s29/PREREG_S29_B.md` addendum 2 (commit d3ccf6b6, before the job).
+
+## S29-L26 -- ADVERSARY CHECK OF S29-L7 (lane T's clauses 1 and 2) AND THE M6 FIXED-PROFILE CONTROL ON THE POINT CLOUD: THE IDENTITY HOLDS TO 2e-14 ON 126/126 AND IS THE CHAIN RULE; CLAUSE 2 IS **FALSIFIED ON ITS OWN REGISTERED BAR** (beta MEDIAN 0.756, ABOVE 1 ON 13% NOT 67%, SIGN AGREEMENT 49% INSIDE THE COIN-TOSS CI) UNDER THREE INDEPENDENT tau AND THE WEIGHTED REGRESSION; AND THE DEPLOYED VQE ARM DIFFERS FROM A FIXED TARGET-INDEPENDENT PREFIX BY -0.0097 A, 0.43x MDE, NOT MEASURED -- WHILE T's "EQUALS ON 120/126" IS FALSE AT THE STRUCTURE LEVEL (43/126 AT THE FLOOR) (2026-09-20 00:54, D)
+
+EVERY NUMBER IS ORACLE where it touches the native direction or an RMSD; nothing deployable;
+nothing tuned. Code `s29/s29_D_theory_check.py` and `s29/s29_D_m6.py`, both written from the
+STATEMENTS in `s29/THEORY.md` and `s29/PREREG_S29_D_m6.md` and importing neither lane T's code
+nor lane B's, so a shared implementation error cannot produce agreement. Jobs
+`s26/jobs_done/s29D_theory_id_beta.json` (110 s, 0.261 GB), `s29D_theory_beta.json` (70 s,
+0.312 GB), `s29D_m6_cloud.json` (326 s, 0.354 GB).
+
+**CLAUSE 1 (the informativeness identity) HOLDS, AND IT IS THE CHAIN RULE.** `<-grad S(c), u>`
+against `-<g, r>` with g the risk table's own slope / P and r = Jc u: relative error median
+2.0e-16, max 2.2e-14, **126/126 under 1e-6** (`s29/results/s29_D_theory_identity.json`). With the
+THEORY's CDF coefficients `w_a (2 F_a(d) - 1)` instead of the table's slope the agreement is
+median 1.3e-6, max 2.4e-4, 126/126 under 1e-3 -- the residual is the float32 storage of the risk
+table plus the step-vs-interpolation difference at the bin centres, not a failure of (2.5). The
+verdict a reader should take: clause 1 is not evidence FOR the theorem, it is a correctness check
+on both implementations, and both pass. C2's geometric compression reproduces too: `ker(Jc^T)` is
+**48.0% of pair space** on the mean over 126 targets (T's illustrative 45% at N = 12).
+
+**CLAUSE 2 (beta > 1 and the sign law) IS FALSIFIED AT ITS OWN REGISTERED BAR, BOTH LIMBS.**
+Registered: "beta > 1 on at least 2/3 of targets, and sign(cos_DIS) = -sign(beta - 1) on at least
+70%... Falsified if beta has median <= 1, or if the sign agreement is inside a coin-toss CI."
+Measured (`s26/logs/s29D_theory_beta.log`, 126 targets):
+| tau | beta median | beta > 1 | sign agreement | small-\|beta-1\| third | large third |
+|---|---|---|---|---|---|
+| LIB75 (S24's sequence-blind 75-window draw, lane O's rule) | **0.756** | **16/126 (13%)** | **62/126 (49%)** | 57% | 38% |
+| UNIV (the whole leakage-safe universe's mean map) | 0.753 | 13/126 (10%) | 61/126 (48%) | 57% | 43% |
+The coin-toss CI is [41%, 59%]: both sign agreements are inside it. BOTH of T's own falsifying
+conditions fire (median beta <= 1 AND the agreement inside the coin-toss CI). The third
+sub-clause fails in the opposite direction to its prediction: exceptions were predicted to
+CONCENTRATE where |beta - 1| is smallest, and agreement is HIGHER there (57%) than in the largest
+third (38 to 43%).
+I attacked the STRONGEST version of the clause before calling it, because a plain OLS slope is
+not what the theorem's expectation contains: (a) the **w x kappa-WEIGHTED** regression, which is
+the version E[<g,r>] = -sum w kappa var(a)(1 - beta) actually implies -- median 0.69, above 1 on
+12%, sign agreement 50%; (b) a **third tau** the theorem does not ask for, the target's own
+500-member pool mean map -- median 0.57, above 1 on 0%, agreement 38%; (c) the **discrete**
+posterior median instead of the risk argmin -- unchanged; (d) **by separation shell** -- beta
+0.30 to 0.42 at |i-j| = 2 to 3, 0.80 to 0.89 at 4 to 6, 0.43 to 0.63 at 7+. Every variant is
+below 1 and no variant reaches the registered bar.
+**WHAT THIS DOES AND DOES NOT KILL.** It does NOT touch theorem 2's central result (the
+expectation contains no term in n; corollaries 2a and 2c), which is a statement about what the
+marginals CANNOT do and is untouched by the value of beta. It DOES kill corollary 2b as a
+predictive law on this instrument: the measured beta < 1 predicts a POSITIVE mean cosine by
+-sign(beta - 1), and the measured cosine is -0.034. Either A2/A3 fail at the precision the sign
+law needs, or the posterior's median map deviates LESS from typical than production does
+(beta < 1) for a reason the decomposition does not model -- the natural candidate being C1
+(production is near a stationary point of the objective, so the cosine is read off a residual,
+which T's own C1 says). **The operational consequence is the one that matters for rule 20**: the
+sign law must NOT be used to predict which way a new objective's cosine will point, and any
+future claim of the form "shrinking moves beta and therefore the cosine" is now unsupported on
+this instrument until the shrink grid measures it directly (running: `s29D_theory_shrink`).
+
+**M6, THE FIXED-PROFILE CONTROL, ON THE POINT CLOUD (`s29/PREREG_S29_D_m6.md`, registered before
+any contrast was computed, with a written declaration of the row statistics I had already seen).**
+My independent computation of p*(alpha = 0.18, T = 0.5) on the standardised rank ladder --
+Sion's minimax form, verified against a 4,000-step mirror descent on the project's own free
+energy -- reproduces lane T's profile: t* **-1.5329** (T: -1.534), F* **-4.7221** (-4.7237),
+m* **30** (29), participation ratio **340.4** (342.3), entropy **8.818 bits** (8.819), prefix
+enhancement **8.80x** (8.4x), uniform F **-4.5320**/m **93** (-4.5394/92). An independent
+implementation from the stated formula lands on T's numbers to the third decimal.
+Then, from `s27/results/vqe_rows.jsonl` (config DIS, seed 0, 126 targets, the artefact reused and
+never recomputed) plus my own rebuild of every prefix average:
+1. **The tail IS the classical prefix**: |rmsd_vqe - rmsd_topm| max **1.14e-13** over 126
+   (S28-L21 reproduced independently, and my own rebuild of the top-m(t) average reproduces the
+   stored `rmsd_vqe` at max |diff| **0.0**).
+2. **F-M6a FAILS AT THE STRUCTURE LEVEL.** Exact set equality with a fixed m* happens on 3 to 10
+   of 126 targets (m* = 74: 3; m* = 75: 9; m* = 80: 10; m* = 30: 0), mean |m(t) - m*| = 5.2 at
+   the best m*, Jaccard 0.93. Agreement of the emitted structure within the built-chain input
+   floor (0.006 A): **43/126**; within 0.02 A: 77/126; within 1e-6: 9. T's "at least 120 of 126"
+   is not met by any m* in the registered sweep. The registered prior I wrote (set equality rare,
+   structures agree anyway) was HALF right: they agree within 0.02 A on 61% of targets, not on
+   the 95% the prediction needs, and the worst target differs by 0.58 A.
+3. **F-M6b DOES NOT FIRE, WHICH IS THE ANSWER THAT MATTERS**, `ST.fmt` verbatim (negative = the
+   fixed prefix is better):
+```
+  fixed prefix m*=75 minus the deployed VQE arm (point cloud, seed 0)
+    a 3.0483 (med 2.8373)   b 3.0580 (med 2.8460)   n=126
+    effect -0.0097   median -0.0001   SE 0.0081   MDE 0.0226   effect/MDE -0.43
+    iid  CI95 [-0.0259, +0.0051]
+    fold CI95 [-0.0250, +0.0005]   folds same sign 4/5   per-fold 0:-0.038 1:-0.004 2:-0.008 3:-0.005 4:+0.004
+    64W/60L/2T   worst degradation +0.3137 (5H1H)   p90 +0.0376   power 0.22  Type-M 2.12
+    concentration: drop-top10 +0.0079 vs uniform-effect null p10/p50/p90 +0.0015/+0.0075/+0.0142 -> pctile 0.539
+    VERDICT: NOT MEASURED (|effect| 0.0097 <= its own MDE 0.0226, 0.43x)
+```
+   The deployed CVaR-VQE arm and a fixed target-independent 75-prefix differ by **-0.0097 A at
+   0.43x MDE with the fold CI including zero** on the point cloud. Removing the entire quantum
+   stage -- circuit, optimiser, per-target computation -- and replacing it with one number costs
+   or buys nothing measurable.
+4. **The m-ladder is flat where it matters** (my rebuild, ORACLE point cloud, 126 targets):
+   m = 70 **3.0483**, 71 3.0479, 74 3.0483, 75 3.0483, 80 3.0577, and the profile's own
+   m* = 30 **3.0720**; the deployed arm 3.0580. So the one scalar the quantum stage still chooses
+   is worth about **0.01 A across the range it actually explores** and 0.024 A out to m = 30.
+   The deployed arm is 0.0097 A WORSE than the fixed 75-prefix because its realised m wanders.
+**Honest framing, as lane T asked**: none of this diminishes the trainability result (the
+optimiser does reduce F, S28-L21/S29-L15). It measures what that reduction buys at the endpoint,
+and on the point cloud the answer is nothing measurable. The BUILT CHAIN (the reporting basis)
+is the registered primary and is queued (`s29_D_m6.py chain`, 126 x 7 projections); no verdict on
+the charter's requirement is written until it lands.
+Multiplicity: 2 endpoint comparisons declared in the M6 prereg, 1 run here (point cloud); the
+sweep's other cells are a curve and are priced as such if any is quoted as a best. 4 ORACLE
+diagnostic contrasts in the clause-2 check (three tau plus the weighted variant).
+Artefacts: `s29/results/s29_D_theory_identity.json`, `s29_D_theory_beta.json` (the 126-target
+two-tau run is in `s26/logs/s29D_theory_beta.log` lines 9 to 11; the three-tau 126 re-run is
+job `s29D_theory_beta3`), `s29_D_m6_profile.json`, `s29_D_m6_cloud_seed0.json`,
+`s29/PREREG_S29_D_m6.md`, code `s29/s29_D_theory_check.py`, `s29/s29_D_m6.py`.
+Verdict: **S29-L7 clause 1 STANDS (as a correctness check). Clause 2 is VETOED at its own
+registered bar under four variants. S29-L15's M6 equivalence claim STANDS WITH CAVEAT: false as
+a structure-level equality (43/126 at the floor, not 120/126), true as an ENDPOINT statement
+(0.43x MDE) on the point cloud, chain pending.**
