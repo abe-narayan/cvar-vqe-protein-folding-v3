@@ -93,3 +93,27 @@ path. 12. Ties never break by array order.
     than local informativeness (ordering, variance, non-contraction), and does not claim the
     gradient. A lane proposing to leave the class names the channel that sees the native's
     deviation from typical and prices its error coherence (S19).
+
+## Addendum 2 (2026-09-20 00:22, coordinator; from lane L's topic 3 and topic 4)
+22. THE PERCEPTION-DISTORTION BOUND (Blau & Michaeli 2018, theorem 3; lane L, S29-L12). For ANY
+    distortion measure, the distortion-optimal estimator's output DISTRIBUTION must diverge from
+    the distribution of real signals, most steeply at the low-distortion end. Every scorer in the
+    S27 library is a realism measure, so every one of them MUST disprefer the RMSD-optimal
+    answer: S28-L48 is that theorem measured, and the scorers are not defective. CONSEQUENCE: no
+    lane may propose "find a native-free scorer that prefers the near-native structure" as a
+    route; it is forbidden in advance. The one open version is ordering WITHIN a matched-realism
+    band, which lane D is measuring. Any future recognition claim states which side of this
+    bound it sits on.
+23. THE AVERAGING BOUND (Krogh-Vedelsby and Ueda-Nakano; lane L, S29-L8). S23 L9's error
+    identity IS the ambiguity decomposition, and the (1 - 1/M) coefficient gives an infinite
+    pool of the same kind at 3.040 A against the shipped 3.0483: enlarging or re-weighting the
+    retained set is worth at most about 0.008 A. No lane spends a 126-target run on "average
+    more or differently" without stating why it escapes this bound.
+24. THE FLAT-MINIMISER CLAUSE (Barkoutsos et al.; lane L, S29-L13). CVaR_alpha's global-minimiser
+    set is {theta : overlap with the best state >= alpha} and is large and flat. Any accuracy
+    change attributed to CVaR optimisation must be shown NOT to be a tie-break inside that set.
+25. CONTRACTION IS JENSEN, NOT THE POSTERIOR (lane L, S29-L12; lane D, S29-L10). The Bayes
+    estimator of a symmetrically over-confident posterior is not contracted; the 22 to 26%
+    contraction is Jensen's inequality on the coordinate average, and the shipped cost's
+    gradient EXPANDS. No lane may claim a contraction mechanism at the posterior or gradient
+    level; the arithmetic of averaging is the mechanism.
