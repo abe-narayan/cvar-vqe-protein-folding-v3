@@ -74,17 +74,108 @@ shut it. Several are theorems rather than measurements.
 
 ## 4. What was established positively
 
-### 4.1 The tail is selection-limited, and the damage is in one stage
+### 4.1 The tail is selection-limited, not pool-limited
 
-[PENDING — lane F detail.]
+The ORACLE best member of the 18 worst pools is **2.2842 Å** (built chain 2.2845) — already under
+the 3.00 Å cap the opening arithmetic asks for, with **13 of the 18** holding a member under 3.00
+and the worst tail pool bottoming out at 3.54. **The material to fix the tail is already inside the
+candidate sets the pipeline is handed.** Nothing in this claim is conditioned on the thing it
+measures, which is why it survived the adversary while the entry's headline did not (§Appendix A).
+
+Retrieval is exonerated at every stratum: BLOSUM's 500 against a random 500 of the same universe is
+NOT MEASURED everywhere, most pointedly on the tail (0.01× its own MDE). **This revises what the
+project had recorded** — the harm on hard targets was attributed to the retrieval corpus; it is not
+retrieval.
+
+**The strongest tail result, and it replicates on all three tail definitions:** the shipped score's
+Spearman with ORACLE in-pool RMSD is **+0.6446 on the easy 108** (fold CI [+0.5905, +0.7063], 5/5
+folds) and **+0.1066 on the hard 18 with the fold CI including zero**. *The score cannot order its
+own pool on hard targets.* It is the distogram's own error that drives this (ρ = −0.799, −0.819
+length-residualised), the chain is fully mediated, and **shape error is 83% of it — scale is
+refuted as the mechanism** (partial ρ = −0.067, p = 0.46, against shape's −0.641 at p = 6.5e−16).
 
 ### 4.2 The pool is a codebook, not a channel
 
-[PENDING — lane T detail.]
+The charter asked where the 1.44 usable bits went and where the other 5.56 were spent. The question
+is not well-posed: **the 500 deposited backbones carry the structure and the index only names it**,
+so bits are not conserved across an index. Seven index bits move the ORACLE ladder 4.108 → 1.898 Å,
+which through the displacement bound is ρ = 0.887 — **36.6 bits of displacement information out of
+7 index bits, a 5.2× ratio**.
 
-### 4.3 The bound restated as one estimable number
+> The honest inversion: **the readout's 7 bits are worth five times their face value, and the
+> system cannot supply even one of them.**
 
-[PENDING — lane T's reformulation and lane P's measurement.]
+The **value-of-a-bit law** follows and makes allocations comparable: `D(R) = a + c·2^(−R/γ)` fits at
+**R² = 0.9983** (a = 1.3312 Å, γ = 3.1636), so `−dD/dR = 0.219·(D − 1.331)` Å per bit. Candidate
+indexing beats subset cardinality by **3×** — which *explains* the 3.5× S29 measured — and
+**torsion/configuration encodings are arithmetically infeasible** at this width (48 bits for four
+basins per residue at n = 12, against 7 deployed). The charter called the encoding the least-examined
+component and the likely hidden bottleneck. **It was examined and it is not.**
+
+### 4.3 The field library spends its rank on the wrong direction
+
+Lane L derived that a fixed-reference statistical potential contains a **separable term that is a
+pure function of scale** (`+kT·Σ ln P_ref(d_ij)`; a uniform 10% contraction of a 13-mer with zero
+shape change moves it ~14 kT, while a size-matched reference moves by exactly 0.0000). It predicted,
+falsifiably and with its concession pre-stated, that **one of the Gram's two effective directions
+must therefore be the radial one**. Measured independently:
+
+```
+radial share of the Gram trace                        0.5798  [+0.545, +0.603]
+cos(dominant principal direction, radial)             0.947 mean / 0.984 median
+fraction of lambda_1 that is radial                   94.8%
+stable rank with radial removed                       1.705 -> 2.642
+
+cos(direction to the native, radial), all targets    -0.0675
+cos(direction to the native, radial), FAIL18         -0.2524
+```
+
+> **The library spends the majority of its two available directions on a component that is
+> orthogonal to the answer in general and *anti-aligned* on the hard targets** — and lane F had
+> independently shown that shape, not scale, is 83% of the tail's error. Three lanes, one chain.
+
+It does **not** follow that deflating scale helps: the residual 42% has no large eigenvalue, the
+combination's ceiling already prices the whole span, and lane L withdrew its own deployable proposal
+on exactly this point — the size-matched field *is* the deflated field, and deflation reallocates
+rank without creating any.
+
+### 4.4 Ordering exists; preference does not
+
+On a ladder where **kind, local realism and perturbation budget are all matched** — every rung an
+ideal-geometry backbone built from torsions drawn from the fold's leakage-safe Ramachandran table,
+no projection, no averaging, no contraction — the verdict splits:
+
+- **Ordering survives.** Two of 43 channels clear the bar, DIS at +0.347 with an anchor contrast of
+  +0.134 (max-over-channels sign-flip null p = 0.000).
+- **Preference fails on all 43.** The best `pref_near` in the library is 0.640, under the bar, and
+  that channel prefers a *random pool member* to production on 0.790.
+- **The largest preference effect in the library points the wrong way:** DIS prefers production to a
+  0.55 Å structure on **94.2%** of targets. The project's most-cited negative, with its confound
+  removed, comes out **sharper**.
+- The leave-fold-out combination prefers the near-native rung to production on **93.0%** of held-out
+  targets — and prefers an **arbitrary pool member on 100%** and a **3 Å rung on 100%**. Margin
+  **−0.070 [−0.110, −0.028]**. *It learned "is this production?", not "is this near-native".*
+
+**And the mechanism makes the null a theorem on this instrument.** Held-out R² at matched capacity:
+local features give **ΔR² −0.089**, global features **+0.600** — and the local block is
+**ORACLE-advantaged**, handed per-residue deviations from the native anchor, and still adds nothing
+beyond knowing the perturbation budget. **A sum of per-residue terms cannot see a lever arm.**
+
+Resolution, which bounds what any support rule could ever select on: DIS concordance inside the near
+band is **0.520** at |Δ| = 0–0.25 Å, reaching 0.822 only above 4 Å. **Coarse triage and nothing
+else.**
+
+### 4.5 Generation is closed jointly with the readout
+
+For a coordinate-average terminal, `set_mean² ≈ B² + S²` where **B is the endpoint itself** and S is
+the set's spread. The terminal's entire value is spread extraction (`avg_gain = 0.4143·S − 0.1559`,
+r = 0.885), and within target `corr(S, B) = +0.085` — **concentration is orthogonal to bias**. So a
+set mean improved purely by concentration is worth **zero by algebra**, and the half that pays *is*
+the endpoint, which is non-identifiable from pool data at any K.
+
+The extreme case settles it: the most concentrated source ever built here (spread 0.568 against the
+pool's 1.577) is **the worst endpoint in the record, 3.789**. **For an averaging terminal, spread is
+the raw material, not a defect.**
 
 ---
 
