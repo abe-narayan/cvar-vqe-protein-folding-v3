@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-19 23:05 Pacific (sprint start).
+Last update: 2026-09-19 23:55 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -86,8 +86,40 @@ jointly, not as marginals. Prior: ties the pool (S21: search saturates).
 | D | adversary (permanent, rotating), cost meter, suite | s29/briefs/S29D.md |
 | X | divergent: configuration-space CVaR-VQE | s29/briefs/S29X.md |
 
+
+## Integration note 1 (2026-09-19 23:55, after S29-L1)
+Lane L's topic 1 closes the "import a QA method" route from outside: no published native-free
+quality method has been trained or benchmarked below 40 to 50 residues (ProQ3 filters under 50,
+VoroMQA trains above 99, DeepAccNet 50 to 300), the four signal classes they reduce to are each
+absent at this length, already ours, or measured dead here, and AlphaFold2's own pLDDT has no
+within-target ranking skill on 588 peptides of 10 to 40 aa (McDonald 2023: rank-1 costs 0.2 to
+1.1 A against best-of-5). Charter finding 8 is the field's position at this length, not a defect
+of the S27 library. Consequence for the sprint: H0 rises; the two published native-free
+selectors that work at 9 to 25 aa (PEP-FOLD 2.6 A, APPTEST 1.96 A) both rank an ensemble their
+OWN energy generated, which is a convergence diagnostic over a self-consistent set, not a
+ranker over a foreign pool. That is a structural hint for the architecture: a selector is only
+known to work when it scores what it generated. Lane X's configuration space is the only S29
+direction with that property (the Hamiltonian that scores the configurations is the Hamiltonian
+that generates them), which raises X's priority from "divergent" to "the second real candidate".
+
+## Wave-2 candidate probes (coordinator's list; not yet assigned)
+P1 THE PROJECTION PRICE. Production pays +0.159 A to go from cloud (3.0483) to chain (3.2126),
+and S28-L39 measured that a de-contracted cloud pays only +0.026. The cloud is contracted 22%
+(mean virtual bond 2.96 vs 3.77). S23 L6 closed the RMSD-optimal global scale as unreachable in
+principle, but that is a different quantity from a GEOMETRIC consistency rescale (make the
+cloud's mean CA-CA bond equal the ideal 3.8 A), which is fully determined and native-free. The
+probe: rescale the production cloud to ideal bond length, project, compare on the built chain;
+then the same with the per-target scale that equalises the bond (not the RMSD). Cheap (126 x 3 s),
+decisive, and it attacks the one stage of the pipeline no S28 lane touched. Falsifier and the
+S23 L6 distinction go in its prereg.
+P2 THE TWO-SOURCE CONTRAST at the level lane O is already measuring (rung 6).
+P3 The centered compatibility Hamiltonian's spectrum (lane T section 3c) if T finds the
+gradient-variance decay flattens.
+
 ## Closed in S29
-(none yet)
+- Importing a native-free QA method from the literature (S29-L1, lane L): no method exists at
+  this length; the four signal classes are absent, ours, or measured dead. The route is closed
+  from the outside as well as from the inside (S28-L48).
 
 ## Comparison count (multiplicity)
 0 endpoint comparisons run. (Every lane reports its count per entry; the coordinator sums here.)
