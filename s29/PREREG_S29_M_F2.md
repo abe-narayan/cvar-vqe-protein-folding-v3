@@ -379,3 +379,49 @@ If `bits_delivered` for the best native-free profile estimate is at or below the
 value, then the supply gap is total in this currency too -- the profile channel delivers **none** of
 the 7 bits the readout leaves on the table -- and that sentence, with its number, is the single most
 useful thing F2 can hand the report under the coordinator's framing.
+
+---
+
+# ADDENDUM 3 (2026-09-20 02:4x, lane M) -- THE SHIPPED SCORE'S OWN BITS AS A STANDALONE NUMBER, AND THE SCOPE CORRECTION THE COORDINATOR MADE TO S29-L44
+
+Appended, not edited. Still before any F2 number exists.
+
+## A3.1 Report the incumbent's bits on its own, not only as the baseline of a delta
+
+Registered: **`bits_delivered(shipped score)` is reported as a standalone number**, with its median,
+its fold-clustered CI and its per-target distribution, in the sentence form "the deployed score
+delivers X of the 7 bits" -- and **if X is near zero, in those words.** It is the natural companion
+to S29-L44's 2.9122 / 2.1549 pair, and it is a statement about the instrument rather than about any
+F2 arm, so it is reported whatever F2's arms do and even if F2 stops at the reproduction gate.
+
+## A3.2 The scope correction, carried into this prereg so no F2 sentence over-reads it
+
+The coordinator has amended S29-L44 (second addendum; STATE note 26) on the point my caveat (a)
+raised: **the 0.757 A prices a readout SWITCH plus the 7 bits, not a ranking improvement fed to the
+shipped operator.** The terminal operator consumes the retained set's mean
+(`operator-consumes-set-mean`: d_out = 1.16 x mean + 0.04 x best, R2 0.89), and a perfect rank-1 is
+worth **-1.74 A through argmin against -0.03 A through the m = 75 average**. What survives, and is
+the better claim, is two-sided: **the architecture caps at 2.9122 A built chain under its own
+operator before any ranking skill enters, and that same operator makes ranking skill nearly
+worthless** -- one decision, two consequences, and jointly the reason several sprints of ranking
+work came back flat. It is **not** a licence to switch operators: argmin is the operator that
+punishes a bad objective (S12/S19) and m = 75 is correct for an objective of the shipped quality.
+
+**Binding on F2's write-up:** no sentence in the F2 entry may convert a bits gain into Angstroms
+through the deployed readout. Bits are reported in bits; the endpoint is reported in Angstroms from
+the built chain; the two are never multiplied. If an F2 arm gains bits, the entry states explicitly
+that realising them would require a different terminal operator, which F2 does not propose, test or
+recommend.
+
+## A3.3 An operational defect of mine, recorded here because it cost box time
+
+While F1's 126-target run was queued at the 8-job cap I launched the same named job more than once
+(a backgrounded `&` attempt, then a chained waiter, then a retry), and **`s26/jobrun.py` does not
+deduplicate by `--name`**: all four eventually got slots and ran the same work concurrently,
+producing 220 duplicate (target, arm) rows and burning box time other lanes were queued for. Three
+were killed and the registered pid kept; no science was corrupted (every arm is deterministic given
+the stable per-target RNG, and the rows dedupe last-wins to identical values), and F1's analysis is
+unaffected. **The lesson for the sprint, worth more than the incident: a job name is not a lock.**
+Before launching, check `s26/jobs/<name>.json` and the live process list; never chain a launcher
+behind a waiter that may itself be retried. F2's jobs will be launched once, checked, and not
+re-issued on a timeout.
