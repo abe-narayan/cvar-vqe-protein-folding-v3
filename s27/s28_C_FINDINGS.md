@@ -244,12 +244,14 @@ above both. The learned linear combination reaches 0.97 held-out but is anti-pro
 random signed combinations on 0.89 and cannot tell ORACLE from random head-to-head, 0.53).
 On the BUILT CHAIN (the reporting basis, S28-L48; 31 scorers, one max-over-31 null, the pool-member
 control on 27): the closure claim stands. 20 of 31 scorers prefer the projected production average to a
-0.25 A ORACLE chain with the fold CI below 0.5 (DIS on 93%, LEG on 79%), 5 are tie-dominated, 7 are coin
-tosses; CAGEO's CA-level preference collapses to anti-recognition (0.611 -> 0.421) once the projection
+0.25 A ORACLE chain with the fold CI below 0.5 (18 informative, 2 more tie-dominated; DIS on 93%, LEG on 79%),
+3 more are tie-dominated, 7 are coin tosses; CAGEO's CA-level preference collapses to anti-recognition (0.611 -> 0.421) once the projection
 gives production the same 3.80 A bonds, as lane D registered (S28-L36(a)); the one scorer that clears both
 registered clauses on both ORACLE starts, CONTACT@chain (0.583), is the expected maximum of 31 null
-scorers (p_max 0.388) and Type-M on the pool-member control (+0.140, 1.23x): the same marginal cell as at
-the CA level, not a candidate. No candidate objective is named for a lane A2 run.
+scorers (p_max 0.388) and, on the pool-member control, measured in sign (+0.140, lane D's max-over-27 null
+p 0.010), Type-M in size (1.23x) and deployably worthless (S27 priced CONTACT as a selector at +0.515 A;
+S28-L49/L50): the same marginal cell as at the CA level, not a candidate. No candidate objective is named
+for a lane A2 run.
 
 ## C2.1 ORACLE DIAGNOSTIC: the CA-level table (S28-L35)
 `s27/results/s28_C2_ca_summary.json`, `s28_C2_ca_seed2_summary.json` (jobs `s28C2_ca_v2`, 176 s,
@@ -386,7 +388,15 @@ margin is +0.107 at 0.71x MDE on a single control draw (`ST.compare`: NOT MEASUR
 contrast is +0.140 at 1.23x with 4/5 folds (Type-M), its head-to-head against a random pool member is
 0.594 (the NATIVE 0.590), and it is below half on FAIL18 (8 of 18): the marginal, Type-M cell S28-L36 named
 and S28-L37 accepted, unchanged by the projection, not a candidate. ENV@chain (+0.131, 1.19x) and
-CONTACT_LL@chain (+0.100, 1.02x) are in the same zone on the pool-member contrast and fail clause 1. The
+CONTACT_LL@chain (+0.100, 1.02x) are in the same zone on the pool-member contrast and fail clause 1. Lane D's
+S28-L49 sharpened the reason (adopted in S28-L50): the contact family's pool-member contrast is NOT a chance
+maximum (per-target sign-flip null over the 27 scorers, p_max 0.010), so its sign is measured and its size is
+Type-M; what it measures is that a native-like structure sits 4 percentile points better than the average
+in a pool where the average is a median member under CONTACT (pct 0.443, against DIS's 0.020), a separation
+of 0.59 that is below DIS's own 0.63; and S27 already consumed that signal on the same 126 targets
+(`s27/results/pool_rows.jsonl`: CONTACT as the selector +0.515 A, ENV +0.419, CONTACT_LL +0.521, every
+DIS+CONTACT admixture null-to-worse). "Measured in sign, Type-M in size, deployably worthless" is the
+reading; multiplicity of the registered statistic (p_max 0.388) is the decision rule. The
 registered prior holds where it was stated; the one CA-level exception, CAGEO, was the contraction of the
 average and collapses to anti-recognition on the projected chains (0.611 -> 0.421; pool-member contrast
 -0.007 -> -0.108; pct(PROD) median 1.00 -> 0.60), as S28-L36(a) registered. What an objective would have
@@ -423,9 +433,9 @@ objective named for a lane A2 run.
 - A second control seed on the chain (4 more draws x 3 controls x 126 projections, about 1.3 h): the
   positive-only replication rule (prereg section 5); no positive fired. The chain's single control draw is
   stated beside every clause-2 number.
-- A null for the multiplicity of the pool-member contrast across the 27 scorers: not registered; stated as
-  un-priced in S28-L48. The registered pricing (the best single pref as an order statistic) is inside its
-  null.
+- A null for the multiplicity of the pool-member contrast across the 27 scorers: not registered and not run
+  by me; lane D ran it (S28-L49: p_max 0.010) and S28-L50 adopts it. The registered pricing (the best single
+  pref as an order statistic) is inside its null and decides.
 - The seed-2 pool-member control at the CA level WAS regenerated on 09-19 (`s28_C2_ca_seed2_summary.json`);
   every circ_best / circ_s0 contrast is identical to seed 0 to the fourth decimal, as it must be (the
   control draws do not enter that contrast); only the RAND_SIGNED-vs-pool-member head-to-head moves, by at

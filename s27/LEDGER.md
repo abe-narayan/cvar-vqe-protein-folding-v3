@@ -4182,3 +4182,34 @@ Artefacts: `s27/results/s28_D_c2_chain_null.json`, `s28_D_c2_poolmember_chain_ca
 `s28_D_c2_poolmember_chain_bb.json`, `s26/logs/s28D_c2_chain_clauses.log`,
 `s26/logs/s28D_c2_chain_null.log`, `s27/s28_D_c2_chain_null.py`, `s27/s28_D_c2_poolmember.py`;
 lane C2's `s28_C2_chain_rows.jsonl`, `s28_C2_chain_summary.json`; S27's `pool_rows.jsonl`.
+## S28-L50 -- C2 ANSWERS S28-L49: ALL FOUR CAVEATS ADOPTED; "UN-PRICED" IS WITHDRAWN FOR "MEASURED IN SIGN (p_max 0.010 OVER 27), TYPE-M IN SIZE, DEPLOYABLY WORTHLESS (S27: CONTACT AS A SELECTOR +0.515 A, ENV +0.419, CONTACT_LL +0.521, EVERY DIS+CONTACT MIX NULL-TO-WORSE)"; THE INFORMATIVE ANTI COUNT IS 18 OF 31; C AND C2 CLOSE (2026-09-19 21:52, C2)
+Question: do lane D's caveats on S28-L48 change the reading? They sharpen it; none changes the verdict.
+(a) ADOPTED, and S28-L48's sentence "the multiplicity of the pool-member contrast itself is not priced by
+    any registered null" is WITHDRAWN as the reason CONTACT@chain is not a candidate. D's per-target
+    sign-flip null of the paired pool-member contrast over the 27 scorers (`s26/logs/s28D_c2_chain_null.log`,
+    `s27/results/s28_D_c2_chain_null.json`) gives p_max 0.010 (CA level 0.003): the contact family's +0.10 to
+    +0.14 is not a chance maximum; its SIGN is measured, its SIZE is Type-M (1.02x to 1.23x MDE), and the
+    three contact-histogram scorers are near-copies so the effective family is smaller than 27. The reason
+    it is not a candidate objective is the one D states and I verified from `s27/results/pool_rows.jsonl`
+    (point cloud, 126 targets, DIS 3.0483): CONTACT as the selector 3.5637 (+0.515 A), ENV 3.4669 (+0.419),
+    CONTACT_LL 3.5698 (+0.521), every DIS+CONTACT admixture null-to-worse (S27 L2/L3 rows, quoted in
+    S28-L49). What CONTACT@chain "recognises" is that a native-like structure sits 4 percentile points
+    better than the average in a pool where the average is a median member under CONTACT (pct(PROD) 0.443)
+    against DIS's fixed point (0.020); it separates native-like from typical at 0.59, below DIS's 0.63 and
+    equal to the native's own 0.59, and S27 already consumed that signal and lost 0.03 to 0.52 A. The
+    registered statistic (pref(circ_best) as the best of 31) stays at the null's mean (p_max 0.388 / D's
+    0.399) and S28-L48 decided on it; the honest one-line reading of CONTACT@chain is now "measured in
+    sign, Type-M in size, deployably worthless", not "at the multiplicity null's mean".
+(b) ADOPTED: the informative anti-recognition count is 18 of 31 (S28-L48 wrote "20, two of them also
+    tie-dominated"; the FINDINGS carry 18 with the 5 tie-dominated scorers listed separately).
+(c) Agreed as written: the backbone scorers' pool-member numbers are cross-basis and none is quoted as
+    anti-recognition.
+(d) Agreed: the projected NATIVE at 0.084 A and the ORACLE structure at 0.252 A with production at the same
+    3.80 A bonds and within 2% in Rg is the cleanest basis the audit has had, and 18 informative scorers
+    still prefer the average with the fold CI below 0.5.
+Verdict: unchanged from S28-L48 (the closure claim stands on the built chain over all 31 scorers; CAGEO's
+collapse is S28-L36(a)'s prediction realised; no candidate objective is named). C and C2 are closed:
+nothing of this lane is queued or running. `s27/s28_C_FINDINGS.md` C2.3 and C2.5 are amended to this
+entry's wording in the same commit. Artefacts: S28-L49's files; `s27/results/pool_rows.jsonl`
+(configs `CONTACT`, `ENV`, `CONTACT_LL`, means recomputed here to the fourth decimal);
+`s27/results/s28_C2_chain_summary.json`.
