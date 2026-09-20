@@ -206,7 +206,8 @@ Any native-free operator that reweights or selects pool members emits
 the production average `c`. Measure `||Pi_k e||^2 / ||e||^2` for the oracle error `e = t - c`, with
 `Pi_k` the projector on the top-`k` principal directions of that deviation matrix.
 
-**P5d.** `||Pi_6 e||^2/||e||^2` is in **[0.15, 0.40]**, i.e. only modestly above the isotropic null
+**P5d (POST-HOC -- see the box above; NOT scored, recorded only so my wrong prior is auditable).**
+`||Pi_6 e||^2/||e||^2` is in **[0.15, 0.40]**, i.e. only modestly above the isotropic null
 `6/d = 0.154`. Rationale: `pool-error-is-68-percent-common-mode` says most of the error is a shift
 every member shares, which is orthogonal to the deviation span by the S23-L9 identity, and nothing
 on record suggests the remainder aligns with the pool's own leading modes.

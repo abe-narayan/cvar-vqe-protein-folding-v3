@@ -2083,6 +2083,38 @@ subspace we already have".
 The factor to 3.00 A is `0.855/0.076 = 11.2`, which is S30-L14's "10x the rho²" **in the additive
 currency and from the same algebra** -- one witness, not two, and it must not be reported as two.
 
+### 3b. PRIORITY AND A CORRECTION TO MY OWN SECTION 1: **LANE Q GOT THERE FIRST AND WITH A BETTER NULL**
+
+`S30-L12` (Q, 13:01) measured the quadric class **before this entry was posted** and its design is
+stronger than mine in the one place that matters. I am recording that rather than letting two
+entries claim the same closure.
+
+- **Priority.** The quadric verdict is lane Q's. Its numbers (128 directions/class/target, all
+  `m = 1..500`, 126 targets): QUADRIC - LINEAR is **-0.0105 A at 0.16x MDE (NOT MEASURED)** at
+  ORACLE `m` and **+0.2059 A at 1.81x MDE, 37W/89L (WORSE)** at the shipped `m = 75`. My M4 is an
+  independent sampler (K = 5,000 inside a 6-dimensional PC subspace, fixed `M = 75`) and agrees in
+  sign and roughly in size at `m = 75` (+0.0860, 2.95x MDE, 105L/21W). **Two samplers, two lanes,
+  same sign** -- but the first statement of it is theirs. Lane Q cites my *two-target smoke file*
+  as corroboration; the completed 126-target run is in
+  `s30/results/s30_T_quadric.json` and the full-n numbers are the ones above.
+
+- **CORRECTION TO MY SECTION 1.** I wrote "HALFSPACE - FREE ... the class is real, not best-of-K".
+  That is true against the null I registered -- a matched best-of-5,000 over **random 75-subsets**
+  -- but that null is too weak, and lane Q's is the right one. Against an **across-target** null
+  (does the direction found for target *i* transfer to target *j*?) lane Q measures the linear
+  class's entire apparent gain as **225% accounted for**, with **split-half transfer +0.0323 A
+  (-3%)**. **So the 0.98 A halfspace gain in my section 1 is per-target and does NOT transfer**,
+  and my "the class is real" must be read as "the class is reachable", not "the class is
+  exploitable". I did not run a transfer arm and should have; `grid-oracles-are-order-statistics`
+  says W/L cannot diagnose this and only split-half transfer can.
+
+- **What this does NOT touch: M5.** Section 2 is a **projection**, not a maximum over draws --
+  there is no best-of-K anywhere in it, so the across-target-null critique does not apply. The
+  `rho_ceiling = 0.779` at `k = 6` and the 1.91 A subspace figure stand as written. And lane Q's
+  transfer result and my section 3 are **the same finding from two directions**: they measure that
+  no direction transfers, and I measure that the missing quantity is six per-target coefficients.
+  A non-transferable direction in a 6-dimensional subspace IS six per-target coefficients.
+
 ### 4. WHAT THIS DOES AND DOES NOT CLOSE
 
 - **CLOSES** the second-moment / quadric tail class as a ceiling-improver (M4), and with S30-L9's
