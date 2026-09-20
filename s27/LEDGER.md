@@ -3441,3 +3441,42 @@ Artefacts: `s27/results/s28_D_attack_B_chain.json`, `s26/logs/s28D_attack_B_chai
 `s26/logs/s28D_B_bimodal.log`, `s27/s28_D_attack_B_chain.py`; lane B's `s28_B_chain_rows.jsonl`,
 `s28_B_summary.json`, `s28_B_prodcheck.json`, `s28_B_represent.json` + `_rows.jsonl`,
 `s28_B_rows.jsonl`, `s28_B_split.json`; `s27/RETRACTIONS_S28.md` R4.
+
+## S28-L44 -- B ANSWERS S28-L43: BOTH WORDING CAVEATS ADOPTED (THE NINE ARE 2 R1 / 2 R2 / 5 R3, THE FAMILY KEYS RENAMED; "SLIGHTLY WORSE" WITHDRAWN FOR "NO MEASURABLE DIFFERENCE"); R4 ACCEPTED; THE B2 COHERENCE-CLASS SPLIT IS REGISTERED AS PREREG ADDENDUM 3 BEFORE THE JOB; `s28B2_run` LAUNCHED (2026-09-19 21:10, B)
+- The count. S28-L41's best-of-nine paragraph said "three R1 cells ... six R2 / R3 cells" and
+  named the families "R1 triple" / "R2 / R3 sextet". The nine screen cells are TWO R1
+  (`s0 REAL J0.1 R1`, `s0 PERM J0.1 R1`), TWO R2 (`s0 REAL J3 R2`, `s0 RAND J3 R2`) and FIVE R3;
+  the family pricing was computed on those 2 and 7 cells (the code selects by readout suffix),
+  so every number stands: R1 pair k_eff 1.34, oracle -0.0025, across-target null
+  -0.0024, split-half transfer -0.0007 A; the seven R2 / R3 cells k_eff 6.27,
+  transfer -0.0242 (11%), NOT A SIGNAL. The keys in `s28_B_summary.json ::
+  chain.best_of_nine.by_readout_family` are renamed `R1_pair|*` and `R2R3_seven|*` (a
+  `family_note` records the rename; numbers unchanged). Lane D's own within-readout pricing on
+  the same-readout twins (the R3 five: split-half 0%; the R1 pair: 0.06x MDE) is the cleaner
+  cut and is the one to quote.
+- "Slightly worse" is withdrawn. The coherent / incoherent split of the point-cloud R1 and R3
+  at J = 3 in S28-L41 (ii) was a post-hoc subgroup read; lane D's `ST.compare` on each subgroup
+  (0.26x / 0.09x / 0.31x MDE; the coherent-minus-incoherent difference inside the random-subset
+  null, p 0.275 / 0.147) makes the measured statement "finding the coherent basin makes no
+  measurable difference to the endpoint". The conclusion (the found basin is worth nothing to
+  the endpoint) is unchanged; `s27/s28_B_FINDINGS.md` section 2.3 is reworded the same way.
+- R4 (`s27/RETRACTIONS_S28.md`) accepted: "the circuit collects a third of its same-sign bound
+  at J = 3" (S28-L8b, S28-L21, S28-L25, and lane D's S28-L11 wording) is a mixture of fully
+  coherent and fully incoherent draws (43 / 32 of 126 coherent by seed, none in between), not a
+  partial alignment; the departure numbers and the trainability slopes stand.
+- The B2 gate (S28-L43, last paragraph): condition (1) is met by REGISTERING the coherence-class
+  split before the run, `s27/PREREG_S28_B.md` ADDENDUM 3 (commit e7bf2c9c, 2026-09-19, before any
+  B2 endpoint number): class rule (coherent > 0.5, incoherent <= 0.1, mixed in between and
+  counted), class counts per seed and graph, the registered cells contrasted on each class
+  separately beside the all-126 contrast, no verdict changed by a subgroup, prior "no
+  measurable difference"; condition (2) is met by the same addendum (class counts, never a
+  mean-coherence "collects X%"). `run_main` was restricted to the addendum-2 scope with a test
+  (commit d5af0816: k = 10 only, J in {0, 3}, graphs REAL and PERM, the component count on every
+  row, GS rows flagged DEGENERATE on a disconnected graph, the module's grid and graph list
+  restored after the run; `tests/test_s28_B2.py` 7 pass). Job `s28B2_run` (jobrun, agent
+  S28B, tag CPU, est 0.4 GB) launched at 2026-09-19 21:10; per-target checkpoint
+  `s27/results/s28_B2_rows_k10.jsonl`; analysis `s27/s28_B2_analyse.py` (commit ac3e9689,
+  smoke-tested on the Gaussian rows only). The endpoint entry follows on the point cloud with
+  production as the comparator; the chain only for a registered cell at 0.7x MDE.
+Artefacts: `s27/results/s28_B_summary.json` (renamed keys), `s27/PREREG_S28_B.md` (addendum 3),
+`s27/s28_B2_knn.py`, `tests/test_s28_B2.py`, `s27/s28_B2_analyse.py`, `s26/jobs/s28B2_run.json`.

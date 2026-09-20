@@ -188,11 +188,11 @@ arm - comparator, negative is better; MDE = 2.8016 x SE; the decision is on the 
   production climbing 0.04 A toward it (S28-L2(a)); its seed-0 twin reads
   +0.0037 (+0.20x) and its PERM control moves -0.0303 against ITS twin
   (REAL - PERM -0.0067, -0.18x). Both-seeds and PERM clauses fail on their own. F3 / F4 silent.
-- Best-of-nine (S28-L22): the nine 0.7x screen cells mix three R1 cells at ~0 with six R2 / R3
-  cells at +0.24 to +0.36, so `best_of_k_within` over the nine "transfers" the R1-vs-R3
+- Best-of-nine (S28-L22): the nine 0.7x screen cells mix two R1 cells at ~0 with two R2 and
+  five R3 cells at +0.24 to +0.36, so `best_of_k_within` over the nine "transfers" the R1-vs-R3
   readout gap (49% of a -0.461 oracle), a WORSE effect already measured at J = 0.
-  Within the R1 triple k_eff 1.34 and the split-half transfer is -0.0007 A (0.06x the R1
-  MDE); within the R2 / R3 sextet NOT A SIGNAL (11%). The best cell is a control
+  Within the R1 pair k_eff 1.34 and the split-half transfer is -0.0007 A (0.06x the R1
+  MDE); within the seven R2 / R3 cells NOT A SIGNAL (11%). The best cell is a control
   (`vqe|s0|PERM|J0.1|R1`, -0.0024).
 - FAIL18 vs the 108 (addendum 1 item 14(a)): R1 nothing on either stratum; R2 / R3 worse on
   the 108 by +0.37 to +0.51 A (1.8x to 2.1x) and on the other side on FAIL18 (-0.34 to -0.47 A,
@@ -222,9 +222,11 @@ cells are coherent, no cell in (0.1, 0.5], 10 targets coherent on both seeds, 61
 The sign-aligned VQE state |psi_vqe| IS representable (overlap median 0.986), so the wall
 between the basins is the sign structure. THIS CORRECTS 1.4 and S28-L21: "the circuit
 collects a third of its bound at J = 3" is a mixture (a third of the cells collect all of it,
-the rest none), not a partial alignment. Where the coherent basin is found, R1 at J = 3 is
-+0.009 A above its J = 0 value (point cloud, 43 cells; m 88.7 vs 74.4) and R3 +0.039: finding
-the hopping ground state's basin is worth nothing to the endpoint.
+the rest none), not a partial alignment (lane D's RETRACTIONS_S28 R4). Where the coherent
+basin is found the endpoint does not measurably move (point cloud, seed 0, R1 at J = 3 minus
+J = 0: +0.009 on the 43 coherent cells, 0.26x its MDE, against -0.003 on the 83 others; the
+difference inside a random-subset null, p 0.275, S28-L43): finding the hopping ground state's
+basin makes no measurable difference to the endpoint.
 
 ---
 
