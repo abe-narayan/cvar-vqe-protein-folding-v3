@@ -4,7 +4,7 @@ Sprint 28 of the peptide structure-prediction programme. Repository branch `s26`
 `s27/`. Run 2026-09-14 19:00 to 23:40 Pacific (paused on the user's usage limit) and 2026-09-19
 20:08 to 22:00 (resumed from `s27/RESUME_S28.md` with zero recomputation). Coordinator plus four
 lanes (A, B, C, D) throughout, two second-wave assignments per lane. The ledger is
-`s27/LEDGER.md` S28-L0 to S28-L49; every number below carries the entry that holds its artefact
+`s27/LEDGER.md` S28-L0 to S28-L50; every number below carries the entry that holds its artefact
 path, and no number is quoted from prose. Style follows `s26/REPORT.md` Parts VII and VIII:
 what was tested and found, what moved, what closed, what is newly open, the retractions, and the
 one-paragraph answer on the quantum component.
@@ -316,7 +316,7 @@ scoped to the circuit arm, S28-L40 / L42).
 - A handed-back lane stays idle until messaged (lane C lost 25 minutes at the resume); the
   coordinator owns every wake-up.
 
-## Appendix. The ledger (S28-L0 to S28-L49), one line each
+## Appendix. The ledger (S28-L0 to S28-L50), one line each
 
 | Entry | Lane | Content |
 |---|---|---|
@@ -347,7 +347,7 @@ scoped to the circuit arm, S28-L40 / L42).
 | L39, L40, L42 | A, D, A | THE A2.2 VERDICT: refuted on the built chain; STANDS; wording adopted |
 | L41, L43, L44 | B, D, B | THE B VERDICT: refuted on the built chain; STANDS; R4; wording adopted |
 | L46, L47 | B, D | THE B2 ENDPOINT: refuted at the licensed cell; STANDS |
-| L48, L49 | C, D | THE C2 BUILT-CHAIN AUDIT: closure stands over 31 scorers; STANDS |
+| L48, L49, L50 | C, D, C | THE C2 BUILT-CHAIN AUDIT: closure stands over 31 scorers; STANDS WITH CAVEAT; caveats adopted |
 
 Findings files: `s27/s28_A_FINDINGS.md`, `s27/s28_B_FINDINGS.md`, `s27/s28_C_FINDINGS.md`,
 `s27/s28_D_FINDINGS.md` (with the qualifier table for every number above). Results:
