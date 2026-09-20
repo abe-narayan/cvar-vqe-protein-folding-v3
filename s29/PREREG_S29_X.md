@@ -235,3 +235,49 @@ s29/s29_X_config.py --run --limit 1` first (peak RSS quoted), then the 12.
 - AMBER anywhere (no physics energy ranks nativeness: S25 L16; not part of the hypothesis).
 - Encoding (i) (closed twice by enumeration: S13, S21).
 - Any tuning of alpha, T, Gamma, F, L, the member rule or the readout on RMSD.
+
+---
+
+## ADDENDUM 1 (2026-09-20 00:10, before any probe number exists)
+
+**A. The register cap, and the measured reason for it.** Section 2 said S = ceil(n / 3). Measured
+cost of one exact parameter-shift gradient of the deployed objective (`core.quantum.free_energy`,
+layers 3, this box, one thread): q = 12 -> 0.10 s, q = 15 -> 1.61 s, q = 18 -> 24.40 s, i.e. 0.1 /
+2.1 / 32.5 minutes for the 80-iteration run. At S = ceil(n/3) the n = 16 target needs q = 18 and
+one arm costs half an hour. The rule becomes **S = min(ceil(n / 3), 5)**, so q = 3S <= 15 and the
+probe's four longest targets cost ~2.5 min per arm instead of ~33. `np.array_split` then makes the
+n = 16 target's segments 4,3,3,3,3 rather than 3,3,3,3,3,1. This is a COMPUTE decision taken before
+any RMSD existed; it shrinks the space on one target of twelve and is stated in the ledger entry.
+
+**B. Lane D's four holes (S29-L4) are adopted in full, before the run.**
+- (a) D1 acquires its matched order-statistic null: a SCRAMBLED-CHIMERA space of identical
+  cardinality, identical parents and identical marginal fragment content, built by permuting each
+  member's segment blocks across segment POSITIONS (`Space(..., scramble=True)`, seeded
+  `stable_rng(pdb, "scramble", salt="s29X")`). **D1's primary becomes chimera ORACLE best minus
+  SCRAMBLED ORACLE best**; the contrast against the eight parents is reported as UNMATCHED and
+  labelled so in the same table.
+- (b) D1's branch is registered: if recombination is worth less than 0.1 A against the SCRAMBLED
+  null, the lane reports D1 and the probe's already-computed arms, and starts nothing further on
+  this space without saying why in the same entry.
+- (c) P3 acquires the participation ratio of the R2 weights (1/sum w^2) and a PR-MATCHED
+  RANDOM-WEIGHT control: 8 Dirichlet draws on the same tail set at the same realised PR, each
+  through the identical readout and projection (`P3c`). The emitted Rg and mean virtual bond are
+  printed for every arm (contract addendum 20(c)).
+- (d) Any GO prints its power and its Type-M factor and says "GO, not a result" in the same
+  sentence; the fold-clustered CI at n = 12 is descriptive only; the 126-target run re-registers
+  its own falsifier rather than inheriting this one.
+- (e) The PERM arm reports its seed and its H_diag spectrum (sd, range, top-75 range) beside the
+  real one.
+- (f) R3 reports the probability mass its top-512 captures; without it R3 is named a top-512
+  readout, not a full-state readout.
+
+**C. Contract addendum 21 (the marginal class is bounded, lane T's theorem 2).** H_diag is inside
+that class: it is a functional of the shipped posterior's per-pair marginals plus a
+sequence-conditioned 1-body prior. What this lane expects to buy is therefore NOT local
+informativeness and NOT a gradient (the meter measures the gradient as undefined on 114/126
+targets anyway, S29-L6): it is (i) ORDERING over a different candidate SET -- chimeras, which the
+pool does not contain -- and (ii) NON-CONTRACTION, an ensemble over recombinations rather than an
+average over 75 pool members. Both are measured here. No gradient claim is made, and no cosine
+gain is claimed, so addendum 20's shrink audit is answered by reporting (b) the native percentile
+(0.378, S29-L6, essentially the shipped cost's 0.368) and (c) the emitted Rg and bond, both of
+which are in the per-arm rows.
