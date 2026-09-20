@@ -196,3 +196,100 @@ the expensive part is the projection, ~3 s per target per arm. Probe (12 x 4 dep
 
 **F1's 126-target run has priority and is queued at the box's job cap; F2 does not start until F1's
 rows are complete and its ledger entry is posted.**
+
+---
+
+# ADDENDUM 1 (2026-09-20 02:2x, lane M) -- WHAT SUPPLIES THE PROFILE AT INFERENCE; A SUPPLY AUDIT THAT COSTS NO PROJECTIONS; AND A STOPPING RULE THAT SPENDS THE BOX ONLY IF IT CLEARS
+
+Appended, not edited (contract rule 7). Written before any F2 number exists, in answer to the
+coordinator's two bullets (00:5x): *what supplies those n-2 numbers at inference without the native,
+and pre-register the falsifier before the run.*
+
+## A1.1 The answer to "what supplies them" is NOT "nothing" -- and that matters, because the fallback closure the coordinator offered would be wrong as written
+
+The coordinator's proposed fallback -- "if nothing native-free supplies them, report the class as an
+ORACLE ceiling with no deployable instantiation" -- does not fit this class. **Native-free rules
+that produce the shell profile exist, there are at least five of them, and every one is already
+measured on this instrument** (`s12/obj_FINDINGS.md:306-331`, all leave-fold-out):
+
+    q' supplied by                                              profile MAE   emitted
+    the distogram's own profile        (THE INCUMBENT, native-free)   2.458     3.078
+    LFO per-shell debias of it                                        2.458     3.071
+    LFO affine recalibration + the pool profile as 2nd regressor      2.394     3.089
+    LFO ridge over ESM + composition + disto + pool profile           2.960     3.309
+    the pool's own mean profile        (pure typicality, no model)    2.717     3.383
+    ------------------------------------------------------------------------------
+    the TRUE profile                   (ORACLE)                       0.000     2.402
+
+So the honest statement of the class is stronger and more specific than "no instantiation":
+
+> **The shell profile HAS a native-free supply -- the shipped distogram is one, and it is what
+> production already uses. The 0.75 A is not the gap between "an oracle" and "nothing"; it is the
+> gap between the true profile and the best of five measured native-free estimates of it, none of
+> which beats simply using the distogram's own.**
+
+That reframing is what makes F2 a well-posed question rather than a fishing trip: **F2 is not
+asking whether the profile can be supplied. It is asking whether it can be supplied BETTER, and by
+how much in the bound's own currency.**
+
+## A1.2 The supply audit: the decisive measurement costs minutes and NO projections
+
+The expensive stage of every arm is the ideal-geometry projection (~3 s per target per arm). **The
+cosine that decides B2 does not need it.** Emitting a point cloud is scoring 500 candidates, a
+tie-safe top-75 and a 75-member coordinate average -- milliseconds. So the whole of stage 2 (the B2
+test) can run on the point cloud for every arm over all 126 targets in minutes, and the built chain
+is spent only on an arm that has already cleared.
+
+**Stage 0, registered here, run before anything else:**
+
+**(a) The supply gap, per predictor.** For each native-free candidate `r_hat` (the distogram's own
+ratio; the pool profile, i.e. `r = 1`; length-only; the compactness block alone; the full LFO
+ridge), measure leave-fold-out against the true ratio `r_true = q_true / q_pool`:
+  - `corr(r_hat, r_true)` pooled over all (target, shell) cells and per target;
+  - the realised shrink `s` = sd(`r_hat` - 1) / sd(`r_true` - 1) (rule 20's quantity (a));
+  - the fraction of `r_true`'s variance the predictor explains, leave-fold-out.
+
+**(b) The cosine ceiling this implies, and then the cosine MEASURED.** The implied ceiling is
+reported first as arithmetic (a predictor capturing a fraction `c` of the true ratio's variation
+supplies at most about `c * rho_oracle` of the ORACLE displacement's cosine, with
+`rho_oracle ~ 0.66` from section 0) -- and then **measured directly**, not inferred: emit each arm's
+cloud, form `u = A_arm - A_PROD`, and compute `rho = cos(u, t - A_PROD)` per target, ORACLE and post
+hoc, with the fold-clustered CI, the per-target sign fraction `q`, and the signed value
+`|rho|(2q-1)` the bound consumes (S29-L23 assumption B4).
+
+**(c) The ORACLE arms in the same table**, as the instrument check: ORACLE-RATIO and ORACLE-PROFILE
+must reproduce `s12/obj_FINDINGS.md`'s 2.402 / 2.299 through my code before any deployable number is
+read. If they do not, F2 stops and the discrepancy is the finding.
+
+## A1.3 THE STOPPING RULE -- pre-registered, and it is the point of this addendum
+
+> **The deployable projection run does not happen unless stage 0(b) shows the best native-free arm's
+> measured displacement cosine exceeding 0.140 with the fold-clustered CI excluding 0.140, AND
+> exceeding its own rule-20 shrink twin by more than 1.0x the MDE of that paired contrast.**
+>
+> If it does not clear, F2 reports -- as its result -- **the ORACLE ceiling (cosine ~0.66, 2.299 A
+> point cloud), the measured supply gap that closes it, and the five native-free instantiations that
+> already exist and lose**, and spends no further box. That closure is written as a closure, in the
+> heading, not as a null of an arm that was never run.
+
+This is the coordinator's instruction implemented with one correction: the closure is *"the supply
+is measured and insufficient"*, not *"there is no supply"*.
+
+## A1.4 What I expect, stated before the numbers
+
+The record's own arithmetic makes the direction fairly clear. `s12/obj_FINDINGS.md:306-331` reports
+`r ~ 0.4-0.6` between the predicted and true profile, and the best-MAE arm emits worse than the
+baseline. Lane L's compactness channel (S29-L19) is +0.909 for the ORACLE Rg and **0.24 to 0.37**
+for achievable native-free proxies (`in-band-ordering-is-per-target`). Taking 0.37 as the optimistic
+supply and 0.66 as the ORACLE cosine gives about **0.24**, which would clear 0.14 -- and taking the
+record's more typical 0.24 gives **0.16**, which barely does, before the shrink twin subtracts its
+share. **So the honest pre-run position is that this is genuinely close to the line, which is
+exactly why it is worth the minutes and why the shrink twin decides it rather than the raw cosine.**
+The registered endpoint prediction (T's, adopted at section 1) is unchanged: inside 0.05 A of
+production.
+
+One asymmetry worth stating now: a cosine that clears 0.14 but yields an endpoint inside 0.05 A is
+**not a contradiction** -- the bound's identity converts rho to RMSD at the OPTIMAL step, and a
+deployable arm takes the step its own score dictates, not the optimal one. If that is what happens,
+the reportable quantity is the cosine (B2 falls, the route opens, the step is a separate problem),
+and the entry must say so without inflating the Angstroms.
