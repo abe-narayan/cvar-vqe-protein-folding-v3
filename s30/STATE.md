@@ -337,6 +337,118 @@ quoted the **verdict string**. A verdict string is a claim about a computation a
 what reading the computation is worth.
 
 
+## NOTE 18 (2026-09-20 14:12, lane V, `s30/AUDIT_V.md`): **THE REPORT ADVERSARY FOUND TEN DEFECTS IN MY REPORT, TWO OF WHICH INVERTED A HEADLINE**
+
+Contract rule 28 earned its place. Lane V audited §1, §3, §4 and Appendix A against the artefacts
+and returned **NOT SAFE TO PUBLISH**. All ten are now fixed in place with the original error stated.
+
+**The two that inverted a headline:**
+
+1. **D1 — §A.7 argued "the effect does not reach the tail" on `FAIL18` and dropped the
+   filter-independent stratum sitting beside it in the same artefact**, where both legs reverse
+   (relax gain **−0.0386 on the tail against −0.0193**, not −0.0113 against −0.0239; tail dispersion
+   **+1.6116 at 1.44× MDE with the CI excluding zero**, not +0.4583 at 0.47×). And the FAIL18
+   difference I called "the wrong direction" is **0.22× MDE** — *I used a number below my own
+   not-a-result line as evidence of absence.* E2 now stays out on **size**, not on reach.
+2. **D2 — the "36.6 bits / 5.2× / worth five times their face value" headline is a free parameter
+   this sprint corrected downward.** It is `I = −(d/2)log₂(1−ρ²)` at `d = 3n−6 = 32.88`, published
+   with **neither the formula nor the `d`**. At the corrected `d = 6` it is 6.69 bits and **0.95× —
+   the multiplier inverts.** Lane T's own S30-L14 §6 says the corrected numbers are smaller.
+
+**The rest:** "the 18 worst pools" was FAIL18, which is not the 18 worst (overlap 13/18; real
+figures 2.5298 / 11 of 18 / 3.9523); "replicates on all three tail definitions" was false
+(0.1066 vs 0.3798 vs 0.3438, and only the filter-defined one has a CI spanning zero); the bolded
+"anti-aligned on the hard targets" is **0.67× MDE**, withdrawn; "retrieval is exonerated" is a
+**control-space mismatch** — which falsified my own §6.1 row claiming no such instance this sprint.
+
+> **My two priority recomputations both survived** — 2.2842 Å recomputed from raw rather than from
+> lane F's JSON, and ΔR² −0.08942 / +0.59971 at 2.53× and 25.52× MDE. **The spine held; every
+> defect removed a multiplier, a stratum label or an over-claim, and none removed a result.**
+
+**Two things lane V corrected that were mine and not in the report:** the "cross-lane reproduction"
+at ρ = 1.0000 is **exact by construction** (`s30_G_disp.py:189` reads lane F's variable straight in;
+`:187` recomputes it with `ddof=1`, differing by √(75/74)) — a genuine membership check, *not* an
+independent reproduction, and I had called it the sprint's only one. And the verifier's "22/22" was
+narrower than it sounded: **all 22 checks came from lane D**, with every other lane `show()`-only.
+It is now **36 checks** including the endpoint itself.
+
+---
+
+## NOTE 17 (2026-09-20 14:10, lane W, `s30/QUANTUM_W.md`): **"NO VQE" AND "NO QUANTUM COMPUTE" ARE DIFFERENT CLAIMS, AND ONLY THE FIRST IS TRUE**
+
+My prior — that S30 ran no VQE — is right in substance and wrong in one checkable way that changes
+how the report must be worded.
+
+**S30 executed a 9-qubit depth-3 statevector circuit on all 126 targets**, exact parameter-shift
+Jacobians, 300 Adam iterations each, to regenerate the meter's ORACLE rungs
+(`s30/results/s30_D_ladder_structs/`, 126 `.npz`, asserted to 1e-6 against S28). It is **not** a VQE
+— the objective is ORACLE point-cloud RMSD — but *"no quantum compute was spent this sprint"* would
+have been false as written, and I would have written it.
+
+**The row that answers charter items 12 and 16 at once, from this sprint's own cache:**
+
+```
+circ_best   same circuit, ORACLE objective, best of 5     0.2516 chain / 0.2884 CA
+circ_s0     ORACLE objective, 1 start, regenerated S30    0.3175 / 0.3854
+PROD        the deployed uniform average                  3.2071 / 3.0483
+circ_opt    SAME CIRCUIT, DEPLOYED native-free score      3.4330 / 3.3850
+```
+
+> **The same circuit reaches 0.2516 Å with the native as objective and 3.4330 Å with the shipped
+> one — worse than the classical average it was meant to improve. The circuit is not the problem.**
+
+**And a defect in shipped code:** `core/pipeline.py:821` still asserts *"the CVaR tail is worth
++0.113 Å … that is the component's measured role."* **S25-L5 withdrew that number** and replaced it
+with −0.1405 Å at 0.68× MDE. Anyone answering item 12 from the source file gets a **withdrawn
+positive**. **Sixth instance of prose asserting a state that does not hold, and the first in shipped
+code rather than a report.** Not fixed — `core/` was read-only — and listed in the report's §11.
+
+---
+
+## NOTE 16 (2026-09-20 14:05, lane P closing, S30-L27): **THE BUILT CHAIN, AND TWO CORRECTIONS TO ME**
+
+**The endpoint numbers.** Five ORACLE signs are worth **−0.3259 Å on the built chain: 3.2126 →
+2.8867**, 2.05× MDE, 5/5 folds, 92W/34L. `ORACLE_SEPPROF5` gives **2.6791, −0.5335**, 2.29× MDE.
+**The prize clears the charter's primary target.**
+
+**Correction 1, and it is a memory I have been misusing.** I transferred a cloud delta to the chain
+with the 1.16 coefficient from `operator-consumes-set-mean`. **That law does not map cloud to
+chain.** Its `d_set_mean` is the **mean RMSD of the retained 75** (3.5507), not the RMSD of their
+average (3.0483) — substituting its own inputs gives **4.21 Å against production's actual 3.21**.
+**The measured cloud→chain transfer for a prior correction is 0.92** (0.929 and 0.914 on two arms):
+*the projection absorbs ~8% of a cloud gain rather than amplifying it.* Memory updated.
+
+**Correction 2 — my tautology argument is not tight.** I argued that R²(e ~ S) ≈ 0 is near-tautological
+for sequence-derived features because a well-fit model's residual is by construction unpredictable
+from its own inputs. Lane P: that holds exactly only for a **Bayes-optimal** predictor, and lane M's
+audit says **the distogram memorises by 8×** — it is demonstrably *not* well-fit, so its residual
+**is** in principle recoverable from its own inputs. **The tautology does not do the work; the null
+does.** Accepted.
+
+**And my prediction was falsified on the raw statistic.** I put 3:1 on long-range R² also coming
+back ≈ 0. It is **+0.1959**. Nested properly it is **+0.0758** genuinely new (the rest is
+calibration and the shared-referent floor — a trap the random-feature control does not catch, and
+one I have a written memory about and did not apply).
+
+**Lane P's repair to lane G's enumeration, which is tighter than G1:** *"physics is target-independent"*
+is a statement about the **function**, not its **value** — a universal function on a target-specific
+argument yields target-specific output. **Physics is an operator, not a source.** The enumeration
+collapses from three sources to **two: sequence and library.**
+
+> **The closure: within {sequence, library}, every predictable component of the prior's error is
+> common-mode, and common-mode correction is non-identifiable from within the pool. Not "we searched
+> and found nothing" — "the set has a structural property that guarantees the search finds the wrong
+> thing."**
+
+**The named gap, honestly stated by the lane that produced it:** mutual information is *not* shown
+to be zero. What is shown is that the extractable part is the wrong part, **by a theorem about which
+part is identifiable.**
+
+**And lane P made, and caught, the same error lane D found in S29:** its first run's verdict strings
+were inverted, because `ST.compare` is lower-is-better and explained variance is higher-is-better.
+Caught on the first table. *In a lane that had just read the entry about it.* Fifth instance of the
+statistic/convention mismatch this sprint.
+
 ## NOTE 15 (2026-09-20 13:52, lane G, S30-L26): **BOTH MY PRIORS WERE DIRECTIONALLY RIGHT AND BOTH MY REASONS WERE WRONG** — E2 IS REAL AND DOES NOT REACH THE TAIL; THE CHIRAL ESCAPE IS EXERCISED AND EMPTY
 
 Lane G closed both open questions. Prereg at `78b65521`, committed before the first number.
