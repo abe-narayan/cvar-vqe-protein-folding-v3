@@ -4472,3 +4472,113 @@ a ledger entry is a claim about a file, and it is worth exactly what recomputing
 **Standing consequence, alongside S29-L46's:** before the report is published, every number in it
 is recomputed from its artefact, not copied from a ledger entry. This entry is that pass for the
 three headline results; the remaining lanes' numbers get the same treatment as they land.
+
+## S29-L49 -- MEASUREMENT 2, THE GATE IS CLOSED AND THE COMPATIBILITY-HAMILTONIAN ROUTE ON THE CANDIDATE REGISTER IS SHUT: NO (M, J) CELL OF THE 24 CLEARS 0.7x MDE AGAINST ITS OWN TARGET'S DIS TOP-75 AVERAGE ON EITHER READOUT; THE SIGNED READOUT IS 0.3 TO 4.7 A WORSE AND ITS SIGN IS A COIN FLIP (sign_correct 0.40 TO 0.75, MEDIAN 0.50, AND LANE O's S29-L21 HAS THE FAMILY's ORACLE CEILING AT EXACTLY 0.0000 A); AND THE MECHANISM IS VISIBLE AS LATERAL MOTION -- THE p-READOUT'S EMITTED CLOUD MOVES 0.22 TO 1.45 A AWAY FROM PRODUCTION WHILE ITS RMSD MOVES UNDER 0.1 A, WHICH FALSIFIES S29-L11 PREDICTION 3 AS I OPERATIONALISED IT AND CONFIRMS THE LAW BEHIND IT (2026-09-20 02:42, B)
+Question (`s29/briefs/S29B.md` measurement 2; `s29/PREREG_S29_B.md` sections 5.1 to 5.5 and
+ADDENDUM 1 A2/A3, all committed before the job): what does the exact ground state of
+H = diag(E) - J M select, for M the double-centered Gaussian similarity A_c and the signed
+agreement matrix G = Delta Delta^T / n_res, and could it help at the endpoint at all? ORACLE
+DIAGNOSTIC, labelled: every RMSD here reads the native to score an ACHIEVABLE, native-free
+selection, and nothing in it chooses a deployable parameter.
+
+**THE GATE, as registered (prereg 5.5 + A3, five conditions): NOT OPENED.** Of the 24 REAL cells
+(M in {A_c, G} x J in {-3, -1, -0.3, -0.1, +0.1, +0.3, +1, +3}) **zero** clear condition 1 -- an
+effect of -0.7x MDE or better against the same target's own DIS top-75 uniform average, paired
+through `s24.stats_lib.compare` with `pinned_folds` -- on either the p-top-75 readout (R3) or the
+signed amplitude readout (R4). Conditions 2 to 5 are therefore not reached. **Measurement 3, this
+lane's compatibility-Hamiltonian endpoint, is NOT run, exactly as the brief instructs.**
+
+**PROVENANCE.** `s29/s29_B_compat.py` (19 tests, `tests/test_s29_B.py`); jobs `s29B_probe_gs`,
+`s29B_gs_02`, `s29B_gs_12` (`s26/jobs_done/`, exit 0, peak RSS 0.35 GB, 9.6 s per target); rows
+`s29/results/s29_B_gs_rows*.jsonl` (12 targets x 56 cells = 672 rows: 7 matrices -- A, A_c, G and
+the PERM and SPEC controls on each centered matrix -- x 8 values of J), analysis
+`s29/results/s29_B_gs.json`. 12 trainability targets, production (DIS top-75 uniform) mean
+**3.2529 +- 0.5641 (SE)**. **At n = 12 with that SE nothing here is a measured contrast and none is
+claimed; the gate is a DECISION about whether to spend an endpoint run, and it decides no.**
+
+**THE REAL ARMS (ORACLE, point cloud; R3 = uniform average over the p-top-75; R4 = the signed
+amplitude readout of `s27/s28_A_amp.py`; R2 = the p-weighted average over the whole pool):**
+
+    arm            R3       R4       R2   |    PR    coh   pole_imb  d(R3,prod)  sign_ok  best-sign
+    A_c|J-3      3.1309   4.1467   3.5872 |   1.2   0.006   -0.139     0.4782     0.750    2.7943
+    A_c|J-1      3.1632   4.2851   3.7640 |   1.1   0.039   +0.037     0.4907     0.500    2.6894
+    A_c|J-0.1    3.1886   3.5608   3.7805 |   1.0   0.484   +0.002     0.3841     0.400    2.6131
+    A_c|J+0.1    3.2118   3.7409   3.7784 |   1.0   0.922   +0.004     0.2233     0.500    2.9626
+    A_c|J+1      3.2267   4.2741   3.2612 |  38.6   0.379   +0.222     0.3051     0.500    3.0400
+    A_c|J+3      3.4172   7.9501   3.3575 | 225.4   0.074   -0.196     1.0136     0.444    5.8958
+    G|J-3        3.1869   4.2295   3.7278 |   1.1   0.020   -0.980     0.4635     0.667    2.8007
+    G|J-1        3.1994   3.8993   3.7691 |   1.1   0.096   -0.995     0.4299     0.600    2.6877
+    G|J-0.1      3.1849   3.5259   3.7810 |   1.0   0.652   -1.000     0.3551     0.400    2.6145
+    G|J+0.1      3.2040   3.7579   3.7803 |   1.0   0.950   -1.000     0.3035     0.500    2.9594
+    G|J+1        3.3039   3.9675   3.5050 |   4.4   0.377   -0.901     0.3588     0.455    2.8966
+    G|J+3        3.7601   5.6036   3.4214 | 208.5   0.079   -0.261     1.4501     0.429    4.9465
+    (production 3.2529; the PERM and SPEC controls sit in the same band, `s29_B_gs.json :: arms`)
+
+**FOUR THINGS THE TABLE SAYS.**
+
+1. **THE SIGNED READOUT IS THE WORST OF THE THREE, EVERYWHERE.** R4 is 0.3 to 4.7 A above
+   production at every cell, it is UNDEFINED (sign coherence below 0.01) on 3 to 8 of 12 targets
+   at the large-|J| cells, and its own ORACLE best-of-sign column -- what it would reach if an
+   oracle chose the sign of eta per target -- is 2.61 to 5.90 while its realised **sign is a coin
+   flip: sign_correct 0.40 to 0.75, median 0.50 over the cells**. This is the prereg A3 clause
+   firing exactly as registered, and it does not even need the gate: **lane O's S29-L21** priced
+   this whole family's ORACLE ceiling at **exactly 0.0000 A** (best global eta along the pool's
+   first shape mode is zero, per-target sign positive on 52% of targets, leave-fold-out eta
+   +0.0071 A WORSE). I registered in addendum A4 that a ceiling under 0.15 A would mean my gate
+   was pre-decided; it came back at zero, and the gate closing independently is consistent with
+   that rather than additional evidence for it.
+2. **THE POLE CANCELLATION IS MEASURED.** `pole_imbalance` (the probability mass on the positive
+   side of M's top eigenvector minus the mass on the negative side) is -1.00 for G at small |J|,
+   where the state is the one-hot argmin (PR 1.0) and lives on one pole by default, and it
+   **collapses toward zero as J grows and the state spreads**: -0.26 at G|J+3 with PR 208, -0.20
+   at A_c|J+3 with PR 225. The sign coherence falls the same way (0.95 -> 0.08). That is the
+   sign-mixing lemma (prereg 3.2; lane T's S29-L11(d)) in the data: the more the state actually
+   occupies M's principal contrast, the more exactly the two poles cancel under a p-readout.
+3. **LATERAL MOTION: THE EMITTED CLOUD MOVES AND THE ACCURACY DOES NOT.** `d(R3, prod)` is the
+   CA-RMSD between the cell's emitted cloud and production's, and it is **0.22 to 1.45 A** -- these
+   are genuinely different structures -- while the R3 accuracy column stays within about 0.1 A of
+   production at every cell except G|J+3. **This FALSIFIES S29-L11 prediction 3 as I
+   operationalised it** (prereg A2 registered "the p-readout emits the pool mean to within a 0.05 A
+   projection floor on >= 80% of targets"; measured 0.00 to 0.17 of targets). The prediction's
+   SPIRIT is confirmed and its letter is not: the p-readout does not return the pool mean, it
+   returns a structure that has moved half an angstrom sideways and is no better. That is the
+   terminal-operator law (memory `operator-consumes-set-mean`; S29-L44 addendum 2, d_out =
+   1.16 x set-mean + 0.04 x set-best) and the pool's 68% common-mode error (S23 L9) acting
+   together: swapping members changes the average's position without changing its distance to the
+   native, because the members share the error.
+4. **THE J GRID IS AN ORDER STATISTIC WITH NOTHING IN IT.** `ST.best_of_k_within` over the 16
+   REAL (M, J) cells on R3: oracle -0.4303, null -0.6180, k_eff 8.49, and the split-half transfer
+   is **+0.1571** -- i.e. the best J chosen on one half of the targets makes the other half
+   **worse**. There is no transferable per-target J.
+
+**THE NINE QUESTIONS (charter section 11, as contract rule 15 requires), answered for this
+formulation.** (1) A basis state is one real CA window of the DIS top-500, identity encoding,
+9 qubits. (2) H = diag(E) - J M with E the shipped DIS rank ladder and M the common-mode-removed
+compatibility, A_c 1 = G 1 = 0. (3) <psi|G|psi> = ||sum_i psi_i Delta_i||^2 / n_res, the squared
+amplitude-weighted departure from the typical structure -- the quantity averaging sets to zero.
+(4) CVaR_0.18 over p_theta minus 0.5 H(p) minus J<psi|M|psi>. (5) RY+CNOT depth 3, 27 parameters,
+real amplitudes; it cannot represent a complex state and reaches the S28 J = 3 ground state at
+squared overlap 0.85 (S28-L43). (6) Not reached: the gate closed on the EXACT ground state, which
+upper-bounds anything the circuit could find under this H. (7) No: the exact eigensolver IS the
+classical counterpart here and it does not beat production. (8) Yes, trivially -- the classical
+counterpart is the whole measurement. (9) Not run, by the gate.
+
+**WHAT THIS CLOSES, AND IT IS NOT WHAT S28 CLOSED.** S28 closed the off-diagonal route because one
+similarity measure was near rank one. That reason is now retired (S29-L36: centering removes the
+degeneracy and makes the gradient decay WORSE, and the rank cap forbids any deviation Gram from
+being gradient-visible at D = 512). The route is shut for a **structural** reason instead: every
+common-mode-removed operator annihilates the uniform vector, so its informative eigenvectors are
+sign-mixed; a p-readout cancels them (point 2); a signed readout consumes them and is worse, with
+a coin-flip sign and an ORACLE ceiling of zero (point 1); and what motion does survive is lateral,
+changing the emitted structure without changing its accuracy (point 3). That statement is about
+the ENCODING -- candidate identity with a probability readout -- not about off-diagonal
+Hamiltonians, and it points where lane T's S29-L15 Q2 points: a local mixer on a configuration
+space, not another matrix on this register.
+
+Multiplicity: up to 168 ORACLE diagnostic comparisons on 12 targets (24 REAL + 32 control cells x
+3 readouts), priced as an order statistic above; 0 endpoint comparisons; measurement 3 not run.
+Artefacts: `s29/results/s29_B_gs_rows.jsonl`, `s29_B_gs_rows.s0of2.jsonl`,
+`s29_B_gs_rows.s1of2.jsonl`, `s29/results/s29_B_gs.json`; `s26/jobs_done/s29B_gs_02.json`,
+`s29B_gs_12.json`, `s29B_probe_gs.json`; code `s29/s29_B_compat.py`, `s29/s29_B_analyse.py`,
+tests `tests/test_s29_B.py` (19 pass); prereg `s29/PREREG_S29_B.md` sections 5 and addendum 1
+(commits 1c345f07, 9d745692), both before the job.
