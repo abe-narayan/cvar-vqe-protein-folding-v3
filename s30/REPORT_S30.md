@@ -185,7 +185,61 @@ the raw material, not a defect.**
 
 ## 6. Statistical discipline and multiplicity
 
-[PENDING]
+### 6.1 The rules actually enforced
+
+| rule | where it bit |
+|---|---|
+| **MDE = 2.8016 x SE, per comparison** - never a sprint-wide constant | the S29 constant 0.084 A is wrong by up to 84x in both directions |
+| **Below 0.7x MDE is not a result; 0.7-1.0x is NOT MEASURED** | killed S29's built-chain preference row at 0.56x (§6.3) and lane P's headline at 0.75x |
+| **Fold-clustered CI, on the pinned folds** | `s24.stats_lib._verdict` refuses a verdict when `folds=None` rather than falling back to the IID CI |
+| **Pre-register the falsifier before the number exists** | every lane did; three lanes' falsifiers then failed and were reported as failures |
+| **A control must match the operator's own space** | the project's most repeated error; no instance this sprint |
+| **The native never tunes a deployable parameter** | every ORACLE arm is labelled ORACLE and none is deployable |
+
+### 6.2 Multiplicity, counted rather than asserted
+
+The meter counts every comparison it emits - **30 on the built chain, 33 on the CA cloud** - and
+states the consequence in the artefact itself: *"With 8 lanes, a 1x-MDE positive is EXPECTED
+somewhere; price any single positive from this instrument against this count and the sprint's
+running total."*
+
+Sprint-wide the count is in the **hundreds**: 43 channels (lane R) + 21 fields (lane D) + 8 feature
+arms x 5 strata (lane P) + the width sweep, the quadric/halfspace ladder, the bit ladder, and the
+63 above. This is why **the surviving positives are the ones at 2-10x MDE with 5/5 folds**, not the
+ones at 1.2x. Two lanes ran max-over-channels nulls rather than per-channel ones (lane R's
+sign-flip null across 43, p = 0.000; lane Q's across-target null on the search ladder) and that is
+the standard the next sprint should inherit for any swept family.
+
+**The honest limitation:** the sprint-wide total is a *lower bound*. Lanes counted their own
+comparisons; nobody maintained a single register, and by the time that was obvious the lanes had
+closed. **A sprint-wide multiplicity register, written to as comparisons are emitted, is a build
+item for S31** - not a discipline problem to exhort about.
+
+### 6.3 Three statistic/null mismatches, which is the sprint's real methodological finding
+
+Three times a statistic was compared against a null belonging to a *different* statistic. They are
+the same defect wearing three costumes:
+
+1. **`7 - log2 r` is right-skewed**, so its median sits 0.416 bits below its own mean. Reading the
+   median against the analytic mean says "worse than chance" **by construction**. (Mine, reported
+   to the user twice.)
+2. **`abs(signed mean)` scored against a null for `mean |cos|`** - `s29/s29_D_fields.py:243,263`
+   labels one statistic and computes the other.
+3. **A 0/0.5/1 preference indicator has modal value 0**, so its median is uninformative by
+   construction and a median paired difference of 0.0000 is *not* the median-vs-mean warning firing.
+
+And a fourth, latent, caught by the verifier rather than by a reader: **`s24.stats_lib.compare` is
+lower-is-better** (`d = a - b`, negative = a better) because its native statistic is RMSD. Fed a
+**preference rate**, which is higher-is-better, its `verdict` string reads `WORSE` for an effect of
+**+0.1716 that is the good direction**. Lane D's gate handles it correctly
+(`s30_D_meter.py:451`, `PASS if effect > 0`) and no S30 document quotes the inverted field -
+`s30/s30_verify.py` now asserts the trap's shape so it stays known.
+
+> **The generalisation, and it is the one to carry forward:** a statistics library encodes a
+> *direction* as well as a test. Every quantity handed to it - preference rates, accuracies,
+> correlations, R2, win rates, concordances - must be checked against that direction, because the
+> failure is silent and the field that is easiest to quote is the one that is wrong.
+
 
 ## 7. Every hypothesis entertained and killed
 
@@ -201,7 +255,74 @@ the raw material, not a defect.**
 
 ## 10. The cost/RMSD meter's baselines for every cost tested
 
-[PENDING]
+Built first, as §7 of the charter demanded, and extended mid-sprint with a `verify` verb and an
+8-draw control. `python s30/s30_D_meter.py meter --f <name-or-module:function> --basis chain`.
+
+### 10.1 The charter's four anchors all recompute
+
+| anchor | charter's value | measured | basis |
+|---|---|---|---|
+| ladder rho (S28 ladder) | ~ -0.40 | **-0.4023** [-0.477, -0.322], 5/5 | built chain |
+| cosine | ~ -0.03 | **-0.0339**, z = -2.45 vs its own null | CA cloud |
+| native percentile | ~ 36.9 | **0.3676** [0.306, 0.405] | either |
+| ORACLE preference | ~ 0.07 | **0.0714** | built chain |
+
+Verified by `s30/s30_verify.py`, **22/22 matched, 0 mismatched, 0 missing**. The extension did not
+move the instrument.
+
+### 10.2 The shipped cost, on both bases
+
+```
+                          built chain      CA point cloud
+ladder rho, S28            -0.4023          -0.1818       lowering the cost RAISES RMSD
+ladder rho, CHARTER        -0.1964          +0.2603
+ladder rho, FULL           -0.3187          +0.1179
+cosine                      n/a             -0.0339       (-2.45 sigma, WRONG side)
+native percentile           0.3676           0.3676       (0 = native is the pool's best; 0.5 = chance)
+pref(ORACLE best vs PROD)   0.0714           0.2063
+pref(pool member vs PROD)   0.0201           0.1265
+production RMSD             3.2071           3.0483
+GATE                        BLOCK            BLOCK
+```
+
+**Both bases BLOCK, and they block for different reasons** - the chain on the ladder alone, the
+cloud on the ladder *and* the cosine. The gate's rule: *"a BLOCK on the ladder means the cost moves
+in the wrong structural direction and gets no endpoint compute."*
+
+### 10.3 The two costs whose percentiles were compared, and the mislabel I made
+
+`native_pctile_DIS = 0.3676` and `native_pctile_DIS_SURR = 0.3688`. I quoted the **DIS_SURR** value
+in lane D's brief beside five `DIS` numbers. They differ by 0.0012 so nothing downstream moved, but
+the anchors block now carries both, named.
+
+### 10.4 The cosine null, corrected from S29
+
+Two different nulls, which S29 mixed:
+
+- `per_draw_abs_mean = 0.1398` - the magnitude of **one** random direction on **one** target.
+- `target_mean_null` - the null for the **126-target mean**, ~10x tighter: sd 0.0144, 95% interval
+  [-0.0169, +0.0307].
+
+The shipped cosine of **-0.0339** is z = **-2.45** against the second. Against the first it looks
+unremarkable. **A cosine of +0.05 is far below 0.1398 and still several sigma above chance** - the
+two nulls answer different questions and S29's paragraph used the wrong one.
+
+### 10.5 What the meter could not see, which is a finding about the meter
+
+Per contract rule 24, *a cost the meter cannot see is a finding about the meter.* Two surfaced:
+
+1. **The meter was blind on the reporting basis.** It ran on the CA point cloud while the endpoint
+   is the **built chain**. Both bases now run and, as §6.3 shows, they do not agree - the
+   preference contrast is a *result* on one and *not a result* on the other.
+2. **Its random-signed control was a single draw.** S29's seed-0 draw turned out to be the
+   **maximum of its own eight**. The relative draw noise is **59% on the chain against 27% on CA**,
+   because on the chain the cost prefers production to nearly everything, so the control is a rare
+   event. The meter now takes `R = 8` draws and reports the per-draw distribution and the
+   single-draw range.
+
+> **A single-draw control is least trustworthy exactly where the effects are smallest - which is
+> where this project's remaining effects live.**
+
 
 ## 11. What remains open
 
