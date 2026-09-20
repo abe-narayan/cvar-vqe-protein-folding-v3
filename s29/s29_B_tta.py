@@ -576,11 +576,13 @@ def main(argv=None):
             pdbs = pdbs[:a.limit]
         C.run_phase("flat", pdbs, FLAT_ROWS, flat_target)
     if a.subset:
+        from s25 import phys_lib as P
         from s29 import s29_B_compat as C
-        pdbs = C.picks_12()
+        pdbs = C.picks_12() if a.targets == "12" else list(P.targets())
         if a.limit:
             pdbs = pdbs[:a.limit]
-        C.run_phase("subset", pdbs, SUBSET_ROWS, subset_target)
+        pdbs = C._shard(pdbs, a.shard)
+        C.run_phase("subset", pdbs, C.shard_path(SUBSET_ROWS, a.shard), subset_target)
     if a.endpoint:
         from s25 import phys_lib as P
         from s29 import s29_B_compat as C
