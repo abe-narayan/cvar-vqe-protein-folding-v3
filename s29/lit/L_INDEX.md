@@ -1,0 +1,43 @@
+# S29 LANE L -- LITERATURE INDEX (one line per paper: verdict, and the information it adds)
+
+Format: topic file :: citation :: signal class :: what it contains that the project does not ::
+KEPT / REJECTED. Signal classes are defined in `L_1_native_free_qa.md` section 5
+(S1 packing/burial, S2 sequence-to-local-structure agreement, S3 consensus, S4 physics/stability).
+The instrument every check is made against: 126 peptides of 9-16 residues, a 500-member
+retrieval pool with 68% common-mode error, an ESM-2 650M PCA-32 17-bin distogram trained
+leave-fold-out, built chain as the reporting basis, CPU only, 16 GB.
+
+## Topic 1 -- native-free structure quality (`L_1_native_free_qa.md`, ledger S29-L1)
+
+| paper | class | information it adds | verdict |
+|---|---|---|---|
+| Olechnovic K, Venclovas C. VoroMQA. Proteins 85:1131-1145 (2017) | S1 | Voronoi contact AREA with solvent as an explicit partner type; atom-typed quasi-chemical reference | REJECTED -- burial is not a variable at 9-16 aa; learning set is chains >99 residues |
+| Uziela K, Wallner B, Elofsson A. ProQ3. Sci Rep 6:33509 (2016) | S1+S2+S4 | none (PSSM < ESM-2; Rosetta terms = the LEG/AMB class) | REJECTED -- the authors filter out every target under 50 residues |
+| Hurtado DM, Uziela K, Elofsson A. ProQ4. arXiv:1804.06281 (2018) | S2 | a Siamese RANK loss on per-residue lDDT over a coarse model description | REJECTED -- same axis as DIS; rank-learners over our features are measured flat (S13, S28-L48) |
+| Hiranuma N et al. DeepAccNet. Nat Commun 12:1340 (2021) | S1+S2+S4 | the estogram: a signed per-pair error distribution usable as a restraint | REJECTED -- trained on 50-300 residues; error-direction closed here by S16 |
+| Studer G et al. QMEANDisCo. Bioinformatics 36:1765 (2020) | S1+S2+S3 | homologue-derived per-pair distance constraints, identity-weighted (gamma=70) | REJECTED -- leakage rule; at this length the homologues ARE the pool; authors' floor ~40 residues |
+| Baldassarre F et al. GraphQA. Bioinformatics 37:360 (2021) | S1+S2 | none (graph estimator over the ProQ feature set; ablation says architecture is not the signal) | REJECTED |
+| Chen C et al. EnQA. Bioinformatics 39:btad030 (2023) | S2 | AlphaFold2's internal features as QA input | REJECTED -- leakage + hardware; base signal fails at peptide length |
+| Hu J et al. MD-based MAE. bioRxiv 439760 (2018) | S4 | sub-ns MD stability as an absolute per-residue accuracy | REJECTED -- assumes physics prefers the native; refuted here with controls (S25 L16) |
+| Kwon S, Won J, Kryshtafovych A, Seok C. CASP14 EMA assessment. Proteins 89:1940-1948 (2021) | -- | the field's own verdict: single-model QA overtook consensus in CASP14; lDDT is learnable, GDT-TS (hence RMSD) is not | KEPT as evidence |
+| Wang Q, Zhang Y et al. PWCom. PLoS One 8:e74006 (2013); Pcons/ModFOLDclust/DAVIS-EMAconsensus lineage | S3 | none -- score_i = mean similarity to the rest of the pool IS our CONS channel | REJECTED (family-level: consensus assumes independent member errors; our pool is 68% common-mode) |
+| quasi-single-model QA (ModFOLD-S, MULTICOM_qa, GATE; CASP15) | S3 | an INDEPENDENT predictor as the reference ensemble | REJECTED as unavailable; FLAGGED -- the value is the independence, not the scoring rule |
+| McDonald EF et al. Benchmarking AlphaFold2 on peptide structure prediction. Structure 31:111-119 (2023) | -- | a controlled in-band ranking measurement on 588 peptides of 10-40 aa: pLDDT has NO within-target skill; rank-1 costs 0.2-1.1 A vs best-of-5 | KEPT as evidence -- external confirmation of charter finding 8 |
+| Maupetit J, Derreumaux P, Tuffery P. PEP-FOLD. NAR 37:W498 (2009); Shen Y et al. JCTC 10:4745 (2014); Lamiable A et al. NAR 44:W449 (2016) | S4 (self-consistent) | sOPEP, a peptide-tuned coarse-grained force field; 27-state structural-alphabet profile retrieval | REJECTED as a pool scorer (it ranks its OWN ensemble); KEPT as the 2.6 A native-free anchor at 9-25 aa |
+| Timmons PB, Hewage CM. APPTEST. Brief Bioinform 22:bbab308 (2021) | S4 (self-consistent) | a torsion head and a fold-from-restraints terminal operator (no retrieval bottleneck) | REJECTED as QA; NOTED as a generation architecture (1.96 A at 9-25 aa) |
+| Lindorff-Larsen K, Piana S, Dror RO, Shaw DE. Science 334:517-520 (2011) | S4 (free energy) | the equilibrium population: an entropy term, not a single-point energy | REJECTED on cost (10^5-10^6 CPU-h per peptide); KEPT as the statement of what the only working peptide selector is |
+
+Topic 1 running count: 15 entries, 4 KEPT (all as evidence or anchors; none importable as an
+operator), 11 REJECTED across 5 families.
+
+## Topic 2 -- correlated error in ensembles (`L_2_correlated_error.md`)
+(pending)
+
+## Topic 3 -- decision theory of structure point estimates (`L_3_decision_theory.md`)
+(pending)
+
+## Topic 4 -- quantum (`L_4_quantum.md`)
+(pending)
+
+## Topic 5 -- peptide prediction at 9-16 residues (`L_5_peptide_ceiling.md`)
+(pending)
