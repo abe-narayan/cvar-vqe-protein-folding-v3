@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 01:28 Pacific.
+Last update: 2026-09-20 01:32 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -171,6 +171,39 @@ third is the queued S8 free-energy item and is now the only structurally live ex
 
 
 
+
+## THE SIGN IS THE INFORMATION, MEASURED ON 21 FIELDS AT ONCE (2026-09-20 01:32, S29-L35)
+Lane D's field survey confirms the bound AND produces the sprint's cleanest statement of its
+thesis. Three results, all on 126 targets with fold CIs.
+1. B2 SURVIVES. No field's signed mean cosine clears the 0.140 random reference with a 2-SE
+   margin; the best is DISTPOT +0.1128 with a fold CI whose upper end is 0.137, just under it.
+   The largest ORACLE gain any of the 21 fields buys through a global step is 0.019 A. Eight of
+   the 21 have fold CIs excluding ZERO, so the honest form of B2 is "no field's mean alignment
+   reaches the random reference", not "every field is uninformative".
+2. THE MAGNITUDE IS THERE AND THE SIGN IS NOT -- THE RESULT THAT ADDS SOMETHING. The PER-TARGET
+   |cos| is 0.251 to 0.325 on EVERY ONE of the 21 fields, about TWICE a random direction's
+   0.140. These fields are genuinely aligned with the direction to the native on each target;
+   what destroys the mean is that the sign is near a coin toss (fraction positive 0.468 to
+   0.643). Granting an ORACLE sign and an ORACLE step per target and nothing else:
+     EXPAND (pure de-contraction) |cos| 0.296, frac+ 0.468 -> 2.708 A
+     RG_LAW 0.294 / 0.579 -> 2.735 | PROJ 0.294 / 0.587 -> 2.740 | ENV 0.305 / 0.571 -> 2.740
+     LEG 0.299 / 0.619 -> 2.756 | MSET_500 0.303 / 0.643 -> 2.759 | MEDOID 0.251 / 0.476 -> 2.894
+   against production's 3.0483. This reproduces S29-L23's structure on 21 fields instead of one
+   and puts the SIGN-ORACLE CEILING at 2.708 A on the point cloud, BELOW lane T's 2.98 figure.
+   Assumption B4 (a field good on some targets and reversed on others enters at |rho|(2q-1)) is
+   therefore not a technicality: it is the entire gap, 0.021 signed against 0.296 unsigned for
+   EXPAND. "The sign is the information" is now measured for a whole operator class, and the
+   class includes the shipped projection.
+3. AND A THIRD SIDE OF THE CONTRACTION STORY. EXPAND has the LARGEST unsigned alignment of all
+   21 fields and a signed mean of -0.021 with 46.8% positive. Production is systematically 22%
+   contracted in the bond, yet expanding it toward the pool's mean radius points AWAY from the
+   native as often as toward it. Contraction is real and is NOT a globally correctable
+   direction -- lane L's Jensen framing, lane D's own "the shipped cost's descent EXPANDS", and
+   now this, meeting from three sides.
+4. THE ALIGNMENT IS A FAIL18 SET PROPERTY: mean cosine on the 18 against the 108 is +0.348 vs
+   +0.046 for CONS_TRIM, +0.316 vs +0.078 for MSET_250, +0.249 vs +0.040 for PROJ. The
+   displacement information lives where the error is largest, which is where a per-target sign
+   would be worth the most and where the sprint has repeatedly found no way to get it.
 
 ## THE BOUND SURVIVES ITS DIRECT ATTACK (2026-09-20 01:28, `s29/results/s29_D_fields.json`; lane D's entry to follow)
 Lane D's field survey is the one experiment that could have falsified the sprint's headline, and
