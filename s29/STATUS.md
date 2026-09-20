@@ -47,8 +47,8 @@
 
 
 ## O
-- 2026-09-20 01:44 running: three rungs posted (S29-L20 rung 6 kills H1; S29-L21 rung 8 PC1 ceiling zero; S29-L30 rung 9 = the architectural ceiling 2.7605 A ORACLE). oa-hull arm reproduces S10-5's 1.802/0.953 to 4 dp; chain shards: BCD 0/2/4 landed, 1 relaunched from checkpoint, 3 running, EF (rung 9 + oa) running on the fixed per-(group,shard) paths. Chain-row integrity check added and passing on 3,208 rows.
-- next: the single ladder summary entry (every rung, point cloud AND built chain, ORACLE-vs-transferable column, FAIL18/108) the moment the last shard lands; leading with rung 9's reading that 2.5 A is unreachable through this architecture even with ORACLE selection.
+- 2026-09-20 02:31 LANE COMPLETE: S29-L47 posted, the whole ladder on the BUILT CHAIN (33 arms x 126, 4,158 projections). Architecture ORACLE ceiling 2.9027 vs production 3.2105 (-0.3079, 3.14x) so 2.5 A is unreachable through it; readout switch at fixed top-128 -0.7592 (4.18x, a readout switch + 7 bits, NOT a ranking gain); m vs member = same 7 bits, -0.3079 vs -1.0670. Table regenerated at n=126 on every arm.
+- next: nothing queued. Findings in s29/s29_O_FINDINGS.md; every artefact committed. Available for follow-ups (e.g. a sparse-weighted readout ceiling under a native-free support rule, the one class not closed by ceiling).
 
 ## D
 - 2026-09-19 23:56 done: cost-RMSD meter built and posted (S29-L2; all four S28 anchors reproduce); prereg checks of O (S29-L3) and X (S29-L4); suite gate 378/3/0 on 17 light files (S29-L5).

@@ -4180,3 +4180,229 @@ would be the same class of slip as quoting the cloud for the chain.
    improvement fed to the shipped average, because that operator consumes the set mean.
 3. The pool itself **expresses** 1.1235 A on the endpoint. Generation is not the constraint.
    (Expressiveness only -- a 500-dof per-target fit; grid oracles are order statistics.)
+
+## S29-L47 -- THE ORACLE CEILING LADDER, COMPLETE, ON THE BUILT CHAIN: 33 ARMS x 126 TARGETS, 4,158 PROJECTIONS. THE DEPLOYED QUANTUM ARCHITECTURE's ORACLE CEILING IS 2.9027 A (production 3.2105, -0.3079 at 3.14x MDE), SO 2.5 A IS UNREACHABLE THROUGH IT WITH THE NATIVE IN HAND; WITH THE CANDIDATE SET HELD FIXED AT THE TOP-128 THE STAGE ACTUALLY SEES, SWITCHING THE READOUT FROM THE PREFIX AVERAGE TO ONE MEMBER IS -0.7592 A AT 4.18x MDE (A READOUT SWITCH PLUS 7 BITS, NOT A RANKING IMPROVEMENT); CHOOSING m AND CHOOSING WHICH MEMBER COST THE SAME 7 BITS AND ARE WORTH -0.3079 AND -1.0670 AGAINST PRODUCTION -- THE SAME INFORMATION BUDGET, 3.5x THE PAYOFF, SPENT ON THE WRONG QUESTION; AND EVERY RUNG WITH A FREE SCALAR HAS AN ORACLE GLOBAL VALUE OF 0.0 TO 0.6% OF ITS PER-TARGET GAIN (2026-09-20 02:30, O)
+
+BASIS: THE BUILT CHAIN (`s12.instrument.project`, contract rule 5), primary throughout; the point
+cloud is carried beside it in the table and never quoted alone. Pre-registration
+`s29/PREREG_S29_O.md` (committed 1e9bb035 before the first number), plus rung 8 (lane T's S29-L11
+prediction 4) and rung 9 (lane M's C13) added by the coordinator and registered in code before
+their first number. EVERY NUMBER IS ORACLE except the three rows marked DEPLOYABLE.
+
+### 1. What answers the charter
+`core/pipeline.py:758` widens the retained prefix to 2**n = 128 when the quantum stage is on, and
+the set-equality theorem (S25; `s24/d_harness.py`, 3,888 adversarial cells, 0 violations) makes the
+realised CVaR tail exactly a prefix of the energy order, consumed by the uniform average. So the
+best structure the deployed quantum architecture can emit, with the native in hand, is the best
+prefix-m average over the top-128:
+```
+  ORACLE architecture ceiling (best prefix-m over the top-128) vs production (BUILT CHAIN)
+    a 2.9027 (med 2.7690)   b 3.2105 (med 2.9661)   n=126
+    effect -0.3079   median -0.1892   SE 0.0351   MDE 0.0982   effect/MDE -3.14
+    iid  CI95 [-0.3789, -0.2430]
+    fold CI95 [-0.3625, -0.2499]   folds same sign 5/5   per-fold 0:-0.368 1:-0.240 2:-0.387 3:-0.218 4:-0.312
+    117W/9L/0T   worst degradation +0.1337 (6B9K)   p90 -0.0089   power 1.00  Type-M 1.00
+    concentration: drop-top10 -0.2203 vs uniform-effect null p10/p50/p90 -0.2576/-0.2202/-0.1846 -> pctile 0.500
+    VERDICT: BETTER
+```
+**2.9027 A on the built chain against production's 3.2105: the charter's 2.5 A is unreachable through
+this architecture even with perfect ORACLE selection.** (S29-L30 reported this ceiling on the point
+cloud, 2.7605 vs 3.0483 -- a consistent cloud-to-cloud comparison, and its basis annotation is
+S29-L44. The chain figure above is the one the sprint's endpoint is defined on.)
+
+### 2. The sharpest architectural statement, and exactly what it prices
+Hold the candidate set FIXED at the top-128 the quantum stage actually sees, and change only what
+is done with it:
+```
+  ORACLE best-of-128 (argmin) vs ORACLE best prefix-m average over the SAME top-128 (BUILT CHAIN)
+    a 2.1435 (med 2.0615)   b 2.9027 (med 2.7690)   n=126
+    effect -0.7592   median -0.5876   SE 0.0648   MDE 0.1815   effect/MDE -4.18
+    iid  CI95 [-0.8855, -0.6337]
+    fold CI95 [-0.8969, -0.6101]   folds same sign 5/5   per-fold 0:-0.697 1:-0.948 2:-0.483 3:-0.932 4:-0.764
+    120W/6L/0T   worst degradation +0.5810 (1D6X)   p90 -0.0833   power 1.00  Type-M 1.00
+    concentration: drop-top10 -0.6094 vs uniform-effect null p10/p50/p90 -0.6802/-0.6076/-0.5381 -> pctile 0.485
+    VERDICT: BETTER
+```
+**-0.7592 A at 4.18x MDE, 5/5 folds, 120W/6L, for switching the readout from the prefix average to
+one member of the same set.** Two constraints on reading it, both adopted from lane M's correction
+of the coordinator's framing (S29-L44 addendum 2), and neither is a caveat I would omit:
+- **It prices a READOUT SWITCH plus 7 bits, not a ranking improvement.** The terminal operator
+  consumes the set MEAN, not the set best (`operator-consumes-set-mean`: d_out = 1.16 x d_mean +
+  0.04 x d_best, R^2 0.89), so a perfect rank-1 fed to the SHIPPED m = 75 average is worth about
+  -0.03 A, not -0.76. The 0.76 A exists only if the emitted structure IS the selected member.
+- **log2(128) = 7 bits.** Best-of-128 is a clean order statistic carrying exactly that much
+  per-target information, which is why it is the defensible contrast here.
+And the comparison that makes the point without any readout change at all: **choosing m (the
+prefix size) and choosing WHICH member both cost 7 bits per target**, and are worth -0.3079 A and
+-1.0670 A against production respectively -- the same information budget, **3.5x the payoff**,
+differing only in what the budget is spent on. The architecture spends its per-target information
+on the wrong question.
+
+### 3. The 2.5 A question by operator class, on the BUILT CHAIN
+| operator class (ORACLE) | top-75 | TOP-128 | K=500 | 2.5 A? |
+|---|---|---|---|---|
+| perfect ranker (best single member) | 2.3055 | 2.1435 | 1.7078 | **CLEARS at every prefix** |
+| **the CVaR tail's reachable set** (best prefix-m average) | -- | **2.9027** | 2.7763 | **MISSES at every prefix** |
+| best basin average (k = 8, the finest tried) | 2.6596 | -- | 2.5620 | MISSES at every prefix |
+| best 2-member convex combination [EXPRESSIVENESS] | 2.1683 | -- | 1.4315 | clears |
+| best 10-member convex combination [EXPRESSIVENESS] | -- | -- | 1.1139 | clears |
+| convex hull, shared frame `cf` [EXPRESSIVENESS] | 2.0646 | 1.8538 | 1.1235 | clears |
+| production (deployable) | 3.2105 | 3.2105 | 3.2105 | -- |
+
+**THE HULL AND SPARSE ROWS ARE EXPRESSIVENESS, NOT CEILINGS** (lane M's correction, adopted):
+they fit 2 to 500 free weights PER TARGET against the native, and `grid-oracles-are-order-statistics`
+is explicit that such a quantity is an order statistic first and a bound second. They say the
+weighted-average FAMILY contains structures at 1.12 A; they do not say any operator could find
+them. The two rows that are genuine bounds on a named architecture are the prefix-average row (the
+CVaR tail, by the set-equality theorem) and the best-single-member row (a clean 7-bit order
+statistic).
+```
+  ORACLE top-128 hull (128 free weights fitted to the native) vs ORACLE best prefix-m over the same 128 (BUILT CHAIN)
+    a 1.8538 (med 1.5212)   b 2.9027 (med 2.7690)   n=126
+    effect -1.0489   median -0.9672   SE 0.0663   MDE 0.1858   effect/MDE -5.65
+    iid  CI95 [-1.1783, -0.9235]
+    fold CI95 [-1.1681, -0.9058]   folds same sign 5/5   per-fold 0:-1.077 1:-1.140 2:-0.783 3:-1.236 4:-1.034
+    126W/0L/0T   worst degradation -0.0261 (2MAI)   p90 -0.2600   power 1.00  Type-M 1.00
+    concentration: drop-top10 -0.9048 vs uniform-effect null p10/p50/p90 -0.9849/-0.9069/-0.8321 -> pctile 0.512
+    VERDICT: BETTER
+  ORACLE K=500 hull (500 free weights fitted to the native) vs production (BUILT CHAIN)
+    a 1.1235 (med 0.9913)   b 3.2105 (med 2.9661)   n=126
+    effect -2.0870   median -1.8579   SE 0.1072   MDE 0.3004   effect/MDE -6.95
+    iid  CI95 [-2.2999, -1.8806]
+    fold CI95 [-2.2089, -1.9654]   folds same sign 5/5   per-fold 0:-1.862 1:-2.052 2:-2.121 3:-2.306 4:-2.105
+    126W/0L/0T   worst degradation -0.1359 (1S9Z)   p90 -0.7798   power 1.00  Type-M 1.00
+    concentration: drop-top10 -1.8484 vs uniform-effect null p10/p50/p90 -1.9842/-1.8465/-1.7247 -> pctile 0.492
+    VERDICT: BETTER
+```
+The separation between the prefix-average row and the others is arithmetic, not pool-dependent: a
+uniform average over any set large enough to be a "basin" inherits the pool's common-mode error
+(S23 L9's 68%), and no choice of which set, or how many sets, escapes it.
+
+### 4. The full ladder, 33 arms, point cloud and built chain, 126 targets each
+| rung | arm (ORACLE unless marked DEPLOYABLE) | cloud | cloud FAIL18 | cloud 108 | cloud <2A | CHAIN | chain FAIL18 | chain 108 | chain <2A | price (chain-cloud) | transferable |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| - | production (the deployable incumbent) | 3.0483 | 5.8319 | 2.5844 | 0.29 | 3.2105 | 6.0200 | 2.7423 | 0.29 | +0.1622 | deployable |
+| 1 | 1  best single member, top-75 | 2.3062 | 4.6774 | 1.9109 | 0.44 | 2.3055 | 4.6826 | 1.9093 | 0.44 | -0.0007 | needs a perfect ranker |
+| 1 | 1  best single member, TOP-128 | 2.1458 | 4.1846 | 1.8060 | 0.47 | 2.1435 | 4.1841 | 1.8034 | 0.47 | -0.0023 | needs a perfect ranker |
+| 1 | 1  best single member, K=500 | 1.7108 | 2.2842 | 1.6153 | 0.58 | 1.7078 | 2.2845 | 1.6117 | 0.58 | -0.0030 | needs a perfect ranker |
+| 2 | 2  best prefix-m average, top-75 (m free) | 2.8267 | 5.5315 | 2.3759 | 0.36 | - | - | - | - | - | global m = 72 worth -0.0018; LFO +0.0079 |
+| 2/9 | 2  best prefix-m average, TOP-128 (m free) | 2.7605 | 5.4627 | 2.3101 | 0.36 | 2.9027 | 5.6090 | 2.4516 | 0.33 | +0.1422 | global m = 72 worth -0.0018; LFO +0.0079 |
+| 2 | 2  best prefix-m average, K=500 (m free) | 2.6062 | 4.8853 | 2.2263 | 0.37 | 2.7763 | 5.1343 | 2.3833 | 0.34 | +0.1701 | global m = 72 worth -0.0018; LFO +0.0079 |
+| 3 | 3  best basin average, top-75, k=2 | 2.8176 | 5.3316 | 2.3986 | 0.33 | 2.9606 | 5.4778 | 2.5410 | 0.30 | +0.1430 | needs the basin chosen per target |
+| 3 | 3  best basin average, top-75, k=3 | 2.7104 | 5.2888 | 2.2807 | 0.37 | 2.8537 | 5.4340 | 2.4236 | 0.33 | +0.1433 | needs the basin chosen per target |
+| 3 | 3  best basin average, top-75, k=4 | 2.6690 | 5.1954 | 2.2479 | 0.37 | 2.7981 | 5.3417 | 2.3742 | 0.33 | +0.1291 | needs the basin chosen per target |
+| 3 | 3  best basin average, top-75, k=6 | 2.5764 | 5.0406 | 2.1657 | 0.40 | 2.7022 | 5.1902 | 2.2875 | 0.37 | +0.1257 | needs the basin chosen per target |
+| 3 | 3  best basin average, top-75, k=8 | 2.5449 | 4.9873 | 2.1379 | 0.40 | 2.6596 | 5.1073 | 2.2517 | 0.36 | +0.1147 | needs the basin chosen per target |
+| 3 | 3  best basin average, K=500, k=2 | 3.0848 | 4.3586 | 2.8725 | 0.25 | 3.2726 | 4.6481 | 3.0434 | 0.27 | +0.1879 | needs the basin chosen per target |
+| 3 | 3  best basin average, K=500, k=3 | 2.6941 | 3.6291 | 2.5382 | 0.29 | 2.8602 | 3.8980 | 2.6873 | 0.27 | +0.1662 | needs the basin chosen per target |
+| 3 | 3  best basin average, K=500, k=4 | 2.6136 | 3.3294 | 2.4943 | 0.32 | 2.7726 | 3.5697 | 2.6398 | 0.27 | +0.1591 | needs the basin chosen per target |
+| 3 | 3  best basin average, K=500, k=6 | 2.4865 | 3.0639 | 2.3903 | 0.33 | 2.6314 | 3.2404 | 2.5299 | 0.30 | +0.1448 | needs the basin chosen per target |
+| 3 | 3  best basin average, K=500, k=8 | 2.4107 | 3.0488 | 2.3044 | 0.33 | 2.5620 | 3.2353 | 2.4497 | 0.30 | +0.1512 | needs the basin chosen per target |
+| 4 | 4  best sparse convex combination, top-75, s=2 | 2.0958 | 4.5422 | 1.6880 | 0.52 | 2.1683 | 4.6117 | 1.7611 | 0.50 | +0.0726 | needs the support and weights per target |
+| 4 | 4  best sparse convex combination, top-75, s=3 | 2.0308 | 4.5107 | 1.6175 | 0.57 | 2.1047 | 4.6076 | 1.6876 | 0.55 | +0.0739 | needs the support and weights per target |
+| 4 | 4  best sparse convex combination, top-75, s=5 | 2.0031 | 4.4997 | 1.5870 | 0.59 | 2.0711 | 4.5978 | 1.6499 | 0.56 | +0.0680 | needs the support and weights per target |
+| 4 | 4  best sparse convex combination, top-75, s=10 | 1.9885 | 4.4973 | 1.5704 | 0.59 | 2.0444 | 4.6103 | 1.6168 | 0.56 | +0.0559 | needs the support and weights per target |
+| 4 | 4  best sparse convex combination, top-75, s=20 | 1.9884 | 4.4973 | 1.5702 | 0.59 | 2.0466 | 4.6080 | 1.6197 | 0.56 | +0.0582 | needs the support and weights per target |
+| 4 | 4  best sparse convex combination, K=500, s=2 | 1.3631 | 1.9089 | 1.2722 | 0.79 | 1.4315 | 2.0091 | 1.3353 | 0.71 | +0.0684 | needs the support and weights per target |
+| 4 | 4  best sparse convex combination, K=500, s=3 | 1.2366 | 1.8075 | 1.1415 | 0.86 | 1.2889 | 1.9377 | 1.1808 | 0.81 | +0.0523 | needs the support and weights per target |
+| 4 | 4  best sparse convex combination, K=500, s=5 | 1.1559 | 1.7542 | 1.0562 | 0.88 | 1.1692 | 1.8866 | 1.0496 | 0.85 | +0.0133 | needs the support and weights per target |
+| 4 | 4  best sparse convex combination, K=500, s=10 | 1.1136 | 1.7363 | 1.0099 | 0.90 | 1.1139 | 1.8707 | 0.9877 | 0.86 | +0.0002 | needs the support and weights per target |
+| 4 | 4  best sparse convex combination, K=500, s=20 | 1.1118 | 1.7353 | 1.0079 | 0.90 | 1.1066 | 1.8877 | 0.9764 | 0.86 | -0.0052 | needs the support and weights per target |
+| 5 | 5  convex hull (cf, shared frame), top-75 | 1.9975 | 4.4975 | 1.5808 | 0.59 | 2.0646 | 4.6125 | 1.6400 | 0.56 | +0.0671 | needs the weights per target |
+| 5/9 | 5  convex hull (cf, shared frame), TOP-128 | 1.8071 | 3.9704 | 1.4466 | 0.67 | 1.8538 | 4.0780 | 1.4831 | 0.61 | +0.0466 | needs the weights per target |
+| 5 | 5  convex hull (cf, shared frame), K=500 | 1.1167 | 1.7409 | 1.0127 | 0.88 | 1.1235 | 1.8734 | 0.9985 | 0.86 | +0.0068 | needs the weights per target |
+| 5 | 5  convex hull (oa, per-candidate ORACLE pose), top-75 | 1.8016 | 3.8797 | 1.4552 | 0.66 | 1.8513 | 4.0663 | 1.4821 | 0.61 | +0.0497 | NOT EMITTABLE: posing needs the native |
+| 5 | 5  convex hull (oa, per-candidate ORACLE pose), K=500 | 0.9532 | 1.3880 | 0.8808 | 0.98 | 0.8716 | 1.4186 | 0.7805 | 0.96 | -0.0816 | NOT EMITTABLE: posing needs the native |
+| 6 | 6  typicality-axis step, per-target t (LIB75) | 2.7422 | 4.9412 | 2.3757 | 0.33 | - | - | - | - | - | global t = 0.0 EXACTLY; LFO +0.0000 |
+| 6 | 6  typicality-axis step, LEAVE-FOLD-OUT t (LIB75) | 3.0483 | 5.8319 | 2.5844 | 0.29 | 3.2105 | 6.0200 | 2.7423 | 0.29 | +0.1622 | DEPLOYABLE |
+| 6 | 6  typicality-axis step, LEAVE-FOLD-OUT t (BPRIME) | 3.0526 | 5.8330 | 2.5891 | 0.29 | 3.2142 | 6.0204 | 2.7465 | 0.28 | +0.1617 | DEPLOYABLE |
+| 8 | 8  PC1 one-parameter family, per-target eta | 2.5940 | 5.0816 | 2.1794 | 0.40 | - | - | - | - | - | global eta = 0.0 EXACTLY; LFO +0.0071 |
+| 8 | 8  PC1 one-parameter family, LEAVE-FOLD-OUT eta | 3.0554 | 5.8402 | 2.5913 | 0.29 | - | - | - | - | - | DEPLOYABLE |
+
+### 5. The ladder is one quantity measured four ways (lane L's S29-L31, adopted)
+| rung | free parameter | ORACLE per-target | ORACLE GLOBAL (one value for 126) | LEAVE-FOLD-OUT |
+|---|---|---|---|---|
+| 2/9 | prefix size m, inside the top-128 | -0.2879 | -0.0018 (0.6% of it) | +0.0079 |
+| 2 | prefix size m, over K=500 | -0.4421 | -0.0018 (0.4%) | +0.0079 |
+| 6 | step t along the typicality axis | -0.3061 | **+0.0000 (exactly zero)** | +0.0000 |
+| 8 | step eta along the pool's first shape mode | -0.4543 | **+0.0000 (exactly zero)** | +0.0071 |
+
+(Point-cloud figures; the two leave-fold-out arms that were chained are +0.0000 and +0.0037 there
+too.) Read with lane L's S29-L31: that scalar is a Neyman-Scott INCIDENTAL PARAMETER -- one
+nuisance parameter per target with a bounded number of observations per target -- so it is not
+estimable from other targets' answers as a matter of statistical theory, not of model capacity.
+Rungs 6 and 8 are the extreme case: on two different one-parameter families the ORACLE optimum of
+the GLOBAL parameter is EXACTLY the do-nothing point, which is what an incidental parameter whose
+sign cancels across targets looks like when you plot it. These are not four near misses; they are
+four measurements of the same quantity. Rungs 3, 4 and 5 carry the same parameter in richer form
+(which basin; which support; which weights), and their ORACLE ceilings are correspondingly larger
+and correspondingly unreachable: **the size of a rung's ORACLE gap measures how much per-target
+information it needs, not how much accuracy it offers.**
+
+### 6. The projection price, priced across 32 arms (S10-5 and S28-L26b, now with a sample)
+corr(cloud RMSD, chain minus cloud) over the 32 chained arms = **+0.866**. The price is <= 0 on
+every arm whose cloud mean is under 2.31 A (best single member -0.0007 / -0.0023 / -0.0030; sparse
+K=500 s = 20 -0.0052; the `oa` hull of K=500 -0.0816, the largest negative on the board) and above
++0.10 on every arm above 2.41 A (production +0.1622; basin top-75 k = 2 +0.1430; basin K=500 k = 2
++0.1879). **The projection is a shape correction that helps a near-native cloud and hurts a
+contracted one, crossing over at about 2.3 A of cloud accuracy.** Read against lane P's result that
+the averaging distortion is a monotone SHAPE distortion in sequence separation (0.773 at the bond,
+crossing 1.00 near separation 8, 1.10 at 13): the arms that PAY the price are exactly the ones
+whose clouds carry that distortion, and the arms that are PAID are the ones that do not.
+
+### 7. Mechanism, measured beside outcome
+(a) **Sparsity.** Within the top-75, 2 members with ORACLE weights emit 2.1683, 3 give 2.1047, 10 give
+2.0444 against the full hull's 2.0646 (chain); over K=500, s = 2 gives 1.4315 and s = 10 gives 1.1139
+against the hull's 1.1235. The ORACLE weighting optimum is genuinely sparse (hull support median 6 of
+128 at rung 9), so the whole expressiveness of the weighted-average family is in about 10 members.
+Stated as expressiveness, not as a ceiling.
+(b) **Basins.** The best basin average improves monotonically with k (top-75 k = 2 2.9606 -> k = 8
+2.6596; K=500 k = 2 3.2726 -> k = 8 2.5620, all chain) and the winning basin shrinks with it (median size
+62 -> 8 of 75; 460 -> 133 of 500). The class INTERPOLATES between the uniform average and rung 1 as
+k grows and never clears 2.5 A. A CVaR-VQE that selects a coherent basin is bounded by this row.
+(c) **Solver consistency, declared.** Rungs 4 and 5 solve the same non-convex joint (frame,
+weights) problem from two paths: alternation at full support (rung 5) and greedy forward selection
+with a convex refit (rung 4). The greedy path reaches a better stationary point on 66/126 targets
+(top-75) and 82/126 (K=500), the reverse on 2 and 3, so the honest `cf` expressiveness figure is
+the per-target minimum of the two: 1.9884 (top-75) and 1.1118 (K=500) on the cloud against the
+alternation-only 1.9975 and 1.1167. Both solvers' arms are in the table separately and never mixed.
+(d) **Convention, declared, with both S10-5 anchors reproduced.** `cf` = ONE shared transform
+solved jointly with the weights, the convention an operator could emit; S10-5's anchors for it are
+its "best re-weighting" rows, raw 1.987 / 1.094, and this lane gets 1.9975 / 1.1167 (deviations
++0.0105 / +0.0227, inside the pre-registered 0.05 A gate). `oa` = each candidate posed on the
+NATIVE individually, S10-5's headline "convex hull" rows, raw 1.802 / 0.953; this lane gets
+**1.8016 / 0.9532 (deviations -0.0004 / +0.0002)**. Both published pairs reproduce. The `oa` rows
+are labelled NOT EMITTABLE because posing each candidate requires the native.
+
+### 8. Reproduction gates (all passed before any number was kept)
+Production's cloud = 3.048338 over 126 and max |deviation| 2.1e-14 against S28-L1b's frame; rung 1's
+anchors 2.3062 / 1.7108 exactly (S28-L1b); rung 2 at m = 75 equals production to 1e-9 on every
+target; rung 9's prefix curve equals rung 2's first 128 columns to 0.0; rung 6's two blind clouds
+reproduce `s24/results/biasalign.json` and `s24/results/qmatch.json` to 0.0 on all 126 x 2 gates;
+the `oa` hull reproduces S10-5's two published anchors to 4 decimals. Production re-projected in
+this job is 3.2105 against S28-L26b's 3.2071 and S27's 3.2126 (S28-L18's branch-flip floor,
+identical on both sides of every contrast here).
+
+### 9. Comparisons, multiplicity, artefacts
+Deployable endpoint contrasts across the whole lane: 6 (rung 6's two blind definitions x two bases;
+rung 8's leave-fold-out eta; rung 9's leave-fold-out prefix), every one NOT MEASURED, two of them
+exact zeros. Stratum tests: 2, each against the random-18 null. Everything else is an ORACLE
+diagnostic; no arm is claimed, so no max-over-K bar applies.
+Artefacts: `s29/results/s29_O_ladder_table.json` (this table, REGENERATED at n = 126 on every arm
+after the last shard landed; the 01:46 version with the top-128 chain arm at n = 43 is superseded),
+`s29/results/s29_O_headline_contrasts.json` (section 1 and 2's blocks),
+`s29/results/s29_O_chain_contrasts.json` (all 32 built-chain contrasts vs production),
+`s29/results/s29_O_cloud_rows.jsonl` (126 rows: every rung's point cloud, the m = 1..500 curve,
+both blind clouds with their gates), `s29/results/s29_O_chain_rows*.jsonl` (4,158 projections, one
+file per (group set, shard)), `s29_O_p128.json`, `s29_O_pc1.json`, `s29_O_lfo.json`,
+`s29_O_mladder.json`, `s29_O_hulloa_rows.jsonl`, `s29/results/s29_O_structs/<pdb>.npz`; code
+`s29/s29_O_ladder.py`; tests `tests/test_s29_O.py` (13 pass); jobs `s26/jobs_done/s29O_*.json`
+(probe 1KWE/1KZ2/1LB7 peak RSS 0.308 GB; cloud 126 in 300 s at 0.321 GB; the chain in 5 + 3 shards
+at 0.06 to 0.11 GB each).
+PROVENANCE NOTE (contract addendum 4): two operational faults of mine, recorded not hidden.
+(i) Repeated `jobrun` wrappers left more than one process on the same (group, shard), duplicating
+509 chain cells; the projection is deterministic and every duplicate agrees to **0.0**, now
+asserted by `all_chain_rows(check=True)` on every read, and the rows path is one file per (group
+set, shard) so two processes can never share a file. No number changes. (ii) Commit e2e49109
+carries lane D's S29-L33 artefacts under a lane O message (the shared-index hazard of addendum 4,
+which arrived after that commit); the ledger headings are authoritative.
