@@ -1,6 +1,6 @@
 # PREREG_S29_O -- THE ORACLE CEILING LADDER BY OPERATOR CLASS, AND THE TYPICALITY-AXIS PROBE
 
-Lane O, Sprint 29. Written 2026-09-19 23:45 Pacific, before the first number. Brief:
+Lane O, Sprint 29. Written 2026-09-19 23:43 Pacific, before the first number. Brief:
 `s29/briefs/S29O.md`. Contract: `s29/S29_CONTRACT.md` (inherits `s27/S28_CONTRACT.md`).
 Code: `s29/s29_O_ladder.py`; tests `tests/test_s29_O.py`; results `s29/results/s29_O_*.json`,
 `s29/results/s29_O_*_rows.jsonl`, `s29/results/s29_O_structs/<pdb>.npz`; findings
