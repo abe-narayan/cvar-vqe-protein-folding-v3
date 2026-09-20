@@ -188,6 +188,93 @@ differently on them for **algebraic** reasons (note 2). And if common-mode error
 from within the pool, a score computed over the pool is structurally blind to the shared component
 -- which would say why confident wrongness concentrates where it does.
 
+
+## NOTE 4 (2026-09-20 12:49, lane T): TWO THEOREMS. THE TAIL IS **ALWAYS** A PREFIX, AND **THE POOL IS THE CODEBOOK**
+
+### (b) The tail condition — the question was mis-posed, mine as much as S29's
+
+**T1, the endogenous-order prefix theorem.** For any tail objective V differentiable on the
+box-simplex {0 ≤ λ ≤ p, Σλ = α}, every KKT point has λ*_x = p_x where ∇V(λ*)_x < μ and 0 where
+> μ. **The tail is always a prefix — of the order induced by ∇V at the optimum.** Prefix-hood is
+universal. What varies is whether that order is **exogenous** (known before solving) or
+**endogenous** (a fixed point). The real condition: *the tail stops being reproducible by one
+classical sort iff the ordering map λ → ∇V(λ) has more than one fixed point.*
+
+**A correction to S29 that the sprint needed.** S29 §4.3 recommends fixing the tail's order by a
+per-state scalar for well-posedness; §4.5 claims set-equality then fails. **Those are
+incompatible.** With an exogenous order the emitted set is still `argsort(E)[:m]` and the endpoint
+channel is still the single integer *m*. S29's counterexample proves a **free** subset optimum is
+non-prefix; it does **not** show the lifted CVaR readout can reach it. **The tail-then-aggregate
+lift as specified does not remove the bottleneck** — which is also why S29's endpoint arm came back
+refuted, and now we have the reason and not only the null.
+
+**T1b, the reachability cap — the pre-check fired before any box was spent.** With an endogenous
+order the cost is `c_x = ⟨∇f(R_λ), W_x⟩`: candidates sorted by projection onto **one**
+self-consistent direction. Reachable tails are **halfspace cuts**, VC dim d+1. Measured on all 126
+real pools: **stable rank of the centred pair-distance matrix = 1.859** (median 1.865, max 2.72),
+PC1 = 55.4% of variance, k90 = 5.6. The class carries ~31 effective bits against
+**log₂ C(500,75) = 300.6** of free set choice — **a 269-bit collapse.** Lane T's pre-registered
+rule (stable rank < 2.0) fires and **lane Q's direction is closed at the encoding level.** Same
+failure mode that killed S29's first non-diagonal Hamiltonian, caught this time *before* the spend.
+
+**THE ONE ESCAPE THAT SURVIVES.** Add a **second-moment (dispersion)** term,
+`V = f(Σλ W, Σλ W Wᵀ)`. Then ∇V_x is **quadratic** in W_x, the cut is a **quadric not a
+halfspace**, and VC dim jumps from 34 to **≈595**. It is the *same object* S29's own post-mortem
+pointed at — "operators that read the pool's own dispersion rather than the posterior's marginals"
+— reached by an independent derivation. **Two routes converging on one class is the strongest
+signal this sprint has produced about where to build.** And it gives CVaR a precise residual role:
+**α supplies the threshold that turns a direction into a set.**
+
+### (a) The bit accounting — the charter's question was not well-posed either
+
+```
+stage 5 retrieval  3,252 bits of CHOICE  ->  DELIVERED +0.69 bits   (Å contrast NOT MEASURED, 0.79×)
+stage 9 readout        7 bits of CHOICE  ->  DELIVERED +0.036       (median -0.575)
+end to end: the deployed system's measured information yield is UNDER ONE BIT PER TARGET
+```
+
+**Why the 5.56 bits are not missing: THE POOL IS THE CODEBOOK.** The 500 deposited backbones carry
+the structure; the index only names it. Bits are not conserved across an index. The cross-check
+settles it: 7 index bits move 4.108 → 1.898 Å, which through the displacement bound is ρ = 0.887,
+i.e. **36.6 bits of displacement information out of 7 index bits — a 5.2× ratio.** So the honest
+statement is the reverse of the charter's premise: **the readout's 7 bits are worth five times
+their face value and the system cannot supply even one of them.**
+
+**THE VALUE-OF-A-BIT LAW** (ORACLE ladder in the deployed pool: 4.1080 → 1.8978 → 1.7108, fitted
+`D(R) = a + c·2^(−R/γ)`, a = 1.3312 Å, γ = 3.1636, **R² = 0.9983**):
+
+> **−dD/dR = (ln2/γ)·(D − a) = 0.219·(D − 1.331) Å per bit.** Marginal at R = 7: **0.132 Å/bit.**
+
+**ALLOCATION, ranked — and the encoding is NOT the bottleneck.** Candidate identity 0.132 Å/bit
+(floor 1.331, γ 3.16); subset cardinality 0.044 — **dominated 3.0×, which explains the 3.5× S29
+measured**; mode/basin saturates at ~1.6 bits; **torsion/configuration space is arithmetically
+infeasible at the deployed width** — 2n·log₂(k) = **48 bits** for 4 basins per residue at n = 12,
+against 7 deployed or 9 in the harness, i.e. 0.29 bits per torsion where 1 bit names a single
+Ramachandran basin. **Binary candidate indexing is optimal among the measured classes by 3×**, and
+capped at 1.331 Å. The charter called the encoding the least-examined component and the likely
+hidden bottleneck; lane T examined it and **it is not**.
+
+**THE DICTIONARY THAT PUTS THE WHOLE SPRINT IN ONE CURRENCY** (d = 3n−6 = 32.9):
+
+```
+rho <= 0.04  (every field ever built)  ->   0.038 bits
+rho  = 0.140 (B2's ceiling)            ->   0.470 bits
+rho  = 0.358 (3.00 A)                  ->   3.25  bits
+rho  = 0.628 (2.50 A, the charter)     ->  11.9   bits
+```
+
+**The charter's target needs ~12 bits of displacement information per target and the entire
+native-free operator space supplies 1/26th of one bit.**
+
+**Lane T's own registered prediction failed in the flattering direction and it said so**: +0.10 to
++0.30 Å predicted for retrieval, **0.07 measured**, copula reasoning overestimating 2–4×. Second
+time this sprint a lane has reported its own prior failing that way.
+
+**A caution I have given lane T about its own framing.** "The encoding is not the bottleneck" is
+established *among the measured classes*. Its own dispersion escape is a statement about the
+**operator**, and lane F has just located a large loss in a **stage**. Three lanes now point at
+three different components and the report must keep them distinct.
+
 ## WHAT I AM TREATING AS BINDING FROM S29 (until a lane breaks it)
 
 - Every native-free operator is a displacement; its whole value is one cosine. 3.00 Å needs
