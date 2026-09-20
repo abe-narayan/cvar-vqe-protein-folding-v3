@@ -3721,3 +3721,61 @@ Multiplicity: 0 endpoint comparisons; 6 dependent cells reported together, none 
 primary registered as the `all` cells before the run.
 Artefacts: `s29/results/s29_T_beta_full.json`, `s26/jobs_done/s29T_beta_full.json`,
 `s29/s29_T_beta_unsat.py`; `s29/THEORY.md` 2.3b; `s29/THEORY_SUMMARY.md` section 2.
+
+## S29-L41 -- THE S8 FREE-ENERGY STAGE DOES NOT EXIST: MODULE, TESTS AND ALL FOUR ARTEFACTS ARE ABSENT FROM DISK **AND FROM GIT HISTORY**, SO "COMMITTED AND RESUMABLE AS python -m s8.relax best" (S29-L1, REPEATED IN MY ASSIGNMENT) IS FALSE, THE width/S_msf COLUMNS THE DIAGNOSTIC WAS TO CORRELATE HAVE NEVER EXISTED, AND THIS IS THE SECOND INSTANCE OF THIS FAILURE MODE IN THE RECORD (2026-09-20 02:02, T)
+
+Assignment (coordinator, 02:00): correlate S8's `width` and `S_msf` against Rg and the S27
+compactness channels on the 1 of 24 targets that stage completed, to decide whether the
+free-energy class is orthogonal to the realism axis or on it. FIRST STEP, AS THE ASSIGNMENT SAID:
+read the stage. IT IS NOT THERE.
+
+    path                    on disk    git log --all -- <path>
+    s8/relax.py             absent     none
+    s8/test_relax.py        absent     none
+    s8/relax_fe.json        absent     none
+    s8/relax_best.json      absent     none
+    s8/relax_sweep.json     absent     none
+    s8/relax_report.txt     absent     none
+    s8/relax_findings.md    absent     none
+
+All seven are absent from the working tree and no commit in any branch has ever touched them
+(`git log --all --oneline -- <path>` is empty for each; `find` over the tree matches nothing).
+What survives is the PROSE, merged verbatim into `docs/FINDINGS.md` section B (lines 6105 to
+6310), which names the module, the tests, the four result files and the six columns, and reports
+that the stage "completed only 1 of its 24 targets before the box filled up". The prose is the
+only trace; the code and the single completed target are gone.
+
+CONSEQUENCES, in order of who needs them.
+1. THE DIAGNOSTIC AS SPECIFIED CANNOT BE RUN. There is no `width`, `S_msf`, `F_qh`, `F_boltz`,
+   `strain` or `E_free` column anywhere in the repository to correlate against anything.
+2. LANE L's ONE ACTIONABLE ITEM NEEDS CORRECTING. S29-L1 closes with "the one class the
+   literature says works at this length is the one class this project started and never
+   finished ... committed and resumable as `python -m s8.relax best`". The second clause is
+   false. The item is not a resume, it is a REBUILD from the prose spec, which changes its cost
+   from "minutes to resume" to "a full OpenMM ensemble stage under the one-AMBER-process rule",
+   and the gate lane L proposed (diagnostic first, accuracy arm never in this sprint) should now
+   read: the diagnostic itself needs the stage built before it can be run at all.
+3. THIS IS THE SECOND INSTANCE OF THE SAME FAILURE MODE. Project memory already carries
+   `presentation-file-absent` (S26's `vqe_research_overview.pptx`, "nowhere on disk or in git").
+   The general lesson, and I would like it in the report: **a FINDINGS paragraph asserting that a
+   module is committed is not evidence that it is**, and any lane planning to resume historical
+   work should run the two-line existence check (`ls` plus `git log --all -- <path>`) before
+   quoting its cost. I ran it as step one of this assignment only because the last sprint's
+   memory told me to.
+
+WHAT I AM DOING INSTEAD, AND IT ANSWERS THE SAME SCIENTIFIC QUESTION. Lane L's objection -- that
+what an entropy term tracks at peptide length is plausibly basin width, which is plausibly
+compactness-like -- is answerable for every channel the project ACTUALLY owns, on real pools,
+with no OpenMM and no native in the selection half: for each of the 32 S27 channels, over the
+500 members of each of the 126 pools, Spearman(channel, member Rg) native-free, plus the in-band
+skill and the Rg-PARTIALLED in-band skill as ORACLE diagnostics. `rho_rg` says whether a channel
+IS compactness; the drop from in-band to partialled says how much of its skill is compactness.
+That is the generalisable form of the question and it prices the class the free-energy stage
+belongs to without rebuilding it. Code `s29/s29_T_compactness.py`, job `s29T_compactness`
+(queued); the result and its verdict go in the next entry, with lane L's caveat attached: any
+free-energy arm would need the entropy term to rescue a channel measured **+0.455 A WORSE than a
+random subset as a ranker, 5/5 folds** (S25 L16), and S7's Finding 10 already measured the DEPTH
+half of the same question -- partialling Rg out cuts AMBER's in-band rho to **0.159** against the
+distogram's **0.479** (diff -0.320, CI [-0.425, -0.216], AMBER better on 12/70).
+Multiplicity: no comparison in this entry. Artefacts: the seven absence checks above are
+reproducible in two lines; `docs/FINDINGS.md` section B is the surviving spec.
