@@ -336,12 +336,24 @@ def project_arm(C, cand, s, lam):
     return ca
 
 
-def run_target(pdb, fac, ref, done, rows_path, floor=True):
-    """Every not-yet-done (arm, target) cell for one target, appended as it completes."""
+def run_target(pdb, fac, ref, done, rows_path, floor=True, phase="all"):
+    """Every not-yet-done (arm, target) cell for one target, appended as it completes.
+
+    `phase` orders the work, and changes nothing else: "primary" runs the 8 named arms, the 8
+    matched-random draws and FLOOR (the cells the pre-registered falsifier needs); "oracle" runs
+    the ORACLE s-grid (the ceiling, which is a diagnostic and can land later). Each cell is a
+    deterministic function of the cached cloud, its scalar and lam, so the order is immaterial.
+    """
     C, cand = production_cloud(pdb)
     assert float(I.ca_rmsd(C, cand.nat_ca)) == float(ref[pdb]["rmsd_cloud"]), \
         f"{pdb}: cached cloud does not reproduce S27's rmsd_cloud exactly"
-    todo = [(a, s, lm) for (a, s, lm) in arms_for(pdb, fac) if (pdb, a) not in done]
+    A = arms_for(pdb, fac)
+    if phase == "primary":
+        A = [x for x in A if not x[0].startswith("ORACLE-GRID")]
+    elif phase == "oracle":
+        A = [x for x in A if x[0].startswith("ORACLE-GRID")]
+        floor = False
+    todo = [(a, s, lm) for (a, s, lm) in A if (pdb, a) not in done]
     if floor and (pdb, "FLOOR") not in done:
         todo.append(("FLOOR", None, LAM))
     n_new = 0
@@ -400,7 +412,7 @@ def shard_rows_path(shard):
     return os.path.join(RESULTS, f"s29_P_rows_shard{shard}.jsonl")
 
 
-def cmd_run(shard, nshards, limit=None, pdbs=None, rows_path=None, floor=True):
+def cmd_run(shard, nshards, limit=None, pdbs=None, rows_path=None, floor=True, phases=("primary", "oracle")):
     fac = json.load(open(FACTORS, encoding="utf-8"))
     ref = s27_dis_rows()
     if pdbs is None:
@@ -416,10 +428,12 @@ def cmd_run(shard, nshards, limit=None, pdbs=None, rows_path=None, floor=True):
     rows_path = rows_path or shard_rows_path(shard)
     done = done_keys([rows_path])
     t0 = time.time()
-    for k, pdb in enumerate(pdbs):
-        n_new = run_target(pdb, fac, ref, done, rows_path, floor=floor)
-        print(f"  [{k+1}/{len(pdbs)}] {pdb} +{n_new} cells "
-              f"({(time.time()-t0)/60:.1f} min elapsed)", flush=True)
+    for ph in phases:
+        print(f"== phase {ph} ==", flush=True)
+        for k, pdb in enumerate(pdbs):
+            n_new = run_target(pdb, fac, ref, done, rows_path, floor=floor, phase=ph)
+            print(f"  [{ph} {k+1}/{len(pdbs)}] {pdb} +{n_new} cells "
+                  f"({(time.time()-t0)/60:.1f} min elapsed)", flush=True)
     print(f"shard {shard}: {len(pdbs)} targets, rows {rows_path}, {(time.time()-t0)/60:.1f} min")
 
 
@@ -500,7 +514,12 @@ def cmd_analyse(rows_paths=None, out=None):
     for r in rows:
         cell[(r["pdb"], r["arm"])] = r        # a later row of the same key supersedes (resume)
     arm_names = sorted({a for (_, a) in cell})
-    have = [p for p in order if all((p, a) in cell for a in arm_names)]
+    rand_all = [f"CTRL-RAND{d}" for d in range(N_RAND)]
+    grid_all = ["PROD" if s == 1.0 else f"ORACLE-GRID{s:.2f}" for s in ORACLE_GRID]
+    primary = [a for a in ["PROD", "BOND", "SPAN", "ISO", "CTRL-INV", "CTRL-GLOBAL",
+                           "CTRL-LAM", "BOND-LAMFIX", "FLOOR"] + rand_all if a in arm_names]
+    have = [p for p in order if all((p, a) in cell for a in primary)]
+    have_grid = [p for p in order if all((p, a) in cell for a in grid_all)]
     L = []
 
     def say(s=""):
@@ -508,10 +527,12 @@ def cmd_analyse(rows_paths=None, out=None):
         print(s, flush=True)
 
     say("LANE P -- THE PROJECTION PRICE. BASIS: BUILT CHAIN (`s12.instrument.project`).")
-    say("  rows %d over %d files; %d arms; complete targets %d / %d"
-        % (len(rows), len(rows_paths), len(arm_names), len(have), len(order)))
+    say("  rows %d over %d files; %d arms; targets complete on the PRIMARY arms %d / %d; "
+        "on the ORACLE grid %d / %d"
+        % (len(rows), len(rows_paths), len(arm_names), len(have), len(order),
+           len(have_grid), len(order)))
     if len(have) < len(order):
-        say("  INCOMPLETE -- missing %s"
+        say("  PRIMARY INCOMPLETE -- missing %s ..."
             % [p for p in order if p not in have][:8])
     pdbs = have
     folds = np.array([cell[(p, "PROD")]["fold"] for p in pdbs])
@@ -527,11 +548,19 @@ def cmd_analyse(rows_paths=None, out=None):
         % (dref.max(), int((dref == 0).sum()), len(pdbs)))
     say("")
 
-    rand_cols = [f"CTRL-RAND{d}" for d in range(N_RAND)]
-    grid_cols = ["PROD" if s == 1.0 else f"ORACLE-GRID{s:.2f}" for s in ORACLE_GRID]
-    M_grid = np.column_stack([col(a) for a in grid_cols])
-    oracle_scale = M_grid.min(1)                                   # ORACLE
-    oracle_argmin = np.array([ORACLE_GRID[k] for k in M_grid.argmin(1)])
+    rand_cols = rand_all
+    grid_cols = grid_all
+    gridp = [p for p in have_grid]
+    if gridp:
+        M_grid = np.column_stack([np.array([cell[(p, a)]["rmsd_chain"] for p in gridp])
+                                  for a in grid_cols])
+        oracle_scale_g = M_grid.min(1)                             # ORACLE, on `gridp`
+        oracle_argmin = np.array([ORACLE_GRID[k] for k in M_grid.argmin(1)])
+    else:
+        M_grid, oracle_scale_g, oracle_argmin = None, None, None
+    #: the ORACLE column aligned to `pdbs` (NaN where the grid is not yet complete)
+    gmap = dict(zip(gridp, oracle_scale_g)) if gridp else {}
+    oracle_scale = np.array([gmap.get(p, np.nan) for p in pdbs])
     M_rand = np.column_stack([col(a) for a in rand_cols])
     rand_mean = M_rand.mean(1)
     rand_best = M_rand.min(1)                                      # order statistic
@@ -546,8 +575,9 @@ def cmd_analyse(rows_paths=None, out=None):
     named = [("PROD", prod), ("BOND", col("BOND")), ("SPAN", col("SPAN")), ("ISO", col("ISO")),
              ("CTRL-GLOBAL", col("CTRL-GLOBAL")), ("CTRL-INV", col("CTRL-INV")),
              ("CTRL-LAM", col("CTRL-LAM")), ("BOND-LAMFIX", col("BOND-LAMFIX")),
-             ("CTRL-RAND(mean8)", rand_mean), ("CTRL-RAND(best8 ORDER STAT)", rand_best),
-             ("ORACLE-SCALE", oracle_scale)]
+             ("CTRL-RAND(mean8)", rand_mean), ("CTRL-RAND(best8 ORDER STAT)", rand_best)]
+    if np.isfinite(oracle_scale).all():
+        named.append(("ORACLE-SCALE", oracle_scale))
     for nm, v in named:
         src = nm if (nm, ) and nm in arm_names else None
         if src:
@@ -606,7 +636,8 @@ def cmd_analyse(rows_paths=None, out=None):
     mask = np.array([p in F18 for p in pdbs])
     say("STRATA: FAIL18 (%d here) vs the other %d, with the RANDOM-18 NULL for every claim"
         % (int(mask.sum()), int((~mask).sum())))
-    for nm in ("BOND", "SPAN", "ISO", "ORACLE-SCALE"):
+    strata_arms = [a for a in ("BOND", "SPAN", "ISO", "ORACLE-SCALE") if a in dict(named)]
+    for nm in strata_arms:
         v = dict(named)[nm] if nm == "ORACLE-SCALE" else col(nm)
         d = v - prod
         for lab, mm in (("FAIL18", mask), ("other108", ~mask)):
@@ -628,17 +659,23 @@ def cmd_analyse(rows_paths=None, out=None):
 
     # ---- the ORACLE s-curve and its order-statistic price
     say("THE s-CURVE [ORACLE grid; every number here reads the native and is a CEILING, not a result]")
-    say("  %-8s %8s %8s" % ("s", "mean", "median"))
-    for s, a in zip(ORACLE_GRID, grid_cols):
-        v = col(a)
-        say("  %-8.2f %8.4f %8.4f" % (s, v.mean(), np.median(v)))
-    bok = ST.best_of_k_within(M_grid)
-    say("  ORACLE-SCALE (per-target argmin over the %d-point grid) mean %.4f; priced: observed "
-        "%+.4f, valid null %+.4f (%.0f%%), k_eff %.2f, split-half %+.4f -> %s"
-        % (len(ORACLE_GRID), oracle_scale.mean(), bok["observed_gain"], bok["null_across_targets"],
-           100 * bok["share_accounted"], bok["k_eff"], bok["split_half"], bok["verdict"]))
-    cnt = {s: int((oracle_argmin == s).sum()) for s in ORACLE_GRID}
-    say("  argmin histogram %s" % cnt)
+    bok, cnt = None, {}
+    if M_grid is None:
+        say("  the grid is not yet complete on any target")
+    else:
+        say("  n = %d targets complete on the grid" % len(gridp))
+        say("  %-8s %8s %8s" % ("s", "mean", "median"))
+        for k, (s, a) in enumerate(zip(ORACLE_GRID, grid_cols)):
+            v = M_grid[:, k]
+            say("  %-8.2f %8.4f %8.4f" % (s, v.mean(), np.median(v)))
+        bok = ST.best_of_k_within(M_grid)
+        say("  ORACLE-SCALE (per-target argmin over the %d-point grid) mean %.4f; priced: "
+            "observed %+.4f, valid null %+.4f (%.0f%%), k_eff %.2f, split-half %+.4f -> %s"
+            % (len(ORACLE_GRID), oracle_scale_g.mean(), bok["observed_gain"],
+               bok["null_across_targets"], 100 * bok["share_accounted"], bok["k_eff"],
+               bok["split_half"], bok["verdict"]))
+        cnt = {s: int((oracle_argmin == s).sum()) for s in ORACLE_GRID}
+        say("  argmin histogram %s" % cnt)
     bokr = ST.best_of_k_within(M_rand)
     say("  CTRL-RAND best-of-8 priced: observed %+.4f, valid null %+.4f (%.0f%%), split-half "
         "%+.4f -> %s" % (bokr["observed_gain"], bokr["null_across_targets"],
@@ -678,6 +715,7 @@ def cmd_analyse(rows_paths=None, out=None):
                 means={nm: float(v.mean()) for nm, v in named},
                 price={nm: float(v.mean() - col(nm, "rmsd_cloud_in").mean())
                        for nm, v in named if nm in arm_names},
+                n_grid=len(gridp),
                 oracle_argmin_hist={str(k): v for k, v in cnt.items()},
                 oracle_grid_bok=bok, ctrl_rand_bok=bokr,
                 maxk_observed=float(obs), maxk_null_p95=float(np.percentile(null, 95)),
