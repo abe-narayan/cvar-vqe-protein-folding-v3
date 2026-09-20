@@ -416,14 +416,28 @@ def run_target(pdb, fac, ref, done, rows_path, floor=True, phase="all"):
 
 
 def load_rows(path):
+    """Read a checkpoint file, tolerating ONE truncated trailing line.
+
+    A shard killed mid-append (re-sharding, a governor kill, a crash) can leave a partial JSON
+    object as the last line. Skipping it is correct -- that cell simply was not finished and the
+    resume will redo it -- but a partial line anywhere EARLIER means real corruption and must
+    raise rather than silently drop completed work.
+    """
     out = []
     if not os.path.exists(path):
         return out
     with open(path, encoding="utf-8") as fh:
-        for line in fh:
-            line = line.strip()
-            if line:
-                out.append(json.loads(line))
+        lines = [ln.strip() for ln in fh]
+    lines = [ln for ln in lines if ln]
+    for k, line in enumerate(lines):
+        try:
+            out.append(json.loads(line))
+        except json.JSONDecodeError:
+            if k == len(lines) - 1:
+                print("  note: dropping a truncated trailing line in %s (an unfinished cell; "
+                      "it will be recomputed)" % os.path.basename(path), flush=True)
+                break
+            raise
     return out
 
 

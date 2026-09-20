@@ -367,3 +367,39 @@ independently predicted BOND harmful by mechanism, again before the bound was pu
    explained away. A bound that forbids a measured effect is the bound's problem.
 4. The lane's value in that case is the same either way: the projection was the one stage the
    sprint had not audited, and it is now audited on the reporting basis with matched controls.
+
+
+## ADDENDUM 6 (2026-09-20 01:15; how entry 2 must READ its own result, fixed before the numbers)
+
+Two results landed after addendum 5 and before this lane's numbers. Neither changes what is run
+-- same primary arm set, same falsifiers, same deferral -- and both fix how the outcome is read.
+
+**(1) S29-L30 (lane O, rung 9): the pattern this lane is an instance of.** The ORACLE ceiling of
+the top-128 prefix -- the exact reachable set of the deployed quantum stage under the
+set-equality theorem -- is **2.7605 A** against production's 3.0483 on the point cloud, while the
+DEPLOYABLE leave-fold-out prefix is **+0.0079 A, 0.30x MDE**. A large ORACLE per-target gain with
+essentially nothing transferable. Entry 2 must state that this lane's own ORACLE/deployable gap
+is the same pattern and must NOT present it as a new discovery: the coordinator counts S29-L30 as
+the third independent instance tonight and this lane's FLOOR arm and branch-flip measurement as
+the fourth. The honest framing is "a fourth instance of a known pattern, measured at a stage
+nothing had audited", not "a novel gap".
+
+**(2) S29-L31 (lane L, topic 8): the per-target quantity is an INCIDENTAL PARAMETER.** The sign
+every one of these levers needs is a Neyman-Scott incidental parameter -- one new nuisance
+parameter per target, with the number of parameters growing with the number of targets -- so it
+is **not estimable from other targets' answers as a matter of statistical theory, not of model
+capacity**. This is the structural form of what S23 L3/L6 found empirically for the per-target
+scale, and it is the reason this lane never proposed predicting s*.
+**Binding on the deferred grid:** when the ORACLE s-grid runs, its per-target argmin is a direct
+instance of an incidental parameter and entry 2 (or 3) must say so. Specifically, the entry may
+NOT write the per-target ORACLE s-curve minimum as "headroom" or as a target for a future
+predictor; it must be written as a quantity that theory says is not estimable across targets,
+with `ST.best_of_k_within`'s split-half transfer quoted beside it as the measured price. The
+same applies to any per-target statement about CTRL-INV.
+
+**What is NOT licensed by either.** Neither result forbids a GLOBAL (single-constant, or
+leave-fold-out constant) effect, which is exactly what BOND, SPAN, ISO, CTRL-GLOBAL and CTRL-INV
+are: each applies one determined rule to every target with no per-target choice. The falsifiers
+therefore stand unmodified and remain genuinely falsifiable. If one of them fires, addendum 5's
+clause 3 applies -- it is reported as evidence against the bound, with the second tie-key seed
+run first, not explained away.
