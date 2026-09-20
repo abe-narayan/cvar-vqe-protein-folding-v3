@@ -224,8 +224,8 @@ resolvable it is worse than a random weight vector of the same shape.
 # C2 -- THE RECOGNITION AUDIT (second-wave brief `s27/briefs/S28C2.md`; ORACLE DIAGNOSTIC THROUGHOUT)
 
 Pre-registration `s27/PREREG_S28_C2.md` (base + addendum 1, before the number each governs).
-Code `s27/s28_C2_recog_audit.py`; tests `tests/test_s28_C2.py` (6 pass). Ledger S28-L35 (CA level)
-and the built-chain entry that follows it. Every structure except production and the controls'
+Code `s27/s28_C2_recog_audit.py`; tests `tests/test_s28_C2.py` (6 pass). Ledger S28-L35 (CA level),
+S28-L37 (the pool-member veto accepted), S28-L48 (built chain, the verdict). Every structure except production and the controls'
 DIRECTIONS is chosen against the native; every number from them is ORACLE; nothing is deployable.
 
 ## C2.0 One paragraph
@@ -242,6 +242,14 @@ displacement (production absent) DIS prefers the ORACLE structure on 89% and CAG
 scorers are not blind to structure among signed combinations; they rate the contracted average
 above both. The learned linear combination reaches 0.97 held-out but is anti-production (it prefers
 random signed combinations on 0.89 and cannot tell ORACLE from random head-to-head, 0.53).
+On the BUILT CHAIN (the reporting basis, S28-L48; 31 scorers, one max-over-31 null, the pool-member
+control on 27): the closure claim stands. 20 of 31 scorers prefer the projected production average to a
+0.25 A ORACLE chain with the fold CI below 0.5 (DIS on 93%, LEG on 79%), 5 are tie-dominated, 7 are coin
+tosses; CAGEO's CA-level preference collapses to anti-recognition (0.611 -> 0.421) once the projection
+gives production the same 3.80 A bonds, as lane D registered (S28-L36(a)); the one scorer that clears both
+registered clauses on both ORACLE starts, CONTACT@chain (0.583), is the expected maximum of 31 null
+scorers (p_max 0.388) and Type-M on the pool-member control (+0.140, 1.23x): the same marginal cell as at
+the CA level, not a candidate. No candidate objective is named for a lane A2 run.
 
 ## C2.1 ORACLE DIAGNOSTIC: the CA-level table (S28-L35)
 `s27/results/s28_C2_ca_summary.json`, `s28_C2_ca_seed2_summary.json` (jobs `s28C2_ca_v2`, 176 s,
@@ -300,13 +308,126 @@ registered; CONTACT also fails the single-start clause). `s27/results/s28_C2_ca_
 pool_member_control`. S28-L35's "closure falsified at the registered bar" is withdrawn
 (`s27/RETRACTIONS_S28.md` R3).
 
-## C2.3 Built chain (DRAFT HEADER; PAUSED 2026-09-14 23:30 ON THE USER'S ORDER)
-Job `s28C2_chain2` was at 70/126 targets when the lane was paused (checkpoint copy
-`s27/results/s28_C2_chain_rows_checkpoint_70.jsonl`; the live file
-`s27/results/s28_C2_chain_rows.jsonl` keeps growing while the job runs). When it lands:
-`python s27/s28_C2_recog_audit.py analyse_chain` writes `s27/results/s28_C2_chain_summary.json`
-(31 scorers: the 16 backbone scorers on the projected chains plus the 15 CA scorers re-evaluated
-on them, one max-over-31 null, the pool-member control for every scorer with a pool channel,
-geometry of every projected structure). Lane D's registered expectation (S28-L36(a)): CAGEO's
-preference collapses on the projected chains because the projection removes the contraction
-that produced it. No chain number has been read.
+## C2.3 Built chain: the verdict (S28-L48; the reporting basis)
+`s27/results/s28_C2_chain_rows.jsonl` (126/126; jobs `s28C2_chain2` to the 09-14 pause at 80, `s28C2_chain3`
+resumed at 81 and killed by the governor at 97.3% box RAM after one target, `s28C2_chain4` from the governor
+queue, 82 to 126, exit 0, 1,685 s, peak RSS 0.355 GB; per-target checkpoint, no target computed twice) and
+`s27/results/s28_C2_chain_summary.json` (`analyse_chain`, job `s28C2_analyse_chain`, 95 s, 0.339 GB). Eight
+projections per target through `s12.instrument.project` in one call per target: PROD, ORACLE sub0 / circ_s0 /
+circ_best, NATIVE(aff500), and ONE draw of each control (the CA level averaged four). 31 scorers: the 16
+backbone scorers (RAMA, DSSPHB, ELEC, TORS_CONS_POOL, LEG and its 11 terms) and the 15 CA scorers re-evaluated
+on the projected CA traces (`@chain`); one max-over-31 sign-flip null; the pool-member control (S28-L36) for
+the 27 scorers with a pool channel in `s27/cache`.
+
+Instrument. ORACLE mean RMSD of the projected structures: PROD 3.207 (anchor 3.2126; no target bit-identical
+to `chain_rows.jsonl :: DIS`, 22 differ by more than 0.01 A, the largest 0.513 A on 2LNG: the projection's
+branch-flip floor, S28-L18/L27b, which touches no contrast here because all eight structures of a target share
+one `I.project` call), sub0 0.499, circ_s0 0.317, circ_best 0.252 (S28-L26b's emitted ORACLE to the third
+decimal), NATIVE 0.084; RAND_SIGNED 3.705, GAUSS_0.3 3.230, GAUSS_MATCHED 3.383 (matched before projection,
+not after). Geometry: every projected structure has a 3.80 A mean virtual bond; PROD's Rg rises from 6.21 to
+6.48 A against 6.60 to 6.61 for the ORACLE ladder and the NATIVE, so the 22% contraction of the average
+becomes a 2% Rg deficit and every geometric preference is between structures of identical bond length.
+
+| scorer (built chain) | pref(circ_best) [fold CI] | circ_s0 | NATIVE | vs RAND_SIGNED [fold CI] | pool-member contrast (x MDE) | h2h vs pool member | FAIL18 k/18 | ties | reading |
+|---|---:|---:|---:|---|---|---:|---:|---:|---|
+| DIS@chain | 0.071 [0.034, 0.109] | 0.071 | 0.079 | +0.063 [+0.033, +0.089] | +0.051 (0.80x) | 0.632 | 0 | 0 | anti (from 0.206) |
+| DIS_MEAN@chain | 0.071 [0.049, 0.098] | 0.071 | 0.063 | +0.032 [+0.009, +0.052] | +0.046 (0.73x) | 0.617 | 0 | 0 | anti |
+| CONTACT_LL@chain | 0.234 [0.168, 0.311] | 0.238 | 0.242 | +0.087 [+0.012, +0.154] | +0.100 (1.02x) | 0.608 | 1 | 13 | anti |
+| DISTPOT@chain | 0.341 [0.319, 0.361] | 0.373 | 0.349 | +0.103 [+0.051, +0.148] | +0.071 (0.63x) | 0.568 | 6 | 0 | anti |
+| CONTACT@chain | 0.583 [0.530, 0.645] | 0.575 | 0.575 | +0.107 [+0.009, +0.199] (0.71x, NOT MEASURED) | +0.140 (1.23x, 4/5 folds) | 0.594 | 8 | 9 | both clauses; p_max 0.388; Type-M: marginal |
+| ENV@chain | 0.492 [0.408, 0.581] | 0.484 | 0.484 | +0.091 [+0.033, +0.163] | +0.131 (1.19x) | 0.612 | 11 | 16 | coin toss |
+| HP@chain | 0.456 [0.361, 0.541] | 0.421 | 0.417 | +0.024 [-0.034, +0.093] | +0.018 (0.15x) | 0.545 | 9 | 13 | coin toss |
+| RG_LAW@chain | 0.405 [0.311, 0.481] | 0.413 | 0.421 | +0.071 [-0.009, +0.121] | -0.030 (0.27x) | 0.480 | 6 | 0 | anti |
+| RG_UNIV@chain | 0.397 [0.336, 0.451] | 0.389 | 0.349 | +0.048 [-0.042, +0.114] | +0.001 (0.01x) | 0.485 | 6 | 0 | anti |
+| EXVOL@chain | 0.417 [0.368, 0.462] | 0.409 | 0.425 | +0.063 [+0.011, +0.118] | -0.076 (1.60x) | 0.425 | 6.5 | 101 | uninformative |
+| CAGEO@chain | 0.421 [0.370, 0.492] | 0.381 | 0.452 | +0.238 [+0.143, +0.359] | -0.108 (1.21x, 5/5) | 0.297 | 7 | 0 | anti (from 0.611) |
+| SS_MATCH@chain | 0.393 [0.340, 0.443] | 0.381 | 0.377 | -0.155 [-0.228, -0.085] | +0.072 (0.93x) | 0.591 | 5 | 11 | anti |
+| CONS_POOL@chain | 0.056 [0.037, 0.089] | 0.056 | 0.063 | -0.127 [-0.185, -0.070] | (pool-relative) | | 2 | 0 | anti |
+| DMAP_CONS_POOL@chain | 0.143 [0.109, 0.171] | 0.135 | 0.143 | -0.095 [-0.157, -0.025] | (pool-relative) | | 3 | 0 | anti |
+| POOLGO_POOL@chain | 0.345 [0.261, 0.414] | 0.349 | 0.345 | -0.063 [-0.145, +0.007] | (pool-relative) | | 4 | 13 | anti |
+| RAMA | 0.413 [0.336, 0.496] | 0.444 | 0.476 | +0.206 [+0.135, +0.290] | -0.377 (3.50x; cross-basis) | 0.117 | 9 | 0 | anti |
+| DSSPHB | 0.226 [0.198, 0.256] | 0.210 | 0.258 | -0.171 [-0.207, -0.134] | -0.104 (1.07x; cross-basis) | 0.403 | 3 | 1 | anti |
+| ELEC | 0.484 [0.416, 0.560] | 0.484 | 0.492 | -0.063 [-0.119, +0.000] | -0.016 (0.15x) | 0.516 | 8.5 | 18 | coin toss |
+| TORS_CONS_POOL | 0.262 [0.226, 0.306] | 0.286 | 0.278 | +0.079 [+0.008, +0.147] | (pool-relative) | | 3 | 0 | anti |
+| LEG (total) | 0.206 [0.137, 0.289] | 0.206 | 0.238 | +0.079 [+0.007, +0.168] | -0.221 (2.37x; cross-basis) | 0.340 | 2 | 0 | anti |
+| LEG_hbond_local | 0.190 [0.107, 0.269] | 0.218 | 0.250 | -0.016 [-0.073, +0.015] | -0.226 (2.60x; cross-basis) | 0.317 | 3 | 8 | anti |
+| LEG_solvation | 0.349 [0.278, 0.436] | 0.365 | 0.365 | +0.008 [-0.094, +0.136] | -0.013 (0.12x) | 0.545 | 9 | 0 | anti |
+| LEG_torsion | 0.405 [0.320, 0.496] | 0.333 | 0.452 | +0.254 [+0.180, +0.322] | -0.293 (3.03x; cross-basis) | 0.221 | 8 | 0 | anti |
+| LEG_coop_helix | 0.361 [0.305, 0.427] | 0.349 | 0.369 | +0.071 [+0.054, +0.088] | -0.146 (2.50x; cross-basis) | 0.366 | 5 | 79 | anti, tie-dominated |
+| LEG_steric | 0.508 [0.384, 0.632] | 0.476 | 0.520 | +0.266 [+0.150, +0.397] | -0.116 (1.41x; cross-basis) | 0.399 | 6 | 54 | coin toss |
+| LEG_contact | 0.532 [0.459, 0.615] | 0.540 | 0.516 | -0.012 [-0.068, +0.084] | +0.021 (0.18x) | 0.521 | 10 | 2 | coin toss |
+| LEG_electrostatic | 0.492 [0.423, 0.562] | 0.484 | 0.484 | -0.048 [-0.089, +0.009] | -0.008 (0.07x) | 0.515 | 8.5 | 18 | coin toss |
+| LEG_compactness | 0.468 [0.393, 0.533] | 0.464 | 0.480 | +0.103 [+0.032, +0.155] | +0.035 (0.31x) | 0.528 | 9 | 14 | coin toss |
+| LEG_hbond_longrange | 0.548 [0.533, 0.562] | 0.556 | 0.583 | -0.004 [-0.033, +0.023] | -0.006 (0.17x) | 0.493 | 10.5 | 114 | uninformative (12 decided targets) |
+| LEG_coop_sheet | 0.508 [0.500, 0.517] | 0.504 | 0.520 | +0.008 [+0.000, +0.017] | -0.003 (0.17x) | 0.497 | 9 | 124 | uninformative |
+| LEG_aromatic | 0.429 [0.357, 0.500] | 0.452 | 0.468 | +0.008 [-0.052, +0.080] | -0.028 (0.35x) | 0.506 | 10.5 | 64 | uninformative |
+
+Multiplicity: best single CONTACT@chain 0.583 against the max-over-31 sign-flip null (mean 0.579, p95
+0.627): p_max 0.388 (lane D independently, 4,000 draws: 0.577 / 0.619 / 0.399, `s28_D_c2_chain_null.json`).
+Linear combination (31 scorers, nested): 0.960 [0.938, 0.983] held out against a null of 0.502; the same
+rule prefers RAND_SIGNED on 0.952 (contrast +0.008 [+0.000, +0.022], one target) and GAUSS_MATCHED on
+0.960 (+0.000); head-to-head ORACLE vs RAND_SIGNED 0.492 [0.364, 0.611]: anti-production, purer than at
+the CA level (0.887 / 0.526).
+
+The pool-member control on the backbone scorers is CROSS-BASIS (the members' cached values are on their
+real torsions, the audited structures on projected torsions) and the projection's torsions are atypical
+of real fragments: the projected NATIVE itself is worse than 93% of its pool under RAMA (median), 78%
+under LEG_torsion, 65% under LEG. The large negative contrasts on RAMA, LEG_torsion, LEG_hbond_local,
+LEG_coop_helix, LEG, DSSPHB, LEG_steric measure that signature, not anti-recognition; on those channels
+the same-code-path contrasts (vs RAND_SIGNED / GAUSS) and the ladder are the like-for-like reading. For
+the CA scorers on the chain the control is like for like (3.8 A bonds on both sides), which is exactly
+why it now resolves CAGEO.
+
+Verdict. The closure claim ("no scorer in the S27 library recognises the ORACLE structures the amplitude
+family expresses") STANDS on the built chain over all 31 scorers with the registered multiplicity pricing
+and the pool-member control. The literal two-clause falsifier is met by one scorer of 31, CONTACT@chain,
+on both ORACLE starts; its pref is the expected maximum of 31 null scorers (p_max 0.388), its clause-2
+margin is +0.107 at 0.71x MDE on a single control draw (`ST.compare`: NOT MEASURED), its pool-member
+contrast is +0.140 at 1.23x with 4/5 folds (Type-M), its head-to-head against a random pool member is
+0.594 (the NATIVE 0.590), and it is below half on FAIL18 (8 of 18): the marginal, Type-M cell S28-L36 named
+and S28-L37 accepted, unchanged by the projection, not a candidate. ENV@chain (+0.131, 1.19x) and
+CONTACT_LL@chain (+0.100, 1.02x) are in the same zone on the pool-member contrast and fail clause 1. The
+registered prior holds where it was stated; the one CA-level exception, CAGEO, was the contraction of the
+average and collapses to anti-recognition on the projected chains (0.611 -> 0.421; pool-member contrast
+-0.007 -> -0.108; pct(PROD) median 1.00 -> 0.60), as S28-L36(a) registered. What an objective would have
+to know is unchanged and now holds with ideal geometry on both sides: the projected Bayes-risk minimiser of
+the over-confident posterior is a better structure than a 0.25 A chain to the objective itself (93% of
+targets; the projected average is better than 99% of its own pool under DIS) and to every consistency,
+geometric and legacy-energy channel in the library. C2 is closed on the reporting basis with no candidate
+objective named for a lane A2 run.
+
+## C2.4 What damaged my own expectations
+- I expected CAGEO's CA-level preference to be the one live cell going into the chain and wrote S28-L35's
+  verdict as "falsified at the registered bar" before the pool-member control existed. The control that
+  killed it was not one of the three I registered: a random signed combination has protein-like bonds but
+  scrambled virtual angles, Gaussian noise has neither, and neither could see that a 22%-contracted
+  average is off the virtual-angle distribution CAGEO was fitted on. Lane D's control (a real trace with no
+  information about the native) saw it in one line, and the projection confirmed it on the reporting basis:
+  CAGEO went from 0.611 to 0.421 the moment production had real bonds. "Beats a random signed control" is
+  not "recognises the ORACLE structure"; the control has to have the property the scorer measures.
+- I expected the backbone scorers to add information the CA scorers lacked. They add none in the
+  recognition direction: none of the 16 clears clause 1, the legacy energy prefers the production chain to
+  the 0.08 A NATIVE chain on 76% of targets, and five are tie-dominated on this basis.
+- I expected the pool-member control to be a single fair yardstick on the chain. For the backbone
+  scorers it is cross-basis, and the projected NATIVE at the 93rd RAMA percentile of its own pool says
+  the projection's torsion signature is larger than any recognition signal on those channels. Two sides of
+  a chain contrast must share a code path (S28-L27b); a control drawn from the cache does not.
+- I expected the shipped objective's anti-preference to weaken once the average was de-contracted. It
+  strengthened (DIS 0.206 -> 0.071; pct(PROD) 0.05 -> 0.01): the projected average is closer to the
+  posterior's mode than the contracted one, and a 0.25 A structure with the same bonds is further from it.
+
+## C2.5 What I did not do and why
+- AMB on the projected chains (brief, prereg section 3): deferred throughout; one AMBER process per box
+  under the user's own 84 to 98% load was not guaranteed to fit (contract rule 8), and the 30 non-AMBER
+  scorers gave the closure verdict with margin; recorded here as not run.
+- A second control seed on the chain (4 more draws x 3 controls x 126 projections, about 1.3 h): the
+  positive-only replication rule (prereg section 5); no positive fired. The chain's single control draw is
+  stated beside every clause-2 number.
+- A null for the multiplicity of the pool-member contrast across the 27 scorers: not registered; stated as
+  un-priced in S28-L48. The registered pricing (the best single pref as an order statistic) is inside its
+  null.
+- The seed-2 pool-member control at the CA level WAS regenerated on 09-19 (`s28_C2_ca_seed2_summary.json`);
+  every circ_best / circ_s0 contrast is identical to seed 0 to the fourth decimal, as it must be (the
+  control draws do not enter that contrast); only the RAND_SIGNED-vs-pool-member head-to-head moves, by at
+  most 0.025.
+- Re-optimising the circuit under any scorer (lane A2's job if one had passed): none passed.
