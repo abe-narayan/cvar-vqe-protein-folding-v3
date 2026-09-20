@@ -5076,3 +5076,131 @@ Artefacts: `s29/s29_M_F2_supply.py`, `s29/s29_M_F2_gate.py`,
 `s29/results/s29_M_F2_supply_rows.jsonl`, `s29_M_F2_supply.json`, `s29_M_F2_gate.json`,
 `s29_M_F2_cells.npz`, `s26/logs/m_f2_supply.log`, `s26/logs/m_f2_gate.log`,
 `s29/PREREG_S29_M_F2.md` (+ addenda 1-3).
+
+## S29-L54 -- THE TAIL-THEN-AGGREGATE ENDPOINT ON THE BUILT CHAIN, 126/126, 9 ARMS: REFUTED AS REGISTERED AND WORSE WHERE IT MOVES -- NO lam BEATS PRODUCTION OR ITS OWN lam = 0 ON EITHER BASIS OR EITHER SEED, lam = 1 IS +0.104 / +0.116 A ABOVE PRODUCTION (0.95x / 1.03x MDE) AND lam = 3 IS +0.103 / +0.106 (0.80x / 0.81x); THE MECHANISM IS ALIVE AND IRRELEVANT -- THE OBJECTIVE MOVES THE SET HARD (JACCARD WITH THE DIS TOP-75 0.93 -> 0.52, m 74 -> 39) WHILE THE DEPLOYED TAIL-SET READOUT IS FLAT AT EVERY lam (|effect| <= 0.046, EVERY CELL NOT MEASURED); THE FIXED-PROFILE CONTROL M6 IS 0.31x FROM THE TRAINED CIRCUIT; AND THE CVaR TAIL IS STILL THE ENERGY PREFIX BY CONSTRUCTION, SO THIS VQE NEVER ESCAPED SET-EQUALITY -- MY OWN tail_is_prefix COLUMN WAS A TIE-CONVENTION ARTEFACT AND I CAUGHT IT BEFORE IT BECAME A CLAIM (2026-09-20 03:16, B)
+Question (`s29/PREREG_S29_B.md` ADDENDUM 2 and ADDENDUM 3, both committed before the run; the
+coordinator's release of 01:20 after lane D's null band measurement S29-L33): with the objective
+put on the tail's own coordinate average -- so that it SEES which candidates populate the tail and
+with what weight, the freedom S29-L15 proves the deployed spine is indifferent to -- does the
+emitted structure improve? **Registered prior (mine, prereg B2.7, and the coordinator's
+independently): the mechanism works and the endpoint does not move or moves the wrong way.**
+Falsifier F5b: refuted as registered if no arm beats BOTH production and its own lam = 0 by 0.7x
+MDE with the fold CI excluding zero on both seeds.
+
+**F5b IS REFUTED. The registered prior held on both clauses.**
+
+**PROVENANCE.** Point cloud: jobs `s29B_end126_04 / _14 / _24 / _34` (4 shards,
+`s26/jobs_done/`, exit 0, peak RSS 0.33 GB, 6 s per target), rows
+`s29/results/s29_B_tta_end_rows.s*of4.jsonl` (2,142 rows = 126 targets x 17 cells), analysis
+`s29/results/s29_B_tta_end_cloud.json`. Built chain: jobs `s29B_chain_04 / _14 / _24 / _34`,
+rows `s29/results/s29_B_tta_chain_rows.s*of4.jsonl` (1,134 rows = 9 arms x 126, no duplicates).
+Probe first as rule 16 requires (`s29B_end12_02 / _12`, 12 trainability targets, 40 s each);
+the probe is quoted nowhere as evidence for the instrument. Code `s29/s29_B_tta.py`, tests
+`tests/test_s29_B.py` (19 pass).
+
+**THE PRODUCTION ANCHOR, AND A KNOWN PATHOLOGY REPRODUCED EXACTLY.** My production point cloud
+equals S27's `chain_rows.jsonl :: DIS` `rmsd_cloud` to **3.7e-14** on 126/126 (both means
+3.048338). Its PROJECTION does not: my `rmsd_chain` mean is 3.210534 against S27's 3.212625, with
+**max per-target |diff| 0.5174 A on 125 of 126 targets**. That is the S28-L18 / S28-L27b /
+S28-L43 input-difference floor of `s12.instrument.project` reproduced to the digit (lane A
+measured "up to 0.513 A from a cloud differing at 1e-13"; mine is 0.517 A from a cloud differing
+at 3.7e-14). It does **not** enter any contrast below: every arm and its comparator are projected
+in THIS lane's process from clouds built by one loader, so both sides share the floor. The only
+number it touches is "vs S27's published 3.2126", which I therefore do not use as a comparator.
+
+**THE BUILT CHAIN (the charter's endpoint; 9 arms x 126; production in this process 3.2105):**
+
+    arm                  chain mean   vs PRODUCTION: effect  x/MDE  fold CI            W/L     verdict
+    production             3.2105     (comparator)
+    vqe|lam0|s0            3.2189     +0.0084   0.30x  [-0.0018, +0.0194]  64W/62L   NOT MEASURED
+    vqe|lam0|s1            3.2139     +0.0034   0.11x  [-0.0144, +0.0220]  58W/68L   NOT MEASURED
+    vqe|lam0.1|s0          3.2149     +0.0044   0.09x  [-0.0368, +0.0632]  65W/61L   NOT MEASURED
+    vqe|lam1|s0            3.3147     +0.1042   0.95x  [+0.0192, +0.1991]  57W/69L   NOT MEASURED
+    vqe|lam1|s1            3.3262     +0.1157   1.03x  [+0.0233, +0.2189]  55W/71L   WORSE (Type-M 1.11)
+    vqe|lam3|s0            3.3160     +0.1055   0.80x  [+0.0092, +0.2238]  54W/72L   NOT MEASURED
+    vqe|lam3|s1            3.3133     +0.1028   0.81x  [+0.0014, +0.2161]  56W/70L   NOT MEASURED
+    fixed_profile|M6       3.2424     +0.0319   0.39x  [-0.0346, +0.0827]  57W/69L   NOT MEASURED
+
+  CHAIN vqe|lam1|s1 - its own lam=0
+    a 3.3262 (med 3.1768)   b 3.2139 (med 3.0034)   n=126
+    effect +0.1123   median +0.0067   SE 0.0372   MDE 0.1043   effect/MDE +1.08
+    iid  CI95 [+0.0434, +0.1913]
+    fold CI95 [+0.0142, +0.2240]   folds same sign 4/5   per-fold 0:+0.012 1:+0.204 2:+0.301 3:+0.086 4:-0.011
+    54W/72L/0T   worst degradation +2.0814 (2RUO)   p90 +0.6053   power 0.85  Type-M 1.09
+    concentration: drop-top10 +0.1657 vs uniform-effect null p10/p50/p90 +0.1166/+0.1619/+0.2145 -> pctile 0.535
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.09x]
+
+  (its seed-0 twin +0.0958, 0.90x, 3/5 folds, NOT MEASURED; lam = 3 vs its own lam = 0:
+   +0.0971 / 0.73x and +0.0994 / 0.82x, both NOT MEASURED; lam = 0.1 vs its own lam = 0:
+   -0.0040, 0.08x, NOT MEASURED.)
+
+**THE POINT CLOUD, R_alpha readout (the quantity the objective steers), vs its own lam = 0, same
+seed:** lam 0.1 **-0.0058 / -0.0024** (0.22x / 0.08x, NOT MEASURED); lam 0.3 +0.0145 / +0.0228;
+lam 1 **+0.1045 / +0.1217** (1.15x / 1.41x, fold CI [+0.031, +0.187] and [+0.055, +0.196], 4/5 and
+5/5, **WORSE**); lam 3 **+0.1378 / +0.1421** (1.24x / 1.29x, 5/5 both, **WORSE**). Against
+production the same shape: +0.0013 to +0.0285 at lam <= 0.3, +0.1116 to +0.1478 at lam >= 1
+(WORSE). The lam grid priced as an order statistic
+(`ST.best_of_k_within`, k = 5): ORACLE gain -0.168 / -0.166 per seed, split-half transfer
+**+0.047 / +0.053** -- the best lam chosen on one half makes the other half WORSE. There is no
+transferable per-target lam.
+
+**THE MECHANISM IS ALIVE AND THE ENDPOINT DOES NOT CARE -- THIS IS THE RESULT.** As lam rises the
+objective genuinely takes control of the tail: the realised m falls **74 -> 39**, the state's
+participation ratio falls **407 -> 164**, and the Jaccard of the retained set with the DIS top-75
+falls **0.933 -> 0.518**. Half the selected set is replaced. And the **DEPLOYED tail-SET readout**
+-- the uniform average over exactly that moved set -- is **FLAT**: every cell is NOT MEASURED, the
+largest |effect| against production is +0.046 (lam 3, seed 1, 0.56x) and against its own lam = 0
+is +0.038. The objective moves the set by half and the emitted accuracy does not follow. That is
+the terminal-operator law arriving from this side (memory `operator-consumes-set-mean`; S29-L44
+addendum 2: d_out = 1.16 x set-mean + 0.04 x set-best) on top of the pool's 68% common-mode error
+(S23 L9): swapping members changes which typical structures are averaged, not how typical the
+average is. Where the endpoint DOES move -- the R_alpha readout at lam >= 1 -- it moves because the
+weights inside the tail become sharp (lam_w ratio rises, m collapses to 39) and a sharper average
+is a worse one, which is the variance-reduction argument in `d_harness.readout_uniform`'s own
+docstring, measured.
+
+**THE CONTROLS (charter section 11 / contract rule 15).** (a) Its own lam = 0: above. (b)
+Production: above. (c) **M6, the target-independent fixed profile** (S29-L15: the exact minimax
+optimum p*(alpha, T) applied to each target's own DIS order, no circuit, no optimiser). My
+implementation reproduces lane T's exact optimum independently -- F **-4.7236** against T's
+-4.7237, m 29 vs 29, PR 343.7 vs 342.3, t* -1.5349 vs -1.534 -- and on the chain it sits at 3.2424,
+**+0.0319 from production (0.39x)**, while the trained circuit at lam = 0 beats it by only
+**-0.0235 (0.31x, NOT MEASURED)**. **The quantum stage does not measurably beat a profile that
+contains no circuit.** S29-L15's M6 prediction holds. (d) Untrained best-of-16 under each arm's own
+objective: at lam = 0 it is +0.0236 from production on the cloud (0.43x) and the trained circuit
+beats it by -0.0165 / -0.0179 (0.28x / 0.30x, NOT MEASURED) -- training helps, not measurably.
+(e) Both seeds throughout. (f) Matched budget is subsumed: the untrained control is the zero-budget
+end and the lam = 0 arm the matched one.
+
+**A CLAIM I DID NOT MAKE, AND WHY.** My rows carry a `tail_is_prefix` column that reads 0.91 to
+0.99 for the VQE arms, which would have said the CVaR tail stops being the energy prefix -- i.e.
+that set-equality broke INSIDE the VQE, which would have been the sprint's quantum headline. **It
+is an artefact of my own column.** The value-based gate (`s24.d_harness.gate_set_equality`) passes
+with `equality` TRUE on every cell I tested (16 cells, 8 targets, lam 0 and 3), and the 37 targets
+that flag False are exactly the ones with **exact E ties** (up to 4-way; 1CB3 has 48 tied groups
+and 104 tied members): my column compared a tail built by `np.argsort(E, stable)` against a set
+built by `topm(E, m, key)`, two different tie conventions. **The CVaR tail under tail-then-aggregate
+is still the energy prefix, by construction**, because the tail's ORDER remains a per-state scalar
+-- which is exactly the condition lane T attached to the derivation (S29-L17: "the order should stay
+a per-state scalar"). The genuine set-equality escape measured in S29-L25 / S29-L45 is for a FREE
+subset optimisation, not for this VQE. Scoping that correctly is the difference between this entry
+and a retraction.
+
+**WHAT THE PAIR SAYS.** S29-L27 measured that the objective can now see all 74 directions the
+readout consumes, where the deployed pair sees none of 511. This entry measures what seeing them is
+worth: **nothing, and then harm.** The two together are the sprint's thesis demonstrated
+constructively rather than asserted -- the flatness was fixable, and fixing it changed nothing,
+because what the objective can now see is a function bound by lane T's theorem 2 (S29-L7) whose
+ladder correlation on the near-native rungs is -0.182 CA / -0.402 chain (S29-L2). The barrier is
+the information content of f, not the shape of the optimisation.
+
+Multiplicity: 62 comparisons on the point cloud (10 VQE cells x 2 readouts x 3 comparators, plus
+M6 and the untrained arm against production) and 11 on the built chain, of which **2 are endpoint
+comparisons that reach a verdict** (`vqe|lam1|s1` vs production and vs its own lam = 0, both
+WORSE); the lam grid is priced as an order statistic and does not transfer.
+Artefacts: `s29/results/s29_B_tta_end_rows.s0of4.jsonl` .. `.s3of4.jsonl`,
+`s29_B_tta_end_rows.s0of2.jsonl` / `.s1of2.jsonl` (the 12-target probe),
+`s29/results/s29_B_tta_chain_rows.s0of4.jsonl` .. `.s3of4.jsonl`,
+`s29/results/s29_B_tta_end_cloud.json`; `s26/jobs_done/s29B_end126_*.json`,
+`s29B_chain_*.json`, `s29B_end12_*.json`; code `s29/s29_B_tta.py`, `s29/s29_B_analyse.py`;
+prereg `s29/PREREG_S29_B.md` addenda 2 and 3 (commits d3ccf6b6, c89e3106), both before the run.
