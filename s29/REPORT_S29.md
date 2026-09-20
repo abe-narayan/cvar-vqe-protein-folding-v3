@@ -651,6 +651,29 @@ the stage's sole remaining channel to the answer, measured against a comparator 
 quantum computation, is worth nothing detectable. It also explains §12.0's constraint from a third
 direction — a better channel feeding this stage still arrives at an operator that cannot spend it.
 
+### 6.3 The control the project's own memory demands: best-of-N, never an initialisation mean
+
+Project memory is explicit that a trained-circuit arm must be compared against **best-of-N draws
+from the untrained circuit at a matched sample budget**, never against an initialisation mean —
+because concentration is the wrong move when discrimination binds, and comparing to a mean flatters
+any optimiser. Lane X ran it on the divergent configuration-space encoding, on the **built chain**:
+
+```
+BESTOFN − UNTRAINED_s0   +0.0095   0.25× MDE   3/5 folds   power 0.11   NOT MEASURED
+BESTOFN − VQE_g1_s0      +0.0279   0.39× MDE   4/5 folds   power 0.20   NOT MEASURED
+BESTOFN − VQE_g0_s0      −0.0536   0.14× MDE                            NOT MEASURED
+```
+
+**At matched budget, best-of-N from an untrained circuit is indistinguishable from the trained
+VQE.** Training the circuit buys nothing the same number of random draws would not have bought.
+
+This is the S20 scope fix being re-tested rather than assumed: S20 established that on a continuous
+encoding the VQE genuinely trains (−0.210 Å, 5/5 folds), which is why the lattice-era conclusion
+"running the VQE is worse than not running it" was narrowed. Here the optimiser does reduce its
+objective — the arms in §6.1 show F falling by half or more — and the *emitted structure* is still
+not separable from best-of-N. The training is real; its endpoint value is not measurable.
+[n = 11 at the time of writing; lane X's final report carries the full set.]
+
 **Controls.** [PENDING — lane X's 94-arm ladder, including the untrained-circuit and best-of-N
 controls, and lane B's endpoint arm.]
 
