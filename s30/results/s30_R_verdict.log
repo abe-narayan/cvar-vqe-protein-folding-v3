@@ -1,0 +1,90 @@
+n = 126 targets, 43 channels, folds {0: 25, 1: 23, 2: 25, 3: 23, 4: 30}
+
+=== INSTRUMENT (every ladder sentence carries this) ===
+  torsion-rebuild FLOOR      0.347 A  (not 0 A)
+  near-native band mean      0.555 A over 18.8 rungs/target   fallbacks 3
+  PROD chain / circ_best     3.207 / 0.252 A    pool best 1.711 A
+  ladder share of the set    0.465  (set-referenced channels use the POOL ONLY: ['CONS', 'DMAP_CONS', 'TORS_CONS', 'POOLGO'])
+
+=== A2 realism flatness of ladder A within m (ORACLE; a positive = residual confound) ===
+  RAMA     +0.116  fold CI [+0.097, +0.137]
+  EXVOL    +0.161  fold CI [+0.099, +0.220]
+  RG_DEV   +0.190  fold CI [+0.157, +0.233]
+
+=== SI audit: the size-matched twin must zero the PURE functions of Rg ===
+  RG_LAW   rel sd  raw 0.5009 -> SI 3.24e-16
+  RG_UNIV  rel sd  raw 0.5071 -> SI 2.79e-16
+
+=== D3 anchor confound  corr(d-to-anchor, d-to-native) within m ===
+  median +0.259  mean +0.214  [p10 -0.545, p90 +0.847]  share > 0.5 0.37   CAVEAT TRIGGERS: False
+
+=== D1 locality decomposition (held-out R2 of RMSD-to-native on ladder A) ===
+  r2_m_only   +0.3111  fold CI [+0.2917, +0.3273]
+  r2_local    +0.2216  fold CI [+0.1722, +0.2744]
+  r2_global   +0.9108  fold CI [+0.9013, +0.9201]
+  d_local     -0.0894  fold CI [-0.1217, -0.0522]
+  d_global    +0.5997  fold CI [+0.5850, +0.6166]
+
+=== THE TABLE (every channel; nothing selected) ===
+channel           rhoA_part  rhoANCH_p   A-ANCH   B-ANCH  rhoB_pa  rho_rg  prefN prefPool pref-ctl  pctNat   res_all  res_near  F-R1
+------------------------------------------------------------------------------------------------------------------------------------
+DIS                  +0.347     +0.213   +0.134   +0.138   +0.281  -0.084  0.058    0.020   +0.038   0.291    0-0.25    0-0.25  i
+CONS                 +0.343     +0.399   -0.056   +0.034   +0.361  -0.374  0.057    0.199   -0.142   0.434    0-0.25     0.5-1  -
+DIS_MEAN             +0.335     +0.234   +0.101   +0.125   +0.284  -0.176  0.062    0.025   +0.037   0.326    0-0.25     0.5-1  i
+CONS_SI              +0.315     +0.366   -0.051   +0.037   +0.322  -0.807  0.079    0.238   -0.159   0.423    0-0.25     0.5-1  -
+CONTACT_LL           +0.294     +0.229   +0.065   +0.052   +0.206  -0.601  0.213    0.134   +0.080   0.297    0-0.25  0.25-0.5  -
+DMAP_CONS            +0.263     +0.316   -0.053   -0.014   +0.235  -0.050  0.138    0.297   -0.160   0.421    0-0.25    0-0.25  -
+DMAP_CONS_SI         +0.237     +0.269   -0.032   +0.032   +0.232  -0.729  0.170    0.324   -0.155   0.411    0-0.25  0.25-0.5  -
+LEG                  +0.210     +0.198   +0.013   -0.030   +0.127  -0.124  0.269    0.427   -0.158   0.283    0-0.25    0-0.25  -
+TORS_CONS            +0.194     +0.203   -0.009   -0.029   +0.125  +0.132  0.310    0.457   -0.146   0.346    0-0.25  0.25-0.5  -
+DISTPOT_SI           +0.193     +0.081   +0.112   +0.083   +0.117  -0.022  0.367    0.254   +0.112   0.315    0-0.25    0-0.25  -
+POOLGO_SI            +0.190     +0.242   -0.053   -0.070   +0.114  -0.678  0.344    0.422   -0.078   0.388    0-0.25     0.5-1  -
+POOLGO               +0.188     +0.238   -0.050   -0.073   +0.103  +0.611  0.341    0.391   -0.050   0.338    0-0.25    0-0.25  -
+DSSPHB               +0.163     +0.228   -0.065   -0.124   +0.053  +0.280  0.247    0.330   -0.083   0.294    0-0.25  0.25-0.5  -
+CAGEO                +0.156     +0.199   -0.043   -0.065   +0.093  +0.020  0.436    0.528   -0.093   0.340  0.25-0.5    0-0.25  -
+CAGEO_SI             +0.156     +0.199   -0.043   -0.065   +0.093  +0.020  0.436    0.528   -0.093   0.340  0.25-0.5    0-0.25  -
+LEG_hbond_local      +0.149     +0.208   -0.059   -0.085   +0.075  +0.054  0.278    0.416   -0.138   0.186    0-0.25    0-0.25  -
+DISTPOT              +0.136     +0.081   +0.056   +0.020   +0.064  +0.028  0.348    0.270   +0.078   0.354  0.25-0.5  0.25-0.5  -
+LEG_coop_helix       +0.111     +0.135   -0.036   -0.035   +0.062  -0.025  0.369    0.507   -0.138   0.020    0-0.25    0-0.25  -
+RAMA                 +0.107     +0.090   +0.017   +0.002   +0.073  +0.051  0.640    0.790   -0.150   0.639    0-0.25     0.5-1  -
+ENV_SI               +0.104     +0.056   +0.048   +0.011   +0.044  +0.028  0.411    0.371   +0.040   0.377  0.25-0.5     0.5-1  -
+ENV                  +0.093     +0.040   +0.053   -0.006   +0.019  +0.144  0.462    0.361   +0.101   0.399       1-2      None  -
+EXVOL                +0.089     +0.090   -0.001   +0.014   +0.089  -0.593  0.403    0.492   -0.089   0.129    0-0.25  0.25-0.5  -
+LEG_steric           +0.087     +0.091   -0.003   -0.008   +0.071  -0.592  0.507    0.624   -0.117   0.121    0-0.25    0-0.25  -
+RG_UNIV              +0.087     +0.078   +0.009   -0.017   +0.042  +0.098  0.413    0.395   +0.017   0.434  0.25-0.5      None  -
+EXVOL_SI             +0.086     +0.092   -0.007   +0.007   +0.088  -0.324  0.436    0.464   -0.028   0.106    0-0.25     0.5-1  -
+CONTACT_SI           +0.084     +0.004   +0.081   +0.042   +0.025  +0.051  0.540    0.443   +0.097   0.387    0-0.25      None  -
+CONTACT              +0.084     +0.009   +0.075   +0.048   +0.035  +0.031  0.558    0.443   +0.115   0.371        >4     0.5-1  -
+LEG_solvation        +0.084     +0.033   +0.051   +0.003   +0.027  +0.495  0.368    0.362   +0.006   0.413      None    0-0.25  -
+LEG_torsion          +0.076     +0.053   +0.024   -0.004   +0.040  -0.025  0.503    0.698   -0.195   0.503  0.25-0.5     0.5-1  -
+HP_SI                +0.063     -0.003   +0.066   +0.047   +0.036  +0.090  0.478    0.412   +0.066   0.425  0.25-0.5      None  -
+HP                   +0.054     +0.002   +0.052   +0.050   +0.042  -0.114  0.447    0.438   +0.008   0.444      None      None  -
+RG_LAW               +0.050     +0.052   -0.002   -0.002   +0.047  +0.608  0.388    0.435   -0.047   0.463        >4    0-0.25  -
+LEG_aromatic         +0.046     -0.000   +0.046   +0.017   +0.015  +0.384  0.392    0.412   -0.021   0.430      None      None  -
+LEG_compactness      +0.033     +0.020   +0.013   -0.002   +0.016  +0.966  0.435    0.433   +0.001   0.424      None    0-0.25  -
+LEG_coop_sheet       +0.022     -0.006   +0.040   -0.114   -0.036  +0.249  0.522    0.511   +0.011   0.001     0.5-1    0-0.25  -
+ELEC                 +0.018     -0.010   +0.028   +0.022   +0.011  -0.121  0.526    0.500   +0.026   0.463      None      None  -
+LEG_electrostatic     +0.018     -0.010   +0.028   +0.022   +0.012  -0.119  0.524    0.500   +0.025   0.464      None      None  -
+LEG_contact          +0.009     -0.028   +0.037   +0.039   +0.018  -0.541  0.566    0.511   +0.055   0.499     0.5-1      None  -
+RG_UNIV_SI           +0.006     +0.001   +0.005   +0.000   +0.001  -0.017  0.466    0.450   +0.016   0.265       1-2      None  -
+RG_LAW_SI            +0.000     +0.007   -0.006   -0.007   -0.003  -0.010  0.485    0.496   -0.011   0.326      None      None  -
+SS_MATCH             -0.017     -0.049   +0.032   +0.036   -0.000  -0.088  0.365    0.321   +0.044   0.444      None      None  -
+LEG_hbond_longrange     -0.023     -0.037   +0.017   -0.013   -0.046  +0.338  0.584    0.554   +0.030   0.073      None    0-0.25  -
+SS_MATCH_SI          -0.026     -0.015   -0.011   +0.008   -0.001  -0.437  0.351    0.426   -0.075   0.512      None      None  -
+
+=== A4 multiplicity (max over channels, per-target sign-flip null, 500 draws) ===
+  rho_A_part   observed max 0.347  null mean 0.062 p95 0.105  p_max 0.000
+  pref_near    observed max 0.443  null mean 0.094 p95 0.132  p_max 0.000
+
+=== LFO combination (fit on 4 folds, evaluated on the 5th) ===
+  near-vs-PROD  real      pref_near 0.500  pool-member control 0.500  margin +0.000
+  near-vs-PROD  shuffled  pref_near 0.500  pool-member control 0.500  margin +0.000
+  GARBAGE CHECK far(>=3A)-vs-PROD    pref 0.500  control 0.500  margin +0.000
+
+=== VERDICT ON F-R1 ===
+  FIRES: False   channels firing: NONE
+  clause (i) only (ordering, no preference): ['DIS', 'DIS_MEAN']
+  clause (ii) only (preference, no ordering): none
+  best partialled rho_A: DIS   best pref_near: RAMA
+
+written -> C:\Users\abena\Protein-Folding-Algorithm\s30\results\s30_R_verdict.json

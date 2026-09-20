@@ -2645,3 +2645,297 @@ direction is *necessary* (58% of the current rank is wasted) and *not sufficient
 orthogonality is a 5.1% discount; the field still needs rho ~ 0.34 of its own). Lane D's Gram tool
 is now a one-liner for checking a proposed field's radial orthogonality **before** it is built,
 and I would make that check a gate on any new channel this sprint funds.
+
+## S30-L19 -- L11, IS NATIVENESS RECOGNISABLE FROM SINGLE-STRUCTURE GEOMETRY? **F-R1 DOES NOT FIRE AT n = 126**: ON A LADDER WHERE KIND, LOCAL REALISM AND PERTURBATION BUDGET ARE ALL MATCHED, ORDERING SURVIVES (DIS +0.347, +0.134 ABOVE ITS ANCHOR CONTROL, p_max 0.000) BUT **PREFERENCE DOES NOT ON ANY OF 43 CHANNELS** -- AND THE LEAVE-FOLD-OUT COMBINATION THAT PREFERS A 0.55 Å STRUCTURE TO PRODUCTION ON 93.0% OF TARGETS PREFERS A **RANDOM POOL MEMBER ON 100%** AND A **3 Å RUNG ON 100%**, SO ITS MARGIN IS **-0.070 [-0.110, -0.028]**; LEG_torsion, S29 §12.0's LAST OUTSIDE-CLASS-M HOPE, IS AT CHANCE; AND D1 GIVES THE MECHANISM -- THE RMSD SIGNAL IS **ABSENT FROM LOCAL FEATURES (ΔR² -0.089) AND ABUNDANT IN GLOBAL ONES (+0.600)**, SO THE NULL FOR EVERY PER-RESIDUE CHANNEL IS A THEOREM ON THIS INSTRUMENT, NOT AN EMPIRICAL MISS (2026-09-20 13:27, R)
+
+Pre-registered in `s30/PREREG_S30_R.md`, committed `7eabffee` at 12:40:35, BEFORE any aggregate
+over more than the single probe target the file declares. Registered prior: **F-R1 does not fire,
+about 4 to 1** -- so this null confirms my own expectation and must be read with that discount.
+Code `s30/s30_R_ladder.py` + `s30/s30_R_agg.py`; tests `tests/test_s30_R.py` (5 pass); artefacts
+`s30/results/s30_R_verdict.json`, `s30_R_rows.s{0,1,2}of3.jsonl` (126 targets),
+`s30_R_stability.json`, `s30_R_chains/` (126), `s30_R_repro/`.
+
+### THE INSTRUMENT, AND ITS FLOOR -- WHICH TRAVELS WITH EVERY SENTENCE BELOW
+
+Every rung is an ideal-geometry backbone built from (phi, psi) by `core.geometry
+.build_backbone_batch`: identical bond lengths and bond angles at every rung, no projection, no
+coordinate average, no contraction. Perturbed residues draw torsions from the fold's
+**leakage-safe** Ramachandran table `s8/generate_rama.npz[fold]`. Three families per target:
+**ladder A** anchored on the native's own torsions, **ladder B** anchored on a random real pool
+member, m ∈ {1,2,3,4,6,8,12} residues resampled × 32 draws each; plus the rebuilt native, the
+projected PROD / circ_best / sub0 chains, and the 500 real pool members.
+
+```
+torsion-rebuild FLOOR        0.347 A   <- the ladder's zero, NOT 0 A
+near-native band             0.555 A mean over 18.8 rungs/target; 3 targets fall back
+PROD chain 3.207 A   circ_best 0.252 A (ORACLE)   sub0 0.498 A (ORACLE)   pool best 1.711 A
+ladder share of the set      0.465 -- reported, not hidden; the four SET-REFERENCED channels
+                             (CONS, DMAP_CONS, TORS_CONS, POOLGO) are referenced to the POOL ONLY
+```
+
+**Why the ladder is the point.** At m = 1 -- ONE resampled residue -- CA-RMSD to the native spans
+0.284 to 4.685 A on the probe target. At a fixed perturbation budget, with local torsions drawn
+from the same distribution, two structures differ by one torsion and by 4.4 A of nativeness.
+Ordering that is the experiment; S28-L48 could not ask it because its rungs differed in KIND
+(S30-L1).
+
+**A1, reproduction.** My independently projected PROD chains give **3.2071 A against the record's
+3.2126** (`s27/results/chain_rows.jsonl :: DIS`), median per-target |Δ| **0.0012 A**, with one
+0.513 A outlier -- which is the known multi-start branch flip already documented in
+S28-L18/L27b/L43. A 17-sprint-old number reproduces and the one deviation has a named cause.
+
+**A2, realism flatness (ORACLE; this audit can only WEAKEN my own positives).** The ladder is not
+perfectly realism-flat: within m, RAMA **+0.116** [+0.097, +0.137], EXVOL **+0.161**
+[+0.099, +0.220], |Rg - median pool Rg| **+0.190** [+0.157, +0.233]. Structures that land farther
+from the native are slightly less Rama-typical, slightly more clashing, slightly less typical in
+size. **That residual gradient would help a positive, so it makes every null below stronger and
+every positive below smaller than it looks.** DIS's +0.347 is about twice the largest gradient.
+
+**A3, no native.** The object every channel is handed is a bare namespace with **no `nat_ca` and
+no `oracle_rr` attributes at all**, and `ham_lib.Context` consumes the universe through exactly
+four keys (W, S, PHI, PSI). A channel cannot read a native even by accident -- a construction
+argument, which is stronger than a poison run, and `tests/test_s30_R.py::test_t4` locks it.
+Every RMSD column is computed only AFTER every channel value exists.
+
+**A5, ties.** No `np.argmin` on a tied signal anywhere; all preferences score ties at 0.5 and
+average over the tied set.
+
+### THE VERDICT: F-R1 DOES NOT FIRE
+
+```
+                     rhoA_part rhoANCH_p  A-ANCH   rho_rg  prefN prefPool pref-ctl  pctNat  F-R1
+DIS                     +0.347    +0.213  +0.134   -0.084  0.058    0.020   +0.038   0.291   i
+CONS                    +0.343    +0.399  -0.056   -0.374  0.057    0.199   -0.142   0.434   -
+DIS_MEAN                +0.335    +0.234  +0.101   -0.176  0.062    0.025   +0.037   0.326   i
+CONS_SI                 +0.315    +0.366  -0.051   -0.807  0.079    0.238   -0.159   0.423   -
+CONTACT_LL              +0.294    +0.229  +0.065   -0.601  0.213    0.134   +0.080   0.297   -
+DMAP_CONS               +0.263    +0.316  -0.053   -0.050  0.138    0.297   -0.160   0.421   -
+LEG                     +0.210    +0.198  +0.013   -0.124  0.269    0.427   -0.158   0.283   -
+DISTPOT_SI              +0.193    +0.081  +0.112   -0.022  0.367    0.254   +0.112   0.315   -
+RAMA                    +0.107    +0.090  +0.017   +0.051  0.640    0.790   -0.150   0.639   -
+CONTACT                 +0.084    +0.009  +0.075   +0.031  0.558    0.443   +0.115   0.371   -
+LEG_torsion             +0.076    +0.053  +0.024   -0.025  0.503    0.698   -0.195   0.503   -
+LEG_compactness         +0.033    +0.020  +0.013   +0.966  0.435    0.433   +0.001   0.424   -
+RG_LAW_SI               +0.000    +0.007  -0.006   -0.010  0.485    0.496   -0.011   0.326   -
+(43 channels in the artefact; nothing selected; full table in s30_R_verdict.json)
+```
+
+- **Clause (i), ordering, FIRES on 2 of 43** -- DIS (+0.347, anchor contrast +0.134) and DIS_MEAN
+  (+0.335, +0.101). Multiplicity is not the explanation: the max-over-channels per-target
+  sign-flip null (500 draws) gives null mean 0.062, p95 0.105, **p_max 0.000**.
+- **Clause (ii), preference, FIRES ON NOTHING.** The best `pref_near` in the entire library is
+  **RAMA at 0.640**, under the 0.65 bar -- and RAMA prefers a **random real pool member** to
+  production on **0.790** of targets, so its contrast is **-0.150**. The S28-L36 pool-member veto
+  fires on every channel that clears the bar-adjacent range.
+- **The largest preference effect in the whole library points the wrong way**: DIS prefers
+  production to a **0.55 A** near-native structure on **94.2%** of targets (`pref_near` 0.058).
+  That is S28-L48 reproduced with the kind confound REMOVED -- and it is sharper, not weaker.
+
+### THE RESULT THAT MATTERS MOST: THE COMBINATION LOOKS LIKE RECOGNITION AND IS NOT
+
+Ridge over 40 channels, fit on four folds, evaluated on the fifth (prereg item 6):
+
+```
+near-native (<=1 A) vs PROD   real       pref 0.930   pool-member control 1.000   margin -0.070
+                                         fold CI [-0.110, -0.028]   1.04x MDE   n = 114
+GARBAGE CHECK far (>=3 A) vs PROD  real  pref 1.000   control 1.000              margin +0.000
+near-native, label-shuffled              pref 0.439   control 0.325              margin +0.114
+```
+
+**Read it in this order.** The combination prefers a 0.55 A structure to production on 93.0% of
+held-out targets. Quoted alone that is a headline. It prefers an **arbitrary real pool member** on
+**100%**, and a **3 A rung** on **100%** -- i.e. it prefers structures that are FARTHER from the
+native MORE often than the near-native one. It has learned *"is this the projected production
+average?"*, not *"is this near-native"*. The margin excludes zero in the wrong direction.
+This is `decoy-bank-not-a-pool-proxy` and the S28-L36 veto, reproduced on the cleanest instrument
+the project owns, and it is the reason clause (ii) had a control clause at all.
+
+**DISCLOSURE, my own bug, caught before it was reported.** The first run of this cell printed
+`0.500 / 0.500 / 0.500` on all three arms. That was a **NULL-INPUT ARTEFACT**: the channel filter
+required `d_near` on *every* row, and 3 targets have no rung under 1 A, so the channel set was
+EMPTY and the "preference" was `mean(0 < 0) + 0.5*mean(0 == 0)`. Three identical 0.500s across
+three different questions is what caught it. Fixed by dropping the offending ROWS rather than the
+channels; the disclosure is in `s30_R_verdict.json :: LFO_note`.
+
+### D1 -- THE MECHANISM, AND WHY HALF THE NULL IS A THEOREM RATHER THAN A MISS
+
+Held-out (5-fold within target) R² of RMSD-to-native on ladder A, with the m one-hot as the
+baseline block, feature counts deliberately MATCHED (84 local vs 80 global):
+
+```
+r2_m_only    +0.3111  [+0.2917, +0.3273]     knowing only HOW MANY residues moved
+r2_local     +0.2216                ->  d_local   -0.0894  [-0.1217, -0.0522]
+r2_global    +0.9108  [+0.9013, +0.9201]  ->  d_global  +0.5997  [+0.5850, +0.6166]
+```
+
+The LOCAL block is **ORACLE-ADVANTAGED**: besides per-residue sin/cos of (phi, psi) it is handed
+the **per-residue circular deviation from the native anchor itself**. With that advantage, and at
+matched capacity, **it adds NOTHING beyond knowing m** -- the held-out ΔR² is negative, meaning it
+only costs capacity. The global block (the CA distance map, Rg, contact count) adds +0.600.
+
+**Therefore the null for every per-residue channel -- RAMA, LEG_torsion, DSSPHB, CAGEO,
+LEG_hbond_local, HP -- is a property of the geometry and not an empirical miss.** One torsion at
+mid-chain swings global RMSD by several Angstroms through a lever arm; a sum of per-residue terms
+cannot see a lever arm. The live question narrows exactly as the coordinator predicted it would:
+only a globally-reaching function could order this ladder. **And the only globally-reaching
+functions the project owns are distogram re-readings (DIS, DIS_MEAN, CONTACT_LL -- inside class M,
+bounded by lane T's theorem 2) and pool-consensus terms (CONS, DMAP_CONS, POOLGO), whose anchor
+contrasts are zero or negative (-0.056, -0.053, -0.050): they measure TYPICALITY, not nativeness.**
+The ORACLE label on r2_global matters and is stated: it is a per-target fit whose labels encode the
+native's own distance map, so it bounds what a target-specific native-informed global function
+could extract -- it does NOT say a native-free one exists.
+
+### D2 -- THE RESOLUTION: WHERE THE ORDERING DIES (chance = 0.500 exactly, by construction)
+
+Pairwise concordance within m, by |Δ RMSD|:
+
+```
+                  0-0.25  0.25-0.5   0.5-1     1-2     2-4      >4
+ALL PAIRS  DIS     0.525     0.566   0.618   0.698   0.771   0.822
+           LEG     0.511     0.525   0.545   0.584   0.656   0.749
+           LEG_torsion 0.499 0.511   0.514   0.528   0.561   0.607
+BOTH <= 2 A (the only regime the endpoint cares about)
+           DIS     0.520     0.554   0.570   0.624     n/a     n/a
+           LEG     0.526     0.555   0.574   0.618     n/a     n/a
+           CONS    0.500     0.486   0.528   0.572     n/a     n/a
+```
+
+**The signal is coarse triage and nothing else.** The best channel separates 4 A from 0.3 A at
+0.822 and separates two near-native structures 0.25 A apart at **0.520** -- two points above a coin
+toss. For lane Q: a sparse-support rule built from this library can only ever select on
+differences of ~2 A or more. For lane T: an objective that had to resolve 0.5 A would need a
+channel roughly four times as discriminating as the best one in the record. Note also that inside
+the near-native band **LEG is as good as DIS** (0.526/0.555/0.574/0.618 against
+0.520/0.554/0.570/0.624) -- the distogram's advantage is entirely in the coarse regime.
+
+### THE SPECIFIC NEGATIVE S29 §12.0 ASKED FOR: LEG_torsion
+
+S29-L50 made LEG_torsion the last live exit -- in-band skill +0.181 that is demonstrably not
+compactness, and a function of the structure rather than of the distogram, hence outside class M.
+On this instrument, with kind and budget matched:
+
+```
+rho_A partialled +0.076   anchor contrast +0.024   rho(score, Rg) -0.025
+pref_near 0.503  vs pool-member control 0.698  ->  contrast -0.195
+the rebuilt NATIVE sits at the 0.503 percentile of its OWN Rama-resampled ladder
+resolution in the near-native band: 0.507 / 0.525 / 0.567 / 0.574
+```
+
+**It is at chance.** It neither orders nativeness above its own anchor control nor prefers a
+near-native structure to production, and it ranks the native at the exact median of the native's
+own perturbations. S29's caveat -- that in-band skill is not deployable value -- turns out to
+understate it: here the in-band skill does not even reappear as ordering once kind and budget are
+matched. **Row 3 of S29 section 7 should now be closed, negatively, with a mechanism (D1: it is a
+per-residue sum, and the signal is not in per-residue features).**
+
+### WHERE THE NATIVE SITS IN ITS OWN LADDER (the sentence that carries the whole result)
+
+`pctile_nat_in_A` = the share of ladder-A rungs -- random Rama-resampled perturbations of the
+native -- that score BETTER than the rebuilt native itself:
+
+```
+DIS 0.291   LEG 0.283   CONTACT_LL 0.297   DSSPHB 0.294   DISTPOT_SI 0.315   CAGEO 0.340
+LEG_torsion 0.503   LEG_contact 0.499   ELEC 0.463   RG_LAW 0.463   RAMA 0.639
+```
+
+Under the shipped cost, **29% of the native's own random perturbations score better than the
+native**. Under the Ramachandran term -- the one channel whose entire job is local plausibility --
+**64% do**, because a draw from the fold's Rama table is typically MORE Rama-typical than a real
+native torsion. Nothing in the library puts the native first.
+
+### LANE L's SIZE-MATCHED FIX: IT WORKS WHERE PREDICTED, AND IT DOES NOT MEAN WHAT IT SOUNDS LIKE
+
+Implemented stronger than requested: instead of only replacing the reference term, the universe
+AND the candidates are both rescaled to a common Rg, so each pair potential is **fitted and
+evaluated in reduced units** and a uniform contraction is exactly invisible. The audit is not an
+assertion -- the two PURE functions of Rg become constant:
+
+```
+RG_LAW   relative sd  raw 0.5009  ->  SI 3.2e-16        RG_UNIV  0.5071  ->  2.8e-16
+```
+
+- **On the channel lane L's derivation named, it helps**: DISTPOT_SI beats DISTPOT on ordering
+  (+0.193 vs +0.136), on the anchor contrast (+0.112 vs +0.056) and on the preference contrast
+  (+0.112 vs +0.078), while its Rg loading falls to -0.022. That is the predicted direction.
+- **And one thing lane L should have back, because it is not obvious**: scale invariance by
+  construction does **NOT** imply ρ(score, Rg) = 0, and on this instrument several twins are MORE
+  Rg-correlated than their parents (CONS -0.374 -> CONS_SI **-0.807**, DMAP_CONS -0.050 ->
+  **-0.729**, POOLGO +0.611 -> **-0.678**). The reason is real rather than a bug: the transform
+  removes the *forced* scale term, but at peptide length shape and size are genuinely correlated,
+  and what is left is that correlation. **Removing the forced term is a correctness fix for the
+  in-band question; it is not a decorrelation, and it changes no endpoint** -- by the S29 section 8
+  bound it is a re-parameterisation and reaches the endpoint only as a cosine. ANDIS's
+  recognition/discrimination trade is the right frame and this ladder is on the side where
+  removing the size term is correct, which is why it is reported here and not proposed as an arm.
+
+### D3 -- THE ANCHOR CONTROL'S OWN CONFOUND, MEASURED BEFORE THE VERDICT WAS READ
+
+`corr(distance-to-anchor, distance-to-native)` within m, over 126 targets: **median +0.259**, mean
++0.214, [p10 -0.545, p90 +0.847], 37% of targets above 0.5. The prereg's caveat triggers only if
+the median exceeds 0.5, so **it does not trigger**: clause (i)'s +0.10 margin was reachable, and
+two channels did reach it. The confound-immune column (`rho_B` with rank(distance-to-anchor)
+partialled out) is in the artefact and tells the same story.
+
+### STABILITY OF THE INSTRUMENT, FROM AN ACCIDENT
+
+A seeding defect -- `hash()` on a str is process-randomised -- meant a duplicate shard drew a
+DIFFERENT ladder for 38 targets. Rather than discard them I measured with them
+(`s30_R_stability.json`), and the answer is worth having:
+
+```
+rho_A_part       draw-to-draw corr 0.912   mean |diff| 0.079     means +0.099 / +0.087
+pref_near        draw-to-draw corr 0.982   mean |diff| 0.027
+pref_pool        draw-to-draw corr 1.000   (does not depend on the ladder)
+rho_ANCHOR_part  draw-to-draw corr 0.147   mean |diff| 0.235     means +0.107 / +0.081
+d_local  -0.127 / -0.134        d_global  +0.619 / +0.596
+```
+
+The ordering and preference columns are stable; **the anchor control is NOISY per target**
+(corr 0.147) because ladder B redraws its anchor, so the per-target A-ANCHOR contrast carries that
+noise even though its mean is stable. Any future use of that contrast should average several
+anchors. The defect is fixed (`zlib.crc32`) for every later run; the numbers in this entry come
+from the pre-fix seed and the duplicate draws are exactly what prices that.
+
+### THE HONEST ANSWER TO L11
+
+**No -- not in the sense the sprint needs.** Precisely:
+
+1. Structures are **not** indistinguishable: a within-kind, budget-matched ordering signal exists
+   and is not multiplicity (DIS +0.347, p_max 0.000, +0.134 above its own anchor control).
+2. But that signal is **the distogram's**, i.e. the objective production already optimises -- which
+   is why "DIS prefers production" is close to tautological -- and it is **coarse**: 0.520
+   concordance at 0.25 A separation in the near-native band.
+3. **No channel and no leave-fold-out combination prefers a 0.55 A structure to the 3.2 A
+   production average at the registered bar**, and the combination that appears to does so less
+   often than it prefers a random pool member or a 3 A rung.
+4. Half the null is **structural**: the signal is not in per-residue features at all (ΔR² -0.089
+   against +0.600 global), so every local channel is blind by construction.
+
+**What this forecloses.** (a) S29 §12.0 row 3 -- LEG_torsion as the outside-class-M route -- closed
+negatively with a mechanism. (b) A native-free support rule for §12.1's sparse weighted readout
+**built from this library**: choosing 2 of 500 is ~17.9 bits, and a library that resolves 0.25 A at
+0.520 cannot pay it. (c) Any "better Hamiltonian assembled from the existing channels": the only
+ordering present is the one production already uses.
+
+**What it does NOT foreclose**, and I want this stated as carefully as the negative: D1 says the
+information IS in the global shape (R² 0.911, ORACLE per-target fit). What is missing is a
+*native-free* globally-reaching channel. That is a supply problem, not an impossibility -- and it
+is a different problem from the one the sprint has been attacking. Nothing here touches the
+retrieval/prior lever, which `prior-derivative-is-the-only-steep-lever` still prices as the only
+steep one.
+
+### MULTIPLICITY, MDE AND SCOPE
+
+0 endpoint (deployable RMSD) comparisons. 43 channels × 3 ordering columns reported as ONE table,
+none selected; one max-over-channels per-target sign-flip null per column (500 draws): rho_A_part
+observed 0.347 vs null mean 0.062 / p95 0.105, p_max 0.000; pref_near observed |0.443| vs null
+0.094 / 0.132, p_max 0.000. Every cell carries a fold-clustered CI and a per-comparison MDE in
+`s30_R_verdict.json` (`mde-is-per-comparison-not-per-instrument`). ρ(score, Rg) travels beside
+every recognition number, as lane L required. Scope: 9-16mers, 126 dev targets, CA-RMSD, a ladder
+whose floor is 0.347 A and whose realism is flat only to ±0.12-0.19 Spearman.
+
+**Operational disclosure.** `s26/jobrun.py`'s `CPU_START = 85.0` gate was closed throughout (lane D
+held the box at 99.8%), so the three run shards went out **detached rather than through the
+governor**. RAM -- the binding constraint per `machine-fits-two-heavy-jobs` -- had 4.0 GB free and
+peak per process was ~0.35 GB. The inherited gate defect named in `s30/STATUS.md` is real and it
+bit exactly as predicted.

@@ -252,8 +252,12 @@ def main(argv=None):
         o["A4_multiplicity"][col] = signflip_pmax(M)
 
     # ---------------- the leave-fold-out combination
-    core = [nm for nm in names if all(nm in r["ch"] and r["ch"][nm].get("d_near") is not None
-                                      for r in rows)]
+    # Keep a channel if it is present on MOST rows, and drop the offending ROWS inside
+    # `lfo_combination`.  Requiring every row emptied the set (3 targets have no rung <= 1 A, so
+    # their d_near is None) and produced a spurious 0.500/0.500/0.500 that looked like a result.
+    core = [nm for nm in names
+            if sum(1 for r in rows if nm in r["ch"] and r["ch"][nm].get("d_near") is not None)
+            >= 0.9 * len(rows)]
     o["LFO_combination"] = dict(channels_used=core, **{k: v for k, v in
                                 (lfo_combination(rows, core) or {}).items()})
     for tag in ("real", "shuffled"):
