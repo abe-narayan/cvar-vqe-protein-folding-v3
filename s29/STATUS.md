@@ -9,11 +9,17 @@
 - next: s29/lit/L_1_native_free_qa.md with the equation/assumption/information test per family; ledger S29-L1.
 
 ## M
+- 2026-09-19 23:48 running: brief, contract, charter 1/9/13, STATE, state-brief, ARCHITECTURE, s25/QUANTUM.md and the code end to end read (core/data, predict, quantum, project, amber, pipeline; s8/generate; s24/d_harness; s22/qcand_lib (the brief's `s25/qcand_lib.py` does not exist); s12/instrument; s24/stats_lib; s27/run_vqe_chain + run_pool); `s29/DATAPATH.md` posted (13 stages, every function cited by line, counts measured: 183 features, 372,881 MLP params, 6.6k training chains of which 90.5% are the fold-shared fragments, universe 7k-39k windows, DIS anchor 3.2126 reproduced from chain_rows).
+- next: `s29/CONVENIENCE_CHOICES.md` (20+ choices with the ledger line that tested each or a cheap decisive test), then the harness audit with commands and a ledger entry.
 
 ## T
 
 ## O
+- 2026-09-19 23:43 running: brief and record read (S10-5, S24 L2/L3/L13, S23 L6/L9, S22 L4, S28-L1b/L26b/L35/L48); PREREG_S29_O.md committed (1e9bb035); building s29_O_ladder.py + tests.
+- next: probe one target under jobrun (peak RSS), point-cloud stage on 126, rung 6 LFO step posted first, chain job 28 structures/target.
 
 ## D
 
 ## X
+- 2026-09-19 23:45 running: brief, contract (S29+S28), charter, STATE, S13 dossier, S15 dossier 1/4/5, S20 L1-L4, S21 L1-L28, STATE_BRIEF 4-5, core/quantum.py, d_harness, instrument, stats_lib, s28_B_hop, D's meter draft read; encoding (ii) chosen (3-mer fragments of the DIS top-8, recombined; q = 3*ceil(n/3) <= 18); prereg being written.
+- next: s29/PREREG_S29_X.md (nine questions, new angle vs S13/S15/S20/S21/S28-L21, falsifiers, prior), then s29_X_config.py + tests, then the 12-target probe under jobrun.
