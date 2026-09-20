@@ -68,6 +68,12 @@ SALT = "s30Dgram"
 TOL = 1e-8
 N_CTRL = 64          # random-subspace control draws per target
 
+#: the 11 fields whose fold-clustered CI excludes zero against the CORRECT signed null (S30-L5).
+#: Fixed here in code, taken from s29/results/s29_D_fields.json, NOT re-selected on this file's
+#: own numbers -- an equal-weight arm over fields chosen by the outcome would be leakage.
+SIG11 = ("CHAN_DISTPOT", "MSET_250", "MSET_150", "CHAN_RG_LAW", "CHAN_CONTACT", "CONS_TRIM",
+         "CHAN_LEG", "MSET_500", "CHAN_CONTACT_LL", "CHAN_ENV", "PROJ")
+
 
 # ============================================================================ field vectors
 def field_vectors(pdb):
@@ -325,7 +331,9 @@ def analyse(pdbs):
              "subspace of the same rigid-body-removed space. Both are ORACLE (u is the direction to the "
              "native). The excess is the only part of the ceiling the fields themselves earn.")
 
-    def fit_global(idx, lam=1e-6):
+    LAMS = (1e-6, 1e-4, 1e-3, 1e-2, 1e-1, 1.0, 10.0, 1e2, 1e3, 1e4, 1e5)
+
+    def fit_global(idx, lam):
         A = np.zeros((len(names0), len(names0))); b = np.zeros(len(names0))
         for t in idx:
             A += Xs[t] @ Xs[t].T; b += Xs[t] @ us[t]
@@ -336,30 +344,85 @@ def analyse(pdbs):
         nv = np.linalg.norm(v)
         return float(v @ us[t] / nv) if nv > 1e-15 else 0.0
 
-    wall = fit_global(range(len(ok)))
-    cos_global_oracle = np.array([cos_of(wall, t) for t in range(len(ok))])
-    lfo = np.zeros(len(ok)); lfo_single = np.zeros(len(ok))
+    def pick_lam(idx):
+        """The ridge chosen by NESTED leave-one-fold-out INSIDE the training folds only.
+        Never on the held-out fold: the collinearity here is severe (stable rank ~2), so an
+        untuned ridge would be a strawman and a test-tuned one would be leakage."""
+        sub = np.array([folds[t] for t in idx])
+        best, bl = -np.inf, LAMS[0]
+        for lam in LAMS:
+            v = []
+            for q in sorted(set(sub.tolist())):
+                tr2 = [t for t, f in zip(idx, sub) if f != q]
+                te2 = [t for t, f in zip(idx, sub) if f == q]
+                if not tr2 or not te2:
+                    continue
+                w = fit_global(tr2, lam)
+                v += [cos_of(w, t) for t in te2]
+            m = float(np.mean(v)) if v else -np.inf
+            if m > best:
+                best, bl = m, lam
+        return bl, best
+
     C = np.array([r["cos"] for r in ok], float)
+    lam_all, _ = pick_lam(list(range(len(ok))))
+    wall = fit_global(range(len(ok)), lam_all)
+    cos_global_oracle = np.array([cos_of(wall, t) for t in range(len(ok))])
+    lfo = np.zeros(len(ok)); lfo_single = np.zeros(len(ok)); lfo_eq = np.zeros(len(ok)); lams_used = {}
+    sel_used = {}
     for q in sorted(set(folds.tolist())):
         tr = [t for t in range(len(ok)) if folds[t] != q]
         te = [t for t in range(len(ok)) if folds[t] == q]
-        w = fit_global(tr)
+        lam, _ = pick_lam(tr)
+        lams_used[int(q)] = lam
+        w = fit_global(tr, lam)
         for t in te:
             lfo[t] = cos_of(w, t)
         j = int(np.nanargmax(np.nanmean(C[tr], 0)))          # best single field on the TRAIN folds
         for t in te:
             lfo_single[t] = C[t, j]
+        #: equal weights over the fields SELECTED INSIDE THE TRAINING FOLDS -- the honest version
+        #: of EQ11, whose 11 were chosen on all 126 targets and is therefore mildly leaked.
+        mtr = np.nanmean(C[tr], 0)
+        sd = np.nanstd(C[tr], 0, ddof=1) / max(np.sqrt(len(tr)), 1)
+        pick = np.where(mtr > 1.96 * sd)[0]
+        if len(pick) == 0:
+            pick = np.array([j])
+        sel_used[int(q)] = [names0[i] for i in pick]
+        wq = np.zeros(len(names0)); wq[pick] = 1.0
+        for t in te:
+            lfo_eq[t] = cos_of(wq, t)
+    #: two ZERO-PARAMETER arms: nothing is fitted, so nothing can be overfitted. The honest
+    #: simple control for a 21-parameter rule (`does it survive a simpler control?`).
+    eq_all = np.array([cos_of(np.ones(len(names0)), t) for t in range(len(ok))])
+    sig = [i for i, nm in enumerate(names0) if nm in SIG11]
+    wsig = np.zeros(len(names0)); wsig[sig] = 1.0
+    eq_sig = np.array([cos_of(wsig, t) for t in range(len(ok))])
     c2 = ST.compare(lfo, lfo_single, folds, names=pdbl, seed_parts=(SALT,), label="LFO global weighting - LFO best single field")
     c3 = ST.compare(lfo, np.zeros(len(ok)), folds, names=pdbl, seed_parts=(SALT,), label="LFO global weighting vs 0")
+    c4 = ST.compare(eq_sig, lfo_single, folds, names=pdbl, seed_parts=(SALT,), label="equal-weight 11 significant fields - LFO best single field")
+    c5 = ST.compare(eq_sig, np.zeros(len(ok)), folds, names=pdbl, seed_parts=(SALT,), label="equal-weight 11 vs 0")
+    c6 = ST.compare(lfo_eq, lfo_single, folds, names=pdbl, seed_parts=(SALT,), label="LFO-SELECTED equal weights - LFO best single field")
+    c7 = ST.compare(lfo_eq, np.zeros(len(ok)), folds, names=pdbl, seed_parts=(SALT,), label="LFO-SELECTED equal weights vs 0")
     out["global_weights"] = dict(
-        oracle_global_rho=float(cos_global_oracle.mean()),
+        oracle_global_rho=float(cos_global_oracle.mean()), oracle_global_lambda=lam_all,
         oracle_global_implied_rmsd=rp * float(np.sqrt(max(1 - cos_global_oracle.mean() ** 2, 0))),
-        lfo_rho=float(lfo.mean()), lfo_median=float(np.median(lfo)),
+        lfo_rho=float(lfo.mean()), lfo_median=float(np.median(lfo)), lfo_lambdas=lams_used,
         lfo_implied_rmsd=rp * float(np.sqrt(max(1 - lfo.mean() ** 2, 0))),
         lfo_best_single_rho=float(lfo_single.mean()),
+        equal_all_rho=float(eq_all.mean()), equal_sig11_rho=float(eq_sig.mean()),
+        equal_sig11_implied_rmsd=rp * float(np.sqrt(max(1 - eq_sig.mean() ** 2, 0))),
+        lfo_eq_rho=float(lfo_eq.mean()), lfo_eq_median=float(np.median(lfo_eq)),
+        lfo_eq_implied_rmsd=rp * float(np.sqrt(max(1 - lfo_eq.mean() ** 2, 0))),
+        lfo_eq_selected=sel_used,
+        lfo_eq_vs_zero={k: v for k, v in c7.items() if k != "concentration"},
+        lfo_eq_vs_best_single={k: v for k, v in c6.items() if k != "concentration"},
+        lfo_eq_concentration=c7.get("concentration"), fmt_lfo_eq=ST.fmt(c6),
         lfo_vs_zero={k: v for k, v in c3.items() if k != "concentration"},
         lfo_vs_best_single={k: v for k, v in c2.items() if k != "concentration"},
-        fmt_vs_zero=ST.fmt(c3), fmt_vs_single=ST.fmt(c2),
+        eq11_vs_best_single={k: v for k, v in c4.items() if k != "concentration"},
+        eq11_vs_zero={k: v for k, v in c5.items() if k != "concentration"},
+        fmt_vs_zero=ST.fmt(c3), fmt_vs_single=ST.fmt(c2), fmt_eq11=ST.fmt(c4),
         weights={nm: float(v) for nm, v in zip(names0, wall)})
     out["fail18_split"] = dict(
         rho_oracle=dict(fail=float(ro[fail].mean()), other=float(ro[~fail].mean())),
@@ -403,14 +466,29 @@ def render(o):
             ci = rc["ci95_fold"][j]
             L.append(f"      {r:3d}   {rc['rho_real'][j]:8.4f}  {rc['rho_ctrl'][j]:8.4f}  {rc['excess'][j]:+8.4f}  "
                      f"{rc['excess_over_mde'][j]:+5.2f}  [{ci[0]:+.3f},{ci[1]:+.3f}]   {rc['implied_rmsd_real'][j]:.4f} / {rc['implied_rmsd_ctrl'][j]:.4f}")
-    L.append("  (3) ORACLE GLOBAL weighting (ONE w for all targets, fitted with the native):")
+    L.append("  (3) ORACLE GLOBAL weighting (ONE w for all targets, fitted with the native), ridge %g:" % gw["oracle_global_lambda"])
     L.append(f"      rho {gw['oracle_global_rho']:.4f} -> implied {gw['oracle_global_implied_rmsd']:.4f} A")
-    L.append("  (4) LEAVE-FOLD-OUT global weighting -- THE ONLY NATIVE-FREE NUMBER HERE:")
-    L.append(f"      rho {gw['lfo_rho']:.4f} (median {gw['lfo_median']:.4f}) -> implied {gw['lfo_implied_rmsd']:.4f} A   "
-             f"| LFO best single field {gw['lfo_best_single_rho']:.4f}")
-    z = gw["lfo_vs_zero"]; s = gw["lfo_vs_best_single"]
-    L.append(f"      vs zero:            {z['effect']:+.4f}  {z['effect_over_mde']:+.2f}x MDE  fold CI [{z['ci95_fold'][0]:+.3f}, {z['ci95_fold'][1]:+.3f}]  folds {z['folds_same_sign']}/{z['n_folds']}")
-    L.append(f"      vs best single fld: {s['effect']:+.4f}  {s['effect_over_mde']:+.2f}x MDE  fold CI [{s['ci95_fold'][0]:+.3f}, {s['ci95_fold'][1]:+.3f}]  folds {s['folds_same_sign']}/{s['n_folds']}")
+    L.append("  (4) NATIVE-FREE ARMS -- the only numbers here that may be read as a capability:")
+    L.append(f"      LFO global weighting (ridge by NESTED CV inside train, lambdas {gw['lfo_lambdas']}):")
+    L.append(f"        rho {gw['lfo_rho']:.4f} (median {gw['lfo_median']:.4f}) -> implied {gw['lfo_implied_rmsd']:.4f} A")
+    L.append(f"      LFO best SINGLE field (the simpler control): rho {gw['lfo_best_single_rho']:.4f}")
+    L.append(f"      ZERO-PARAMETER equal weights over the 11 S30-L5-significant fields: rho {gw['equal_sig11_rho']:.4f} "
+             f"-> implied {gw['equal_sig11_implied_rmsd']:.4f} A   | over all 21: {gw['equal_all_rho']:.4f}")
+    z = gw["lfo_vs_zero"]; s = gw["lfo_vs_best_single"]; e1 = gw["eq11_vs_zero"]; e2 = gw["eq11_vs_best_single"]
+    L.append(f"      LFO vs zero:             {z['effect']:+.4f}  {z['effect_over_mde']:+.2f}x MDE  fold CI [{z['ci95_fold'][0]:+.3f}, {z['ci95_fold'][1]:+.3f}]  folds {z['folds_same_sign']}/{z['n_folds']}")
+    L.append(f"      LFO vs best single fld:  {s['effect']:+.4f}  {s['effect_over_mde']:+.2f}x MDE  fold CI [{s['ci95_fold'][0]:+.3f}, {s['ci95_fold'][1]:+.3f}]  folds {s['folds_same_sign']}/{s['n_folds']}")
+    L.append(f"      EQ11 vs zero:            {e1['effect']:+.4f}  {e1['effect_over_mde']:+.2f}x MDE  fold CI [{e1['ci95_fold'][0]:+.3f}, {e1['ci95_fold'][1]:+.3f}]  folds {e1['folds_same_sign']}/{e1['n_folds']}")
+    L.append(f"      EQ11 vs best single fld: {e2['effect']:+.4f}  {e2['effect_over_mde']:+.2f}x MDE  fold CI [{e2['ci95_fold'][0]:+.3f}, {e2['ci95_fold'][1]:+.3f}]  folds {e2['folds_same_sign']}/{e2['n_folds']}")
+    f1 = gw["lfo_eq_vs_zero"]; f2 = gw["lfo_eq_vs_best_single"]
+    L.append(f"      LFO-SELECTED equal weights (fields chosen INSIDE train, no leakage): rho {gw['lfo_eq_rho']:.4f} "
+             f"(median {gw['lfo_eq_median']:.4f}) -> implied {gw['lfo_eq_implied_rmsd']:.4f} A")
+    L.append(f"        vs zero:            {f1['effect']:+.4f}  {f1['effect_over_mde']:+.2f}x MDE  fold CI [{f1['ci95_fold'][0]:+.3f}, {f1['ci95_fold'][1]:+.3f}]  folds {f1['folds_same_sign']}/{f1['n_folds']}")
+    L.append(f"        vs best single fld: {f2['effect']:+.4f}  {f2['effect_over_mde']:+.2f}x MDE  fold CI [{f2['ci95_fold'][0]:+.3f}, {f2['ci95_fold'][1]:+.3f}]  folds {f2['folds_same_sign']}/{f2['n_folds']}")
+    L.append(f"        fields selected per fold: {gw['lfo_eq_selected']}")
+    cc = gw.get("lfo_eq_concentration")
+    if cc:
+        L.append(f"        concentration vs the UNIFORM-EFFECT null: median {cc['median']:+.4f} drop-top10 {cc['drop_top10_mean']:+.4f} "
+                 f"at the {100*cc['pctile_in_null']:.0f}th pct of the null, flag {cc['flag']}")
     L.append(f"  (5) FAIL18 vs 108: ORACLE rho* {o['fail18_split']['rho_oracle']['fail']:.4f} / {o['fail18_split']['rho_oracle']['other']:.4f}   "
              f"LFO {o['fail18_split']['lfo']['fail']:.4f} / {o['fail18_split']['lfo']['other']:.4f}")
     L.append("  READ (2) ONLY BESIDE ITS CONTROL: a 21-dim subspace of a ~33-dim space captures most of any direction "
