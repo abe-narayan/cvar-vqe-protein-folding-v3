@@ -365,11 +365,92 @@ parameter. **The architecture is not the problem; the information is.**
 
 ## 12. What remains unresolved
 
-[PENDING]
+Listed honestly, including the ones that are unresolved because we ran out of box rather than
+because they are hard.
+
+### 12.1 The one class the ladder did not close by ceiling
+
+Lane O: **two members with ORACLE weights emit 1.4315 Å on the built chain where 75 members with
+ORACLE membership emit 2.3055 Å.** Every other rung is bounded; this one is not. A *sparse weighted*
+readout is exactly the terminal operator that sits between the shipped uniform mean and argmin, and
+it is the same direction §0 item 3 arrives at from the operator side.
+
+**What is not resolved is whether any native-free rule can pick the support.** And the bit cost must
+be stated honestly: choosing 2 of 500 is ≈ 17.9 bits, *more* than the 7 bits the top-128 argmin
+needs, not less. A low parameter count is not a low information requirement — that conflation is
+how an ORACLE ceiling gets mistaken for a route, and this report should not be read as proposing it.
+
+### 12.2 The shell-profile supply gap
+
+[PENDING — lane M's F2.] The question is not whether a native-free rule can supply the shell profile
+(five already do, measured leave-fold-out since S12) but whether any supplies it *better*, and by
+how much in the bound's currency. Note the sting already in the record: among those five, the arm
+with the **best profile MAE** (2.394) emits the **worse** RMSD (3.089), and the incumbent — the
+distogram's own profile — wins at 3.078. That is the project's MAE law arriving from a fourth
+independent direction.
+
+### 12.3 Assumption B3's scope
+
+[PENDING — `s29D_fields_b3_126`.] The bound's linearisation is exact to ~1e−4 for sub-Ångström
+steps but degrades with step size, reaching −0.93% mean at a 2.03 Å step. Where exactly it stops
+being safe is being measured; until then, B3 is stated conditionally rather than flatly.
+
+### 12.4 Things we did not get to
+
+- **Lane D's AMBER-step and Legacy-gradient displacement fields.** Dropped deliberately, by my
+  instruction, in favour of B3 at a real *n* and a run test suite. Recorded rather than quietly
+  omitted.
+- **The S8 free-energy stage.** The only native-free selector class with peptide-length precedent in
+  the literature is a free energy, and it is the one sub-class the recognition audit never covered.
+  It was believed to be "committed and resumable"; it does not exist on disk or in git history
+  (S29-L41/L42), so it is a lane-week rebuild from a prose spec, not a resume. **It remains the
+  most defensible single item for S30.**
+- **A fresh benchmark.** There is none: all 204 clusters of 9–16mers are spent, and the
+  containment-fresh world supply is 16 targets, 10 of them amyloid fibrils. Every result in this
+  report is on the 126 dev targets, and the sealed benchmark was not spent, per the charter.
+
+### 12.5 An honest note on what the bound does and does not forbid
+
+The bound (S29-L23) is over **operators constructible from the present information**. It is not a
+statement that 2.5 Å is impossible. It says that no re-weighting, re-ranking, re-averaging or
+displacement of *this* pool under *this* information gets there, because all of them are
+displacements and their cosines are measured. A genuinely new information channel — not a new way
+of consuming the existing one — is outside its scope. That is the distinction §13 turns on.
+
 
 ## 13. The next question, and the evidence that would settle it
 
-[PENDING]
+**The next question is not "which operator?" It is "where does new information come from?"**
+
+Everything this sprint closed was closed as a *consumer* of the existing information: 21
+displacement fields, four free scalars, the readout, the aggregation, the ranking, the calibration.
+They fail for one reason, and the reason is now a measurement rather than a suspicion — the
+per-target sign is an incidental parameter (Neyman & Scott 1948), measured four independent ways by
+lane O, with the ORACLE *global* value of each free scalar at 0.0–0.6% of its per-target gain and
+two of the four **exactly zero**.
+
+So the ranked candidates for S30, each with the evidence that would settle it:
+
+| # | candidate | what would settle it | cost |
+|---|---|---|---|
+| 1 | **The free-energy stage (S8, rebuilt)** | It is the only native-free selector class with peptide-length precedent in the literature, and the one sub-class the recognition audit never covered. Settled by running lane D's band design on it: does it have in-band skill after partialling out compactness? | A lane-week — a full OpenMM ensemble stage under the one-AMBER-process rule, rebuilt from a prose spec |
+| 2 | **A sparse weighted readout with a native-free support rule** | The only ladder class not closed by ceiling (§12.1). Settled by whether any native-free rule picks a 2–5 member support better than chance — noting it needs ~18 bits, not 7 | Days; the ladder machinery exists |
+| 3 | **A genuinely new information channel** | Not a new operator on the same pool. The bound explicitly does not cover this, and it is the only thing that could move the ceiling rather than the approach to it | Unknown; this is a research question, not an engineering one |
+
+**And one thing that should not be attempted again**, because this sprint priced it: tuning any
+single global scalar. Four were measured; two have an ORACLE global optimum of *exactly zero*, and
+all four are on the wrong side of zero leave-fold-out. "Tune one number better" is not a strategy
+that this instrument can reward, and the reason is structural rather than a matter of effort.
+
+**A methodological recommendation, carried from how this sprint actually went.** Two of the three
+cheapest and most decisive results came from *not running anything*: the perception–distortion
+theorem closed a whole scorer class, and the Neyman–Scott result explained four separate empirical
+failures at once. Lane L, the permanent literature role, cost one lane and closed more routes per
+unit box than any experimental lane. Keep it, and give it the first word rather than the last.
+
+**Reading list for S30** (lane L): Neyman & Scott 1948; Blau & Michaeli 2018; Brown/Wyatt/Tiňo 2005
+eqs 9–10; McDonald 2023; Cerezo 2025.
+
 
 ## 14. Every hypothesis entertained and killed, with the reason
 
