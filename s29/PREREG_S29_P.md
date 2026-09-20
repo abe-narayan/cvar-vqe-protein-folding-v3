@@ -300,3 +300,16 @@ verdict be read before the ceiling grid completes. Each cell is a deterministic 
 cached cloud, its scalar and lam, so phase order changes no number. The analysis reports the
 primary-complete target count and the grid-complete target count separately and refuses to form
 the ORACLE contrast until the grid is complete on every analysed target.
+
+## ADDENDUM 3 (2026-09-20 00:23, before any 126-target number; a CONSERVATIVE amendment)
+
+CTRL-INV (s = 1/g) was registered in section 5 as a *direction control*. It is, however,
+computed from the cloud alone and is therefore **deployable**, exactly like BOND, SPAN, ISO and
+CTRL-GLOBAL. If it were to beat PROD it would be a native-free operator, not a control result,
+and it must pay the same multiplicity price. It is therefore moved into the max-over-K set,
+making **K = 5** deployable contrasts rather than 4. This raises the bar and lowers nothing:
+a positive on CTRL-INV is additionally a POST-HOC finding (it was not a registered candidate),
+and the entry will say so, will price it against the max-over-5 sign-flip null, will require the
+contraction check (emitted Rg against the native's) and will owe a second tie-key seed before
+any endpoint claim. The registered falsifiers F-P1/F-P2/F-P3 for BOND, SPAN and ISO are
+unchanged.

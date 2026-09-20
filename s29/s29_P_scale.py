@@ -621,7 +621,10 @@ def cmd_analyse(rows_paths=None, out=None):
     say(ST.fmt(o)); say("")
 
     # ---- multiplicity
-    dep = ("BOND", "SPAN", "ISO", "CTRL-GLOBAL")
+    #: CTRL-INV (1/g) is native-free, hence DEPLOYABLE, so it enters the multiplicity set
+    #: even though the prereg registered it as a direction control. Enlarging K is the
+    #: conservative amendment (a higher bar), never the permissive one.
+    dep = ("BOND", "SPAN", "ISO", "CTRL-GLOBAL", "CTRL-INV")
     D = np.column_stack([col(a) - prod for a in dep])
     obs = np.max(np.abs(D.mean(0)) / (ST.MDE_K * D.std(0, ddof=1) / _m.sqrt(len(pdbs))))
     null = _max_over_k_null(D)
