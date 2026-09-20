@@ -127,6 +127,21 @@ lam = set(sup['ridge_lambda_per_fold'].values())
 print('%-58s %s %s' % ('F2 ridge lambda per fold (report: 1000 on all 5)', sorted(lam),
                        'MATCH' if lam == {1000.0} else '*** MISMATCH ***'))
 
+# ---------- lane D M6 on the built chain ----------
+print()
+print('=== section 6.2: lane D, M6 built-chain control ===')
+m6 = [json.loads(l) for l in open('s29/results/s29_D_m6_chain_rows_seed0.jsonl') if l.strip()]
+f6 = [r['fold'] for r in m6]
+n6 = [r['pdb'] for r in m6]
+for arm, claim in [('deployed', 3.2187), ('m70', 3.2051), ('m71', 3.2117),
+                   ('m74', 3.2118), ('m75', 3.2105), ('m80', 3.2184), ('m30', 3.2350)]:
+    check('M6 %s, built chain' % arm, claim, st.mean(r['arms'][arm]['rmsd_chain'] for r in m6))
+r = compare([x['arms']['deployed']['rmsd_chain'] for x in m6],
+            [x['arms']['m75']['rmsd_chain'] for x in m6], folds=f6, names=n6, label='m6')
+check('M6 deployed - m75, effect', 0.0082, r['effect'])
+check('M6 deployed - m75, MDE', 0.0307, r['mde'])
+print('%-58s %.1f' % ('M6 mean deployed m (report: 74.1)', st.mean(r2['m_deployed'] for r2 in m6)))
+
 print()
 print('=' * 80)
 print('MATCHED: %d    MISMATCHED: %d' % (len(ok), len(bad)))
