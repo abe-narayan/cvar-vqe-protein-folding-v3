@@ -3237,3 +3237,104 @@ steps; (b) if a commit fails, run `git status --porcelain` and re-stage before r
 failed commit leaves the index dirty for whoever commits next. Lanes running long jobs beside
 each other on one working tree should assume this will happen again.
 Artefacts: `git show e2e49109 --stat`; `s29/LEDGER.md` S29-L33.
+
+## S29-L35 -- ADVERSARY CHECK OF S29-L23 (the achievable native-free bound), PART 1, ASSUMPTION B2: **THE BOUND SURVIVES 21 NEW DISPLACEMENT FIELDS** -- NO FIELD's SIGNED MEAN COSINE CLEARS THE 0.140 REFERENCE (BEST +0.113 [+0.088, +0.137]) -- BUT THE SURVEY SHARPENS WHY: EVERY FIELD's **PER-TARGET |cos| IS 0.25 TO 0.33**, TWICE A RANDOM DRAW's, SO A PERFECT PER-TARGET SIGN WOULD REACH **2.708 A** ON THE CLOUD; AND THE ALIGNMENT IS A **FAIL18 SET PROPERTY** (10 OF 21 FIELDS CLEAR A 20,000-DRAW RANDOM-18 NULL) (2026-09-20 01:30, D)
+
+EVERY COSINE IS ORACLE. Nothing deployable, nothing tuned. Code `s29/s29_D_fields.py`, written
+from the S29-L23 statement and importing no lane T code; job `s29D_fields` (126 targets); rows
+`s29/results/s29_D_fields_rows.jsonl`; summary `s29/results/s29_D_fields.json`.
+Question (the coordinator's item 1): the bound's load-bearing assumption B2 is rho_max <= 0.14
+for every field constructible from the present information -- DERIVED for the marginal class and
+MEASURED outside it. Find a field the survey missed.
+**21 fields, none of them in T's survey**, all native-free, all differences of two structures the
+pipeline can build without a native, rigid body removed from both sides: the m-ladder's own
+displacement (top-m average minus production, m = 1, 5, 10, 25, 50, 150, 250, 500), MEDOID (the
+retained set's medoid member minus production, the on-manifold end of the perception-distortion
+curve), PROJ (the production projection's CA trace minus its cloud -- the one displacement the
+SHIPPED pipeline actually applies downstream of the average), nine CHAN_X re-rankings (the
+top-75 average under DIS+X minus under DIS, for X = LEG, DISTPOT, CONTACT, ENV, CAGEO, RG_LAW,
+SS_MATCH, DIS_MEAN, CONTACT_LL), CONS_TRIM (the 75 members nearest the pool medoid), and EXPAND
+(production dilated about its centroid to the pool's mean Rg -- the pure de-contraction
+direction, which the record's contraction story implies and which no rung ever tested AS A
+DIRECTION).
+
+**RESULT 1: B2 SURVIVES.** The random-shape-field reference is 0.140 (reproduced here from A2's
+own draws). The largest signed mean over 126 targets is **CHAN_DISTPOT +0.1128 [+0.088, +0.137]**
+(fold CI), then MSET_250 +0.1118, MSET_150 +0.0946, CHAN_RG_LAW +0.0933, CHAN_CONTACT +0.0933,
+CONS_TRIM +0.0890, CHAN_LEG +0.0883, MSET_500 +0.0815, CHAN_CONTACT_LL +0.0786, CHAN_SS_MATCH
++0.0750, CHAN_ENV +0.0730, **PROJ +0.0694**, MSET_5 +0.0629, CHAN_CAGEO +0.0565, MSET_10 +0.0515,
+MSET_1 +0.0445, MSET_25 +0.0337, CHAN_DIS_MEAN +0.0231, **MEDOID -0.0097**, MSET_50 -0.0187,
+**EXPAND -0.0208**. **No field clears 0.140 with a 2-SE margin**, and the best one's fold CI has
+its upper end at 0.137, just under the reference. The implied instrument RMSD at each field's own
+best step runs 3.029 to 3.048 against production's 3.0483: **the largest ORACLE gain any of these
+21 fields buys through a global step is 0.019 A.** The bound's central statement is not moved by
+anything I could build out of this repository.
+**A caveat that strengthens the bound rather than weakening it**: eight of the 21 have signed
+means whose fold CI excludes ZERO. They are not noise; they are real, small, positive alignments
+sitting below the reference. B2 is therefore better stated as "no field's mean alignment reaches
+the random reference", not "every field is uninformative".
+
+**RESULT 2, THE ONE THAT ADDS SOMETHING: THE MAGNITUDE IS THERE AND THE SIGN IS NOT.** The
+per-target **|cos|** is **0.251 to 0.325** on every one of the 21 fields -- about **twice** a
+random direction's 0.140. So these fields are genuinely aligned with the native direction on each
+target; what destroys the mean is that the sign is near a coin toss (fraction of targets with
+cos > 0: 0.468 for EXPAND, 0.476 MEDOID, 0.500 MSET_50, up to 0.643 for MSET_250 and MSET_500).
+Feeding the per-target |cos| through the bound's own formula -- i.e. granting an ORACLE sign and
+an ORACLE step per target, and nothing else -- gives:
+| field | mean abs cos | frac cos > 0 | implied cloud RMSD with a perfect sign |
+|---|---|---|---|
+| EXPAND (pure de-contraction) | 0.296 | 0.468 | **2.708** |
+| CHAN_RG_LAW | 0.294 | 0.579 | 2.735 |
+| PROJ | 0.294 | 0.587 | 2.740 |
+| CHAN_ENV | 0.305 | 0.571 | 2.740 |
+| CHAN_LEG | 0.299 | 0.619 | 2.756 |
+| MSET_500 | 0.303 | 0.643 | 2.759 |
+| MEDOID (the worst) | 0.251 | 0.476 | 2.894 |
+against production's 3.0483. **This independently reproduces S29-L23's own structure on 21 fields
+instead of one** (T's "nearest margin 2.98 A, requiring a per-target sign measured at chance"),
+and it puts the sign-oracle ceiling LOWER than T's figure: 2.708 A on the point cloud for the
+de-contraction direction. Two things follow. (a) The bound's B4 -- rho_max is an expectation, so a
+field good on some targets and reversed on others enters at abs(rho)(2q-1) -- is not a
+technicality here, it is the entire gap: 0.021 signed against 0.296 unsigned for EXPAND. (b) "The
+sign IS the information" is now measured for a whole operator class rather than for PC1 alone,
+and the class includes the shipped projection.
+**And a result about the contraction story specifically**: EXPAND has the LARGEST unsigned
+alignment of all 21 fields and a signed mean of **-0.021** with frac > 0 of **0.468**. Production
+is systematically 22% contracted, yet expanding it toward the pool's mean Rg points AWAY from the
+native as often as toward it. Contraction is real in the bond length and is NOT a direction you
+can correct globally -- which is the Jensen framing (S29-L12) and my own S29-L10 finding (the
+shipped cost's descent EXPANDS) meeting from a third side.
+
+**RESULT 3: THE ALIGNMENT IS A FAIL18 SET PROPERTY.** Mean cosine on the 18 versus the 108:
+CONS_TRIM **+0.348 vs +0.046**, MSET_250 +0.316 vs +0.078, MSET_500 +0.269 vs +0.050, PROJ
++0.249 vs +0.040, MSET_150 +0.246 vs +0.069, CHAN_ENV +0.238 vs +0.046, CHAN_DISTPOT +0.235 vs
++0.093, CHAN_RG_LAW +0.234 vs +0.070, CHAN_LEG +0.220 vs +0.066. Against a **20,000-draw
+random-18-subset null** on the excess (S28-L40's construction), **10 of 21 fields clear p < 0.05**
+(CONS_TRIM p 0.0001, MSET_250 0.0014, MSET_500 0.0072, PROJ 0.0091, CHAN_ENV 0.0171, MSET_5
+0.0174, MSET_150 0.0210, MSET_1 0.0337, CHAN_CAGEO 0.0351, CHAN_RG_LAW 0.0360, CHAN_LEG 0.0445),
+where 1 would be expected by chance at 21 tests. So where production fails, native-free
+displacement fields point toward the native two to three times better than where it succeeds.
+**This does NOT move the bound**: at n = 18 the SEs are 0.08 to 0.12, so no field's FAIL18 CI
+excludes the 0.140 reference (CONS_TRIM is +0.348 [+0.128, +0.568], its lower end 0.128 sitting
+just below), and the implied FAIL18 RMSD at CONS_TRIM's signed mean is 5.468 from 5.832, which
+weights to 0.05 A on the instrument and still needs the sign. It is recorded as a regime
+property with its null, not as an opening.
+
+**WHAT I HAVE NOT YET CHECKED** (items 3 and 4 of the coordinator's list, and the AMBER and
+Legacy-gradient fields of item 1): the neglected second-order term at the largest step a real arm
+takes; the AMBER relaxation step (one process at a time, and it needs the all-atom path); the
+Legacy gradient (torsion-space, so it needs the projection in the loop). Those are the next three
+fields and they are queued behind lane B's S29-L25 check.
+**On the three exits T names**: I agree the free-energy form of a physics term on the EMITTED
+structure is the only structurally live one, because it is the only candidate outside the
+marginal class -- but my survey is a warning about how that exit will behave. CHAN_LEG is the
+Legacy energy consumed as a RE-RANKING and it lands at +0.088 signed / 0.299 unsigned, the same
+shape as everything else. A free-energy term will be a displacement field too, and it will be
+judged by the same two numbers: its signed mean, and whether anything native-free supplies its
+per-target sign.
+Multiplicity: 21 fields x 1 ORACLE cosine each, plus 21 random-18 null tests (10 clear at
+p < 0.05 against 1 expected). 0 endpoint comparisons.
+Verdict: **S29-L23's assumption B2 STANDS against the widest field survey this repository can
+produce**, and the bound's headline is unmoved. Its DESCRIPTION should be amended in the report:
+the limiting quantity is not the absence of alignment (abs cos is 0.25 to 0.33, twice random) but
+the absence of its SIGN, and that is a sharper and more actionable statement of the same ceiling.
