@@ -57,6 +57,20 @@ states have local structure, which is true here and false in a candidate-index e
 - Lane T's exact CVaR-optimal law (`cvar_optimal_law`) beats 200 random Dirichlet laws on F and
   reproduces the Boltzmann law exactly at alpha = 1 (TV 0.0), which is T's own assertion.
 
+## 3b. A harness defect in my own code, found by the coordinator (2026-09-20)
+
+Two processes ran the identical unsharded command (`s29X_probe12d` and `s29X_probe12e`;
+`s26/jobrun.py` does not deduplicate) and overlapped on one target, 1A13. The artefacts are
+undamaged -- all nine parse, all carry exactly 47 arms, 1A13's internals are self-consistent
+(q 15, M 32768, segments [3,3,3,3,2], 8 distinct members, 47 unique arm names, both bases on
+every arm, the native through the production projection at 0.0282 A) and no stray temp file
+exists. But the near-miss is the finding: **`os.replace` is atomic and does not make a SHARED
+temp path safe.** Both processes wrote `s29_X_probe_1A13.json.tmp`; an interleave inside that
+file would then have been published atomically as a corrupt artefact. Fixed at both write sites
+(`tmp = f + ".%d.tmp" % os.getpid()`) and pinned by a test that reads this module's own source,
+beside a second test pinning checkpoint-awareness (`os.path.exists(f) and not a.force`), which
+is what limited the waste to the single overlapping target. Commit `d6d59487`.
+
 ## 4. Results
 
 (filled from `s29/results/s29_X_probe.json` when the probe completes; the ledger entry carries
