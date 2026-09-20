@@ -1,0 +1,710 @@
+<title>The Missing Cosine</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --surface:#fcfcfb; --raised:#f4f3f0; --sunken:#eeece8;
+  --ink:#1b1a18; --ink2:#4a4742; --ink3:#797369; --rule:#dedbd4;
+  --c1:#0B8FA0; --c2:#C77A0A; --c3:#C2334A; --c4:#5B6FC0;
+  --goal:#8d867a;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono',Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --surface:#1a1a19; --raised:#242422; --sunken:#121211;
+    --ink:#eceae6; --ink2:#b5b0a8; --ink3:#837d74; --rule:#34332f;
+    --c1:#1F9DAE; --c2:#C08226; --c3:#DE4E66; --c4:#7488D4;
+    --goal:#7d766a;
+  }
+}
+:root[data-theme="dark"]{
+  --surface:#1a1a19; --raised:#242422; --sunken:#121211;
+  --ink:#eceae6; --ink2:#b5b0a8; --ink3:#837d74; --rule:#34332f;
+  --c1:#1F9DAE; --c2:#C08226; --c3:#DE4E66; --c4:#7488D4;
+  --goal:#7d766a;
+}
+*{box-sizing:border-box}
+body{background:var(--surface);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.62;margin:0;padding-block:0 72px;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:1px solid var(--rule);padding:44px 0 26px;margin-bottom:34px}
+.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink3);margin:0 0 14px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(34px,7vw,56px);
+  line-height:1.04;letter-spacing:-.022em;margin:0 0 16px;text-wrap:balance}
+.dek{font-size:clamp(17px,2.4vw,19.5px);color:var(--ink2);margin:0;max-width:62ch;text-wrap:pretty}
+.meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px;
+  font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+
+/* ---------- the headline figure ---------- */
+.verdict{background:var(--raised);border:1px solid var(--rule);border-radius:14px;
+  padding:26px 24px;margin:0 0 38px}
+.vnum{font-family:var(--serif);font-size:clamp(46px,10vw,72px);line-height:1;
+  font-weight:600;letter-spacing:-.03em;color:var(--c1)}
+.vnum small{font-size:.32em;font-weight:500;color:var(--ink3);letter-spacing:0;
+  font-family:var(--mono);display:block;margin-top:10px}
+.vsub{margin:16px 0 0;color:var(--ink2);max-width:60ch}
+
+h2{font-family:var(--serif);font-weight:600;font-size:clamp(23px,3.6vw,30px);
+  line-height:1.2;letter-spacing:-.014em;margin:54px 0 6px;text-wrap:balance}
+h2 + .sub{color:var(--ink3);margin:0 0 20px;font-size:15px}
+h3{font-family:var(--sans);font-weight:600;font-size:16.5px;margin:30px 0 8px;
+  letter-spacing:-.005em}
+p{margin:0 0 15px;text-wrap:pretty}
+a{color:var(--c1)}
+strong{font-weight:600}
+em.t{font-style:normal;font-family:var(--mono);font-size:.9em;color:var(--ink2)}
+
+/* ---------- number strip ---------- */
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:12px;
+  overflow:hidden;margin:26px 0 8px}
+.three > div{background:var(--surface);padding:18px 18px 16px}
+.three .n{font-family:var(--serif);font-size:31px;font-weight:600;line-height:1.05;
+  letter-spacing:-.02em}
+.three .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink3);margin-bottom:9px}
+.three .d{font-size:13.5px;color:var(--ink2);margin-top:7px;line-height:1.45}
+
+/* ---------- charts ---------- */
+figure{margin:26px 0 30px}
+.ch{width:100%;height:auto;display:block;overflow:visible}
+.ct{font-family:var(--mono);font-size:11px;fill:var(--ink3);letter-spacing:.04em}
+.cl{font-family:var(--mono);font-size:10.5px;fill:var(--ink3)}
+.cy{font-family:var(--sans);font-size:12px;fill:var(--ink2)}
+.cv{font-family:var(--mono);font-size:11px;fill:var(--ink2);font-weight:500}
+.cz{fill:var(--ink3)}
+.cg{font-family:var(--mono);font-size:10px;fill:var(--goal);letter-spacing:.03em}
+.grid{stroke:var(--rule);stroke-width:1}
+.goal{stroke:var(--goal);stroke-width:1;stroke-dasharray:3 3}
+figcaption{font-size:13.5px;color:var(--ink3);margin-top:12px;line-height:1.5;
+  border-left:2px solid var(--rule);padding-left:13px}
+[data-t]{cursor:crosshair}
+#tip{position:fixed;z-index:50;pointer-events:none;opacity:0;transition:opacity .1s;
+  background:var(--ink);color:var(--surface);font-family:var(--mono);font-size:11.5px;
+  padding:7px 10px;border-radius:7px;max-width:290px;line-height:1.45}
+
+/* ---------- tables ---------- */
+.scroll{overflow-x:auto;margin:20px 0;border:1px solid var(--rule);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:480px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--rule)}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--ink3);font-weight:500;background:var(--sunken)}
+tr:last-child td{border-bottom:0}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:20px;
+  border:1px solid currentColor;white-space:nowrap}
+.tag.no{color:var(--ink3)}
+.tag.bad{color:var(--c3)}
+.tag.ok{color:var(--c1)}
+
+/* ---------- callouts ---------- */
+.note{background:var(--raised);border:1px solid var(--rule);border-left:3px solid var(--c2);
+  border-radius:0 10px 10px 0;padding:17px 19px;margin:24px 0;font-size:14.5px}
+.note.err{border-left-color:var(--c3)}
+.note.open{border-left-color:var(--c4)}
+.note p:last-child{margin-bottom:0}
+.note .h{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
+pre{background:var(--sunken);border:1px solid var(--rule);border-radius:9px;
+  padding:14px 15px;overflow-x:auto;font-family:var(--mono);font-size:12px;
+  line-height:1.6;margin:18px 0;color:var(--ink2)}
+ul{margin:0 0 15px;padding-left:22px}
+li{margin-bottom:7px}
+.foot{border-top:1px solid var(--rule);margin-top:56px;padding-top:22px;
+  font-size:13px;color:var(--ink3)}
+</style>
+
+<div id="tip"></div>
+<div class="wrap">
+
+<header class="mast">
+  <p class="kicker">Sprint 29 &middot; CVaR-VQE protein folding &middot; 126 targets, 9&ndash;16 aa</p>
+  <h1>The missing cosine</h1>
+  <p class="dek">We spent a sprint looking for the path below 2.5&nbsp;&Aring;. We found instead that
+  the gap is a single measurable quantity &mdash; and measured it. Every operator this project can
+  build moves the answer <em>sideways</em>.</p>
+  <div class="meta">
+    <span>56 ledger entries</span><span>8 lanes</span><span>9 pre-registrations</span>
+    <span>58/58 numbers re-verified</span><span>205/217 artefact paths resolve</span>
+  </div>
+</header>
+
+<div class="verdict">
+  <div class="vnum">3.2105&nbsp;&Aring;<small>MEAN BUILT-CHAIN C&alpha; RMSD &middot; UNCHANGED &middot; n = 126</small></div>
+  <p class="vsub">Nothing was adopted, because nothing cleared its pre-registered falsifier. That is
+  the result: the sprint converted &ldquo;we haven&rsquo;t found the trick yet&rdquo; into a measured
+  bound with a named mechanism, and closed seven candidate routes &mdash; five without spending a
+  single endpoint run.</p>
+</div>
+
+<p>The charter asked for a path below 2.5&nbsp;&Aring;, naming 3.0&nbsp;&Aring; as a meaningful
+intermediate. Neither is reachable through the current architecture. What follows is why, at the
+level of mechanism, with every number recomputed from its artefact rather than copied from the
+entry that reported it.</p>
+
+<div class="three">
+  <div><div class="k">The bound</div><div class="n">&ge; 3.21&nbsp;&Aring;</div>
+    <div class="d">for every operator we have built &mdash; and still &ge;&nbsp;3.18&nbsp;&Aring;
+    even granting one a <em>perfect sign</em>. 21 fields measured; none beats a random
+    reference.</div></div>
+  <div><div class="k">Architecture ceiling</div><div class="n">2.9027&nbsp;&Aring;</div>
+    <div class="d">the best the deployed quantum stage could emit <strong>with the native in
+    hand</strong>. 3.14&times; MDE below production.</div></div>
+  <div><div class="k">What the pool holds</div><div class="n">1.1235&nbsp;&Aring;</div>
+    <div class="d">expressible by a weighted combination of candidates we already generate.
+    Generation is not the constraint.</div></div>
+</div>
+
+<h2>One geometric fact, seen from four sides</h2>
+<p class="sub">Why every operator fails, and why they all fail the same way</p>
+
+<p>The production answer is a point in coordinate space. Everything the project can do to it
+without seeing the native &mdash; re-rank, re-weight, re-average, shrink, project &mdash; moves it.
+Write that move as a displacement <em class="t">d</em>, and the direction to the native as
+<em class="t">u</em>. Then, exactly:</p>
+
+<pre>RMSD_new = RMSD_prod &times; &radic;(1 &minus; &rho;&sup2;)        &rho; = cos(d, u)</pre>
+
+<p>This is not a model. It is Pythagoras with the optimal step substituted in, and it means the
+<strong>entire value of any operator is one number</strong>. Reaching 3.00&nbsp;&Aring; needs
+&rho;&nbsp;=&nbsp;0.358. Reaching 2.50&nbsp;&Aring; needs 0.628. A random shape field scores 0.1398.</p>
+
+<p>Stated at three levels: <strong>&ge;&nbsp;3.210&nbsp;&Aring;</strong> for every field this project
+has built; <strong>&ge;&nbsp;3.181&nbsp;&Aring;</strong> for a random-strength field handed a perfect
+sign; <strong>&ge;&nbsp;2.98&nbsp;&Aring;</strong> for the best structured field handed a perfect
+<em>per-target</em> oracle sign. Even the last of those &mdash; which no method could achieve &mdash;
+misses the interim target.</p>
+
+<figure>
+<svg viewBox="0 0 760 499" class="ch" role="img" aria-label="Displacement field cosines against the thresholds">
+<text x="0" y="14" class="ct">signed mean cos(displacement, direction to native), n = 126</text>
+<line x1="199.2" y1="30" x2="199.2" y2="485" class="grid"/>
+<text x="199.2" y="497" class="cl" text-anchor="middle">0.0</text>
+<line x1="322.3" y1="30" x2="322.3" y2="485" class="grid"/>
+<text x="322.3" y="497" class="cl" text-anchor="middle">0.2</text>
+<line x1="445.4" y1="30" x2="445.4" y2="485" class="grid"/>
+<text x="445.4" y="497" class="cl" text-anchor="middle">0.4</text>
+<line x1="568.5" y1="30" x2="568.5" y2="485" class="grid"/>
+<text x="568.5" y="497" class="cl" text-anchor="middle">0.6</text>
+<line x1="285.3" y1="30" x2="285.3" y2="485" stroke="#C2334A" stroke-width="2" stroke-dasharray="4 3"/>
+<text x="285.3" y="24" class="cg" text-anchor="middle" fill="#C2334A">random 0.14</text>
+<line x1="419.5" y1="30" x2="419.5" y2="485" stroke="#C77A0A" stroke-width="2" stroke-dasharray="4 3"/>
+<text x="419.5" y="24" class="cg" text-anchor="middle" fill="#C77A0A">need 0.358 for 3.0 &#197;</text>
+<line x1="585.7" y1="30" x2="585.7" y2="485" stroke="#5B6FC0" stroke-width="2" stroke-dasharray="4 3"/>
+<text x="585.7" y="24" class="cg" text-anchor="middle" fill="#5B6FC0">need 0.628 for 2.5 &#197;</text>
+<text x="142" y="52.0" class="cy" text-anchor="end">DISTPOT</text>
+<rect x="199.2" y="43.0" width="69.4" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="DISTPOT &#8212; cos +0.1128 (SE 0.0316); beats random reference: NO"/>
+<text x="142" y="73.0" class="cy" text-anchor="end">MSET_250</text>
+<rect x="199.2" y="64.0" width="68.8" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="MSET_250 &#8212; cos +0.1118 (SE 0.0287); beats random reference: NO"/>
+<text x="142" y="94.0" class="cy" text-anchor="end">MSET_150</text>
+<rect x="199.2" y="85.0" width="58.2" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="MSET_150 &#8212; cos +0.0946 (SE 0.0301); beats random reference: NO"/>
+<text x="142" y="115.0" class="cy" text-anchor="end">CONTACT</text>
+<rect x="199.2" y="106.0" width="57.4" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="CONTACT &#8212; cos +0.0933 (SE 0.0318); beats random reference: NO"/>
+<text x="142" y="136.0" class="cy" text-anchor="end">RG_LAW</text>
+<rect x="199.2" y="127.0" width="57.4" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="RG_LAW &#8212; cos +0.0933 (SE 0.0316); beats random reference: NO"/>
+<text x="142" y="157.0" class="cy" text-anchor="end">CONS_TRIM</text>
+<rect x="199.2" y="148.0" width="54.8" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="CONS_TRIM &#8212; cos +0.0890 (SE 0.0307); beats random reference: NO"/>
+<text x="142" y="178.0" class="cy" text-anchor="end">LEG</text>
+<rect x="199.2" y="169.0" width="54.3" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="LEG &#8212; cos +0.0883 (SE 0.0320); beats random reference: NO"/>
+<text x="142" y="199.0" class="cy" text-anchor="end">MSET_500</text>
+<rect x="199.2" y="190.0" width="50.2" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="MSET_500 &#8212; cos +0.0815 (SE 0.0315); beats random reference: NO"/>
+<text x="142" y="220.0" class="cy" text-anchor="end">CONTACT_LL</text>
+<rect x="199.2" y="211.0" width="48.4" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="CONTACT_LL &#8212; cos +0.0786 (SE 0.0343); beats random reference: NO"/>
+<text x="142" y="241.0" class="cy" text-anchor="end">SS_MATCH</text>
+<rect x="199.2" y="232.0" width="46.2" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="SS_MATCH &#8212; cos +0.0750 (SE 0.0294); beats random reference: NO"/>
+<text x="142" y="262.0" class="cy" text-anchor="end">ENV</text>
+<rect x="199.2" y="253.0" width="44.9" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="ENV &#8212; cos +0.0730 (SE 0.0324); beats random reference: NO"/>
+<text x="142" y="283.0" class="cy" text-anchor="end">PROJ</text>
+<rect x="199.2" y="274.0" width="42.7" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="PROJ &#8212; cos +0.0694 (SE 0.0310); beats random reference: NO"/>
+<text x="142" y="304.0" class="cy" text-anchor="end">MSET_5</text>
+<rect x="199.2" y="295.0" width="38.7" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="MSET_5 &#8212; cos +0.0629 (SE 0.0291); beats random reference: NO"/>
+<text x="142" y="325.0" class="cy" text-anchor="end">CAGEO</text>
+<rect x="199.2" y="316.0" width="34.8" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="CAGEO &#8212; cos +0.0565 (SE 0.0318); beats random reference: NO"/>
+<text x="142" y="346.0" class="cy" text-anchor="end">MSET_10</text>
+<rect x="199.2" y="337.0" width="31.7" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="MSET_10 &#8212; cos +0.0515 (SE 0.0298); beats random reference: NO"/>
+<text x="142" y="367.0" class="cy" text-anchor="end">MSET_1</text>
+<rect x="199.2" y="358.0" width="27.4" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="MSET_1 &#8212; cos +0.0445 (SE 0.0303); beats random reference: NO"/>
+<text x="142" y="388.0" class="cy" text-anchor="end">MSET_25</text>
+<rect x="199.2" y="379.0" width="20.7" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="MSET_25 &#8212; cos +0.0337 (SE 0.0322); beats random reference: NO"/>
+<text x="142" y="409.0" class="cy" text-anchor="end">DIS_MEAN</text>
+<rect x="199.2" y="400.0" width="14.2" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="DIS_MEAN &#8212; cos +0.0231 (SE 0.0291); beats random reference: NO"/>
+<text x="142" y="430.0" class="cy" text-anchor="end">MEDOID</text>
+<rect x="193.3" y="421.0" width="6.0" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="MEDOID &#8212; cos -0.0097 (SE 0.0282); beats random reference: NO"/>
+<text x="142" y="451.0" class="cy" text-anchor="end">MSET_50</text>
+<rect x="187.7" y="442.0" width="11.5" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="MSET_50 &#8212; cos -0.0187 (SE 0.0314); beats random reference: NO"/>
+<text x="142" y="472.0" class="cy" text-anchor="end">EXPAND</text>
+<rect x="186.4" y="463.0" width="12.8" height="10" rx="3" fill="#0B8FA0" opacity="0.9" data-t="EXPAND &#8212; cos -0.0208 (SE 0.0329); beats random reference: NO"/>
+</svg>
+<figcaption>Every displacement field the project can construct, measured against the direction to
+the native on all 126 targets. <strong>Not one beats the random reference.</strong> The best
+&mdash; a distance-potential re-ranking &mdash; reaches 0.1128, and stepped by an amount chosen
+with the native in hand it is worth 0.0195&nbsp;&plusmn;&nbsp;0.001&nbsp;&Aring;. Five of the 21
+are operators this record has already priced by RMSD, which anchors the new axis to quantities that
+can be checked independently.</figcaption>
+</figure>
+
+<h3>The motion is real, but lateral &mdash; and we photographed it</h3>
+<p>The most vivid demonstration arrived as a by-product. One lane&rsquo;s readout emits a cloud that
+moves <strong>0.22 to 1.45&nbsp;&Aring; away from production</strong> while its RMSD changes by
+<strong>under 0.1&nbsp;&Aring;</strong>. A large displacement that barely changes the distance to the
+native <em>is</em> a near-zero cosine, visible without computing one. The operators are not weak.
+They are sideways.</p>
+
+<h2>Why no operator finds the direction</h2>
+<p class="sub">The missing quantity is not hard to estimate. It is not estimable.</p>
+
+<p>To move toward the native you must know, per target, <em>which way</em>. That per-target sign is
+an <strong>incidental parameter</strong> in the sense of Neyman &amp; Scott (1948): a nuisance
+parameter whose count grows with the sample, so it cannot be estimated from other targets&rsquo;
+answers &mdash; not &ldquo;is difficult to&rdquo;, but <em>cannot</em>, as a matter of statistical
+theory. The standard remedy eliminates it rather than estimating it.</p>
+
+<p>Then it was measured four independent times, and the agreement is the strongest evidence here.</p>
+
+<figure>
+<svg viewBox="0 0 760 306" class="ch" role="img" aria-label="Four free scalars: per-target, global and leave-fold-out value">
+<text x="0" y="14" class="ct">&#916; mean RMSD vs production (&#197;) &#8212; negative is better</text>
+<rect x="200" y="24" width="10" height="10" rx="2" fill="#0B8FA0"/>
+<text x="214" y="33" class="cl">ORACLE per-target</text>
+<rect x="390" y="24" width="10" height="10" rx="2" fill="#C77A0A"/>
+<text x="404" y="33" class="cl">ORACLE global</text>
+<rect x="580" y="24" width="10" height="10" rx="2" fill="#C2334A"/>
+<text x="594" y="33" class="cl">leave-fold-out</text>
+<line x1="672.7" y1="38" x2="672.7" y2="292" class="grid"/>
+<text x="672.7" y="304" class="cl" text-anchor="middle">0</text>
+<line x1="294.5" y1="38" x2="294.5" y2="292" class="grid"/>
+<text x="294.5" y="304" class="cl" text-anchor="middle">-0.4</text>
+<line x1="483.6" y1="38" x2="483.6" y2="292" class="grid"/>
+<text x="483.6" y="304" class="cl" text-anchor="middle">-0.2</text>
+<text x="190" y="70.0" class="cy" text-anchor="end">prefix m (within 128)</text>
+<rect x="400.5" y="48.0" width="272.2" height="11" rx="3" fill="#0B8FA0" opacity="0.92" data-t="prefix m (within 128) &#8212; ORACLE per-target: -0.2879 &#197;"/>
+<text x="678.7" y="58.0" class="cv">-0.2879</text>
+<rect x="671.0" y="63.0" width="1.7" height="11" rx="3" fill="#C77A0A" opacity="0.92" data-t="prefix m (within 128) &#8212; ORACLE global: -0.0018 &#197;"/>
+<text x="678.7" y="73.0" class="cv">-0.0018</text>
+<rect x="672.7" y="78.0" width="7.5" height="11" rx="3" fill="#C2334A" opacity="0.92" data-t="prefix m (within 128) &#8212; leave-fold-out: +0.0079 &#197;"/>
+<text x="686.2" y="88.0" class="cv">+0.0079</text>
+<text x="190" y="132.0" class="cy" text-anchor="end">prefix m (over K=500)</text>
+<rect x="254.7" y="110.0" width="418.0" height="11" rx="3" fill="#0B8FA0" opacity="0.92" data-t="prefix m (over K=500) &#8212; ORACLE per-target: -0.4421 &#197;"/>
+<text x="678.7" y="120.0" class="cv">-0.4421</text>
+<rect x="671.0" y="125.0" width="1.7" height="11" rx="3" fill="#C77A0A" opacity="0.92" data-t="prefix m (over K=500) &#8212; ORACLE global: -0.0018 &#197;"/>
+<text x="678.7" y="135.0" class="cv">-0.0018</text>
+<rect x="672.7" y="140.0" width="7.5" height="11" rx="3" fill="#C2334A" opacity="0.92" data-t="prefix m (over K=500) &#8212; leave-fold-out: +0.0079 &#197;"/>
+<text x="686.2" y="150.0" class="cv">+0.0079</text>
+<text x="190" y="194.0" class="cy" text-anchor="end">typicality step t</text>
+<rect x="383.3" y="172.0" width="289.4" height="11" rx="3" fill="#0B8FA0" opacity="0.92" data-t="typicality step t &#8212; ORACLE per-target: -0.3061 &#197;"/>
+<text x="678.7" y="182.0" class="cv">-0.3061</text>
+<rect x="672.7" y="187.0" width="1.5" height="11" rx="3" fill="#C77A0A" opacity="0.92" data-t="typicality step t &#8212; ORACLE global: +0.0000 &#197;"/>
+<text x="678.7" y="197.0" class="cv cz">exactly 0</text>
+<rect x="672.7" y="202.0" width="1.5" height="11" rx="3" fill="#C2334A" opacity="0.92" data-t="typicality step t &#8212; leave-fold-out: +0.0000 &#197;"/>
+<text x="678.7" y="212.0" class="cv cz">exactly 0</text>
+<text x="190" y="256.0" class="cy" text-anchor="end">PC1 family eta</text>
+<rect x="243.2" y="234.0" width="429.5" height="11" rx="3" fill="#0B8FA0" opacity="0.92" data-t="PC1 family eta &#8212; ORACLE per-target: -0.4543 &#197;"/>
+<text x="678.7" y="244.0" class="cv">-0.4543</text>
+<rect x="672.7" y="249.0" width="1.5" height="11" rx="3" fill="#C77A0A" opacity="0.92" data-t="PC1 family eta &#8212; ORACLE global: +0.0000 &#197;"/>
+<text x="678.7" y="259.0" class="cv cz">exactly 0</text>
+<rect x="672.7" y="264.0" width="6.7" height="11" rx="3" fill="#C2334A" opacity="0.92" data-t="PC1 family eta &#8212; leave-fold-out: +0.0071 &#197;"/>
+<text x="685.4" y="274.0" class="cv">+0.0071</text>
+</svg>
+<figcaption>Four free scalars in the pipeline. Each has a large <strong>per-target</strong> ORACLE
+gain; each has a <strong>global</strong> ORACLE value of 0&ndash;0.6% of that gain &mdash; two of
+them <em>exactly zero</em>, meaning that with the native in hand a single global scalar cannot beat
+doing nothing; and each is on the <strong>wrong side of zero</strong> leave-fold-out. One theorem,
+four instruments, no near misses. This is why &ldquo;tune one number better&rdquo; has failed every
+time this project has tried it.</figcaption>
+</figure>
+
+<h2>The ladder, on the metric that counts</h2>
+<p class="sub">And a correction we made to our own headline</p>
+
+<div class="note err">
+  <div class="h">A correction, in the open</div>
+  <p>For most of this sprint the architectural ceiling was quoted as <strong>2.7605&nbsp;&Aring;</strong>.
+  That is a <em>point-cloud</em> number, and the endpoint is the <em>built chain</em>. The error was
+  the coordinator&rsquo;s, not the lane&rsquo;s: the underlying entry was a consistent
+  cloud-to-cloud comparison; promoting it into a headline without its basis label was not. On the
+  endpoint the figure is <strong>2.9027&nbsp;&Aring;</strong>, and the conclusion gets
+  <em>stronger</em>, not weaker. <b>Eighteen claims were withdrawn during this sprint; eleven were the
+  coordinator&rsquo;s own</b> &mdash; caught by a lane, by recomputing a number from its artefact, or
+  by simply re-running the thing. The last of them was written into this report and superseded by
+  the lane that owned the measurement.</p>
+</div>
+
+<figure>
+<svg viewBox="0 0 760 380" class="ch" role="img" aria-label="ORACLE ceiling ladder on the built chain">
+<text x="0" y="14" class="ct">mean built-chain C&#945; RMSD (&#197;), n = 126</text>
+<line x1="375.0" y1="26" x2="375.0" y2="366" class="grid"/>
+<text x="375.0" y="378" class="cl" text-anchor="middle">1.0</text>
+<line x1="500.0" y1="26" x2="500.0" y2="366" class="grid"/>
+<text x="500.0" y="378" class="cl" text-anchor="middle">2.0</text>
+<line x1="562.5" y1="26" x2="562.5" y2="366" class="grid"/>
+<text x="562.5" y="378" class="cl" text-anchor="middle">2.5</text>
+<line x1="625.0" y1="26" x2="625.0" y2="366" class="grid"/>
+<text x="625.0" y="378" class="cl" text-anchor="middle">3.0</text>
+<line x1="687.5" y1="26" x2="687.5" y2="366" class="grid"/>
+<text x="687.5" y="378" class="cl" text-anchor="middle">3.5</text>
+<line x1="562.5" y1="26" x2="562.5" y2="366" class="goal"/>
+<text x="562.5" y="20" class="cg" text-anchor="middle">2.5 target</text>
+<line x1="625.0" y1="26" x2="625.0" y2="366" class="goal"/>
+<text x="625.0" y="20" class="cg" text-anchor="middle">3.0 interim</text>
+<text x="240" y="49.0" class="cy" text-anchor="end">production (ships)</text>
+<rect x="250.0" y="39.0" width="401.3" height="13" rx="4" fill="#0B8FA0" opacity="1" data-t="production (ships) &#8212; 3.2105 &#197; built chain (3.0483 cloud), n=126"/>
+<text x="657.3" y="50.0" class="cv">3.21</text>
+<text x="240" y="79.0" class="cy" text-anchor="end">best prefix-m avg, top-128</text>
+<rect x="250.0" y="69.0" width="362.8" height="13" rx="4" fill="#C77A0A" opacity="0.92" data-t="best prefix-m avg, top-128 &#8212; 2.9027 &#197; built chain (2.7605 cloud), n=126"/>
+<text x="618.8" y="80.0" class="cv">2.90</text>
+<text x="240" y="109.0" class="cy" text-anchor="end">best prefix-m avg, K=500</text>
+<rect x="250.0" y="99.0" width="347.0" height="13" rx="4" fill="#C77A0A" opacity="0.92" data-t="best prefix-m avg, K=500 &#8212; 2.7763 &#197; built chain (2.6062 cloud), n=126"/>
+<text x="603.0" y="110.0" class="cv">2.78</text>
+<text x="240" y="139.0" class="cy" text-anchor="end">best basin avg, top-75, k=8</text>
+<rect x="250.0" y="129.0" width="332.5" height="13" rx="4" fill="#C77A0A" opacity="0.92" data-t="best basin avg, top-75, k=8 &#8212; 2.6596 &#197; built chain (2.5449 cloud), n=126"/>
+<text x="588.5" y="140.0" class="cv">2.66</text>
+<text x="240" y="169.0" class="cy" text-anchor="end">best basin avg, K=500, k=8</text>
+<rect x="250.0" y="159.0" width="320.2" height="13" rx="4" fill="#C77A0A" opacity="0.92" data-t="best basin avg, K=500, k=8 &#8212; 2.5620 &#197; built chain (2.4107 cloud), n=126"/>
+<text x="576.2" y="170.0" class="cv">2.56</text>
+<text x="240" y="199.0" class="cy" text-anchor="end">best single member, top-75</text>
+<rect x="250.0" y="189.0" width="288.2" height="13" rx="4" fill="#C77A0A" opacity="0.92" data-t="best single member, top-75 &#8212; 2.3055 &#197; built chain (2.3062 cloud), n=126"/>
+<text x="544.2" y="200.0" class="cv">2.31</text>
+<text x="240" y="229.0" class="cy" text-anchor="end">best single member, top-128</text>
+<rect x="250.0" y="219.0" width="267.9" height="13" rx="4" fill="#C77A0A" opacity="0.92" data-t="best single member, top-128 &#8212; 2.1435 &#197; built chain (2.1458 cloud), n=126"/>
+<text x="523.9" y="230.0" class="cv">2.14</text>
+<text x="240" y="259.0" class="cy" text-anchor="end">best single member, K=500</text>
+<rect x="250.0" y="249.0" width="213.5" height="13" rx="4" fill="#C77A0A" opacity="0.92" data-t="best single member, K=500 &#8212; 1.7078 &#197; built chain (1.7108 cloud), n=126"/>
+<text x="469.5" y="260.0" class="cv">1.71</text>
+<text x="240" y="289.0" class="cy" text-anchor="end">convex hull, top-75</text>
+<rect x="250.0" y="279.0" width="258.1" height="13" rx="4" fill="#5B6FC0" opacity="0.55" data-t="convex hull, top-75 &#8212; 2.0646 &#197; built chain (1.9975 cloud), n=126"/>
+<text x="514.1" y="290.0" class="cv">2.06</text>
+<text x="240" y="319.0" class="cy" text-anchor="end">convex hull, top-128</text>
+<rect x="250.0" y="309.0" width="231.7" height="13" rx="4" fill="#5B6FC0" opacity="0.55" data-t="convex hull, top-128 &#8212; 1.8538 &#197; built chain (1.8071 cloud), n=126"/>
+<text x="487.7" y="320.0" class="cv">1.85</text>
+<text x="240" y="349.0" class="cy" text-anchor="end">convex hull, K=500</text>
+<rect x="250.0" y="339.0" width="140.4" height="13" rx="4" fill="#5B6FC0" opacity="0.55" data-t="convex hull, K=500 &#8212; 1.1235 &#197; built chain (1.1167 cloud), n=126"/>
+<text x="396.4" y="350.0" class="cv">1.12</text>
+</svg>
+<figcaption>Every rung is ORACLE except production &mdash; each is the best that class could emit
+<strong>with the native in hand</strong>. The deployed quantum stage sees only the top-128 prefix,
+and its tail provably <em>is</em> a prefix, so its ceiling is the second bar: 2.9027&nbsp;&Aring;.
+<strong>The charter&rsquo;s 2.5&nbsp;&Aring; is unreachable through this architecture even with an
+oracle.</strong> The hull rows are <em>expressiveness</em>, not ceilings &mdash; they fit 128 or 500
+free weights per target, and grid oracles are order statistics.</figcaption>
+</figure>
+
+<h2>Two constraints, at two levels</h2>
+<p class="sub">Conflating them is easy, so they are kept apart</p>
+
+<p>For anything <strong>native-free</strong>, the binding constraint is the cosine. The pool is not
+the limit (its hull expresses 1.12&nbsp;&Aring;), the circuit is not, the optimiser is not, and even
+a free readout over the top-75 is not. What is missing is a vector with &rho;&nbsp;&gt;&nbsp;0.14.</p>
+
+<p>For the <strong>deployed architecture with an oracle</strong>, the binding constraint is the
+readout. Holding the candidate set fixed at the top-128 the quantum stage actually sees:</p>
+
+<div class="scroll"><table>
+<thead><tr><th>spend the same 7 bits on&hellip;</th><th>built chain</th><th>vs production</th><th></th></tr></thead>
+<tbody>
+<tr><td><em>how many</em> to average (prefix length <em class="t">m</em>)</td><td class="n">2.9027</td><td class="n">&minus;0.3079</td><td><span class="tag no">3.14&times; MDE</span></td></tr>
+<tr><td><em>which member</em> is right (and switch to argmin)</td><td class="n">2.1435</td><td class="n">&minus;1.0670</td><td><span class="tag ok">4.18&times; MDE</span></td></tr>
+</tbody></table></div>
+
+<p><strong>The same information budget, 3.5&times; the payoff, differing only in what it is spent
+on.</strong> The architecture spends its information on the wrong question.</p>
+
+<p>So the obvious follow-up: how many of those 7 bits does the shipped score actually supply? We
+measured it directly &mdash; the rank, under the deployed score, of the genuinely best member of its
+own fixed top-128.</p>
+
+<div class="note err">
+  <div class="h">The answer, and the mean flatters it</div>
+  <p>The deployed score delivers <b>1.442 of 7 bits</b>. A uniform random ranking delivers
+  <b>1.405</b>. The difference is <b>0.10&times; MDE</b>.</p>
+  <p style="margin-top:11px">And the median is worse than that: the median paired difference is
+  <b>&minus;0.575 bits</b>, the score is <b>below the random baseline on 82 of 126 targets</b>, and
+  the median rank of the best member is <b>72 of 128</b> against a chance median of 64.5. The
+  positive mean rides on a handful of targets where the best member happens to land near the top.
+  <b>The shipped score is at chance for locating the best member of its own top-128 &mdash; and on
+  the typical target, slightly worse than chance.</b></p>
+  <p style="margin-top:11px">Nor is the gap shaped like the quantity we most suspected: even
+  <i>oracle</i> knowledge of the radial profile supplies only 3.20 of the 7 bits.</p>
+</div>
+
+<div class="note">
+  <div class="h">The caveat that makes this honest</div>
+  <p>That 0.7592&nbsp;&Aring; prices a readout <strong>switch</strong> plus the bits &mdash; not a
+  ranking improvement fed to the operator that ships. The terminal operator consumes the set
+  <em>mean</em>: <em class="t">d_out = 1.16&middot;mean + 0.04&middot;best</em> (R&sup2;&nbsp;=&nbsp;0.89).
+  A <em>perfect</em> rank-1 signal is worth about &minus;1.74&nbsp;&Aring; through argmin and about
+  <strong>&minus;0.03&nbsp;&Aring;</strong> through the shipped 75-member average. A lane caught the
+  coordinator stating this wrongly, and the correction is in the record beside the claim.</p>
+  <p style="margin-top:11px">So the two levels compose, and that is the practical conclusion:
+  <strong>a better channel is necessary but not sufficient</strong>, because the operator that would
+  have to spend it is an average, and an average cannot spend a ranking.</p>
+</div>
+
+<h2>Does lower cost mean lower RMSD?</h2>
+<p class="sub">The question this project most needed answered &mdash; tested directly</p>
+
+<p>The setup was the strongest available. One lane&rsquo;s meter had identified a cost function that
+is the <em>first</em> in this project&rsquo;s record not to <strong>anti</strong>-order the
+near-native ladder. If better cost ordering ever converts into better structures, this is the cost
+that should show it. Everything but the functional was held at production.</p>
+
+<pre>LOG &minus; PRODUCTION      +0.0822 &Aring;   0.55&times; MDE   NOT MEASURED
+LOG &minus; random swap     +0.0202 &Aring;   0.14&times; MDE   NOT MEASURED</pre>
+
+<p><strong>The better cost function&rsquo;s entire endpoint effect is indistinguishable from
+exchanging 20.6 of its 75 members at random.</strong> And it emits the same answer: the cosine
+between its error vector and production&rsquo;s is <strong>0.924</strong>, against a random
+reference of 0.177.</p>
+
+<p>The information is real &mdash; destroying the correspondence it consumes costs
++0.7295&nbsp;&Aring; at 2.29&times; MDE. It is simply not information production lacks. A better cost
+moves the answer along a displacement whose cosine is &asymp;&nbsp;0.04, through a readout that can
+spend at most 0.04 of any ranking, toward a per-target sign that is not estimable. Four independent
+reasons, one outcome.</p>
+
+<h2>What the quantum stage contributed</h2>
+<p class="sub">A real result, and an honest price</p>
+
+<p>CVaR is defined on <em>sorted</em> samples for diagonal Hamiltonians, so the deployed tail is
+provably a prefix of the energy order. Putting the objective on the tail&rsquo;s own coordinate
+average breaks that. Exhaustively, over all 124,750 pairs of each of the 126 pools:</p>
+
+<div class="scroll"><table>
+<thead><tr><th>measurement</th><th>result</th></tr></thead>
+<tbody>
+<tr><td>f-optimal <strong>pair</strong> is not the energy prefix</td><td class="n">114 / 126 &nbsp;(90.5%)</td></tr>
+<tr><td>f-optimal <strong>5-member subset</strong> is not a prefix</td><td class="n">124 / 126 &nbsp;(98.4%)</td></tr>
+<tr><td>the per-state sort finds the optimum</td><td class="n">12 / 126 &nbsp;(9.5%)</td></tr>
+</tbody></table></div>
+
+<p>The optimum is reachable <strong>neither by sorting E nor by sorting f</strong>. This is the
+first measurement in the project&rsquo;s record of <em>which set</em> as a genuine optimisation
+variable rather than the read-out of a sort.</p>
+
+<p>And it buys nothing measurable. The aggregate arm is +0.2451&nbsp;&Aring; worse &mdash; but
+two-thirds of that is simply using 5 members instead of 75, a ladder priced three times before. The
+part attributable to the hypothesis itself is <strong>+0.0804 at 0.73&times; MDE: not
+measured</strong>. The lane reported it that way rather than banking the aggregate as a refutation.</p>
+
+<p><b>One distinction we hold to, because it would be easy to overclaim.</b> That is a statement
+about a <i>free subset search</i>. The deployed circuit's tail is still the energy prefix <i>by
+construction</i> at every setting &mdash; it never escaped the theorem. The lane found a column in
+its own output that briefly suggested otherwise, identified it as a tie-convention artefact, and
+asked that the stronger claim not be made. The non-prefix optimum exists and is reachable by
+search; the circuit running that objective does not reach it.</p>
+
+<h3>The mechanism is alive, and irrelevant</h3>
+
+<p>Running a VQE on that objective refutes the arm exactly as pre-registered &mdash; no setting
+beats production <i>or</i> its own zero setting, on either seed. What makes it more than another
+null is the pair of facts underneath:</p>
+
+<ul>
+<li><b>The objective moves the set hard.</b> Overlap with the shipped top-75 falls from
+<b>0.93 to 0.52</b>, and the realised tail from <b>74 members to 39</b>. This is not an arm that
+failed to do anything.</li>
+<li><b>And the emitted structure does not move.</b> The readout is flat at every setting &mdash;
+|effect| &le; 0.046&nbsp;&Aring;, every cell not measured.</li>
+</ul>
+
+<p>Half the set membership changes and the answer stays put. That is the terminal-operator law seen
+from the quantum side.</p>
+
+<p>The matching control closes it. The deployed stage's <i>only</i> remaining channel to the answer
+is its per-target choice of tail size. Measured against a fixed size with no circuit in it, on the
+built chain, every comparison is inside its own MDE &mdash; and the trained circuit is nominally the
+worst of the cluster:</p>
+
+<div class="scroll"><table>
+<thead><tr><th>arm</th><th>built chain</th><th>deployed &minus; arm</th><th></th></tr></thead>
+<tbody>
+<tr><td>deployed (trained circuit, mean m = 74.1)</td><td class="n">3.2187</td><td class="n">&mdash;</td><td></td></tr>
+<tr><td>fixed m = 75, no circuit</td><td class="n">3.2105</td><td class="n">+0.0082</td><td><span class="tag no">0.27&times; MDE</span></td></tr>
+<tr><td>fixed m = 70, no circuit</td><td class="n">3.2051</td><td class="n">+0.0136</td><td><span class="tag no">0.45&times; MDE</span></td></tr>
+<tr><td>fixed m = 80, no circuit</td><td class="n">3.2184</td><td class="n">+0.0003</td><td><span class="tag no">0.01&times; MDE</span></td></tr>
+</tbody></table></div>
+
+<p><b>Choosing the tail size per target with a trained variational circuit is not distinguishable
+from fixing it at 75 and running no circuit at all.</b></p>
+
+<h2>The mean is a tail statistic</h2>
+<p class="sub">Which reframes the charter&rsquo;s own question</p>
+
+<div class="scroll"><table>
+<thead><tr><th>threshold</th><th>fraction of targets under it</th></tr></thead>
+<tbody>
+<tr><td>2.0&nbsp;&Aring;</td><td class="n">28.6%</td></tr>
+<tr><td>2.5&nbsp;&Aring; &mdash; the charter target</td><td class="n">34.9%</td></tr>
+<tr><td><strong>3.0&nbsp;&Aring; &mdash; the interim target</strong></td><td class="n"><strong>50.8%</strong></td></tr>
+<tr><td>4.0&nbsp;&Aring;</td><td class="n">73.0%</td></tr>
+</tbody></table></div>
+
+<p>The median is <strong>2.9661&nbsp;&Aring;</strong> &mdash; the interim target, already met by the
+typical target. What holds the <em>mean</em> at 3.2105 is a tail reaching 8.24&nbsp;&Aring;, with a
+standard deviation more than half the mean. So &ldquo;get the mean below 2.5&rdquo; is not a request
+to make typical predictions better; <strong>it is a request to fix the targets the pipeline fails
+on</strong> &mdash; and the record already shows the shipped pipeline is <em>worse than a blind
+one</em> on its 18 hardest targets.</p>
+
+<h2>The projection stage is not a fixed tax</h2>
+
+<figure>
+<svg viewBox="0 0 760 330" class="ch" role="img" aria-label="Projection price against point-cloud accuracy">
+<text x="0" y="14" class="ct">projection price (built chain &#8722; point cloud, &#197;) vs point-cloud accuracy</text>
+<line x1="66.0" y1="196.6" x2="738.0" y2="196.6" class="grid"/>
+<text x="684.0" y="191.6" class="cl">price = 0</text>
+<line x1="95.1" y1="34.0" x2="95.1" y2="286.0" class="grid"/>
+<text x="95.1" y="301.0" class="cl" text-anchor="middle">1.0</text>
+<line x1="240.7" y1="34.0" x2="240.7" y2="286.0" class="grid"/>
+<text x="240.7" y="301.0" class="cl" text-anchor="middle">1.5</text>
+<line x1="386.3" y1="34.0" x2="386.3" y2="286.0" class="grid"/>
+<text x="386.3" y="301.0" class="cl" text-anchor="middle">2.0</text>
+<line x1="531.8" y1="34.0" x2="531.8" y2="286.0" class="grid"/>
+<text x="531.8" y="301.0" class="cl" text-anchor="middle">2.5</text>
+<line x1="677.4" y1="34.0" x2="677.4" y2="286.0" class="grid"/>
+<text x="677.4" y="301.0" class="cl" text-anchor="middle">3.0</text>
+<text x="60.0" y="281.9" class="cl" text-anchor="end">-0.1</text>
+<text x="60.0" y="200.6" class="cl" text-anchor="end">+0.0</text>
+<text x="60.0" y="119.3" class="cl" text-anchor="end">+0.1</text>
+<text x="60.0" y="38.0" class="cl" text-anchor="end">+0.2</text>
+<circle cx="81.5" cy="262.9" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="hull_oa_pool &#8212; cloud 0.953 &#197;, price -0.0816 &#197;, n=126"/>
+<circle cx="127.7" cy="200.8" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="sparse_pool_s20 &#8212; cloud 1.112 &#197;, price -0.0052 &#197;, n=126"/>
+<circle cx="128.2" cy="196.4" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="sparse_pool_s10 &#8212; cloud 1.114 &#197;, price +0.0002 &#197;, n=126"/>
+<circle cx="129.1" cy="191.1" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="hull_pool &#8212; cloud 1.117 &#197;, price +0.0068 &#197;, n=126"/>
+<circle cx="140.5" cy="185.8" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="sparse_pool_s5 &#8212; cloud 1.156 &#197;, price +0.0133 &#197;, n=126"/>
+<circle cx="164.0" cy="154.1" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="sparse_pool_s3 &#8212; cloud 1.237 &#197;, price +0.0523 &#197;, n=126"/>
+<circle cx="200.8" cy="141.0" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="sparse_pool_s2 &#8212; cloud 1.363 &#197;, price +0.0684 &#197;, n=126"/>
+<circle cx="302.1" cy="199.0" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="best1_pool &#8212; cloud 1.711 &#197;, price -0.0030 &#197;, n=126"/>
+<circle cx="328.5" cy="156.2" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="hull_oa_top75 &#8212; cloud 1.802 &#197;, price +0.0497 &#197;, n=126"/>
+<circle cx="330.1" cy="158.7" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="hull_top128 &#8212; cloud 1.807 &#197;, price +0.0466 &#197;, n=126"/>
+<circle cx="382.9" cy="149.3" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="sparse_top75_s20 &#8212; cloud 1.988 &#197;, price +0.0582 &#197;, n=126"/>
+<circle cx="382.9" cy="151.1" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="sparse_top75_s10 &#8212; cloud 1.988 &#197;, price +0.0559 &#197;, n=126"/>
+<circle cx="385.5" cy="142.0" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="hull_top75 &#8212; cloud 1.998 &#197;, price +0.0671 &#197;, n=126"/>
+<circle cx="387.2" cy="141.3" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="sparse_top75_s5 &#8212; cloud 2.003 &#197;, price +0.0680 &#197;, n=126"/>
+<circle cx="395.2" cy="136.5" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="sparse_top75_s3 &#8212; cloud 2.031 &#197;, price +0.0739 &#197;, n=126"/>
+<circle cx="414.1" cy="137.6" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="sparse_top75_s2 &#8212; cloud 2.096 &#197;, price +0.0726 &#197;, n=126"/>
+<circle cx="428.7" cy="198.5" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="best1_top128 &#8212; cloud 2.146 &#197;, price -0.0023 &#197;, n=126"/>
+<circle cx="475.4" cy="197.1" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="best1_top75 &#8212; cloud 2.306 &#197;, price -0.0007 &#197;, n=126"/>
+<circle cx="505.8" cy="73.7" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="basin_pool_k8 &#8212; cloud 2.411 &#197;, price +0.1512 &#197;, n=126"/>
+<circle cx="527.9" cy="78.9" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="basin_pool_k6 &#8212; cloud 2.486 &#197;, price +0.1448 &#197;, n=126"/>
+<circle cx="544.9" cy="103.3" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="basin_top75_k8 &#8212; cloud 2.545 &#197;, price +0.1147 &#197;, n=126"/>
+<circle cx="554.1" cy="94.4" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="basin_top75_k6 &#8212; cloud 2.576 &#197;, price +0.1257 &#197;, n=126"/>
+<circle cx="562.7" cy="58.3" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="bestm &#8212; cloud 2.606 &#197;, price +0.1701 &#197;, n=126"/>
+<circle cx="564.9" cy="67.2" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="basin_pool_k4 &#8212; cloud 2.614 &#197;, price +0.1591 &#197;, n=126"/>
+<circle cx="581.0" cy="91.6" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="basin_top75_k4 &#8212; cloud 2.669 &#197;, price +0.1291 &#197;, n=126"/>
+<circle cx="588.3" cy="61.5" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="basin_pool_k3 &#8212; cloud 2.694 &#197;, price +0.1662 &#197;, n=126"/>
+<circle cx="593.1" cy="80.1" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="basin_top75_k3 &#8212; cloud 2.710 &#197;, price +0.1433 &#197;, n=126"/>
+<circle cx="607.7" cy="81.0" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="bestm128 &#8212; cloud 2.760 &#197;, price +0.1422 &#197;, n=126"/>
+<circle cx="624.3" cy="80.3" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="basin_top75_k2 &#8212; cloud 2.818 &#197;, price +0.1430 &#197;, n=126"/>
+<circle cx="691.4" cy="64.7" r="7.0" fill="#C2334A" opacity="1" stroke="var(--surface)" stroke-width="2" data-t="prod &#8212; cloud 3.048 &#197;, price +0.1622 &#197;, n=126"/>
+<circle cx="691.4" cy="64.7" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="lfo_LIB75 &#8212; cloud 3.048 &#197;, price +0.1622 &#197;, n=126"/>
+<circle cx="692.7" cy="65.1" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="lfo_BPRIME &#8212; cloud 3.053 &#197;, price +0.1617 &#197;, n=126"/>
+<circle cx="702.1" cy="43.8" r="4.5" fill="#0B8FA0" opacity="0.8" stroke="var(--surface)" stroke-width="2" data-t="basin_pool_k2 &#8212; cloud 3.085 &#197;, price +0.1879 &#197;, n=126"/>
+<text x="680.4" y="68.7" class="cv" text-anchor="end">production &#8594;</text>
+<text x="402.0" y="324.0" class="cl" text-anchor="middle">point-cloud RMSD (&#197;)</text>
+</svg>
+<figcaption>Each point is one arm of the ladder. The price of converting a point cloud into a valid
+backbone <strong>depends on how good the cloud is</strong>: correlation +0.866, at or below zero for
+clouds better than &asymp;&nbsp;2.31&nbsp;&Aring;, above +0.10 for clouds worse than
+&asymp;&nbsp;2.41&nbsp;&Aring;. Production sits at 3.0483, deep in the penalised regime, paying
++0.1622. The practical consequence: <strong>any improvement to the cloud is worth more at the
+endpoint than it looks on the cloud</strong>, because it also reduces this penalty.</figcaption>
+</figure>
+
+<h2>What stayed open</h2>
+<p class="sub">The result that makes this report less complete, reported first among the unresolved</p>
+
+<div class="note open">
+  <div class="h">A falsifier that went against both people who registered a prior</div>
+  <p>The argument for closing the last exit was that the project&rsquo;s positive in-band signals
+  might all be <em>compactness</em> proxies in disguise. The coordinator expected confirmation in
+  writing; the lane registered a prior of 3-to-1 the same way. <strong>Both were wrong.</strong></p>
+  <p style="margin-top:11px">The loadings are exactly as predicted &mdash; a compactness channel
+  scores +0.956 against member radius of gyration. But compactness loading <em>does not track
+  in-band skill</em>: the correlation between them is <strong>+0.083</strong> against a registered
+  bar of 0.40, partialling out size removes <strong>9%</strong> of the top channels&rsquo; skill,
+  and the most size-loaded channels carry the <em>least</em> skill. Nine of 31 channels keep skill
+  after removing both monotone and V-shaped size dependence, against ~1.6 expected by chance.</p>
+  <p style="margin-top:11px">The survivor that matters is a <strong>backbone-torsion</strong> term:
+  local conformation, a function of the structure and not of the distance prediction &mdash;
+  therefore outside the class the theorem bounds. <em>The route is open in the precise sense that
+  the argument for closing it failed, not that it is shown to work.</em></p>
+</div>
+
+<h2>What would actually settle it</h2>
+<p class="sub">The next question is not &ldquo;which operator&rdquo;</p>
+
+<p>Everything closed here was closed as a <em>consumer</em> of existing information. The next
+question is where new information comes from &mdash; and the answer has to clear two bars at once,
+because a channel without a readout that can spend it is worth 0.04 of itself.</p>
+
+<div class="scroll"><table>
+<thead><tr><th>#</th><th>candidate</th><th>what would settle it</th></tr></thead>
+<tbody>
+<tr><td class="n">1</td><td><strong>A free-energy stage</strong></td><td>The only native-free selector class with peptide-length precedent, and the one sub-class the recognition audit never covered. It does not currently exist &mdash; see below.</td></tr>
+<tr><td class="n">1=</td><td><strong>The backbone-torsion channel</strong></td><td>Outside the bounded class, with skill that partialling out size does not remove. Needs to survive a band test <em>and</em> a terminal operator that can consume a ranking.</td></tr>
+<tr><td class="n">2</td><td><strong>A sparse weighted readout</strong></td><td>The only ladder class not closed by ceiling: two members with oracle weights reach 1.43&nbsp;&Aring;. Needs a native-free support rule &mdash; and ~18 bits, not 7.</td></tr>
+</tbody></table></div>
+
+<p>And one thing that should not be attempted again: tuning a single global scalar. Four were
+measured; two have an oracle global optimum of <em>exactly</em> zero.</p>
+
+<h2>How this was checked</h2>
+
+<div class="note">
+  <div class="h">Two verification passes, run against our own record</div>
+  <p><strong>Every artefact path was tested for existence</strong> &mdash; <b>205 of the 217</b>
+  cited in the ledger resolve. This check exists because the sprint discovered that a module
+  described in the project&rsquo;s findings file as &ldquo;committed and resumable&rdquo;, with its
+  tests and four output files named, <strong>has never existed on disk or in git history</strong>.
+  An artefact path in prose is a claim, not a citation.</p>
+  <p style="margin-top:11px">The twelve that do not resolve are itemised rather than rounded away:
+  six are extraction artefacts, two a rename recorded in git history, one an older sprint&rsquo;s,
+  <b>two were this audit&rsquo;s own tool cited by its scratchpad name</b> &mdash; an entry about
+  unresolvable citations containing one &mdash; and <b>one is a genuine dangling citation</b> to a
+  file that never existed. That is the fourth such path found this sprint.</p>
+  <p style="margin-top:11px"><strong>Every headline number was recomputed from its artefact</strong>,
+  not copied from the entry reporting it: <b>58 of 58 match</b>. That pass caught an error several
+  re-readings of the prose had not &mdash; a field count of 39 quoted against a file containing 21.</p>
+</div>
+
+<p>Statistical discipline throughout: MDE computed per comparison rather than per instrument (the
+project&rsquo;s old single constant is wrong by up to 84&times; in both directions); fold-clustered
+confidence intervals on 5 pinned folds; concentration scored against a uniform-effect null rather
+than a raw drop-top threshold; power and Type-M reported beside every effect. <strong>Below
+0.7&times; MDE is not a result</strong> &mdash; a rule applied to this sprint&rsquo;s own positives
+without exception, disqualifying four of them.</p>
+
+<p class="foot">Sprint 29 &middot; branch <em class="t">s26</em> &middot; 126 development targets,
+disjoint from the sealed benchmark, which was not spent. Every figure is mean built-chain C&alpha;
+RMSD unless labelled otherwise. ORACLE rows read the native to score an achievable selection and are
+labelled wherever they appear; no native RMSD tuned any deployable parameter.</p>
+
+</div>
+
+<script>
+(function(){
+  var tip=document.getElementById('tip');
+  document.addEventListener('mouseover',function(e){
+    var t=e.target.closest('[data-t]');
+    if(!t){tip.style.opacity=0;return;}
+    tip.innerHTML=t.getAttribute('data-t');
+    tip.style.opacity=1;
+  });
+  document.addEventListener('mousemove',function(e){
+    if(tip.style.opacity=='0'||tip.style.opacity==='')return;
+    var x=e.clientX+14,y=e.clientY+16;
+    var r=tip.getBoundingClientRect();
+    if(x+r.width>window.innerWidth-10)x=e.clientX-r.width-14;
+    if(y+r.height>window.innerHeight-10)y=e.clientY-r.height-16;
+    tip.style.left=x+'px';tip.style.top=y+'px';
+  });
+  document.addEventListener('mouseout',function(e){
+    if(!e.relatedTarget||!e.relatedTarget.closest('[data-t]'))tip.style.opacity=0;
+  });
+})();
+</script>
