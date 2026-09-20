@@ -480,7 +480,8 @@ def load_all(path: str) -> List[Dict]:
             continue
         for r in load(f):
             key = (r.get("pdb"), r.get("matrix"), r.get("J"), r.get("n"),
-                   r.get("lam"), r.get("kind"), r.get("greedy_m"))
+                   r.get("lam"), r.get("kind"), r.get("greedy_m"), r.get("arm"),
+                   r.get("seed"), r.get("readout"))
             if key in seen:
                 continue
             seen.add(key)
