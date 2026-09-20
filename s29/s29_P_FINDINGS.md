@@ -144,6 +144,39 @@ crossing 1 near |i-j| = 8 -- is identical under all three statistics.
 
 ## REFUTED
 
+P10. **The shape distortion of P9 is REAL but NOT CORRECTABLE -- and an ORACLE-fitted profile is
+no better than a native-free one.** `s29/results/s29_P_sepprofile_cloud.json`. Operator: divide
+each cloud's distance map by the population separation profile r(|i-j|), re-embed by classical
+MDS (double-centring, top-3 eigenvectors), score against the native. **POINT-CLOUD BASIS, a
+diagnostic; the built chain is not measured for this arm.**
+
+    production cloud                                                        3.0483
+    separation-profile corrected, NATIVE-FREE (leave-fold-out, posterior-fitted)   3.6266
+    separation-profile corrected, [ORACLE]   (leave-fold-out, native-fitted)       3.6307
+
+    P sep-profile NATIVE-FREE - production (POINT CLOUD, diagnostic)
+      effect +0.5782  median +0.4351  SE 0.0730  MDE 0.2045  effect/MDE +2.83
+      fold CI95 [+0.4165, +0.7230]  folds same sign 5/5  27W/99L  VERDICT: WORSE
+    P sep-profile [ORACLE] - production (POINT CLOUD, diagnostic)
+      effect +0.5824  median +0.4689  SE 0.0813  MDE 0.2278  effect/MDE +2.56
+      fold CI95 [+0.4343, +0.7397]  folds same sign 5/5  37W/89L  VERDICT: WORSE
+
+**THE CONTROL IS EXACT, which is what makes this readable.** With r == 1 the same MDS returns
+the production cloud at **0.00e+00 A** on the test target, so the +0.58 A is the correction and
+not the re-embedding. And the ORACLE arm -- the profile fitted on the OTHER FOLDS' real natives,
+i.e. the best population profile that exists -- is **as bad as the native-free one (+0.582 vs
++0.578)**, which rules out "the profile was mis-estimated" as the explanation.
+
+**Reading.** Undistorting the distance map target-by-target destroys more than the distortion
+costs: the coordinate average's value is the COHERENCE of its errors (68% common-mode, S23 L9),
+and a per-pair correction fitted to a population profile breaks that coherence while replacing
+it with nothing. **Scope:** this closes the POPULATION-PROFILE class of distance-space
+corrections; it says nothing about a per-target profile, which S23 L6 already places out of
+reach in principle. It also strengthens this lane's registered null prior a fortiori: if the
+full 13-parameter profile with an oracle fit cannot help, a single scalar drawn from the same
+curve is not going to.
+
+
 ## OPEN
 
 ## WHAT DAMAGED MY OWN EXPECTATIONS
