@@ -6,13 +6,14 @@ governs). Code `s27/s28_A_amp.py` (the readout, the surrogate, the exact gradien
 and the classical families, the ORACLE ceilings, the three phases), `s27/s28_A_analyse.py`,
 `s27/s28_A_objdiag.py`, `s27/s28_A2_local.py`, `s27/s28_A2_analyse.py`, `s27/s28_A2_prodcheck.py`.
 Tests `tests/test_s28_A.py` (23) and `tests/test_s28_A2.py` (5), all passing. Ledger entries
-S28-L1b, L12, L17, L18b, L19, L23b, L26b, L27, L30, L39; lane D's checks S28-L1, L13, L20, L23,
-L27b, L31 (every one STANDS or STANDS WITH CAVEAT, the caveats answered in the entries named;
-the check of S28-L39 is lane D's next). Every number carries its artefact path; nothing is
+S28-L1b, L12, L17, L18b, L19, L23b, L26b, L27, L30, L39, L42; lane D's checks S28-L1, L13, L20,
+L23, L27b, L31, L40 (every one STANDS or STANDS WITH CAVEAT, the caveats answered in the
+entries named). Every number carries its artefact path; nothing is
 quoted from memory. Basis is stated on both sides of every contrast; the built chain is the
 verdict basis.
 
-STATUS: complete. Lanes A and A2 close with S28-L39 (section 4.3).
+STATUS: complete. Lanes A and A2 close with S28-L39 (section 4.3), lane D's S28-L40 STANDS, and
+S28-L42 (the wording caveat adopted).
 
 ## 1. The question
 
@@ -181,11 +182,20 @@ floor does not apply. ST.fmt verbatim for every contrast in S28-L39.
   k_eff 2.7; the split-half "residual" (-0.043 / -0.038) is the column-mean effect of the
   smallest step (its column mean sits 0.0433 below the average of the three), i.e. the choice
   "e = 0.1", whose own contrast with production is the null -0.0037. No e is chosen.
-- FAIL18 / 108 (`chain_strata`; FAIL18 spans 4 folds): at e = 1 the step is worse in both strata
-  (FAIL18 +0.134, 1.01x, Type-M, 4/4, 4W/14L; the 108 +0.100, 1.85x, 5/5, WORSE); at e <= 0.3
-  nothing is measured in either; the circuit step at e = 0.1 / 0.3 costs +0.041 / +0.117 on
-  FAIL18 (1.08 to 1.09x, Type-M, sign only) and 0.05x on the 108: where the distogram is wrong
-  its descent costs more (3.3's -0.14 cosine, in Angstroms), and no regime is helped.
+- FAIL18 / 108 (`chain_strata`; FAIL18 spans 4 folds; scoped per lane D's S28-L40, adopted in
+  S28-L42): for the RAW STEP the split carries no regime information: its FAIL18 excess at
+  e = 0.3 / 1 (+0.053 / +0.134 against +0.012 / +0.100 on the 108) sits at p 0.056 / 0.25
+  against 20,000 random 18-subsets of the 126 and at 0.24 / 0.50 without 2NB7 (D's
+  `s28_D_attack_A2_fail18_null.json`); the harm at e = 1 is the whole set's (+0.105, 2.1x, 5/5)
+  seen on 18 targets. For the CIRCUIT's one step the FAIL18 excess (+0.117 at e = 0.3, +0.348
+  at e = 1, against -0.002 / +0.093 on the 108) IS a set property (p 0.001 / 0.003; 0.014 /
+  0.012 without 2NB7; present on the point cloud before projection; not monotone in
+  production's RMSD): where the distogram is wrong the circuit's descent costs more (3.3's
+  -0.14 cosine, in Angstroms). It is harm at a Type-M size inside the stratum; it changes no
+  verdict and no regime is helped. The random control is cheap on FAIL18 by geometry (a random
+  displacement e on a structure at RMSD R costs about e^2 / 2R; Spearman of its cost with
+  production's RMSD -0.287), which is why step-vs-random is +0.071 on FAIL18 at e = 1 and
+  still nothing (0.63x, fold CI including zero).
 - Through the projection: the step's harm at e = 1 shrinks from +0.237 (cloud) to +0.105
   (chain) and the same two random draws' from +0.212 to +0.119, because a 1 A displacement
   de-contracts the average (projection price +0.159 for production, +0.026 for the step, +0.06
@@ -236,6 +246,11 @@ floor does not apply. ST.fmt verbatim for every contrast in S28-L39.
   process, which I adopted from S28-L27 on.
 - Times in S28-L12 and prereg addendum 3 were stamped ahead of the clock (about 19:45, not
   20:05 / 20:10); nothing else in them changes.
+- On the built chain I read the raw step's FAIL18 stratum ("WORSE [Type-M]" from a per-stratum
+  `ST.compare` on 18 targets) as the regime pattern of S27 L9; lane D's random-18 null (S28-L40)
+  shows it is the whole-set harm seen on 18 targets (p 0.25 at e = 1). A stratum verdict at
+  n = 18 needs the random-subset null beside it before it is called a regime; only the circuit
+  arm's excess passes that null, and it is harm. Adopted in S28-L42 and in 4.3.
 
 ## 7. What I did not do and why
 

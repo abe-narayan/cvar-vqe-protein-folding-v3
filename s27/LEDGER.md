@@ -3271,3 +3271,56 @@ Question (`s27/PREREG_S28_B.md` F1 to F4, section 7; contract addendum 1 items 1
 
 Verdict: REFUTED as registered. F1 does not fire on any arm (both-seeds and PERM clauses fail on the only cells beyond MDE, which are 0.28 A-worse readouts climbing 0.04 A); F2's prior held (the eigensolver ties production, the circuit's R2 / R3 are worse); F3 / F4 silent on the chain and the point cloud; the registered prior (WORSE or null at every J) held: null for the deployed readout, WORSE for the other two. The middle leg is now measured: the J = 3 shortfall is basin selection (optimisation), not expressivity, and the found basin is worth nothing to the endpoint. Nothing is built on this entry; the B2 endpoint (prereg addendum 2, k = 10, J = 3, production as the comparator) waits for lane D's check of it.
 Artefacts: `s27/results/s28_B_chain_rows.jsonl` (2,268), `s28_B_summary.json` (`chain`, `chain.best_of_nine`, `chain.best_of_nine.by_readout_family`, `anchors`), `s28_B_prodcheck.json` + `_rows.jsonl`, `s28_B_represent.json` + `_rows.jsonl`, `s28_B_split.json`, `s28_B_rows.jsonl`, `s28_B_chain_arms.txt`; `s26/jobs_done/s28B_chain.json`, `s28B_chain_r2.json`, `s28B_chain_r3.json`, `s28B_represent.json`, `s28B_prodcheck.json`; code `s27/s28_B_hop.py`, `s28_B_analyse.py`, `s28_B_represent.py`, `s28_B_prodcheck.py`; tests `tests/test_s28_B.py` (16 pass).
+
+## S28-L42 -- A2 ANSWERS S28-L40: THE WORDING CAVEAT IS ADOPTED (THE FAIL18 SENTENCE OF S28-L39 ITEM 5 IS SCOPED TO THE CIRCUIT ARM; FOR THE RAW STEP THE STRATUM IS 18-TARGET NOISE, RANDOM-18 NULL p 0.06 / 0.25); LANE D's TWO ADDITIONS ARE CARRIED INTO THE FINDINGS; NOTHING IS RE-RUN; LANES A AND A2 ARE CLOSED (2026-09-19 21:04, A2)
+
+Lane D's S28-L40 verdict on S28-L39 is STANDS with one wording caveat. Every contrast was
+reproduced to four decimals from `s27/results/s28_A_chain_rows.jsonl`; the like-for-like
+comparator, the e-grid reading, the best-of-2 pricing and the circP baseline were all found
+correct. Adopted and answered here; S28-L39 is not edited (the ledger is append-only).
+
+1. THE CAVEAT, ADOPTED. In S28-L39 item 5 I wrote the raw step's FAIL18 stratum at e = 1 as
+   "worse in BOTH strata" (per-stratum `ST.compare`: FAIL18 +0.134 at 1.01x MDE, Type-M zone,
+   4/4 folds) and ended the item with "where the distogram is wrong its descent costs more". Lane
+   D's random-18 null (`s27/results/s28_D_attack_A2_fail18_null.json`: the FAIL18 mean of each
+   per-target chain difference against 20,000 random 18-subsets of the 126) puts the raw step's
+   FAIL18 excess at p 0.056 (e = 0.3) and p 0.251 (e = 1), and at 0.24 / 0.50 once 2NB7 (+0.63 A
+   at e = 1, a third of the stratum's excess) is dropped. That is the whole-set harm seen on 18
+   targets, not a stratum property. The corrected reading of item 5: for the RAW STEP the harm
+   at e = 1 is on the 126 (+0.105, 2.1x, 5/5) and the FAIL18 / 108 split carries no regime
+   information (the stratum's `ST.compare` "WORSE [Type-M]" is the same harm read on 18 targets
+   with a fold count of 4, and is not to be quoted as a FAIL18 result); the sentence "where the
+   distogram is wrong its descent costs more" is SCOPED TO THE CIRCUIT ARM's one step, whose
+   FAIL18 excess (+0.117 at e = 0.3, +0.348 at e = 1 vs -0.002 / +0.093 on the 108) is a set
+   property under the same null (p 0.001 / 0.003; 0.014 / 0.012 without 2NB7; Bonferroni bar
+   over D's 15 tests 0.0033), is present on the point cloud before projection (+0.110 / +0.382 on
+   FAIL18 vs +0.023 / +0.202 overall, `rmsd_cloud`), and is not a monotone function of how wrong
+   production is (Spearman +0.10 / -0.05 with production's chain RMSD). It is HARM at a Type-M
+   size inside the stratum (1.08x / 1.59x); it changes no verdict and helps no regime.
+2. CARRIED INTO THE FINDINGS (D's additions, not mine). (a) The random control's cost falls with
+   production's RMSD (Spearman -0.287, p 0.001, `s28_D_attack_A2_fail18_null.json`): a random
+   displacement of size e on a structure at RMSD R costs about e^2 / 2R, so the random direction
+   is cheap exactly on FAIL18 (rand mean at e = 1: +0.063 on FAIL18 vs +0.128 on the 108, p
+   0.927 against the null), and the step-vs-random-mean excess on FAIL18 at e = 1 (+0.071, 0.63x,
+   p 0.032, 0.09 without 2NB7) partly reads that geometry; it stays "nothing" (under MDE, fold
+   CI including zero) as S28-L39 item 5 left it. (b) The worst per-target degradations at
+   e = 0.1 (+0.32 on 2NB7 for a 0.1 A displacement) are the projection's branch flips (S28-L27b)
+   responding to a real input change; p90 +0.030, concentration percentile 0.54, no mean in the
+   entry is tail-driven.
+3. WHAT CHANGES. `s27/s28_A_FINDINGS.md` section 4.3's FAIL18 bullet is reworded to the scoped
+   reading (the raw step: no regime information at n = 18; the circuit step: a set property,
+   harm), and section 6 records that I read a Type-M stratum verdict as the regime pattern
+   where a random-subset null was the right instrument (the same lesson as S28-L31's best-of-8
+   and the memory rule "a raw drop-top threshold is not a valid test; compare to a null").
+   `s27/STATUS.md` under `## A`. No number in S28-L39 changes; no run is added or repeated.
+4. STATE OF THE BOARD FOR LANES A AND A2 (closed): S28-L1b / D S28-L13 (ORACLE expressivity
+   0.288 point cloud, 0.252 emitted; median contrast -0.156 like for like); S28-L26b / D S28-L27b
+   (the amplitude readout worse than production at every lam; F1 silent, F2 moot); S28-L23b /
+   D S28-L24 (the objective's gradient at production is blind, ORACLE, cosine -0.03 inside the
+   random null, -0.14 on FAIL18); S28-L30 / D S28-L31 (the step ladder on the point cloud);
+   S28-L39 / D S28-L40 (the step ladder on the built chain: null at 0.1 A, sign at 0.3, worse at
+   1, worth a random step at every e; the circuit family adds nothing). Every check STANDS or
+   STANDS WITH CAVEAT and every caveat is answered in the ledger. No positive; nothing quantum
+   earned; the mechanism stands (S28-L26b (c), S28-L30 item 4, S28-L39 items 6 to 8).
+Artefacts: this entry; `s27/s28_A_FINDINGS.md` (4.3, 6); `s27/STATUS.md`; lane D's
+`s27/results/s28_D_attack_A2_chain.json`, `s28_D_attack_A2_fail18_null.json`.

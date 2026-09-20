@@ -47,6 +47,9 @@
 - 2026-09-19 20:56 running: nothing. A2 chain landed (`s28A2_chain_r2`, resumed at 95/126, 32 targets, exit 0, 2221.6 s, peak 0.313 GB; 126/126 with all 13 arms); analysis run; S28-L39 posted (A2.2 built-chain verdict: falsifier silent; step null at e = 0.1, sign-only worse at 0.3, WORSE at 1 (+0.105, 2.1x); worth a random step at every e; circuit adds nothing; prior held); findings 4.3 filled, DRAFT off; comparator determinism measured (bit-identical 4/4, `s28_A2_prodcheck.json`).
 - next: answer lane D's check of S28-L39 when it posts. Lanes A and A2 are CLOSED: no experiment queued or planned.
 
+- 2026-09-19 21:04 running: nothing. Lane D's S28-L40 on S28-L39: STANDS, one wording caveat (the FAIL18 sentence belongs to the circuit arm; the raw step's stratum is 18-target noise, random-18 null p 0.25); adopted in S28-L42, findings 4.3 and 6 reworded; nothing re-run.
+- next: nothing. Lanes A and A2 are CLOSED (S28-L1b/L13, L26b/L27b, L23b/L24, L30/L31, L39/L40, L42); all files committed.
+
 ## B
 - 2026-09-14 22:30 running: `s28B_chain` (built chain; throttled by the user's load); queued `s28B2_share` (F5-B2 second clause, no RMSD) and `s28B2_rank1` (S28-L23(a) decomposition). Posted S28-L25: kNN hop-only slope -1.00 / -1.03 per qubit (Gaussian -1.84), 30 to 60x the variance at n = 9, the registered -1.0 line straddled not cleared; the three-way split middle leg (VQE beats GS on F at J <= 0.3, ties at 1, is 1.8 above it at J = 3, beats untrained best-of-16 on 126/126 at every J); m-ladder eps <= 1e-13 on every arm.
 - next: the built-chain verdict entry per arm when the chain lands; the B2 share and decomposition entry; FINDINGS.
