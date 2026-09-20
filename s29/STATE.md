@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:55 Pacific.
+Last update: 2026-09-20 00:56 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -110,10 +110,15 @@ the nearest margin, 2.98 A, requires a per-target sign measured at chance.
 THE GAP TO 2.5 A IS NOT a search gap, NOT expressivity (a 27-parameter family holds a 0.25 A
 structure on every target), NOT aggregation (the hull of the shipped top-75 contains a 2.00 A
 point and the pool's hull a 1.12 A point) and NOT optimisation. IT IS ONE NUMBER.
-THE BOUND'S ONE END-TO-END CHECK, and it is the strongest evidence in the sprint: T's sign
-formula gain = RMSD(1 - sqrt(1 - rho^2 (2q-1)^2)) reproduces lane O's PC1 triple -- per-target
-magnitude, 52% sign accuracy, +0.0071 A leave-fold-out -- EXACTLY, and was derived before those
-numbers were read. Lane D is verifying that provenance from the commit order.
+THE BOUND'S END-TO-END CHECK, WITH ITS PROVENANCE CORRECTED (S29-L28, lane D, certified from
+git): T's sign formula gain = RMSD(1 - sqrt(1 - rho^2 (2q-1)^2)) reproduces lane O's PC1 triple
+-- per-target magnitude, 52% sign accuracy, +0.0071 A leave-fold-out -- exactly, BUT IT WAS NOT
+DERIVED BEFORE THOSE NUMBERS WERE READ. The term `2q-1` first enters THEORY.md at commit
+53c42bd4, 00:38:49, which is 7.5 minutes AFTER lane O posted S29-L21 at 00:31:19, and
+`git log --all -S "2q-1"` finds nothing earlier. The DERIVATION is unaffected and the agreement
+is real; the agreement is POST HOC and must be labelled so wherever it is quoted, including in
+the final report. I repeated the "derived before" claim in this file and to the user before it
+was checked, and both are corrected here. The provenance rule (contract 27) caught its author.
 LOAD-BEARING ASSUMPTION (B2): rho_max <= 0.14 for every field constructible from the present
 information. Derived for the marginal class by theorem 2; measured outside it across 31 scorers,
 38 signals, eight routers, the typicality axis and PC1. Lane D's attack is to find a field the
@@ -230,6 +235,33 @@ B's code, so agreement cannot come from a shared implementation error. Three out
    bit-reproducible by a fixed target-independent rank profile, but it is STATISTICALLY
    INDISTINGUISHABLE from one at the endpoint. T's reduction is right in effect and too strong
    in detail, and lane D's measurement is the version that goes in the report.
+
+
+## Integration note 18 (2026-09-20 00:56, after S29-L27 and S29-L28): TWO OF MY OWN ERRORS
+1. A FALSE PROVENANCE CLAIM I MADE AND REPEATED TO THE USER, now corrected in the headline block
+   above. Lane D certified all three chronology claims from git commit times, as I asked it to
+   rather than taking my word. Two stand with 24-minute leads: my own prediction of lane B's
+   result (note 11 at 00:27:56 against S29-L25 at 00:51:58) and lane T's rung-8 prediction
+   (S29-L11 at 00:07:02 against lane O's S29-L21 at 00:31:19, with a stated failure threshold,
+   the strongest provenance in the sprint). The third does NOT: the sign formula postdates the
+   numbers it reproduces by 7.5 minutes. Lane D invited lane T to produce an earlier uncommitted
+   artefact and amend if one exists; until then the agreement is post hoc.
+2. A GATE I SET THAT WOULD HAVE KILLED A LIVE IDEA BY A CONSTANT. I told lane B "recompute the
+   flat fraction for the new objective against the deployed 85.5%; if it does not fall
+   materially, the idea is dead". Lane B registered BEFORE measuring that it would not fall and
+   COULD not fall, with the derivation and a replacement gate: for any state strictly above the
+   VaR the same envelope argument that zeroes dCVaR/dp_y also zeroes dR_alpha/dp_y, so the f
+   term is flat on EXACTLY the CVaR term's subspace at every lam. Measured: flat fraction 0.8552
+   at every lam, identical to the CVaR term's, reproducing lane T's 85.5% independently. My gate
+   was a quantity that is constant by construction and reading it as written would have killed
+   the idea for the wrong reason.
+   THE QUANTITY THAT ACTUALLY MOVED, and it is the right one: under the DEPLOYED readout the
+   emitted structure moves along 0 of 511 continuous directions (it changes only through the
+   discrete scalar m); under tail-then-aggregate it moves along 74, and the objective is
+   non-constant along ALL 74 (overlap of flat-objective with moving-readout directions = 0.0000
+   at every lam). The sensitivity is real, not a near-zero derivative: the mean norm of
+   dC/dp_y over the tail directions is 55.7 A per unit probability. That is the mechanism
+   result, and lane B got it by correcting my gate rather than obeying it.
 
 ## Integration note 1 (2026-09-19 23:55, after S29-L1)
 Lane L's topic 1 closes the "import a QA method" route from outside: no published native-free
