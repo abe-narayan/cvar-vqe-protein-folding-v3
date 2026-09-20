@@ -2117,3 +2117,173 @@ Artefacts: `s29/PREREG_S29_P.md`, `s29/s29_P_scale.py`, `tests/test_s29_P.py` (2
 `s29_P_oracle_cloud_sstar.json`, `s29_P_contraction_profile.json`, `s29_P_sepprofile_cloud.json`;
 jobs `s26/jobs_done/s29P_factors.json`, `s26/jobs_done/s29P_probe6.json`;
 findings `s29/s29_P_FINDINGS.md` P1-P10.
+
+## S29-L23 -- THEORY SECTION 8, THE ACHIEVABLE NATIVE-FREE BOUND: EVERY OPERATOR IS A DISPLACEMENT AND ITS VALUE IS ONE COSINE, RMSD = RMSD_prod sqrt(1 - rho^2), SO 2.5 A COSTS rho = 0.628 AGAINST A MEASURED 0.04 AND A RANDOM-FIELD 0.140; THE BOUND ASSEMBLES TO >= 3.18 A WITH 2.98 A AS THE PERFECT-SIGN CEILING ON THE BEST FIELD ANYONE HAS BUILT, AND THE CEILING IS THEREFORE NOT THE POOL, THE CIRCUIT, THE OPTIMISER OR THE READOUT BUT THE ABSENCE OF A NATIVE-FREE VECTOR WITH A COSINE ABOVE 0.14 (2026-09-20 00:43, T)
+
+Question (the coordinator, 00:35): given exactly what the system has -- 500 real windows with a
+68% common-mode error, the 17-bin posterior's marginals, and no channel carrying covariance with
+the native's deviation from typical -- what is the best expected BUILT-CHAIN RMSD attainable by
+ANY native-free operator? Derivation from pieces already on the board; `s29/THEORY.md` section 8;
+12 tests in `tests/test_s29_T.py` including the identity and the price table.
+
+THE FORM. Write any operator's output as A = c + u with u native-free. Exactly,
+|A - t|^2 = |e|^2(1 - 2 rho s + s^2) with e = t - c, rho = cos(u, e), s = |u|/|e|; minimising over
+the step gives s = rho and
+    RMSD_achievable = RMSD_prod * sqrt(1 - rho_max^2),
+rho_max the best EXPECTED cosine of a native-free displacement field with the direction to the
+native. Selection, re-weighting, a gradient step, a basin average, a signed readout, a projection
+and a quantum tail are all displacements, so this collapses every operator class -- and every rung
+of lane O's ladder -- onto one number. Inverted (RMSD_prod = 3.2126): 3.00 A needs rho 0.358,
+2.50 needs 0.628, 2.31 needs 0.695, 1.71 needs 0.847. The random-shape-field reference is 0.140
+(S28-L23b), so the charter's 2.5 A is 4.5 random directions. A CONFLATION TO AVOID: S14's "0.638
+needed" is an in-band SPEARMAN for a 2.0 A target; 0.628 here is a COSINE in R^3N for a 2.5 A
+target -- two different quantities and two different targets, never to be quoted as one threshold.
+
+WHAT THE RECORD MEASURES FOR rho (all ORACLE diagnostics). Shipped objective's descent -0.034 (SE
+0.021; -0.143 on FAIL18, S28-L23b); every other S27 channel with a gradient +0.034 to -0.006; the
+typicality axis -0.058 (S29-L20); the pool's first shape mode PC1 per-target |rho| = 0.37 to 0.39
+(inverted from lane O's ORACLE one-global-sign ceilings -0.214 / -0.246 A) with the sign correct
+on 52% of targets, hence a signed rho of 0.015 and a leave-fold-out arm +0.0071 A WORSE than
+production (S29-L21). The sign enters as gain = RMSD(1 - sqrt(1 - rho^2(2q-1)^2)): that formula
+reproduces lane O's PC1 triple (magnitude, 52%, +0.0071) exactly, and it was derived before those
+numbers were read, which is the bound's one end-to-end check.
+
+THE BOUND. Every native-free field ever built here (|rho| <= 0.04) -> >= 3.210 A, a 0.003 A gain.
+A field as strong as a RANDOM one WITH the sign right on every target (0.140) -> >= 3.181 A. The
+best structured field known, PC1, with a PERFECT ORACLE per-target sign (0.37) -> >= 2.98 A. The
+charter's 2.5 A needs 0.628. Three independent ceilings agree and do not add, because each is a
+displacement already priced by its own cosine: enlarging or re-weighting the set is <= 0.008 A by
+the Ueda-Nakano coefficient (S29-L8) and is capped in principle by Krogh-Vedelsby (any selection
+that raises the members' mean quality destroys ambiguity, and S27 section 6 measured the two
+cancelling with the wrong sign, +0.286 A for CONS); in-band ordering transfers at 0.600 across
+targets with capacity saturated by a linear model (S14, S12, S29-L19); and the scale lever is
+unreachable in principle because s* is a function of ebar alone (S23 L6/L9).
+CENTRAL STATEMENT: **no native-free operator over the present information reaches below about
+3.18 A on the built chain, the honest central estimate is 3.21 A (production), and the nearest
+thing to a margin is 2.98 A, which requires a per-target SIGN for the pool's own principal mode
+that is measured at chance.** The gap to 2.5 A is not a search gap, not expressivity (a
+27-parameter family holds a 0.25 A structure on every target, S28-L26b), not aggregation (lane O's
+ladder: the hull of the shipped top-75 contains a 2.00 A point and the pool's hull a 1.12 A point)
+and not optimisation. It is one number.
+
+ASSUMPTIONS. (B1) native-free; (B2) rho_max <= 0.14 for every field constructible from the present
+information -- THE LOAD-BEARING ONE, derived for the marginal class by theorem 2 and measured
+outside it (31 scorers S28-L48, 38 signals S12, eight routers, the typicality axis S29-L20, PC1
+S29-L21); (B3) rigid-body components projected out and the identity read to first order in
+s = |u|/|e|, where at s <= 0.14 the neglected term is under 2% of the gain; (B4) rho_max is an
+expectation over the 126, so a field that is excellent on some targets and reversed on others
+enters at |rho|(2q-1) -- buying the per-target sign is worth exactly as much as buying the
+direction. A NEW SOURCE MUST BREAK (B2) AND ONLY (B2), and by section 7 the only classes that can
+are a better distance prior (which moves e itself, slope -2.15 A per unit), a learned residual with
+errors decorrelated from the predictor's (blocked by error coherence, S19), and a physics term on
+the emitted structure in its FREE-energy form (outside the marginal class, so theorem 2 does not
+bound it; its single-point form is measured worse than random, S25 L16). A second pool, the pool's
+dispersion, an attention map and a joint all leave (B2) intact, which is why they price at 0.002
+to 0.03 A whenever they are run.
+
+THE FALSIFIER, ONE MEASUREMENT: exhibit a native-free displacement field whose mean cosine with
+t - c over 126 targets exceeds 0.140 with the fold-clustered CI excluding it. It is meter number 2
+and it runs in minutes, now with the mandatory shrink signature (S29-L10) so a cosine bought by
+contracting toward typicality is rejected automatically. Secondary: (i) any operator whose
+BUILT-CHAIN mean beats 3.181 A with a fold CI excluding production, since the identity says that
+requires rho > 0.14 whether or not the cosine was measured; (ii) a per-target sign predictor for
+PC1 with held-out accuracy above 0.58, which at |rho| = 0.37 buys 0.02 A and at 0.75 buys 0.09 A --
+small, but it would prove the sign is learnable, the one clause of (B4) with no derivation behind
+it.
+
+FOR THE SPRINT. This is the charter's "decisive measurement of what imposes the ceiling" in the
+form the charter asked for, and it ranks the remaining work: (i) lane D's band experiment, the one
+route to a cosine never measured under a matched-realism control; (ii) section 4.5's structural
+CVaR, the first formulation whose classical counterpart genuinely goes away, which by this bound
+will not move the RMSD unless (i) succeeds first; (iii) the free-energy class. If (i) closes
+negative, S29's headline is this bound with its table, and the next sprint's question is not an
+architecture but whether the distance prior can be improved -- the only lever the record has ever
+measured with a steep slope.
+Multiplicity: 0 endpoint comparisons; 3 registered falsifiers. Every rho quoted is ORACLE and
+named as such; nothing here tunes or selects anything.
+Artefacts: `s29/THEORY.md` section 8 (commit 53c42bd4); `tests/test_s29_T.py` (12 pass);
+inputs are S28-L23b, S29-L8, S29-L19, S29-L20, S29-L21, lane O's `s29/results/s29_O_cloud_rows.jsonl`
+(the ORACLE ladder: hull_top75 1.9975, hull_pool 1.1167, best1_pool 1.7108, bestm 2.6062) and
+S23 L6/L9.
+
+## S29-L24 -- SECTION 9, ON LANE P's SEPARATION PROFILE (S29-L22): THE CURVE IS THE PRODUCT OF THE POOL'S INHERITED LONG-RANGE OVER-EXTENSION AND A FADING AVERAGING SHRINK, SO "CONTRACTION" IS THE LEFT-HAND END OF A SHEAR AND NOT A PROPERTY OF THE OPERATOR; AN ORACLE PROFILE CORRECTION CANNOT HELP BECAUSE THE PROFILE SUBSPACE IS MOSTLY UNREALISABLE; AND I WITHDRAW MY OWN SECTION 1.4 BUILD RECOMMENDATION -- SEPARATION-BAND RE-WEIGHTING IS A GENUINELY DIFFERENT OPERATION FROM P's RESCALE AND IS NEVERTHELESS CLOSED, MEASURED LEAVE-FOLD-OUT AT +0.010 A IN S12 AND RETIRED FROM THE SHIPPED CODE ONCE ALREADY (2026-09-20 00:43, T)
+
+Question (the coordinator, 00:45): does the separation-band re-weighting of the OBJECTIVE that my
+section 1.4 recommended survive lane P's refutation of the post-hoc cloud rescale, or is it the
+same operation seen twice; and what is the one-sentence mechanism the report should use instead of
+"contraction"? Derivation plus a record search; no job; `s29/THEORY.md` section 9.
+
+THE MECHANISM. Section 1.2's identity compares the average to its own MEMBERS; lane P measured the
+ratio to the NATIVE, and that ratio factorises exactly:
+    d_ij(C)/d_ij(t) = [mean_k d_ij(W_k)^2]^(1/2)/d_ij(t)  x  sqrt(1 - s_ij^2/mean_k d_ij(W_k)^2),
+i.e. POOL BIAS at that separation TIMES AVERAGING SHRINK at that separation. The shrink is <= 1
+always and rises toward 1 with separation, because s^2 is the members' superposition residual and
+does not grow with |i-j| while d^2 does. The pool bias is not an averaging effect at all: the pool
+is selected by a posterior that S25 L1 measured as predicting distances systematically TOO LONG,
+increasingly so with separation (signed error -0.048 A at 2-2 growing monotonically to -0.589 A at
+9-15). The two factors move oppositely in separation and trade places near |i-j| = 8.
+THE SENTENCE FOR THE REPORT: "Averaging does not contract the structure: by the exact identity
+d(C)^2 = <d_k^2> - s^2 the emitted distance is the members' RMS distance less their own spread, so
+the distortion is a SEPARATION-DEPENDENT SHEAR -- a large shrink where distances are short and the
+spread is comparable to them (-23% at the virtual bond), fading to nothing where distances are
+long -- multiplied by the pool's inherited over-extension at long range, which the fading shrink no
+longer masks; the ratio therefore crosses 1.0 near |i-j| = 8 and ends above it, and 'the 22%
+contraction' is the left-hand end of that curve, not a property of the operator."
+A ZERO-COST CHECK FOR LANE P, and it is an identity so it must pass exactly: compute the two
+factors separately on the clouds P already has. The shrink factor d_ij(C)/[mean_k d_ij(W_k)^2]^(1/2)
+is NATIVE-FREE and must be <= 1 at every separation and monotonically rising; the pool-bias factor
+is ORACLE and must carry the ENTIRE crossing; their product must reproduce P's measured profile to
+floating point. If the crossing appears in the shrink factor, the identity is wrong and section 1.2
+with it.
+WHY P's ORACLE-FITTED PROFILE CORRECTION COULD NOT HELP, DERIVED: a per-separation multiplicative
+profile is a vector in pair space, which has P coordinates against a realisable set of dimension
+3N - 6 (55 against 30 at N = 12, section 2 C2). The only exactly realisable profile direction is
+the UNIFORM one -- a global scale -- and that is closed twice over (+0.0002 A by nested CV, and
+unreachable in principle per target because s* depends on ebar, S23 L2/L6/L9). Every differential
+component is mostly outside the tangent space of the realisable set and is mostly annihilated when
+the corrected map is returned to a structure. P's null is what the factorisation plus C2 predicts.
+
+IS THE OBJECTIVE RE-WEIGHTING THE SAME OPERATION? NO. It changes the SCORE of each of the 500
+windows, hence which 75 are retained, hence the emitted average; the displacement is a difference
+of real windows and is realisable by construction, so no post-hoc profile edit can imitate it and
+"the same operation seen twice" is not the right closure. BUT IT IS CLOSED ANYWAY, BY A MEASUREMENT
+THAT PREDATES THIS SPRINT. `s12/obj_FINDINGS.md` section 4, all 126 targets, point cloud: shipped
+Bayes risk 3.048; 1/sd-weighted L1 3.047; **LFO per-shell weighted L1 3.058** (a separation-band
+re-weighting fitted leave-fold-out: +0.010 A, WORSE); shell-profile only, deployable, 3.163. And
+the mechanism was built and retired once already in the project's own history: `score_weights.json`
+is "intentionally absent" because "refitting drives two of the six parameters to their clip bounds
+and loses on the benchmark (top-1 2.76 -> 2.91 A) while gaining 65% on the dev objective"
+(`core/predict.py:377-383`) -- the canonical shape of optimising the objective and losing the
+structure.
+I THEREFORE WITHDRAW THE BUILD RECOMMENDATION IN MY SECTION 1.4 (the withdrawal is marked in the
+file at the point of the original sentence). The derivation stands -- a calibration can act on the
+Bayes-risk minimiser through the separation-band weights and through nothing else, because a width
+error leaves the median map unchanged -- but the conclusion was wrong to call that a live route.
+CALIBRATION IS CLOSED, NOT REDIRECTED: its only channel is measured at +0.010 A leave-fold-out, was
+retired once before, and is bounded by theorem 2 in any case (a re-weighted objective is still in
+class M with g -> gamma g, so its expected informativeness is sum gamma w kappa var(a)(1 - beta), a
+re-weighting of second-order terms, capped by section 8 at the 0.03 A a random-magnitude cosine
+buys). No lane should spend a build on it.
+
+THE ONE THING IN THAT TABLE WORTH THE SPRINT'S ATTENTION. In the same S12 screen, ORACLE
+shell-profile only (n-2 numbers) = 2.299 against the shipped 3.048: a scorer that knows ONLY the
+native's per-separation distance profile -- 11 to 14 numbers, no pair detail -- selects a top-75
+whose average is 0.75 A better than production, and the complement in the same file is that the
+prediction's entire pair-specific detail is worth 0.155 A ("the shipped distogram is, operationally,
+a predictor of a 12-to-14-number curve"). That is the lowest-dimensional named instance of what
+would break section 8's assumption (B2). Its price is already set by the record: the profile's
+leading component is COMPACTNESS, the in-band axis is compactness at oracle +0.909 with the
+native's z-scored Rg (S29-L19), the achievable native-free proxies reach 0.24 to 0.37 against that
+0.909, and the DEPLOYABLE version of the same scorer is 3.163, i.e. worse than production -- so the
+gap 3.163 -> 2.299 is exactly the value of the native information in those numbers.
+CHEAPEST FALSIFIER (lane M or P, minutes, no new code path): fit leave-fold-out a predictor of the
+per-separation profile ratio from native-free features only (pool profile, posterior profile,
+length, predicted secondary-structure content), re-score the 500 windows with the corrected
+profile, take the top-75, average, project. REGISTERED PREDICTION from section 8: the
+leave-fold-out arm lands INSIDE 0.05 A of production, and it is a result only if it clears 0.7x MDE
+with the fold CI excluding zero AND its cosine clears 0.140 with the shrink signature attached. If
+it lands near the ORACLE 0.75 A, section 8's (B2) is falsified and that is the sprint's result.
+Multiplicity: 0 endpoint comparisons; 1 registered prediction; 1 WITHDRAWAL of my own earlier
+recommendation.
+Artefacts: `s29/THEORY.md` section 9 (commit 591fab47); sources S29-L22 (lane P), S25 L1,
+S23 L2/L6/L9, `s12/obj_FINDINGS.md` sections 3 and 4, `core/predict.py:377-395`, S29-L19.
