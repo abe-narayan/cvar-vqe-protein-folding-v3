@@ -466,7 +466,76 @@ original 12, which lane D verified independently (S29-L38). The pre-fix rows are
 
 ## 7. The final built-chain RMSD, with full statistics
 
-[PENDING — lane B's 126-target endpoint is running.]
+**The final number is unchanged: 3.2105 Å mean built-chain Cα RMSD over the 126 dev targets.**
+No arm in this sprint displaced it, and §3.1 lists each candidate with the figure that disqualified
+it. The endpoint is the deployable incumbent, and it is reported here in full rather than as a
+single mean, because the shape of the distribution turns out to matter more than the mean does.
+
+```
+                      built chain          point cloud
+n                          126                  126
+mean                    3.2105               3.0483
+median                  2.9661               2.8373
+sd                      1.7290               1.6466
+SE                      0.1540               0.1467
+min                     0.1820               0.1959
+p10                     1.1602               1.1504
+p25                     1.8626               1.8521
+p75                     4.2063               3.7242
+p90                     5.6060               5.5521
+max                     8.2406               8.0688
+
+projection price (chain − cloud)           +0.1622
+```
+
+### 7.1 The mean is a tail statistic, and this reframes the charter's target
+
+| threshold | fraction of targets under it (built chain) |
+|---|---|
+| 2.0 Å | 28.6% |
+| 2.5 Å | 34.9% |
+| **3.0 Å** | **50.8%** |
+| 4.0 Å | 73.0% |
+
+**More than half the benchmark is already under 3.0 Å on the endpoint metric.** The median is
+2.9661 Å — the charter's intermediate target, already met by the typical target. What keeps the
+*mean* at 3.2105 is a tail running to 8.24 Å: the p90 alone is 5.61 Å, and the standard deviation
+(1.73) is more than half the mean.
+
+This matters for how the charter's question should be read. "Get the mean below 2.5 Å" is not a
+request to make typical predictions better; **it is a request to fix the targets the pipeline fails
+on**, and the project's own record already says those failures are where the sequence channel is
+weakest — the shipped pipeline is *worse* than a blind one on its 18 hardest targets (5.425 blind
+vs 6.019 shipped). An intervention that improves the median by 0.2 Å and leaves the tail alone
+moves the mean by roughly 0.1 Å; one that halves the tail moves it far more.
+
+None of the sprint's closures are softened by this. The bound (§5.1) is a per-target statement
+about displacement cosines, not an average one, and lane D's 21-field survey measured the cosine on
+every target. But it does mean that **the most promising shape for an S30 intervention is one that
+targets failure modes rather than average quality** — and §13's first candidate, the free-energy
+stage, is exactly the kind of signal that could behave differently on a bad pool than on a good one.
+
+### 7.2 What the sprint's arms did to this number
+
+Every arm is a paired comparison against the row above, on its own common targets:
+
+```
+arm                                         built chain    vs prod    ×MDE    verdict
+production (ships)                             3.2105         —         —     incumbent
+tail-then-aggregate, m=5 f-optimal subset      3.2934      +0.2451    1.45×    WORSE
+  of which the non-prefix choice alone            —        +0.0804    0.73×    NOT MEASURED
+compatibility Hamiltonian (best of 24 cells)      —           —         —     GATE NOT OPENED
+pair log-score selection functional (F1)       3.2949      +0.0822    0.55×    NOT MEASURED
+  vs its zero-information control                 —        +0.0202    0.14×    NOT MEASURED
+L2 risk functional                             3.2567      +0.0440    0.59×    NOT MEASURED
+leave-fold-out typicality step                 3.2105      +0.0000      —      bit-identical
+leave-fold-out prefix m                           —        +0.0079    0.30×    NOT MEASURED
+```
+
+Nothing improved it; nothing was adopted. The two arms that *are* measured — lane B's aggregate
+m = 5 subset and lane M's permutation control — are both decisively **worse**, which is what makes
+the surrounding nulls interpretable rather than merely underpowered: the instrument demonstrably
+resolves effects of the size that matter, and finds none in the useful direction.
 
 ## 8. Uncertainty, MDE, fold CI, concentration
 
