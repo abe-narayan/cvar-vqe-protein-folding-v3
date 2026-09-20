@@ -3148,3 +3148,191 @@ Artefacts: `s30/results/s30_D_meter_DIS_chain.json`, `s30/results/s30_D_meter_DI
 ladder cache with chain projections and 8 matched draws at
 `s30/results/s30_D_ladder_structs/` (126/126, built 13:36). Multiplicity: 30 comparisons from
 the chain run, 24 from the CA run.
+
+## S30-L25 -- **THE WHOLE NATIVE-FREE FEATURE SPACE EXPLAINS 0.8% OF THE ORACLE ERROR OUT OF FOLD** (BAR 1.96%, EXCESS OVER A MATCHED-DIMENSION CONTROL +0.0095 AT 0.75x MDE), WHILE THE SAME BASIS **LOCATES 82.7% OF THAT ERROR NATIVE-FREE AGAINST A CONTROL'S 44.4% AT 10.17x MDE** -- THE SUBSPACE IS FREE AND THE SIGN IS THE WHOLE PROBLEM. AND ON THE PRIOR ROUTE, WHICH THE BOUND DOES NOT PRICE: **S19's 0.525 A SEPARATION-PROFILE PRIZE REPRODUCES ON THE PINNED BENCHMARK AT -0.5740 A** (2.52x MDE, 5/5 FOLDS, 70.8% OF A PERFECT DISTOGRAM), **68% OF IT IS IN |i-j| >= 7**, IT CONCENTRATES **4x ON BOTH FILTER-INDEPENDENT TAILS**, AND IT REDUCES TO **FIVE SIGNS PER TARGET**: ORACLE SIGN WITH A LEAVE-FOLD-OUT MAGNITUDE BUYS **-0.3567 (62%)**, ORACLE MAGNITUDE WITH A LEAVE-FOLD-OUT SIGN BUYS **-0.0733 (NOT MEASURED)** (2026-09-20 13:43, P)
+
+Pre-registration `s30/PREREG_S30_P.md`, committed **097352c5 at 13:25:18, before the first arm
+existed**. Code `s30/s30_P_r2.py`, `s30/s30_P_prior.py`, `s30/s30_P_chain.py`. Results
+`s30/results/s30_P.json`, `s30/results/s30_P_prior.json`, `s30/results/s30_P_chain.json`.
+
+My brief was L3 -- find an information source whose errors are decorrelated from the distogram's,
+then correct with it. The coordinator reformulated it mid-task into lane T's restatement of B2,
+`rho_max = sqrt(R^2(e ~ S))`, which turns the enumeration into one out-of-fold regression. Lane L
+then narrowed it again (S30-L18) by localising the target to a five-number separation profile and
+by pricing orthogonality out of the picture (**decorrelation is a 5.1% discount; skill is the
+lever**). Both reformulations were better than my brief and this entry follows them.
+
+---
+
+### 1. THE REGISTERED MEASUREMENT: EVERYTHING, THROWN AT `e`, OUT OF FOLD
+
+`e` = `remove_rigid(oracle_direction(C0, nat), C0)`, C0 = production's `avg_ca` **point cloud**
+(3.0483 A -- an INTERMEDIATE; production's built chain is 3.2041 A, contract rule 1). Verified:
+`||e||^2/n` reproduces `rmsd_avg` to 1e-4 on all 126.
+
+The native-free basis is 14 orthonormal directions per target: the pure **scale** mode, the
+**consensus** direction (top-75 mean deviation), lane L's **five per-separation-bin distogram
+descent directions** -- put in the basis rather than left to the pool's PCs to span -- and 7 pool
+PCs. 20 signed reference fields and correlations, 6 unsigned direction features, 17 target
+features; ridge, leave-fold-out on the pinned folds with the penalty chosen by a **nested**
+leave-fold-out inside the training folds.
+
+**The design decision that makes the number mean anything.** A PC's sign is arbitrary, so
+regressing `c_k = <e, U_k>` on target features is ill-posed -- and supplying the per-target sign is
+exactly the leverage `in-band-ordering-is-per-target` names as the only one left. Every feature is
+therefore either **signed** (flips with `U_k`: projections of the consensus / distogram-descent /
+scale / EXPAND / provenance / score-weighted directions, the skewness of the 500 pool projections
+along `U_k`, the signed pool correlations of projection against score, Rg, BLOSUM sim and
+residual) or **unsigned**, and the model is linear in the signed ones with unsigned interactions
+and **no intercept**. The fit is equivariant by construction, so **it cannot launder an ORACLE
+sign**. Without this the arm is lane D's rho = 0.949 that was 0.809 dimension.
+
+```
+arm                 R2_oof    ctrl     excess    fold CI (excess)     x MDE   verdict
+full_nodist|wt     +0.0083  -0.0012   +0.0095   [-0.0079, +0.0988]    0.75    NOT MEASURED
+full|wt            -0.0097  -0.0108   +0.0010   [-0.0015, +0.2142]    0.74    NOT MEASURED
+main|wt            -0.0021  -0.0024   +0.0002   [-0.0145, +0.1304]    0.68    NOT MEASURED
+main_nodist|wt     -0.0020  -0.0023   +0.0003   [-0.0114, +0.0557]    0.44    NOT MEASURED
+full_nodist|unwt   +0.0062  -0.0082   +0.0144   [+0.0153, +0.1480]    0.87    NOT MEASURED
+main_nodist|unwt   -0.0646  -0.0309   -0.0337                         1.35    WORSE
+CPERM (permuted target->feature link)  R2 -0.0388
+```
+
+**Registered bar 1.96%. Best arm 0.83%, excess 0.95%, 0.75x MDE. P1 holds; the primary and
+ambitious bars are not approached.** In Angstroms, both figures because one of them flatters:
+excess rho = 0.098 gives `3.0483*sqrt(1-rho^2)` = **3.0338 A** implied, but **applying the fitted
+displacement out of fold actually emits 3.0519 A against production's 3.0483** -- a no-op that is
+marginally worse. The implied-endpoint conversion is the generous one and both belong in the
+record.
+
+Strata: nothing clears the bar on FAIL18 (circular, flagged), the other 108, or either of lane F's
+filter-independent tails; the largest is worst-18-by-pool-mean at R^2 = 0.0462 on n = 18, where the
+MDE is far larger than the effect. **P4 holds -- the tail is no more predictable than the bulk in
+this space.** P2 holds and is vacuous: the scale mode carries 26.5% of the ORACLE error and its
+coefficient's out-of-fold R^2 is +0.0404. P5 holds -- removing every distogram-derived feature moves
+the excess by under 1 point, and in the *favourable* direction, i.e. there was nothing there to
+inherit.
+
+### 2. THE ONE STRONG POSITIVE, AND IT IS ABOUT LOCATION, NOT DIRECTION
+
+The same basis, scored ORACLE against the matched-dimension random-frame control:
+
+```
+ORACLE capture of ||e||^2, native-free basis        0.8273
+ORACLE capture, matched-dimension random frame      0.4444
+excess                                             +0.3829   10.17x MDE, 5/5 folds, [+0.369, +0.392]
+```
+
+> **We can locate 82.7% of the ORACLE error's variance with no native at all, in 14 native-free
+> directions, and out of fold we cannot say which way along them (R^2 0.8%). The subspace is free.
+> The sign is the whole problem.**
+
+The control is in the operator's own space, and I checked rather than assuming: at n = 9-16 the
+rigid-free space is 21-42 dimensional and the 75 pool deviations span **all** of it, so an
+isotropic random K-frame is inside the pool's span and this is not an instance of
+`control-must-match-the-operators-space`.
+
+### 3. THE PRIOR ROUTE -- WHICH THE DISPLACEMENT BOUND DOES **NOT** PRICE
+
+Lane L flagged, correctly, that `rho_max` governs **pool-space operators** ("add another field to
+the 21") and does not price "fix the prior's shape". Section 1 is the operator question; this is a
+different one. Every arm translates each pair's **posterior** by `Delta_p` so the shipped
+Bayes-risk score is evaluated unchanged at `risk_p(d - Delta_p)`, then runs production's own
+downstream: rescore the same 500-member pool, keep 75, coordinate-average in the medoid frame.
+Point cloud, production 3.0483:
+
+```
+arm                                     mean     delta    x MDE  folds  W/L
+ORACLE_FULL      (perfect distogram)   2.2379  -0.8104   3.28    5/5   117/9
+ORACLE_SEPPROF5  (5 numbers/target)    2.4743  -0.5740   2.52    5/5   106/20    = 70.8% of full
+ORACLE_PERRES    (n numbers/target)    2.4769  -0.5714   2.81    5/5   113/13    -- adds NOTHING over 5
+ORACLE_OFFSET1                         2.9041  -0.1443   0.87          69/57     NOT MEASURED
+ORACLE_STRETCH1                        2.8983  -0.1501   0.85          74/52     NOT MEASURED
+```
+
+**The coordinator's caveat 3 is discharged: S19's -0.525 A predates the benchmark pinning and it
+REPRODUCES on the pinned 126, slightly larger, at -0.5740 A.** And the nesting reproduces too --
+one offset and one stretch are both NOT MEASURED, the five-number profile is 70.8% of a perfect
+distogram, and n per-residue parameters buy nothing beyond the five.
+
+**Which half is missing, and this is the sharpest number in the entry:**
+
+```
+ORACLE SIGN      + leave-fold-out magnitude   2.6917  -0.3567   2.29x  5/5  93/33   = 62.1% of the prize
+ORACLE MAGNITUDE + leave-fold-out sign        2.9750  -0.0733   0.32x        66/60  NOT MEASURED, 12.8%
+```
+
+Matched-accuracy sign corruption, the mandatory null from `error-coherence-decides-correctors`:
+acc 1.0 -> -0.574, 0.9 -> **-0.4724**, 0.8 -> **-0.2744**, 0.7 -> -0.2506, 0.6 -> -0.0747 (NOT
+MEASURED). **The deployable leave-fold-out sign performs like accuracy ~0.6, barely above chance;
+~0.8 is needed to buy -0.27 A.** The target is **five bits per target**.
+
+**Both things I can currently build to supply them deliver zero or worse:**
+
+```
+LFO_GLOBALPROF5  (5 global numbers, leave-fold-out)   3.0520  +0.0036  0.11x  NOT MEASURED
+NF_POOLPROF5     (5 numbers from the pool)            3.0878  +0.0395  0.48x  wrong sign
+```
+
+The mechanism is explicit and is not a fitting failure. The ORACLE profile's mean across targets is
+`[0.048, 0.194, 0.281, 0.397, 0.464]` against sd `[0.369, 1.247, 1.712, 2.268, 4.274]`. **The
+distogram really does systematically over-predict long-range distances, and the per-target
+dispersion is ~9x the systematic part**, so a global constant is arithmetically a no-op. And
+estimating the profile **from the pool** makes the answer worse -- `pool-error-is-68-percent-
+common-mode` arriving at the prior, and an independent confirmation of lane L's constraint that the
+covariate cannot be generated by the pool.
+
+### 4. WHERE THE PRIZE IS -- TWO LOCALISATIONS, BOTH CLEAN
+
+**By separation bin (ORACLE, one bin corrected at a time):**
+
+```
+|i-j| =  2   -0.0107   (0.49x, NOT MEASURED)
+|i-j| =  3   -0.0874   (1.00x, NOT MEASURED)
+|i-j| =  4   -0.0836   (1.32x, 5/5)
+|i-j| = 5-6  -0.1071   (1.45x, 5/5)
+|i-j| >= 7   -0.3907   (1.98x, 5/5)   = 68% of the profile prize
+```
+
+**The prize is long-range.** Lane R measured on a completely different instrument that the RMSD
+signal is absent from local features (dR^2 -0.089) and abundant in global ones (+0.600). Two
+instruments, one statement.
+
+**By stratum, and it replicates on BOTH of lane F's filter-independent tails**, so it does not rest
+on the FAIL18 circularity the adversary exposed:
+
+```
+                    other108   tailA(pool mean)  tailB(ORACLE best)  FAIL18 (CIRCULAR)
+ORACLE_SEPPROF5      -0.359        -1.405             -1.164             -1.865
+ORACLEsign_LFOmag    -0.266        -0.821             -0.591             -0.901
+```
+
+**~4x concentration on the hard targets on non-circular definitions.** By the sprint-open
+counterfactual that is the stratum where fixing ten targets beats improving all 126 by 0.20 A.
+
+### 5. WHAT I CLAIM AND WHAT I DO NOT
+
+**Claimed.** (a) The operator question is closed **as a measurement**: the whole native-free feature
+space -- distogram outputs, pool statistics, geometry, provenance, sequence-level scalars, in the
+most favourable basis available and with a sign-equivariant model that cannot cheat -- explains
+**0.8%** of the ORACLE displacement out of fold against a 1.96% bar. That reproduces the 21-field
+survey's answer in one run instead of an enumeration. (b) The prior route is **not** closed by that
+number and must not be read as closed by it. (c) On the prior route the prize reproduces on the
+pinned benchmark, is 68% long-range, concentrates 4x on the tail, and reduces to five signs per
+target at ~0.8 accuracy.
+
+**Not claimed.** That any covariate exists which supplies those signs. I tested two (a global
+constant and the pool) and both are zero or negative. Lane L's design constraint -- *a native-free
+covariate, observed at inference, predicting the separation profile, generated by neither the
+distogram nor the pool* -- survives this entry untested, and it is now a five-bit question rather
+than an open-ended one.
+
+**Two things I got wrong or nearly wrong.** The verdict strings in my first run were **inverted**:
+`ST.compare`'s convention is lower-is-better and explained variance is higher-is-better, so an arm
+that was 0.0337 WORSE than its control printed `BETTER`. I caught it on the first table and negated
+both arms. It is the same failure lane D found in S29-L23's printed verdict, one sprint later, in a
+lane that had just read the entry about it. And my original brief -- hunt for a decorrelated source
+-- would have been a waste: lane L's arithmetic (a perfectly orthogonal channel must itself carry
+rho = 0.3398, 3.01x anything we own; 10.1 orthogonal channels to reach 3.00 A against a measured
+stable rank of 2.057) prices decorrelation out before any measurement, and my section 1 confirms it
+from the other side.

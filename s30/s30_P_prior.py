@@ -134,6 +134,19 @@ def main():
     run("ORACLE_PERRES", lambda r: r["r_res"][r["ii"]] + r["r_res"][r["jj"]])
     run("LFO_GLOBALPROF5", lambda r: gprof[r["fold"]][r["b"]])
     run("NF_POOLPROF5", lambda r: r["prof_pool"][r["b"]])
+    # WHICH HALF IS MISSING: the sign or the magnitude?  Both arms are ORACLE in exactly one
+    # half and leave-fold-out native-free in the other.
+    gmag = {f: np.abs(np.array([r["prof"] for r in R if r["fold"] != f])).mean(0) for f in F}
+    run("ORACLEsign_LFOmag", lambda r: np.sign(r["prof"])[r["b"]] * gmag[r["fold"]][r["b"]])
+    run("ORACLEmag_LFOsign", lambda r: np.abs(r["prof"])[r["b"]] * np.sign(gprof[r["fold"]])[r["b"]])
+    # matched-accuracy sign corruption (mandatory null, `error-coherence-decides-correctors`)
+    rngc = np.random.default_rng(300202)
+    for acc in (0.9, 0.8, 0.7, 0.6):
+        flip = {r["pdb"]: np.where(rngc.random(5) < acc, 1.0, -1.0) for r in R}
+        run("ORACLE_SEPPROF5_acc%.1f" % acc, lambda r, fl=flip: (r["prof"] * fl[r["pdb"]])[r["b"]])
+    # which separation bin carries the prize (ORACLE, one bin at a time)
+    for q in range(5):
+        run("ORACLE_BIN%d" % q, lambda r, q=q: np.where(r["b"] == q, r["prof"][r["b"]], 0.0))
 
     nt = len(R)
     pm = np.array([r["pool_mean"] for r in R]); pb = np.array([r["pool_best"] for r in R])
