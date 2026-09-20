@@ -1,0 +1,1302 @@
+{
+ "prereg": "s30/PREREG_S30_X.md @ d4305d17 (H-X2)",
+ "n_targets_resolved": 126,
+ "missing": [],
+ "n_multi_model": 111,
+ "n_single_model": 15,
+ "n_models_mean": 15.603174603174603,
+ "n_models_median": 20.0,
+ "floor_medoid_to_model1_ORACLE": {
+  "mean": 0.6136258734128888,
+  "median": 0.3783519698899263,
+  "sd": 0.7630256764537136,
+  "max": 4.294274957157567,
+  "min": 0.0,
+  "frac_above_1A": 0.21428571428571427
+ },
+ "spread_pairwise_ORACLE": {
+  "mean": 0.9534661668111248,
+  "median": 0.8061946892824958,
+  "max": 4.26481836275199
+ },
+ "endpoint_builtchain": {
+  "mean": 3.2147651542109985,
+  "median": 2.96606842892922,
+  "tail18": 6.287164515173032,
+  "rest": 2.7026985940506587
+ },
+ "corr_floor_endpoint": 0.12195979361178262,
+ "corr_spread_endpoint": 0.1008568272097908,
+ "corr_floor_poolbest_ORACLE": 0.3105145042121402,
+ "tail_enrichment": {
+  "d_endpoint_tail_minus_rest": 3.5844659211223733,
+  "d_floor_tail_minus_rest_ORACLE": -0.1775816831677295,
+  "d_spread_tail_minus_rest_ORACLE": -0.48717987172075317,
+  "share_of_tail_excess_explained_by_floor": -0.04954202022713745,
+  "share_of_tail_excess_explained_by_spread": -0.13591421496014855
+ },
+ "DECISION_RULE": "PRICED AND DEAD at this endpoint if mean floor < 1.0 A AND the floor explains < 25% of the FAIL18 excess; LIVE otherwise (registered before the numbers)",
+ "rows": [
+  {
+   "pdb": "1A13",
+   "n": 14,
+   "n_models": 14,
+   "spread_pairwise_ORACLE": 1.1874613480287277,
+   "spread_to_model1_ORACLE": 1.1227699395656516,
+   "floor_medoid_to_model1_ORACLE": 1.2093630401093283,
+   "endpoint_builtchain": 2.6359449136296362,
+   "pool_best_ORACLE": 1.7591813802719116
+  },
+  {
+   "pdb": "1A1P",
+   "n": 13,
+   "n_models": 21,
+   "spread_pairwise_ORACLE": 0.8685827455803917,
+   "spread_to_model1_ORACLE": 0.818364764967567,
+   "floor_medoid_to_model1_ORACLE": 0.6351189114213249,
+   "endpoint_builtchain": 3.4421328534429145,
+   "pool_best_ORACLE": 2.5868396759033203
+  },
+  {
+   "pdb": "1CB3",
+   "n": 11,
+   "n_models": 40,
+   "spread_pairwise_ORACLE": 1.6300757814461337,
+   "spread_to_model1_ORACLE": 1.960732990363366,
+   "floor_medoid_to_model1_ORACLE": 1.870287824248552,
+   "endpoint_builtchain": 2.93444144788262,
+   "pool_best_ORACLE": 2.0284502506256104
+  },
+  {
+   "pdb": "1CEK",
+   "n": 13,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 0.5251420854561515,
+   "pool_best_ORACLE": 0.3419731855392456
+  },
+  {
+   "pdb": "1CS9",
+   "n": 9,
+   "n_models": 7,
+   "spread_pairwise_ORACLE": 2.5659990267610775,
+   "spread_to_model1_ORACLE": 2.3725119344159014,
+   "floor_medoid_to_model1_ORACLE": 1.7736430456581034,
+   "endpoint_builtchain": 4.205953875937748,
+   "pool_best_ORACLE": 1.358286738395691
+  },
+  {
+   "pdb": "1D0W",
+   "n": 12,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.1450495278456043,
+   "spread_to_model1_ORACLE": 0.9328745726576116,
+   "floor_medoid_to_model1_ORACLE": 0.5895274493036277,
+   "endpoint_builtchain": 1.6416796768713136,
+   "pool_best_ORACLE": 0.9470975399017334
+  },
+  {
+   "pdb": "1D6X",
+   "n": 13,
+   "n_models": 19,
+   "spread_pairwise_ORACLE": 1.6155753782198168,
+   "spread_to_model1_ORACLE": 1.5296134072676264,
+   "floor_medoid_to_model1_ORACLE": 1.1194427207082112,
+   "endpoint_builtchain": 1.7814298703635463,
+   "pool_best_ORACLE": 2.4193971157073975
+  },
+  {
+   "pdb": "1DEP",
+   "n": 15,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 0.8716032573661616,
+   "pool_best_ORACLE": 0.5086030960083008
+  },
+  {
+   "pdb": "1DJF",
+   "n": 15,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 1.9785557988047948,
+   "pool_best_ORACLE": 1.1628154516220093
+  },
+  {
+   "pdb": "1FUV",
+   "n": 11,
+   "n_models": 19,
+   "spread_pairwise_ORACLE": 0.5530453331237739,
+   "spread_to_model1_ORACLE": 0.6691622422404789,
+   "floor_medoid_to_model1_ORACLE": 0.5604192370360652,
+   "endpoint_builtchain": 3.673265497220449,
+   "pool_best_ORACLE": 2.4140655994415283
+  },
+  {
+   "pdb": "1G89",
+   "n": 13,
+   "n_models": 16,
+   "spread_pairwise_ORACLE": 1.3691108429139571,
+   "spread_to_model1_ORACLE": 1.2423355155528228,
+   "floor_medoid_to_model1_ORACLE": 0.9720193154247644,
+   "endpoint_builtchain": 4.808669385879054,
+   "pool_best_ORACLE": 2.4921584129333496
+  },
+  {
+   "pdb": "1I6Y",
+   "n": 11,
+   "n_models": 15,
+   "spread_pairwise_ORACLE": 1.8022334766580874,
+   "spread_to_model1_ORACLE": 2.340514170350616,
+   "floor_medoid_to_model1_ORACLE": 2.1209171128473847,
+   "endpoint_builtchain": 3.2399091455642335,
+   "pool_best_ORACLE": 2.5142531394958496
+  },
+  {
+   "pdb": "1I8E",
+   "n": 11,
+   "n_models": 15,
+   "spread_pairwise_ORACLE": 0.8438036200910068,
+   "spread_to_model1_ORACLE": 0.8617528121910222,
+   "floor_medoid_to_model1_ORACLE": 0.7670437037230778,
+   "endpoint_builtchain": 2.4630798416163664,
+   "pool_best_ORACLE": 2.0106635093688965
+  },
+  {
+   "pdb": "1I93",
+   "n": 11,
+   "n_models": 15,
+   "spread_pairwise_ORACLE": 2.0593497286652735,
+   "spread_to_model1_ORACLE": 1.8578571692279378,
+   "floor_medoid_to_model1_ORACLE": 1.5430899515637062,
+   "endpoint_builtchain": 2.288304732229336,
+   "pool_best_ORACLE": 2.0792715549468994
+  },
+  {
+   "pdb": "1ID6",
+   "n": 15,
+   "n_models": 11,
+   "spread_pairwise_ORACLE": 1.668692056104163,
+   "spread_to_model1_ORACLE": 1.9112704554091917,
+   "floor_medoid_to_model1_ORACLE": 1.7905753086243272,
+   "endpoint_builtchain": 5.578027933747703,
+   "pool_best_ORACLE": 3.543567180633545
+  },
+  {
+   "pdb": "1IM7",
+   "n": 13,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 3.888708008471984,
+   "pool_best_ORACLE": 2.2772343158721924
+  },
+  {
+   "pdb": "1JBF",
+   "n": 15,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.0209657780907302,
+   "spread_to_model1_ORACLE": 0.8083808851398786,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 4.9628959361833775,
+   "pool_best_ORACLE": 1.6687090396881104
+  },
+  {
+   "pdb": "1KMR",
+   "n": 15,
+   "n_models": 17,
+   "spread_pairwise_ORACLE": 0.8684988496412924,
+   "spread_to_model1_ORACLE": 0.5948267181079453,
+   "floor_medoid_to_model1_ORACLE": 0.12302846684880482,
+   "endpoint_builtchain": 3.649807053982285,
+   "pool_best_ORACLE": 2.0612261295318604
+  },
+  {
+   "pdb": "1KWE",
+   "n": 16,
+   "n_models": 11,
+   "spread_pairwise_ORACLE": 1.8459640749090802,
+   "spread_to_model1_ORACLE": 1.7803444780691666,
+   "floor_medoid_to_model1_ORACLE": 1.2306607175657214,
+   "endpoint_builtchain": 2.4127126889812684,
+   "pool_best_ORACLE": 2.8625335693359375
+  },
+  {
+   "pdb": "1KYC",
+   "n": 15,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 0.6933376516309304,
+   "pool_best_ORACLE": 0.37789255380630493
+  },
+  {
+   "pdb": "1KZ2",
+   "n": 16,
+   "n_models": 39,
+   "spread_pairwise_ORACLE": 0.34896496332600263,
+   "spread_to_model1_ORACLE": 0.3250771590703383,
+   "floor_medoid_to_model1_ORACLE": 0.38474788303034163,
+   "endpoint_builtchain": 1.8604557650061362,
+   "pool_best_ORACLE": 1.2814403772354126
+  },
+  {
+   "pdb": "1LB7",
+   "n": 16,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.2334432421568757,
+   "spread_to_model1_ORACLE": 1.0357516298100975,
+   "floor_medoid_to_model1_ORACLE": 0.6057200080701121,
+   "endpoint_builtchain": 4.962793702639683,
+   "pool_best_ORACLE": 2.0050759315490723
+  },
+  {
+   "pdb": "1M02",
+   "n": 12,
+   "n_models": 19,
+   "spread_pairwise_ORACLE": 1.671914194211242,
+   "spread_to_model1_ORACLE": 1.4382146703965974,
+   "floor_medoid_to_model1_ORACLE": 0.6461149705714792,
+   "endpoint_builtchain": 3.053398788263723,
+   "pool_best_ORACLE": 2.299534797668457
+  },
+  {
+   "pdb": "1M23",
+   "n": 13,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 0.18830215166534012,
+   "spread_to_model1_ORACLE": 0.241178642737713,
+   "floor_medoid_to_model1_ORACLE": 0.2006106118971141,
+   "endpoint_builtchain": 1.331122376795056,
+   "pool_best_ORACLE": 0.7946493029594421
+  },
+  {
+   "pdb": "1MF6",
+   "n": 12,
+   "n_models": 15,
+   "spread_pairwise_ORACLE": 0.8269955927281342,
+   "spread_to_model1_ORACLE": 0.929216555839745,
+   "floor_medoid_to_model1_ORACLE": 0.9181058592016064,
+   "endpoint_builtchain": 1.207076740609544,
+   "pool_best_ORACLE": 0.5651609897613525
+  },
+  {
+   "pdb": "1N9U",
+   "n": 10,
+   "n_models": 21,
+   "spread_pairwise_ORACLE": 0.11574715252965832,
+   "spread_to_model1_ORACLE": 0.1009753640651182,
+   "floor_medoid_to_model1_ORACLE": 0.0477365308462869,
+   "endpoint_builtchain": 2.6781613027586038,
+   "pool_best_ORACLE": 1.9814393520355225
+  },
+  {
+   "pdb": "1NIZ",
+   "n": 14,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 2.7361606014532738,
+   "pool_best_ORACLE": 1.309677004814148
+  },
+  {
+   "pdb": "1RG4",
+   "n": 16,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 1.1030171694996527,
+   "spread_to_model1_ORACLE": 1.0148930499246047,
+   "floor_medoid_to_model1_ORACLE": 0.6266590459825249,
+   "endpoint_builtchain": 2.723302881597102,
+   "pool_best_ORACLE": 1.8944470882415771
+  },
+  {
+   "pdb": "1RSW",
+   "n": 12,
+   "n_models": 11,
+   "spread_pairwise_ORACLE": 2.295441059835517,
+   "spread_to_model1_ORACLE": 2.526473680569534,
+   "floor_medoid_to_model1_ORACLE": 1.7836054854329173,
+   "endpoint_builtchain": 4.270158269320753,
+   "pool_best_ORACLE": 3.183152198791504
+  },
+  {
+   "pdb": "1S9Z",
+   "n": 16,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 0.18198112330908295,
+   "pool_best_ORACLE": 0.1595955491065979
+  },
+  {
+   "pdb": "1TOR",
+   "n": 10,
+   "n_models": 5,
+   "spread_pairwise_ORACLE": 0.7853937858368576,
+   "spread_to_model1_ORACLE": 0.6282106632175064,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 2.0651516336592146,
+   "pool_best_ORACLE": 0.9307210445404053
+  },
+  {
+   "pdb": "1U62",
+   "n": 11,
+   "n_models": 12,
+   "spread_pairwise_ORACLE": 1.7225512669339018,
+   "spread_to_model1_ORACLE": 1.5003481807182988,
+   "floor_medoid_to_model1_ORACLE": 1.071458717451302,
+   "endpoint_builtchain": 3.805114998188511,
+   "pool_best_ORACLE": 2.3797261714935303
+  },
+  {
+   "pdb": "2BAO",
+   "n": 10,
+   "n_models": 12,
+   "spread_pairwise_ORACLE": 1.1174450320914942,
+   "spread_to_model1_ORACLE": 1.0119779685962673,
+   "floor_medoid_to_model1_ORACLE": 0.7584891010747704,
+   "endpoint_builtchain": 1.8626218040794973,
+   "pool_best_ORACLE": 1.2232229709625244
+  },
+  {
+   "pdb": "2BFI",
+   "n": 12,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 7.030048363993378,
+   "pool_best_ORACLE": 2.215287923812866
+  },
+  {
+   "pdb": "2BP4",
+   "n": 16,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.9782721314838411,
+   "spread_to_model1_ORACLE": 0.953665449532087,
+   "floor_medoid_to_model1_ORACLE": 1.1339984844216637,
+   "endpoint_builtchain": 5.274054620655451,
+   "pool_best_ORACLE": 0.6306326985359192
+  },
+  {
+   "pdb": "2EFZ",
+   "n": 16,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.44779903243506686,
+   "spread_to_model1_ORACLE": 0.4672575196931474,
+   "floor_medoid_to_model1_ORACLE": 0.4564925456660255,
+   "endpoint_builtchain": 3.643687256238115,
+   "pool_best_ORACLE": 2.561685562133789
+  },
+  {
+   "pdb": "2F3A",
+   "n": 13,
+   "n_models": 5,
+   "spread_pairwise_ORACLE": 0.3112809441553744,
+   "spread_to_model1_ORACLE": 0.3903937206779384,
+   "floor_medoid_to_model1_ORACLE": 0.3433495589548308,
+   "endpoint_builtchain": 1.1601615229980498,
+   "pool_best_ORACLE": 0.7255584001541138
+  },
+  {
+   "pdb": "2FBU",
+   "n": 12,
+   "n_models": 5,
+   "spread_pairwise_ORACLE": 2.4428766202076377,
+   "spread_to_model1_ORACLE": 2.450356753700912,
+   "floor_medoid_to_model1_ORACLE": 1.3390461597670908,
+   "endpoint_builtchain": 2.99769540997582,
+   "pool_best_ORACLE": 2.2431859970092773
+  },
+  {
+   "pdb": "2JN5",
+   "n": 12,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 0.34209499323366777,
+   "spread_to_model1_ORACLE": 0.3173587854520554,
+   "floor_medoid_to_model1_ORACLE": 0.20030641450334988,
+   "endpoint_builtchain": 5.606004981752246,
+   "pool_best_ORACLE": 2.6896302700042725
+  },
+  {
+   "pdb": "2L7T",
+   "n": 11,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 2.0197614205154992,
+   "spread_to_model1_ORACLE": 2.080205780938605,
+   "floor_medoid_to_model1_ORACLE": 1.3942211475213164,
+   "endpoint_builtchain": 3.486538007105897,
+   "pool_best_ORACLE": 2.0153262615203857
+  },
+  {
+   "pdb": "2LER",
+   "n": 11,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.5502930211179556,
+   "spread_to_model1_ORACLE": 0.5602528014153585,
+   "floor_medoid_to_model1_ORACLE": 0.38586303841853753,
+   "endpoint_builtchain": 2.775015933573181,
+   "pool_best_ORACLE": 1.7911219596862793
+  },
+  {
+   "pdb": "2LM8",
+   "n": 13,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.16223402337679832,
+   "spread_to_model1_ORACLE": 0.15928780844918844,
+   "floor_medoid_to_model1_ORACLE": 0.0654749120832753,
+   "endpoint_builtchain": 5.26547670965317,
+   "pool_best_ORACLE": 2.882925510406494
+  },
+  {
+   "pdb": "2LNG",
+   "n": 13,
+   "n_models": 40,
+   "spread_pairwise_ORACLE": 1.099950687124341,
+   "spread_to_model1_ORACLE": 1.1498926458428178,
+   "floor_medoid_to_model1_ORACLE": 0.8370772018892714,
+   "endpoint_builtchain": 4.778535407482649,
+   "pool_best_ORACLE": 2.3960273265838623
+  },
+  {
+   "pdb": "2LU6",
+   "n": 14,
+   "n_models": 19,
+   "spread_pairwise_ORACLE": 1.6552397277595994,
+   "spread_to_model1_ORACLE": 1.3142324611833045,
+   "floor_medoid_to_model1_ORACLE": 0.4400463782371853,
+   "endpoint_builtchain": 3.571829555434367,
+   "pool_best_ORACLE": 2.41469669342041
+  },
+  {
+   "pdb": "2LWS",
+   "n": 12,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.15104305142924923,
+   "spread_to_model1_ORACLE": 0.21061633355082474,
+   "floor_medoid_to_model1_ORACLE": 0.1760555677698476,
+   "endpoint_builtchain": 4.534051099521434,
+   "pool_best_ORACLE": 2.4074862003326416
+  },
+  {
+   "pdb": "2LWU",
+   "n": 15,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.3135208164793486,
+   "spread_to_model1_ORACLE": 0.34408698356358747,
+   "floor_medoid_to_model1_ORACLE": 0.39783048062427445,
+   "endpoint_builtchain": 2.9123286587887747,
+   "pool_best_ORACLE": 1.6413286924362183
+  },
+  {
+   "pdb": "2MAA",
+   "n": 13,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.03965485210015478,
+   "spread_to_model1_ORACLE": 0.04633907033668555,
+   "floor_medoid_to_model1_ORACLE": 0.032063494369083984,
+   "endpoint_builtchain": 1.8943710049882083,
+   "pool_best_ORACLE": 1.582632303237915
+  },
+  {
+   "pdb": "2MAI",
+   "n": 14,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.4791906137622536,
+   "spread_to_model1_ORACLE": 0.5037964652873835,
+   "floor_medoid_to_model1_ORACLE": 0.5272317840535606,
+   "endpoint_builtchain": 6.369422632035915,
+   "pool_best_ORACLE": 3.0378456115722656
+  },
+  {
+   "pdb": "2MD2",
+   "n": 10,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 0.41950684685614537,
+   "spread_to_model1_ORACLE": 0.31301042533894075,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 1.2661858037701723,
+   "pool_best_ORACLE": 0.9322386384010315
+  },
+  {
+   "pdb": "2MFV",
+   "n": 14,
+   "n_models": 15,
+   "spread_pairwise_ORACLE": 0.07970073093151575,
+   "spread_to_model1_ORACLE": 0.0946903492283435,
+   "floor_medoid_to_model1_ORACLE": 0.1083641935679587,
+   "endpoint_builtchain": 6.040623434444815,
+   "pool_best_ORACLE": 3.9522974491119385
+  },
+  {
+   "pdb": "2MID",
+   "n": 12,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 2.136098269123493,
+   "spread_to_model1_ORACLE": 2.206423951946766,
+   "floor_medoid_to_model1_ORACLE": 1.3711391620556284,
+   "endpoint_builtchain": 3.9087039834165984,
+   "pool_best_ORACLE": 3.2740375995635986
+  },
+  {
+   "pdb": "2MIG",
+   "n": 12,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 2.62865755752371,
+   "spread_to_model1_ORACLE": 2.7640181905520635,
+   "floor_medoid_to_model1_ORACLE": 2.477124296344657,
+   "endpoint_builtchain": 3.533612377380904,
+   "pool_best_ORACLE": 2.516658067703247
+  },
+  {
+   "pdb": "2MJQ",
+   "n": 10,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.5722617770245055,
+   "spread_to_model1_ORACLE": 0.4700632945999952,
+   "floor_medoid_to_model1_ORACLE": 0.23457701278914006,
+   "endpoint_builtchain": 0.3995034794157278,
+   "pool_best_ORACLE": 0.22413215041160583
+  },
+  {
+   "pdb": "2MK7",
+   "n": 9,
+   "n_models": 16,
+   "spread_pairwise_ORACLE": 1.8197726314976752,
+   "spread_to_model1_ORACLE": 1.519950525067387,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 3.100972701674761,
+   "pool_best_ORACLE": 0.7037706971168518
+  },
+  {
+   "pdb": "2MLQ",
+   "n": 16,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 2.0277415180868643,
+   "spread_to_model1_ORACLE": 1.6643686647602611,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 2.4622990699616834,
+   "pool_best_ORACLE": 1.9042634963989258
+  },
+  {
+   "pdb": "2MP9",
+   "n": 12,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 0.5663061995958929,
+   "spread_to_model1_ORACLE": 0.5713077787992765,
+   "floor_medoid_to_model1_ORACLE": 0.6372654123872594,
+   "endpoint_builtchain": 1.266043652465101,
+   "pool_best_ORACLE": 0.4176119267940521
+  },
+  {
+   "pdb": "2MQ2",
+   "n": 14,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.4505552044942834,
+   "spread_to_model1_ORACLE": 0.31576626063743624,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 8.24010323862393,
+   "pool_best_ORACLE": 3.403582811355591
+  },
+  {
+   "pdb": "2MSA",
+   "n": 14,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 5.3098598892107916,
+   "pool_best_ORACLE": 2.8885579109191895
+  },
+  {
+   "pdb": "2N5C",
+   "n": 15,
+   "n_models": 15,
+   "spread_pairwise_ORACLE": 0.6418902755957305,
+   "spread_to_model1_ORACLE": 0.5475963681215325,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 6.342947815097202,
+   "pool_best_ORACLE": 2.4593346118927
+  },
+  {
+   "pdb": "2N9A",
+   "n": 11,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.6636749808794556,
+   "spread_to_model1_ORACLE": 0.5687000409330218,
+   "floor_medoid_to_model1_ORACLE": 0.2947175878552085,
+   "endpoint_builtchain": 1.16370698736763,
+   "pool_best_ORACLE": 0.6362920999526978
+  },
+  {
+   "pdb": "2N9M",
+   "n": 16,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.9382867307592346,
+   "spread_to_model1_ORACLE": 1.7440664210341523,
+   "floor_medoid_to_model1_ORACLE": 1.5089749969451496,
+   "endpoint_builtchain": 3.432045629934662,
+   "pool_best_ORACLE": 2.2907116413116455
+  },
+  {
+   "pdb": "2NB7",
+   "n": 14,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.4529741331260277,
+   "spread_to_model1_ORACLE": 0.3541334294112208,
+   "floor_medoid_to_model1_ORACLE": 0.12192215474901358,
+   "endpoint_builtchain": 4.5779155632591655,
+   "pool_best_ORACLE": 1.2827339172363281
+  },
+  {
+   "pdb": "2NBC",
+   "n": 16,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.30209511430879216,
+   "spread_to_model1_ORACLE": 0.2765663226412802,
+   "floor_medoid_to_model1_ORACLE": 0.25653317302257617,
+   "endpoint_builtchain": 4.8550119987212605,
+   "pool_best_ORACLE": 1.019078254699707
+  },
+  {
+   "pdb": "2NDM",
+   "n": 13,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.6810861312221452,
+   "spread_to_model1_ORACLE": 0.6601013250376484,
+   "floor_medoid_to_model1_ORACLE": 0.324359789853406,
+   "endpoint_builtchain": 6.885037278785359,
+   "pool_best_ORACLE": 1.649061679840088
+  },
+  {
+   "pdb": "2NDN",
+   "n": 16,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.6626191491128474,
+   "spread_to_model1_ORACLE": 0.6590552267832013,
+   "floor_medoid_to_model1_ORACLE": 0.46331286683820677,
+   "endpoint_builtchain": 2.6456703649581588,
+   "pool_best_ORACLE": 0.9773252010345459
+  },
+  {
+   "pdb": "2O0S",
+   "n": 12,
+   "n_models": 9,
+   "spread_pairwise_ORACLE": 0.21418711835108023,
+   "spread_to_model1_ORACLE": 0.2476318516230001,
+   "floor_medoid_to_model1_ORACLE": 0.2764922437764825,
+   "endpoint_builtchain": 3.8476131171205576,
+   "pool_best_ORACLE": 2.3405463695526123
+  },
+  {
+   "pdb": "2P5H",
+   "n": 9,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 2.1561775504293252,
+   "spread_to_model1_ORACLE": 1.8276384622880002,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 2.6141657054800826,
+   "pool_best_ORACLE": 1.839739441871643
+  },
+  {
+   "pdb": "2RUO",
+   "n": 16,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.5631228936078924,
+   "spread_to_model1_ORACLE": 0.6032659648962259,
+   "floor_medoid_to_model1_ORACLE": 0.5718033018037302,
+   "endpoint_builtchain": 0.9707263592432889,
+   "pool_best_ORACLE": 0.7731632590293884
+  },
+  {
+   "pdb": "2XL1",
+   "n": 15,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.29762464663915233,
+   "spread_to_model1_ORACLE": 0.23432133539365038,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 0.514551323125962,
+   "pool_best_ORACLE": 0.3701746463775635
+  },
+  {
+   "pdb": "3BTB",
+   "n": 15,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 4.26481836275199,
+   "spread_to_model1_ORACLE": 4.363472377447079,
+   "floor_medoid_to_model1_ORACLE": 4.294274957157567,
+   "endpoint_builtchain": 4.964543608251532,
+   "pool_best_ORACLE": 2.9685893058776855
+  },
+  {
+   "pdb": "3SGO",
+   "n": 11,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 6.295871726164081,
+   "pool_best_ORACLE": 1.6002593040466309
+  },
+  {
+   "pdb": "5H1H",
+   "n": 16,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 2.1905014370878795,
+   "spread_to_model1_ORACLE": 1.9175743636591474,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 3.255394180697442,
+   "pool_best_ORACLE": 2.7699928283691406
+  },
+  {
+   "pdb": "5MML",
+   "n": 16,
+   "n_models": 30,
+   "spread_pairwise_ORACLE": 0.5924305706006975,
+   "spread_to_model1_ORACLE": 0.5648952263607685,
+   "floor_medoid_to_model1_ORACLE": 0.41869137478576574,
+   "endpoint_builtchain": 1.012069524077431,
+   "pool_best_ORACLE": 0.5626097321510315
+  },
+  {
+   "pdb": "5MXS",
+   "n": 14,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.6291592938233754,
+   "spread_to_model1_ORACLE": 0.4993773486571211,
+   "floor_medoid_to_model1_ORACLE": 0.16620688385542,
+   "endpoint_builtchain": 1.4145413057238587,
+   "pool_best_ORACLE": 1.151322364807129
+  },
+  {
+   "pdb": "5NVB",
+   "n": 15,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.4332582077099016,
+   "spread_to_model1_ORACLE": 1.2901359897636246,
+   "floor_medoid_to_model1_ORACLE": 0.8507763120795062,
+   "endpoint_builtchain": 3.7365097897829513,
+   "pool_best_ORACLE": 2.574502468109131
+  },
+  {
+   "pdb": "5V5B",
+   "n": 10,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 3.404849187039926,
+   "pool_best_ORACLE": 1.0679157972335815
+  },
+  {
+   "pdb": "5W52",
+   "n": 11,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 5.657183238337402,
+   "pool_best_ORACLE": 1.1173932552337646
+  },
+  {
+   "pdb": "5Z5W",
+   "n": 12,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.00991128412239,
+   "spread_to_model1_ORACLE": 0.7491304428775352,
+   "floor_medoid_to_model1_ORACLE": 0.12285404645842178,
+   "endpoint_builtchain": 2.356980479827353,
+   "pool_best_ORACLE": 1.359852910041809
+  },
+  {
+   "pdb": "6A5J",
+   "n": 13,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.18040973101420893,
+   "spread_to_model1_ORACLE": 0.15330918842657942,
+   "floor_medoid_to_model1_ORACLE": 0.06283014575348256,
+   "endpoint_builtchain": 2.802180126013128,
+   "pool_best_ORACLE": 1.5071240663528442
+  },
+  {
+   "pdb": "6B9K",
+   "n": 10,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 2.205091211936077,
+   "spread_to_model1_ORACLE": 3.253514067503031,
+   "floor_medoid_to_model1_ORACLE": 2.934124539585939,
+   "endpoint_builtchain": 3.8610556538027336,
+   "pool_best_ORACLE": 2.07733416557312
+  },
+  {
+   "pdb": "6BJF",
+   "n": 13,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.39350607788572484,
+   "spread_to_model1_ORACLE": 0.4507806458178417,
+   "floor_medoid_to_model1_ORACLE": 0.26879758924260433,
+   "endpoint_builtchain": 0.8153319476348625,
+   "pool_best_ORACLE": 0.5018367767333984
+  },
+  {
+   "pdb": "6BX9",
+   "n": 15,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.6869477613837756,
+   "spread_to_model1_ORACLE": 0.539285645512245,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 4.463418120215786,
+   "pool_best_ORACLE": 3.009758710861206
+  },
+  {
+   "pdb": "6CEJ",
+   "n": 14,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 4.1995625295594845,
+   "spread_to_model1_ORACLE": 4.129636040116855,
+   "floor_medoid_to_model1_ORACLE": 3.3912407720598554,
+   "endpoint_builtchain": 4.38247676347506,
+   "pool_best_ORACLE": 2.1592860221862793
+  },
+  {
+   "pdb": "6EY3",
+   "n": 9,
+   "n_models": 40,
+   "spread_pairwise_ORACLE": 2.6735538953839155,
+   "spread_to_model1_ORACLE": 2.517901539275165,
+   "floor_medoid_to_model1_ORACLE": 1.4846722870046134,
+   "endpoint_builtchain": 2.6073081338883792,
+   "pool_best_ORACLE": 1.6408889293670654
+  },
+  {
+   "pdb": "6F3V",
+   "n": 9,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 0.19812859827043805,
+   "spread_to_model1_ORACLE": 0.15715541936917046,
+   "floor_medoid_to_model1_ORACLE": 0.05309922979735536,
+   "endpoint_builtchain": 4.432126594139739,
+   "pool_best_ORACLE": 2.1748828887939453
+  },
+  {
+   "pdb": "6GIJ",
+   "n": 15,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 2.957512905123082,
+   "spread_to_model1_ORACLE": 2.8260952102683756,
+   "floor_medoid_to_model1_ORACLE": 2.462682896635171,
+   "endpoint_builtchain": 3.1577055249790082,
+   "pool_best_ORACLE": 1.8784338235855103
+  },
+  {
+   "pdb": "6HVK",
+   "n": 12,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 0.09779193420283011,
+   "spread_to_model1_ORACLE": 0.08543131143829569,
+   "floor_medoid_to_model1_ORACLE": 0.04753846885966537,
+   "endpoint_builtchain": 3.5515807232295225,
+   "pool_best_ORACLE": 2.3902111053466797
+  },
+  {
+   "pdb": "6J9P",
+   "n": 12,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 0.22481720538374042,
+   "spread_to_model1_ORACLE": 0.23577397484333007,
+   "floor_medoid_to_model1_ORACLE": 0.2097737692369059,
+   "endpoint_builtchain": 1.0882817162585396,
+   "pool_best_ORACLE": 0.9132280349731445
+  },
+  {
+   "pdb": "6MBM",
+   "n": 16,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 1.0509061835076208,
+   "spread_to_model1_ORACLE": 0.9496272922056009,
+   "floor_medoid_to_model1_ORACLE": 0.9626947229986266,
+   "endpoint_builtchain": 1.3928947610650653,
+   "pool_best_ORACLE": 0.7734891772270203
+  },
+  {
+   "pdb": "6MK8",
+   "n": 13,
+   "n_models": 5,
+   "spread_pairwise_ORACLE": 0.731598411256644,
+   "spread_to_model1_ORACLE": 0.6512086766596612,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 0.7837604244011481,
+   "pool_best_ORACLE": 0.6409529447555542
+  },
+  {
+   "pdb": "6OQP",
+   "n": 13,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.22619574978287743,
+   "spread_to_model1_ORACLE": 0.1607942205267513,
+   "floor_medoid_to_model1_ORACLE": 0.017144190825962514,
+   "endpoint_builtchain": 3.3373651266776307,
+   "pool_best_ORACLE": 2.7261900901794434
+  },
+  {
+   "pdb": "6Q08",
+   "n": 14,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 1.0861205665907834,
+   "spread_to_model1_ORACLE": 1.1257104866104437,
+   "floor_medoid_to_model1_ORACLE": 0.6099837913313498,
+   "endpoint_builtchain": 2.774020326064194,
+   "pool_best_ORACLE": 1.136791706085205
+  },
+  {
+   "pdb": "6QAX",
+   "n": 13,
+   "n_models": 40,
+   "spread_pairwise_ORACLE": 1.7568325187830478,
+   "spread_to_model1_ORACLE": 1.5682331468347224,
+   "floor_medoid_to_model1_ORACLE": 1.3064391253662386,
+   "endpoint_builtchain": 4.226988499642408,
+   "pool_best_ORACLE": 2.5920252799987793
+  },
+  {
+   "pdb": "6RRL",
+   "n": 12,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.25378336175011,
+   "spread_to_model1_ORACLE": 1.0557771320169822,
+   "floor_medoid_to_model1_ORACLE": 0.371956056749511,
+   "endpoint_builtchain": 1.6154908576920395,
+   "pool_best_ORACLE": 0.9141728281974792
+  },
+  {
+   "pdb": "6RRO",
+   "n": 11,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.0479638572966696,
+   "spread_to_model1_ORACLE": 0.814910501057199,
+   "floor_medoid_to_model1_ORACLE": 0.12778718850226445,
+   "endpoint_builtchain": 1.9578937696705971,
+   "pool_best_ORACLE": 0.33573755621910095
+  },
+  {
+   "pdb": "6S0N",
+   "n": 9,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.279796905232215,
+   "spread_to_model1_ORACLE": 1.315611407629616,
+   "floor_medoid_to_model1_ORACLE": 0.8270795038361439,
+   "endpoint_builtchain": 2.7801587667862826,
+   "pool_best_ORACLE": 1.5623576641082764
+  },
+  {
+   "pdb": "6TWG",
+   "n": 13,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 0.19738342358024596,
+   "spread_to_model1_ORACLE": 0.19760940518335335,
+   "floor_medoid_to_model1_ORACLE": 0.15381551866823986,
+   "endpoint_builtchain": 1.4385150910531654,
+   "pool_best_ORACLE": 0.4310274124145508
+  },
+  {
+   "pdb": "6WPB",
+   "n": 14,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 0.291974252401858,
+   "spread_to_model1_ORACLE": 0.3432671169437478,
+   "floor_medoid_to_model1_ORACLE": 0.358973918939122,
+   "endpoint_builtchain": 0.4168287411620455,
+   "pool_best_ORACLE": 0.21359635889530182
+  },
+  {
+   "pdb": "7BX2",
+   "n": 14,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.6457188639820508,
+   "spread_to_model1_ORACLE": 0.8797787728843174,
+   "floor_medoid_to_model1_ORACLE": 0.7252272053702989,
+   "endpoint_builtchain": 2.773407329208493,
+   "pool_best_ORACLE": 1.187502145767212
+  },
+  {
+   "pdb": "7JGX",
+   "n": 13,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.1329702843693226,
+   "spread_to_model1_ORACLE": 1.1267215659959922,
+   "floor_medoid_to_model1_ORACLE": 0.7026221665541643,
+   "endpoint_builtchain": 2.87450071195835,
+   "pool_best_ORACLE": 0.6236392855644226
+  },
+  {
+   "pdb": "7JS6",
+   "n": 15,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.1276284445881952,
+   "spread_to_model1_ORACLE": 1.0991660009734725,
+   "floor_medoid_to_model1_ORACLE": 0.9038028137092796,
+   "endpoint_builtchain": 7.142519913635159,
+   "pool_best_ORACLE": 3.1305882930755615
+  },
+  {
+   "pdb": "7LCW",
+   "n": 15,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.2029010371378588,
+   "spread_to_model1_ORACLE": 1.0360988763879577,
+   "floor_medoid_to_model1_ORACLE": 0.56683108467725,
+   "endpoint_builtchain": 6.5475977572701245,
+   "pool_best_ORACLE": 3.191636562347412
+  },
+  {
+   "pdb": "7N2I",
+   "n": 9,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 1.2300992857521023,
+   "pool_best_ORACLE": 0.7407885789871216
+  },
+  {
+   "pdb": "7P3M",
+   "n": 13,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 1.1489663506052852,
+   "spread_to_model1_ORACLE": 0.9907830949693781,
+   "floor_medoid_to_model1_ORACLE": 0.7675716997282049,
+   "endpoint_builtchain": 1.401559419946992,
+   "pool_best_ORACLE": 0.40786516666412354
+  },
+  {
+   "pdb": "7QZV",
+   "n": 12,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.4659992385209852,
+   "spread_to_model1_ORACLE": 1.5718154843941388,
+   "floor_medoid_to_model1_ORACLE": 1.7372191126154535,
+   "endpoint_builtchain": 1.3903846891161058,
+   "pool_best_ORACLE": 0.7327612042427063
+  },
+  {
+   "pdb": "7S3O",
+   "n": 13,
+   "n_models": 25,
+   "spread_pairwise_ORACLE": 1.886087972116065,
+   "spread_to_model1_ORACLE": 1.5476766615728759,
+   "floor_medoid_to_model1_ORACLE": 0.6406256205723901,
+   "endpoint_builtchain": 4.829866647836813,
+   "pool_best_ORACLE": 2.588998317718506
+  },
+  {
+   "pdb": "7T3H",
+   "n": 10,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 3.985013001325564,
+   "pool_best_ORACLE": 1.5597805976867676
+  },
+  {
+   "pdb": "7VI4",
+   "n": 10,
+   "n_models": 1,
+   "spread_pairwise_ORACLE": 0.0,
+   "spread_to_model1_ORACLE": 0.0,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 2.862621898160966,
+   "pool_best_ORACLE": 0.884853720664978
+  },
+  {
+   "pdb": "7YFS",
+   "n": 16,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.18302112323950095,
+   "spread_to_model1_ORACLE": 0.1578547075529336,
+   "floor_medoid_to_model1_ORACLE": 0.0781315497866855,
+   "endpoint_builtchain": 6.040889676885778,
+   "pool_best_ORACLE": 2.5454061031341553
+  },
+  {
+   "pdb": "8FLP",
+   "n": 13,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.6831615435904619,
+   "spread_to_model1_ORACLE": 0.5875432467061705,
+   "floor_medoid_to_model1_ORACLE": 0.3998516482850657,
+   "endpoint_builtchain": 1.608549011298285,
+   "pool_best_ORACLE": 1.2080036401748657
+  },
+  {
+   "pdb": "8HVS",
+   "n": 10,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.151114536815656,
+   "spread_to_model1_ORACLE": 0.9554995205234825,
+   "floor_medoid_to_model1_ORACLE": 0.3693020985774317,
+   "endpoint_builtchain": 2.0672197085915287,
+   "pool_best_ORACLE": 0.711966335773468
+  },
+  {
+   "pdb": "8IL1",
+   "n": 14,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.9486658677997615,
+   "spread_to_model1_ORACLE": 1.8289533322696758,
+   "floor_medoid_to_model1_ORACLE": 1.153262722939505,
+   "endpoint_builtchain": 3.31369643621651,
+   "pool_best_ORACLE": 2.566478967666626
+  },
+  {
+   "pdb": "8IS3",
+   "n": 9,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.1606138818371332,
+   "spread_to_model1_ORACLE": 1.1556331137919258,
+   "floor_medoid_to_model1_ORACLE": 0.9217150787572589,
+   "endpoint_builtchain": 2.7362592877711083,
+   "pool_best_ORACLE": 1.7952778339385986
+  },
+  {
+   "pdb": "8T61",
+   "n": 16,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 1.4409840053466758,
+   "spread_to_model1_ORACLE": 1.2581094380546762,
+   "floor_medoid_to_model1_ORACLE": 0.0,
+   "endpoint_builtchain": 3.705137587111848,
+   "pool_best_ORACLE": 1.8454616069793701
+  },
+  {
+   "pdb": "8T62",
+   "n": 16,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 0.99290540968211,
+   "spread_to_model1_ORACLE": 1.0988104510652594,
+   "floor_medoid_to_model1_ORACLE": 1.0894458866999284,
+   "endpoint_builtchain": 3.7217838863029167,
+   "pool_best_ORACLE": 1.9480637311935425
+  },
+  {
+   "pdb": "8T63",
+   "n": 16,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 1.5548923523119713,
+   "spread_to_model1_ORACLE": 2.6109440887226625,
+   "floor_medoid_to_model1_ORACLE": 2.550941079655567,
+   "endpoint_builtchain": 6.105595757353645,
+   "pool_best_ORACLE": 3.199414014816284
+  },
+  {
+   "pdb": "8TXS",
+   "n": 16,
+   "n_models": 10,
+   "spread_pairwise_ORACLE": 0.3176251528578384,
+   "spread_to_model1_ORACLE": 0.21985506298126617,
+   "floor_medoid_to_model1_ORACLE": 0.02551206023840574,
+   "endpoint_builtchain": 2.7135204933079833,
+   "pool_best_ORACLE": 0.9029970765113831
+  },
+  {
+   "pdb": "8UN8",
+   "n": 12,
+   "n_models": 23,
+   "spread_pairwise_ORACLE": 0.08130460073490688,
+   "spread_to_model1_ORACLE": 0.062475233448735866,
+   "floor_medoid_to_model1_ORACLE": 0.03117488206924147,
+   "endpoint_builtchain": 1.8955623120876963,
+   "pool_best_ORACLE": 0.7449617385864258
+  },
+  {
+   "pdb": "8ZG2",
+   "n": 11,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.5167547491511056,
+   "spread_to_model1_ORACLE": 0.3570191128046366,
+   "floor_medoid_to_model1_ORACLE": 0.12201745566594005,
+   "endpoint_builtchain": 3.24831601896622,
+   "pool_best_ORACLE": 2.1549971103668213
+  },
+  {
+   "pdb": "9BAF",
+   "n": 16,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.8609220246109809,
+   "spread_to_model1_ORACLE": 0.750607665838913,
+   "floor_medoid_to_model1_ORACLE": 0.5802899500700974,
+   "endpoint_builtchain": 1.6778512129223506,
+   "pool_best_ORACLE": 0.9363853931427002
+  },
+  {
+   "pdb": "9BFL",
+   "n": 10,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.9071572904008322,
+   "spread_to_model1_ORACLE": 0.8723053228287583,
+   "floor_medoid_to_model1_ORACLE": 0.5122564276994197,
+   "endpoint_builtchain": 2.6131019883007234,
+   "pool_best_ORACLE": 1.3344357013702393
+  },
+  {
+   "pdb": "9KAR",
+   "n": 15,
+   "n_models": 15,
+   "spread_pairwise_ORACLE": 0.09374243571241435,
+   "spread_to_model1_ORACLE": 0.08666051430678241,
+   "floor_medoid_to_model1_ORACLE": 0.055416623336427835,
+   "endpoint_builtchain": 7.437696305468429,
+   "pool_best_ORACLE": 1.3997329473495483
+  },
+  {
+   "pdb": "9L1M",
+   "n": 12,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.2447862802450032,
+   "spread_to_model1_ORACLE": 1.0141140287205876,
+   "floor_medoid_to_model1_ORACLE": 0.44466618632616095,
+   "endpoint_builtchain": 4.968067491654659,
+   "pool_best_ORACLE": 2.959625244140625
+  },
+  {
+   "pdb": "9S5G",
+   "n": 13,
+   "n_models": 15,
+   "spread_pairwise_ORACLE": 1.0500410819841364,
+   "spread_to_model1_ORACLE": 0.8666367398282617,
+   "floor_medoid_to_model1_ORACLE": 0.3502440799582783,
+   "endpoint_builtchain": 3.1598517701525854,
+   "pool_best_ORACLE": 2.11210560798645
+  },
+  {
+   "pdb": "9UV5",
+   "n": 9,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 1.6911318544221414,
+   "spread_to_model1_ORACLE": 1.6132410124357537,
+   "floor_medoid_to_model1_ORACLE": 1.3397591783340936,
+   "endpoint_builtchain": 2.1388856336316384,
+   "pool_best_ORACLE": 1.6374348402023315
+  },
+  {
+   "pdb": "9WXK",
+   "n": 13,
+   "n_models": 20,
+   "spread_pairwise_ORACLE": 0.06650982647740002,
+   "spread_to_model1_ORACLE": 0.055682399114571075,
+   "floor_medoid_to_model1_ORACLE": 0.021507769758556162,
+   "endpoint_builtchain": 1.7979069100013527,
+   "pool_best_ORACLE": 1.2482061386108398
+  }
+ ],
+ "VERDICT": "PRICED AND DEAD at this endpoint"
+}

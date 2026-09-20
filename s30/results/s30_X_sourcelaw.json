@@ -1,0 +1,257 @@
+{
+ "frozen_coefficients": {
+  "a_set_mean": 0.803,
+  "b_set_best": 0.298,
+  "source": "Sprint 20 wide-set fit, 2142 cells"
+ },
+ "prereg": "s30/PREREG_S30_X.md @ d4305d17",
+ "H_X1_primary_kladder": {
+  "cells": [
+   {
+    "K": 25,
+    "d_mean": -0.2760000000000007,
+    "d_best": 0.639,
+    "pred": -0.031206000000000567,
+    "obs": -0.015000000000000124,
+    "resid": -0.016206000000000442,
+    "sign_ok": true
+   },
+   {
+    "K": 50,
+    "d_mean": -0.22100000000000009,
+    "d_best": 0.46599999999999997,
+    "pred": -0.038595000000000074,
+    "obs": -0.05500000000000016,
+    "resid": 0.016405000000000086,
+    "sign_ok": true
+   },
+   {
+    "K": 100,
+    "d_mean": -0.13700000000000045,
+    "d_best": 0.2589999999999999,
+    "pred": -0.0328290000000004,
+    "obs": -0.02900000000000036,
+    "resid": -0.0038290000000000407,
+    "sign_ok": true
+   },
+   {
+    "K": 250,
+    "d_mean": -0.0600000000000005,
+    "d_best": 0.09699999999999998,
+    "pred": -0.019274000000000412,
+    "obs": 0.006999999999999673,
+    "resid": -0.026274000000000085,
+    "sign_ok": false
+   },
+   {
+    "K": 1000,
+    "d_mean": 0.06899999999999995,
+    "d_best": -0.14300000000000002,
+    "pred": 0.012792999999999957,
+    "obs": 0.028999999999999915,
+    "resid": -0.016206999999999958,
+    "sign_ok": true
+   },
+   {
+    "K": 2000,
+    "d_mean": 0.1429999999999998,
+    "d_best": -0.20700000000000007,
+    "pred": 0.05314299999999983,
+    "obs": 0.06599999999999984,
+    "resid": -0.012857000000000007,
+    "sign_ok": true
+   }
+  ],
+  "disclosed_cell_NOT_out_of_sample": {
+   "cell": "K25_to_K2000",
+   "pred": 0.0843490000000004,
+   "obs": 0.08099999999999996,
+   "resid": 0.003349000000000435
+  },
+  "n_cells": 6,
+  "mean_abs_resid": 0.015296333333333438,
+  "max_abs_resid": 0.026274000000000085,
+  "sign_correct": 5,
+  "sign_n": 6,
+  "FALSIFIER_mean_abs_resid_bar": 0.1,
+  "FALSIFIER_sign_wrong_frac_bar": 0.3333333333333333,
+  "verdict": "PASS",
+  "collinearity_mean_vs_best_r": -0.9898349294793514,
+  "control_best_only_mean_abs_resid": 0.33300000000000013,
+  "control_mean_only_mean_abs_resid": 0.11983333333333346,
+  "control_best_only_sign_correct": 1
+ },
+ "H_X1_secondary_s24": {
+  "n_cells": 504,
+  "slope_pooled": 1.0412735409206881,
+  "intercept": -0.664707832029354,
+  "r2_pooled": 0.9286857024653333,
+  "fold_CI95_slope_pooled": [
+   1.0297339580300844,
+   1.0559413299505411
+  ],
+  "n_boot": 2000,
+  "per_arm": {
+   "T0_helix": {
+    "slope": 1.0750901215219484,
+    "intercept": -0.36743126128502696,
+    "r2": 0.9949785329333659,
+    "set_mean": 3.866272780404062,
+    "endpoint": 3.7891604120365785
+   },
+   "T1_blind": {
+    "slope": 1.1089369211342939,
+    "intercept": -1.2165185174007833,
+    "r2": 0.935090358698956,
+    "set_mean": 4.021842937558075,
+    "endpoint": 3.243451607060572
+   },
+   "T2_restype": {
+    "slope": 1.0919261656284383,
+    "intercept": -1.1135236519612068,
+    "r2": 0.9281651716270463,
+    "set_mean": 3.956302829418674,
+    "endpoint": 3.2064669266308647
+   },
+   "T3_pool": {
+    "slope": 0.9660587227160612,
+    "intercept": -0.2944902449586978,
+    "r2": 0.955011158519063,
+    "set_mean": 3.591584668514429,
+    "endpoint": 3.1751914524329403
+   }
+  },
+  "union_ceiling": {
+   "T0_helix": {
+    "n_targets_with_a_better_structure_than_the_whole_pool_ORACLE": 12,
+    "pool_best_ORACLE": 1.7108244199364904,
+    "union_best_matched_ORACLE": 1.6968919102178082,
+    "union_best_full_ORACLE": 1.681394888483895,
+    "d_ceiling_matched": -0.013932509718682472,
+    "d_endpoint": 0.008460458067725631,
+    "implied_d_set_mean": 0.015706532956280207
+   },
+   "T1_blind": {
+    "n_targets_with_a_better_structure_than_the_whole_pool_ORACLE": 39,
+    "pool_best_ORACLE": 1.7108244199364904,
+    "union_best_matched_ORACLE": 1.608804639076181,
+    "union_best_full_ORACLE": 1.5296700830435241,
+    "d_ceiling_matched": -0.10201978086030954,
+    "d_endpoint": 0.01704550386227327,
+    "implied_d_set_mean": 0.0590876694379147
+   },
+   "T2_restype": {
+    "n_targets_with_a_better_structure_than_the_whole_pool_ORACLE": 45,
+    "pool_best_ORACLE": 1.7108244199364904,
+    "union_best_matched_ORACLE": 1.5946255486081182,
+    "union_best_full_ORACLE": 1.515354944620475,
+    "d_ceiling_matched": -0.11619887132837228,
+    "d_endpoint": 0.015684548910710597,
+    "implied_d_set_mean": 0.06265481017006916
+   },
+   "T3_pool": {
+    "n_targets_with_a_better_structure_than_the_whole_pool_ORACLE": 47,
+    "pool_best_ORACLE": 1.7108244199364904,
+    "union_best_matched_ORACLE": 1.6010556208834321,
+    "union_best_full_ORACLE": 1.5229490903512404,
+    "d_ceiling_matched": -0.10976879905305827,
+    "d_endpoint": 0.05088457109647944,
+    "implied_d_set_mean": 0.10410420076499477
+   }
+  },
+  "WITHIN_TARGET_slope": 0.9348639197018394,
+  "WITHIN_TARGET_r2": 0.6682807845720993,
+  "WITHIN_TARGET_CI95_target_clustered": [
+   0.8200670406704774,
+   1.0631906092793595
+  ],
+  "WITHIN_TARGET_note": "target-demeaned, 4 arms per target: this is the operator's own response, free of cross-target difficulty"
+ },
+ "GATE_SCORECARD": {
+  "cells": [
+   {
+    "family": "S7-6 K-ladder",
+    "cell": "K25",
+    "obs": -0.015000000000000124,
+    "law_pred": -0.031206000000000567,
+    "ceiling_gate_pred": 0.639
+   },
+   {
+    "family": "S7-6 K-ladder",
+    "cell": "K50",
+    "obs": -0.05500000000000016,
+    "law_pred": -0.038595000000000074,
+    "ceiling_gate_pred": 0.46599999999999997
+   },
+   {
+    "family": "S7-6 K-ladder",
+    "cell": "K100",
+    "obs": -0.02900000000000036,
+    "law_pred": -0.0328290000000004,
+    "ceiling_gate_pred": 0.2589999999999999
+   },
+   {
+    "family": "S7-6 K-ladder",
+    "cell": "K250",
+    "obs": 0.006999999999999673,
+    "law_pred": -0.019274000000000412,
+    "ceiling_gate_pred": 0.09699999999999998
+   },
+   {
+    "family": "S7-6 K-ladder",
+    "cell": "K1000",
+    "obs": 0.028999999999999915,
+    "law_pred": 0.012792999999999957,
+    "ceiling_gate_pred": -0.14300000000000002
+   },
+   {
+    "family": "S7-6 K-ladder",
+    "cell": "K2000",
+    "obs": 0.06599999999999984,
+    "law_pred": 0.05314299999999983,
+    "ceiling_gate_pred": -0.20700000000000007
+   },
+   {
+    "family": "S24 generated-source union",
+    "cell": "T0_helix",
+    "obs": 0.008460458067725631,
+    "law_pred": null,
+    "ceiling_gate_pred": -0.013932509718682472
+   },
+   {
+    "family": "S24 generated-source union",
+    "cell": "T1_blind",
+    "obs": 0.01704550386227327,
+    "law_pred": null,
+    "ceiling_gate_pred": -0.10201978086030954
+   },
+   {
+    "family": "S24 generated-source union",
+    "cell": "T2_restype",
+    "obs": 0.015684548910710597,
+    "law_pred": null,
+    "ceiling_gate_pred": -0.11619887132837228
+   },
+   {
+    "family": "S24 generated-source union",
+    "cell": "T3_pool",
+    "obs": 0.05088457109647944,
+    "law_pred": null,
+    "ceiling_gate_pred": -0.10976879905305827
+   }
+  ],
+  "ceiling_gate_sign_correct": 1,
+  "ceiling_gate_sign_n": 10,
+  "source_law_sign_correct": 5,
+  "source_law_sign_n": 6,
+  "READING": "the ceiling gate predicts the DIRECTION of the endpoint move; a gate that is wrong on the sign is worse than no gate, because it rejects exactly the spaces it should admit and admits the ones it should reject"
+ },
+ "chimera_inversion_APPROXIMATE": {
+  "n": 12,
+  "space_mean_rmsd": 3.877063655100315,
+  "chimera_best_ORACLE": 2.1801305456692583,
+  "pool_best_ORACLE": 1.5268146221836407,
+  "NOTE": "the pool's MEAN on these 12 targets is not stored in any artefact, so the chimera cell is an INVERSION, not a prediction: given the observed endpoint deficit and the measured ceiling deficit, what Delta(set mean) does the law require? Labelled approximate wherever it is quoted.",
+  "d_ceiling": 0.6533159234856176
+ }
+}
