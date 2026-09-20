@@ -2771,3 +2771,144 @@ Artefacts: `s29/THEORY.md` commit d433dfff (corollary 2b marked WITHDRAWN in pla
 prediction-2 block marked FIRED, M6 restated, the 1.6-2.7x band, the provenance correction in
 8.2); the saturation numbers are mine and reproduce in seconds from `s12.instrument.distogram` and
 the DIS top-75 average on 1A13 / 2BFI / 9KAR; `tests/test_s29_T.py` 12 pass unchanged.
+
+## S29-L30 -- RUNG 9 (LANE M's C13): THE ORACLE CEILING OF THE TOP-128 PREFIX, WHICH BOUNDS EVERY QUANTUM ARM THIS PROJECT HAS RUN OR COULD RUN IN THE DEPLOYED ENCODING -- THE QUANTUM STAGE's FIELD OF VIEW IS NOT THE CONSTRAINT: WIDENING 75 -> 128 BUYS 0.0663 A ON THE ONLY CLASS THE CVaR TAIL CAN REACH (1.84x MDE, 5/5 FOLDS, 50W/0L/76T) WHILE THE FULL K=500 IS ONLY 0.1543 A FURTHER; THE WHOLE DEPLOYED QUANTUM SELECTION ARCHITECTURE HAS AN ORACLE CEILING OF 2.7605 A (production 3.0483 -> 2.7605), AND ITS TRANSFERABLE PART IS ZERO -- THE ORACLE GLOBAL PREFIX IS m = 72 (WORTH -0.0018 A, i.e. THE SHIPPED 75) AND THE LEAVE-FOLD-OUT PREFIX IS +0.0079 A WORSE THAN PRODUCTION AT 0.30x MDE (2026-09-20 01:03, O)
+
+Question, set by the coordinator from lane M's convenience-choice audit C13: the deployed pipeline
+widens the retained prefix to 2**n = 128 when the quantum stage is on (`core/pipeline.py:758`), and
+the set-equality theorem (S25, `s24/d_harness.py` docstring, 3,888 adversarial cells, 0 violations)
+says the realised CVaR tail's support is ALWAYS a subset of an initial prefix of the energy order.
+So the ORACLE ceiling of the top-128 prefix is a hard bound on every arm the deployed quantum
+stage can produce, and it is absent from the record. What is it?
+
+THE PREFIX IS NATIVE-FREE (the DIS order with `s27.run_pool.topm`'s stable tie key; the shipped
+top-75 is 100% inside it by construction). EVERY RMSD IN THIS ENTRY IS ORACLE. Nothing here is
+deployable except the one leave-fold-out row, which is labelled in its own block.
+
+### The three prefixes, read together (ORACLE, point cloud, 126 targets)
+| operator class (all ORACLE) | top-75 | **TOP-128** | K=500 | what reaches it |
+|---|---|---|---|---|
+| best single member | 2.3062 | **2.1458** | 1.7108 | a perfect ranker |
+| best PREFIX-m average (m free per target) | 2.8267 | **2.7605** | 2.6062 | **the CVaR tail's exact reachable set** |
+| convex hull, shared frame (`cf`) | 1.9975 | **1.8071** | 1.1167 | any weighting of the prefix |
+| production (the deployable incumbent) | 3.0483 | 3.0483 | 3.0483 | -- |
+
+The middle row is the one that bounds the architecture, because the set-equality theorem says the
+tail IS a prefix: **the best structure the deployed quantum selection can emit, with the native in
+hand, is 2.7605 A**, against production's 3.0483. The entire quantum stage's ORACLE headroom, inside
+its own field of view and through its own readout, is **-0.2879 A** -- and see the transfer row below
+for how much of that is reachable (none).
+
+Widening the prefix, ORACLE, `ST.fmt` verbatim:
+```
+  ORACLE best1_top128 vs ORACLE best1_top75 (POINT CLOUD)
+    a 2.1458 (med 2.0637)   b 2.3062 (med 2.2616)   n=126
+    effect -0.1604   median -0.0119   SE 0.0250   MDE 0.0701   effect/MDE -2.29
+    iid  CI95 [-0.2127, -0.1130]
+    fold CI95 [-0.2143, -0.1057]   folds same sign 5/5   per-fold 0:-0.106 1:-0.222 2:-0.079 3:-0.152 4:-0.233
+    65W/0L/61T   worst degradation +0.0000 (1A13)   p90 +0.0000   power 1.00  Type-M 1.00
+    concentration: drop-top10 -0.0960 vs uniform-effect null p10/p50/p90 -0.1193/-0.0958/-0.0742 -> pctile 0.497
+    VERDICT: BETTER
+  ORACLE bestm128 vs ORACLE bestm_top75 (POINT CLOUD)
+    a 2.7605 (med 2.5610)   b 2.8267 (med 2.6682)   n=126
+    effect -0.0663   median +0.0000   SE 0.0129   MDE 0.0361   effect/MDE -1.84
+    iid  CI95 [-0.0930, -0.0425]
+    fold CI95 [-0.0785, -0.0557]   folds same sign 5/5   per-fold 0:-0.070 1:-0.057 2:-0.050 3:-0.091 4:-0.064
+    50W/0L/76T   worst degradation +0.0000 (1A13)   p90 +0.0000   power 1.00  Type-M 1.00
+    concentration: drop-top10 -0.0308 vs uniform-effect null p10/p50/p90 -0.0436/-0.0312/-0.0203 -> pctile 0.518
+    VERDICT: BETTER
+  ORACLE hull_top128 vs ORACLE hull_top75 (POINT CLOUD)
+    a 1.8071 (med 1.4603)   b 1.9975 (med 1.6525)   n=126
+    effect -0.1903   median -0.0863   SE 0.0240   MDE 0.0673   effect/MDE -2.83
+    iid  CI95 [-0.2370, -0.1449]
+    fold CI95 [-0.2453, -0.1403]   folds same sign 5/5   per-fold 0:-0.128 1:-0.191 2:-0.129 3:-0.192 4:-0.291
+    117W/6L/3T   worst degradation +0.0890 (7YFS)   p90 -0.0000   power 1.00  Type-M 1.00
+    concentration: drop-top10 -0.1259 vs uniform-effect null p10/p50/p90 -0.1528/-0.1275/-0.1063 -> pctile 0.531
+    VERDICT: BETTER
+```
+And what the prefix COSTS against the full pool, ORACLE:
+```
+  ORACLE bestm_pool vs ORACLE bestm128 (POINT CLOUD)
+    a 2.6062 (med 2.4661)   b 2.7605 (med 2.5610)   n=126
+    effect -0.1543   median -0.0026   SE 0.0282   MDE 0.0790   effect/MDE -1.95
+    iid  CI95 [-0.2143, -0.1028]
+    fold CI95 [-0.1900, -0.1095]   folds same sign 5/5   per-fold 0:-0.070 1:-0.209 2:-0.164 3:-0.142 4:-0.185
+    66W/0L/60T   worst degradation +0.0000 (1CB3)   p90 +0.0000   power 1.00  Type-M 1.00
+    concentration: drop-top10 -0.0770 vs uniform-effect null p10/p50/p90 -0.1024/-0.0769/-0.0563 -> pctile 0.500
+    VERDICT: BETTER
+  ORACLE hull_pool vs ORACLE hull_top128 (POINT CLOUD)
+    a 1.1167 (med 1.1002)   b 1.8071 (med 1.4603)   n=126
+    effect -0.6904   median -0.3303   SE 0.0772   MDE 0.2161   effect/MDE -3.19
+    iid  CI95 [-0.8543, -0.5509]
+    fold CI95 [-0.8200, -0.5140]   folds same sign 5/5   per-fold 0:-0.359 1:-0.656 2:-0.848 3:-0.834 4:-0.751
+    124W/2L/0T   worst degradation +0.0008 (2NBC)   p90 -0.0183   power 1.00  Type-M 1.00
+    concentration: drop-top10 -0.5003 vs uniform-effect null p10/p50/p90 -0.5879/-0.5029/-0.4204 -> pctile 0.512
+    VERDICT: BETTER
+```
+
+### The coordinator's question, answered
+**The quantum stage's field of view is not the constraint.** Widening 75 -> 128 is worth
+-0.0663 A on the reachable-set class (1.84x MDE, fold CI [-0.0785, -0.0557], 5/5 folds, 50W/0L/76T: it
+never hurts, because a wider prefix contains the narrower one's optimum), and the whole remaining
+pool beyond 128 is worth only a further -0.1543 A on the same class. On the single-member and hull
+classes the prefix matters more (-0.1604 and -0.1903 for 75 -> 128; -0.4350 and -0.6904 for 128 -> 500),
+but neither class is reachable by a prefix selector. Widening the prefix is therefore NOT a lever
+nobody has pulled: it is a lever worth 0.07 A ORACLE, and zero achievable (next paragraph).
+
+### The transferable part is zero, which is the third independent instance tonight
+The per-target ORACLE prefix m is worth -0.2879 A inside the top-128 (-0.4421 over the whole pool).
+The GLOBAL choice -- one m for all 126 targets -- is **m = 72, worth -0.0018 A**, i.e. the shipped
+75 is already at the global optimum to two decimal places. And the honest transfer measurement,
+the prefix chosen LEAVE-FOLD-OUT (m per fold {0: 70, 1: 108, 2: 72, 3: 72, 4: 72}), is:
+```
+  prefix-m chosen LEAVE-FOLD-OUT inside top128 vs production (POINT CLOUD, DEPLOYABLE)
+    a 3.0562 (med 2.8572)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0079   median +0.0014   SE 0.0093   MDE 0.0260   effect/MDE +0.30
+    iid  CI95 [-0.0093, +0.0271]
+    fold CI95 [-0.0034, +0.0225]   folds same sign 2/5   per-fold 0:+0.016 1:+0.037 2:-0.002 3:-0.002 4:-0.005
+    59W/67L/0T   worst degradation +0.7445 (1U62)   p90 +0.0525   power 0.14  Type-M 2.90
+    concentration: drop-top10 +0.0218 vs uniform-effect null p10/p50/p90 +0.0106/+0.0207/+0.0328 -> pctile 0.547
+    VERDICT: NOT MEASURED (|effect| 0.0079 <= its own MDE 0.0260, 0.30x)
+```
+**+0.0079 A, WORSE than production, 0.30x MDE, NOT MEASURED, 2/5 folds, 59W/67L.** The per-target
+choice transfers -3% of its own ORACLE gap. This is the same shape as tonight's S29-L20 (the
+typicality-axis step: ORACLE global t = 0 exactly) and S29-L21 (the PC1 family: ORACLE global
+eta = 0 exactly), and it sharpens S22 L4: that entry measured the per-target m transferring 65%
+ACROSS POOL HALVES OF THE SAME TARGET (with that target's own native), and explicitly said it was
+ORACLE; ACROSS TARGETS it transfers nothing. The missing quantity is per-target and it is not in
+any channel here -- the sprint's unified finding, measured a third way.
+
+### The sign / per-target decomposition the coordinator asked for
+For this rung the per-target quantity is m itself, and the gap decomposes cleanly: of the
+-0.2879 A ORACLE per-target gap inside the top-128, **-0.0018 A (1%) is available globally** and
+-0.2860 A (99%) is the per-target choice, of which +0.0079 A transfers. The per-target m is wildly
+dispersed (median 50, deciles ['2', '6', '50', '115', '128'], at the prefix edge m = 128 on 11% of targets), which is why
+no global value captures it and why five router constructions failed to predict it (S22 L7,
+S23 L7). Read as lane T's theorem 2 requires: this rung's ORACLE ceiling is large and its
+achievable version needs a per-target choice, so it is a BOUND, not an opportunity.
+
+### Mechanism beside outcome
+The hull's support inside the top-128 is a median of 6 members (of 128), so the weighting class
+is genuinely sparse at its optimum -- which is why rung 4's sparse arms sit so close to the hull.
+And the prefix-m curve's global minimum at m = 72 against production's m = 75 says the deployed
+set size is not a convenience choice worth revisiting (lane M's C13 answered in the other
+direction from the one it was raised in).
+
+Comparisons this entry: 1 deployable endpoint contrast (the leave-fold-out prefix vs production,
+point cloud), NOT MEASURED; 5 ORACLE prefix contrasts, diagnostics. Built chain: the three rung-9
+structures are queued as chain group E and will be reported in the full ladder table; the
+point-cloud numbers decide the coordinator's question and are posted now, as instructed.
+Artefacts: `s29/results/s29_O_p128_rows.jsonl` (126 rows: per-target prefix curve, hull support,
+best member), `s29/results/s29_O_p128.json` (every ST block), `s29/results/s29_O_mladder.json`
+(the global / leave-fold-out prefix), `s29/results/s29_O_cloud_rows.jsonl :: m_curve` (the m = 1
+to 500 ORACLE curve this rung's middle row is read from); code `s29/s29_O_ladder.py :: p128_row,
+analyse_p128`; tests `tests/test_s29_O.py` (13 pass); job `s26/jobs_done/s29O_p128b.json`
+(246 s, peak RSS 0.308 GB, run under contention with five chain shards).
+CONVENTION NOTE, because it changes which anchor the hull rows reproduce: this lane's hull is
+S10-5's `cf` -- ONE shared transform solved jointly with the weights, the convention an operator
+could actually emit -- whose S10-5 anchors are the "best re-weighting" rows, raw 1.987 (top-75)
+and 1.094 (K=500). This lane gets 1.9975 and 1.1167, deviations +0.0105 and +0.0227, inside the
+pre-registered 0.05 A gate. S10-5's headline "convex hull" rows (1.802 / 0.953 raw, 1.840 / 0.853
+emitted) are its `oa` convention -- each candidate posed on the NATIVE individually -- which no
+operator can emit; that arm is running separately and will be reported in the ladder table with
+this label attached, so the two are never mixed.

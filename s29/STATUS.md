@@ -38,8 +38,8 @@
 
 
 ## O
-- 2026-09-20 00:33 running: S29-L20 posted (rung 6 KILLS H1: ORACLE cos -0.058 below the random-field 0.144 at 2.19x, ORACLE global step EXACTLY t=0, LFO bit-identical to production 126/126 on the chain; FAIL18 cos -0.317, random-18 p 0.0006) and S29-L21 (rung 8 PC1: ORACLE global eta = 0, sign a coin flip 52%, LFO +0.0071 at 0.82x -> lane B's achievable ceiling through this readout is ZERO). Chain ladder now 5 shards + rung 9 (top-128) launched.
-- next: rung 9 (best1 / best prefix-m / hull of the top-128, the quantum stage's whole field of view) posts on its own; then the full ladder table (rungs 1-5) as one ledger entry when the 5 shards finish (~00:55).
+- 2026-09-20 01:03 running: S29-L30 posted (rung 9, the top-128 ORACLE ceiling): the CVaR tail's exact reachable set (a prefix, by the set-equality theorem) tops out at 2.7605 vs production 3.0483; widening 75->128 is worth 0.066 ORACLE and the whole K=500 only 0.154 more, so the quantum field of view is NOT the constraint; the ORACLE global prefix is m=72 and the leave-fold-out prefix is +0.0079 WORSE (0.30x). Third instance tonight of 'global optimum = do nothing, everything is per-target'.
+- next: the oa-convention hull arm (S10-5's 0.853 anchor) is running; chain shards ~60% done; the full ladder table (rungs 1-5 + chain) posts as one entry when they land.
 
 ## D
 - 2026-09-19 23:56 done: cost-RMSD meter built and posted (S29-L2; all four S28 anchors reproduce); prereg checks of O (S29-L3) and X (S29-L4); suite gate 378/3/0 on 17 light files (S29-L5).

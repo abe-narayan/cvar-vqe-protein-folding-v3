@@ -205,9 +205,23 @@ def test_rand18_null_detects_an_injected_stratum_effect():
 
 
 def test_chain_groups_cover_every_item_once_and_rung6_first():
-    assert len(O.ALL_ITEMS) == 31 and O.ALL_ITEMS[:3] == ["prod", "lfo_LIB75", "lfo_BPRIME"]
+    assert len(O.ALL_ITEMS) == 33 and O.ALL_ITEMS[:3] == ["prod", "lfo_LIB75", "lfo_BPRIME"]
     assert len(set(O.ALL_ITEMS)) == len(O.ALL_ITEMS)
     assert set(O.CHAIN_GROUPS["E"]) == {"best1_top128", "bestm128", "hull_top128"}
+    assert set(O.CHAIN_GROUPS["F"]) == {"hull_oa_top75", "hull_oa_pool"}
+
+
+def test_hull_oa_is_at_least_as_good_as_the_shared_frame_hull_on_a_synthetic_pool():
+    """`oa` poses every member on the target individually, so its reachable set contains the
+    uniform average of the posed members and it can only be helped by the extra freedom; it is
+    NOT emittable (posing needs the native) and the test records why the two rows differ."""
+    W, nat = _pool(k=12, n=8, seed=9)
+    from s27 import s28_A_amp as A
+    frame = A.Frame(W, np.arange(len(W)))
+    r_cf, _, _ = O.oracle_hull(frame.Wf, nat, 8, natp0=O.superpose_one(nat, frame.ref))
+    r_oa, X, w = O.oracle_hull_oa(W, np.arange(len(W)), nat, 8)
+    assert abs(w.sum() - 1) < 1e-12 and (w >= -1e-12).all()
+    assert r_oa <= r_cf + 1e-9
 
 
 def test_chain_shard_partition_is_exact_and_disjoint():

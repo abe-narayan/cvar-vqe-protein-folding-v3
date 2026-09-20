@@ -74,16 +74,24 @@ PC1_JSON = os.path.join(RESULTS, "s29_O_pc1.json")
 M128 = 128
 P128_ROWS = os.path.join(RESULTS, "s29_O_p128_rows.jsonl")
 P128_JSON = os.path.join(RESULTS, "s29_O_p128.json")
+#: rung 5's SECOND convention. S10-5's ladder reports two and never mixes them: `cf` (one shared
+#: transform solved jointly with the weights -- its "best re-weighting" row, raw 1.987 / 1.094) and
+#: `oa` (each candidate posed on the NATIVE individually, then convex-combined -- its "convex hull"
+#: row, raw 1.802 / 0.953, emitted 1.840 / 0.853). `oa` needs the native to POSE each candidate, so
+#: it is not a family any operator here could emit; it is carried because the brief names its
+#: emitted 0.853 as the anchor to reproduce.
+OA_ROWS = os.path.join(RESULTS, "s29_O_hulloa_rows.jsonl")
 RHO_SUM = 1e3                                                  # the sum-to-one augmented row
 HULL_ROUNDS, SPARSE_ROUNDS = 5, 3
 CHAIN_GROUPS = {
     "A": ["prod", "lfo_LIB75", "lfo_BPRIME"],
     "E": ["best1_top128", "bestm128", "hull_top128"],
+    "F": ["hull_oa_top75", "hull_oa_pool"],
     "B": ["best1_top75", "best1_pool", "bestm", "hull_top75", "hull_pool"],
     "C": ["sparse_%s_s%d" % (S, s) for S in SETS for s in SPARSE_S],
     "D": ["basin_%s_k%d" % (S, k) for S in SETS for k in BASIN_K],
 }
-ALL_ITEMS = [it for g in "ABCDE" for it in CHAIN_GROUPS[g]]
+ALL_ITEMS = [it for g in "ABCDEF" for it in CHAIN_GROUPS[g]]
 
 
 # ================================================================== pool, frames, geometry
@@ -461,6 +469,56 @@ def analyse_pc1():
         print(ST.fmt(out[k]["all"]))
     print("pc1:", PC1_JSON)
     return out
+
+
+def oracle_hull_oa(W, idx, nat, n):
+    """ORACLE, S10-5's `oa` convention: pose EVERY member on the native individually, then take the
+    best convex combination.  Not emittable by any operator (posing needs the native); reported
+    because the brief names its emitted value as the anchor."""
+    idx = np.asarray(idx, int)
+    Wo = I.superpose_batch(W[idx], np.asarray(nat, float)).reshape(len(idx), 3 * n)
+    w = convex_nnls(Wo.T, np.asarray(nat, float).ravel())
+    X = (w @ Wo).reshape(n, 3)
+    return float(I.ca_rmsd(X, nat)), X, w
+
+
+def hulloa_row(pdb, verbose=True):
+    t0 = time.time()
+    cand, dis, top, order, dg = load_pool(pdb)
+    W = cand.W; n = cand.n; nat = cand.nat_ca                                  # ORACLE label
+    structs = {}
+    row = dict(pdb=pdb, n=n, fold=int(cand.fold), fail18=bool(pdb in I.FAIL18))
+    for nm, idx in (("top75", np.sort(top)), ("pool", np.arange(cand.k))):
+        r, X, w = oracle_hull_oa(W, idx, nat, n)
+        structs["hull_oa_%s" % nm] = X
+        row["hull_oa_%s" % nm] = r
+        row["hull_oa_%s_support" % nm] = int((w > 1e-9).sum())
+    row["secs"] = time.time() - t0
+    save_structs(pdb, structs, cand.seq, cand.fold, cand.n)
+    if verbose:
+        print("  %s n=%d  ORACLE hull(oa) top-75 %.3f (supp %d)  pool %.3f (supp %d)  %.1fs"
+              % (pdb, n, row["hull_oa_top75"], row["hull_oa_top75_support"], row["hull_oa_pool"],
+                 row["hull_oa_pool_support"], row["secs"]), flush=True)
+    return row
+
+
+def phase_hulloa(pdbs):
+    done = jsonl_rows(OA_ROWS)
+    for pdb in pdbs:
+        if (pdb,) in done:
+            continue
+        append_row(OA_ROWS, hulloa_row(pdb))
+    rows = jsonl_rows(OA_ROWS)
+    if any((p,) not in rows for p in all_pdbs()):
+        print("hulloa rows:", OA_ROWS, "(partial)")
+        return
+    pdbs2 = all_pdbs()
+    for nm, anchor in (("top75", 1.802), ("pool", 0.953)):
+        v = np.array([rows[(p,)]["hull_oa_%s" % nm] for p in pdbs2])
+        print("ORACLE hull(oa) %s: %.4f over 126 (S10-5 raw anchor %.3f, deviation %+.4f); "
+              "support median %.0f" % (nm, v.mean(), anchor, v.mean() - anchor,
+                                       np.median([rows[(p,)]["hull_oa_%s_support" % nm] for p in pdbs2])))
+    print("hulloa rows:", OA_ROWS)
 
 
 # =========================================== rung 9: the top-128 prefix (the quantum field of view)
@@ -925,6 +983,9 @@ def analyse(write=True):
             if it in ("best1_top128", "bestm128", "hull_top128") and os.path.exists(P128_ROWS):
                 p128 = jsonl_rows(P128_ROWS)
                 rc = np.array([p128.get((p,), {}).get(it, np.nan) for p in pdbs])
+            if it.startswith("hull_oa_") and os.path.exists(OA_ROWS):
+                oar = jsonl_rows(OA_ROWS)
+                rc = np.array([oar.get((p,), {}).get(it, np.nan) for p in pdbs])
         rh = np.array([chain.get((p, it), {}).get("rmsd_chain", np.nan) for p in pdbs])
         rhc = np.array([chain.get((p, it), {}).get("rmsd_cloud", np.nan) for p in pdbs])
         if it.startswith("lfo_") and lfo is not None:
@@ -1039,7 +1100,7 @@ def render_table(out):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("mode", choices=["cloud", "lfo", "chain", "pc1", "p128", "analyse"])
+    ap.add_argument("mode", choices=["cloud", "lfo", "chain", "pc1", "p128", "hulloa", "analyse"])
     ap.add_argument("--pdbs", default="")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--groups", default="ABCD")
@@ -1062,6 +1123,8 @@ def main():
         phase_pc1(pdbs)
     elif a.mode == "p128":
         phase_p128(pdbs)
+    elif a.mode == "hulloa":
+        phase_hulloa(pdbs)
     else:
         analyse()
 
