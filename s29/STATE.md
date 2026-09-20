@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:00 Pacific.
+Last update: 2026-09-20 00:02 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -137,6 +137,32 @@ gradient-variance decay flattens.
    D adversary and meter, X configuration space, P projection price, B compatibility Hamiltonian.
    Roles kept distinct: B and X are different state spaces, not variants; D attacks both; L
    keeps reading; O finishes the ceiling ladder that tells us what any of them could reach.
+
+
+## Integration note 3 (2026-09-20 00:02, after S29-L6): THE FUNCTIONAL, NOT THE INFORMATION
+Lane D metered lane X's pair log-score and found the first cost in the record that is not
+ANTI-informative on the near-native ladder: ladder rho +0.018 [-0.069, +0.123] against the
+shipped cost's -0.182 [-0.308, -0.053], a paired difference of +0.200 at 1.45x MDE with 5/5
+folds and power 0.98 (`s29/results/s29_D_cost_audit_X_cost_nll_ca.json`). The mechanism lane D
+states is the sprint's first structural insight: the shipped cost is a BAYES RISK (expected L1
+distance error under a posterior that is about 2x over-confident, S25 L2), whose minimiser is a
+CONTRACTED structure; the pair log-score is a PROPER SCORING RULE of the SAME posterior, whose
+minimiser is not driven to contract. Same information, different functional, +0.200 of ladder
+rho. Lane D also scoped it correctly: the native still sits at the 37.8th percentile of its own
+pool (36.8th under the shipped cost, difference NOT MEASURED), so finding 8 survives and this
+cost can only stop making things worse, not recognise; and the memory `better-matrix-worse-
+ranking` is on the record for exactly this shape.
+CONSEQUENCE. Two independent stages now attack ONE mechanism, contraction under an
+over-confident posterior:
+  P1 (lane P, running): the contraction is removed downstream, at the projection.
+  F1 (queued, lane M on release): the contraction is never created, by swapping ONLY the
+     functional at the selection stage of the SHIPPED pipeline (L1 Bayes risk -> the log score
+     of the same 17-bin posterior, same pool, same K, same readout, same projection), as a
+     deployable leave-fold-out arm on the built chain with the matched control (a monotone
+     re-ranking of the shipped score, which changes the functional's SHAPE but not its
+     information) and the S24-L3 parallel-bias check. If both fail, contraction is closed as a
+     lever and the ceiling is information, not functional form. If either moves the chain, it is
+     the sprint's first movement and lane D attacks it the same hour.
 
 ## Closed in S29
 - H1, the typicality axis (S29-L<O's entry>): the ORACLE global step is exactly zero; the axis
