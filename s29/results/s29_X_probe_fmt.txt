@@ -1,0 +1,319 @@
+S29 LANE X PROBE -- n = 12 targets: 2P5H, 1I6Y, 1M02, 2BFI, 2LWS, 2MP9, 5Z5W, 8HVS, 1A13, 6MBM, 7JGX, 9KAR
+artefact: C:\Users\abena\Protein-Folding-Algorithm\s29\results\s29_X_probe.json
+
+==============================================================================
+GATE 1 (lane T, S29-L15): TV(p_Gamma, p_0) on the SAMPLED distribution > 0.45
+==============================================================================
+  VQE_g05_s0   mean TV 0.5765  median 0.5553  [0.4406, 0.7783]  above 0.45 on 11/12
+  VQE_g1_s0    mean TV 0.5631  median 0.5752  [0.4000, 0.7015]  above 0.45 on 11/12
+  VQE_g2_s0    mean TV 0.5563  median 0.5910  [0.2931, 0.6978]  above 0.45 on 10/12
+  GATE 1 (TV) : CLEARS 0.45
+
+  HOW TO READ THE PASS -- the diagnostic that decides it (lane L, S29-L13: the
+  prepared object must NOT be an eigenvector; |+>^q is an eigenvector of H_mix):
+    arm              S/Smax    mixer/q m/(alpha M)
+    VQE_g0_s0        0.8313     0.0000     0.0225
+    VQE_g05_s0       0.9247     0.8820     0.3792
+    VQE_g1_s0        0.9568     0.8821     0.6476
+    VQE_g2_s0        0.9536     0.8607     0.7868
+
+  THE TAIL UNDER A NON-COMMUTING TERM. NOT A DISCOVERY: `cvar_from_probs`
+  allocates the alpha mass along the ENERGY ORDER, so a full-support state's
+  tail is a prefix BY CONSTRUCTION of the extraction (lane L, S29-L13: this is
+  Barkoutsos eq 12, a definition). It is printed because it shows the mixer did
+  not produce exact zeros, so the ONLY channel it leaves open is m:
+    VQE_g0_s0    tail is an energy PREFIX on 12/12, EQUALS the classical top-m on 12/12
+    VQE_g05_s0   tail is an energy PREFIX on 12/12, EQUALS the classical top-m on 12/12
+    VQE_g1_s0    tail is an energy PREFIX on 12/12, EQUALS the classical top-m on 12/12
+    VQE_g2_s0    tail is an energy PREFIX on 12/12, EQUALS the classical top-m on 12/12
+    VQE_prod_s0  tail is an energy PREFIX on 12/12, EQUALS the classical top-m on 12/12
+
+==============================================================================
+MEANS BY ARM (A; cloud = point cloud, chain = the reporting basis)
+==============================================================================
+  arm                         cloud      med    chain      med
+  ORACLE_best_chimera        2.1801   2.1297   2.1812   2.1297
+  EXACT_argmin               3.9125   3.3791   3.9122   3.3728
+  EXACT_top8                 3.8007   3.3453   3.8513   3.4054
+  EXACT_top75                3.7939   3.4367   3.9000   3.6154
+  EXACT_topm_matched         3.6791   3.0347   3.8159   3.2681
+  CVAROPT|R1                 3.8324   3.3658   3.8568   3.4153
+  CVAROPT|R2                 3.8912   3.3792   3.9113   3.3805
+  GIBBS_T1|R2                3.9049   3.3791   3.9055   3.3729
+  GIBBS_match|R2             3.7411   3.3786   3.8642   3.5760
+  SA_s0|R2                   3.8398   3.4933   3.8574   3.5385
+  VQE_g0_s0|R1               3.8449   3.3362   3.8693   3.4370
+  VQE_g0_s0|R2               3.9514   3.4198   3.9559   3.4367
+  VQE_g1_s0|R1               3.6793   3.0345   3.8190   3.2722
+  VQE_g1_s0|R2               3.7013   3.1713   3.8388   3.4080
+  VQE_g1_s0|R3               3.5860   2.9998   3.7205   3.2321
+  VQE_g1_s1|R2               3.6673   2.9996   3.7962   3.2115
+  VQE_g05_s0|R2              3.8150   3.3120   3.9146   3.5723
+  VQE_g2_s0|R2               3.6891   3.0453   3.8337   3.2886
+  VQE_prod_s0|R2             3.7137   3.3268   3.8743   3.7096
+  UNTRAINED_s0|R2            3.6205   2.6933   3.6937   2.6972
+  GS_g1|R2                   3.7398   3.3790   3.8767   3.6279
+  GS_g0|R2                   3.9125   3.3791   3.9123   3.3729
+  PERM_VQE_g1_s0|R2          3.5928   2.7928   3.7068   2.8995
+  PERM_EXACT_top75           3.6664   3.1504   3.7730   3.2669
+  PRODUCTION (DIS s0)        3.2529            3.3816
+
+==============================================================================
+ORACLE DIAGNOSTICS (labelled ORACLE; they choose nothing)
+==============================================================================
+  best_chimera_rmsd_cloud              mean   2.1801  median   2.1297
+  best_parent_rmsd_cloud               mean   2.9867  median   2.6205
+  pool_best_rmsd                       mean   1.5268  median   1.5795
+  space_mean_rmsd                      mean   3.8771  median   3.5661
+  best_chimera_E_pctile                mean   0.6195  median   0.6352
+  native_pair_E_pctile                 mean   0.7173  median   0.9624
+  corr_E_rmsd                          mean   0.0199  median   0.0497
+  E_argmin_rmsd                        mean   3.9125  median   3.3791
+  scrambled_best_rmsd_cloud            mean   2.2888  median   2.2223
+  scrambled_mean_rmsd                  mean   4.3330  median   3.6949
+  scrambled_argminE_rmsd               mean   3.8266  median   3.3840
+  native_pair_E_projected_pctile       mean   0.7931  median   0.9764
+  native_projected_rmsd                mean   0.1100  median   0.0263
+
+==============================================================================
+MECHANISM (contract rule 18; addendum 20(c); lane T's M5)
+==============================================================================
+  q                            mean    12.7500  [9.0000, 15.0000]
+  M                            mean 13354.6667  [512.0000, 32768.0000]
+  gamma_gap                    mean     7.1655  [1.6735, 14.1795]
+  overlap_vqe_gs               mean     0.4355  [0.0003, 0.8895]
+  gibbs_matched_T              mean    20.3076  [3.2679, 70.0474]
+  sa_distinct                  mean  3430.8333  [168.0000, 12208.0000]
+  p_vqe_entropy                mean     8.4348  [6.1586, 9.7589]
+  secs                         mean   938.8246  [125.7853, 2512.0653]
+  vqe_pr                       mean   569.3481  [45.4869, 1446.4498]
+  vqe_r3_mass                  mean     0.3116  [0.0880, 1.0000]
+  vqe_m                        mean  1327.4167  [49.0000, 3980.0000]
+  VQE_g1_s0|R1|rg                  6.7092
+  VQE_g1_s0|R1|bond                3.2568
+  VQE_g1_s0|R2|rg                  6.7218
+  VQE_g1_s0|R2|bond                3.2879
+  EXACT_top75|rg                   6.7069
+  EXACT_top75|bond                 3.4190
+  ORACLE_best_chimera|rg           6.1980
+  ORACLE_best_chimera|bond         3.8040
+
+==============================================================================
+GATE 2 (T's classical counterpart: SA over the same space at matched evaluations)
+==============================================================================
+  P2 VQE R2 - SA R2 (chain)
+    a 3.8388 (med 3.4080)   b 3.8574 (med 3.5385)   n=12
+    effect -0.0186   median -0.0350   SE 0.0713   MDE 0.1999   effect/MDE -0.09
+    iid  CI95 [-0.1524, +0.1123]
+    fold CI95 [-0.1023, +0.1179]   folds same sign 2/5   per-fold 0:-0.152 1:+0.006 2:+0.069 3:+0.195 4:-0.075
+    7W/5L/0T   worst degradation +0.4245 (9KAR)   p90 +0.2647   power 0.06  Type-M 9.02
+    VERDICT: NOT MEASURED (|effect| 0.0186 <= its own MDE 0.1999, 0.09x)
+
+  P2 VQE R2 - SA R2 (cloud)
+    a 3.7013 (med 3.1713)   b 3.8398 (med 3.4933)   n=12
+    effect -0.1385   median -0.0377   SE 0.0846   MDE 0.2371   effect/MDE -0.58
+    iid  CI95 [-0.3060, +0.0130]
+    fold CI95 [-0.2818, +0.0202]   folds same sign 3/5   per-fold 0:-0.385 1:+0.002 2:-0.049 3:+0.064 4:-0.135
+    8W/4L/0T   worst degradation +0.2023 (2MP9)   p90 +0.1545   power 0.37  Type-M 1.62
+    VERDICT: NOT MEASURED (|effect| 0.1385 <= its own MDE 0.2371, 0.58x)
+
+
+==============================================================================
+GATE 3 (the endpoint, built chain)
+==============================================================================
+  P1 VQE_g1_s0|R2 - PRODUCTION (chain)
+    a 3.8388 (med 3.4080)   b 3.3816 (med 2.7568)   n=12
+    effect +0.4572   median +0.4471   SE 0.1388   MDE 0.3890   effect/MDE +1.18
+    iid  CI95 [+0.2087, +0.7207]
+    fold CI95 [+0.1454, +0.6161]   folds same sign 4/5   per-fold 0:+0.630 1:-0.080 2:+0.165 3:+0.332 4:+0.670
+    3W/9L/0T   worst degradation +1.3628 (8HVS)   p90 +1.0789   power 0.91  Type-M 1.05
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.05x]
+
+  P1 VQE_g1_s0|R1 - PRODUCTION (chain)
+    a 3.8190 (med 3.2722)   b 3.3816 (med 2.7568)   n=12
+    effect +0.4374   median +0.2624   SE 0.1493   MDE 0.4184   effect/MDE +1.05
+    iid  CI95 [+0.1730, +0.7238]
+    fold CI95 [+0.1092, +0.6116]   folds same sign 4/5   per-fold 0:+0.493 1:-0.078 2:+0.149 3:+0.350 4:+0.713
+    2W/10L/0T   worst degradation +1.5006 (8HVS)   p90 +1.0978   power 0.83  Type-M 1.10
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.10x]
+
+  P1 VQE_g0_s0|R2 - PRODUCTION (chain)
+    a 3.9559 (med 3.4367)   b 3.3816 (med 2.7568)   n=12
+    effect +0.5743   median +0.3633   SE 0.1907   MDE 0.5342   effect/MDE +1.08
+    iid  CI95 [+0.2297, +0.9460]
+    fold CI95 [+0.0732, +0.8549]   folds same sign 4/5   per-fold 0:+0.989 1:-0.023 2:+0.002 3:+0.311 4:+0.830
+    3W/9L/0T   worst degradation +1.6930 (2LWS)   p90 +1.4671   power 0.85  Type-M 1.09
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.09x]
+
+  P1 EXACT_argmin - PRODUCTION (chain)
+    a 3.9122 (med 3.3728)   b 3.3816 (med 2.7568)   n=12
+    effect +0.5307   median +0.2322   SE 0.1940   MDE 0.5434   effect/MDE +0.98
+    iid  CI95 [+0.1956, +0.9112]
+    fold CI95 [-0.0019, +0.8368]   folds same sign 3/5   per-fold 0:+1.008 1:-0.130 2:-0.003 3:+0.129 4:+0.806
+    3W/9L/0T   worst degradation +1.7128 (2LWS)   p90 +1.3747   power 0.78  Type-M 1.14
+    VERDICT: NOT MEASURED (|effect| 0.5307 <= its own MDE 0.5434, 0.98x)
+
+  P1 EXACT_top8 - PRODUCTION (chain)
+    a 3.8513 (med 3.4054)   b 3.3816 (med 2.7568)   n=12
+    effect +0.4697   median +0.1629   SE 0.1702   MDE 0.4767   effect/MDE +0.99
+    iid  CI95 [+0.1631, +0.7979]
+    fold CI95 [-0.0032, +0.7946]   folds same sign 3/5   per-fold 0:+1.026 1:-0.104 2:-0.013 3:+0.116 4:+0.614
+    2W/10L/0T   worst degradation +1.4429 (8HVS)   p90 +1.3511   power 0.79  Type-M 1.13
+    VERDICT: NOT MEASURED (|effect| 0.4697 <= its own MDE 0.4767, 0.99x)
+
+  D2 EXACT top-75 - PRODUCTION (chain)
+    a 3.9000 (med 3.6154)   b 3.3816 (med 2.7568)   n=12
+    effect +0.5184   median +0.3182   SE 0.1615   MDE 0.4524   effect/MDE +1.15
+    iid  CI95 [+0.2300, +0.8352]
+    fold CI95 [+0.0847, +0.7788]   folds same sign 4/5   per-fold 0:+0.952 1:-0.070 2:+0.160 3:+0.124 4:+0.717
+    2W/10L/0T   worst degradation +1.4862 (8HVS)   p90 +1.2788   power 0.89  Type-M 1.06
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.06x]
+
+  P1 CVAROPT|R2 - PRODUCTION (chain)
+    a 3.9113 (med 3.3805)   b 3.3816 (med 2.7568)   n=12
+    effect +0.5297   median +0.2290   SE 0.1972   MDE 0.5525   effect/MDE +0.96
+    iid  CI95 [+0.1776, +0.9133]
+    fold CI95 [+0.0016, +0.8220]   folds same sign 4/5   per-fold 0:+0.975 1:-0.130 2:+0.004 3:+0.128 4:+0.824
+    3W/9L/0T   worst degradation +1.7781 (2LWS)   p90 +1.3819   power 0.77  Type-M 1.15
+    VERDICT: NOT MEASURED (|effect| 0.5297 <= its own MDE 0.5525, 0.96x)
+
+  P1 SA_s0|R2 - PRODUCTION (chain)
+    a 3.8574 (med 3.5385)   b 3.3816 (med 2.7568)   n=12
+    effect +0.4758   median +0.2483   SE 0.1673   MDE 0.4687   effect/MDE +1.02
+    iid  CI95 [+0.1781, +0.7958]
+    fold CI95 [+0.0608, +0.7049]   folds same sign 4/5   per-fold 0:+0.783 1:-0.086 2:+0.096 3:+0.137 4:+0.745
+    2W/10L/0T   worst degradation +1.4788 (8HVS)   p90 +1.3130   power 0.81  Type-M 1.12
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.12x]
+
+
+==============================================================================
+D1 (does recombination contain anything: the SCRAMBLED matched null first)
+==============================================================================
+  D1 chimera ORACLE best - SCRAMBLED ORACLE best (cloud)
+    a 2.1801 (med 2.1297)   b 2.2888 (med 2.2223)   n=12
+    effect -0.1086   median -0.1292   SE 0.0641   MDE 0.1796   effect/MDE -0.60
+    iid  CI95 [-0.2289, +0.0154]
+    fold CI95 [-0.1559, -0.0419]   folds same sign 5/5   per-fold 0:-0.143 1:-0.217 2:-0.011 3:-0.029 4:-0.144
+    9W/3L/0T   worst degradation +0.2853 (5Z5W)   p90 +0.1966   power 0.40  Type-M 1.57
+    VERDICT: NOT MEASURED (|effect| 0.1086 <= its own MDE 0.1796, 0.60x)
+
+  D1u chimera ORACLE best - best PARENT (cloud, UNMATCHED order statistic)
+    a 2.1801 (med 2.1297)   b 2.9867 (med 2.6205)   n=12
+    effect -0.8065   median -0.4144   SE 0.2694   MDE 0.7547   effect/MDE -1.07
+    iid  CI95 [-1.3687, -0.3620]
+    fold CI95 [-1.2435, -0.3830]   folds same sign 5/5   per-fold 0:-1.208 1:-0.244 2:-0.312 3:-1.547 4:-0.523
+    12W/0L/0T   worst degradation -0.1325 (2P5H)   p90 -0.1450   power 0.85  Type-M 1.09
+    VERDICT: BETTER [TYPE-M ZONE: magnitude inflated ~1.09x]
+
+  D1p chimera ORACLE best - POOL ORACLE best K=500 (cloud)
+    a 2.1801 (med 2.1297)   b 1.5268 (med 1.5795)   n=12
+    effect +0.6533   median +0.2468   SE 0.3806   MDE 1.0663   effect/MDE +0.61
+    iid  CI95 [+0.0923, +1.4737]
+    fold CI95 [+0.1130, +1.5173]   folds same sign 5/5   per-fold 0:+0.044 1:+0.141 2:+2.190 3:+1.189 4:+0.202
+    4W/8L/0T   worst degradation +4.4958 (2BFI)   p90 +1.4913   power 0.40  Type-M 1.56
+    VERDICT: NOT MEASURED (|effect| 0.6533 <= its own MDE 1.0663, 0.61x)
+
+
+==============================================================================
+P3 / P3c (the quantum stage beyond m, with lane D's PR-matched control)
+==============================================================================
+  P3 VQE R2 - VQE R1 (chain)
+    a 3.8388 (med 3.4080)   b 3.8190 (med 3.2722)   n=12
+    effect +0.0198   median -0.0018   SE 0.0375   MDE 0.1051   effect/MDE +0.19
+    iid  CI95 [-0.0352, +0.1010]
+    fold CI95 [-0.0319, +0.0999]   folds same sign 2/5   per-fold 0:+0.137 1:-0.002 2:+0.016 3:-0.018 4:-0.042
+    7W/5L/0T   worst degradation +0.4094 (7JGX)   p90 +0.0349   power 0.08  Type-M 4.55
+    VERDICT: NOT MEASURED (|effect| 0.0198 <= its own MDE 0.1051, 0.19x)
+
+  P3c VQE R2 - PR-matched random weights (chain)
+    a 3.8388 (med 3.4080)   b 3.8117 (med 3.2448)   n=12
+    effect +0.0271   median -0.0047   SE 0.0367   MDE 0.1029   effect/MDE +0.26
+    iid  CI95 [-0.0227, +0.1075]
+    fold CI95 [-0.0288, +0.1168]   folds same sign 2/5   per-fold 0:+0.163 1:-0.003 2:+0.012 3:-0.031 4:-0.031
+    7W/5L/0T   worst degradation +0.4142 (7JGX)   p90 +0.0517   power 0.11  Type-M 3.31
+    VERDICT: NOT MEASURED (|effect| 0.0271 <= its own MDE 0.1029, 0.26x)
+
+
+==============================================================================
+P4 / P5 and the charter's ten controls (built chain)
+==============================================================================
+  P4 VQE R2 - GIBBS(matched) R2 (chain)
+    a 3.8388 (med 3.4080)   b 3.8642 (med 3.5760)   n=12
+    effect -0.0254   median -0.0208   SE 0.0422   MDE 0.1182   effect/MDE -0.22
+    iid  CI95 [-0.1106, +0.0448]
+    fold CI95 [-0.0894, +0.0517]   folds same sign 3/5   per-fold 0:-0.139 1:-0.011 2:+0.023 3:+0.096 4:-0.029
+    8W/4L/0T   worst degradation +0.2227 (9KAR)   p90 +0.0500   power 0.09  Type-M 4.00
+    VERDICT: NOT MEASURED (|effect| 0.0254 <= its own MDE 0.1182, 0.22x)
+
+  P5 VQE gamma - VQE gamma=0, R2 (chain)
+    a 3.8388 (med 3.4080)   b 3.9559 (med 3.4367)   n=12
+    effect -0.1171   median -0.0542   SE 0.0973   MDE 0.2726   effect/MDE -0.43
+    iid  CI95 [-0.3180, +0.0440]
+    fold CI95 [-0.2708, +0.0751]   folds same sign 3/5   per-fold 0:-0.359 1:-0.057 2:+0.163 3:+0.020 4:-0.159
+    9W/3L/0T   worst degradation +0.3756 (1I6Y)   p90 +0.1692   power 0.23  Type-M 2.11
+    VERDICT: NOT MEASURED (|effect| 0.1171 <= its own MDE 0.2726, 0.43x)
+
+  M6 VQE(gamma=0) R2 - CVaR-OPTIMAL LAW R2 (chain)
+    a 3.9559 (med 3.4367)   b 3.9113 (med 3.3805)   n=12
+    effect +0.0446   median +0.0015   SE 0.0319   MDE 0.0894   effect/MDE +0.50
+    iid  CI95 [-0.0098, +0.1106]
+    fold CI95 [+0.0055, +0.1240]   folds same sign 4/5   per-fold 0:+0.014 1:+0.107 2:-0.002 3:+0.183 4:+0.006
+    5W/7L/0T   worst degradation +0.3328 (9KAR)   p90 +0.1161   power 0.29  Type-M 1.85
+    VERDICT: NOT MEASURED (|effect| 0.0446 <= its own MDE 0.0894, 0.50x)
+
+  M6g VQE(gamma) R2 - CVaR-OPTIMAL LAW R2 (chain)
+    a 3.8388 (med 3.4080)   b 3.9113 (med 3.3805)   n=12
+    effect -0.0725   median -0.0078   SE 0.1121   MDE 0.3142   effect/MDE -0.23
+    iid  CI95 [-0.2828, +0.1249]
+    fold CI95 [-0.2278, +0.1651]   folds same sign 2/5   per-fold 0:-0.345 1:+0.050 2:+0.161 3:+0.204 4:-0.153
+    6W/6L/0T   worst degradation +0.4249 (9KAR)   p90 +0.3503   power 0.10  Type-M 3.74
+    VERDICT: NOT MEASURED (|effect| 0.0725 <= its own MDE 0.3142, 0.23x)
+
+  C-untrained VQE R2 - UNTRAINED R2 (chain)
+    a 3.8388 (med 3.4080)   b 3.6937 (med 2.6972)   n=12
+    effect +0.1450   median -0.0114   SE 0.1105   MDE 0.3095   effect/MDE +0.47
+    iid  CI95 [-0.0409, +0.3628]
+    fold CI95 [+0.0118, +0.2155]   folds same sign 3/5   per-fold 0:+0.183 1:-0.010 2:-0.070 3:+0.205 4:+0.233
+    7W/5L/0T   worst degradation +0.9592 (8HVS)   p90 +0.7167   power 0.26  Type-M 1.95
+    VERDICT: NOT MEASURED (|effect| 0.1450 <= its own MDE 0.3095, 0.47x)
+
+  C-product VQE R2 - PRODUCT R2 (chain)
+    a 3.8388 (med 3.4080)   b 3.8743 (med 3.7096)   n=12
+    effect -0.0355   median -0.0005   SE 0.0522   MDE 0.1463   effect/MDE -0.24
+    iid  CI95 [-0.1473, +0.0492]
+    fold CI95 [-0.0584, -0.0053]   folds same sign 5/5   per-fold 0:-0.076 1:-0.008 2:-0.001 3:-0.012 4:-0.041
+    6W/6L/0T   worst degradation +0.1604 (2MP9)   p90 +0.1050   power 0.10  Type-M 3.57
+    VERDICT: NOT MEASURED (|effect| 0.0355 <= its own MDE 0.1463, 0.24x)
+
+  C-seed VQE R2 s0 - s1 (chain)
+    a 3.8388 (med 3.4080)   b 3.7962 (med 3.2115)   n=12
+    effect +0.0426   median +0.0054   SE 0.0377   MDE 0.1056   effect/MDE +0.40
+    iid  CI95 [-0.0075, +0.1221]
+    fold CI95 [-0.0112, +0.1242]   folds same sign 2/5   per-fold 0:+0.174 1:-0.020 2:+0.031 3:-0.006 4:-0.011
+    5W/7L/0T   worst degradation +0.4446 (7JGX)   p90 +0.0680   power 0.20  Type-M 2.23
+    VERDICT: NOT MEASURED (|effect| 0.0426 <= its own MDE 0.1056, 0.40x)
+
+  C-diagonalised VQE R2 - GS R2 (chain)
+    a 3.8388 (med 3.4080)   b 3.8767 (med 3.6279)   n=12
+    effect -0.0380   median -0.0083   SE 0.0411   MDE 0.1151   effect/MDE -0.33
+    iid  CI95 [-0.1192, +0.0304]
+    fold CI95 [-0.1215, +0.0339]   folds same sign 3/5   per-fold 0:-0.175 1:-0.015 2:+0.022 3:+0.058 4:-0.019
+    7W/5L/0T   worst degradation +0.1384 (9KAR)   p90 +0.0704   power 0.15  Type-M 2.68
+    VERDICT: NOT MEASURED (|effect| 0.0380 <= its own MDE 0.1151, 0.33x)
+
+  C-perm VQE R2 - PERM VQE R2 (chain)
+    a 3.8388 (med 3.4080)   b 3.7068 (med 2.8995)   n=12
+    effect +0.1319   median -0.0231   SE 0.0985   MDE 0.2761   effect/MDE +0.48
+    iid  CI95 [-0.0317, +0.3412]
+    fold CI95 [-0.0539, +0.4121]   folds same sign 2/5   per-fold 0:+0.581 1:-0.061 2:-0.037 3:+0.100 4:-0.056
+    7W/5L/0T   worst degradation +0.9424 (1M02)   p90 +0.5734   power 0.27  Type-M 1.92
+    VERDICT: NOT MEASURED (|effect| 0.1319 <= its own MDE 0.2761, 0.48x)
+
+  C-ordstat VQE R2 - EXACT top-m (chain)
+    a 3.8388 (med 3.4080)   b 3.8159 (med 3.2681)   n=12
+    effect +0.0228   median -0.0031   SE 0.0377   MDE 0.1057   effect/MDE +0.22
+    iid  CI95 [-0.0312, +0.1051]
+    fold CI95 [-0.0310, +0.1029]   folds same sign 2/5   per-fold 0:+0.141 1:-0.002 2:+0.018 3:-0.008 4:-0.041
+    7W/5L/0T   worst degradation +0.4140 (7JGX)   p90 +0.0395   power 0.09  Type-M 3.99
+    VERDICT: NOT MEASURED (|effect| 0.0228 <= its own MDE 0.1057, 0.22x)
+
