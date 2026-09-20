@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 01:02 Pacific.
+Last update: 2026-09-20 01:04 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -167,6 +167,36 @@ third is the queued S8 free-energy item and is now the only structurally live ex
    signature. If it lands near the ORACLE 0.75 A, assumption B2 is falsified and the sprint's
    headline changes from a ceiling to an opening.
 
+
+
+## THE ARCHITECTURAL CEILING (2026-09-20 01:04, S29-L30, rung 9): 2.76 A WITH THE NATIVE IN HAND
+Nobody had ever measured the ORACLE ceiling of the TOP-128 PREFIX, which is the only part of the
+pool the deployed quantum stage can see (`core/pipeline.py:758` widens the prefix to 2**n = 128
+when the stage is on). Because the set-equality theorem says the realised CVaR tail is ALWAYS a
+prefix of the energy order, the best prefix-m average IS the tail's exact reachable set, so its
+ORACLE value is a hard ceiling on every arm the deployed quantum architecture can emit.
+| operator class (ORACLE, point cloud, 126) | top-75 | TOP-128 | K = 500 |
+|---|---|---|---|
+| best single member (a perfect ranker) | 2.3062 | 2.1458 | 1.7108 |
+| best prefix-m average (THE CVaR TAIL'S REACHABLE SET) | 2.8267 | **2.7605** | 2.6062 |
+| convex hull in the shared frame (any weighting) | 1.9975 | 1.8071 | 1.1167 |
+| production (deployable incumbent) | 3.0483 | 3.0483 | 3.0483 |
+THE STATEMENT THE REPORT WILL LEAD WITH ON THE QUANTUM SIDE: the best structure the deployed
+quantum selection can emit, WITH THE NATIVE IN HAND, is 2.7605 A. The charter's 2.5 A target is
+therefore unreachable through this architecture even with perfect ORACLE selection -- not because
+the search is hard, but because the tail is a prefix and the prefix's ORACLE ceiling is above the
+target. The whole quantum stage's ORACLE headroom over production, inside its own field of view
+and through its own readout, is -0.2879 A.
+WIDENING THE PREFIX HELPS (ORACLE) AND TRANSFERS NOTHING. 75 -> 128 buys -0.0663 on the prefix-m
+average (1.84x MDE, 5/5 folds, 50W/0L/76T) and -0.1903 on the hull; but the DEPLOYABLE version,
+the prefix chosen leave-fold-out (m per fold 70/108/72/72/72), gives +0.0079 A at 0.30x MDE, NOT
+MEASURED. The per-target choice is 99% of the ORACLE gap and -3% of it transfers.
+THIS IS THE THIRD INDEPENDENT INSTANCE TONIGHT of one pattern: rung 6 (the typicality axis, ORACLE
+best global step exactly 0.0), rung 8 (PC1, ORACLE best global eta exactly 0.0), rung 9 (the
+prefix, ORACLE per-target 99% and transfer -3%). It also sharpens S22 L4, which measured the
+per-target m transferring 65% WITHIN a target's own pool halves: ACROSS targets it transfers
+nothing. Every one of the three says the same thing in a different operator class -- the quantity
+the system is missing is per-target, and nothing native-free supplies it.
 
 ## THE SPRINT'S QUANTUM RESULT (2026-09-20 00:52, S29-L25; provisional until lane D's attack)
 THE SET-EQUALITY THEOREM FAILS ON REAL POOLS, AND THE ESCAPE BUYS NO ACCURACY. Both halves
