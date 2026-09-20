@@ -182,7 +182,81 @@ original 12, which lane D verified independently (S29-L38). The pre-fix rows are
 
 ## 9. Every control, and what it ruled out
 
-[PENDING — partial: recognition closed three ways.]
+The charter asked for this explicitly. Controls are listed with the specific alternative
+explanation each one kills, because a control that does not name its alternative is decoration.
+
+### 9.1 Recognition is closed three independent ways
+
+This is the sprint's unified finding, and the three closures are independent in *kind* — one
+theorem, one measurement, one impossibility result — which is why it is reported as closed rather
+than as three pieces of evidence pointing the same way.
+
+| level | result | what it rules out |
+|---|---|---|
+| **across realism bands** | theorem (S29-L17): the identity `d(C)² = ⟨d_k²⟩ − s²` holds to 2e−14 on 126/126 | That apparent ranking skill is anything but the band structure. Global skill is a realism detector |
+| **within a band** | measurement (S29-L33): F1 fires, **F2 fails on 58/70** | That skill survives conditioning. Conditioning on realism *removes* ordering skill on **every** informative score |
+| **per target** | impossibility (S29-L31): Neyman–Scott incidental parameter | That the missing sign could be learned from other targets. It cannot, as a matter of statistical theory |
+
+### 9.2 Zero-information controls — the project's most repeated error, guarded
+
+Project memory records that *a control must match the operator's space*, with three instances in two
+sprints, and that *a zero-information control must be plausible, not uniform*. Both were live risks
+this sprint and both were caught:
+
+- **My proposed matched control for F1 was the identity by algebra** through a top-*m* readout —
+  it could not have failed. Lane M declined it and substituted **SWAPCTL**, a zero-information
+  member swap. The substitute has teeth: LOGPERM 4.065 vs LOG 3.616 vs PROD 3.382.
+- **Lane M's own first permutation control was the identity for a sum aggregator.** Found and fixed
+  by lane M before any claim was made.
+- **The shrink twin (RSHRINK)** carries zero information and reaches cosine 0.329 against the
+  fitted arm's 0.350 on the smoke test — i.e. the fitted arm barely separates from its own
+  null. That is the twin doing exactly the job it was registered for.
+- **Random-shape reference = 0.1398**, used as the bar for all 39 displacement fields. Not one
+  beat it.
+
+### 9.3 Controls against our own enthusiasm
+
+- **Best-of-N, never an initialisation mean.** Project memory: *concentration is wrong when
+  discrimination binds*. Any trained-circuit arm is compared to best-of-N from the untrained
+  circuit at a matched sample budget, never to an initialisation mean.
+- **A uniform-effect null for every concentration claim.** A raw drop-top threshold is not a valid
+  test and has misfired in this project before. Every verdict above prints drop-top10 against the
+  null's p10/p50/p90 and reports the percentile. Lane B's m=5 arm sits at the 52nd percentile —
+  i.e. the effect is *not* concentrated, which is what makes it a real aggregate.
+- **Fold-clustered CIs and 5/5-fold sign agreement** beside every mean, not i.i.d. CIs alone.
+- **MDE reported per comparison, never per instrument** (memory: the quoted 0.084 Å constant is
+  wrong by up to 84× in both directions).
+- **Chronology certified from git, not from anyone's word** (contract rule 27). This caught me:
+  I told the user a formula "was derived before those numbers were read," and lane D certified from
+  git that it appears 7.5 minutes *after* them.
+- **Multiplicity tracked.** Lane B's decisive block: 4 ORACLE diagnostic comparisons at n = 126,
+  0 endpoint comparisons. Lane X's ladder is 94 arms and is priced as an order statistic
+  (`best_of_k_within`), with only the pre-specified primary arm read as a result.
+
+### 9.4 The control that could have killed the sprint's own headline
+
+Lane D's field survey was designed, on my instruction, to falsify S29-L23 — the bound that is this
+report's first headline. It measured the ORACLE cosine of **18 displacement fields the original
+survey never covered**, against the random-shape reference:
+
+```
+DISTPOT 0.1128 (SE 0.0316)   MSET_250 0.1118   MSET_150 0.0946   RG_LAW 0.0933
+CONTACT 0.0933   CONS_TRIM 0.0890   LEG 0.0883   MSET_500 0.0815   CONTACT_LL 0.0786
+SS_MATCH 0.0750   ENV 0.0730   PROJ 0.0694   MSET_5 0.0629   CAGEO 0.0565
+... DIS_MEAN 0.0231   MEDOID −0.0097   MSET_50 −0.0187   EXPAND −0.0208
+```
+
+`beats_random_reference` is **False on every one**. The implied point-cloud RMSD at each field's own
+ORACLE-chosen best step runs 3.0289 (best) to 3.0482 (worst) against production's 3.0483: the single
+best displacement field this project can construct, stepped with the native in hand, is worth
+**0.019 Å**. Assumption B2 survives a direct, pre-registered attack with 18 new candidates.
+
+**And one assumption did not survive unqualified.** Lane D hardened its own B3 check from a ±3 Å to
+a ±6 Å bracket and the answer changed: the residual is *not* uniformly 1e−4. It grows with step
+size, reaching −0.93% mean and −2.6% max at a 2.03 Å step (MSET_25). So the bound's linearisation is
+sound for fields whose own best step is sub-Ångström — which is all of them except that one — and
+the report states B3 with that condition rather than flatly. [Final figure at n = 126: PENDING]
+
 
 ## 10. The literature relied on, and rejected
 
