@@ -303,6 +303,18 @@ The contract required these to be listed, and I would point a sceptical reader h
   mismatch is real and is the kind that eventually costs a result rather than a test run: **a rule
   that lives only in prose is not enforced by the thing that schedules the work.** Reconciling
   `MAX_AMBER` with rule 8 is an S30 item.
+- **A second prose-versus-scheduler mismatch, and this one is mine.** I disabled CPU-triggered
+  suspension in the governor (`governor.py:61`, `CPU_CEILING = 101.0`) so the box would run at the
+  ~94-95% the user asked for — and never touched the **launch** gate, which still refuses to start
+  a job while smoothed CPU exceeds 85% (`jobrun.py:39`, `CPU_START = 85.0`). The two policies
+  contradict: under a design that deliberately holds the box at ~100% CPU, new work can only start
+  in a **dip**. Lane P lost roughly an hour to it with two free slots and nothing able to fill them.
+  It is a throughput bug rather than a deadlock — jobs do start in the gaps, which is why it took
+  so long to see — and it is the **same shape as the governor deadlock earlier in the sprint**
+  (§3.3, first bullet): I changed one half of a paired threshold and not the other. Twice.
+  Unresolved at the close and left to the user, because `jobrun.py` and `launch_cap.json` are
+  shared infrastructure; lane P proposed the minimal fix, was denied by the permission system, and
+  **correctly did not work around it**.
 - **A duplicate job ran for 57 minutes**, holding a contended slot. Two lane X jobs with *different*
   names ran the identical unsharded command and converged on the same target; I stopped the younger.
   A name-based check would not have caught it — the invariant is one process per unit of *work*, not
