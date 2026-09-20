@@ -307,7 +307,31 @@ materially better number is A BETTER DISTANCE PRIOR (-2.15 A per unit, S24 L13),
 classes lane T's section 7 names as able to break assumption B2. Those are two different projects
 and the report must not let the first stand in for the second.
 
-## THE ARCHITECTURAL CEILING (2026-09-20 01:04, S29-L30, rung 9): 2.76 A WITH THE NATIVE IN HAND
+## THE ARCHITECTURAL CEILING (corrected 2026-09-20 02:17, S29-L44; was S29-L30 rung 9): **2.91 A ON THE BUILT CHAIN** WITH THE NATIVE IN HAND -- AND THE **READOUT**, NOT THE FIELD OF VIEW, IS WHAT BINDS
+
+CORRECTION TO MY OWN HEADLINE. The 2.76 A I had here was a **POINT-CLOUD** number. The
+charter's endpoint is the **BUILT CHAIN**, and the S28 steer was explicit about exactly this
+distinction. On the endpoint the deployed architecture's ORACLE ceiling is **2.9122 A**
+(n = 121, production 3.2206 on the same targets, delta -0.3084, MDE 0.1003, 3.1x MDE).
+The conclusion survives and hardens: the charter's 2.5 A is **unreachable through this
+architecture even with the native in hand**, and 3.0 A only via a per-target ORACLE m.
+
+THE NEW PART, and the sharpest architectural statement of the sprint. Inside the
+**IDENTICAL** top-128 candidate set:
+  - prefix-average readout (what the architecture uses), ORACLE m per target: **2.9122 A**
+  - single best member of the same 128 (a clean order statistic, **7 bits**): **2.1549 A**
+  - free convex combination of the same 128 (expressiveness only, ~128 dof): 1.8604 A
+The readout costs **0.757 A at 4.0x MDE** with the candidates held fixed. Lane O had
+already shown the field of view is not the constraint (75 -> 128 buys 0.0663 A); the pool
+is not the constraint either (its convex hull expresses 1.1235 A built chain, 6.9x MDE
+below production). **The constraint is how the candidates are consumed, and then above
+that the inability to supply 7 bits per target native-free** -- which is precisely the
+incidental-parameter result (S29-L31). Hull numbers are EXPRESSIVENESS, not ceilings:
+project memory is explicit that grid oracles are order statistics, and a 128-dof per-target
+fit is not something any rule approaches. The defensible contrast is best-of-128.
+
+### superseded headline, left standing
+## (SUPERSEDED BY S29-L44) THE ARCHITECTURAL CEILING (2026-09-20 01:04, S29-L30, rung 9): 2.76 A WITH THE NATIVE IN HAND
 Nobody had ever measured the ORACLE ceiling of the TOP-128 PREFIX, which is the only part of the
 pool the deployed quantum stage can see (`core/pipeline.py:758` widens the prefix to 2**n = 128
 when the stage is on). Because the set-equality theorem says the realised CVaR tail is ALWAYS a

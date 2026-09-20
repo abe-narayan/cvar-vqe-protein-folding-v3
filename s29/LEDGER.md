@@ -2772,6 +2772,8 @@ prediction-2 block marked FIRED, M6 restated, the 1.6-2.7x band, the provenance 
 8.2); the saturation numbers are mine and reproduce in seconds from `s12.instrument.distogram` and
 the DIS top-75 average on 1A13 / 2BFI / 9KAR; `tests/test_s29_T.py` 12 pass unchanged.
 
+> **BASIS ANNOTATION appended 2026-09-20 02:17 by the coordinator, original wording below left standing (contract addendum 3: chronology is part of the evidence).** Every RMSD in this entry is a **POINT-CLOUD** RMSD, and the entry is internally consistent as a cloud-to-cloud comparison. But the sprint's endpoint is the **BUILT CHAIN**, and I -- not lane O -- promoted the 2.7605 A figure into the STATE headline and into reports to the user as "the architectural ceiling" without its basis label. On the built chain the same arm is **2.9122 A** at n = 121 against production 3.2206 on the same targets. The conclusion is unchanged in direction and stronger in magnitude. See S29-L44.
+
 ## S29-L30 -- RUNG 9 (LANE M's C13): THE ORACLE CEILING OF THE TOP-128 PREFIX, WHICH BOUNDS EVERY QUANTUM ARM THIS PROJECT HAS RUN OR COULD RUN IN THE DEPLOYED ENCODING -- THE QUANTUM STAGE's FIELD OF VIEW IS NOT THE CONSTRAINT: WIDENING 75 -> 128 BUYS 0.0663 A ON THE ONLY CLASS THE CVaR TAIL CAN REACH (1.84x MDE, 5/5 FOLDS, 50W/0L/76T) WHILE THE FULL K=500 IS ONLY 0.1543 A FURTHER; THE WHOLE DEPLOYED QUANTUM SELECTION ARCHITECTURE HAS AN ORACLE CEILING OF 2.7605 A (production 3.0483 -> 2.7605), AND ITS TRANSFERABLE PART IS ZERO -- THE ORACLE GLOBAL PREFIX IS m = 72 (WORTH -0.0018 A, i.e. THE SHIPPED 75) AND THE LEAVE-FOLD-OUT PREFIX IS +0.0079 A WORSE THAN PRODUCTION AT 0.30x MDE (2026-09-20 01:03, O)
 
 Question, set by the coordinator from lane M's convenience-choice audit C13: the deployed pipeline
@@ -3854,3 +3856,79 @@ any other lane's work was built on my false clause, and the one lane that acted 
 it before spending anything. Multiplicity: 0 endpoint comparisons.
 Artefacts: this entry; S29-L41 (lane T); `s29/lit/L_1_native_free_qa.md`;
 `s29/lit/L_7_inband_training.md`; `s29/s29_L_FINDINGS.md`.
+
+## S29-L44 -- CORRECTION TO MY OWN HEADLINE, AND THE SPRINT's SHARPEST ARCHITECTURAL NUMBER: I HAVE BEEN QUOTING THE ARCHITECTURAL CEILING ON THE **POINT CLOUD** WHILE THE CHARTER's ENDPOINT IS THE **BUILT CHAIN** -- ON THE ENDPOINT THE CEILING IS **2.9122 A** (n = 121), NOT 2.7605; AND WITHIN THE **IDENTICAL** TOP-128 CANDIDATE SET THE SINGLE BEST MEMBER REACHES **2.1549 A** ON 7 BITS OF ORACLE, SO THE PREFIX-AVERAGE **READOUT** -- NOT THE FIELD OF VIEW, NOT THE POOL -- THROWS AWAY 0.757 A AT 4.0x MDE (2026-09-20 02:16, coordinator)
+
+**The error is mine and it is the exact error the S28 steer warned about.** The user's S28
+instruction was "Prioritize **built-chain RMSD**, not point-cloud RMSD." S29-L30 reported the
+top-128 prefix ceiling as 2.7605 A against production 3.0483 A. Those two numbers are a
+consistent CLOUD-to-CLOUD comparison and S29-L30 is not wrong on its own terms. But I then
+promoted 2.7605 into the STATE headline block and into my reports to the user as "the
+architectural ceiling", without the basis label, in a sprint whose stated endpoint is the built
+chain. On the endpoint the number is different and the conclusion is stronger, not weaker.
+
+**Provenance.** Re-derived by me from lane O's raw chain rows, `s29/results/s29_O_chain_rows*.jsonl`
+(7 shard files, deduplicated on (item, pdb), 4762 raw rows -> 33 distinct items), paired through
+`s24.stats_lib.compare`. NOTE: `s29/results/s29_O_ladder_table.json` is STALE relative to these rows
+-- it was written 01:46 with the top-128 chain arm at n = 43 and reads 3.0324 A there; the later
+shards have since landed and the same arm is now n = 121. Lane O's `s29O_chEF2` is still running, so
+n may rise again. Every number below carries its n.
+
+### The ladder ON THE CHARTER'S ENDPOINT (built-chain Ca RMSD), each arm paired against production
+on its own common target set
+
+| arm | n | built chain | production, same n | delta | MDE | x MDE |
+|---|---|---|---|---|---|---|
+| production (deployable incumbent) | 126 | **3.2105** | -- | -- | -- | -- |
+| best prefix-m average, top-128, ORACLE per-target m | 121 | **2.9122** | 3.2206 | -0.3084 | 0.1003 | 3.1 |
+| best prefix-m average, top-75, ORACLE per-target m | 126 | 2.7763 | 3.2105 | -0.4343 | -- | -- |
+| best SINGLE member, top-128 | 121 | **2.1549** | 3.2206 | -1.0657 | -- | -- |
+| best SINGLE member, top-75 | 126 | 2.3055 | 3.2105 | -0.9051 | -- | -- |
+| best SINGLE member, K=500 | 126 | 1.7078 | 3.2105 | -1.5027 | -- | -- |
+| convex hull, top-128 (free weights) | 121 | 1.8604 | 3.2206 | -1.3602 | -- | -- |
+| convex hull, K=500 (free weights) | 126 | 1.1235 | 3.2105 | -2.0870 | 0.3004 | 6.9 |
+
+### The three contrasts that matter, all on the built chain
+
+1. **The architecture's ORACLE ceiling is 2.9122 A** (n = 121, vs production 3.2206 on the same
+   121, delta -0.3084, MDE 0.1003, **3.1x MDE**). The charter's 2.5 A is **not reachable through the
+   deployed architecture even with the native in hand**, and 3.0 A is reachable only by an oracle
+   choosing m per target. That was the S29-L30 conclusion and it SURVIVES the basis correction --
+   the endpoint number is 0.15 A worse than the cloud number I was quoting, so the conclusion
+   gets stronger.
+
+2. **The readout, not the field of view, is what binds.** Inside the IDENTICAL top-128 candidate
+   set: the prefix-average readout the architecture actually uses caps at 2.9122 A, while the
+   single best member of the same 128 reaches **2.1549 A** (n = 121, se 0.0669, MDE 0.1875,
+   delta -0.757, **4.0x MDE**). Lane O already showed the field of view is not the constraint
+   (75 -> 128 buys 0.0663 A). This adds the other half: with the candidates held fixed, changing
+   only HOW they are consumed is worth 0.757 A, and a selection rule needs only
+   log2(128) = **7 bits** of information per target to get it.
+
+3. **The pool is not the constraint either.** A free convex combination of the full K=500 pool
+   reaches **1.1235 A** built chain (n = 126, vs production 3.2105, delta -2.0870, MDE 0.3004,
+   **6.9x MDE**). The generation stage already puts 1.12 A on the table. Production delivers 3.21.
+
+### The caveat I am required to state against my own strongest number
+
+The convex-hull arms fit up to 128 (or 500) free weights per target against the native. Project
+memory is explicit -- **grid oracles are order statistics** -- and a hull with that many degrees of
+freedom is not a ceiling anyone could approach; it is an upper bound on what the candidate set can
+EXPRESS, not on what any rule could FIND. So contrast 3 is quoted as expressiveness only.
+Contrast 2 is the defensible one: best-of-128 is a clean order statistic carrying 7 bits, and
+7 bits per target is a small, honest amount of oracle information.
+
+### What this does and does not change
+
+It does NOT change the bound (S29-L23). The bound says no native-free operator the project has
+built gets |rho| above 0.04 against the 0.358 needed for 3.00 A. These rungs are all ORACLE and
+sit on the far side of it. What this entry does is **locate the gap precisely**: it is not in
+generation (the pool holds 1.12 A), and it is not in the quantum stage's field of view
+(75 -> 128 is worth 0.066 A). It is in the readout, and then above the readout in the inability to
+supply 7 bits per target native-free -- which is exactly the incidental-parameter result
+(S29-L31): the per-target sign is not estimable from other targets' answers.
+
+**Registered consequence for the report:** every ceiling number in the S29 report is quoted on the
+BUILT CHAIN with its n, and where a cloud number is used it is labelled as such in the same
+sentence. The STATE headline block is corrected in this commit. S29-L30 stands as written, with a
+basis annotation appended in place and its original wording left standing.
