@@ -625,6 +625,11 @@ the worst of the cluster.** Choosing *m* per target with a trained variational c
 distinguishable from fixing it at 75 and running no circuit at all. Lane B's independent version of
 the same control reports 0.31× MDE.
 
+Lane D also priced the ladder itself rather than only its cells: **the whole m-ladder is flat at
+−0.00047 Å per unit of m**, and its best cell is an order statistic that transfers at **−5%**.
+So there is no per-target m worth finding, and the apparent best choice does not generalise — which
+is the same incidental-parameter signature as §5.3's four scalars, measured a fifth time.
+
 This is the endpoint statement about the quantum stage, and it is the one the charter asked for:
 the stage's sole remaining channel to the answer, measured against a comparator containing no
 quantum computation, is worth nothing detectable. It also explains §12.0's constraint from a third
