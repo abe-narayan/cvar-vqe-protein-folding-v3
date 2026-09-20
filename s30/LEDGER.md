@@ -3073,3 +3073,76 @@ it understates concentration and **cannot manufacture** the effect reported here
 counting test tied its bar and is reported as undecided. Only H-X3's two pre-registered arms are
 read as results; the per-arm decompositions are descriptive. No native was used to set any
 parameter; every ceiling and every per-member RMSD row is ORACLE and says so in its field name.
+
+## S30-L9 -- THE METER'S NEW 8-DRAW CONTROL EARNS ITS KEEP ON ITS FIRST RUN: **S29's SEED-0 RANDOM-SIGNED DRAW WAS THE MAXIMUM OF ITS OWN EIGHT ON THE BUILT CHAIN.** THE C2-CLAUSE-2 CONTRAST FALLS **+0.0635 -> +0.0357**, FROM 0.92× TO **0.56× MDE**, FOLD CI NOW SPANNING ZERO -- BELOW THE SPRINT'S "NOT A RESULT" FLOOR. **ON CA THE SAME SINGLE DRAW WAS FINE** (+0.1746 -> +0.1716, STILL 1.84× MDE, 5/5 FOLDS). THE DRAW NOISE IS A PROPERTY OF THE BASIS, NOT OF THE CONTROL (2026-09-20 13:38, D)
+
+**Verdict: one S29 number withdrawn, one confirmed. The built-chain preference contrast is not a
+result; the CA one survives a control eight times stronger than the one it was published with.**
+
+This is the first run of extension **(E4)** (S30-L3), which replaces S29's single seed-0
+matched random-signed structure with R = 8 independent draws per target, and it is also the
+first time any cost has been metered on the built chain through recomputed projections rather
+than C2's stored rows.
+
+### Built chain — the reporting basis
+
+| | value |
+|---|---|
+| pref(circ_best vs PROD) | 0.0714 |
+| pref(matched random-signed vs PROD), 8 draws | 0.0357 (per draw 0.008, 0.048, 0.008, 0.056, 0.056, 0.016, 0.048, 0.048; **sd 0.0212**) |
+| **contrast, 8 draws** | **+0.0357, SE 0.0226, +0.56× MDE, fold CI [−0.011, +0.082], 3/5 folds** |
+| S29's published value (seed 0 alone) | **+0.0635, +0.92× MDE** |
+| what a single draw could have given | **[+0.0159, +0.0635]** |
+
+**S29's seed-0 draw sits at the top of its own range.** The reported +0.0635 is the maximum of
+the eight; the 8-draw mean is exactly **half** of it, and the effect moves from "0.7–1.0× MDE,
+not a demonstrated improvement" to "**below 0.7× MDE, not a result**," with a fold CI that now
+includes zero and folds agreeing 3/5 instead of 4/5. Nothing was done wrong in S29 — a single
+draw is an unbiased estimate of the control — but its variance was never measured, and here it
+is 59% of the mean.
+
+### CA point cloud — the same control, the opposite conclusion
+
+| | value |
+|---|---|
+| pref(matched random-signed), 8 draws | 0.0347 (per draw 0.016–0.048, **sd 0.0094**) |
+| **contrast, 8 draws** | **+0.1716, SE 0.0333, +1.84× MDE, fold CI [+0.086, +0.255], 5/5 folds** |
+| S29's published value (seed 0 alone) | +0.1746, +1.84× MDE |
+| what a single draw could have given | [+0.1587, +0.1905] |
+
+Here the single draw was representative and **S29's number is confirmed to three decimals**. The
+contrast is not concentrated: against the uniform-effect null the drop-top-10 mean sits at the
+51st percentile [p10 +0.151, p90 +0.242], no flag. (Its *median* paired difference is 0.0000,
+but that is the expected shape for a 0/0.5/1 indicator whose modal value is 0 — the
+median-vs-mean warning does not transfer to bounded indicators, and the concentration test
+against the uniform-effect null is the right instrument, which is why E4 prints it.)
+
+### Why the two bases differ, and the rule it earns
+
+The draw sd is **0.0212 on the chain against 0.0094 on CA**, while the chain's effect is a
+quarter of the size. Relative draw noise: **59% on the chain, 27% on CA.** On the chain the
+shipped cost prefers production to almost everything (every pref is 0.008–0.056), so the control
+is a rare event and a single draw of it is correspondingly noisy. **A single-draw control is
+least trustworthy exactly where the effects are smallest — which is where this project's
+remaining effects live.**
+
+> **Rule: a control that is itself a random draw needs its own draw distribution reported, and
+> the number of draws must scale with how small the effect is.** Eight was enough to separate
+> these two cases; one was not.
+
+### What this does and does not change
+
+- **Withdrawn as evidence:** the built-chain C2-clause-2 contrast, "f prefers the 0.29 Å ORACLE
+  structure to production more often than it prefers a matched random displacement." On the
+  reporting basis that is 0.56× MDE with a CI spanning zero.
+- **Confirmed:** the CA-basis version, +0.1716 at 1.84× MDE with 5/5 folds.
+- **Unchanged:** the meter's verdict for the shipped cost is **BLOCK on both bases**, driven by
+  the S28 ladder (rho −0.4023 chain, −0.1818 CA, both fold CIs entirely below zero), not by this
+  contrast.
+- The CHARTER ladder rho is stable across draws (chain sd 0.016, CA sd 0.008), so the ladder
+  numbers were never at risk from the single-draw choice — only the preference contrast was.
+
+Artefacts: `s30/results/s30_D_meter_DIS_chain.json`, `s30/results/s30_D_meter_DIS_ca.json`;
+ladder cache with chain projections and 8 matched draws at
+`s30/results/s30_D_ladder_structs/` (126/126, built 13:36). Multiplicity: 30 comparisons from
+the chain run, 24 from the CA run.
