@@ -4406,3 +4406,69 @@ asserted by `all_chain_rows(check=True)` on every read, and the rows path is one
 set, shard) so two processes can never share a file. No number changes. (ii) Commit e2e49109
 carries lane D's S29-L33 artefacts under a lane O message (the shared-index hazard of addendum 4,
 which arrived after that commit); the ledger headings are authoritative.
+
+## S29-L48 -- INDEPENDENT RECOMPUTATION OF EVERY HEADLINE NUMBER FROM ITS ARTEFACT, NOT FROM ITS LEDGER PROSE: **LANE B's S29-L45 AND LANE O's S29-L47 REPRODUCE EXACTLY, TO EVERY DIGIT QUOTED**; LANE D's SURVEY REPRODUCES AND IN DOING SO **CAUGHT AN ERROR IN MY OWN PROSE** (I WROTE "39 FIELDS", THE FILE HAS 21; MY STATE NOTE SAID "EIGHTEEN") (2026-09-20 02:37, coordinator)
+
+S29-L46 checked that every cited path EXISTS. This entry checks that every headline NUMBER is what
+the file says, by recomputing it from the rows rather than reading the entry that reported it. The
+two checks are different and the second is the one that found something.
+
+### Lane B, S29-L45 -- recomputed from `s29_B_tta_subset_rows.s*of4.jsonl` (126 rows)
+
+Claim 1, by direct count, no statistics:
+
+    non-prefix f-optimal PAIR          114 / 126  (90.5%)     entry: 114 / 126   MATCH
+    non-prefix f-optimal m=5 SUBSET    124 / 126  (98.4%)     entry: 124 / 126   MATCH
+    per-state sort finds the optimum    12 / 126  ( 9.5%)     entry:  12 / 126   MATCH
+    mean objective gap, pair            +0.1041 (min -0.0000) entry: +0.1041     MATCH
+    mean objective gap, m = 5           +0.1499 (min -0.0000) entry: +0.1499     MATCH
+    maximum tie set                     4                     entry: 4           MATCH
+
+Claim 2, re-run through `s24.stats_lib.compare` with the rows' own fold labels:
+
+    greedy m=5 - production        a 3.2934  b 3.0483  +0.2451  MDE 0.1685  1.45x  5/5  51W/75L  pow 0.98  WORSE
+    m=5 energy prefix - production a 3.2130  b 3.0483  +0.1647  MDE 0.1210  1.36x  5/5  41W/85L  pow 0.97  WORSE
+    NON-PREFIX CHOICE (m fixed)    a 3.2934  b 3.2130  +0.0804  MDE 0.1104  0.73x  4/5  59W/66L  pow 0.53  NOT MEASURED
+    f-optimal PAIR - prefix pair   a 3.3815  b 3.2882  +0.0934  MDE 0.1353  0.69x  5/5  50W/64L  pow 0.49  NOT MEASURED
+
+Every figure, every verdict, every W/L split and every power value matches S29-L45 exactly. The
+decomposition that is the entry's actual finding -- that two thirds of the aggregate harm is the
+m-ladder and the part attributable to the hypothesis is inside its own MDE -- reproduces.
+
+### Lane O, S29-L47 -- recomputed from `s29_O_chain_rows*.jsonl` (7 shard files, deduped on (item, pdb))
+
+    architecture ORACLE ceiling vs production   2.9027 / 3.2105  -0.3079  MDE 0.0982  3.14x   MATCH
+    best-of-128 (argmin) vs prefix average      2.1435 / 2.9027  -0.7592  MDE 0.1815  4.18x   MATCH
+    top-128 hull vs prefix average              1.8538 / 2.9027  -1.0489  MDE 0.1858  5.65x   MATCH
+    K=500 hull vs production                    1.1235 / 3.2105  -2.0870  MDE 0.3004  6.95x   MATCH
+
+Derived independently by me before lane O posted S29-L47, and independently by lane O after; the
+two agree. (My earlier n = 121 version was computed while `s29O_chEF2` was still running and is
+superseded by these; see S29-L44 addendum 3.)
+
+### Lane D, `s29_D_fields.json` -- reproduces, and catches ME
+
+    n = 126, random_ref_mean_abs = 0.13982827, prod_rmsd = 3.0483381
+    best_field = CHAN_DISTPOT at signed +0.11280344, any_beats_reference = []  (empty)
+    implied_rmsd_at_best_step spans 3.0289 (best) to 3.0482 (worst)
+    best achievable gain = 3.0483 - 3.0289 = 0.0195 A
+    beats_random_reference is False on ALL 21 fields
+
+**The file contains 21 fields.** I had written "39 displacement fields -- 21 in the pre-registered
+attack plus 18 more" in the report's section 0, and my own STATE note said the survey covered
+"EIGHTEEN displacement fields the original survey never covered". Neither is what the artefact
+says. Both are corrected, in place, with the artefact path attached. Lane D's S29-L35 heading says
+"21 NEW", which is a different and still-open claim -- 21 new, or 21 total of which some are
+carried-over controls -- and it has been referred to lane D to state as fact.
+
+### Why this entry exists
+
+The error was small, mine, and in the one sentence of the report most likely to be quoted. It was
+not caught by rereading the prose -- I had reread it several times -- but by opening the file. That
+is the same lesson as S29-L41/L42 arriving from the opposite direction: there, prose asserted a
+file that did not exist; here, prose asserted a count the existing file contradicts. **A number in
+a ledger entry is a claim about a file, and it is worth exactly what recomputing it is worth.**
+
+**Standing consequence, alongside S29-L46's:** before the report is published, every number in it
+is recomputed from its artefact, not copied from a ledger entry. This entry is that pass for the
+three headline results; the remaining lanes' numbers get the same treatment as they land.
