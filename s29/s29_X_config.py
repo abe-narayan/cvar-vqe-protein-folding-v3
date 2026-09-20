@@ -115,6 +115,11 @@ R3_CAP = 512
 MEDOID_EXACT_MAX = 600      # above this the medoid is estimated on a seeded 256-subsample
 MEDOID_SUBSAMPLE = 256
 SA_COOL = (20.0, 1.0)       # nats, geometric
+#: ADDENDUM 2 (S29-L15, lane T's falsifier ladder): the mixer coupling grid, in units of the
+#: native-free `gamma_gap`.  Gate 1 is TV(p_Gamma, p_0) > TV_GATE on the SAMPLED distribution;
+#: below it the readout provably cannot resolve the difference (S25 L15) and the cell is empty.
+GAMMA_GRID = (0.0, 0.5, 1.0, 2.0)
+TV_GATE = 0.45
 
 #: S27's trainability set (`s27/run_trainability.py`: `P.targets()[::11][:12]`).
 PROBE_TARGETS = ["1A13", "1I6Y", "1M02", "2BFI", "2LWS", "2MP9",
@@ -370,6 +375,39 @@ def ground_state(E: np.ndarray, gamma: float, q: int, xors: Sequence[np.ndarray]
     return float(w[0]), g
 
 
+def cvar_optimal_law(E: np.ndarray, alpha: float, T: float) -> Tuple[np.ndarray, float]:
+    """The EXACT minimiser of CVaR_alpha(E; p) - T S(p) over the simplex (lane T, S29-L15 Q1).
+
+    By Rockafellar-Uryasev plus Sion's minimax theorem the optimum is
+    `p*(x) ~ exp((t* - E_x)_+ / (alpha T))` with `t*` the maximiser of
+    `t - T log sum_x exp((t - E_x)_+ / (alpha T))`.  This is lane T's M6 control in the
+    strongest available form: the exact optimum of the SAME objective with no circuit, no
+    optimiser and no per-target training -- what the quantum stage must beat to contribute.
+    """
+    E = np.asarray(E, float)
+    s = max(alpha * T, 1e-12)
+
+    def obj(t):
+        z = np.maximum(t - E, 0.0) / s
+        return t - T * (float(np.max(z)) + math.log(float(np.exp(z - z.max()).sum())))
+    lo, hi = float(E.min()) - 1.0, float(E.max()) + 1.0
+    for _ in range(200):                                # golden-section on a concave function
+        a = lo + 0.381966 * (hi - lo)
+        b = hi - 0.381966 * (hi - lo)
+        if obj(a) < obj(b):
+            lo = a
+        else:
+            hi = b
+    t = 0.5 * (lo + hi)
+    z = np.maximum(t - E, 0.0) / s
+    p = np.exp(z - z.max())
+    return p / p.sum(), float(t)
+
+
+def total_variation(p: np.ndarray, q: np.ndarray) -> float:
+    return float(0.5 * np.abs(np.asarray(p, float) - np.asarray(q, float)).sum())
+
+
 def gibbs(E: np.ndarray, T: float) -> np.ndarray:
     z = -(np.asarray(E, float) - E.min()) / max(float(T), 1e-12)
     p = np.exp(z - z.max())
@@ -597,16 +635,29 @@ def run_target(pdb: str, chain: bool = True, verbose: bool = True) -> Dict:
 
     # ---------------- the VQE arms ---------------------------------------------------
     circ = Q.StatevectorCircuit(sp.q, LAYERS)
-    vqe_cells = [("VQE_g1_s0", circ, sp.gamma_gap, 0),
+    # ADDENDUM 2 / S29-L15: the Gamma grid comes FIRST and carries lane T's gate-1 quantity,
+    # the total variation of the sampled distribution against the Gamma = 0 twin.  Full
+    # readouts for the two registered couplings (0 and 1 x gamma_gap); R1/R2 only for the
+    # two extra grid points, which exist to place the gate rather than to emit an endpoint.
+    vqe_cells = [("VQE_g0_s0", circ, 0.0, 0),
+                 ("VQE_g1_s0", circ, sp.gamma_gap, 0),
+                 ("VQE_g05_s0", circ, 0.5 * sp.gamma_gap, 0),
+                 ("VQE_g2_s0", circ, 2.0 * sp.gamma_gap, 0),
                  ("VQE_g1_s1", circ, sp.gamma_gap, 1),
-                 ("VQE_g0_s0", circ, 0.0, 0),
                  ("VQE_prod_s0", ProductCircuit(sp.q, LAYERS), sp.gamma_gap, 0)]
-    m_ref, psi_ref = None, None
+    m_ref, psi_ref, p_g0 = None, None, None
+    out["tv_gate"] = {}
     for name, cc, gam, sd in vqe_cells:
         tt = time.time()
         res = train(cc, sp.E, ALPHA, TEMP, gam, xors, sd)
         ro = tail_readouts(sp, res["p"], name)
         gate = H.gate_set_equality(sp.E, ro["tail_idx"], ro["m"])
+        if name == "VQE_g0_s0" and sd == 0:
+            p_g0 = res["p"]
+        if p_g0 is not None and sd == 0:
+            out["tv_gate"][name] = dict(gamma=float(gam),
+                                        tv_vs_g0=total_variation(res["p"], p_g0),
+                                        m=ro["m"], entropy=ro["entropy"], pr=ro["pr"])
         if name == "VQE_g1_s0":
             m_ref = ro["m"]
             psi_ref = res["psi"]
@@ -615,8 +666,13 @@ def run_target(pdb: str, chain: bool = True, verbose: bool = True) -> Dict:
                     pr=ro["pr"], r3_mass=ro["r3_mass"], r3_k=ro["r3_k"],
                     gamma=float(gam), seed=int(sd), F_final=res["F"], F_first=res["hist"][0],
                     mixer=res["mixer"], tail_is_prefix=bool(gate["subset_of_energy_prefix"]),
-                    tail_equals_topm=bool(gate["equality"]), secs=float(time.time() - tt))
-        for R in ("R1", "R2", "R3"):
+                    tail_equals_topm=bool(gate["equality"]),
+                    # lane T's M5: the CVaR term is exactly constant along every simplex
+                    # direction above the VaR; the mixer term is not a function of p at all.
+                    cvar_flat_frac=float((sp.M - ro["m"] - 1) / max(sp.M - 1, 1)),
+                    secs=float(time.time() - tt))
+        for R in (("R1", "R2", "R3") if name in ("VQE_g0_s0", "VQE_g1_s0", "VQE_g1_s1",
+                                                 "VQE_prod_s0") else ("R1", "R2")):
             emit(sp, f"{name}|{R}", ro[R], out, chain, dict(meta, readout=R))
         if name == "VQE_g1_s0":
             # S29-L4 hole (c): random weights on the SAME set at the SAME participation ratio
@@ -649,6 +705,16 @@ def run_target(pdb: str, chain: bool = True, verbose: bool = True) -> Dict:
     out["overlap_vqe_gs"] = float((psi_ref / np.linalg.norm(psi_ref) @ g1) ** 2)
 
     # ---------------- classical ensembles at matched entropy ------------------------
+    # lane T's M6 (S29-L15 Q1), in its strongest form: the EXACT minimiser of the same
+    # objective at Gamma = 0, with no circuit and no optimiser.  A quantum stage that cannot
+    # beat this contributes nothing at Gamma = 0 by construction.
+    pstar, tstar = cvar_optimal_law(sp.E, ALPHA, TEMP)
+    ro = tail_readouts(sp, pstar, "CVAROPT")
+    out["cvaropt"] = dict(t_star=tstar, m=ro["m"], entropy=ro["entropy"], pr=ro["pr"],
+                          tv_vs_vqe_g0=total_variation(pstar, p_g0) if p_g0 is not None else None)
+    for R in ("R1", "R2"):
+        emit(sp, f"CVAROPT|{R}", ro[R], out, chain, dict(m=ro["m"], readout=R))
+
     pg = gibbs(sp.E, TEMP)
     ro = tail_readouts(sp, pg, "GIBBS_T1")
     for R in ("R1", "R2"):
@@ -793,6 +859,16 @@ def analyse(pdbs: Optional[Sequence[str]] = None) -> Dict:
         if v:
             out["meta"][k] = dict(mean=float(np.mean(v)), min=float(np.min(v)),
                                   max=float(np.max(v)))
+    # GATE 1 (lane T, S29-L15): TV of the sampled distribution against the Gamma = 0 twin.
+    out["tv_gate"] = {}
+    for nm in ("VQE_g05_s0", "VQE_g1_s0", "VQE_g2_s0"):
+        v = [r["tv_gate"][nm]["tv_vs_g0"] for r in rows if nm in r.get("tv_gate", {})]
+        if v:
+            out["tv_gate"][nm] = dict(mean=float(np.mean(v)), median=float(np.median(v)),
+                                      min=float(np.min(v)), max=float(np.max(v)),
+                                      n_above_gate=int(sum(x > TV_GATE for x in v)),
+                                      n=len(v), gate=TV_GATE,
+                                      per_target={p: float(x) for p, x in zip(names, v)})
 
     def cmp(a, b, basis, label):
         va = [idx[p][a].get(basis) for p in names]
@@ -833,6 +909,8 @@ def analyse(pdbs: Optional[Sequence[str]] = None) -> Dict:
         cmp("VQE_g1_s0|R2", "VQE_prod_s0|R2", basis, f"C-product VQE R2 - PRODUCT R2 ({b})")
         cmp("VQE_g1_s0|R2", "VQE_g1_s1|R2", basis, f"C-seed VQE R2 s0 - s1 ({b})")
         cmp("VQE_g1_s0|R2", "GS_g1|R2", basis, f"C-diagonalised VQE R2 - GS R2 ({b})")
+        cmp("VQE_g0_s0|R2", "CVAROPT|R2", basis, f"M6 VQE(gamma=0) R2 - CVaR-OPTIMAL LAW R2 ({b})")
+        cmp("VQE_g1_s0|R2", "CVAROPT|R2", basis, f"M6g VQE(gamma) R2 - CVaR-OPTIMAL LAW R2 ({b})")
         cmp("VQE_g1_s0|R2", "PERM_VQE_g1_s0|R2", basis, f"C-perm VQE R2 - PERM VQE R2 ({b})")
         cmp("VQE_g1_s0|R2", "EXACT_topm_matched", basis, f"C-ordstat VQE R2 - EXACT top-m ({b})")
         cmp("EXACT_top75", "PRODUCTION", basis, f"D2 EXACT top-75 - PRODUCTION ({b})")
@@ -919,6 +997,11 @@ def main() -> None:
         selftest()
         return
     pdbs = [s for s in a.targets.split(",") if s] or list(PROBE_TARGETS)
+    if not a.targets:
+        # lane T's ladder is run CHEAPEST FIRST (S29-L15): the register size sets the cost,
+        # so the gate-1 quantity arrives on the small targets within minutes.
+        tg = {t["pdb"]: t["n"] for t in I.targets()}
+        pdbs = sorted(pdbs, key=lambda p: (min(math.ceil(tg[p] / SEG_LEN), SEG_MAX), p))
     if a.limit:
         pdbs = pdbs[:a.limit]
     if a.run:

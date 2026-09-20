@@ -281,3 +281,59 @@ average over 75 pool members. Both are measured here. No gradient claim is made,
 gain is claimed, so addendum 20's shrink audit is answered by reporting (b) the native percentile
 (0.378, S29-L6, essentially the shipped cost's 0.368) and (c) the emitted Rg and bond, both of
 which are in the per-arm rows.
+
+---
+
+## ADDENDUM 2 (2026-09-20 00:35, before any probe number exists; the coordinator's upgrade and
+## lane T's S29-L15 falsifier ladder)
+
+The coordinator raised this lane from "the divergent direction" to the sprint's principal quantum
+candidate on lanes L (S29-L13) and T (S29-L15): a formulation is non-classical in the relevant
+sense only if the Hamiltonian's terms do not commute AND the prepared object is not an
+eigenvector, and T's variance law leaves exactly one operator class with extensive stable rank --
+a sum of LOCAL Pauli terms, which is meaningful only where basis states have local structure,
+i.e. here. The formulation T names as the smallest qualifying one is the one already registered
+in section 3 above (H_diag + Gamma sum_k X_k; a free-energy target, never an eigenvector; the
+CVaR tail's coordinate average as the readout). Three things are ADDED, before any number:
+
+**G. The coupling grid.** Gamma in {0, 0.5, 1, 2} x Gamma_gap, seed 0, trained identically. Full
+readouts (R1, R2, R3, both bases) for Gamma in {0, 1} x Gamma_gap (the registered arms); R1 and R2
+only for 0.5 and 2, which exist to place the gate rather than to emit an endpoint.
+
+**GATE 1 (T's cheapest falsifier, read BEFORE any endpoint number).** TV(p_theta(Gamma),
+p_theta(0)) on the sampled distribution must exceed **0.45** -- S25 L15 measured that this readout
+cannot resolve a 45%-of-mass distributional difference. Registered branch: **if no grid point's
+mean TV clears 0.45, the cell is empty for this instrument, no build follows, and THAT is the
+result** -- reported as such, with the endpoint arms that were computed anyway reported beside it
+and not used to argue past the gate. If it clears, gate 2 is the correctly-named classical
+counterpart (a classical thermal sampler / SA over the same configuration space at matched
+evaluations -- the registered SA arm, which becomes the MAIN comparison, not the eigensolver),
+and only then gate 3, the endpoint contrast on the built chain.
+
+**M6, lane T's fixed-profile control, in its strongest form.** The EXACT minimiser of the same
+objective at Gamma = 0, computed classically with no circuit and no optimiser: by
+Rockafellar-Uryasev plus Sion's minimax theorem, p*(x) proportional to exp((t* - E_x)_+/(alpha T))
+with t* the maximiser of t - T log sum_x exp((t - E_x)_+/(alpha T)) (`cvar_optimal_law`; verified
+to beat 200 random Dirichlet laws on F and to reproduce the Boltzmann law exactly at alpha = 1,
+TV 0.0, which is lane T's own assertion). Contrasts M6 (VQE at Gamma = 0 vs p*) and M6g (VQE at
+Gamma_gap vs p*) are registered. Prior: the Gamma = 0 arm ties p* or is worse (it is an
+under-trained approximation of it, S29-L15's measured 8.836 vs 8.819 bits).
+
+**M5, T's flat-fraction clause.** Every arm reports the fraction of simplex directions on which
+the CVaR term is exactly constant, (M - m - 1)/(M - 1). Stated in advance: at Gamma = 0 this
+formulation inherits the deployed flatness exactly -- it is a property of CVaR, not of H -- so
+the Gamma = 0 arm is NOT expected to break T's M6 control. The mixer term is not a function of p
+at all, which is the only structural reason Gamma > 0 could differ, and gate 1 is the test of
+whether that difference reaches the readout.
+
+**One scope note on T's reduction, stated so it is not over-read either way.** T's Q1 reduction
+("the quantum stage is a target-independent rank-weight profile whose only endpoint channel is
+m") rests on E = zrank(scores) being the same standardised rank ladder on every target to 1.18%
+of range (S25 L17). H_diag here is in physical nats with target-specific gaps and is NOT
+rank-standardised, so the profile is target-dependent by construction. The entry reports the
+realised spread of H_diag (sd, range, top-75 range) so the reader can judge how much of T's
+reduction survives here rather than taking my word for it. This is a reason the reduction may not
+transfer; it is not a claim that anything is gained.
+
+**Ordering.** The run is cheapest-first by register size (q = 9, then 12, then 15), so gate 1's
+quantity arrives on the small targets within minutes, as T's ladder requires.
