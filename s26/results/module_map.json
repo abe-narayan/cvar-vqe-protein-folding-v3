@@ -1,6 +1,6 @@
 {
  "root": "C:\\Users\\abena\\Protein-Folding-Algorithm",
- "n_modules": 787,
+ "n_modules": 836,
  "skipped_dirs": [
   ".git",
   ".pytest_cache",
@@ -217,6 +217,7 @@
     "s26.i_identity_audit",
     "s26.ph_cis",
     "s26.q_adapt",
+    "s27.s28_B_hop",
     "tests.test_equivalence",
     "tests.test_integration",
     "tests.test_pipeline",
@@ -227,7 +228,7 @@
     "verify.leak_audit",
     "verify.legacy_audit"
    ],
-   "n_importers": 20,
+   "n_importers": 21,
    "backend_names": {}
   },
   "core.amber": {
@@ -302,6 +303,7 @@
     "s26.ph_c3",
     "s26.ph_relief",
     "s26.ph_validity",
+    "s26.x_energy_timing",
     "tests.test_amber",
     "tests.test_amber_frame_invariance",
     "tests.test_integration",
@@ -311,7 +313,7 @@
     "verify.amber_threads",
     "verify.hazard_audit"
    ],
-   "n_importers": 39,
+   "n_importers": 40,
    "backend_names": {
     "default": [
      "amber"
@@ -521,11 +523,12 @@
     "s26.w_provenance_test",
     "s26.w_recall",
     "s26.w_selfcopy",
+    "s27.ham_lib",
     "tests.test_data",
     "tests.test_geometry",
     "tests.test_instrument"
    ],
-   "n_importers": 23,
+   "n_importers": 24,
    "backend_names": {
     "default": [
      "data"
@@ -584,9 +587,10 @@
     "s20.c_land",
     "s20.c_q1relax",
     "s22.probe_perturb",
+    "s26.x_energy_timing",
     "tests.test_energy"
    ],
-   "n_importers": 19,
+   "n_importers": 20,
    "backend_names": {
     "default": [
      "energy",
@@ -670,10 +674,13 @@
     "s26.ph_relief",
     "s26.ph_validity",
     "s26.test_ph_synthetic",
+    "s26.x_energy_timing",
+    "s27.ham_lib",
+    "s27.run_wave3",
     "tests.test_geometry",
     "tests.test_instrument"
    ],
-   "n_importers": 48,
+   "n_importers": 51,
    "backend_names": {
     "default": [
      "geometry",
@@ -776,6 +783,7 @@
     "s26.q_adapt",
     "s26.q_tests",
     "s26.w_selfcopy",
+    "s27.s28_B_hop",
     "tests.test_equivalence",
     "tests.test_integration",
     "tests.test_pipeline",
@@ -785,7 +793,7 @@
     "verify.leak_audit",
     "verify.vqe_lfo_audit"
    ],
-   "n_importers": 27,
+   "n_importers": 28,
    "backend_names": {}
   },
   "core.predict": {
@@ -1085,14 +1093,28 @@
     "s26.q_adapt",
     "s26.q_tests",
     "s26.q_var_boot",
+    "s26.x_cvar_plateau",
+    "s27.run_trainability",
+    "s27.s28_A2_local",
+    "s27.s28_A_amp",
+    "s27.s28_B_hop",
+    "s27.s28_B_rank1",
+    "s27.s28_B_represent",
+    "s27.s28_B_split",
+    "s27.s28_C2_recog_audit",
     "tests.test_amber",
     "tests.test_cvar",
     "tests.test_integration",
     "tests.test_quantum",
+    "tests.test_s28_A",
+    "tests.test_s28_A2",
+    "tests.test_s28_B",
+    "tests.test_s28_B2",
+    "tests.test_s28_D",
     "verify.ansatz_audit",
     "verify.cvar_audit"
    ],
-   "n_importers": 56,
+   "n_importers": 70,
    "backend_names": {
     "default": [
      "quantum"
@@ -5991,10 +6013,40 @@
     "s26.w_selfcopy",
     "s26.w_selfcopy_test",
     "s26.w_tiebreak",
+    "s26.x_energy_timing",
+    "s27.ham_lib",
+    "s27.run_pool",
+    "s27.run_vqe_chain",
+    "s27.run_wave2",
+    "s27.run_wave3",
+    "s27.s28_A2_analyse",
+    "s27.s28_A2_local",
+    "s27.s28_A_amp",
+    "s27.s28_A_analyse",
+    "s27.s28_A_objdiag",
+    "s27.s28_B_hop",
+    "s27.s28_B_mladder",
+    "s27.s28_B_prodcheck",
+    "s27.s28_C2_recog_audit",
+    "s27.s28_C_fail18",
+    "s27.s28_C_readout",
+    "s27.s28_D_anchor_B",
+    "s27.s28_D_attack",
+    "s27.s28_D_attack_A2_chain",
+    "s27.s28_D_attack_B_chain",
+    "s27.s28_D_c2_chain_null",
+    "s27.s28_D_c2_poolmember",
+    "s27.s28_D_reproduce",
     "tests.test_amber_frame_invariance",
-    "tests.test_instrument"
+    "tests.test_instrument",
+    "tests.test_s28_A",
+    "tests.test_s28_A2",
+    "tests.test_s28_B",
+    "tests.test_s28_C",
+    "tests.test_s28_C2",
+    "tests.test_s28_D"
    ],
-   "n_importers": 499,
+   "n_importers": 529,
    "backend_names": {}
   },
   "s12.key_corpus": {
@@ -8423,9 +8475,10 @@
     "s20.qb2_lib",
     "s24.d2_amberscore",
     "s24.d_hamiltonians",
-    "s25.phys_gate"
+    "s25.phys_gate",
+    "s26.x_energy_timing"
    ],
-   "n_importers": 48,
+   "n_importers": 49,
    "backend_names": {}
   },
   "s13.qarch_locality": {
@@ -14933,9 +14986,12 @@
     "s26.w_ensemble",
     "s26.w_provenance_readout",
     "s26.w_recall",
-    "s26.w_tiebreak"
+    "s26.w_tiebreak",
+    "s27.s28_A2_local",
+    "s27.s28_A_amp",
+    "s27.s28_C2_recog_audit"
    ],
-   "n_importers": 226,
+   "n_importers": 229,
    "backend_names": {}
   },
   "s16": {
@@ -15593,9 +15649,11 @@
     "s24.d_harness",
     "s26.ph_c3",
     "s26.ph_validity",
+    "s26.x_energy_timing",
+    "s27.ham_lib",
     "tests.test_amber_frame_invariance"
    ],
-   "n_importers": 40,
+   "n_importers": 42,
    "backend_names": {}
   },
   "s16.energy_repair": {
@@ -22721,9 +22779,10 @@
     "s22.run_qcand_readouth",
     "s24.d2_amberscore",
     "s24.d_hamiltonians",
-    "s25.phys_gate"
+    "s25.phys_gate",
+    "s26.x_energy_timing"
    ],
-   "n_importers": 20,
+   "n_importers": 21,
    "backend_names": {}
   },
   "s20.qb2_opt": {
@@ -24526,9 +24585,17 @@
     "s22.run_qcand_readouth",
     "s23.c1_explore_t0",
     "s23.c1_probweight",
-    "s24.d_harness"
+    "s24.d_harness",
+    "s27.s28_A_amp",
+    "s27.s28_B2_knn",
+    "s27.s28_B_hop",
+    "s27.s28_B_represent",
+    "s27.s28_B_split",
+    "s27.s28_B_train",
+    "tests.test_s28_A",
+    "tests.test_s28_B"
    ],
-   "n_importers": 8,
+   "n_importers": 16,
    "backend_names": {}
   },
   "s22.results.d_l2_audit": {
@@ -26235,9 +26302,22 @@
     "s25.phys_lib",
     "s25.phys_suite",
     "s25.q_alpha",
-    "s25.q_verify"
+    "s25.q_verify",
+    "s27.run_pool",
+    "s27.run_vqe_chain",
+    "s27.s28_A_amp",
+    "s27.s28_B_hop",
+    "s27.s28_B_prodcheck",
+    "s27.s28_C2_recog_audit",
+    "s27.s28_C_fail18",
+    "s27.s28_C_readout",
+    "s27.s28_D_anchor_B",
+    "s27.s28_D_reproduce",
+    "tests.test_s28_B",
+    "tests.test_s28_C",
+    "tests.test_s28_D"
    ],
-   "n_importers": 10,
+   "n_importers": 23,
    "backend_names": {}
   },
   "s24.d_harness_test": {
@@ -26831,6 +26911,7 @@
     "s26.p_b3",
     "s26.p_c4",
     "s26.p_c5",
+    "s26.p_close",
     "s26.p_coh",
     "s26.p_deliver",
     "s26.p_ladder",
@@ -26859,9 +26940,38 @@
     "s26.w_recall",
     "s26.w_selfcopy",
     "s26.w_tiebreak",
-    "s26.w_tiebreak_report"
+    "s26.w_tiebreak_report",
+    "s27.analyse_arms",
+    "s27.analyse_pool",
+    "s27.s28_A2_analyse",
+    "s27.s28_A2_local",
+    "s27.s28_A2_prodcheck",
+    "s27.s28_A_amp",
+    "s27.s28_A_analyse",
+    "s27.s28_A_objdiag",
+    "s27.s28_B2_analyse",
+    "s27.s28_B2_knn",
+    "s27.s28_B2_rank1",
+    "s27.s28_B_analyse",
+    "s27.s28_B_hop",
+    "s27.s28_B_mladder",
+    "s27.s28_B_prodcheck",
+    "s27.s28_B_rank1",
+    "s27.s28_B_represent",
+    "s27.s28_B_split",
+    "s27.s28_B_train",
+    "s27.s28_C2_recog_audit",
+    "s27.s28_C_fail18",
+    "s27.s28_C_readout",
+    "s27.s28_D_anchor_B",
+    "s27.s28_D_attack",
+    "s27.s28_D_attack_A2_chain",
+    "s27.s28_D_attack_B_chain",
+    "s27.s28_D_c2_chain_null",
+    "s27.s28_D_c2_poolmember",
+    "s27.s28_D_reproduce"
    ],
-   "n_importers": 68,
+   "n_importers": 98,
    "backend_names": {}
   },
   "s25.agentCLEAN_classify": {
@@ -27416,9 +27526,31 @@
     "s25.phys_form5",
     "s25.phys_gate",
     "s25.phys_landscape",
-    "s25.phys_suite"
+    "s25.phys_suite",
+    "s27.run_pool",
+    "s27.run_trainability",
+    "s27.run_vqe_chain",
+    "s27.run_wave2",
+    "s27.run_wave3",
+    "s27.s28_A2_local",
+    "s27.s28_A_amp",
+    "s27.s28_A_objdiag",
+    "s27.s28_B2_knn",
+    "s27.s28_B2_rank1",
+    "s27.s28_B_chain_part",
+    "s27.s28_B_hop",
+    "s27.s28_B_prodcheck",
+    "s27.s28_B_rank1",
+    "s27.s28_B_represent",
+    "s27.s28_B_train",
+    "s27.s28_C2_recog_audit",
+    "s27.s28_C_fail18",
+    "s27.s28_C_readout",
+    "s27.s28_D_anchor_B",
+    "s27.s28_D_reproduce",
+    "tests.test_s28_B2"
    ],
-   "n_importers": 6,
+   "n_importers": 28,
    "backend_names": {}
   },
   "s25.phys_suite": {
@@ -27578,9 +27710,10 @@
     "sys"
    ],
    "imported_by": [
-    "s26.q_var"
+    "s26.q_var",
+    "s26.x_cvar_plateau"
    ],
-   "n_importers": 1,
+   "n_importers": 2,
    "backend_names": {}
   },
   "s25.q_verify": {
@@ -27950,6 +28083,23 @@
    "n_importers": 0,
    "backend_names": {}
   },
+  "s26.a_append_final_pass": {
+   "path": "s26/a_append_final_pass.py",
+   "lines": 71,
+   "sha256": "e0dc94f23c0b7d2b723860db3f065cb7923eb50a7f76b5368a241b8a8b59ee6c",
+   "doc": "s26/a_append_final_pass.py -- lane A: the final Part 10 deliverables pass as a ledger entry (with the L131 / L132 checks).",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "io",
+    "os",
+    "re",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
   "s26.a_append_l43_l44": {
    "path": "s26/a_append_l43_l44.py",
    "lines": 118,
@@ -28231,14 +28381,14 @@
   },
   "s26.e_report_check": {
    "path": "s26/e_report_check.py",
-   "lines": 697,
-   "sha256": "2a9e20688d147ead310aaa1327bbd9020c97b9b8ff4c74d78319455f651053f3",
+   "lines": 700,
+   "sha256": "26bda1c989d02fa47fa6fb4f51537948d8e3330c32cdf895d86e3f5cc7aa82e1",
    "doc": "s26/e_report_check.py -- every number in s26/REPORT.md Appendix B against its artefact.",
    "imports_repo": [
     {
      "module": "s24.stats_lib",
      "as_written": "s24.stats_lib",
-     "line": 685,
+     "line": 688,
      "lazy": true
     }
    ],
@@ -28660,7 +28810,7 @@
   "s26.i_verify_table": {
    "path": "s26/i_verify_table.py",
    "lines": 92,
-   "sha256": "2ad27fd37f64f5541066a51dc494ad6e4db25915f07a0b6b6a365fbab5aa624a",
+   "sha256": "197ce7f9ae5e291a9e675a415d8c80b1d4d4cf8940d0ab172f16891b70551aa5",
    "doc": "s26/i_verify_table.py -- the 20-audit table for the ledger and the findings, from",
    "imports_repo": [],
    "imports_third_party": [
@@ -28839,6 +28989,30 @@
     "json",
     "numpy",
     "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.p_close": {
+   "path": "s26/p_close.py",
+   "lines": 92,
+   "sha256": "3cf25a12cc02a9af4434cf9f51c3df07fec7ef3099987d7aff2f708074421e6a",
+   "doc": "One-off close-out: C5 ledger entry (ST.fmt verbatim), raw not-run entry, PROPOSAL_C addendum 2, findings closing sections.",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 5,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "datetime",
+    "json",
+    "os",
+    "re",
     "sys"
    ],
    "imported_by": [],
@@ -29809,8 +29983,8 @@
   },
   "s26.pr_build_deck": {
    "path": "s26/pr_build_deck.py",
-   "lines": 637,
-   "sha256": "001f0a476feffc109d7321d6db780a67328cefaada512b9966d2cf338c58e076",
+   "lines": 645,
+   "sha256": "96731e979169539049913e7b215b612f3e8031da3fe15f8a04151fb8da95cd2c",
    "doc": "PR lane, Sprint 26: build `vqe_research_overview.pptx` (repository root) from artefacts.",
    "imports_repo": [
     {
@@ -29822,7 +29996,7 @@
     {
      "module": "s26.pr_figures",
      "as_written": "s26.pr_figures",
-     "line": 603,
+     "line": 611,
      "lazy": true
     }
    ],
@@ -29844,14 +30018,14 @@
   },
   "s26.pr_changes": {
    "path": "s26/pr_changes.py",
-   "lines": 176,
-   "sha256": "ef3374f0283bbca7926149d9ac79283da14ef4eebdf5c4ec6dfef0888b115fa4",
+   "lines": 180,
+   "sha256": "ee365fbb2ee1bfdb7f3dbc55a7a7361f79802abee675c9f26e48635e6171c747",
    "doc": "PR lane, Sprint 26: write `s26/PRESENTATION_CHANGES.md` from the build's own records.",
    "imports_repo": [
     {
      "module": "s26.pr_build_deck",
      "as_written": "s26.pr_build_deck.BANNED",
-     "line": 169,
+     "line": 173,
      "lazy": true
     }
    ],
@@ -29901,8 +30075,8 @@
   },
   "s26.pr_values": {
    "path": "s26/pr_values.py",
-   "lines": 672,
-   "sha256": "f5434e172389d6b0d5d133a470ba19d752d0d5ea87fc95d97d459e8f6427c378",
+   "lines": 713,
+   "sha256": "6166346d018a10e6aed4dff06926ee01411ffd4e8e802de581798035775ee2c6",
    "doc": "PR lane (Presentation), Sprint 26: the registry of every number that appears on a slide",
    "imports_repo": [],
    "imports_third_party": [
@@ -30843,6 +31017,1901 @@
     "sys",
     "time",
     "w_selfcopy"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.x_cvar_plateau": {
+   "path": "s26/x_cvar_plateau.py",
+   "lines": 184,
+   "sha256": "740f934e3d1feb3b0848d1a5e0ef1ffe483886879f7cdb03c470e3a08ce05a58",
+   "doc": "Graph 2: gradient variance of the project's CVaR objective versus qubit count, one line per",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 42,
+     "lazy": false
+    },
+    {
+     "module": "s25.q_plateau",
+     "as_written": "s25.q_plateau",
+     "line": 43,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "matplotlib",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s26.x_energy_timing": {
+   "path": "s26/x_energy_timing.py",
+   "lines": 249,
+   "sha256": "d067953481099a289bf542ef46a566aaadefab3aae2df85fc4880ffd47442f8e",
+   "doc": "Graph 1: wall-clock time per ENERGY EVALUATION versus peptide length (number of residues) for",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 41,
+     "lazy": false
+    },
+    {
+     "module": "s16.energy_lib",
+     "as_written": "s16.energy_lib",
+     "line": 42,
+     "lazy": false
+    },
+    {
+     "module": "core.geometry",
+     "as_written": "core.geometry",
+     "line": 43,
+     "lazy": false
+    },
+    {
+     "module": "core.energy",
+     "as_written": "core.energy",
+     "line": 44,
+     "lazy": false
+    },
+    {
+     "module": "s13.qarch_lib",
+     "as_written": "s13.qarch_lib",
+     "line": 62,
+     "lazy": true
+    },
+    {
+     "module": "s20.qb2_lib",
+     "as_written": "s20.qb2_lib",
+     "line": 63,
+     "lazy": true
+    },
+    {
+     "module": "core.amber",
+     "as_written": "core.amber",
+     "line": 121,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "matplotlib",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.analyse_arms": {
+   "path": "s27/analyse_arms.py",
+   "lines": 95,
+   "sha256": "c6d5d79bf82d89a58ab4d80c82830badeddc684de86693f7cdd9c97887847666",
+   "doc": "s27/analyse_arms.py -- statistics of the CVaR-VQE arm (`vqe_rows.jsonl`) and the built-chain",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 18,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "collections",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.analyse_pool": {
+   "path": "s27/analyse_pool.py",
+   "lines": 116,
+   "sha256": "493ad73c9a310134643cb00e78743d32b7860fc9900fcd4185eb259705363562",
+   "doc": "s27/analyse_pool.py -- paired statistics of every configuration in `pool_rows.jsonl`",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 22,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "collections",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.ham_lib": {
+   "path": "s27/ham_lib.py",
+   "lines": 476,
+   "sha256": "1bf163c987a26c178470aa5489439b7d1210154742a7d232c6d6917ac16696b1",
+   "doc": "s27/ham_lib.py -- the Sprint 27 library of alternative Hamiltonians (energy channels).",
+   "imports_repo": [
+    {
+     "module": "core.data",
+     "as_written": "core.data",
+     "line": 74,
+     "lazy": false
+    },
+    {
+     "module": "core.geometry",
+     "as_written": "core.geometry",
+     "line": 75,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 76,
+     "lazy": false
+    },
+    {
+     "module": "s16.energy_lib",
+     "as_written": "s16.energy_lib",
+     "line": 455,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "math",
+    "numpy",
+    "os",
+    "scipy",
+    "sys",
+    "typing"
+   ],
+   "imported_by": [
+    "s27.make_tables",
+    "s27.run_pool",
+    "s27.run_trainability",
+    "s27.run_wave2",
+    "s27.run_wave3",
+    "s27.s28_A2_local",
+    "s27.s28_C2_recog_audit",
+    "s27.s28_C_fail18",
+    "s27.s28_C_readout"
+   ],
+   "n_importers": 9,
+   "backend_names": {}
+  },
+  "s27.make_tables": {
+   "path": "s27/make_tables.py",
+   "lines": 144,
+   "sha256": "bfa5e596fa9acbeee32e6bba4385c1337d092c38a76eb06af778bfc115518e11",
+   "doc": "s27/make_tables.py -- render every S27 result table as markdown from the summary JSONs",
+   "imports_repo": [
+    {
+     "module": "s27.ham_lib",
+     "as_written": "s27.ham_lib",
+     "line": 58,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.run_pool": {
+   "path": "s27/run_pool.py",
+   "lines": 226,
+   "sha256": "a845ac1cbf040de7368033945daccdb36e3e1eab8f9eaffa29755ca557c94330",
+   "doc": "s27/run_pool.py -- compute every channel on every target's shipped pool, cache it, and",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 30,
+     "lazy": false
+    },
+    {
+     "module": "s24.d_harness",
+     "as_written": "s24.d_harness",
+     "line": 31,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 32,
+     "lazy": false
+    },
+    {
+     "module": "s27.ham_lib",
+     "as_written": "s27.ham_lib",
+     "line": 33,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "hashlib",
+    "itertools",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "scipy",
+    "sys",
+    "time"
+   ],
+   "imported_by": [
+    "s27.run_trainability",
+    "s27.run_vqe_chain",
+    "s27.run_wave2",
+    "s27.run_wave3",
+    "s27.s28_A2_local",
+    "s27.s28_A_amp",
+    "s27.s28_B2_knn",
+    "s27.s28_B2_rank1",
+    "s27.s28_B_hop",
+    "s27.s28_B_mladder",
+    "s27.s28_B_prodcheck",
+    "s27.s28_B_rank1",
+    "s27.s28_B_represent",
+    "s27.s28_B_split",
+    "s27.s28_B_train",
+    "s27.s28_C2_recog_audit",
+    "s27.s28_C_fail18",
+    "s27.s28_C_readout",
+    "s27.s28_D_anchor_B",
+    "s27.s28_D_reproduce",
+    "tests.test_s28_B",
+    "tests.test_s28_C2",
+    "tests.test_s28_D"
+   ],
+   "n_importers": 23,
+   "backend_names": {}
+  },
+  "s27.run_trainability": {
+   "path": "s27/run_trainability.py",
+   "lines": 93,
+   "sha256": "c6ad1c8f34d00ea0e8dca121c64c3888364fde34c2087a9b001ab11833ff8a0d",
+   "doc": "s27/run_trainability.py -- H8: does the Hamiltonian change the selector's trainability?",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 33,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 34,
+     "lazy": false
+    },
+    {
+     "module": "s27.ham_lib",
+     "as_written": "s27.ham_lib",
+     "line": 35,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 36,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.run_vqe_chain": {
+   "path": "s27/run_vqe_chain.py",
+   "lines": 140,
+   "sha256": "6a43eb57f05be9ae5dd2240cf654ff1547ad15b91e2c046a8666bed1bd7e6e20",
+   "doc": "s27/run_vqe_chain.py -- the two secondary arms for the finalists (`s27/PREREG.md` H7 and",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 33,
+     "lazy": false
+    },
+    {
+     "module": "s24.d_harness",
+     "as_written": "s24.d_harness",
+     "line": 34,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 35,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 36,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [
+    "s27.s28_B_prodcheck",
+    "s27.s28_C_fail18",
+    "s27.s28_D_reproduce"
+   ],
+   "n_importers": 3,
+   "backend_names": {}
+  },
+  "s27.run_wave2": {
+   "path": "s27/run_wave2.py",
+   "lines": 118,
+   "sha256": "e4439714ab9192552218b740413502131c9c566c742f201c642f20d341e813b2",
+   "doc": "s27/run_wave2.py -- PREREG addendum 1: H9 (m-ladder), H10 (in-band re-ranking), H11",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 22,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 23,
+     "lazy": false
+    },
+    {
+     "module": "s27.ham_lib",
+     "as_written": "s27.ham_lib",
+     "line": 24,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 25,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "scipy",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.run_wave3": {
+   "path": "s27/run_wave3.py",
+   "lines": 120,
+   "sha256": "1e42a5fa088791275f031792e551210f2e40e76190e0471c51d3a005557264fb",
+   "doc": "s27/run_wave3.py -- PREREG addendum 2 (H13): SS_MATCH2 (H-bond secondary-structure call vs",
+   "imports_repo": [
+    {
+     "module": "core.geometry",
+     "as_written": "core.geometry",
+     "line": 22,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 23,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 24,
+     "lazy": false
+    },
+    {
+     "module": "s27.ham_lib",
+     "as_written": "s27.ham_lib",
+     "line": 25,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 26,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_A2_analyse": {
+   "path": "s27/s28_A2_analyse.py",
+   "lines": 235,
+   "sha256": "13e4162084ef52682ef8b1bc5433ca8fd1e9edbce41ee419b4937c46f0e4c030",
+   "doc": "s27/s28_A2_analyse.py -- statistics for S28 lane A2 (`s27/PREREG_S28_A.md` ADDENDUM 4).",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 21,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 22,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_A_analyse",
+     "as_written": "s27.s28_A_analyse",
+     "line": 23,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_A2_local",
+     "as_written": "s27.s28_A2_local",
+     "line": 24,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "scipy",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_A2_local": {
+   "path": "s27/s28_A2_local.py",
+   "lines": 342,
+   "sha256": "d63bb311d97191695094d1844254a65285025e845af46be150056a07b7a04561",
+   "doc": "s27/s28_A2_local.py -- S28 lane A2: is the objective LOCALLY informative at the production point?",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 41,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 42,
+     "lazy": false
+    },
+    {
+     "module": "s15.seed",
+     "as_written": "s15.seed",
+     "line": 43,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 44,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_A_amp",
+     "as_written": "s27.s28_A_amp",
+     "line": 45,
+     "lazy": false
+    },
+    {
+     "module": "s27.ham_lib",
+     "as_written": "s27.ham_lib",
+     "line": 131,
+     "lazy": true
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 132,
+     "lazy": true
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 336,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [
+    "s27.s28_A2_analyse",
+    "tests.test_s28_A2"
+   ],
+   "n_importers": 2,
+   "backend_names": {}
+  },
+  "s27.s28_A2_prodcheck": {
+   "path": "s27/s28_A2_prodcheck.py",
+   "lines": 47,
+   "sha256": "b44b92d8a8f28bfba4a409b22e38626470be5d01f37bc984593f510987e03ebd",
+   "doc": "s27/s28_A2_prodcheck.py -- lane D's S28-L23 caveat (d), answered by measurement.",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 24,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_A_amp",
+     "as_written": "s27.s28_A_amp",
+     "line": 25,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_A_amp": {
+   "path": "s27/s28_A_amp.py",
+   "lines": 803,
+   "sha256": "4806e107329c507751959195784a260a7a919831092a43638852d10e57dcae0e",
+   "doc": "s27/s28_A_amp.py -- S28 lane A: the AMPLITUDE READOUT.",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 43,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 44,
+     "lazy": false
+    },
+    {
+     "module": "s15.seed",
+     "as_written": "s15.seed",
+     "line": 45,
+     "lazy": false
+    },
+    {
+     "module": "s22.qcand_lib",
+     "as_written": "s22.qcand_lib",
+     "line": 46,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 47,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 72,
+     "lazy": true
+    },
+    {
+     "module": "s24.d_harness",
+     "as_written": "s24.d_harness",
+     "line": 504,
+     "lazy": true
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 789,
+     "lazy": true
+    },
+    {
+     "module": "s27.s28_A_analyse",
+     "as_written": "s27.s28_A_analyse",
+     "line": 796,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "scipy",
+    "sys",
+    "time",
+    "typing"
+   ],
+   "imported_by": [
+    "s27.s28_A2_local",
+    "s27.s28_A2_prodcheck",
+    "s27.s28_A_objdiag",
+    "s27.s28_C2_recog_audit",
+    "tests.test_s28_A",
+    "tests.test_s28_A2",
+    "tests.test_s28_D"
+   ],
+   "n_importers": 7,
+   "backend_names": {}
+  },
+  "s27.s28_A_analyse": {
+   "path": "s27/s28_A_analyse.py",
+   "lines": 329,
+   "sha256": "28a2fd7c094b75b686d53c807c412baed3e46af869690b88ea86be67e1e629ab",
+   "doc": "s27/s28_A_analyse.py -- statistics for S28 lane A (`s27/PREREG_S28_A.md` section 7).",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 25,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 26,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "scipy",
+    "sys"
+   ],
+   "imported_by": [
+    "s27.s28_A2_analyse",
+    "s27.s28_A_amp"
+   ],
+   "n_importers": 2,
+   "backend_names": {}
+  },
+  "s27.s28_A_objdiag": {
+   "path": "s27/s28_A_objdiag.py",
+   "lines": 67,
+   "sha256": "0562a3cf24c8a96296d9e058e40274a16eb6436f9f48357d45360967d1f24dbb",
+   "doc": "s27/s28_A_objdiag.py -- ORACLE DIAGNOSTIC of the native-free objective term (PREREG section 6).",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 24,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 25,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_A_amp",
+     "as_written": "s27.s28_A_amp",
+     "line": 26,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 30,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_B2_analyse": {
+   "path": "s27/s28_B2_analyse.py",
+   "lines": 267,
+   "sha256": "c52e446e04cd0f3ddc2b18d98ef4e79550024eb502709f04f8a6244d70292996",
+   "doc": "s27/s28_B2_analyse.py -- statistics for the B2 ENDPOINT at the scope of prereg addendum 2.",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 30,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 31,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_analyse",
+     "as_written": "s27.s28_B_analyse.compact",
+     "line": 32,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_B2_knn": {
+   "path": "s27/s28_B2_knn.py",
+   "lines": 405,
+   "sha256": "14e7e189ffb87ea4dced3bba3466fc3a2b1e9191ef690151a18c28937dc9ed27",
+   "doc": "s27/s28_B2_knn.py -- S28 LANE B2: the hopping graph with a SPREAD spectrum.",
+   "imports_repo": [
+    {
+     "module": "s22.qcand_lib",
+     "as_written": "s22.qcand_lib",
+     "line": 41,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 42,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 43,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 184,
+     "lazy": true
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 185,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time",
+    "typing"
+   ],
+   "imported_by": [
+    "s27.s28_B2_rank1",
+    "tests.test_s28_B2"
+   ],
+   "n_importers": 2,
+   "backend_names": {}
+  },
+  "s27.s28_B2_rank1": {
+   "path": "s27/s28_B2_rank1.py",
+   "lines": 94,
+   "sha256": "baa393c17645754fcda43da4b3137ef26bdb2cc16c167018ddb6cbd4498486ba",
+   "doc": "s27/s28_B2_rank1.py -- S28-L23 caveat (a): decompose the kNN graph's hop-only gradient",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 23,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 24,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 25,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 26,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_rank1",
+     "as_written": "s27.s28_B_rank1",
+     "line": 27,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B2_knn",
+     "as_written": "s27.s28_B2_knn",
+     "line": 28,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_B_analyse": {
+   "path": "s27/s28_B_analyse.py",
+   "lines": 320,
+   "sha256": "9a970424ce3522dd4e88ec36d3b808e4050f1a74488d6799587b492bfd654a82",
+   "doc": "s27/s28_B_analyse.py -- statistics for the S28-B run. Supersedes `s28_B_hop.py --analyse`.",
+   "imports_repo": [
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 34,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 35,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [
+    "s27.s28_B2_analyse"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
+  "s27.s28_B_chain_part": {
+   "path": "s27/s28_B_chain_part.py",
+   "lines": 42,
+   "sha256": "ebf2c53742efdde6ac1ced6dbaae14b5bbc6e2fb5ebca89904e8c87fdd5a7c33",
+   "doc": "s27/s28_B_chain_part.py -- run `s28_B_hop.chain_main` on one half of the targets so the two",
+   "imports_repo": [
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 21,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 22,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_B_hop": {
+   "path": "s27/s28_B_hop.py",
+   "lines": 843,
+   "sha256": "f34df0ea517a9f76b25f46f664360bfce89a720ed76c3e696cb46d092c96bbef",
+   "doc": "s27/s28_B_hop.py -- S28 LANE B: THE FIRST NON-DIAGONAL HAMILTONIAN, H = diag(E) - J A.",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 58,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 59,
+     "lazy": false
+    },
+    {
+     "module": "s22.qcand_lib",
+     "as_written": "s22.qcand_lib",
+     "line": 60,
+     "lazy": false
+    },
+    {
+     "module": "s24.d_harness",
+     "as_written": "s24.d_harness",
+     "line": 61,
+     "lazy": false
+    },
+    {
+     "module": "core",
+     "as_written": "core",
+     "line": 87,
+     "lazy": true
+    },
+    {
+     "module": "core.pipeline",
+     "as_written": "core.pipeline",
+     "line": 296,
+     "lazy": true
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 307,
+     "lazy": true
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 512,
+     "lazy": true
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 567,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "sys",
+    "time",
+    "typing"
+   ],
+   "imported_by": [
+    "s27.s28_B2_analyse",
+    "s27.s28_B2_knn",
+    "s27.s28_B2_rank1",
+    "s27.s28_B_analyse",
+    "s27.s28_B_chain_part",
+    "s27.s28_B_mladder",
+    "s27.s28_B_prodcheck",
+    "s27.s28_B_rank1",
+    "s27.s28_B_represent",
+    "s27.s28_B_split",
+    "s27.s28_B_train",
+    "s27.s28_D_anchor_B",
+    "tests.test_s28_B",
+    "tests.test_s28_B2",
+    "tests.test_s28_D"
+   ],
+   "n_importers": 15,
+   "backend_names": {}
+  },
+  "s27.s28_B_mladder": {
+   "path": "s27/s28_B_mladder.py",
+   "lines": 80,
+   "sha256": "ce53a23445f679c8b379386552bf81de38c26d4883dae3d3dcaccf061c354040",
+   "doc": "s27/s28_B_mladder.py -- the S27 T9 decomposition for every S28-B R1 row:",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 26,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 27,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 28,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 29,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_B_prodcheck": {
+   "path": "s27/s28_B_prodcheck.py",
+   "lines": 105,
+   "sha256": "acc56f9853982bd363d534ac68a73d9cec2e41e77cc4a6236ed5f99388c55fc1",
+   "doc": "s27/s28_B_prodcheck.py -- the production comparator re-projected IN LANE B's OWN PROCESS on",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 35,
+     "lazy": false
+    },
+    {
+     "module": "s24.d_harness",
+     "as_written": "s24.d_harness",
+     "line": 36,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 37,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 38,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 39,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_vqe_chain",
+     "as_written": "s27.run_vqe_chain",
+     "line": 40,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 41,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_B_rank1": {
+   "path": "s27/s28_B_rank1.py",
+   "lines": 100,
+   "sha256": "c4c6d79442916bfd58e14b7677a65ab0a9665a447b0196f84086abedb61e8c02",
+   "doc": "s27/s28_B_rank1.py -- mechanism check for F5: is the hopping term's gradient-variance decay",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 30,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 31,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 32,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 33,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 34,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [
+    "s27.s28_B2_rank1"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
+  "s27.s28_B_represent": {
+   "path": "s27/s28_B_represent.py",
+   "lines": 240,
+   "sha256": "df590908a30460af3e8eb76e8a8b3dcebb78047f99c62eb9b7bd87134ccc149c",
+   "doc": "s27/s28_B_represent.py -- the REPRESENTABILITY FIT lane D asked for in S28-L26 (the missing",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 55,
+     "lazy": false
+    },
+    {
+     "module": "s22.qcand_lib",
+     "as_written": "s22.qcand_lib",
+     "line": 56,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 57,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 58,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 59,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 60,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_split",
+     "as_written": "s27.s28_B_split.F_of_state",
+     "line": 61,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time",
+    "typing"
+   ],
+   "imported_by": [
+    "tests.test_s28_B"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
+  "s27.s28_B_split": {
+   "path": "s27/s28_B_split.py",
+   "lines": 133,
+   "sha256": "5a13de0adade188263fd22c5d33baa27a4827eb037858cba3860af4d503ec53e",
+   "doc": "s27/s28_B_split.py -- the THREE-WAY SPLIT's middle leg (S28-L2 caveat (b)).",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 33,
+     "lazy": false
+    },
+    {
+     "module": "s22.qcand_lib",
+     "as_written": "s22.qcand_lib",
+     "line": 34,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 35,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 36,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 37,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [
+    "s27.s28_B_represent"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
+  "s27.s28_B_train": {
+   "path": "s27/s28_B_train.py",
+   "lines": 118,
+   "sha256": "afd09369e0bfa0fbb84a51c0ec941d2402662f97323fc91af8f3ec44589bff59",
+   "doc": "s27/s28_B_train.py -- F5 of `s27/PREREG_S28_B.md`: gradient variance of F vs J at n = 4..9,",
+   "imports_repo": [
+    {
+     "module": "s22.qcand_lib",
+     "as_written": "s22.qcand_lib",
+     "line": 24,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 25,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 26,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 27,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 28,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_C2_recog_audit": {
+   "path": "s27/s28_C2_recog_audit.py",
+   "lines": 670,
+   "sha256": "a56c08ac505588f29340545ddd25851c3fb8020d926b6d4fade32b1396dc79c6",
+   "doc": "s27/s28_C2_recog_audit.py -- S28 lane C2: the recognition audit (`s27/PREREG_S28_C2.md`).",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 48,
+     "lazy": false
+    },
+    {
+     "module": "s15.seed",
+     "as_written": "s15.seed",
+     "line": 49,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 50,
+     "lazy": false
+    },
+    {
+     "module": "s27.ham_lib",
+     "as_written": "s27.ham_lib",
+     "line": 51,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 52,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_A_amp",
+     "as_written": "s27.s28_A_amp",
+     "line": 199,
+     "lazy": true
+    },
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 200,
+     "lazy": true
+    },
+    {
+     "module": "s24.d_harness",
+     "as_written": "s24.d_harness",
+     "line": 204,
+     "lazy": true
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 275,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "scipy",
+    "sys",
+    "time",
+    "types"
+   ],
+   "imported_by": [
+    "tests.test_s28_C2"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
+  "s27.s28_C_fail18": {
+   "path": "s27/s28_C_fail18.py",
+   "lines": 621,
+   "sha256": "7a3e64c3fe626701ac54d833d6a84d505af0c3533b3327033171fc3ece13d66c",
+   "doc": "s27/s28_C_fail18.py -- S28 lane C, Part 1: a FAIL18 detector on a feature class no router has",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 38,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 39,
+     "lazy": false
+    },
+    {
+     "module": "s27.ham_lib",
+     "as_written": "s27.ham_lib",
+     "line": 40,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 41,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 123,
+     "lazy": true
+    },
+    {
+     "module": "s24.d_harness",
+     "as_written": "s24.d_harness",
+     "line": 322,
+     "lazy": true
+    },
+    {
+     "module": "s27.run_vqe_chain",
+     "as_written": "s27.run_vqe_chain",
+     "line": 323,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "scipy",
+    "sys",
+    "time"
+   ],
+   "imported_by": [
+    "tests.test_s28_C"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
+  "s27.s28_C_readout": {
+   "path": "s27/s28_C_readout.py",
+   "lines": 357,
+   "sha256": "7ed27b384fd12ac9d84060c2c4aca9d206c6d8c2849eb4034d34dc61aca296c4",
+   "doc": "s27/s28_C_readout.py -- S28 lane C, Part 2: readouts that consume a ranker's in-pool",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 46,
+     "lazy": false
+    },
+    {
+     "module": "s24.d_harness",
+     "as_written": "s24.d_harness",
+     "line": 47,
+     "lazy": false
+    },
+    {
+     "module": "s27.ham_lib",
+     "as_written": "s27.ham_lib",
+     "line": 48,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 49,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 207,
+     "lazy": true
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 252,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "math",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [
+    "tests.test_s28_C",
+    "tests.test_s28_D"
+   ],
+   "n_importers": 2,
+   "backend_names": {}
+  },
+  "s27.s28_D_anchor_B": {
+   "path": "s27/s28_D_anchor_B.py",
+   "lines": 86,
+   "sha256": "4dc0f54c0019a38c7f44d6b4eb1c03829d606c1467d19b8b46849f87e6c1bfe8",
+   "doc": "s27/s28_D_anchor_B.py -- lane D: does lane B's J = 0 loop reproduce S27's DIS VQE row bit-for-bit?",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 29,
+     "lazy": false
+    },
+    {
+     "module": "s24.d_harness",
+     "as_written": "s24.d_harness",
+     "line": 30,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 31,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 32,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 33,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 34,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "sys",
+    "time"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_D_attack": {
+   "path": "s27/s28_D_attack.py",
+   "lines": 172,
+   "sha256": "ffc8ea6062167fcf156fc7a2b43146806b707ef04f932ebeef7eac29510178ca",
+   "doc": "s27/s28_D_attack.py -- lane D: the standard attack kit on any per-target arm table.",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 38,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 39,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "re",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_D_attack_A2_chain": {
+   "path": "s27/s28_D_attack_A2_chain.py",
+   "lines": 136,
+   "sha256": "3463c1c742fa6afac3aec8bfba0d9e94d71c67302f1ede01abe81dd9886477fe",
+   "doc": "s27/s28_D_attack_A2_chain.py -- lane D: the standing checks on lane A2's built-chain arms.",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 37,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 38,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_D_attack_B_chain": {
+   "path": "s27/s28_D_attack_B_chain.py",
+   "lines": 160,
+   "sha256": "bd7146c7cf6f24180567211ab73e5c07c8ed2cb0f838e9c4a9189379a47de90b",
+   "doc": "s27/s28_D_attack_B_chain.py -- lane D: the standing checks on lane B's built-chain rows.",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 39,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 40,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_D_c2_chain_null": {
+   "path": "s27/s28_D_c2_chain_null.py",
+   "lines": 108,
+   "sha256": "44a422cca48e4b6196a093133eff1ecb98aa673c8dd667bf96555a4a3626489b",
+   "doc": "s27/s28_D_c2_chain_null.py -- lane D: an independent max-over-31 multiplicity null for lane",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 35,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 36,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_D_c2_poolmember": {
+   "path": "s27/s28_D_c2_poolmember.py",
+   "lines": 117,
+   "sha256": "2f5dbbfc31b811da00a0491b1365f773b40ecf8ecfb6e971ecb59750c1e0ba1e",
+   "doc": "s27/s28_D_c2_poolmember.py -- lane D: the pool-member control for lane C2's recognition audit.",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 37,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 38,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_D_leakgrep": {
+   "path": "s27/s28_D_leakgrep.py",
+   "lines": 91,
+   "sha256": "fe94f1124372bc28c1038bc4f14ffff1e43a7150d6c656ff08c296581885cc17",
+   "doc": "s27/s28_D_leakgrep.py -- lane D: the leakage grep over a lane's scripts.",
+   "imports_repo": [],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "os",
+    "re",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "s27.s28_D_reproduce": {
+   "path": "s27/s28_D_reproduce.py",
+   "lines": 166,
+   "sha256": "151eed488fe73e707e47ae0c6b2030cdef85c20f6d17185f4437f211dcacc67e",
+   "doc": "s27/s28_D_reproduce.py -- lane D (Adversary): reproduce ONE S27 number from its artefact.",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 32,
+     "lazy": false
+    },
+    {
+     "module": "s24.stats_lib",
+     "as_written": "s24.stats_lib",
+     "line": 33,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 34,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 35,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_vqe_chain",
+     "as_written": "s27.run_vqe_chain",
+     "line": 36,
+     "lazy": false
+    },
+    {
+     "module": "s24.d_harness",
+     "as_written": "s24.d_harness",
+     "line": 123,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "argparse",
+    "json",
+    "numpy",
+    "os",
+    "re",
+    "sys",
+    "time"
    ],
    "imported_by": [],
    "n_importers": 0,
@@ -32646,6 +34715,337 @@
     "sys",
     "time",
     "torch"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "tests.test_s28_A": {
+   "path": "tests/test_s28_A.py",
+   "lines": 316,
+   "sha256": "0d91a87cb75e4aca3f0efaad4c229f52eeb2c801722885e3c3d7d66873fcfa1e",
+   "doc": "tests/test_s28_A.py -- S28 lane A, the amplitude readout (`s27/s28_A_amp.py`).",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 22,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 23,
+     "lazy": false
+    },
+    {
+     "module": "s22.qcand_lib",
+     "as_written": "s22.qcand_lib",
+     "line": 24,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_A_amp",
+     "as_written": "s27.s28_A_amp",
+     "line": 25,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "math",
+    "numpy",
+    "os",
+    "pytest",
+    "sys"
+   ],
+   "imported_by": [
+    "tests.test_s28_A2"
+   ],
+   "n_importers": 1,
+   "backend_names": {}
+  },
+  "tests.test_s28_A2": {
+   "path": "tests/test_s28_A2.py",
+   "lines": 101,
+   "sha256": "b5b08c9bb25b9d3a0fc14fe733d6c9a59cc261e516114074e1ea4099080ca486",
+   "doc": "tests/test_s28_A2.py -- S28 lane A2 (`s27/s28_A2_local.py`): the objective's local behaviour.",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 19,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 20,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_A_amp",
+     "as_written": "s27.s28_A_amp",
+     "line": 21,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_A2_local",
+     "as_written": "s27.s28_A2_local",
+     "line": 22,
+     "lazy": false
+    },
+    {
+     "module": "tests.test_s28_A",
+     "as_written": "tests.test_s28_A._frame",
+     "line": 23,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "inspect",
+    "numpy",
+    "os",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "tests.test_s28_B": {
+   "path": "tests/test_s28_B.py",
+   "lines": 320,
+   "sha256": "09f4941602211d3d056787bc2504baefcc48d1641585e1aa7e5ea6a52616c58a",
+   "doc": "Tests for `s27/s28_B_hop.py` (S28 lane B: H = diag(E) - J A inside the CVaR-VQE).",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 27,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 28,
+     "lazy": false
+    },
+    {
+     "module": "s24.d_harness",
+     "as_written": "s24.d_harness",
+     "line": 169,
+     "lazy": true
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 170,
+     "lazy": true
+    },
+    {
+     "module": "s22.qcand_lib",
+     "as_written": "s22.qcand_lib",
+     "line": 171,
+     "lazy": true
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 212,
+     "lazy": true
+    },
+    {
+     "module": "s27.s28_B_represent",
+     "as_written": "s27.s28_B_represent",
+     "line": 286,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "numpy",
+    "os",
+    "pytest",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "tests.test_s28_B2": {
+   "path": "tests/test_s28_B2.py",
+   "lines": 164,
+   "sha256": "1b5943d4706a6980f3ac01e48c64615bd84d0ae4e487deb7b5f62863937b8075",
+   "doc": "Tests for `s27/s28_B2_knn.py` (S28 lane B2: the kNN spread-spectrum hopping graph).",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 20,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 21,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B2_knn",
+     "as_written": "s27.s28_B2_knn",
+     "line": 22,
+     "lazy": false
+    },
+    {
+     "module": "s25.phys_lib",
+     "as_written": "s25.phys_lib",
+     "line": 98,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "numpy",
+    "os",
+    "pytest",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "tests.test_s28_C": {
+   "path": "tests/test_s28_C.py",
+   "lines": 179,
+   "sha256": "4079246597e0a9e5a37c4bbf02be74db62e93e9919d51157706fc3f885a81b4b",
+   "doc": "tests/test_s28_C.py -- S28 lane C: the FAIL18 detector's feature functions and the",
+   "imports_repo": [
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 22,
+     "lazy": false
+    },
+    {
+     "module": "s24.d_harness",
+     "as_written": "s24.d_harness",
+     "line": 23,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_C_fail18",
+     "as_written": "s27.s28_C_fail18",
+     "line": 24,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_C_readout",
+     "as_written": "s27.s28_C_readout",
+     "line": 25,
+     "lazy": false
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "numpy",
+    "os",
+    "pytest",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "tests.test_s28_C2": {
+   "path": "tests/test_s28_C2.py",
+   "lines": 119,
+   "sha256": "316107dd55f5f9cff158ddc7aae718e84afca0b9ffd864ea72dbfb894ce9c33d",
+   "doc": "tests/test_s28_C2.py -- S28 lane C2: the recognition audit's adapters and controls.",
+   "imports_repo": [
+    {
+     "module": "s27.s28_C2_recog_audit",
+     "as_written": "s27.s28_C2_recog_audit",
+     "line": 20,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 31,
+     "lazy": true
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 32,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "numpy",
+    "os",
+    "pytest",
+    "sys"
+   ],
+   "imported_by": [],
+   "n_importers": 0,
+   "backend_names": {}
+  },
+  "tests.test_s28_D": {
+   "path": "tests/test_s28_D.py",
+   "lines": 232,
+   "sha256": "ae1cb13dfd5eb846a1faf51fa7778d11b786367bb0a694ccb946f0c8413b61ec",
+   "doc": "tests/test_s28_D.py -- lane D (the Adversary): the checks the lanes' own test files do not make.",
+   "imports_repo": [
+    {
+     "module": "core.quantum",
+     "as_written": "core.quantum",
+     "line": 33,
+     "lazy": false
+    },
+    {
+     "module": "s12.instrument",
+     "as_written": "s12.instrument",
+     "line": 34,
+     "lazy": false
+    },
+    {
+     "module": "s24.d_harness",
+     "as_written": "s24.d_harness",
+     "line": 35,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_A_amp",
+     "as_written": "s27.s28_A_amp",
+     "line": 36,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_B_hop",
+     "as_written": "s27.s28_B_hop",
+     "line": 37,
+     "lazy": false
+    },
+    {
+     "module": "s27.s28_C_readout",
+     "as_written": "s27.s28_C_readout",
+     "line": 38,
+     "lazy": false
+    },
+    {
+     "module": "s27.run_pool",
+     "as_written": "s27.run_pool",
+     "line": 201,
+     "lazy": true
+    }
+   ],
+   "imports_third_party": [
+    "__future__",
+    "numpy",
+    "os",
+    "pytest",
+    "sys"
    ],
    "imported_by": [],
    "n_importers": 0,

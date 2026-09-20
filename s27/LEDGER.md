@@ -3480,3 +3480,52 @@ Artefacts: `s27/results/s28_D_attack_B_chain.json`, `s26/logs/s28D_attack_B_chai
   production as the comparator; the chain only for a registered cell at 0.7x MDE.
 Artefacts: `s27/results/s28_B_summary.json` (renamed keys), `s27/PREREG_S28_B.md` (addendum 3),
 `s27/s28_B2_knn.py`, `tests/test_s28_B2.py`, `s27/s28_B2_analyse.py`, `s26/jobs/s28B2_run.json`.
+## S28-L45 -- SUITE STATUS (close): EVERY TEST FILE IN THE TREE RAN IN THE QUIET WINDOW; 442 UNIQUE TESTS: 440 PASSED, 2 SKIPPED (TWO ABSENT ARTEFACTS), 0 FAILED, 0 ERRORS ON THE FLAG BASIS (429 / 13 / 0 ON THE SKIPPED BASIS); THE 11 VERIFY_SLOW OPT-INS RUN AND PASS AS AT THE S26 CLOSE; examine.py: 836 MODULES MAPPED, 101 PINNED HASHES WITHOUT DRIFT, 21/21 CLAIMS OK (2026-09-19 21:40, lane D)
+Question: is the suite green on the same basis as the S26 close (s26/LEDGER.md L98 / L102 / L113:
+the `VERIFY_SLOW=1` tier run with the flag INSIDE the command), and do the pinned artefacts and
+claimed numbers still check?
+Every run is a `s26/jobrun.py` job (record in `s26/jobs_done/<name>.json`, log in
+`s26/logs/<name>.log`); production code is frozen (rule 3); nothing was edited to make a test pass.
+
+| file(s) | job | tag | pass / skip / fail | wall s | peak GB |
+|---|---|---|---|---|---|
+| `tests/test_cvar.py test_data test_energy test_equivalence test_geometry test_instrument test_project test_quantum` (light 8) | `s28D_pytest_light` (S28-L4, 2026-09-14; no file in the set changed since: `git diff fafbc5bf --stat`) | TEST | 286 / 3 / 0 | 95 | 0.909 |
+| `tests/test_s28_{A,A2,B,B2,C,C2,D}.py` (7 lane files) | `s28D_pytest_lanes_v4` (S28-L38) | TEST | 72 / 0 / 0 | 15 (+120 queued) | 0.328 |
+| `tests/test_pipeline.py` | `s28D_pytest_pipeline_q` | TEST | 35 / 2 / 0 | 145 | 1.563 |
+| `tests/test_integration.py` (skipped basis, no flag) | `s28D_pytest_integration_q` | TEST | 17 / 8 / 0 | 5 | 0.010 |
+| `tests/test_amber.py` | `s28D_pytest_amber_q` | TEST (OpenMM; no other AMBER job live) | 16 / 0 / 0 | 459 | 0.872 |
+| `tests/test_amber_frame_invariance.py` | `s28D_pytest_amber_frame_q` | TEST (OpenMM; alone) | 3 / 0 / 0 | 211 | 0.323 |
+| `tests/test_integration.py` (flag basis: `python -c "os.environ['VERIFY_SLOW']='1'; pytest.main([...])"`, the S26 L98 form) | `s28D_pytest_integration_slow` | AMBER (alone) | 25 / 0 / 0 | 80 | 1.141 |
+| `tests/test_equivalence.py` (flag basis, same form) | `s28D_pytest_equivalence_slow` | AMBER (alone) | 14 / 0 / 0 | 25 | 0.960 |
+
+Counts. Skipped basis (every file once, no flag): 286 + 72 + 35 + 17 + 16 + 3 = 429 pass,
+3 + 2 + 8 = 13 skips, 0 fail, 0 errors, 442 unique tests. Flag basis (the two opt-in files
+replaced by their flag runs; per file: the light set without `test_equivalence` 275 / 0,
+`test_equivalence` 14 / 0, lanes 72 / 0, pipeline 35 / 2, integration 25 / 0, amber 16 / 0,
+frame 3 / 0): **440 passed, 2 skipped, 0 failed, 0 errors on 442 unique tests.** The 11 opt-ins (8 in `test_integration.py`: the Legacy terms on a real pool, the
+ff14SB + GBn2 parameters, the pinned 1A13 energy, rigid-translation invariance, NaN-poisoning
+through `run_target`, cross-process and 4-thread bit-identity; 3 in `test_equivalence.py`: the
+pipeline arms up to the projection, the degenerate branch, no skipped stage) all RUN AND PASS,
+as at the S26 close (11 / 11, s26/LEDGER.md L113). The two remaining skips are the S26 close's
+two: the absent `bench_results/optimised_tuning126_w6.json` and "no smoke result on disk" in
+`test_pipeline.py` (log lines in `s26/logs/s28D_pytest_pipeline_q.log`). Nothing skipped for
+memory; the memory guard fired in no job.
+Correction to my own earlier count: S28-L38's "358 pass / 3 skip / 0 fail on the runnable set"
+counted `test_integration.py` and the opt-in tier as deferred; the first `s28D_pytest_integration_q`
+run in this window (17 / 8) skipped every OpenMM check because the flag was not in the command
+(the coordinator caught it; the S26 L98 lesson: a job's environment belongs in its command); the
+flag runs above are the ones that count.
+`python s26/examine.py` (`s26/logs/s28D_examine_close.log`, exit 0): module map regenerated
+(`s26/results/module_map.json`, 836 modules; 787 at the S26 close, the difference is the S27 /
+S28 modules); pinned-artefact hashes: no drift, 101 entries identical to
+`s26/results/pinned_hashes.json` (the sealed benchmark manifest hashed as bytes, never parsed);
+claims: 21 checked, 0 failing (`s26/results/claim_check.json`; production 3.2147651542109985 /
+3.048338093879532 / 3.2354598538973844, leaderboard 3.2126212503925293, pool best
+1.7108244199364904, the four pinned sha256s, the S8 transfer law, the S26 test-run record).
+Box during the window: 72 to 81% RAM (the user's programs), cap 3, one lane job (`s28B2_chain`,
+CPU, 0.3 GB) running beside each test job; no kill, no suspension.
+Verdict: the suite is green on the S26 basis; the instrument's pinned artefacts and claimed
+numbers are unchanged after the sprint. Nothing in S28 touched production code.
+Artefacts: `s26/jobs_done/s28D_pytest_{light,lanes_v4,pipeline_q,integration_q,amber_q,amber_frame_q,integration_slow,equivalence_slow}.json`
+and the matching `s26/logs/*.log`; `s26/logs/s28D_examine_close.log`, `s26/results/module_map.json`,
+`s26/results/claim_check.json`, `s26/results/pinned_hashes.json`.
