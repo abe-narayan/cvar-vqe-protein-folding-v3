@@ -167,7 +167,7 @@ Substituting (2.6) and (A2) into (2.4), using `r = n - a` to first order,
 > cov(a,b)`: the POOL's deviation tracks the native's better than the POSTERIOR's does. That is
 > consistent with the pool being made of real structures and the median map not being one, and it
 > is second order either way.
-> **THE FOLLOW-UP, RUN BY ME ON ALL 126 (S29-L33; `s29/s29_T_beta_unsat.py`, built on lane D's own
+> **THE FOLLOW-UP, RUN BY ME ON ALL 126 (S29-L39; `s29/s29_T_beta_unsat.py`, built on lane D's own
 > implementation so that the author of the failed claim does not re-derive a favourable variant;
 > job `s26/jobs_done/s29T_beta_unsat.json`). THE VERDICT IS (ii), AND (i) IS SETTLED IN A WAY I DID
 > NOT EXPECT.**
