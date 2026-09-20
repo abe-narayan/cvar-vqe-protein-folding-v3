@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:45 Pacific.
+Last update: 2026-09-20 00:52 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -161,6 +161,39 @@ third is the queued S8 free-energy item and is now the only structurally live ex
    clears 0.7x MDE with the fold CI excluding zero AND its cosine clears 0.140 with the shrink
    signature. If it lands near the ORACLE 0.75 A, assumption B2 is falsified and the sprint's
    headline changes from a ceiling to an opening.
+
+
+## THE SPRINT'S QUANTUM RESULT (2026-09-20 00:52, S29-L25; provisional until lane D's attack)
+THE SET-EQUALITY THEOREM FAILS ON REAL POOLS, AND THE ESCAPE BUYS NO ACCURACY. Both halves
+measured in one job, and together they are this sprint's thesis demonstrated rather than asserted.
+MECHANISM (deterministic, per target, no statistics needed; exhaustive over all C(500,2) = 124,750
+pairs of the deployed pool; 12 targets): with the objective placed on the tail's own coordinate
+average, V(S) = f(mean of the subset), the f-optimal PAIR is NOT the energy-order prefix on 11 of
+12 targets (mean objective gap +0.0847), the f-optimal m = 5 subset is not a prefix on 12 of 12
+(mean gap +0.1522, clearing lane T's registered 0.10 at m = 5 rather than m = 75), supports reach
+ranks 324 and 269 of 500, AND IT IS NOT A DIFFERENT SORT EITHER: the pair of the two lowest
+per-state f values equals the exhaustive optimum on only 1 of 12 targets. So the optimum is
+reachable neither by sorting E nor by sorting f. It is a genuine subset-selection problem, exactly
+as lane T's three-state two-dimensional witness (S29-L17/L18) requires.
+THIS IS THE FIRST MEASUREMENT IN THE PROJECT'S RECORD of a formulation in which "which set" is a
+real optimisation variable rather than the read-out of a sort, and it is an affirmative answer, on
+the deployed pool, to charter section 11 questions 5 and 7. The deployed spine cannot do this: its
+tail is provably a prefix (Barkoutsos eq 12), which is why lane T could derive that the whole
+deployed quantum stage reduces at the endpoint to choosing one number m.
+PRICE (ORACLE, point cloud, n = 12, a PROBE and labelled one): the f-optimal m = 5 subset's
+average is +0.4278 A WORSE than production (0.59x MDE, NOT MEASURED at this n, fold CI straddling
+zero, 4W/8L, power 0.38, Type-M 1.60). The direction is the one that matters and it is the wrong
+one.
+CHRONOLOGY (contract rule 27): I registered this exact prediction in integration note 11 at 00:26
+-- "the flatness falls (the mechanism works) AND the endpoint gets WORSE, because f is a
+marginal-class objective bound by theorem 2" -- and lane B posted the measurement at 00:53. The
+prediction preceded the measurement and both halves came in as registered.
+WHAT IT MEANS. The flatness WAS fixable: a lift exists, it is derived, it costs the same 2P
+evaluations, it is more device-realisable than the deployed objective, and on real pools it
+genuinely escapes the prefix. And fixing it did not help, because the scoring function it consumes
+is still bound by theorem 2 and the bound of S29-L23. THE FLATNESS WAS NEVER THE BARRIER; THE
+INFORMATION IS. That is the sprint's thesis, and it is now demonstrated from the constructive side
+as well as the destructive one.
 
 ## Integration note 1 (2026-09-19 23:55, after S29-L1)
 Lane L's topic 1 closes the "import a QA method" route from outside: no published native-free
