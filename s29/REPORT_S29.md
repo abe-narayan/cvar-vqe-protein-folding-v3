@@ -229,6 +229,7 @@ killed it, so the reader can check rather than take it on report:
 | candidate | result | verdict |
 |---|---|---|
 | Tail-then-aggregate, escaping the CVaR prefix | +0.0804 at 0.73× MDE (the non-prefix term alone) | NOT MEASURED |
+| Tail-then-aggregate, the **VQE endpoint** (§6.1) | λ = 1: +0.104 / +0.116 Å; no λ beats production **or** its own λ = 0 on either seed | REFUTED as registered |
 | The compatibility Hamiltonian on the candidate register | 0 of 24 (M, J) cells clear 0.7× MDE on either readout | GATE CLOSED, endpoint not run |
 | The signed amplitude readout | 0.3–4.7 Å worse than production; sign correct 0.40–0.75, median **0.50** | WORSE |
 | The typicality axis (rung 6) | ORACLE best global step **exactly 0**; leave-fold-out bit-identical to production on 126/126 | FALSIFIED |
@@ -662,6 +663,8 @@ arm                                         built chain    vs prod    ×MDE    v
 production (ships)                             3.2105         —         —     incumbent
 tail-then-aggregate, m=5 f-optimal subset      3.2934      +0.2451    1.45×    WORSE
   of which the non-prefix choice alone            —        +0.0804    0.73×    NOT MEASURED
+tail-then-aggregate VQE endpoint, λ = 1           —     +0.104/+0.116  0.95×/1.03×  REFUTED (F5b)
+tail-then-aggregate VQE endpoint, λ = 3           —     +0.103/+0.106  0.80×/0.81×  REFUTED (F5b)
 compatibility Hamiltonian (best of 24 cells)      —           —         —     GATE NOT OPENED
 pair log-score selection functional (F1)       3.2949      +0.0822    0.55×    NOT MEASURED
   vs its zero-information control                 —        +0.0202    0.14×    NOT MEASURED
