@@ -28,9 +28,11 @@ three numbers that did not exist before, all on the charter's own endpoint:
 1. **The achievable native-free bound (S29-L23, attacked and survived in S29-L35).**
    Every native-free operator this project can build is a displacement of the production cloud, and
    its entire value is one cosine: `RMSD = RMSD_prod · √(1 − ρ²)`. Reaching 3.00 Å needs ρ = 0.358;
-   2.50 Å needs ρ = 0.628. Across **39 displacement fields** — 21 in the pre-registered attack plus
-   18 more — **not one beats the random-shape reference of 0.1398**, and the best field, stepped by
-   an amount chosen *with the native in hand*, is worth **0.019 Å**. The bound is ≈ 3.18–3.21 Å.
+   2.50 Å needs ρ = 0.628. Across the **21 displacement fields** of the pre-registered attack
+   (`s29/results/s29_D_fields.json`, n = 126), **not one beats the random-shape reference of
+   0.1398** — `beats_random_reference` is `False` on all 21, best is CHAN_DISTPOT at +0.1128 — and
+   the best field, stepped by an amount chosen *with the native in hand*, moves the point cloud from
+   3.0483 to 3.0289: a gain of **0.0195 Å**. The bound is ≈ 3.18–3.21 Å.
 
 2. **The architectural ceiling (S29-L30, corrected to the endpoint in S29-L44).**
    The deployed quantum stage sees only the top-128 prefix and its tail *is* a prefix

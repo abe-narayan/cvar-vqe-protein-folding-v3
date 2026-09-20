@@ -212,7 +212,7 @@ thesis. Three results, all on 126 targets with fold CIs.
 
 ## THE BOUND SURVIVES ITS DIRECT ATTACK (2026-09-20 01:28, `s29/results/s29_D_fields.json`; lane D's entry to follow)
 Lane D's field survey is the one experiment that could have falsified the sprint's headline, and
-it does not. It measured the ORACLE cosine of EIGHTEEN displacement fields the original survey
+it does not. It measured the ORACLE cosine of TWENTY-ONE displacement fields (corrected 2026-09-20 02:35 against the artefact: `s29_D_fields.json` contains 21, and my "eighteen" here was wrong; lane D's own S29-L35 heading says 21 NEW, which is a separate claim about how many were new and is for lane D to reconcile) the original survey
 never covered -- nine channel re-rankings, the m-set differences at m = 5, 50, 150, 250, 500, the
 MEDOID minus mean displacement, CONS_TRIM, EXPAND (pure de-contraction) and PROJ (the projection's
 own displacement) -- against the random-shape-field reference of 0.1398.
