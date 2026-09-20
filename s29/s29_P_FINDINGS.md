@@ -211,35 +211,50 @@ queued behind 8 others rather than running, and that delay is mine, not the sche
 
 When slots free, the deferred half is the same command with `--phase oracle`.
 
-P12. **[PROBE, n=4; the 126 run is queued] The coordinator's lane-T question is answered, and
-the answer goes AGAINST my own result's reach: separation-band re-weighting of the SELECTION
-objective is NOT the same operation as rescaling the emitted cloud, so S29-L22 result 5 does NOT
-close lane T's route.** `s29/s29_P_bandsel.py` (falsifier registered in its docstring before any
-number: the operators are DIFFERENT if any band weighting moves the emitted profile's |i-j| = 1
-ratio by more than 0.02).
+P12. **METHODOLOGICAL NOTE (the 126-target run was NOT spent, and should not be spent by a
+future sprint either): separation-band re-weighting of the selection objective is a GENUINELY
+DIFFERENT operator from this lane's rescale -- and it is closed anyway, by a measurement that
+predates S29.**
 
-Construction: replace production's UNIFORM mean over pairs in `s12.instrument.shipped_score`
-with a weighted mean whose weights depend only on |i - j|, re-select the top 75 with the same
-tie key and the same m, coordinate-average, and measure the emitted cloud's separation profile.
-The `uniform` arm reproduces production's cloud RMSD at **max |diff| 0.000e+00**, so the
-re-scoring path is the production path.
+Two independent statements, and they must not be collapsed:
 
-On the 4-target probe the |i-j| = 1 ratio moves from production's 0.885 to **0.802** under
-`local_only` (all weight on |i-j| <= 3), a move of **0.083, four times the 0.02 threshold**,
-with only 46% of the top-75 shared with production's. **THE FALSIFIER FIRES.** Selection can
-materially reshape the distortion, because it changes WHICH structures are averaged and hence
-how much the pool disagrees at each band.
+*(i) The operators are distinguishable -- my result 5 does NOT close this route.*
+`s29/s29_P_bandsel.py`, falsifier registered in its docstring before any number (the operators
+differ if a band weighting moves the emitted |i-j| = 1 ratio by more than 0.02). Replace
+production's UNIFORM mean over pairs in `s12.instrument.shipped_score` with a weighted mean whose
+weights depend only on |i - j|, re-select the top 75 with the same tie key and the same m,
+re-average. The `uniform` arm reproduces production's cloud RMSD at **max |diff| 0.000e+00**, so
+the re-scoring path IS the production path. On a 4-target probe, `local_only` (all weight on
+|i-j| <= 3) moves the ratio from production's 0.885 to **0.802 -- 0.083, four times the
+threshold** -- with only **46%** of the top-75 shared with production's. THE FALSIFIER FIRES.
+The reason is structural: band re-weighting acts UPSTREAM of the averaging and changes WHICH
+structures are averaged, while P10's rescale acts DOWNSTREAM of it on an already-averaged map.
+Lane T reached the same conclusion independently and withdrew its own section 1.4 build
+recommendation on those grounds (**S29-L24**).
 
-So the two operators are not the same operation seen twice, and my result 5 -- which refutes
-correcting the profile of an ALREADY-AVERAGED cloud -- does not reach an operator that acts
-upstream of the averaging. The distinction is the one I gave before running this: result 5 acts
-downstream of the Jensen contraction, band re-weighting acts upstream of it. What result 5 still
-contributes to T's route is the burden of proof: the profile is manufactured by averaging, so a
-re-weighted selection inherits a profile of its OWN, and T must show the re-weighting reduces
-POOL DISAGREEMENT rather than that it corrects a profile. NOTE: n = 4 is a probe and is never
-evidence for the instrument; the 126-target run is queued. The probe is quoted here only for the
-QUALITATIVE claim (the operators are distinguishable), which a 0.083 move at 46% set overlap
-establishes on its own.
+*(ii) And it is dead on the merits, measured leave-fold-out before this sprint existed.*
+`s12/obj_FINDINGS.md` section 4, all 126 targets, coordinate-average arm:
+
+    shipped Bayes risk                    3.048   (production)
+    LFO per-shell weighted L1             3.058   WORSE by +0.010
+    LFO per-shell recalibrated L1         3.262
+    separation-component only             3.148
+    shell-profile only (DEPLOYABLE)       3.163
+    per-shell standardised L1             3.382
+    RANDOM score                          3.445
+
+Every per-shell / per-band re-weighting of the objective that has been tried loses, and the one
+fitted weight set (`score_weights.json`) was fitted and RETIRED from the shipped code once
+already -- refitting drove two of six parameters to their clip bounds and lost 2.76 to 2.91 A on
+the benchmark while gaining 65% on the dev objective. **So the route is distinguishable from
+mine and separately closed.** The 126-target confirmation of (i) was dropped from the queue by
+the coordinator rather than run, correctly: it would have confirmed a distinction that a 4-target
+probe already establishes qualitatively, in order to characterise an operator already measured
+dead. `s29/s29_P_bandsel.py` is kept, with its falsifier, so the measurement is one command away
+if anyone doubts (i).
+
+**This note exists so the route is not proposed a third time.** It has now been proposed twice
+(S12's arms, lane T's section 1.4) and closed twice, on different grounds each time.
 
 ## WHAT DAMAGED MY OWN EXPECTATIONS
 
