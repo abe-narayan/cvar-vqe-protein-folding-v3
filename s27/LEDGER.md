@@ -3757,3 +3757,313 @@ Artefacts: `s26/logs/s28D_attack_B2.log`; lane B2's `s27/results/s28_B2_rows_k10
 `s28_B2_chain_rows_k10.jsonl`, `s28_B2_summary.json`, `s27/PREREG_S28_B.md` (addenda 2, 3),
 `s26/jobs_done/s28B2_run.json`, `s28B2_chain.json`; S28-L41's `s28_B_chain_rows.jsonl` and
 `s28_B_prodcheck.json`.
+## S28-L48 -- C2 RECOGNITION AUDIT, BUILT CHAIN (ORACLE DIAGNOSTIC, THE REPORTING BASIS, 126/126, 31 SCORERS, ONE MAX-OVER-31 NULL, POOL-MEMBER CONTROL ON 27): THE CLOSURE CLAIM STANDS; 20 OF 31 SCORERS PREFER THE PROJECTED PRODUCTION AVERAGE TO A 0.25 A ORACLE STRUCTURE WITH THE FOLD CI BELOW 0.5 (DIS ON 93%, LEG ON 79%, RAMA ON 59%), 5 ARE TIE-DOMINATED, 7 ARE COIN TOSSES; CAGEO's CA-LEVEL PREFERENCE COLLAPSES TO ANTI-RECOGNITION ON THE PROJECTED CHAINS (0.611 -> 0.421; POOL-MEMBER CONTRAST -0.108, 1.21x), AS S28-L36(a) REGISTERED; THE ONE SCORER THAT CLEARS BOTH REGISTERED CLAUSES ON BOTH ORACLE STARTS, CONTACT@chain (0.583; vs RAND_SIGNED +0.107 ON ONE CONTROL DRAW), SITS AT THE MAX-OVER-31 NULL's MEAN (p_max 0.388) AND IN THE TYPE-M ZONE ON THE POOL-MEMBER CONTROL (+0.140, 1.23x, 4/5 FOLDS): THE SAME MARGINAL CELL AS AT THE CA LEVEL, NOT A CANDIDATE; THE LEARNED COMBINATION IS ANTI-PRODUCTION (HEAD-TO-HEAD 0.492); C2 CLOSED WITH NO CANDIDATE OBJECTIVE NAMED (2026-09-19 21:47, C2)
+EVERY STRUCTURE HERE EXCEPT PRODUCTION AND THE CONTROLS' DIRECTIONS IS ORACLE (chosen against the
+native); nothing is deployable; the falsifier is for the CLOSURE claim (`s27/PREREG_S28_C2.md`
+section 5 and addendum 1; the pool-member control of S28-L36/L37 added for every scorer with a pool
+channel). Question: on the BUILT CHAIN (the reporting basis, contract rule 5 / addendum 1 item 13),
+which native-free scorer in the S27 library, if any, prefers the ORACLE structures the amplitude
+family expresses to the production average, once every structure has been projected by
+`s12.instrument.project` onto ideal backbone geometry?
+Jobs: `s28C2_chain` (11 rows, pre-geometry-field module, superseded; kept as
+`s28_C2_chain_rows_prepatch_partial11.jsonl`), `s28C2_chain2` (70 rows at the 09-14 pause, died at 80
+with the harness's low-memory kill at 23:33; checkpoint copies at 70 and 80 committed), `s28C2_chain3`
+(resumed 09-19 20:07 at target 81, banked it, KILLED by the governor 20:10:48 at 97.3% box RAM, exit 15,
+`s26/jobs_done/s28C2_chain3.json`), `s28C2_chain4` (governor queue, resumed at 82; the row file is
+per-target checkpointed and no target was computed twice: 126 distinct pdbs). Rows
+`s27/results/s28_C2_chain_rows.jsonl` (126/126), summary `s27/results/s28_C2_chain_summary.json`
+(`python s27/s28_C2_recog_audit.py analyse_chain`). Code `s27/s28_C2_recog_audit.py :: chain_row,
+chain_scores, ca_scores, analyse, pool_member_control`; tests `tests/test_s28_C2.py` (6 pass).
+Per target 8 projections: PROD, ORACLE sub0, ORACLE circ_s0, ORACLE circ_best, NATIVE(aff500), and ONE
+draw of each control (RAND_SIGNED[0], GAUSS_0.3[0], GAUSS_MATCHED[0]; the CA level averaged 4 draws per control,
+the chain carries one, draw 0 of the registered seed, at 3 to 6 s per projection); every pref against a
+control on this basis is therefore a single-draw fraction. Scorers: 31 = the 16 backbone scorers on the
+projected chains (RAMA, DSSPHB, ELEC, TORS_CONS_POOL, LEG and its 11 terms; S28-L34(e): they see a
+projected ORACLE structure, not the point-cloud one) plus the 15 CA scorers re-evaluated on the projected
+CA traces (suffix `@chain`). Lower is better everywhere; ties count 0.5 (S28-L34(a)); FAIL18 as k of 18
+(S28-L34(d)); ONE max-over-31 sign-flip null (S28-L34(e)); the pool-member control for the 27 scorers
+with a pool channel of the same name in `s27/cache/<pdb>.npz` (the CA channels against the members'
+real CA traces, the backbone channels against the members' real torsions; the four pool-relative
+adapters TORS_CONS_POOL, CONS_POOL@chain, DMAP_CONS_POOL@chain, POOLGO_POOL@chain have no such
+channel and are excluded, as in S28-L36).
+ORACLE mean RMSD of the projected structures (built chain): PROD 3.207  sub0 0.499  circ_s0 0.317  circ_best 0.252  NATIVE 0.084  RAND_SIGNED 3.705  GAUSS_0.3 3.230  GAUSS_MATCHED 3.383.
+The same structures before projection (point cloud, from the rows' `oracle_rmsd_cloud`): PROD 3.048  sub0 0.620  circ_s0 0.385  circ_best 0.288  NATIVE 0.000  RAND_SIGNED[0] 3.882  GAUSS_0.3[0] 3.064  GAUSS_MATCHED[0] 4.117.
+Geometry beside every preference (S28-L34(b); mean virtual CA-CA bond / Rg, A, of the PROJECTED structures): PROD 3.80/6.48  sub0 3.80/6.60  circ_s0 3.80/6.61  circ_best 3.80/6.61  NATIVE 3.80/6.60  RAND_SIGNED 3.80/6.77  GAUSS_0.3 3.80/6.49  GAUSS_MATCHED 3.80/6.59.
+The same before projection (point cloud): PROD 2.96/6.21  sub0 3.71/6.56  circ_s0 3.75/6.59  circ_best 3.77/6.59  NATIVE 3.81/6.60  RAND_SIGNED[0] 3.79/6.82  GAUSS_0.3[0] 3.00/6.22  GAUSS_MATCHED[0] 5.35/7.07.
+Ties (count 0.5 in every pref; scorer: ties on circ_best vs PROD of 126): DSSPHB 1, ELEC 18, LEG_steric 54, LEG_contact 2, LEG_hbond_local 8, LEG_hbond_longrange 114, LEG_coop_helix 79, LEG_coop_sheet 124, LEG_electrostatic 18, LEG_aromatic 64, LEG_compactness 14, CONTACT_LL@chain 13, CONTACT@chain 9, ENV@chain 16, HP@chain 13, EXVOL@chain 101, SS_MATCH@chain 11, POOLGO_POOL@chain 13; the rest 0.
+
+pref(X) = fraction of 126 targets on which the scorer scores X BELOW production on the built chain; h2h = the
+ORACLE structure scored below the control itself (production absent); clauses: c1 = fold CI of pref(circ_best)
+above 0.5, c2 = pref(circ_best) - pref(RAND_SIGNED) fold CI above zero; 'anti' = fold CI below 0.5;
+'uninf' = more than 63 ties:
+```
+  scorer                pref(circ_best) [fold CI]  circ_s0  sub0   NATIVE | RAND_SIGNED GAUSS_0.3 GAUSS_M | rho   | vs RAND_SIGNED [fold CI]   circ_s0 vs RAND [fold CI] | h2h RAND  h2h GAUSS_M | FAIL18 k/18, 108 | ties | clauses
+  RAMA                 0.413 [0.336,0.496]   0.444   0.357  0.476  | 0.206       0.444     0.254 | +0.08 | +0.206 [+0.135,+0.290]   +0.238 [+0.169,+0.302] | 0.722     0.746    |  9.0/18, 0.40 |   0 | anti
+  DSSPHB               0.226 [0.198,0.256]   0.210   0.250  0.258  | 0.397       0.464     0.310 | -0.25 | -0.171 [-0.207,-0.134]   -0.187 [-0.235,-0.143] | 0.409     0.345    |  3.0/18, 0.24 |   1 | anti
+  ELEC                 0.484 [0.416,0.560]   0.484   0.508  0.492  | 0.548       0.421     0.492 | -0.04 | -0.063 [-0.119,+0.000]   -0.063 [-0.119,+0.000] | 0.500     0.516    |  8.5/18, 0.49 |  18 | neither
+  TORS_CONS_POOL       0.262 [0.226,0.306]   0.286   0.254  0.278  | 0.183       0.476     0.190 | -0.17 | +0.079 [+0.008,+0.147]   +0.103 [+0.050,+0.153] | 0.611     0.563    |  3.0/18, 0.28 |   0 | anti
+  LEG_steric           0.508 [0.384,0.632]   0.476   0.429  0.520  | 0.242       0.484     0.262 | +0.11 | +0.266 [+0.150,+0.397]   +0.234 [+0.118,+0.353] | 0.746     0.778    |  6.0/18, 0.54 |  54 | neither
+  LEG_contact          0.532 [0.459,0.615]   0.540   0.548  0.516  | 0.544       0.405     0.611 | -0.02 | -0.012 [-0.068,+0.084]   -0.004 [-0.062,+0.092] | 0.448     0.484    | 10.0/18, 0.53 |   2 | neither
+  LEG_hbond_local      0.190 [0.107,0.269]   0.218   0.226  0.250  | 0.206       0.452     0.194 | -0.22 | -0.016 [-0.073,+0.015]   +0.012 [-0.033,+0.041] | 0.544     0.524    |  3.0/18, 0.19 |   8 | anti
+  LEG_hbond_longrange  0.548 [0.533,0.562]   0.556   0.548  0.583  | 0.552       0.500     0.524 | +0.10 | -0.004 [-0.033,+0.023]   +0.004 [-0.025,+0.036] | 0.492     0.520    | 10.5/18, 0.54 | 114 | uninf
+  LEG_coop_helix       0.361 [0.305,0.427]   0.349   0.325  0.369  | 0.290       0.500     0.310 | -0.18 | +0.071 [+0.054,+0.088]   +0.060 [+0.039,+0.074] | 0.587     0.563    |  5.0/18, 0.38 |  79 | uninf
+  LEG_coop_sheet       0.508 [0.500,0.517]   0.504   0.504  0.520  | 0.500       0.500     0.500 | +0.02 | +0.008 [+0.000,+0.017]   +0.004 [+0.000,+0.012] | 0.508     0.508    |  9.0/18, 0.51 | 124 | uninf
+  LEG_solvation        0.349 [0.278,0.436]   0.365   0.373  0.365  | 0.341       0.460     0.325 | -0.13 | +0.008 [-0.094,+0.136]   +0.024 [-0.094,+0.179] | 0.563     0.532    |  9.0/18, 0.32 |   0 | anti
+  LEG_electrostatic    0.492 [0.423,0.562]   0.484   0.508  0.484  | 0.540       0.421     0.492 | -0.05 | -0.048 [-0.089,+0.009]   -0.056 [-0.104,+0.000] | 0.500     0.516    |  8.5/18, 0.50 |  18 | neither
+  LEG_aromatic         0.429 [0.357,0.500]   0.452   0.452  0.468  | 0.421       0.476     0.476 | -0.05 | +0.008 [-0.052,+0.080]   +0.032 [-0.043,+0.110] | 0.516     0.484    | 10.5/18, 0.40 |  64 | uninf
+  LEG_torsion          0.405 [0.320,0.496]   0.333   0.294  0.452  | 0.151       0.333     0.183 | +0.05 | +0.254 [+0.180,+0.322]   +0.183 [+0.135,+0.235] | 0.802     0.786    |  8.0/18, 0.40 |   0 | anti
+  LEG_compactness      0.468 [0.393,0.533]   0.464   0.421  0.480  | 0.365       0.433     0.377 | +0.05 | +0.103 [+0.032,+0.155]   +0.099 [+0.050,+0.138] | 0.575     0.492    |  9.0/18, 0.46 |  14 | neither
+  LEG                  0.206 [0.137,0.289]   0.206   0.183  0.238  | 0.127       0.397     0.111 | -0.16 | +0.079 [+0.007,+0.168]   +0.079 [-0.023,+0.193] | 0.722     0.651    |  2.0/18, 0.22 |   0 | anti
+  DIS@chain            0.071 [0.034,0.109]   0.071   0.063  0.079  | 0.008       0.341     0.087 | -0.40 | +0.063 [+0.033,+0.089]   +0.063 [+0.031,+0.096] | 0.651     0.325    |  0.0/18, 0.08 |   0 | anti
+  DIS_MEAN@chain       0.071 [0.049,0.098]   0.071   0.056  0.063  | 0.040       0.373     0.127 | -0.41 | +0.032 [+0.009,+0.052]   +0.032 [-0.009,+0.067] | 0.571     0.325    |  0.0/18, 0.08 |   0 | anti
+  CONTACT_LL@chain     0.234 [0.168,0.311]   0.238   0.238  0.242  | 0.147       0.488     0.202 | -0.29 | +0.087 [+0.012,+0.154]   +0.091 [+0.012,+0.160] | 0.575     0.460    |  1.0/18, 0.26 |  13 | anti
+  DISTPOT@chain        0.341 [0.319,0.361]   0.373   0.365  0.349  | 0.238       0.361     0.310 | -0.18 | +0.103 [+0.051,+0.148]   +0.135 [+0.017,+0.236] | 0.579     0.492    |  6.0/18, 0.34 |   0 | anti
+  CONTACT@chain        0.583 [0.530,0.645]   0.575   0.544  0.575  | 0.476       0.488     0.460 | +0.10 | +0.107 [+0.009,+0.199]   +0.099 [+0.013,+0.179] | 0.583     0.571    |  8.0/18, 0.61 |   9 | BOTH + s0
+  ENV@chain            0.492 [0.408,0.581]   0.484   0.492  0.484  | 0.401       0.433     0.421 | -0.05 | +0.091 [+0.033,+0.163]   +0.083 [+0.024,+0.149] | 0.556     0.540    | 11.0/18, 0.47 |  16 | neither
+  HP@chain             0.456 [0.361,0.541]   0.421   0.440  0.417  | 0.433       0.417     0.460 | -0.12 | +0.024 [-0.034,+0.093]   -0.012 [-0.082,+0.069] | 0.567     0.484    |  9.0/18, 0.45 |  13 | neither
+  RG_LAW@chain         0.405 [0.311,0.481]   0.413   0.365  0.421  | 0.333       0.429     0.373 | -0.04 | +0.071 [-0.009,+0.121]   +0.079 [+0.017,+0.121] | 0.524     0.452    |  6.0/18, 0.42 |   0 | anti
+  RG_UNIV@chain        0.397 [0.336,0.451]   0.389   0.413  0.349  | 0.349       0.548     0.476 | -0.14 | +0.048 [-0.042,+0.114]   +0.040 [-0.042,+0.104] | 0.548     0.357    |  6.0/18, 0.41 |   0 | anti
+  EXVOL@chain          0.417 [0.368,0.462]   0.409   0.405  0.425  | 0.353       0.496     0.393 | -0.05 | +0.063 [+0.011,+0.118]   +0.056 [+0.000,+0.113] | 0.579     0.548    |  6.5/18, 0.43 | 101 | uninf
+  CAGEO@chain          0.421 [0.370,0.492]   0.381   0.349  0.452  | 0.183       0.321     0.143 | +0.11 | +0.238 [+0.143,+0.359]   +0.198 [+0.116,+0.301] | 0.825     0.873    |  7.0/18, 0.43 |   0 | anti
+  SS_MATCH@chain       0.393 [0.340,0.443]   0.381   0.421  0.377  | 0.548       0.524     0.532 | -0.21 | -0.155 [-0.228,-0.085]   -0.167 [-0.258,-0.081] | 0.333     0.345    |  5.0/18, 0.41 |  11 | anti
+  CONS_POOL@chain      0.056 [0.037,0.089]   0.056   0.056  0.063  | 0.183       0.333     0.111 | -0.56 | -0.127 [-0.185,-0.070]   -0.127 [-0.185,-0.070] | 0.286     0.135    |  2.0/18, 0.05 |   0 | anti
+  DMAP_CONS_POOL@chain 0.143 [0.109,0.171]   0.135   0.135  0.143  | 0.238       0.341     0.190 | -0.38 | -0.095 [-0.157,-0.025]   -0.103 [-0.146,-0.033] | 0.508     0.262    |  3.0/18, 0.14 |   0 | anti
+  POOLGO_POOL@chain    0.345 [0.261,0.414]   0.349   0.373  0.345  | 0.409       0.504     0.393 | -0.23 | -0.063 [-0.145,+0.007]   -0.060 [-0.137,+0.020] | 0.464     0.405    |  4.0/18, 0.37 |  13 | anti
+```
+Multiplicity (ONE null over all 31 scorers, S28-L34(e)): best single CONTACT@chain at pref(circ_best) 0.583 against the max-over-31 sign-flip null (500 draws; mean 0.579, p95 0.627): p_max 0.388.
+
+Pool-member control (S28-L36(b), for the 27 scorers with a pool channel): pref(circ_best vs PROD) - pct(PROD), where pct(X) is the
+share of the target's 500 pool members scoring better than X (ties at half) so pct(PROD) = pref(a random pool member vs PROD); a
+POSITIVE contrast is the recognition direction; the same for circ_s0; head-to-head = 1 - pct(X):
+```
+  scorer                cb - pct(PROD) [fold CI]  x MDE  | circ_s0          | h2h cb beats a pool member  NATIVE  RAND_SIGNED | pct(PROD) med  pct(cb)  pct(NATIVE) | FAIL18 contrast
+  RAMA                 -0.377 [-0.434,-0.326]  -3.50x | -0.345 -3.28x | 0.117                       0.124   0.040       | 0.92           0.883    0.876      | -0.313
+  DSSPHB               -0.104 [-0.124,-0.083]  -1.07x | -0.120 -1.22x | 0.403                       0.419   0.477       | 0.21           0.597    0.581      | -0.090
+  ELEC                 -0.016 [-0.081,+0.067]  -0.15x | -0.016 -0.15x | 0.516                       0.517   0.541       | 0.50           0.484    0.483      | -0.002
+  LEG_steric           -0.116 [-0.204,-0.030]  -1.41x | -0.148 -1.76x | 0.399                       0.400   0.177       | 0.46           0.601    0.600      | -0.325
+  LEG_contact          +0.021 [-0.049,+0.102]  +0.18x | +0.029 +0.25x | 0.521                       0.510   0.559       | 0.51           0.479    0.490      | +0.017
+  LEG_hbond_local      -0.226 [-0.300,-0.159]  -2.60x | -0.198 -2.28x | 0.317                       0.347   0.282       | 0.42           0.683    0.653      | -0.197
+  LEG_hbond_longrange  -0.006 [-0.024,+0.012]  -0.17x | +0.002 +0.05x | 0.493                       0.530   0.496       | 0.55           0.507    0.470      | +0.022
+  LEG_coop_helix       -0.146 [-0.200,-0.093]  -2.50x | -0.158 -2.79x | 0.366                       0.374   0.290       | 0.52           0.634    0.626      | -0.257
+  LEG_coop_sheet       -0.003 [-0.011,+0.006]  -0.17x | -0.007 -0.60x | 0.497                       0.509   0.489       | 0.51           0.503    0.491      | -0.013
+  LEG_solvation        -0.013 [-0.084,+0.054]  -0.12x | +0.003 +0.03x | 0.545                       0.547   0.486       | 0.30           0.455    0.453      | +0.138
+  LEG_electrostatic    -0.008 [-0.074,+0.074]  -0.07x | -0.016 -0.14x | 0.515                       0.518   0.541       | 0.50           0.485    0.482      | -0.004
+  LEG_aromatic         -0.028 [-0.089,+0.026]  -0.35x | -0.004 -0.05x | 0.506                       0.510   0.487       | 0.50           0.494    0.490      | +0.082
+  LEG_torsion          -0.293 [-0.373,-0.210]  -3.03x | -0.364 -3.76x | 0.221                       0.260   0.078       | 0.81           0.779    0.740      | -0.300
+  LEG_compactness      +0.035 [-0.041,+0.085]  +0.31x | +0.031 +0.27x | 0.528                       0.527   0.460       | 0.38           0.472    0.473      | +0.040
+  LEG                  -0.221 [-0.273,-0.162]  -2.37x | -0.221 -2.35x | 0.340                       0.375   0.221       | 0.48           0.660    0.625      | -0.315
+  DIS@chain            +0.051 [+0.013,+0.090]  +0.80x | +0.051 +0.81x | 0.632                       0.634   0.558       | 0.01           0.368    0.366      | -0.023
+  DIS_MEAN@chain       +0.046 [+0.026,+0.070]  +0.73x | +0.046 +0.75x | 0.617                       0.618   0.574       | 0.02           0.383    0.382      | -0.021
+  CONTACT_LL@chain     +0.100 [+0.041,+0.189]  +1.02x | +0.104 +1.05x | 0.608                       0.598   0.563       | 0.13           0.392    0.402      | -0.095
+  DISTPOT@chain        +0.071 [+0.037,+0.102]  +0.63x | +0.103 +0.90x | 0.568                       0.556   0.509       | 0.21           0.432    0.444      | +0.047
+  CONTACT@chain        +0.140 [+0.065,+0.211]  +1.23x | +0.132 +1.15x | 0.594                       0.590   0.546       | 0.43           0.406    0.410      | -0.120
+  ENV@chain            +0.131 [+0.060,+0.206]  +1.19x | +0.123 +1.10x | 0.612                       0.605   0.554       | 0.33           0.388    0.395      | +0.212
+  HP@chain             +0.018 [-0.081,+0.107]  +0.15x | -0.018 -0.15x | 0.545                       0.536   0.524       | 0.44           0.455    0.464      | +0.002
+  RG_LAW@chain         -0.030 [-0.124,+0.020]  -0.27x | -0.022 -0.20x | 0.480                       0.482   0.449       | 0.41           0.520    0.518      | -0.112
+  RG_UNIV@chain        +0.001 [-0.032,+0.039]  +0.01x | -0.006 -0.06x | 0.485                       0.484   0.454       | 0.34           0.515    0.516      | -0.091
+  EXVOL@chain          -0.076 [-0.124,-0.027]  -1.60x | -0.084 -1.70x | 0.425                       0.432   0.357       | 0.49           0.575    0.568      | -0.125
+  CAGEO@chain          -0.108 [-0.132,-0.082]  -1.21x | -0.147 -1.65x | 0.297                       0.321   0.145       | 0.60           0.703    0.679      | -0.192
+  SS_MATCH@chain       +0.072 [+0.047,+0.098]  +0.93x | +0.060 +0.70x | 0.591                       0.578   0.734       | 0.24           0.409    0.422      | +0.081
+```
+Excluded from this control (no pool channel of the same name; pool-relative by construction): TORS_CONS_POOL, CONS_POOL@chain, DMAP_CONS_POOL@chain, POOLGO_POOL@chain.
+
+Nested pairwise-logistic combination of the 31 scorers (sign-augmented, no intercept, alpha by inner leave-one-fold-out; n_used 126): held-out sign accuracy 0.960 [fold CI 0.938, 0.983] against a per-target sign-flip null of mean 0.502 (p95 0.603; p 0.000); FAIL18 1.00, the 108 0.95. The SAME held-out rule on the controls (single draw): RAND_SIGNED 0.952 [0.931,0.975] (contrast +0.008 [+0.000,+0.022]; head-to-head 0.492 [0.364,0.611]); GAUSS_0.3 0.619 [0.480,0.732] (contrast +0.341 [+0.250,+0.455]; head-to-head 0.944 [0.924,0.962]); GAUSS_MATCHED 0.960 [0.928,0.992] (contrast +0.000 [-0.049,+0.043]; head-to-head 0.722 [0.634,0.812]).
+
+Scorers clearing both registered clauses on the built chain: CONTACT@chain. Clearing clause 1 only: NONE.
+`ST.fmt` verbatim (paired indicators; a POSITIVE effect is the recognition direction; the VERDICT word is
+`ST.compare`'s RMSD convention and is to be read against that sign) for every scorer that clears a clause, and
+for CAGEO@chain in every case because S28-L36(a) registered the expectation that its CA-level preference
+(0.611, S28-L35) collapses on the projected chains:
+```
+  CONTACT@chain: pref(ORACLE circ_best) - pref(RAND_SIGNED)
+    a 0.5833 (med 1.0000)   b 0.4762 (med 0.5000)   n=126
+    effect +0.1071   median +0.0000   SE 0.0542   MDE 0.1519   effect/MDE +0.71
+    iid  CI95 [+0.0040, +0.2103]
+    fold CI95 [+0.0085, +0.1992]   folds same sign 4/5   per-fold 0:+0.240 1:-0.043 2:+0.080 3:+0.022 4:+0.200
+    19W/34L/73T   worst degradation +1.0000 (1A13)   p90 +1.0000   power 0.51  Type-M 1.40
+    VERDICT: NOT MEASURED (|effect| 0.1071 <= its own MDE 0.1519, 0.71x)
+  CONTACT@chain: pref(ORACLE circ_s0) - pref(RAND_SIGNED)
+    a 0.5754 (med 1.0000)   b 0.4762 (med 0.5000)   n=126
+    effect +0.0992   median +0.0000   SE 0.0549   MDE 0.1539   effect/MDE +0.64
+    iid  CI95 [-0.0119, +0.2063]
+    fold CI95 [+0.0126, +0.1793]   folds same sign 4/5   per-fold 0:+0.240 1:-0.043 2:+0.040 3:+0.065 4:+0.167
+    20W/34L/72T   worst degradation +1.0000 (1A13)   p90 +1.0000   power 0.44  Type-M 1.50
+    VERDICT: NOT MEASURED (|effect| 0.0992 <= its own MDE 0.1539, 0.64x)
+  CONTACT@chain: pref(circ_best vs PROD) - pref(pool member vs PROD)
+    a 0.5833 (med 1.0000)   b 0.4431 (med 0.4345)   n=126
+    effect +0.1403   median +0.1215   SE 0.0407   MDE 0.1139   effect/MDE +1.23
+    iid  CI95 [+0.0616, +0.2174]
+    fold CI95 [+0.0647, +0.2113]   folds same sign 4/5   per-fold 0:+0.244 1:-0.015 2:+0.119 3:+0.120 4:+0.207
+    48W/76L/2T   worst degradation +0.9760   p90 +0.7595   power 0.93  Type-M 1.04
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.04x]
+  CONTACT@chain: pref(circ_s0 vs PROD) - pref(pool member vs PROD)
+    a 0.5754 (med 1.0000)   b 0.4431 (med 0.4345)   n=126
+    effect +0.1323   median +0.1130   SE 0.0412   MDE 0.1155   effect/MDE +1.15
+    iid  CI95 [+0.0529, +0.2111]
+    fold CI95 [+0.0493, +0.1980]   folds same sign 4/5   per-fold 0:+0.244 1:-0.015 2:+0.079 3:+0.163 4:+0.173
+    50W/75L/1T   worst degradation +1.0000   p90 +0.7860   power 0.89  Type-M 1.06
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.06x]
+  CAGEO@chain: pref(ORACLE circ_best) - pref(RAND_SIGNED)
+    a 0.4206 (med 0.0000)   b 0.1825 (med 0.0000)   n=126
+    effect +0.2381   median +0.0000   SE 0.0397   MDE 0.1113   effect/MDE +2.14
+    iid  CI95 [+0.1667, +0.3175]
+    fold CI95 [+0.1429, +0.3594]   folds same sign 5/5   per-fold 0:+0.480 1:+0.130 2:+0.120 3:+0.217 4:+0.233
+    1W/31L/94T   worst degradation +1.0000 (1D6X)   p90 +1.0000   power 1.00  Type-M 1.00
+    VERDICT: WORSE
+  CAGEO@chain: pref(ORACLE circ_s0) - pref(RAND_SIGNED)
+    a 0.3810 (med 0.0000)   b 0.1825 (med 0.0000)   n=126
+    effect +0.1984   median +0.0000   SE 0.0374   MDE 0.1048   effect/MDE +1.89
+    iid  CI95 [+0.1270, +0.2698]
+    fold CI95 [+0.1157, +0.3008]   folds same sign 5/5   per-fold 0:+0.400 1:+0.130 2:+0.080 3:+0.217 4:+0.167
+    1W/26L/99T   worst degradation +1.0000 (1D6X)   p90 +1.0000   power 1.00  Type-M 1.00
+    VERDICT: WORSE
+  CAGEO@chain: pref(circ_best vs PROD) - pref(pool member vs PROD)
+    a 0.4206 (med 0.0000)   b 0.5283 (med 0.5980)   n=126
+    effect -0.1077   median -0.0025   SE 0.0317   MDE 0.0889   effect/MDE -1.21
+    iid  CI95 [-0.1699, -0.0474]
+    fold CI95 [-0.1317, -0.0817]   folds same sign 5/5   per-fold 0:-0.059 1:-0.140 2:-0.099 3:-0.098 4:-0.138
+    67W/41L/18T   worst degradation +0.9520   p90 +0.0980   power 0.92  Type-M 1.05
+    VERDICT: BETTER [TYPE-M ZONE: magnitude inflated ~1.05x]
+  CAGEO@chain: pref(circ_s0 vs PROD) - pref(pool member vs PROD)
+    a 0.3810 (med 0.0000)   b 0.5283 (med 0.5980)   n=126
+    effect -0.1474   median -0.0045   SE 0.0320   MDE 0.0896   effect/MDE -1.65
+    iid  CI95 [-0.2125, -0.0870]
+    fold CI95 [-0.1815, -0.1152]   folds same sign 5/5   per-fold 0:-0.139 1:-0.140 2:-0.139 3:-0.098 4:-0.205
+    72W/36L/18T   worst degradation +0.9520   p90 +0.0530   power 1.00  Type-M 1.00
+    VERDICT: BETTER
+```
+CAGEO, CA level (S28-L35, `s28_C2_ca_summary.json`) vs built chain (this entry): pref(circ_best) 0.611 [0.551,0.691] -> 0.421 [0.370,0.492]; vs RAND_SIGNED +0.190 [+0.136,+0.252] -> +0.238 [+0.143,+0.359]; pool-member contrast -0.007 (-0.18x) -> -0.108 (-1.21x); pct(PROD) median 1.00 -> 0.60; mean virtual bond of PROD 2.96 -> 3.80 A.
+
+Instrument notes. (1) PROD projected here (lane A's `s28_A_structs :: prod`, equal to the deployed
+average to 1e-10, through `I.project`) averages 3.207 A against the production anchor 3.2126 A
+(`s27/results/chain_rows.jsonl :: DIS`, S27's `readout_projected` path): no target is bit-identical,
+59 are within 1e-3 A, 22 differ by more than 0.01 A, 3 by more than 0.1 A, the largest 0.513 A on 2LNG.
+That is the multi-start projection's branch-flip floor from a 1e-14 input difference (S28-L18, S28-L27b;
+`s27/RETRACTIONS_S28.md` R1, R2: "mean 0.006 A, tail 0.5 A on 2LNG"); it touches no contrast here,
+because the eight structures of a target are projected by the same `I.project` call in the same job (the
+two sides of every chain contrast share a code path). (2) ORACLE circ_best emits at 0.252 A, lane A's
+S28-L26b figure to the third decimal; the projected NATIVE sits at 0.084 A (the projection's own floor
+on a native CA trace); sub0 improves from 0.620 to 0.499 and circ_s0 from 0.385 to 0.317 through the
+projection; the controls were matched BEFORE projection (prereg section 2) and are not matched after it:
+RAND_SIGNED stays far (3.705 A to the native), GAUSS_MATCHED collapses toward production (3.383 A to the
+native; its 5.39 A bonds are rebuilt to 3.80), GAUSS_0.3 is 3.230. (3) The projection equalises the geometry that
+S28-L34(b) asked to be read beside every preference: every projected structure has a 3.80 A mean virtual
+bond (PROD had 2.96 on the point cloud, the ORACLE ladder 3.71 to 3.81, GAUSS_MATCHED 5.39), and PROD's
+Rg rises from 6.21 to 6.48 A against 6.60 to 6.61 for the ORACLE ladder and the NATIVE: the 22% contraction of
+the average becomes a 2% Rg deficit. Every "geometric" preference in the tables above is therefore a preference between
+structures of identical bond length. (4) The pool-member control has two bases on this entry, and they
+must be read differently. For the 11 CA scorers `@chain` (EXVOL@chain excluded as tie-dominated) it is
+like for like: a projected CA trace and a real pool member both have 3.8 A bonds, which is exactly why it
+is now a fair control for CAGEO. For the 16 backbone scorers it is a CROSS-BASIS comparison: the pool
+members' RAMA / DSSPHB / ELEC / LEG values in `s27/cache` are on their REAL torsions, the eight audited
+structures are on PROJECTED torsions, and the projection's torsions are atypical of real fragments under
+the torsion-reading channels: the projected NATIVE itself (0.084 A from the native CA trace) is worse
+than 93% of its pool under RAMA (pct median 0.93; mean 0.876), 78% under LEG_torsion (0.78) and 65% under
+LEG (0.65), and the projected PROD is at 0.92 / 0.81 / 0.48. The large negative pool-member contrasts on RAMA
+(-0.377, 3.50x), LEG_torsion (-0.293, 3.03x), LEG_hbond_local (-0.226, 2.60x), LEG_coop_helix (-0.146,
+2.50x), LEG (-0.221, 2.37x), DSSPHB (-0.104, 1.07x), LEG_steric (-0.116, 1.41x) measure that torsion
+signature of the projection, not anti-recognition; on those channels only the same-code-path contrasts
+(vs RAND_SIGNED, GAUSS_0.3, GAUSS_MATCHED) and the ladder are like for like. Lane D's independent files
+(`s27/results/s28_D_c2_poolmember_chain_bb.json`, `_ca.json`, `s28_D_c2_chain_null.json`, commit
+59ad7dbf) give the same RAMA percentiles (PROD median 0.924, circ_best 0.944, NATIVE 0.927; mean 0.790 /
+0.883 / 0.876) and the same multiplicity null (4,000 draws: mean 0.577, p95 0.619, p_max 0.399 against
+my 500-draw 0.579 / 0.627 / 0.388).
+
+Reading (all ORACLE diagnostic; every structure but PROD and the controls' directions is chosen
+against the native; nothing is deployable).
+(1) THE REGISTERED EXPECTATION S28-L36(a) IS CONFIRMED. CAGEO, the one scorer that cleared both
+registered clauses at the CA level (0.611 [0.551, 0.691], S28-L35) and was vetoed by the pool-member
+control (S28-L36/L37: a random pool member beat the contracted average as often, 0.618), is
+ANTI-recognition on the projected chains: pref(circ_best) 0.421 [0.370, 0.492], circ_s0 0.381, the
+NATIVE 0.452, sub0 0.349; ladder rho +0.11 (from +0.42). Its pool-member contrast goes from -0.007
+(0.18x) to -0.108 [-0.132, -0.082] (1.21x MDE, 5/5 folds, the wrong direction): the projected
+production average is a typical trace under CAGEO once its bonds are 3.80 A (pct(PROD) median 1.00 ->
+0.60, mean 0.618 -> 0.528), while the projected ORACLE structure and the NATIVE stay at the 70th to
+76th percentile of their pools (pct(cb) 0.703, pct(NATIVE) 0.679; head-to-head CAGEO rates the ORACLE
+structure better than a random pool member on 0.297, the NATIVE on 0.321). CAGEO still beats the random
+signed control by +0.238 [+0.143, +0.359] and head-to-head on 0.825 (0.962 at the CA level): what it
+measures survives projection as "real local geometry against a scrambled one", and the projection now
+gives production that geometry too. This is D's control's prediction realised on the reporting basis,
+not a new fact; the CA-level 0.611 was the contraction of the average, as S28-L36 said.
+(2) THE DISTOGRAM AND CONSISTENCY FAMILIES ARE MORE ANTI ON THE CHAIN THAN ON THE CLOUD. DIS@chain
+prefers the projected production average to the projected 0.25 A ORACLE structure on 93% of targets
+(pref 0.071 [0.034, 0.109]; 0.206 at the CA level), to the NATIVE on 92%, and the projected average is
+better than 99% of its own pool under the shipped objective (pct(PROD) median 0.01 against 0.05 at the CA level; mean 0.020); DIS_MEAN@chain 0.071, CONTACT_LL@chain 0.234, DISTPOT@chain 0.341, CONS_POOL@chain 0.056,
+DMAP_CONS_POOL@chain 0.143, POOLGO_POOL@chain 0.345, SS_MATCH@chain 0.393, RG_LAW@chain 0.405,
+RG_UNIV@chain 0.397, all with the fold CI below 0.5. The de-contracted average is, to the objective and
+to every consistency scorer, an even better structure than the contracted one was; a 0.25 A structure
+with the same bond length is not.
+(3) THE 16 BACKBONE SCORERS, NEW ON THIS BASIS (they see projected structures, S28-L34(e)): 8 are
+anti-recognition with the fold CI below 0.5 (LEG total 0.206 [0.137, 0.289]: the legacy energy prefers
+the production chain to a 0.25 A chain on 79% of targets and to the 0.08 A NATIVE chain on 76%;
+LEG_hbond_local 0.190, DSSPHB 0.226, TORS_CONS_POOL 0.262, LEG_solvation 0.349, LEG_coop_helix 0.361,
+LEG_torsion 0.405, RAMA 0.413 [0.336, 0.496]); 5 are tie-dominated and uninformative here
+(LEG_coop_sheet 124 ties, LEG_hbond_longrange 114, EXVOL@chain 101, LEG_coop_helix 79, LEG_aromatic
+64; LEG_hbond_longrange's fold CI [0.533, 0.562] above 0.5 is 114 ties at 0.5 plus 12 decided targets
+and is not a pass); the rest are coin tosses (ELEC 0.484, LEG_electrostatic 0.492, LEG_compactness 0.468,
+LEG_steric 0.508 with 54 ties, LEG_contact 0.532). None clears clause 1. Over all 31: 20 have the fold
+CI below 0.5 (two of them also tie-dominated), 3 more are tie-dominated, 7 are coin tosses, 1 clears both
+clauses. The NATIVE column tracks the circ_best column within 0.05 on 29/31 scorers (RAMA 0.476 vs
+0.413 and LEG_hbond_local 0.250 vs 0.190 are the exceptions, both toward the NATIVE): as at the CA level, what the library dislikes is nativeness relative to the
+average, not the ORACLE optimisation.
+(4) THE ONE SCORER THAT CLEARS THE REGISTERED TWO-CLAUSE BAR, AND WHY IT IS NOT A CANDIDATE.
+CONTACT@chain prefers the ORACLE structure on 0.583 [0.530, 0.645] (circ_s0 0.575 [0.529, 0.640]; sub0
+0.544; NATIVE 0.575; 9 ties) and beats the single-draw random signed control by +0.107 [+0.009, +0.199]
+(0.71x its own MDE, 4/5 folds, `ST.compare`'s own verdict NOT MEASURED; circ_s0 +0.099 [+0.013, +0.179],
+0.64x, NOT MEASURED): both clauses on the fold-CI reading, on both ORACLE starts, where at the CA level CONTACT cleared them on the best-of-5 only (S28-L35). Against
+that: (a) priced as the best of 31, as section 4 registers, its 0.583 is what the best of 31 null
+scorers gives on average (max-over-31 sign-flip null mean 0.579, p95 0.627, p_max 0.388; lane D
+independently 0.577 / 0.619 / 0.399); (b) on the pool-member control it is +0.140 [+0.065, +0.211] at
+1.23x MDE with 4/5 folds (fold 1 -0.015), the Type-M zone (contract rule 6), the same cell as at the CA
+level (+0.137, 1.18x, S28-L36/L37), and head-to-head it rates the ORACLE structure better than a random
+pool member on 0.594 and the NATIVE on 0.590, the 0.58 to 0.63 band S28-L36 called "a typical-looking
+pool member"; (c) its preference is carried by the 108 (0.61) and is below half on FAIL18 (8 of 18;
+pool-member contrast -0.120 on FAIL18); (d) the chain carries ONE control draw against four at the CA
+level, so the clause-2 lower bound of +0.009 is a single-draw number, and section 5's second control
+seed and second null seed, which a positive needs before it is believed, were not run on this basis.
+CONTACT@chain is "marginal, Type-M, at the multiplicity null's mean" on the built chain, which is the
+reading S28-L36 gave it and S28-L37 accepted; it is not a candidate objective for a lane A2 run.
+ENV@chain (+0.131, 1.19x) and CONTACT_LL@chain (+0.100, 1.02x) sit in the same zone on the pool-member
+contrast with 5/5 folds, and both fail clause 1 (ENV 0.492; CONTACT_LL 0.234, anti): for the distogram
+family a positive pool-member contrast means "the ORACLE structure loses to the average less often than
+a typical pool member does" (pct(PROD) 0.13 for CONTACT_LL), not recognition. The multiplicity of the
+pool-member contrast itself is not priced by any registered null; the statistic that is priced, the
+best single pref, is inside its null.
+(5) THE LEARNED COMBINATION IS ANTI-PRODUCTION, PURER THAN AT THE CA LEVEL. The nested pairwise
+logistic over the 31 scorers reaches 0.960 [0.938, 0.983] held out (null 0.502, p95 0.603) and the SAME
+held-out rule prefers the random signed control to production on 0.952 and the matched Gaussian
+control on 0.960: contrasts +0.008 [+0.000, +0.022] (one target of 126; the fold CI's lower end is
++0.0000 and does not exclude zero) and +0.000 [-0.049, +0.043]; head-to-head it tells the ORACLE
+structure from a random signed combination on 0.492 [0.364, 0.611] (0.526 at the CA level). The rule it
+learns is "not the production average", which any displaced structure satisfies; it fails clause 2 and
+the head-to-head reading of addendum 1.
+(6) STRATA (ORACLE label, k of 18): the informative scorers prefer the ORACLE structure on FAIL18 no
+more often than on the 108 (DIS@chain 0/18, DIS_MEAN@chain 0/18, LEG 2/18, CONTACT_LL@chain 1/18,
+CAGEO@chain 7/18, RAMA 9/18, CONTACT@chain 8/18 vs 0.61 on the 108, ENV@chain 11/18 vs 0.47); the
+combination is 1.00 on FAIL18 and 0.95 on the 108. There is no stratum on which recognition appears.
+VERDICT (built chain, the reporting basis; contract addendum 1 item 13): the closure claim "no scorer in
+the S27 library recognises the ORACLE structures the amplitude family expresses" STANDS on the built
+chain over all 31 scorers, with the registered multiplicity pricing and the pool-member control of
+S28-L36/L37 applied to every scorer that has a pool channel. The falsifier's literal two clauses are met
+by exactly one of 31 scorers (CONTACT@chain), whose pref is the expected maximum of 31 null scorers
+(p_max 0.388) and whose standing-control contrast is Type-M (1.23x, 4/5 folds): by the prereg's own
+pricing and by S28-L36's reading it is marginal, not a positive, and no second seed exists on this basis
+to promote it. The registered prior holds where it was stated (the distogram family and the consistency
+scorers prefer the average; the geometric channels prefer production once the bonds are equal) and the
+one CA-level exception, CAGEO, was the contraction of the average and has collapsed to anti-recognition
+on the projected chains, as S28-L36(a) registered. What an objective would have to know is unchanged
+from S28-L35/L36 and now holds with ideal geometry on both sides: the projected Bayes-risk minimiser of
+the over-confident posterior is a better structure than a 0.25 A chain to the objective itself (93% of
+targets) and to every consistency, geometric and legacy-energy channel in the library. No candidate
+objective is named for a lane A2 run; C2 is closed on the reporting basis. Not a result: an ORACLE
+diagnostic that closes a question.
+What I did not do: AMB on the projected chains (deferred throughout, contract rule 8, one AMBER process
+per box under the user's load; prereg section 7); a second control seed on the chain (4 more draws x 3
+controls x 126 projections, about 1.3 h; the positive-only rule did not fire); a null for the
+multiplicity of the pool-member contrast (unregistered; stated as un-priced above). Artefacts:
+`s27/results/s28_C2_chain_rows.jsonl` (126 rows), `s27/results/s28_C2_chain_summary.json` (job
+`s28C2_analyse_chain`, exit 0, 95 s, peak RSS 0.339 GB), `s27/results/s28_C2_ca_summary.json` and
+`s28_C2_ca_seed2_summary.json` (the CA level, the seed-2 file regenerated 09-19 with the pool-member
+control: every circ_best / circ_s0 pool-member contrast identical to seed 0 to the fourth decimal, as it
+must be, the control draws do not enter it), job records `s26/jobs_done/s28C2_chain{,3,4}.json`,
+`s28C2_analyse_chain.json`, code `s27/s28_C2_recog_audit.py`, tests `tests/test_s28_C2.py`.
