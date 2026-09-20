@@ -2287,3 +2287,119 @@ Multiplicity: 0 endpoint comparisons; 1 registered prediction; 1 WITHDRAWAL of m
 recommendation.
 Artefacts: `s29/THEORY.md` section 9 (commit 591fab47); sources S29-L22 (lane P), S25 L1,
 S23 L2/L6/L9, `s12/obj_FINDINGS.md` sections 3 and 4, `core/predict.py:377-395`, S29-L19.
+
+## S29-L25 -- THE SET-EQUALITY THEOREM FAILS ON REAL POOLS, MEASURED: THE f-OPTIMAL 2-SUBSET IS NOT THE ENERGY-ORDER PREFIX ON 11/12 TARGETS AND NOT THE TWO BEST BY THE PER-STATE CRITERION ON 11/12 EITHER (EXHAUSTIVE OVER ALL 124,750 PAIRS OF THE DEPLOYED 500-POOL), THE f-OPTIMAL m = 5 SUBSET IS NON-PREFIX ON 12/12 WITH A MEAN OBJECTIVE GAP OF +0.152, AND THE ESCAPE BUYS NOTHING: THOSE SUBSETS' AVERAGES ARE WORSE THAN THE PREFIX ON 10/12 AND WORSE THAN PRODUCTION ON 8/12 (NOT MEASURED AT n = 12, DIRECTION ONLY) -- LANE T's S29-L17 SECTION 4.5 CONFIRMED ON THIS INSTRUMENT, BOTH CLAUSES (2026-09-20 00:51, B)
+Question (`s29/PREREG_S29_B.md` ADDENDUM 2 section B2.6 falsifier F5c; the coordinator's
+instruction of 00:35; lane T's **S29-L17 section 4** and **S29-L18**, whose three-state, two-
+dimensional witness shows the set-equality theorem MUST fail under a CVaR over the tail's AVERAGE
+structure): does it fail on a REAL pool of this instrument, and does escaping it buy accuracy?
+Falsifier as registered (T's, adopted verbatim): the objective gap of the aggregate-optimal subset
+over the energy prefix is under 0.02 (it is not), and -- the clause that decides whether this is an
+opening -- the aggregate-optimal subset's coordinate average is BETTER than production, in which
+case it goes to 126 immediately.
+
+**THE OBJECT.** f = the shipped distogram risk (`s27/s28_A_amp.py :: Surrogate`, the piecewise-
+linear reading of the shipped risk table) evaluated on the coordinate AVERAGE of a subset, in the
+deployed readout's own frame (`Frame(W, DIS top-75)`, every window superposed on the top-75
+medoid). V(S) = f(mean_{i in S} W_i) is neither additive nor monotone, so no per-state sort can be
+optimal for it; the deployed CVaR-VQE's tail, by contrast, is provably a PREFIX of the E order
+(S24/S25, and S29-L13: it is Barkoutsos eq (12), a definition). Selection is native-free
+throughout; the RMSD columns are ORACLE and are attached afterwards.
+
+**PROVENANCE.** `s29/s29_B_compat.py` + `s29/s29_B_tta.py :: subset_target` (18 tests,
+`tests/test_s29_B.py`, all pass); job `s29B_tta_subset` (`s26/jobs_done/s29B_tta_subset.json`
+exit 0, wall 92 s, peak RSS 0.34 GB); rows `s29/results/s29_B_tta_subset_rows.jsonl`, 12 rows =
+S27 T11's 12 trainability targets. The pair search is EXHAUSTIVE over all C(500, 2) = 124,750
+pairs of the deployed 500-candidate pool; the m = 5 search is greedy plus swap local search to
+convergence. Ties are averaged over the tied argmin set, never read off array order (memory
+`tie-breaking-leaks-the-pool-order`).
+
+**RESULT 1, THE MECHANISM -- deterministic, per target, no statistics needed
+(`s29_B_tta_subset_rows.jsonl`):**
+
+    pdb    best pair ranks   f_pair   f_prefix    gap     greedy m=5 ranks        f_greedy  f_pref5    gap
+    1A13   [0, 10]           0.7402   0.7503    +0.0101  [0, 1, 161, 162, 163]    0.7257   0.7549   +0.0292
+    1I6Y   [1, 33]           1.4692   1.5311    +0.0619  [0, 1, 2, 29, 33]        1.4008   1.5737   +0.1729
+    1M02   [24, 37]          1.6091   1.9231    +0.3140  [37, 52, 53, 73, 130]    1.5927   1.8614   +0.2688
+    2BFI   [6, 38]           0.6047   0.6158    +0.0111  [2, 4, 38, 61, 118]      0.5975   0.6155   +0.0180
+    2LWS   [0, 5]            1.6476   1.8429    +0.1952  [0, 5, 6, 8, 52]         1.6574   1.9611   +0.3037
+    2MP9   [0, 12]           2.1534   2.2874    +0.1340  [44, 229, 234, 324, 438] 2.0912  2.3700   +0.2788
+    2P5H   [0, 4]            1.3083   1.3516    +0.0432  [0, 1, 4, 5, 15]         1.3081   1.3247   +0.0166
+    5Z5W   [4, 118]          0.7098   0.7114    +0.0015  [1, 5, 26, 118, 217]     0.7006   0.7116   +0.0110
+    6MBM   [15, 82]          1.0228   1.0374    +0.0147  [0, 15, 82, 86, 97]      1.0141   1.0352   +0.0211
+    7JGX   [0, 1]            1.8154   1.8154    +0.0000  [0, 1, 2, 7, 11]         1.8406   1.8989   +0.0582
+    8HVS   [1, 2]            1.3878   1.4390    +0.0512  [10, 41, 92, 185, 269]   1.3202   1.5338   +0.2135
+    9KAR   [0, 3]            2.1736   2.3526    +0.1790  [52, 57, 84, 127, 206]   2.2120   2.6461   +0.4341
+
+- The f-optimal PAIR is **not** the energy-order prefix {rank 0, rank 1} on **11 of 12** targets
+  (7JGX is the one where it happens to coincide, gap exactly 0.0000). Mean objective gap +0.0847.
+- The f-optimal m = 5 subset is **not** a prefix on **12 of 12**; mean gap +0.1522, which clears
+  lane T's registered 0.10 at m = 5 rather than at m = 75. Supports reach rank 324 (2MP9) and 269
+  (8HVS) of 500.
+- **It is not a different sort either.** The pair of the two lowest-f_single members (f as a
+  PER-STATE score, the other obvious classical rule) equals the exhaustive optimum on only
+  **1 of 12** targets. So the optimum is not reachable by sorting E, and not by sorting f: it is a
+  genuine subset-selection problem, which is exactly what lane T's three-state witness says.
+- This is the first measurement in this project's record of a formulation in which "which set" is a
+  real optimisation variable rather than a read-out of a sort. On the charter's section 11
+  questions 5 and 7 it is an affirmative IN PRINCIPLE, measured on the deployed pool.
+
+**RESULT 2, THE PRICE -- the escape buys no accuracy (ORACLE, point cloud, n = 12, paired through
+`s24.stats_lib.compare` with `pinned_folds`; production = DIS top-75 uniform, mean 3.2529):**
+
+  greedy m=5 (f-optimal subset) - production
+    a 3.6808 (med 3.2640)   b 3.2529 (med 2.6820)   n=12
+    effect +0.4278   median +0.0813   SE 0.2567   MDE 0.7193   effect/MDE +0.59
+    iid  CI95 [+0.0154, +0.9677]
+    fold CI95 [-0.0785, +0.8049]   folds same sign 3/5   per-fold 0:+1.092 1:-0.078 2:+0.065 3:-0.150 4:+0.527
+    4W/8L/0T   worst degradation +2.7500 (2MP9)   p90 +1.3450   power 0.38  Type-M 1.60
+    VERDICT: NOT MEASURED (|effect| 0.4278 <= its own MDE 0.7193, 0.59x)
+
+  greedy m=5 - the m=5 ENERGY PREFIX
+    a 3.6808 (med 3.2640)   b 3.4293 (med 2.8810)   n=12
+    effect +0.2515   median +0.0688   SE 0.1739   MDE 0.4873   effect/MDE +0.52
+    iid  CI95 [-0.0007, +0.6295]
+    fold CI95 [+0.0386, +0.6086]   folds same sign 5/5   per-fold 0:+0.841 1:+0.023 2:+0.085 3:+0.025 4:+0.063
+    2W/10L/0T   worst degradation +2.0548 (2MP9)   p90 +0.5000   power 0.30  Type-M 1.80
+    VERDICT: NOT MEASURED (|effect| 0.2515 <= its own MDE 0.4873, 0.52x)
+
+  f-optimal PAIR - the energy prefix pair
+    a 3.7370 (med 3.4339)   b 3.4236 (med 3.0863)   n=12
+    effect +0.3134   median +0.0980   SE 0.1473   MDE 0.4126   effect/MDE +0.76
+    iid  CI95 [+0.0527, +0.6012]
+    fold CI95 [+0.1456, +0.3883]   folds same sign 4/5   per-fold 0:+0.421 1:-0.208 2:+0.263 3:+0.365 4:+0.363
+    3W/8L/1T   worst degradation +1.3620 (2LWS)   p90 +1.1016   power 0.57  Type-M 1.33
+    VERDICT: NOT MEASURED (|effect| 0.3134 <= its own MDE 0.4126, 0.76x)
+
+**How to read those three blocks, stated plainly.** At n = 12 NONE of them is a result: every
+effect is inside its own MDE and the entry does not claim otherwise (contract rule 6; S29-L4(d)).
+What IS readable is the DIRECTION and the W/L, which are descriptive: the f-optimal m = 5 subset
+loses to the m = 5 energy prefix on 10 of 12 targets with 5/5 folds the same sign, and loses to
+production on 8 of 12; the f-optimal pair loses to the prefix pair on 8 of 12. **T's F5c second
+clause therefore does NOT fail**: the aggregate-optimal subset is not better than production, so
+this is not the sprint's opening, and nothing here goes to 126. The worst cell is 2MP9, where the
+objective moves the support from the prefix to ranks 44 to 324 and the ORACLE RMSD goes from 1.188
+(production) to 3.938: the S29-L2 anti-correlation (ladder rho -0.182 CA / -0.402 chain) doing
+exactly what it says it does, on a target where production is already good.
+
+**THE TWO SENTENCES THIS ENTRY IS FOR.** (1) Escaping the set-equality theorem is achievable on
+this instrument and is achieved: the optimum is non-prefix on 11/12 and 12/12 and is unreachable
+by any sort of E or of f. (2) Escaping it creates no INFORMATION -- f is a marginal-class objective
+(lane T's theorem 2, S29-L7; contract addendum 1 rule 21) and the sets it prefers are worse. The
+combination is lane T's "necessary and not sufficient" measured rather than cited, and it prices
+the endpoint arm of measurement 5 before it is run: the VQE cannot find a better set than an
+exhaustive/greedy classical search over the same objective, and that search is worse than
+production.
+
+**Charter section 11, the questions this answers.** (7) Does the quantum output contain information
+unavailable classically? For THIS objective, no: the classical greedy-plus-local-search is the
+correct counterpart (rule 15, S29-L17) and it is a strict upper bound on what the circuit could
+find. (8) Can a classical control reproduce the effect? Yes, and better. The affirmative on (5) and
+(7) "in principle" stands as a statement about the FORMULATION, not about accuracy, and the entry
+says so in the same sentence.
+
+Multiplicity: 4 ORACLE diagnostic comparisons on 12 targets, 0 endpoint comparisons. No native
+chose any parameter; f, the subsets and the frame are native-free.
+Artefacts: `s29/results/s29_B_tta_subset_rows.jsonl`; `s26/jobs_done/s29B_tta_subset.json`;
+`s26/logs/s29B_tta_subset.log`; code `s29/s29_B_tta.py`, tests `tests/test_s29_B.py` (18 pass);
+prereg `s29/PREREG_S29_B.md` addendum 2 (commit d3ccf6b6, before the job).
