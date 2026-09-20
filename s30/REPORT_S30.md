@@ -983,6 +983,97 @@ Per contract rule 24, *a cost the meter cannot see is a finding about the meter.
 > **A single-draw control is least trustworthy exactly where the effects are smallest - which is
 > where this project's remaining effects live.**
 
+### 10.6 Every cost in the library, on the endpoint basis
+
+Charter item 27 asks for the meter's baselines *"for every serious cost function tested."* All **32**
+costs the meter can address were run on the **built chain** — the basis the endpoint is reported on
+— emitting **912 comparisons**.
+
+**Read this as a descriptive baseline table, not a search for a winner.** The largest |z| is **8.06**
+against an expected max-of-32 under the null of ~2.5–2.9, so the top rows are *not* order-statistic
+artefacts — but what they measure is **coarse triage**, not what the pipeline needs (§10.6.2).
+
+```
+cost                    kind   ladder  lfold  contrast   xMDE   pctile  gate
+LEG_steric             chain  +0.1553    3/5   +0.2515  +2.88      n/a  PROCEED
+CAGEO                     ca  +0.1075    4/5   +0.2341  +2.49   0.6874  REVIEW
+LEG_torsion            chain  +0.0502    3/5   +0.2212  +2.14      n/a  PROCEED
+RAMA                   chain  +0.0760    2/5   +0.1498  +1.48      n/a  PROCEED
+LEG_coop_helix         chain  -0.3828    5/5   +0.0645  +1.18      n/a  BLOCK
+CONTACT                   ca  +0.1081    5/5   +0.1305  +1.09   0.4138  PROCEED
+EXVOL                     ca  -0.1736    5/5   +0.0456  +0.93   0.5680  BLOCK
+DISTPOT                   ca  -0.1849    5/5   +0.1002  +0.89   0.4321  BLOCK
+ENV                       ca  -0.0520    3/5   +0.0918  +0.87   0.3932  PROCEED
+CONTACT_LL                ca  -0.3197    5/5   +0.0655  +0.68   0.4025  BLOCK
+DIS_SURR                  ca  -0.3890    5/5   +0.0367  +0.58   0.3688  BLOCK
+DIS  (SHIPPED)            ca  -0.4023    5/5   +0.0357  +0.56   0.3676  BLOCK
+LEG                    chain  -0.1560    4/5   +0.0546  +0.55      n/a  BLOCK
+LEG_coop_sheet         chain  +0.4829    4/5   +0.0074  +0.47      n/a  PROCEED
+DIS_MEAN                  ca  -0.4141    5/5   +0.0218  +0.36   0.3836  BLOCK
+LEG_compactness        chain  +0.0604    3/5   +0.0441  +0.36      n/a  PROCEED
+HP                        ca  -0.1265    4/5   +0.0273  +0.23   0.4644  BLOCK
+TORS_CONS_POOL         chain  -0.1735    5/5   +0.0159  +0.17      n/a  BLOCK
+LEG_hbond_longrange    chain  +0.4850    5/5   +0.0055  +0.15      n/a  PROCEED
+RG_UNIV                   ca  -0.1430    5/5   +0.0169  +0.15   0.5151  BLOCK
+RG_LAW                    ca  -0.0386    3/5   +0.0169  +0.14   0.5169  REVIEW
+LEG_solvation          chain  -0.1330    4/5   -0.0179  -0.15      n/a  BLOCK
+LEG_aromatic           chain  -0.0917    4/5   -0.0139  -0.17      n/a  PROCEED
+LEG_contact            chain  -0.0157    2/5   -0.0253  -0.21      n/a  PROCEED
+LEG_electrostatic      chain  -0.0544    3/5   -0.0327  -0.30      n/a  PROCEED
+LEG_hbond_local        chain  -0.2310    4/5   -0.0263  -0.33      n/a  BLOCK
+ELEC                   chain  -0.0468    3/5   -0.0417  -0.39      n/a  PROCEED
+POOLGO_POOL               ca  -0.2552    5/5   -0.0714  -0.68   0.5144  BLOCK
+DMAP_CONS_POOL            ca  -0.3784    5/5   -0.0933  -1.03   0.5865  BLOCK
+SS_MATCH                  ca  -0.2248    5/5   -0.0967  -1.12   0.4440  BLOCK
+CONS_POOL                 ca  -0.5633    5/5   -0.1290  -1.52   0.6175  BLOCK
+DSSPHB                 chain  -0.2527    5/5   -0.1835  -1.93      n/a  BLOCK
+
+ladder   = Spearman(cost, RMSD) over the S28 ORACLE ladder; POSITIVE is the good direction
+contrast = pref(ORACLE best vs PROD) - pref(matched random-signed vs PROD), 8 draws
+pctile   = the native's percentile in its own 500-pool (0 = best, 0.5 = chance)
+```
+
+### 10.6.1 A defect in this table, which the table's own signature caught
+
+**The first version of this sweep printed `pctile = 0.0000` for sixteen costs**, making it look as
+though the native were each one's argmin. It is not: **`native_pctile` is only computed for CA-kind
+costs**, and my collector's `r.get('pctile') or 0` turned a **missing key into a fabricated zero**.
+
+> Sixteen identical values across sixteen different costs is **exactly the signature that caught
+> lane R's null-input artefact** (three identical 0.500s across three different questions,
+> §Appendix A). I wrote the same bug three hours after recording that lesson in this report.
+> **`or 0` on a possibly-absent numeric key manufactures data.** The column now reads `n/a`.
+
+### 10.6.2 What the table says, and what it does not
+
+**Three descriptive facts, none of which is a route:**
+
+1. **The shipped cost ranks 12th of 32 on the preference contrast** (+0.0357, **0.56× MDE — below
+   the not-a-result line**) and has **the second-worst ladder ρ in its own library** (−0.4023; only
+   `CONS_POOL` is worse). *Lowering the shipped cost raises RMSD on the ORACLE ladder, and eleven
+   other costs do better on a criterion it was never selected for.*
+2. **Coarse triage is widespread.** Four costs clear 1× MDE on the contrast with a *positive*
+   ladder ρ — `LEG_steric` (+2.88), `CAGEO` (+2.49), `LEG_torsion` (+2.14), `RAMA` (+1.48) — and
+   `CONTACT` manages +1.09 with 5/5 ladder folds. Several are physics terms carrying no distogram
+   information at all.
+3. **And not one of them ranks the native inside its own pool.** Every computed percentile is
+   0.37 or worse, i.e. at or below chance-adjacent, and **`CAGEO` — the second-strongest contrast
+   in the library — puts the native at the 69th percentile, *worse* than chance.** The two
+   abilities are **decoupled**.
+
+**Why this is not a licence to swap the cost.** The contrast asks *"does this cost prefer a
+near-native structure to a randomly displaced one?"* The pipeline needs *"does this cost order
+candidates **within the top-75**?"* — which lane R measured directly on a kind-matched ladder and
+found **preference fails on all 43 channels**. The fold agreement on the top rows is also weak
+(`LEG_steric` 3/5 ladder folds, `LEG_torsion` 3/5, `RAMA` 2/5), and the binding stage is the filter,
+not the score's coarse behaviour (§4.1).
+
+> **The sweep reproduces lane R's split verdict across 32 costs on the endpoint basis: coarse
+> ordering is common and cheap; in-band selection is absent everywhere.** That the shipped cost is
+> near-worst on the coarse criterion while being the one selected for in-band use is consistent —
+> and it is the clearest single illustration that *these are two different abilities and this
+> project needs the one nothing has.*
+
 
 ## 11. What remains open
 
