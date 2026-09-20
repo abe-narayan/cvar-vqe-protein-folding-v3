@@ -47,6 +47,12 @@ TRAIN_ROWS = os.path.join(RESULTS, "s28_B2_train_rows.jsonl")
 TRAIN_OUT = os.path.join(RESULTS, "s28_B2_train.json")
 KS = (5, 10)
 J_GRID_B2 = (0.0, 0.3, 1.0, 3.0)
+#: THE ENDPOINT SCOPE (`s27/PREREG_S28_B.md` addendum 2, written before any B2 endpoint number):
+#: k = 10 only, J in {0, 3}, graphs REAL and PERM (no RAND, no other k or J). `run_main` binds
+#: these into `s28_B_hop` for the duration of the run and restores the module afterwards.
+J_GRID_ENDPOINT = (0.0, 3.0)
+GRAPHS_ENDPOINT = ("REAL", "PERM")
+K_ENDPOINT = 10
 NS = [4, 5, 6, 7, 8, 9]
 N_THETA = 120
 
@@ -298,17 +304,29 @@ def share_main():
 
 # ================================================================ endpoint (gated)
 def run_main(k: int, limit: int = 0):
-    """Point-cloud endpoint with the kNN graph. GATED on the S28B built-chain verdict entry."""
+    """Point-cloud endpoint with the kNN graph, at the scope of prereg addendum 2 ONLY: k = 10,
+    J in {0, 3}, graphs REAL and PERM; every row carries the kNN graph's component count and
+    the GS rows are flagged `degenerate` when it is more than one (S28-L23(b)). Runs only after
+    the S28B built-chain verdict (S28-L41) and lane D's check of it. The module's grid and
+    graph list are bound for the run and restored afterwards, even when the run raises."""
     from s25 import phys_lib as P
     from s27 import run_pool as RP
+    if k != K_ENDPOINT:
+        raise ValueError(f"the B2 endpoint is scoped to k = {K_ENDPOINT} (prereg addendum 2), got {k}")
     rows_path = os.path.join(RESULTS, f"s28_B2_rows_k{k}.jsonl")
-    real_kernel = B.kernel_graph
+    real_kernel, real_grid, real_graphs = B.kernel_graph, B.J_GRID, B.GRAPHS
+    seen = []                                            # the kNN reports, one per target (REAL)
 
     def knn_kernel(D, sigma=None):                       # the graph switch
-        return knn_graph(D, k)
+        g = knn_graph(D, k)
+        seen.append(dict(n_components=g["n_components"], lam2_over_lam1=g["lam2_over_lam1"],
+                         perron_uniform_overlap=g["perron_uniform_overlap"],
+                         knn_degree_min=g["knn_degree_min"], knn_degree_max=g["knn_degree_max"]))
+        return g
 
     B.kernel_graph = knn_kernel
-    B.J_GRID = J_GRID_B2
+    B.J_GRID = J_GRID_ENDPOINT
+    B.GRAPHS = GRAPHS_ENDPOINT
     done = B._done_pdbs(rows_path)
     pdbs = P.targets()[:limit] if limit else P.targets()
     t0 = time.time()
@@ -317,17 +335,24 @@ def run_main(k: int, limit: int = 0):
             if pdb in done:
                 continue
             t1 = time.time()
+            seen.clear()
             rows = B.run_target(pdb)
+            assert len(seen) == 1, f"expected one kNN graph per target, built {len(seen)}"
+            rep = seen[0]
             for r in rows:
                 r["graph_kind"] = f"knn{k}"
+                r.update(rep)
+                if r["source"] == "gs" and r["J"] > 0 and rep["n_components"] > 1:
+                    r["degenerate"] = True               # S28-L23(b): lambda_1 = 1 is degenerate
             with open(rows_path, "a", encoding="utf-8") as fh:
                 for r in rows:
                     fh.write(json.dumps(r) + "\n")
             j0 = [r for r in rows if r["source"] == "vqe" and r["J"] == 0.0 and r["seed"] == 0][0]
-            print(f"  [{i+1}/{len(pdbs)}] {pdb} rows={len(rows)} vqe0={j0['R1']['rmsd']:.3f} "
-                  f"{time.time()-t1:.1f}s (elapsed {(time.time()-t0)/60:.1f} min)", flush=True)
+            print(f"  [{i+1}/{len(pdbs)}] {pdb} rows={len(rows)} comps={rep['n_components']} "
+                  f"vqe0={j0['R1']['rmsd']:.3f} {time.time()-t1:.1f}s (elapsed {(time.time()-t0)/60:.1f} min)",
+                  flush=True)
     finally:
-        B.kernel_graph = real_kernel
+        B.kernel_graph, B.J_GRID, B.GRAPHS = real_kernel, real_grid, real_graphs
     print("done:", rows_path)
 
 

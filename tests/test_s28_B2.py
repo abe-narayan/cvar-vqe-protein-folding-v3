@@ -100,3 +100,37 @@ def test_run_main_restores_the_gaussian_graph_switch(monkeypatch):
     with pytest.raises(RuntimeError):
         B2.run_main(10, limit=1)
     assert B.kernel_graph is original
+
+
+def test_run_main_binds_the_addendum_2_scope_and_restores_it(monkeypatch):
+    """Prereg addendum 2: the B2 endpoint is k = 10, J in {0, 3}, graphs REAL and PERM, nothing
+    else. `run_main` must hand exactly that scope to `s28_B_hop` while it runs, put the
+    Gaussian kernel, the full grid and the full graph list back afterwards, and refuse any
+    other k before touching anything."""
+    original = (B.kernel_graph, B.J_GRID, B.GRAPHS)
+    captured = {}
+
+    def fake_run_target(pdb):
+        captured["J_GRID"] = tuple(B.J_GRID)
+        captured["GRAPHS"] = tuple(B.GRAPHS)
+        captured["kernel_is_knn"] = B.kernel_graph is not original[0]
+        # the runner expects exactly one kNN graph per target: build it the way select_target does
+        W = _pool(seed=1, k=40)
+        D = B.pairwise_rmsd_matrix(W)
+        B.kernel_graph(D)
+        raise RuntimeError("stop")
+
+    monkeypatch.setattr(B, "run_target", fake_run_target)
+    from s25 import phys_lib as P
+    monkeypatch.setattr(P, "targets", lambda: ["XXXX"])
+    monkeypatch.setattr(B2, "RESULTS", os.path.join(os.path.dirname(__file__), "_no_such_dir_"))
+    with pytest.raises(RuntimeError):
+        B2.run_main(10, limit=1)
+    assert captured["J_GRID"] == (0.0, 3.0)
+    assert captured["GRAPHS"] == ("REAL", "PERM")
+    assert captured["kernel_is_knn"]
+    assert (B.kernel_graph, B.J_GRID, B.GRAPHS) == original
+    assert B.J_GRID == (0.0, 0.1, 0.3, 1.0, 3.0) and B.GRAPHS == ("REAL", "PERM", "RAND")
+    with pytest.raises(ValueError):
+        B2.run_main(5, limit=1)
+    assert (B.kernel_graph, B.J_GRID, B.GRAPHS) == original
