@@ -115,9 +115,10 @@ if isinstance(x, dict):
         for arm in ['T0_helix', 'T1_blind', 'T2_restype', 'T3_pool']:
             a = pa.get(arm)
             if isinstance(a, dict):
+                B = a.get('B_endpoint', a.get('B', a.get('endpoint')))
                 show('  %s' % arm,
                      'set_mean %s  B %s  S %s' % (round(a.get('set_mean', 0), 4),
-                                                  round(a.get('B', a.get('endpoint', 0)), 4),
+                                                  'MISSING' if B is None else round(B, 4),
                                                   round(a.get('S', 0), 4)), '')
     show('  MOST_CONCENTRATED_SOURCE', str(x.get('MOST_CONCENTRATED_SOURCE'))[:60], '')
     show('  SECONDARY corr(S,B) within target', str(x.get('SECONDARY_within_target_corr_S_B'))[:60],
@@ -204,6 +205,66 @@ if ma:
     print('%-56s %s' % ('  verdict.gates.rand_signed says', gate))
     print('%-56s %s' % ('  -> QUOTE THE GATE, NOT .verdict',
                         'CONSISTENT with the known trap' if ok else '*** trap changed shape ***'))
+
+# ------------------------------------------- the ENDPOINT itself, and its reproducibility (D10)
+print()
+print('--- the endpoint: production, and how well it reproduces ---')
+import statistics as _st
+
+
+def _rows(path, key, **flt):
+    if not os.path.exists(path):
+        MISSING.append(path)
+        return None
+    out = []
+    for line in io.open(path, encoding='utf-8'):
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            r = json.loads(line)
+        except Exception:
+            continue
+        if all(r.get(k) == val for k, val in flt.items()):
+            out.append(r[key])
+    return out or None
+
+
+s29p = _rows('s29/results/s29_O_chain_rows.jsonl', 'rmsd_chain', item='prod')
+s29c = _rows('s29/results/s29_O_chain_rows.jsonl', 'rmsd_cloud', item='prod')
+s27p = _rows('s27/results/chain_rows.jsonl', 'rmsd_chain', config='DIS')
+s27c = _rows('s27/results/chain_rows.jsonl', 'rmsd_cloud', config='DIS')
+
+if s29p:
+    check('production built chain (S29 prod row, CANONICAL)', 3.2105, _st.mean(s29p))
+    check('production CA cloud   (S29 prod row)', 3.0483, _st.mean(s29c))
+    show('  n targets', len(s29p), '')
+if s27p:
+    check('production built chain (S27 DIS config)', 3.2126, _st.mean(s27p))
+    check('production CA cloud   (S27 DIS config)', 3.0483, _st.mean(s27c))
+if s29p and s27p:
+    dchain = abs(_st.mean(s29p) - _st.mean(s27p))
+    dcloud = abs(_st.mean(s29c) - _st.mean(s27c))
+    show('  chain disagreement between records', '%.4f A' % dchain,
+         'the projection is multi-start and NOT seed-pinned')
+    show('  cloud disagreement between records', '%.4f A' % dcloud,
+         'the cloud is EXACT; only the projection is stochastic')
+    ok = dcloud < 1e-4 < dchain
+    (OK if ok else BAD).append(('cloud exact / chain stochastic', 'cloud==, chain!=',
+                                '%.4f / %.4f' % (dcloud, dchain)))
+    show('  -> any claim below ~0.01 A on the chain', 'IS INSIDE THE NOISE',
+         'E2 at 0.0221 is only ~2x the full 0.0107 spread')
+
+# ------------------------------------------- every path the ledger claims to have written (S30-L0)
+print()
+print('--- every path the ledger claims to have written (the S30-L0 failure) ---')
+claimed = ['s30/BRIEF.md', 's30/LEDGER.md', 's30/STATE.md', 's30/THEORY.md',
+           's30/S30_CONTRACT.md', 's30/REPORT_S30.md', 's30/s30_D_meter.py',
+           's30/AUDIT_V.md', 's30/QUANTUM_W.md']
+for c in claimed:
+    good = os.path.exists(c)
+    (OK if good else BAD).append(('path exists: %s' % c, 'exists', 'yes' if good else 'MISSING'))
+    print('%-56s %s' % ('  ' + c, 'exists' if good else '*** MISSING ***'))
 
 print()
 print('=' * 92)

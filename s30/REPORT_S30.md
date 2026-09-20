@@ -46,6 +46,33 @@ not deliver it.
 
 ---
 
+
+### 1.1 The endpoint's own reproducibility, which nobody had pinned
+
+Four values for "production built chain" were in circulation this sprint. They are now reconciled,
+and the reconciliation is itself a finding:
+
+```
+s29/results/s29_O_chain_rows.jsonl :: item=prod      chain 3.2105   cloud 3.0483   <- canonical
+s27/results/chain_rows.jsonl       :: config=DIS     chain 3.2126   cloud 3.0483
+lane D's independent re-projection                   chain 3.2071
+lane P's independent re-projection                   chain 3.2126
+```
+
+> **The CA point cloud is identical to four decimals in both records — 3.0483. Only the built chain
+> differs.** The projection from cloud to chain is **multi-start and its seed is not pinned**, so
+> the same cloud projected twice gives means differing by ~0.002 Å, and independent re-projections
+> range to 3.2071. The known cause is documented: a multi-start branch flip on a single target
+> (S28-L18/L27b/L43), which lane D reproduced with **median per-target |Δ| of 0.0012 Å and one
+> 0.513 Å outlier**.
+
+**This report uses 3.2105** (the S29 `prod` row, which is what the charter quotes). The spread
+matters for exactly one reason: **the full range across instruments is 0.0107 Å, and the sprint's
+one confirmed deployable effect — the AMBER relax at k=30 — is 0.0221 Å.** That effect is only
+**2×** the endpoint's own reconstruction spread. It does not threaten anything at the 3.00 or 2.50
+scale, but it means **any future claim below ~0.01 Å on the built chain is inside the noise of the
+instrument that measures it**, and the projection seed should be pinned before one is made.
+
 ## 2. What was tested
 
 ### 2.1 The lanes
@@ -123,7 +150,7 @@ shut it. Several are theorems rather than measurements.
 | second-moment / quadric escape | Q **and** T, independently | +0.2059 Å (Q, 1.81× MDE) and +0.086 (T, 2.95×); the structured `disp2` form scores 3.3585 against production's 3.0483 |
 | subset objective through an averaging readout | T | **T1**: the tail is *always* a prefix — of the order induced by ∇V at the optimum. S29 §4.3 and §4.5 are incompatible and §4.3 wins |
 | generative structural spaces | X | closed **jointly with the readout**: at ρ≈0 the endpoint is near-unit-slope in the set **mean**, and width buys ceiling while costing mean |
-| torsion / configuration encodings | T | arithmetically infeasible — **48 bits** for 4 basins/residue at n=12 against **7** deployed |
+| torsion / configuration encodings | T | arithmetically infeasible — **48 bits** (2 bits/torsion x 2 torsions/residue x 12 residues) against **7** deployed |
 | common-mode correction from pool data | L | **non-identifiable**: the likelihood depends on (t, μ) only through t+μ at any K; **m_eff = 1.4** of 75 members |
 | E1 — a prior on the shared bias's form | L | three independent ways |
 | E2 — constraint repair | L | field-scale: removing 98% of clashes costs **+0.08 Å**; works here only because 2/n is 15.4% at n=13 |
@@ -135,40 +162,89 @@ shut it. Several are theorems rather than measurements.
 
 ### 4.1 The tail is selection-limited, not pool-limited
 
-The ORACLE best member of the 18 worst pools is **2.2842 Å** (built chain 2.2845) — already under
-the 3.00 Å cap the opening arithmetic asks for, with **13 of the 18** holding a member under 3.00
-and the worst tail pool bottoming out at 3.54. **The material to fix the tail is already inside the
-candidate sets the pipeline is handed.** Nothing in this claim is conditioned on the thing it
-measures, which is why it survived the adversary while the entry's headline did not (§Appendix A).
+The claim holds on **two** tail definitions, and the stratum label matters, so both are given.
 
-Retrieval is exonerated at every stratum: BLOSUM's 500 against a random 500 of the same universe is
-NOT MEASURED everywhere, most pointedly on the tail (0.01× its own MDE). **This revises what the
-project had recorded** — the harm on hard targets was attributed to the retrieval corpus; it is not
-retrieval.
+**On `FAIL18`** — the *filter-defined* stratum (`s12/instrument.py:271-278`: the targets whose
+score-top-75 retained **zero** members within 1.5 Å of the pool optimum) — the ORACLE best pool
+member is **2.2842 Å** (built chain 2.2845), with **13 of the 18** holding a member under 3.00 and
+the worst bottoming out at **3.5436**.
 
-**The strongest tail result, and it replicates on all three tail definitions:** the shipped score's
-Spearman with ORACLE in-pool RMSD is **+0.6446 on the easy 108** (fold CI [+0.5905, +0.7063], 5/5
-folds) and **+0.1066 on the hard 18 with the fold CI including zero**. *The score cannot order its
-own pool on hard targets.* It is the distogram's own error that drives this (ρ = −0.799, −0.819
-length-residualised), the chain is fully mediated, and **shape error is 83% of it — scale is
-refuted as the mechanism** (partial ρ = −0.067, p = 0.46, against shape's −0.641 at p = 6.5e−16).
+**On the genuinely worst 18** (by production built-chain RMSD, an order statistic, overlap with
+FAIL18 **13 of 18**) the same figures are **2.5298 Å**, **11 of 18** under 3.00, worst **3.9523**.
+
+Either way the direction survives and it is the point: **2.53 < 3.00, so the material to fix the
+tail is already inside the candidate sets the pipeline is handed.** The larger claim I first wrote
+— that *nothing* here is conditioned on what it measures — was too strong: the 2.2842 figure is
+computed on a stratum defined by the filter's own recall, and only the worst-18 figure is free of
+that.
+
+**Retrieval is NOT MEASURED at any stratum — which is not the same as exonerated.** BLOSUM's 500
+against a random 500 of the same universe fails to clear its MDE everywhere, most pointedly on the
+tail (0.01× its own MDE). But the measurement is **ORACLE best-of-pool on the CA cloud** with an
+MDE of 0.29 Å on the tail, power 0.05 and type-M 71, whereas the record it appears to revise
+(blind 5.425 against shipped 6.019 on FAIL18) is about the **emitted built-chain endpoint**. *A
+different operator, on a different basis, at a power that could not have detected the effect.*
+**The prior record stands; this adds an absence of evidence, not evidence of absence** — and it is
+this sprint's one instance of the control-space error (§6.1).
+
+**The tail ordering result, with the three strata separated rather than merged:** the shipped
+score's Spearman with ORACLE in-pool RMSD is **+0.6446 on the easy 108** (fold CI [+0.5905,
++0.7063], 5/5 folds) against
+
+```
+FAIL18 (filter-defined)   +0.1066   fold CI includes zero, 3/5 folds
+worst18 by pool mean      +0.3798   no fold CI stored
+worst18 by best-in-pool   +0.3438   no fold CI stored
+random-18 null, lower bound         +0.4067
+```
+
+All three sit below the random-18 null's lower bound, so the degradation is real — but the
+filter-defined number is **3.2–3.6× lower than the other two**, and only it has a CI spanning zero.
+The honest statement is therefore **"the score orders its own pool markedly worse on hard
+targets,"** not that it cannot order it at all.
+
+It is the distogram's own error that drives this (ρ = −0.799, −0.819 length-residualised) and the
+chain is fully mediated. On shape versus scale, lane F attached a quotation condition to its own
+row and it travels here verbatim: **shape error is 83.1% of it, and `|scale error|` is 3.23× on
+FAIL18 against shape's 1.93× — both facts belong in any quotation of this row.** Scale is refuted
+as the *mechanism* (partial ρ = −0.067, p = 0.46, against shape's −0.641 at p = 6.5e−16) while
+being the larger *absolute* deviation. Lane F also records `F3c.fires = False` with the caveat
+*"statistic guessed by lane F; lane L was unreachable"* — an unregistered self-chosen statistic,
+which is why this is stated as a refuted mechanism and not as a headline.
 
 ### 4.2 The pool is a codebook, not a channel
 
 The charter asked where the 1.44 usable bits went and where the other 5.56 were spent. The question
 is not well-posed: **the 500 deposited backbones carry the structure and the index only names it**,
 so bits are not conserved across an index. Seven index bits move the ORACLE ladder 4.108 → 1.898 Å,
-which through the displacement bound is ρ = 0.887 — **36.6 bits of displacement information out of
-7 index bits, a 5.2× ratio**.
+which through the displacement bound is ρ = 0.887.
 
-> The honest inversion: **the readout's 7 bits are worth five times their face value, and the
-> system cannot supply even one of them.**
+**The multiplier that follows is a free parameter and this sprint corrected it downward, so it is
+reported with its formula rather than as a headline.** The information is
+`I = −(d/2)·log₂(1 − ρ²)`, and everything depends on `d`:
+
+```
+d = 3n - 6 = 32.88  (the full coordinate dimension)   ->  36.6 bits, a 5.2x ratio
+d = 6               (the effective dimension)         ->   6.69 bits, a 0.95x ratio
+```
+
+**At the corrected `d` the multiplier inverts to slightly under one.** S30-L14 §6 says so in lane
+T's own words — *"S30-L15 corrects the `d` this should be evaluated at, and the corrected numbers
+are smaller"* — and Appendix A records the companion 12 → 3.78 bit withdrawal made on exactly this
+ground. **I originally published the `d = 32.88` figure with neither the formula nor the `d`.**
+
+> What survives, and it does not depend on `d` at all: **bits are not conserved across an index,
+> because the 500 deposited backbones carry the structure and the index only names it.** The
+> *qualitative* claim is robust; the multiplier is not, and the system still cannot supply the
+> seven bits either way.
 
 The **value-of-a-bit law** follows and makes allocations comparable: `D(R) = a + c·2^(−R/γ)` fits at
 **R² = 0.9983** (a = 1.3312 Å, γ = 3.1636), so `−dD/dR = 0.219·(D − 1.331)` Å per bit. Candidate
 indexing beats subset cardinality by **3×** — which *explains* the 3.5× S29 measured — and
-**torsion/configuration encodings are arithmetically infeasible** at this width (48 bits for four
-basins per residue at n = 12, against 7 deployed). The charter called the encoding the least-examined
+**torsion/configuration encodings are arithmetically infeasible** at this width (**2 bits per
+torsion x 2 torsions per residue x 12 residues = 48 bits**, against 7 deployed; the ledger's
+per-torsion figure is 51.8 bits). *As first worded — "4 basins per residue" — the arithmetic gives
+24, not 48; the factor of two is the two backbone torsions.* The charter called the encoding the least-examined
 component and the likely hidden bottleneck. **It was examined and it is not.**
 
 ### 4.3 The field library spends its rank on the wrong direction
@@ -182,7 +258,7 @@ must therefore be the radial one**. Measured independently:
 ```
 radial share of the Gram trace                        0.5798  [+0.545, +0.603]
 cos(dominant principal direction, radial)             0.947 mean / 0.984 median
-fraction of lambda_1 that is radial                   94.8%
+radial share of lambda_1 (ratio of trace shares, NOT a projection)   91.2%
 stable rank with radial removed                       1.705 -> 2.642
 
 cos(direction to the native, radial), all targets    -0.0675
@@ -190,8 +266,14 @@ cos(direction to the native, radial), FAIL18         -0.2524
 ```
 
 > **The library spends the majority of its two available directions on a component that is
-> orthogonal to the answer in general and *anti-aligned* on the hard targets** — and lane F had
-> independently shown that shape, not scale, is 83% of the tail's error. Three lanes, one chain.
+> orthogonal to the answer** — and lane F had independently shown that shape, not scale, is 83.1%
+> of the tail's error. **Two lanes, one chain.**
+
+**The anti-alignment half is withdrawn.** The FAIL18 figure of −0.2524 is **0.67× its own MDE**
+(n = 18, SE 0.1337) — *below this sprint's own "not a result" line* — has no CI anywhere in the
+artefact, and one of four non-empty folds (−0.6491) carries it. I bolded it in the first draft. The
+orthogonal-in-general half stands, because at 0.74× MDE it is claiming a **null**, which is what a
+sub-MDE number can legitimately support.
 
 It does **not** follow that deflating scale helps: the residual 42% has no large eigenvalue, the
 combination's ceiling already prices the whole span, and lane L withdrew its own deployable proposal
@@ -228,7 +310,10 @@ else.**
 
 For a coordinate-average terminal, `set_mean² ≈ B² + S²` where **B is the endpoint itself** and S is
 the set's spread. The terminal's entire value is spread extraction (`avg_gain = 0.4143·S − 0.1559`,
-r = 0.885), and within target `corr(S, B) = +0.085` — **concentration is orthogonal to bias**. So a
+r = 0.885), and within target `corr(S, B) = +0.085` **after dropping the `T0_helix` arm** — the
+artefact's primary value over all arms is **−0.4744**, which lane X itself flagged as driven by that
+one arm and "must not be quoted". Both belong here: on the arms that matter, **concentration is
+orthogonal to bias**. So a
 set mean improved purely by concentration is worth **zero by algebra**, and the half that pays *is*
 the endpoint, which is non-identifiable from pool data at any K.
 
@@ -252,7 +337,7 @@ the raw material, not a defect.**
 | **Below 0.7x MDE is not a result; 0.7-1.0x is NOT MEASURED** | killed S29's built-chain preference row at 0.56x (§6.3) and lane P's headline at 0.75x |
 | **Fold-clustered CI, on the pinned folds** | `s24.stats_lib._verdict` refuses a verdict when `folds=None` rather than falling back to the IID CI |
 | **Pre-register the falsifier before the number exists** | every lane did; three lanes' falsifiers then failed and were reported as failures |
-| **A control must match the operator's own space** | the project's most repeated error; no instance this sprint |
+| **A control must match the operator's own space** | the project's most repeated error, and **there WAS an instance this sprint**: the "retrieval is exonerated" claim in §4.1 compared an ORACLE best-of-pool CA-cloud measurement against a record about the emitted built-chain endpoint. Caught by the report adversary, not by the lane |
 | **The native never tunes a deployable parameter** | every ORACLE arm is labelled ORACLE and none is deployable |
 
 ### 6.2 Multiplicity, counted rather than asserted
@@ -531,19 +616,40 @@ then measured it: **confirmed at −0.0406 Å, 3.56× MDE, 5/5 folds** on a leng
 > which was about a different *mechanism* (bias repair, not geometry repair). Each rested on an
 > object that was not the one under test, and their agreement read as convergence.
 
-What survives the confirmation is narrower than the claim: **the effect does not reach the tail.**
-FAIL18 dispersion against the 108 is NOT MEASURED (0.47× MDE), the relax gain on FAIL18 is −0.0113
-against −0.0239 on the other 108 — *the wrong direction* — and targeting the divergent half buys
-−0.0215 against −0.0221, i.e. nothing.
+What survives the confirmation is narrower than the claim: **the effect is too small to matter,
+which is not the same as failing to reach the tail, and my first draft argued it on the wrong
+stratum.**
+
+I originally quoted two FAIL18 rows. **FAIL18 is the wrong tail for a dispersion-graded question**
+— it is the *filter-defined* stratum and is barely enriched in high dispersion (11 of 18 against
+9.0 expected) — and `s30/results/s30_G_disp2.json` holds the filter-independent rows **right beside
+the ones I quoted**, where both legs reverse:
+
+```
+                                  FAIL18 (quoted)        worst18 by pool mean (not quoted)
+tail dispersion vs the rest       +0.4583  0.47x MDE     +1.6116  1.44x MDE  CI [+0.583,+2.076]
+relax gain, tail vs rest          -0.0113 vs -0.0239     -0.0386  vs  -0.0193
+```
+
+On the filter-independent tail the relax gain is **twice as large on the tail**, not half. The
+ledger printed both; the report printed one. Worse, the FAIL18 relax-gain difference I called *"the
+wrong direction"* is **0.22× MDE** — I used a number below my own not-a-result line as evidence of
+absence.
+
+**The third leg is sound and is sufficient on its own:** targeting the divergent half buys
+**−0.0215 against −0.0221**, i.e. nothing, because the other half contributed nothing to begin
+with. And the whole arm is **0.69% of the 3.2126 Å baseline**. So **E2 stays out of the mechanism
+column on SIZE, not on reach**, and its restraint constant still has no native-free selection
+rule.
 
 **And lane G killed its own positive before anyone quoted it.** WRITHE's preference contrast is
 **+0.1641, 2.17× MDE, 5/5 folds, max-null p = 0.000**, clearing *both* of lane R's preference
 clauses that none of 43 channels cleared. It is **cross-kind** — the control keeps deposited
 coordinates while the near rungs are ideal rebuilds. The kind-matched statistic settles it: the
 rebuilt native's percentile inside its own ladder is **0.6061 for WRITHE and 0.6732 for |WRITHE|,
-both worse than the 0.5 chance line**, against DIS's 0.2876. **Third instance of the cross-kind
-confound this sprint**, after S28-L48 (withdrawn by lane R) and the widening result (withdrawn by
-lane F).
+both worse than the 0.5 chance line**, against DIS's 0.2876. **Second instance of the cross-kind confound this sprint**, after S28-L48 (withdrawn by lane R).
+*My first draft said "third" and counted the widening result, which Appendix A correctly records as
+circular rather than cross-kind — a different defect.*
 
 ### A.6 The three checklist entries this sprint earned
 
