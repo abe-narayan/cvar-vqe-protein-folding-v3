@@ -3960,3 +3960,113 @@ problem that S12 through S27 measured and that S29-L31 shows is an incidental pa
 Neither arm is deployable. Both sit on the far side of the bound (S29-L23), which says no
 native-free operator the project has built supplies either set of seven bits: |rho| <= 0.04
 against the 0.358 needed for 3.00 A. The value of this addendum is diagnostic, not a route.
+
+## S29-L45 -- S29-L25 AT THE INSTRUMENT (126/126) WITH THE TIE RULE LANE D FOUND (S29-L38) CORRECTED: CLAIM 1 GETS STRONGER -- THE f-OPTIMAL PAIR IS NON-PREFIX ON 114/126 AND THE m = 5 SUBSET ON 124/126, AND THE PER-STATE SORT FINDS THE OPTIMUM ON ONLY 12/126; CLAIM 2 IS NOW DECIDED AND IT DECOMPOSES -- THE AGGREGATE-OPTIMAL m = 5 SUBSET IS +0.2451 A WORSE THAN PRODUCTION (1.45x MDE, FOLD CI [+0.171, +0.326], 5/5 FOLDS, POWER 0.98, WORSE), BUT +0.1647 OF THAT IS THE SMALL m ITSELF AND ONLY +0.0804 (0.73x, NOT MEASURED, FOLD CI [+0.028, +0.135]) IS THE NON-PREFIX CHOICE (2026-09-20 02:19, B)
+Question: lane D's check of S29-L25 (**S29-L38**) reproduced claim 1 independently on 12/12 and
+under the exact shipped risk lookup with zero sign flips, and made two demands: (a) fix the tie
+rule before reuse, and (b) decide claim 2 at an n that can carry it -- D computed that the observed
+effect needs n = 35 for power 1.00, and 126 were available. Both are done here. Nothing in S29-L25
+is retracted; D verified that the tie defect changed no number there (tie sets were size 1 or 2 and
+D's independent single pass agreed on 12/12).
+
+**THE DEFECT AND ITS FIX.** `s29/s29_B_tta.py :: subset_target` carried the comment "average over
+the tied argmin set rather than reading array order" and then took `tie[0]` -- the first tied index
+in ARRAY order, which on a DIS-sorted pool is the best-ranked member, so the rule was biased
+**toward the prefix**, which is the hypothesis the experiment tests. This is the project's own named
+failure mode (memory `tie-breaking-leaks-the-pool-order`: an argmin on a tied signal read the
+ORACLE sort order and invented a 1.386 A winner). Corrected in commit `7b2e83e1`: ONE global argmin
+over all C(N, 2) pairs (the chunked version could also lose a global tie straddling two chunks),
+ties broken by a stable per-target RNG draw (`argmin_untied`, `RP.rng_for(pdb, "s29B_tie")`), the
+same rule in the greedy and swap steps, the **tie-set size recorded on every row**, and a test that
+an all-tied vector spreads over the tie set instead of returning index 0
+(`tests/test_s29_B.py :: test_argmin_untied_never_reads_array_order_on_a_tie`, 19 tests pass).
+**The tie sets are not always singletons at 126: the maximum tie set encountered is 4**, so the fix
+was not cosmetic even though it moved nothing on the 12. The pre-fix 12-target rows are kept at
+`s29/results/s29_B_tta_subset_rows_pre_tiefix.jsonl` rather than deleted.
+
+**PROVENANCE.** Jobs `s29B_sub126_04 / _14 / _24 / _34` (4 shards, `s26/jobs_done/`, all exit 0),
+rows `s29/results/s29_B_tta_subset_rows.s*of4.jsonl`, 126 rows = 126 targets, one per target,
+exhaustive over all C(500, 2) = 124,750 pairs each. Mean 1.73 accepted swaps per target in the
+m = 5 local search.
+
+**CLAIM 1 AT THE INSTRUMENT (deterministic, no statistics):**
+
+    non-prefix f-optimal PAIR                      114 / 126   (90.5%)
+    non-prefix f-optimal m = 5 SUBSET              124 / 126   (98.4%)
+    per-state sort finds the exhaustive optimum     12 / 126   ( 9.5%)
+    mean objective gap, pair, over the prefix pair      +0.1041  (min -0.0000)
+    mean objective gap, m = 5, over the m = 5 prefix    +0.1499  (min -0.0000)
+
+Both gaps are non-negative on every target by construction and the m = 5 gap clears lane T's
+registered 0.10 (S29-L17's F5c clause 1) at the instrument. The set-equality theorem fails on 90 to
+98% of this benchmark's targets, and the optimum is unreachable by sorting E **or** by sorting f.
+
+**CLAIM 2, NOW DECIDED, AND IT DECOMPOSES INTO TWO STEPS.** ORACLE, point cloud, n = 126, paired
+through `s24.stats_lib.compare` with `pinned_folds`; production = DIS top-75 uniform, 3.0483.
+**Read lane D's field-survey caveat first, as instructed: MSET_5, the displacement from the top-75
+average to a 5-member average, has signed cosine +0.063 with the direction to the native and
+per-target |cos| 0.271. So a harmful result here is the EXPECTED value of an unsigned displacement
+and is NOT by itself a refutation of the mechanism claim.** With that stated:
+
+  greedy m=5 (f-optimal subset) - production
+    a 3.2934 (med 3.0390)   b 3.0483 (med 2.8373)   n=126
+    effect +0.2451   median +0.0901   SE 0.0601   MDE 0.1685   effect/MDE +1.45
+    iid  CI95 [+0.1345, +0.3647]
+    fold CI95 [+0.1714, +0.3264]   folds same sign 5/5   per-fold 0:+0.188 1:+0.379 2:+0.290 3:+0.294 4:+0.115
+    51W/75L/0T   worst degradation +2.7500 (2MP9)   p90 +1.1433   power 0.98  Type-M 1.01
+    concentration: drop-top10 +0.3351 vs uniform-effect null p10/p50/p90 +0.2568/+0.3309/+0.4096 -> pctile 0.525
+    VERDICT: WORSE
+
+  the m=5 energy prefix - production          (THE m EFFECT, no set choice at all)
+    a 3.2130 (med 3.0374)   b 3.0483 (med 2.8373)   n=126
+    effect +0.1647   median +0.0834   SE 0.0432   MDE 0.1210   effect/MDE +1.36
+    iid  CI95 [+0.0854, +0.2492]
+    fold CI95 [+0.1004, +0.2555]   folds same sign 5/5   per-fold 0:+0.068 1:+0.342 2:+0.121 3:+0.198 4:+0.119
+    41W/85L/0T   worst degradation +2.3075 (1M23)   p90 +0.7796   power 0.97  Type-M 1.02
+    concentration: drop-top10 +0.2375 vs uniform-effect null p10/p50/p90 +0.1814/+0.2365/+0.2933 -> pctile 0.508
+    VERDICT: WORSE
+
+  greedy m=5 - the m=5 ENERGY PREFIX          (THE NON-PREFIX CHOICE, m held fixed)
+    a 3.2934 (med 3.0390)   b 3.2130 (med 3.0374)   n=126
+    effect +0.0804   median +0.0218   SE 0.0394   MDE 0.1104   effect/MDE +0.73
+    iid  CI95 [+0.0081, +0.1618]
+    fold CI95 [+0.0280, +0.1354]   folds same sign 4/5   per-fold 0:+0.120 1:+0.036 2:+0.169 3:+0.095 4:-0.004
+    59W/66L/1T   worst degradation +2.0548 (2MP9)   p90 +0.6010   power 0.53  Type-M 1.37
+    concentration: drop-top10 +0.1399 vs uniform-effect null p10/p50/p90 +0.0903/+0.1389/+0.1917 -> pctile 0.509
+    VERDICT: NOT MEASURED (|effect| 0.0804 <= its own MDE 0.1104, 0.73x)
+
+  f-optimal PAIR - the energy prefix pair
+    a 3.3815 (med 3.1785)   b 3.2882 (med 3.2537)   n=126
+    effect +0.0934   median +0.0032   SE 0.0483   MDE 0.1353   effect/MDE +0.69
+    iid  CI95 [-0.0007, +0.1877]
+    fold CI95 [+0.0485, +0.1386]   folds same sign 5/5   per-fold 0:+0.174 1:+0.015 2:+0.117 3:+0.109 4:+0.055
+    50W/64L/12T   worst degradation +1.5586 (7QZV)   p90 +0.8910   power 0.49  Type-M 1.42
+    concentration: drop-top10 +0.1801 vs uniform-effect null p10/p50/p90 +0.1192/+0.1791/+0.2396 -> pctile 0.508
+    VERDICT: NOT MEASURED (|effect| 0.0934 <= its own MDE 0.1353, 0.69x)
+
+**THE DECOMPOSITION IS THE FINDING, and it corrects the impression S29-L25's probe left.** The
+aggregate-optimal m = 5 subset is +0.2451 A worse than production and that is a VERDICT (1.45x MDE,
+fold CI excluding zero, 5/5 folds, power 0.98, Type-M 1.01, not concentrated -- drop-top10 sits at
+the 52nd percentile of the uniform-effect null). But **+0.1647 of the +0.2451 is simply going from
+m = 75 to m = 5**, which is the m-ladder the project has priced three times and has nothing to do
+with set-equality. The part attributable to CHOOSING the f-optimal set rather than the prefix at
+the same m is **+0.0804 at 0.73x MDE, NOT MEASURED**, with a fold CI of [+0.0280, +0.1354] that
+excludes zero and 4/5 folds the same sign. So the honest statement is: **escaping the prefix is
+mildly harmful at best and is not measured to be harmful at all at this n**; what is measured is
+that a 5-member average is worse than a 75-member one, which was never in doubt.
+The pair-level contrast tells the same story at +0.0934 / 0.69x.
+
+**WHAT THIS DOES AND DOES NOT SETTLE FOR THE ENDPOINT ARM.** It bounds it: a classical exhaustive
+or greedy search over the SAME objective is a strict upper bound on what the CVaR-VQE could find
+under that objective (contract rule 15's classical counterpart, S29-L17), and that search does not
+beat production. It does not attribute the harm to the escape: at m = 75, which is the endpoint
+arm's regime, the m effect is zero by construction and the only term left is the +0.08-scale one,
+which is inside its own MDE. The endpoint run at m ~ 75 is therefore still the measurement that
+decides, and it is running.
+
+Multiplicity: 4 ORACLE diagnostic comparisons at n = 126, 0 endpoint comparisons. No native chose
+any parameter; f, the subsets, the tie draws and the frame are native-free.
+Artefacts: `s29/results/s29_B_tta_subset_rows.s0of4.jsonl` .. `.s3of4.jsonl` (126 rows);
+`s29/results/s29_B_tta_subset_rows_pre_tiefix.jsonl` (the 12 pre-fix rows, kept);
+`s26/jobs_done/s29B_sub126_*.json`; code `s29/s29_B_tta.py` (fix `7b2e83e1`), tests
+`tests/test_s29_B.py` (19 pass); lane D's check `S29-L38`.
