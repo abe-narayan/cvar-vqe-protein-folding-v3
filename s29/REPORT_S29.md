@@ -116,11 +116,111 @@ What changed is the **map**:
 
 ## 3. What failed
 
-[PENDING]
+### 3.1 Every deployable candidate
+
+Not one candidate intervention cleared its pre-registered falsifier. Listed with the number that
+killed it, so the reader can check rather than take it on report:
+
+| candidate | result | verdict |
+|---|---|---|
+| Tail-then-aggregate, escaping the CVaR prefix | +0.0804 at 0.73× MDE (the non-prefix term alone) | NOT MEASURED |
+| The compatibility Hamiltonian on the candidate register | 0 of 24 (M, J) cells clear 0.7× MDE on either readout | GATE CLOSED, endpoint not run |
+| The signed amplitude readout | 0.3–4.7 Å worse than production; sign correct 0.40–0.75, median **0.50** | WORSE |
+| The typicality axis (rung 6) | ORACLE best global step **exactly 0**; leave-fold-out bit-identical to production on 126/126 | FALSIFIED |
+| The PC1 one-parameter family (rung 8) | ORACLE best global η **exactly 0**; leave-fold-out +0.0071 Å worse | FALSIFIED |
+| A transferable prefix length *m* | ORACLE global m = 72 worth −0.0018 Å; leave-fold-out +0.0079 Å **worse** | FALSIFIED |
+| 21 native-free displacement fields | `beats_random_reference` False on all 21; best 0.1128 vs 0.1398 | FALSIFIED |
+| The profile correction | +0.582 Å **even ORACLE-fitted** | FALSIFIED |
+| Within-band ordering (F2) | Fails on 58/70 — conditioning on realism *removes* skill | FALSIFIED |
+| Configuration-space encoding | [PENDING — lane X's 12-target arms] | |
+| The shell-profile supply gap (F2) | [PENDING — lane M] | |
+
+### 3.2 Claims made in this sprint that did not survive it
+
+The contract required these to be listed, and I would point a sceptical reader here first. Eleven
+claims were withdrawn, **eight of them mine**. The full table is §14(e); the shape of it is:
+
+- **Lane T withdrew its own Corollary 2b** at its own registered bar, then ran a 126-target
+  post-mortem establishing that it is *vacuous in its own valid regime* — a harder verdict than
+  "wrong."
+- **Lane D refuted rule 20's cosine justification**, a rule I had written into the contract. The
+  rule now stands on its confirmed percentile half only (contract addendum 5).
+- **Lane L owned that a clause in its own S29-L1 was its own addition** and false — the S8
+  free-energy stage does not exist on disk or in git — and annotated both affected entries in place
+  with the original wording left standing.
+- **Lane D superseded its own B3 bracket**, finding that a ±3 Å window had hidden a residual that
+  grows with step size.
+- **My own eight** are in §14(e) and §13's note: a trainability premise, a false provenance claim
+  to the user, a flatness gate that was a constant, an "absent instantiation" framing, a "7 bits"
+  reading, a point-cloud/built-chain basis error, a field count of 39 against a file containing 21,
+  and a standing expectation about compactness that the measurement refuted (§12.0).
+
+### 3.3 What failed operationally
+
+- **A governor deadlock of my own making**, costing ~40 minutes across five jobs: I raised the RAM
+  bands to 94/95.5 while leaving `CPU_RESUME` at 80, so a suspended job could never resume while
+  eight jobs pinned the CPU. Found by comparing sibling shard progress, not by an alarm.
+- **A shared git index across eight lanes**, so a failed commit left files staged and the next lane
+  swept them. Happened at least three times before contract addendum 4 (commit by pathspec, never
+  `git add` first) stopped it.
+- **`s26/jobrun.py` does not deduplicate by `--name`.** Lane M launched the same job four times
+  while waiting at the cap; all four got slots and ran the same work, producing 220 duplicate rows.
+  No science was corrupted — the arms are deterministic and the rows dedupe to identical values —
+  but the slots were taken from other lanes. Now in project memory.
+- **36 result artefacts were untracked** until late in the sprint, including the rows the corrected
+  ceiling is computed from. Found by S29-L46's existence check, not by anyone noticing.
+
 
 ## 4. What succeeded
 
-[PENDING]
+### 4.1 The three numbers that did not exist before
+
+All on the charter's endpoint, all reproduced independently from their artefacts (S29-L48):
+
+1. **The achievable native-free bound**, ≈ 3.18–3.21 Å, with its geometry (§5.1) and its 21-field
+   attack survived (§9.4).
+2. **The architectural ceiling**, 2.9027 Å built chain — so the charter's 2.5 Å is unreachable
+   through the deployed architecture *with the native in hand*.
+3. **The readout as the binding constraint**: the same 7 bits are worth −0.3079 Å spent on *m* and
+   −1.0670 Å spent on *which member*, a 3.5× difference at equal information cost.
+
+### 4.2 The quantum result
+
+The set-equality theorem **fails on real pools** — the f-optimal subset is not the energy prefix on
+114/126 pairs and 124/126 m = 5 subsets, and is not any sort's prefix either (the per-state sort
+finds the optimum on 12/126). This is the first measurement in the project's record of *which set*
+as a genuine optimisation variable rather than the read-out of a sort. It is also the sprint's
+thesis demonstrated constructively: the escape is real, ubiquitous, and buys nothing measurable.
+
+### 4.3 Seven routes closed without spending an endpoint run
+
+Five by derivation or by a measurement already in the record, two by a cheap probe (§14). The
+cheapest and most decisive were the two that required no computation at all: the
+perception–distortion theorem closed an entire scorer class, and Neyman–Scott explained four
+separate empirical failures at once. **The permanent literature role closed more routes per unit of
+box than any experimental lane.**
+
+### 4.4 One unification
+
+Lane O's four-way measurement of a single incidental parameter (§5.3) — large per-target gains, a
+global value of 0.0–0.6% of them, two ORACLE global optima *exactly zero*, and leave-fold-out on
+the wrong side every time. Four instruments, one theorem, no near misses.
+
+### 4.5 One new architectural fact
+
+The projection stage's price is a **function**, not a constant: `corr(cloud RMSD, chain − cloud)`
+= +0.866 over 32 arms, ≤ 0 below ≈ 2.31 Å of cloud accuracy and > +0.10 above ≈ 2.41 Å. Any
+improvement to the point cloud is therefore worth *more* at the endpoint than it looks on the
+cloud. First time this stage has been characterised as anything but a fixed tax.
+
+### 4.6 The process held
+
+Two verification passes were run against the sprint's own record before writing this report:
+**S29-L46** — all 160 artefact paths cited in the ledger resolve — and **S29-L48** — every headline
+number recomputed from its artefact rather than copied from the entry that reported it. Lane B's and
+lane O's figures reproduced to every digit quoted. The second pass caught an error of mine that
+several re-readings of the prose had not.
+
 
 ## 5. Why, at the level of mechanism
 
