@@ -1418,3 +1418,80 @@ question -- it would say the library is the wrong instrument for it, which is a 
 different claim that must be stated before the run.
 Multiplicity: 0 endpoint comparisons; no new measurement in this entry.
 Artefacts: `s29/lit/L_6_matched_realism.md`; `s29/lit/L_INDEX.md`.
+
+## S29-L17 -- THEORY SECTIONS 1 AND 4: (1) CONTRACTION IS AN EXACT VARIANCE IDENTITY, d(C)^2 = <d_k^2> - s^2, SO IT IS THE POOL'S OWN 32% AND A POSTERIOR CALIBRATION CANNOT TOUCH IT OR THE MINIMISER (ONLY THE SEPARATION-BAND WEIGHTS, WHICH THE 2x OVER-CONFIDENCE DISTORTS BY 2.7x); (4) UNDER A CVaR OVER THE TAIL'S AVERAGE STRUCTURE THE SET-EQUALITY THEOREM FAILS -- THREE STATES, TWO DIMENSIONS, THE OPTIMAL SUBSET IS THE TWO WORST STATES BY EVERY PER-STATE CRITERION (2026-09-20 00:26, T)
+
+`s29/THEORY.md` sections 1 and 4 (this commit). Derivations; no job, no native, nothing
+deployable. Section 6 was answered inside Q1 (S29-L15) and is not repeated.
+
+SECTION 1, THE CONTRACTION THEOREM. (1.1) The L1 Bayes risk is minimised at the per-pair median
+and its local form is S(C) = const + (1/2)||D(C) - m||^2 in the w*kappa metric, kappa = 2 p(median):
+the objective is a weighted squared distance from the median map, and the median map is generally
+not realisable, so the structural minimiser is its projection. (1.2) THE EXACT IDENTITY, not
+Jensen: for a coordinate average, d_ij(C)^2 = mean_k d_ij(W_k)^2 - s_ij^2 with s_ij^2 the members'
+pair-vector spread, and Rg(C)^2 = mean_k Rg(W_k)^2 - Delta^2 with Delta^2 exactly S23 L9's
+IDIOSYNCRATIC term. Contraction is the variance decomposition of the pool: the operator cannot
+take the 68% and cannot avoid paying the 32% in contraction. The measured 22% bond contraction
+requires s^2/<d^2> = 0.396; the envelope check gives Rg = sqrt(6.80^2 - 63.82/N) = 6.41 against a
+measured 6.21 (3% high; the 63.82 is a per-target sum over targets of varying length). The
+separation dependence is S23 L1's "averaging smooths" with no extra assumption: s^2 is the
+superposition residual and does not grow with |i-j| while d^2 does, so the fractional contraction
+falls from 22% at the bond to 6% at the envelope. (1.3) The average beats the typical member by
+the pool's dispersion and loses 2<b,c> + |c|^2 to the contraction; the members that beat it are
+exactly those inside a ball of radius |b + c| about the median map, and that ball holds an eighth
+of the pool (pct(PROD) = 0.126, S28-L36). (1.4) A 2x OVER-CONFIDENT POSTERIOR: the posterior
+enters twice and the two entries behave differently. Through the MEDIAN MAP -- unchanged by a
+width error (z_mean -0.052, S25 L1) -- so the minimiser is unchanged to first order, which derives
+S25 L2's null and S25 L7's retraction. Through the METRIC w*kappa ~ 1/sigma^2 -- and a UNIFORM
+over-confidence multiplies the whole metric by a constant and changes no minimiser at all. Only
+the heterogeneity matters: z_sd is 1.23 / 2.05 / 1.87 / 1.28 across separations 2-2 / 4-5 / 6-8 /
+9-15, so the shipped objective over-weights mid-range pairs by about 2.7x against a calibrated
+one. CORRECTION TO THE STANDING PROGRAMME (`s27/REPORT_S28.md` section 12 item 2, "calibrate the
+posterior and re-read the meter"): calibration cannot move the median map, hence not the
+minimiser, and cannot touch the contraction, which is the pool's dispersion; the only live version
+of that item is a SEPARATION-BAND RE-WEIGHTING with one or two parameters.
+PREDICTION (12 targets, minutes, lane D or M; inputs all cached): dS/dlambda at production =
+sum w d (2F(d) - 1) is NEGATIVE on >= 75% of targets (the objective wants production EXPANDED),
+while the native-optimal scale is BELOW 1 on 73/126 (S23 L9) -- so the sign agreement on the scale
+axis is below a coin toss, the scale-axis instance of theorem 2; and widening the posterior to
+z_sd = 1 leaves that sign unchanged on >= 90% of targets while changing the magnitude by 0.4 to
+0.7x. Falsified if clause 1 holds on under half the targets or if calibration flips the sign on
+more than 25%.
+
+SECTION 4, CVaR OVER A STRUCTURAL OBSERVABLE. Two inequivalent lifts: (a) scalarise then tail
+(a per-state structural loss; everything transfers, including set-equality; this is S27's 80
+diagonal energies) and (b) TAIL THEN AGGREGATE, R_alpha(p) = sum_x lambda_x(p) W_x, the tail's own
+coordinate average, with the objective f(R_alpha(p)). For (b): the envelope argument gives
+dR/dp_y = (W_y - W_{x_q})/alpha on the strict tail, so dF/dp_y = <grad f(R), W_y - W_{x_q}>/alpha
+and the parameter-shift chain costs the SAME 2P evaluations as the deployed objective. Non-smooth
+exactly where the scalar CVaR is, plus f's own bin kinks, plus -- if the tail's ORDER is allowed to
+depend on R -- order permutations, which is why the order should stay a per-state scalar; on each
+tail-set cell R is linear in p, so a convex f makes F convex there and the landscape is a union of
+convex cells indexed by the SET. Shot noise: (b) needs a quantile plus a MEAN structure over the
+tail (variance Cov(W|tail)/(alpha S)), not the full 2^n-outcome distribution the deployed gradient
+needs -- (b) is the MORE device-realisable of the two.
+THE SET-EQUALITY THEOREM FAILS FOR (b). Smallest witness: three states, two dimensions.
+W1 = (+1,0), W2 = (-1,0), W3 = (0,0.1), target (0,0), f = |R|, tail size 2. Per-state loss puts W3
+first (0.1 vs 1), so every per-state prefix of size 2 is {3,1} or {3,2} with f = 0.5025, while the
+optimal set {1,2} has f = 0 -- the optimal subset is the two WORST states by every per-state
+criterion, because their errors cancel. V(S) = f(mean_{i in S} W_i) is neither additive nor
+monotone, so no greedy per-state rule is optimal and the gap is not measure-zero. THIS IS THE ONE
+PLACE IN THE PROJECT WHERE THE THEOREM THAT MAKES THE DEPLOYED SPINE CLASSICAL GENUINELY BREAKS:
+under (b) "which set" is a real optimisation variable rather than a read-out of the sort, which
+answers charter questions 5 and 7 in the affirmative IN PRINCIPLE. Three binding caveats: escaping
+the theorem creates no information (f is still bound by theorem 2, and if f is the distogram risk
+the best-cancelling set is the one whose average sits at the median map -- the contracted average
+again); the classical counterpart is not absent, it is greedy plus local search over subsets, and
+rule 15 requires it; and the landscape becomes combinatorial, which is the right shape for a
+variational method and also the shape where classical local search is hard to beat at D = 512.
+PREDICTION (native-free, minutes, lane D or X): a greedy-plus-local-search 75-subset minimising
+f(mean of the subset) beats the DIS top-75 on the OBJECTIVE by at least 0.10 (falsified under
+0.02), AND its coordinate average is WORSE than production on the built chain by at least 0.1 A
+(ladder rho -0.40, S29-L2; the minimiser is away from the native, S28-L18b). So escaping the
+theorem is necessary and NOT sufficient -- and if the second clause fails, i.e. the
+aggregate-optimal subset is BETTER than production, that is the sprint's first genuine opening and
+should go to 126 immediately.
+Multiplicity: 0 endpoint comparisons; 2 registered predictions (the scale-derivative triple and
+the subset-gap pair).
+Artefacts: `s29/THEORY.md` sections 1 and 4. Numbers quoted are from S23 L1/L9, S25 L1/L2/L7,
+S28-L18b/L36 and S29-L2, each named in the text.
