@@ -4582,3 +4582,92 @@ Artefacts: `s29/results/s29_B_gs_rows.jsonl`, `s29_B_gs_rows.s0of2.jsonl`,
 `s29B_gs_12.json`, `s29B_probe_gs.json`; code `s29/s29_B_compat.py`, `s29/s29_B_analyse.py`,
 tests `tests/test_s29_B.py` (19 pass); prereg `s29/PREREG_S29_B.md` sections 5 and addendum 1
 (commits 1c345f07, 9d745692), both before the job.
+
+## S29-L50 -- THE COMPACTNESS OBJECTION IS REFUTED AT 126 AND SECTION 7 ROW 3 STAYS OPEN: F1 FAILS ON BOTH CLAUSES (Spearman(|rho_Rg|, |rho_inband|) = +0.083 AGAINST A REGISTERED BAR OF +0.40; PARTIALLING Rg OUT OF THE TOP EIGHT REMOVES 9% OF THEIR SKILL, BAR 40%) AND F2 FIRES ON CONTACT_LL AND LEG_torsion -- AGAINST MY OWN REGISTERED PRIOR OF F1 AT 3 TO 1; THE LOADINGS ARE EXACTLY AS PREDICTED (LEG_compactness +0.956) AND DO NOT IMPLY THE CONCLUSION DRAWN FROM THEM (2026-09-20 02:44, T)
+
+Pre-registered in `s29/PREREG_S29_T.md`, committed 02:13:31, BEFORE any full result existed
+(rule 27; the commit precedes this entry's artefact). The measurement is the substitute for the
+S8 free-energy diagnostic, which cannot be run because that stage does not exist (S29-L41).
+Job `s26/jobs_done/s29T_compactness.json`; artefact `s29/results/s29_T_compactness.json` (n = 126);
+code `s29/s29_T_compactness.py`. 126 targets x 500 members x 32 channels.
+
+**THE VERDICT FIRST. F1 does not fire on either clause; F2 fires. Lane L's objection (topic 7)
+that an entropy term at peptide length is compactness-like, so the free-energy class is not
+orthogonal to the realism axis, FAILS on the channels the project owns. SECTION 7 ROW 3 STAYS
+OPEN, and with it one structurally live exit in the section 8 bound's assumption (B2). My
+registered prior was F1 at 3 to 1 and it was WRONG.**
+
+THE SETUP, NATIVE-FREE AND DEPLOYABLE (Spearman of each channel with its members' Rg, median over
+126, fold CIs from `ST.compare`, all excluding zero): LEG_compactness **+0.956** [+0.942, +0.955],
+110.7x MDE; RG_LAW +0.921, 16.9x; POOLGO +0.672, 15.3x; LEG_solvation +0.621, 8.8x; LEG +0.606,
+16.7x; DSSPHB +0.587, 14.3x. The loadings are exactly what the coordinator predicted. CONTACT and
+ENV sit below 0.7x their own MDE on this column and are reported NOT MEASURED rather than ranked
+(contract rule 13).
+
+THE KILL -- ORACLE DIAGNOSTICS, labelled as such in every clause. Compactness loading does not
+track in-band skill. (i) F1a: across the 32 channels Spearman(|rho_Rg|, |rho_inband|) = **+0.083**
+against my registered bar of +0.40. (ii) F1b: partialling Rg out of the top eight by skill removes
+**9%** of it, against a bar of 40%. (iii) The most compactness-loaded channels carry the LEAST
+in-band skill: LEG_compactness +0.043, RG_LAW +0.087, LEG_solvation +0.073. (iv) Member Rg itself
+orders the in-band set at only **+0.075**, against +0.412 over the whole pool -- the in-band /
+whole-pool split of `in-band-is-the-only-ranking-metric`, again. THE INFERENCE THE MEASUREMENT
+KILLS IS "these channels are size measures, therefore their skill is a size artefact".
+
+ROBUST BEYOND F2's OWN GATE, so the verdict does not rest on one channel or on the |rho_Rg| <= 0.30
+clause: **9 of 31** channels keep |rho_inband| >= 0.15 after partialling out BOTH rank(Rg) and
+rank(|Rg - median Rg|), with fold CIs excluding zero -- DMAP_CONS +0.316 [+0.157, +0.301], DIS
++0.275, DIS_MEAN +0.229, CONTACT_LL +0.221, CAGEO +0.216, TORS_CONS +0.204, LEG_torsion +0.181,
+DSSPHB +0.166, RAMA +0.158. Nine of 31 is far above the ~1.6 a 95% interval gives by chance.
+
+WHICH CHANNELS SURVIVE F2 AND WHAT THEY PHYSICALLY ARE (the sentence S30 needs):
+- **CONTACT_LL** (rho_Rg -0.240; partialled in-band +0.221, fold CI [+0.150, +0.184]) is the
+  negative log-likelihood of the candidate's 8 A contact map under the distogram
+  (`s27/ham_lib.py:52`). Its skill is a CONTACT PATTERN, not a size. BUT it is a distogram
+  RE-READING by `ham_lib`'s own category, hence inside class M, still bounded by theorem 2,
+  carrying no information the distogram lacks -- and S27 priced it deployably at **+0.52 A WORSE**
+  as a selector, every DIS+CONTACT mix null-to-worse (S28-L49). The less interesting survivor.
+- **LEG_torsion** (rho_Rg +0.182; partialled in-band +0.181, fold CI [+0.053, +0.236]) is the
+  Legacy energy's backbone-torsion term: LOCAL CONFORMATION, a function of the structure and not
+  of the distogram, therefore OUTSIDE class M and not bounded by theorem 2. **This is the survivor
+  that matters for row 3**: it is the physics family's own channel and its in-band skill is
+  demonstrably not compactness.
+
+THE F2 REPAIR, AND WHY IT IS ACCEPTABLE AFTER THE FACT. F2 as registered used |rho(X, Rg)| <= 0.30
+to mean "not a compactness measure". That fails by construction for RG_UNIV = |Rg - median Rg| and
+RG_LAW = |Rg - 2.2 n^0.38| / 2.2 n^0.38 (`s27/ham_lib.py` lines 20 to 22), which are PURE FUNCTIONS
+of Rg and V-shaped in it, so partialling rank(Rg) alone cannot detect them -- and RG_UNIV duly
+passed the registered clause. The repair partials rank(Rg) AND rank(|Rg - median Rg|). Two things
+make it acceptable: it was argued from the channel DEFINITIONS, not from its effect on the verdict;
+and **it can only REMOVE F2 hits, never add them, so it handicaps me and favours my own registered
+prior** (memory: `unstated-operators-align-with-your-hypothesis`). Both versions are computed by
+the code and reported: F2 as registered fires on CONTACT_LL, DISTPOT, LEG_torsion, RG_UNIV; F2
+repaired on CONTACT_LL and LEG_torsion. RG_UNIV drops out as the construction argument predicts,
+and RG_LAW's apparent surviving skill falls +0.139 -> +0.037 under the repair, which is the same
+mechanism read back.
+
+DISCLOSURE, standing: a 40-target code-path check PRINTED its verdict before the 126 ran, so I had
+read a partial result. The n = 40 artefacts are committed (`s29_T_compactness_n40_PARTIAL.json`,
+`_n40_REPAIRED.json`) so the reporting frame could not be chosen afterwards. At n = 40 F1a was
++0.396 against the 0.40 bar -- close enough that the coordinator was right to require the full
+benchmark -- and at n = 126 it collapses to +0.083. The verdict is unchanged and the margin is no
+longer close.
+
+WHAT THIS DOES AND DOES NOT LICENSE. It refutes the general argument that the physics/realism
+family's in-band skill is a size artefact. It does NOT show that a width or entropy term
+specifically would be orthogonal, because no such channel exists here to measure (S29-L41) and the
+one that was named would have to be rebuilt. And in-band skill is not deployable value: ranking
+information is anti-useful on an averaging readout (S27 section 6), and by section 8 any channel
+reaches the endpoint only as a cosine, where everything the project owns measures 0.04 against the
+0.140 random reference. **Row 3 stays open in the precise sense that the argument for closing it
+has failed, not in the sense that the route is shown to work.** Lane L's caveat travels with it
+unchanged: any free-energy arm needs its entropy term to rescue a channel measured +0.455 A WORSE
+than a random subset as a ranker, 5/5 folds (S25 L16).
+One nuance for the record, to prevent a false conflict: memory's "native-free compactness proxies
+reach 0.24 to 0.37 against the oracle's 0.909" is a DIFFERENT statistic -- the predictability of the
+per-target in-band ORDERING -- from this entry's within-pool Spearman(member Rg, member RMSD) =
++0.075. They are not in tension.
+Multiplicity: 0 endpoint comparisons; 32 channels reported together as one table, none selected;
+the 9-of-31 count is quoted against its chance expectation (~1.6).
+Artefacts: `s29/results/s29_T_compactness.json` (n = 126), `_n40_PARTIAL.json`, `_n40_REPAIRED.json`;
+`s26/jobs_done/s29T_compactness.json`; `s29/s29_T_compactness.py`; `s29/PREREG_S29_T.md`;
+`s29/THEORY.md` section 7b and row 3; `s29/THEORY_SUMMARY.md` item 4.
