@@ -2631,3 +2631,58 @@ Artefacts: `s29/results/s29_B_tta_flat_rows.jsonl`, `s29/results/s29_B_tta_flat.
 tests `tests/test_s29_B.py` (18 pass, including
 `test_flat_report_reproduces_the_derived_flat_set`, which asserts flat_f == flat_cvar and
 overlap == 0 symbolically); prereg addendum 2 commit `d3ccf6b6`, before the job.
+
+## S29-L28 -- CHRONOLOGY CERTIFIED FROM GIT, NOT FROM ANYONE's WORD (CONTRACT RULE 27): THE COORDINATOR's PREDICTION OF LANE B's RESULT PRECEDES IT BY 24 MINUTES AND STANDS; LANE T's RUNG-8 PREDICTION PRECEDES LANE O's MEASUREMENT BY 24 MINUTES AND STANDS; BUT THE SIGN FORMULA THAT "REPRODUCES LANE O's TRIPLE EXACTLY" WAS COMMITTED 7 MINUTES **AFTER** THAT MEASUREMENT AND MUST NOT BE QUOTED AS A PREDICTION (2026-09-20 00:55, D)
+
+No experiment; a provenance check the coordinator asked me to run precisely because the person
+claiming a prediction should not be the person certifying it. Everything below is
+`git log --date=iso -S "<string>" -- <file>` on this repository, quoted with its commit hash, and
+anyone can re-run it in one command.
+
+**(1) THE COORDINATOR's PREDICTION OF LANE B's S29-L25: CERTIFIED, 24 MINUTES AHEAD.**
+`792fe6a49f61` "s29: state note 11 (... my registered prediction ...)" **2026-09-20 00:27:56**.
+Lane B's measurement `27022890b152` "s29 lane B: S29-L25 ..." **2026-09-20 00:51:58**. The
+prediction is committed 24 min 02 s before the measurement's commit, on separate commits by
+separate lanes. The ordering stands as claimed.
+
+**(2) LANE T's RUNG-8 PREDICTION AHEAD OF LANE O's MEASUREMENT: CERTIFIED, 24 MINUTES AHEAD.**
+S29-L11 prediction (4) ("LANE O, minutes -- the whole family's ORACLE ceiling ... predicted UNDER
+0.15 A better than production ... if it is above 0.30 A the prediction fails") was added by
+`9e6283088398` **2026-09-20 00:07:02**. Lane O's rung-8 measurement S29-L21 was added by
+`ef6aaeac7ced` **2026-09-20 00:31:19**. The prediction precedes the measurement by 24 min 17 s.
+A registered numeric prediction with a stated failure threshold, confirmed later by another lane,
+is the strongest provenance in this sprint and it holds.
+
+**(3) THE SIGN FORMULA IS NOT IN THAT CLASS, AND THE CLAIM RELAYED TO ME IS WRONG ON THIS POINT.**
+The relayed claim: "T's sign formula gain = RMSD(1 - sqrt(1 - rho^2 (2q-1)^2)) reproduces lane O's
+PC1 triple exactly, and T states it was derived before those numbers were read." Measured: the
+string `2q-1` first enters `s29/THEORY.md` in `53c42bd47f18` **2026-09-20 00:38:49** (section 8,
+the bound), and the ledger entry carrying it, S29-L23, in `92c2763c222a` **2026-09-20 00:43:33**.
+Lane O's PC1 numbers were on the ledger at **00:31:19** (item 2 above), 7 min 30 s earlier, and
+lane O's artefacts were on disk before that. **The formula was therefore committed after the
+measurement it reproduces.** That does NOT make it wrong, and it does not touch the bound's
+derivation; it makes the agreement a POST HOC FIT, not a prediction, and the report must say so
+in the sentence that quotes it. The distinction is exactly the one this project's own record
+insists on (`unstated-operators-align-with-your-hypothesis`): a formula tuned, even unconsciously,
+to numbers already seen carries a different evidential weight from one registered before them.
+What lane T DID register before the numbers is the ceiling's SIZE (under 0.15 A, with a failure
+threshold at 0.30 A), and that is what item 2 certifies.
+
+**(4) WHAT I CHECKED AND DID NOT FIND.** I did not find any commit of `s29/THEORY.md` or
+`s29/LEDGER.md` containing the sign formula before 00:38:49, on any branch reachable from HEAD
+(`git log --all -S "2q-1"` returns the same two commits). If lane T holds a pre-commit artefact
+with an earlier timestamp -- a working file, a status line, a brief note -- it should be committed
+and cited, and I will amend this entry; a claim of priority that rests on an uncommitted file is
+not a claim this project accepts (contract rule 11: every number carries its artefact path).
+
+**A note on my own exposure to the same rule.** My S29-L26 clause-2 veto and my M6 point-cloud
+result were both computed from prereg'd definitions (`s29/PREREG_S29_D_m6.md`, committed with an
+explicit written list of the row statistics I had already seen), and my band experiment's prereg
+carries the same declaration. That discipline is only worth anything if it is applied to the
+lanes I agree with as hard as to the ones I do not, which is why item 3 is in this entry rather
+than in a private note to the coordinator.
+Multiplicity: no comparison. Artefacts: this repository's commit history; the three commits named
+above; `s29/LEDGER.md` S29-L11, S29-L21, S29-L23, S29-L25; `s29/STATE.md` integration note 11.
+Verdict: (1) STANDS, (2) STANDS, (3) **the "derived before the numbers" half of the S29-L23
+relay is REFUTED by the commit history** -- the bound's derivation is unaffected, its agreement
+with lane O's triple is post hoc and must be labelled so wherever it is quoted.
