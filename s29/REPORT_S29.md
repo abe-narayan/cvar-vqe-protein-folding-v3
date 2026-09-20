@@ -259,7 +259,7 @@ killed it, so the reader can check rather than take it on report:
 ### 3.2 Claims made in this sprint that did not survive it
 
 The contract required these to be listed, and I would point a sceptical reader here first.
-**17 claims were withdrawn during the sprint, 10 of them mine.** The full table is §14(e); the shape of it is:
+**18 claims were withdrawn during the sprint, 11 of them mine.** The full table is §14(e); the shape of it is:
 
 - **Lane T withdrew its own Corollary 2b** at its own registered bar, then ran a 126-target
   post-mortem establishing that it is *vacuous in its own valid regime* — a harder verdict than
@@ -271,7 +271,7 @@ The contract required these to be listed, and I would point a sceptical reader h
   with the original wording left standing.
 - **Lane D superseded its own B3 bracket**, finding that a ±3 Å window had hidden a residual that
   grows with step size.
-- **My own 10** are in §14(e): a trainability premise, a false provenance claim to the user, a
+- **My own 11** are in §14(e): a trainability premise, a false provenance claim to the user, a
   flatness gate that was a constant, a point-cloud/built-chain basis error, an "absent
   instantiation" framing, a "7 bits" reading, a field count of 39 against a file holding 21, a
   standing expectation about compactness that the measurement refuted (§12.0), and a test count
@@ -693,7 +693,12 @@ encoding the VQE genuinely trains (−0.210 Å, 5/5 folds), which is why the lat
 "running the VQE is worse than not running it" was narrowed. Here the optimiser does reduce its
 objective — the arms in §6.1 show F falling by half or more — and the *emitted structure* is still
 not separable from best-of-N. The training is real; its endpoint value is not measurable.
-[n = 11 at the time of writing; lane X's final report carries the full set.]
+
+At the lane's final n, the same contrast inside its own space reads **−0.0088 at 0.07× MDE** — the
+tightest null in the sprint — against +0.1362 (0.47×) for best-of-N versus a *single* untrained
+draw. The gap between those two numbers is the whole point of the control: comparing a trained
+circuit to one draw makes training look worth something; comparing it to the same budget of draws
+does not.
 
 ### 6.4 The divergent lane: is the candidate pool the wrong state space?
 
@@ -1559,4 +1564,5 @@ reader at first.
 | **Lane B’s `tail_is_prefix` column** | Briefly suggested the deployed VQE had escaped set-equality. A tie-convention artefact; lane B found it, named it, and asked that the report not make the stronger claim (§6.1). |
 | **Lane T’s compactness prior** | Registered at 3-to-1 that lane L’s objection would hold. It did not (§12.0). |
 | **My "the chimera family is expressive"** | Written into §6.4 from my own recomputation while lane X was still analysing, and marked provisional. Lane X’s entry says the opposite and is right: the space is **poorer than the pool it was cut from** (ORACLE +0.6533 Å). I had compared its ORACLE against *production*; the informative comparison is against the *pool’s own* ORACLE. |
+| **My "the untrained circuit is the best arm"** | Read off lane X’s 5-target probe and repeated to the user more than once. At n = 12 it **collapses to 0.08–0.55× MDE — not measured** — and R3, the readout I singled out as the one that separates the arms, is the **least** informative of the three (separation-to-noise 0.459 vs R1’s 1.047). Both readings found structure in a small sample. |
 
