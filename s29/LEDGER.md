@@ -1495,3 +1495,88 @@ Multiplicity: 0 endpoint comparisons; 2 registered predictions (the scale-deriva
 the subset-gap pair).
 Artefacts: `s29/THEORY.md` sections 1 and 4. Numbers quoted are from S23 L1/L9, S25 L1/L2/L7,
 S28-L18b/L36 and S29-L2, each named in the text.
+
+## S29-L18 -- THEORY SECTIONS 5 AND 7, AND THE LANE CLOSES ITS BRIEF: (5) THE DLA AT n = 3 MAKES S26's UNEXPLAINED n = 6 / n = 9 OBSTRUCTION A RULE (3 | n), THE DEPLOYED n = 9 DEPTH-3 ALGEBRA IS su(256), HALF OF so(512) -- AND THE ALGEBRA IS NOT THE OBSTRUCTION, THE 27 PARAMETERS ARE; THE ENCODING MAKES CLASSICAL PREFIXES RANK-2 AND GENERIC 75-SUBSETS RANK-16, AN ANSATZ-SIDE REASON FOR THE PREFIX RESULT INDEPENDENT OF THE CVaR CLIP; (7) EVERY CANDIDATE INFORMATION SOURCE RANKED BY cov(source, n), AND ONLY THREE CLASSES ARE FIRST ORDER (2026-09-20 00:30, T)
+
+`s29/THEORY.md` sections 5 and 7 (this commit); job `s26/jobs_done/` not required for the light
+phases, which ran in-process (`s29/results/s29_T_reach.json`: `dla`, `subset_cut_rank`,
+`entropy`); the per-target free-energy-gap phase is queued as `s29T_reach` behind the launch cap
+and nothing above depends on it. Property measurements only: no native, no RMSD, no pool in
+section 5.
+
+SECTION 5, THE REACHABLE SET. (a) THE DLA, exact Pauli-set closure with an independent dense
+nested-commutator cross-check at every n <= 5 cell (12/12 agree): n = 3 gives 3 / 8 / 16 / 28 at
+L = 1..4 with dim so(8) = 28, so n = 3 needs depth 4; n = 4 and n = 5 are full at depth 2; n = 6 is
+510 / 1023 / 2016 (S26 reproduced). With S26's n = 7..11 this makes a RULE over n = 3..11: the
+obstruction occurs exactly when 3 | n, and in those cases the closure is 2 dim su(2^(n-2)) at
+L = 2 and dim su(2^(n-1)) at L = 3, climbing a chain of proper subalgebras one rung per layer.
+S26 labelled the n = 6 / n = 9 pattern HYPOTHESIS, not explained; the mechanism (the three-step
+CNOT chain plus ring leaving the early conjugation rounds inside the stabiliser of a complex
+structure when the ring length is divisible by 3) is labelled CONJECTURE, and its next test n = 12
+is not runnable at s26/q_dla.py's CAP = 2^21 (dim su(2^11) = 4,194,303).
+SCOPE CORRECTION TO `s26/REPORT.md` V.9: "the algebra at the deployed cell is maximal" is true at
+n = 7, L = 3 (8128 = so(128)) and FALSE at the S27/S28 register n = 9, L = 3, where it is 65535 =
+dim su(256), exactly half of dim so(512) = 130816. The plateau conclusion is unchanged; the
+sentence needs its n.
+(b) AND THE ALGEBRA IS NOT THE OBSTRUCTION: su(N) acts transitively on the unit sphere of C^N =
+R^(2N), so even su(256) generates a group whose orbit of |0...0> is all of S^511. What is
+unreachable is everything outside the image of a smooth map R^27 -> S^511: dimension <= 27 of 511,
+measure zero, with a generic target's best squared overlap of order P/D = 0.05. S28's measured cap
+of 0.80 to 0.88 against the J = 3 ground state therefore says that state is very far from generic
+(PR 301 against the family's 465), not that the family is nearly universal. Any argument that
+reaches for controllability here answers the wrong question.
+(c) THE CUT-RANK ASYMMETRY, measured (n = 9, 200 random subsets per size): a random 75-subset's
+uniform superposition has max-over-cuts Schmidt rank 16 -- the register's generic maximum -- while
+the PREFIX {0..74} has rank 2. The depth-3 chain gives bond dimension 8 (16 with the ring). So the
+deployed encoding makes exactly the classical prefixes cheap and every other set expensive: an
+ANSATZ-SIDE mechanism for "the circuit reproduces the classical top-m", independent of the CVaR
+clip the set-equality theorem argues from -- two separate reasons for one fact. The gap is a factor
+2 at n = 9 and grows with the register (8 against 64 at n = 12), which binds on any formulation
+that widens the register to make an off-diagonal term trainable. A design variable nobody has
+used: `s22/qcand_lib.py :: Encoding` takes a free label permutation, set to the identity in
+deployment; it decides which FAMILY of sets is cheap, and it comes with its own control (a random
+relabelling).
+(d) THE 0.85 CAP IS AMPLITUDE CONCENTRATION, NOT SIGNS (S28-L41: the sign-aligned |psi_vqe| is
+representable at 0.986). PREDICTION, from dimension counting (1 - F ~ 0.151 x 27/P): F = 0.887 at
+L = 4, 0.925 at L = 6, 0.943 at L = 8. FALSIFIER: F at L = 6 outside [0.88, 0.96] on the median of
+4 targets; the exponential alternative predicts 0.98 and is separated by the same run. About ten
+minutes by re-running `s27/s28_B_represent.py` at layers in {4, 6, 8} on 4 of its 12 targets (one
+line: the module reads B.LAYERS). What it buys is design guidance, not accuracy -- S28 already
+showed reaching the coherent basin moves the endpoint by nothing.
+
+SECTION 7, WHAT AN OBJECTIVE MUST KNOW. The meter's four numbers are not equally informative:
+theorem 2 makes the GRADIENT COSINE second order and purchasable with no information (section 2.4's
+shrink; section 1.5's scale axis), while the NATIVE PERCENTILE and the PREFERENCE both require
+cov(channel, n) != 0 and cannot be gamed that way. Meter numbers 3 and 4 are the binding ones and
+2 must always be read beside 3. Every candidate source is then judged by one question -- does it
+carry cov(., n) given the distogram -- and the record's ranking is: (1) A BETTER DISTANCE PRIOR
+(breaks A4 directly; -2.15 A per unit, the only steep lever, S24; blocked by hardware and leakage,
+not by theory); (2) A LEARNED RESIDUAL (first order by construction; the binding constraint is
+S19's error coherence, +0.31 A at 0.688 sign accuracy when the mistakes are coherent); (3) A
+PHYSICS TERM ON THE EMITTED STRUCTURE (outside class M, so theorem 2 does not bound it; excluded by
+measurement in its single-point form, S25 L16, but its FREE-energy form is unmeasured here and is
+the only class with peptide-length precedent, S29-L1, with S8's F_qh machinery built and never
+finished); (4) A SECOND POOL (breaks A3 only: second order; S24 L2/L3 prices it at cos 0.943 once
+selected, 31% independent only when 0.76 A worse); (5) AN ESM-ATTENTION MAP (redundant with a
+distogram that already consumes ESM-2 650M PCA-32; the cheap test is the partial correlation with n
+given DIS, not an endpoint run); (6) THE POOL'S DISPERSION (a second moment: predicts the error's
+MAGNITUDE, never its SIGN, and both binding meter numbers need the sign); (7) A JOINT over the same
+marginals (section 2 C2: the repair lands partly in ker(Jc^T), which the gradient annihilates
+exactly -- 45% of pair space at N = 12 -- so it buys zero locally by construction).
+THE READING: rows 4 to 7 are what a quantum formulation naturally reaches for and theorem 2 prices
+them all at second order; rows 1 to 3 are the only first-order classes and two are outside this
+sprint's reach. Charter finding 8 is not a gap in the scorer library, it is a corollary of the
+information the system holds. The reachable results are therefore (i) mechanism, now in closed form
+(theorem 2, the stable-rank law, the Q1 reduction), (ii) the ONE structural opening of section 4.5
+(the set-equality theorem genuinely fails under a CVaR over the tail's average structure, so "which
+set" becomes a real optimisation variable) -- with the order of work stated: find an f that clears
+meter numbers 3 and 4 FIRST, then build the CVaR that consumes it, because building the structural
+CVaR around the shipped cost reproduces S28 with more machinery -- and (iii) the free-energy class,
+whose natural quantum home is exactly Q2's configuration-space cell with a local mixer.
+
+LANE T's BRIEF IS COMPLETE: sections 2, 3, Q1, Q2, 1, 4, 5, 7 in `s29/THEORY.md` (section 6 is
+inside Q1), each with a measurable prediction and a named lane. Multiplicity: 0 endpoint
+comparisons by this lane in the whole sprint; 13 registered predictions, 0 measured by me.
+Artefacts: `s29/THEORY.md`; `s29/s29_T_spectra.py` + `s29/results/s29_T_spectra{.json,_rows.jsonl}`
++ `s29_T_grad_rows.jsonl` (job s29T_spectra, exit 0, 100.2 s, 0.337 GB);
+`s29/s29_T_reach.py` + `s29/results/s29_T_reach.json`.

@@ -1,8 +1,13 @@
 # S29 THEORY (lane T)
 
 Derivations for Sprint 29, one section per question of `s29/briefs/S29T.md`. Sections 2 and 3 are
-written first because the coordinator gates every build on them; 1, 4, 5, 6, 7 follow in the
-brief's order.
+written first because the coordinator gates every build on them; then Q1 and Q2 (the coordinator's
+two questions of 2026-09-20 00:20, taken ahead of the rest); then 1, 4, 5, 7 in the brief's order.
+**Section 6 (the entropy term) is answered inside Q1 and is not repeated.**
+
+    order in this file:  2  3  Q1  Q2  1  4  5  7
+    ledger entries:      S29-L7 (2), S29-L11 (3), S29-L15 (Q1, Q2), S29-L17 (1, 4), and the
+                         entry for 5 and 7 posted with this file's final commit.
 
 **Conventions used throughout.** A target has `N` residues; a structure is `C in R^{3N}`; the pair
 index `alpha = (i,j)` runs over the `P` pairs with `|i-j| >= 2` that the shipped distogram scores
