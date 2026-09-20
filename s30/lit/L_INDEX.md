@@ -74,16 +74,36 @@ expensive*.
 
 Topic 4 count: 3 entries, 1 KEPT, 1 literature gap RECORDED, 1 REJECTED.
 
+## Topic 5 -- breaking a shared bias given a prior on its FORM (`L30_4_shared_bias.md`, ledger S30-L18)
+
+| source | what it adds | verdict |
+|---|---|---|
+| Schoenberg (1935); Gower's EDM rank results; Dattorro's EDM-cone treatise; rank-constrained EDM least squares for protein conformation (J Glob Optim 2019); low-rank EDM completion (arXiv:1804.04310); Dykstra projection onto the EDM cone | machinery for projecting a predicted distance matrix onto the valid rank-3 EDM cone; at our lengths 42-65% of the prediction's freedom is metric inconsistency | **REJECTED, with a prohibition quoted from our own record.** `s19/agentA_FINDINGS.md` 1.2: *"Nobody should spend on EDM projection, triangle repair, or joint-consistency enforcement as a route to RMSD."* A4 refuted -- unrealisability is ANTI-correlated with harm, and the EDM defect is a magnitude proxy (+0.511 vs residual RMS's +0.891) |
+| **Reiersol, Econometrica 18:375-389 (1950)** -- EIV identified without an instrument when the latent regressor is non-normal | the standard answer to "identify without an instrument"; higher moments do the work | **REJECTED, recorded because it will be proposed** -- it needs a linear relation between TWO observed error-laden variables and we have one prediction and no second observable of the same quantity |
+| errors-in-variables via two measurements (reliability ratio from their covariance) | the classic two-view identification | REJECTED -- needs the two views' errors **independent**; S19 section 4 measured that ours share the bias. Not unverified, measured false |
+| multichannel blind deconvolution (Xu et al. 1995 and successors) | identification from multiple channels without a reference | REJECTED -- needs the channels **coprime**; a shared bias is a common factor, which is exactly what S24's 0.9432 (vs 0.9330 within-source) measures |
+| single-channel blind deconvolution; instrument calibration | structural priors; a reference standard | REJECTED -- no sparsity/non-negativity/support prior applies, and the reference standard is the native |
+| Kennedy & O'Hagan (2001); **Brynjarsdottir & O'Hagan (2014)** | a discrepancy term helps only given an informative prior on its SHAPE | **KEPT and now CONSTRUCTIVE** -- S19 section 5 *supplies* the shape (a per-target separation profile, five numbers). This project is in the regime B&O describe as workable: form known, per-target values missing |
+
+Topic 5 count: 6 entries, 1 KEPT, 5 REJECTED. **The deliverable is a narrowed target and three
+prohibitions**, plus two derivations (orthogonality is a 5.1% discount; lane F's ORACLE 0.169 is
+what a zero-skill partner at c = 0.745 produces).
+
 ---
 
 ## RUNNING TOTALS
 
-28 sources engaged, 11 KEPT, 1 NOTED, 15 REJECTED across 12 families. **Zero importable
+34 sources engaged, 12 KEPT, 1 NOTED, 20 REJECTED across 17 families. **Zero importable
 operators**, which is the expected and correct outcome -- the value of this lane is closures and
 corrections, not imports.
 
-Four ledger entries: **S30-L6** (reference state), **S30-L7** (common-mode non-identifiability),
-**S30-L8** (set selection + a refuted hypothesis of my own), **S30-L13** (I re-cap my own escape E2).
+Five ledger entries: **S30-L6** (reference state), **S30-L7** (common-mode non-identifiability),
+**S30-L8** (set selection + a refuted hypothesis of my own), **S30-L13** (I re-cap my own escape E2),
+**S30-L18** (for lane P: a narrowed target, three prohibitions, and two derivations).
+
+**NOTE ON NUMBERING:** lanes are colliding. My L6/L7/L8 (all stamped 12:52, tagged `L`) are
+duplicated by lane D entries stamped 13:17-13:24. Mine are the earlier ones and are cited by
+commit and by message; the collisions are flagged, not unilaterally renumbered by me.
 
 ## THINGS I CHECKED RATHER THAN ASSUMED, BECAUSE THE PROJECT HAS BEEN BURNED FOUR TIMES
 
