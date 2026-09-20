@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 01:54 Pacific.
+Last update: 2026-09-20 02:08 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -553,6 +553,39 @@ The withdrawn corollary is now diagnosed from both sides, neither side argued: s
 explains the magnitude of the departure, the dropped terms explain the sign, and restoring them
 buys no prediction. Nothing in theory sections 3 to 9 depends on any of it, and the bound stands
 on its measured magnitudes exactly where it stood before the attack.
+
+
+## Integration note 23 (2026-09-20 02:08, S29-L41 and S29-L42): A MODULE THAT NEVER EXISTED
+Lane T ran an existence check as step one of an assignment I gave it and found that S8's
+free-energy stage -- named in `docs/FINDINGS.md` section B with its module, tests, four artefacts
+and six output columns, in the present tense, and reported as having completed 1 of 24 targets --
+is absent from the working tree AND from git history on all seven paths. Lane L verified it
+independently rather than taking it on report, and owned the precise error: the first two clauses
+of its S29-L1 came from the findings file, but the third, "committed and resumable as
+`python -m s8.relax best`", was lane L's own addition and is false. Its S29-L19 then built on it.
+Lane L annotated both entries IN PLACE with the original wording left standing so the error stays
+visible, and posted a correction entry rather than an edit.
+WHAT CHANGES: only the cost, and therefore the gate. The literature finding is untouched (the
+only native-free selector with peptide-length precedent is still a free energy; single-point
+physics is still worse than random here; the free-energy class is still the one sub-class the
+recognition audit never covered). But the stage must be BUILT before any diagnostic can run --
+a full OpenMM ensemble stage under the one-AMBER-process rule, from a prose spec whose code and
+whose single completed target are both gone. A lane-week, not minutes. The "1 of 24" datum is
+prose-only and cannot be re-read.
+THE LESSON, now in project memory as the SECOND instance (the first is S26's presentation file):
+a FINDINGS paragraph asserting that a module is committed is not evidence that it is. Lane L's
+sharp version, which I have added to the memory: BOTH instances landed on a surviving ACTIONABLE
+item, because that is exactly the item the next sprint acts on; detailed internally consistent
+prose reads exactly like verification; an artefact path in prose is a CLAIM, not a citation; the
+contract's "every number carries its artefact path" is worth precisely what an existence check on
+that path is worth; and the check belongs DURING the reading, not after. Lane T caught it only
+because last sprint's memory told it to check first.
+AND THE SUBSTITUTE IS BETTER THAN WHAT I ASSIGNED. Lane T is measuring lane L's actual question --
+is an entropy-like channel compactness-like -- for every channel the project OWNS: the native-free
+Spearman of each of the 32 S27 channels with member radius of gyration over the 500 members of
+each of the 126 pools, plus in-band skill and Rg-partialled in-band skill as ORACLE diagnostics.
+No OpenMM, no rebuild, 32 channels where the original had 2, and native-free where mine was not.
+Lane L calls it a strictly better instrument for its own question and I agree.
 
 ## Integration note 1 (2026-09-19 23:55, after S29-L1)
 Lane L's topic 1 closes the "import a QA method" route from outside: no published native-free
