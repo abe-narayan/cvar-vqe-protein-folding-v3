@@ -773,3 +773,63 @@ Comparisons (multiplicity): **0 endpoint comparisons.** This entry contains no d
 check 9 is an ORACLE diagnostic of the instrument, not of an arm.
 Artefacts: `s29/DATAPATH.md`, `s29/CONVENIENCE_CHOICES.md`, `s29/s29_M_harness_audit.md`,
 `s29/s29_M_harness.py`, `s29/results/s29_M_harness_audit.json`, `s26/logs/m_harness_audit3.log`.
+
+## S29-L10 -- CONTRACT ADDENDUM 20 IS NOW MECHANICAL IN THE METER: EVERY COSINE CARRIES ITS SHRINK SIGNATURE, AND THE SHIPPED COST's DESCENT DIRECTION EXPANDS (BOND x1.044, Rg x1.025, ONLY 18/126 CONTRACT); PLUS TWO DEFECTS IN MY OWN METER, FOUND AND FIXED WITH REGRESSION TESTS (2026-09-20 00:06, D)
+
+ORACLE diagnostic throughout; nothing deployable; the meter still tunes nothing.
+Question: the coordinator's addendum 20 (from lane T's theorem 2, S29-L7) says a cosine gain is
+purchasable with zero information by shrinking an objective's target map toward typicality, and
+makes lane D veto any cosine gain that does not report (a) the implied shrink, (b) the native
+percentile and (c) the emitted geometry. Can the meter make that mechanical rather than a
+reviewer's memory?
+
+1. THE SHRINK SIGNATURE IS NOW PRINTED UNDER EVERY COSINE (`s29/s29_D_cost_audit.py`, SHRINK_E
+   = 0.3 A). The implied shrink of an arbitrary cost's target map is not computable in general
+   (most costs have no explicit target map), but its SIGNATURE is, and it is the quantity
+   theorem 2 actually points at: descend 0.3 A along -grad f from production and report what
+   happened to the mean virtual CA-CA bond and to Rg, with the count of targets that contract.
+   A shrink-bought cosine moves the emitted structure toward the typical map, so its ratios sit
+   below 1; information does not have to.
+   THE SHIPPED COST's BASELINE, measured (n = 126, the number every candidate is read against):
+   descending 0.3 A along -grad S~ multiplies the mean bond by 1.0438 and Rg by 1.0248, and only
+   18 of 126 targets contract. So the shipped cost's descent direction EXPANDS a structure that
+   is already 22% contracted (S23 L1; production's mean bond 2.96 A against the native's 3.81 A,
+   S28-L35). Read with S28-L30 (S~ falls on 126/126 at e = 0.1 while the RMSD rises) this says
+   the shipped objective is NOT sitting at a contraction optimum and its blindness is not a
+   contraction artefact -- which is worth knowing, because "the cost just likes contracted
+   things" was the obvious explanation of the -0.034 and it is now measured false at the
+   gradient level. (It remains true of the cost's RANKING: production beats 87% of real traces
+   under it, S28-L36.)
+   Lane X's pair log-score, for comparison: bond x1.0232, Rg x1.0065, 3 of 12 targets contract
+   (on the 12 targets where its gradient exists at all -- see 3 below), so its cosine is not
+   shrink-bought either. Both costs are on the expanding side; neither buys its cosine the cheap
+   way. Addendum 20's veto has nothing to fire on yet, and now it will fire automatically when
+   it does.
+2. DEFECT 1 IN MY OWN METER, FIXED: an all-NaN axis crashed the renderer. Metering CAGEO (a
+   step-function channel) produced a zero gradient on EVERY target, `_summ` returned
+   `ci95_fold = None`, and `render` raised `TypeError: 'NoneType' object is not subscriptable` --
+   after the run had completed, so the 126-target result was lost to a print statement. Fixed:
+   every summary key is always present, the cosine block prints "UNDEFINED on k of n targets,
+   100% zero gradient components, re-run with --fd-h 0.5 for A2's smoothed finite difference",
+   and the preference rows render with or without a CI. Regression test
+   `tests/test_s29_D.py::test_all_nan_axis_does_not_crash_the_render`.
+3. DEFECT 2, FIXED IN THE SAME PLACE: a PARTIALLY defined cosine was being reported as if it
+   were a measurement. Lane X's cost has a defined gradient on 12 of 126 targets (99.2% of
+   components are exactly zero at h = 1e-3 A); the meter printed "+0.110" with a fold CI and no
+   warning, and S29-L6 had to add the caveat by hand. The meter now prints, in the header line
+   itself, "UNDEFINED on 114 of 126 targets (zero gradient); the mean below is on the survivors
+   and is a SELECTED SUBSAMPLE, not a measurement" -- the survivors are exactly the targets
+   whose pair distances sit within h of a bin edge, which is a selection on proximity to a
+   discontinuity, not a random subsample. No number of S29-L6 changes; its caveat is now
+   emitted by the code instead of remembered by me.
+4. `Spearman(cos, production RMSD)` is now computed on the finite subset (it was NaN whenever
+   any cosine was NaN); for the shipped cost it is unchanged at -0.372 (S28-L23b).
+Suite: `tests/test_s29_D.py` 9 pass (7 + the two regressions). The three meter artefacts and
+lane X's were regenerated so every stored summary carries the signature; every number in
+S29-L2 and S29-L6 is unchanged by the fix (the shipped cost's four anchors re-verified by the
+same test file after the patch).
+Multiplicity: no comparison in this entry. Artefacts: `s29/s29_D_cost_audit.py`,
+`tests/test_s29_D.py`, `s29/results/s29_D_cost_audit_{DIS_ca,DIS_SURR_ca,DIS_chain-s28rows,X_cost_nll_ca,CAGEO_ca}.json`.
+Verdict: addendum 20 is mechanical. Any lane reporting a cosine gain gets the shrink signature
+printed beside it whether or not it asks, and a gain with ratios below 1 and an unmoved native
+percentile will be vetoed on sight, as the coordinator's rule says.

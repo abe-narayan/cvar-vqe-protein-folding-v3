@@ -32,6 +32,8 @@
 - next: attack every positive within the hour; O's rung-6 controls and X's D1/P3 controls when their numbers land; heavy test files in the coordinator's quiet window; hourly S28 reproduction.
 - 2026-09-20 00:05 done: S29-L6, the meter's first customer -- lane X's pair log-score is +0.200 ladder rho above the shipped cost on the binding S28 ladder (fold CI [+0.100,+0.343], 5/5) and is the first cost in the record that is uninformative rather than anti-informative there; recognition unchanged (native at the 37.8th percentile, 0.25x MDE from the shipped cost's) and its gradient is undefined on 114/126. Reproduction seed 201 (2FBU / DIS+0.5*LEG_compactness) exact, abs diff 0.0.
 - next: lanes M, T, O entries as they post; every lane's proposed cost through the meter on request (`--f module:function`).
+- 2026-09-20 00:12 done: S29-L8 -- contract addendum 20 is mechanical in the meter (every cosine now carries its shrink signature; the shipped cost's descent EXPANDS, bond x1.044, Rg x1.025, 18/126 contract, so its blindness is not a contraction artefact at the gradient level); two defects in my own meter found and fixed with regression tests (an all-NaN cosine axis crashed the renderer; a partially defined cosine was printed as a measurement). tests/test_s29_D.py 9 pass.
+- next: O's and T's entries; heavy test files in the quiet window; reproduction seed 202 at ~02:00.
 
 ## X
 - 2026-09-19 23:45 running: brief, contract (S29+S28), charter, STATE, S13 dossier, S15 dossier 1/4/5, S20 L1-L4, S21 L1-L28, STATE_BRIEF 4-5, core/quantum.py, d_harness, instrument, stats_lib, s28_B_hop, D's meter draft read; encoding (ii) chosen (3-mer fragments of the DIS top-8, recombined; q = 3*ceil(n/3) <= 18); prereg being written.

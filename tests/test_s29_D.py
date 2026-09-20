@@ -213,3 +213,42 @@ def test_helpers():
     assert np.isnan(M.spearman([1, np.nan, 2], [1, 2, 3]))
     with pytest.raises(KeyError):
         M.Cost("NO_SUCH_COST")
+
+
+# ------------------------------------------------------------------ 6. the meter's own defects
+def _step_function_cost(W, ctx):
+    """A bin lookup: its finite-difference gradient is zero except within h of a bin edge."""
+    i, j = I.pair_index(ctx.n)
+    D = I.pair_dists(np.asarray(W, float), i, j)
+    return np.floor(D).sum(1)
+
+
+@needs_cache
+def test_all_nan_axis_does_not_crash_the_render():
+    """A cost whose gradient is zero on EVERY target left `ci95_fold` None and the renderer
+    raised TypeError (found by metering CAGEO, 2026-09-20). The summary must render, name the
+    step size, and point at --fd-h 0.5 rather than quote a cosine from the surviving targets."""
+    s = M.run_meter(__name__ + ":_step_function_cost", basis="ca", pdbs=list(PROBE), quiet=True, save=False)
+    c = s["cosine"]
+    assert c["ci95_fold"] is None and c["n"] < 3 and c["n_nan"] > 0
+    assert "UNDEFINED" in s["text"] and "--fd-h 0.5" in s["text"]
+    for k in ("mean", "median", "se", "ci95_iid", "ci95_fold", "per_fold", "fail18_mean"):
+        assert k in c
+    for v in s["pref"].values():                 # the preference rows render with or without a CI
+        assert "mean" in v
+
+
+@needs_cache
+def test_shrink_signature_is_reported_beside_every_cosine():
+    """Contract addendum 20 (lane T's theorem 2, S29-L7): a cosine gain is purchasable by
+    shrinking the target map, which contracts the emitted structure, so the descent step's
+    bond/Rg ratios must travel with the cosine. For the shipped cost the step EXPANDS."""
+    s = M.run_meter("DIS", basis="ca", pdbs=list(PROBE), quiet=True, save=False)
+    sh = s["cosine"]["shrink_signature"]
+    assert sh is not None and sh["n"] == len(PROBE) and sh["e"] == M.SHRINK_E
+    assert sh["bond_ratio_mean"] > 1.0, sh          # descending the shipped cost does not contract further
+    assert "SHRINK SIGNATURE" in s["text"] and "addendum 20" in s["text"]
+    # and the ratios are what they claim to be: recompute one by hand
+    r = M.meter_target(PROBE[0], M.Cost("DIS"))
+    rr = M.load_rungs(PROBE[0])["S"]["PROD"]
+    assert abs(r["shrink"]["bond_prod"] - A.struct_diag(rr)["bond"]) < 1e-12

@@ -109,6 +109,7 @@ CIRC_OPT_KEY = "circ_l1_i80"          # lane A's native-free recognition optimum
 N_COS_REF = 16
 CA_NAMES = ["DIS", "DIS_SURR"] + C2.CA_SCORERS[1:]          # DIS listed once
 CHAIN_NAMES = list(C2.CHAIN_SCORERS)
+SHRINK_E = 0.3            # the descent displacement at which the shrink signature is read (contract addendum 20)
 FD_H_DEFAULT = 1e-3       # h = 1e-3 A: cosine within 3e-4 of the analytic on the piecewise-linear S~; step-function costs need --fd-h 0.5 (A2's smoothed FD)
 
 
@@ -460,6 +461,17 @@ def meter_target(pdb, cost: Cost, basis="ca", need_grad=True):
         row["cos"] = A2.cosine(-gp, u)
         row["grad_rms"] = A2.rms(gp); row["u_rms"] = A2.rms(u); row["grad_method"] = method
         row["grad_zero_frac"] = float((np.abs(g) < 1e-300).mean())
+        #: CONTRACT ADDENDUM 20 (the shrink rule, lane T's theorem 2, S29-L7): a positive cosine
+        #: is purchasable with no information by shrinking the target map toward typicality,
+        #: which CONTRACTS the emitted structure.  The descent step's geometry is the signature:
+        #: descend 0.3 A along -grad f and report what happened to the virtual bond and Rg.
+        if A2.rms(gp) > 1e-15:
+            Cs = C0 - SHRINK_E * gp / A2.rms(gp)
+            gp0, gps = A.struct_diag(C0), A.struct_diag(Cs)
+            row["shrink"] = dict(e=SHRINK_E, bond_prod=gp0["bond"], rg_prod=gp0["rg"],
+                                 bond_step=gps["bond"], rg_step=gps["rg"],
+                                 bond_ratio=gps["bond"] / max(gp0["bond"], 1e-12),
+                                 rg_ratio=gps["rg"] / max(gp0["rg"], 1e-12))
         rng = SD.stable_rng(pdb, "s28A2_cosref", salt=A2.SALT)                      # A2's own reference draws
         row["cos_random_ref"] = [A2.cosine(A2.remove_rigid(rng.normal(size=C0.shape), C0), u) for _ in range(N_COS_REF)]
     row["secs"] = time.time() - t0
@@ -499,11 +511,19 @@ def meter_target_from_s28_rows(pdb, cost: Cost):
 
 # ============================================================================ the summary
 def _summ(x, folds, fail, label):
+    """Mean, median, SE and both CIs of a per-target quantity, NaNs dropped and counted.
+
+    With fewer than 3 finite targets (a cost whose gradient is zero everywhere gives NONE) every
+    key is still present and the CIs are None, so a caller can print the row without a crash --
+    the defect `tests/test_s29_D.py::test_all_nan_axis_does_not_crash_the_render` pins.
+    """
     x = np.asarray(x, float)
     ok = np.isfinite(x)
     out = dict(label=label, n=int(ok.sum()), n_nan=int((~ok).sum()))
     if ok.sum() < 3:
-        out.update(mean=float("nan"), median=float("nan"), se=float("nan"), ci95_iid=None, ci95_fold=None)
+        out.update(mean=float("nan"), median=float("nan"), se=float("nan"), ci95_iid=None, ci95_fold=None,
+                   per_fold=None, folds_same_sign=0, n_pos=0, n_neg=0,
+                   fail18_mean=float("nan"), other108_mean=float("nan"))
         return out
     r = ST.compare(x[ok], np.zeros(int(ok.sum())), folds[ok], label=label, seed_parts=("s29D",))
     out.update(mean=r["effect"], median=r["median_effect"], se=r["se"], ci95_iid=r["ci95_iid"], ci95_fold=r["ci95_fold"],
@@ -531,12 +551,27 @@ def summarise(rows, cost: Cost, basis):
     # (b)
     if all("cos" in r for r in rows):
         out["cosine"] = _summ([r["cos"] for r in rows], folds, fail, "cos(-grad f, native direction) vs 0")
+        out["cosine"]["n_defined"] = int(np.isfinite([r["cos"] for r in rows]).sum())
+        sh = [r["shrink"] for r in rows if "shrink" in r]
+        out["cosine"]["shrink_signature"] = (dict(
+            n=len(sh), e=SHRINK_E,
+            bond_ratio_mean=float(np.mean([x["bond_ratio"] for x in sh])),
+            rg_ratio_mean=float(np.mean([x["rg_ratio"] for x in sh])),
+            n_contracting=int(sum(1 for x in sh if x["rg_ratio"] < 1.0)),
+            bond_prod_mean=float(np.mean([x["bond_prod"] for x in sh])),
+            rg_prod_mean=float(np.mean([x["rg_prod"] for x in sh])),
+            note="contract addendum 20 / S29-L7: a cosine gain bought by shrinking the target map CONTRACTS "
+                 "the emitted structure; read this beside the cosine and beside the native percentile, which "
+                 "the shrink moves the wrong way. Production's own trace is already 22% contracted (S23 L1).")
+            if sh else None)
         out["cosine"]["random_ref_mean_abs"] = float(np.mean([np.mean(np.abs(r["cos_random_ref"])) for r in rows]))
         out["cosine"]["random_ref_p95_abs"] = float(np.percentile(np.concatenate([np.abs(r["cos_random_ref"]) for r in rows]), 95))
         out["cosine"]["grad_method"] = rows[0]["grad_method"]
         out["cosine"]["grad_rms_mean"] = float(np.mean([r["grad_rms"] for r in rows]))
         out["cosine"]["grad_zero_frac_mean"] = float(np.mean([r["grad_zero_frac"] for r in rows]))
-        out["cosine"]["spearman_cos_vs_prod_rmsd"] = spearman([r["cos"] for r in rows], [r["rmsd"]["PROD"] for r in rows])
+        cs = np.array([r["cos"] for r in rows], float); pr = np.array([r["rmsd"]["PROD"] for r in rows], float)
+        ok = np.isfinite(cs)
+        out["cosine"]["spearman_cos_vs_prod_rmsd"] = spearman(cs[ok], pr[ok]) if ok.sum() >= 3 else float("nan")
     else:
         out["cosine"] = None
     # (c)
@@ -597,15 +632,30 @@ def render(o):
                      f"pos {s['n_pos']}/{s['n']}  FAIL18 {s['fail18_mean']:+.3f} / 108 {s['other108_mean']:+.3f}  "
                      f"(undefined->0 as C2: {s['n_undefined_set_to_0_as_C2']}, mean {s['mean_C2_convention']:+.4f})  rungs {o['ladders'][nm]}")
     c = o.get("cosine")
-    if c:
-        L.append(f"  (b) COSINE cos(-grad f at production, native direction), rigid body removed [{c['grad_method']}]:")
+    if c and c["ci95_fold"] is None:
+        L.append(f"  (b) COSINE: UNDEFINED on {c['n_nan']} of {c['n'] + c['n_nan']} targets [{c['grad_method']}] -- "
+                 f"{100*c['grad_zero_frac_mean']:.1f}% of the gradient components are exactly zero. This cost is a step "
+                 f"function at this step size: re-run with --fd-h 0.5 for A2's SMOOTHED finite difference (S28-L23b), "
+                 f"and never quote a cosine computed on the surviving targets -- they are the ones nearest a discontinuity.")
+    elif c:
+        L.append(f"  (b) COSINE cos(-grad f at production, native direction), rigid body removed [{c['grad_method']}]"
+                 + (f" -- UNDEFINED on {c['n_nan']} of {c['n'] + c['n_nan']} targets (zero gradient); the mean below is on the survivors and is a SELECTED SUBSAMPLE, not a measurement" if c["n_nan"] else "") + ":")
         L.append(f"      mean {c['mean']:+.4f}  SE {c['se']:.4f}  median {c['median']:+.4f}  fold CI [{c['ci95_fold'][0]:+.3f}, {c['ci95_fold'][1]:+.3f}]  "
                  f"pos {c['n_pos']}/{c['n']}  FAIL18 {c['fail18_mean']:+.3f} / 108 {c['other108_mean']:+.3f}  "
                  f"| random-direction |cos| mean {c['random_ref_mean_abs']:.3f} p95 {c['random_ref_p95_abs']:.3f}  "
                  f"| grad RMS {c['grad_rms_mean']:.3g}, zero components {100*c['grad_zero_frac_mean']:.0f}%  | Spearman(cos, prod RMSD) {c['spearman_cos_vs_prod_rmsd']:+.3f}")
+        sh = c.get("shrink_signature")
+        if sh:
+            L.append(f"      SHRINK SIGNATURE (contract addendum 20, S29-L7): descending {sh['e']} A along -grad f multiplies the mean virtual bond by "
+                     f"{sh['bond_ratio_mean']:.4f} and Rg by {sh['rg_ratio_mean']:.4f} ({sh['n_contracting']}/{sh['n']} targets contract; production's own bond "
+                     f"{sh['bond_prod_mean']:.2f} A, Rg {sh['rg_prod_mean']:.2f} A, already 22% contracted). A cosine gain with a ratio below 1 is a shrink, "
+                     f"not information: read it beside (c), which the shrink moves the wrong way.")
     else:
         L.append("  (b) COSINE: not defined on this basis (the projection is not differentiable)")
     p = o.get("native_pctile")
+    if p and p["ci95_fold"] is None:
+        L.append(f"  (c) PCTILE: UNDEFINED on {p['n_nan']} of {p['n'] + p['n_nan']} targets (NaN cost on the native or the pool)")
+        p = None
     if p:
         L.append(f"  (c) PCTILE native's percentile in its own pool under f (share of members scoring better, half ties): "
                  f"mean {p['mean']:.4f} [{p['ci95_fold'][0]:.3f}, {p['ci95_fold'][1]:.3f}]  (strict, objdiag: {p['mean_strict_objdiag']:.4f})  "
@@ -615,7 +665,8 @@ def render(o):
         L.append("  (c) PCTILE: not available (no CA pool channel for this cost)")
     L.append("  (d) PREF share of targets on which f scores X below PROD (ties 0.5), mean [fold CI]:")
     for k, s in o["pref"].items():
-        L.append(f"      {k:16s} {s['mean']:.3f} [{s['ci95_fold'][0]:.3f}, {s['ci95_fold'][1]:.3f}]  ties {s['ties']}  FAIL18 {s['fail18_mean']:.2f} / 108 {s['other108_mean']:.2f}")
+        ci = ("[%.3f, %.3f]" % tuple(s["ci95_fold"])) if s["ci95_fold"] else "[CI undefined: %d finite]" % s["n"]
+        L.append(f"      {k:16s} {s['mean']:.3f} {ci}  ties {s['ties']}  FAIL18 {s['fail18_mean']:.2f} / 108 {s['other108_mean']:.2f}")
     m = o.get("pool_member_control")
     if m:
         cc = m["contrast"]
