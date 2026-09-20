@@ -1,6 +1,9 @@
 # Sprint 29 — CVaR-VQE Protein Folding: the path below 2.5 Å
 
-**Status: FINAL, closed 2026-09-20 03:52 Pacific.** Every lane has reported; no run is outstanding.
+**Status: FINAL, closed 2026-09-20 03:54 Pacific.** No run is outstanding and the box is idle. Seven of
+the eight lanes filed closing reports; **lane P's own ledger entry never landed**, and its result
+appears here as a verified recomputation from its committed rows — recorded as a gap in §9.2c
+rather than filled in.
 
 Before publication, two checks were run against this report's own claims and both are reproducible
 from the repository:
