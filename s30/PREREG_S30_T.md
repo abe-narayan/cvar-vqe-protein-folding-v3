@@ -161,3 +161,42 @@ mean is the wrong operator to spend selection on, which is the law's own content
 
 **What M4 cannot say.** Every arm is ORACLE. M4 measures the CLASS's reachable ceiling, not any
 deployable operator, and no native-free rule is proposed here that selects within any class.
+
+---
+
+# ADDENDUM 2 -- M5 AND P5, REGISTERED BEFORE LANE D REPORTS ITS COMBINATION
+
+## P5 -- LANE D's FIELD-COMBINATION CEILING, PREDICTED FROM A DIFFERENT INSTRUMENT
+
+For `k` fields with signed cosine `rho_0`, exchangeable pairwise correlation `c`, and the
+`rho`-vector aligned with the Gram's leading eigenvector,
+`rho_comb^2 = k rho_0^2 / (1 + (k-1)c)`, and `(1 + (k-1)c)/k = s_1`, the PC1 variance share of the
+field Gram (the eigenvalues sum to `k`). Hence
+
+    rho_comb = rho_0 / sqrt(s_1)          -- the COUNT cancels; only the Gram's rank enters.
+
+At `rho_0 = 0.1128` (lane D's DISTPOT, S30-L5):
+
+**P5a** the 21x21 field Gram has stable rank in **[1.3, 3.5]** and `s_1` in **[0.45, 0.80]**.
+**P5b** the **leave-fold-out** ORACLE-optimal combination reaches `rho_comb` in **[0.11, 0.22]**,
+point estimate **0.15**; it does NOT reach 0.30 and does NOT clear the 0.358 that 3.00 A needs.
+*Falsified* if the LFO combination exceeds 0.25.
+**P5c** the IN-SAMPLE all-21 figure will be inflated to **0.25-0.45** and must not be read as a
+ceiling (21 coefficients on 126 targets; `C^{-1}` amplifies exactly the directions the fields do
+not share).
+
+The orthogonal estimate 0.33-0.36 corresponds to `s_1 = 1/11 = 0.09`, i.e. a Gram of full rank 11.
+
+## M5 -- THE COMBINATION CEILING FROM THE POOL's GEOMETRY (registered before the run)
+
+Any native-free operator that reweights or selects pool members emits
+`u = sum_x w_x (W_x - c)` with `sum w_x = 1`, so it lies in the span of the pool's deviations about
+the production average `c`. Measure `||Pi_k e||^2 / ||e||^2` for the oracle error `e = t - c`, with
+`Pi_k` the projector on the top-`k` principal directions of that deviation matrix.
+
+**P5d.** `||Pi_6 e||^2/||e||^2` is in **[0.15, 0.40]**, i.e. only modestly above the isotropic null
+`6/d = 0.154`. Rationale: `pool-error-is-68-percent-common-mode` says most of the error is a shift
+every member shares, which is orthogonal to the deviation span by the S23-L9 identity, and nothing
+on record suggests the remainder aligns with the pool's own leading modes.
+*Falsified* if it exceeds 0.50 -- in which case the subspace is NOT the obstruction and the
+combination question is about coefficients, not about span.

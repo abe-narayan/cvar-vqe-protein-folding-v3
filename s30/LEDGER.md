@@ -1610,3 +1610,96 @@ Two classes x 8 best-of-K points x 2 set-size conventions, 2 order-statistic pri
 rule directions (7 rules x 2 sign conventions), 3 stratum splits. The two contrasts read as results
 are QUADRIC-minus-LINEAR at ORACLE m and at m = 75; both were fixed as the decision before the run
 and both are reported with SE, MDE and W/L. No per-target maximum is read as a mean anywhere.
+
+## S30-L13 -- I RE-CAP MY OWN ESCAPE E2: THE FIELD HAS RUN IT AT SCALE AND IT COSTS ACCURACY. MCORE TAKES AVERAGING CLASHES FROM **63.0% OF ATOMS TO 1.09%** AND RMSD FROM **3.28 A TO 3.36 A -- 0.08 A WORSE**, ON 2090 PROTEINS. OUR -0.022 A IS THE **OPPOSITE SIGN** FROM THE PUBLISHED RESULT, AND THE MECHANISM PREDICTS WHY: THE BONDED FRACTION OF ALL PAIRS GOES AS ~2/n, SO A CONSTRAINT REPAIR IS **~15% OF THE GEOMETRY AT n=13 AND ~1% AT n=200**. PERCEPTION-DISTORTION RE-CAPS E2 IMMEDIATELY AFTER IT ESCAPES THE IDENTIFICATION INVARIANCE (2026-09-20 13:01, L)
+Addendum to S30-L7, correcting my own framing there. Note: `s30/lit/L30_2_common_mode.md`
+section 4. **Literature reading plus arithmetic; no new measurement.**
+
+**WHAT S30-L7 SAID, AND WHERE IT WAS INCOMPLETE.** S30-L7 proved the pool's shared bias `mu` is
+non-identifiable and listed exactly three escapes. I called **E2** -- a hard constraint that the
+native satisfies and the contracted average does not -- "the only escape this project has ever
+obtained a signed fold-consistent result from", at -0.022 A [-0.036, -0.009], 5/5 folds
+(`averaging-space-beats-the-objective`). That is true. **What I did not say is that escaping the
+identification invariance does not exempt you from the OTHER theorem, and E2 walks straight into
+it.**
+
+**THE PUBLISHED NUMBERS** (*Improving consensus structure by eliminating averaging artifacts*,
+PMC2662860; 2090 non-homologous single-domain proteins under 200 residues):
+
+    baseline averaging (COMBO)      63.0 %  of atoms in clashes < 3.6 A
+    MCORE (their repair)             1.09 %                                <- a 58x reduction
+    PULCHRA                          3.64 %
+    RMSD, MCORE refined              3.36 A   against   3.28 A original    <- +0.08 A, WORSE
+
+**A repair that removes 98% of the clashes costs 0.08 A of accuracy.** That is a realism operator
+improving realism and losing distortion, which is Blau & Michaeli (CVPR 2018) Theorem 3 -- already
+imported in S29-L12 -- arriving in a place S29 did not apply it. **So the correct statement is:
+E2 breaks the identification invariance of S30-L7 and is then immediately re-capped by
+perception-distortion.** The two theorems compose, and the composition is what sets the size of the
+prize.
+
+**WHY OUR RESULT HAS THE OPPOSITE SIGN, AND IT IS A FALSIFIABLE MECHANISM.** Ours is -0.022 A
+(better) on 126 peptides of 9-16 aa; the published one is +0.08 A (worse) on proteins under 200. A
+constraint repair acts on the **bonded** part of the geometry, and the bonded fraction of all
+residue pairs is `(n-1) / C(n,2) = 2/n`:
+
+    n = 13   ->  12 Ca-Ca bonds among 78 pairs   =  15.4 %
+    n = 200  ->  199 among 19,900                =   1.0 %
+
+**A constraint repair touches ~15x more of the geometry at peptide length than at protein length.**
+That is a mechanism for the sign flip, it is arithmetic rather than a story, and it is falsifiable
+three ways: (i) the gain should fall with `n` across our own 9-16 range, (ii) it should fall as the
+repair is restricted to non-bonded constraints, and (iii) it predicts our gain is essentially a
+bond-geometry gain and not a clash gain.
+
+**CONSEQUENCES, IN PRIORITY ORDER.**
+
+1. **Do not scale the AMBER-relax result.** The field ran the general version at 15x our sample and
+   got the wrong sign. Our -0.022 A is an outlier in the literature's direction, is 0.7% of
+   baseline, and section "why the sign flips" says the mechanism does **not** grow with effort --
+   it is capped by the bonded fraction, which is fixed by chain length.
+2. **The cheap re-read that is worth doing, and it uses a measurement that already exists.** The
+   published paper states *"averaging artifacts become more pronounced when members of the ensemble
+   are more divergent"* but provides **no quantitative version** (I checked; the correlation with
+   ensemble spread is asserted, never measured -- a gap in the literature, not a result I can
+   import). Our pool's divergence is observable per target (`mean_k |d_k|^2`,
+   `s23/results/errdecomp.json`). So: **split the EXISTING k=30 AMBER-relax measurement by pool
+   dispersion and by FAIL18/108.** It costs no new compute, it tests a literature claim nobody has
+   tested, and it is aimed exactly where S30-L0's arithmetic says the sprint should aim. If the
+   -0.022 A concentrates on the divergent tail it is a tail intervention rather than a 0.7%
+   aggregate; if it is uniform, E2 closes.
+3. **A prediction I am registering before anyone looks**, so it is falsifiable: the repair's gain
+   concentrates on high-dispersion targets. Stated at 2 to 1, not more -- the field asserts the
+   mechanism but never measured it, and S29's own experience is that asserted mechanisms of this
+   kind fail about as often as they hold (S29-L50 refuted a 3-to-1 prior of lane T's and my own
+   expectation in the same direction).
+
+**A CLOSURE THIS COMPLETES: E1 IS DEAD THREE INDEPENDENT WAYS.** With E2 re-capped, the accounting
+in S30-L7 tightens. Escape E1 (a prior on the bias's FORM) is closed on this instrument by three
+separate arguments, and I want them in one place because each alone looks escapable:
+  (a) the **scale** form -- the optimal rescale `s* = <c,t>/|c|^2` is a function of the invisible
+      component and of nothing else (memory `pool-error-is-68-percent-common-mode`), which is why
+      the mismatched-native placebo works;
+  (b) the **flexible** form -- a corrector trained on the predictor's own features inherits its
+      error structure (memory `error-coherence-decides-correctors`: at identical 0.688 sign
+      accuracy, coherent mistakes emit +0.31 A and i.i.d. mistakes -0.14 A), and S24 closed
+      boosting/residual fitting on this instrument;
+  (c) the **rigid global** form -- S29-L47 measured four global scalars whose ORACLE global optima
+      are 0.0-0.6% of their per-target gains, **two of them exactly zero**.
+Brynjarsdottir & O'Hagan (2014) require an informative prior on the discrepancy's *shape*; (a),
+(b) and (c) are the three shapes available here and all three are measured closed.
+
+**WHERE THAT LEAVES THE SPRINT'S HOPE.** Of S30-L7's three escapes: **E1 closed** (three ways),
+**E2 open but doubly capped** (identification escaped, perception-distortion re-applied, bonded
+fraction fixed by `n`, published sign wrong, our size 0.7% of baseline), **E3 the only one whose
+cap is not yet a theorem** -- and its obvious instance is refuted (provenance cosine 0.9432 above a
+0.9330 within-source control), leaving "score against a different prior" rather than "draw from a
+different source", which is `prior-derivative-is-the-only-steep-lever` at -2.15 A/unit.
+
+**WHERE I COULD BE WRONG.** The 63.0% / 1.09% / 3.28 -> 3.36 numbers are from one paper on one
+benchmark, read from the article rather than recomputed, and their averaging protocol is not ours
+(they average full-atom models across clusters; we average Ca windows in a medoid frame after
+Kabsch). The `2/n` bonded-fraction argument treats all pairs as equally weighted by the repair,
+which no real force field does -- it is an order-of-magnitude argument for the sign flip, not a
+prediction of its size. And prediction 3 is mine, at 2 to 1, and the last time this lane and lane T
+agreed on a prior of this kind at 3 to 1 we were both wrong at n = 126.
