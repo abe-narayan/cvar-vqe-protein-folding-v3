@@ -291,6 +291,24 @@ number recomputed from its artefact rather than copied from the entry that repor
 lane O's figures reproduced to every digit quoted. The second pass caught an error of mine that
 several re-readings of the prose had not.
 
+**And the test suite was actually run, including the files that are usually deferred.** This report
+was gated on it: the heavy files had been self-policed against a "≤ 3 jobs" condition that was
+never true, so they were placed on the governor's own queue instead of a polling launcher.
+
+```
+tests/test_pipeline.py                         35 passed,  2 skipped    236 s   1.56 GB
+tests/test_amber.py                            16 passed                291 s   0.87 GB
+tests/test_amber_frame_invariance.py            3 passed                281 s   0.32 GB
+tests/test_integration.py + test_equivalence.py (VERIFY_SLOW=1)
+                                               39 passed                        
+                                        total: 93 passed,  2 skipped,  0 failed
+```
+
+The commitment made before running them was that a failure would appear here as a finding rather
+than being fixed and omitted. None failed, so there is nothing to report on that count — but the
+commitment is recorded because an unrun suite and a passing suite look identical in a report that
+does not say which it had.
+
 
 ### 4.7 The direct answer to "does lower cost mean lower RMSD?"
 
