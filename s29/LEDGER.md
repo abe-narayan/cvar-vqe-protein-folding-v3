@@ -4671,3 +4671,144 @@ the 9-of-31 count is quoted against its chance expectation (~1.6).
 Artefacts: `s29/results/s29_T_compactness.json` (n = 126), `_n40_PARTIAL.json`, `_n40_REPAIRED.json`;
 `s26/jobs_done/s29T_compactness.json`; `s29/s29_T_compactness.py`; `s29/PREREG_S29_T.md`;
 `s29/THEORY.md` section 7b and row 3; `s29/THEORY_SUMMARY.md` item 4.
+
+## S29-L51 -- F1, THE SELECTION FUNCTIONAL: **NOT A RESULT** -- THE LOG SCORE'S ENTIRE ENDPOINT EFFECT IS INDISTINGUISHABLE FROM EXCHANGING 20.6 OF 75 MEMBERS AT RANDOM (LOG - SWAPCTL +0.0202, **0.14x MDE**, FOLD CI [-0.1020, +0.1622], 57W/69L, POWER 0.07); IT EMITS THE SAME ANSWER AS PRODUCTION (ERROR-DIRECTION COSINE 0.924 AGAINST A 0.177 RANDOM REFERENCE); AND ITS PAIR INFORMATION IS REAL BUT NOT BETTER (DESTROYING THE PAIR-TO-POSTERIOR CORRESPONDENCE COSTS +0.730 A AT 2.29x MDE, 5/5 FOLDS) (2026-09-20 02:49, M)
+
+Pre-registered in `s29/PREREG_S29_M_F1.md` + addendum 1, both before any number. Question: lane D's
+meter found the pair log-score is the first cost in the record that is not ANTI-informative on the
+near-native ladder (+0.200 of ladder rho, 5/5 folds, S29-L6). Does that ordering difference survive
+to the built chain? Run: `s29/s29_M_F1.py --full`, job `m_f1_full`, 126 targets x 6 arms,
+resumable; rows `s29/results/s29_M_F1_rows.jsonl` (756 rows, 126 targets, 6 arms, deduped);
+statistics `s29/s29_M_F1_analyse.py` -> `s29/results/s29_M_F1_summary.json`,
+`s29_M_F1_fmt.txt` (every `ST.fmt` block verbatim). Everything but the functional is held at
+production: same pool (K=500), same leave-fold-out posterior, same tie-safe top-75, same uniform
+average in the medoid frame, same production projection, same RMSD. PROD is the cached DIS channel,
+so the comparator reproduces `chain_rows.jsonl :: DIS` bit-for-bit (audit check 5, S29-L9).
+
+**MEANS (built chain, A; point cloud beside it as the intermediate, never as the result):**
+
+    arm       built chain   point cloud   cloud bond (native 3.8122)   top-75 overlap w/ PROD
+    PROD          3.2126       3.0483             2.9614                    1.000
+    L2RISK        3.2567       3.0766             2.9207                    0.813
+    LOGW          3.2722       3.1031             3.0255                    0.715
+    SWAPCTL       3.2747       3.0860             2.7542                    0.726   (4 draws, sd 0.112)
+    LOG           3.2949       3.1225             3.0207                    0.726
+    LOGPERM       3.9421       3.6625             2.2989                    0.199
+
+**THE PRIMARY, and the addendum-1 main comparison, `ST.fmt` verbatim:**
+
+```
+  PRIMARY  LOG - PROD (built chain)
+    a 3.2949 (med 3.1217)   b 3.2126 (med 2.9661)   n=126
+    effect +0.0822   median +0.0103   SE 0.0531   MDE 0.1489   effect/MDE +0.55
+    iid  CI95 [-0.0227, +0.1858]
+    fold CI95 [-0.0337, +0.1860]   folds same sign 3/5   per-fold 0:-0.034 1:-0.118 2:+0.238 3:+0.136 4:+0.162
+    52W/74L/0T   worst degradation +2.3570 (2LWS)   p90 +0.6058   power 0.34  Type-M 1.70
+    concentration: drop-top10 +0.1886 vs uniform-effect null p10/p50/p90 +0.1270/+0.1852/+0.2461 -> pctile 0.527
+    VERDICT: NOT MEASURED (|effect| 0.0822 <= its own MDE 0.1489, 0.55x)
+
+  ADDENDUM-1 MAIN  LOG - SWAPCTL (built chain): does the log functional's ORDERING beat a random exchange of the same number of members?
+    a 3.2949 (med 3.1217)   b 3.2747 (med 3.1640)   n=126
+    effect +0.0202   median +0.0105   SE 0.0516   MDE 0.1446   effect/MDE +0.14
+    iid  CI95 [-0.0805, +0.1229]
+    fold CI95 [-0.1020, +0.1622]   folds same sign 3/5   per-fold 0:-0.157 1:-0.100 2:+0.283 3:+0.030 4:+0.033
+    57W/69L/0T   worst degradation +2.2382 (2LWS)   p90 +0.6553   power 0.07  Type-M 6.07
+    concentration: drop-top10 +0.1316 vs uniform-effect null p10/p50/p90 +0.0696/+0.1306/+0.1853 -> pctile 0.509
+    VERDICT: NOT MEASURED (|effect| 0.0202 <= its own MDE 0.1446, 0.14x)
+
+  control  SWAPCTL - PROD (built chain): the ZERO-INFORMATION re-ordering at LOG's own exchange rate, mean of 4 draws
+    effect +0.0621   median +0.0104   SE 0.0283   MDE 0.0794   effect/MDE +0.78
+    fold CI95 [-0.0062, +0.1226]   folds same sign 3/5   56W/70L/0T   power 0.59  Type-M 1.30
+    VERDICT: NOT MEASURED (|effect| 0.0621 <= its own MDE 0.0794, 0.78x)
+```
+
+> **THE READING, and the heading is the whole of it.** LOG exchanges **20.6 of 75** members against
+> production (overlap 0.726) and costs **+0.082 A**. Exchanging the **same number at random** costs
+> **+0.062 A**. The difference -- the whole of what the log functional's ORDERING buys or costs at
+> the endpoint -- is **+0.020 A at 0.14x its own MDE**, with the fold CI straddling zero, 3/5 folds,
+> power 0.07 and a Type-M factor of 6.07. **Not a result, and the pre-registered falsifier fires.**
+
+**THE THREE SUPPORTING FACTS, in the order that matters.**
+
+**1. It is the same answer, not a different one.** The S24-L2/L3 parallel-bias check, ORACLE and
+post hoc: the cosine between LOG's and PROD's error vectors against the native, rigid body removed,
+is **0.924 mean / 0.969 median** (min 0.394, max 1.000) against a random reference of **0.177** at
+3n-6 dof. LOG does not emit a new structure; it emits production's structure with a fifth of the
+retained set exchanged. That single number explains the endpoint result without any statistics: an
+operator that moves the answer 0.92-parallel to where it already was cannot move the error much,
+whatever its ladder rho.
+
+**2. The log score's pair information is REAL -- and that makes the null stronger, not weaker.**
+The repaired permutation control, which scores pair p's distance against pair perm(p)'s posterior:
+**LOGPERM - PROD = +0.7295, SE 0.1138, 2.29x MDE, fold CI [+0.5658, +0.9637], 5/5 folds, 38W/88L,
+power 1.00 -- WORSE**, with the top-75 overlap collapsing to 0.199 and the cloud contracting to a
+2.299 A bond. So the functional genuinely consumes the pair-to-posterior correspondence: destroying
+it costs three quarters of an Angstrom. **The log score is not an empty functional that happened to
+tie; it is a working functional whose ordering is worth nothing MORE than the incumbent's at this
+readout.**
+
+**3. The mechanism moved, in the predicted direction, and the endpoint still did not.** Contract
+rule 18's measurement beside the outcome: LOG's emitted cloud is **+0.0593 A LESS contracted** than
+production's (bond 3.0207 vs 2.9614 against a native 3.8122), SE 0.0158, **1.34x MDE**, fold CI
+[+0.0203, +0.1039], 4/5 folds -- measured, and in the direction lane D's original mechanism
+predicted. The endpoint is +0.082 A WORSE. And the matched functional control runs the other way:
+**L2RISK contracts MORE** (2.9207) and is **also** worse (+0.0440, 0.59x MDE). **Two functionals
+move the contraction in opposite directions and both move the endpoint the same way.** That is a
+third independent confirmation, from the selection stage, of S29-L10 (the shipped cost's descent
+EXPANDS) and S29-L12 (the contraction is Jensen on the average, not the posterior or the
+functional). The contraction is not the lever; addendum 1 withdrew that claim before this run and
+this is the measurement that would have caught it.
+
+**THE OTHER CONTRASTS** (all `ST.fmt` in `s29_M_F1_fmt.txt`): LOGW - PROD +0.0596 (0.47x MDE, 3/5,
+NOT MEASURED); L2RISK - PROD +0.0440 (0.59x, 3/5, NOT MEASURED); LOG - LOGW +0.0227 (0.39x, NOT
+MEASURED -- **the shipped 1/(sd+0.5) weight is worth nothing either way on this functional**);
+LOG - PROD on the point cloud +0.0741 (0.52x, NOT MEASURED), so the basis does not change the
+verdict. **FAIL18 split** (ORACLE partition, selects nothing): +0.0155 on the 18 against +0.0934 on
+the 108, and the 18-target effect sits at the **30th percentile** of a 2,000-draw random-18 null
+(p10/p50/p90 = -0.077/+0.087/+0.247) -- **no regime effect**; S19's FAIL18 story does not reappear
+here.
+
+**THE RECORD PREDICTED THIS TO WITHIN 0.01 A, AND THAT IS THE CALIBRATION NOTE.** The prereg's
+rule-10 declaration cited S7's `pmi lam=0 (pure NLL)` arm at **+0.093 A** on this same 126-target
+instrument (through the argmin readout; `docs/FINDINGS.md`, `s7/debias_tune.json`) and S25 L12's L2
+arm at +0.018, and registered the prior as "null to worse, most likely +0.00 to +0.10 A". Measured:
+**+0.082 A**. A twenty-sprint-old number predicted a new arm's endpoint to a hundredth of an
+Angstrom, through a *different readout*. The re-opening was legitimate under rule 10 and it returned
+the closure it re-opened.
+
+**TWO DEFECTS OF MINE, both caught before any claim, both recorded rather than quietly fixed.**
+(a) The first permutation control permuted the per-pair values AFTER the gather, which for a SUM
+aggregator is the **identity** -- it reproduced LOG to every printed digit on the 12-target probe.
+Repaired to permute the posterior's rows and gather with the true bins; the repaired control is the
++0.730 A arm above. (b) I launched the same named job four times while it was queued at the 8-job
+cap (`s26/jobrun.py` does not deduplicate by `--name`); three copies were killed, the registered pid
+kept, 220 duplicate (target, arm) rows deduped last-wins to identical values -- every arm is
+deterministic given the stable per-target RNG, so no science is affected, but it burned box time
+other lanes were queued for. **A job name is not a lock** (`s29/PREREG_S29_M_F2.md` addendum 3).
+
+**AND ONE CONTROL I DECLINED, with the reason.** The coordinator proposed a monotone re-ranking of
+the shipped score as the matched control. Through a top-m selection readout that is the **identity
+by algebra** -- the retained set depends only on the order -- so its null would have been an
+algebraic identity reported as a measurement (`s25/QUANTUM.md` section 5's failure mode). SWAPCTL
+replaced it and has teeth: it is the only control that separates "the functional's ordering" from
+"exchanging that many members at all", and it is what turns this entry from "+0.08, underpowered"
+into "+0.02 at 0.14x MDE, and here is what the other +0.06 was".
+
+**Diagnostics registered in section 5 of the prereg, all clean:** top-75 overlap 0.726 (LOG is a
+genuinely different operator, not PROD with extra steps); posterior floor-hit rate 10.0% of pairs
+(the 1e-4 floor is touched but does not dominate); tie fraction at the m=75 cut 1.6% (ties broken by
+the stable random key, never array order).
+
+**VERDICT: the functional swap is NOT A RESULT. C9 in `s29/CONVENIENCE_CHOICES.md` ("L1 Bayes risk
+rather than a proper scoring rule") is closed in the direction the record predicted, on the built
+chain, with a zero-information control that prices the swap rate.** The log score remains what lane
+D measured it to be -- a cost that is uninformative rather than adversarial on the near-native
+ladder -- and S29-L6's own second reading stands: uninformative does not fold a peptide.
+
+Comparisons (multiplicity): **7 endpoint comparisons at n = 126** (LOG, LOGW, L2RISK, LOGPERM,
+SWAPCTL each vs PROD; LOG - SWAPCTL; LOG - LOGW), primary pre-specified as LOG vs PROD and the
+addendum-1 main as LOG - SWAPCTL, both before any number existed. Plus 2 ORACLE diagnostics (the
+parallel-bias cosine and the FAIL18 split) and 1 mechanism contrast (the cloud bond). No arm is
+carried forward.
+Artefacts: `s29/results/s29_M_F1_rows.jsonl`, `s29_M_F1_summary.json`, `s29_M_F1_fmt.txt`,
+`s29/s29_M_F1.py`, `s29/s29_M_F1_analyse.py`, `s29/PREREG_S29_M_F1.md`, `s26/logs/m_f1_full.log`.
