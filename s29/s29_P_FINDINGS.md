@@ -179,22 +179,37 @@ curve is not going to.
 
 ## OPEN
 
-P11. **The 126 x 26 arm run (the registered falsifiers F-P1/F-P2/F-P3) is IN FLIGHT.** Launched
-00:31 as four concurrent shards over contiguous quarters of the pinned order, each with its own
-rows file and a per-(arm, target) checkpoint; phase `primary` (the 17 cells every falsifier
-needs) then phase `oracle` (the 9-point s-grid). Throughput is limited by the box, not by the
-lane: `s26/launch_cap.json` allows 8 concurrent jobs and 8 were already registered, so three of
-the four shards sat queued; the box is CPU-bound at 92-96% on 6.43 core-equivalents.
+P11. **The arm run, cut to the falsifiers (coordinator's decision, 2026-09-20 00:45).**
+The box is CPU-bound on 6.43 core-equivalents, so extra jobs split the same throughput rather
+than adding any; the coordinator declined to reassign slots from lane O's ceiling ladder and
+directed lane P to run only what carries F-P1/F-P2/F-P3, in one slot. Implemented as a `--phase`
+flag and a single consolidated job `s29P_primary`.
 
-**RESUME (nothing is ever recomputed; every cell is checkpointed):**
+    PRIMARY  (running)  15 cells/target = 1890: PROD, BOND, SPAN, ISO, CTRL-INV, CTRL-GLOBAL,
+                        CTRL-RAND0..7, FLOOR
+    DEFERRED            11 cells/target = 1386: the 9-point ORACLE s-grid, CTRL-LAM,
+                        BOND-LAMFIX, and with them MS-OBJ / MS-MEAN / MS-ORACLE
 
-    python s26/jobrun.py --agent S29P --tag CPU --name s29P_run_s<k> --est-ram 0.6 --         python s29/s29_P_scale.py run --shard <k> --nshards 4        # k = 0..3, idempotent
-    python s29/s29_P_scale.py analyse                                 # tolerates a partial grid
+**Arithmetic correction, stated rather than hidden:** the primary set is 58% of the 3276 cells,
+not the quarter the instruction estimated. The difference is CTRL-RAND. F-P1 clause (d) requires
+BOND to beat the **mean of 8** matched-magnitude draws, so reducing the draws would weaken a
+pre-registered falsifier to save compute; all 8 are kept. CTRL-GLOBAL is kept because it is
+native-free and therefore sits in the max-over-K set beside CTRL-INV. CTRL-LAM and BOND-LAMFIX
+are deferred rather than dropped because the prereg reads them ONLY if BOND is non-null.
+`analyse` gates MS-OBJ on grid completeness, so the deferral is mechanical, not remembered.
 
-`analyse` prints the primary-complete and grid-complete target counts separately, re-asserts the
-PROD gate per target, and refuses to form the ORACLE contrast until the grid is complete on every
-analysed target. The second ledger entry (the arm verdicts, the branch-flip floor, the FAIL18
-split with the random-18 null, the ORACLE s-curve and MS-OBJ) is owed from its output.
+**A cost I inflicted and should own:** consolidating the four shards, my first process filter was
+too broad and terminated the running shard as well as the three queued launchers, which returned
+lane P's one active slot to the queue. No computation was lost -- all 52 completed cells are
+checkpointed and the resume now reads every shard rows file -- but the consolidated job is
+queued behind 8 others rather than running, and that delay is mine, not the scheduler's.
+
+**RESUME (idempotent; no cell is ever recomputed):**
+
+    python s26/jobrun.py --agent S29P --tag CPU --name s29P_primary --est-ram 0.6 --         python s29/s29_P_scale.py run --shard 0 --nshards 1 --phase primary
+    python s29/s29_P_scale.py analyse          # primary- and grid-complete counts reported apart
+
+When slots free, the deferred half is the same command with `--phase oracle`.
 
 ## WHAT DAMAGED MY OWN EXPECTATIONS
 
