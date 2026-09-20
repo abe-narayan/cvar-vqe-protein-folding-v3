@@ -606,15 +606,217 @@ Per contract rule 24, *a cost the meter cannot see is a finding about the meter.
 
 ## 11. What remains open
 
-[PENDING]
+### 11.1 The one scientific question
+
+**Does an observable exist whose error is incoherent with the pool's common mode?** Everything else
+below is housekeeping by comparison. It has an admission test and a price (§12).
+
+**The named gap in the closure, stated by the lane that produced it:** neither G1 nor lane P has
+shown the *mutual information* between the native-free feature set and the prior's error is zero.
+What is shown is that **the extractable part is the wrong part, by a theorem about which part is
+identifiable.** That is a stronger claim than an exhausted search and a weaker one than an
+information-theoretic zero, and it should be quoted as exactly that.
+
+### 11.2 Open because it was never measured at the right scale
+
+**Chiral functionals at 40+ residues.** G1 proves every achiral single-structure channel is a
+distance-map reading, leaving chiral functionals as the only escape family; lane G built them and
+found them empty. But **the theorem does not depend on chain length — only the emptiness does.** A
+13-mer barely crosses itself, so writhe is dominated by local helical handedness. The family is
+worth retesting where a chain can actually knot. *This project's instrument cannot ask the question:
+the benchmark is 9–16mers and all 204 clusters are spent.*
+
+**E2's restraint constant.** The AMBER relax at k = 30 is confirmed (−0.0406, 3.56× MDE,
+length-matched, 5/5 folds) and **still has no native-free rule that selects its restraint
+constant.** It was picked on dev-set RMSD. Until that rule exists it is not deployable, independent
+of its size.
+
+### 11.3 Open defects, all located, none fixed here
+
+| defect | location | status |
+|---|---|---|
+| A **withdrawn positive asserted in shipped code** — "the CVaR tail is worth +0.113 Å … the component's measured role" | `core/pipeline.py:821` | S25-L5 withdrew it and replaced it with −0.1405 Å at 0.68× MDE. `core/` was read-only for this audit. **Sixth instance of prose asserting a state that does not hold; first in shipped code** |
+| **The cloud→chain projection seed is not pinned** | the multi-start projection | Two records give 3.2105 and 3.2126 from an *identical* cloud (§1.1). Harmless at the 3.00 Å scale; **fatal for any future sub-0.01 Å claim** |
+| **The launch gate contradicts the governor** | `s26/jobrun.py:39` (`CPU_START = 85.0`, refused at `:137`) against `s26/governor.py:61` (`CPU_CEILING = 101.0`, CPU suspension deliberately **disabled**) | The governor is content up to 101% CPU; `jobrun` refuses to *launch* above 85%. During exactly the 94–95% the charter asks for, launches are blocked while the governor is happy, so lanes launch detached and bypass the governor. **Open since S29; this is the user's call, not mine** — the one-line fix is to raise `CPU_START` to match the governor's disabled-CPU policy and leave RAM as the binding constraint, which it is |
+| **No sprint-wide multiplicity register** | — | Lanes counted their own comparisons; the sprint-wide total is a *lower bound* in the hundreds. A register written to as comparisons are emitted is a build item, not an exhortation |
+
+### 11.4 Open because the sprint chose not to spend on it
+
+The charter's twelve leads are a **leads register, not a task list**, and it says so. §8 records which
+were pursued, which were not, and — where nobody touched one — the honest reason, without
+retrofitted justifications.
+
 
 ## 12. The next highest-value scientific question
 
-[PENDING]
+> ### Find an observable of *this molecule* whose error is **incoherent with the pool's common
+> mode** — not merely decorrelated from the distogram.
+
+This is not a restatement of "get a better prior". It is a specific, measurable, and cheaply
+falsifiable condition that the sprint derived and then priced.
+
+### 12.1 Why this and not something else
+
+Three results compose into it, each independently established:
+
+1. **The source enumeration collapses to two** — sequence and library — with physics as an
+   *operator* on either rather than a third source (G1, repaired by lane P: a universal function
+   evaluated on a target-specific argument yields target-specific output, so physics has no target
+   argument of its own).
+2. **Both sources are measured.** Sequence-derived features: out-of-fold R² **0.83%** against a
+   registered 1.96% bar; the entire uncollapsed posterior is worth **−0.018**. The pool:
+   genuinely informative at **+0.0758** out of fold at long range, and **strictly harmful when
+   applied**, raising the residual's coherence with the pool's common mode from 0.6931 to **0.9172**.
+3. **The mechanism says why, and it is a theorem, not a search result.** The predictable part of the
+   prior's error *is* the common mode, and the common mode is exactly the component S30-L7 proves
+   non-identifiable from within the pool.
+
+> **What can be predicted is coherent and therefore harmful; what would help is incoherent and
+> therefore unpredictable.**
+
+### 12.2 The admission test — use this, not decorrelation
+
+Define `coh` as the **within-target correlation of a candidate corrector's residual with the pool's
+common-mode pair error** `μ_{t,p}` (the mean over the retained 75 of `d_{m,p} − d_nat,{t,p}`; the
+S30-L7 quantity).
+
+```
+uncorrected                                     coh = 0.6931
+every fitted corrector this project owns        coh = 0.783 / 0.786 / 0.917   <- ALL RAISE IT
+imposed-structure ORACLE arms only              coh = 0.587 / 0.537           <- only these lower it
+
+ADMIT a prior corrector iff it LOWERS coh below 0.6931.
+```
+
+**This is not "decorrelated from the distogram."** Lane L priced orthogonality at a **5.1% discount
+on the requirement** — decorrelation is not the lever. Incoherence is a different condition and it
+is the one that separates a −0.25 Å corrector from a +0.06 Å one **at identical accuracy**.
+
+### 12.3 The price, which is the encouraging part
+
+The required quality is **far below the displacement bound**, because this corrects the *prior* and
+acts through the filter rather than being a displacement added to the answer:
+
+```
+R2 = 0.16  ->  -0.126 A        ORACLE-CONSTRUCTED, NOT DEPLOYABLE:
+R2 = 0.24  ->  -0.247 A        a PRICE for a channel nobody has, never an achievement
+```
+
+And the target is sized: **five ORACLE signs on long-range pairs are worth −0.3259 Å on the built
+chain (3.2126 → 2.8867, 2.05× MDE, 5/5 folds)** — which would clear the charter's primary target.
+**The prize is five bits per target.** The deployable sign currently performs at accuracy ≈ 0.60
+against a *free* baseline of 0.627; ≈ 0.8 is needed.
+
+### 12.4 The secondary recommendation, and three measurements agree on it
+
+**If the next sprint has one place to spend bits, it is the readout.**
+
+```
+readout index bit      0.376 A/bit   (lane T's value-of-a-bit law at D = 3.05)
+prior-sign bit         0.0713 A/bit  (lane P, cloud)  ->  5.3x
+prior-sign bit         0.0652 A/bit  (lane P, chain)  ->  5.8x
+candidate indexing over subset cardinality            ->  3x  (lane T, independent)
+```
+
+**Flagged unregistered, and the currencies are not exchangeable** — one names a candidate, one
+shifts a prior, and lane T's law was fitted on an ORACLE ladder. But three independent measurements
+agree in direction, which is more than any single one of them is worth.
+
+### 12.5 What NOT to spend on
+
+Closed by theorem or by price, with the closure named: the field combination (rank, not count);
+sparse weighted readouts (argmin dominates at every bit budget); subset objectives through an
+averaging readout (T1); the second-moment/quadric escape (twice, independently); generative spaces
+(closed *jointly* with the readout); torsion encodings (48 bits against 7); common-mode correction
+from pool data (non-identifiable at any K); achiral single-structure channels (G1); and
+recognition from single-structure geometry (ordering survives, preference fails on all 43).
+
 
 ## 13. Architecture diagram of what was actually built
 
-[PENDING]
+### 13.1 The production path — unchanged by this sprint
+
+```
+  sequence
+     |
+     v
+  [1] BLOSUM62 retrieval, K = 500            <- NOT MEASURED as harmful at any stratum
+     |                                          (and not exonerated either -- see 4.1)
+     v
+  [2] leave-fold-out ESM-2 650M distogram, 17 bins
+     |                                          <- the ceiling lives here: its error is
+     |                                             83.1% shape, and 68% of the recoverable
+     v                                             prize is in |i-j| >= 7
+  [3] L1 Bayes-risk score  ->  top-75 filter
+     |                                          <- rho +0.6446 on the easy 108,
+     |                                             +0.1066 to +0.3798 on the tail
+     v
+  [4] coordinate average of the 75            <- extracts spread (r = 0.885); cancels
+     |                                           i.i.d. error, NOT coherent error
+     v
+     CA point cloud   3.0483 A                <- exact, reproduces to 4 decimals
+     |
+     v
+  [5] multi-start ideal-geometry projection   <- SEED NOT PINNED: +-0.002 A (section 1.1)
+     |
+     v
+     BUILT CHAIN      3.2105 A   <- THE ENDPOINT (charter section 2)
+
+
+  [Q] quantum stage ....................... OFF THE PATH
+      core/pipeline.py:179  quantum = False
+      core/pipeline.py:241  PROD = Config()
+      "VQE/CVaR do not participate at all"  (:173-178)
+```
+
+### 13.2 What S30 actually built
+
+No new production architecture. **Nothing in §13.1 changed**, and that is the result, not an
+omission — every candidate replacement was closed by measurement, by theorem or by price before it
+reached the pipeline.
+
+What was built is **instrumentation**:
+
+```
+  s30/s30_D_meter.py     the cost/RMSD meter, extended from s29's
+                         + a `verify` verb        (the old `selftest` was an 8-residue synthetic
+                                                   check that would pass on a drifted meter)
+                         + BOTH reporting bases   (it had been blind on the built chain)
+                         + an R = 8 draw control  (the single draw was the maximum of its own 8)
+                         + a multiplicity counter (30 chain / 33 cloud comparisons per run)
+
+  s30/s30_verify.py      36 headline numbers recomputed from artefacts, 0 mismatches
+                         + the endpoint's own reproducibility
+                         + an assertion that every path the ledger claims to have written EXISTS
+                           (the mechanical fix for the S30-L0 failure)
+
+  s30/THEORY.md          T1, T1b, the codebook reframe, the value-of-a-bit law
+  s30/BRIEF.md           the charter, verbatim -- written 77 minutes after being claimed
+  s30/AUDIT_V.md         the report adversary's findings (rule 28)
+  s30/QUANTUM_W.md       items 12-19, audited against the code
+```
+
+### 13.3 The one structural change the sprint argues for
+
+Not a new stage — a **gate on an existing one**:
+
+```
+  a candidate prior corrector
+     |
+     v
+  compute coh = corr(residual, pool common-mode pair error)     [S30-L7 quantity]
+     |
+     +-- coh >= 0.6931  ->  REJECT.  It will emit WORSE at any accuracy.
+     |                      (every corrector this project owns lands here)
+     |
+     +-- coh <  0.6931  ->  admit and measure the endpoint.
+                            R2 0.16 -> -0.126 A;  R2 0.24 -> -0.247 A
+```
+
+**This gate is the sprint's deliverable.** It is cheap, it is native-free, it discriminates a
+−0.25 Å corrector from a +0.06 Å one at identical out-of-fold accuracy, and **no measurement in
+this project's history would have passed it.**
+
 
 ---
 
