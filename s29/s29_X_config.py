@@ -860,6 +860,37 @@ def analyse(pdbs: Optional[Sequence[str]] = None) -> Dict:
             out["meta"][k] = dict(mean=float(np.mean(v)), min=float(np.min(v)),
                                   max=float(np.max(v)))
     # GATE 1 (lane T, S29-L15): TV of the sampled distribution against the Gamma = 0 twin.
+    # AND the diagnostic that decides how to READ a pass: a mixer strong enough to drive the
+    # state to |+>^q makes TV large by FLATTENING, and |+>^q is an EIGENVECTOR of H_mix --
+    # which is exactly the condition lane L's S29-L13 says disqualifies a formulation.
+    out["gate1_diagnostic"] = {}
+    for nm in ("VQE_g0_s0", "VQE_g05_s0", "VQE_g1_s0", "VQE_g2_s0"):
+        sr, mr, mf = [], [], []
+        for r in rows:
+            a = {x["arm"]: x for x in r["arms"]}
+            x = a.get(nm + "|R2")
+            if not x:
+                continue
+            sr.append(x["entropy"] / math.log(r["M"]))
+            mr.append(x["mixer"] / r["q"])
+            mf.append(x["m"] / (ALPHA * r["M"]))
+        if sr:
+            out["gate1_diagnostic"][nm] = dict(
+                entropy_over_max=dict(mean=float(np.mean(sr)), min=float(np.min(sr)),
+                                      max=float(np.max(sr))),
+                mixer_over_q=dict(mean=float(np.mean(mr)), min=float(np.min(mr)),
+                                  max=float(np.max(mr))),
+                m_over_alphaM=dict(mean=float(np.mean(mf)), min=float(np.min(mf)),
+                                   max=float(np.max(mf))))
+    # the set-equality property under a NON-COMMUTING term: does the tail stop being a prefix?
+    pref = {}
+    for nm in ("VQE_g0_s0", "VQE_g05_s0", "VQE_g1_s0", "VQE_g2_s0", "VQE_prod_s0"):
+        v = [(a.get("tail_is_prefix"), a.get("tail_equals_topm"))
+             for r in rows for a in r["arms"] if a["arm"] == nm + "|R2"]
+        if v:
+            pref[nm] = dict(n=len(v), is_prefix=int(sum(1 for x, _ in v if x)),
+                            equals_topm=int(sum(1 for _, y in v if y)))
+    out["set_equality"] = pref
     out["tv_gate"] = {}
     for nm in ("VQE_g05_s0", "VQE_g1_s0", "VQE_g2_s0"):
         v = [r["tv_gate"][nm]["tv_vs_g0"] for r in rows if nm in r.get("tv_gate", {})]
