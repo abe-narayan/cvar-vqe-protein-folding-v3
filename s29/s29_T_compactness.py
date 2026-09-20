@@ -56,14 +56,32 @@ def _rank(x):
     return rankdata(np.asarray(x, float))
 
 
-def partial_spearman(x, y, z):
-    """Spearman correlation of x and y with z partialled out, on ranks (Pearson of the residuals
-    of the rank vectors, the standard Spearman-partial)."""
+def _resid_multi(a, Z):
+    """Residual of a after least-squares removal of the columns of Z (an intercept is implied)."""
+    a = np.asarray(a, float) - np.mean(a)
+    Z = np.asarray(Z, float)
+    Z = Z - Z.mean(0, keepdims=True)
+    coef, *_ = np.linalg.lstsq(Z, a, rcond=None)
+    return a - Z @ coef
+
+
+def partial_spearman(x, y, z, vshape=False):
+    """Spearman correlation of x and y with z partialled out, on ranks.
+
+    `vshape=False` removes rank(z) only -- the standard Spearman-partial, which removes the
+    MONOTONE dependence on z and nothing else.
+    `vshape=True` removes rank(z) AND rank(|z - median z|), so that a channel which is a
+    NON-MONOTONE (V-shaped) function of z -- e.g. RG_UNIV = |Rg - median Rg| and
+    RG_LAW = |Rg - 2.2 n^0.38| / 2.2 n^0.38, both pure functions of Rg by construction
+    (`s27/ham_lib.py` lines 20 to 22) -- cannot pass as independent of z.
+    """
     rx, ry, rz = _rank(x), _rank(y), _rank(z)
-    def resid(a, b):
-        b = b - b.mean()
-        return a - a.mean() - (np.dot(a - a.mean(), b) / max(np.dot(b, b), 1e-30)) * b
-    ex, ey = resid(rx, rz), resid(ry, rz)
+    if vshape:
+        z = np.asarray(z, float)
+        Z = np.column_stack([rz, _rank(np.abs(z - np.median(z)))])
+    else:
+        Z = rz[:, None]
+    ex, ey = _resid_multi(rx, Z), _resid_multi(ry, Z)
     den = np.sqrt(np.dot(ex, ex) * np.dot(ey, ey))
     return float(np.dot(ex, ey) / den) if den > 0 else float("nan")
 
@@ -91,6 +109,8 @@ def target_row(pdb):
         if inb.sum() > 10 and np.std(v[inb]) > 0:
             cell["rho_inband"] = float(spearmanr(v[inb], rr[inb]).correlation)
             cell["rho_inband_partial_rg"] = partial_spearman(v[inb], rr[inb], rg[inb])
+            cell["rho_inband_partial_rg_vshape"] = partial_spearman(v[inb], rr[inb], rg[inb],
+                                                                    vshape=True)
         row["ch"][name] = cell
     return row
 
@@ -109,6 +129,7 @@ def summarise(rows):
         g = np.array([r["ch"][nm]["rho_rg"] for r in rows if nm in r["ch"]], float)
         ib = np.array([r["ch"][nm].get("rho_inband", np.nan) for r in rows if nm in r["ch"]], float)
         pa = np.array([r["ch"][nm].get("rho_inband_partial_rg", np.nan) for r in rows if nm in r["ch"]], float)
+        pv = np.array([r["ch"][nm].get("rho_inband_partial_rg_vshape", np.nan) for r in rows if nm in r["ch"]], float)
         fo = folds[[i for i, r in enumerate(rows) if nm in r["ch"]]]
         ok = np.isfinite(g)
         cell = dict(n_targets=int(ok.sum()),
@@ -126,7 +147,11 @@ def summarise(rows):
                         fold_ci_rho_partial=ST.compare(pa[m], np.zeros(int(m.sum())), fo[m],
                                                        label="rho_partial " + nm,
                                                        seed_parts=("s29Tcp",))["ci95_fold"],
-                        mde_rho_partial=float(2.8016 * np.std(pa[m], ddof=1) / np.sqrt(m.sum())))
+                        mde_rho_partial=float(2.8016 * np.std(pa[m], ddof=1) / np.sqrt(m.sum())),
+                        rho_inband_partial_vshape_median=float(np.median(pv[m])),
+                        fold_ci_rho_partial_vshape=ST.compare(pv[m], np.zeros(int(m.sum())), fo[m],
+                                                              label="rho_partial_v " + nm,
+                                                              seed_parts=("s29Tcp",))["ci95_fold"])
         cell["mde_rho_rg"] = float(2.8016 * np.std(g[ok], ddof=1) / np.sqrt(ok.sum()))
         cell["rho_rg_over_mde"] = float(abs(np.mean(g[ok])) / max(cell["mde_rho_rg"], 1e-12))
         cell["not_measured_rho_rg"] = bool(cell["rho_rg_over_mde"] < 0.7)
@@ -146,6 +171,17 @@ def summarise(rows):
           and abs(out["channels"][n]["rho_rg_median"]) <= 0.30
           and (out["channels"][n]["fold_ci_rho_partial"][0] > 0
                or out["channels"][n]["fold_ci_rho_partial"][1] < 0)]
+    #: F2 AS REGISTERED has a construction-validity flaw, demonstrated by a channel rather than by
+    #: its effect: RG_UNIV = |Rg - median Rg| is a PURE FUNCTION OF Rg (`s27/ham_lib.py` line 22)
+    #: and its rank correlation with Rg is only +0.26 because the dependence is V-shaped, so it
+    #: passes a clause meant to identify channels that are NOT compactness. The repair removes
+    #: rank(Rg) and rank(|Rg - median Rg|) together. IT CUTS TOWARD MY REGISTERED PRIOR (it can
+    #: only remove F2 hits, never add them), which is stated in the entry.
+    f2r = [n for n in nms
+           if abs(out["channels"][n].get("rho_inband_partial_vshape_median", 0.0)) >= 0.15
+           and (out["channels"][n].get("fold_ci_rho_partial_vshape", [0, 0])[0] > 0
+                or out["channels"][n].get("fold_ci_rho_partial_vshape", [0, 0])[1] < 0)
+           and abs(out["channels"][n]["rho_rg_median"]) <= 0.30]
     out["falsifier"] = dict(
         prereg="s29/PREREG_S29_T.md section 3",
         F1a_spearman_absrho_rg_vs_absrho_inband=f1a, F1a_bar=0.4, F1a_fires=bool(f1a >= 0.4),
@@ -153,6 +189,13 @@ def summarise(rows):
         F1_fires=bool(f1a >= 0.4 and f1b >= 0.4),
         F1_top8_by_inband_skill=topk,
         F2_channels=f2, F2_fires=bool(len(f2) > 0),
+        F2_repaired_channels=f2r, F2_repaired_fires=bool(len(f2r) > 0),
+        F2_repair_note=("F2 as registered uses |rho(X,Rg)| <= 0.30 to mean 'not a compactness "
+                        "measure'; RG_UNIV and RG_LAW are pure functions of Rg by construction "
+                        "and V-shaped in it, so the repaired clause partials out rank(Rg) AND "
+                        "rank(|Rg - median Rg|). The repair can only REMOVE hits, i.e. it favours "
+                        "my registered prior F1, and is made on the construction argument "
+                        "(s27/ham_lib.py lines 20-22), not on its effect."),
         verdict=("F1: lane L's objection CONFIRMED, section 7 row 3 CLOSES"
                  if (f1a >= 0.4 and f1b >= 0.4) and not f2 else
                  "F2: the objection FAILS, row 3 STAYS OPEN" if f2 and not (f1a >= 0.4 and f1b >= 0.4)
@@ -181,14 +224,18 @@ def main(argv=None):
     f = out["falsifier"]
     print(f"FALSIFIER: F1a {f['F1a_spearman_absrho_rg_vs_absrho_inband']:+.3f} (bar 0.4, fires "
           f"{f['F1a_fires']});  F1b {f['F1b_median_share_removed_top8']:+.3f} (bar 0.4, fires "
-          f"{f['F1b_fires']});  F2 channels {f['F2_channels']}")
+          f"{f['F1b_fires']});  F2 as registered {f['F2_channels']};  F2 repaired "
+          f"{f['F2_repaired_channels']}")
     print(f"VERDICT: {f['verdict']}")
-    print(f"{'channel':22s} {'rho(X,Rg)':>10s} {'|rho|':>7s} {'in-band':>9s} {'partial':>9s} {'Rg share':>9s}")
+    print(f"{'channel':22s} {'rho(X,Rg)':>10s} {'|rho|':>7s} {'in-band':>9s} {'partial':>9s} "
+          f"{'partialV':>9s} {'Rg share':>9s}")
     for nm, c in sorted(out["channels"].items(), key=lambda kv: -abs(kv[1]["rho_rg_median"])):
         print(f"{nm:22s} {c['rho_rg_median']:+10.3f} {c['rho_rg_abs_median']:7.3f} "
               f"{c.get('rho_inband_median', float('nan')):+9.3f} "
               f"{c.get('rho_inband_partial_median', float('nan')):+9.3f} "
-              f"{c.get('share_of_inband_from_rg', float('nan')):9.3f}")
+              f"{c.get('rho_inband_partial_vshape_median', float('nan')):+9.3f} "
+              f"{c.get('share_of_inband_from_rg', float('nan')):9.3f}"
+              f"{'  NOT MEASURED(rho_rg)' if c.get('not_measured_rho_rg') else ''}")
     return 0
 
 
