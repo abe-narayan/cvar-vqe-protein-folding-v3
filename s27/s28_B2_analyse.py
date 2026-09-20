@@ -121,6 +121,51 @@ def main():
         if k1 in C:
             C[key]["effect_seed1"] = C[k1]["effect"]
             C[key]["replicates_seed1"] = bool(C[key]["ci_fold"][0] <= C[k1]["effect"] <= C[key]["ci_fold"][1])
+
+    # ---- PREREG addendum 3: the coherence-class split, REGISTERED before the job. Class from
+    # the trained state's own sign coherence: COHERENT > 0.5, INCOHERENT <= 0.1, MIXED between.
+    # Class counts per seed and graph; the registered cells contrasted on each class separately
+    # beside the all-126 contrast. Changes no verdict.
+    def cls(arm):
+        coh = np.array([by[arm][p]["sign_coh"] for p in pdbs])
+        return np.where(coh > 0.5, "coherent", np.where(coh <= 0.1, "incoherent", "mixed"))
+
+    out["classes"] = {}
+    for s in B.SEEDS:
+        for g in ("REAL", "PERM"):
+            arm = f"vqe|s{s}|{g}|J3"
+            if arm not in out["arms"]:
+                continue
+            c_ = cls(arm)
+            rs = [by[arm][p] for p in pdbs]
+            d = dict(n_coherent=int((c_ == "coherent").sum()), n_mixed=int((c_ == "mixed").sum()),
+                     n_incoherent=int((c_ == "incoherent").sum()))
+            for name in ("coherent", "incoherent", "mixed"):
+                m_ = c_ == name
+                if m_.sum():
+                    d[f"{name}_hop_mean"] = float(np.mean([r["hop"] for r, k in zip(rs, m_) if k]))
+                    d[f"{name}_bound_mean"] = float(np.mean([r["hop_abs"] for r, k in zip(rs, m_) if k]))
+                    d[f"{name}_coh_mean"] = float(np.mean([r["sign_coh"] for r, k in zip(rs, m_) if k]))
+                    d[f"{name}_F_mean"] = float(np.mean([r["F"] for r, k in zip(rs, m_) if k]))
+                    d[f"{name}_m_mean"] = float(np.mean([r["m"] for r, k in zip(rs, m_) if k]))
+            out["classes"][arm] = d
+            base = f"vqe|s{s}|NONE|J0"
+            for name in ("coherent", "incoherent"):
+                m_ = c_ == name
+                if m_.sum() < 8:
+                    continue
+                sub = [p for p, k in zip(pdbs, m_) if k]
+                for R in ("R1", "R3"):
+                    a_ = vec(arm, R)[m_]
+                    C[f"CLASS|{arm}|{R}|{name}|vs_J0"] = compact(ST.compare(a_, vec(base, R)[m_], folds=folds[m_], names=sub,
+                                                                              label=f"B2 CLASS {name} (n {m_.sum()}) {arm} {R} - {base} {R} (point cloud; registered addendum 3)"))
+                    C[f"CLASS|{arm}|{R}|{name}|vs_PROD"] = compact(ST.compare(a_, prod[m_], folds=folds[m_], names=sub,
+                                                                                label=f"B2 CLASS {name} (n {m_.sum()}) {arm} {R} - DIS top-75 uniform (point cloud; registered addendum 3)"))
+    if all(f"vqe|s{s}|REAL|J3" in out["arms"] for s in B.SEEDS):
+        c0, c1 = cls("vqe|s0|REAL|J3"), cls("vqe|s1|REAL|J3")
+        out["classes"]["REAL_targets"] = dict(coherent_both=int(((c0 == "coherent") & (c1 == "coherent")).sum()),
+                                              coherent_either=int(((c0 == "coherent") | (c1 == "coherent")).sum()),
+                                              coherent_neither=int(((c0 != "coherent") & (c1 != "coherent")).sum()))
     ST.save_atomic(OUT, out, module_file=__file__)
     A = out["anchors"]
     print(f"n={n}  DIS top-75 {A['dis75_mean']:.6f}  J0 bit-identical to the Gaussian run: {A['J0_bit_identical_s0']} {A['J0_bit_identical_s1']}")
@@ -129,9 +174,21 @@ def main():
         d = out["arms"][arm]
         f = lambda x, w=6, p=3: (f"{x:{w}.{p}f}" if x is not None else " " * w)
         print(f"{arm:20s} {d['mean_R1']:7.4f} {d['mean_R3']:7.4f} {d['m_mean']:5.1f} {d['pr_median']:6.0f} {d['jac75_mean']:6.3f} {f(d['hop_mean'])} {f(d['sign_coh_mean'],5,2)} {d.get('n_coherent_over_0.5', ''):>4} {d['n_targets_disconnected']:4d} {f(d['F_mean'],8,4)}")
+    print("\ncoherence classes (addendum 3; class rule coherent > 0.5, incoherent <= 0.1, mixed between):")
+    for arm, d in out["classes"].items():
+        if arm == "REAL_targets":
+            print(f"  REAL targets: coherent on both seeds {d['coherent_both']}, either {d['coherent_either']}, neither {d['coherent_neither']}")
+            continue
+        print(f"  {arm:18s} coherent {d['n_coherent']:3d}  mixed {d['n_mixed']:3d}  incoherent {d['n_incoherent']:3d}"
+              + "".join(f" | {nm}: hop {d.get(nm + '_hop_mean', float('nan')):.3f} bound {d.get(nm + '_bound_mean', float('nan')):.3f} coh {d.get(nm + '_coh_mean', float('nan')):.3f} F {d.get(nm + '_F_mean', float('nan')):.3f} m {d.get(nm + '_m_mean', float('nan')):.1f}"
+                        for nm in ("coherent", "incoherent", "mixed") if d.get(nm + "_hop_mean") is not None))
     print("\ncontrasts (point cloud):")
     for key, c in C.items():
         if key.endswith(("|108", "|FAIL18")):
+            continue
+        if key.startswith("CLASS|"):
+            n_sub = c["fmt"].split("n=")[1].split()[0]
+            print(f"  {key:52s} n {n_sub:>3} eff {c['effect']:+.4f} x{c['x_mde']:+.2f} MDE {c['mde']:.4f} fold [{c['ci_fold'][0]:+.4f},{c['ci_fold'][1]:+.4f}] {c['folds_same_sign']}/5  {c['verdict'].split(' [')[0]}")
             continue
         k108 = C.get(key + "|108"); kf = C.get(key + "|FAIL18")
         print(f"  {key:30s} eff {c['effect']:+.4f} x{c['x_mde']:+.2f} fold [{c['ci_fold'][0]:+.4f},{c['ci_fold'][1]:+.4f}] {c['folds_same_sign']}/5 {c['W']}W/{c['L']}L/{c['T']}T "
