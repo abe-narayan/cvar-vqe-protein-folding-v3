@@ -229,3 +229,84 @@ ADMISSION condition must not be quoted. I will say so in the heading of the ledg
 - Quote the 12-target S29-L56 probe as instrument evidence (contract rule 16).
 - Use the native to tune anything. Every ceiling row here is labelled ORACLE in the sentence that
   uses it.
+
+---
+
+# ADDENDUM 1 — H-X3: CAN A GENERATOR HAVE A BETTER *TYPICAL MEMBER*?
+
+Written 2026-09-20 ~12:58, on the coordinator's resume, before the per-target numbers exist.
+Appended, never edited (rule 15). The question as handed to me:
+
+> *"Can a generator be built whose TYPICAL member is better than the pool's typical member —
+> Δ(set mean) ≈ −0.2 Å against a pool set mean of 4.4533 — rather than one whose BEST member is
+> better? Measure the set mean first, before anything else."*
+
+## A1.0 A CORRECTION TO MY OWN S30-L10 THAT I MUST MAKE BEFORE MEASURING ANYTHING
+
+**My admission condition treats Δ(set mean) as one quantity. It is two, and only one of them
+converts.** For a coordinate-average terminal over a set of size m, the common-mode identity
+(`pool-error-is-68-percent-common-mode`, exact to 2.7e-14) gives, per target:
+
+```
+    set_mean^2   ~=   B^2 + S^2                 B = RMSD(set average, native) = THE ENDPOINT
+    endpoint^2   ~=   B^2 + S^2/m               S = the set's spread about its own centroid
+```
+
+So a generator that improves its set mean purely by **concentrating** (S down, B fixed) moves the
+endpoint by **zero, by algebra**. Only a generator that reduces **B** — the shared bias — gains
+anything, and `B` *is* the endpoint, so the condition is circular unless a generator can be shown
+to move B.
+
+**This reframes the coordinator's question and it is the thing to test.** "Typical-good" in the
+sense of low spread and "typical-good" in the sense of low bias are different properties, and the
+record's set-mean column does not distinguish them. My own S30-L10 did not either.
+
+## A1.1 DISCLOSURE (rule 14), before the falsifier
+
+From the four published aggregates (`s24/results/c_ladder.json` per-arm means, already in
+`s30/results/s30_X_sourcelaw.json`) plus `bench_results/baseline_tuning126.json`, I computed the
+AGGREGATE decomposition by hand before writing this addendum:
+
+```
+    arm            set_mean     B (endpoint)   S = sqrt(set_mean^2 - B^2)   avg gain (set_mean - B)
+    POOL (K=500)     3.5507        3.0483            1.821                      0.502
+    T0_helix         3.8663        3.7892            0.768                      0.077
+    T1_blind         4.0218        3.2435            2.378                      0.778
+    T2_restype       3.9563        3.2065            2.317                      0.750
+    T3_pool          3.5916        3.1752            1.679                      0.416
+```
+
+That is disclosed, is NOT the falsifier, and is excluded from the bar below. It is what motivated
+the hypothesis. Every per-target number, every CI and every counting test is registered here first.
+
+## A1.2 HYPOTHESIS AND FALSIFIER
+
+**H-X3.** Every "better typical member" in the record is a SPREAD reduction, not a BIAS reduction,
+and therefore buys nothing at the endpoint.
+
+- **PRIMARY falsifier (counting, per target, 126 x 4 = 504 cells):** H-X3 is **REFUTED** if a
+  generated source achieves **both** a lower set mean **and** a lower endpoint than the shipped
+  pool on **≥ 25%** of cells AND that advantage **transfers split-half** (the transfer arm is
+  required; `grid-oracles-are-order-statistics`). Below that, H-X3 stands.
+- **SECONDARY:** across the 504 cells, `corr(S, B)` within target. If concentration bought bias,
+  this is strongly positive. Registered prediction: **near zero or negative**.
+- **TERTIARY:** the averaging gain `(set_mean - B)` scales with S. If it does, the terminal's whole
+  value is spread extraction and a concentrated source hands it nothing to extract.
+- **MY REGISTERED PREDICTION:** fewer than 10% of cells win on both, no split-half transfer, and
+  the most CONCENTRATED source in the record (T0_helix, S = 0.768) is also the WORST endpoint.
+  **I expect the answer to the coordinator's question to be NO.**
+
+## A1.3 LANE L'S FALSIFIER, ACCEPTED AND APPLIED WITHOUT A NEW RUN
+
+Lane L requires a generated source's provenance cosine **below 0.9330** before any endpoint run.
+The measurement exists at n = 126 and does not need repeating: S24's quality-matched retrieval-free
+source scores **0.9432** against the **0.9330** within-source control (`s24/results/qmatch.json`,
+`s24/LEDGER.md` L3, replicated independently by S24 lane E). **It fails lane L's gate on the
+already-measured value**, so no endpoint run is spent on a new source in this addendum.
+
+## A1.4 SCOPE HELD FROM THE MAIN PREREG
+
+Source changes at a fixed score only. **Not composed with lane F's S30-L2**, which is a gate
+change. Lane T's register arithmetic is accepted as binding: any generative object must be
+lower-dimensional than a full torsion vector or need ~50 qubits, so no torsion-vector encoding is
+proposed here. Nothing is built; this addendum spends no VQE compute.
