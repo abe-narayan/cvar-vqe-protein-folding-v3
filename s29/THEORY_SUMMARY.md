@@ -84,7 +84,7 @@ the small quantities and carries information about the pool, never about the nat
 **The post-mortem (section 2.3b, S29-L29).** `beta < 1` is the pool's idiosyncratic 32% appearing
 in `a` and not in `b`; substituted into the formula it predicts a *positive* cosine while the
 measurement is negative, so a dropped term dominates. Two candidates: **(i) the linearisation** --
-`phi' = 2F - 1` saturates, and at production `|2F-1| >= 0.5` on a median 53% of pairs, where the
+`phi' = 2F - 1` saturates, and at production `|2F-1| >= 0.5` on a median 53% of pairs (6 targets; the 126-target run is in flight), where the
 coefficient is `w sign(a-b)` and the expectation stops being a function of `beta` at all; **(ii)
 (A4) is an idealisation** -- in full `E[(a-b)(a-n)] = var(a) - cov(a,b) - cov(a,n) + cov(b,n)`, and
 the measured sign reads `cov(a,n) > cov(b,n)`: **the pool's deviation tracks the native better than
