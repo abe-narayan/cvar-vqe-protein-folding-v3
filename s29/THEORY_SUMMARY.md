@@ -224,7 +224,7 @@ Ranked by what the record says each carries:
    machinery does NOT exist -- absent from disk and from git history, so it is a rebuild, not a
    resume (S29-L41).** And the objection that would have closed this row -- that an entropy term is
    compactness-like, so the class is not orthogonal to the realism axis -- is **REFUTED at 126
-   (S29-L42), against my own registered prior**: compactness loading does not track in-band skill
+   (S29-L50), against my own registered prior**: compactness loading does not track in-band skill
    (Spearman +0.083 against a 0.40 bar; partialling Rg out of the top eight removes 9% of it), the
    most compactness-loaded channels carry the least skill, and 9 of 31 channels keep in-band skill
    after removing both the monotone and the V-shaped dependence on Rg. The two channels that pass
