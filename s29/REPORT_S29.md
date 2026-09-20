@@ -246,7 +246,7 @@ killed it, so the reader can check rather than take it on report:
 | The projection stage's bond-length correction | +0.7222 Å, **inside the 8-draw random band** [+0.6504, +0.8152] — worth what a random displacement of the same size is worth | FALSIFIED |
 | Within-band ordering (F2) | Fails on 58/70 — conditioning on realism *removes* skill | FALSIFIED |
 | A cost function that orders the ladder **better** (F1) | LOG − SWAPCTL = +0.0202 at **0.14× MDE**; error-direction cosine with production **0.924** | NOT MEASURED |
-| Configuration-space encoding | [PENDING — lane X's 12-target arms] | |
+| Configuration-space encoding (§6.4) | best non-ORACLE arm **+0.1972 Å** vs production on its own 12 targets, and that arm is the **untrained** circuit | WORSE |
 | The shell-profile supply gap (F2) | fitted cosine 0.090 vs the 0.140 line, and **beaten by its own zero-information twin** (−0.0319, fold CI excludes 0) | CLOSED |
 
 ### 3.2 Claims made in this sprint that did not survive it
@@ -688,8 +688,62 @@ objective — the arms in §6.1 show F falling by half or more — and the *emit
 not separable from best-of-N. The training is real; its endpoint value is not measurable.
 [n = 11 at the time of writing; lane X's final report carries the full set.]
 
-**Controls.** [PENDING — lane X's 94-arm ladder, including the untrained-circuit and best-of-N
-controls, and lane B's endpoint arm.]
+### 6.4 The divergent lane: a different encoding, and the same answer
+
+The charter required a permanent divergent role. Lane X built a **configuration-space** encoding —
+a different state space from the deployed candidate-index register — and ran 94 arms over 12
+targets, with registers up to 2^15 = 32,768 states.
+
+**First, the comparator, because without it the ladder is uninterpretable.** Lane X's targets are
+harder than the benchmark average, and quoting its arms against the full-benchmark production mean
+would have flattered them:
+
+```
+production, all 126 targets                cloud 3.0483   chain 3.2105
+production, lane X's 12 targets            cloud 3.2529   chain 3.3866
+```
+
+Against the right comparator:
+
+```
+ORACLE best chimera (the family's ceiling)       2.1801   − 1.0728 vs production
+UNTRAINED_s0 | R3   (best non-ORACLE arm)        3.4501   **+0.1972 vs production**
+VQE_g1_s1    | R3                                3.4748
+VQE_g1_s0    | R3                                3.5860
+VQE_prod_s0  | R3                                3.6222
+VQE_g0_s0    | R3                                3.6251
+```
+
+Three things follow, and they compose into the same conclusion the rest of the report reaches by
+other routes:
+
+1. **The family is expressive.** Its ORACLE chimera reaches 2.1801 Å on targets where production
+   manages 3.2529 — more than a full Ångström of headroom **with the native in hand**. Expressivity
+   is not what is missing here either.
+2. **Training the circuit does not help.** The best non-oracle arm on the board is the
+   **untrained** circuit, ahead of every trained variant. This held at 5 targets and still holds at
+   12. Lane X's best-of-N control (§6.3) settles the matter properly: at matched sample budget the
+   untrained circuit is statistically indistinguishable from the trained one on the built chain.
+3. **And the whole family is worse than production anyway**, by +0.1972 Å on the point cloud.
+
+So a genuinely different state space, with a larger register and an order of magnitude more arms,
+reproduces the finding rather than escaping it: the expressive ceiling is far below production, the
+optimiser reaches its objective, and the emitted structure does not improve. That is the divergent
+lane doing its job — the most useful thing it could have returned was a disagreement, and it did not
+find one.
+
+*Attribution: the figures above are my own recomputation from lane X's committed artefacts
+(`s29_X_probe.json`, n = 12, 94 arms; production restricted to the same targets from lane O's
+`s29_O_chain_rows*.jsonl`). Lane X's own entry, with its multiplicity accounting for the 94 arms
+and its reading of why only the R3 readout separates them, had not landed when this section was
+written; where it differs, lane X's reading governs.*
+
+**Controls.** The full control set behind the arms above is lane X's: permutation controls (PERM),
+spectral controls (SPEC), random-weight draws at eight depths (RANDW), exact ground states by
+eigensolver (GS), simulated annealing (SA), Gibbs sampling at matched and unit temperature, exact
+argmin and exact top-m readouts, and the untrained-circuit and best-of-N arms discussed above. The
+94-arm count is itself a multiplicity problem and is handled as one (§1.2): per-target maxima are
+priced with `best_of_k_within` and only the pre-specified primary arm is read as a result.
 
 **A defect found and fixed in our own code, mid-result.** `s29_B_tta.py::subset_target` carried the
 comment *"average over the tied argmin set rather than reading array order"* and then took `tie[0]`
