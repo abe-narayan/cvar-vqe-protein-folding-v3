@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 02:08 Pacific.
+Last update: 2026-09-20 02:18 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -610,6 +610,50 @@ Spearman of each of the 32 S27 channels with member radius of gyration over the 
 each of the 126 pools, plus in-band skill and Rg-partialled in-band skill as ORACLE diagnostics.
 No OpenMM, no rebuild, 32 channels where the original had 2, and native-free where mine was not.
 Lane L calls it a strictly better instrument for its own question and I agree.
+
+
+## Integration note 24 (2026-09-20 02:18): TWO ERRORS OF MINE IN ONE HOUR, BOTH CAUGHT, BOTH THE SAME SHAPE
+**(a) The basis error.** I promoted lane O's 2.7605 A into the STATE headline and into reports to
+the user as "the architectural ceiling" without its basis label. It is a POINT-CLOUD number; the
+charter's endpoint is the BUILT CHAIN; and the S28 steer from the user named exactly this
+distinction ("Prioritize built-chain RMSD, not point-cloud RMSD"). Corrected in the headline block
+and in S29-L44. The endpoint figure is 2.9122 A at n = 121. Lane O's entry was never wrong -- it
+was a consistent cloud-to-cloud comparison -- the promotion was mine.
+
+**(b) The absent-instantiation error.** I told lane M that if nothing native-free supplies the
+shell profile's 14 numbers, the class closes as "an ORACLE ceiling with no deployable
+instantiation." Lane M declined: FIVE native-free rules already supply it, measured leave-fold-out
+since S12 (obj_FINDINGS.md:306-331) -- incumbent distogram profile 3.078, LFO per-shell debias
+3.071, LFO affine recal 3.089, LFO ridge 3.309, pool mean profile 3.383, against the ORACLE true
+profile 2.402. The right question is not "can anything supply it" but "can anything supply it
+BETTER, and by how much in the bound's currency." The closure, if it comes, is a MEASURED SUPPLY
+GAP, which is stronger and more citable than an absent instantiation.
+
+**The shape both share:** I reached for the more dramatic version of a result without checking the
+label on it. (a) quoted a number on the wrong axis because the wrong axis was better; (b) assumed
+an absence because an absence closes a class more cleanly than a gap does. Both were caught by a
+lane rather than by me. That is the adversarial structure working, and it is the second time this
+sprint that a lane has corrected the coordinator on a matter of substance (the first: lane T on the
+trainability premise, note 5).
+
+**Note (b) also carries a fourth independent arrival of the MAE law.** Among lane M's five rules,
+the one with the BEST profile MAE (2.394) emits the WORSE RMSD (3.089), and the incumbent -- the
+distogram's own profile -- wins. Project memory: MAE does not price selected RMSD, r = 0.19 among
+achievable priors. Four independent routes now.
+
+## Integration note 25 (2026-09-20 02:18): THE READOUT IS THE BINDING CONSTRAINT -- THE SPRINT'S SHARPEST ARCHITECTURAL NUMBER
+From lane O's raw chain rows, re-derived by me on the charter's endpoint (S29-L44). Holding the
+candidate set FIXED at the top-128 the quantum stage actually sees:
+  - prefix-average readout (what ships), ORACLE per-target m : **2.9122 A**  (n = 121)
+  - single best member of the same 128, a clean order statistic: **2.1549 A**  (0.757 A, 4.0x MDE)
+  - free convex combination of the same 128 (EXPRESSIVENESS only): 1.8604 A
+And the pool itself expresses 1.1235 A built chain (K=500 hull, 6.9x MDE below production 3.2105).
+So: generation is not the constraint, the field of view is not the constraint (lane O: 75 -> 128
+buys 0.0663 A), and the readout costs 0.757 A on 7 bits. The gap is (i) how the candidates are
+consumed and (ii) the inability to supply those 7 bits per target native-free -- which is the
+incidental-parameter theorem (S29-L31) and the bound (S29-L23), arriving from the architecture side.
+The hull figures are quoted as expressiveness, never as ceilings: memory says grid oracles are order
+statistics, and a 128-dof per-target fit is not a thing any rule approaches.
 
 ## Integration note 1 (2026-09-19 23:55, after S29-L1)
 Lane L's topic 1 closes the "import a QA method" route from outside: no published native-free
