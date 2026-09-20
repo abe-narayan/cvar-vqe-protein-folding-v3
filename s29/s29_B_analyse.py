@@ -278,14 +278,132 @@ def analyse2(targets: str = "12", out_path: str = None) -> Dict:
     return out
 
 
+# ================================================= measurement 5b: the endpoint (prereg addendum 3)
+def analyse_end(basis: str = "cloud", out_path: str = None) -> Dict:
+    """Every pre-registered contrast of measurement 5b, on the point cloud or the built chain.
+
+    basis = "cloud"  reads `rmsd_Ralpha` / `rmsd_tailset` from `s29_B_tta_end_rows*.jsonl`
+    basis = "chain"  reads `rmsd_chain` from `s29_B_tta_chain_rows*.jsonl`, keyed by readout
+    """
+    from s24 import stats_lib as ST
+    from s29 import s29_B_tta as TT
+    if basis == "cloud":
+        rows = C.load_all(TT.END_ROWS)
+        fields = {"R_alpha": "rmsd_Ralpha", "tailset": "rmsd_tailset"}
+    else:
+        rows = C.load_all(TT.CHAIN_ROWS)
+        fields = {"R_alpha": "rmsd_chain", "tailset": "rmsd_chain"}
+    by = {}
+    for r in rows:
+        if basis == "chain" and r.get("readout") not in (None, "C_Ralpha", "C_tailset"):
+            continue
+        k = r["arm"] if basis == "cloud" else (r["arm"], r.get("readout"))
+        by.setdefault(k, {})[r["pdb"]] = r
+    pdbs = sorted(set(r["pdb"] for r in rows))
+    folds = ST.pinned_folds(pdbs)
+    out = dict(kind="s29_B_tta_end", lane="B", sprint=29, basis=basis, n=len(pdbs), pdbs=pdbs,
+               label="ACHIEVABLE SELECTIONS, ORACLE-SCORED; nothing here tunes anything",
+               lam_grid=list(TT.LAM_GRID), arms={}, contrasts={})
+
+    def vec(arm, field):
+        d = by[arm]
+        return np.array([d[p][field] for p in pdbs], float)
+
+    full = [a for a in by if len(by[a]) == len(pdbs)]
+    for a in sorted(full, key=str):
+        d = by[a]
+        row = dict(n=len(pdbs))
+        for nm, f in fields.items():
+            if f in next(iter(d.values())):
+                v = vec(a, f)
+                row["mean_" + nm] = float(v.mean())
+                row["se_" + nm] = float(v.std(ddof=1) / np.sqrt(len(v)))
+        for f in ("m_tail", "pr", "jac75", "lam_w_ratio", "rg_Ralpha", "bond_Ralpha",
+                  "tail_is_prefix", "pad_mass", "F", "cvar", "H_nats", "s_val", "secs"):
+            vals = [d[p].get(f) for p in pdbs if d[p].get(f) is not None]
+            if vals:
+                row[f + "_mean"] = float(np.mean([float(x) for x in vals]))
+        out["arms"][str(a)] = row
+
+    def add_contrast(label, a, b, field):
+        if a not in by or b not in by:
+            return
+        if len(by[a]) != len(pdbs) or len(by[b]) != len(pdbs):
+            return
+        va, vb = vec(a, field), vec(b, field)
+        if not (np.isfinite(va).all() and np.isfinite(vb).all()):
+            return
+        o = ST.compare(va, vb, folds=folds, names=pdbs, label=label)
+        out["contrasts"][label] = dict(
+            effect=o["effect"], se=o["se"], mde=o["mde"], x_mde=o["effect_over_mde"],
+            ci_fold=o["ci95_fold"], ci_iid=o["ci95_iid"], folds_same_sign=o["folds_same_sign"],
+            W=o["n_better"], L=o["n_worse"], T=o["n_tied"], verdict=o["verdict"],
+            mean_a=o["mean_a"], mean_b=o["mean_b"], fmt=ST.fmt(o))
+
+    if basis == "cloud":
+        for nm, f in fields.items():
+            for lam in TT.LAM_GRID:
+                for sd in (0, 1):
+                    arm = "vqe|lam%g|s%d" % (lam, sd)
+                    add_contrast("%s %s - production" % (arm, nm), arm, "production", f)
+                    if lam != 0.0:
+                        add_contrast("%s %s - its own lam=0 (same seed)" % (arm, nm),
+                                     arm, "vqe|lam0|s%d" % sd, f)
+                    add_contrast("%s %s - untrained best-of-16 (same lam)" % (arm, nm),
+                                 arm, "untr16|lam%g" % lam, f)
+                    add_contrast("%s %s - fixed profile M6" % (arm, nm), arm,
+                                 "fixed_profile|M6", f)
+            add_contrast("fixed profile M6 %s - production" % nm, "fixed_profile|M6",
+                         "production", f)
+            add_contrast("untrained best-of-16 (lam=0) %s - production" % nm, "untr16|lam0",
+                         "production", f)
+        # the lam grid as an order statistic, per seed and readout (prereg B2.6)
+        for nm, f in fields.items():
+            for sd in (0, 1):
+                arms = ["vqe|lam%g|s%d" % (lam, sd) for lam in TT.LAM_GRID]
+                if all(a in by and len(by[a]) == len(pdbs) for a in arms):
+                    M = np.column_stack([vec(a, f) for a in arms])
+                    base = vec("production", f)
+                    bk = ST.best_of_k_within(M - base[:, None])
+                    out["best_of_k_%s_s%d" % (nm, sd)] = {
+                        kk: (float(vv) if isinstance(vv, (int, float, np.floating)) else vv)
+                        for kk, vv in bk.items() if kk != "per_draw"}
+                    out["best_of_k_%s_s%d" % (nm, sd)]["arms"] = arms
+    else:
+        for lam in TT.LAM_GRID:
+            for sd in (0, 1):
+                arm = "vqe|lam%g|s%d" % (lam, sd)
+                for ro in ("C_Ralpha", "C_tailset"):
+                    add_contrast("CHAIN %s [%s] - production" % (arm, ro), (arm, ro),
+                                 ("production", ro), "rmsd_chain")
+                    if lam != 0.0:
+                        add_contrast("CHAIN %s [%s] - its own lam=0" % (arm, ro), (arm, ro),
+                                     ("vqe|lam0|s%d" % sd, ro), "rmsd_chain")
+    ST.save_atomic(out_path or os.path.join(HERE, "results", "s29_B_tta_end_%s.json" % basis), out)
+    print("n =", out["n"], "basis", basis)
+    print("%-24s %9s %9s %7s %7s %7s %7s" % ("arm", "R_alpha", "tailset", "m", "PR", "jac75",
+                                             "prefix"))
+    for a in sorted(out["arms"], key=str):
+        r = out["arms"][a]
+        print("%-24s %9.4f %9.4f %7.1f %7.1f %7.3f %7.2f" % (
+            a, r.get("mean_R_alpha", float("nan")), r.get("mean_tailset", float("nan")),
+            r.get("m_tail_mean", float("nan")), r.get("pr_mean", float("nan")),
+            r.get("jac75_mean", float("nan")), r.get("tail_is_prefix_mean", float("nan"))))
+    return out
+
+
 if __name__ == "__main__":
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("--analyse1", action="store_true")
     ap.add_argument("--analyse2", action="store_true")
+    ap.add_argument("--analyse-end", action="store_true")
+    ap.add_argument("--basis", default="cloud")
     ap.add_argument("--targets", default="12")
     a = ap.parse_args()
     if a.analyse1:
         analyse1()
     if a.analyse2:
         analyse2(a.targets)
+    if a.analyse_end:
+        analyse_end(a.basis)
