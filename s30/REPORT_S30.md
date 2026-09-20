@@ -88,8 +88,9 @@ sparse weighted readout, subset objectives through an averaging readout, the sec
 (twice, independently), generative spaces, torsion encodings, common-mode correction, filter width,
 achiral single-structure channels, and recognition from single-structure geometry.
 
-**Thirty-odd claims were withdrawn, eleven of them mine, and one withdrawal was itself withdrawn.**
-The report adversary then found ten further defects in this document — two of which inverted a
+**Twenty-six claims were withdrawn in Appendix A's tables — ten of them mine — plus lane G's
+self-killed 2.17×-MDE positive, and one withdrawal that was itself later withdrawn.**
+The report adversary then found **eighteen** further defects in this document — two of which inverted a
 headline — and they are fixed in place with the original error stated. That process is the reason
 the surviving results are worth anything, and §Appendix A records all of it.
 
