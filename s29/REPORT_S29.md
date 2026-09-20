@@ -685,6 +685,26 @@ this sprint and both were caught:
 - **Random-shape reference = 0.1398**, used as the bar for all 39 displacement fields. Not one
   beat it.
 
+### 9.2b Where a control exists is where an overreach dies young
+
+Three claims in this sprint failed the same way — asserting from an artefact that did not say what
+its author wanted it to say. My architectural ceiling was quoted on the wrong axis; lane T's sign
+formula was inverted from numbers it was said to predict; lane M's F2 prior and my own "39 passed"
+were both read off incomplete evidence. The tempting lesson is "check your artefacts."
+
+Lane M pointed out that this is the wrong generalisation, and the observation is worth more than the
+instances. **The three did not differ in care; they differed in whether a cheap control existed at
+the decisive step.** Lane M's F2 prior would have become a published claim had the shrink twin not
+been registered; its permutation control would have "confirmed" a null on 126 targets had the
+12-target probe not existed. Both died young, before reaching a conclusion. The sign formula and the
+test count had no control at the step where they went wrong, so both reached conclusions and had to
+be retracted afterwards.
+
+So the actionable version is narrower: **spend control effort at the step where a wrong answer would
+first become quotable**, not uniformly across the experiment. A matched null at that step converts a
+future retraction into a cheap in-flight correction. Every retraction in §14(e) is a step that had
+no such control; every "caught before it was claimed" in this report is a step that did.
+
 ### 9.3 Controls against our own enthusiasm
 
 - **Best-of-N, never an initialisation mean.** Project memory: *concentration is wrong when
