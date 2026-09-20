@@ -337,3 +337,36 @@ transfer; it is not a claim that anything is gained.
 
 **Ordering.** The run is cheapest-first by register size (q = 9, then 12, then 15), so gate 1's
 quantity arrives on the small targets within minutes, as T's ladder requires.
+
+---
+
+## ADDENDUM 3 (2026-09-20, before the number exists; the coordinator's point 3 and the
+## `concentration-is-wrong-when-discrimination-binds` control)
+
+The UNTRAINED arm as run is ONE draw of theta_0 at seed 0 put through the identical readout.
+The project memory forbids exactly that comparison as the control for a trained arm: the control
+is BEST-OF-N FROM THE UNTRAINED CIRCUIT AT MATCHED BUDGET, never a single draw and never an
+initialisation mean. Registered here before it is run:
+
+**BESTOFN.** N = ITERS = 80 draws theta_0 ~ N(0, 0.6) from the SAME circuit (seeds
+`stable_rng(pdb, "bestofN", i, salt="s29X")`), each evaluated on the objective F at Gamma_gap
+(no gradients, so the circuit-evaluation count is ~80 against the trained arm's 80 x (2P + 1)
+and the control is CONSERVATIVE in the trained arm's favour); the draw with the LOWEST F is
+read out through R1, R2 and R3 and projected. Native-free throughout: F selects, not an RMSD.
+
+Why this is the deciding measurement and not a formality. If best-of-N by F lands on the
+TRAINED arm's RMSD, then "training hurts" is really "LOW F hurts" -- the optimiser is innocent
+and the objective is anti-correlated with nativeness, which is charter finding 4 reproduced in
+configuration space. If best-of-N by F lands on the SINGLE untrained draw's RMSD, then the
+objective is uninformative rather than adversarial and the separation at R3 was noise.
+Pre-registered prior: best-of-N lands nearer the trained arm than the single draw (the objective
+is adversarial, not merely uninformative), and the single-draw UNTRAINED arm is therefore a
+FLATTERED control that must not be quoted.
+
+**Falsifier for the coordinator's reading.** "The untrained circuit is the best non-oracle arm"
+is REFUTED if, at n = 12, |UNTRAINED|R3 - trained|R3| is below 0.7x its own MDE, or if the
+BESTOFN control reproduces the trained arm. Both were checked at n = 8 before this addendum was
+written and both point that way; the n = 12 numbers decide it.
+
+No new formulation, no new objective, no new Hamiltonian: BESTOFN is the mandatory control for a
+comparison the probe already contains, and it is the only thing added.
