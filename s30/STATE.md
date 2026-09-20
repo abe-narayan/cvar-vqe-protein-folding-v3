@@ -337,6 +337,47 @@ quoted the **verdict string**. A verdict string is a claim about a computation a
 what reading the computation is worth.
 
 
+## CORRECTION TO THE SYNTHESIS BELOW (2026-09-20 13:08, lane F): **THE WIDENING HALF IS CIRCULAR AND THE FILTER-WIDTH HALF IS CLOSED**
+
+Written within the hour of the synthesis it corrects. Both halves of my "two qubits" mechanism took
+damage from lane F's own measurements, and I am recording it before the synthesis is quoted.
+
+**1. Filter width is closed by ceiling, not open.** I hypothesised that if the 108's benefit
+saturates early in k while the tail's harm grows, a wider filter keeps the benefit and sheds the
+harm with no detection. Lane F tested it:
+- **F2a refuted — there is no free lunch.** Benefit-retained against harm-shed crosses smoothly at
+  ~55%/55% near k ≈ 275. **No knee.**
+- **F2b closed by ceiling without spending the chain:** the **ORACLE global argmin over k IS the
+  shipped 75**, so no leave-fold-out k arm can beat production. Fifth instance of the global-scalar
+  pattern, and lane F pre-registered that it expected exactly this.
+
+What survives from that experiment is a **methodological** result I should have had before
+proposing the hypothesis: **filter width moves the emitted structure 0.3790 Å over its range against
+0.0256–0.0927 Å for averaging width — 4 to 15×.** My claim that S29's flat m sweep says nothing
+about filter width was right; the inference I drew from it was not.
+
+**2. The widening-rescues-the-tail result is CIRCULAR, and lane F flagged it rather than selling
+it.** Widening appears to rescue FAIL18 (−0.6193 Å at k = 400, null p = 0) — but **it does not
+replicate on either filter-independent tail**, coming in at ≈0 and *reversed* at **+0.7313** on
+worst-18-by-pool-mean. One quantity explains all four strata at **ρ = +0.81**: widening helps
+exactly where the filter *hurt the set mean*. That is `operator-consumes-set-mean` read backwards,
+not a tail rescue.
+
+**3. And the same circularity has to be applied to lane Q's §5, which I put at the centre of the
+synthesis.** Lane Q's finding is that on FAIL18 the ORACLE best candidate sits at rank 128–500,
+outside the register. **But FAIL18 is defined by production, production is the filtered set's
+average, and a bad filter is exactly what pushes good candidates down the ranking.** So "the good
+candidate is outside the window" may be *produced by* the thing it is offered as evidence about.
+Lane Q's number is on a different readout from lane F's (argmin versus set mean) so the two do not
+directly conflict — but it has not been run against a filter-independent tail, and **until it is,
+the two-qubit mechanism rests on a statistic with a known circularity.** That check is cheap and it
+is now the gate on that whole direction.
+
+**What the synthesis below keeps.** Items 1, 2, 3 and 6 stand — the tail is selection-limited, the
+score has no in-pool skill there and that **replicates on all three tail definitions**, the filter
+is worse than random on the tail, and the argmin dominates the sparse weighted family by price.
+What falls is the *intervention* I built on top of them.
+
 ## SYNTHESIS (2026-09-20 13:07): SIX LANES CONVERGED ON ONE PLACE, AND IT IS TWO QUBITS WIDE
 
 Everything closed today points at the same intervention, reached independently. Stating it as a
