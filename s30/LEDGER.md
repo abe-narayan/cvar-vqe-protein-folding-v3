@@ -312,3 +312,87 @@ pinned, not re-derived); `bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json` (`sub
 index into the pool, not the universe); `s8/generate_univ/*.npz` (126 present); project memory
 `sequence-conditioning-hurts-the-failures`, `operator-consumes-set-mean`,
 `grid-oracles-are-order-statistics`.
+
+## S30-L3 -- THE METER REPRODUCES: ALL TEN S29 ANCHORS TO <5e-4 ON A COLD RE-RUN. BUT THE INSTRUMENT COULD NOT MEASURE A NEW COST ON THE **BUILT CHAIN** AT ALL -- THE REPORTING BASIS WAS AVAILABLE ONLY TO THE 31 SCORERS S28 HAD ALREADY STORED. FIXED, PLUS FOUR EXTENSIONS SECTION 7 ASKS FOR (2026-09-20 12:45, D)
+
+**Verdict: the six numbers the brief asked me to check all reproduce; the defect is elsewhere, in
+what the meter could not be pointed at.**
+
+### 1. Reproduction (job 1, the part that had to be true)
+
+Cold re-run of `s29/s29_D_cost_audit.py` on the 126 dev targets, nothing cached from S29's run
+reused except the ladder structures (themselves re-asserted against the S28 artefacts on load):
+
+| anchor | S29 published | S30 cold re-run | dev |
+|---|---|---|---|
+| ladder rho, S28 rungs, chain | -0.4023 | **-0.4023** | < 5e-5 |
+| ladder rho, S28 rungs, CA | -0.1818 | **-0.1818** | < 5e-5 |
+| gradient cosine | -0.0339 | **-0.0339** | < 5e-5 |
+| random-direction reference \|cos\| | 0.140 | **0.140** | < 1e-3 |
+| native percentile | 0.3688 | **0.3688** (DIS_SURR) / **0.3676** (DIS) | see 2 |
+| pref(circ_best vs PROD), chain / CA | 0.0714 / 0.2063 | **0.0714 / 0.2063** | < 5e-5 |
+| pool-member control, chain / CA | 0.0201 / 0.1265 | **0.0201 / 0.1265** | < 5e-5 |
+
+Ten checks, all pass, now asserted in code: `python s30/s30_D_meter.py verify`.
+
+### 2. Two things the brief said that the code does not do
+
+(a) **`selftest` does not check any of this.** `s29_D_cost_audit.py selftest` is a synthetic
+8-residue check that the RMSD-gradient cosine is +1 and that `spearman`/`pct_in_pool` behave --
+it runs in 0.4 s and would pass on a meter whose every dev-set number had drifted. The brief's
+instruction "run selftest and confirm it reproduces S29's published baselines" could not have
+been satisfied by that command. The reproduction check now exists as a separate `verify` mode.
+
+(b) **The 0.3688 anchor is the SURROGATE's, not the shipped cost's.** `DIS_SURR` (S~, the
+linear-interpolation surrogate) gives 0.3688; the shipped lookup `DIS` gives 0.3676. S29's own
+lane D recorded both (`s29/s29_D_FINDINGS.md:190`); the brief quotes 0.3688 beside the other
+five numbers, which are all `DIS`. Not a defect, but the percentile must always name its cost.
+
+### 3. THE REAL DEFECT: the reporting basis was closed to new costs
+
+The meter has three bases: `ca` (the point cloud), `chain` (the built chain, recomputed) and
+`chain-s28rows` (the built chain, read out of C2's stored rows). **`chain` was unusable: 0 of
+126 ladder-cache files carried the chain projections it requires**, so any `--basis chain` run
+raised `FileNotFoundError`. `chain-s28rows` works only for the 31 scorer names S28 had already
+evaluated and stored -- by construction it can never serve a cost written this sprint.
+
+So the instrument that is supposed to gate every new cost function could measure new costs
+**only on the CA point cloud**, and the project's own reporting basis is the built chain. That
+matters here more than usual: on the shipped cost the two bases do not merely differ in
+magnitude, they differ in **sign of the headline ladder** (CHARTER rho **+0.2603** on CA,
+**-0.0921** on the chain) and by a factor of 2.2 on the S28 ladder (-0.182 vs -0.402). A cost
+cleared on CA alone would have been cleared on the wrong instrument.
+
+Fixed: `s30/s30_D_meter.py build-cache --chain` now builds the projections (47 s/target, four
+shards, ~25 min) into `s30/results/s30_D_ladder_structs/`. S29's cache and results are left
+alone; the s30 cache is a separate directory (both are gitignored, regenerable).
+
+### 4. Four extensions section 7 asks for, now standard output
+
+- **(E1) per-target distributions** -- min/p10/q1/median/q3/p90/max, IQR, and the five named
+  extreme targets, for every diagnostic. A mean is not a distribution.
+- **(E2) FAIL18 vs 108 as a fold-clustered CONTRAST** (Welch SE, MDE, cluster-bootstrap CI,
+  per-fold cells), replacing S29's two bare means. **With the caveat that cannot be engineered
+  away: fold 0 holds NO FAIL18 target** (FAIL18 by pinned fold = 1:6, 2:2, 3:4, 4:6, 0:0), so
+  the split's cluster bootstrap draws from 4 non-empty clusters and its CI is wide by
+  construction. Any lane quoting a FAIL18/108 split this sprint inherits that.
+- **(E4) matched random-signed structures as a first-class control, R = 8 draws** (S29 used
+  seed 0 alone). The per-draw spread is printed beside the contrast, so a single-draw control
+  can be seen for what it is.
+- **(E5) the cosine's aggregate null.** S29 printed mean |cos| = 0.140, which is the magnitude
+  of ONE random direction on ONE target. That is **not** the null for a 126-target mean, which
+  is ~10x tighter. Both are now printed and labelled; mixing them makes a real effect look like
+  noise and is the mirror image of the error this project usually makes.
+- plus **(E6)** a pre-stated PASS/BLOCK gate carrying the 0.7x / 1.0x MDE rule, and **(E7)** a
+  multiplicity register counting every comparison the meter emits.
+
+### 5. Standing instruction to the other lanes
+
+Route a cost through `python s30/s30_D_meter.py meter --f <name-or-module:function> --basis chain`
+**before** it gets substantial VQE compute. A cost whose S28-ladder fold CI lies entirely below
+zero is gated BLOCK: lowering it raises RMSD, and the charter forbids spending a day on that.
+If the meter cannot see the merits of your cost, say so -- that is a finding about the meter and
+I will extend it.
+
+Artefacts: `s30/s30_D_meter.py`, `s30/results/s30_D_meter_*.json`; anchors asserted by
+`s30/s30_D_meter.py verify`.
