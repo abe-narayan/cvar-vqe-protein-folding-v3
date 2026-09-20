@@ -293,3 +293,89 @@ One asymmetry worth stating now: a cosine that clears 0.14 but yields an endpoin
 deployable arm takes the step its own score dictates, not the optimal one. If that is what happens,
 the reportable quantity is the cosine (B2 falls, the route opens, the step is a separate problem),
 and the entry must say so without inflating the Angstroms.
+
+---
+
+# ADDENDUM 2 (2026-09-20 02:3x, lane M) -- THE RULE-20 CITATION IS CORRECTED, THE SHRINK TWIN IS RE-JUSTIFIED ON A FOOTING THAT SURVIVES, AND THE SUPPLY GAP GAINS A SECOND CURRENCY: BITS OF THE READOUT'S 7
+
+Appended, not edited (contract rule 7). Still before any F2 number exists.
+
+## A2.1 Rule 20's cosine justification is withdrawn; my addendum 1 leaned on the withdrawn half
+
+Contract addendum 5 (30), on lane D's S29-L37: the claim "a positive gradient cosine is purchasable
+with zero information by shrinking the target map toward typicality" **is refuted on this
+instrument** -- across the registered nine-point grid the cosine does not rise, it falls to a
+minimum at s = 0.6 and returns, staying inside [-0.056, -0.033] and never approaching zero. **Do
+not quote it.** What is confirmed, monotonically and 9 of 9 steps in the predicted direction, is the
+other half: shrinking toward typicality **degrades the native's percentile in its own pool**,
+0.3688 -> 0.4910.
+
+**My addendum 1, section A1.3, justified the shrink twin by the withdrawn half** ("F2 is pre-loaded
+to produce a spurious cosine gain"). That sentence is withdrawn here. The control itself stands, on
+two footings that do survive:
+
+1. **It is the matched zero-information control in the operator's own space** -- the project's most
+   repeated error (`control-must-match-the-operators-space`, three instances in two sprints). A
+   fitted ratio model with realised shrink `s` produces a displacement whose geometry is partly a
+   property of `s` alone. The only way to separate "the fit knows something about this sequence"
+   from "a map of that shrink displaces the answer that way" is a twin with the same `s` and no
+   information. That argument never depended on rule 20.
+2. **The percentile axis is confirmed and F2 sits exactly on it.** A shrunk ratio model is a map
+   pulled toward the pool's typical profile, which is the move addendum 5 measures as degrading the
+   native's percentile from 0.369 to 0.491. S12's deployable shell-profile arm already sits at
+   **0.459** (`s12/obj_FINDINGS.md:198`) against the shipped 0.368 (`:191`) -- i.e. **the S12 arm's
+   percentile is already 3/4 of the way along addendum 5's shrink grid.** That is a measured
+   precedent that F2's arm will do the same thing, and it is now a pre-registered expectation.
+
+**Consequently the F2 report gate is restated:** every F2 arm prints the shrink `s`, **the native's
+percentile (the surviving axis)**, the emitted bond and Rg, beside the cosine -- and an arm whose
+percentile drifts toward 0.49 while its cosine improves is reporting addendum 5's measured trade
+(ladder rho -0.186 -> -0.054 and ORACLE-preference 0.198 -> 0.373 while recognition degrades), not a
+new information channel. Four numbers, never one.
+
+## A2.2 The MAE law, arriving from a fourth independent direction -- to be named in the entry
+
+Inside section 6's own table the **incumbent wins**: the distogram's own profile emits **3.078**,
+beating all four alternatives, including the arm with the **best profile MAE** (2.394 -> emits
+3.089). That is `MAE does not price selected RMSD` (memory; r = 0.19 among achievable priors) at the
+level of the *profile*, which is a fourth independent direction after the prior's MAE, the pool's
+MAE and the distance-matrix MAE. The F2 entry names it as such, and it is also the reason F2's
+primary readout is the cosine and the bits (below) rather than the profile's MAE or correlation.
+
+## A2.3 THE SECOND CURRENCY: how many of the readout's 7 bits the best native-free profile estimate delivers
+
+The coordinator's new architectural number: on the **built chain**, inside the identical top-128
+candidate set, the single best member reaches **2.1549 A** while the prefix-average readout caps at
+**2.9122 A** -- the readout costs **0.757 A at 4.0x MDE with the candidates held fixed**, and a rule
+needs only **7 bits per target** (log2 128) to claim it.
+
+**This falls out of F2 with one extra line and no new machinery**, because every F2 arm already
+computes a score over the pool and the instrument already carries `oracle_rr`. Registered now:
+
+    For each target, hold the candidate set FIXED at the production top-128 (the shipped score's
+    own prefix -- the coordinator's set, so only the RANKING varies, never the set).
+    Let r = the 1-based rank, under the arm's own score, of the ORACLE-best member of that set.
+    bits_delivered(arm) = 7 - log2(r)        (7 when it is ranked first, 0 when it is ranked last)
+
+Report, per arm: the mean over 126 targets, the median, the fold-clustered CI, and the **delta
+against the shipped score's own value**, which is the supply gap in the readout's currency. The
+ORACLE-RATIO and ORACLE-PROFILE arms give the ceiling of the class in the same units.
+
+**Three caveats, registered before the number exists, because this currency is easy to over-read:**
+
+1. **Bits about the BEST member are not bits the deployed readout can spend.** The terminal operator
+   consumes the retained set's MEAN, not its best (`operator-consumes-set-mean`: d_out = 1.16 x set
+   mean + 0.04 x set best, R2 0.89). So `bits_delivered` is a diagnostic in the coordinator's
+   currency and **is not a claim that F2's arm would realise any part of the 0.757 A** through the
+   average. An arm can gain bits and move the endpoint by nothing; that is the m-ladder's whole
+   history.
+2. **It is an ORACLE diagnostic** (it reads `oracle_rr` to identify the best member) and is labelled
+   so in every sentence that quotes it. It chooses nothing and tunes nothing.
+3. **7 - log2(r) is an order statistic**, so a per-target maximum over arms must be priced with
+   `ST.best_of_k_within` (`grid-oracles-are-order-statistics`). Only the pre-specified primary arm
+   is read as a result; the others are reported with the null beside them.
+
+If `bits_delivered` for the best native-free profile estimate is at or below the shipped score's own
+value, then the supply gap is total in this currency too -- the profile channel delivers **none** of
+the 7 bits the readout leaves on the table -- and that sentence, with its number, is the single most
+useful thing F2 can hand the report under the coordinator's framing.
