@@ -74,6 +74,13 @@ N_CTRL = 64          # random-subspace control draws per target
 SIG11 = ("CHAN_DISTPOT", "MSET_250", "MSET_150", "CHAN_RG_LAW", "CHAN_CONTACT", "CONS_TRIM",
          "CHAN_LEG", "MSET_500", "CHAN_CONTACT_LL", "CHAN_ENV", "PROJ")
 
+#: THE TWO BASES, AND THEY ARE NOT INTERCHANGEABLE. Every cosine here is measured on the CA POINT
+#: CLOUD, where production is ~3.048 A. The bound's published thresholds are on the BUILT CHAIN,
+#: where production is 3.2105 A (S29-L44 / REPORT_S29 section 0 item 2) -- which is why the record
+#: says "rho = 0.358 is needed for 3.00 A": 3.2105*sqrt(1-0.358^2) = 3.00. Applying a point-cloud
+#: production RMSD to that threshold silently answers a different question, so both are printed.
+CHAIN_PROD = 3.2105
+
 
 # ============================================================================ field vectors
 def field_vectors(pdb):
@@ -344,6 +351,47 @@ def analyse(pdbs):
         nv = np.linalg.norm(v)
         return float(v @ us[t] / nv) if nv > 1e-15 else 0.0
 
+    #: cos_t(w) = (w.a_t) / sqrt(w' G_t w) -- exact, so the ORACLE-optimal global weighting can be
+    #: found by MAXIMISING THE MEAN COSINE rather than by least squares. The LS solution is NOT the
+    #: optimum of this objective: on the partial run it returned rho BELOW the best single field,
+    #: which is impossible for a true maximum (w = e_j reproduces field j exactly). Caught by that
+    #: internal consistency check, which is why the check is worth running.
+    Amat = np.stack([Xs[t] @ us[t] for t in range(len(ok))])                     # (T, F)
+    Gmat = np.stack([Xs[t] @ Xs[t].T for t in range(len(ok))])                   # (T, F, F)
+
+    def cos_vec(w, idx):
+        a = Amat[idx] @ w
+        s = np.sqrt(np.maximum(np.einsum("tij,i,j->t", Gmat[idx], w, w), 1e-300))
+        return a / s
+
+    def neg_mean_cos(w, idx):
+        a = Amat[idx] @ w
+        Gw = np.einsum("tij,j->ti", Gmat[idx], w)
+        s = np.sqrt(np.maximum((Gw * w).sum(1), 1e-300))
+        c = a / s
+        g = (Amat[idx] / s[:, None]) - (a / s ** 3)[:, None] * Gw
+        return -float(c.mean()), -g.mean(0)
+
+    def max_cos(idx, extra_starts=()):
+        """The ORACLE-optimal GLOBAL weighting: argmax_w mean_t cos(X_t' w, u_t), multi-start.
+
+        Starts: every single-field basis vector (so the optimum can never be worse than the best
+        single field -- the consistency floor), equal weights, and any extra start supplied.
+        """
+        from scipy.optimize import minimize
+        idx = np.asarray(idx, int)
+        starts = [np.eye(len(names0))[j] for j in range(len(names0))]
+        starts.append(np.ones(len(names0)))
+        starts.extend(extra_starts)
+        best_w, best_v = None, -np.inf
+        for w0 in starts:
+            r = minimize(neg_mean_cos, np.asarray(w0, float), args=(idx,), jac=True,
+                         method="L-BFGS-B", options=dict(maxiter=500))
+            v = -float(r.fun)
+            if v > best_v:
+                best_v, best_w = v, r.x
+        return best_w, best_v
+
     def pick_lam(idx):
         """The ridge chosen by NESTED leave-one-fold-out INSIDE the training folds only.
         Never on the held-out fold: the collinearity here is severe (stable rank ~2), so an
@@ -366,8 +414,10 @@ def analyse(pdbs):
 
     C = np.array([r["cos"] for r in ok], float)
     lam_all, _ = pick_lam(list(range(len(ok))))
-    wall = fit_global(range(len(ok)), lam_all)
+    wall_ls = fit_global(range(len(ok)), lam_all)
+    wall, _ = max_cos(range(len(ok)), extra_starts=(wall_ls,))            # the TRUE oracle optimum
     cos_global_oracle = np.array([cos_of(wall, t) for t in range(len(ok))])
+    cos_global_ls = np.array([cos_of(wall_ls, t) for t in range(len(ok))])
     lfo = np.zeros(len(ok)); lfo_single = np.zeros(len(ok)); lfo_eq = np.zeros(len(ok)); lams_used = {}
     sel_used = {}
     for q in sorted(set(folds.tolist())):
@@ -375,7 +425,8 @@ def analyse(pdbs):
         te = [t for t in range(len(ok)) if folds[t] == q]
         lam, _ = pick_lam(tr)
         lams_used[int(q)] = lam
-        w = fit_global(tr, lam)
+        w_ls = fit_global(tr, lam)
+        w, _ = max_cos(tr, extra_starts=(w_ls,))       # fitted on TRAIN ONLY, same objective
         for t in te:
             lfo[t] = cos_of(w, t)
         j = int(np.nanargmax(np.nanmean(C[tr], 0)))          # best single field on the TRAIN folds
@@ -407,6 +458,8 @@ def analyse(pdbs):
     out["global_weights"] = dict(
         oracle_global_rho=float(cos_global_oracle.mean()), oracle_global_lambda=lam_all,
         oracle_global_implied_rmsd=rp * float(np.sqrt(max(1 - cos_global_oracle.mean() ** 2, 0))),
+        oracle_global_rho_ls=float(cos_global_ls.mean()),
+        oracle_global_best_single_floor=float(np.nanmax(np.nanmean(C, 0))),
         lfo_rho=float(lfo.mean()), lfo_median=float(np.median(lfo)), lfo_lambdas=lams_used,
         lfo_implied_rmsd=rp * float(np.sqrt(max(1 - lfo.mean() ** 2, 0))),
         lfo_best_single_rho=float(lfo_single.mean()),
@@ -427,9 +480,23 @@ def analyse(pdbs):
     out["fail18_split"] = dict(
         rho_oracle=dict(fail=float(ro[fail].mean()), other=float(ro[~fail].mean())),
         lfo=dict(fail=float(lfo[fail].mean()), other=float(lfo[~fail].mean())))
-    out["thresholds"] = dict(rho_for_3A=float(np.sqrt(max(1 - (3.00 / rp) ** 2, 0))),
-                             rho_for_2_5A=float(np.sqrt(max(1 - (2.50 / rp) ** 2, 0))),
-                             note="rho needed so that rmsd_prod*sqrt(1-rho^2) reaches the stated RMSD")
+    def chain(r):
+        return CHAIN_PROD * float(np.sqrt(max(1 - r ** 2, 0)))
+    out["thresholds"] = dict(
+        cloud_prod=rp, chain_prod=CHAIN_PROD,
+        rho_for_3A_cloud=float(np.sqrt(max(1 - (3.00 / rp) ** 2, 0))),
+        rho_for_3A_chain=float(np.sqrt(max(1 - (3.00 / CHAIN_PROD) ** 2, 0))),
+        rho_for_2_5A_chain=float(np.sqrt(max(1 - (2.50 / CHAIN_PROD) ** 2, 0))),
+        note="rho needed so that rmsd_prod*sqrt(1-rho^2) reaches the stated RMSD. The record's "
+             "'0.358 for 3.00 A' is the CHAIN row; every cosine measured in this file is a POINT-CLOUD "
+             "cosine, so the chain column below is the comparable one.")
+    out["chain_basis"] = dict(
+        oracle_per_target=chain(out["oracle_per_target"]["rho"]), oracle_global=chain(out["global_weights"]["oracle_global_rho"]),
+        lfo_global=chain(out["global_weights"]["lfo_rho"]), lfo_eq=chain(out["global_weights"]["lfo_eq_rho"]),
+        eq_sig11=chain(out["global_weights"]["equal_sig11_rho"]), best_single=chain(out["global_weights"]["oracle_global_best_single_floor"]),
+        ctrl_random_subspace=chain(out["oracle_per_target"]["ctrl_full_dim_rho"]), production=CHAIN_PROD,
+        note="the SAME cosines carried through the bound with the BUILT-CHAIN production RMSD. "
+             "These are the numbers comparable to the record's 3.2105 / 3.00 / 2.50 A.")
     out["text"] = render(out)
     os.makedirs(RESULTS, exist_ok=True)
     ST.save_atomic(OUT, out, module_file=__file__)
@@ -442,7 +509,9 @@ def render(o):
     g = o["gram_mean"]; pr = o["per_target_rank"]; op = o["oracle_per_target"]; gw = o["global_weights"]
     L = [f"FIELD-CLASS GRAM AND COMBINATION CEILING (ORACLE throughout), n={o['n']} targets, "
          f"{len(o['fields'])} fields, mean ambient dim (3n-6) {o['ambient_mean']:.1f}, production {o['rmsd_prod_mean']:.4f} A"]
-    L.append(f"  rho needed for 3.00 A: {o['thresholds']['rho_for_3A']:.4f}   for 2.50 A: {o['thresholds']['rho_for_2_5A']:.4f}")
+    th = o["thresholds"]
+    L.append(f"  BASES: cosines are POINT-CLOUD (production {th['cloud_prod']:.4f} A). The record's thresholds are BUILT CHAIN "
+             f"(production {th['chain_prod']:.4f} A): rho for 3.00 A = {th['rho_for_3A_chain']:.4f}, for 2.50 A = {th['rho_for_2_5A_chain']:.4f}.")
     L.append("  (1) GRAM of the unit field directions, averaged over targets:")
     L.append(f"      mean |off-diagonal| {g['mean_abs_offdiag']:.4f}  eigenvalues {['%.2f' % x for x in g['eig'][:8]]} ...")
     L.append(f"      stable rank (trace/lmax) {g['stable_rank']:.3f}   effective rank (exp entropy) {g['effective_rank']:.3f}   "
@@ -466,8 +535,10 @@ def render(o):
             ci = rc["ci95_fold"][j]
             L.append(f"      {r:3d}   {rc['rho_real'][j]:8.4f}  {rc['rho_ctrl'][j]:8.4f}  {rc['excess'][j]:+8.4f}  "
                      f"{rc['excess_over_mde'][j]:+5.2f}  [{ci[0]:+.3f},{ci[1]:+.3f}]   {rc['implied_rmsd_real'][j]:.4f} / {rc['implied_rmsd_ctrl'][j]:.4f}")
-    L.append("  (3) ORACLE GLOBAL weighting (ONE w for all targets, fitted with the native), ridge %g:" % gw["oracle_global_lambda"])
-    L.append(f"      rho {gw['oracle_global_rho']:.4f} -> implied {gw['oracle_global_implied_rmsd']:.4f} A")
+    L.append("  (3) ORACLE GLOBAL weighting (ONE w for all targets, fitted with the native by MAXIMISING the mean cosine):")
+    L.append(f"      rho {gw['oracle_global_rho']:.4f} -> implied {gw['oracle_global_implied_rmsd']:.4f} A   "
+             f"| consistency floor (best single field's own mean cos) {gw['oracle_global_best_single_floor']:+.4f}  "
+             f"| least-squares fit for comparison {gw['oracle_global_rho_ls']:.4f} (ridge {gw['oracle_global_lambda']:g})")
     L.append("  (4) NATIVE-FREE ARMS -- the only numbers here that may be read as a capability:")
     L.append(f"      LFO global weighting (ridge by NESTED CV inside train, lambdas {gw['lfo_lambdas']}):")
     L.append(f"        rho {gw['lfo_rho']:.4f} (median {gw['lfo_median']:.4f}) -> implied {gw['lfo_implied_rmsd']:.4f} A")
@@ -491,6 +562,12 @@ def render(o):
                  f"at the {100*cc['pctile_in_null']:.0f}th pct of the null, flag {cc['flag']}")
     L.append(f"  (5) FAIL18 vs 108: ORACLE rho* {o['fail18_split']['rho_oracle']['fail']:.4f} / {o['fail18_split']['rho_oracle']['other']:.4f}   "
              f"LFO {o['fail18_split']['lfo']['fail']:.4f} / {o['fail18_split']['lfo']['other']:.4f}")
+    cb = o["chain_basis"]
+    L.append(f"  (6) THE SAME COSINES ON THE BUILT CHAIN (production {cb['production']:.4f} A) -- the comparable column:")
+    L.append(f"      ORACLE per-target {cb['oracle_per_target']:.4f}  (matched random subspace {cb['ctrl_random_subspace']:.4f})  "
+             f"| ORACLE GLOBAL {cb['oracle_global']:.4f}  | best single field {cb['best_single']:.4f}")
+    L.append(f"      native-free: LFO global {cb['lfo_global']:.4f}   LFO-selected equal weights {cb['lfo_eq']:.4f}   "
+             f"EQ11 (leaked selection) {cb['eq_sig11']:.4f}")
     L.append("  READ (2) ONLY BESIDE ITS CONTROL: a 21-dim subspace of a ~33-dim space captures most of any direction "
              "by dimension counting. The ORACLE ceiling is meaningful only as its EXCESS over the matched random subspace.")
     return "\n".join(L)

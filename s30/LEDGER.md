@@ -2190,3 +2190,107 @@ claim that nothing upstream or downstream is.
 Reproduction: `s30/PREREG_S30_T.md` addenda 1-2, `s30/s30_T_quadric.py`, `s30/s30_T_combo.py`,
 `s30/results/s30_T_quadric.json`, `s30_T_combo.json`. Derivations in `s30/THEORY.md` sections 4, 8.
 
+
+## S30-L6 -- **THE COMBINATION QUESTION IS CLOSED, AND THE REASON IS RANK, NOT COUNT.** THE 21 FIELDS HAVE A PER-TARGET STABLE RANK OF **1.68** -- ELEVEN SIGNIFICANT FIELDS ARE ~2 DIRECTIONS. THE **ORACLE GLOBAL** WEIGHTING, ONE w FOR ALL TARGETS WITH THE NATIVE IN HAND, REACHES ρ = **0.1693 = 0.69 BITS AGAINST THE 3.22 NEEDED**, WORTH **0.046 Å ON THE BUILT CHAIN**. EVERY NATIVE-FREE ARM **LOSES TO THE SINGLE BEST FIELD**, AND THE 21-PARAMETER FITTED ARM IS THE WORST OF THEM (ρ = 0.012). MY OWN PRE-REGISTERED FALSIFIER IS NOT MET (2026-09-20 13:17, D)
+
+**Verdict: no. Combining the fields does not reopen the bound. Prereg
+`s30/PREREG_S30_D_gram.md` predicted this and stated the falsifier; the falsifier failed.**
+
+### The question (coordinator, after S30-L5)
+
+If eleven native-free displacement fields each carry real signal at ρ ≈ 0.10–0.11, and orthogonal
+fields would combine to √(Σρᵢ²) ≈ **0.332–0.365**, and 3.00 Å needs **ρ = 0.3561** — does the
+combination clear the threshold? The arithmetic lands close enough that it had to be measured.
+
+### The answer, on the built chain (production 3.2105 Å, ρ for 3.00 Å = 0.3561 = 3.22 bits)
+
+| arm | ρ | bits | built-chain Å | vs production |
+|---|---|---|---|---|
+| **what is needed for 3.00 Å** | **0.3561** | **3.218** | 3.0000 | −0.2105 |
+| ORACLE per-target weighting (21-dim projection) | 0.9491 | 54.8 | 1.0111 | −2.199 |
+| — **matched random 21-dim subspace (the control)** | **0.8095** | **25.3** | 1.8850 | −1.326 |
+| **ORACLE GLOBAL weighting** (one w, native in hand) | **0.1693** | **0.690** | **3.1642** | **−0.046** |
+| best single field (CHAN_DISTPOT), LFO-chosen | 0.1214 | 0.352 | 3.1867 | −0.024 |
+| EQ11, zero-parameter, leaked selection | 0.1139 | 0.310 | 3.1896 | −0.021 |
+| **LFO-selected equal weights (no leakage)** | **0.0948** | **0.214** | 3.1960 | −0.015 |
+| LFO global weighting, 21 fitted parameters | 0.0124 | 0.004 | 3.2103 | −0.000 |
+
+n = 119 of 126 (7 targets lack one of the 9 S27 channels, so their field set is not the same 21
+and they are excluded from every aggregate rather than silently padded). Cosines are POINT-CLOUD;
+the Å column carries them through the bound with the published built-chain production 3.2105 Å,
+which is the basis the record's 0.3561 threshold lives on. Both bases are printed by the tool.
+
+### Why: rank, exactly as the coordinator guessed
+
+**The Gram of the 21 unit field directions has a per-target stable rank (trace/λmax) of 1.681**
+and an effective rank of 3.68; aggregated, stable rank 2.057 with the **top 3 eigenvalues
+carrying 60.0%** and λ₁ alone carrying 10.21 of 21. Mean |off-diagonal| 0.427. **Eleven
+significant fields are about two directions.** This is the same collapse lane T measured on the
+pair-distance matrix (stable rank 1.859) — the fields are all differences of averages over
+overlapping prefixes of one pool, ranked by scores that all contain DIS, so they cannot be
+independent and are not.
+
+The orthogonality arithmetic that motivated the question assumed 11 independent directions.
+There are ~2. **√(Σρᵢ²) = 0.33 was the right formula applied to the wrong rank.**
+
+### The one real thing here, and why it is still unusable
+
+The ORACLE per-target projection reaches ρ = 0.9491. **Read alone that is nonsense**: a random
+21-dimensional subspace of these targets' 32.9-dimensional rigid-body-removed space reaches
+0.8095 by dimension counting. But the excess is real and large — **+0.1396, SE 0.0073, 6.83× MDE,
+fold CI [+0.132, +0.148], 5/5 folds** — and the rank curve shows it is not an artefact of the
+near-degenerate tail: at rank 4 the real field set reaches **0.6627 against 0.3299 for a random
+4-dimensional subspace (+0.333, 6.31× MDE)**. The field class's span genuinely points at the
+native better than a random subspace of the same size.
+
+**And it is per-target.** The gap between the per-target ORACLE (0.9491) and the global ORACLE
+(0.1693) — both with the native in hand, differing only in whether the weights may vary by target
+— is the entire result. This is `in-band-ordering-is-per-target` appearing in a new basis: 0.949
+within a target, 0.169 across them. S29's incidental-parameter result says per-target weights are
+not estimable from other targets, and the four native-free arms confirm it from the other side.
+
+### Three things I had to fix in my own arms before the numbers meant anything
+
+1. **My first LFO fit returned a NEGATIVE cosine (−0.218).** An untuned ridge on a stable-rank-2
+   Gram is a strawman. The ridge is now chosen by nested leave-one-fold-out *inside the training
+   folds*. It selects the largest value in the grid on 4 of 5 folds — i.e. the fitted covariance
+   contributes nothing and the rule degenerates to marginal-cosine weighting.
+2. **My "ORACLE global" arm was fitted by least squares and returned ρ BELOW the best single
+   field** — impossible for a true maximum, since w = eⱼ reproduces field j exactly. That internal
+   consistency floor is what caught it. The arm now maximises the mean cosine directly (analytic
+   gradient, 22 starts including every single-field basis vector). It is the reason the reported
+   0.1693 can be trusted as a ceiling rather than an artefact of an objective mismatch.
+3. **My EQ11 arm selected its 11 fields using the same 126 targets it was scored on.** Replaced by
+   an arm that selects fields inside the training folds only. It costs 0.019 in ρ (0.1139 →
+   0.0948), which is the size of that leakage and is worth knowing.
+
+### Against my own pre-registered falsifier
+
+> the rank curve's excess is materially positive at some rank **AND** the leave-fold-out global
+> weighting reaches ρ ≥ 0.20 with a fold CI excluding the best single field's ρ.
+
+First clause **met**. Second clause **failed on both counts**: the best honest native-free arm
+reaches ρ = 0.0948, less than half of 0.20, and against the best single field it is
+**−0.0267, fold CI [−0.067, +0.010], −0.36× MDE**. The fitted 21-parameter arm is worse still
+(−0.1091, −1.31× MDE, 5/5 folds against it). Under the sprint's rule, nothing here is a result
+except the negative: **below 0.7× MDE is not a result, and every combination arm is below it.**
+
+Concentration was checked against a uniform-effect null (52nd percentile, no flag), so the small
+positive-vs-zero effects are not one or two targets.
+
+### What this settles for the sprint
+
+- **Do not spend compute searching for a better weighting of this field class.** The ceiling with
+  the native in hand is 0.046 Å on the built chain; the deployable arms return 0.015 Å and lose to
+  picking one field.
+- **The barrier is the rank of the information, not the number of channels.** Adding a 22nd field
+  built the same way — from the same pool, ranked by a score containing DIS — will land in the
+  same 2-dimensional span. A field that helps must be *orthogonal* to that span, and the Gram
+  above is the instrument for checking that before anything is built: it is now a one-line test.
+- **B2 stands, and stands more firmly than before.** Its number survives (S30-L5), its argument is
+  replaced (S30-L5), and now its scope is measured: the bound does not move under combination.
+
+Artefacts: `s30/s30_D_gram.py`, `s30/results/s30_D_gram.json`, `s30/results/s30_D_gram/*.npz`,
+prereg `s30/PREREG_S30_D_gram.md`. The regenerated fields are asserted equal to
+`s29/results/s29_D_fields_rows.jsonl` cosines to 1e-9, so this prices the same 21 fields S30-L5 did.
+Multiplicity: 25 comparisons from this file (21 of them the rank curve).
