@@ -665,6 +665,39 @@ ranking work came back flat. NOT a route: argmin is the operator that punishes a
 (S12/S19), and m* = 75 is correct FOR an objective of the shipped quality. See S29-L44 addendum 2.
 This is the third lane correction of the coordinator this sprint, and the second in one hour.
 
+## Integration note 29 (2026-09-20 02:51, S29-L51): F1 IS THE DIRECT ANSWER TO THE USER'S COST-RMSD QUESTION, AND IT IS NO
+After S28 the user asked for work on "making sure cost function reduction equals reduced RMSD -- I
+need those 2 to correlate." Lane M's F1 is the cleanest test of that the project has ever run, and
+the answer is that a cost function which orders the near-native ladder BETTER emits the SAME ANSWER.
+
+The setup was the strongest available. Lane D's meter had found the pair log-score to be the FIRST
+cost in the project's record that is not ANTI-informative on the near-native ladder (+0.200 of
+ladder rho above the shipped cost, 5/5 folds, S29-L6). If better cost ordering ever converts into
+better structures, this is the cost that should show it. Everything but the functional was held at
+production: same K=500 pool, same leave-fold-out posterior, same tie-safe top-75, same uniform
+average in the medoid frame, same projection, same RMSD -- and PROD reproduces the cached DIS
+channel bit-for-bit.
+
+THE RESULT, on the built chain at n = 126:
+    LOG - PROD      +0.0822   0.55x MDE   3/5 folds   power 0.34   NOT MEASURED
+    LOG - SWAPCTL   +0.0202   **0.14x MDE**  fold CI [-0.1020, +0.1622]  57W/69L  power 0.07
+**The log score's entire endpoint effect is indistinguishable from exchanging 20.6 of 75 members at
+random.** And it emits the same structure: the error-direction cosine against production is 0.924,
+against a random reference of 0.177.
+
+AND THE INFORMATION IS REAL -- it is just not information production lacks. Destroying the
+pair-to-posterior correspondence (LOGPERM) costs +0.730 A at 2.29x MDE, 5/5 folds, power 1.00. So
+the channel carries genuine signal; the signal is about REALISM, which production already has; and
+the residual ordering it adds on top is worth 0.14x MDE.
+
+THIS IS THE COST-RMSD CORRELATION QUESTION ANSWERED AT THE ENDPOINT, and it composes with the rest:
+a cost that orders better still moves the answer only along a displacement whose cosine is ~0.04
+(the bound), through a readout that consumes the set mean and can spend at most 0.04 of any ranking
+(the operator law), on a per-target sign that is not estimable (the incidental parameter). Four
+independent reasons, one outcome. The honest answer to the user's question is that the two will not
+correlate through THIS architecture no matter how good the cost gets -- and the report must say so
+plainly rather than promising a better cost function.
+
 ## Integration note 28 (2026-09-20 02:40, lane T's compactness measurement at n = 40): MY STANDING EXPECTATION WAS WRONG AND **B2's LAST EXIT STAYS OPEN**
 I told lane L, in writing, that "if the channels we own are as compactness-loaded as that suggests,
 your objection is confirmed, lane T's section 7 row 3 closes, and with it the last structurally
