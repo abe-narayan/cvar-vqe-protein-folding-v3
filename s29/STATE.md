@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 01:32 Pacific.
+Last update: 2026-09-20 01:34 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -200,7 +200,12 @@ thesis. Three results, all on 126 targets with fold CIs.
    native as often as toward it. Contraction is real and is NOT a globally correctable
    direction -- lane L's Jensen framing, lane D's own "the shipped cost's descent EXPANDS", and
    now this, meeting from three sides.
-4. THE ALIGNMENT IS A FAIL18 SET PROPERTY: mean cosine on the 18 against the 108 is +0.348 vs
+4. THE ALIGNMENT IS A FAIL18 SET PROPERTY, WITH BOTH HALVES STATED TOGETHER because a reader
+   who gets only the first half has a case: 10 of the 21 fields clear a 20,000-draw random-18
+   null where 1 is expected, AND it does not move the bound, because the n = 18 intervals are
+   wide and even the strongest field's lower bound (CONS_TRIM, 0.128) sits under the 0.140
+   reference. The displacement information is real and concentrated on the hard stratum; it is
+   not enough to change what any native-free operator can do. Numbers: mean cosine on the 18 against the 108 is +0.348 vs
    +0.046 for CONS_TRIM, +0.316 vs +0.078 for MSET_250, +0.249 vs +0.040 for PROJ. The
    displacement information lives where the error is largest, which is where a per-target sign
    would be worth the most and where the sprint has repeatedly found no way to get it.
