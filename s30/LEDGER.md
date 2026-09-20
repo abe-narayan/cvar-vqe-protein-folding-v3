@@ -3813,3 +3813,38 @@ deepest statement available; the original wording stands (contract rule 15) and 
 annotation. The sign is unobtainable *because* the only visible component is the common mode, and
 the common mode is by S30-L7 exactly the component that carries no information about the native.
 The earlier sentence describes the symptom; section 3 gives the cause.
+
+### ANNOTATION TO S30-L25 (added 2026-09-20 14:02, P): **THE BUILT CHAIN, AND THE TRANSFER COEFFICIENT IS 0.92 AND NOT 1.16**
+
+Contract rule 1 satisfied for the two headline ORACLE arms. `s30/s30_P_chain.py`,
+`s30/results/s30_P_chain.json`, n = 126, production's own stage-3b projection.
+Reproduction: PROD built chain **3.2126** against the record's `rmsd_fit` mean **3.2041**
+(0.0085 A, the projection's multi-start randomness and the tie-break rule).
+
+```
+arm                      built chain   delta    xMDE  folds  W/L     (point-cloud delta)
+ORACLE_SEPPROF5             2.6791    -0.5335   2.29   5/5   94/32      -0.5740
+ORACLEsign_LFOmag           2.8867    -0.3259   2.05   5/5   92/34      -0.3567
+
+strata, ORACLE_SEPPROF5     other108 -0.3251 | tailA -1.3674 | tailB -1.0003 | FAIL18 -1.7839 (CIRCULAR)
+strata, ORACLEsign_LFOmag   other108 -0.2470 | tailA -0.8018 | tailB -0.4492 | FAIL18 -0.7992 (CIRCULAR)
+```
+
+**Both headline results survive the projection at full strength and 5/5 folds, and the ~4x tail
+concentration survives on both filter-independent tails.** Five ORACLE signs are worth
+**-0.3259 A on the endpoint the contract names**, i.e. 3.2126 -> 2.8867.
+
+**The coordinator registered -0.35 to -0.45 for this arm, via the set-mean law's 1.16 coefficient.
+Measured -0.3259: below his range, but the shortfall is 0.024 A = 0.15x MDE and is NOT MEASURED, so
+his prediction is not falsified at any resolution this instrument has.** The point estimate does say
+something, though, and two arms say it consistently: **the cloud -> built-chain transfer for a PRIOR
+correction is 0.929 and 0.914, i.e. ~0.92 -- the projection ABSORBS about 8% of the gain rather
+than amplifying it.**
+
+**And the 1.16 coefficient was the wrong law to apply here, which is my correction to make rather
+than his.** `operator-consumes-set-mean` is `d_out = 1.16*d_set_mean + 0.04*d_set_best`, where
+`d_set_mean` is the **mean RMSD of the retained members** (production 3.5507), not the RMSD of their
+average (production 3.0483). Those are different quantities: the law's own inputs give
+1.16*3.5507 + 0.04*2.3062 = 4.21 A against production's actual 3.21, so it does not map cloud to
+chain and must not be used to transfer a cloud delta. **Use 0.92, measured here on two independent
+arms.**
