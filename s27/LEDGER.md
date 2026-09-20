@@ -3098,3 +3098,74 @@ blind, ORACLE), S28-L30 and this entry (the deployable step is worth a random st
 quantum was earned; what stands is the mechanism: the family can express the native, the
 optimiser reaches the objective's optimum, and the objective is wrong at its optimum, wrong in
 its ordering, and blind at production. Lane D attacks this entry next; nothing is built on it.
+## S28-L40 -- ADVERSARY CHECK OF S28-L39 (A2.2, the step ladder on the built chain): STANDS; THE FALSIFIER IS SILENT AT EVERY e AND THE e-GRID "RESIDUAL" IS THE SMALLEST-e COLUMN; THE STEP ARM's FAIL18 "WORSE" IS THE WHOLE-SET HARM SEEN ON 18 TARGETS (RANDOM-18 NULL p 0.06 / 0.25), NOT A REGIME; THE CIRCUIT STEP's FAIL18 EXCESS IS A REAL SET PROPERTY (p 0.001 / 0.003, SURVIVES DROPPING 2NB7) AND IT IS HARM (2026-09-19 21:02, lane D)
+Question: does the verdict stand, is the comparator like for like, is any positive hidden in the
+grid or the strata, and is the FAIL18 stratum a regime statement or 18-target noise?
+Recomputed from `s27/results/s28_A_chain_rows.jsonl` (126 targets, 13 A2 arms + prod) with
+`s27/s28_D_attack_A2_chain.py` -> `s27/results/s28_D_attack_A2_chain.json`
+(`s26/logs/s28D_attack_A2_chain.log`):
+- Every contrast in the entry matches to four decimals: step vs production -0.0037 / +0.0178 /
+  +0.1045 (0.21x / 0.74x / 2.10x); step vs the mean of the SAME two projected draws -0.0051 /
+  -0.0001 / -0.0139 (0.22x / 0.00x / 0.26x, fold CI including zero at every e); the random mean
+  vs production +0.0014 / +0.0180 / +0.1185; circP vs production +0.0072 (0.38x); the circuit
+  step vs circP +0.0000 / +0.0078 / +0.1222 (e = 1 WORSE, 1.34x, 5/5). Falsifier: does not
+  fire at any e (neither clause is met at any e). Correct.
+- Like for like (S28-L23 (c)/(d)): `s28_A2_prodcheck.json` re-projects the stored production
+  cloud bit-for-bit on 4/4 including 2LNG (the S28-L27b branch-flip target), so the floor
+  needs an input difference, as S28-L18 said; and the chain job's `rmsd_cloud` equals the
+  point-cloud entry's `s28_A2_ladder_rows.jsonl` at 0.0 on all 13 arms x 126 targets, and
+  production's cloud equals S27 `pool_rows.jsonl :: DIS` at 3.7e-14 on 126/126: the chain rows
+  project exactly the clouds S28-L30 measured, through one code path. Correct.
+- The e grid (S28-L23 (b)): `best_of_k_within` 93% / 94% accounted, k_eff 2.74 / 2.71; the
+  kit's "residual survives" (-0.0432 / -0.0380) equals the smallest-e column's deviation from
+  the mean of the three column means (-0.0433) to the fourth decimal: what transfers is the
+  choice e = 0.1, whose own contrast with production is -0.0037 at 0.21x. The entry reads it
+  exactly so. The best-of-3 means (3.170 / 3.131) are order statistics and are not quoted as
+  achievable. Correct.
+- The random best-of-2 (3.187 / 3.177 / 3.225): priced NOT A SIGNAL at every e (83 to 72%
+  accounted, split-half -15% to +23%). Correct; never a control.
+- circP residual 0.114 A RMS (median 0.104, max 0.377); its chain +0.0072 at 0.38x: the
+  circuit family starts at production within noise and its step tracks the raw step. Correct.
+- FAIL18 / 108 (the coordinator's question; `s27/results/s28_D_attack_A2_fail18_null.json`,
+  `s26/logs/s28D_A2_fail18_null.log`): for each per-target chain difference I put the FAIL18
+  mean against the null of 20,000 random 18-subsets of the 126 (without replacement; one-sided
+  p = share of subsets at least as harmful), and again with 2NB7 dropped (17 vs random 17):
+    step e=0.3 - prod       FAIL18 +0.053  other +0.012  p 0.056  [null 2.5/97.5: -0.022, +0.062]  drop-2NB7 +0.033, p 0.24
+    step e=1   - prod       FAIL18 +0.134  other +0.100  p 0.251  [+0.020, +0.188]                 drop-2NB7 +0.104, p 0.50
+    step e=1   - rand mean  FAIL18 +0.071  other -0.028  p 0.032  [-0.106, +0.076]                 drop-2NB7 +0.049, p 0.09
+    circ e=0.3 - prod       FAIL18 +0.117  other -0.002  p 0.001  [-0.046, +0.077]                 drop-2NB7 +0.089, p 0.014
+    circ e=1   - prod       FAIL18 +0.348  other +0.093  p 0.003  [-0.024, +0.285]                 drop-2NB7 +0.313, p 0.012
+    circ e=0.3 - circP      FAIL18 +0.111  other -0.009  p 0.000                                    drop-2NB7 +0.091, p 0.004
+    rand mean e=1 - prod    FAIL18 +0.063  other +0.128  p 0.927 (the random step is CHEAPER on FAIL18)
+  Reading: (i) for the RAW STEP the FAIL18 "WORSE [Type-M]" at e = 0.3 and 1 is the whole-set
+  harm seen on 18 targets (p 0.056 / 0.251, and 0.24 / 0.50 once 2NB7, whose +0.63 is a third
+  of the stratum's excess, is dropped): NOT a regime statement; the entry's item 5 sentence
+  "where the distogram is wrong its descent costs more" should be scoped to the circuit arm.
+  (ii) For the CIRCUIT's one step the FAIL18 excess IS a set property: p 0.001 / 0.003 against
+  the random-18 null at e = 0.3 / 1 (0.004 to 0.014 with 2NB7 dropped; Bonferroni over the 15
+  tests 0.0033), it is present on the point cloud before projection (+0.110 / +0.382 on FAIL18
+  vs +0.023 / +0.202 overall, `rmsd_cloud`), and it is NOT a monotone function of how wrong
+  production is (Spearman of the harm with production's chain RMSD over 126: +0.10 / -0.05,
+  n.s.), so it is the direction the circuit takes on these 18, not a "worse where production
+  is worse" gradient. It is HARM at a Type-M size inside the stratum (1.08x / 1.59x); it changes
+  no verdict and helps no regime. (iii) The random control's harm falls with production's RMSD
+  (Spearman -0.287, p 0.001): a step of size e on a structure at RMSD R costs about e^2 / 2R
+  when the direction is random, so the random control is cheap exactly on FAIL18; "step vs the
+  random mean +0.071 on FAIL18" (p 0.032, 0.09 without 2NB7) partly reads that geometry, and
+  the entry rightly leaves it at "nothing" (0.63x).
+- Tails: the worst per-target degradations at e = 0.1 (+0.32 on 2NB7 for a 0.1 A displacement of
+  the cloud) are the projection's branch flips (S28-L27b) responding to a real input change;
+  p90 is +0.030 and the concentration percentile 0.54, so no mean here is tail-driven.
+- Cosmetic-variant test and novelty (addendum 1, 14 (b)): a displacement of the production
+  cloud along the objective's own gradient, priced against a same-size random displacement on
+  the verdict basis; not a re-weighting of the top-75; beyond S16 and S28-L30 as the entry
+  says. Rule 4: the deployable arms never read the native (lane A's recognition-phase poison
+  test, `tests/test_s28_D.py`, covers the chain phase's inputs). Rule 12: no tie is broken by
+  array order (no argmin over candidates in these arms).
+Verdict: STANDS (refuted for accuracy: the falsifier is silent at every e; the descent
+direction is worth a random direction at every e on the verdict basis; the circuit family adds
+nothing). One wording caveat: the FAIL18 sentence of item 5 belongs to the circuit arm only;
+for the raw step the stratum is noise at n = 18. Lanes A and A2 close on this entry.
+Artefacts: `s27/results/s28_D_attack_A2_chain.json`, `s27/results/s28_D_attack_A2_fail18_null.json`,
+`s26/logs/s28D_attack_A2_chain.log`, `s26/logs/s28D_A2_fail18_null.log`, `s27/s28_D_attack_A2_chain.py`;
+lane A2's `s27/results/s28_A2_summary.json`, `s28_A2_prodcheck.json`, `s28_A_chain_rows.jsonl`.
