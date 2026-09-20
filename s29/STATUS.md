@@ -128,3 +128,18 @@
 - next: nothing queued. Lane B has no outstanding jobs.
 - 2026-09-20 03:51 CLOSED: probe12e exit 0 (11,117 s, peak RSS 0.311 GB) and bestofn exit 0 (175 s, 0.348 GB), 12/12 targets x 47 arms, all parsing. Ledger S29-L56. NO ARM CLEARS ITS BAR. Production restricted to these 12 is 3.2529 cloud / 3.3816 chain (targets are +0.20/+0.17 HARDER than the benchmark), the primary P1 is +0.4572 A WORSE at 1.18x MDE (fold CI [+0.1454,+0.6161], 9/12 worse) so the GO rule fires backwards and there is no 126 run; the chimera space's ORACLE best is +0.6533 A worse than the pool's (5/5 folds) and recombination is -0.109 A against lane D's matched scrambled null against -0.807 against the parents (87% order statistic); gate 1's TV pass is the mixer flattening the state to ~|+>^q (entropy 95.7% of max, mixer 88.2% of q), an eigenvector -- lane L's own disqualifier -- and its whole endpoint channel is m (0.022 -> 0.79 of alpha*M); all 13 controls NOT MEASURED, best-of-N at matched budget ties the trained VQE at 0.07x MDE while F halves. Multiplicity 125 blocks / 48 arm-vs-production, Bonferroni z 3.279; the per-target max is 136% accounted by best_of_k_within, k_eff 6.93, split-half transfer 7.0%.
 - next: nothing running. Findings and report inputs are on disk; available for the report or a new assignment.
+
+## SPRINT 29 CLOSED 2026-09-20 03:56 Pacific
+Report `s29/REPORT_S29.md` (1,581 lines, all 14 charter sections, 0 PENDING).
+Artifact: https://claude.ai/artifact/1D1hGrJfNT9NhU7EwTc2iB ("The Missing Cosine").
+S28 artifact updated with S29 corrections: https://claude.ai/artifact/5iE59KicGARNF5CBjofZFw
+Ledger S29-L0 .. L56 (no L43). ENDPOINT UNMOVED: 3.2105 A mean built-chain Ca RMSD, n=126.
+Verification: `python s29/s29_audit_paths.py` 205/217 paths resolve (12 itemised, 1 genuinely
+dangling); `python s29/s29_verify_report.py` 58/58 numbers recomputed from artefacts, 0
+mismatches. Every test file in the tree ran, 0 failures, no unexercised VERIFY_SLOW opt-in.
+18 claims withdrawn during the sprint, 11 of them mine. Lane P filed no closing entry; its
+result is in the report as a verified recomputation and the gap is recorded in section 9.2c.
+THE THREE NUMBERS: bound >= 3.21 A (>= 2.708 even granting a perfect per-target sign);
+architectural ORACLE ceiling 2.9027 A built chain; the pool expresses 1.1235 A.
+STILL OPEN: LEG_torsion and 8 other non-compactness in-band channels (section 12.0), a sparse
+weighted readout, and a genuinely new information channel. Do not redo what is closed.
