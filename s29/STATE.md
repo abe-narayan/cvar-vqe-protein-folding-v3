@@ -360,6 +360,47 @@ per-target m transferring 65% WITHIN a target's own pool halves: ACROSS targets 
 nothing. Every one of the three says the same thing in a different operator class -- the quantity
 the system is missing is per-target, and nothing native-free supplies it.
 
+## THE SPRINT'S QUANTUM RESULT (upgraded to the instrument 2026-09-20 02:21, S29-L45 at n = 126;
+## lane D's attack survived as S29-L38; the 12-target probe below is superseded and left standing)
+
+**AT THE FULL INSTRUMENT, 126/126, WITH THE TIE RULE CORRECTED.** Lane B took S29-L25's probe to
+every target, exhaustive over all C(500,2) = 124,750 pairs each, after fixing a tie rule that had
+been biased toward the prefix -- the project's own named failure mode, `tie-breaking-leaks-the-
+pool-order`, caught by lane D in S29-L38 and by lane B in its own code. Max tie set at 126 is 4, so
+the fix was not cosmetic; it moved nothing on the original 12.
+
+CLAIM 1 IS STRONGER AT 126 THAN AT 12 (deterministic, no statistics):
+    the f-optimal PAIR is not the energy prefix        114 / 126   (90.5%)
+    the f-optimal m = 5 SUBSET is not a prefix         124 / 126   (98.4%)
+    the per-state sort finds the exhaustive optimum     12 / 126   ( 9.5%)
+    mean objective gap over the prefix, m = 5              +0.1499  (clears lane T's registered 0.10)
+The set-equality theorem fails on 90 to 98% of this benchmark, and the optimum is reachable
+**neither by sorting E nor by sorting f**. "Which set" is a real optimisation variable -- the first
+measurement of that in the project's record, and an affirmative answer to charter section 11
+questions 5 and 7. The deployed spine provably cannot do it: its tail IS a prefix (Barkoutsos
+eq 12), which is why lane T could reduce the whole deployed quantum stage to choosing one number m.
+
+CLAIM 2 IS NOW DECIDED, AND THE DECOMPOSITION IS THE REAL FINDING (ORACLE, cloud, n = 126):
+    f-optimal m=5 subset  - production   +0.2451   1.45x MDE   5/5 folds   power 0.98   **WORSE**
+      of which: m = 75 -> m = 5 alone    +0.1647   1.36x MDE   5/5 folds   **WORSE**
+      of which: the NON-PREFIX CHOICE    +0.0804   0.73x MDE   4/5 folds   **NOT MEASURED**
+So the aggregate arm IS worse than production and that is a verdict -- but two thirds of it is
+simply that a 5-member average beats nothing, which was never in doubt and which the project has
+priced three times. **The part attributable to escaping the prefix -- the actual hypothesis -- is
++0.0804 at 0.73x its own MDE and is NOT MEASURED.** Lane B said so itself rather than claiming the
+aggregate as a refutation, and it read lane D's field-survey caveat first: MSET_5 has signed cosine
++0.063 with the direction to the native, so a harmful result here is the EXPECTED value of an
+unsigned displacement and is not by itself a verdict on the mechanism.
+
+THE THESIS, STATED AT THE RIGHT STRENGTH: the escape from the prefix is real, ubiquitous (90-98%),
+and unreachable by any sort -- and it buys **nothing measurable** at the endpoint. That is this
+sprint's argument demonstrated constructively rather than asserted, and it bounds the endpoint arm:
+a classical exhaustive/greedy search over the same objective is a strict upper bound on what the
+CVaR-VQE could find under it, and that search does not beat production. It does NOT attribute the
+harm to the escape, because at m ~ 75 -- the endpoint arm's regime -- the m term vanishes by
+construction and only the +0.08-scale term is left, inside its own MDE. The endpoint run decides.
+
+### superseded probe, left standing (contract addendum 3)
 ## THE SPRINT'S QUANTUM RESULT (2026-09-20 00:52, S29-L25; provisional until lane D's attack)
 THE SET-EQUALITY THEOREM FAILS ON REAL POOLS, AND THE ESCAPE BUYS NO ACCURACY. Both halves
 measured in one job, and together they are this sprint's thesis demonstrated rather than asserted.
