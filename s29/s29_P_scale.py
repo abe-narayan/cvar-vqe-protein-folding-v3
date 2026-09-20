@@ -282,6 +282,13 @@ def arms_for(pdb, fac):
 
 
 DEPLOYABLE = ("PROD", "BOND", "SPAN", "ISO", "CTRL-GLOBAL", "CTRL-LAM", "BOND-LAMFIX")
+#: THE PRIMARY SET (coordinator, 2026-09-20 00:45, under the CPU-bound one-slot decision):
+#: exactly the cells the pre-registered falsifiers F-P1/F-P2/F-P3 need -- PROD, the three
+#: candidates, the 8 matched-random draws, CTRL-INV (native-free, so it is in the
+#: max-over-K set), CTRL-GLOBAL (likewise) and FLOOR. CTRL-LAM and BOND-LAMFIX are the
+#: 2x2 effective-lambda controls, which the prereg reads ONLY if BOND is non-null, so they
+#: are DEFERRED with the ORACLE s-grid rather than dropped.
+DEFERRED_ARMS = ("CTRL-LAM", "BOND-LAMFIX")
 
 
 # ============================================================ factors stage
@@ -366,9 +373,9 @@ def run_target(pdb, fac, ref, done, rows_path, floor=True, phase="all"):
         f"{pdb}: cached cloud does not reproduce S27's rmsd_cloud exactly"
     A = arms_for(pdb, fac)
     if phase == "primary":
-        A = [x for x in A if not x[0].startswith("ORACLE-GRID")]
+        A = [x for x in A if not x[0].startswith("ORACLE-GRID") and x[0] not in DEFERRED_ARMS]
     elif phase == "oracle":
-        A = [x for x in A if x[0].startswith("ORACLE-GRID")]
+        A = [x for x in A if x[0].startswith("ORACLE-GRID") or x[0] in DEFERRED_ARMS]
         floor = False
     todo = [(a, s, lm) for (a, s, lm) in A if (pdb, a) not in done]
     if floor and (pdb, "FLOOR") not in done:
@@ -446,7 +453,15 @@ def cmd_run(shard, nshards, limit=None, pdbs=None, rows_path=None, floor=True, p
         else:
             pdbs = allp
     rows_path = rows_path or shard_rows_path(shard)
-    done = done_keys([rows_path])
+    #: resume across EVERY shard file, not just this job's own: a consolidated re-run must never
+    #: recompute a cell another shard already checkpointed. Each job appends only to its own file.
+    allrows = sorted(os.path.join(RESULTS, f) for f in os.listdir(RESULTS)
+                     if f.startswith("s29_P_rows_shard") and f.endswith(".jsonl"))
+    if rows_path not in allrows:
+        allrows.append(rows_path)
+    done = done_keys(allrows)
+    print("resume: %d (arm, target) cells already checkpointed across %d rows files"
+          % (len(done), len(allrows)), flush=True)
     t0 = time.time()
     for ph in phases:
         print(f"== phase {ph} ==", flush=True)
@@ -537,7 +552,7 @@ def cmd_analyse(rows_paths=None, out=None):
     rand_all = [f"CTRL-RAND{d}" for d in range(N_RAND)]
     grid_all = ["PROD" if s == 1.0 else f"ORACLE-GRID{s:.2f}" for s in ORACLE_GRID]
     primary = [a for a in ["PROD", "BOND", "SPAN", "ISO", "CTRL-INV", "CTRL-GLOBAL",
-                           "CTRL-LAM", "BOND-LAMFIX", "FLOOR"] + rand_all if a in arm_names]
+                           "FLOOR"] + rand_all if a in arm_names]
     have = [p for p in order if all((p, a) in cell for a in primary)]
     have_grid = [p for p in order if all((p, a) in cell for a in grid_all)]
     L = []
@@ -658,10 +673,12 @@ def cmd_analyse(rows_paths=None, out=None):
     # so picking the one with the lowest shipped objective obj0 strictly improves production's
     # own optimisation, with no native anywhere. Ties are averaged over the argmin set, never
     # broken by array order.
-    ms_arms = [a for a in arm_names if not a.startswith("ORACLE-GRID")] if True else []
+    ms_arms = [a for a in arm_names if not a.startswith("ORACLE-GRID")]
     OBJ = np.column_stack([col(a, "obj0") for a in ms_arms])
     CH = np.column_stack([col(a) for a in ms_arms])
-    if np.isfinite(OBJ).all():
+    #: MS-OBJ / MS-MEAN / MS-ORACLE are DEFERRED with the grid phase (coordinator, 00:45): the
+    #: wider multi-start is only reported once its full arm set exists on every analysed target.
+    if gridp and len(gridp) == len(pdbs) and np.isfinite(OBJ).all():
         ms_pick, ms_ties = [], []
         for r in range(len(pdbs)):
             v, k = ST.argmin_tied(OBJ[r], CH[r])
@@ -858,6 +875,7 @@ def main(argv=None):
     r.add_argument("--shard", type=int, default=0)
     r.add_argument("--nshards", type=int, default=1)
     r.add_argument("--limit", type=int, default=None)
+    r.add_argument("--phase", default="all", choices=["all", "primary", "oracle"])
     an = sub.add_parser("analyse")
     an.add_argument("--out", default=None)
     sub.add_parser("selftest")
@@ -868,7 +886,8 @@ def main(argv=None):
         s = cmd_probe()
         sys.exit(0 if s["gate_pass"] else 3)
     elif a.cmd == "run":
-        cmd_run(a.shard, a.nshards, limit=a.limit)
+        ph = ("primary", "oracle") if a.phase == "all" else (a.phase,)
+        cmd_run(a.shard, a.nshards, limit=a.limit, phases=ph)
     elif a.cmd == "analyse":
         cmd_analyse(out=a.out)
     elif a.cmd == "selftest":
