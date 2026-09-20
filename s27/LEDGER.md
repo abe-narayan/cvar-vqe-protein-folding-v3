@@ -4067,3 +4067,118 @@ multiplicity of the pool-member contrast (unregistered; stated as un-priced abov
 control: every circ_best / circ_s0 pool-member contrast identical to seed 0 to the fourth decimal, as it
 must be, the control draws do not enter it), job records `s26/jobs_done/s28C2_chain{,3,4}.json`,
 `s28C2_analyse_chain.json`, code `s27/s28_C2_recog_audit.py`, tests `tests/test_s28_C2.py`.
+## S28-L49 -- ADVERSARY CHECK OF S28-L48 (C2's recognition audit on the built chain, 31 scorers): STANDS WITH CAVEAT; EVERY NUMBER REPRODUCES INDEPENDENTLY (POOL-MEMBER CONTRASTS ON 27 SCORERS AT 0.0, MAX-OVER-31 NULL p_max 0.399 vs 0.388); THE CLOSURE HOLDS OVER ALL 31; CAGEO COLLAPSED AS S28-L36(a) PREDICTED; CONTACT@chain IS THE ONE TWO-CLAUSE PASS AND IS NOT A CANDIDATE, BUT FOR A SHARPER REASON THAN MULTIPLICITY: ITS POOL-MEMBER CONTRAST IS NOT A CHANCE MAXIMUM (MY SIGN-FLIP NULL OVER 27, p 0.010), IT SEPARATES NATIVE-LIKE FROM TYPICAL AT 0.59 = THE NATIVE's 0.59, BELOW DIS's 0.63, AND S27 PRICED IT DEPLOYABLY AT +0.52 A WORSE AS A SELECTOR WITH EVERY DIS+CONTACT MIX NULL-TO-WORSE; LANE C2 CLOSES (2026-09-19 21:49, lane D)
+Question: does the closure claim ("no scorer in the S27 library recognises the ORACLE structures")
+hold over all 31 scorers on the built chain; does CAGEO's preference collapse on ideal geometry
+as S28-L36(a) predicted; is any survivor a candidate objective; and is the multiplicity priced?
+Recomputed independently from `s27/results/s28_C2_chain_rows.jsonl` (126 targets; `scores` = the
+16 backbone scorers on the projected chains, `scores_ca_on_chain` = the 15 CA scorers
+re-evaluated on them) with `s27/s28_D_c2_chain_null.py` -> `s27/results/s28_D_c2_chain_null.json`
+(prefs with ties at 0.5, FAIL18 k/18, the max-over-31 sign-flip null) and
+`s27/s28_D_c2_poolmember.py --rows ... --scores-key {scores_ca_on_chain, scores}` ->
+`s27/results/s28_D_c2_poolmember_chain_ca.json`, `_bb.json` (the pool-member control, S28-L36,
+for the 12 CA scorers and the 15 backbone scorers that have a pool channel);
+`s26/logs/s28D_c2_chain_clauses.log` (the two registered clauses decided for all 31).
+- THE TWO REGISTERED CLAUSES on the chain (pref(circ_best vs PROD) fold CI above 0.5 AND
+  pref(circ_best) - pref(RAND_SIGNED) fold CI above zero): exactly ONE of 31 scorers clears
+  both, CONTACT@chain (pref 0.583, fold CI [0.530, 0.645]; +0.107 over RAND_SIGNED, fold CI
+  [+0.009, +0.193]); on the single start circ_s0 its pref is 0.575. LEG_hbond_longrange clears
+  clause 1 alone (0.548, [0.533, 0.562]) with 114/126 ties: uninformative (S28-L34(a)), not
+  recognition. Every other scorer fails clause 1; 15 clear clause 2 alone (they tell a real
+  trace from a scrambled one, S28-L36's reading). Tie-heavy chain scorers (ties > 63/126):
+  LEG_hbond_longrange 114, LEG_coop_sheet 124, LEG_coop_helix 79, LEG_aromatic 64, EXVOL@chain
+  101: uninformative here.
+- CAGEO on the chain: pref 0.421 (from 0.611 at the CA level); the pool-member contrast -0.108
+  (1.21x, the WRONG way, 5/5; single start -0.147, 1.65x); head-to-head it rates the 0.25 A
+  ORACLE structure better than a random pool member on 0.297 and the native on 0.321. The
+  collapse S28-L36(a) predicted, to the number: the CA-level 0.611 was production's
+  contraction, which the projection removes. This is that control's prediction confirmed, not
+  a new fact.
+- THE POOL-MEMBER CONTROL for all 27 scorers with a pool channel: in the recognition direction
+  only CONTACT@chain +0.140 (1.23x MDE, fold CI [+0.066, +0.211], 4/5 folds; single start
+  +0.132, 1.15x, [+0.059, +0.198]), ENV@chain +0.131 (1.19x; single start 1.10x), CONTACT_LL
+  @chain +0.100 (1.02x), SS_MATCH@chain +0.072 (0.93x), DIS@chain +0.051 (0.80x), DIS_MEAN
+  +0.046 (0.73x), DISTPOT +0.071 (0.63x); every backbone scorer is under MDE or the wrong way
+  (RAMA -0.377, LEG_torsion -0.293, LEG_hbond_local -0.226, LEG -0.221, LEG_coop_helix -0.146,
+  LEG_steric -0.116, DSSPHB -0.104: the projected ORACLE chain is a WORSE backbone than a
+  typical pool member's real torsions under every torsion-reading scorer; the pool channels
+  are on the members' REAL torsions and the rows' structures are PROJECTED, so a negative
+  here is the ideal-geometry projection, not anti-recognition; a positive would survive it and
+  none is positive). CONTACT@chain's contrast, `ST.fmt` verbatim (positive = the recognition
+  direction; the kit's WORSE label reads a as an RMSD and is to be ignored):
+    CONTACT: pref(circ_best vs PROD) - pref(pool member vs PROD)
+      a 0.5833 (med 1.0000)   b 0.4431 (med 0.4345)   n=126
+      effect +0.1403   median +0.1215   SE 0.0407   MDE 0.1139   effect/MDE +1.23
+      iid  CI95 [+0.0604, +0.2167]
+      fold CI95 [+0.0655, +0.2113]   folds same sign 4/5   per-fold 0:+0.244 1:-0.015 2:+0.119 3:+0.120 4:+0.207
+      48W/76L/2T   worst degradation +0.9760 (2EFZ)   p90 +0.7595   power 0.93  Type-M 1.04
+      concentration: drop-top10 +0.2132 vs uniform-effect null p10/p50/p90 +0.1603/+0.2127/+0.2661 -> pctile 0.505
+      VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.04x]
+- MULTIPLICITY. (i) On pref(circ_best) itself, the max-over-31 sign-flip null: best CONTACT@
+  chain 0.583 against a null mean 0.577, p95 0.619, p_max 0.399: as a MAXIMUM over 31 scorers
+  the pref is unremarkable; 5 of 31 scorers sit above 0.5 where the null gives 14 (p95 23):
+  the library as a whole is ANTI-recognition on the chain, as at the CA level. (ii) On the
+  pool-member contrast (the bar S28-L36 set), a max-over-27 per-target sign-flip null of the
+  paired difference: observed max CONTACT@chain 1.23x against a null mean 0.68x, p95 1.03x,
+  p_max 0.010 (the CA level, S28-L36 rows: CONTACT_LL 1.28x, p_max 0.003). The three
+  contact-histogram scorers (CONTACT, CONTACT_LL, ENV) are near-copies, so k_eff is below 27
+  and the p is conservative. So the contact family's pool-member contrast is measured (sign),
+  at a Type-M size, and it is not a chance maximum.
+- WHAT CONTACT RECOGNISES, in its own pool percentiles (`_chain_ca.json`): the 0.25 A ORACLE
+  structure sits at pct 0.406 of the pool, the native at 0.410, the 0.5 A sub0 at 0.427,
+  production at 0.443, a random signed combination at 0.454. Head-to-head, the ORACLE structure
+  beats a random pool member on 0.594 and the native on 0.590 (their difference 0.27x MDE):
+  CONTACT separates native-like from typical at 0.59, which is BELOW DIS's 0.632 and ENV's
+  0.612 and equal to every informative scorer's 0.57 to 0.63 (S28-L36's "what an objective
+  would have to know"). What sets CONTACT apart is not recognition but where PRODUCTION sits:
+  a median pool member under CONTACT (pct 0.443) against DIS's own fixed point (0.020). The
+  registered clause "prefers the ORACLE structure to production" is therefore met by a scorer
+  that prefers ANY slightly-better-than-median member to production, and the pool-member
+  contrast (+0.140 = 0.583 - 0.443) is the 4-percentile-point gap between a native-like
+  structure and the average, read 126 times. Its deployable value was measured by S27 on the
+  same 126 (`s27/results/pool_rows.jsonl`, point cloud vs DIS 3.0483): CONTACT as the selector
+  3.5637 (+0.515, 1.77x, WORSE); ENV 3.4669 (+0.419, WORSE); CONTACT_LL 3.5698 (+0.521, WORSE);
+  DIS+0.25/0.5/1.0*CONTACT +0.031 / +0.038 / +0.045 (all under MDE, all the wrong way);
+  DIS+CONTACT_LL +0.088 (1.09x, WORSE); DIS+ENV -0.002; REJ[CONTACT]->DIS +0.032 (0.74x);
+  DIS+adapt(CONTACT) +0.029. A scorer whose selection is 0.5 A worse than DIS and whose
+  admixture is null-to-worse at every weight is not a candidate objective; what it "recognises"
+  at 0.59 it already had the chance to use in S27 and it hurt.
+- Cannot be replicated on fresh targets: the 126 are the only set (no fresh benchmark exists);
+  the CA-level and chain-level readings are the same 126 targets scored on two bases, not two
+  samples. The second control seed (S28-L35's seed 2) does not touch this contrast (the
+  pool-member percentile has no draw), so "replicates on a second seed" is vacuous here.
+- FAIL18 (k of 18): CONTACT@chain 8/18 (0.44 against 0.61 on the 108: the preference is on the
+  108, not on the failures); ENV 11/18; CAGEO 7/18; DIS 0/18. No stratum statement.
+Verdict: STANDS WITH CAVEAT. The closure claim stands on the reporting basis over all 31
+scorers; CAGEO's collapse is the S28-L36 control's prediction realised; CONTACT@chain is
+marginal and not a candidate, as the entry says. Caveats, for the findings and the report:
+(a) the entry's "the multiplicity of the pool-member contrast itself is not priced by any
+    registered null" is true of the registered nulls and false of the question: my per-target
+    sign-flip null of the paired contrast over the 27 scorers gives p_max 0.010 (CA level
+    0.003), so the contact family's +0.10 to +0.14 is NOT a chance maximum and its SIGN is
+    measured (the three contact-histogram scorers are near-copies, so the effective family is
+    smaller than 27 and the p conservative). The honest sentence is "measured in sign, Type-M in
+    size, and deployably worthless": the reason CONTACT is not a candidate is not that its
+    contrast might be chance, it is that what it measures (a native-like structure sits 4
+    percentile points better than the average in a distribution where the average is median)
+    was already available to S27 as a selector and an admixture and cost 0.03 to 0.52 A there;
+    "at the multiplicity null's mean" applies to pref(circ_best) as a maximum over 31, which is
+    the registered statistic, and the entry is right to decide on it.
+(b) the "20 of 31 anti-recognition" count includes 5 tie-dominated scorers whose fold CI is a
+    tie artefact (S28-L34(a)); the entry flags two of them; the informative anti count is 18.
+(c) every "vs pool member" number for the 16 backbone scorers is cross-basis (projected vs real
+    torsions), as the entry's instrument note 4 says; none of those negatives is evidence of
+    anti-recognition and none is quoted as such. Correct.
+(d) the projected NATIVE at 0.084 A and the projected ORACLE structure at 0.252 A make this the
+    cleanest basis the audit has had: same bonds, same Rg within 2%, and still 18 informative
+    scorers prefer the average with the fold CI below 0.5. "What an objective would have to
+    know" (S28-L36) is unchanged and now holds with ideal geometry on both sides.
+Nothing here is deployable; no NaN-poison applies; no candidate objective is named; C2 closes.
+With this entry every S28 result entry has been checked: A (S28-L13, L20, L27b), A2 (S28-L24,
+L31, L40), B (S28-L9, L11, L22, L43), B2 (S28-L26, L31, L47), C (S28-L8, L16, L33), C2 (S28-L34,
+L36, here); the suite close is S28-L45; no positive is on the board and none was vetoed
+wrongly.
+Artefacts: `s27/results/s28_D_c2_chain_null.json`, `s28_D_c2_poolmember_chain_ca.json`,
+`s28_D_c2_poolmember_chain_bb.json`, `s26/logs/s28D_c2_chain_clauses.log`,
+`s26/logs/s28D_c2_chain_null.log`, `s27/s28_D_c2_chain_null.py`, `s27/s28_D_c2_poolmember.py`;
+lane C2's `s28_C2_chain_rows.jsonl`, `s28_C2_chain_summary.json`; S27's `pool_rows.jsonl`.
