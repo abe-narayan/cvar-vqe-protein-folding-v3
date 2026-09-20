@@ -309,7 +309,8 @@ The set-equality theorem **fails on real pools** — the f-optimal subset is not
 114/126 pairs and 124/126 m = 5 subsets, and is not any sort's prefix either (the per-state sort
 finds the optimum on 12/126). This is the first measurement in the project's record of *which set*
 as a genuine optimisation variable rather than the read-out of a sort. It is also the sprint's
-thesis demonstrated constructively: the escape is real, ubiquitous, and buys nothing measurable.
+thesis demonstrated constructively: **the escape is real and ubiquitous *under search*, the
+deployed circuit does not take it, and where it is taken it buys nothing measurable** (§6, §6.1).
 
 ### 4.3 Seven routes closed without spending an endpoint run
 
@@ -508,9 +509,20 @@ the sprint's clearest *positive* measurement is about it.
 
 **The set-equality theorem fails on real pools (S29-L25, taken to the full instrument as S29-L45).**
 CVaR is defined on *sorted* samples for diagonal Hamiltonians (Barkoutsos et al. eq 12), so the
-deployed tail is provably a prefix of the energy order. Placing the objective on the tail's own
-coordinate average, `V(S) = f(mean of S)`, breaks that. Exhaustively over all C(500,2) = 124,750
-pairs of each of the **126** pools, with a tie rule corrected mid-sprint (below):
+deployed tail is provably a prefix of the energy order.
+
+**A distinction this report holds to throughout, at lane B's insistence.** What follows is a
+statement about a **free subset optimisation** — an exhaustive search over all pairs, with the
+objective placed on the tail's own coordinate average, `V(S) = f(mean of S)`. It is **not** a
+statement that the VQE escaped the theorem. The deployed circuit's tail remains the energy prefix
+**by construction** at every λ, because the tail's order stays a per-state scalar (§6.1). Lane B
+found a column in its own output that briefly suggested otherwise, identified it as a
+tie-convention artefact, and asked explicitly that the report not make the stronger claim. So: the
+non-prefix optimum exists and is reachable by search; the circuit running that objective does not
+reach it.
+
+Exhaustively over all C(500,2) = 124,750 pairs of each of the **126** pools, with a tie rule
+corrected mid-sprint (below):
 
 ```
 the f-optimal PAIR is not the energy prefix       114 / 126   (90.5%)
@@ -589,6 +601,34 @@ S27's cached `DIS` values to **3.7e−14** on 126/126. Its *projection* does not
 S27's 3.212625, with a per-target maximum difference of 0.5174 Å on 125 of 126 targets. That is the
 input-difference floor of the multi-start projection documented in S28 (a branch flip, not a bug),
 reproduced here rather than glossed. Every MDE in this report sits far above it.
+
+### 6.2 The control that prices the quantum stage's *only* endpoint channel
+
+Lane T proved that the deployed quantum stage reduces, at the endpoint, to choosing one number:
+*m*, the realised tail size. Lane D's M6 control asks what that per-target choice is worth against
+a **fixed** profile with no circuit in it — the honest zero-information comparator for the whole
+stage. On the built chain, n = 126, mean deployed m = 74.1:
+
+```
+arm          built chain     cloud        deployed − arm      ×MDE    verdict
+deployed        3.2187      3.0580              —              —       —
+m = 70          3.2051      3.0483          +0.0136          0.45×   NOT MEASURED
+m = 71          3.2117      3.0479          +0.0071          0.25×   NOT MEASURED
+m = 74          3.2118      3.0483          +0.0069          0.22×   NOT MEASURED
+m = 75          3.2105      3.0483          +0.0082          0.27×   NOT MEASURED
+m = 80          3.2184      3.0577          +0.0003          0.01×   NOT MEASURED
+m = 30          3.2350      3.0720          −0.0163          0.21×   NOT MEASURED
+```
+
+**Every arm is inside its own MDE of the deployed circuit, and the deployed circuit is nominally
+the worst of the cluster.** Choosing *m* per target with a trained variational circuit is not
+distinguishable from fixing it at 75 and running no circuit at all. Lane B's independent version of
+the same control reports 0.31× MDE.
+
+This is the endpoint statement about the quantum stage, and it is the one the charter asked for:
+the stage's sole remaining channel to the answer, measured against a comparator containing no
+quantum computation, is worth nothing detectable. It also explains §12.0's constraint from a third
+direction — a better channel feeding this stage still arrives at an operator that cannot spend it.
 
 **Controls.** [PENDING — lane X's 94-arm ladder, including the untrained-circuit and best-of-N
 controls, and lane B's endpoint arm.]
