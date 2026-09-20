@@ -132,3 +132,21 @@ path. 12. Ties never break by array order.
     carry the timestamps of the prediction and of the measurement, so a reader can check that
     the prior was not moved after the fact. Lane P's addendum 5 is the model: falsifiers and
     null prior registered 00:10, its own mechanism prediction 00:37, lane T's bound 00:43.
+
+## Addendum 4 (2026-09-20 01:28, coordinator; from lane D's S29-L34)
+28. COMMIT BY PATHSPEC, NEVER BY INDEX. Eight lanes share one working tree and therefore ONE git
+    index. `git add` followed by `git commit` is not atomic: if the commit fails (a transient
+    object-lock from a concurrent lane is common here) the files stay STAGED, and the next lane
+    to commit sweeps them into ITS commit under ITS message. This has now happened at least
+    three times tonight (S29-L10 committed as "S29-L8", S29-L28 as "S29-L27", and S29-L33's
+    band entry and its three artefacts inside lane O's commit e2e49109).
+    THE RULE: commit with an explicit pathspec in ONE command --
+        git commit -m "<message>" -- s29/path/one s29/path/two
+    which commits exactly those paths and does not touch the shared index. Do not `git add`
+    first. If a commit fails, re-run the same one command; nothing is left staged for another
+    lane to inherit. The contract's existing "never git add -A" does not cover this case,
+    because the hazard is another lane committing what YOU staged.
+29. THE LEDGER HEADING IS AUTHORITATIVE, NOT THE COMMIT MESSAGE. Where the two disagree (the
+    three cases above), the entry's own heading and artefact list decide, and the discrepancy is
+    recorded in a provenance note rather than corrected by rewriting history. The final report
+    traces numbers to LEDGER ENTRIES and artefact paths, with commits as corroboration.
