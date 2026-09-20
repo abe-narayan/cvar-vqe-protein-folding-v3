@@ -158,3 +158,67 @@ No deployable arm; no tuning of a band edge, a scorer weight or an occupancy thr
 outcome; no benchmark60; no AMBER; no second realism definition invented after seeing R1; no
 re-cut of the bands after seeing a result (the five edges are fixed above); and no claim that a
 positive within-band rho is an Angstrom until section 7's ceiling is computed.
+
+---
+
+## ADDENDUM 1 (2026-09-20 00:36, lane D; written after the coordinator relayed lane L's S29-L16 and BEFORE any analysis of this experiment's rows)
+
+**What I had seen when this addendum was written, stated exactly, because it is the only thing
+that can compromise a pre-registration.** One probe target (1A13, `s29_D_band.py probe`): for DIS
+under R1 the across-band Spearman is +0.879 and the five in-band values are +0.215, +0.513,
++0.736, +0.901, +0.921. Nothing else: no second target, no other scorer, no aggregate, no
+summary, and the 126-target rows were still being written by job `s29D_band_ca` when this was
+committed. Everything below is therefore registered against one target's DIS row and nothing more.
+
+**(A1.1) The closed form IS the pre-registration (L's point 1).** For jointly Gaussian
+(S, Y, R) = (scorer, ORACLE RMSD, realism) the in-band correlation is the partial correlation
+    rho_SY.R = (rho_SY - rho_SR rho_RY) / sqrt((1 - rho_SR^2)(1 - rho_RY^2)),
+independent of where the band sits. It is zero exactly when a scorer's whole association with
+accuracy is MEDIATED by realism -- which is this experiment's question stated as an equation.
+Added to the run: per target and per scorer, the three correlations (rho_SR native-free; rho_SY
+and rho_RY ORACLE and labelled so) and the predicted rho_SY.R, computed on ranks (so the Gaussian
+assumption enters only through the copula) and reported BEFORE the measured in-band numbers in
+the entry. The measured band-averaged rho_in is then read against its own prediction: agreement
+means the Gaussian/linear model suffices and no band structure is being missed; a measured value
+materially above the prediction is the interesting case and must be shown not to be the thin-band
+small-sample bias (the shuffle null already registered).
+**(A1.2) A width curve, not one width (L's point 2).** Conditioning on a band of finite width is
+not conditioning on a point, so in-band skill interpolates monotonically from the global
+correlation (width 1.0) to the partial correlation (width -> 0). Added: for widths
+w in {1.0, 0.5, 0.25, 0.10, 0.05} of the R-percentile axis, sliding windows centred on a fixed
+grid of centres {0.1, 0.3, 0.5, 0.7, 0.9} (fixed now), the occupancy-filtered mean rho_in per
+width, with its fold CI. The curve is ONE pre-registered object and replaces the per-band table
+as the headline; the five fixed bands of section 5 stay as the registered decomposition. The
+prediction is explicit: the curve falls from rho_across at w = 1 toward rho_SY.R as w -> 0, and
+the question is where it lands, not whether it falls.
+**(A1.3) The published precedent, registered against (L's point 3).** PIRM 2018 (arXiv:1809.07517)
+is this design in transpose, human-validated by 35 raters, and its own finding is that the
+no-reference realism index correlates 0.83 ACROSS bands and "not always well" WITHIN them. The
+project's own split is the same shape (distogram +0.653 global, +0.091 in-band, S12). I therefore
+expect a SMALL in-band effect, and I register that the experiment is powered for a small one: the
+statistic is a per-target correlation averaged over 126 targets with a fold-clustered CI, whose
+MDE on a rho scale is about 0.05 to 0.08 at the observed spreads. PIRM also reports the tradeoff
+is steepest at the low-distortion end -- where we operate -- so the narrow-width end of the curve
+is the informative end and the wide end is the confound.
+**(A1.4) Range restriction is named, never hidden (L's point 4).** A within-band correlation is
+never compared with a global one without stating the selection: every comparison in the entry
+carries both numbers and the band's occupancy, and Thorndike's case-2 correction is reported as a
+diagnostic (what the global correlation would be if the band's restriction were the only
+difference) so that "the in-band number is smaller" is not read as "the scorer got worse".
+**(A1.5) The band's construction is not neutral, and a result on one does not transfer.** The QA
+literature's restricted sets (best150, sel20, BZQ15) change which method wins, and pure-geometry
+scorers swap places with information-carrying ones between subsets. The three realism definitions
+(R1, R2, R3) are therefore reported side by side, a positive on one is explicitly NOT claimed for
+the others, and the entry states which definition any claim belongs to in the same sentence.
+**(A1.6) How a positive is reported (L's point 4, second half).** `decorrelated-errors-exist-but-are-unusable`
+prices fusion gain as the SQUARE of the weaker channel's skill, so a small partial correlation
+buys nearly nothing in Angstroms. A positive is therefore reported as a MECHANISM result --
+"information orthogonal to realism exists in the library, of this size" -- and only then, if
+section 7's band-restricted selection ceiling clears 0.7x MDE, as a candidate operator. No
+endpoint is promised in the entry that reports the correlation.
+**(A1.7) The physics statement, which makes the null interpretable (L's (b)).** Banding on R
+destroys R's own discriminating power by construction, so an in-band experiment measures exactly
+what is orthogonal to R: a positive is direct evidence of information orthogonal to realism (the
+quantity H0 says the system lacks) and a null is the measured statement that the library carries
+nothing beyond realism. Either way the entry states it in those terms, and a within-band mean is
+never quoted as an estimate of a pool mean (Torrie & Valleau's discipline for an imposed bias).
