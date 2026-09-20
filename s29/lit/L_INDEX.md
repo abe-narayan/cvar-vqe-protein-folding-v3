@@ -30,8 +30,24 @@ leave-fold-out, built chain as the reporting basis, CPU only, 16 GB.
 Topic 1 running count: 15 entries, 4 KEPT (all as evidence or anchors; none importable as an
 operator), 11 REJECTED across 5 families.
 
-## Topic 2 -- correlated error in ensembles (`L_2_correlated_error.md`)
-(pending)
+## Topic 2 -- correlated error in ensembles (`L_2_correlated_error.md`, ledger S29-L8)
+
+| paper | what it needs that we lack | verdict |
+|---|---|---|
+| Krogh A, Vedelsby J (1995), ambiguity decomposition, as Brown, Wyatt & Tino, JMLR 6:1621-1650 (2005) eq (10) | nothing -- it is an identity, and it IS S23 L9's decomposition (160.36 + 63.82, exact to 2.7e-14) | KEPT as framing: finding 11 is a law, not a defect |
+| Ueda N, Nakano R (1996), bias-variance-covariance, same paper eq (9): bias^2 + (1/M)var + (1-1/M)covar | nothing | KEPT: the (1-1/M) coefficient caps aggregation; yields the M-table and the derived <= ~0.008 A bound on "more members" |
+| Liu Y, Yao X (1999) negative correlation learning; bounds lambda_upper = M/(M-1), gamma_upper = M^2/(2(M-1)^2) (Brown et al. eq 39) | members that are ESTIMATORS BEING TRAINED | REJECTED -- ours are retrieved real windows; noted for any future parameterised generator (lane X) |
+| Abe T, Buchanan EK, Pleiss G, Cunningham J. Pathologies of Predictive Diversity in Deep Ensembles. arXiv:2302.00704 | nothing; it is a negative result (R_ens = R_avg - Jensen gap) | KEPT as confirmation -- diversity interventions harm good ensembles; matches "diversity-maximising selection: dead" |
+| Glynn PW, Szechtman R. Some New Perspectives on the Method of Control Variates. MCQMC 2000, Springer (2002) | a control variate whose mean E Y is KNOWN | REJECTED -- the known mean is the native; the formal reason within-pool statistics cannot see the common mode |
+| Peherstorfer B, Willcox K, Gunzburger M. SIAM Review 60:550-591 (2018), eqs (3.12), (3.16) | m0 samples of the HIGH-FIDELITY quantity as an unbiased anchor | REJECTED -- it reduces variance around an anchor; it never de-biases a biased model |
+| Richardson-style extrapolation / two-source contrast (classical; H1's family) | a KNOWN bias ratio along a SHARED direction | REJECTED as stated -- S24 L2/L3 gives cos 0.647 with the second source 0.76 A worse; the non-parallel 31% is amplified |
+| Boosting / gradient residual fitting | a residual learnable from inference features, with decorrelated errors | REJECTED -- closed by S24; `error-coherence-decides-correctors` gives the violated condition (+0.31 A coherent vs -0.14 A i.i.d. at equal accuracy) |
+| Jumper J et al. AlphaFold2. Nature 596:583-589 (2021) -- recycling | training the predictor with its own output in the loop | REJECTED (training-time, leakage, hardware); KEPT as evidence: pLDDT fits lDDT at r = 0.76 globally yet has no in-band skill at peptide length |
+
+Topic 2 running count: 9 entries, 4 KEPT (framing/confirmation), 5 REJECTED families.
+Derived in the note (arithmetic on `s23/results/errdecomp.json`, not a new measurement):
+an infinite pool of the same kind returns 3.040 A against the shipped 3.0483 point cloud, so
+"average more members" is worth <= ~0.008 A.
 
 ## Topic 3 -- decision theory of structure point estimates (`L_3_decision_theory.md`)
 (pending)

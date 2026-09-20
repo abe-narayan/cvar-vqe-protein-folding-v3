@@ -583,3 +583,90 @@ monotonically, crossing zero near s = 1/median(beta), while the native percentil
 same grid.
 Multiplicity: 0 endpoint comparisons; 3 registered predictions, none yet measured.
 Artefacts: `s29/THEORY.md` section 2 (commit d4b52a6c). No job, no native read by me.
+
+## S29-L8 -- TOPIC 2, CORRELATED ERROR IN ENSEMBLES: S23 L9's IDENTITY IS THE KROGH-VEDELSBY AMBIGUITY DECOMPOSITION, SO FINDING 11 IS A LAW AND NOT A DEFECT; THE (1 - 1/M) COEFFICIENT ON THE COVARIANCE MEANS MORE MEMBERS IS WORTH <= ~0.008 A (ARITHMETIC ON S23's OWN NUMBERS); AND EVERY LITERATURE METHOD THAT BREAKS CORRELATED ERROR NEEDS TRAINABLE MEMBERS, A CONTROL WITH A KNOWN MEAN, SAMPLES OF THE TRUTH, OR A KNOWN BIAS RATIO -- THIS INSTRUMENT HAS NONE, WHICH IS ALSO THE MISSING INGREDIENT IN H1 (2026-09-20 00:02, L)
+
+Question (brief topic 2): what does the literature offer for ensembles under common-mode error,
+and does any of it break the 68%? Falsifier for the negative half: one method whose stated
+inputs this instrument has. No experiment; literature only.
+
+THE LAW IS ALREADY OURS. Brown, Wyatt & Tino, JMLR 6:1621-1650 (2005), eq (10), give Krogh &
+Vedelsby (1995): (f_ens - t)^2 = sum_i c_i (f_i - t)^2 - sum_i c_i (f_i - f_ens)^2, the second
+term being the AMBIGUITY. With uniform weights and the project's notation (w_k = t + e_k,
+c the average, d_k = w_k - c) that is exactly S23 L9's identity mean_k|e_k|^2 = |ebar|^2 +
+mean_k|d_k|^2 = 160.36 + 63.82, verified to 2.7e-14 A on 126/126
+(`s23/errdecomp.py`, `s23/results/errdecomp.json`). The project's "common-mode / idiosyncratic"
+split is the field's "ensemble error / ambiguity" split, re-derived independently. Finding 11 is
+therefore a statement about where this pool sits on a universal law, not a pathology, and it is
+citable as such.
+
+THE PREDICTION THE EXPECTATION FORM ADDS. Ueda & Nakano (1996), as eq (9) of the same paper:
+E{(fbar - t)^2} = bias^2 + (1/M) var + (1 - 1/M) covar. The coefficient on covar does not decay.
+With rho = covar/var = 0.676 the reducible factor 1/M + (1 - 1/M) rho runs 1.000 (M=1), 0.689
+(25), 0.680 (75), 0.677 (500), 0.676 (limit). Between the shipped top-75 and the whole 500-member
+pool it moves 0.0037. DERIVED, and labelled as arithmetic on S23's aggregate numbers rather than
+a new measurement: under member exchangeability |c_inf - t|^2 = 160.36 - (63.82*75/74)/75 =
+159.50, so an INFINITE pool of the same kind returns 3.0483 * sqrt(159.50/160.36) = 3.040 A on
+the point cloud -- more members is worth about 0.008 A, and residual correlation among the d_k
+makes it smaller, so read it as an upper bound. Caveat stated in the note: the same conversion
+maps the member scale to 3.604 A against the recorded typical-member 3.7037 A, so the
+aggregate-to-RMSD map is approximate at ~3%; an exact per-target version is five minutes in lane
+O off `s23/results/errdecomp.json` and I run no experiments. This explains three empirical
+results at once: S17 (widening K makes the answer worse -- the averaging gain from extra members
+is ~0.4% of a member's variance, so displacing good members from the shortlist dominates it),
+S24's pool union at +0.0022 A, and `operator-consumes-set-mean`.
+
+WHAT EACH METHOD NEEDS, AND WHY WE HAVE NONE OF IT. (a) Negative correlation learning (Liu & Yao
+1999; the diversity error e_i^div = (1/M) sum (1/2)(f_i - t)^2 - kappa (1/M) sum (1/2)(f_i -
+fbar)^2, eq 17, with the proven bound lambda_upper = M/(M-1), gamma_upper = M^2/(2(M-1)^2),
+eq 39) needs members that are ESTIMATORS BEING TRAINED; ours are retrieved real windows with no
+parameter to push. (b) Control variates (Glynn & Szechtman 2002): "suppose that there exists a
+random variable Y ... for which EY is KNOWN", lambda* = cov(X,C)/var C, a Hilbert-space
+projection onto the span of ZERO-MEAN controls. The known mean here is the native; an uncentred
+control does not reduce variance, it moves the estimator by an unknown amount. This is the formal
+statement of "a bias shared by every member is invisible to any within-pool statistic". (c)
+Multifidelity Monte Carlo (Peherstorfer, Willcox & Gunzburger, SIAM Rev 60:550-591, 2018;
+alpha_i* = rho_i sigma_hi/sigma_i, eq 3.12; the efficiency condition sqrt(1-rho_1^2) + sum
+sqrt(c_lo/c_hi)(rho_i^2 - rho_{i+1}^2) < 1, eq 3.16) is UNBIASED precisely because it is anchored
+by m0 samples of the HIGH-FIDELITY model: it reduces variance around an unbiased anchor and never
+removes a biased model's bias. We have no anchor. (d) Boosting/residual fitting needs a residual
+learnable from inference-time features with errors decorrelated from the first model's; S24 closed
+it, and `error-coherence-decides-correctors` gives the exact violated condition (at identical
+0.688 sign accuracy, coherent mistakes emit +0.31 A and i.i.d. mistakes -0.14 A, because a
+corrector trained on the predictor's own features inherits its error structure). (e) Recycling
+(Jumper et al., Nature 596:583, 2021: 4 iterations, the pair and single representations and
+predicted CB fed back, final loss applied at each) is a TRAINING-TIME property -- it would require
+a structure-conditioned distogram, which is leakage and unaffordable.
+
+DIRECTLY ON H1. The two-source contrast is Richardson's family, and Richardson cancels the leading
+error term only when the two evaluations' biases differ by a KNOWN factor along a SHARED
+direction. S24 L2/L3 measured that geometry: bias cosine 0.647 between the blind library source
+and the incumbent (31% angularly independent), q = 1.231 (the blind source 0.76 A WORSE),
+score-selected mixtures on a line at cos 0.943. A known ratio along a shared direction is exactly
+what that is not, and the literature names the failure mode the coordinator's own objection
+predicts: the non-parallel 31%, which belongs to the WORSE source, is what an extrapolation
+amplifies. The literature does not rescue H1 and does not kill it either; it says the probe must
+be priced as a ONE-PARAMETER leave-fold-out fit with its control in the operator's own space.
+Separately, Abe et al. (arXiv:2302.00704, ensemble risk = R_avg - Jensen gap, eq 3; ~600
+ensembles) is the external form of "diversity-maximising selection: dead": diversity
+interventions harm ensembles whose members are already good, and even free diversity carries an
+opportunity cost because the best members predict nearly identically.
+
+ONE MORE, WORTH THE SPRINT'S ATTENTION. AF2's pLDDT fits lDDT-Ca = 0.997 pLDDT - 1.17 at Pearson
+r = 0.76 across a broad quality range (Jumper 2021) and has NO within-target ranking skill on 588
+peptides of 10-40 aa (S29-L1). A signal can be strongly calibrated globally and worthless in-band:
+the project's "in-band is the only ranking metric" confirmed on the field's best confidence score.
+
+VERDICT. KEPT (4, as framing or confirmation): the ambiguity decomposition (it is ours); the
+bias-variance-covariance form (it supplies the M-law and the 0.008 A bound); Abe et al. on
+predictive diversity; the global-vs-in-band contrast from 2.7. REJECTED (5 families, each with
+the input it needs and we lack): negative correlation learning (trainable members); control
+variates (a control with a known mean); multifidelity (samples of the truth); Richardson-style
+two-source extrapolation as stated (a known bias ratio along a shared direction); boosting /
+residual correction (decorrelated, feature-learnable residuals). The one place the family could
+act here is a PARAMETERISED GENERATOR, where eq (17)'s kappa and eq (39)'s bound would apply --
+lane X's configuration space is the only S29 direction with that property.
+Multiplicity: 0 endpoint comparisons. The only new number is the derived 0.008 A bound, labelled
+as arithmetic on existing artefacts with its caveat.
+Artefacts: `s29/lit/L_2_correlated_error.md`; `s29/lit/L_INDEX.md`; inputs `s23/results/errdecomp.json`,
+`s27/results/chain_rows.jsonl` (the 3.0483 anchor).

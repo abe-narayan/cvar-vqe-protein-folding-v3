@@ -9,6 +9,8 @@
 - next: s29/lit/L_1_native_free_qa.md with the equation/assumption/information test per family; ledger S29-L1.
 - 2026-09-19 23:54 done: topic 1 posted (S29-L1, `s29/lit/L_1_native_free_qa.md`, 15 papers): NO published QA method is trained or benchmarked below 40-50 residues; AF2's pLDDT has no within-target skill on 588 peptides of 10-40 aa (McDonald 2023) = external confirmation of finding 8; nothing importable; the one actionable item is S8's unfinished free-energy stage (1/24 targets), a probe for D or O.
 - next: topic 2 (correlated error in ensembles and the methods that break it) -- directly serves H1 and finding 11.
+- 2026-09-20 00:03 done: topic 2 posted (S29-L8): S23 L9's identity IS Krogh-Vedelsby's ambiguity decomposition, so finding 11 is a LAW; the (1-1/M) covar coefficient gives more-members <= ~0.008 A (derived, caveated); every breaking method needs trainable members / a known control mean / samples of the truth / a known bias ratio, and H1's family needs the last of those (S24 L3 says we do not have it).
+- next: topic 3 (decision theory of structure point estimates, distogram calibration) -- serves lane T's contraction theorem.
 
 ## M
 - 2026-09-19 23:48 running: brief, contract, charter 1/9/13, STATE, state-brief, ARCHITECTURE, s25/QUANTUM.md and the code end to end read (core/data, predict, quantum, project, amber, pipeline; s8/generate; s24/d_harness; s22/qcand_lib (the brief's `s25/qcand_lib.py` does not exist); s12/instrument; s24/stats_lib; s27/run_vqe_chain + run_pool); `s29/DATAPATH.md` posted (13 stages, every function cited by line, counts measured: 183 features, 372,881 MLP params, 6.6k training chains of which 90.5% are the fold-shared fragments, universe 7k-39k windows, DIS anchor 3.2126 reproduced from chain_rows).
