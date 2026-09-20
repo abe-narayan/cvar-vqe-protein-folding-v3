@@ -117,3 +117,18 @@ path. 12. Ties never break by array order.
     contraction is Jensen's inequality on the coordinate average, and the shipped cost's
     gradient EXPANDS. No lane may claim a contraction mechanism at the posterior or gradient
     level; the arithmetic of averaging is the mechanism.
+
+## Addendum 3 (2026-09-20 00:52, coordinator; from lane P's registered clause)
+26. THE BOUND DOES NOT LICENSE DISMISSING A MEASUREMENT. Lane T's achievable bound (S29-L23)
+    now predicts a null for most remaining arms. That prediction is a hypothesis with a
+    load-bearing assumption (B2), not a verdict. Therefore, for every arm already
+    pre-registered before the bound existed: the falsifier is honoured exactly as written, no
+    prior is revised, no threshold is moved, and no arm is dropped because the bound says it is
+    null. IF AN ARM CLEARS ITS FALSIFIER IT IS REPORTED AS EVIDENCE AGAINST THE BOUND, with the
+    second seed and the tie-key replication run FIRST, rather than explained away. A bound that
+    forbids a measured effect is the bound's problem. Lane P registered this clause itself
+    before its numbers existed and it is adopted sprint-wide.
+27. CHRONOLOGY IS PART OF THE EVIDENCE. Any entry claiming "this was predicted in advance" must
+    carry the timestamps of the prediction and of the measurement, so a reader can check that
+    the prior was not moved after the fact. Lane P's addendum 5 is the model: falsifiers and
+    null prior registered 00:10, its own mechanism prediction 00:37, lane T's bound 00:43.
