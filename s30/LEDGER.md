@@ -1176,3 +1176,146 @@ falsifier was registered as a residual bar. Comparisons made by this lane: 6 cel
 4 union arms, 6 slopes, and the H-X2 battery; only H-X1-primary and H-X2 were pre-registered and
 only those two are read as results. No per-target maximum is taken anywhere here, so no
 `best_of_k_within` arm is required. Every ceiling row is ORACLE and says so.
+
+
+## S30-L11 -- THE SPARSE WEIGHTED READOUT IS **INFORMATION-DOMINATED BY THE ARGMIN IT WAS MEANT TO BEAT**: AT EVERY BUDGET FROM 3 TO 9 BITS THE PLAIN `argmin` OVER THE TOP-2^B IS BETTER THAN THE BEST FULLY-PRICED SPARSE ARM, BY **+0.162 TO +0.727 Å**; ON THE BUILT CHAIN, 2 OF THE TOP-75 WITH **FREE CONTINUOUS WEIGHTS** (11.4 BITS + UNBOUNDED) IS 2.1683 Å AGAINST THE TOP-128 ARGMIN'S **2.1435 Å AT 7.0 BITS**. S29's LAST UNCLOSED LADDER CLASS IS CLOSED -- NOT BY CEILING, BY **PRICE**. PLUS THE SPRINT-RELEVANT INCIDENTAL: ON FAIL18 THE ORACLE BEST CANDIDATE IS **HIDING AT RANK 128-500**, AND WIDENING THE REGISTER 128->512 IS WORTH **-1.90 Å ON THE TAIL AGAINST -0.19 Å ON THE OTHER 108** (2.77x MDE) (2026-09-20 12:57, Q)
+
+Pre-registration `s30/PREREG_S30_Q_sparse.md`, committed at 05455a88 before the first number
+existed. Code `s30/s30_Q_sparse.py`, `s30/s30_Q_analyse.py`. Rows
+`s30/results/s30_Q_sparse_rows.jsonl` (126), summary `s30/results/s30_Q_sparse.json`.
+**Every arm is ORACLE except the `D_*` and `H_*` rows**, whose construction reads no native.
+Basis is the POINT CLOUD except the section explicitly headed BUILT CHAIN, which re-uses S29 lane
+O's already-chained arms and computes nothing new.
+
+## WHAT WAS ASKED
+
+S29 left a sparse weighted readout as "the only ladder class not closed by ceiling": two members
+with ORACLE weights emit 1.4315 Å on the chain where 75 members with ORACLE membership emit
+2.3055 and production emits 3.2105. The coordinator's framing, which this lane adopted: **a low
+parameter count is not a low information requirement.** Choosing 2 of 500 is log2 C(500,2) =
+**16.93 bits**, more than the 7 bits the deployed top-128 argmin spends, not fewer -- and the
+1.4315 Å arm additionally fits **free continuous weights per target against the native**, a second
+and entirely unpriced channel.
+
+So the question is not "how low can this class go" but **"what does it cost, in the same currency
+the deployed readout already spends".**
+
+## THE BIT LEDGER (both channels counted the same way)
+
+- support: log2 C(|S|, s); **0** for a support fixed by a native-free rule.
+- weights: log2 C(L+s-1, s-1) for weights on the 1/L simplex lattice; **0** for uniform;
+  **unbounded** for continuous.
+- reference: the argmin over the top-2^B of the score order costs **exactly B bits**.
+
+## THE FOUR PRE-REGISTERED FALSIFIERS
+
+**F1 CONFIRMED -- the support does carry most of the gain, but only while s is small.**
+At s = 2 over the pool, ORACLE support with UNIFORM weights recovers **76.7%** of the
+production-to-ORACLE gain (A 1.3631, B 1.7565, gain 1.6852). The share **falls monotonically with
+s**: 78.7 / 75.9 / 60.4 / **33.9%** at s = 3 / 5 / 10 / 20, and on the top-75 set 88.6% down to
+18.7%. So "which members" dominates at s = 2 and "with what weights" takes over by s = 20.
+
+**F2 CONFIRMED -- the weights are cheap in bits.** At s = 2 the 1/L lattice is within 0.05 Å of
+the continuous optimum at **L = 4, i.e. 2.32 bits** (1.406 vs 1.363); L = 8 costs 3.17 bits and is
+within 0.011. The weight channel is NOT what makes this class expensive.
+
+**F3 CONFIRMED AND WORTHLESS, WHICH IS THE INFORMATIVE OUTCOME.** A native-free support rule does
+beat a random one -- best of {score-prefix, farthest-point diversity} beats the mean of 8 random
+supports by **+0.364 Å** at s = 2 (3.198 vs 3.562), and by +0.699 / +0.586 / +0.379 / +0.219 at
+s = 3 / 5 / 10 / 20. **But every native-free support arm is WORSE than production** (3.198 against
+3.048), even with ORACLE continuous weights handed to it for free. The skill exists, is real, and
+is nowhere near enough. Reported as a confirmed falsifier whose confirmation changes nothing.
+
+**F4 REFUTED -- and this is the lane's result.** At equal bits the argmin wins everywhere in the
+registered window:
+
+```
+ budget  best fully-priced sparse arm          argmin over top-2**B     sparse - argmin
+ B = 3   H_top75_s20   (0.0 b)  3.0662          2.9040                    +0.1622
+ B = 4   H_top75_s20   (0.0 b)  3.0662          2.7159                    +0.3503
+ B = 5   T8_s2_unif    (4.8 b)  2.8805          2.5115                    +0.3690
+ B = 6   T8_s2_unif    (4.8 b)  2.8805          2.3432                    +0.5374
+ B = 7   T16_s2_unif   (6.9 b)  2.6517          2.1458                    +0.5059
+ B = 8   T16_s2_unif   (6.9 b)  2.6517          1.9383                    +0.7134
+ B = 9   T32_s2_unif   (9.0 b)  2.4375          1.7108                    +0.7267
+```
+
+The sparse family needs **~15 bits** (T256_s2_unif, 1.8317) to reach what the argmin delivers at
+**9** (1.7108), and **~19-20 bits** to reach 1.41. The three "sparse wins" at B = 0, 1, 2 are
+outside the registered window and are not a route: they say only that a 20-member uniform average
+(3.0662) beats the best of 1, 2 or 4 candidates -- which is production's existing design, not a
+new one.
+
+**On the BUILT CHAIN, using only arms S29 already chained, so nothing here is a projection:**
+
+```
+ best1_top128     argmin over top-128           7.0 bits, no weights      2.1435 A
+ sparse_top75_s2  2 of top-75 + CONTINUOUS w    11.4 bits + UNBOUNDED     2.1683 A
+ sparse_pool_s2   2 of 500 + CONTINUOUS w       16.9 bits + UNBOUNDED     1.4315 A
+ best1_pool       argmin over the 500           8.97 bits, no weights     1.7078 A
+```
+
+The argmin beats the 2-of-75 sparse arm **by 0.0248 Å while spending 4.4 fewer bits and no weight
+channel at all**. The famous 1.4315 Å is real and is bought for at least 16.9 bits plus an
+unbounded continuous channel; the same pool's argmin gets to 1.7078 for 8.97 bits and nothing else.
+**The 1.4315 Å figure was never a route. It is an expensive way to buy what 9 bits already buys.**
+
+## CONTROLS
+
+- **Greedy-gap.** The supports are chosen by forward greedy; exhaustive s = 2 over the top-64
+  (C(64,2) = 2016 pairs enumerated per target) gives 2.1180 against greedy's 2.1427, a **+0.0247 Å**
+  gap. The greedy arms are faithful, not lower bounds, at this resolution.
+- **Order statistic (contract rule 8).** The random-support arm is the **mean of 8 draws**, never
+  the per-target min. Priced: observed min-of-8 gain -1.1056 Å is **108% accounted for by the
+  across-target null** and the split-half transfer is **+0.0007 Å (0%)**. The random-support
+  minimum is pure best-of-k and is used nowhere as an arm.
+- Every comparison is made on one basis at a time and each figure names it.
+
+## THE INCIDENTAL FINDING, WHICH MAY MATTER MORE THAN THE REGISTERED ONE
+
+The argmin reference curve was computed per stratum because S30's headline says the mean is a tail
+statistic. **The deployed top-128 register is what fails the tail.**
+
+```
+ B     top-N     all 126    FAIL18    other 108
+ 7     128        2.1458    4.1846      1.8060
+ 8     256        1.9383    3.4526      1.6859
+ 9     500        1.7108    2.2842      1.6153
+
+ widening 128 -> 512:      -0.4350   -1.9004     -0.1907
+```
+
+The difference of stratum means is **-1.7097 Å, SE 0.2207, 2.77x MDE**. On the 18 hardest targets
+the ORACLE best candidate in the pool sits **at rank 128-500**, outside the window the quantum
+stage sees (`core/pipeline.py:758`). On the other 108 widening is worth almost nothing.
+
+**Stated with its caveat, which is severe:** this is ORACLE -- it says the candidate *is there*,
+not that anything can find it, and S29 closed recognition three ways. It relocates the tail's
+failure from "the pool does not contain the answer" to "the register does not contain the
+candidate", which are different problems with different costs. Two more qubits widen 128 -> 512.
+
+**It also composes with lane F's width measurement in the opposite direction, and the pair is the
+real statement.** Lane F (`s30/results/s30_F_width_cloud.json`, phase 1) has the ORACLE **set
+mean** getting *worse* with width on the other 108 (3.116 at 75 -> 4.201 at 500) and *better* on
+FAIL18 (6.159 -> 5.755 at 400). Mine has the **argmin** getting dramatically better with width on
+FAIL18. Together: **widening the register hurts an averaging readout and helps a selecting one, and
+on the tail the selecting readout gains 1.90 Å.** Neither lane's number says that alone. Flagged to
+lane F rather than claimed here.
+
+## WHAT THIS DAMAGED IN MY OWN EXPECTATIONS
+
+1. I expected F1 to be the decisive one and F4 to be a formality. It was the reverse: the support
+   *does* carry the gain (F1 confirmed at 76.7%), and that turned out to be exactly why the class
+   loses -- the support is the expensive channel, and the argmin buys the same thing cheaper.
+2. I expected the weights to be the hidden cost. They are the cheapest part of the whole family
+   (2.32 bits at s = 2).
+3. I expected to be arguing about whether a native-free support rule could be built. F3 says one
+   already has measurable skill over random -- and it does not matter, because the whole
+   native-free branch sits above production.
+
+## COMPARISONS MADE (contract rule 26)
+
+Four pre-registered falsifiers; 10 F1 cells, 5 F2 rows x 7 lattice resolutions, 5 F3 cells,
+21 F4 budgets, 1 greedy control, 2 order-statistic prices, 1 stratum split of the reference curve.
+Only F1-F4 are read as results. The stratum split of the argmin curve was **not** pre-registered
+and is reported as an incidental finding with its SE and MDE attached, not as a lane result.
