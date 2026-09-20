@@ -337,6 +337,153 @@ quoted the **verdict string**. A verdict string is a claim about a computation a
 what reading the computation is worth.
 
 
+## NOTE 14 (2026-09-20 13:43, lane P, S30-L25): **THE ONE MEASUREMENT CAME BACK NULL — AND THE SECOND HALF REPRICES THE SPRINT INTO A FIVE-BIT QUESTION**
+
+The whole B2 bound reduced this morning to a single estimable number, `rho_max = sqrt(R2(e ~ S))`,
+with bars pre-registered at 1.96% / 12.82% / 39.44% before the regression existed. It is measured.
+
+### (a) The registered answer is the null
+
+**R² = 0.0083** out of fold — `rho_max = 0.091` against the **0.358** that 3.00 Å requires and the
+**0.628** that 2.50 requires. Best of 8 arms; matched-dimension control −0.0012; excess **+0.0095 at
+0.75× MDE, NOT MEASURED**. Nothing in {main, full, no-distogram} × {weighted, unweighted} ×
+{126, FAIL18, other-108, tailA, tailB} clears the bar. P1–P5 all hold.
+
+And the line that matters more than the R²: **applying the fitted displacement out of fold emits
+3.0519 Å against production's 3.0483 — it is very slightly WORSE.** The implied-endpoint conversion
+(ρ → 3.0338) flatters a no-op by 0.018 Å. That is the sprint's **fourth checklist entry**:
+
+> **An implied-endpoint conversion from ρ is an upper bound attained only by a perfectly calibrated
+> correction. Always also APPLY the correction and measure the endpoint.**
+
+Every lane that quoted a √(1−ρ²) number this sprint, me first, was quoting the flattering side.
+
+### (b) Why the null is *more* conclusive than a failed search
+
+A trained model's residual is by construction what it could not predict from its own inputs. So for
+any S that is a function of the **sequence**, R²(e ~ S) ≈ 0 is near-tautological for a well-fit
+predictor — and ESM-2 650M is one. The sequence arms were never the informative ones. **The only
+genuinely non-tautological arm in the design was the POOL**, which the distogram never saw — and it
+came back at **+0.0395 Å with the wrong sign**. Regressing the prior toward the pool *hurts*. That is
+`pool-error-is-68-percent-common-mode` arriving at the prior, a third independent site.
+
+### (c) The sprint's cleanest positive, at 10.17× MDE
+
+The native-free basis captures **82.73%** of the ORACLE error in 14 directions against a
+matched-dimension random frame's **44.44%** — excess **+0.3829, 10.17× MDE, 5/5 folds, CI
+[+0.369, +0.392]**.
+
+> **The subspace is free. The sign is the whole problem.**
+
+### (d) The reframe — and it says the target is REACHABLE, just not from here
+
+Lane L's 0.525 Å separation-profile prize reproduces on the pinned benchmark, slightly larger:
+
+```
+ORACLE_FULL (perfect distogram)   2.2379   -0.8104   3.28x MDE  5/5  117W/9L
+ORACLE_SEPPROF5  (5 numbers)      2.4743   -0.5740   2.52x MDE  5/5  106W/20L   70.8% of the full gap
+ORACLE_PERRES    (n numbers)      2.4769   -0.5714                              extra params add NOTHING
+
+ORACLE SIGN + leave-fold-out magnitude   -0.3567   2.29x MDE  5/5  93W/33L    62.1%
+ORACLE MAGNITUDE + leave-fold-out sign   -0.0733   0.32x MDE  NOT MEASURED    12.8%
+```
+
+Sign-corruption ladder (the mandatory null from `error-coherence-decides-correctors`):
+acc 1.0 → −0.574, 0.9 → −0.472, 0.8 → −0.274, 0.7 → −0.251, 0.6 → −0.075. **The deployable
+leave-fold-out sign performs like accuracy ≈ 0.6 — barely above chance — and ≈ 0.8 is needed.**
+
+Both deployable arms are zero and the mechanism is explicit: 5 **global** numbers buy +0.0036 Å
+(the profile's per-target dispersion is **9× its mean**, so the real systematic bias is swamped), and
+5 numbers estimated **from the pool** buy +0.0395 Å, wrong sign.
+
+**Where the prize is, on non-circular strata:** |i−j| ≥ 7 carries **68%** of it — lane R's
+"absent from local (ΔR² −0.089), abundant in global (+0.600)" arriving from a different instrument —
+and it concentrates **~4×** on both of lane F's filter-independent tails, not just on the circular
+FAIL18.
+
+**So the sprint does not close with "unreachable".** Five ORACLE signs are worth −0.3567 Å on the
+cloud: 44% of a perfect distogram, production 3.0483 → 2.69. The closing statement is:
+
+> **The target is reachable with five bits per target on long-range pairs, concentrated on the tail.
+> Nothing in the distogram-plus-pool information set supplies them at the required accuracy.**
+
+### (e) My registered prediction, made before lane P's built-chain number arrives
+
+The terminal slope (`d_out = 1.16·d_set_mean + 0.04·d_set_best`) transfers −0.3567 to **≈ −0.41 on
+the built chain, 3.2105 → ~2.80**, which would clear the charter's primary target. **I predict the
+measured chain delta lands in −0.35 to −0.45.** If it lands materially short, that is *not* noise:
+correcting the prior changes the score, which changes selection, which changes the set the terminal
+averages, so the 1.16 slope is not clean here and a shortfall is the selection-feedback effect —
+its own finding. I will quote lane P's measured number, not the transfer.
+
+### (f) Lane P and lane G have met, and jointly they may close it
+
+Lane G proved (G1, classical MDS) that target-specific information has **exactly three** sources:
+the predicted distogram, the pool, and universal physics — the third **target-independent by
+construction**, hence unable to supply a per-target sign. Lane P has now measured the first two at
+**zero** and **negative**. If G1's reference argument transfers from *scoring a structure* to
+*correcting the prior* — different operators, so the transfer is not free — then the missing
+covariate provably does not exist inside this project's information set, and the only escape is a new
+observable, which S27 already priced and closed (shifts on 54/126; ORACLE-perfect torsions still
+leave 2.021 Å against the 55 needed). **I have asked lane P to attack the transfer rather than
+accept it.**
+
+### (g) An unregistered comparison, flagged as such
+
+Lane T's law gives **0.376 Å per INDEX bit** at D = 3.05; lane P's −0.574/5 gives **0.115 Å per
+prior-sign bit**. Roughly 3×, and lane T independently measured candidate indexing beating subset
+cardinality by 3×. Two different bit currencies, so it may be coincidence — but if it is not, **the
+readout is where bits are worth most**, which is load-bearing for the next sprint.
+
+## NOTE 13 (2026-09-20 13:38, lane D, S30-L24): **THE METER'S NEW CONTROL WITHDRAWS AN S29 NUMBER ON ITS FIRST RUN** — S29 DREW THE MAXIMUM OF ITS OWN EIGHT
+
+I asked lane D to extend the meter with a `verify` verb and an R-draw control. The control paid for
+itself immediately, and what it withdrew is *ours*.
+
+S29 published its built-chain preference contrast against **one** matched random-signed structure,
+seed 0. Lane D ran the same contrast against **eight** draws:
+
+| basis | S29 published (1 draw) | S30 (8 draws) | single-draw range | verdict |
+|---|---|---|---|---|
+| **built chain** | **+0.0635** (0.92× MDE) | **+0.0357** (0.56× MDE) | [+0.0159, +0.0635] | **WITHDRAWN** — below the 0.7× floor, fold CI spans zero, folds 3/5 |
+| **CA point cloud** | +0.1746 (1.87× MDE) | **+0.1716** (1.84× MDE) | [+0.1587, +0.1905] | **CONFIRMED**, 5/5 folds |
+
+**S29's seed-0 draw was the maximum of its own eight.** Not near it — the maximum. The published
+number was the single most flattering value the control could have taken.
+
+### Why the two bases split, which is the transferable part
+
+Relative draw noise is **59% on the chain against 27% on CA**. On the chain the shipped cost prefers
+production to nearly everything — every preference in the sweep sat between 0.008 and 0.056 — so the
+control *is a rare event*, and a rare event's single realisation is mostly variance.
+
+> **A single-draw control is least trustworthy exactly where the effects are smallest — which is
+> where this project's remaining effects live.**
+
+That is the whole of it. It is not a fact about S29's carelessness; it is a fact about where we now
+operate. Every contrast still standing in this project is in the 0.02–0.15 band.
+
+### The rule, in lane D's words, and it goes in the checklist
+
+> *"A control that is itself a random draw needs its own draw distribution reported, and the number
+> of draws must scale inversely with the effect size. Eight separated these two cases; one did not."*
+
+### A nuance that stops a false alarm
+
+Lane D also flagged that the preference statistic is a 0/0.5/1 indicator with modal value 0, so its
+**median is uninformative by construction**. A median paired difference of 0.0000 there is *not* the
+median-vs-mean early warning firing — it is what that statistic's median always does. Use the
+uniform-effect-null concentration test instead. This is the third time this sprint that a statistic's
+transform and its null have had to be matched by hand (see NOTE 10(a), my own `7 − log₂r` error).
+
+### What it does and does not touch
+
+It does **not** touch the sprint's own results: every S30 contrast was run against its own control in
+its own space, and lane R's 43-channel verdict used a max-over-channels sign-flip null. It touches
+one **S29** number, and it means the S29 report's built-chain preference row must be annotated rather
+than cited. Per contract rule 13 the historical artefact stays untouched; the annotation lives here,
+in S30-L24, and in the report's §3 closures table.
+
 ## NOTE 12 (2026-09-20 13:31, lane X, S30-L20): **NO GENERATOR CAN IMPROVE THE TYPICAL MEMBER IN THE SENSE THAT PAYS** — AND MY PREMISE WAS BACKWARDS
 
 I asked lane X to test the one construction its own law would admit: a generator whose **typical**
