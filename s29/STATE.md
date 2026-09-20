@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:02 Pacific.
+Last update: 2026-09-20 00:06 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -163,6 +163,37 @@ over-confident posterior:
      information) and the S24-L3 parallel-bias check. If both fail, contraction is closed as a
      lever and the ceiling is information, not functional form. If either moves the chain, it is
      the sprint's first movement and lane D attacks it the same hour.
+
+
+## Integration note 4 (2026-09-20 00:06, after S29-L7 and S29-L9): TWO GUARDS AND A CONSTRAINT
+1. THE THEOREM (S29-L7, lane T) is the sprint's spine result so far: an objective is locally
+   informative iff its per-pair force coefficients are negatively correlated with production's
+   own signed error against the native; under the record's error model the expectation carries
+   NO term in the native's deviation from typical, is second order, and vanishes when the
+   posterior's median map and production deviate from typical alike. Corollaries: 45% of pair
+   space is in ker(Jc^T) and invisible to any marginal objective's gradient; non-separability
+   buys nothing; the sign is -sign(beta - 1) with beta the over-confidence, which predicts the
+   measured -0.034 and the -0.143 on FAIL18. This is H0 DERIVED, not merely observed.
+2. GUARD 1, now contract rule 20: the cosine is gameable by shrinking the target map toward
+   typicality (positive cosine, zero information, worse structure). Every cosine gain must ship
+   with its implied shrink, the native percentile, and the emitted bond and Rg. Lane D is
+   adding the shrink to the meter and running the theorem's three predictions as a measured
+   guard.
+3. GUARD 2, from lane M's audit (S29-L9): the distogram MEMORISES its training peptides by 8x
+   (in-fold vs out-of-fold NLL delta +2.075, SE 0.152, 4.88x MDE, correct sign on 5/5 folds;
+   372,881 parameters against 787 peptides + 6,003 fragments with dropout deliberately 0).
+   Consequence for every S29 lane: any diagnostic computed on the corpus (calibration,
+   sharpness, MAE, a fitted residual) describes MEMORISATION and means nothing about the
+   deployed model until it is recomputed out of fold. This bounds the one route lane T's
+   theorem leaves open (a learned residual that sees the native's deviation from typical): it
+   must be trained and read strictly leave-fold-out, and its in-sample fit is worthless.
+   The harness itself is sound (nine checks, all pass; one declared non-bit-exactness in the
+   s12 score cache that affects only operators reading the order below the top-75 cut).
+4. The sprint's remaining live routes, in order of what would move the endpoint:
+   B (a non-degenerate off-diagonal Hamiltonian: does the quantum state select a better set),
+   P (contraction removed at the projection), F1 (contraction never created, at the selection
+   functional), X (the configuration state space where the scorer scores what it generated).
+   All four are gated, pre-registered, and attack mechanisms the theorem names.
 
 ## Closed in S29
 - H1, the typicality axis (S29-L<O's entry>): the ORACLE global step is exactly zero; the axis

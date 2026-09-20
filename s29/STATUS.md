@@ -2,7 +2,8 @@
 
 ## Coordinator
 - 2026-09-19 23:35 running: sprint opened; governor v2.5 (band 92-94, hard 95.5); cap 6; six lanes spawning (L, M, T, O, D, X).
-- next: read O ladder, T sections 2-3, M map before any build; wave 2 (build) on their word.
+- 2026-09-20 00:06 running: 8 lanes (L M T O D X P B). Closed: H1 (ORACLE step exactly 0), the QA-import route (no method exists below 40-50 residues; AF2 pLDDT fails at peptide length). Open and gated: B (T's spectra scope finding 7: lam2/lam1 0.138 raw vs 0.465 centered vs 0.634 agreement), P (projection price), F1 (queued to M), X (configuration space). Guards: contract rule 20 (the cosine is gameable) and the 8x distogram memorisation. Cap 8, box filling.
+- next: O's chain ladder (sharded) says what any operator class could reach; D's check of T's predictions; then wave 3 on whichever mechanism survives.
 
 ## L
 - 2026-09-19 23:36 running: brief, contract, charter 4/6/12/18, STATE, S28 report 1/2/8, state-brief 5, S28-L48/L49 and the ham_lib scorer list read; topic 1 (native-free QA) searches starting.
@@ -20,8 +21,8 @@
 - next: F1 (coordinator, integration note 3): PREREG_S29_M_F1.md first -- swap ONLY the selection functional (L1 Bayes risk -> log score of the same 17-bin posterior), monotone-reranking control, S24-L3 parallel-bias cosine, FAIL18/108 split with a random-18 null; 12-target probe, then 126, built chain.
 
 ## T
-- 2026-09-19 23:57 running: brief + contract + charter 4/7/11/12 + S28 report + S28-L8b/L11/L18b/L21/L23b/L26b/L35/L36/L41/L43/L48 + QUANTUM.md + S13 locality/Pauli + REPORT V.1-V.10 read; job s29T_spectra launched (spectra + hop-only gradient variance for A, A_c, DD^T at n=4..9, 12 targets).
-- next: THEORY.md sections 2 (locally informative class) and 3 (spectral condition) written and committed, ledger entries with their predictions.
+- 2026-09-20 00:06 posted: THEORY sections 2 (S29-L7) and 3 (S29-L8). SECTION 3 CARRIES A CORRECTION FOR LANE B: centering raises lambda_2/lambda_1 0.138 -> 0.465 but the gradient-variance decay gets WORSE (-2.30 vs -1.83 per qubit), because Var = r_stable/D^2 and r_stable only rises 1.04 -> 1.6; J* falls 88 -> 71, not an order of magnitude. And a centered H consumed by any p-readout is self-cancelling (pole symmetry): B needs a SIGNED readout, and the family collapses to production +- eta PC1(pool), an ORACLE rung lane O can price in minutes.
+- next: sections 1 (contraction), 5 (reachable set), 6 (entropy), 4 (CVaR over a structural observable), 7 (what an objective must know).
 
 ## O
 - 2026-09-19 23:43 running: brief and record read (S10-5, S24 L2/L3/L13, S23 L6/L9, S22 L4, S28-L1b/L26b/L35/L48); PREREG_S29_O.md committed (1e9bb035); building s29_O_ladder.py + tests.
