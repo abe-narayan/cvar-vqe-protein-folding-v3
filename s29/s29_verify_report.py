@@ -185,6 +185,35 @@ print('%-58s %s %s' % ('P BOND inside the 8-draw random band (report: yes)', ins
                        'MATCH' if inside else '*** MISMATCH ***'))
 print('%-58s %d' % ('P random draws counted (report: 8)', len(rd)))
 
+# ---------- lane X, the divergent encoding ----------
+print()
+print('=== section 6.4: lane X, configuration-space encoding ===')
+xd = json.load(open('s29/results/s29_X_probe.json'))
+xa = xd['arms']
+print('%-58s %d %s' % ('X targets (report: 12)', xd['n'], 'MATCH' if xd['n'] == 12 else '*** MISMATCH ***'))
+print('%-58s %d' % ('X arm count (report: 94)', len(xa)))
+for arm, claim in [('ORACLE_best_chimera|rmsd_cloud', 2.1801),
+                   ('UNTRAINED_s0|R3|rmsd_cloud', 3.4501),
+                   ('VQE_g1_s1|R3|rmsd_cloud', 3.4748),
+                   ('VQE_g1_s0|R3|rmsd_cloud', 3.5860),
+                   ('VQE_prod_s0|R3|rmsd_cloud', 3.6222),
+                   ('VQE_g0_s0|R3|rmsd_cloud', 3.6251)]:
+    check('X %s' % arm.replace('|rmsd_cloud', ''), claim, xa[arm]['mean'])
+# production restricted to lane X's targets
+xt = xd['pdbs']
+pr = {q: byitem['prod'][q] for q in xt if q in byitem['prod']}
+print('%-58s %d of %d' % ('X targets matched in the ladder rows', len(pr), len(xt)))
+check('production restricted to X targets, cloud', 3.2529, st.mean(v['rmsd_cloud'] for v in pr.values()))
+check('production restricted to X targets, chain', 3.3866, st.mean(v['rmsd_chain'] for v in pr.values()))
+check('X best non-ORACLE arm vs that production', 0.1972,
+      xa['UNTRAINED_s0|R3|rmsd_cloud']['mean'] - st.mean(v['rmsd_cloud'] for v in pr.values()))
+# the untrained arm must be the best non-oracle one
+nono = sorted((v['mean'], k) for k, v in xa.items()
+              if k.endswith('rmsd_cloud') and 'ORACLE' not in k)
+best = nono[0][1]
+print('%-58s %s %s' % ('X best non-ORACLE arm is UNTRAINED_s0|R3', best,
+                       'MATCH' if best == 'UNTRAINED_s0|R3|rmsd_cloud' else '*** MISMATCH ***'))
+
 print()
 print('=' * 80)
 print('MATCHED: %d    MISMATCHED: %d' % (len(ok), len(bad)))
