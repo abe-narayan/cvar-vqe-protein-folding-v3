@@ -243,6 +243,7 @@ killed it, so the reader can check rather than take it on report:
 | A transferable prefix length *m* | ORACLE global m = 72 worth −0.0018 Å; leave-fold-out +0.0079 Å **worse** | FALSIFIED |
 | 21 native-free displacement fields | `beats_random_reference` False on all 21; best 0.1128 vs 0.1398 | FALSIFIED |
 | The profile correction | +0.582 Å **even ORACLE-fitted** | FALSIFIED |
+| The projection stage's bond-length correction | +0.7222 Å, **inside the 8-draw random band** [+0.6504, +0.8152] — worth what a random displacement of the same size is worth | FALSIFIED |
 | Within-band ordering (F2) | Fails on 58/70 — conditioning on realism *removes* skill | FALSIFIED |
 | A cost function that orders the ladder **better** (F1) | LOG − SWAPCTL = +0.0202 at **0.14× MDE**; error-direction cosine with production **0.924** | NOT MEASURED |
 | Configuration-space encoding | [PENDING — lane X's 12-target arms] | |
@@ -886,6 +887,44 @@ So the actionable version is narrower: **spend control effort at the step where 
 first become quotable**, not uniformly across the experiment. A matched null at that step converts a
 future retraction into a cheap in-flight correction. Every retraction in §14(e) is a step that had
 no such control; every "caught before it was claimed" in this report is a step that did.
+
+### 9.2c The projection stage's own falsifier, and why eight random draws were worth insisting on
+
+Lane P tested whether the projection stage's distortion can be corrected by a native-free rule.
+Its design carries **eight matched random draws** rather than one — I originally called that set
+"a quarter of the cells" and wanted it trimmed; lane P corrected me (it is 58% of them, because the
+falsifier requires all eight) and kept them. That decision is what makes the result readable.
+
+On the built chain, n = 126, every arm paired against production with fold-clustered statistics:
+
+```
+arm            effect     MDE     ×MDE   folds   W/L        verdict
+BOND          +0.7222   0.3220   +2.24    5/5    34/92      WORSE
+SPAN          +0.1220   0.0738   +1.65    5/5    43/83      WORSE
+ISO           +0.0737   0.0589   +1.25    4/5    54/72      WORSE (Type-M zone)
+CTRL-INV      +0.1671   0.1763   +0.95    4/5    49/77      NOT MEASURED
+FLOOR         −0.0077   0.0137   −0.56    3/5    58/68      NOT MEASURED
+CTRL-GLOBAL   +0.6578   0.1870   +3.52    5/5    21/105     WORSE
+```
+
+Read against production alone, BOND is decisively **worse** — 2.24× MDE, 5/5 folds. That is not the
+finding. The finding is what the eight draws make visible:
+
+> The eight matched random displacements produce effects of **+0.6504 to +0.8152** (mean +0.7308).
+> **BOND's +0.7222 sits inside that band**, −0.0087 from the random mean.
+
+**The bond-length correction is worth exactly what a random displacement of the same size is worth.**
+Its entire effect is magnitude, not direction — which is §5.1 again, on a stage that generates its
+displacement by a completely different construction from the 21 fields of §9.4. Two independent
+routes to the same conclusion.
+
+`FLOOR` sitting at −0.0077 (0.56× MDE) is the design's internal check and it behaves: the arm that
+should be zero is zero.
+
+*Attribution: the figures above are my own recomputation from lane P's committed rows
+(`s29/results/s29_P_rows_shard*.jsonl`, 1,896 rows, 126 targets on every arm, all 8 random draws
+present). Lane P's own entry with its interpretation had not landed when this section was written;
+if it differs, lane P's reading governs and this paragraph is the thing to correct.*
 
 ### 9.3 Controls against our own enthusiasm
 
