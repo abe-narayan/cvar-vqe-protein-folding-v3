@@ -149,6 +149,62 @@ if isinstance(f, dict):
     show('  F1c', str(f.get('F1c'))[:90],
          'WITHDRAWN as an effect estimate by S30-L23 -- the stratum is the outcome')
 
+# ------------------------------------------------- lane D: the meter, and the charter's anchors
+print()
+print("--- lane D, the cost/RMSD meter (S30-L24): the charter's four anchors ---")
+mc = load('s30/results/s30_D_meter_DIS_chain.json')
+ma = load('s30/results/s30_D_meter_DIS_ca.json')
+if mc:
+    check("charter anchor: ladder rho (chain, S28)", -0.40,
+          dig(mc, 'ladder_rho', 'S28', 'mean'), tol=1e-2)
+    check("charter anchor: ORACLE preference (chain)", 0.07,
+          dig(mc, 'rand_signed_control', 'pref_circ_best'), tol=5e-3)
+    check("production RMSD, built chain", 3.2071, dig(mc, 'mean_rmsd', 'PROD'), tol=5e-3)
+if ma:
+    check("charter anchor: cosine (ca)", -0.03, dig(ma, 'cosine', 'mean'), tol=5e-3)
+    check("charter anchor: native percentile", 0.369,
+          dig(ma, 'native_pctile', 'mean'), tol=2e-3)
+    check("production RMSD, CA point cloud", 3.0483, dig(ma, 'mean_rmsd', 'PROD'), tol=5e-3)
+
+# The S30-L24 withdrawal: 8 draws, and the two bases split.
+print()
+print('--- S30-L24: the 8-draw random-signed control, and why the bases split ---')
+for nm, o, claimed_eff, claimed_x in (('chain', mc, 0.0357, 0.5636), ('ca', ma, 0.1716, 1.8415)):
+    if not o:
+        continue
+    rc = dig(o, 'rand_signed_control') or {}
+    ct = rc.get('contrast') or {}
+    check('  %-5s preference contrast (8 draws)' % nm, claimed_eff, ct.get('effect'), tol=1e-3)
+    check('  %-5s   as a multiple of its own MDE' % nm, claimed_x, ct.get('effect_over_mde'), tol=2e-3)
+    show('  %-5s   n_draws / draw sd' % nm,
+         '%s / %s' % (rc.get('n_draws'), round(rc.get('pref_rand_signed_draw_sd') or 0, 4)),
+         'single-draw range %s' % (rc.get('single_draw_range'),))
+    sd_rel = ((rc.get('pref_rand_signed_draw_sd') or 0)
+              / (rc.get('pref_rand_signed_mean') or 1))
+    show('  %-5s   RELATIVE draw noise' % nm, '%.1f%%' % (100 * sd_rel),
+         'the chain is the noisy basis -- the control is a rare event there')
+
+# ---- the sign-convention trap, asserted so it stays known rather than lurking ----
+print()
+print('--- the sign-convention trap in this artefact (KNOWN, asserted, not a defect) ---')
+if ma:
+    rc = dig(ma, 'rand_signed_control') or {}
+    ct = rc.get('contrast') or {}
+    gate = dig(ma, 'verdict', 'gates', 'rand_signed')
+    vstr = str(ct.get('verdict'))
+    # s24.stats_lib.compare is LOWER-IS-BETTER (d = a - b, negative = a better) because its
+    # native statistic is RMSD.  A PREFERENCE RATE is HIGHER-IS-BETTER, so for this one
+    # statistic its verdict string is inverted.  Lane D's gate handles it correctly
+    # (s30_D_meter.py:451, `PASS if effect > 0`).  Anyone quoting `.verdict` instead of the
+    # gate reports the OPPOSITE of the truth.  No S30 document does; this keeps it that way.
+    ok = (vstr.startswith('WORSE') and gate == 'PASS' and (ct.get('effect') or 0) > 0)
+    (OK if ok else BAD).append(('sign-convention trap present and gated', 'WORSE/PASS',
+                                '%s / %s' % (vstr[:12], gate)))
+    print('%-56s %s' % ('  contrast.verdict says', vstr[:40]))
+    print('%-56s %s' % ('  verdict.gates.rand_signed says', gate))
+    print('%-56s %s' % ('  -> QUOTE THE GATE, NOT .verdict',
+                        'CONSISTENT with the known trap' if ok else '*** trap changed shape ***'))
+
 print()
 print('=' * 92)
 print('MATCHED: %d    MISMATCHED: %d    KEYS/FILES NOT FOUND: %d' % (len(OK), len(BAD), len(MISSING)))
