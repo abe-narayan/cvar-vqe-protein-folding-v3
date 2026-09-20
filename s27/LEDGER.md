@@ -3324,3 +3324,120 @@ correct. Adopted and answered here; S28-L39 is not edited (the ledger is append-
    earned; the mechanism stands (S28-L26b (c), S28-L30 item 4, S28-L39 items 6 to 8).
 Artefacts: this entry; `s27/s28_A_FINDINGS.md` (4.3, 6); `s27/STATUS.md`; lane D's
 `s27/results/s28_D_attack_A2_chain.json`, `s28_D_attack_A2_fail18_null.json`.
+## S28-L43 -- ADVERSARY CHECK OF S28-L41 (lane B's built-chain verdict, 18 arms): STANDS; THE COMPARATOR IS LIKE FOR LIKE (B's OWN RE-PROJECTION EQUALS S27's ROWS AT 0.0 ON 126/126, SO THE S28-L18 FLOOR IS LANE A's INPUT DIFFERENCE, NOT THE PROJECTION's); NO CELL OF THE NINE OR ANY ORDER STATISTIC OVER THEM IS A RESULT (WITHIN-READOUT SPLIT-HALF 0% FOR THE R3 FIVE, 0.06x MDE FOR THE R1 PAIR); THE MIDDLE LEG IS MEASURED AND ITS ANSWER SUPERSEDES MY OWN S28-L26 RULE (THE FIDELITY CAP 0.85 IS EXPRESSIVITY OF THE STATE, THE 2.8 GAP IN F IS OPTIMISATION BY BASIN SELECTION) AND MY S28-L11 WORDING "COLLECTS A THIRD OF ITS BOUND" (A MIXTURE: THE FULL BOUND ON A THIRD OF THE DRAWS, RETRACTIONS R4); THE B2 GATE IS OPEN FOR THE SCOPED k = 10, J = 3 CELL WITH TWO CONDITIONS (2026-09-19 21:08, lane D)
+Question: does the verdict stand; is the comparator like for like; is any positive hidden in the
+nine cells, the strata or the readout families; is the three-way split's middle leg now
+measured; and is the B2 endpoint gate (contract addendum 1 item 15; PREREG_S28_B addendum 2;
+S28-L23 (d)) open or closed?
+Recomputed from `s27/results/s28_B_chain_rows.jsonl` (2,268 rows = 126 x 18) with
+`s27/s28_D_attack_B_chain.py` -> `s27/results/s28_D_attack_B_chain.json`
+(`s26/logs/s28D_attack_B_chain.log`) and `s26/logs/s28D_B_bimodal.log` (this entry's extra checks):
+- Every cell of the entry's table matches to four decimals: vs production R1 arms +0.0037 to
+  +0.0125 (0.12x to 0.46x); R2 / R3 arms +0.2498 to +0.3706 (1.28x to 1.58x, fold CI above zero,
+  WORSE); the eigensolver -0.0026 / -0.0058 (0.09x / 0.13x); F1 on the chain vs the same
+  readout at J = 0: +0.0003, -0.0024, -0.0090, -0.0288, -0.0369, -0.0303, -0.0466 and the two
+  R2 cells +0.3645 / +0.3636 vs J = 0 R1. Anchor: `rmsd_cloud` of both J = 0 R1 arms equals S27
+  `vqe_rows.jsonl :: DIS` at 0.0 on 126/126 (S28-L38's 104 extends to 126). Correct.
+- COMPARATOR AND CODE PATH (S28-L38's caveat, closed). B's comparator is S27's
+  `chain_rows.jsonl :: DIS`; `s27/results/s28_B_prodcheck.json :: summary` re-projects the DIS
+  top-75 in B's own process (stable key -> `readout_uniform` -> `readout_projected`) and gets
+  `rmsd_chain` identical on 126/126 (max_d_chain 0.0, mean 3.212625 both sides). So every
+  "vs production" contrast in S28-L41 shares one code path AND one input with S27. This also
+  scopes S28-L18 / L27b / R2: lane A's re-projection of "the same" cloud differed from S27 by up
+  to 0.513 A because lane A's cloud differs from S27's at 1e-13 (it rebuilds C0 in its own
+  frame); B's cloud is bit-identical and so is its chain. The floor is an INPUT-difference
+  floor of `I.project`, which is what S28-L18 said; it is not a property of the projection run
+  twice on identical input (lane A's own `s28_A2_prodcheck.json` shows the same, 4/4).
+- THE NINE CELLS (S28-L22). `best_of_k_within` on the (126 x 9) matrix vs J = 0 R1: oracle
+  -0.4609, null -0.6385, k_eff 6.12, split-half -0.2277 (49%, "residual survives"), as the
+  entry prints; the entry's diagnosis (the transfer is the R1-vs-R2/R3 readout gap) is correct
+  and I priced it within readout family on the SAME-READOUT twin differences: the R3 five
+  (`s0 PERM J0.3`, `s0 PERM J1`, `s1 REAL J0.1`, `s1 PERM J0.1`, `s1 PERM J0.3` vs J = 0 R3 of
+  their seed) oracle -0.1298, null -0.1358, k_eff 4.66, split-half -0.0002 (0%): NOT A SIGNAL;
+  the R1 pair (`s0 REAL J0.1`, `s0 PERM J0.1`) k_eff 1.34, split-half -0.0007 (0.06x the R1
+  MDE); the two R2 cells have no J = 0 R2 twin and are +0.36 above J = 0 R1. One count to fix in
+  the entry's wording: the nine are TWO R1 cells, TWO R2 cells and FIVE R3 cells (not "three R1
+  / six R2 / R3"); B's family numbers (R1 k_eff 1.34, transfer -0.0007; the rest 11% on the
+  vs-J0-R1 matrix) are right, the labels are off by one. No cell and no minimum over cells is a
+  result. Correct.
+- THE LARGEST POINT-CLOUD CELL (S28-L22): `s1 REAL J0.1 R3` on the chain -0.0369 vs its J = 0
+  R3 twin (1.24x, BETTER Type-M, 5/5); its seed-0 twin +0.0037 (0.20x, 3/5); its PERM control
+  -0.0303 (0.81x, 5/5); REAL minus PERM at the cell -0.0067 (0.18x, fold CI [-0.033, +0.021]);
+  and the arm is +0.2795 A above production (1.35x). The second BETTER cell is the PERM control
+  `s1 PERM J0.3 R3` (-0.0466). Both are the seed-1 J = 0 R3 comparator sitting +0.0378 above the
+  seed-0 one (0.44x, fold CI [-0.001, +0.082]) read from the other side, as the entry says.
+  F1's both-seeds clause and its PERM clause each fail. Dead, as on the point cloud. Correct.
+- FAIL18 / 108. R1 arms: within 0.26x / 0.48x of production on both strata: nothing. R2 / R3
+  arms: -0.34 to -0.47 on FAIL18 and +0.37 to +0.51 on the 108; against 20,000 random
+  18-subsets of the 126 the FAIL18 mean is below every subset (p 0.0000 for J = 0 R3 both
+  seeds and J = 3 R2): a real regime, S27 L9's, carried by the READOUT at J = 0 (the J = 0 R3
+  rows split -0.348 / -0.436 vs +0.383 / +0.442) and not by J; the FAIL18 sizes are at or
+  under 1x MDE (Type-M, sign only); no native-free switch exists (S28-L6 / L8). The
+  eigensolver's FAIL18 readings -0.064 / -0.049 sit at p 0.065 / 0.041 under the same null and
+  0.53x / 0.84x MDE: not a result. Correct.
+- THE MIDDLE LEG (S28-L2 (b), S28-L26's request). `s27/results/s28_B_represent.json` +
+  `_rows.jsonl` recomputed: best squared overlap with the J = 3 ground state over 16 starts,
+  median 0.849 at 80 iterations and 0.851 at 400 (range 0.796 to 0.880; the 16 finals spread
+  by at most 0.016; long minus short at most 0.012; untrained best-of-16 0.027); F at the fitted
+  state below F_gs on 10/12 (median -7.409 vs -7.327) and below the VQE's reached F on 24/24
+  cells; 7/24 VQE cells coherent (coherence > 0.5, overlap 0.78 to 0.86, F within 0.041 of the
+  fitted state's) and 17/24 incoherent (overlap <= 0.021, coherence <= 0.022, F -4.557 = the
+  J = 0 value); the sign-aligned |psi_vqe| representable at median overlap 0.986; fitted state
+  PR 465 against the ground state's 301; the re-run VQE F bit-identical to `s28_B_rows.jsonl`
+  on 24/24. The module reads no native quantity (grep: the only hit is its docstring). Every
+  number in the entry's table reproduces. READING, and a correction of my own rule: S28-L26
+  said "overlap near 1 -> optimisation shortfall; well below 1 -> expressivity". The measured
+  0.85 is neither, and B's resolution is the right one: the fidelity cap is an expressivity fact
+  about the STATE (the 27-parameter family cannot reach the ground state's participation
+  ratio), while the leg's question is about the OBJECTIVE F, of which the ground state is not
+  the optimum (it optimises <H>; F is the CVaR objective, and the fitted state has LOWER F than
+  the ground state on 10/12). On F the circuit holds a state 2.8 below what the optimiser
+  reached on 17/24 cells, and F_fit is only an UPPER bound on the family's minimum F (the fit
+  maximised overlap, not F), so the shortfall is at least that. The 1.8 gap of S28-L25 is an
+  OPTIMISATION shortfall of the basin-selection kind, and the middle leg is measured. With it,
+  my S28-L11 wording "the circuit collects a third of its same-sign hopping bound at J = 3"
+  (and B's S28-L8b / L21 / L25 "34% / 25%", "sign coherence 0.34 / 0.25") is superseded: on the
+  126 (`s28_B_rows.jsonl`, REAL J = 3, native-free) seed 0 has 43 cells at coherence > 0.5, 0 in
+  (0.1, 0.5], 83 at <= 0.1; seed 1 has 32 / 0 / 94; coherent on both seeds 10, on either 65, on
+  neither 61; at J = 1 the coherent basin is found on 1 / 4 cells. The mean was a MIXTURE of
+  fully coherent and fully incoherent draws, not a partial alignment. Recorded as
+  `s27/RETRACTIONS_S28.md` R4 (a reading correction; no number changes; the departure numbers
+  and the trainability slopes stand).
+- One Type-M reading in the entry to strike: "where the coherent basin IS found the deployed
+  readout emits a slightly worse structure (+0.0089 on the 43 coherent cells against -0.0025
+  on the 83 others)". That is a post-hoc subgroup split by a state property; `ST.compare` on
+  each subgroup: seed 0 R1 coherent +0.0089 (SE 0.012, 0.26x), incoherent -0.0025 (0.09x),
+  R3 +0.039 (0.31x) / -0.003; seed 1 R1 +0.020 (0.25x) / +0.001; and the coherent-minus-
+  incoherent difference sits inside the random-subset null (p 0.275 / 0.147). The measured
+  statement is "finding the basin makes no measurable difference to the endpoint"; "slightly
+  worse" is not measured. The conclusion (the found basin is worth nothing to the endpoint) is
+  unchanged.
+- S28-L2 (c), (d), (e): the hopping table carries coherence beside every value (and is now to
+  be read as a mixture, above); no GS J = 0 row is compared; the J grid is priced on the point
+  cloud (NOT A SIGNAL) and the chain's own order statistic is the nine-cell one. Correct.
+  Novelty (14 (b)): the first non-diagonal H, the first measured departure of the trained
+  state, the first exact-eigensolver comparator; none changes S27 L7. Correct. Rule 9: no
+  plateau wording; "cannot train" withdrawn earlier. Rule 12: the eigensolver ties are broken
+  by the stable key and labelled DEGENERATE where they matter.
+Verdict: STANDS (refuted as registered: F1 does not fire, F2's prior held, F3 / F4 silent, the
+registered prior held: null for R1, WORSE for R2 / R3; the middle leg is measured as
+optimisation by basin selection). Two wording caveats (the 2 / 2 / 5 count; "slightly worse"
+-> "no measurable difference") and one correction of my own (R4).
+THE B2 ENDPOINT GATE (addendum 1 item 15; PREREG_S28_B addendum 2; S28-L23 (d)): the S28B
+built-chain verdict is posted and checked; nothing positive is being built on (the gate was
+procedural, not conditional on a positive). The gate is OPEN for exactly the scoped cell
+(k = 10, J = 3, both seeds, VQE R1 / R3, GS R3 with the DEGENERATE label per component count,
+PERM, J = 0 from the existing rows; production as the comparator; point cloud, chain only at
+0.7x MDE; prior WORSE or null), with two conditions that follow from this entry and cost no
+compute: (1) the entry reports, per (target, seed), the coherence CLASS of the trained state
+(> 0.5 or <= 0.1; the kNN share of 44 to 68% at k = 10, J = 3 in S28-L29 is to be re-read as a
+mixture before any endpoint number is interpreted), and the endpoint contrast on the coherent
+and incoherent cells separately, labelled a post-hoc subgroup split unless B2 registers it in an
+addendum 3 before the job runs; (2) no "the circuit collects X% of its bound" sentence is
+written from a mean coherence; the class counts are written instead. The cell is not a
+cosmetic variant of S28-L41 (a different graph is a different H, with a ground state of PR 53
+around the argmin, the opposite of the Gaussian's 301), so the prereg's new angle stands.
+Artefacts: `s27/results/s28_D_attack_B_chain.json`, `s26/logs/s28D_attack_B_chain.log`,
+`s26/logs/s28D_B_bimodal.log`, `s27/s28_D_attack_B_chain.py`; lane B's `s28_B_chain_rows.jsonl`,
+`s28_B_summary.json`, `s28_B_prodcheck.json`, `s28_B_represent.json` + `_rows.jsonl`,
+`s28_B_rows.jsonl`, `s28_B_split.json`; `s27/RETRACTIONS_S28.md` R4.
