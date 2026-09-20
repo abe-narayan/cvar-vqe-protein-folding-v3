@@ -164,3 +164,151 @@ Artefacts read: `s27/REPORT_S28.md` §3.7; `s27/LEDGER.md` (S28-L35/L36/L37/L48/
 3870, 4006, 4033, 4046); `s29/REPORT_S29.md` §9.1, §9.4, §12.0; `s29/LEDGER.md` S29-L12, S29-L50;
 `s29/s29_D_cost_audit.py:250`; `s27/results/s28_A_structs/` (379 files, present);
 `s29/results/s29_D_ladder_structs/` (126 files, present).
+
+## S30-L2 -- THE CHEAP DIAGNOSIS, AND IT IS DECISIVE: THE TAIL IS **NOT POOL-LIMITED**. THE ORACLE BEST POOL MEMBER ON FAIL18 IS **2.284 Å** -- ALREADY UNDER THE 3.00 Å CAP THE SPRINT-OPEN COUNTERFACTUAL ASKS FOR. THE PIPELINE THEN THROWS IT AWAY: THE DISTOGRAM'S 500 -> 75 FILTER IS **+1.767 Å WORSE THAN A RANDOM 75** ON FAIL18 (3.87× MDE, 0W/18L, RANDOM-18 NULL p = 0) WHILE BEING NO WORSE THAN RANDOM ON THE OTHER 108. **BLOSUM RETRIEVAL IS NOT THE CULPRIT** (NOT MEASURED EVERYWHERE). THE HARMFUL THING THE PIPELINE DOES ON HARD TARGETS IS NOW LOCATED IN ONE STAGE (2026-09-20 12:44, F)
+
+Pre-registration `s30/PREREG_S30_F1.md`, committed **73626721 at 12:39:50**, before the first
+aggregate number for this experiment existed. Code `s30/s30_F_stagegap.py`; output
+`s30/results/s30_F_stagegap.json`, `s30/results/s30_F_stratum_nulls.json`.
+
+**Every RMSD in this entry is ORACLE except `prod`, and every one is a POINT CLOUD figure**
+(`rr` from `s8/generate_univ/<pdb>.npz`). The built-chain counterparts for the three rungs that
+have them come from S29 lane O's `s29/results/s29_O_ladder_table.json` and are given in
+parentheses; the two bases are never mixed inside a row (contract rule 1).
+
+### 1. The decomposition
+
+The shipped path narrows three times: universe (9.8k-21.5k windows) -> BLOSUM pool (500) ->
+score-selected top-75 -> emitted m=75 average.
+
+```
+ORACLE best of ...        all 126      FAIL18       other 108
+  the universe             1.3134      1.6400        1.2590
+  the BLOSUM 500           1.7108      2.2842 (chain 2.2845)   1.6153 (chain 1.6117)
+  the score's top-75       2.3062      4.6774 (chain 4.6826)   1.9109 (chain 1.9093)
+production (DEPLOYABLE)    3.0483      5.8319 (chain 6.0200)   2.5844 (chain 2.7423)
+
+gap decomposition         all 126      FAIL18       other 108
+  G_retr = pool - univ     0.3974      0.6442        0.3562
+  G_filt = top75 - pool    0.5953      2.3932        0.2957
+  G_read = prod  - top75   0.7422      1.1545        0.6735
+  G_tot  = prod  - pool    1.3375      3.5478        0.9691
+  share of G_tot due to the filter:     67.5%         30.5%
+```
+
+### 2. F1a FIRES -- the tail is not pool-limited
+
+The ORACLE best member of the FAIL18 pools averages **2.2842 Å point cloud (2.2845 built chain)**,
+below the 3.00 Å cap; **13 of the 18 have an ORACLE pool member under 3.00 Å** and the worst pool
+on the whole tail bottoms out at 3.54 Å. The material to cap the tail is already in the candidate
+sets the pipeline is handed. This closes the pool-limited branch and nothing in this lane will
+pursue retrieval or generation on its account.
+
+### 3. F1c FIRES, and it is where the damage is -- but only on one of the two filters
+
+Each narrowing stage against a random subset drawn in **its own operator space** (contract rule
+6), because best-of-k is an order statistic (`grid-oracles-are-order-statistics`) and the raw drop
+from 500 to 75 is expected:
+
+```
+arm                                        effect    ×MDE   fold CI            folds  W/L      verdict
+BLOSUM-500 vs random-500 of the universe
+  all 126                                  -0.0722  -0.87  [-0.1329,-0.0172]   4/5   72W/54L  NOT MEASURED
+  FAIL18                                   -0.0034  -0.01  [-0.1609,+0.1130]   1/4    8W/10L  NOT MEASURED
+  other 108                                -0.0837  -0.99  [-0.1308,-0.0357]   4/5   64W/44L  NOT MEASURED
+score's top-75 vs random-75 of the pool
+  all 126                                  +0.2292  +1.17  [+0.0599,+0.3401]   4/5   62W/64L  WORSE (type-M zone)
+  **FAIL18**                               **+1.7674  +3.87  [+1.4984,+2.3478]   4/4    0W/18L  WORSE**
+  other 108                                -0.0271  -0.24  [-0.0920,+0.0320]   3/5   62W/46L  NOT MEASURED
+```
+
+**Retrieval is exonerated at every stratum.** BLOSUM's 500 is indistinguishable from a random 500
+of the same universe, and most pointedly so on FAIL18 (0.01× its own MDE). The project's
+`sequence-conditioning-hurts-the-failures` memory attributes the harm to the corpus that retrieval
+draws from; on the ORACLE *best-member* axis that stage is simply neutral, and the harm is one
+stage downstream.
+
+**The filter is worse than chance on every single FAIL18 target** -- 0W/18L, and the median
+per-target percentile of the realised best within its own exact random-75 distribution is
+**0.99999**: on the median tail target, essentially every random 75-subset of the same pool
+contains a better member than the score's chosen 75 does. Random-18 null (20,000 draws, seed
+30002): observed +1.7674 against a null mean of +0.2288, CI95 [-0.0849, +0.5832], **p = 0**.
+
+### 4. F1b FIRES on all three registered clauses
+
+1. share of the gap due to the filter, FAIL18 0.6746 vs other-108 0.3051, **ratio 2.21** (bar 2.0);
+2. `G_filt` on FAIL18 = 2.3932 against a random-18 null CI95 [0.2690, 0.9880], **p = 0**;
+3. **difficulty control**: regressing `G_filt` on production RMSD over the 108 and extrapolating,
+   **all 18 of 18** FAIL18 targets sit above the 95% prediction band, mean z = **+4.99**, mean
+   residual +1.698. The filter's failure is super-linear in difficulty, not a restatement of it.
+
+### 5. The set mean -- why this reaches the endpoint at all
+
+The terminal operator consumes the set **mean** (`operator-consumes-set-mean`, d_out =
+1.16·d_set_mean + 0.04·d_set_best, R² 0.89), so the best-member axis above is not by itself an
+endpoint story. Measured on the set mean, where a random-75's expectation is exactly the pool mean:
+
+```
+filter effect on the set mean     effect   ×MDE   fold CI            folds  W/L
+  all 126                        -0.9026  -4.01  [-1.0032,-0.8174]   5/5   110W/16L
+  other 108                      -1.0855  -5.11  [-1.2862,-0.9380]   5/5   100W/8L
+  FAIL18                         +0.1947  +0.39  [-0.0280,+0.3544]   3/4    10W/8L
+```
+
+Stated to the contract's own bar (rule 2): **the +0.1947 on FAIL18 is NOT MEASURED and I am not
+claiming the filter degrades the set mean there.** What *is* measured is that the filter's large,
+5/5-fold, 100W/8L set-mean benefit on the other 108 **vanishes on the tail**, and that the
+difference between the strata is far outside the random-18 null (observed +0.1947 against null
+mean -0.9036, CI95 [-1.2886, -0.5203], **p = 0**). Through the 1.16 coefficient a vanished -1.09 Å
+set-mean benefit is worth roughly +1.26 Å of emitted RMSD on those targets, which is the right
+order for the record's blind-beats-shipped gap on FAIL18 (5.425 vs 6.019) -- and that gap is now
+attributable to a stage rather than to a corpus.
+
+### 6. The circularity, declared, and what survives it
+
+FAIL18 is defined by production RMSD, and production is the average of the set the filter chose,
+so a filter that chose badly **mechanically** lands its target in FAIL18. Part of the +1.7674 is
+that selection. Two tail definitions that never see the filter or production, scored through the
+same random-18 null:
+
+```
+tail definition                       overlap    filter vs random-75    null CI95          p
+worst 18 by POOL MEAN                  9 / 18        +0.6708          [-0.0805,+0.5782]   0.0148
+worst 18 by ORACLE best-in-pool        8 / 18        +0.6320          [-0.0788,+0.5894]   0.0300
+(FAIL18, for contrast)                18 / 18        +1.7674          [-0.0849,+0.5832]   0
+```
+
+**The effect is real under filter-independent stratification and clears the null both times, but
+FAIL18's magnitude is inflated roughly 2.7× by the way FAIL18 is defined.** Anyone quoting
+"+1.77 Å" must quote the +0.63/+0.67 beside it. I would rather post this calibration myself than
+have the adversary lane find it.
+
+A third, non-circular corroboration: **44 of 126 targets** have a filter worse than 90% of random
+75-subsets, and **26 of those are not in FAIL18**. Their production mean is **3.1360** against
+**2.4095** for the remaining 82 non-FAIL18 targets. The pathology is broader than the tail and it
+tracks emitted quality outside it.
+
+### 7. One declared deviation from the pre-registration
+
+The prereg registered a 2,000-draw sampler for both controls. The min of a random k-subset depends
+only on the rank of the smallest index drawn, whose law is exact and closed-form
+(P(min rank ≥ i) = C(n−i,k)/C(n,k)), so the exact computation replaced the sampler: **same
+estimand, zero Monte-Carlo error, no free parameter to tune**. The registered sampler was run
+alongside on the k=75 arm as a cross-check and agrees to a maximum absolute difference of
+**0.0258 Å** across all 126 targets. The deviation is annotated in the source docstring.
+
+### 8. What this does and does not license
+
+It does **not** produce a fix, and every number above except `prod` is ORACLE. A selection-limited
+verdict says the information is present in the pool, not that any native-free rule can find it, and
+S29 closed recognition three independent ways. What it does establish is that **the branch of the
+lane that would have gone after retrieval or generation is closed**, and that the sprint-open
+clue -- "something the pipeline does on hard targets is actively harmful" -- is now a named stage
+with a measured sign, rather than a curiosity.
+
+Artefacts read: `s29/REPORT_S29.md` §7.1/§12/§13; `s29/s29_O_FINDINGS.md`;
+`s29/results/s29_O_ladder_table.json` (present, 72,521 bytes); `s12/instrument.py:50` (FAIL18,
+pinned, not re-derived); `bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json` (`sub`, verified to
+index into the pool, not the universe); `s8/generate_univ/*.npz` (126 present); project memory
+`sequence-conditioning-hurts-the-failures`, `operator-consumes-set-mean`,
+`grid-oracles-are-order-statistics`.
