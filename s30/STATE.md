@@ -357,8 +357,13 @@ perturbation budget are all matched; only nativeness varies.** Floor is the tors
   one line: it prefers a **0.55 A structure to production on 93.0% of targets** — and prefers a
   **random pool member on 100%** and a **3 A rung on 100%**. Its margin over the controls is
   **−0.070 [−0.110, −0.028]**. It is not detecting nativeness; it is detecting *not-production*.
-- **LEG_torsion is at chance.** S29 section 12.0's last outside-class-M hope, the one channel the
-  compactness measurement left standing, does not survive a matched-kind ladder.
+- **LEG_torsion does not survive — but "at chance" was MY wording and lane R withdrew it**
+  (corrected 2026-09-20 13:30). Its anchor contrast is **+0.024 with fold CI [+0.010, +0.038],
+  excluding zero**: it *does* order nativeness slightly above its own anchor control. The correct
+  and still-decisive statement is that this is **a quarter of the registered +0.10 margin**, its
+  preference is **0.503 against a 0.698 pool-member control**, and it ranks the native at the
+  **exact median (0.503) of the native's own perturbations**. S29 section 12.0's last
+  outside-class-M hope closes negatively, but not by being noise.
 
 **AND THE MECHANISM, WHICH IS THE PART THAT MAKES THIS DURABLE.** The derivation I asked lane R to
 make explicit came back measured: the RMSD signal is **absent from local features (delta-R^2
@@ -371,6 +376,28 @@ make explicit came back measured: the RMSD signal is **absent from local feature
 **Lane R discounts its own result correctly**: its registered prior was "F-R1 does not fire, about
 4 to 1", so the null confirms its own expectation and it said so rather than presenting a
 confirmation as a discovery.
+
+
+**Three more numbers from lane R's close that sharpen this.**
+
+- **The largest preference effect in the whole library points the wrong way:** DIS prefers
+  production to a 0.55 A structure on **94.2%** of targets. That is S28-L48 with the kind confound
+  removed -- **sharper, not weaker**. My note 1 said removing the confound might weaken it; it did
+  the opposite.
+- **The local block is ORACLE-advantaged and still adds nothing.** It is handed the per-residue
+  circular deviation *from the native anchor* and still gives delta-R^2 **-0.089** against global's
+  **+0.600**. So RAMA, LEG_torsion, DSSPHB, CAGEO and HP are **blind by construction** -- a sum of
+  per-residue terms cannot see a lever arm.
+- **Resolution: coarse triage only.** DIS concordance inside the near band is **0.520** at
+  |delta| = 0-0.25 A, rising to 0.822 only above 4 A. **Resolving 0.5 A needs a channel ~4x the best
+  in the record**, and inside the near band LEG matches DIS -- the distogram's edge is entirely
+  coarse.
+
+**AND WHAT IT DOES NOT FORECLOSE, which lane R was careful to separate.** D1 says the information
+**is** in the global shape -- held-out R^2 **0.911**, ORACLE and native-informed. What is missing is
+a **native-free globally-reaching channel**. That is a **supply problem, not an impossibility**, and
+it is a different problem from the one this sprint has been attacking. Nothing in lane R's result
+touches the retrieval or prior lever.
 
 ### WHAT THIS CLOSES
 
