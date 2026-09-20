@@ -66,8 +66,43 @@ contracted?"): NO, not from over-confidence per se -- a symmetric width error mo
 mean nor the median. The contraction here is averaging (Jensen) plus shrinkage toward the prior's
 centre (the typicality axis).
 
-## Topic 4 -- quantum (`L_4_quantum.md`)
-(pending)
+## Topic 4 -- quantum (`L_4_quantum.md`, ledger S29-L13)
+
+| paper | what it adds | verdict |
+|---|---|---|
+| Barkoutsos PKl, Nannicini G, Robert A, Tavernelli I, Woerner S. Quantum 4:256 (2020), arXiv:1907.04769, eqs (11) and (12) | CVaR is DEFINED on sorted samples and is scoped to "classical optimization problems, which yield diagonal Hamiltonians" | KEPT -- the definitional source of the project's set-equality theorem; cite it rather than presenting S25's theorem as a discovery |
+| the same paper: the overlap result and Prop 5.1 | CVaR's global-minimiser set is {theta : overlap >= alpha}, large and flat; estimator SE grows as 1/alpha; CVaR and expectation landscapes do not map to each other | KEPT and FLAGGED -- a candidate mechanism for "the objective is optimised but the structure does not move", and a new falsifier for our own quantum arms |
+| Cerezo M, Sone A, Volkoff T, Cincio L, Coles PJ. Nat Commun 12:1791 (2021), arXiv:2001.00550 | locality of the OBSERVABLE, not depth alone, governs gradient decay (assumes local 2-designs) | NOTED, not actionable -- our ansatz is nowhere near a 2-design; contract rule 9 |
+| Larocca M et al. Quantum 6:824 (2022), arXiv:2105.14377 | the dynamical Lie algebra as the diagnostic of reachability and gradient scaling | KEPT and RECOMMENDED -- the project's DLA is listed as never measured; classical linear algebra, minutes, answers charter question 5 |
+| Ragone M et al. Nat Commun 15 (2024), arXiv:2309.09342 | an exact loss-variance expression through the DLA; variance falls as dim(g) grows | KEPT with a sourcing caveat (abstract read; equation not quoted verbatim) |
+| Cerezo M et al. Nat Commun 16:7907 (2025), arXiv:2312.09121 | trainable, barren-plateau-free models tend to admit classical simulation of the loss | KEPT -- the framing constraint: "it trains" is now evidence FOR simulability; the charter's ten controls are this paper's programme |
+| Amin MH, Andriyash E, Rolfe J, Kulchytskyy B, Melko R. Phys Rev X 8:021050 (2018) | a thermal state of a non-commuting H whose measurement distribution is not a classical Boltzmann distribution | KEPT -- the cleanest instance of (C1) non-commuting AND (C2) not-an-eigenvector together |
+| QAOA's mixer (structural reading) | an off-diagonal term is the only thing that moves amplitude BETWEEN candidates | KEPT -- explains S28's rank-one failure as a degenerate mixer, not as "off-diagonals do not help" |
+| Grimsley HR, Economou SE, Barnes E, Mayhall NJ. ADAPT-VQE, Nat Commun 10:3007 (2019), arXiv:1812.11173 | grow the ansatz one operator at a time by the commutator gradient over an operator pool | KEPT conditionally -- the principled way to build a circuit for a structured non-diagonal H; not itself a source of non-classicality |
+
+Topic 4 running count: 9 entries, 7 KEPT, 1 NOTED, no RMSD lever. The condition for
+non-classicality: (C1) the Hamiltonian's terms do not commute AND (C2) the prepared object is not
+an eigenvector (Gibbs/thermal, or a sampling distribution, or a free-energy objective). The
+project has never satisfied both.
+
+## Topic 5 -- peptide prediction at 9-16 residues (`L_5_peptide_ceiling.md`, ledger S29-L14)
+
+| paper | what it adds | verdict |
+|---|---|---|
+| Maupetit J, Derreumaux P, Tuffery P. NAR 37:W498 (2009) -- PEP-FOLD1 | 2.6 A cRMSD on 25 NMR peptides of 9-25 aa for the lowest-sOPEP-energy cluster centroid (a genuine native-free single answer) | KEPT as the published anchor |
+| Timmons PB, Hewage CM. Brief Bioinform 22:bbab308 (2021) -- APPTEST | 1.96 A on 42 peptides of 9-25 aa, selected by XPLOR-NIH energy; plus a fold-from-restraints terminal operator | KEPT as the anchor and as an architectural note (lanes M/X); REJECTED as a scorer |
+| Lamiable A et al. NAR 44:W449 (2016); Shen Y et al. JCTC 10:4745 (2014); Rey J et al. NAR 51:W432 (2023) -- PEP-FOLD2/3/4 | best-of-5 hit rates at 25-52 aa; PEP-FOLD4 ties trRosetta and AF2 on 17 peptides | KEPT as context; the retrieval key REJECTED (closed here, see below) |
+| McDonald EF et al. Structure 31:111 (2023) | the field's only ceiling-like statement, and it is a ceiling on SELECTION | KEPT |
+| Lindorff-Larsen K et al. Science 334:517 (2011) | the equilibrium population as the working selector at 10-20 aa | REJECTED on cost; KEPT as the statement of what the working selector is |
+| Senior AW et al. Nature 577:706 (2020) -- AlphaFold1 | minimise a potential fitted to the distance posterior instead of taking a per-pair point estimate | KEPT as a route note |
+
+Topic 5 running count: 6 entries. NO published ceiling exists at this length. The comparison
+splits: our GENERATION (ORACLE 1.71-2.31 A) is inside the published band; our SELECTION is the
+0.9-1.5 A gap. **Closed, and nearly re-imported by this lane**: PEP-FOLD's central architectural
+claim (retrieve by predicted local conformation) failed here twice -- S13's torsion-bin key
+(0.517 on FAIL18 vs a 0.562 majority baseline) and the 22-key / 24-arm screen (no key beats
+BLOSUM on the chain; structural keys worsen pool-best 1.711 -> 2.161 and the ORACLE ceiling
+1.994 -> 2.542 by concentrating the pool on the predicted type).
 
 ## Topic 5 -- peptide prediction at 9-16 residues (`L_5_peptide_ceiling.md`)
 (pending)

@@ -1016,3 +1016,202 @@ temperature calibration of the distogram (argmax- and median-invariant, no infor
 independently closed by S25 L2) and changing the training scoring rule (the log score is already
 strictly proper). Multiplicity: 0 endpoint comparisons; no new measurement in this entry.
 Artefacts: `s29/lit/L_3_decision_theory.md`; `s29/lit/L_INDEX.md`.
+
+## S29-L13 -- TOPIC 4, QUANTUM: THE SET-EQUALITY THEOREM IS EQ (12) OF BARKOUTSOS ET AL. (CVaR IS DEFINED ON SORTED SAMPLES, FOR DIAGONAL HAMILTONIANS), SO IT IS A DEFINITION AND NOT A DISCOVERY; NON-CLASSICALITY NEEDS BOTH NON-COMMUTING TERMS *AND* A TARGET THAT IS NOT AN EIGENVECTOR (GIBBS/THERMAL, QUANTUM BOLTZMANN MACHINES); CVaR's GLOBAL OPTIMUM IS THE FLAT SET {overlap >= alpha}, A NEW CHEAP FALSIFIER FOR OUR OWN QUANTUM ARMS; AND arXiv:2312.09121 MAKES "IT TRAINS" EVIDENCE *FOR* CLASSICAL SIMULABILITY (2026-09-20 00:13, L)
+
+Question (brief topic 4; charter section 6 group 1 and section 11): under what condition does the
+quantum object differ from its classical counterpart, what Hamiltonian structure would make the
+variational state not reproducible by a sort or an eigensolver, and which papers show a
+variational state doing something an eigensolver on the same H cannot? No experiment; literature
+only. Nine papers read for their constructions.
+
+1. CVaR IS CLASSICAL BY DEFINITION ON A DIAGONAL H. Barkoutsos, Nannicini, Robert, Tavernelli,
+Woerner, Quantum 4:256 (2020), arXiv:1907.04769: "CVaR_alpha(X) = E[X | X <= F_X^{-1}(alpha)]"
+(eq 11) and, for samples sorted nondecreasing, CVaR_alpha = (1/ceil(alpha K)) sum_{k=0}^{ceil(alpha
+K)} H_k (eq 12); "the limit alpha -> 0 corresponds to the minimum, and alpha = 1 corresponds to
+the expected value". The abstract scopes the method: "In the case of classical optimization
+problems, which yield diagonal Hamiltonians, we argue that aggregating the samples in a different
+way than the expected value is more natural." The project's set-equality theorem (S25: the CVaR
+tail's support is always a subset of an initial prefix of the energy order; 2,592 adversarial
+cells, 0 violations) is therefore eq (12) restated, not a property of our implementation. RECORD
+CORRECTION OF EMPHASIS, not of fact: cite Barkoutsos eq (12) beside it. On a diagonal H the only
+quantum content is the sampling distribution the trial state induces.
+
+2. A NEW CHEAP FALSIFIER FOR OUR OWN ARMS. The same paper: "for any problem (1) and parameters
+theta* such that |psi(theta*)> has overlap rho > 0 with the ground state, theta* is a global
+minimum of CVaR_alpha(X(theta*)) for alpha <= rho". So CVaR_alpha's global-minimiser set is
+{theta : overlap with the best candidate >= alpha} -- large and flat. With an averaging readout
+the objective is indifferent to precisely the freedom the readout consumes (which OTHER
+candidates populate the tail), which is a candidate mechanism for the sprint's central puzzle:
+the optimiser reaches the optimum on 126/126 while the emitted structure does not move (S28-L18b,
+S28-L26b). I have not seen this stated in the record. CONSEQUENCE, offered to lane D as a meter
+clause and to lane T to check: any accuracy change attributed to CVaR optimisation must be shown
+NOT to be a tie-break within that flat set. Also recorded: the empirical CVaR estimator's variance
+is O(1/(K alpha^2)), so the standard error grows as 1/alpha and matching the expectation's
+accuracy needs K/alpha samples -- not binding on an exact statevector, but the right price to
+quote if any arm ever samples. And Proposition 5.1: local minima of the expectation and of CVaR do
+not map to each other (their two-qubit example has a constant expectation and an informative
+CVaR_0.5 = sin^2(theta/2)) -- the paper's real argument for CVaR is LANDSCAPE repair, which is not
+this project's binding problem since our objective already falls on 126/126.
+
+3. THE CONDITION FOR NON-CLASSICALITY. The classical counterpart of the current formulation is a
+SORT (H diagonal, CVaR reads a prefix). It becomes an EIGENSOLVER as soon as H is non-diagonal but
+the target is its ground state. So a formulation is non-classical in the relevant sense only if
+BOTH (C1) the Hamiltonian's terms do not commute, so the eigenbasis is not the computational basis,
+AND (C2) the prepared object is NOT an eigenvector, so diagonalisation is also not the counterpart.
+(C2) is satisfied by a thermal/Gibbs state e^{-beta H}/Z, by a state whose role is to be a sampling
+distribution, and by any FREE-energy objective (energy minus entropy). The project has never used
+(C2): S28's non-diagonal Hamiltonian satisfied (C1) with a near-rank-one (degenerate) off-diagonal
+(S28-L8b/L11), and everything else has been diagonal. Suggestive from our own record: S25 found the
+trained state sits 0.902 nats / 45% of its mass from its own analytic Gibbs optimum and that RMSD
+tracks READOUT ENTROPY (rho -0.74) rather than alpha or T -- the entropy is where the output lives.
+TWO CAVEATS SO NOBODY OVER-READS IT: for a diagonal H the Gibbs state is a classical Boltzmann
+distribution over candidates, and S21 exhaustively enumerated the 2^n latent on 75/126 targets, so
+(C2) alone buys nothing; and see item 4.
+
+4. THE FRAMING RESULT, AND IT CUTS AGAINST US. Cerezo, Larocca, Garcia-Martin, Diaz, Braccia,
+Fontana, Rudolph, Bermejo, Ijaz, Thanasilp, Anschuetz, Holmes, "Does provable absence of barren
+plateaus imply classical simulability?", Nat Commun 16:7907 (2025), arXiv:2312.09121, verbatim:
+"many commonly used models whose loss landscapes avoid barren plateaus can also admit classical
+simulation, provided that one can collect some classical data from quantum devices during an
+initial data acquisition phase ... barren plateaus result from a curse of dimensionality, and ...
+current approaches for solving them end up encoding the problem into some small, classically
+simulable, subspaces." The project's one genuine quantum positive -- the optimiser trains, beats
+best-of-200 from the untrained circuit, closes 78-89% of the free-energy gap, no barren plateau at
+any measured width (S13/S25) -- sits squarely in the regime this paper warns about. It does NOT
+retract that result (a correctly scoped trainability claim; rule 9 already forbids treating the
+simulator as a cause). It changes how any S29 quantum claim must be positioned: "our circuit
+trains well" is now evidence FOR classical simulability, so the charter's first control (a
+classical equivalent) is the central test rather than a formality, and the reachable claim is "a
+specific quantity the matched classical control does not reproduce", not "classically impossible".
+
+5. THE CHEAPEST OPEN QUANTUM QUESTION IN THE PROJECT. Larocca, Czarnik, Sharma, Muraleedharan,
+Coles, Cerezo, Quantum 6:824 (2022), arXiv:2105.14377, diagnose trainability and reachability
+through the DYNAMICAL LIE ALGEBRA g generated by the ansatz's generators under commutation (the
+reachable set is exp(g)); Ragone et al., Nat Commun 15 (2024), arXiv:2309.09342, give "an exact
+expression for the variance of the loss function of sufficiently deep parametrized quantum
+circuits", resolving "a standing conjecture about a connection between loss concentration and the
+dimension of the Lie algebra of the circuit's generators" -- the dependence is INVERSE in dim(g)
+(sourcing caveat: I read the abstract and surrounding text, not the displayed equation; anyone
+using the exact P_g(rho) P_g(O)/dim(g) form should pull it from the paper). `docs/STATE_BRIEF` 5.7
+item 4 lists the deployed ansatz's DLA as NOT MEASURED. It is classical linear algebra on the
+generators, costs minutes, is not an endpoint experiment, and answers charter question 5 ("what
+the ansatz can represent, and what it provably cannot"). RECOMMENDED to lane T or X; I do not run
+it.
+
+6. THE REST, BRIEFLY. Cerezo et al., Nat Commun 12:1791 (2021): global observables give
+exponentially vanishing gradients even at shallow depth while local ones give at worst polynomial
+decay at depth O(log n) -- assumes blocks forming local 2-designs, which S13 says we are nowhere
+near, so NOTED and not actionable (rule 9). Amin, Andriyash, Rolfe, Kulchytskyy, Melko, Phys Rev X
+8:021050 (2018), quantum Boltzmann machines: the model distribution is that of a thermal state of
+a TRANSVERSE-FIELD Hamiltonian, which is not a classical Boltzmann distribution over the same
+variables -- the cleanest existing instance of (C1)+(C2) together, and what the charter's QBM
+bullet points at. QAOA's mixer B = sum_i X_i is the structural answer to "what does an off-diagonal
+term mean": it is the only thing that moves amplitude BETWEEN candidates, so S28's rank-one
+similarity graph was a mixer that moves amplitude along one direction only -- the failure was the
+degeneracy, not the idea. ADAPT-VQE (Grimsley, Economou, Barnes, Mayhall, Nat Commun 10:3007, 2019,
+arXiv:1812.11173) "grows it systematically one operator at a time", selecting by the energy
+gradient at zero angle, i.e. the commutator expectation |<psi|[H, A_i]|psi>| over an operator pool;
+it is ansatz construction, not a source of non-classicality, and it is the principled way to build
+a circuit matched to a structured non-diagonal H, with the resulting DLA reported.
+
+VERDICT. Topic 4 yields NO RMSD lever. It yields: a definition (cite Barkoutsos eq 12 for the
+set-equality theorem), a falsifier (CVaR's flat optimum set), a cheap unmeasured diagnostic (the
+ansatz's DLA), a condition ((C1) and (C2) together), and a framing constraint (arXiv:2312.09121).
+KEPT 7 (Barkoutsos definition and properties; Larocca; Ragone with caveat; Cerezo 2025; Amin QBM;
+the QAOA mixer reading; ADAPT conditionally). NOTED 1 (Cerezo 2021, assumption not met here).
+Multiplicity: 0 endpoint comparisons; no new measurement in this entry.
+Artefacts: `s29/lit/L_4_quantum.md`; `s29/lit/L_INDEX.md`.
+
+## S29-L14 -- TOPIC 5, THE PUBLISHED PEPTIDE CEILING: NO PAPER STATES ONE; THE PUBLISHED NUMBERS AT 9 TO 25 aa ARE 1.96 TO 2.6 A BUT NONE IS LIKE-FOR-LIKE (CURATED NMR SETS, BEST-OF-N REPORTING, AND SELECTION INSIDE AN ENSEMBLE THE SAME ENERGY GENERATED); SPLIT THE COMPARISON -- OUR GENERATION (ORACLE 1.71 TO 2.31 A) IS INSIDE THE PUBLISHED BAND AND OUR SELECTION IS THE 0.9 TO 1.5 A GAP; AND THE PEPTIDE LITERATURE'S CENTRAL ARCHITECTURAL CLAIM (RETRIEVE BY PREDICTED LOCAL CONFORMATION) IS ALREADY CLOSED HERE, WHICH I NEARLY RE-IMPORTED (2026-09-20 00:16, L)
+
+Question (brief topic 5): what accuracy does the field reach at 9 to 16 residues, which inputs
+are legitimately available here, what is the published ceiling for native-free peptide
+prediction at this length, and how does 3.21 A compare? No experiment; literature only.
+
+THERE IS NO PUBLISHED CEILING. No paper reports an upper bound for native-free peptide
+prediction at this length; the literature reports method scores on small curated sets. The
+nearest thing to a ceiling statement is McDonald et al. 2023's negative result (S29-L1): the best
+confidence signal in the field cannot rank within a peptide's own five models. That is a ceiling
+on SELECTION, and it agrees with this project's own measurement of the same thing. If S29
+produces a measured bound on native-free selection for 9-16-mers with controls, that is a
+contribution to the field, not only to the project.
+
+THE NUMBERS, WITH WHAT EACH ONE IS. PEP-FOLD1 (Maupetit, Derreumaux, Tuffery, NAR 37:W498, 2009):
+"averaged on 25 peptides and five runs, the PEP-FOLD LEC reproduces the NMR structure at 2.6 A
+cRMSD", where the LEC is the lowest-sOPEP-energy cluster centroid -- a genuine native-free single
+answer, 9-25 aa. APPTEST (Timmons & Hewage, Brief Bioinform 22:bbab308, 2021): 1.96 A on 42
+peptides of 9-25 aa, selected by lowest XPLOR-NIH energy / CYANA target function (PEP-FOLD 2.05,
+PEPstrMOD 4.66). PEP-FOLD3 (Lamiable et al., NAR 44:W449, 2016): near-native in the top five
+scored models for 80% of 56 targets of 25-52 aa -- BEST-OF-5, and out of our length range.
+PEP-FOLD4 (Rey et al., NAR 51:W432, 2023): no RMSD table; "the three methods performed similarly
+on a total 17 peptides" against trRosetta and AF2, its edge being pH-dependent and poly-charged
+cases, and it notes "TrRosetta and AlphaFold2 failed on two peptides of 10 and 17 amino acids
+which are described as beta-hairpins experimentally". AF2 on peptides (McDonald et al., Structure
+31:111, 2023): best-of-5 by class 2.2 (disulfide-rich), 2.3 (helical membrane), 2.9 (beta-hairpin),
+4.4 (mixed soluble), 4.5 A (helical soluble), rank-1 being 0.2-1.1 A worse. MD (Lindorff-Larsen
+et al., Science 334:517, 2011): folds chignolin (10 aa) and Trp-cage (20 aa) to the native, at
+100 us to 1 ms per system. Ours: 3.2126 A built chain, 126 targets of 9-16 aa, one deployable
+answer, no best-of-N (`s27/results/chain_rows.jsonl :: DIS`; cloud 3.0483).
+
+WHY NONE OF IT IS LIKE-FOR-LIKE, three specific ways. (1) COMPOSITION: the published sets are
+curated NMR peptides in solution with regular secondary structure, and PEP-FOLD states its own
+scope excludes membrane-bound, ligand-bound and metal-stabilised peptides; our instrument is 126
+identity-clustered PDB targets whose hard stratum is chemically identifiable -- S12 measured that
+56% of FAIL18 is steric-zipper amyloid segments and lasso peptides, which no linear-window
+retrieval can represent. (2) REPORTING: PEP-FOLD3's 80% and McDonald's per-class figures are
+best-of-N; our matched quantities are the ORACLE top-75 ceiling 2.31 A and pool-best 1.71 A
+(charter finding 10), which sit INSIDE or below the published band. (3) REGIME: every published
+method selects within an ensemble its own energy or restraints generated (sOPEP ranks sOPEP-
+assembled fragments; APPTEST ranks by violation of the restraints it folded under; AF2 ranks by
+its own pLDDT head), which S29-L1 established is the only regime where native-free selection is
+shown to work at this length. We rank 500 real windows retrieved from other proteins with an
+independently constructed objective.
+
+SO THE COMPARISON SPLITS, and this is the useful output. GENERATION: 1.71-2.31 A ORACLE is
+competitive with the published field at this length; generation is not the project's problem.
+SELECTION: the 0.9-1.5 A between 3.2126 and those ceilings is the whole gap, and the field's own
+best method has no in-band skill here either. Reporting 3.21 against 1.96 without the three
+caveats would be misleading in the project's own disfavour and should not be done.
+
+WHAT IS LEGITIMATELY AVAILABLE. A torsion head: NO (S13, phi carries no sequence signal at this
+length, 36.1 vs 36.4 deg blind; direct build 4.151 A). A structure-trained predictor (AF2,
+ESMFold, OmegaFold, trRosetta): NO (leakage against the natives; ESMFold infeasible on this box,
+S26 VII.2). sOPEP or another peptide-tuned coarse-grained field: NO VALUE (Legacy's functional
+class, +0.330 A worse than a random subset as a ranker, S25 L16). Converged MD free energy: NO
+(10^5-10^6 CPU-hours per peptide). Chemical-shift torsion restraints: CLOSED (54/126 coverage;
+ORACLE-perfect torsions still 2.021 A). A fold-from-restraints terminal operator: YES IN
+PRINCIPLE and it is architectural, not a QA import -- `core/project.py` already does L-BFGS over
+(phi,psi) with multi-start, and what has never been run is that optimiser against the DISTOGRAM
+rather than against a retrieved coordinate average (S12 Part 4); flagged to lanes M and X, priced
+by nobody yet.
+
+A NEAR-MISS OF MY OWN, RECORDED AS THE BRIEF REQUIRES. I first wrote up PEP-FOLD's central
+architectural claim -- retrieve fragments by PREDICTED LOCAL CONFORMATION rather than by BLOSUM
+sum -- as the strongest unexploited lead in the peptide literature, on the strength of S12's
+diagnostic (2.284 -> 1.640 A pool-best on FAIL18, near-native recall 16/500 -> 92/500, robust to
+30% prediction error). It is CLOSED, in two places. S13 built the predictor: "a leave-fold-out
+4-state torsion-bin predictor, 0.690 accuracy overall, 0.517 on FAIL18 (majority baseline 0.562)
+-- it failed as a retrieval key" (`s13/BRIEF.md`). And the 22-key screen over the whole window
+universe plus 24 chain arms on 126 paired targets (`docs/FINDINGS.md`) tested `disto`, `dconf`,
+`dshort` (a secondary-structure key, the closest available analogue of a structural alphabet) and
+fusions: the distogram key gives the largest pool-DISTRIBUTION move in the project (best-window
+percentile 39.3 -> 16.5 median, sub-2 A count 54.5 -> 101.5, pool mean 4.453 -> 3.605) while
+making the pool worse where it matters (pool-best 1.711 -> 2.161, distance-ORACLE ceiling 1.994 ->
+2.542) "because the distogram key concentrates the pool on one predicted structural type: many
+near-native candidates on the targets it gets right, none at all on the targets it does not"; on
+the chain no key beat BLOSUM (incumbent 3.454, best alternative fuse_be 3.447, CI [-0.100,
++0.083]), and S26's report lists the retrieval key as closed. The mechanism that kills it is the
+typicality axis again. The S12 line that tempted me is a FAIL18 pool-best diagnostic and the
+chain result that closes it lives in a different file, so anyone reading `s12/lit_FINDINGS.md`
+without `docs/FINDINGS.md` beside it will re-propose this. Logged so they do not.
+
+VERDICT. KEPT (as anchors and route notes, none importable as an operator): PEP-FOLD's 2.6 A and
+APPTEST's 1.96 A as the published native-free anchors at 9-25 aa; McDonald 2023 as the field's
+only ceiling-like statement (and it is a ceiling on selection); AlphaFold1's minimise-the-posterior
+route and APPTEST's fold-from-restraints operator as architectural notes for lanes M and X.
+REJECTED: the structural-alphabet retrieval key (closed here twice, with the mechanism);
+sOPEP and peptide-tuned coarse-grained fields (Legacy's class, anti here); torsion heads (closed);
+structure-trained predictors (leakage and hardware); MD free energy (cost).
+Multiplicity: 0 endpoint comparisons; no new measurement in this entry.
+Artefacts: `s29/lit/L_5_peptide_ceiling.md`; `s29/lit/L_INDEX.md`.
