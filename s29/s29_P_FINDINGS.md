@@ -103,6 +103,43 @@ to a perfect chooser. PREREG addendum 4 registers MS-OBJ (native-free pick), MS-
 zero-information pick) and MS-ORACLE, and registers the prediction that MS-OBJ lowers the
 objective and NOT the RMSD -- the projection-stage instance of charter finding 3.
 
+P9. **[native-free profile confirmed against an ORACLE one] The averaging distortion is NOT a
+contraction. It is a MONOTONE SHAPE DISTORTION IN SEQUENCE SEPARATION, and that is why no single
+scalar can undo it.** `s29/results/s29_P_contraction_profile.json`, all 126 cached clouds,
+pooled over every pair at each separation (ratio of means; the median ratio beside it):
+
+    |i-j|      1      2      3      4      5      6      7      8      9     10     11     12     13
+    cloud/native   .773   .824   .830   .870   .921   .948   .968   .996  1.029  1.047  1.065  1.083  1.102
+    median ratio   .784   .857   .886   .912   .960   .975   .982   .997  1.009  1.013  1.029  1.038  1.048
+    cloud/posterior-median (NATIVE-FREE)  .776  .821  .809  .846  .902  .913  .924  .955  .965  .967  .971 1.001  .952
+
+The curve is monotone, starts 23% SHORT at the virtual bond and CROSSES 1.00 at |i-j| ~ 8,
+ending slightly LONG. The native-free profile (against the distogram posterior's own median map)
+has the same shape and the same crossing region, so this is not an ORACLE-only statement.
+Cloud mean Rg 6.2061 against the native's 6.6009 (6% short): S23 L1 reproduced.
+
+**Consequences, all of them mechanical:**
+(a) S23 L1's "22% short in the bond, 6% short in the envelope" is the two ENDS of this curve;
+    the middle is where the distortion changes sign.
+(b) BOND's g = 1/0.773 = 1.29 sets the bond exactly right and inflates every separation beyond
+    8 by ~29% on top of distances that are ALREADY long. BOND is predicted harmful, and its
+    harm should grow with chain length -- this is the registered null prior's mechanism, now
+    measured rather than argued.
+(c) The best SINGLE scalar in least squares must sit near the middle of the curve, around
+    1.05 to 1.08. s_ISO is 1.077 and s_SPAN is 1.102, so ISO and SPAN are near-optimal members
+    of a family whose optimum is near 1.0 -- which is exactly why the registered prior for them
+    is null rather than harmful.
+(d) It is the direct measurement of the Jensen mechanism S29-L12 names: averaging shrinks a
+    distance by more when the pool disagrees more about it, and the pool disagrees most about
+    LOCAL geometry (adjacent-residue placement) relative to that distance's size.
+
+**METHOD NOTE, because I got this wrong first.** My first pass used the MEAN OF PER-PAIR RATIOS
+and reported the sep-13 ratio as 1.37. That statistic is dominated by small denominators (a
+native hairpin puts two residues 13 apart very close in space, and the ratio explodes). The
+ratio of means and the median ratio agree with each other at 1.10 and 1.05 and are the honest
+numbers; the 1.37 is withdrawn before it was ever used. The qualitative conclusion -- monotone,
+crossing 1 near |i-j| = 8 -- is identical under all three statistics.
+
 ## HYPOTHESIS
 
 ## REFUTED
