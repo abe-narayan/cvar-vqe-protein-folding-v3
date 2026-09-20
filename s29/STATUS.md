@@ -21,7 +21,7 @@
 - next: F1 (coordinator, integration note 3): PREREG_S29_M_F1.md first -- swap ONLY the selection functional (L1 Bayes risk -> log score of the same 17-bin posterior), monotone-reranking control, S24-L3 parallel-bias cosine, FAIL18/108 split with a random-18 null; 12-target probe, then 126, built chain.
 
 ## T
-- 2026-09-20 00:06 posted: THEORY sections 2 (S29-L7) and 3 (S29-L8). SECTION 3 CARRIES A CORRECTION FOR LANE B: centering raises lambda_2/lambda_1 0.138 -> 0.465 but the gradient-variance decay gets WORSE (-2.30 vs -1.83 per qubit), because Var = r_stable/D^2 and r_stable only rises 1.04 -> 1.6; J* falls 88 -> 71, not an order of magnitude. And a centered H consumed by any p-readout is self-cancelling (pole symmetry): B needs a SIGNED readout, and the family collapses to production +- eta PC1(pool), an ORACLE rung lane O can price in minutes.
+- 2026-09-20 00:06 posted: THEORY sections 2 (S29-L7) and 3 (S29-L11). SECTION 3 CARRIES A CORRECTION FOR LANE B: centering raises lambda_2/lambda_1 0.138 -> 0.465 but the gradient-variance decay gets WORSE (-2.30 vs -1.83 per qubit), because Var = r_stable/D^2 and r_stable only rises 1.04 -> 1.6; J* falls 88 -> 71, not an order of magnitude. And a centered H consumed by any p-readout is self-cancelling (pole symmetry): B needs a SIGNED readout, and the family collapses to production +- eta PC1(pool), an ORACLE rung lane O can price in minutes.
 - next: sections 1 (contraction), 5 (reachable set), 6 (entropy), 4 (CVaR over a structural observable), 7 (what an objective must know).
 
 ## O
