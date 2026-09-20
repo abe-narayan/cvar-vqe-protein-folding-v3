@@ -337,6 +337,114 @@ quoted the **verdict string**. A verdict string is a claim about a computation a
 what reading the computation is worth.
 
 
+## NOTE 15 (2026-09-20 13:52, lane G, S30-L26): **BOTH MY PRIORS WERE DIRECTIONALLY RIGHT AND BOTH MY REASONS WERE WRONG** — E2 IS REAL AND DOES NOT REACH THE TAIL; THE CHIRAL ESCAPE IS EXERCISED AND EMPTY
+
+Lane G closed both open questions. Prereg at `78b65521`, committed before the first number.
+
+### (a) Q1 — the divergence claim is CONFIRMED, and it beat the power note registered against it
+
+Lane G registered that a half-split **could not** reach its own MDE unless more than 100% of the
+0.022 Å effect sat in one half. **More than 100% does.**
+
+```
+whole sample                 -0.0221  [-0.0297,-0.0159]  1.12x MDE  5/5   (reproduced from s16)
+rho(d, DISP_rmsd)            -0.316   fold-preserving permutation null p2 = 0.000
+high-dispersion half         -0.0429      low half  -0.0012      97.2% of the gain
+LENGTH-MATCHED split         -0.0406  [-0.0481,-0.0319]  3.56x MDE  5/5 folds
+uniform-effect null          observed gap at pctile 0.001 of [-0.0264,+0.0289]
+```
+
+Multiplicity is ~1 comparison, not 3 — the three dispersion variables correlate 0.93–1.000, and
+lane G's reproduces **lane F's `F4_top75_rg_sd` at ρ = 1.0000**. It survives dropping the ten
+biggest winners (−0.0310, 5/5) and dies only at drop-top-20, where there is no gain left to
+localise — a gradient, not ten winners relabelled. Partialling chain length **strengthens** it.
+
+**The mechanism is measured, not assumed:** `ρ(DISP, contraction) = +0.947`, and partialling DISP
+collapses contraction's effect from −0.276 to **+0.078**. **Divergence is the primary variable;
+contraction is its shadow.** The relax does not repair the bias — *it repairs the geometry the
+averaging destroyed*, and the destruction scales with spread.
+
+**But the inference I drew does not go through, and that is the finding.** Divergence and the
+production tail are **different objects**:
+
+```
+FAIL18 dispersion vs the 108     +0.4583 [-0.3845,+1.0472]  0.47x MDE  NOT MEASURED
+relax gain on FAIL18  -0.0113    vs the other 108  -0.0239   <- the WRONG direction
+targeting the divergent half     -0.0215  against  -0.0221   <- buys nothing
+```
+
+> **E2 is a real, mechanistically explained, divergence-graded effect that does not reach the
+> stratum the opening arithmetic cares about.** 0.69% of baseline, and its restraint constant still
+> has no native-free selection rule.
+
+### (b) This withdraws one of MY Appendix A entries — a withdrawal that is itself withdrawn
+
+Appendix A recorded lane L lowering "the benefit concentrates on divergent pools" from 2:1 to
+roughly even, on lane F's dispersion null. **That downgrade was wrong**, and so was lane G's own
+2:1-against. The correction that matters is *why*:
+
+> **Two lanes agreeing did not make a prior.** Lane L moved on lane F's null, which was about a
+> **different outcome** (filter failure, not relax gain). Lane G moved on the common-mode argument,
+> which was about a **different mechanism** (bias repair, not geometry repair). Two independent
+> revisions in the same direction, each resting on an object that was not the one under test, read
+> as convergent evidence and were not evidence at all.
+
+### (c) Q2 — my pre-check refuted lane G's own mechanism, and made the negative stronger
+
+I asked for the variance of the chiral coordinate across the manifold *before* any contrast, on the
+grounds that a provably-chiral functional can still be near-constant on a set containing no mirrors.
+Lane G predicted it would be. **It is not:**
+
+```
+occupancy (sd over candidates / sd over candidates + their mirrors)
+WRITHE 0.685   CHIRAL3 0.953   CHIRAL3_LONG 0.965   |   DIS 0.345 (pool), 0.231 (ladder)
+```
+
+**The chiral axis is more fully exercised on our manifold than the shipped cost is.** The escape
+class is not empty in practice — so the null below is a real negative, not a degenerate coordinate.
+
+```
+WRITHE anchor contrast   +0.0405 [-0.0255,+0.1015]  0.41x MDE  3/5 folds   (bar +0.10)
+CHIRAL3 -0.0363   CHIRAL3_LONG -0.0394   (wrong sign)
+max-over-3 sign-flip null:  observed 0.0405   null MEAN 0.0408   p_max 0.430
+WRITHE minus its achiral twin |WRITHE|:  +0.0170  0.29x MDE  CI includes zero
+```
+
+The best chiral channel sits **on its own null to three decimal places**, and whatever WRITHE does,
+its reflection-invariant shadow — a `D`-functional by G1 — already does. The in-code audit
+(reflection flips X at 0.00e+00, leaves |X| and D at 0.00e+00, rotation invariance 4.19e-13)
+**caught a real bug**: the first Klenin–Langowski sign term was not rotation-invariant (rot_err
+2.03) and the assertion stopped the run before any number existed.
+
+### (d) The positive lane G found, chased, and killed itself — the third cross-kind confound
+
+WRITHE's preference contrast is **+0.1641 [+0.1016,+0.2282], 2.17× MDE, 5/5 folds, max-null
+p = 0.000**, with `pref_near = 0.771` — **clearing both of lane R's registered preference clauses
+that none of its 43 channels cleared.** It is **cross-kind**, in exactly the way S30-L1 withdrew
+S28-L48: `pref_pool`'s control keeps **deposited** coordinates while the near rungs are **ideal
+rebuilds**, and a raw shape statistic separates those constructions whether or not it sees
+nativeness. The kind-matched statistic settles it — the rebuilt native's percentile inside its own
+ladder, chance exactly 0.5:
+
+```
+WRITHE 0.6061   |WRITHE| 0.6732   both WORSE than chance, 5/5 folds   |   DIS 0.2876
+```
+
+A channel ranking the native at the 61st percentile of the native's **own** perturbations is
+separating production from everything else, not recognising nativeness. **Withdrawn by lane G before
+it was quoted anywhere.** Third instance of the cross-kind confound this sprint.
+
+### (e) What it closes
+
+> Lane R proved the null for every **per-residue** channel is a theorem. Lane G proves **the null
+> for every non-chiral channel is a theorem too** — leaving exactly one family, which was built,
+> is genuinely exercised, and is empty.
+
+**Scope, so it is not over-quoted:** G1 bounds **single-structure** channels only — not
+set-referenced ones (bucket b, closed separately), and not a fourth reference this project does not
+have. **The theorem does not depend on chain length; only the emptiness does.** The survivor family
+is worth retesting at 40+ residues, where a chain can actually cross itself.
+
 ## NOTE 14 (2026-09-20 13:43, lane P, S30-L25): **THE ONE MEASUREMENT CAME BACK NULL — AND THE SECOND HALF REPRICES THE SPRINT INTO A FIVE-BIT QUESTION**
 
 The whole B2 bound reduced this morning to a single estimable number, `rho_max = sqrt(R2(e ~ S))`,

@@ -374,7 +374,7 @@ results are worth anything.
 |---|---|
 | **EDM projection / triangle repair as a route** | Grepped the codebase after deriving it: S19 had already measured it and left a **named prohibition**. Refuted in the *unexpected* direction — an incoherent magnitude-matched field is worse on realisability and lands **1.24 Å better** |
 | **The deployable half of its own reference-state proposal** | Its own algebra refutes it: the score decomposes additively, so the size-matched field **is** the deflated field, and deflation reallocates rank without creating any |
-| **"The AMBER-relax benefit concentrates on divergent pools", 2:1** | Lowered to **roughly even** by lane L itself, on lane F's dispersion null (−0.128, CI includes zero) — adjacent evidence pointing the other way |
+| **"The AMBER-relax benefit concentrates on divergent pools", 2:1** | Lowered to **roughly even** by lane L itself, on lane F's dispersion null (−0.128, CI includes zero) — adjacent evidence pointing the other way. **THIS WITHDRAWAL IS ITSELF WITHDRAWN (S30-L26): the claim is CONFIRMED at −0.0406, 3.56× MDE, 5/5 folds on a length-matched split, with 97.2% of the gain in the divergent half.** Lane L moved on a null about a *different outcome* and lane G's matching prior rested on a *different mechanism*; two revisions agreeing was not evidence. See §A.7 |
 | **"Two independent arrivals" on confidently-wrong** | Downgraded to one literature result plus one project result on a *different object*, after lane F measured error×confidence (−0.729) as **worse** than error alone (−0.799) |
 
 ### A.4 Lane X's
@@ -394,6 +394,33 @@ results are worth anything.
 | **Three defects in lane D's own combination arms** | An untuned ridge returning a negative cosine; a least-squares objective violating its own consistency floor (caught because ρ fell below the best single field, impossible for a true maximum); selection leakage worth 0.019 in ρ |
 | **Lane R's 0.500/0.500/0.500 cell** | A **null-input artefact** — three identical values across three different questions is what caught it |
 | **Lane Q's framing of my point 4** | "The framing survives; the operator does not" — identity is not only the better question but the **cheaper** one, so a sparse weighted readout is the expensive way to ask it |
+
+### A.7 The one withdrawal that was itself wrong, and lane G's self-kill
+
+**A withdrawal is a claim too, and it can be wrong in the same ways.** Appendix A recorded lane L
+lowering "the AMBER-relax benefit concentrates on divergent pools" from 2:1 to roughly even. Lane G
+then measured it: **confirmed at −0.0406 Å, 3.56× MDE, 5/5 folds** on a length-matched split, with
+**97.2%** of the gain in the high-dispersion half and a permutation null at p = 0.000. Lane G had
+*also* registered 2:1 against, and lost.
+
+> **Two lanes agreeing did not make a prior.** Lane L moved on lane F's null, which was about a
+> different *outcome* (filter failure, not relax gain). Lane G moved on the common-mode argument,
+> which was about a different *mechanism* (bias repair, not geometry repair). Each rested on an
+> object that was not the one under test, and their agreement read as convergence.
+
+What survives the confirmation is narrower than the claim: **the effect does not reach the tail.**
+FAIL18 dispersion against the 108 is NOT MEASURED (0.47× MDE), the relax gain on FAIL18 is −0.0113
+against −0.0239 on the other 108 — *the wrong direction* — and targeting the divergent half buys
+−0.0215 against −0.0221, i.e. nothing.
+
+**And lane G killed its own positive before anyone quoted it.** WRITHE's preference contrast is
+**+0.1641, 2.17× MDE, 5/5 folds, max-null p = 0.000**, clearing *both* of lane R's preference
+clauses that none of 43 channels cleared. It is **cross-kind** — the control keeps deposited
+coordinates while the near rungs are ideal rebuilds. The kind-matched statistic settles it: the
+rebuilt native's percentile inside its own ladder is **0.6061 for WRITHE and 0.6732 for |WRITHE|,
+both worse than the 0.5 chance line**, against DIS's 0.2876. **Third instance of the cross-kind
+confound this sprint**, after S28-L48 (withdrawn by lane R) and the widening result (withdrawn by
+lane F).
 
 ### A.6 The three checklist entries this sprint earned
 
