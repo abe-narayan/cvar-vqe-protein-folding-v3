@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:06 Pacific.
+Last update: 2026-09-20 00:08 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -195,7 +195,38 @@ over-confident posterior:
    functional), X (the configuration state space where the scorer scores what it generated).
    All four are gated, pre-registered, and attack mechanisms the theorem names.
 
+
+## Integration note 5 (2026-09-20 00:08, after S29-L11): I WAS WRONG ABOUT WHY LANE B WAS WORTH SPAWNING
+Lane T's theory section 3 corrects my integration note 2, and the correction is mine to own.
+DERIVED LAW: for any unit-spectral-norm observable, Var[dF/dtheta] = r_stable/D^2 and nothing
+else (r_stable = ||A||_F^2 / ||A||_2^2), which predicts S28's Gaussian graph to 7%, S28-B2's kNN
+to 46x and lane D's J* = 85.7 as 88, with NO free parameter. Consequences:
+(a) Note 2's trainability half is WRONG. Centering removes the lambda_2/lambda_1 degeneracy
+    (0.138 -> 0.465 -> 0.634) but makes the gradient decay WORSE (-2.305 for A_c and -1.900 for
+    G against A's -1.830), because r_stable rises only 1.04 to 1.6. "The spectrum is no longer
+    degenerate" is the wrong justification for a build, and I gave it.
+(b) DESIGN RULE, general: an off-diagonal term is gradient-visible at the deployed width iff its
+    STABLE RANK grows with the register (parity at n = 9 would need r_stable ~ 8000). No dense
+    kernel can, centered or not; a k-regular graph reaches M/k; ANY Gram matrix of structural
+    deviations is capped by rank at r_stable <= 3N_res - 6 <= 42 here. This closes the whole
+    "make the coupling matrix better conditioned" family by derivation, not by one more run.
+(c) WHAT SURVIVES is the MEANING of the ground state, not its trainability: <v|G|v> =
+    |sum_i v_i delta_i|^2 / N_res, so the top eigenvector is the signed combination whose
+    deviations from the pool mean add to the largest displacement -- the pool's principal
+    contrast, positive on one pole and negative on the other. Every deployed readout is a
+    function of p = psi^2 and is blind to that sign, so the contrast SELF-CANCELS and the
+    emitted structure is the pool mean again. A signed readout (S28 lane A's, refuted under the
+    shipped objective but not as a readout) is required, and under it the family collapses to
+    ONE parameter: production +- eta PC1(pool). Everything then rests on the SIGN, which theory
+    section 2 says the marginals cannot supply. Lane B is redirected accordingly; lane O is
+    measuring that family's ORACLE ceiling as rung 8 (T predicts under 0.15 A better than
+    production; above 0.30 A would mean the build is worth much more than the theory says).
+This is the charter's method working: theory before the build killed a justification I had
+already acted on, and replaced it with a sharper, cheaper, falsifiable claim.
+
 ## Closed in S29
+- The "better-conditioned coupling matrix" family (S29-L11, derived): gradient visibility needs
+  stable rank growing with the register; no dense kernel and no Gram matrix of deviations can.
 - H1, the typicality axis (S29-L<O's entry>): the ORACLE global step is exactly zero; the axis
   carries no deployable signal, and the per-target step is an order statistic.
 - Importing a native-free QA method from the literature (S29-L1, lane L): no method exists at
