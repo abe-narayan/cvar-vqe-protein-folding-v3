@@ -1025,10 +1025,20 @@ routes to the same conclusion.
 `FLOOR` sitting at −0.0077 (0.56× MDE) is the design's internal check and it behaves: the arm that
 should be zero is zero.
 
-*Attribution: the figures above are my own recomputation from lane P's committed rows
-(`s29/results/s29_P_rows_shard*.jsonl`, 1,896 rows, 126 targets on every arm, all 8 random draws
-present). Lane P's own entry with its interpretation had not landed when this section was written;
-if it differs, lane P's reading governs and this paragraph is the thing to correct.*
+*Attribution, and a gap this report does not paper over.* **Lane P's own ledger entry never
+landed.** Its arms completed at 03:03 and its final job exited 0, but the lane produced no further
+artefact and did not drain two messages sent to it over the following fifty minutes; it was still
+marked running when this report was closed. The figures above are therefore **my own recomputation**
+from its committed rows (`s29/results/s29_P_rows_shard*.jsonl` — 1,896 rows, 126 targets on every
+arm, all eight random draws present), paired through `s24.stats_lib.compare` with the rows' own fold
+labels, and they are covered by the verification pass (§4.6) like every other number here.
+
+What is missing is not the measurement but **lane P's interpretation of it** — the reading of *why*
+the bond-length correction lands where a random displacement does, and whatever its author would
+have said about the ISO and SPAN arms. Recorded as an absence rather than quietly filled in. The
+one substantive judgement in this subsection that is mine rather than the lane's is the decision to
+lead with the random-band comparison instead of the production comparison; if lane P's entry
+surfaces later and reads it differently, lane P's reading governs.
 
 ### 9.3 Controls against our own enthusiasm
 
