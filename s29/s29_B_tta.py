@@ -66,6 +66,11 @@ os.makedirs(RESULTS, exist_ok=True)
 FLAT_ROWS = os.path.join(RESULTS, "s29_B_tta_flat_rows.jsonl")
 FLAT_OUT = os.path.join(RESULTS, "s29_B_tta_flat.json")
 SUBSET_ROWS = os.path.join(RESULTS, "s29_B_tta_subset_rows.jsonl")
+END_ROWS = os.path.join(RESULTS, "s29_B_tta_end_rows.jsonl")
+CHAIN_ROWS = os.path.join(RESULTS, "s29_B_tta_chain_rows.jsonl")
+N_UNTRAINED = 16
+FAIL18 = {"1ID6", "1JBF", "1LB7", "2BFI", "2BP4", "2JN5", "2MQ2", "2N5C", "2NB7",
+          "2NDM", "3BTB", "3SGO", "5W52", "7JS6", "7LCW", "8T63", "9KAR", "9L1M"}
 
 ALPHA, TEMP, LAYERS, ITERS, LR, M_PROD = 0.18, 0.5, 3, 80, 0.15, 75
 LAM_GRID = (0.0, 0.1, 0.3, 1.0, 3.0)                # prereg B2.6, fixed
@@ -221,8 +226,13 @@ def flat_target(pdb: str) -> List[Dict]:
     # the DEPLOYED readout operator, in the retained set's OWN medoid frame, exactly as shipped
     C_uni = I.coordinate_average(cand.W[tail_idx])[0]
     C_prod = I.coordinate_average(cand.W[top])[0]
-    # frame.Wf[top].mean(0) is the same object in the top-75 medoid frame; assert they agree
-    assert abs(float(I.ca_rmsd(C_prod, frame.Wf[top].mean(0).reshape(int(cand.n), 3)))) < 1e-8
+    # frame.Wf[top].mean(0) is the SAME object: lane A's Frame superposes every window onto the
+    # medoid of `top`, which is the frame `I.coordinate_average` averages in, so the two arrays
+    # are bit-identical.  Asserted on the raw arrays, which is strictly stronger than an RMSD
+    # check: `I.ca_rmsd` has a Kabsch/SVD floor of ~1.3e-7 A on IDENTICAL input (measured here
+    # on 1A13: max|diff| exactly 0.0, ca_rmsd 1.274e-07), so any "identical to 1e-8" claim made
+    # through `ca_rmsd` cannot be met and the first version of this gate mis-fired on it.
+    assert np.max(np.abs(C_prod - frame.Wf[top].mean(0).reshape(int(cand.n), 3))) == 0.0
     R0 = (lam_w0 @ Wf).reshape(int(cand.n), 3)
     pad_mass = float(p0[k:].sum())
     for lam_f in LAM_GRID:
@@ -362,10 +372,178 @@ def subset_target(pdb: str, n_pool: int = 500, greedy_m: int = 5) -> List[Dict]:
                  rank_of_min_f_single=int(np.argmin(f_single)))]
 
 
+# ================================================= MEASUREMENT 5b: THE ENDPOINT (prereg addendum 3)
+def fixed_profile(E, alpha, T, n_grid: int = 4001):
+    """M6 (S29-L15): the exact minimax optimum of the deployed objective over the rank ladder,
+    p*(x) proportional to exp((t* - E_x)_+ / (alpha T)) with
+    t* = argmax_t [ t - T log sum_x exp((t - E_x)_+ / (alpha T)) ].
+
+    TARGET-INDEPENDENT: it depends on (alpha, T) and the ladder only, so applying it to a target's
+    own DIS order involves no circuit, no optimiser and no per-target computation.  That is what
+    makes it strictly stronger than "a classical equivalent" (contract rule 15).
+    """
+    E = np.asarray(E, float)
+    ts = np.linspace(E.min() - 1.0, E.max() + 1.0, int(n_grid))
+    best_t, best_g = None, -np.inf
+    for t in ts:
+        z = np.maximum(t - E, 0.0) / (alpha * T)
+        mx = float(z.max())
+        g = t - T * (mx + math.log(float(np.exp(z - mx).sum())))
+        if g > best_g:
+            best_g, best_t = g, float(t)
+    z = np.maximum(best_t - E, 0.0) / (alpha * T)
+    z = z - z.max()
+    p = np.exp(z)
+    return p / p.sum(), best_t, best_g
+
+
+def _readouts(E, p, alpha, Wf, k, W, n_res):
+    """R_alpha (the quantity the objective steers) and the DEPLOYED uniform average over the same
+    tail SET (which it does not).  Returns (C_Ralpha, C_tailset, tail_idx, lam_w)."""
+    lam_w, strict, x_q, _, _ = tail_lambda(E, p, alpha)
+    R = (lam_w @ Wf).reshape(n_res, 3)
+    tail = np.sort(np.union1d(strict, [x_q])).astype(int)
+    tail = tail[tail < k]
+    C_set = I.coordinate_average(np.asarray(W, float)[tail])[0]
+    return R, C_set, tail, lam_w
+
+
+def endpoint_target(pdb):
+    """Every arm and control of measurement 5b for one target. Selection is native-free; the
+    RMSD columns are ORACLE evaluations of achievable selections."""
+    from s22 import qcand_lib as QC
+    from s27 import run_pool as RP
+    from s27 import s28_A_amp as AMP
+    cand, ch, _ = RP.channels_for(pdb)
+    E_real = RP.zr(ch["DIS"])
+    key = RP.rng_for(pdb, "tiekey").random(cand.k)
+    top = np.sort(RP.topm(E_real, M_PROD, key)).astype(int)
+    top_lex = np.sort(np.lexsort((key, np.asarray(ch["DIS"], float)))[:M_PROD]).astype(int)
+    assert np.array_equal(top, top_lex), pdb + ": top-75 differs from lane P's lexsort path"
+    frame = AMP.Frame(cand.W, top)
+    sur = AMP.Surrogate(I.distogram(pdb, cand.seq, cand.fold), int(cand.n))
+    enc = QC.Encoding(E_real)
+    E, dim, k, n_res = enc.E, enc.dim, int(cand.k), int(cand.n)
+    Wf = np.zeros((dim, 3 * n_res))
+    Wf[:k] = frame.Wf
+    C_prod = I.coordinate_average(cand.W[top])[0]
+
+    def orc(Cc):
+        if cand.nat_ca is None or not np.isfinite(np.asarray(cand.nat_ca, float)).all():
+            return float("nan")
+        Cc = np.asarray(Cc, float)
+        return float(I.ca_rmsd(Cc, cand.nat_ca)) if np.isfinite(Cc).all() else float("nan")
+
+    base = dict(pdb=pdb, n=n_res, fold=int(cand.fold), k=k, basis="point_cloud",
+                label="ACHIEVABLE SELECTION, ORACLE-SCORED", rmsd_prod=orc(C_prod),
+                fail18=bool(pdb in FAIL18))
+    rows = []
+
+    def emit(arm, p, extra=None):
+        R, C_set, tail, lam_w = _readouts(E, p, ALPHA, Wf, k, cand.W, n_res)
+        pr_real = p[:k] / max(float(p[:k].sum()), 1e-300)
+        d = dict(base)
+        d.update(arm=arm, m_tail=int(len(tail)),
+                 pr=float(1.0 / np.sum(pr_real ** 2)), pad_mass=float(p[k:].sum()),
+                 jac75=float(len(set(tail.tolist()) & set(top.tolist()))
+                             / max(1, len(set(tail.tolist()) | set(top.tolist())))),
+                 lam_w_ratio=float(lam_w.max() / max(float(lam_w[lam_w > 0].min()), 1e-300)),
+                 rmsd_Ralpha=orc(R), rmsd_tailset=orc(C_set),
+                 rg_Ralpha=float(np.sqrt(((R - R.mean(0)) ** 2).sum(1).mean())),
+                 bond_Ralpha=float(np.linalg.norm(np.diff(R, axis=0), axis=1).mean()),
+                 tail_is_prefix=bool(np.array_equal(
+                     np.sort(tail),
+                     np.sort(np.asarray(RP.topm(E_real, len(tail), key), int)))),
+                 C_Ralpha=R.tolist(), C_tailset=np.asarray(C_set, float).tolist())
+        if extra:
+            d.update(extra)
+        rows.append(d)
+
+    for lam_f in LAM_GRID:
+        for seed in (0, 1):
+            t0 = time.time()
+            p, th, circ, dd = run_tta_vqe(E, ALPHA, TEMP, lam_f, Wf, sur, n_res,
+                                          enc.n_qubits, seed=seed)
+            emit("vqe|lam%g|s%d" % (lam_f, seed), p,
+                 dict(secs=float(time.time() - t0), F=float(dd["value"]),
+                      cvar=float(dd["cvar_value"]), H_nats=float(dd["H"]),
+                      s_val=float(dd["s_val"]), seed=seed, lam=float(lam_f), source="vqe"))
+        circ = Q.StatevectorCircuit(enc.n_qubits, LAYERS)
+        rng = np.random.default_rng(10000 + int(lam_f * 1000))
+        best = None
+        for _ in range(N_UNTRAINED):
+            th = rng.normal(0.0, 0.6, circ.n_params())
+            pu = circ.probs(th)
+            du = dF_dp(E, pu, ALPHA, TEMP, lam_f, Wf, sur, n_res)
+            if best is None or du["value"] < best[0]:
+                best = (du["value"], pu)
+        emit("untr16|lam%g" % lam_f, best[1],
+             dict(F=float(best[0]), lam=float(lam_f), source="untrained16", seed=-1))
+
+    p_fix, t_star, g_star = fixed_profile(E, ALPHA, TEMP)
+    emit("fixed_profile|M6", p_fix,
+         dict(t_star=float(t_star), g_star=float(g_star), source="fixed_profile", seed=-2,
+              lam=None))
+
+    prod_row = dict(base)
+    prod_row.update(arm="production", source="production", seed=-3, lam=None,
+                    m_tail=int(len(top)), pr=float(M_PROD), pad_mass=0.0, jac75=1.0,
+                    lam_w_ratio=1.0, rmsd_Ralpha=orc(C_prod), rmsd_tailset=orc(C_prod),
+                    rg_Ralpha=float(np.sqrt(((C_prod - C_prod.mean(0)) ** 2).sum(1).mean())),
+                    bond_Ralpha=float(np.linalg.norm(np.diff(C_prod, axis=0), axis=1).mean()),
+                    tail_is_prefix=True, C_Ralpha=np.asarray(C_prod, float).tolist(),
+                    C_tailset=np.asarray(C_prod, float).tolist())
+    rows.append(prod_row)
+    return rows
+
+
+def chain_main(arms, readout="C_Ralpha"):
+    """Built chain for named arms, resumable per (arm, pdb, readout)."""
+    from s24 import d_harness as H
+    from s29 import s29_B_compat as C
+    rows = C.load_all(END_ROWS)
+    by = {(r["arm"], r["pdb"]): r for r in rows}
+    done = set()
+    if os.path.exists(CHAIN_ROWS):
+        for r in C.load_all(CHAIN_ROWS):
+            done.add((r["arm"], r["pdb"], r["readout"]))
+    pdbs = sorted(set(r["pdb"] for r in rows))
+    t0 = time.time()
+    for i, pdb in enumerate(pdbs):
+        todo = [a for a in arms if (a, pdb, readout) not in done and (a, pdb) in by]
+        if not todo:
+            continue
+        cand = H.Candidates.from_universe(pdb, k=500)
+        nat_ok = cand.nat_ca is not None and np.isfinite(np.asarray(cand.nat_ca, float)).all()
+        out = []
+        for a in todo:
+            r = by[(a, pdb)]
+            Cc = np.asarray(r[readout], float)
+            t1 = time.time()
+            ca = H.readout_projected(cand, Cc)
+            out.append(dict(arm=a, pdb=pdb, readout=readout, n=int(cand.n), fold=int(cand.fold),
+                            basis="built_chain", label="ACHIEVABLE, ORACLE-SCORED",
+                            rmsd_cloud=float(I.ca_rmsd(Cc, cand.nat_ca)) if nat_ok else float("nan"),
+                            rmsd_chain=float(I.ca_rmsd(ca, cand.nat_ca)) if nat_ok else float("nan"),
+                            fail18=bool(pdb in FAIL18), secs=float(time.time() - t1)))
+        with open(CHAIN_ROWS, "a", encoding="utf-8") as fh:
+            for r in out:
+                fh.write(json.dumps(r) + "\n")
+        print("  [chain %d/%d] %s %d arms %.1fs (elapsed %.1f min)"
+              % (i + 1, len(pdbs), pdb, len(out), sum(r["secs"] for r in out),
+                 (time.time() - t0) / 60.0), flush=True)
+    print("done:", CHAIN_ROWS, flush=True)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--flat", action="store_true")
     ap.add_argument("--subset", action="store_true")
+    ap.add_argument("--endpoint", action="store_true")
+    ap.add_argument("--chain", type=str, default="")
+    ap.add_argument("--readout", type=str, default="C_Ralpha")
+    ap.add_argument("--targets", type=str, default="12")
+    ap.add_argument("--shard", type=str, default="")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--analyse-flat", action="store_true")
     a = ap.parse_args(argv)
@@ -381,6 +559,16 @@ def main(argv=None):
         if a.limit:
             pdbs = pdbs[:a.limit]
         C.run_phase("subset", pdbs, SUBSET_ROWS, subset_target)
+    if a.endpoint:
+        from s25 import phys_lib as P
+        from s29 import s29_B_compat as C
+        pdbs = C.picks_12() if a.targets == "12" else list(P.targets())
+        if a.limit:
+            pdbs = pdbs[:a.limit]
+        pdbs = C._shard(pdbs, a.shard)
+        C.run_phase("end", pdbs, C.shard_path(END_ROWS, a.shard), endpoint_target)
+    if a.chain:
+        chain_main([x for x in a.chain.split(",") if x], a.readout)
     if a.analyse_flat:
         analyse_flat()
     return 0
