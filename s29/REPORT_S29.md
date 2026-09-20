@@ -87,22 +87,59 @@ matter of statistical theory (S29-L31). Recognition was then closed three indepe
 
 ## 1. What was tested
 
-[PENDING — completed once the last lanes report. Structure: the eight lanes, their briefs, the
-pre-registered falsifier for each experiment, and the multiplicity ledger.]
+Eight lanes ran under `s29/S29_CONTRACT.md`, with the three permanent roles the charter required:
+**adversary** (D), **divergent** (X), **literature** (L). The contract's 30 rules bound every lane,
+including the ones written mid-sprint and the one whose justification was later refuted (addendum 5).
 
-Eight lanes ran under `s29/S29_CONTRACT.md`, with three permanent roles the charter required:
-adversary (D), divergent (X), literature (L).
-
-| lane | brief | deliverables |
+| lane | remit | principal deliverables |
 |---|---|---|
 | **L** | literature, permanent | `s29/lit/L_1..L_8*.md`, `L_INDEX.md` (~2,600 lines), `s29_L_FINDINGS.md` (17 findings) |
+| **T** | theory, permanent | `THEORY.md` (~1,200 lines), `THEORY_SUMMARY.md`, `PREREG_S29_T.md`; **0 endpoint comparisons all sprint** |
+| **D** | adversary, permanent; the cost–RMSD meter | `s29_D_cost_audit.py` and its six numbers; the 21-field attack; the test suite |
+| **X** | divergent, permanent: configuration-space encoding | `s29_X_config.py`, `s29_X_probe*.json` (94 arms) |
 | **M** | data path, convenience choices, harness audit | `DATAPATH.md`, `CONVENIENCE_CHOICES.md` (31 entries, 17 untested), `s29_M_harness_audit.md` |
-| **T** | theory, permanent | `THEORY.md` (1,080 lines), `THEORY_SUMMARY.md` |
-| **O** | ORACLE ceiling ladder | `s29_O_ladder_table.json`, `s29_O_chain_rows*.jsonl` |
-| **D** | adversary, permanent; the cost–RMSD meter | `s29_D_cost_audit.py` and its six numbers |
-| **X** | divergent, permanent: configuration-space encoding | `s29_X_probe*.json` (94 arms) |
+| **O** | ORACLE ceiling ladder | 33 arms × 126 targets = 4,158 projections; `s29_O_ladder_table.json` |
 | **P** | the projection stage's price | `s29_P_*.json`, `s29_P_rows_shard*.jsonl` |
-| **B** | compatibility Hamiltonian, tail-then-aggregate | `s29_B_tta.py`, `s29_B_tta_*` rows |
+| **B** | compatibility Hamiltonian, tail-then-aggregate | `s29_B_tta.py`, `s29_B_compat.py`, 19 tests |
+
+### 1.1 Pre-registration
+
+Nine pre-registration documents were committed **before** the numbers they govern:
+`PREREG_S29_{B,D_band,D_m6,M_F1,M_F2,O,P,T,X}.md`. Every experiment registered its falsifier in
+advance, per contract rule 14, and the record contains several cases where that discipline decided
+the outcome against the lane that wrote it:
+
+- **Lane B's gate did not open** — 0 of 24 cells cleared 0.7× MDE — so measurement 3, its own
+  endpoint run, was **not executed**. The pre-registration stopped a run the lane wanted.
+- **Lane T's Corollary 2b was withdrawn at its own registered bar** once both limbs fired.
+- **Lane T's compactness prior was 3-to-1** in the direction the measurement then contradicted
+  (§12.0), and the registration is what makes that a result rather than a story.
+- **Lane B registered, before measuring, that its flat fraction *could not* fall** — correcting a
+  gate I had set that was a constant — and supplied the right quantity instead.
+
+### 1.2 Multiplicity
+
+Contract rule 17 required the count to be tracked, because a sprint with eight lanes and ~50
+entries can manufacture significance by volume. The discipline used:
+
+- **ORACLE and deployable comparisons are counted separately** and labelled in every sentence.
+  Lane B's decisive block, for instance, is 4 ORACLE diagnostic comparisons at n = 126 and
+  **0 endpoint comparisons**.
+- **Per-target maxima over a family are priced as order statistics** with `best_of_k_within`, never
+  read as a mean. Lane X's 94-arm ladder is handled this way, with only the pre-specified primary
+  arm read as a result.
+- **Below 0.7× MDE is not a result** (charter). This disqualified several of the sprint's own
+  positives, including lane B's non-prefix term (0.73×), lane M's F1 primary (0.55×) and the
+  pair-level contrast (0.69×).
+
+### 1.3 What was deliberately not spent
+
+- **The sealed benchmark was not touched.** Every number is on the 126 dev targets.
+- **`peptide_folds.json` and `peptide_clusters.json` were not regenerated**, per the charter — the
+  project has invalidated every fold model this way once before.
+- **Native RMSD was never used to tune a deployable parameter.** ORACLE analyses are labelled as
+  such throughout and kept in separate arms; where an ORACLE figure appears next to a deployable
+  one, the table says which is which.
 
 ---
 
