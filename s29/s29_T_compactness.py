@@ -122,8 +122,41 @@ def summarise(rows):
                         rho_inband_partial_median=float(np.median(pa[m])),
                         share_of_inband_from_rg=float(1.0 - np.median(np.abs(pa[m])) /
                                                       max(np.median(np.abs(ib[m])), 1e-9)),
-                        n_inband_targets=int(m.sum()))
+                        n_inband_targets=int(m.sum()),
+                        fold_ci_rho_partial=ST.compare(pa[m], np.zeros(int(m.sum())), fo[m],
+                                                       label="rho_partial " + nm,
+                                                       seed_parts=("s29Tcp",))["ci95_fold"],
+                        mde_rho_partial=float(2.8016 * np.std(pa[m], ddof=1) / np.sqrt(m.sum())))
+        cell["mde_rho_rg"] = float(2.8016 * np.std(g[ok], ddof=1) / np.sqrt(ok.sum()))
+        cell["rho_rg_over_mde"] = float(abs(np.mean(g[ok])) / max(cell["mde_rho_rg"], 1e-12))
+        cell["not_measured_rho_rg"] = bool(cell["rho_rg_over_mde"] < 0.7)
         out["channels"][nm] = cell
+
+    # ---- the falsifier of s29/PREREG_S29_T.md, computed here rather than read off by eye
+    from scipy.stats import spearmanr
+    nms = [n for n, c in out["channels"].items() if "rho_inband_median" in c]
+    rg = np.array([abs(out["channels"][n]["rho_rg_median"]) for n in nms])
+    ibm = np.array([abs(out["channels"][n]["rho_inband_median"]) for n in nms])
+    order = np.argsort(-ibm)
+    topk = [nms[i] for i in order[:8]]
+    f1a = float(spearmanr(rg, ibm).correlation) if len(nms) > 5 else float("nan")
+    f1b = float(np.median([out["channels"][n]["share_of_inband_from_rg"] for n in topk]))
+    f2 = [n for n in nms
+          if abs(out["channels"][n]["rho_inband_partial_median"]) >= 0.15
+          and abs(out["channels"][n]["rho_rg_median"]) <= 0.30
+          and (out["channels"][n]["fold_ci_rho_partial"][0] > 0
+               or out["channels"][n]["fold_ci_rho_partial"][1] < 0)]
+    out["falsifier"] = dict(
+        prereg="s29/PREREG_S29_T.md section 3",
+        F1a_spearman_absrho_rg_vs_absrho_inband=f1a, F1a_bar=0.4, F1a_fires=bool(f1a >= 0.4),
+        F1b_median_share_removed_top8=f1b, F1b_bar=0.4, F1b_fires=bool(f1b >= 0.4),
+        F1_fires=bool(f1a >= 0.4 and f1b >= 0.4),
+        F1_top8_by_inband_skill=topk,
+        F2_channels=f2, F2_fires=bool(len(f2) > 0),
+        verdict=("F1: lane L's objection CONFIRMED, section 7 row 3 CLOSES"
+                 if (f1a >= 0.4 and f1b >= 0.4) and not f2 else
+                 "F2: the objection FAILS, row 3 STAYS OPEN" if f2 and not (f1a >= 0.4 and f1b >= 0.4)
+                 else "NEITHER fires cleanly -- report as registered, row 3 UNDECIDED by this instrument"))
     return out
 
 
@@ -145,6 +178,11 @@ def main(argv=None):
     out["rows"] = rows
     ST.save_atomic(OUT, out)
     print(f"n = {out['n']}; Rg's own in-band skill (ORACLE): rho {out['rho_rg_rr_inband_median']:+.3f}")
+    f = out["falsifier"]
+    print(f"FALSIFIER: F1a {f['F1a_spearman_absrho_rg_vs_absrho_inband']:+.3f} (bar 0.4, fires "
+          f"{f['F1a_fires']});  F1b {f['F1b_median_share_removed_top8']:+.3f} (bar 0.4, fires "
+          f"{f['F1b_fires']});  F2 channels {f['F2_channels']}")
+    print(f"VERDICT: {f['verdict']}")
     print(f"{'channel':22s} {'rho(X,Rg)':>10s} {'|rho|':>7s} {'in-band':>9s} {'partial':>9s} {'Rg share':>9s}")
     for nm, c in sorted(out["channels"].items(), key=lambda kv: -abs(kv[1]["rho_rg_median"])):
         print(f"{nm:22s} {c['rho_rg_median']:+10.3f} {c['rho_rg_abs_median']:7.3f} "
