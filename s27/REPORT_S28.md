@@ -354,3 +354,22 @@ Findings files: `s27/s28_A_FINDINGS.md`, `s27/s28_B_FINDINGS.md`, `s27/s28_C_FIN
 `s27/results/s28_*.json`, `s28_*.jsonl`; job records `s26/jobs_done/s28*.json`; logs
 `s26/logs/s28*.log`. Second-wave briefs `s27/briefs/S28A2.md`, `S28B2.md`, `S28C2.md`. No
 further waves are planned; this report closes the sprint.
+
+## 12. What to work on next: making cost reduction mean RMSD reduction
+
+The full programme, with the meter's four numbers, falsifiers, priors and costs, is in the
+published page `s27/REPORT_S28.html` (https://claude.ai/artifact/5iE59KicGARNF5CBjofZFw),
+section 8. In one paragraph: the shipped cost's Spearman with RMSD along the ladder from
+production to the native is -0.40 (`s27/results/s28_C2_chain_summary.json :: ladder_rho ::
+DIS@chain`), its gradient at production is blind (cosine -0.03, S28-L23b) and the native is at
+its 37th percentile (S28-L18b). The programme, in dependency order: (1) package the meter
+(`s27/cost_audit.py`: ladder rho, cosine at production, native percentile, preference vs
+production with the pool-member control; all four pieces exist in `s27/`); (2) calibrate the
+2x over-confident posterior leave-fold-out and re-read the meter (hours; the identified
+mechanism, S25 L2 and S28-L35); (3) score the de-contracted structure (the average is 22%
+contracted and two scorers' preference was the contraction, S28-L36); (4) the pool-residual
+prior: train, leave-fold-out on `s8/generate_univ`, a head that predicts the pool's 68%
+common-mode error (S23 L9) from ESM features, with the S19 error-coherence check on its
+mistakes; (5) an RMSD-supervised cost on the ORACLE ladder structures with candidate-only
+features, prior null. Not to be run: any further readout, graph, J, lam, k or sigma variant;
+any global rescaling; a ninth router; harder optimisation of the current cost.

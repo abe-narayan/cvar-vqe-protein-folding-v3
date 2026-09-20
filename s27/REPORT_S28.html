@@ -1,0 +1,481 @@
+<title>Where the Error Lives</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F4F6F8; --surface:#FFFFFF; --ink:#172029; --muted:#5A6674; --rule:#D6DCE3; --soft:#EAEEF2;
+  --teal:#0B8FA0; --amber:#C77A0A; --red:#C2334A; --indigo:#5B6FC0; --grey:#8A96A3;
+  --teal-bg:#E3F3F5; --amber-bg:#FBF0DD; --red-bg:#F9E4E7;
+  --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#12171D; --surface:#1A2129; --ink:#E6EBF0; --muted:#98A4B1; --rule:#2C353F; --soft:#222B35;
+    --teal:#1F9DAE; --amber:#C08226; --red:#DE4E66; --indigo:#7488D4; --grey:#7D8996;
+    --teal-bg:#12303A; --amber-bg:#3A2A10; --red-bg:#3D1C24;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#12171D; --surface:#1A2129; --ink:#E6EBF0; --muted:#98A4B1; --rule:#2C353F; --soft:#222B35;
+  --teal:#1F9DAE; --amber:#C08226; --red:#DE4E66; --indigo:#7488D4; --grey:#7D8996;
+  --teal-bg:#12303A; --amber-bg:#3A2A10; --red-bg:#3D1C24;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.55;margin:0;padding-block:0 64px;padding-inline:20px}
+a{color:var(--teal);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--teal) 40%,transparent)}
+a:hover{border-bottom-color:var(--teal)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto}
+.prose{max-width:70ch}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,4.6vw,46px);letter-spacing:-0.01em}
+h2{font-size:26px;margin-top:64px;padding-top:20px;border-top:2px solid var(--ink)}
+h3{font-size:19px;margin-top:34px}
+p{margin:12px 0}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+header{padding-block:40px 24px;border-bottom:1px solid var(--rule)}
+header .sub{font-size:18px;color:var(--muted);max-width:64ch;margin-top:14px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ground);border-bottom:1px solid var(--rule);margin:0 -20px;padding:10px 20px;overflow-x:auto}
+nav.toc ul{list-style:none;margin:0;padding:0;display:flex;gap:18px;white-space:nowrap}
+nav.toc a{font-family:var(--mono);font-size:12px;border:0;color:var(--muted)}
+nav.toc a:hover{color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:28px 0}
+.stat{background:var(--surface);border:1px solid var(--rule);padding:14px 16px}
+.stat .n{font-family:var(--mono);font-size:26px;font-weight:500;font-variant-numeric:tabular-nums}
+.stat .l{color:var(--muted);font-size:13px;margin-top:2px}
+.callout{background:var(--surface);border-left:4px solid var(--teal);padding:14px 18px;margin:20px 0}
+.callout.oracle{border-left-color:var(--amber);background:var(--amber-bg)}
+.callout.refuted{border-left-color:var(--red)}
+.tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;vertical-align:middle}
+.tag.oracle{background:var(--amber-bg);color:var(--amber)}
+.tag.refuted{background:var(--red-bg);color:var(--red)}
+.tag.closed{background:var(--soft);color:var(--muted)}
+.tag.stands{background:var(--teal-bg);color:var(--teal)}
+figure{margin:28px 0;background:var(--surface);border:1px solid var(--rule);padding:18px 18px 12px}
+figure svg{width:100%;height:auto;display:block;font-family:var(--mono);font-size:11.5px}
+figcaption{font-size:13px;color:var(--muted);margin-top:10px;max-width:80ch}
+figcaption b{color:var(--ink);font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-family:var(--mono);font-size:12px;color:var(--muted);margin:6px 0 10px}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+.tbl{overflow-x:auto;margin:18px 0;border:1px solid var(--rule);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule)}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--soft)}
+td.num,th.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+td.ref{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--ground);font-family:var(--mono);font-size:12px;padding:6px 9px;border-radius:3px;max-width:320px;z-index:20;display:none;line-height:1.4}
+.next{counter-reset:step}
+.step{background:var(--surface);border:1px solid var(--rule);padding:18px 20px;margin:16px 0;display:grid;grid-template-columns:56px 1fr;gap:14px}
+.step::before{counter-increment:step;content:counter(step);font-family:var(--serif);font-size:34px;font-weight:600;color:var(--teal);line-height:1}
+.step h3{margin-top:0}
+.step .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px;font-size:13.5px}
+.step .meta div{background:var(--soft);padding:9px 11px}
+.step .meta b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;font-weight:500}
+.donot{border-left:4px solid var(--red)}
+ul.tight{margin:8px 0;padding-left:20px}
+ul.tight li{margin:6px 0}
+code{font-family:var(--mono);font-size:.92em;background:var(--soft);padding:1px 5px;border-radius:3px}
+.quote{font-family:var(--serif);font-size:19px;line-height:1.5;max-width:64ch;border-left:3px solid var(--amber);padding-left:18px;margin:26px 0;color:var(--ink)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:760px){.two{grid-template-columns:1fr}.step{grid-template-columns:1fr}.step::before{font-size:24px}}
+@media (prefers-reduced-motion: no-preference){.pt{transition:r .15s}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Sprint 28 · peptide structure programme · closed 2026-09-19 · ledger S28-L0 to L50</div>
+  <h1>Where the Error Lives</h1>
+  <p class="sub">The CVaR-VQE spine under three formulations it had never been given, measured on the built chain against production, with an Adversary lane on every entry. Nothing moved. What was bought is the mechanism, and with it the programme for making cost reduction mean RMSD reduction.</p>
+</header>
+<nav class="toc"><ul>
+  <li><a href="#answer">Answer</a></li>
+  <li><a href="#disconnect">The disconnect</a></li>
+  <li><a href="#arms">Every arm</a></li>
+  <li><a href="#lanes">Lane by lane</a></li>
+  <li><a href="#instrument">Instrument</a></li>
+  <li><a href="#quantum">Quantum</a></li>
+  <li><a href="#retract">Retractions</a></li>
+  <li><a href="#next">What to work on next</a></li>
+  <li><a href="#files">Artefacts</a></li>
+</ul></nav>
+
+<section id="answer">
+<h2>1. The answer, stated first</h2>
+<div class="stats">
+  <div class="stat"><div class="n">0 of 37</div><div class="l">deployable arms projected to the built chain that beat production (A 4, A2 7, B 18, B2 2, C 6)</div></div>
+  <div class="stat"><div class="n">0.252 Å</div><div class="l">ORACLE emitted ceiling of the deployed circuit family, 126/126 targets</div></div>
+  <div class="stat"><div class="n">−0.40</div><div class="l">Spearman of the shipped cost with RMSD along the ladder from production to the native</div></div>
+  <div class="stat"><div class="n">440 / 2 / 0</div><div class="l">tests passed / skipped / failed at the close, S26 basis</div></div>
+</div>
+<div class="prose">
+<p>The brief asked for real movement on the built-chain RMSD, or a real quantum result, or both, with the CVaR-VQE kept as the spine and everything around it fair game. The sprint built the three formulations the record had never tried and one second wave behind each, measured every arm on the built chain against production with the full control set, and had lane D attack every entry within the hour.</p>
+<p>Every deployable arm of every formulation is inside its own MDE of production or worse than production beyond it. Every one of those verdicts survived the Adversary. What the sprint bought is the mechanism, measured on both sides of the pipeline:</p>
+<ul class="tight">
+<li><b>Expressivity is not the barrier.</b> The deployed circuit family, read as signed affine weights over the pool, holds a structure within 0.25 Å of the native on every one of the 126 targets <span class="tag oracle">ORACLE</span> (S28-L26b).</li>
+<li><b>Optimisation is not the barrier.</b> The optimiser reaches the objective's optimum: λ = 0 reproduces the production VQE bit for bit, and the objective falls on 126 of 126 targets (S28-L18b, L26b).</li>
+<li><b>The objective is the barrier, three ways.</b> Its minimiser is away from the native (every signed arm worse, S28-L26b). Its gradient at the pipeline's own output has no directional information about the native (cosine −0.03, inside the random null, S28-L23b), and a step along it is worth a random step (S28-L39). And 20 of 31 native-free scorers in the whole library prefer the projected production average to a 0.25 Å structure (S28-L48).</li>
+<li><b>The quantum side.</b> The first non-diagonal Hamiltonian in the project was built, differentiated exactly and run end to end. Its hopping term is invisible to the circuit's gradient at the deployed width because the pool graph is a near-rank-one typicality projector (S28-L8b, L11). A spread-spectrum graph halves that decay; the circuit then finds the coherent basin on 25 to 39% of cells, and the emitted structure does not move on either class (S28-L46, L47).</li>
+</ul>
+</div>
+</section>
+
+<section id="disconnect">
+<h2>2. Why cost reduction does not mean RMSD reduction</h2>
+<div class="prose">
+<p>This is the sprint's central measurement and the reason every route died at the same place. The deployed cost is the L1 Bayes-risk of the shipped distogram against a structure's own distance map. Along the ladder that matters, from the circuit's optimum through production to the ORACLE structure and the native, the cost <b>falls as RMSD rises</b>.</p>
+</div>
+
+<figure id="fig-ladder">
+<div class="legend"><span style="--c:var(--teal)">deployable structure</span><span style="--c:var(--amber)">ORACLE structure</span><span style="--c:var(--grey)">the native</span></div>
+<svg viewBox="0 0 760 330" role="img" aria-label="Mean shipped cost against mean built-chain RMSD for four structures; cost falls as RMSD rises"></svg>
+<figcaption><b>Figure 1. The cost points the wrong way along the ladder.</b> Mean over 126 targets of the shipped Bayes-risk S (y) against the mean built-chain CA-RMSD (x). Circuit optimum at λ = 1: S 1.339, RMSD 3.433. Production: S 1.683, RMSD 3.207. ORACLE circuit structure: S 2.094, RMSD 0.252. Native: S 2.090. On only 25 of 126 targets does the ORACLE structure have lower cost than production; on 99 of 126 the circuit's optimum has lower cost than production. Sources: <code>s27/results/s28_A_objdiag.json</code>, <code>s28_A_recog_rows.jsonl</code>, <code>s28_A_chain_rows.jsonl</code> (S28-L18b item 2, L26b).</figcaption>
+</figure>
+
+<div class="two">
+<figure id="fig-cos">
+<svg viewBox="0 0 520 300" role="img" aria-label="Histogram of the per-target cosine between the objective's descent direction at production and the direction to the native"></svg>
+<figcaption><b>Figure 2. The gradient at production is blind.</b> Per-target cosine between the objective's steepest-descent direction at the production cloud and the direction to the native (rigid body removed). Mean −0.034 (SE 0.021), 56 of 126 positive; the shaded band is the random-direction reference (mean |cos| 0.140). FAIL18 mean −0.143. <span class="tag oracle">ORACLE</span> diagnostic, <code>s27/results/s28_A2_cosine_rows.jsonl</code> (S28-L23b).</figcaption>
+</figure>
+<div>
+<div class="callout oracle"><div class="eyebrow">The mechanism in the record's own numbers</div>
+<p>The shipped posterior is about twice over-confident (S25 L2). The L1 Bayes-risk of an over-confident posterior is minimised by a structure whose distances sit at the posterior medians, and the pool's coordinate average is exactly that structure: it is contracted 22% against the native (mean virtual bond 2.96 Å vs 3.77) and it is the posterior's own fixed point. Under the shipped cost, production ranks at the 12.6th percentile of its own pool: the cost prefers the contracted average to 87% of the real protein windows it was averaged from (S28-L35, L36).</p>
+<p>So "reduce the cost" means "agree more with the posterior median", which means "contract toward the average", which is a direction that on most targets is orthogonal to the native and on the failing targets points away from it. The pool's error is 68% common-mode (S23 L9) and the distogram shares that error, because it trained on the same fragments; a cost built from it cannot see the error it shares.</p>
+</div>
+</div>
+</div>
+
+<div class="prose">
+<p>The same failure is not specific to the distogram. Section 3.7 measures every native-free scorer in the library on the same ladder: 20 of 31 prefer the contracted production average to the 0.25 Å structure, and the one that clears both registered clauses is at the mean of the multiplicity null. The library was built around the same posterior and the same pool, and it inherits the same blind spot.</p>
+</div>
+</section>
+
+<section id="arms">
+<h2>3. Every deployable arm on the built chain</h2>
+<div class="prose"><p>The verdict basis for the whole sprint. Effect is arm minus production (3.2126 Å; negative would be better), with its own minimum detectable effect (2.8016 × SE). Nothing is left of the zero line, and everything that clears its MDE clears it on the wrong side.</p></div>
+<figure id="fig-arms">
+<div class="legend"><span style="--c:var(--red)">worse beyond MDE</span><span style="--c:var(--grey)">inside MDE (not measured)</span><span style="--c:var(--indigo)">whisker = ± MDE</span></div>
+<svg viewBox="0 0 760 640" role="img" aria-label="Effect of every deployable arm against production on the built chain with MDE whiskers"></svg>
+<figcaption><b>Figure 3. Twenty-one deployable arms against production, built chain, n = 126.</b> Hover a row for the entry and the fold-clustered decision. Lane B's remaining chain cells (R3 at J = 0, 0.1, 0.3, 1 on both seeds and graphs) sit between +0.25 and +0.32 and are omitted for legibility; the eigensolver arms (−0.003, −0.006) are inside MDE. Sources: S28-L26b, L39, L41, L46, L32 and their summary files.</figcaption>
+</figure>
+</section>
+
+<section id="lanes">
+<h2>4. Lane by lane, full depth</h2>
+
+<h3>4.1 Lane A: the amplitude readout <span class="tag refuted">refuted</span> <span class="tag stands">D: stands</span></h3>
+<div class="prose">
+<p>A CVaR-VQE whose output is a signed combination. The deployed real-amplitude RY/CNOT circuit (9 qubits, depth 3, 27 parameters) gives amplitudes ψ<sub>i</sub> that are signed; C(θ) = Σ ψ<sub>i</sub> W<sub>i</sub> / Σ ψ<sub>i</sub> is an affine combination of the 500 pool windows in the medoid frame. Objective F = CVaR<sub>α</sub>(E; p) − T H(p) + λ S(C), with S the shipped Bayes-risk of the emitted structure's own distance map. The first non-convex consumer of the pool on record; S10-5's affine bound had been ORACLE only.</p>
+</div>
+<div class="tbl"><table>
+<tr><th>Measurement</th><th>Result</th><th>Entry</th></tr>
+<tr><td>ORACLE expressivity of the family (θ chosen against the native) <span class="tag oracle">ORACLE</span></td><td>0.288 Å point cloud, best of 5 starts (single start 0.36 to 0.42; the best-of-5 is an order statistic, k<sub>eff</sub> 3.4). Emitted on the built chain: <b>0.252 Å</b>, 126/126 under 2 Å, worst 0.970. A random 27-dimensional affine subspace reaches 0.608.</td><td class="ref">L1b, L13, L26b</td></tr>
+<tr><td>Recognition, point cloud: circuit at λ 0.3 / 1 / 3 vs production 3.0483</td><td>+0.335 / +0.337 / +0.390, all WORSE (2.0× to 2.4× MDE, 5/5 folds)</td><td class="ref">L18b, L20</td></tr>
+<tr><td>Recognition, built chain: λ 0.3 / 1 / 3 vs production 3.2071 (re-projected in the same job)</td><td>+0.236 (1.48×) / +0.226 (1.29×, Type-M zone, same sign) / +0.264 (1.59×), fold CI above zero. λ = 0 read as signed weights: 6.14 Å. F1 silent.</td><td class="ref">L26b, L27b</td></tr>
+<tr><td>Classical controls at matched budget: unconstrained signed weights on 75 and 500; random 27-dim subspace ×8; softmax simplex; untrained circuit best-of-16</td><td>Every signed family is worse in proportion to how well it minimises S. The convex simplex under the same objective lands at production (3.056). Untrained circuit mean of 16 draws 22.2 Å, best-of-16 3.09 (an order statistic).</td><td class="ref">L18b</td></tr>
+<tr><td>What the objective does with sign freedom</td><td>S at the circuit optimum 1.34 &lt; production 1.67 &lt; ORACLE structure 2.09: it uses the freedom to move away from the native. The native is at the objective's 36.9th percentile of the pool; production is below the native's cost on 99/126.</td><td class="ref">L18b item 2, L26b</td></tr>
+</table></div>
+<div class="prose"><p>The Adversary's checks (S28-L13, L20, L27b): the ORACLE contrast must be quoted like for like (single start −0.156 median, not the best-of-5's −0.320); the matched-budget unconstrained control is quoted beside the converged one; λ = 1 at 1.29× is in the Type-M zone with the same sign as its neighbours. All adopted. Findings: <code>s27/s28_A_FINDINGS.md</code>.</p></div>
+
+<h3>4.2 Lane A2: is the objective locally informative at production? <span class="tag refuted">refuted</span> <span class="tag stands">D: stands</span></h3>
+<div class="tbl"><table>
+<tr><th>Measurement</th><th>Result</th><th>Entry</th></tr>
+<tr><td>ORACLE cosine, descent direction of S at the production cloud vs the direction to the native <span class="tag oracle">ORACLE</span></td><td>DIS −0.034 (SE 0.021), median −0.043, 56/126 positive, sign test p 0.25. FAIL18 −0.143 (SE 0.066, 6/18 positive); the 108 −0.016. Random-direction reference |cos| 0.140. Spearman(cos, production RMSD) −0.37: the worse the target, the more the descent direction opposes the native.</td><td class="ref">L23b, L24</td></tr>
+<tr><td>The same cosine for every S27 CA channel with a gradient</td><td>RG_LAW +0.034 (SE 0.033), EXVOL −0.035, DISTPOT −0.002, CONTACT +0.030, ENV −0.006, CAGEO +0.010: none above the random reference; CAGEO's 15/18 on FAIL18 is one of 21 sign tests at a third of the reference magnitude.</td><td class="ref">L23b</td></tr>
+<tr><td>Deployable step e ∈ {0.1, 0.3, 1.0} Å along the descent direction, built chain, vs production</td><td>−0.004 (0.21×) / +0.018 (0.74×, sign only) / +0.105 (2.10×, WORSE, 5/5)</td><td class="ref">L39, L40</td></tr>
+<tr><td>The same step vs the mean of the same two projected random directions</td><td>−0.005 / −0.000 / −0.014 (0.22× / 0.00× / 0.26×, fold CI including zero at every e): the descent direction is worth a random direction of the same size.</td><td class="ref">L39</td></tr>
+<tr><td>One Adam step inside the circuit family from the production-reproducing θ</td><td>+0.000 / +0.008 / +0.122 (e = 1 WORSE, 1.34×). The circuit arm's FAIL18 excess is a real set property by the random-18 null (p 0.001) and it is harm; the raw step's FAIL18 stratum is 18-target noise (p 0.06 / 0.25).</td><td class="ref">L39, L40, L42</td></tr>
+<tr><td>Projection prices</td><td>A 1 Å displacement de-contracts the average: the step's harm shrinks from +0.237 (cloud) to +0.105 (chain) and the random draws' from +0.212 to +0.119; production's projection price is +0.159, the step's +0.026.</td><td class="ref">L39</td></tr>
+</table></div>
+
+<h3>4.3 Lane B: the first non-diagonal Hamiltonian, H = diag(E) − J A <span class="tag refuted">refuted</span> <span class="tag stands">D: stands</span></h3>
+<div class="prose"><p>A<sub>ij</sub> = exp(−d<sub>ij</sub>² / 2σ²) on the pairwise CA-RMSD of the 500 windows, σ the pool median, native-free. F = CVaR − T H − J ⟨ψ|A|ψ⟩ with the hopping term's exact parameter-shift gradient added to the deployed gradient. Readouts: R1 the deployed CVaR tail, R2 the p-weighted average, R3 the p-top-75. Controls: PERM (correspondence destroyed, spectrum kept), RAND (degree sequence kept), the exact ground state by eigensolver. J ∈ {0, 0.1, 0.3, 1, 3}; seeds 0 and 1; J = 0 reproduces S27's VQE arm bit for bit on 126/126.</p></div>
+<div class="tbl"><table>
+<tr><th>Measurement</th><th>Result</th><th>Entry</th></tr>
+<tr><td>Gradient variance of the hopping term alone, n = 4 to 9 (exact parameter shift, 120 draws, 12 targets)</td><td>4.06e−3 at n = 4 to 4.16e−6 at n = 9: −1.7 to −1.8 per qubit. At n = 9 it is 7,300× below the CVaR-plus-entropy terms at J = 1 (820× at J = 3). The full objective's variance is flat in n at every J. No slope is called a plateau or its absence.</td><td class="ref">L8b, L11</td></tr>
+<tr><td>Mechanism</td><td>The rank-one part of A carries 97% of the variance at n = 9 and reproduces the slope; the Perron vector is 95 to 99% the uniform state (λ₂/λ₁ 0.11 to 0.14); a diagonal observable with the same spectrum decays at the same rate on the padding-free registers. The decay belongs to the near-rank-one spectrum, not to off-diagonality.</td><td class="ref">L8b, L11</td></tr>
+<tr><td>Set-equality departure</td><td><code>gate_set_equality</code> passes 4,914/4,914 cells; the deployed tail equals the classical top-m of E at its realised m to 1.1e−13 Å on every cell at every J. Any R1 movement at J &gt; 0 is the m-ladder term.</td><td class="ref">L21, <code>s28_B_mladder.json</code></td></tr>
+<tr><td>Point cloud, 39 arms × 126</td><td>R1 within 0.013 Å of production at every J; R2 / R3 +0.24 to +0.33 worse; the eigensolver at J = 1 re-selects the DIS top-75 (Jaccard 0.960).</td><td class="ref">L21, L22</td></tr>
+<tr><td>Built chain, 18 arms × 126 (comparator re-projected in-lane, equal to S27's rows at 0.0 on 126/126)</td><td>R1 at every J, graph and seed inside 0.46× MDE of production and 0.22× of J = 0. R2 / R3 +0.25 to +0.37 WORSE (1.28× to 1.58×, fold CI above zero). F1 does not fire: the one cell BETTER than its J = 0 twin (−0.037, 1.24×) is a 0.28 Å-worse readout climbing 0.04 Å toward production, unreplicated on seed 0 (+0.004), matched by PERM (−0.030). F3 / F4 silent. The exact ground state ties production (−0.003, −0.006).</td><td class="ref">L41, L43, L44</td></tr>
+<tr><td>Three-way split, middle leg (representability fit, 16 starts, 80 and 400 iterations)</td><td>The J = 3 ground state itself is not representable (max overlap 0.80 to 0.88, saturated at 80 iterations), but a representable state has F below the ground state's on 10/12 targets and below every reached F on 24/24 cells: the gap is optimisation by basin selection. The trained state is bimodal on all 126: 43 / 32 cells by seed fully sign-coherent, the rest at the J = 0 state, none between.</td><td class="ref">L41, L43, <code>s28_B_represent.json</code></td></tr>
+</table></div>
+
+<h3>4.4 Lane B2: a spread-spectrum graph <span class="tag refuted">refuted</span> <span class="tag stands">D: stands</span></h3>
+<div class="prose"><p>The one follow-up the mechanism licensed: if the decay is the spectrum's, change the spectrum. Symmetric k-nearest-neighbour graph on the same RMSDs (k 5 and 10), degree-normalised, unit spectral norm.</p></div>
+<div class="tbl"><table>
+<tr><th>Measurement</th><th>Result</th><th>Entry</th></tr>
+<tr><td>Hop-only gradient variance, n = 4 to 9</td><td>−1.00 / −1.03 per qubit (Gaussian −1.84); 30 to 60× the variance at n = 9. The pre-registered −1.0 line is straddled, not cleared. The remainder, not the rank-one part, now carries 96 to 99% of the variance.</td><td class="ref">L25, L26, L29</td></tr>
+<tr><td>Coherence classes (counts, never a mean; retraction R4)</td><td>At J = 1 the circuit is at the J = 0 state on nearly every cell. At J = 3, k = 10 it is fully coherent on 49 / 33 of 126 cells by seed (Gaussian 43 / 32). Which cells is not a function of production's RMSD or FAIL18.</td><td class="ref">L29, L46</td></tr>
+<tr><td>Endpoint at the licensed cell (k = 10, J = 3; prereg addenda 2 and 3), point cloud</td><td>R1 inside 0.42× MDE of J = 0 and 0.37× of production (+0.0098 vs MDE 0.0264 on seed 0); R3 +0.28 worse; REAL vs PERM silent; the kNN eigensolver (a PR-53 cluster) ties production (0.54×); no measurable endpoint difference between the coherent and incoherent classes.</td><td class="ref">L46, L47</td></tr>
+<tr><td>The two R3 cells at 0.7× MDE, built chain</td><td>+0.306 Å worse than production (1.45×, 5/5, fold CI [+0.155, +0.430]), within 0.35× of their J = 0 twin.</td><td class="ref">L46, <code>s28_B2_summary.json</code></td></tr>
+</table></div>
+
+<h3>4.5 Lane C, Part 1: a FAIL18 detector on a never-used feature class <span class="tag closed">closed</span> <span class="tag stands">D: stands</span></h3>
+<div class="prose"><p>Eighteen targets sit at 5.83 Å against 2.58 Å for the other 108 and carry most of the mean; every alternative Hamiltonian helps on those 18 and hurts on the 108 (S27). A native-free switch would be worth 0.03 to 0.06 Å. Seven router constructions had failed. New inputs this time: the pool's own statistical-potential distribution and its agreement with the distogram, 21 features.</p></div>
+<div class="tbl"><table>
+<tr><th>Measurement</th><th>Result</th><th>Entry</th></tr>
+<tr><td>Nested leave-fold-out ridge logistic, held-out AUROC vs a 500-draw label-permutation null (the whole nested procedure per draw)</td><td>SP block 0.468 (null p95 0.629); SP + controls 0.608 (p 0.10); the S22 router set through the same harness 0.591 (p 0.19). No block clears its null.</td><td class="ref">L6, L8</td></tr>
+<tr><td>Best single feature as an order statistic over 26</td><td>DISTPOT_spread 0.706 vs a max-over-26 null p95 0.720 (p 0.076); it is a length proxy (corr −0.43 with n; 0.593 after residualising).</td><td class="ref">L6</td></tr>
+<tr><td>ORACLE ceiling: switch exactly the 18 to DIS+DISTPOT / DIS+ENV, built chain <span class="tag oracle">ORACLE</span></td><td>−0.020 (0.28× MDE) / −0.047 (0.62×): a perfect detector's prize is itself under detectability at n = 126.</td><td class="ref">L6</td></tr>
+</table></div>
+
+<h3>4.6 Lane C, Part 2: readouts that consume ranking information without averaging it away <span class="tag closed">closed</span> <span class="tag stands">D: stands</span></h3>
+<div class="tbl"><table>
+<tr><th>Readout (CONS ranker unless stated)</th><th>Built chain vs production 3.2126</th><th>vs permuted-ranker control</th><th>Entry</th></tr>
+<tr><td>Medoid of the top-75 + its k = 20 nearest neighbours</td><td class="num">+0.149 (0.99×; fold CI [+0.034, +0.237])</td><td class="num">+0.042 (0.24×)</td><td class="ref">L32</td></tr>
+<tr><td>Two-stage average, drop the worst-decile CONS members</td><td class="num">+0.031 (0.75×; fold CI [+0.011, +0.046])</td><td class="num">+0.027 (0.66×)</td><td class="ref">L32</td></tr>
+<tr><td>Diversity-preserving weighted average (β = 1, γ = 1)</td><td class="num">+0.071 (0.66×; fold CI [−0.024, +0.143])</td><td class="num">+0.019</td><td class="ref">L32</td></tr>
+<tr><td>Trim by DISTPOT instead of CONS</td><td class="num">+0.022</td><td class="num">a random trim</td><td class="ref">L15, L32</td></tr>
+</table></div>
+<div class="prose"><p>Every cell is on the harmful side, none clears its MDE either way, and the ranker trims are worse than random trims with the fold CI above zero (sign measured, size not). All three are convex combinations of the same 75 members; consuming the ranking makes them worse, which is S27 section 6 seen a third time.</p></div>
+
+<h3>4.7 Lane C2: which native-free scorer recognises the structures the family can express? <span class="tag closed">closure stands</span> <span class="tag stands">D: stands with caveat</span></h3>
+<div class="prose"><p>An ORACLE diagnostic with a closure falsifier. Per target: production, the ORACLE circuit structure (best-of-5 and single start), the 0.61 Å random-subspace structure, and two matched controls (a random signed combination at the same distance from production; a Gaussian perturbation of production at the same RMSD). Statistic: the fraction of targets on which the scorer prefers the ORACLE structure to production, ties at 0.5, fold-clustered CI, one max-over-scorers sign-flip null, and the pool-member control (does the scorer prefer any real trace to the contracted average?).</p></div>
+<figure id="fig-pref">
+<div class="legend"><span style="--c:var(--red)">anti-recognition (fold CI below 0.5)</span><span style="--c:var(--indigo)">coin toss</span><span style="--c:var(--grey)">tie-dominated</span><span style="--c:var(--teal)">clears both clauses</span></div>
+<svg viewBox="0 0 760 700" role="img" aria-label="Preference of 31 native-free scorers for the ORACLE structure over production on the built chain, with fold confidence intervals"></svg>
+<figcaption><b>Figure 4. Thirty-one native-free scorers on the built chain.</b> Fraction of 126 targets on which the scorer prefers the 0.25 Å ORACLE structure to the projected production average (ties count 0.5); whiskers are the fold-clustered 95% CI; the vertical line is 0.5. Eighteen informative scorers sit below 0.5 with the CI excluding it. CONTACT@chain (0.583) is the one two-clause pass and is at the mean of the max-over-31 sign-flip null (0.579, p95 0.627, p<sub>max</sub> 0.39). CAGEO's CA-level 0.611 collapses to 0.421 on ideal geometry, as registered in S28-L36(a). Source: <code>s27/results/s28_C2_chain_summary.json</code> (S28-L48, L49, L50).</figcaption>
+</figure>
+<div class="tbl"><table>
+<tr><th>Level</th><th>Result</th><th>Entry</th></tr>
+<tr><td>CA level, 15 scorers, two control seeds</td><td>9 of 15 prefer the contracted production average to the 0.29 Å ORACLE structure with the fold CI below 0.5 (DIS 0.206, DIS_MEAN 0.151, SS_MATCH 0.393, CONS_POOL 0.024). The nested linear combination of all 15 prefers random signed combinations on 0.89.</td><td class="ref">L35</td></tr>
+<tr><td>The one CA-level candidate, CAGEO (0.611)</td><td>Vetoed by the pool-member control: it prefers any real protein trace to the 22%-contracted average exactly as often (−0.007, 0.18×). Retraction R3.</td><td class="ref">L36, L37</td></tr>
+<tr><td>Built chain, 31 scorers, one max-over-31 null, pool-member control on 27</td><td>20 of 31 below 0.5 with the fold CI excluding it (18 informative once the 5 tie-dominated are set aside): DIS on 93% of targets, LEG on 79%, RAMA on 59%. Six coin tosses. The contact family's pool-member contrast is measured in sign (max-over-27 p 0.010) and worthless in deployment: S27 priced CONTACT as a selector at +0.52 Å worse and every DIS+CONTACT mix null-to-worse.</td><td class="ref">L48, L49, L50</td></tr>
+</table></div>
+</section>
+
+<section id="instrument">
+<h2>5. The instrument, the suite, the reproductions</h2>
+<div class="tbl"><table>
+<tr><th>Check</th><th>Result</th><th>Entry</th></tr>
+<tr><td>Reproducibility of the built chain under a floating-point input difference</td><td>Lane A's re-projection of the production cloud (input equal to 5.7e−14) differs from S27's rows by 0.006 Å mean with a 0.5 Å tail on one target (a branch flip of the multi-start projection). Lane B's re-projection equals S27's rows at 0.0 on 126/126. The floor belongs to the input difference, not to the projection; every S28 MDE is above it. Retractions R1, R2.</td><td class="ref">L18, L27b, L43</td></tr>
+<tr><td>Lane B's J = 0 anchor</td><td>Equals S27's <code>vqe_rows.jsonl :: DIS</code> at 0.0 on 126/126 targets, both seeds.</td><td class="ref">L9, L38</td></tr>
+<tr><td>NaN-poison</td><td>Lane A's own poison test was a determinism test; lane D's <code>tests/test_s28_D.py</code> runs the real one (natives NaN'd through a monkeypatched loader, every deployable field bit-identical) and it passes.</td><td class="ref">L10</td></tr>
+<tr><td>S27 reproduced from its artefacts, one random row per hour</td><td>Seeds 101 to 106 across the pool, chain and VQE bases: exact to the last digit, six of six.</td><td class="ref">L14, L38</td></tr>
+<tr><td>Suite at the close, S26 flag basis</td><td>Every test file ran in the quiet window: 442 unique tests, <b>440 passed, 2 skipped</b> (the same two absent artefacts as the S26 close), 0 failed; the 11 opt-in OpenMM and pipeline checks run and pass. <code>s26/examine.py</code>: 836 modules, 101 pinned hashes with no drift, 21 of 21 claims check.</td><td class="ref">L45</td></tr>
+</table></div>
+<div class="prose"><p>Operations: two sessions with one pause on the usage limit and a full resume note; zero recomputation on resume (checkpoints at 103, 94 and 80 of 126 verified before relaunch; every job resumed at its first undone target). Eleven governor kills of lane jobs under the user's own memory load; every one resumed from a per-target checkpoint. Sixty job records in <code>s26/jobs_done/s28*.json</code>.</p></div>
+</section>
+
+<section id="quantum">
+<h2>6. Did the quantum component earn anything?</h2>
+<p class="quote">No accuracy, and it was given every chance: its state was read as signed weights, the one readout that could have escaped the convex bottleneck; it was handed the first non-diagonal Hamiltonian in the project's history with an exact hopping gradient; and that Hamiltonian was re-built on a spread-spectrum graph at the one cell the mechanism licensed. On the built chain every deployable arm is inside its MDE of production or worse, every verdict survived the Adversary, and the classical spectral counterpart, the exact ground state, ties production wherever the circuit does.</p>
+<div class="prose">
+<p>What it earned is three measured properties that stand on their own and were not known before. The pool's similarity graph is a near-rank-one typicality projector whose hopping term decays at −1.7 to −1.8 per qubit and is 7,300× below the diagonal terms at the deployed width (S28-L8b, L11). The CVaR tail read from a non-diagonal H is still exactly the classical top-m prefix, to 1e−13, at every J (S28-L21): the set-equality theorem surviving its first genuine test. And under a spread spectrum the variational optimiser is bimodal, finding the coherent basin or not on a per-cell basis with nothing between (S28-L41, L46). The first two say why the circuit cannot matter through this readout; the third is a landscape fact about the ansatz that a future non-diagonal formulation would have to design around.</p>
+<p>The quantum component's ceiling in this pipeline was measured to be the objective's ceiling, and the objective's ceiling is zero.</p>
+</div>
+</section>
+
+<section id="retract">
+<h2>7. Retractions and what damaged the priors</h2>
+<div class="tbl"><table>
+<tr><th></th><th>Retracted</th><th>By</th><th>Kind</th></tr>
+<tr><td class="ref">R1</td><td>S28-L7: the built chain's numerical floor is 1e−5 Å (one target)</td><td class="ref">L18</td><td>scope</td></tr>
+<tr><td class="ref">R2</td><td>S28-L18: the floor is 0.02 Å per target, 0.0025 mean (22 targets)</td><td class="ref">L27b, L43</td><td>scope</td></tr>
+<tr><td class="ref">R3</td><td>S28-L35: the closure claim is falsified at the registered bar by CAGEO</td><td class="ref">L36, L37</td><td>veto</td></tr>
+<tr><td class="ref">R4</td><td>S28-L11, L8b, L21, L25: "the circuit collects a third of its hopping bound", a mixture of coherent and J = 0 cells read as partial alignment</td><td class="ref">L43, L44</td><td>reading; no number changed</td></tr>
+</table></div>
+<div class="prose">
+<ul class="tight">
+<li>The ORACLE ceiling of a 27-parameter curved family was expected well below 2.954 Å and came in at 0.252 emitted; the affine-hull rows are exactly zero by dimension counting (3n ≤ 48 coordinates, 75 members), which is why S10-5's affine bound was 0.035.</li>
+<li>The Gaussian graph was expected to give the circuit something to do; it gave it a projector on the uniform state.</li>
+<li>Lane D's rule "overlap near 1 means optimisation shortfall" was wrong in form: the ground state is only 85% representable and the gap is still optimisation, because a representable state with lower F than every reached state exists.</li>
+<li>CAGEO looked like the first native-free scorer to prefer a near-native structure; it prefers any real trace to a contracted one.</li>
+</ul>
+</div>
+</section>
+
+<section id="next">
+<h2>8. What to work on next: making cost reduction mean RMSD reduction</h2>
+<div class="prose">
+<p>The goal is a cost whose reduction correlates with reduced RMSD in the region the optimiser explores. Today the correlation is negative (Figure 1: Spearman −0.40 along the ladder for the shipped cost, <code>s28_C2_chain_summary.json :: ladder_rho</code>), the gradient at production is blind (Figure 2), and the native sits at the cost's 37th percentile. The programme below is ordered by dependency and by cost. The first item is not optional: without a meter that reports the correlation, no experiment can claim to have improved it.</p>
+</div>
+<div class="next">
+
+<div class="step">
+<div>
+<h3>Build the cost-RMSD meter first, and make every candidate cost pass through it</h3>
+<p>One command, four pre-registered numbers, for any cost function f(structure). All four already exist as pieces in <code>s27/</code>; the work is packaging them as <code>s27/cost_audit.py</code> with a test that reproduces the S28 values for the shipped cost. The meter is what "cost reduction equals RMSD reduction" means, operationally.</p>
+<ul class="tight">
+<li><b>ρ<sub>ladder</sub></b>: Spearman(f, RMSD) per target over the ladder {circuit optimum, random signed combination, production, Gaussian perturbation, ORACLE structure, native}, mean with fold-clustered CI (from the C2 audit). Shipped cost today: <b>−0.40</b>. Target: &gt; 0 with the fold CI excluding zero.</li>
+<li><b>cos<sub>prod</sub></b>: cosine of −∇f at the production cloud with the direction to the native, rigid body removed (from A2). Today: <b>−0.03</b>, random reference 0.14. Target: above the reference with 5/5 folds.</li>
+<li><b>native percentile</b> in the pool under f (from the objective diagnostic). Today: <b>36.9</b>. Target: below 5.</li>
+<li><b>pref</b>: fraction of targets on which f prefers the ORACLE structure to production AND to the matched random signed combination, with the pool-member control (from C2). Today: <b>0.07</b>. Target: above 0.5 with the CI excluding it and above the pool-member control.</li>
+</ul>
+<p>Every number is ORACLE (it uses the native) and that is correct here: the meter measures a cost, it does not choose a parameter of a deployable arm. A cost that is tuned against the meter must then be evaluated leave-fold-out on the built chain like any other arm.</p>
+<div class="meta"><div><b>Falsifier</b>none; an instrument</div><div><b>Cost</b>a day of desk work; seconds per target to run</div><div><b>Depends on</b>nothing; all pieces exist</div></div>
+</div></div>
+
+<div class="step">
+<div>
+<h3>Calibrate the posterior before using it as a cost</h3>
+<p>The identified mechanism: the shipped distogram is about 2× over-confident (S25 L2) and the L1 Bayes-risk of an over-confident posterior is minimised by the contracted average, which is why the cost prefers production to 87% of real windows and to the native. A temperature, or a per-bin calibration map, fitted leave-fold-out on the other folds' natives, is deployable and changes the cost's minimiser without retraining anything. Sweep the temperature and read the meter at each value. The distogram outputs are cached, so this is hours, not days.</p>
+<div class="meta"><div><b>Falsifier</b>no temperature raises ρ<sub>ladder</sub> above zero with the fold CI excluding it, or flips pref for the native-vs-production pair on a majority of targets</div><div><b>Registered prior</b>pref and cos move but do not flip: the shared error is common-mode, not a calibration error</div><div><b>Cost</b>hours; no AMBER, no retraining</div><div><b>If it passes</b>the calibrated cost goes straight into the S28 amplitude family (lane A's code, one flag) and to the built chain</div></div>
+</div></div>
+
+<div class="step">
+<div>
+<h3>Score the de-contracted structure</h3>
+<p>The average is 22% contracted and two scorers' apparent preference for it was the contraction alone (CAGEO, S28-L36). The prediction-versus-pool disagreement in radius of gyration is a demonstrated native-free signal (S23 memory; Ångström value never measured). Inside the cost, rescale the structure to the pool's predicted Rg before scoring, so the cost stops rewarding contraction; the emitted structure is unchanged. Read the meter, then the FAIL18 / 108 split, because the record's scale result (S23 L6) says a global scalar is worth 1.7% and the right scale is a per-target property.</p>
+<div class="meta"><div><b>Falsifier</b>the meter's four numbers, as above; the FAIL18 cos<sub>prod</sub> is the one expected to move</div><div><b>Registered prior</b>helps the cosine on FAIL18, not the mean</div><div><b>Cost</b>hours</div></div>
+</div></div>
+
+<div class="step">
+<div>
+<h3>The pool-residual prior: train the cost to predict where the pool is wrong</h3>
+<p>The steep lever. The pool's error is 68% common-mode (S23 L9): on a given target most members are wrong in the same direction, and the distogram shares that direction because it was trained on the same fragments. A per-target correction therefore has most of the error variance to work with, and the prior's derivative is the only steep lever in the record (−2.15 Å per unit toward a perfect prior, S23). Train, leave-fold-out with the pinned folds, a head on ESM-2 features that predicts the pool's residual (realised minus predicted distance, per pair, sign and magnitude); the cost becomes the Bayes-risk against the corrected posterior. Two disciplines from the record are mandatory: the corrector's features must not be the predictor's own outputs (S19: a corrector trained on the predictor's features inherits its error structure; measure the coherence of its mistakes and require it to be i.i.d.-like), and the leakage-safe universe <code>s8/generate_univ</code> is the only training pool.</p>
+<div class="meta"><div><b>Falsifier</b>ρ<sub>ladder</sub> and cos<sub>prod</sub> on held-out folds; then the built chain against production with the full S28 control set</div><div><b>Registered prior</b>the cosine moves off zero on the 108 first; FAIL18 is where the common-mode error is largest and where a correct sign is worth the most</div><div><b>Cost</b>one distogram-scale training per fold (the S8 machinery); about a day of compute under the governor</div><div><b>Depends on</b>item 1; items 2 and 3 tell it which contraction it must not learn</div></div>
+</div></div>
+
+<div class="step">
+<div>
+<h3>An RMSD-supervised cost on off-pool structures</h3>
+<p>The C2 audit shows the existing library cannot tell a 0.25 Å structure from production. A cost trained directly on (structure, RMSD) pairs from the ORACLE ladders of the other folds' targets, using only features computed on the candidate itself (ideal-geometry backbone terms, contact statistics, torsion distributions; nothing from the pool), tested on held-out folds with the meter, is the direct test of whether nativeness is recognisable at all from a single peptide structure. C2's linear combination of the library failed because it learned "not production"; this trains on the ladder distribution, not on pool members.</p>
+<div class="meta"><div><b>Falsifier</b>pref above 0.5 vs the matched random signed control on held-out folds; then the built chain</div><div><b>Registered prior</b>null; in-band discrimination was signal-limited on pool members, and off-pool structures are untested</div><div><b>Cost</b>the ladders exist (<code>s27/results/s28_A_structs/</code>, 379 files); a small model per fold; a day</div></div>
+</div></div>
+
+<div class="step donot">
+<div>
+<h3>Do not spend the next sprint on</h3>
+<ul class="tight">
+<li>Any readout, graph, J, λ, k or σ variant of the S28 formulations: the endpoint is closed at every cell the mechanism licensed, and the amplitude family with the current cost will walk away from the native again.</li>
+<li>Any global scalar rescaling of the output (S23 L6: 1.7%, and the right scale is a per-target property).</li>
+<li>A ninth router or FAIL18 detector on features derived from the same posterior: the eighth closed with its ORACLE prize under MDE.</li>
+<li>Optimising harder on the current cost in any representation: searching harder on a bad objective hurts (S-record, "search saturates; discrimination binds").</li>
+<li>A cost tuned against the meter and then quoted without a leave-fold-out built-chain run: the meter is ORACLE by construction.</li>
+</ul>
+</div></div>
+
+</div>
+<div class="callout"><div class="eyebrow">The order, and why</div>
+<p>Item 1 is the meter and comes first because the question "does cost reduction equal RMSD reduction" has no answer without it. Items 2 and 3 are cheap and each targets one named mechanism (over-confidence, contraction); together they either fix the shipped cost or eliminate the two easy explanations in a day. Item 4 is the only lever the record calls steep, and it needs items 2 and 3 done first so it does not learn the contraction as signal. Item 5 is the long shot that would settle whether the answer is recognisable at all. The CVaR-VQE spine stays as it is throughout; when a cost passes the meter, lane A's signed-amplitude code runs it on the built chain unchanged.</p>
+</div>
+</section>
+
+<section id="files">
+<h2>9. Artefacts</h2>
+<div class="prose">
+<ul class="tight">
+<li>Report: <code>s27/REPORT_S28.md</code>. Ledger: <code>s27/LEDGER.md</code> S28-L0 to L50. Retractions: <code>s27/RETRACTIONS_S28.md</code>. Contract: <code>s27/S28_CONTRACT.md</code> with addenda 1 and 2. Resume record: <code>s27/RESUME_S28.md</code>.</li>
+<li>Findings: <code>s27/s28_A_FINDINGS.md</code>, <code>s28_B_FINDINGS.md</code>, <code>s28_C_FINDINGS.md</code>, <code>s28_D_FINDINGS.md</code> (with the qualifier table for every number).</li>
+<li>Pre-registrations: <code>s27/PREREG_S28_A.md</code> (+4 addenda), <code>PREREG_S28_B.md</code> (+3), <code>PREREG_S28_C.md</code> (+3), <code>PREREG_S28_C2.md</code> (+1).</li>
+<li>Results: <code>s27/results/s28_*.json</code> and <code>*.jsonl</code>; ORACLE structures <code>s27/results/s28_A_structs/</code>; job records <code>s26/jobs_done/s28*.json</code>; logs <code>s26/logs/s28*.log</code>.</li>
+<li>Code: <code>s27/s28_A_amp.py</code>, <code>s28_A2_local.py</code>, <code>s28_B_hop.py</code>, <code>s28_B2_knn.py</code>, <code>s28_B_represent.py</code>, <code>s28_C_fail18.py</code>, <code>s28_C_readout.py</code>, <code>s28_C2_recog_audit.py</code>, <code>s28_D_*.py</code>; tests <code>tests/test_s28_*.py</code> (72 pass).</li>
+<li>Production code frozen at <code>a15406c</code> throughout; the sealed benchmark was never opened.</li>
+</ul>
+</div>
+</section>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+(function(){
+  const css = (v)=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const NS='http://www.w3.org/2000/svg';
+  const el=(t,a,parent)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(parent)parent.appendChild(e);return e;};
+  const txt=(p,x,y,s,a)=>{const t=el('text',Object.assign({x,y,fill:css('--muted')},a||{}),p);t.textContent=s;return t;};
+  const tip=document.getElementById('tip');
+  const showTip=(e,html)=>{tip.innerHTML=html;tip.style.display='block';const w=tip.offsetWidth;let x=e.clientX+14,y=e.clientY+14;if(x+w>innerWidth-8)x=e.clientX-w-14;tip.style.left=x+'px';tip.style.top=y+'px';};
+  const hideTip=()=>{tip.style.display='none';};
+  const hover=(node,html)=>{node.addEventListener('mousemove',e=>showTip(e,html));node.addEventListener('mouseleave',hideTip);node.style.cursor='default';};
+
+  // ---- Figure 1: the ladder (cost vs RMSD)
+  (function(){
+    const svg=document.querySelector('#fig-ladder svg'); const W=760,H=330,L=70,R=30,T=24,B=54;
+    const pts=[
+      {name:'circuit optimum (λ = 1)',S:1.339,r:3.433,kind:'dep',dx:-12,dy:20,anchor:'end'},
+      {name:'production (DIS top-75 average)',S:1.683,r:3.207,kind:'dep',dx:-10,dy:-12,anchor:'end'},
+      {name:'ORACLE circuit structure',S:2.094,r:0.252,kind:'ora',dx:12,dy:14,anchor:'start'},
+      {name:'native',S:2.090,r:0.0,kind:'nat',dx:12,dy:-10,anchor:'start'}
+    ];
+    const x=v=>L+(v/3.8)*(W-L-R), y=v=>T+(1-(v-1.2)/(1.1))*(H-T-B);
+    for(let i=0;i<=3;i++){const xv=i; el('line',{x1:x(xv),x2:x(xv),y1:T,y2:H-B,stroke:css('--rule'),'stroke-width':1},svg);txt(svg,x(xv),H-B+18,xv.toFixed(1),{'text-anchor':'middle'});}
+    for(let v=1.2;v<=2.31;v+=0.2){el('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:css('--rule'),'stroke-width':1},svg);txt(svg,L-8,y(v)+4,v.toFixed(1),{'text-anchor':'end'});}
+    txt(svg,(L+W-R)/2,H-14,'mean built-chain CA-RMSD to the native (Å)  →  worse',{'text-anchor':'middle'});
+    const yl=txt(svg,16,(T+H-B)/2,'mean shipped cost S  →  worse',{'text-anchor':'middle'}); yl.setAttribute('transform',`rotate(-90 16 ${(T+H-B)/2})`);
+    const order=[0,1,2,3];
+    let d='';order.forEach((i,k)=>{d+=(k?'L':'M')+x(pts[i].r)+' '+y(pts[i].S)+' ';});
+    el('path',{d,fill:'none',stroke:css('--ink'),'stroke-width':1.5,'stroke-dasharray':'4 4',opacity:0.6},svg);
+    // annotation arrow along the ladder
+    txt(svg,x(1.75),y(1.42),'cost falls as RMSD rises: the optimiser walks this way',{'text-anchor':'middle',fill:css('--red'),'font-weight':'500'});
+    el('path',{d:`M ${x(1.05)} ${y(1.50)} L ${x(2.65)} ${y(1.50)}`,stroke:css('--red'),'stroke-width':1.5,fill:'none','marker-end':'url(#arr)'},svg);
+    const defs=el('defs',{},svg); const m=el('marker',{id:'arr',viewBox:'0 0 10 10',refX:'9',refY:'5',markerWidth:'7',markerHeight:'7',orient:'auto-start-reverse'},defs); el('path',{d:'M0 0 L10 5 L0 10 z',fill:css('--red')},m);
+    pts.forEach(p=>{
+      const col=p.kind==='ora'?css('--amber'):p.kind==='nat'?css('--grey'):css('--teal');
+      const c=el('circle',{cx:x(p.r),cy:y(p.S),r:8,fill:col,stroke:css('--surface'),'stroke-width':2,class:'pt'},svg);
+      txt(svg,x(p.r)+p.dx,y(p.S)+p.dy,p.name,{'text-anchor':p.anchor,fill:css('--ink')});
+      hover(c,`${p.name}<br>S ${p.S.toFixed(3)} · RMSD ${p.r.toFixed(3)} Å`);
+    });
+  })();
+
+  // ---- Figure 2: cosine histogram
+  (function(){
+    const svg=document.querySelector('#fig-cos svg'); const W=520,H=300,L=44,R=16,T=20,B=52;
+    const bins=[[-0.7,0],[-0.6,2],[-0.5,6],[-0.4,9],[-0.3,18],[-0.2,12],[-0.1,23],[0.0,24],[0.1,13],[0.2,9],[0.3,4],[0.4,3],[0.5,2],[0.6,1]];
+    const x=v=>L+((v+0.7)/1.4)*(W-L-R), y=n=>T+(1-n/26)*(H-T-B);
+    el('rect',{x:x(-0.14),y:T,width:x(0.14)-x(-0.14),height:H-T-B,fill:css('--indigo'),opacity:0.12},svg);
+    for(let n=0;n<=25;n+=5){el('line',{x1:L,x2:W-R,y1:y(n),y2:y(n),stroke:css('--rule')},svg);txt(svg,L-6,y(n)+4,String(n),{'text-anchor':'end'});}
+    [-0.6,-0.3,0,0.3,0.6].forEach(v=>txt(svg,x(v),H-B+18,v.toFixed(1),{'text-anchor':'middle'}));
+    const bw=x(0.1)-x(0)-2;
+    bins.forEach(([v,n])=>{if(!n)return;const r=el('rect',{x:x(v)+1,y:y(n),width:bw,height:y(0)-y(n),fill:css('--teal'),rx:2},svg);hover(r,`cos in [${v.toFixed(1)}, ${(v+0.1).toFixed(1)}): ${n} targets`);});
+    el('line',{x1:x(-0.034),x2:x(-0.034),y1:T,y2:H-B,stroke:css('--red'),'stroke-width':2},svg);
+    txt(svg,x(-0.034)-6,T+12,'mean −0.034',{'text-anchor':'end',fill:css('--red')});
+    txt(svg,x(0.14)+4,T+12,'random-direction band ±0.14',{fill:css('--indigo')});
+    txt(svg,(L+W-R)/2,H-14,'cos(−∇S at production, direction to the native)',{'text-anchor':'middle'});
+    txt(svg,L-6,T-6,'targets',{'text-anchor':'end'});
+  })();
+
+  // ---- Figure 3: every arm vs production, built chain
+  (function(){
+    const svg=document.querySelector('#fig-arms svg'); const W=760,H=640,L=300,R=40,T=26,B=40;
+    const arms=[
+      ['A · amplitude λ = 0.3',0.236,0.159,'S28-L26b'],['A · amplitude λ = 1',0.226,0.175,'S28-L26b (Type-M zone)'],['A · amplitude λ = 3',0.264,0.165,'S28-L26b'],
+      ['A2 · step e = 0.1 Å along −∇S',-0.004,0.018,'S28-L39'],['A2 · step e = 0.3 Å',0.018,0.024,'S28-L39 (sign only)'],['A2 · step e = 1.0 Å',0.105,0.050,'S28-L39'],
+      ['A2 · circuit step e = 1.0 Å',0.129,0.091,'S28-L39'],
+      ['B · VQE J = 0, R1 (deployed readout)',0.0061,0.032,'S28-L41'],['B · VQE J = 1, R1',0.0056,0.027,'S28-L41'],['B · VQE J = 0.1, R1',0.0063,0.032,'S28-L41'],
+      ['B · VQE J = 3, R2 (p-weighted)',0.371,0.235,'S28-L41'],['B · VQE J = 0.1 s1, R3 (p-top-75)',0.280,0.207,'S28-L41; the point cloud\'s largest cell'],
+      ['B · exact ground state J = 1, R2',-0.0058,0.045,'S28-L41'],['B · exact ground state J = 1, R3',-0.0026,0.029,'S28-L41'],
+      ['B2 · kNN k = 10, J = 3, R1',0.0098,0.026,'S28-L46'],['B2 · kNN k = 10, J = 3, R3 (chain)',0.306,0.211,'S28-L46'],
+      ['C · medoid + 20 neighbours (CONS)',0.149,0.150,'S28-L32'],['C · worst-decile CONS trim',0.031,0.041,'S28-L32'],['C · diversity-weighted (β1, γ1)',0.071,0.107,'S28-L32'],
+      ['C · ORACLE switch of the 18 to DIS+ENV',-0.047,0.076,'S28-L6 · ORACLE ceiling'],
+      ['A · ORACLE circuit structure',-2.9555,0.4064,'S28-L26b · ORACLE ceiling, off scale']
+    ];
+    const xmin=-0.12,xmax=0.62; const x=v=>L+((Math.max(v,xmin)-xmin)/(xmax-xmin))*(W-L-R);
+    const rowH=(H-T-B)/arms.length;
+    [-0.1,0,0.1,0.2,0.3,0.4,0.5,0.6].forEach(v=>{el('line',{x1:x(v),x2:x(v),y1:T,y2:H-B,stroke:v===0?css('--ink'):css('--rule'),'stroke-width':v===0?1.5:1},svg);txt(svg,x(v),H-B+16,(v>0?'+':'')+v.toFixed(1),{'text-anchor':'middle'});});
+    txt(svg,(L+W-R)/2,H-6,'effect vs production on the built chain (Å); negative = better',{'text-anchor':'middle'});
+    arms.forEach((a,i)=>{
+      const [name,eff,mde,ref]=a; const cy=T+rowH*(i+0.5);
+      const worse=eff>0&&Math.abs(eff)>mde, oracle=/ORACLE/.test(name);
+      const col=oracle?css('--amber'):worse?css('--red'):css('--grey');
+      txt(svg,L-10,cy+4,name,{'text-anchor':'end',fill:css('--ink')});
+      const off=eff<xmin;
+      el('line',{x1:x(Math.max(eff-mde,xmin)),x2:x(Math.min(eff+mde,xmax)),y1:cy,y2:cy,stroke:css('--indigo'),'stroke-width':2,opacity:0.7},svg);
+      const c=el('circle',{cx:x(eff),cy,r:6,fill:col,stroke:css('--surface'),'stroke-width':1.5,class:'pt'},svg);
+      if(off){txt(svg,x(xmin)+10,cy+4,'← '+eff.toFixed(2)+' Å (off scale)',{fill:css('--amber')});}
+      const ratio=(Math.abs(eff)/mde).toFixed(2);
+      hover(c,`${name}<br>effect ${eff>=0?'+':''}${eff.toFixed(3)} Å · MDE ${mde.toFixed(3)} · ${ratio}× MDE<br>${ref}`);
+    });
+  })();
+
+  // ---- Figure 4: 31 scorers
+  (function(){
+    const svg=document.querySelector('#fig-pref svg'); const W=760,H=700,L=200,R=30,T=26,B=40;
+    const S=[['CONTACT@chain',0.583,0.53,0.645,9,'pass'],['LEG_hbond_longrange',0.548,0.533,0.562,114,'tie'],['LEG_contact',0.532,0.459,0.615,2,'coin'],['LEG_steric',0.508,0.384,0.632,54,'coin'],['LEG_coop_sheet',0.508,0.5,0.517,124,'tie'],['LEG_electrostatic',0.492,0.423,0.562,18,'coin'],['ENV@chain',0.492,0.408,0.581,16,'coin'],['ELEC',0.484,0.416,0.56,18,'coin'],['LEG_compactness',0.468,0.393,0.533,14,'coin'],['HP@chain',0.456,0.361,0.541,13,'coin'],['LEG_aromatic',0.429,0.357,0.5,64,'tie'],['CAGEO@chain',0.421,0.37,0.492,0,'anti'],['EXVOL@chain',0.417,0.368,0.462,101,'tie'],['RAMA',0.413,0.336,0.496,0,'anti'],['LEG_torsion',0.405,0.32,0.496,0,'anti'],['RG_LAW@chain',0.405,0.311,0.481,0,'anti'],['RG_UNIV@chain',0.397,0.336,0.451,0,'anti'],['SS_MATCH@chain',0.393,0.34,0.443,11,'anti'],['LEG_coop_helix',0.361,0.305,0.427,79,'tie'],['LEG_solvation',0.349,0.278,0.436,0,'anti'],['POOLGO_POOL@chain',0.345,0.261,0.414,13,'anti'],['DISTPOT@chain',0.341,0.319,0.361,0,'anti'],['TORS_CONS_POOL',0.262,0.226,0.306,0,'anti'],['CONTACT_LL@chain',0.234,0.168,0.311,13,'anti'],['DSSPHB',0.226,0.198,0.256,1,'anti'],['LEG',0.206,0.137,0.289,0,'anti'],['LEG_hbond_local',0.19,0.107,0.269,8,'anti'],['DMAP_CONS_POOL@chain',0.143,0.109,0.171,0,'anti'],['DIS@chain (the shipped cost)',0.071,0.034,0.109,0,'anti'],['DIS_MEAN@chain',0.071,0.049,0.098,0,'anti'],['CONS_POOL@chain',0.056,0.037,0.089,0,'anti']];
+    const x=v=>L+v*(W-L-R); const rowH=(H-T-B)/S.length;
+    [0,0.25,0.5,0.75,1].forEach(v=>{el('line',{x1:x(v),x2:x(v),y1:T,y2:H-B,stroke:v===0.5?css('--ink'):css('--rule'),'stroke-width':v===0.5?1.5:1},svg);txt(svg,x(v),H-B+16,v.toFixed(2),{'text-anchor':'middle'});});
+    el('rect',{x:x(0.5),y:T-14,width:x(0.579)-x(0.5)+6,height:1,fill:'none'},svg);
+    el('line',{x1:x(0.579),x2:x(0.579),y1:T-8,y2:T+4,stroke:css('--indigo'),'stroke-width':2},svg);
+    txt(svg,x(0.579)+5,T-2,'max-over-31 null mean 0.579 · p95 0.627',{fill:css('--indigo')});
+    txt(svg,(L+W-R)/2,H-6,'fraction of 126 targets preferring the ORACLE structure to production (ties 0.5)',{'text-anchor':'middle'});
+    const colOf={anti:css('--red'),coin:css('--indigo'),tie:css('--grey'),pass:css('--teal')};
+    S.forEach((s,i)=>{const [name,p,lo,hi,ties,cls]=s; const cy=T+rowH*(i+0.5);
+      txt(svg,L-8,cy+4,name,{'text-anchor':'end',fill:cls==='tie'?css('--muted'):css('--ink')});
+      el('line',{x1:x(lo),x2:x(hi),y1:cy,y2:cy,stroke:colOf[cls],'stroke-width':2,opacity:0.6},svg);
+      const c=el('circle',{cx:x(p),cy,r:6,fill:colOf[cls],stroke:css('--surface'),'stroke-width':1.5,class:'pt'},svg);
+      hover(c,`${name}<br>pref ${p.toFixed(3)} · fold CI [${lo.toFixed(3)}, ${hi.toFixed(3)}]<br>ties ${ties}/126 · ${cls==='anti'?'anti-recognition':cls==='tie'?'tie-dominated':cls==='pass'?'clears both clauses':'coin toss'}`);
+    });
+  })();
+})();
+</script>
