@@ -73,3 +73,23 @@ path. 12. Ties never break by array order.
 - Commit your own files early and often on branch `s26` with the single trailer line
   `Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>`. Never `git add -A`.
 - Every lane finishes each turn with two lines: what stands, what is next (or what fell).
+
+## Addendum 1 (2026-09-20 00:05, coordinator; binds every lane from now)
+20. THE SHRINK RULE (from lane T's theorem 2, S29-L7). The meter's gradient cosine is GAMEABLE:
+    shrinking an objective's target map toward typicality, m -> tau + s(m - tau), drives the
+    cosine positive with ZERO information added while moving the emitted structure toward the
+    typical map. Therefore: every candidate objective that reports a gain in meter number 2
+    (the cosine) MUST report, in the same entry, (a) its implied shrink s (the scale of its
+    target map's deviation from the length-matched typical map, measured against the shipped
+    map's), (b) meter number 3 (the native's percentile in the pool), which the shrink moves
+    the wrong way, and (c) the emitted structure's mean virtual bond and Rg. A cosine gain
+    without those three is not readable and lane D will veto it on sight.
+21. THE MARGINAL CLASS IS BOUNDED (same theorem). No objective built from the per-pair
+    marginals of the shipped posterior -- separable or not, any functional form, any
+    normalisation -- has an expected gradient cosine whose magnitude is set by the native's
+    deviation from typical; the expectation is second order in the pool's own spread and is
+    exactly zero when the posterior's median map and production deviate from typical alike.
+    A lane proposing a new objective INSIDE that class states what it expects to buy other
+    than local informativeness (ordering, variance, non-contraction), and does not claim the
+    gradient. A lane proposing to leave the class names the channel that sees the native's
+    deviation from typical and prices its error coherence (S19).
