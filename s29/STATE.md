@@ -665,6 +665,39 @@ ranking work came back flat. NOT a route: argmin is the operator that punishes a
 (S12/S19), and m* = 75 is correct FOR an objective of the shipped quality. See S29-L44 addendum 2.
 This is the third lane correction of the coordinator this sprint, and the second in one hour.
 
+## Integration note 27 (2026-09-20 02:33, lane O's closing report, S29-L47): ONE INCIDENTAL PARAMETER MEASURED FOUR WAYS
+Lane O's unifying measurement is the cleanest empirical statement of lane L's S29-L31, and it is
+four independent instruments agreeing rather than four near misses. For EVERY rung of the ladder
+that has a free scalar: the ORACLE PER-TARGET gain is large, the ORACLE GLOBAL value of the same
+scalar is 0.0 to 0.6% of it, and the LEAVE-FOLD-OUT value is on the WRONG SIDE OF ZERO.
+
+    scalar                  ORACLE per-target   ORACLE global     leave-fold-out
+    prefix m within 128        -0.2879            -0.0018            +0.0079
+    prefix m over K=500        -0.4421            -0.0018            +0.0079
+    typicality step t          -0.3061          **+0.0000 exactly**  +0.0000
+    PC1 family eta             -0.4543          **+0.0000 exactly**  +0.0071
+
+Two of the four ORACLE global optima are EXACTLY zero: with the native in hand, one global scalar
+cannot beat doing nothing. That is the incidental-parameter theorem showing up as an arithmetic
+fact in four places, and it is why "tune one number better" has failed every time this project has
+tried it.
+
+ALSO FROM O, AND NEW: the PROJECTION PRICE IS NOT A CONSTANT. corr(cloud RMSD, chain - cloud) =
+**+0.866** across 32 arms; the price is <= 0 below about 2.31 A of cloud accuracy and > +0.10 above
+about 2.41 A. So the ideal-geometry projection HELPS an accurate cloud and HURTS an inaccurate one.
+Production sits at 3.0483 cloud, deep in the hurting regime, paying +0.1622. This is the first
+time the projection stage's cost has been characterised as a function rather than quoted as a
+single number, and it means any improvement to the cloud is worth MORE at the endpoint than it
+looks on the cloud.
+
+THE ONE CLASS LANE O DID NOT CLOSE BY CEILING: two members with ORACLE weights emit 1.4315 A on the
+chain where 75 members with ORACLE membership emit 2.3055. A sparse weighted readout under a
+NATIVE-FREE support rule is the obvious S30 follow-up -- and it is the same direction S29-L44
+addendum 2 arrives at from the operator side, since a sparse weighted average is exactly the
+terminal operator that sits between the shipped mean and argmin. Note the bit cost honestly:
+choosing 2 of 500 is ~17.9 bits, far more than the 7 that the top-128 argmin needs. Low parameter
+count is not low information.
+
 ## Integration note 24 (2026-09-20 02:18): TWO ERRORS OF MINE IN ONE HOUR, BOTH CAUGHT, BOTH THE SAME SHAPE
 **(a) The basis error.** I promoted lane O's 2.7605 A into the STATE headline and into reports to
 the user as "the architectural ceiling" without its basis label. It is a POINT-CLOUD number; the
