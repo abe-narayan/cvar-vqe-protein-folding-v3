@@ -555,3 +555,624 @@ like S30-L4's two, points toward "recognition is closed."
 
 Reproduction: `s29/results/s29_D_fields.json`, `s29_D_fields_rows.jsonl`; nulls from the 16 stored
 `cos_random_ref` draws per target.
+
+## S30-L6 -- THE REFERENCE STATE IS A COMPACTNESS TERM, ALGEBRAICALLY: A FIXED-REFERENCE PAIR POTENTIAL PAYS **-0.256 kT PER PAIR (~14 kT OVER A 13-mer)** FOR A PURE 10% CONTRACTION WITH ZERO SHAPE CHANGE, AND A SIZE-MATCHED REFERENCE PAYS **EXACTLY 0.0000**. THIS MAKES S29-L50's LOADINGS **FORCED RATHER THAN MEASURED**, AND EXPLAINS THE FIELD'S 40-50 RESIDUE WALL MECHANISTICALLY: FOR A 13-mer THE DOPE REFERENCE STATE'S ENTIRE SUPPORT IS [0, 15.05 A] AND THE TABLE'S CUTOFF IS 15 A (2026-09-20 12:52, L)
+Full note: `s30/lit/L30_1_reference_state.md`. Arithmetic script: `s30/lit/s30_L_refstate.py`
+(closed form only; reads no project data). **No measurement; this is a derivation plus published
+arithmetic.**
+
+**THE ALGEBRA.** A statistical potential is `u(d) = -kT ln[P_obs(d)/P_ref(d)]`, so a candidate's
+score contains the **separable** term `+kT sum_pairs ln P_ref(d_ij)`. For the ideal-gas reference
+`P_ref ~ d^2` that term is `2kT sum ln d_ij`: scale the structure by `lambda` and it moves by
+exactly `2 kT N_pairs ln lambda`. It is a pure compactness term with no shape content. For DOPE's
+reference (Shen & Sali, Protein Sci 15:2507 (2006): uniform points in a ball of radius
+`a = sqrt(5/3) Rg`, their own words), the density `f(d;a) = (3d^2/a^3)(1 - (3/4)(d/a) + (d/a)^3/16)`
+on `[0, 2a]` has the exact form `(1/a) g(d/a)`, so `ln f = -ln a + ln g(d/a)`: **scale-invariant iff
+the reference's size parameter tracks the candidate's own size.**
+
+**THE ARITHMETIC** (Rg from `2.2 n^0.38`, the same law `s27/ham_lib.py` RG_LAW uses):
+
+    n      Rg      a    2a = the reference state's ENTIRE support
+    9    5.07   6.55    13.09 A   <- DOPE is tabulated to 15 A: the top 13% has ZERO reference density
+   13    5.83   7.53    15.05 A   <- table and reference run out together
+  150   14.77  19.07    38.13 A   <- the 15 A cutoff sits comfortably inside
+
+    finite-size correction R(d;a) at 8 A:  0.278 (n=13) vs 0.690 (n=150) -- a factor 2.5, ~0.9 kT/pair
+    uniform 10% contraction, 13-mer:  fixed reference -0.256 kT/pair (~14 kT over ~55 Ca pairs)
+                                      size-matched reference  0.0000 EXACTLY, by scale invariance
+
+**WHAT IT CORRECTS.** S29-L50 reported LEG_compactness +0.956, RG_LAW +0.921, LEG_solvation
++0.621, LEG +0.606 as a **measured** pattern of Rg loading. The algebra makes them **forced**: any
+distance-based potential with a fixed reference contains a separable pure-scale term, so high
+|rho(channel, Rg)| is the expected value and not a finding. **The surprise in S29-L50 was never the
+loadings; it was that they fail to explain in-band skill (F1a +0.083 against a +0.40 bar), and that
+half is untouched.** S29's framing of its own result should be corrected in the S30 report.
+
+It is also the mechanism under the field's length wall (S29-L1, 40-50 residues): at 9-16 aa the
+molecule's diameter is comparable to the potential's interaction cutoff, so the reference is
+boundary-dominated. DOPE's authors say plainly *"DOPE, like other statistical potentials, is less
+accurate for smaller proteins"*, and their own ablation has a FIXED reference sphere (DOPE-24)
+performing substantially worse than the size-adaptive one. A separate source states the failure
+direction: *"a reference state that is too small results in an erroneous preference for loosely
+packed structures"* -- the reference's size parameter **is the knob that sets a potential's
+compactness preference**, and in our channels it is untuned.
+
+**OUR CHANNELS, CHECKED IN SOURCE** (`s27/ham_lib.py` docstring lines 24-45): DISTPOT reference is
+*"separation-only"*, CONTACT is *"quasi-chemical"*, ENV is a burial ratio -- **none size-corrected**;
+CAGEO and RAMA are angle-based and **already scale-free**. That immunity is a cleaner explanation
+than coincidence for why LEG_torsion (+0.181, fold CI [+0.053,+0.236]) and CAGEO (+0.216) are among
+S29-L50's nine partialled survivors. Qualification I am not hiding: our references are fitted per
+target on a same-length universe, so the pool-average size is already right; what is uncorrected is
+the **per-candidate** Rg variation -- which is precisely where in-band ranking happens.
+
+**THE CONSTRUCTIVE PROPOSAL AND ITS PRICE.** Build a pair channel with a per-candidate reference
+`a_i = sqrt(5/3) Rg_i`: compactness-free **by construction**, not by partialling. Worth having as a
+**band statistic** (S29-L19's self-fulfilling-null warning is exactly this, and this use never
+passes through the terminal operator). Worth **approximately nothing** as a deployable ranker: it
+creates no information, reaches the endpoint only as a cosine (S29 section 5.1), and the averaging
+readout spends at most 0.04 of any ranking (section 5.4). The trade is explicit and against us in
+one direction -- ANDIS (Yu et al. 2019): *"native recognition and decoy discrimination cannot be
+optimized simultaneously with the same parameter sets"*.
+
+**REJECTED IN THIS TOPIC, with reasons**: fine-grained sub-region Ramachandran and
+neighbour-dependent Ramachandran (Ting & Dunbrack) -- the conditioner is **sequence**, measured
+dead here (memory `phi-carries-no-sequence-signal`: 36.1 deg with full sequence context vs 36.4 deg
+sequence-blind); omega as a discriminator -- fixed at 180 deg by the builder; **Ca pseudo-torsion
+(theta, tau) potentials** reported to beat DFIRE/dDFIRE/RWPlus -- **already built as CAGEO**, found
+by reading `s27/ham_lib.py` before proposing it, and already priced at +0.216; DFIRE's `r^1.61`
+exponent -- **fitted** to protein-size spheres, so it carries the artefact rather than fixing it.
+
+**WHERE I COULD BE WRONG**: the -0.256 kT/pair figure is for DOPE's *ball* reference and our
+DISTPOT uses an empirical separation-conditioned one (mechanism transfers exactly, magnitude does
+not); `Rg = 2.2 n^0.38` is a folded-protein law, so real peptides are less compact, the true `a` is
+larger, and section 2's magnitudes are **overstated** while correct in direction and ordering; and
+"scale-freeness explains the torsion channels' survival" is an inference I have not tested against
+the other seven survivors.
+
+## S30-L7 -- THE COMMON MODE IS NON-IDENTIFIABLE, NOT MERELY INVISIBLE: UNDER "MEMBER = NATIVE + SHARED BIAS + i.i.d. NOISE" THE POOL'S LIKELIHOOD DEPENDS ON `(t, mu)` **ONLY THROUGH `t + mu`**, SO NO POOL-ONLY ESTIMATOR OF THE SHARED BIAS EXISTS AT ANY K. THE THEOREM PERMITS **EXACTLY THREE** ESCAPES AND THIS PROJECT HAS MEASURED ALL THREE: E1 CLOSED, E2 OPEN AT **-0.022 A**, E3 REFUTED FOR A DIFFERENT GENERATOR (PROVENANCE COSINE **0.9432 ABOVE A 0.9330 WITHIN-SOURCE CONTROL**). THE 75-MEMBER POOL CARRIES **m_eff = 1.4 INDEPENDENT MEMBERS** (2026-09-20 12:52, L)
+Full note: `s30/lit/L30_2_common_mode.md`. Commissioned by the coordinator after my message of
+~12:50. **Derivation plus arithmetic on an existing artefact; no new measurement.**
+
+**WHAT I AM NOT CLAIMING.** The project memory note `pool-error-is-68-percent-common-mode` already
+states the invariance in prose: *"a bias shared by every member moves `c` and every `w_k` together
+and leaves every within-pool statistic unchanged."* That sentence is not mine. I read the note's
+**body**, not its index line (memory `read-the-memory-body-not-the-index-line`), and the body is
+what this entry formalises. What is new is the quantifier, the model class, the exhaustive escape
+list, and the observation that the record already prices every escape.
+
+**THE TAUTOLOGY I AM AVOIDING**, stated so the real claim is not confused with it: "for any `t'`
+the world `(t', {w_k - t'})` reproduces the data" is true and worthless -- it says only that a set
+of structures does not name one of them as the answer. The content comes from the **error model**.
+
+**THE THEOREM.** Model class M: `w_k = t + mu + d_k`, `d_k` i.i.d. `~ G` with `E_G[d] = 0`, `t` the
+native, `mu` an unknown shared bias. This is the smallest class containing both the i.i.d. model
+the ensemble literature assumes (`mu = 0`) and the pool we have. Then the likelihood is
+`prod_k G(w_k - (t + mu))`, which depends on `(t, mu)` **only through the sum**. Hence `(t, mu)` and
+`(t - c, mu + c)` induce *identical* data distributions for every `c` and every `K`. **`t + mu` is
+identifiable (estimated by the pool mean, error `O(K^-1/2)`); `mu` is not, at any K.**
+
+Corollary, and it is the S23 L9 identity read as an identification statement rather than a variance
+decomposition: `mean_k|e_k|^2 = |ebar|^2 + mean_k|d_k|^2` = `160.36 + 63.82`, where the first term
+is the NOT-IDENTIFIABLE part and the second is the identifiable one.
+
+**THE NUMBER TO QUOTE TO ANY ENSEMBLE PROPOSAL.** Under i.i.d. the average's squared error would be
+`mean_k|e_k|^2 / K`. Observed it is `|ebar|^2`. The ratio is the pool's effective independent size:
+
+    m_eff = 224.18 / 160.36 = 1.398        (per-target, from the note's own f = 0.676: 1.479)
+
+> **The deployed 75-member pool carries the statistical content of about 1.4 independent members.**
+> Every aggregation, consensus, bagging, voting and ensemble-QA method prices its gain in K. The
+> honest conversion factor from any such paper to this instrument is `(1.4 / K_theirs)`.
+
+**THE QUANTIFIER, EXACT** (the coordinator asked for this explicitly and it is the load-bearing
+paragraph). The theorem says `mu` is not identifiable **from the pool, under model class M** -- a
+statement about one data matrix and one invariance group. It does **NOT** say `mu` is invisible to
+any method. The invariance breaks in exactly three places, because those are the only three places
+the proof can fail:
+
+  E1  a restriction on `mu` itself -- a prior on the bias's FORM (breaks "mu ranges over R^3n")
+  E2  a constraint `t` satisfies that `t + mu` does not (breaks "t ranges over R^3n")
+  E3  a second observation whose distribution depends on `(t, mu)` DIFFERENTLY (breaks the factorisation)
+
+Nothing else can work: any estimator built from `{w_k}` alone -- consensus, medoid, typicality,
+dispersion, weighting, re-ranking, selection, re-averaging -- is a function of the identifiable part
+and is therefore **constant in `mu`**.
+
+**ALL THREE ARE ALREADY PRICED ON THE RECORD, which is what makes the theorem worth having:**
+
+- **E1 -- CLOSED.** The natural form to posit is a scale error, and one exists (averaging contracts
+  the backbone 25.8%, Jensen). But the memory note derives the closure: the optimal rescale
+  `s* = <c,t>/|c|^2` is **a function of the invisible component and of nothing else**, which is
+  Corollary 1 as algebra and which *derives* the mismatched-native placebo result. The governing
+  literature is Kennedy & O'Hagan (2001) and **Brynjarsdottir & O'Hagan, Inverse Problems 30:114007
+  (2014)**: calibration parameter and discrepancy are not jointly identifiable, and a discrepancy
+  term helps **only** given a strongly informative prior on its shape -- with the warning that a
+  *wrong* discrepancy prior is worse than none, which is this project's "confidently wrong costs
+  2-3x absent" arriving from a second literature.
+- **E2 -- OPEN, MEASURED, SMALL.** A hard physical constraint satisfied by real backbones and
+  violated by the contracted average is an E2. Already run: **AMBER-relaxing the average at k=30 is
+  -0.022 A [-0.036, -0.009], n=126, valid geometry, 5/5 folds same sign**
+  (memory `averaging-space-beats-the-objective`). **This is the only escape this project has ever
+  obtained a signed fold-consistent result from, and -0.022 A is the number any geometry-repair,
+  constraint-projection or physical-validity proposal should be priced against -- not the 68%.**
+- **E3 -- OPEN IN PRINCIPLE; THE OBVIOUS INSTANCE IS REFUTED.** E3 needs a source whose bias is not
+  the same `mu`. S24 measured: quality-matched **retrieval-free** provenance cosine **0.9432**
+  against a **0.9330 within-source control**. Two candidates from completely different sources are
+  MORE aligned than two draws from the same source. **`mu` is not a property of where candidates
+  come from; it is a property of the prior they are scored against.** Hence the same note's
+  "selection aligns the output with WHATEVER prior it is scored against, including a target-blind
+  one", and hence `prior-derivative-is-the-only-steep-lever` (-2.15 A/unit) being the only steep
+  direction anyone has found.
+
+**WHY LANE O's EXACT ZEROS ARE EXACT.** PCA on the centred pool returns the common-mode
+**direction** but is *identically* uninformative about `mu`'s component along it, because centring
+removes exactly that component before the decomposition runs. That is why S29-L47's ORACLE global
+`eta` for the PC1 family is `+0.0000 exactly`, and two of its four scalars are exact zeros. An exact
+zero in a measurement is almost always something being identically zero for a reason; this is it.
+
+**FOR LANE X** (the coordinator asked me to route this; lane X is not directly addressable from my
+session). The theorem **justifies** lane X's premise -- selection is a function of the identifiable
+part, so its cap is structural, not a failure to find a good selector. Section E3 then **refutes the
+obvious remedy**: changing the generator does not change `mu`. **Suggested pre-registered falsifier:
+before spending an endpoint run, measure the provenance cosine of generated candidates against the
+incumbent pool and require it BELOW the 0.9330 within-source control.** If it lands at ~0.94 like
+every previous source, the arm cannot move `mu` and will measure approximately nothing -- for a
+reason known in advance rather than after.
+
+**FAMILY-LEVEL REJECTIONS, assumption named per family** (the form the brief asked for): bagging /
+consensus QA (Pcons, ModFOLDclust, DAVIS-EMAconsensus) assume i.i.d. mean-zero errors with gain
+`~1/K` -- we have `m_eff = 1.4` and `mu != 0`; negative correlation learning needs members being
+**trained**; control variates need a **known mean** (ours is the native); multifidelity MC needs
+**high-fidelity samples** as an anchor and de-biases nothing; factor models / PCA / ICA recover the
+shared direction only up to the standard **sign-and-scale gauge**, and the offset is removed by
+centring before they run; blind source separation needs a structural assumption we do not have.
+Krogh-Vedelsby / Ueda-Nakano (Brown, Wyatt & Tino 2005 eqs 9-10) assume **nothing** and remain the
+correct framing.
+
+**WHERE I COULD BE WRONG**: the theorem is relative to model class M -- if loadings vary with an
+observable, something is recoverable, and the per-target `f` spread (10th 0.372, 90th 0.961) is
+*consistent with* varying loadings and does not prove M. `m_eff` is arithmetic on two aggregate
+numbers from `s23/results/errdecomp.json` via the memory note, not a recomputation from the raw
+file. And I have **not** shown E3 is achievable -- only that the obvious E3 is measured to fail, and
+where a working one would have to differ.
+
+## S30-L8 -- THE SET-SELECTION PROBLEM IS **COMPUTATIONALLY EASY AND INFORMATIONALLY EXPENSIVE**, AND THE PROJECT HAS BEEN TREATING IT AS THE REVERSE: `V(S) = f(mean_S W)` FACTORS THROUGH THE CENTROID, SO EVERY SUBMODULARITY GUARANTEE IS VOID (THEY REQUIRE **MONOTONE**; S29-L25 STATES V IS NOT) AND FRANK-WOLFE ON THE SIMPLEX IS THE CORRECT CLASSICAL COUNTERPART. PLUS: MY OWN FINITE-SHOT CVaR BIAS HYPOTHESIS, **TESTED AND REFUTED**, IN THE OPPOSITE DIRECTION TO MY GUESS (2026-09-20 12:52, L)
+Full note: `s30/lit/L30_3_set_selection_cvar.md`. Check script: `s30/lit/s30_L_cvar_bias.py`.
+
+**THE STRUCTURAL OBSERVATION.** From S29-L25's own definition `V(S) = f(mean_{i in S} W_i)`: **V
+depends on S only through one point of R^(3n), the centroid.** That disposes of the reading list:
+
+- **Submodularity guarantees -- VOID.** Nemhauser-Wolsey-Fisher `1-1/e` and Das & Kempe's weakly
+  submodular `1-e^(-gamma)` both require **monotone**. S29-L25 states in its own words that V is
+  *"neither additive nor monotone"*. **Monotonicity, not submodularity, is what we fail first.**
+- **DPPs / facility location / diversity-aware selection -- VOID.** V is constant on
+  centroid-equivalence classes, so there is no diversity structure to exploit. (And Abe et al.
+  arXiv:2302.00704 is already in the S29 index as the negative result on diversity interventions.)
+- **QUBO / Ising -- available but moot.** If `f` were quadratic in the centroid then
+  `V(S) = (1/|S|^2) sum_{i,j in S} Q_ij` exactly: the densest-k-subgraph form, NP-hard at fixed `m`,
+  poly-time by max-flow at free `m` (Goldberg 1984). A real structural analogy -- **fixed-m is the
+  hard formulation** -- but moot, because the continuous relaxation is cheap.
+- **The relaxation.** Reachable centroids are the `1/m`-grid on the simplex; by Maurey's empirical
+  method any hull point is within `R/sqrt(m)`. With the project's own dispersion
+  `sqrt(63.82) = 7.99`: 0.22 A at m=75, 0.86 A at m=5, 1.36 A at m=2 (RMSD units). **Frank-Wolfe on
+  the simplex, seconds, is the correct classical counterpart (contract rule 15) and strictly upper
+  bounds any circuit on this objective.**
+
+**THE REFRAME, which is the entry's point.** Beside the project's own numbers -- 2 members with
+ORACLE **weights** 1.4315 A vs 75 members with ORACLE **membership** 2.3055 A; choosing 2 of 500 is
+~17.9 bits vs 7 bits for the top-128 argmin (S29 section 12.1) -- the expressiveness lives in the
+**weights**, and the weighted object costs **more** bits, not fewer. Hence:
+
+> **Solving the set problem better is worth nothing -- exhaustive search already solved it
+> (S29-L25) and the answer was worse than production. What is scarce is the information needed to
+> SPECIFY a good set, and no solver supplies information.**
+
+That also explains S29-L25's second clause mechanically: escaping the set-equality theorem creates
+no information, so the optimum of a marginal-class objective moves the support without moving the
+answer.
+
+**CVaR ON A SET FUNCTION -- the literature exists and is sharp.** Maehara (Oper Res Lett 43:526,
+2015): the CVaR of a stochastic submodular set function **is not submodular**, and **no
+polynomial-time multiplicative approximation exists** unless P=NP. Wilder (AAAI 2018) and Ohsaka &
+Yoshida (2017): the escape is to stop asking for a single set and relax to a **portfolio -- a
+distribution over sets** -- where a `1-1/e` guarantee returns via continuous DR-submodular
+maximisation. **Mismatch stated rather than hidden:** their CVaR is over *exogenous* randomness;
+ours is over a distribution the optimiser controls, so the theorems do not transfer. What transfers
+is the design lesson, identical to the one above from the other side: **relax the set, do not search
+it harder.**
+
+**MY OWN HYPOTHESIS, TESTED AND REFUTED.** I proposed that finite-shot CVaR estimator bias gives the
+VQE an incentive to shape its distribution for the estimator rather than for the structure -- a
+candidate mechanism for "the objective improves and the structure does not move" and for S29's
+"realised m wanders". Checked at the deployed cell (n=9 -> 512 states, alpha 0.18, shots 2048 from
+`core/quantum.py:179`, tail k=369):
+
+    A  bias vs concentration (Boltzmann states)     +0.0000 .. +0.0025   (sd 0.017-0.036)
+    B  states MATCHED on true CVaR, support 2..32   +0.0001 .. +0.0019, NO trend with support
+    C  does it move the argmin?                     exact beta 2.5, finite-shot beta 2.5, penalty +0.0000
+    D  Barkoutsos's flat minimiser set              support 92->1: bias -0.0006 -> +0.0162, i.e.
+                                                    concentration PENALISED, and by LESS THAN ONE sd
+                                                    of the shot noise (0.027)
+
+**REFUTED, and in the direction opposite to my guess** -- the empirical lower-tail CVaR is
+*pessimistically* biased (verified analytically: `E[min(X1,X2)] = -0.564` vs `E[X|X<=med] = -0.798`
+for a standard normal). At 369 tail shots the bias is ~0.1% of the objective's range, does not order
+states by concentration, and does not move the argmin. **Finite-shot CVaR estimator bias is not a
+mechanism for anything at this project's shot count. Do not spend on it.** Scope: the bias grows as
+`alpha*shots` falls; at the `foldvqe` sort path (384 shots, 69 tail shots) it is ~5x larger and
+still an order of magnitude below the effect sizes here. **If any lane proposes a low-alpha or
+low-shot arm, this closure lapses and must be re-run.**
+
+**WHERE I COULD BE WRONG**: Maurey's bound is for **multisets** (weights on a `1/m` grid), not the
+uniform-weight **subsets** the readout uses -- the subset family is strictly poorer and the
+`1.4315` vs `2.3055` gap is the size of that difference, so "the relaxation is tight" is a claim
+about the *weighted* problem and a reader could wrongly take it as one about subsets. `R` should be
+a **max** over members and I used the RMS dispersion, so the table is optimistic by perhaps 2-3x
+(ordering across `m` unaffected). And section 4's refutation is on a **synthetic Gaussian
+spectrum**, not a real cell's energies; I judged the margin large enough not to spend a lane's time
+re-running it on a real one, but that is my judgement.
+
+## S30-L9 -- A CORRECTION TO MY PREDECESSOR AND TO THE BRIEF: **THE CVaR TAIL NEVER STOPS BEING A PREFIX.** IT IS ALWAYS THE PREFIX OF THE ORDER INDUCED BY `grad V` AT THE OPTIMUM, SO THE QUESTION "WHEN DOES IT STOP" IS MIS-POSED -- AND S29's §4.3 (KEEP THE ORDER EXOGENOUS, FOR WELL-POSEDNESS) **PROVABLY GUARANTEES** WHAT S29's §4.5 CLAIMS TO ESCAPE: UNDER THE TAIL-THEN-AGGREGATE LIFT AS SPECIFIED, THE EMITTED SET IS STILL `argsort(E)[:m]` AND THE ENDPOINT CHANNEL IS STILL THE SINGLE INTEGER `m` (2026-09-20 12:53, T)
+
+**Verdict: S29's section 4 conclusion "this is the first formulation in the project's history whose
+classical counterpart genuinely goes away" is WITHDRAWN as stated. What S29 proved is that a FREE
+subset optimum is non-prefix. It did not show the lifted CVaR readout can REACH it, and §4.3's own
+well-posedness recommendation is exactly the condition that prevents it.** The repair is in this
+entry and it is constructive, not merely a withdrawal.
+
+### 1. THE THEOREM (T1), WHICH REPLACES THE QUESTION
+
+Let `Lambda(p) = { lambda : 0 <= lambda <= p, 1'lambda = alpha }` be the tail polytope -- the exact
+feasible set of the deployed readout (`core/quantum.py:290 cvar_from_probs` lines 306-308 compute
+its vertex). Let `V` be any tail objective differentiable on it.
+
+> **T1.** At every KKT point `lambda*` of `min_{Lambda(p)} V` there is a scalar `mu` with
+>
+>     grad V(lambda*)_x < mu  =>  lambda*_x = p_x ,       grad V(lambda*)_x > mu  =>  lambda*_x = 0 .
+>
+> **Hence `lambda*` is a prefix of the order induced by `grad V(lambda*)`, for every `V`.**
+
+*Proof.* `Lambda(p)` is a box intersected with one equality. The Lagrangian is
+`V(lambda) - mu(1'lambda - alpha) - <s, lambda> + <t, lambda - p>` with `s, t >= 0`; stationarity
+gives `grad V = mu + s - t`, complementary slackness kills `s` where `lambda > 0` and `t` where
+`lambda < p`. The three cases are the display. ∎
+
+The deployed CVaR is the case `V = <E, lambda>`, `grad V = E` -- **constant in `lambda`**. That, and
+not anything about CVaR, is why one classical sort reproduces it. `cvar_from_probs`'s cumulative
+scan is the greedy solution of a fractional knapsack, and the rearrangement inequality is the whole
+content of `s25/QUANTUM.md` section 5.
+
+**So the charter's question ("under what conditions does the tail stop being a prefix?") has the
+answer NEVER, and the load-bearing question is a different one:**
+
+> **the tail stops being reproducible by ONE CLASSICAL SORT iff the ordering map
+> `lambda -> grad V(lambda)` has more than one fixed point.**
+
+That is a statement about self-consistency, not about CVaR, and it is checkable.
+
+### 2. THE INCOMPATIBILITY IN S29's SECTION 4, NAMED IN ITS OWN TEXT
+
+- `s29/THEORY.md:4.1` -- (4.1) "keeps a scalar order to FORM the tail and lets the structure be
+  aggregated inside it."
+- `s29/THEORY.md:4.2` -- "With the tail formed by a per-state scalar order (energies `E`, quantile
+  `q`, boundary state `x_q`)..."
+- `s29/THEORY.md:4.3` -- "**Recommendation: keep the order fixed by a per-state scalar** and let
+  only the aggregate be structural."
+- `s29/THEORY.md:4.5` -- "**the set-equality theorem fails for (b)**"; "Under (b) the tail's
+  composition -- which states share the mass -- changes the objective, so 'which set' is a real
+  optimisation variable rather than a read-out of the sort."
+
+The first three fix `grad`(tail-formation)` = E`. By T1 with an exogenous order the support of
+`lambda*` is the `E`-prefix reaching `alpha`, full stop: the optimiser's freedom is `m`, plus
+deletions at exact zeros, which is *verbatim* the deployed situation (`s25/QUANTUM.md` §5, and
+`DATAPATH.md` stage 9: "the whole quantum stage reduces, for the structure, to choosing `m`").
+
+§4.5's three-state witness (`W_1=(1,0), W_2=(-1,0), W_3=(0,0.1)`, optimal 2-subset `{1,2}`) is
+correct **about the free subset problem** and is *unreachable* by the readout it was written for:
+with `l_3 < l_1 = l_2`, state 3 is in every `alpha`-prefix, so `{1,2}` requires `p_3 = 0` exactly --
+the "hole" mechanism, which `s25/QUANTUM.md` §5 already showed is chosen "by an amplitude pattern
+that is a function of the **same energies** the classical rank order already uses."
+
+**What survives of §4.5 intact:** `V(S) = f(mean_{i in S} W_i)` is neither additive nor monotone;
+the free-subset optimum is non-prefix (lane B measured 11/12 pairs and 12/12 five-subsets, S29-L25);
+and the gap is not measure-zero. **What does not survive:** that the lifted CVaR stage reaches it.
+S29-L25's own second clause -- "the escape buys nothing: those subsets' averages are worse than the
+prefix on 10 of 12" -- was measured on the *free* optimum, i.e. on sets the readout cannot emit, so
+it is not evidence about the lift either way.
+
+### 3. THE REPAIR, AND ITS PRICE (T1b)
+
+Make the order **endogenous**: `V(lambda) = f(R_lambda)`, `R_lambda = (1/alpha) sum_x lambda_x W_x`,
+so by T1 the induced cost is
+
+    c_x(lambda) = (1/alpha) < grad f(R_lambda), W_x > ,
+
+i.e. **the candidates sorted by their projection onto ONE self-consistently determined direction
+`g = grad f(R)`.** Now the readout genuinely has `d` degrees of freedom instead of 1. The price:
+
+> **T1b.** Under an endogenous linear order the reachable tails are contained in the halfspace-cut
+> class `{ {x : <g, Psi_x> <= tau} }`, VC dimension `d+1`. By Sauer-Shelah the class carries at most
+> `log2 sum_{i<=d+1} C(500, i)` bits.
+
+**Measured, 126 real pools of 500** (`s30/s30_T_bits.py`, `s30_T_spec.py`; the rank-collapse
+pre-check the brief required *before* compute): stable rank of the centred pair-distance matrix
+**1.859** (median 1.865, min 1.247, max 2.721); PC1 alone is **55.4%** of the variance;
+`k90 = 5.61`, `k99 = 21.13` directions; for the coordinate matrix stable rank 3.404, `k90 = 11.5`.
+Caps against the **300.6 bits** of free 75-subset choice:
+
+    d_eff = 2  (stable rank)       halfspace cap    24.3 bits
+    d_eff = 6  (k90)               halfspace cap    50.4 bits
+    d_eff = 21 (k99)               halfspace cap   126.7 bits
+    d_eff = 33 (nominal 3n-6)      halfspace cap   175.5 bits
+
+**My registered decision rule (stable rank < 2.0 -> CLOSED at the encoding level) fires.** The
+tail-then-aggregate lift, even with the order made endogenous, is a 2-to-6-parameter continuous
+family, not a combinatorial search: a 250-to-275-bit collapse below the set choice it was supposed
+to open. **It should not be built**, and that verdict cost one 76-second pass over data that was
+already on disk rather than a lane-week.
+
+### 4. THE ONE SURVIVING ESCAPE, WHICH IS S29's OWN OPEN POINTER
+
+Add a **second moment**: `V = f(R_lambda) + mu*h(Sigma_lambda)` with
+`Sigma_lambda = (1/alpha) sum lambda_x (W_x - R)(W_x - R)'`. Then
+`grad V_x` is **quadratic** in `W_x`, the cut is a quadric rather than a halfspace, and the VC
+dimension goes `d+1 -> (d+2)(d+1)/2`: at `d_eff = 6`, from 7 to 28, and the cap from 50.4 to
+**152.1 bits**. A 3x enrichment in the exponent, arrived at from the readout's algebra.
+
+**It is the same object S29's own post-mortem pointed at from the opposite direction** -- "the one
+argument for operators that read **the pool's own dispersion** rather than the posterior's
+marginals" (THEORY_SUMMARY §2, from `cov(a,n) > cov(b,n)`). Two independent derivations landing on
+one class is the only reason this row is worth a measurement rather than an opinion.
+
+**And its hard cap, stated now so no one has to discover it later:** `tr(Sigma_lambda)` is invariant
+to a common shift of the pool, so by the S23-L9 identity (`mean_k |e_k|^2 = |ebar|^2 + mean_k
+|d_k|^2`, exact to 2.7e-14) **a dispersion term cannot see the 68% common-mode error at all.** It
+operates on the idiosyncratic 32% only. Its ceiling is measured in S30-L9 (M4) and not asserted here.
+
+### 5. CVaR's RESIDUAL ROLE, WHICH IS EXACTLY ONE THING
+
+Under an endogenous order the pair `(g, tau)` defines the cut. `g` comes from `grad f`; **`alpha`
+supplies `tau`.** That is CVaR's whole remaining function: it turns a direction into a set, with a
+budget rather than a threshold, which is what makes the map continuous in `p`. It is not
+dispensable and it is not doing selection.
+
+### 6. THE TRICHOTOMY, FOR THE REPORT
+
+| order | tail | classical counterpart | endpoint channels |
+|---|---|---|---|
+| **exogenous** (deployed, and S29 §4.3 as recommended) | `argsort(E)[:m]` | one sort | **1** (the integer `m`) |
+| **endogenous, `f` convex** | halfspace cut, unique up to ties | Frank-Wolfe, `O(1/eps)` linear-minimisation oracles, each a sort | `d_eff` ~ 2-6 |
+| **endogenous, `f` non-convex** | halfspace cut, multiple fixed points | greedy + local search over `<= 175` bits | `d_eff`, genuinely combinatorial |
+
+Row 2 is classically polynomial, so it is not a quantum opening; row 3 is the only one that is, and
+T1b prices its search space at 24-175 bits against 300.6.
+
+Reproduction: `s30/PREREG_S30_T.md` (registered before any array was loaded, commit 7f8bbce5),
+`s30/s30_T_bits.py`, `s30/s30_T_spec.py`, `s30/results/s30_T_bits.json`, `s30_T_spec.json`.
+Derivations in `s30/THEORY.md` sections 2-4.
+
+
+## S30-L10 -- THE GATE LANE X WAS HANDED ("MEASURE THE CEILING FIRST, ALWAYS") IS AN **ANTI-PREDICTOR**: IT GETS THE DIRECTION OF THE ENDPOINT MOVE RIGHT ON **1 OF 10 CELLS** ACROSS TWO INDEPENDENT FAMILIES, WHERE THE FROZEN SOURCE LAW GETS **5 OF 6** AND 22x THE ACCURACY. THE ADMISSION CONDITION THAT REPLACES IT SAYS **GENERATION MUST RAISE A SPACE'S FLOOR, NOT ITS CEILING** -- AND ITS SPECIFICATION (-0.2 Å IN THE TYPICAL MEMBER, EVEN GRANTED A PERFECT CEILING) IS MET BY NOTHING IN THE RECORD, SO **DO NOT BUILD A GENERATIVE SPACE THIS SPRINT**. SEPARATELY, MY OWN INFORMATION-CEILING HYPOTHESIS IS DEAD WITH THE SIGN REVERSED: THE FAIL18 TAIL HAS **TIGHTER** DEPOSITED NMR ENSEMBLES THAN THE OTHER 108 (-0.487 Å), SO THE TAIL IS NOT CONFORMATIONAL AMBIGUITY IN THE REFERENCE (2026-09-20 12:53, X)
+
+Pre-registration `s30/PREREG_S30_X.md` @ **d4305d17**, committed before any number below existed.
+
+> **Numbering note (contract rule 15).** Written as S30-L5 and appended at 12:53. While it was
+> being written lanes D, L and T landed S30-L5 through S30-L9, so it was renumbered twice on
+> append -- L5 -> L6 -> **L10** -- before anyone read it. No number is skipped, no other
+> lane's text was touched, and the chronology is 12:53 regardless of the number.
+Findings `s30/s30_X_FINDINGS.md`. Code `s30/s30_X_sourcelaw.py`, `s30/s30_X_ensemble.py`.
+Results `s30/results/s30_X_sourcelaw.json`, `s30/results/s30_X_ensemble.json`.
+**No VQE or pipeline compute was spent. Every number is from a stored artefact or a PDB parse.**
+
+### 0. What I was sent to do, and what I am reporting instead
+
+My remit: attack "retrieve, then select or average", and ask whether the quantum stage should be
+GENERATING. I was given one test to apply before spending compute -- *"does this space contain
+structures better than the pool's own ORACLE best? ... Measure the ceiling first, always."*
+
+**I am reporting that the test is wrong-signed, and that the condition replacing it forbids the
+thing I was sent to build.**
+
+### 1. THE SCORECARD. Both families are ORACLE; both were already in the record.
+
+| family | cells | **ceiling gate** sign correct | source law sign correct |
+|---|---|---|---|
+| S7-6 K-ladder, K = 25..2000 vs K = 500 | 6 | **1 / 6** | **5 / 6** |
+| S24 generated-source unions, 4 samplers | 4 | **0 / 4** | n/a (set mean not stored) |
+| **total** | **10** | **1 / 10** | 5 / 6 |
+
+`P(X <= 1 | n = 10, p = 0.5) = 11/1024 = 0.0107`, **indicative only** -- the six rungs share one
+reference and the four arms share 126 targets and one pool, so the cells are not independent. The
+magnitude is the finding: on the same six cells, mean |residual| **0.333 Å for the ceiling gate
+against 0.0153 Å for the law**, a factor of **22**.
+
+The underlying table (`docs/FINDINGS.md` §S7-6, `s7/poolsize_kcurve.json`, n = 126 per rung,
+verified in place before transcription) is the whole argument in seven lines:
+
+```
+     K      selected   pool best (ORACLE)   pool mean
+     25      3.439           2.350            4.177
+     50      3.399           2.177            4.232
+    100      3.425           1.970            4.316
+    250      3.461           1.808            4.393
+    500      3.454           1.711            4.453      <- shipped
+   1000      3.483           1.568            4.522
+   2000      3.520           1.504            4.596
+
+   ceiling improves 0.846 A  ->  endpoint gets 0.081 A WORSE
+```
+
+S7 stated the direction in 2026 prose ("selection tracks the pool MEAN not its BEST ...
+*anti*-correlated with the pool BEST"). It was never turned into a gate, and the project has since
+run at least two generative probes whose admission test was the ceiling -- S24 lane C and
+**S29-L56, which abandoned the chimera space on exactly this number (+0.6533 Å)**.
+
+### 2. H-X1 PRIMARY: PASS, against a registered residual bar, coefficients FROZEN
+
+`d_out = 0.803*d_set_mean + 0.298*d_set_best` -- the Sprint 20 wide-set fit (2,142 (arm,target)
+cells, 17 generator arms at 8,192 draws). **Nothing fitted.** Six rungs predicted vs K = 500:
+
+```
+    mean |residual|  0.0153 A     registered bar 0.10 A      PASS
+    max  |residual|  0.0263 A
+    sign correct     5 / 6        registered bar < 1/3 wrong PASS
+
+    matched controls in the operator's own space (contract rule 6):
+       two-term source law    |resid| 0.0153    sign 5/6
+       mean-only              |resid| 0.1198    sign 5/6
+       best-only (THE GATE)   |resid| 0.3330    sign 1/6
+```
+
+**DISCLOSURE (rule 14).** One cell -- K25 -> K2000, predicted +0.0843 vs observed +0.0810 -- I
+computed by hand *before* writing the prereg. It motivated the hypothesis, is excluded from the
+bar, and is carried separately in the artefact as `disclosed_cell_NOT_out_of_sample`.
+
+**IDENTIFIABILITY, registered in advance and confirmed: r(pool mean, pool best) = -0.9898** across
+the ladder. This family cannot identify the two coefficients separately, so none were fitted on it.
+
+H-X1 SECONDARY, S24 lane C, **504 (arm,target) cells**, a different sprint / corpus / sampler set:
+
+```
+    WITHIN-TARGET slope on the selected set's mean   0.9349
+      target-clustered CI95 [0.8201, 1.0632]         R2 0.668
+    pooled cross-target (contaminated by difficulty) 1.0413   R2 0.929
+```
+
+### 3. THE ADMISSION CONDITION, AND ITS SPECIFICATION
+
+```
+    ADMIT a generative space G against pool P iff
+        Delta(set mean) < -(b/a) * Delta(set best),      b/a in [0.319, 0.371]
+```
+
+> **An X Å improvement in a space's CEILING is worth having only if its TYPICAL member degrades by
+> less than ~0.32-0.37 X. At fixed ceiling, the mean is worth ~2.7-3.1x what the best is worth.**
+
+It is also the *cheaper* gate: a set mean is a few draws with small variance; a set best over 10^4
+configurations is an order statistic needing `best_of_k_within` and split-half transfer before it
+can be read at all.
+
+**Specification.** Best ceiling anywhere on this corpus is the whole-library best **1.313 Å**
+(§S8-4, `s8/triage.py`) vs the shipped **1.7108** (ORACLE both). Granting that *in full*,
+`0.298 * -0.398 = -0.119 Å`. To reach the sprint's -0.30 Å primary:
+
+```
+    Delta(set mean) = -0.19 A (a = 0.935)  to  -0.23 A (a = 0.803)
+```
+
+> **A winning generative space must make its TYPICAL member ~0.2 Å better than the pool's, even
+> after being granted a perfect ceiling. Generation must raise the FLOOR.** S24's four samplers
+> stand at 3.789 / 3.243 / 3.207 / 3.175 against the 3.0483 incumbent -- every one worse in the
+> mean while three beat the pool at the ceiling.
+
+**AND THE COROLLARY FOR THE QUANTUM ENCODING.** A `2**q` register over structural variables is by
+construction a **wide** space (S29-L56's chimera was 8**S = 32,768). Width is the encoding's
+selling point -- and at rho ~ 0 width buys ceiling and costs mean. **The property a quantum
+encoding is chosen FOR is the property this condition penalises.** The coefficients are a property
+of the **readout**, not of physics: under argmin they would be (0, 1) and the ceiling *would* be
+the endpoint. So wide space + averaging consumes the wrong statistic; wide space + argmin needs
+rho, which is closed; **narrow, uniformly-good space + averaging needs no rho at all and is the
+only one of the three still open.** Generation is closed *jointly with the readout*.
+
+**SCOPE, so it is not misused.** Validated for changes to the candidate **SOURCE at a fixed
+score**. NOT validated for changes to the **SCORE at a fixed source** -- S18's amendment to
+`operator-consumes-set-mean` measured this law failing there (Legacy gate: premise held, law
+predicted a gain, output +0.076 worse). **Lane F's S30-L2 is a GATE change and this condition must
+not be composed with it.** I flag that because the two results are adjacent enough to invite it.
+
+### 4. A GAP IN A CLOSURE THAT HAS BEEN DRIVING LANE DESIGN FOR SIX SPRINTS
+
+`prior-derivative-is-the-only-steep-lever` says "do not build another candidate generator -- closed
+on five instruments". Checking the artefacts: **four of the five measured only the ENDPOINT after
+selection and carry no oracle arm at all** (`biasalign.json`, `qmatch.json` field lists verified).
+The fifth (S24 lane C) measured the generated source's oracle best in isolation but **never formed
+`min(pool, generated)`**. Recomputed here from its own stored rows, ORACLE:
+
+| arm | of 126 targets, # carrying a structure better than the WHOLE K=500 pool's best | union ceiling (500) | Δ | union ceiling (2000) | Δ | **endpoint Δ** |
+|---|---|---|---|---|---|---|
+| T0_helix | 12 | 1.6969 | -0.0139 | 1.6814 | -0.0294 | **+0.0085** |
+| T1_blind | 39 | 1.6088 | -0.1020 | 1.5297 | -0.1812 | **+0.0170** |
+| T2_restype | **45** | 1.5946 | **-0.1162** | 1.5154 | -0.1955 | **+0.0157** |
+| T3_pool | **47** | 1.6011 | -0.1098 | 1.5229 | -0.1879 | **+0.0509** |
+
+An **untrained per-residue-type Ramachandran sampler** puts a structure better than the entire
+retrieved pool's best member on **45 of 126 targets**, and the endpoint still gets worse.
+
+**This does not weaken S24's verdict -- it is section 1 a third time.** What it changes is the
+wording. The closure should read *"no achievable source produces candidates the shipped score can
+convert into Ångströms"*, not *"no alternative source contains better structures"*, which is false
+on 45/126 targets. The stronger wording has been used to rule proposals out.
+
+### 5. H-X2: MY OWN HYPOTHESIS, DEAD, WITH THE SIGN REVERSED
+
+`core/geometry.py:808` scores against **model 1** (`model_index=0`); `ca_rmsd_to_ensemble` and
+`native_ensemble_from_pdb` exist in two modules and are **called by nothing**. 111 of 126 tuning
+targets are multi-model depositions (mean 15.6 models, median 20). So the question was real: if the
+reference is one draw from an ensemble, RMSD to it has a floor no information can beat.
+
+Floor = `RMSD(ensemble medoid, model 1)`, ORACLE by construction:
+
+```
+    floor  mean 0.6136  median 0.3784  sd 0.7630  max 4.2943   21.4% above 1.0 A
+    pairwise ensemble spread  mean 0.9535
+    endpoint (built chain) 3.2148    FAIL18 6.2872    other 108 2.7027
+    corr(floor, endpoint) +0.1220    corr(spread, endpoint) +0.1009
+
+    FAIL18 minus the other 108:
+       d endpoint  +3.5845
+       d floor     -0.1776     share of tail excess  -5.0%
+       d spread    -0.4872     share                -13.6%
+```
+
+**VERDICT: PRICED AND DEAD at this endpoint** (registered rule: dead if mean floor < 1.0 Å and it
+explains < 25% of the FAIL18 excess). My registered prediction was ~0.6 Å and < 5%; measured
+0.614 Å and -5.0%.
+
+**It answers the coordinator's open question #1 directly.** *"Does the tail's difficulty have a
+cause we can name?"* -- **it is NOT conformational ambiguity in the reference. The hard 18 have
+*tighter* deposited ensembles than the easy 108.** With lane F's S30-L2 (the tail is not
+pool-limited either) two candidate causes are now excluded.
+
+**Calibration:** the model-1 convention costs <= ~0.61 Å and does not bind until the endpoint is
+below ~1.5 Å. `corr(floor, pool_best_ORACLE) = +0.311` -- a floppy peptide has a floppy retrieval
+neighbourhood, which is the mechanism to expect if this is ever revisited.
+
+### 6. A FRAMING I DECLINE TO ACCEPT AS BINDING
+
+My brief cites *"the pool's error is 68% common-mode, 50.7x the i.i.d. prediction"* as the cap that
+motivates generation. Reading the memory's **body** (`read-the-memory-body-not-the-index-line`):
+`|ebar|^2 = n*RMSD^2` **exactly**, so the "common-mode" numerator *is* the output RMSD -- not
+independent evidence about it -- and the same file's own S24 correction says ***"f is NOT a screen
+and must never be used as one"*** (a blind library draw scores f = 0.4896 against the incumbent's
+0.6758 while being 0.76 Å **worse**). The 50.7x compares an identity against an i.i.d.-member model
+that retrieval exists to violate. The durable content is the weaker claim -- pool members resemble
+each other more than any resembles the native -- and it is not a cap on generation.
+
+### 7. THE DIVERGENT VERDICT, WHICH IS NOT THE ONE I WAS SENT TO FIND
+
+At rho ~ 0 the endpoint is a near-unit-slope function of the candidate set's MEAN
+(0.9349 [0.8201, 1.0632] within target, 504 cells). **The only stage in the pipeline that raises
+that mean is retrieval** -- it turns a ~18,674-window universe into a K = 500 set of mean 4.4533 Å.
+No downstream operator does it and no generative sampler in the record does it.
+
+> **"Retrieve, then average" is not an accident of history to be escaped. It is the only
+> architecture in the record that optimises the one statistic the terminal consumes.**
+
+**RECOMMENDATION, against my own remit: do not build a generative structural space this sprint.**
+The specification is -0.2 Å in the typical member and nothing approaches it; and the gate that
+would have admitted a proposal is wrong on the sign 9 times in 10.
+
+**Where the live freedom is:** in `a` and `b` themselves, which are readout properties, not
+physics. That is where S30's STATE already points ("a sparse weighted readout -- the only ladder
+class not closed by ceiling"), reached from the opposite direction and now with a transfer
+function attached to it.
+
+### 8. What these numbers are NOT
+
+The primary is a **6-cell prediction test against a registered residual bar, not a powered
+effect-size comparison**: the S7-6 rungs are published aggregates, no per-target rows survive, so
+no SE, MDE or fold CI is computable for them and none is quoted -- which is exactly why the
+falsifier was registered as a residual bar. Comparisons made by this lane: 6 cells x 3 predictors,
+4 union arms, 6 slopes, and the H-X2 battery; only H-X1-primary and H-X2 were pre-registered and
+only those two are read as results. No per-target maximum is taken anywhere here, so no
+`best_of_k_within` arm is required. Every ceiling row is ORACLE and says so.
