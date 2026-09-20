@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:38 Pacific.
+Last update: 2026-09-20 00:44 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -86,6 +86,44 @@ jointly, not as marginals. Prior: ties the pool (S21: search saturates).
 | D | adversary (permanent, rotating), cost meter, suite | s29/briefs/S29D.md |
 | X | divergent: configuration-space CVaR-VQE | s29/briefs/S29X.md |
 
+
+
+## THE SPRINT'S HEADLINE RESULT (2026-09-20 00:44, S29-L23; provisional until lane D's attack)
+EVERY NATIVE-FREE OPERATOR IS A DISPLACEMENT AND ITS VALUE IS ONE COSINE.
+    RMSD_achievable = RMSD_prod * sqrt(1 - rho_max^2)
+with rho the cosine between the displacement and the direction to the native. Selection,
+re-weighting, a gradient step, a basin average, a signed readout, a projection and a quantum
+tail are all displacements, so every operator class -- and every rung of lane O's ladder --
+collapses onto one number. Inverted from 3.2126: 3.00 A needs rho 0.358; 2.50 A needs 0.628;
+2.31 needs 0.695; 1.71 needs 0.847. The random-shape-field reference is 0.140, so the charter's
+2.5 A is 4.5 random directions' worth of alignment.
+MEASURED rho FOR EVERY FIELD THE PROJECT HAS BUILT (all ORACLE): the shipped objective's descent
+-0.034; every other S27 channel with a gradient +0.034 to -0.006; the typicality axis -0.058;
+PC1 per-target |rho| 0.37 to 0.39 but with the sign correct on 52% of targets, hence a SIGNED rho
+of 0.015 and a leave-fold-out arm +0.0071 A worse than production.
+THE BOUND: every native-free field ever built here (|rho| <= 0.04) gives >= 3.210 A, a 0.003 A
+gain. A field as strong as a RANDOM one with the sign right everywhere (0.140) gives >= 3.181 A.
+The best structured field known, PC1, with a PERFECT ORACLE per-target sign (0.37) gives
+>= 2.98 A. CENTRAL STATEMENT: no native-free operator over the present information reaches below
+about 3.18 A on the built chain; the honest central estimate is 3.21 A, production itself; and
+the nearest margin, 2.98 A, requires a per-target sign measured at chance.
+THE GAP TO 2.5 A IS NOT a search gap, NOT expressivity (a 27-parameter family holds a 0.25 A
+structure on every target), NOT aggregation (the hull of the shipped top-75 contains a 2.00 A
+point and the pool's hull a 1.12 A point) and NOT optimisation. IT IS ONE NUMBER.
+THE BOUND'S ONE END-TO-END CHECK, and it is the strongest evidence in the sprint: T's sign
+formula gain = RMSD(1 - sqrt(1 - rho^2 (2q-1)^2)) reproduces lane O's PC1 triple -- per-target
+magnitude, 52% sign accuracy, +0.0071 A leave-fold-out -- EXACTLY, and was derived before those
+numbers were read. Lane D is verifying that provenance from the commit order.
+LOAD-BEARING ASSUMPTION (B2): rho_max <= 0.14 for every field constructible from the present
+information. Derived for the marginal class by theorem 2; measured outside it across 31 scorers,
+38 signals, eight routers, the typicality axis and PC1. Lane D's attack is to find a field the
+survey missed (the AMBER step, the Legacy gradient, the projection's own displacement, top-25 vs
+top-150 differences, medoid minus mean, the ESM contact-weighted displacement).
+THE THREE EXITS, each of which must break B2 and only B2: a better distance prior (moves e
+itself, slope -2.15 A per unit); a learned residual with errors decorrelated from the
+predictor's (blocked by S19's error coherence); and a physics term on the emitted structure in
+its FREE-ENERGY form, which sits outside the marginal class so theorem 2 does not bind it. The
+third is the queued S8 free-energy item and is now the only structurally live exit in the sprint.
 
 ## Integration note 1 (2026-09-19 23:55, after S29-L1)
 Lane L's topic 1 closes the "import a QA method" route from outside: no published native-free
