@@ -494,6 +494,35 @@ second.
    "average more or differently" (bounded at 0.008 A, S29-L8). Seven routes, none of which cost
    a 126-target endpoint run to close.
 
+
+## Integration note 14 (2026-09-20 00:32, after S29-L19 and S29-L21): THE SPRINT'S UNIFIED FINDING IS THE SIGN
+Three independent lines converged on the same quantity within one hour, and it is now the
+sprint's thesis rather than a conjecture.
+(a) RUNG 8 (measurement, lane O): along the pool's first shape mode the ORACLE per-target gain
+    is -0.4543 with a FREE sign and only -0.2142 / -0.2455 with the sign forced positive /
+    negative. Most of the apparent per-target signal IS the freedom to choose the sign.
+(b) THEOREM 2 (derivation, lane T): no objective built from the posterior's marginals carries a
+    term in the native's deviation from typical, so the marginals cannot supply that sign.
+(c) S14 VIA LANE L (the record, topic 7): a linear 4,125-parameter pair potential already
+    saturates the within-target ordering problem at 0.986 with an overfitting gap of -0.0005,
+    and cross-target transfer is 0.600 against the 0.638 needed -- a transfer gap 770x the
+    overfitting gap. No loss, architecture, capacity or equivariance touches transfer. S14's own
+    conclusion, which the sprint has now re-derived from two other directions: the only open
+    direction is "a conditioning signal, not a better objective".
+THE UNIFIED STATEMENT: what the system lacks is a PER-TARGET SIGN (equivalently, a conditioning
+signal supplied at inference), not a better objective, not a better ranker, not a better
+Hamiltonian, not a better readout. Every S29 route that died this sprint died for that one
+reason, and the routes still running are each a test of whether some quantity can supply it.
+ALSO, AND IT ARRIVED BEFORE THE EXPERIMENT RATHER THAN AFTER: lane L found that the in-band
+ordering axis IS compactness (S14: per-target in-band skill correlates +0.909 with the native's
+z-scored Rg and +0.951 with rho(contacts, RMSD)) and that every realism statistic in the S27
+library is compactness-like. So banding on a compactness-loaded statistic would remove the very
+axis the experiment is looking for and make a null self-fulfilling. Lane D must report
+rho(R, Rg) for its band statistic beside the result, and re-run S28-L48's 0.960 pairwise learner
+INSIDE the band as a validity check (it should collapse toward chance if the band is real).
+This is the second time this sprint that the literature lane has saved an experiment from being
+uninterpretable before it ran.
+
 ## Closed in S29
 - The PC1 / signed-readout family (S29-L21): ORACLE best global eta is exactly 0.000; the
   per-target gain is the SIGN, which the marginals cannot supply.
