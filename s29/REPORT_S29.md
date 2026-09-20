@@ -355,7 +355,7 @@ both are committed as re-runnable tools rather than described:
   `s7/debias_tune.json`, absent from disk and from git history. That is the fourth such path found
   this sprint.
 - **`s29/s29_verify_report.py` (S29-L48)** — every headline number recomputed from its artefact
-  rather than copied from the entry that reported it. **49 of 49 match, 0 mismatches.** Lane B's and
+  rather than copied from the entry that reported it. **58 of 58 match, 0 mismatches.** Lane B's and
   lane O's figures reproduced to every digit quoted.
 
 The second pass caught an error of mine that several re-readings of the prose had not — a field
