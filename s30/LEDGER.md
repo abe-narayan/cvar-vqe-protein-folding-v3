@@ -9,7 +9,32 @@ original wording left standing.
 ## S30-L0 -- THE CHARTER, TWO READING-LIST CORRECTIONS, AND THE ARITHMETIC THAT SHOULD GOVERN THE SPRINT: **FIXING TEN TARGETS BEATS IMPROVING ALL 126 BY 0.20 Å** (2026-09-20 12:35, coordinator)
 
 ### The charter
-Saved verbatim as `s30/BRIEF.md`. One hard constraint (CVaR-VQE remains the spine and main
+Saved verbatim as `s30/BRIEF.md`. One hard constraint
+> **ANNOTATION (2026-09-20 13:52, coordinator) — THIS ENTRY'S OWN CLAIM WAS FALSE FOR 77 MINUTES,
+> AND IT IS THE FIFTH INSTANCE OF THE FAILURE THIS ENTRY WAS RECORDING.**
+>
+> "Saved verbatim as `s30/BRIEF.md`" was written at 12:35. **The file was never created.** It was
+> found missing at 13:52 only because I went to read the charter's §8 to write the report, and it
+> is now written — the charter recovered **verbatim** from the session transcript (line 13069,
+> 39,834 characters), not reconstructed from the paraphrases in this ledger.
+>
+> The original wording stands above per contract rule 15. What makes it worth an annotation rather
+> than a silent fix is *where* it sits: the very next paragraph of this entry records that **"this
+> project has four instances of prose naming a path that does not exist, one of which cost a
+> mis-planned lane-week"** — and offers that as the reason to check rather than assume. I wrote
+> that sentence and committed the fifth instance in the same entry, in the same minute.
+>
+> **The transferable form:** writing "saved as X" is not saving as X, and the moment of greatest
+> risk is immediately after articulating the lesson, when the articulation feels like the work.
+> Eight lanes then worked for 77 minutes against a charter with no canonical on-disk copy. Nothing
+> downstream is known to be wrong — every lane was briefed from quotations in this ledger and in
+> `STATE.md`, and the recovered text confirms those quotations — but that is luck, not process.
+>
+> **The fix is mechanical, not exhortative:** `s30/s30_verify.py` should assert the existence of
+> every path this ledger claims to have written. A claim about a file is checkable by a machine and
+> should never have been left to a reader. Carried to S31 as a build item.
+
+ (CVaR-VQE remains the spine and main
 scientific object), one endpoint (mean built-chain Cα RMSD, 126 targets), current production
 **3.2105 Å**, primary target < 3.0, ambitious < 2.5. Section 8's twelve leads are explicitly a
 **leads register, not a task list**; the charter states that a sprint ignoring ten of them and
