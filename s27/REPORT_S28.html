@@ -89,6 +89,34 @@ code{font-family:var(--mono);font-size:.92em;background:var(--soft);padding:1px 
   <h1>Where the Error Lives</h1>
   <p class="sub">The CVaR-VQE spine under three formulations it had never been given, measured on the built chain against production, with an Adversary lane on every entry. Nothing moved. What was bought is the mechanism, and with it the programme for making cost reduction mean RMSD reduction.</p>
 </header>
+<div class="callout refuted" style="margin:22px 0 0" id="s29-update">
+  <div class="eyebrow">Updated after Sprint 29 &middot; 2026-09-20</div>
+  <p><b>Section 8's programme has been run, and three of its five items are now closed.</b>
+  The S28 measurements on this page stand as recorded; what changed is what a reader should
+  <i>do</i> next. Sprint 29 built the meter (item 1), used it, and established a bound that
+  reframes the rest &mdash; full report: <a href="https://claude.ai/artifact/1D1hGrJfNT9NhU7EwTc2iB">The Missing Cosine</a>.</p>
+  <ul class="tight" style="margin-top:10px">
+    <li><b>Item 1 (build the meter) &mdash; DONE.</b> <code>s29/s29_D_cost_audit.py</code>, six numbers
+    per candidate cost. Its first customer was the first cost in the record that does <i>not</i>
+    anti-order the near-native ladder &mdash; and at the endpoint that cost landed 0.14&times; MDE
+    from a random member swap, emitting the same structure as production (error-direction cosine
+    <b>0.924</b>). <b>A better-ordering cost did not produce a better answer.</b></li>
+    <li><b>Item 2 (calibrate the posterior) &mdash; CLOSED, and it was already closed when written.</b>
+    An S12 measurement predating S28 prices calibration at +0.010&nbsp;&Aring;; the one variant that
+    survived that, separation-band re-weighting, was measured in S29 and is also closed. The
+    registered prior on this page ("pref and cos move but do not flip") was right.</li>
+    <li><b>Item 3 (score the de-contracted structure) &mdash; CLOSED by measurement.</b> Pure
+    de-contraction was run as one of 21 displacement fields and scored a signed cosine of
+    <b>&minus;0.0208</b> &mdash; the <i>worst</i> of all 21, below a random shape field. See the
+    contraction correction below: the premise itself was wrong.</li>
+    <li><b>Items 4 and 5 survive, and item 4 is now the ranked candidate</b> &mdash; but under a
+    constraint this page could not state: any new channel reaches the endpoint only as a cosine
+    against the direction to the native, and every operator the project owns measures &le;&nbsp;0.04
+    against the <b>0.358</b> needed for 3.0&nbsp;&Aring;. A better channel is necessary but not
+    sufficient, because the terminal operator is an average and an average cannot spend a ranking.</li>
+  </ul>
+</div>
+
 <nav class="toc"><ul>
   <li><a href="#answer">Answer</a></li>
   <li><a href="#disconnect">The disconnect</a></li>
@@ -140,7 +168,7 @@ code{font-family:var(--mono);font-size:.92em;background:var(--soft);padding:1px 
 </figure>
 <div>
 <div class="callout oracle"><div class="eyebrow">The mechanism in the record's own numbers</div>
-<p>The shipped posterior is about twice over-confident (S25 L2). The L1 Bayes-risk of an over-confident posterior is minimised by a structure whose distances sit at the posterior medians, and the pool's coordinate average is exactly that structure: it is contracted 22% against the native (mean virtual bond 2.96 Å vs 3.77) and it is the posterior's own fixed point. Under the shipped cost, production ranks at the 12.6th percentile of its own pool: the cost prefers the contracted average to 87% of the real protein windows it was averaged from (S28-L35, L36).</p>
+<p>The shipped posterior is about twice over-confident (S25 L2). The L1 Bayes-risk of an over-confident posterior is minimised by a structure whose distances sit at the posterior medians, and the pool's coordinate average is exactly that structure: it is contracted 22% against the native (mean virtual bond 2.96 Å vs 3.77) and it is the posterior's own fixed point. <span class="tag refuted">S29 correction</span> <b>&ldquo;Contracted&rdquo; is the wrong shape.</b> S29 proved the distortion is an exact variance identity, d(C)&sup2; = &#10216;d<sub>k</sub>&sup2;&#10217; &minus; s&sup2;, and measured it as a <b>separation-dependent shear</b> that crosses 1.0 near |i&minus;j|&nbsp;=&nbsp;8 &mdash; short-range distances are compressed while long-range ones are <i>over-extended</i>. A uniform rescaling therefore cannot fix it, which is why item 3 below is closed and why pure de-contraction scores the <i>worst</i> signed cosine of all 21 displacement fields S29 measured (&minus;0.0208, below a random shape field). Under the shipped cost, production ranks at the 12.6th percentile of its own pool: the cost prefers the contracted average to 87% of the real protein windows it was averaged from (S28-L35, L36).</p>
 <p>So "reduce the cost" means "agree more with the posterior median", which means "contract toward the average", which is a direction that on most targets is orthogonal to the native and on the failing targets points away from it. The pool's error is 68% common-mode (S23 L9) and the distogram shares that error, because it trained on the same fragments; a cost built from it cannot see the error it shares.</p>
 </div>
 </div>
@@ -295,7 +323,7 @@ code{font-family:var(--mono);font-size:.92em;background:var(--soft);padding:1px 
 
 <div class="step">
 <div>
-<h3>Build the cost-RMSD meter first, and make every candidate cost pass through it</h3>
+<h3>Build the cost-RMSD meter first, and make every candidate cost pass through it <span class="tag stands">S29: DONE</span></h3>
 <p>One command, four pre-registered numbers, for any cost function f(structure). All four already exist as pieces in <code>s27/</code>; the work is packaging them as <code>s27/cost_audit.py</code> with a test that reproduces the S28 values for the shipped cost. The meter is what "cost reduction equals RMSD reduction" means, operationally.</p>
 <ul class="tight">
 <li><b>ρ<sub>ladder</sub></b>: Spearman(f, RMSD) per target over the ladder {circuit optimum, random signed combination, production, Gaussian perturbation, ORACLE structure, native}, mean with fold-clustered CI (from the C2 audit). Shipped cost today: <b>−0.40</b>. Target: &gt; 0 with the fold CI excluding zero.</li>
@@ -309,14 +337,14 @@ code{font-family:var(--mono);font-size:.92em;background:var(--soft);padding:1px 
 
 <div class="step">
 <div>
-<h3>Calibrate the posterior before using it as a cost</h3>
+<h3>Calibrate the posterior before using it as a cost <span class="tag closed">S29: CLOSED</span></h3>
 <p>The identified mechanism: the shipped distogram is about 2× over-confident (S25 L2) and the L1 Bayes-risk of an over-confident posterior is minimised by the contracted average, which is why the cost prefers production to 87% of real windows and to the native. A temperature, or a per-bin calibration map, fitted leave-fold-out on the other folds' natives, is deployable and changes the cost's minimiser without retraining anything. Sweep the temperature and read the meter at each value. The distogram outputs are cached, so this is hours, not days.</p>
 <div class="meta"><div><b>Falsifier</b>no temperature raises ρ<sub>ladder</sub> above zero with the fold CI excluding it, or flips pref for the native-vs-production pair on a majority of targets</div><div><b>Registered prior</b>pref and cos move but do not flip: the shared error is common-mode, not a calibration error</div><div><b>Cost</b>hours; no AMBER, no retraining</div><div><b>If it passes</b>the calibrated cost goes straight into the S28 amplitude family (lane A's code, one flag) and to the built chain</div></div>
 </div></div>
 
 <div class="step">
 <div>
-<h3>Score the de-contracted structure</h3>
+<h3>Score the de-contracted structure <span class="tag refuted">S29: CLOSED — premise wrong</span></h3>
 <p>The average is 22% contracted and two scorers' apparent preference for it was the contraction alone (CAGEO, S28-L36). The prediction-versus-pool disagreement in radius of gyration is a demonstrated native-free signal (S23 memory; Ångström value never measured). Inside the cost, rescale the structure to the pool's predicted Rg before scoring, so the cost stops rewarding contraction; the emitted structure is unchanged. Read the meter, then the FAIL18 / 108 split, because the record's scale result (S23 L6) says a global scalar is worth 1.7% and the right scale is a per-target property.</p>
 <div class="meta"><div><b>Falsifier</b>the meter's four numbers, as above; the FAIL18 cos<sub>prod</sub> is the one expected to move</div><div><b>Registered prior</b>helps the cosine on FAIL18, not the mean</div><div><b>Cost</b>hours</div></div>
 </div></div>
@@ -479,3 +507,4 @@ code{font-family:var(--mono);font-size:.92em;background:var(--soft);padding:1px 
   })();
 })();
 </script>
+
