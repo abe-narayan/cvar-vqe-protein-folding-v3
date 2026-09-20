@@ -45,6 +45,40 @@ actively harmful. That is a mechanism to find, not a curiosity.
 
 ---
 
+
+## NOTE 1 (2026-09-20 12:40, lane R, before its numbers): A FINDING I HANDED OVER AS SETTLED IS CONFOUNDED
+
+I briefed lane R with S28-L48 as established: *20 of 31 native-free scorers prefer the contracted
+production average to a 0.25 Å ORACLE structure.* It is the most-cited negative in the project's
+recent record — it is in the S29 report, in the published artifact, and it is why I called
+recognition "the crux."
+
+**Lane R's objection, which I accept: every rung in that ladder differs in KIND as well as in
+nativeness.** Production is a contracted average; the ORACLE rungs are circuit outputs; the
+controls are perturbations. So the measurement is a **cross-kind preference**, and the
+perception–distortion theorem (S29-L12) already predicts exactly that without any claim about
+whether nativeness is visible. **S28-L48 therefore establishes something weaker than I said: that
+these scorers prefer one kind of object to another, not that nativeness is unrecognisable.**
+
+**What this does and does not touch.** It does *not* undo S29's "recognition closed three ways" —
+that rests on different evidence (the across-band identity, F2 failing on 58/70 *within* band, and
+the incidental-parameter theorem). It removes one pillar from the specific claim that *single-
+structure geometry cannot see nativeness*, which is precisely the question lane R is now testing on
+an instrument where kind, local geometry and perturbation budget are matched and only nativeness
+varies.
+
+**The instrument's one-line case**, from lane R's own probe on 1A13: resample **one** residue's
+torsions from the fold's leakage-safe Ramachandran table and RMSD-to-native spans **0.284 to
+4.685 Å**. Same kind, same local statistics, one torsion, 4.4 Å of nativeness. If nothing can order
+that, nothing can see nativeness.
+
+**A derivation I have asked lane R to make explicit, because it may predict the answer.** If a
+single torsion swings global RMSD by 4.4 Å while every local statistic is matched by construction,
+then any purely *local* channel is blind to that variation **by construction**, and its ceiling is
+set by how much RMSD variance is non-local. If that fraction is near zero for local channels, the
+negative result becomes a theorem on this instrument rather than an empirical miss — and the live
+question narrows to channels with genuinely global reach.
+
 ## WHAT I AM TREATING AS BINDING FROM S29 (until a lane breaks it)
 
 - Every native-free operator is a displacement; its whole value is one cosine. 3.00 Å needs
