@@ -3507,3 +3507,101 @@ Artefacts: `s29/results/s29_D_theory_shrink.json`, `s26/logs/s29D_theory_shrink.
 clause 2's veto reproduced on the full grid of variants).
 Verdict: **clause 3 is HALF REFUTED and HALF CONFIRMED**; contract addendum 20 STANDS as a rule
 and its stated mechanism does not.
+
+## S29-L38 -- ADVERSARY CHECK OF S29-L25 (lane B's non-prefix subset optimum): **CLAIM 1 STANDS, REPRODUCED INDEPENDENTLY ON 12/12 TARGETS AND UNDER A SECOND READING OF THE RISK TABLE** (the exact shipped lookup gives the same verdict on every target, 0 sign flips; the frame is the deployed readout's own to 0.0; 7JGX's zero gap is a genuine argmin, not a code path); ONE REAL DEFECT IN THE TIE RULE THAT DID NOT BITE AND IS CONSERVATIVE FOR B's OWN CLAIM; AND CLAIM 2 NEEDS n = 35, WHICH IS WORTH SPENDING (2026-09-20 01:37, D)
+
+Code `s29/s29_D_bcheck.py`, written from lane B's ENTRY rather than its flow: a single vectorised
+pass over all pairs with no chunking, tie handling that reports the tied argmin SET, and f
+evaluated under BOTH readings of the risk table. Results `s29/results/s29_D_bcheck_pairs.json`,
+`s29_D_bcheck_power.json`. ORACLE only in the RMSD columns, attached after every selection.
+
+**A. IS THE SEARCH EXHAUSTIVE? YES.** 124,750 pairs enumerated on every one of the 12 targets,
+equal to C(500, 2) exactly, in one pass with no chunk-local argmin. **all_exhaustive: true.**
+
+**B. THE TIE RULE IS DEFECTIVE AND IT DID NOT BITE.** `s29/s29_B_tta.py:324-328` carries the
+comment "ties: average over the tied argmin set rather than reading array order" and then takes
+`tie[0]` -- **the first tied index in ARRAY order**. On a pool held in DIS-sorted order the first
+tied index is the BEST-RANKED member, so the rule is biased **toward the prefix**, which is the
+direction that would WEAKEN lane B's own conclusion, not manufacture it. Measured: the tied
+argmin sets have size 1 on 10 targets and 2 on two (1I6Y, 2P5H), and lane B's chunk-local rule
+agrees with my single pass on **12 of 12** targets to 1e-15. So the defect is real, is recorded,
+changed nothing here, and should be fixed before the rule is reused on a statistic with wide ties
+(`tie-breaking-leaks-the-pool-order` is on the record for exactly this shape).
+
+**C. THE FRAME IS THE DEPLOYED READOUT's OWN.** `Frame(W, DIS top-75)`'s uniform average over the
+retained set equals `s24.d_harness.readout_uniform(cand, top)` at **max |dev| 0.00e+00** on all
+12 targets. Not a convenient frame; the shipped one.
+
+**D. THE CONCLUSION SURVIVES A SECOND READING OF THE RISK TABLE, WHICH WAS THE OPEN RISK.** Lane
+B's f is the piecewise-linear `Surrogate`, which differs from the EXACT shipped lookup
+(`I.shipped_score`) by about 0.006 to 0.009 in absolute value -- and three of lane B's twelve
+gaps (5Z5W +0.0015, MSET-style small gaps) are SMALLER than that discrepancy, so the result could
+in principle have been an artefact of which reading was used. Recomputed under the exact lookup:
+| target | surrogate best pair / gap | shipped best pair / gap | same verdict? |
+|---|---|---|---|
+| 1A13 | [0, 10] +0.0101 | [0, 10] +0.0113 | yes |
+| 1I6Y | [1, 33] +0.0619 | [1, 33] +0.0555 | yes |
+| 1M02 | [24, 37] +0.3140 | [24, 37] +0.3250 | yes |
+| 2BFI | [6, 38] +0.0111 | [6, 38] +0.0118 | yes |
+| 2LWS | [0, 5] +0.1952 | [0, 5] +0.1948 | yes |
+| 2MP9 | [0, 12] +0.1340 | [0, 12] +0.1385 | yes |
+| 2P5H | [0, 4] +0.0432 | **[0, 5]** +0.0445 | yes (different pair, still non-prefix) |
+| 5Z5W | [4, 118] +0.0015 | **[2, 5]** +0.0041 | yes (different pair, still non-prefix) |
+| 6MBM | [15, 82] +0.0147 | [15, 82] +0.0095 | yes |
+| 7JGX | [0, 1] +0.0000 | [0, 1] +0.0000 | yes (IS the prefix, under both) |
+| 8HVS | [1, 2] +0.0512 | [1, 2] +0.0540 | yes |
+| 9KAR | [0, 3] +0.1790 | [0, 3] +0.1825 | yes |
+**0 sign flips between the two readings.** Two targets change WHICH pair wins (2P5H, 5Z5W -- both
+small-gap cells, exactly as the risk predicted) and neither changes the verdict. Every one of
+lane B's twelve best-pair ranks and values reproduces from my independent code.
+
+**E. 7JGX's ZERO GAP IS GENUINE.** The exhaustive argmin over all 124,750 pairs IS {rank 0,
+rank 1} under the surrogate AND under the shipped lookup, with a tie set of size 1. The
+"+0.0000" is then an identity (f(best) and f(prefix) are the same number because the best pair IS
+the prefix), not a code path returning the prefix -- my scan has no such path and lands in the
+same place. So the entry's "11 of 12" is right, and 7JGX is the honest one-in-twelve.
+
+**VERDICT ON CLAIM 1: STANDS.** It is what the entry says it is -- the first measurement in this
+project's record of "which set" being a real optimisation variable rather than the read-out of a
+sort, on the deployed pool, with the deployed frame and the deployed functional. On the charter's
+section 11 questions 5 and 7 it is an affirmative in principle, and I say that plainly.
+
+**CLAIM 2, THE PRICE: n = 12 CANNOT MEASURE THE DIRECTION, AND n = 35 CAN.** The entry reports
++0.4278 A worse than production at 0.59x MDE, fold CI straddling zero, power 0.38, Type-M 1.60,
+and labels it NOT MEASURED. That labelling is correct and the arithmetic behind it is:
+| n | MDE | effect / MDE | power | Type-M |
+|---|---|---|---|---|
+| 12 (as run) | 0.7251 | 0.59 | **0.38** | 1.61 |
+| 24 | 0.5127 | 0.83 | 0.65 | 1.25 |
+| **35** | ~0.425 | **1.00** | ~0.80 | ~1.10 |
+| 40 | 0.3971 | 1.08 | 0.85 | 1.09 |
+| 60 | 0.3243 | 1.32 | 0.96 | 1.02 |
+| 126 | 0.2238 | 1.91 | 1.00 | 1.00 |
+(implied sd 0.8965 from the reported effect and ratio; SE 0.2588 at n = 12.)
+**Read in BOTH directions, as the coordinator asked.** (i) It is NOT evidence that the lift helps
+-- the point estimate is on the harmful side and nothing in it supports a build. (ii) It is
+equally NOT strong evidence that the lift hurts: at power 0.38 a true harm of this size is missed
+three times in five, and the Type-M factor of 1.61 says that IF the observed effect is
+significant-by-noise its magnitude is inflated by about 60%, so "+0.43 A worse" is very likely an
+overstatement of whatever is really there. The honest statement is the entry's own: direction
+only, not measured.
+**Is n = 35 worth spending? YES, and cheaply.** The probe cost 92 s for 12 targets on one core
+(`s26/jobs_done/s29B_tta_subset.json`, peak 0.34 GB), so 35 targets is about 4.5 minutes and the
+full 126 about 16 minutes -- less than a single one of this sprint's chain jobs. Given that
+claim 1 is now independently confirmed and is a genuine mechanism result, the accuracy question
+it raises deserves a measurement rather than a shrug, and at 126 targets the same effect would
+sit at 1.91x MDE with power 1.00 and Type-M 1.00. My recommendation to the coordinator: run the
+m = 5 subset arm on all 126 on the POINT CLOUD first (16 min), and take it to the built chain
+only if it clears 0.7x MDE, with the registered expectation that it is worse.
+**One caveat for that run, from my own S29-L35**: the m = 5 subset average is a displacement
+field like every other, and my survey puts MSET_5's signed cosine at +0.063 with a per-target
+|cos| of 0.271. If the 126-target run comes back harmful, that is the expected value of a
+displacement whose sign is not supplied, not a refutation of claim 1's mechanism.
+Multiplicity: 12 targets x 2 readings of the risk table (a robustness check, not a grid to pick
+from); 0 endpoint comparisons run by me.
+Artefacts: `s29/s29_D_bcheck.py`, `s29/results/s29_D_bcheck_pairs.json`,
+`s29/results/s29_D_bcheck_power.json`; lane B's `s29/results/s29_B_tta_subset_rows.jsonl`.
+Verdict: **CLAIM 1 STANDS (mechanism, reproduced independently and under a second functional).
+CLAIM 2 STANDS AS NOT MEASURED, in both directions, and should be taken to n = 126 for 16
+minutes of compute.** One defect recorded in the tie rule; it is conservative for lane B's claim
+and must be fixed before reuse.
