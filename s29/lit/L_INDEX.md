@@ -151,3 +151,30 @@ Topic 7 running count: 10 entries, 5 KEPT, 1 NOTED, 4 RECORDED, 2 REJECTED. No i
 statistic in the S27 library is compactness-like, so a compactness-loaded band would crush
 rho_SY.R toward zero BY CONSTRUCTION and yield a SELF-FULFILLING null. Measure rho(R, Rg) for the
 chosen band statistic and report it beside the result.
+
+## Topic 8 -- per-target conditioning, the sign problem, ensemble dispersion (`L_8_conditioning.md`, ledger S29-L31)
+
+The sprint's last literature assignment, aimed at the unified finding (the system lacks a
+per-target SIGN, i.e. a conditioning signal supplied at inference).
+
+| source | what it adds | verdict |
+|---|---|---|
+| **Neyman J, Scott EL. Econometrica 16:1-32 (1948)** -- the incidental parameters problem | the per-target sign is an INCIDENTAL parameter (one nuisance parameter per target, bounded observations per target); pooled ML is inconsistent for it; the standard remedy (conditional / fixed-effects likelihood = the within-group pairwise design of S29-L19) ELIMINATES it rather than estimating it | **KEPT -- the topic's central result.** Converts S14's empirical closure into a structural one: the sign is not estimable from other targets' answers as a matter of theory, not of capacity. Names the only two escapes: replication within the instance, or a covariate observed at inference |
+| Whitaker JS, Loughe AF. Mon Wea Rev 126:3292-3302 (1998) | spread-skill is weak EVEN FOR A PERFECT ensemble; larger where the day-to-day variability of spread is large; most useful when spread is EXTREME | KEPT -- three design statements for the pool-dispersion route, plus a null-interpretation rule (a modest correlation is the expected result, not evidence of a broken pool) |
+| AlphaFold2 MSA-depth dependence (accuracy degrades below depth ~30; pLDDT tracks aligned residues per position; single-sequence mode as a distinct regime) | the field's real per-target conditioner is an ALIGNMENT statistic | REJECTED as unavailable -- structurally absent at 9-16 residues (a 13-mer has no family; any hits are the fragment's parents, i.e. leakage). The cleanest statement of why the peptide case is harder than the protein case |
+| Jumper J et al. Nature 596:583 (2021) -- recycling | recycling feeds back the network's OWN output only; no external evidence enters | REJECTED as a conditioning source; the classification (OPTIMISATION, not information) is the deliverable -- it addresses expression, and our barrier is selection |
+| templates; self-reported confidence heads (pLDDT/PAE/pTM) | per-target, but either leakage or a function of the model's own output | REJECTED (L_1 4.1 measured pLDDT's in-band skill at peptide length: none) |
+| quasi-single-model QA (CASP15 EMA winners) | agreement with an INDEPENDENT predictor: per-target, MSA-free, and escape route (1) | AVAILABLE IN PRINCIPLE, empty in practice (S24 L2/L3: the only second source is 31% independent and 0.76 A worse) |
+| phase retrieval / "the importance of phase" | sign/phase information is disproportionately VALUABLE | RECORDED as a negative transfer -- it establishes value, not recoverability; phase retrieval needs magnitude measurements plus strong priors we lack |
+| sign ambiguity in factor models / PCA | the component sign is a GAUGE fixed by convention | RECORDED as a negative transfer -- ours is a real latent state with a right answer (lane O's PC1: 52%) |
+| one-bit compressed sensing | recovers a DIRECTION from many sign measurements | RECORDED as a negative transfer -- the converse of our problem |
+| my own distinction, labelled | spread is a MAGNITUDE statistic, reflection-symmetric, so it cannot reach the sign unless read ANISOTROPICALLY | RECORDED -- decides whether the dispersion route can address q at all |
+
+Topic 8 running count: 10 entries, 2 KEPT, 1 available-in-principle, 5 RECORDED, 3 REJECTED.
+**Priced judgement for S30 (labelled judgement, in the note's section (d)):** run the per-target
+sign regression (PC1's ORACLE sign on S14's three compactness proxies, leave-fold-out, 126
+existing rows, minutes) as the cheapest decisive MECHANISM measurement -- but the price table,
+which I corrected by ~4x from my own first draft, caps it: at rho = 0.37, q = 0.70 buys 0.035 A,
+q = 0.80 buys 0.080 A, and the ceiling at a perfect sign is 2.985 A. The gain is QUADRATIC in
+(2q-1). **S30's only plausible route to a materially better number is a better distance prior**
+(-2.15 A per unit, S24 L13). Those are two different projects.

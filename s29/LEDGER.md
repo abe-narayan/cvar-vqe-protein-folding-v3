@@ -2912,3 +2912,127 @@ pre-registered 0.05 A gate. S10-5's headline "convex hull" rows (1.802 / 0.953 r
 emitted) are its `oa` convention -- each candidate posed on the NATIVE individually -- which no
 operator can emit; that arm is running separately and will be reported in the ladder table with
 this label attached, so the two are never mixed.
+
+## S29-L31 -- TOPIC 8, PER-TARGET CONDITIONING: THE MISSING SIGN IS AN *INCIDENTAL PARAMETER* (NEYMAN-SCOTT 1948), SO IT IS NOT ESTIMABLE FROM OTHER TARGETS' ANSWERS AS A MATTER OF THEORY AND THE CORRECT HANDLING OF THE CONFOUND *ELIMINATES* IT RATHER THAN ESTIMATING IT -- WHICH CONVERTS S14's EMPIRICAL CLOSURE INTO A STRUCTURAL ONE AND NAMES THE ONLY TWO ESCAPES; THE FIELD's OWN PER-TARGET CONDITIONER IS MSA DEPTH AND IS STRUCTURALLY ABSENT AT 9-16 RESIDUES; RECYCLING IS OPTIMISATION, NOT INFORMATION; AND MY PRICED JUDGEMENT FOR S30, WITH A SELF-CORRECTION OF MY OWN FIRST DRAFT (2026-09-20 01:08, L)
+
+Question (coordinator's topic 8, the sprint's last literature assignment): (a) where does the
+field get per-target conditioning, and does any of it exist for a 9-16-mer with no MSA and no
+template; (b) is there a general result on when a SIGN is estimable if the magnitude is not,
+with only other instances' answers as supervision; (c) is there literature on extracting signal
+from an ensemble's own dispersion that a summary statistic does not carry; (d) my judgement, on
+the record, on S30's most promising direction and its first cheap measurement. Literature plus
+the record; no experiment.
+
+(b) FIRST, BECAUSE IT IS A THEOREM AND IT IS EXACTLY OUR SITUATION. Neyman J, Scott EL,
+"Consistent estimates based on partially consistent observations", Econometrica 16:1-32 (1948).
+Canonical example: X_ij ~ N(mu_j, sigma^2), i = 1,2, j = 1..n; as n grows the number of NUISANCE
+parameters mu_j grows with it while observations per nuisance parameter stay at 2, and the MLE of
+sigma^2 converges to HALF its true value -- inconsistent, not merely inefficient. Map: the scorer
+is s(x) = f(x) + g(j) with f the STRUCTURAL parameter (shared, what cross-target training
+estimates) and g(j) the per-target sign of the in-band axis, an INCIDENTAL parameter with one
+instance per target. S14 is that theorem measured: 0.986 within-target with a -0.0005 overfitting
+gap (g(j) identifiable from that target's own labels), 0.600 across targets (g(j) NOT estimable
+from other targets' answers), and a learning curve that DECLINES with more targets because
+pooling averages a quantity whose sign differs per target. THE SHARPER HALF, which closes the loop
+with S29-L19: the standard remedy for incidental parameters is to ELIMINATE them (conditional
+likelihood, fixed effects), and the within-group pairwise objective that correctly handles a
+per-group confound, s_i - s_j = f(x_i) - f(x_j), is exactly conditional logistic regression -- it
+buys a consistent estimate of the shared f PRECISELY BY DISCARDING all information about g(j).
+So the two available moves are: estimate f consistently and discard the sign, or estimate f
+inconsistently and contaminate it with the sign. Neither returns g(j). **The per-target sign is
+not estimable from other targets' answers as a matter of statistical theory, not of model
+capacity** -- the structural version of S14's "capacity is saturated by a linear model" and S12's
+flat learning curve. THE ONLY TWO ESCAPES, named by that literature: (1) REPLICATION WITHIN THE
+INSTANCE (independent observations of the same target's latent state -- i.e. an independent
+second source, which is (a)'s quasi-single-model class and why independence rather than scoring
+is the valuable property); (2) A COVARIATE OBSERVED AT INFERENCE that predicts g(j) -- which is
+exactly what the sprint has been calling "a conditioning signal", with candidates already priced
+(S14's native-free compactness proxies at residualised r = 0.244 pool-mean Rg, 0.313
+distogram-predicted Rg, 0.365 incumbent emitted Rg, against the ORACLE's 0.909, all three CIs
+excluding zero). THREE NEGATIVE TRANSFERS, recorded so S30 does not spend time on them: phase
+retrieval / "the importance of phase" establishes that sign information is disproportionately
+VALUABLE, not that it is RECOVERABLE (phase retrieval needs magnitude measurements plus strong
+priors -- support, positivity, oversampling -- with no analogue here); sign ambiguity in factor
+models/PCA is a GAUGE fixed by convention, whereas ours is a real latent state with a right answer
+(lane O's PC1: |rho| 0.37-0.39, sign correct on 52%, S29-L21); one-bit compressed sensing recovers
+a DIRECTION from many sign measurements, the converse of our problem.
+
+(a) THE FIELD's PER-TARGET CONDITIONER IS MSA DEPTH, AND IT IS STRUCTURALLY ABSENT HERE. AF2's
+accuracy scales with the number of effective sequences and degrades substantially below an MSA
+depth of about 30; residue-level pLDDT correlates with aligned residues per position; orphan
+sequences and de novo designs are the known failure class and ColabFold exposes a single-sequence
+mode because that regime differs. A 13-residue query has no alignable homolog set: any hits are
+the fragment's parent proteins, which is the leakage the fold clustering exists to exclude, and
+coevolution is a statement about a family that a peptide of this length does not have. The
+project reaches the same place independently (`structure-and-sequence-are-decoupled`: the
+best-matching window has 12% identity; S13: sequence context predicts phi at 36.1 deg vs a blind
+36.4). THIS IS THE CLEANEST STATEMENT OF WHY THIS INSTRUMENT IS HARDER THAN THE PROTEIN CASE: the
+field's per-target conditioner is not weak here, it is absent. RECYCLING, on the coordinator's
+specific question, IS OPTIMISATION, NOT INFORMATION: AF2 recycles the pair representation, the
+single representation and predicted CB -- all the network's OWN output -- so no external evidence
+enters and it cannot create a per-target signal the inputs do not determine; it addresses
+expression, and the project's barrier is selection (a 27-parameter family already holds a 0.25 A
+structure on every target, S28-L26b). Templates are leakage here; self-reported confidence heads
+(pLDDT/PAE/pTM) are functions of the model's own output and L_1 4.1 measured pLDDT's in-band skill
+at peptide length as none. The one genuinely per-target, MSA-free, available-in-principle class is
+quasi-single-model QA (agreement with an INDEPENDENT predictor; CASP15's EMA winners), blocked
+here by S24 L2/L3 (the only second source is 31% angularly independent and 0.76 A worse; mixtures
+on a line at cos 0.943).
+
+(c) ENSEMBLE DISPERSION: A MATURE LITERATURE WITH A QUANTITATIVE WARNING. Numerical weather
+prediction has asked our question for thirty years. Whitaker JS, Loughe AF, "The Relationship
+between Ensemble Spread and Ensemble Mean Skill", Mon Wea Rev 126:3292-3302 (1998): "even for a
+perfect ensemble (one in which all sources of forecast error are sampled correctly) there need not
+be a high correlation between spread and skill"; the correlation "should be larger where the
+day-to-day variability of spread is large"; and spread "is likely to be most useful as a predictor
+of skill when it is EXTREME ... either very large or very small compared to its climatological
+mean value". Three actionable transfers: a weak pool-spread-to-error correlation is the EXPECTED
+result even for a perfectly behaved pool, so a modest correlation is not evidence of a broken pool
+and a null is not evidence of no information; the quantity to compute FIRST is not the pool's
+spread but the length-residualised CROSS-TARGET VARIABILITY of that spread, which if small closes
+the route cheaply; and the signal should concentrate in the tails, which maps onto the standing
+FAIL18-versus-108 regime question and gives a pre-registered place to look. The project's memory
+note `prediction-pool-disagreement-is-a-native-free-signal` says the contrast is demonstrated but
+its Angstrom value was never measured; Whitaker & Loughe say what shape that measurement should
+have. THE DISTINCTION THAT DECIDES WHETHER THE ROUTE CAN REACH THE SIGN AT ALL, recorded as mine:
+spread is a MAGNITUDE statistic and is symmetric under reflection of the error, so by S29-L23's
+|rho|(2q-1) form it can say "this target is hard" (a magnitude claim, which could gate abstention
+or a per-target step size) but cannot say which WAY to move -- unless read ANISOTROPICALLY (the
+orientation of the spread's principal axes relative to the candidate, not its scalar size). The
+anisotropic reading is the version worth testing and is not what the memory note measured.
+
+(d) MY JUDGEMENT, LABELLED AS JUDGEMENT, AND A SELF-CORRECTION. Given T's bound (S29-L23: every
+native-free operator is worth one cosine; no field built here exceeds |rho| 0.04 against the 0.628
+that 2.5 A needs; PC1 at |rho| 0.37-0.39 with its sign at chance reaches 2.98 A at a perfect sign),
+plus topic 8(b)'s theorem and topic 8(a)'s absence, I would say plainly in the report that the
+search for a better native-free SCORER is closed from three directions at once -- measurement
+(S28-L48, S12, S14), derivation (theorem 2) and now statistical theory (Neyman-Scott). That leaves
+the two escapes. I would put S30's FIRST experiment through the second: regress the per-target
+ORACLE sign of the pool's PC1 (already computed for S29-L21) on S14's three length-residualised
+native-free compactness proxies, leave-fold-out, and report held-out sign accuracy q with a
+fold-clustered CI against 0.50. One regression over 126 existing rows; minutes; no AMBER; no
+endpoint run; decisive in both directions. **I PRICED IT WRONG IN MY FIRST DRAFT BY ABOUT 4x AND
+AM CORRECTING IT HERE RATHER THAN QUIETLY FIXING IT.** T's formula gain = RMSD(1 - sqrt(1 - rho^2
+(2q-1)^2)) at rho = 0.37, RMSD_prod 3.2126 (arithmetic on T's formula, verified to reproduce T's
+own 2.98 A at q = 1): q = 0.55 -> 0.002 A; 0.60 -> 0.009; 0.65 -> 0.020; 0.70 -> 0.035; 0.80 ->
+0.080; 0.90 -> 0.144; 1.00 -> 0.228 (built chain 3.210 / 3.204 / 3.193 / 3.177 / 3.132 / 3.069 /
+2.985). The gain is QUADRATIC in (2q-1) -- the squared-skill law again -- so a genuinely good sign
+classifier at q = 0.70 buys 0.035 A, inside this instrument's noise, and the CEILING of the entire
+direction is 2.985 A. REVISED JUDGEMENT, which is less attractive than my first draft implied and
+is the honest one: run the sign regression as the cheapest decisive MECHANISM measurement, but do
+not let it stand in for the accuracy goal, because no achievable sign accuracy on PC1 reaches
+3.0 A let alone 2.5 A. **S30's only plausible route to a materially better number is a better
+distance prior** (-2.15 A per unit, S24 L13; one of the three classes T's section 7 names as able
+to break assumption B2). Those are two different projects and the report should say so. If q comes
+back at chance, the native-free scorer programme is closed by theorem plus measurement and S30
+should be a prior project or an honest ceiling paper.
+
+VERDICT. KEPT 2 (Neyman-Scott 1948; Whitaker & Loughe 1998). AVAILABLE-IN-PRINCIPLE 1
+(quasi-single-model QA, blocked by S24 L2/L3). RECORDED 5 (three negative transfers -- phase
+retrieval, PCA sign gauge, one-bit compressed sensing; the recycling classification; the
+magnitude-versus-sign distinction for dispersion). REJECTED 3 (recycling, MSA depth, templates and
+confidence heads as conditioning sources here). No importable operator; the deliverables are a
+theorem, a classification, three design statements and a priced judgement.
+Multiplicity: 0 endpoint comparisons. The only arithmetic is the price table, labelled as
+arithmetic on lane T's formula and cross-checked against T's published 2.98 A.
+Artefacts: `s29/lit/L_8_conditioning.md`; `s29/lit/L_INDEX.md`.
