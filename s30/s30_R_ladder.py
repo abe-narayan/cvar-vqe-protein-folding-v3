@@ -525,8 +525,13 @@ def target_row(pdb, seed=0):
         cell["pref_native_rebuilt"] = float((v[iNATR] < vp) + 0.5 * (v[iNATR] == vp))
         # S3: the rebuilt native's percentile inside its own ladder A
         cell["pctile_nat_in_A"] = float(np.mean(v[iA] < v[iNATR]))
-        # D2: resolution -- pairwise concordance by |delta RMSD|, within m
-        conc = np.zeros(len(DELTA_LABELS)); cnt = np.zeros(len(DELTA_LABELS))
+        # D2: resolution -- pairwise concordance by |delta RMSD|, within m.  Chance is exactly
+        # 0.5 by construction, so no separate null is needed.  Reported twice: over ALL pairs,
+        # and restricted to the NEAR-NATIVE regime (both members <= 2 A) -- because separating
+        # 4 A from 0.3 A is coarse triage, and separating 1.5 A from 1.0 A is what an endpoint
+        # objective would actually have to do.
+        nb = len(DELTA_LABELS)
+        conc = np.zeros(nb); cnt = np.zeros(nb); conc2 = np.zeros(nb); cnt2 = np.zeros(nb)
         for m in grid:
             sel = np.where(MA == m)[0]
             if sel.size < 4:
@@ -536,13 +541,19 @@ def target_row(pdb, seed=0):
             d = np.abs(ll[a] - ll[b])
             ok = ((vv[a] < vv[b]) == (ll[a] < ll[b])).astype(float)
             ok[vv[a] == vv[b]] = 0.5
-            bi2 = np.clip(np.digitize(d, DELTA_BINS) - 1, 0, len(DELTA_LABELS) - 1)
-            for q in range(len(DELTA_LABELS)):
+            nearpair = np.maximum(ll[a], ll[b]) <= 2.0
+            bi2 = np.clip(np.digitize(d, DELTA_BINS) - 1, 0, nb - 1)
+            for q in range(nb):
                 s2 = bi2 == q
                 if s2.any():
                     conc[q] += ok[s2].sum(); cnt[q] += s2.sum()
-        cell["conc"] = [float(conc[q] / cnt[q]) if cnt[q] > 0 else None for q in range(len(DELTA_LABELS))]
-        cell["conc_n"] = [int(cnt[q]) for q in range(len(DELTA_LABELS))]
+                s3 = s2 & nearpair
+                if s3.any():
+                    conc2[q] += ok[s3].sum(); cnt2[q] += s3.sum()
+        cell["conc"] = [float(conc[q] / cnt[q]) if cnt[q] > 0 else None for q in range(nb)]
+        cell["conc_n"] = [int(cnt[q]) for q in range(nb)]
+        cell["conc_near"] = [float(conc2[q] / cnt2[q]) if cnt2[q] >= 20 else None for q in range(nb)]
+        cell["conc_near_n"] = [int(cnt2[q]) for q in range(nb)]
         # --- features for the LEAVE-FOLD-OUT combination (prereg item 6).  Rank-z over the union
         # of ladder A, the pool and the fixed rungs, so every target contributes on one scale.
         from s27.ham_lib import zrank

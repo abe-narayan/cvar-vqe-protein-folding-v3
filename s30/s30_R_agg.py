@@ -187,8 +187,16 @@ def main(argv=None):
                   "rho_B_part_anchor", "rho_rg_A", "rho_rg_pool", "pref_near", "pref_pool",
                   "pref_oracle_circbest", "pref_native_rebuilt", "pctile_nat_in_A"):
             cell[k] = mean_ci(g(k), folds, f"{nm}.{k}")
+        # F-R1 clause (i)'s registered contrast: ladder A's nativeness ordering vs ladder B's
+        # distance-to-anchor ordering.
         cell["contrast_A_minus_ANCHOR"] = paired_ci(g("rho_A_part"), g("rho_ANCHOR_part"), folds,
                                                     f"{nm}.A-ANCHOR")
+        # Reported BESIDE it, never substituted for it: the SAME ladder-B structures with the
+        # SAME channel values, only the LABEL changed (distance to the native vs distance to the
+        # anchor).  This is the sharpest form the control can take -- nothing varies but the
+        # question being asked.
+        cell["contrast_B_minus_ANCHOR"] = paired_ci(g("rho_B_part"), g("rho_ANCHOR_part"), folds,
+                                                    f"{nm}.B-ANCHOR")
         cell["contrast_pref"] = paired_ci(g("pref_near"), g("pref_pool"), folds, f"{nm}.pref")
         # D2 resolution: concordance per |delta RMSD| bin, count-weighted per target
         cell["conc"] = {}
@@ -196,12 +204,21 @@ def main(argv=None):
             v = [r["ch"].get(nm, {}).get("conc", [None] * 6)[q] for r in rows]
             cell["conc"][lab] = mean_ci([float(x) if x is not None else float("nan") for x in v],
                                         folds, f"{nm}.conc.{lab}")
-        res = None
-        for lab in DELTA_LABELS:                      # the SMALLEST bin that stays above 0.5
-            c = cell["conc"][lab]
-            if np.isfinite(c.get("mean", float("nan"))) and c["mean"] > 0.5 and c["fold_ci"][0] > 0.5:
-                res = lab; break
-        cell["resolution"] = res
+        cell["conc_near"] = {}
+        for q, lab in enumerate(DELTA_LABELS):
+            v = [(r["ch"].get(nm, {}).get("conc_near") or [None] * 6)[q] for r in rows]
+            cell["conc_near"][lab] = mean_ci([float(x) if x is not None else float("nan")
+                                              for x in v], folds, f"{nm}.concnear.{lab}")
+
+        def _res(d):
+            for lab in DELTA_LABELS:                  # the SMALLEST bin that stays above 0.5
+                c = d[lab]
+                if np.isfinite(c.get("mean", float("nan"))) and c["mean"] > 0.5 \
+                        and c["fold_ci"][0] > 0.5:
+                    return lab
+            return None
+        cell["resolution"] = _res(cell["conc"])
+        cell["resolution_near"] = _res(cell["conc_near"])
         # ---- F-R1, evaluated exactly as registered
         c1a = cell["rho_A_part"]["mean"] >= BAR_RHO and cell["rho_A_part"]["excludes_zero"]
         ctr = cell["contrast_A_minus_ANCHOR"]
@@ -287,9 +304,9 @@ def render(o):
         print(f"  {k:11s} {v['mean']:+.4f}  fold CI [{v['fold_ci'][0]:+.4f}, {v['fold_ci'][1]:+.4f}]")
 
     print("\n=== THE TABLE (every channel; nothing selected) ===")
-    hdr = (f"{'channel':16s} {'rhoA_part':>10s} {'rhoANCH_p':>10s} {'A-ANCH':>8s} "
+    hdr = (f"{'channel':16s} {'rhoA_part':>10s} {'rhoANCH_p':>10s} {'A-ANCH':>8s} {'B-ANCH':>8s} "
            f"{'rhoB_pa':>8s} {'rho_rg':>7s} {'prefN':>6s} {'prefPool':>8s} {'pref-ctl':>8s} "
-           f"{'pctNat':>7s} {'resolutn':>9s}  F-R1")
+           f"{'pctNat':>7s} {'res_all':>9s} {'res_near':>9s}  F-R1")
     print(hdr); print("-" * len(hdr))
     order = sorted(t, key=lambda nm: -(t[nm]["rho_A_part"]["mean"]
                                        if np.isfinite(t[nm]["rho_A_part"]["mean"]) else -9))
@@ -299,10 +316,12 @@ def render(o):
         flag = "FIRES" if f["FIRES"] else ("i" if f["clause_i"] else "") + ("ii" if f["clause_ii"] else "") or "-"
         print(f"{nm:16s} {c['rho_A_part']['mean']:+10.3f} {c['rho_ANCHOR_part']['mean']:+10.3f} "
               f"{c['contrast_A_minus_ANCHOR'].get('effect', float('nan')):+8.3f} "
+              f"{c['contrast_B_minus_ANCHOR'].get('effect', float('nan')):+8.3f} "
               f"{c['rho_B_part_anchor']['mean']:+8.3f} {c['rho_rg_A']['mean']:+7.3f} "
               f"{c['pref_near']['mean']:6.3f} {c['pref_pool']['mean']:8.3f} "
               f"{c['contrast_pref'].get('effect', float('nan')):+8.3f} "
-              f"{c['pctile_nat_in_A']['mean']:7.3f} {str(c['resolution']):>9s}  {flag}")
+              f"{c['pctile_nat_in_A']['mean']:7.3f} {str(c['resolution']):>9s} "
+              f"{str(c['resolution_near']):>9s}  {flag}")
 
     print("\n=== A4 multiplicity (max over channels, per-target sign-flip null, 500 draws) ===")
     for k, v in o["A4_multiplicity"].items():
