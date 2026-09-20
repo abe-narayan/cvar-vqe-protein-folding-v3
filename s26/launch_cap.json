@@ -1,4 +1,4 @@
 {
- "max_concurrent": 6,
- "note": "S29 start: cap 6; band 92-94, hard 95.5"
+ "max_concurrent": 8,
+ "note": "S29 00:05: cap 8 (8 cores); the user asked for 94-95% utilisation and the box is at 64% with lanes single-streaming. Lanes shard 126-target runs into concurrent chunks."
 }
