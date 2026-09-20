@@ -463,3 +463,204 @@ inside MDE) unless an `n`-carrying channel picks the pole.
    with the best global `eta` chosen leave-fold-out: predicted **under 0.15 A** better than
    production, with the per-target sign an order statistic priced by `best_of_k_within`. If it is
    above 0.30 A my prediction fails and the B build is worth considerably more than I think.
+
+---
+
+## Q1. THE FLAT MINIMISER SET, AND WHY THE OPTIMISER REACHES THE OPTIMUM WITHOUT MOVING THE STRUCTURE
+
+(The coordinator's question of 2026-09-20 00:2x, taken ahead of sections 1, 4, 5, 6, 7; it is
+section 6's material, so section 6 is answered here and not repeated later.)
+
+### Q1.1 The flat directions are exact, and they are most of the simplex
+
+Barkoutsos et al.'s statement -- if `p(x*) >= alpha` for the optimal basis state `x*` then
+`CVaR_alpha(E; p) = E(x*)`, its global minimum, so every such `p` is a global minimiser -- is the
+special case at the optimum. The operative statement at the **production point** is stronger and
+needs no overlap assumption. From the exact derivative (`core/quantum.py :: cvar_exact`, envelope
+theorem),
+
+    dCVaR_alpha/dp(x) = (E(x) - q)/alpha  on the strict tail,  0 for every x with E(x) > q,      (Q1.1)
+
+`q` the VaR. **CVaR is exactly constant along every simplex direction supported above the VaR.**
+At the deployed cell the realised tail is `m = 74.1` of `D = 512` (`s27/results/s28_B_rows.jsonl`,
+seed 0, J = 0), so the CVaR term is blind to
+
+    D - m - 1 = 437 of the 511 simplex directions  =  85.5%                                      (Q1.2)
+
+at every point, not only at the minimiser. Barkoutsos's global-minimiser set
+`{p : p(x*) >= alpha}` is, by comparison, exponentially rare in state space -- for a Haar-random
+real state `P(p(x*) >= 0.18) ~ (1 - alpha)^((D-3)/2) = e^-46` at `D = 512` -- and the deployed
+state is nowhere near it (`p_max ~ 1/PR = 1/428 = 0.0023 << 0.18`). **The flatness that matters
+here is (Q1.2), not the overlap condition**: the objective is indifferent to how the mass above
+the VaR is arranged, which is exactly the freedom an averaging readout would have to consume.
+
+### Q1.2 What the entropy term selects inside the flat set: derived exactly
+
+The project's CVaR is the LOWER tail, whose Rockafellar-Uryasev form is a maximum,
+`CVaR_alpha(E; p) = max_t [ t - (1/alpha) sum_x p_x (t - E_x)_+ ]`. The bracket is linear in `p`,
+concave in `t`, and the simplex is compact convex, so Sion's minimax theorem applies and
+
+    F* = min_p max_t [...] = max_t [ t - T log sum_x exp( (t - E_x)_+ / (alpha T) ) ],
+    p*(x)  proportional to  exp( (t* - E_x)_+ / (alpha T) ).                                     (Q1.3)
+
+(The code asserts the alpha = 1 limit: (Q1.3) returns the Gibbs free energy `-T log sum e^{-E/T}`
+and the Boltzmann law, reproducing S25 section 6.3 to 6 decimals,
+`s29/results/s29_T_reach.json :: entropy`.)
+
+Read (Q1.3): **`p*` is exactly uniform on every state above the VaR -- the 437 flat directions,
+which the entropy term resolves by flattening them -- and rises exponentially below it with scale
+`alpha T` in energy units.** On the deployed rank ladder the rank spacing is
+`Delta E = 2 sqrt(3)/D = 0.00676`, so the enhancement per rank is `exp(Delta E/(alpha T)) = 1.078`
+and the total enhancement across the prefix is 8.4x. Exact numbers at the deployed cell
+(`n = 9`, `alpha = 0.18`, `T = 0.5`, rank ladder):
+
+    state                          F         m (realised tail)   entropy    PR
+    uniform over 512            -4.5394            92            9.000     512.0
+    the EXACT simplex optimum   -4.7237            29            8.819     342.3      (t* = -1.534,
+                                                                                       prefix 29)
+    the deployed trained circuit -4.5610            74.1          8.836     407        (S28 rows,
+                                                                                       seed 0, sd 0.022)
+
+So the optimum is a **near-uniform state with a modest enhancement on a short prefix** -- the
+brief's phrase is right in substance, with the correction that it is not "uniform ON a prefix" but
+"uniform above the VaR, enhanced below it". The circuit sits between the uniform state and the
+optimum, closing about a third of the `m` distance (92 -> 74 of 92 -> 29) and a fraction of the
+free-energy gap; it is under-trained toward a target that is itself nearly uniform.
+
+### Q1.3 Therefore: a target-independent rank-weight profile, and one scalar channel
+
+`E = zrank(score[top[:D]])` is the standardised rank ladder on every target, identical up to
+tie-averaging (worst deviation 1.18% of range on 8 targets, S25 L17). `p*` in (Q1.3) is a function
+of `E`, `alpha` and `T` only. Hence:
+
+> **The deployed quantum stage is, up to tie structure, a FIXED weight profile over RANKS,
+> `w(rank; alpha, T)`, applied to each target's own sorted candidate list.** It has no other target
+> dependence. The emitted structure is `sum_i w(rank_i) W_i`, whose only target-specific input is
+> which candidate the distogram put at which rank -- i.e. no information the classical sort does
+> not already have. S25 L17's "two trained states in the whole deployment" is this, derived.
+
+Two measured corroborations, both native-free: the realised `m` over 126 targets at the deployed
+cell has sd 6.74 and correlation **+0.026 with chain length** (seed 1: 71.2, sd 7.94, -0.104) (my computation over
+`s27/results/s28_B_rows.jsonl`, seed 0, J = 0), against a between-cell spread of 29 to 92 as
+`(alpha, T)` moves; and the tail is the classical top-`m` prefix to 1.1e-13 on 4,914 cells
+(S28-L21).
+
+**This closes the loop the sprint has been circling.** The optimiser reduces the objective on
+126/126 (S28-L18b) and the structure does not move, because:
+(i) 85.5% of the objective's directions are flat and the entropy term sets them to uniform;
+(ii) the non-flat directions are the tail's internal weights, and the deployed readout R1 consumes
+only the tail SET;
+(iii) the tail set is a prefix of the energy order by the set-equality theorem, so it is fixed by
+the ordering the classical sort already produced;
+(iv) the single remaining scalar the optimisation can move is **where the prefix cuts**, `m`, and
+`m` is a function of `(alpha, T)` alone.
+**The deployed CVaR-VQE is therefore equivalent, at the endpoint, to choosing one number `m`** --
+and the `m`-ladder has been priced three times (S22's ladder, S27 T5, S28's `s28_B_mladder.json`).
+
+### Q1.4 Falsifiable clauses for lane D's meter
+
+* **(M5) FLAT FRACTION.** For any proposed objective, report the fraction of readout-relevant
+  directions along which it is exactly constant at the production point. For the deployed CVaR it
+  is 437/511 = 85.5% in simplex space and, after the readout, everything except one scalar.
+  **A candidate objective is worth a build only if its flat fraction is materially below that AND
+  the non-flat directions are ones the readout consumes.** Cheap: the flat set of a CVaR-family
+  objective is computable in closed form from the realised tail; for a general objective it is the
+  rank of the Jacobian of (objective -> readout-visible coordinates).
+* **(M6) THE FIXED-PROFILE CONTROL, which is stronger than "a classical equivalent".** Replace the
+  whole quantum stage by the target-independent weight profile `p*(alpha, T)` of (Q1.3) applied to
+  the target's own rank order -- no circuit, no optimiser, no per-target computation at all.
+  **Prediction: the deployed arm's emitted structure equals this control to within the built-chain
+  input floor (S28-L43) on at least 120 of 126 targets.** Any new formulation that claims the
+  quantum stage contributes something must break this control; if it does not, the stage is a
+  lookup table indexed by rank. Minutes to run, and it needs no VQE.
+
+---
+
+## Q2. THE UNTESTED NON-CLASSICAL CELL: A FREE ENERGY OVER A NON-COMMUTING HAMILTONIAN
+
+Lane L's condition (S29-L13): a formulation is non-classical in the relevant sense only if
+**(C1)** the Hamiltonian's terms do not commute, so its eigenbasis is not the computational basis,
+**and (C2)** the prepared object is not an eigenvector, so an eigensolver is not its classical
+counterpart either. The question: can that cell contain anything measurable *here*?
+
+**The derived answer is NO for the candidate-index encoding with a pool-geometry coupling, and the
+reason is a new second-order result, not an appeal to the earlier nulls.**
+
+### Q2.1 A zero-diagonal coupling's thermal state is a classical reweighting at second order
+
+Let `H = diag(E) - J A` with `A` a pool-similarity or agreement matrix, `A_xx = 0` (every graph in
+the record has a zero diagonal by construction, `s27/s28_B_hop.py :: finish_graph`). The measured
+distribution of the Gibbs state is `p_x = <x| e^{-H/T} |x> / Z`. Expand in `J` (Duhamel):
+
+    <x| e^{-H/T} |x> = e^{-E_x/T} [ 1 + (J/T) A_xx + (J^2) sum_{y != x} A_xy^2 g(E_x, E_y; T) + ... ]
+
+and **the first-order term vanishes identically because `A_xx = 0`**, so
+
+    p_x  proportional to  e^{-E_x/T} [ 1 + J^2 sum_y A_xy^2 g(E_x, E_y; T) + O(J^3) ],           (Q2.1)
+
+    g(E_x, E_y; T) = ( 1 - e^{-(E_y - E_x)/T} - (E_y - E_x)/T ) / (E_y - E_x)^2,  g -> 1/(2T^2) as E_y -> E_x.
+
+> **The entire quantum content of a thermal state over a zero-diagonal coupling, at leading order,
+> is a classical reweighting of the Boltzmann law by the candidate's own squared-similarity degree
+> `sum_y A_xy^2` -- a native-free scalar feature computable without any circuit.** And that feature
+> is precisely what S28's RAND control holds fixed: the degree-matched random graph (Sinkhorn-
+> scaled to the same row sums) changed nothing at any `J`, readout or seed (F3/F4 silent on 72
+> contrasts, S28-L41). The second-order cell has, in effect, already been controlled for.
+
+### Q2.2 The three conditions the cell would have to satisfy, and which one is binding
+
+(a) **Information.** The coupling must carry something outside the marginals -- it must break (A4)
+of Theorem 2. Every pool-geometry operator (similarity, centering, agreement, disagreement between
+the prior and the pool) is a function of the pool and the posterior, so it does not. **Binding.**
+(b) **Trainability.** By section 3b the coupling is gradient-visible at `D = 512` only if its
+stable rank grows with the register; a dense kernel has `r_stable ~ 1.6`, and any Gram of
+structural deviations is capped at `3 N_res - 6 <= 42`. At `J ~ 70 to 90` the coupling IS the
+energy and the free-energy term becomes a perturbation on an eigenvector problem -- which
+violates (C2). Binding jointly with (a).
+(c) **Readout.** By section 3d a `p`-based readout is blind to the sign structure that is the only
+new content of a centered coupling, and cancels it by the pole symmetry. Binding unless the
+readout changes.
+
+**And a fourth, from the record rather than from theory:** even if the cell is entered, S25 L15
+measured that this readout cannot resolve a distributional difference of 45% of the mass
+(KL 0.902 nats, TV 0.453, endpoint 0.24x MDE). A thermal correction of order `J^2 A^2` is far
+smaller than that. **Readout slack alone kills the measurability of the cell in the candidate-index
+encoding.**
+
+### Q2.3 What would have to be true instead, and the smallest formulation that qualifies
+
+The obstruction in (b) is specific and it points at exactly one operator class. My variance law
+says `Var[dF/dtheta] = r_stable/D^2` at unit spectral norm, so an off-diagonal term is trainable
+only if `r_stable` grows with `D`. A dense kernel cannot; **a sum of local Pauli terms can, by
+construction**: for a transverse field `M = sum_q X_q`, `||M||_F^2 = n D` and `||M||_2 = n`, so
+
+    r_stable( sum_q X_q ) = D/n,   Var[dF/dtheta] ~= 1/(n D),   slope = -1 per qubit exactly,
+    J* = D sqrt( Var_diag / r_stable ) = sqrt( n D Var_diag ) = 11.8 at n = 9.                   (Q2.2)
+
+So the only non-commuting operators that are simultaneously (C1) non-commuting, gradient-visible at
+the deployed width, and cheap are **local mixers**, not pool-geometry couplings -- and a local
+mixer is only meaningful when the basis states have local structure, i.e. **in a configuration-
+space encoding (lane X's), not in a candidate-index encoding** where a qubit is a bit of an
+arbitrary label and `X_q` flips a candidate's index bit.
+
+> **The smallest formulation that qualifies:** basis state = a per-residue configuration assignment
+> (fragment or torsion bin); `H = H_diag(configuration posterior, 1- and 2-body) + Gamma sum_q X_q`;
+> the prepared object a **free-energy / thermal state** (`F = CVaR_alpha - T H(p)` with `Gamma > 0`,
+> or a variational Gibbs state), never an eigenvector; readout = the CVaR tail's coordinate
+> average. It satisfies (C1) and (C2) by construction, satisfies (b) by (Q2.2), and satisfies (c)
+> because the tail's ENSEMBLE, not a signed amplitude, is what is consumed.
+>
+> **Its cheapest falsifier, in this order.** (1) `Gamma = 0` must be a genuinely different answer
+> from `Gamma > 0` on the SAMPLED distribution -- TV against the classical Boltzmann law of
+> `H_diag` above 0.45, because below that the readout provably cannot resolve it (S25 L15). (2) The
+> classical counterpart must be named correctly: for a local mixer it is **not** an eigensolver but
+> a classical thermal sampler / simulated annealing over the same configuration space at matched
+> evaluations. (3) The endpoint contrast against that sampler, built chain. If (1) fails, the cell
+> is empty for this instrument and no build follows.
+>
+> **What it still cannot do:** by (a), nothing in this cell creates information about the native's
+> deviation from typical. It can only change WHICH configurations the tail contains. So the
+> honest upside is charter section 17's "a specific, measurable, classically irreproducible
+> contribution at unchanged RMSD", not an accuracy result -- unless the configuration space's own
+> posterior carries more than the pool's marginals, which is lane X's premise and is measured by
+> lane D's meter, not by me.
