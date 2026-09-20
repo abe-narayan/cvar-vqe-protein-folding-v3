@@ -3441,3 +3441,69 @@ Artefacts: `s29/results/s29_B_grad_rows.jsonl`, `s29_B_grad_rows.s0of2.jsonl`,
 (18 pass); lane T's `s29/results/s29_T_grad_rows.jsonl` and S28's `s27/results/s28_B_train.json`
 as the two anchors; prereg `s29/PREREG_S29_B.md` section 4 + addendum 1 (commits 1c345f07,
 9d745692), both before the job.
+
+## S29-L37 -- ADVERSARY CHECK OF S29-L7 CLAUSE 3 (the shrink experiment), THE MEASUREMENT BEHIND CONTRACT ADDENDUM 20: **THE COSINE HALF IS REFUTED** -- SHRINKING THE TARGET MAP TOWARD TYPICALITY MAKES THE COSINE **MORE NEGATIVE** (-0.034 -> -0.056 AT s = 0.6), NEVER RISES AND NEVER CROSSES ZERO -- WHILE THE PERCENTILE HALF IS **CONFIRMED** (0.369 -> 0.491, MONOTONE); METER NUMBER 2 IS NOT GAMEABLE THE WAY THE RULE ASSUMES, AND THE RULE SHOULD BE KEPT FOR THE OTHER HALF (2026-09-20 01:32, D)
+
+EVERY NUMBER IS ORACLE. Nothing deployable. Code `s29/s29_D_theory_check.py :: shrink`, which
+re-scores the shipped Bayes risk with each pair's target map moved to tau + s(m - tau) by
+shifting that pair's risk curve, then reads all four meter numbers through
+`s29/s29_D_cost_audit.py` on 126 targets per grid point. Job `s29D_theory_shrink` (nine grid
+points, 27 to 31 s each). tau = LIB75, the sequence-blind draw (the theorem's tau); m = the
+posterior's own per-pair median map. The s = 1.0 cell reproduces the shipped cost exactly
+(cos -0.0338 against the anchor -0.0339, percentile 0.3688), which is the arm's own gate.
+
+**THE REGISTERED PREDICTION (S29-L7 clause 3):** "the cosine rises monotonically with decreasing
+s and crosses zero near s = 1/beta_median, while the native percentile (meter number 3) gets
+WORSE over the same grid."
+**THE MEASUREMENT:**
+| s | cosine [fold CI] | native percentile | S28 ladder rho | pref(circ_best) | bond ratio on descent |
+|---|---|---|---|---|---|
+| 1.00 | **-0.0338** [-0.058, -0.014] | 0.3688 | -0.186 | 0.198 | x1.0438 |
+| 0.90 | -0.0352 [-0.052, -0.024] | 0.3753 | -0.207 | 0.183 | x1.0520 |
+| 0.80 | -0.0394 [-0.046, -0.032] | 0.3827 | -0.183 | 0.198 | x1.0557 |
+| 0.75 | -0.0471 [-0.054, -0.042] | 0.3867 | -0.177 | 0.198 | x1.0590 |
+| 0.70 | -0.0532 [-0.065, -0.042] | 0.3904 | -0.149 | 0.222 | x1.0612 |
+| 0.60 | **-0.0558** [-0.071, -0.041] | 0.4116 | -0.111 | 0.286 | x1.0606 |
+| 0.50 | -0.0522 [-0.072, -0.029] | 0.4484 | -0.098 | 0.310 | x1.0578 |
+| 0.40 | -0.0393 [-0.062, -0.016] | 0.4747 | -0.077 | 0.341 | x1.0554 |
+| 0.30 | -0.0334 [-0.057, -0.008] | 0.4910 | -0.054 | 0.373 | x1.0534 |
+1. **THE COSINE HALF IS REFUTED, in sign and in shape.** It does not rise; it falls to a minimum
+   at s = 0.6 and returns, staying negative and inside [-0.056, -0.033] across the whole grid.
+   It never approaches zero, so it cannot cross it "near s = 1/beta_median" (= 1.32, which is
+   outside the grid's direction anyway, since the measured beta is BELOW 1 -- see S29-L26, where
+   clause 2 was vetoed). The two failures are the same failure: corollary 2b's sign law does not
+   hold on this instrument, so neither does the shrink prediction that rests on it.
+2. **THE PERCENTILE HALF IS CONFIRMED, cleanly and monotonically**: the native's percentile in
+   its own pool worsens from 0.3688 to 0.4910 across the grid, 9 of 9 steps in the predicted
+   direction. Shrinking the target map toward typicality DOES degrade recognition exactly as
+   the theory says.
+3. **A trade-off between two meter numbers, which is why the meter has four.** Over the same
+   grid the S28 ladder rho IMPROVES monotonically (-0.186 -> -0.054, i.e. the cost becomes much
+   less anti-correlated with RMSD on the near-native rungs) and pref(circ_best) nearly doubles
+   (0.198 -> 0.373), while the native percentile degrades. A single-number gate would have been
+   gamed here; four numbers catch it.
+4. **The shrink signature (addendum 20's own quantity) does not fire either**: the descent step's
+   bond ratio stays ABOVE 1 at every s (1.044 to 1.061) and the number of contracting targets
+   never exceeds 18 of 126. Shrinking the target map does not make the gradient contract the
+   emitted structure on this instrument.
+
+**CONSEQUENCE FOR CONTRACT ADDENDUM 20, stated plainly because a binding rule rests on it.**
+Addendum 20 was adopted on the strength of "a positive cosine is purchasable with no information
+by shrinking the target map toward typicality". **On this instrument it is not purchasable that
+way**: the measured cosine moves the wrong way over the entire registered grid. The rule should
+nonetheless be KEPT, for two reasons that survive: (a) the percentile half is confirmed, so the
+underlying trade (a cost can be made to look better on one meter axis while recognition gets
+worse) is real and measured -- it just does not run through the cosine; (b) the guard costs
+nothing, since the meter now prints the shrink signature and the percentile beside every cosine
+automatically (S29-L10). What must change is the JUSTIFICATION quoted in the rule: "the cosine
+is gameable by shrinking" is not supported, and the rule's real content is "no single meter
+number is sufficient, and the percentile is the one a shrink degrades". I have not retracted
+anything of lane T's derivation here beyond corollary 2b, which S29-L26 already vetoed; the
+class theorem (no term in n) is untouched.
+Multiplicity: 9 grid points x 4 meter numbers, one pre-registered curve, 0 endpoint comparisons.
+Artefacts: `s29/results/s29_D_theory_shrink.json`, `s26/logs/s29D_theory_shrink.log`,
+`s29/results/s29_D_theory_beta.json` (the three-tau 126-target re-run: beta median 0.756 LIB75 /
+0.753 UNIV / 0.656 POOL, weighted 0.787 / 0.769 / 0.674, sign agreement 48 to 49% throughout --
+clause 2's veto reproduced on the full grid of variants).
+Verdict: **clause 3 is HALF REFUTED and HALF CONFIRMED**; contract addendum 20 STANDS as a rule
+and its stated mechanism does not.
