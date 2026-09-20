@@ -46,19 +46,21 @@ def load_rows(pattern=None):
     return sorted(rows, key=lambda r: r["pdb"])
 
 
-def mean_ci(vals, folds, label=""):
+def mean_ci(vals, folds, label="", n_boot=4000):
     """Mean with a FOLD-CLUSTERED CI and the per-comparison MDE, via the project's own stats."""
     from s24 import stats_lib as ST
     v = np.asarray(vals, float)
     ok = np.isfinite(v)
     if ok.sum() < 5:
         return dict(mean=float("nan"), n=int(ok.sum()), note="NOT MEASURED (n < 5)")
-    o = ST.compare(v[ok], np.zeros(int(ok.sum())), folds=list(np.asarray(folds)[ok]), label=label)
-    return dict(mean=float(o["effect"]), median=float(o["median"]), se=float(o["se"]),
+    o = ST.compare(v[ok], np.zeros(int(ok.sum())), folds=list(np.asarray(folds)[ok]), label=label,
+                   n_boot=n_boot)
+    ci = o["ci95_fold"]
+    return dict(mean=float(o["effect"]), median=float(o["median_effect"]), se=float(o["se"]),
                 mde=float(o["mde"]), ratio=float(o["effect"] / o["mde"]) if o["mde"] else float("nan"),
-                fold_ci=[float(o["fold_ci"][0]), float(o["fold_ci"][1])],
+                fold_ci=[float(ci[0]), float(ci[1])], power=float(o.get("power", float("nan"))),
                 folds_same_sign=o.get("folds_same_sign"), n=int(ok.sum()),
-                excludes_zero=bool(o["fold_ci"][0] > 0 or o["fold_ci"][1] < 0))
+                excludes_zero=bool(ci[0] > 0 or ci[1] < 0))
 
 
 def paired_ci(a, b, folds, label=""):
@@ -68,11 +70,12 @@ def paired_ci(a, b, folds, label=""):
     if ok.sum() < 5:
         return dict(effect=float("nan"), n=int(ok.sum()), note="NOT MEASURED (n < 5)")
     o = ST.compare(a[ok], b[ok], folds=list(np.asarray(folds)[ok]), label=label)
+    ci = o["ci95_fold"]
     return dict(effect=float(o["effect"]), se=float(o["se"]), mde=float(o["mde"]),
                 ratio=float(o["effect"] / o["mde"]) if o["mde"] else float("nan"),
-                fold_ci=[float(o["fold_ci"][0]), float(o["fold_ci"][1])],
+                fold_ci=[float(ci[0]), float(ci[1])], power=float(o.get("power", float("nan"))),
                 folds_same_sign=o.get("folds_same_sign"), n=int(ok.sum()),
-                excludes_zero=bool(o["fold_ci"][0] > 0 or o["fold_ci"][1] < 0))
+                excludes_zero=bool(ci[0] > 0 or ci[1] < 0))
 
 
 def signflip_pmax(M, n_boot=500, seed=20300930):
@@ -80,6 +83,10 @@ def signflip_pmax(M, n_boot=500, seed=20300930):
     Returns the null's mean/p95 of the max |mean| and the p of the observed max."""
     rng = np.random.default_rng(seed)
     M = np.asarray(M, float)
+    keep = np.isfinite(M).sum(0) >= 5          # drop channels that are absent almost everywhere
+    M = M[:, keep]
+    if M.shape[1] == 0:
+        return dict(note="NOT MEASURED (no channel with >= 5 targets)")
     obs = np.nanmax(np.abs(np.nanmean(M, axis=0)))
     draws = np.empty(n_boot)
     for b in range(n_boot):
@@ -161,12 +168,14 @@ def main(argv=None):
     o["A2_realism_flatness"] = {k: mean_ci([r["realism_flatness"].get(k) for r in rows], folds, k)
                                 for k in ("RAMA", "EXVOL", "RG_DEV")}
     # --- SI audit: the size-matched twin must make the pure Rg functions constant
-    o["SI_audit"] = {k: dict(
-        rel_sd_SI=float(np.mean([r["si_audit"][k]["sd_SI_over_raw_scale"] for r in rows
-                                 if k in r.get("si_audit", {})])),
-        rel_sd_raw=float(np.mean([r["si_audit"][k]["sd_raw_over_raw_scale"] for r in rows
-                                  if k in r.get("si_audit", {})])))
-        for k in ("RG_LAW", "RG_UNIV")}
+    def _si(k, new_key, old_key):
+        v = [r["si_audit"][k].get(new_key, r["si_audit"][k].get(old_key))
+             for r in rows if k in r.get("si_audit", {})]
+        v = [x for x in v if x is not None]
+        return float(np.mean(v)) if v else float("nan")
+    o["SI_audit"] = {k: dict(rel_sd_SI=_si(k, "sd_SI_over_raw_scale", "rel_sd"),
+                             rel_sd_raw=_si(k, "sd_raw_over_raw_scale", "raw_rel_sd"))
+                     for k in ("RG_LAW", "RG_UNIV")}
     # --- D3 anchor confound, measured BEFORE the verdict is read
     ac = np.array([r["anchor_confound"] for r in rows], float)
     o["D3_anchor_confound"] = dict(mean=float(np.nanmean(ac)), median=float(np.nanmedian(ac)),
@@ -203,12 +212,13 @@ def main(argv=None):
         for q, lab in enumerate(DELTA_LABELS):
             v = [r["ch"].get(nm, {}).get("conc", [None] * 6)[q] for r in rows]
             cell["conc"][lab] = mean_ci([float(x) if x is not None else float("nan") for x in v],
-                                        folds, f"{nm}.conc.{lab}")
+                                        folds, f"{nm}.conc.{lab}", n_boot=1200)
         cell["conc_near"] = {}
         for q, lab in enumerate(DELTA_LABELS):
             v = [(r["ch"].get(nm, {}).get("conc_near") or [None] * 6)[q] for r in rows]
             cell["conc_near"][lab] = mean_ci([float(x) if x is not None else float("nan")
-                                              for x in v], folds, f"{nm}.concnear.{lab}")
+                                              for x in v], folds, f"{nm}.concnear.{lab}",
+                                             n_boot=1200)
 
         def _res(d):
             for lab in DELTA_LABELS:                  # the SMALLEST bin that stays above 0.5
