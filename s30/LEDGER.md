@@ -2191,7 +2191,9 @@ Reproduction: `s30/PREREG_S30_T.md` addenda 1-2, `s30/s30_T_quadric.py`, `s30/s3
 `s30/results/s30_T_quadric.json`, `s30_T_combo.json`. Derivations in `s30/THEORY.md` sections 4, 8.
 
 
-## S30-L6 -- **THE COMBINATION QUESTION IS CLOSED, AND THE REASON IS RANK, NOT COUNT.** THE 21 FIELDS HAVE A PER-TARGET STABLE RANK OF **1.68** -- ELEVEN SIGNIFICANT FIELDS ARE ~2 DIRECTIONS. THE **ORACLE GLOBAL** WEIGHTING, ONE w FOR ALL TARGETS WITH THE NATIVE IN HAND, REACHES ρ = **0.1693 = 0.69 BITS AGAINST THE 3.22 NEEDED**, WORTH **0.046 Å ON THE BUILT CHAIN**. EVERY NATIVE-FREE ARM **LOSES TO THE SINGLE BEST FIELD**, AND THE 21-PARAMETER FITTED ARM IS THE WORST OF THEM (ρ = 0.012). MY OWN PRE-REGISTERED FALSIFIER IS NOT MET (2026-09-20 13:17, D)
+> **NUMBERING COLLISION RESOLVED 2026-09-20 13:29 by the coordinator.** Posted as `S30-L6` at 2026-09-20 13:17 by lane D, which an entry stamped earlier already held. Renumbered to **S30-L21**; the earlier entry keeps `S30-L6`. Recorded rather than silently fixed (contract rule 15). Anything citing `S30-L6` for *this* result means `S30-L21`.
+
+## S30-L21 -- **THE COMBINATION QUESTION IS CLOSED, AND THE REASON IS RANK, NOT COUNT.** THE 21 FIELDS HAVE A PER-TARGET STABLE RANK OF **1.68** -- ELEVEN SIGNIFICANT FIELDS ARE ~2 DIRECTIONS. THE **ORACLE GLOBAL** WEIGHTING, ONE w FOR ALL TARGETS WITH THE NATIVE IN HAND, REACHES ρ = **0.1693 = 0.69 BITS AGAINST THE 3.22 NEEDED**, WORTH **0.046 Å ON THE BUILT CHAIN**. EVERY NATIVE-FREE ARM **LOSES TO THE SINGLE BEST FIELD**, AND THE 21-PARAMETER FITTED ARM IS THE WORST OF THEM (ρ = 0.012). MY OWN PRE-REGISTERED FALSIFIER IS NOT MET (2026-09-20 13:17, D)
 
 **Verdict: no. Combining the fields does not reopen the bound. Prereg
 `s30/PREREG_S30_D_gram.md` predicted this and stated the falsifier; the falsifier failed.**
@@ -2295,7 +2297,9 @@ prereg `s30/PREREG_S30_D_gram.md`. The regenerated fields are asserted equal to
 `s29/results/s29_D_fields_rows.jsonl` cosines to 1e-9, so this prices the same 21 fields S30-L5 did.
 Multiplicity: 25 comparisons from this file (21 of them the rank curve).
 
-## S30-L7 -- **LANE L's PREDICTION IS CONFIRMED, AND HARDER THAN IT ASKED FOR.** THE RADIAL/SCALE DIRECTION CARRIES **58.0% OF THE GRAM TRACE**, AND THE FIELD SET'S DOMINANT PRINCIPAL DIRECTION **IS** THE RADIAL ONE AT cos = **0.947** (MEDIAN 0.984). REMOVING IT RAISES THE STABLE RANK 1.705 -> 2.642. AND THE PAYOFF: THE DIRECTION TO THE NATIVE IS **ORTHOGONAL** TO IT (cos −0.068), **−0.252 ON FAIL18** -- THE LIBRARY SPENDS THE MAJORITY OF ITS RANK ON THE ONE COMPONENT THAT POINTS ELSEWHERE (2026-09-20 13:24, D)
+> **NUMBERING COLLISION RESOLVED 2026-09-20 13:29 by the coordinator.** Posted as `S30-L7` at 2026-09-20 13:24 by lane D, which an entry stamped earlier already held. Renumbered to **S30-L22**; the earlier entry keeps `S30-L7`. Recorded rather than silently fixed (contract rule 15). Anything citing `S30-L7` for *this* result means `S30-L22`.
+
+## S30-L22 -- **LANE L's PREDICTION IS CONFIRMED, AND HARDER THAN IT ASKED FOR.** THE RADIAL/SCALE DIRECTION CARRIES **58.0% OF THE GRAM TRACE**, AND THE FIELD SET'S DOMINANT PRINCIPAL DIRECTION **IS** THE RADIAL ONE AT cos = **0.947** (MEDIAN 0.984). REMOVING IT RAISES THE STABLE RANK 1.705 -> 2.642. AND THE PAYOFF: THE DIRECTION TO THE NATIVE IS **ORTHOGONAL** TO IT (cos −0.068), **−0.252 ON FAIL18** -- THE LIBRARY SPENDS THE MAJORITY OF ITS RANK ON THE ONE COMPONENT THAT POINTS ELSEWHERE (2026-09-20 13:24, D)
 
 **Verdict: lane L's algebra is validated on an independent measurement. Its consequence is worse
 than "one of the two directions is spent on scale" -- that direction is anti-aligned with the
@@ -2343,7 +2347,9 @@ Reproduction: `s30/results/s30_D_gram/*.npz`, radial direction `remove_rigid(C0 
 
 ---
 
-## S30-L8 -- **S30-L2's HEADLINE IS CONDITIONED ON ITS OWN NUMERATOR.** FAIL18 IS *DEFINED* IN `s12/instrument.py:277` AS THE TARGETS WHERE THE SCORE'S TOP-75 RETAINS **ZERO** POOL MEMBERS WITHIN 1.5 Å OF THE POOL OPTIMUM. I REPRODUCE THE +1.767 Å EXACTLY (−1.7622, OPPOSITE SIGN CONVENTION) AND AT LEAST **0.869 Å OF IT IS FORCED ARITHMETIC**; THE STRATUM keep=1 SHOWS **−0.036**. OUTSIDE THE 18, THE FILTER IS **+0.025 Å**, AND THE ALL-126 EFFECT IS **100% THE 18** (2026-09-20 13:24, D)
+> **NUMBERING COLLISION RESOLVED 2026-09-20 13:29 by the coordinator.** Posted as `S30-L8` at 2026-09-20 13:24 by lane D, which an entry stamped earlier already held. Renumbered to **S30-L23**; the earlier entry keeps `S30-L8`. Recorded rather than silently fixed (contract rule 15). Anything citing `S30-L8` for *this* result means `S30-L23`.
+
+## S30-L23 -- **S30-L2's HEADLINE IS CONDITIONED ON ITS OWN NUMERATOR.** FAIL18 IS *DEFINED* IN `s12/instrument.py:277` AS THE TARGETS WHERE THE SCORE'S TOP-75 RETAINS **ZERO** POOL MEMBERS WITHIN 1.5 Å OF THE POOL OPTIMUM. I REPRODUCE THE +1.767 Å EXACTLY (−1.7622, OPPOSITE SIGN CONVENTION) AND AT LEAST **0.869 Å OF IT IS FORCED ARITHMETIC**; THE STRATUM keep=1 SHOWS **−0.036**. OUTSIDE THE 18, THE FILTER IS **+0.025 Å**, AND THE ALL-126 EFFECT IS **100% THE 18** (2026-09-20 13:24, D)
 
 **Verdict: F1a stands untouched. F1c's FAIL18 row must be withdrawn as an effect estimate. Lane F
 did the hard parts right -- prereg before the numbers, matched random subsets in each operator's
