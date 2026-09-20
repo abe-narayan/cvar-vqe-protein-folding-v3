@@ -204,6 +204,21 @@ def test_rand18_null_detects_an_injected_stratum_effect():
     assert r1["p_one_sided"] < 0.01 and r1["fail18_mean"] > r1["null_p97_5"]
 
 
-def test_chain_groups_cover_28_items_and_rung6_first():
-    assert len(O.ALL_ITEMS) == 28 and O.ALL_ITEMS[:3] == ["prod", "lfo_LIB75", "lfo_BPRIME"]
-    assert len(set(O.ALL_ITEMS)) == 28
+def test_chain_groups_cover_every_item_once_and_rung6_first():
+    assert len(O.ALL_ITEMS) == 31 and O.ALL_ITEMS[:3] == ["prod", "lfo_LIB75", "lfo_BPRIME"]
+    assert len(set(O.ALL_ITEMS)) == len(O.ALL_ITEMS)
+    assert set(O.CHAIN_GROUPS["E"]) == {"best1_top128", "bestm128", "hull_top128"}
+
+
+def test_chain_shard_partition_is_exact_and_disjoint():
+    pdbs = ["p%02d" % k for k in range(126)]
+    seen = []
+    for k in range(5):
+        seen.append([p for j, p in enumerate(pdbs) if j % 5 == k])
+    flat = [p for s_ in seen for p in s_]
+    assert sorted(flat) == sorted(pdbs) and len(set(flat)) == 126
+    for a in range(5):
+        for b in range(a + 1, 5):
+            assert not (set(seen[a]) & set(seen[b]))
+    assert O.chain_rows_path(None) != O.chain_rows_path(0)
+    assert O.chain_rows_path(3).endswith("_shard3.jsonl")

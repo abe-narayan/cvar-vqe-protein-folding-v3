@@ -61,15 +61,29 @@ SETS = ("top75", "pool")
 T_GRID = np.round(np.arange(-1.0, 2.0 + 1e-9, 0.1), 6)        # 31 values, fixed in the prereg
 N_RAND_FIELDS = 16
 BLIND_DEFS = ("LIB75", "BPRIME")
+#: rung 8 (lane T's S29-L11 prediction 4): the one-parameter family X(eta) = production + eta*PC1,
+#: PC1 the top shape mode of the top-75 members' deviations from the production average, scaled so
+#: that eta is in ANGSTROM of point-cloud RMSD displacement.  Grid fixed here, before any number.
+ETA_GRID = np.round(np.arange(-3.0, 3.0 + 1e-9, 0.1), 6)
+PC1_ROWS = os.path.join(RESULTS, "s29_O_pc1_rows.jsonl")
+PC1_JSON = os.path.join(RESULTS, "s29_O_pc1.json")
+#: rung 9 (lane M's C13): the deployed quantum stage widens the retained prefix to 2**n = 128
+#: (`core/pipeline.py:758`), and the set-equality theorem (S25) says the CVaR tail's support is
+#: always a PREFIX of the energy order.  So the ORACLE ceiling of the top-128 prefix bounds every
+#: quantum arm this project has run or could run in the deployed encoding.
+M128 = 128
+P128_ROWS = os.path.join(RESULTS, "s29_O_p128_rows.jsonl")
+P128_JSON = os.path.join(RESULTS, "s29_O_p128.json")
 RHO_SUM = 1e3                                                  # the sum-to-one augmented row
 HULL_ROUNDS, SPARSE_ROUNDS = 5, 3
 CHAIN_GROUPS = {
     "A": ["prod", "lfo_LIB75", "lfo_BPRIME"],
+    "E": ["best1_top128", "bestm128", "hull_top128"],
     "B": ["best1_top75", "best1_pool", "bestm", "hull_top75", "hull_pool"],
     "C": ["sparse_%s_s%d" % (S, s) for S in SETS for s in SPARSE_S],
     "D": ["basin_%s_k%d" % (S, k) for S in SETS for k in BASIN_K],
 }
-ALL_ITEMS = [it for g in "ABCD" for it in CHAIN_GROUPS[g]]
+ALL_ITEMS = [it for g in "ABCDE" for it in CHAIN_GROUPS[g]]
 
 
 # ================================================================== pool, frames, geometry
@@ -327,6 +341,237 @@ def lfo_structure(C, u, t):
     Reads no native.  `t` comes from other folds."""
     C = np.asarray(C, float)
     return C + float(t) * np.asarray(u, float).reshape(len(C), 3)
+
+
+# ============================================================== rung 8: the PC1 family
+def pool_pc1(W, top, P, C):
+    """NATIVE-FREE.  The pool's first shape mode: the top right-singular vector of the top-75
+    members' deviations from the production average, in the average's own (medoid) frame, with the
+    rigid-body component removed and scaled so that ||PC1||_2 = sqrt(n) -- i.e. adding eta*PC1
+    moves the point cloud by exactly |eta| A of RMSD.  The SIGN is fixed by a deterministic,
+    native-free convention (the largest-|component| entry is positive): lane T's point is that the
+    marginals cannot supply the sign, so an achievable arm must carry an arbitrary one."""
+    top = np.asarray(top, int)
+    n = W.shape[1]
+    idx = top[int(np.argmin(P[np.ix_(top, top)].mean(1)))]
+    Wp = I.superpose_batch(W[top], W[idx])                     # the deployed frame
+    D = (Wp - C[None]).reshape(len(top), 3 * n)
+    U, S, Vt = np.linalg.svd(D - D.mean(0, keepdims=True), full_matrices=False)
+    v = remove_rigid(Vt[0], C)
+    nv = np.linalg.norm(v)
+    if nv <= 0:
+        return np.zeros(3 * n), dict(sd_along=0.0, var_frac=0.0, sv=[])
+    v = v / nv
+    v = v * (1.0 if v[int(np.argmax(np.abs(v)))] >= 0 else -1.0)
+    proj = (D - D.mean(0, keepdims=True)) @ v
+    var_frac = float(S[0] ** 2 / max((S ** 2).sum(), 1e-300))
+    v = v * math.sqrt(n)                                       # eta in A of RMSD
+    return v, dict(sd_along=float(proj.std(ddof=1) / math.sqrt(n)), var_frac=var_frac,
+                   sv=[float(x) for x in S[:5]])
+
+
+def pc1_row(pdb, verbose=True):
+    """Rung 8 per target.  PC1 is NATIVE-FREE; the curve over eta is ORACLE."""
+    t0 = time.time()
+    cand, dis, top, order, dg = load_pool(pdb)
+    W = cand.W; n = cand.n; nat = cand.nat_ca                                 # ORACLE label
+    P = I.pairwise_rmsd(W)
+    C, _ = avg_of(W, np.sort(top), P)
+    v, meta = pool_pc1(W, np.sort(top), P, C)
+    curve = np.array([I.ca_rmsd(C + e * v.reshape(n, 3), nat) for e in ETA_GRID])   # ORACLE
+    j0 = int(np.argmin(np.abs(ETA_GRID)))
+    row = dict(pdb=pdb, n=n, fold=int(cand.fold), fail18=bool(pdb in I.FAIL18),
+               curve=curve.tolist(), eta_grid=[float(e) for e in ETA_GRID],
+               r_prod=float(curve[j0]), eta_best=float(ETA_GRID[int(np.argmin(curve))]),
+               r_best=float(curve.min()), secs=time.time() - t0, **meta)
+    if verbose:
+        print("  %s n=%d prod %.3f  PC1 sd %.3f (var frac %.3f)  ORACLE best eta %+.1f -> %.3f  %.1fs"
+              % (pdb, n, row["r_prod"], meta["sd_along"], meta["var_frac"], row["eta_best"],
+                 row["r_best"], row["secs"]), flush=True)
+    return row
+
+
+def phase_pc1(pdbs):
+    done = jsonl_rows(PC1_ROWS)
+    for pdb in pdbs:
+        if (pdb,) in done:
+            continue
+        append_row(PC1_ROWS, pc1_row(pdb))
+    rows = jsonl_rows(PC1_ROWS)
+    if any((p,) not in rows for p in all_pdbs()):
+        print("pc1 rows:", PC1_ROWS, "(partial)")
+        return None
+    return analyse_pc1()
+
+
+def analyse_pc1():
+    rows = jsonl_rows(PC1_ROWS)
+    pdbs = all_pdbs()
+    folds = ST.pinned_folds(pdbs)
+    R = np.array([rows[(p,)]["curve"] for p in pdbs])                          # ORACLE curves
+    prod = np.array([rows[(p,)]["r_prod"] for p in pdbs])
+    j0 = int(np.argmin(np.abs(ETA_GRID)))
+    assert np.allclose(R[:, j0], prod), "eta = 0 column != production"
+    mean_curve = R.mean(0)
+    jg = int(np.argmin(mean_curve))
+    t_of, t_fold, ties = lfo_choices(R, folds, ETA_GRID)
+    arm = np.array([R[i, int(np.argmin(np.abs(ETA_GRID - t_of[i])))] for i in range(len(pdbs))])
+    pos = R[:, ETA_GRID >= 0].min(1); neg = R[:, ETA_GRID <= 0].min(1)
+    eta_best = np.array([rows[(p,)]["eta_best"] for p in pdbs])
+    out = dict(
+        eta_grid=[float(e) for e in ETA_GRID], mean_curve=mean_curve.tolist(),
+        oracle_global_eta=float(ETA_GRID[jg]), oracle_global_mean=float(mean_curve[jg]),
+        oracle_global_gain=float(mean_curve[jg] - prod.mean()),
+        oracle_per_target_mean=float(R.min(1).mean()),
+        oracle_per_target_gain=float(R.min(1).mean() - prod.mean()),
+        oracle_per_target_bok=ST.best_of_k_within(R, seed_parts=("s29O", "pc1eta")),
+        oracle_sign_plus_mean=float(pos.mean()), oracle_sign_minus_mean=float(neg.mean()),
+        frac_eta_best_positive=float((eta_best > 0).mean()),
+        median_abs_eta_best=float(np.median(np.abs(eta_best))),
+        eta_fold=t_fold, ties=ties, lfo_mean=float(arm.mean()), prod_mean=float(prod.mean()),
+        lfo_cloud=strata(arm, prod, pdbs, folds,
+                         "PC1 one-parameter family, LEAVE-FOLD-OUT eta vs prod (POINT CLOUD, DEPLOYABLE)"),
+        oracle_global_cloud=strata(R[:, jg], prod, pdbs, folds,
+                                   "ORACLE PC1 global eta vs prod (POINT CLOUD)"),
+        oracle_per_target_cloud=strata(R.min(1), prod, pdbs, folds,
+                                       "ORACLE PC1 per-target eta vs prod (POINT CLOUD, an order statistic)"),
+        sd_along_mean=float(np.mean([rows[(p,)]["sd_along"] for p in pdbs])),
+        var_frac_mean=float(np.mean([rows[(p,)]["var_frac"] for p in pdbs])),
+        arm_cloud={p: float(v) for p, v in zip(pdbs, arm)},
+        provenance=ST.provenance(__file__))
+    ST.save_atomic(PC1_JSON, out, module_file=__file__)
+    print("== rung 8 (PC1, lane T's one-parameter family). PC1 is NATIVE-FREE; every eta below is "
+          "ORACLE except the leave-fold-out arm.")
+    print("   pool sd along PC1 %.3f A, PC1 variance share %.3f"
+          % (out["sd_along_mean"], out["var_frac_mean"]))
+    print("   ORACLE global eta %+.1f -> %.4f (%+.4f vs production %.4f); ORACLE per-target eta %.4f "
+          "(%+.4f, an order statistic); ORACLE best eta positive on %.0f%% of targets, median |eta| %.1f"
+          % (out["oracle_global_eta"], out["oracle_global_mean"], out["oracle_global_gain"],
+             out["prod_mean"], out["oracle_per_target_mean"], out["oracle_per_target_gain"],
+             100 * out["frac_eta_best_positive"], out["median_abs_eta_best"]))
+    print("   ORACLE best over eta >= 0 only %.4f; over eta <= 0 only %.4f (the one-global-sign arms)"
+          % (out["oracle_sign_plus_mean"], out["oracle_sign_minus_mean"]))
+    print("   per-target eta pricing: observed %+.4f, across-target null %+.4f (%.0f%% accounted), "
+          "split-half %+.4f (%.0f%%), k_eff %.1f"
+          % (out["oracle_per_target_bok"]["observed_gain"], out["oracle_per_target_bok"]["null_across_targets"],
+             100 * out["oracle_per_target_bok"]["share_accounted"], out["oracle_per_target_bok"]["split_half"],
+             100 * out["oracle_per_target_bok"]["split_half_frac"], out["oracle_per_target_bok"]["k_eff"]))
+    print("   leave-fold-out eta per fold %s (ties %s)" % (out["eta_fold"], out["ties"]))
+    for k in ("oracle_global_cloud", "oracle_per_target_cloud", "lfo_cloud"):
+        print(ST.fmt(out[k]["all"]))
+    print("pc1:", PC1_JSON)
+    return out
+
+
+# =========================================== rung 9: the top-128 prefix (the quantum field of view)
+def p128_row(pdb, verbose=True):
+    """Rung 9 per target. The prefix is NATIVE-FREE (the DIS order with the stable tie key);
+    every RMSD below is ORACLE."""
+    t0 = time.time()
+    cand, dis, top, order, dg = load_pool(pdb)
+    W = cand.W; n = cand.n; nat = cand.nat_ca; rr = cand.oracle_rr            # ORACLE labels
+    P = I.pairwise_rmsd(W)
+    pre = order[:M128]
+    structs = {}
+    # (a) best single member of the prefix                                    # ORACLE
+    r = rr[pre]; m = r.min(); tie = np.isclose(r, m, atol=1e-9)
+    j = int(pre[np.flatnonzero(tie)[0]])
+    structs["best1_top128"] = W[j]
+    # (b) best PREFIX-m average inside the top-128: the exact reachable-set ceiling of the CVaR
+    #     tail, whose support is always a prefix of the energy order (S25's set-equality theorem)
+    curve = np.array([I.ca_rmsd(avg_of(W, order[:mm], P)[0], nat) for mm in range(1, M128 + 1)])
+    m_best = int(np.argmin(curve)) + 1
+    structs["bestm128"] = avg_of(W, order[:m_best], P)[0]
+    # (c) the convex hull of the prefix: upper-bounds ANY weighting inside the field of view
+    from s27 import s28_A_amp as A
+    frame = A.Frame(W, np.sort(top))
+    natp0 = superpose_one(nat, frame.ref)
+    r_h, X_h, w_h = oracle_hull(frame.Wf[np.sort(pre)], nat, n, natp0=natp0)   # ORACLE
+    structs["hull_top128"] = X_h
+    save_structs(pdb, structs, cand.seq, cand.fold, cand.n)
+    row = dict(pdb=pdb, n=n, fold=int(cand.fold), fail18=bool(pdb in I.FAIL18),
+               best1_top128=float(I.ca_rmsd(W[j], nat)), best1_member=j, best1_n_tied=int(tie.sum()),
+               bestm128=float(curve[m_best - 1]), m128=m_best, curve128=curve.tolist(),
+               hull_top128=r_h, hull_n_support=int((w_h > 1e-9).sum()),
+               prod=float(curve[M - 1] if M <= M128 else np.nan),
+               overlap_top75_in_128=float(len(set(pre.tolist()) & set(top.tolist())) / float(M)),
+               secs=time.time() - t0)
+    if verbose:
+        print("  %s n=%d prod %.3f | top-128 best1 %.3f  best prefix-m %.3f (m=%d)  hull %.3f (supp %d)  %.1fs"
+              % (pdb, n, row["prod"], row["best1_top128"], row["bestm128"], row["m128"],
+                 row["hull_top128"], row["hull_n_support"], row["secs"]), flush=True)
+    return row
+
+
+def phase_p128(pdbs):
+    done = jsonl_rows(P128_ROWS)
+    for pdb in pdbs:
+        if (pdb,) in done:
+            continue
+        append_row(P128_ROWS, p128_row(pdb))
+    rows = jsonl_rows(P128_ROWS)
+    if any((p,) not in rows for p in all_pdbs()):
+        print("p128 rows:", P128_ROWS, "(partial)")
+        return None
+    return analyse_p128()
+
+
+def analyse_p128():
+    rows = jsonl_rows(P128_ROWS)
+    cloud = jsonl_rows(CLOUD_ROWS)
+    pdbs = all_pdbs()
+    folds = ST.pinned_folds(pdbs)
+    fm = np.array([p in I.FAIL18 for p in pdbs])
+    G = lambda k: np.array([rows[(p,)][k] for p in pdbs])
+    C = lambda it: np.array([cloud[(p,)]["items"][it]["rmsd_cloud"] for p in pdbs])
+    prod = G("prod")
+    Mc = np.array([cloud[(p,)]["m_curve"] for p in pdbs])                      # ORACLE, m = 1..500
+    out = dict(prod_mean=float(prod.mean()), provenance=ST.provenance(__file__),
+               overlap_mean=float(G("overlap_top75_in_128").mean()))
+    trip = {}
+    for nm, v in (("best1_top75", C("best1_top75")), ("best1_top128", G("best1_top128")),
+                  ("best1_pool", C("best1_pool")),
+                  ("bestm_top75", Mc[:, :M].min(1)), ("bestm128", G("bestm128")),
+                  ("bestm_pool", Mc.min(1)),
+                  ("hull_top75", C("hull_top75")), ("hull_top128", G("hull_top128")),
+                  ("hull_pool", C("hull_pool"))):
+        trip[nm] = dict(mean=float(v.mean()), median=float(np.median(v)), fail18=float(v[fm].mean()),
+                        other108=float(v[~fm].mean()), frac_under2=float((v < 2.0).mean()),
+                        vs_prod=ST.compare(v, prod, folds, names=pdbs,
+                                           label="ORACLE %s vs production (POINT CLOUD)" % nm))
+    out["arms"] = trip
+    out["m128_median"] = float(np.median(G("m128")))
+    out["m128_quartiles"] = [float(q) for q in np.percentile(G("m128"), [10, 25, 50, 75, 90])]
+    out["frac_m128_at_128"] = float((G("m128") == M128).mean())
+    out["hull_support_median"] = float(np.median(G("hull_n_support")))
+    #: the three prefixes read against each other (the coordinator's question)
+    for a, b in (("best1_top128", "best1_top75"), ("bestm128", "bestm_top75"),
+                 ("hull_top128", "hull_top75"), ("best1_pool", "best1_top128"),
+                 ("bestm_pool", "bestm128"), ("hull_pool", "hull_top128")):
+        va = G(a) if a in ("best1_top128", "bestm128", "hull_top128") else (
+            Mc[:, :M].min(1) if a == "bestm_top75" else (Mc.min(1) if a == "bestm_pool" else C(a)))
+        vb = G(b) if b in ("best1_top128", "bestm128", "hull_top128") else (
+            Mc[:, :M].min(1) if b == "bestm_top75" else (Mc.min(1) if b == "bestm_pool" else C(b)))
+        out.setdefault("prefix_contrasts", {})[a + " vs " + b] = ST.compare(
+            va, vb, folds, names=pdbs, label="ORACLE %s vs ORACLE %s (POINT CLOUD)" % (a, b))
+    ST.save_atomic(P128_JSON, out, module_file=__file__)
+    print("== rung 9 (the top-128 prefix: the deployed quantum stage's ENTIRE field of view). "
+          "The prefix is native-free; EVERY RMSD below is ORACLE.")
+    print("   production %.4f; the top-75 is %.0f%% inside the top-128 prefix by construction; "
+          "ORACLE best prefix-m inside 128: median m %.0f (10/25/50/75/90 %s), at m=128 on %.0f%% of targets; "
+          "hull support median %.0f" % (out["prod_mean"], 100 * out["overlap_mean"], out["m128_median"],
+                                        ["%.0f" % q for q in out["m128_quartiles"]],
+                                        100 * out["frac_m128_at_128"], out["hull_support_median"]))
+    print("   | class | top-75 | TOP-128 | K=500 |")
+    for cls, keys in (("best single member", ("best1_top75", "best1_top128", "best1_pool")),
+                      ("best prefix-m average", ("bestm_top75", "bestm128", "bestm_pool")),
+                      ("convex hull", ("hull_top75", "hull_top128", "hull_pool"))):
+        print("   | %s | %.4f | %.4f | %.4f |" % (cls, trip[keys[0]]["mean"], trip[keys[1]]["mean"],
+                                                  trip[keys[2]]["mean"]))
+    for k, v in out["prefix_contrasts"].items():
+        print(ST.fmt(v))
+    print("p128:", P128_JSON)
+    return out
 
 
 # ================================================================== per-target point cloud
@@ -613,8 +858,27 @@ def chain_item(pdb, item):
                 secs=time.time() - t1, **struct_diag(ca))
 
 
-def phase_chain(pdbs, groups="ABCD"):
-    done = jsonl_rows(CHAIN_ROWS, key=("pdb", "item"))
+def chain_rows_path(shard=None):
+    return CHAIN_ROWS if shard is None else CHAIN_ROWS.replace(".jsonl", "_shard%d.jsonl" % int(shard))
+
+
+def all_chain_rows():
+    """Every chain row from the unsharded file and from every shard file."""
+    import glob as _glob
+    done = {}
+    for f in sorted(_glob.glob(CHAIN_ROWS.replace(".jsonl", "*.jsonl"))):
+        done.update(jsonl_rows(f, key=("pdb", "item")))
+    return done
+
+
+def phase_chain(pdbs, groups="ABCD", shard=None, n_shards=1):
+    #: every shard READS every rows file (so nothing is computed twice) and APPENDS only to its own
+    #: (so no two processes ever write the same file). Work splits by target index: a kill costs one
+    #: item, a resume skips whatever any shard already banked.
+    done = all_chain_rows()
+    path = chain_rows_path(shard)
+    if shard is not None:
+        pdbs = [p for k, p in enumerate(pdbs) if k % int(n_shards) == int(shard)]
     work = []
     for g in groups:
         if g == "A":
@@ -622,16 +886,18 @@ def phase_chain(pdbs, groups="ABCD"):
         else:
             work += [(p, it) for p in pdbs for it in CHAIN_GROUPS[g]]
     todo = [w for w in work if w not in done]
-    print("chain: %d items, %d done, %d to do" % (len(work), len(work) - len(todo), len(todo)), flush=True)
+    print("chain shard %s/%s: %d targets, %d items, %d done, %d to do -> %s"
+          % (shard, n_shards, len(pdbs), len(work), len(work) - len(todo), len(todo),
+             os.path.basename(path)), flush=True)
     t0 = time.time()
     for k, (pdb, item) in enumerate(todo):
         r = chain_item(pdb, item)
-        append_row(CHAIN_ROWS, r)
+        append_row(path, r)
         if (k + 1) % 20 == 0 or k == len(todo) - 1:
             print("  [chain %d/%d] %s %s chain %.3f cloud %.3f (%.1fs)  elapsed %.1f min"
                   % (k + 1, len(todo), pdb, item, r.get("rmsd_chain", float("nan")), r.get("rmsd_cloud", float("nan")),
                      r.get("secs", 0.0), (time.time() - t0) / 60), flush=True)
-    print("chain rows:", CHAIN_ROWS)
+    print("chain rows:", path)
 
 
 # ============================================================================ analysis
@@ -645,7 +911,7 @@ def _fold_ci_mean(x, folds, n_boot=4000, seed_parts=("s29O", "foldci")):
 
 def analyse(write=True):
     rows = jsonl_rows(CLOUD_ROWS)
-    chain = jsonl_rows(CHAIN_ROWS, key=("pdb", "item"))
+    chain = all_chain_rows()
     pdbs = [p for p in all_pdbs() if (p,) in rows]
     folds = ST.pinned_folds(pdbs)
     fm = np.array([p in I.FAIL18 for p in pdbs])
@@ -653,8 +919,12 @@ def analyse(write=True):
     prod_chain = np.array([chain.get((p, "prod"), {}).get("rmsd_chain", np.nan) for p in pdbs])
     lfo = json.load(open(LFO_JSON)) if os.path.exists(LFO_JSON) else None
     for it in ALL_ITEMS:
-        rc = np.array([rows[(p,)]["items"][it]["rmsd_cloud"] if it in rows[(p,)]["items"] else np.nan for p in pdbs]) \
-            if not it.startswith("lfo_") else np.full(len(pdbs), np.nan)
+        rc = np.full(len(pdbs), np.nan)
+        if not it.startswith("lfo_"):
+            rc = np.array([rows[(p,)]["items"].get(it, {}).get("rmsd_cloud", np.nan) for p in pdbs])
+            if it in ("best1_top128", "bestm128", "hull_top128") and os.path.exists(P128_ROWS):
+                p128 = jsonl_rows(P128_ROWS)
+                rc = np.array([p128.get((p,), {}).get(it, np.nan) for p in pdbs])
         rh = np.array([chain.get((p, it), {}).get("rmsd_chain", np.nan) for p in pdbs])
         rhc = np.array([chain.get((p, it), {}).get("rmsd_cloud", np.nan) for p in pdbs])
         if it.startswith("lfo_") and lfo is not None:
@@ -709,6 +979,10 @@ def analyse(write=True):
                 out["lfo"]["defs"][which]["lfo_chain"] = strata(rh[ok], prod_chain[ok], [p for p, o in zip(pdbs, ok) if o], folds[ok],
                                                                 "lfo_%s vs prod (BUILT CHAIN, DEPLOYABLE step)" % which)
                 out["lfo"]["defs"][which]["lfo_chain_n"] = int(ok.sum())
+    if os.path.exists(PC1_JSON):
+        out["pc1"] = json.load(open(PC1_JSON))
+    if os.path.exists(P128_JSON):
+        out["p128"] = json.load(open(P128_JSON))
     out["text"] = render_table(out)
     if write:
         ST.save_atomic(SUMMARY_JSON, out, module_file=__file__)
@@ -765,10 +1039,12 @@ def render_table(out):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("mode", choices=["cloud", "lfo", "chain", "analyse"])
+    ap.add_argument("mode", choices=["cloud", "lfo", "chain", "pc1", "p128", "analyse"])
     ap.add_argument("--pdbs", default="")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--groups", default="ABCD")
+    ap.add_argument("--shard", type=int, default=None)
+    ap.add_argument("--n-shards", type=int, default=1)
     a = ap.parse_args()
     pdbs = all_pdbs()
     if a.pdbs:
@@ -781,7 +1057,11 @@ def main():
     elif a.mode == "lfo":
         phase_lfo()
     elif a.mode == "chain":
-        phase_chain(pdbs, groups=a.groups)
+        phase_chain(pdbs, groups=a.groups, shard=a.shard, n_shards=a.n_shards)
+    elif a.mode == "pc1":
+        phase_pc1(pdbs)
+    elif a.mode == "p128":
+        phase_p128(pdbs)
     else:
         analyse()
 

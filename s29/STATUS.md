@@ -35,8 +35,8 @@
 - next: idle and available. Standing offers: price any proposed objective against theorem 2 before it is built; supply the flat-fraction (M5) and fixed-profile (M6) clauses to lane D; derive the configuration-space mixer cell for lane X if it wants it.
 
 ## O
-- 2026-09-19 23:43 running: brief and record read (S10-5, S24 L2/L3/L13, S23 L6/L9, S22 L4, S28-L1b/L26b/L35/L48); PREREG_S29_O.md committed (1e9bb035); building s29_O_ladder.py + tests.
-- next: probe one target under jobrun (peak RSS), point-cloud stage on 126, rung 6 LFO step posted first, chain job 28 structures/target.
+- 2026-09-20 00:33 running: S29-L20 posted (rung 6 KILLS H1: ORACLE cos -0.058 below the random-field 0.144 at 2.19x, ORACLE global step EXACTLY t=0, LFO bit-identical to production 126/126 on the chain; FAIL18 cos -0.317, random-18 p 0.0006) and S29-L21 (rung 8 PC1: ORACLE global eta = 0, sign a coin flip 52%, LFO +0.0071 at 0.82x -> lane B's achievable ceiling through this readout is ZERO). Chain ladder now 5 shards + rung 9 (top-128) launched.
+- next: rung 9 (best1 / best prefix-m / hull of the top-128, the quantum stage's whole field of view) posts on its own; then the full ladder table (rungs 1-5) as one ledger entry when the 5 shards finish (~00:55).
 
 ## D
 - 2026-09-19 23:56 done: cost-RMSD meter built and posted (S29-L2; all four S28 anchors reproduce); prereg checks of O (S29-L3) and X (S29-L4); suite gate 378/3/0 on 17 light files (S29-L5).
