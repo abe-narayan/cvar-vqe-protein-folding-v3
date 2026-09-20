@@ -67,6 +67,21 @@ harmful. The lane's question survives that only because the BUILT CHAIN's scale 
 covalent geometry, so the cloud-basis argument does not transfer -- which is exactly the
 distinction the prereg's section 2 rests on, now with a number attached.
 
+P6. **[ORACLE for the price, native-free for g] The lane's premise HOLDS: the projection costs
+more exactly where the cloud is more contracted.**
+Projection price (built chain minus point cloud, per target, from `s27/results/chain_rows.jsonl
+:: DIS`): **mean +0.1643 A, sd 0.2014, median +0.0958, positive on 111/126, range -0.347 to
++0.652**. Spearman with the native-free contraction factor g: **+0.604**; partialling out the
+cloud's own RMSD and the chain length, **+0.481**. (Against s_SPAN +0.378, s_ISO +0.339, length
+-0.142, cloud RMSD +0.511, ORACLE s* -0.313.)
+So the +0.164 A is not a flat toll: it is concentrated on the targets whose averages are most
+geometrically inconsistent with the ideal-geometry space they are projected into. That is the
+mechanism the lane hypothesises, measured before the intervention. It does NOT establish that
+removing the inconsistency removes the price -- the correlation is equally consistent with
+"contracted clouds are the ones that disagree most, and disagreement is what the projection
+cannot repair" (S29-L12: the contraction is Jensen's inequality, and Jensen's shrink is not
+uniform, so it cannot be undone by one scalar). The 126-target run separates those two.
+
 ## HYPOTHESIS
 
 ## REFUTED
