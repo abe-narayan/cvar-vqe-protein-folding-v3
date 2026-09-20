@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:32 Pacific.
+Last update: 2026-09-20 00:38 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -522,6 +522,40 @@ rho(R, Rg) for its band statistic beside the result, and re-run S28-L48's 0.960 
 INSIDE the band as a validity check (it should collapse toward chance if the band is real).
 This is the second time this sprint that the literature lane has saved an experiment from being
 uninterpretable before it ran.
+
+
+## Integration note 15 (2026-09-20 00:38, after S29-L22): THE DISTORTION IS NOT A CONTRACTION
+Lane P measured the averaging distortion as a function of sequence separation on all 126 clouds
+and it is NOT a contraction. The ratio of the cloud's distances to the native's is monotone in
+|i-j|: 0.773 at the virtual bond, CROSSING 1.00 near |i-j| = 8, and 1.10 by ratio of means
+(1.05 by median ratio) at |i-j| = 13. The NATIVE-FREE profile against the posterior's own median
+map has the same shape and the same crossing, so this is not an ORACLE-only statement.
+CONSEQUENCES, and they tidy up three standing items.
+(a) S23 L1's two numbers (bond 22% short, envelope 6% short) are the TWO ENDS OF ONE CURVE and
+    the middle is where the sign changes. The project has been describing a shape distortion as
+    a contraction for several sprints, including in my own integration notes 3 and 11 and in the
+    published S28 page; the correct statement is "averaging shortens local geometry and
+    lengthens long-range geometry", which is lane L's Jensen mechanism and lane T's variance
+    identity seen per separation: averaging shrinks a distance by more when the pool disagrees
+    more about it RELATIVE to that distance's size, and the pool disagrees most about local
+    geometry.
+(b) THE BOND-RESCALE ARM IS PREDICTED HARMFUL BY MEASUREMENT RATHER THAN BY ARGUMENT: setting
+    the bond right requires g = 1.29, which inflates every separation beyond 8 by about 29% on
+    top of distances that are ALREADY too long. The best single scalar must sit near the middle
+    of the curve, about 1.05 to 1.08 (the lane's SPAN and ISO factors are 1.102 and 1.077).
+(c) CORRECTING THE PROFILE IS REFUTED, AND AN ORACLE-FITTED PROFILE IS NO BETTER -- another
+    closure at an ORACLE ceiling rather than by a null endpoint run. This bears on lane T's
+    "separation-band re-weighting" as the only live form of the calibration item: P corrected
+    the CLOUD's separation profile and it did not help, which is a different operation from
+    re-weighting the OBJECTIVE's pairs but close enough that T should state whether its
+    suggestion survives P's measurement before anyone builds it.
+Also from the same entry: the projection price is NOT a flat toll (mean +0.1643, sd 0.2014,
+positive on 111/126) and correlates +0.604 with the native-free contraction factor, +0.481 after
+partialling out the cloud's own RMSD and the length. And S23 L2/L3 reproduce exactly on these
+clouds (42.9% of targets want expansion against S23's 42.1%), with every native-free factor
+inside the +-0.11 band S23 measured and the only one outside it carrying the WRONG sign.
+Lane P also withdrew its own first statistic (a mean of per-pair ratios, 1.37, dominated by small
+denominators) before using it. The shape conclusion is identical under all three statistics.
 
 ## Closed in S29
 - The PC1 / signed-readout family (S29-L21): ORACLE best global eta is exactly 0.000; the
