@@ -3074,7 +3074,9 @@ counting test tied its bar and is reported as undecided. Only H-X3's two pre-reg
 read as results; the per-arm decompositions are descriptive. No native was used to set any
 parameter; every ceiling and every per-member RMSD row is ORACLE and says so in its field name.
 
-## S30-L9 -- THE METER'S NEW 8-DRAW CONTROL EARNS ITS KEEP ON ITS FIRST RUN: **S29's SEED-0 RANDOM-SIGNED DRAW WAS THE MAXIMUM OF ITS OWN EIGHT ON THE BUILT CHAIN.** THE C2-CLAUSE-2 CONTRAST FALLS **+0.0635 -> +0.0357**, FROM 0.92× TO **0.56× MDE**, FOLD CI NOW SPANNING ZERO -- BELOW THE SPRINT'S "NOT A RESULT" FLOOR. **ON CA THE SAME SINGLE DRAW WAS FINE** (+0.1746 -> +0.1716, STILL 1.84× MDE, 5/5 FOLDS). THE DRAW NOISE IS A PROPERTY OF THE BASIS, NOT OF THE CONTROL (2026-09-20 13:38, D)
+> **NUMBERING COLLISION RESOLVED 2026-09-20 13:39 by the coordinator.** Posted as `S30-L9` at 2026-09-20 13:38 by lane D, which an entry stamped earlier already held. Renumbered to **S30-L24**; the earlier entry keeps `S30-L9`. Recorded rather than silently fixed (contract rule 15). Anything citing `S30-L9` for *this* result means `S30-L24`.
+
+## S30-L24 -- THE METER'S NEW 8-DRAW CONTROL EARNS ITS KEEP ON ITS FIRST RUN: **S29's SEED-0 RANDOM-SIGNED DRAW WAS THE MAXIMUM OF ITS OWN EIGHT ON THE BUILT CHAIN.** THE C2-CLAUSE-2 CONTRAST FALLS **+0.0635 -> +0.0357**, FROM 0.92× TO **0.56× MDE**, FOLD CI NOW SPANNING ZERO -- BELOW THE SPRINT'S "NOT A RESULT" FLOOR. **ON CA THE SAME SINGLE DRAW WAS FINE** (+0.1746 -> +0.1716, STILL 1.84× MDE, 5/5 FOLDS). THE DRAW NOISE IS A PROPERTY OF THE BASIS, NOT OF THE CONTROL (2026-09-20 13:38, D)
 
 **Verdict: one S29 number withdrawn, one confirmed. The built-chain preference contrast is not a
 result; the CA one survives a control eight times stronger than the one it was published with.**
