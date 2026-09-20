@@ -265,6 +265,24 @@ def flat_target(pdb: str) -> List[Dict]:
 
 
 # ======================================== the set-equality counterexample on a real instrument
+def argmin_untied(vals, rng, atol=1e-12, rtol=1e-9):
+    """The argmin of vals, with EXACT ties broken by a stable RNG draw, never by array order.
+
+    The project's named failure mode (memory tie-breaking-leaks-the-pool-order, and lane D's
+    S29-L38 check of S29-L25): on a pool held in DIS-sorted order, np.argmin on a tied score
+    reads the POOL ORDER, which here is biased toward the energy prefix -- precisely the
+    hypothesis under test.  s24.stats_lib.argmin_tied averages an OUTCOME over the tie set,
+    which is the right tool when an outcome exists; here the object is an INDEX, so the tie is
+    broken by an independent uniform draw and the tie-set size is returned and recorded.
+    """
+    vals = np.asarray(vals, float)
+    m = float(np.nanmin(vals))
+    tie = np.flatnonzero(np.isclose(vals, m, atol=atol, rtol=rtol))
+    if len(tie) == 1:
+        return int(tie[0]), 1
+    return int(tie[rng.integers(len(tie))]), int(len(tie))
+
+
 def sur_values(sur, Cb: np.ndarray, chunk: int = 4096) -> np.ndarray:
     """The surrogate's VALUE for a batch of clouds `Cb` (B, n_res, 3). Same arithmetic as
     `s28_A_amp.Surrogate.value_grad`, batched, value only."""
@@ -314,30 +332,32 @@ def subset_target(pdb: str, n_pool: int = 500, greedy_m: int = 5) -> List[Dict]:
 
     f_single = sur_values(sur, Wp)                         # the per-state criterion
     ii, jj = np.triu_indices(N, 1)
-    best_v, best_pair = np.inf, (-1, -1)
+    rng_tie = RP.rng_for(pdb, "s29B_tie")
+    best_v, best_pair, n_tied = np.inf, (-1, -1), 1
     CH = 20000
+    all_vals = np.empty(len(ii))
     for a in range(0, len(ii), CH):
         i2, j2 = ii[a:a + CH], jj[a:a + CH]
-        vals = sur_values(sur, 0.5 * (Wp[i2] + Wp[j2]))
-        t = int(np.argmin(vals))
-        # ties: average over the tied argmin set rather than reading array order
-        tie = np.flatnonzero(vals <= vals[t] + 1e-15)
-        if vals[t] < best_v:
-            best_v = float(vals[t])
-            best_pair = (int(i2[tie[0]]), int(j2[tie[0]]))
-            n_tied = int(len(tie))
+        all_vals[a:a + CH] = sur_values(sur, 0.5 * (Wp[i2] + Wp[j2]))
+    # ONE global argmin over all C(N,2) pairs, ties broken by a stable RNG draw, never by array
+    # order (the chunked version could also lose a global tie that straddled two chunks)
+    t, n_tied = argmin_untied(all_vals, rng_tie)
+    best_v, best_pair = float(all_vals[t]), (int(ii[t]), int(jj[t]))
     prefix_pair_v = float(sur_values(sur, 0.5 * (Wp[0] + Wp[1])[None])[0])
     # the best pair by the PER-STATE criterion (the two lowest f_single)
     ps = np.argsort(f_single, kind="stable")[:2]
     perstate_pair_v = float(sur_values(sur, 0.5 * (Wp[ps[0]] + Wp[ps[1]])[None])[0])
     # greedy + one pass of local search at size greedy_m
-    sel = [int(np.argmin(f_single))]
+    t0i, tie0 = argmin_untied(f_single, rng_tie)
+    sel, tie_max = [int(t0i)], int(tie0)
     for _ in range(greedy_m - 1):
         cand_ids = np.array([c for c in range(N) if c not in sel])
         Cb = (Wp[sel].sum(0)[None] + Wp[cand_ids]) / (len(sel) + 1.0)
         v = sur_values(sur, Cb)
-        sel.append(int(cand_ids[int(np.argmin(v))]))
-    improved = True
+        bi, nt = argmin_untied(v, rng_tie)
+        tie_max = max(tie_max, nt)
+        sel.append(int(cand_ids[bi]))
+    improved, n_swaps = True, 0
     while improved:
         improved = False
         cur = float(sur_values(sur, Wp[sel].mean(0)[None])[0])
@@ -346,10 +366,11 @@ def subset_target(pdb: str, n_pool: int = 500, greedy_m: int = 5) -> List[Dict]:
             cand_ids = np.array([c for c in range(N) if c not in rest])
             Cb = (Wp[rest].sum(0)[None] + Wp[cand_ids]) / (len(rest) + 1.0)
             v = sur_values(sur, Cb)
-            b = int(np.argmin(v))
+            b, nt = argmin_untied(v, rng_tie)
+            tie_max = max(tie_max, nt)
             if v[b] < cur - 1e-12:
                 sel = rest + [int(cand_ids[b])]
-                cur, improved = float(v[b]), True
+                cur, improved, n_swaps = float(v[b]), True, n_swaps + 1
     greedy_v = float(sur_values(sur, Wp[sel].mean(0)[None])[0])
     prefix_m_v = float(sur_values(sur, Wp[:greedy_m].mean(0)[None])[0])
     return [dict(pdb=pdb, n_res=n_res, fold=int(cand.fold), N=N, kind="subset_counterexample",
@@ -369,7 +390,8 @@ def subset_target(pdb: str, n_pool: int = 500, greedy_m: int = 5) -> List[Dict]:
                  rmsd_greedy=orc(Wp[sel].mean(0)),
                  rmsd_prefix_m=orc(Wp[:greedy_m].mean(0)),
                  rmsd_prod=orc(frame.Wf[top].mean(0).reshape(n_res, 3)),
-                 rank_of_min_f_single=int(np.argmin(f_single)))]
+                 rank_of_min_f_single=int(t0i), max_tie_set=int(tie_max),
+                 n_swaps=int(n_swaps))]
 
 
 # ================================================= MEASUREMENT 5b: THE ENDPOINT (prereg addendum 3)

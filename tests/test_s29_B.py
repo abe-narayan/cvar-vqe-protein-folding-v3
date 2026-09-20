@@ -390,3 +390,23 @@ def test_flat_report_reproduces_the_derived_flat_set():
     assert r1["flat_readout_deployed"] == 1.0           # the deployed readout moves nowhere
     assert r1["nmove_readout_tta"] == r1["m_strict"]
     assert 0.0 < r1["flat_cvar"] < 1.0
+
+
+def test_argmin_untied_never_reads_array_order_on_a_tie():
+    """The project's named failure mode (`tie-breaking-leaks-the-pool-order`; lane D's S29-L38
+    found the first version of the subset search taking `tie[0]`, which on a DIS-sorted pool is
+    biased toward the very prefix the experiment tests)."""
+    from s29 import s29_B_tta as TT
+    v = np.zeros(50)                       # every index tied
+    seen = set()
+    for s_ in range(200):
+        i, n = TT.argmin_untied(v, np.random.default_rng(s_))
+        seen.add(i)
+        assert n == 50
+    assert len(seen) > 20                  # it spreads over the tie set, not index 0
+    assert seen != {0}
+    # a unique minimum is still returned exactly, with tie set size 1
+    v2 = np.arange(50, dtype=float)
+    v2[37] = -1.0
+    i, n = TT.argmin_untied(v2, np.random.default_rng(0))
+    assert i == 37 and n == 1
