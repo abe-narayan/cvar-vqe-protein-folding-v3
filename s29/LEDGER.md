@@ -3090,3 +3090,124 @@ is labelled so in STATUS and in the summary's one provisional figure (the 53% sa
 Multiplicity: 0 endpoint comparisons; the fgap block is a property measurement, not a contrast.
 Artefacts: `s29/results/s29_T_reach.json` (`dla`, `subset_cut_rank`, `entropy`, `fgap`);
 `s26/jobs_done/s29T_reach.json`; `s29/THEORY.md` Q1.2; `s29/THEORY_SUMMARY.md`.
+
+## S29-L33 -- WITHIN-REALISM-BAND ORDERING, THE 126-TARGET MEASUREMENT: F1 FIRES AND F2 FAILS -- CONDITIONING ON REALISM **REMOVES** ORDERING SKILL ON EVERY INFORMATIVE SCORER (DIS +0.568 GLOBAL -> +0.508 IN-BAND, 58 OF 70 CELLS DOWN) RATHER THAN REVEALING ANY; THE ONE SIGN CHANGE IS SS_MATCH (-0.009 -> +0.060, REPLICATED ON TWO REALISM DEFINITIONS AND BOTH ARMS) AND IT IS WORTH NOTHING IN ANGSTROMS; SUBSTANTIAL INFORMATION ORTHOGONAL TO REALISM EXISTS AND IS THE SAME INFORMATION THE RECORD ALREADY PRICES (2026-09-20 01:23, D)
+
+EVERY NUMBER IS ORACLE (ordering is measured against the CA-RMSD to the native). Nothing
+deployable; nothing tuned; the band edges, the occupancy rule, the degeneracy rule, the three
+realism statistics, the width grid and the four falsifiers were all fixed in
+`s29/PREREG_S29_D_band.md` and its two addenda before any aggregate was read, each addendum
+carrying a written list of exactly what I had seen (one probe target's DIS row).
+Question (from lane L's S29-L12): the perception-distortion theorem forbids a realism measure
+from preferring the distortion-optimal answer ACROSS realism levels and says nothing about
+ordering INSIDE one. So: condition on a native-free realism statistic, then ask for ordering
+skill inside the band.
+Jobs: `s26/jobs_done/s29D_band_ca2.json` (exit 0, 1614 s, 0.38 GB, 126 targets x 500 pool members
+x 12 CA scorers x 3 realism definitions x 2 arms), analysis `s29D_band_analyse2`. Rows
+`s29/results/s29_D_band_ca_rows.jsonl`; summary `s29/results/s29_D_band_ca.json`; code
+`s29/s29_D_band.py`.
+
+**ADDENDUM 2 FIRST, BECAUSE IT DECIDES WHETHER THE DESIGN IS VALID.** The coordinator's relay of
+lane L's S29-L19: if the realism statistic is compactness-loaded, the band removes the very axis
+S14 measured as carrying in-band skill and a null is uninterpretable. Measured over 126 targets,
+on the pool, native-free:
+| realism statistic | rho(R, Rg) | fold CI | \|rho\| > 0.5 on | rho(R, RMSD) ORACLE |
+|---|---|---|---|---|
+| R1 CAGEO percentile | **+0.460** | [+0.450, +0.469] | 53/126 | +0.298 |
+| R2 geometric (percentile distance from the pool's median bond/Rg) | **-0.015** | [-0.024, -0.005] | 0/126 | +0.193 |
+| R3 consensus percentile | **+0.404** | [+0.389, +0.418] | 28/126 | +0.425 |
+(the ORACLE reference rho(Rg, RMSD) over the pool is +0.279). So R1 and R3 ARE moderately
+compactness-loaded and their cells are read with that stated; R2 is linearly orthogonal to Rg
+and is the clean definition. **The honest caveat on R2, which I state rather than claim
+orthogonality**: R2 is a FOLDED function of Rg (|percentile - median|), so its rank correlation
+with Rg is ~0 by symmetry while it is not independent of Rg -- banding on R2 removes the
+MAGNITUDE of the compactness deviation and leaves its SIGN free. That is a property worth
+naming, because the sign is exactly what S14 and rung 8 identify as the per-target information.
+
+**THE HEADLINE: F1 FIRES, F2 FAILS, AND F2 IS THE ONE THAT MATTERS.**
+F1 (some scorer has positive within-band rho with the fold CI excluding zero) fires on **50 of
+70** (arm, realism, scorer) cells. The distogram family is large and unambiguous: under R1,
+DIS **+0.5075** [+0.462, +0.547] and DIS_MEAN +0.5081 [+0.476, +0.534]; under the clean R2,
+DIS **+0.5397** [+0.500, +0.571]. The max-over-scorers sign-flip null gives p_max 0.000 in every
+arm. So **information orthogonal to realism exists in the library, and it is substantial** --
+which is the physics statement lane L supplied (banding on R destroys R's own discriminating
+power, so what survives is orthogonal to R by construction).
+F2 (the banding must REVEAL skill: rho_in > rho_across) **fails on 58 of 70 cells**, and on every
+informative scorer, with the fold CI of the paired difference BELOW zero:
+| scorer | rho_across | rho_in (R1) | in - across (R1) | rho_in (R2) | in - across (R2) | rho_in (R3) | in - across (R3) |
+|---|---|---|---|---|---|---|---|
+| DIS | +0.568 | +0.508 | **-0.060** [-0.086, -0.040] | +0.540 | -0.028 [-0.032, -0.023] | +0.361 | **-0.205** [-0.228, -0.180] |
+| DIS_MEAN | +0.559 | +0.508 | -0.051 | +0.532 | -0.027 | +0.365 | -0.186 |
+| CONTACT_LL | +0.314 | +0.249 | -0.064 | +0.302 | -0.011 | +0.149 | -0.160 |
+| DISTPOT | +0.339 | +0.208 | -0.132 | +0.324 | -0.015 | +0.156 | -0.184 |
+| CAGEO | +0.298 | (degenerate) | -- | +0.261 | -0.037 | **-0.016** | -0.314 |
+**Reading: conditioning on realism does not reveal hidden accuracy information; it removes
+ordering that was there.** A large part of what the S27 library knows about accuracy IS realism
+(that is the perception-distortion theorem's content), and the part that is not is the same
+ordering the record already prices globally. By my own registered criterion (F2), **this is not
+a recognition result**, and I am saying so about an experiment I designed, ran and would have
+liked to go the other way.
+
+**THE ONE GENUINE SIGN CHANGE, AND ITS SIZE.** SS_MATCH (secondary-structure compatibility) is
+the only scorer that is uninformative globally and informative in-band, and it replicates across
+two realism definitions and both arms (4 cells of the 12 F2 passes), `ST.fmt` verbatim:
+```
+  SS_MATCH | R1_CAGEO | pool: within-band rho - across-band rho
+    a 0.0592 (med 0.0435)   b -0.0090 (med 0.0263)   n=126
+    effect +0.0682   median +0.0384   SE 0.0211   MDE 0.0592   effect/MDE +1.15
+    iid  CI95 [+0.0264, +0.1102]
+    fold CI95 [+0.0398, +0.0891]   folds same sign 5/5   per-fold 0:+0.074 1:+0.009 2:+0.092 3:+0.095 4:+0.068
+    58W/68L/0T   worst degradation +0.6942   p90 +0.4401   power 0.90  Type-M 1.06
+    concentration: drop-top10 +0.0963 vs uniform-effect null p10/p50/p90 +0.0685/+0.0959/+0.1248 -> pctile 0.507
+    VERDICT: WORSE [TYPE-M ZONE: magnitude inflated ~1.06x]
+```
+(POSITIVE = the banding revealed skill; the WORSE label is `ST.compare`'s RMSD convention.)
+It goes from rho_across **-0.009** to rho_in **+0.060** [+0.045, +0.077]. The other F2 passes are
+RG_UNIV +0.050 and RG_LAW +0.015 under the GEOMETRIC band only -- a geometric scorer gaining
+inside a geometric band, which is the degeneracy the prereg warned about read from the other
+side -- and HP +0.012. **F3 (the size rule) applies to all of them**: at rho_in = 0.06, with
+`decorrelated-errors-exist-but-are-unusable` pricing fusion gain as the SQUARE of the weaker
+channel's skill, SS_MATCH's in-band skill is worth on the order of 10^-3 A and is a MECHANISM
+result, not a candidate operator. I am not proposing an arm on it.
+
+**THE CLOSED FORM IS AN UPPER BOUND HERE, NOT AN ESTIMATE (addendum 1, L's point 1).** The
+registered prediction was the Gaussian partial correlation rho_SY.R, computed per target before
+the in-band numbers were read. For DIS under R1 the prediction is **+0.596** and the measurement
+is **+0.508**; the width curve runs **+0.568 -> +0.495 -> +0.459 -> +0.436 -> +0.418** as the
+band narrows from w = 1.0 to 0.05, i.e. it converges BELOW the Gaussian prediction rather than
+to it. Under R2: predicted +0.679, measured +0.540, curve +0.568 -> +0.517. Under R3: predicted
++0.258, measured +0.361, curve +0.568 -> +0.219 (here the narrow end falls BELOW the prediction
+too, and the band-averaged statistic sits above it because the five fixed bands are wide). So the
+jointly-Gaussian closed form systematically OVERSTATES what survives narrow conditioning on this
+data, and any future use of rho_SY.R on this instrument should be labelled an upper bound. The
+width curve behaved exactly as lane L said it would (monotone from the global correlation toward
+the partial correlation) and is the right object to report: it answers the multiplicity objection
+with one pre-registered curve instead of five bands.
+
+**WHAT THIS DESIGN CANNOT SEE, IN THE COORDINATOR's OWN TERMS (S29-L31).** The within-band design
+IS the incidental-parameter remedy: a conditional / fixed-effects construction that buys a
+consistent estimate of the SHARED structural part precisely by DISCARDING all information about
+the per-target term. **Eliminating is not estimating.** This entry therefore measures the shared
+part and is SILENT BY CONSTRUCTION about the per-target sign -- rung 8's -0.454 free-sign versus
+-0.21 forced-sign gap, and S14's 0.986-within against 0.600-across, are untouched by anything
+here, in either direction. A reader must not take F2's failure as closing the per-target
+question. Stacked with lane L's topic-7 caution (a null from this library is a statement about
+this library), the scope of the claim is: **on the S27 CA-level library, at this length, matched
+realism does not expose accuracy information beyond what the global correlation already carries.**
+
+**MULTIPLICITY AND CONTROLS.** 70 cells (2 arms x 3 realism definitions x 12 scorers); the
+headline per cell is the band-averaged, degenerate-excluded, pool-only rho_in; occupancy >= 20
+structures and >= 10 distinct RMSDs per cell with thin cells dropped and counted; DEGENERATE
+cells (|Spearman(scorer, R)| > 0.8 inside the band, or < 20% of the scorer's range retained)
+excluded and counted (EXVOL loses 3.00 cells per target, DIS 1.04 under R1 and 0.02 under R2);
+the within-cell shuffle null is flat at |mean| <= 0.001 everywhere, so no small-cell bias is
+being read as skill; the max-over-scorers sign-flip null is p_max 0.000 for F1 and is not the
+binding test, since F1 was never in doubt. 0 endpoint comparisons.
+Artefacts: `s29/results/s29_D_band_ca.json`, `s29_D_band_ca_rows.jsonl`,
+`s29/PREREG_S29_D_band.md` (+ addenda 1 and 2), `s26/jobs_done/s29D_band_ca2.json`,
+`s26/logs/s29D_band_analyse2.log`.
+**Verdict: the one open version of the recognition question is MEASURED AND ANSWERED NO for the
+S27 library at CA level.** Realism-matched ordering does not beat unmatched ordering on any
+informative scorer; the only sign change is worth ~10^-3 A; the recognition ceiling at this
+length now has a controlled measurement behind it, which lane L says nobody has published. That
+is the H0 outcome stated as a contribution, and it is what the report should carry.

@@ -322,15 +322,21 @@ def analyse(basis="ca", n_max_null=2000):
                                if r["cells"][arm][rname].get(s)], float)
                 wc = {}
                 for w in WIDTHS:
-                    v = [r["cells"][arm][rname][s]["width_curve"].get(str(w), {}).get("rho")
-                         for r in rows if r["cells"][arm][rname].get(s)
-                         and "width_curve" in r["cells"][arm][rname][s]]
-                    v = [q for q in v if q is not None and np.isfinite(q)]
+                    #: v and its fold labels are built in ONE pass so they cannot drift apart
+                    #: (they did once: a finiteness filter on the values and a None filter on the
+                    #: indices gave 125 values against 126 folds and ST.compare refused, correctly).
+                    v, fw = [], []
+                    for q, r in enumerate(rows):
+                        c = r["cells"][arm][rname].get(s)
+                        if not c or "width_curve" not in c:
+                            continue
+                        val = c["width_curve"].get(str(w), {}).get("rho")
+                        if val is None or not np.isfinite(val):
+                            continue
+                        v.append(float(val)); fw.append(folds[q])
                     if len(v) >= 3:
-                        f_w = folds[[q for q, r in enumerate(rows) if r["cells"][arm][rname].get(s)
-                                     and "width_curve" in r["cells"][arm][rname][s]
-                                     and r["cells"][arm][rname][s]["width_curve"].get(str(w), {}).get("rho") is not None]]
-                        cw = ST.compare(np.array(v), np.zeros(len(v)), f_w, label=f"width {w}", seed_parts=("s29Dband",))
+                        cw = ST.compare(np.array(v), np.zeros(len(v)), np.array(fw), label=f"width {w}",
+                                        seed_parts=("s29Dband",))
                         wc[str(w)] = dict(rho=float(np.mean(v)), n=len(v), ci95_fold=cw["ci95_fold"], se=cw["se"])
                     else:
                         wc[str(w)] = dict(rho=None, n=len(v))

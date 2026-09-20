@@ -916,16 +916,30 @@ def chain_item(pdb, item):
                 secs=time.time() - t1, **struct_diag(ca))
 
 
-def chain_rows_path(shard=None):
-    return CHAIN_ROWS if shard is None else CHAIN_ROWS.replace(".jsonl", "_shard%d.jsonl" % int(shard))
+def chain_rows_path(shard=None, groups=""):
+    """One rows file per (group set, shard) so that no two processes ever append the same file.
+    S29-L31's incident: two jobs with different --groups but the same --shard shared a file (the
+    rows were identical to 0.0 and nothing was corrupted, but the guarantee was not there)."""
+    if shard is None:
+        return CHAIN_ROWS
+    tag = "".join(sorted(set(str(groups)))) or "X"
+    return CHAIN_ROWS.replace(".jsonl", "_%s_shard%d.jsonl" % (tag, int(shard)))
 
 
-def all_chain_rows():
-    """Every chain row from the unsharded file and from every shard file."""
+def all_chain_rows(check=True):
+    """Every chain row from the unsharded file and from every shard file.  `check` asserts that any
+    (pdb, item) computed more than once agrees to 1e-9: the projection is deterministic, so a
+    disagreement would mean an interleaved write, and it is checked rather than assumed."""
     import glob as _glob
-    done = {}
+    done, seen = {}, {}
     for f in sorted(_glob.glob(CHAIN_ROWS.replace(".jsonl", "*.jsonl"))):
-        done.update(jsonl_rows(f, key=("pdb", "item")))
+        for k, r in jsonl_rows(f, key=("pdb", "item")).items():
+            if check and k in seen:
+                a, b = seen[k], r.get("rmsd_chain", float("nan"))
+                if np.isfinite(a) and np.isfinite(b) and abs(a - b) > 1e-9:
+                    raise RuntimeError("chain row disagreement for %s: %.9f vs %.9f" % (k, a, b))
+            seen[k] = r.get("rmsd_chain", float("nan"))
+            done[k] = r
     return done
 
 
@@ -934,7 +948,7 @@ def phase_chain(pdbs, groups="ABCD", shard=None, n_shards=1):
     #: (so no two processes ever write the same file). Work splits by target index: a kill costs one
     #: item, a resume skips whatever any shard already banked.
     done = all_chain_rows()
-    path = chain_rows_path(shard)
+    path = chain_rows_path(shard, groups)
     if shard is not None:
         pdbs = [p for k, p in enumerate(pdbs) if k % int(n_shards) == int(shard)]
     work = []
