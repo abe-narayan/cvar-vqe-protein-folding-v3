@@ -1320,3 +1320,20 @@ THE THREE NUMBERS: bound >= 3.21 A (>= 2.708 even granting a perfect per-target 
 architectural ORACLE ceiling 2.9027 A built chain; the pool expresses 1.1235 A.
 STILL OPEN: LEG_torsion and 8 other non-compactness in-band channels (section 12.0), a sparse
 weighted readout, and a genuinely new information channel. Do not redo what is closed.
+
+## LANE P FILED AFTER THE FIRST CLOSE (2026-09-20 09:16)
+S29-L57 (commit 7620d4c0) supersedes my recomputation; report section 9.2c now carries lane P's
+reading and the gap it recorded is closed. ALL EIGHT LANES FILED. Ledger S29-L0..L57.
+THE ADDED FINDING: **the mechanism is confirmed and the hypothesis is refuted** -- forcing the
+emitted chain geometrically consistent with its own cloud works as a FIT (projection residual
+0.8135 -> 0.6191 A, -24%, native-free) and costs 0.72 A, because the distortion is a monotone
+SHEAR in sequence separation so fixing the bond inflates long-range distances already too long
+(emitted Rg 1.011x native -> 1.272x). BOND sits 0.03x MDE from the mean of 8 matched random
+displacements: all magnitude, no direction.
+AND IT CORRECTED ME: a FALLING projection price is not a SAVED one. My section 11.3 said
+improving the cloud is worth more than it looks; the converse trap is that the price also falls
+when the cloud gets WORSE (+0.1643 -> -0.1512 under BOND). The +0.164 A is the COST OF THE
+GEOMETRY CONSTRAINT, not a recoverable loss. Guard added to 11.3.
+OPEN FOR THE USER: jobrun.py CPU_START=85 contradicts governor.py CPU_CEILING=101 (my bug, the
+second paired-threshold error of the sprint). Lane P proposed the minimal fix, was DENIED by the
+permission system, and did not work around it; I declined to apply it on its behalf.
