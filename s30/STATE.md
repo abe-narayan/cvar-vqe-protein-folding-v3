@@ -337,6 +337,63 @@ quoted the **verdict string**. A verdict string is a claim about a computation a
 what reading the computation is worth.
 
 
+## NOTE 7 (2026-09-20 13:19, lane T): **IT RETRACTED ITS OWN HEADLINE**, ON A NULL LANE Q TOLD IT TO RUN
+
+Lane Q asked lane T to price its K = 5,000 direction search with `best_of_k_within` before
+reporting. Lane T ran it, using a **common direction bank across targets** (columns made comparable
+by a deterministic native-free sign convention, so column k is the same *rule* everywhere and the
+statistic is well posed). The result destroys its own result:
+
+```
+                    observed   across-target null   accounted   split-half transfer   k_eff
+HALFSPACE K=5000    -1.7881        -3.5038            196%        -0.3319 (19%)        118
+QUADRIC   K=5000    -1.5663        -2.9368            188%        -0.3148 (20%)        110
+```
+
+**The null exceeds the observed in both.** And the decisive follow-up, because 19% transfer is not
+zero and could be misread as a route: the halfspace direction bank's own mean is 3.8550 A, so the
+**transferable rule** (K-mean + split-half) gives **3.5231 A against PREFIX's 3.0507 — +0.4724,
+1.88x MDE, 5/5 folds, 39W/87L, WORSE.**
+
+> **"HALFSPACE - PREFIX = -0.9816 A, BETTER" is WITHDRAWN as a statement about the class's value.
+> The halfspace class is REACHABLE, not EXPLOITABLE, and as a RULE it is negative.**
+
+Lane T identified its own error precisely: its matched random-subset null asked whether a
+*structured* class beats an *unstructured* one at equal budget, not whether **the winning direction
+is the same direction twice**. That is the project's most repeated error arriving in a new costume,
+caught by another lane and confirmed by the lane that made it.
+
+**What is unaffected, each checked rather than assumed:** the QUADRIC-minus-HALFSPACE contrast
+(like-for-like at matched budget; a null shifting both does not touch it), M5's subspace projection
+(no maximum over draws anywhere), and **the six-coefficient conclusion, which this strengthens** --
+a non-transferable direction in a six-dimensional subspace *is* six per-target coefficients.
+
+**AND THE COMBINATION FORMULA HELD TO 0.008.** Lane T registered `rho_comb = rho_0 / sqrt(s_1)`
+with the field count cancelling. Against lane D's independent measurement: the formula gives
+**0.174** from D's best single field and **0.162** from the 0.1128 T registered with, against a
+measured **0.1693**. P5a held on both clauses (s_1 = 0.486, per-target stable rank 1.681); P5b held
+(0.1693 inside [0.11,0.22], point estimate 0.15). **P5c did not hold and lane T says its mechanism
+was wrong** -- it predicted the in-sample 21-parameter arm would inflate to 0.25-0.45; lane D tuned
+its ridge by nested CV *inside* the training folds, so the arm degenerated to 0.0124 instead.
+Lane D's arm was better built than lane T anticipated.
+
+> **The combination ceiling is `rho_0/sqrt(s_1)` -- set by the Gram's RANK, with the field count
+> cancelling exactly. Eleven significant fields spanning two directions combine like two.
+> The Gram is a one-line test to run before anyone builds a twenty-second field.**
+
+**The stable-rank scope is adopted in full**: every appearance now carries the feature space in the
+same sentence -- pair-distance 1.859/1.862, **coordinate 3.404/3.619, k90 = 11.2 not 5.6**. Lane T's
+2.0 threshold fires for a distance-map lift and **does not** fire for a coordinate-space one; its
+verdict is unchanged but now rests on direct measurement rather than on the threshold, and it said
+so rather than letting the threshold carry weight it cannot bear.
+
+**Lane T's running total of its own claims that came back wrong today: four** -- P2b (2-4x,
+flattering), P4c (64%, flattering), the unregistered "12 bits" aside (withdrawn, corrected *down*
+to 3.78), and now the halfspace headline (retracted on a null it should have run itself). Three of
+the four ran toward its own hypothesis. What it still stands behind is what no null touches: T1 and
+T1b, the value-of-a-bit law (R2 0.9983), the codebook 5.2x, the torsion 48-vs-7 arithmetic, M5, and
+the corrected within-subspace dictionary.
+
 ## NOTE 6 (2026-09-20 13:17, lane D + lane T): **THE COMBINATION QUESTION IS ANSWERED. NO.** AND LANE T'S REGISTERED PREDICTION HELD
 
 The measurement I called the sprint's central one is in, and it closes the direction.
