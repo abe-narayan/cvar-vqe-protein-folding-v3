@@ -64,16 +64,26 @@ Topic 3 count: 10 entries, 4 KEPT, 1 NOTED, 5 REJECTED (one of them my own hypot
 importable operator.** The deliverable is a reframe: *computationally easy, informationally
 expensive*.
 
+## Topic 4 -- escape E2, constraint repair of an averaged structure (`L30_2_common_mode.md` section 4, ledger S30-L13)
+
+| source | what it adds | verdict |
+|---|---|---|
+| **"Improving consensus structure by eliminating averaging artifacts", PMC2662860** (2090 non-homologous single-domain proteins under 200 residues) | the field's own at-scale run of escape E2: MCORE takes averaging clashes from **63.0% of atoms to 1.09%** and RMSD from **3.28 A to 3.36 A -- 0.08 A WORSE**; PULCHRA 3.64% | **KEPT -- it re-caps my own S30-L7.** Removing 98% of clashes costs accuracy: a realism operator losing distortion, i.e. Blau & Michaeli applied where S29 did not apply it. **Our -0.022 A is the opposite sign**, and `2/n` bonded fraction (15.4% at n=13, 1.0% at n=200) is the arithmetic mechanism |
+| the same paper's claim that *"averaging artifacts become more pronounced when members of the ensemble are more divergent"* | the mechanism we would want | **RECORDED AS A LITERATURE GAP** -- asserted, never measured; no quantitative version exists. Our pool's divergence is observable per target, so the cheap re-read (split the existing k=30 AMBER-relax result by dispersion and by FAIL18/108) tests a claim nobody has tested |
+| REFMAC `regularize`, SCAR clustering, PULCHRA | alternative repair operators | REJECTED -- same operator class, priced by the same measurement; no additional information |
+
+Topic 4 count: 3 entries, 1 KEPT, 1 literature gap RECORDED, 1 REJECTED.
+
 ---
 
 ## RUNNING TOTALS
 
-25 sources engaged, 10 KEPT, 1 NOTED, 14 REJECTED across 11 families. **Zero importable
+28 sources engaged, 11 KEPT, 1 NOTED, 15 REJECTED across 12 families. **Zero importable
 operators**, which is the expected and correct outcome -- the value of this lane is closures and
 corrections, not imports.
 
-Three ledger entries: **S30-L6** (reference state), **S30-L7** (common-mode non-identifiability),
-**S30-L8** (set selection + a refuted hypothesis of my own).
+Four ledger entries: **S30-L6** (reference state), **S30-L7** (common-mode non-identifiability),
+**S30-L8** (set selection + a refuted hypothesis of my own), **S30-L13** (I re-cap my own escape E2).
 
 ## THINGS I CHECKED RATHER THAN ASSUMED, BECAUSE THE PROJECT HAS BEEN BURNED FOUR TIMES
 
