@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 01:25 Pacific.
+Last update: 2026-09-20 01:28 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -170,6 +170,29 @@ third is the queued S8 free-energy item and is now the only structurally live ex
 
 
 
+
+
+## THE BOUND SURVIVES ITS DIRECT ATTACK (2026-09-20 01:28, `s29/results/s29_D_fields.json`; lane D's entry to follow)
+Lane D's field survey is the one experiment that could have falsified the sprint's headline, and
+it does not. It measured the ORACLE cosine of EIGHTEEN displacement fields the original survey
+never covered -- nine channel re-rankings, the m-set differences at m = 5, 50, 150, 250, 500, the
+MEDOID minus mean displacement, CONS_TRIM, EXPAND (pure de-contraction) and PROJ (the projection's
+own displacement) -- against the random-shape-field reference of 0.1398.
+NOT ONE FIELD BEATS THE RANDOM REFERENCE. The ranking, signed mean cosine over 126 targets:
+DISTPOT 0.1128 (SE 0.0316), MSET_250 0.1118, MSET_150 0.0946, RG_LAW 0.0933, CONTACT 0.0933,
+CONS_TRIM 0.0890, LEG 0.0883, MSET_500 0.0815, CONTACT_LL 0.0786, SS_MATCH 0.0750, ENV 0.0730,
+PROJ 0.0694, MSET_5 0.0629, CAGEO 0.0565 ... down to DIS_MEAN 0.0231, MEDOID -0.0097,
+MSET_50 -0.0187 and EXPAND -0.0208. `beats_random_reference` is False on every one of them.
+AND THE PRICE IS THE POINT: the implied point-cloud RMSD at each field's own BEST (ORACLE) step
+runs from 3.0289 for the best field to 3.0482 for the worst, against production's 3.0483. The
+single best displacement field this project can construct, stepped by an amount chosen with the
+native in hand, is worth 0.019 A on the point cloud.
+SO ASSUMPTION B2 -- rho_max <= 0.14 for every field constructible from the present information --
+SURVIVES a direct, pre-registered attack with eighteen new candidates, and the bound of S29-L23
+stands: no native-free operator over this information reaches below about 3.18 A on the built
+chain. Lane D designed this attack on my instruction to try to break the sprint's own headline,
+and it is worth recording that the attack was real: PROJ, MEDOID and EXPAND are exactly the three
+fields a critic would name, and all three are at or below the reference.
 
 ## RECOGNITION IS NOW CLOSED THREE WAYS (2026-09-20 01:25, S29-L33)
 The within-realism-band measurement, the sprint's only open recognition question, has landed.
