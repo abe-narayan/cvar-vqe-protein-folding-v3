@@ -337,6 +337,70 @@ quoted the **verdict string**. A verdict string is a claim about a computation a
 what reading the computation is worth.
 
 
+## NOTE 12 (2026-09-20 13:31, lane X, S30-L20): **NO GENERATOR CAN IMPROVE THE TYPICAL MEMBER IN THE SENSE THAT PAYS** — AND MY PREMISE WAS BACKWARDS
+
+I asked lane X to test the one construction its own law would admit: a generator whose **typical**
+member is better, rather than whose **best** member is better. It measured the set mean first, as
+instructed, and found **the set mean is two quantities and only one of them converts.**
+
+For a coordinate-average terminal over m members, the common-mode identity gives per target:
+
+```
+set_mean^2  ~=  B^2 + S^2        B = RMSD(set average, native) = THE ENDPOINT
+                                 S = the set's spread about its own centroid
+```
+
+**A set mean improved purely by concentration is worth zero, by algebra.** Only B converts, and
+**B is the endpoint itself.**
+
+```
+arm            set_mean   B(endpoint)     S    avg_gain |  d_set_mean     d_B      d_S
+POOL (top-75)    3.5507      3.0483    1.5770   0.5023  |      --         --       --
+T0_helix         3.8663      3.7892    0.5676   0.0771  |   +0.3156   +0.7408  -1.0094
+T1_blind         4.0218      3.2435    2.2242   0.7784  |   +0.4712   +0.1951  +0.6472
+T2_restype       3.9563      3.2065    2.1267   0.7498  |   +0.4056   +0.1581  +0.5497
+T3_pool          3.5916      3.1752    1.4791   0.4164  |   +0.0409   +0.1269  -0.0979
+```
+
+**Four reasons, independent:**
+
+1. **Nothing in the record improves the set mean at all** — every `d_set_mean` is positive, three
+   at 5/5 folds with CIs excluding zero. The best is a **statistical tie** (T3_pool +0.0409,
+   0.57x MDE) against my stated requirement of **-0.2 A**.
+2. **The concentration half is worth zero, as the algebra says.** `avg_gain = 0.4143*S - 0.1559,
+   r = 0.8854, n = 630` — **the terminal's entire value is spread extraction**. Within target,
+   `corr(S, B) = +0.0851`: concentration is **orthogonal** to bias.
+3. **The extreme case proves it.** `T0_helix` — constant alpha-helix plus jitter — **is** the
+   typical-good generator I described, and the most concentrated source ever built here
+   (S 0.568 against the pool's 1.577). **It is the worst endpoint in the record: 3.7892.** Its
+   averaging gain collapsed to 0.077 and the endpoint fell back onto B.
+4. **The cells that win on both do not transfer.** Split-half **+0.1597 [+0.0676, +0.2687]** —
+   wrong sign, CI excluding zero.
+
+> **MY PREMISE WAS BACKWARDS.** I wrote: *"every sampler was built to be diverse; nobody has built
+> one to be typical-good."* Somebody did, and **diversity is the correct design**: the
+> largest-spread arms have the largest averaging gains and the best generated endpoints.
+> **For an averaging terminal, spread is the raw material, not a defect.** The samplers were not
+> built wrong.
+
+**Two honesty items lane X volunteered, and both matter for quoting it.** Its counting falsifier
+**essentially tied its bar — 24.80% against 25%, a 0.20-point miss — and decided nothing**; the
+verdict rests entirely on the transfer arm. And the raw within-target `corr(S,B) = -0.4744` is
+**driven by T0_helix alone**; drop that arm and it is +0.0851. Both satisfy its registered
+prediction, but **the strong negative is an artefact and must not be quoted** — the durable number
+is the orthogonality.
+
+**And it amended its own admission condition to be STRICTER**, not looser: S30-L10's
+`d(set mean) < -(0.32..0.37)*d(set best)` treats one channel as two, so it becomes
+**`ADMIT G iff d(bias B) + 0.298*d(set best) < 0`**. The cheap half was free all along.
+
+**Why this is a ceiling and not a miss.** "Improve the typical member" decomposes into a **spread**
+half (free, already extracted, orthogonal to the endpoint) and a **bias** half (worth everything,
+but it *is* the endpoint). **Lane L's non-identifiability closes the second half structurally.**
+The only half of "typical-good" that pays is the half no source change can move — and lane L's
+falsifier had already failed before any endpoint run, at a provenance cosine of 0.9432 against a
+0.9330 within-source control. **No endpoint compute was spent on this closure.**
+
 ## NOTE 11 (2026-09-20 13:28, lane R, S30-L19): **L11 IS ANSWERED. NATIVENESS IS NOT RECOGNISABLE FROM SINGLE-STRUCTURE GEOMETRY** — AND THE NULL IS A THEOREM, NOT A MISS
 
 The question I judged to sit underneath the sprint, answered on an instrument built to remove the
