@@ -4121,7 +4121,7 @@ future sprint discover it the way this one discovered S8.
 with a known extension (160 distinct), test each against disk, resolve basename-only citations
 against a full recursive file index, and for anything still missing run the S29-L41 check --
 `git log --all --oneline -- <path>` -- to distinguish "moved" from "never existed".
-Script: scratchpad `audit_paths.py` / `resolve_names.py`.
+Script: `s29/s29_audit_paths.py` (committed; it was written in the scratchpad and cited by its scratchpad name in the first version of this entry, which is itself an unresolvable citation — corrected 2026-09-20 03:42).
 
 **RESULT.**
 
@@ -5296,3 +5296,41 @@ PROJ corr +0.651).
 Verdict: **THE DEPLOYED QUANTUM STAGE CONTRIBUTES NOTHING MEASURABLE AT THE ENDPOINT THAT A
 SINGLE TARGET-INDEPENDENT NUMBER DOES NOT. M6 CLOSES ON THE REPORTING BASIS; F-M6a is refuted at
 the structure level and confirmed as an endpoint statement; the suite closes green.**
+
+### ADDENDUM to S29-L46 (2026-09-20 03:42): THE AUDIT RE-RUN AT THE SPRINT'S CLOSE, ON A LEDGER THAT HAS GROWN FROM 160 TO 217 CITED PATHS -- AND IT CAUGHT **MY OWN** CITATION, PLUS ONE GENUINELY DANGLING PATH
+
+The first run of this audit covered 160 cited paths. Entries S29-L47 to S29-L55 added more, and the
+tool was re-run at the close with its basename resolution folded in (the first version resolved
+basenames in a second, separate script, which is why its own citation did not resolve — see below).
+
+    paths cited in the ledger : 217
+    resolve                   : 205   (162 directly, 43 by basename)
+    DO NOT RESOLVE            :  12
+
+**The twelve, itemised, because "12 unresolved" without the breakdown would be the same kind of
+unchecked summary this audit exists to catch:**
+
+- **Six are extraction artefacts, not citations.** `..._DIS_SURR_ca.json`,
+  `..._DIS_chain-s28rows.json`, `.s1of2.jsonl`, `.s3of4.jsonl`, `_n40_PARTIAL.json`,
+  `_n40_REPAIRED.json` — prose elisions and bare shard suffixes that the extractor reads as paths.
+  The underlying files exist.
+- **Two are mine, and they are a real instance of the failure mode.** This entry originally cited
+  `audit_paths.py` / `resolve_names.py` by their **scratchpad** names. They were labelled
+  "scratchpad", so the entry was not misleading, but neither name resolves against the repository
+  — and an entry about unresolvable citations should not contain one. The tool is now committed as
+  `s29/s29_audit_paths.py` and the citation above is corrected.
+- **Two are one renamed file.** `s29/results/s29_B_tta_subset_rows.jsonl` →
+  `..._pre_tiefix.jsonl` when lane B fixed its tie rule (S29-L45). The rename is in git history and
+  the content is preserved, which is exactly what the git check is for.
+- **One is older than this sprint.** `score_weights.json`, in history from Sprint 2.
+- **ONE IS GENUINELY DANGLING: `s7/debias_tune.json`.** Absent from disk **and** from git history.
+  It is cited in lane M's F1 calibration note alongside `docs/FINDINGS.md`. Note what sits beside
+  it: `s7/debias_calib.json` and `s7/debias_dev.json` both **exist**. So this is a near-miss
+  citation rather than an invented stage — but it is unresolvable as written, and a reader chasing
+  it would find nothing. **Fourth instance of prose naming a path that is not there**, after S8's
+  free-energy stage, S26's presentation file, and `s25/qcand_lib.py`.
+
+**The number the report quotes is therefore not "217/217".** It is: 205 of 217 resolve; 11 of the
+12 that do not are extraction artefacts, renames, or an older sprint's file; **1 is a genuine
+dangling citation and is named here.** That is a more useful statement than a clean sweep would
+have been, and it is the reason the audit is a committed tool rather than a one-off.
