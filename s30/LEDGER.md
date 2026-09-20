@@ -1320,7 +1320,9 @@ Four pre-registered falsifiers; 10 F1 cells, 5 F2 rows x 7 lattice resolutions, 
 Only F1-F4 are read as results. The stratum split of the argmin curve was **not** pre-registered
 and is reported as an incidental finding with its SE and MDE attached, not as a lane result.
 
-## S30-L3 -- FILTER WIDTH IS **NOT** AVERAGING WIDTH: IT MOVES THE EMITTED STRUCTURE 4-15× AS MUCH, SO S29'S FLAT m SWEEP DOES NOT TRANSFER. BUT THERE IS **NO FREE LUNCH IN WIDTH** -- F2a REFUTED, THE BENEFIT/HARM TRADE-OFF IS CLEAN AND CONTINUOUS AND CROSSES AT ~55%/55%. F2b CLOSED **BY CEILING WITHOUT SPENDING THE CHAIN**: THE ORACLE GLOBAL BEST FILTER WIDTH **IS THE SHIPPED VALUE**. AND THE "WIDENING HELPS HARD TARGETS" READING IS **FALSE** -- IT DOES NOT REPLICATE ON EITHER FILTER-INDEPENDENT TAIL. ONE MECHANISM (ρ = +0.81) EXPLAINS ALL FOUR STRATA (2026-09-20 12:57, F)
+> **NUMBERING COLLISION RESOLVED 2026-09-20 13:05 by the coordinator.** Posted as `S30-L3`, which an earlier entry already held -- lanes picked the next free number from a ledger that grew between their reads. Renumbered to **S30-L16**; the earlier entry keeps `S30-L3`. Recorded rather than silently fixed, per contract rule 15. Anything citing `S30-L3` for *this* result means `S30-L16`.
+
+## S30-L16 -- FILTER WIDTH IS **NOT** AVERAGING WIDTH: IT MOVES THE EMITTED STRUCTURE 4-15× AS MUCH, SO S29'S FLAT m SWEEP DOES NOT TRANSFER. BUT THERE IS **NO FREE LUNCH IN WIDTH** -- F2a REFUTED, THE BENEFIT/HARM TRADE-OFF IS CLEAN AND CONTINUOUS AND CROSSES AT ~55%/55%. F2b CLOSED **BY CEILING WITHOUT SPENDING THE CHAIN**: THE ORACLE GLOBAL BEST FILTER WIDTH **IS THE SHIPPED VALUE**. AND THE "WIDENING HELPS HARD TARGETS" READING IS **FALSE** -- IT DOES NOT REPLICATE ON EITHER FILTER-INDEPENDENT TAIL. ONE MECHANISM (ρ = +0.81) EXPLAINS ALL FOUR STRATA (2026-09-20 12:57, F)
 
 Pre-registration `s30/PREREG_S30_F2.md`, committed **e626a88e at 12:47:48**, before this file's
 code existed. Code `s30/s30_F_width.py`; rows `s30/results/s30_F_width_rows.jsonl` (126);
@@ -1704,7 +1706,9 @@ which no real force field does -- it is an order-of-magnitude argument for the s
 prediction of its size. And prediction 3 is mine, at 2 to 1, and the last time this lane and lane T
 agreed on a prior of this kind at 3 to 1 we were both wrong at n = 126.
 
-## S30-L4 -- THE SCORE HAS **NO IN-POOL RANKING SKILL ON THE TAIL**: ρ = **+0.1066** (FOLD CI INCLUDING ZERO) AGAINST **+0.6446** ON THE 108, RANDOM-18 NULL **p = 0**. IT IS ALMOST ENTIRELY THE DISTOGRAM'S OWN ERROR (ρ = **−0.799**), THE CHAIN IS FULLY MEDIATED, AND THE ERROR THAT MATTERS IS **SHAPE, NOT SCALE** -- LANE L'S SCALE-SEPARABLE TERM IS **REFUTED AS THE MECHANISM** (PARTIAL −0.067, p = 0.46, AGAINST SHAPE'S −0.641). "CONFIDENTLY WRONG" ALSO REFUTED: ERROR×CONFIDENCE IS **WORSE** THAN ERROR ALONE (2026-09-20 13:03, F)
+> **NUMBERING COLLISION RESOLVED 2026-09-20 13:05 by the coordinator.** Posted as `S30-L4`, which an earlier entry already held -- lanes picked the next free number from a ledger that grew between their reads. Renumbered to **S30-L17**; the earlier entry keeps `S30-L4`. Recorded rather than silently fixed, per contract rule 15. Anything citing `S30-L4` for *this* result means `S30-L17`.
+
+## S30-L17 -- THE SCORE HAS **NO IN-POOL RANKING SKILL ON THE TAIL**: ρ = **+0.1066** (FOLD CI INCLUDING ZERO) AGAINST **+0.6446** ON THE 108, RANDOM-18 NULL **p = 0**. IT IS ALMOST ENTIRELY THE DISTOGRAM'S OWN ERROR (ρ = **−0.799**), THE CHAIN IS FULLY MEDIATED, AND THE ERROR THAT MATTERS IS **SHAPE, NOT SCALE** -- LANE L'S SCALE-SEPARABLE TERM IS **REFUTED AS THE MECHANISM** (PARTIAL −0.067, p = 0.46, AGAINST SHAPE'S −0.641). "CONFIDENTLY WRONG" ALSO REFUTED: ERROR×CONFIDENCE IS **WORSE** THAN ERROR ALONE (2026-09-20 13:03, F)
 
 Pre-registration `s30/PREREG_S30_F3.md`, committed **eb719398 at 12:58:34**, before this file's
 code existed. Code `s30/s30_F_score.py`; output `s30/results/s30_F_score.json`.
@@ -1857,3 +1861,248 @@ Artefacts read: `s29/LEDGER.md:751` (recompute-the-posterior warning, adopted), 
 of §1), `:229-321` (lane C's detector and its ORACLE prize); project memory
 `prior-derivative-is-the-only-steep-lever`, `operator-consumes-set-mean`,
 `torsion-restraints-reach-the-target`, `error-shape-not-mae-decides-ranking`.
+
+## S30-L14 -- THE CHARTER'S BIT QUESTION IS MIS-POSED AND THE RIGHT ANSWER INVERTS IT: **THE POOL IS A CODEBOOK, NOT A CHANNEL.** 7 INDEX BITS REALISE **36.6 BITS** OF DISPLACEMENT INFORMATION (5.2x), SO NO BITS WENT MISSING -- THE READOUT's 7 ARE WORTH FIVE TIMES THEIR FACE VALUE AND THE SYSTEM CANNOT SUPPLY ONE. PLUS THE **VALUE-OF-A-BIT LAW** (R² 0.9983), THE ENCODING ALLOCATION (CANDIDATE INDEXING WINS BY 3x; TORSION SPACE IS ARITHMETICALLY INFEASIBLE AT 7 QUBITS), AND **ONE REGISTERED PREDICTION OF MINE REFUTED** (2026-09-20 13:04, T)
+
+**Verdict: the encoding is NOT the hidden bottleneck.** The charter named it "the least-examined
+component and may be the hidden bottleneck"; it is now examined and it is not. Binary candidate
+indexing is optimal among the measured classes by a factor of 3, its ORACLE floor is 1.331 A, and
+the charter's target is 2.50 A -- so the allocation is not floor-limited.
+
+### 1. THE ACCOUNTING, IN A CURRENCY DEFINED BEFORE IT WAS MEASURED
+
+| stage | bits of CHOICE (capacity) | bits DELIVERED (measured) |
+|---|---|---|
+| 5 retrieval, 17,088 -> 500 | **3,252** | **+0.69** search-equivalent [SE 0.18, median +0.44] |
+| 6 energy, 500 scores -> ranks | 3,767 (permutation) | -- |
+| 7 top-128 prefix | 300.6 (set choice) | ORACLE ceiling 0.066 A (S29-L30); transferable part 0 |
+| 9 tail readout, which of 128 | **7** | **+0.036** [MDE 0.385] (S29-L44/F2, and see S30-L4 on its median) |
+
+**End to end the deployed system's measured information yield is under one bit per target**, against
+7,019 bits of choice consumed. `b_ret = log2(N*/500)`, `N*` = the number of uniformly random draws
+from the same universe whose ORACLE best matches the BLOSUM-500's, was defined in the prereg before
+any array was loaded precisely so it could not be chosen afterwards.
+
+### 2. **REFUTED: MY OWN REGISTERED P2b, BY A FACTOR OF 2 TO 4, IN THE FLATTERING DIRECTION**
+
+I registered that the BLOSUM top-500 would beat a matched random 500 of the same universe by
+**+0.10 to +0.30 A** on the ORACLE minimum, from a Gaussian-copula argument at the key's measured
+`rho = +0.066` (conditioning on the top 2.9% shifts the normal-scored `rr` by `0.066 x 2.27 = 0.150
+sd`; at `sd(rr) ~ 1-2 A` that is 0.15-0.30 A).
+
+```
+  M2  BLOSUM-500 best minus RANDOM-500 best (NEGATIVE = the key helps)
+    a 1.7108 (med 1.7139)   b 1.7823 (med 1.8407)   n=126
+    effect -0.0715   median -0.0131   SE 0.0323   MDE 0.0904   effect/MDE -0.79
+    fold CI95 [-0.1474, -0.0051]   folds same sign 4/5   67W/59L   power 0.60
+    VERDICT: NOT MEASURED (|effect| 0.0715 <= its own MDE 0.0904, 0.79x)
+```
+
+**Measured 0.07 against a registered 0.10-0.30.** The copula argument over-predicted by 2 to 4x --
+it treats the key as a noisy copy of quality with a fixed marginal, and the real key has enormous
+tie sets (an integer BLOSUM sum over 9-16 positions), so conditioning on it does not shift the
+distribution the way a continuous copula does. **The direction of my error is toward my own
+hypothesis** (I wanted retrieval to be delivering something measurable), which is the pattern
+`unstated-operators-align-with-your-hypothesis` names, and it is the second such row today.
+P2a (`b_ret <= 3.0 bits`) HELD at +0.69.
+
+### 3. THE VALUE-OF-A-BIT LAW
+
+The ORACLE order-statistic ladder inside the deployed pool, in the deployed order (n = 126):
+
+     N        1      2      4      8     16     32     64    128    256    500
+     D(R)  4.1080 3.6059 3.1115 2.7289 2.4901 2.2973 2.1230 1.8978 1.8061 1.7108   A
+     SE    0.1810 0.1516 0.1457 0.1297 0.1205 0.1112 0.0996 0.0877 0.0844 0.0791
+
+Fitted by `D(R) = a + c 2^(-R/gamma)` with **a = 1.3312 A, c = 2.7859, gamma = 3.1636, R² =
+0.998341** (P1a HELD: bar R² >= 0.99 and gamma in [2,6]). Differentiating:
+
+> **-dD/dR = (ln 2 / gamma) (D(R) - a) = 0.2191 (D - 1.331) A per bit.**
+
+Marginal at R = 7: **0.1317 A/bit** (P1b HELD, registered [0.05, 0.14]; the empirical 64->128 step
+is 0.2253). Fitted floor **1.3312 A** against a true universe floor of 1.3134 and a pool floor of
+1.7108; `D(7) - a = 0.567 A`, so at the production register the pool is NOT near its own floor and
+bits still pay (P1c HELD).
+
+### 4. WHY NO BITS WENT MISSING -- THE CODEBOOK CROSS-CHECK
+
+Through S29's own displacement bound (`RMSD = RMSD_prod sqrt(1-rho^2)`):
+
+    R = 7.000 index bits: 4.1080 -> 1.8978 A  =>  rho = 0.8869  =>  **36.63 displacement bits  (5.23x)**
+    R = 8.966 index bits: 4.1080 -> 1.7108 A  =>  rho = 0.9092  =>    41.55 displacement bits  (4.63x)
+
+Bits are not conserved across the index **because the 500 deposited backbones ARE the information
+and the index only names one**. The charter's premise -- the register as a channel through which
+7 bits pass, 1.44 arriving -- is the wrong object. The right statement is the inverse and it is
+harder, not softer:
+
+> **the readout's 7 bits are worth five times their face value, and the system cannot supply one.**
+
+### 5. THE ALLOCATION THEOREM, AND THE ANSWER TO "IS BINARY CANDIDATE INDEXING OPTIMAL?"
+
+Since `-dD/dR = (ln2/gamma)(D - a)` and `D` is common at the branch point, **allocations are
+comparable only through `(D - a)/gamma`: a class's ORACLE FLOOR and its TAIL INDEX. Cardinality is
+irrelevant.** Ranked at the deployed width:
+
+| allocation | A/bit | floor | note |
+|---|---|---|---|
+| **candidate identity** (deployed) | **0.132** at R = 7 | 1.331 A | wins |
+| subset cardinality (`m`) | 0.044 | -- | S29-L44's -0.3079 A / 7; dominated 3.0x -- **and the law explains the 3.5x S29 measured** |
+| mode / basin index | saturates ~1.6 bits | -- | 2-3 populated clusters; a sub-class of the first |
+| **torsion / configuration** | **infeasible** | -- | see below |
+| hierarchical / factorised | capped | -- | block-independent allocation cannot touch the 68% common-mode; bounded by the idiosyncratic 32% |
+
+**The torsion arithmetic, which is a counting statement and not a preference.** Mean `n = 12.96`
+over the 126, so `2n = 25.9` torsions. Naming one Ramachandran basin per residue costs
+`2n log2(k)` bits: **25.9 at k = 2, 41.1 at k = 3, 51.8 at k = 4, 77.8 at k = 8.** The deployed
+register is **7** qubits (`core/pipeline.py:181`) or 9 in the harness --
+**0.27 bits per torsion, where 1 bit names a single basin.** Any generative proposal over torsion
+space needs 4-8x the register this project has ever run, before expressivity is even discussed.
+(Consistent with `phi-carries-no-sequence-signal`: the channel is 10.4 deg of psi, so the class's
+`gamma` is large as well as its bit demand.)
+
+### 6. THE rho <-> BITS DICTIONARY, SO THE SPRINT CAN ARGUE IN ONE CURRENCY
+
+`I = -(d/2) log2(1 - rho^2)`, `d = 3n - 6 = 32.88`. Small-`rho` limit `I ~= (d/(2 ln 2)) rho^2`:
+**bits are quadratic in rho**, which is lane D's "the geometry squares it" (S30-L5) -- and the
+squaring is not a penalty, it is what makes `rho^2` the **additive** quantity across stages and
+fields.
+
+    rho 0.1128 (lane D's best field)   0.304 bits        rho 0.358 (3.00 A)     3.253 bits
+    rho 0.140  (B2's ceiling)          0.470 bits        rho 0.628 (2.50 A)    11.895 bits
+
+To reach 0.358 by fusing fields at 0.1128 needs `(0.358/0.1128)^2 = 10.07` **mutually orthogonal**
+fields as good as the best of D's twenty-one -- the operational content of S30-L5's "10x the rho²".
+**S30-L15 corrects the `d` this should be evaluated at**, and the corrected numbers are smaller.
+
+Reproduction: `s30/PREREG_S30_T.md` (committed before any array was loaded, 7f8bbce5),
+`s30/s30_T_bits.py`, `s30_T_analyse.py`, `s30_T_spec.py`,
+`s30/results/s30_T_bits.json`, `s30_T_spec.json`. Every ladder row is ORACLE and none of them
+chooses a deployable parameter. Derivations in `s30/THEORY.md` sections 5-7.
+
+
+## S30-L15 -- **THE SECOND-MOMENT ESCAPE IS CLOSED BEFORE IT WAS BUILT** (QUADRIC IS +0.086 A WORSE THAN HALFSPACE AT MATCHED BUDGET, 2.95x MDE, 5/5 FOLDS). AND THE RESULT THAT REFRAMES THE SPRINT: **THE POOL'S TOP SIX DIRECTIONS ALREADY CONTAIN A 1.91 A POINT** -- THE ORACLE ERROR IS 8x MORE CONCENTRATED IN THEM THAN ISOTROPY PREDICTS, A 6-PARAMETER LINEAR ORDER REACHES 2.069 A OF IT, AND THE DEPLOYED PREFIX GETS 3.051 A. **THE WHOLE 0.98 A GAP IS SIX PER-TARGET COEFFICIENTS**, PRICED AT **3.78 BITS** FOR 2.50 A AND **0.855** FOR 3.00 A (2026-09-20 13:04, T)
+
+**Verdict: the reachable set is not the obstruction, the subspace is not the obstruction, the
+search is not the obstruction, and the second moment does not help. What is missing is a direction
+in six dimensions, and it is smaller than anyone has priced it.**
+
+### 1. M4 -- THE QUADRIC CEILING, BUDGET-MATCHED (n = 126, K = 5,000 each, m = 75, ORACLE)
+
+Registered in `s30/PREREG_S30_T.md` addendum 1 before the run, with the budget matched precisely
+because this is the `grid-oracles-are-order-statistics` trap. Classes, at fixed `m`:
+PREFIX is **exactly one set**; HALFSPACE orders by `<g, z_x>` (6 params); QUADRIC by
+`z' G z + <g, z>` (27 params); FREE is any 75-subset. Frame: all 500 superposed onto the pool
+medoid ONCE, **exogenous and declared**, because a tail-dependent frame is an unstated operator.
+
+    PREFIX    (deployed DIS top-75, one set)        3.0507 A   SE 0.1456
+    HALFSPACE best-of-5,000                        2.0691 A   SE 0.0903
+    QUADRIC   best-of-5,000                        2.1551 A   SE 0.0929
+    FREE      best-of-5,000 random 75-subsets      2.9259 A   SE 0.1254   <- the matched null
+
+| contrast | effect | MDE | folds | W/L | verdict |
+|---|---|---|---|---|---|
+| **P4a QUADRIC - HALFSPACE** | **+0.0860** | 2.95x | 5/5 [+0.068,+0.103] | 21W/105L | **WORSE** -- P4a HELD (bar: within 0.10) |
+| HALFSPACE - FREE (matched null) | -0.8568 | 4.93x | 5/5 | 122W/4L | **BETTER** -- the class is real, not best-of-K |
+| HALFSPACE - PREFIX | -0.9816 | 4.08x | 5/5 | 122W/4L | **BETTER** |
+| P4b FREE - PREFIX | -0.1248 | 0.60x | 4/5 | 70W/56L | NOT MEASURED -- P4b HELD (bar: within 0.15) |
+
+**HALFSPACE is the `G = 0` slice of QUADRIC**, so the deficit is a statement about SEARCHABILITY,
+not containment -- 27 parameters are sparser to sample than 6 at equal budget. Operationally the
+answer is the same: **at equal effort the enrichment is not findable and the halfspace ceiling is
+already the binding one.** The second-moment row in S29's post-mortem, and my own T1b enrichment
+(VC dim 7 -> 28, cap 50.4 -> 152.1 bits), are both **closed as ceiling-improvers** in one afternoon
+instead of a lane-week. That is the second time today the pre-check has paid (see S30-L9).
+
+**MISSED, and it is my second registered miss today.** P4c predicted every searched class would
+beat PREFIX by **less than 0.6 A**; HALFSPACE beat it by **0.982 A**. Not falsified (my falsifier
+was 1.0 A, and it came within 0.018 of it) but the point estimate missed by 64%, **again toward my
+own hypothesis** -- I under-predicted what an ORACLE class can do because I over-weighted
+`operator-consumes-set-mean`'s flattening. With P2b (S30-L14) that is two registered priors wrong
+in one day, both in the flattering direction.
+
+### 2. M5 -- THE COMBINATION CEILING, AND IT INVERTS THE QUESTION
+
+Any native-free operator that reweights or selects pool members emits
+`u = sum_x w_x (W_x - c)`, `sum w_x = 1`, so it lies in the span of the pool's deviations about the
+production average `c`. Project the ORACLE error `e = t - c` onto the top-`k` principal directions
+of that deviation matrix (n = 126; deviation-matrix stable rank 2.717, PC1 share 0.391):
+
+     k      ||Pi_k e||^2/||e||^2    rho_ceiling    isotropic null k/d
+     1            0.1997              0.4469           0.0257
+     2            0.3514              0.5928           0.0514
+     3            0.4369              0.6610           0.0772
+     6            0.6072            **0.7792**         0.1543
+    10            0.7519              0.8671           0.2572
+    21            0.9261              0.9624           0.5401
+
+**The oracle error is 8x more concentrated in the pool's leading deviation directions than isotropy
+predicts.** Six directions contain a `rho = 0.779` point -- **1.91 A** through the bound, against
+production's 3.051. **The subspace is NOT the obstruction**, which is the opposite of what I
+expected and of what the 68% common-mode result had led me to expect. (See the declared defect box
+in the prereg: my clause P5d was written AFTER this ran and is **not** a pre-registration; its
+failure is recorded so the wrong prior is auditable, and carries no evidential weight.)
+
+**M4 and M5 agree to 0.16 A from two independent instruments**: the 6-direction subspace ceiling is
+1.91 A and the 6-parameter halfspace class reaches 2.069 A. A linear order nearly saturates the
+subspace that contains the answer.
+
+### 3. THE SPRINT's PROBLEM, WITH A DIMENSION AND A BIT PRICE ON IT
+
+The reachable displacement space contains a **1.91 A** point inside **six** well-conditioned
+directions; a 6-parameter linear tail order reaches **2.069**; the deployed prefix gets **3.051**.
+**The entire 0.98 A gap is the problem of locating six per-target coefficients** -- S29's
+Neyman-Scott incidental parameter with a dimension attached for the first time.
+
+**And the price is much lower than the full-space dictionary says**, because the subspace itself is
+FREE: the pool's PCA is native-free and per-target. Evaluating `I = -(d/2) log2(1 - rho^2)` inside
+the top-6 subspace, where a field needs only `cos = rho_target / 0.779` against the true direction
+(two derivations, sphere rate-distortion and the covering number of `S^5` by caps, agreeing
+exactly):
+
+    rho_target              FULL SPACE (d = 32.88)     WITHIN THE POOL's TOP-6
+    0.1128 (D's best field)      0.304 bits                 0.076 bits
+    0.140  (B2's ceiling)        0.470                      0.118
+    0.358  (3.00 A)              3.253                    **0.855**
+    0.628  (2.50 A, charter)    11.895                    **3.782**
+    0.695  (2.31 A)             15.649                      5.726
+
+> **The charter's 2.50 A needs 3.78 bits of per-target direction information in a subspace the
+> pipeline can already compute for nothing. 3.00 A needs 0.855 bits. The best native-free field on
+> record supplies 0.076.**
+
+**CORRECTION TO MY OWN UNREGISTERED ASIDE**, flagged loudly because it is the kind that gets quoted
+without a bar: I told the coordinator that "six coefficients at ~2 bits each = 12 bits" matched the
+full-space 11.895 and called it two independent routes. **It was a coincidence and it is
+withdrawn.** The two columns above are the same formula evaluated at two different `d`, and the
+8.1-bit difference at 2.50 A is exactly the value of knowing the subspace. The corrected number is
+3.78, not 12, and it makes the missing thing **smaller**, not larger -- which sharpens the question
+from "is there enough signal anywhere" to "why can nothing supply four bits of direction in a
+subspace we already have".
+
+The factor to 3.00 A is `0.855/0.076 = 11.2`, which is S30-L14's "10x the rho²" **in the additive
+currency and from the same algebra** -- one witness, not two, and it must not be reported as two.
+
+### 4. WHAT THIS DOES AND DOES NOT CLOSE
+
+- **CLOSES** the second-moment / quadric tail class as a ceiling-improver (M4), and with S30-L9's
+  T1b it closes the tail-then-aggregate lift as a whole.
+- **CLOSES** "the reachable set is too poor" and "the span is too small" as explanations. Neither
+  is true: 1.91 A is inside six directions the pool hands you.
+- **DOES NOT** close, or even touch, whether anything native-free can supply 0.86 to 3.78 bits of
+  direction. Every arm here is ORACLE. No native-free rule is proposed, tested or recommended.
+- **DOES NOT** contradict the bound. It restates where the bound bites: not in the operator space,
+  not in the pool, not in the encoding -- in six coefficients.
+
+### 5. THE SCOPE CAUTION, BECAUSE THREE LANES NOW POINT AT DIFFERENT COMPONENTS
+
+This entry is about the **operator** (which displacement it emits) and S30-L14 is about the
+**encoding** (how the register indexes candidates). Lane F's S30-L2 is about a **stage** (the
+distogram's 500 -> 75 filter, +1.767 A worse than a random 75 on FAIL18). These are three distinct
+components and the report must keep them distinct. "The encoding is not the bottleneck" is a
+closure about the encoding **among the measured classes**; it is not, and must not be read as, a
+claim that nothing upstream or downstream is.
+
+Reproduction: `s30/PREREG_S30_T.md` addenda 1-2, `s30/s30_T_quadric.py`, `s30/s30_T_combo.py`,
+`s30/results/s30_T_quadric.json`, `s30_T_combo.json`. Derivations in `s30/THEORY.md` sections 4, 8.
+
