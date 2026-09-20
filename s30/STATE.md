@@ -337,6 +337,80 @@ quoted the **verdict string**. A verdict string is a claim about a computation a
 what reading the computation is worth.
 
 
+## NOTE 9 (2026-09-20 13:26, lane D, S30-L8): **THE SPRINT'S FIRST MECHANISM HAS ITS HEADLINE WITHDRAWN.** THE STRATUM *IS* THE OUTCOME
+
+The adversary has gone after lane F's S30-L2 — the entry I reported as the sprint's first real
+mechanism — and it is right. **F1c's FAIL18 row must be withdrawn as an effect estimate.**
+
+**The definition, from `s12/instrument.py:271-278`:**
+
+```python
+sub  = np.asarray(rec["sub"], int)              # the SCORE's top-75
+band = np.where(rr <= rr.min() + BAND)[0]       # pool members within 1.5 A of the pool best (ORACLE)
+if not np.isin(band, sub).any():
+    zero.append(t["pdb"])
+assert set(zero) == set(FAIL18)
+```
+
+> **FAIL18 is DEFINED as the set of targets on which the 500 -> 75 filter retained no in-band
+> member.** S30-L2 then measured, *on that set*, how much worse the filter's retained set is than a
+> random 75 in ORACLE best. **The selection predicate is a lower bound on the measured quantity's
+> first term.**
+
+**Lane D reproduced the number independently** — −1.7622 A against lane F's +1.7674 in the opposite
+sign convention — and then decomposed it:
+
+```
+stratum by `keep` = in-band members surviving the filter     n      effect
+keep = 0   <- this stratum IS FAIL18                         18    -1.7622
+keep = 1                                                      3    -0.0363
+keep = 2-3                                                    1    -0.8654
+keep = 4-8                                                    8    -0.0039
+keep >= 9                                                    96    +0.0380
+```
+
+**There is no gradient.** The effect is a **step at the selection boundary**, not a continuum in
+recall — one retained in-band member removes 98% of it. Among the 108 non-FAIL18 targets,
+Spearman(keep, effect) = **−0.046**. Outside the 18 the filter is **+0.025 A**, and the all-126
+effect is **100% the 18**.
+
+**How much is forced arithmetic.** By definition `top_best − pool_best >= 1.5` on these 18
+(measured 2.393); the random arm is unconstrained at `rand_best − pool_best = 0.631`. So the
+predicate alone forces **|effect| >= 0.869 A — 49% of the headline.** The remaining 0.893 is not an
+unbiased estimate either: it is expected *exceedance above a selection threshold*, which truncation
+inflates by an amount this design cannot measure.
+
+**Lane D's verdict, and the sentence is the durable output:** *"Lane F did the hard parts right --
+prereg before the numbers, matched random subsets in each operator's own space, fold CIs, a
+random-18 null -- and none of those defences reaches this one, because **the stratum itself is the
+outcome.**"*
+
+That is a failure mode distinct from every one on the project's list. Lane F **did** check
+circularity — it noticed FAIL18 is defined by *production* and produced two filter-independent
+tails. What it did not catch is that FAIL18 is defined by **the filter's own recall**, which is
+precisely the quantity being measured.
+
+### WHAT SURVIVES, AND IT IS NOT NOTHING
+
+- **F1a is untouched**: the tail is **not pool-limited**. ORACLE best of the FAIL18 pools is
+  2.2842 A, 13 of 18 under 3.00. That is a property of the pools, not of the filter's recall.
+- **The filter effect on filter-independent tails survives**: +0.6708 (p = 0.0148) and +0.6320
+  (p = 0.0300) on worst-18-by-pool-mean and worst-18-by-ORACLE-best. Lane F reported these itself
+  and told me to quote them beside the headline; **they are now the headline.**
+- **S30-L17 survives and is the strongest tail result**: the score's Spearman with ORACLE in-pool
+  RMSD is +0.6446 on the 108 and **+0.1066 on the tail with the CI including zero**, and it
+  **replicates on all three tail definitions** (+0.38, +0.34). Nothing about that rests on the
+  FAIL18 predicate.
+- The **mediated chain** — distogram shape error -> in-pool ranking skill -> filter set-mean
+  benefit -> emitted RMSD — rests on S30-L17, not on the withdrawn row.
+
+### WHAT I GOT WRONG IN REPORTING IT
+
+I told the user the filter is "worse than chance on every single tail target, 0W/18L, random-18
+null p = 0" as the sprint's first mechanism. **Roughly half that number is forced by the definition
+of the set it was measured on**, and the rest is truncation-inflated by an unmeasurable amount. The
+correct statement is the +0.63 to +0.67 pair on tails that are not defined by the filter.
+
 ## NOTE 8 (2026-09-20 13:20, lane T's closing line): **THE WHOLE BOUND COLLAPSES TO ONE OUT-OF-FOLD REGRESSION**
 
 Lane T closed with a reformulation that turns the sprint's central question into a single cheap
