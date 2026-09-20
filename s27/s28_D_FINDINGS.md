@@ -74,6 +74,16 @@ candidate. Every informative scorer rates the native-like structure better than 
 member by only 0.58 to 0.63 head to head (DIS 0.626) and production better than 87% of the pool
 (DIS pct 0.126): "what an objective would have to know" in two numbers.
 
+D7. **Every S28 built-chain verdict was checked and none was vetoed wrongly.** A (S28-L27b),
+A2 (S28-L40), B (S28-L43), B2 (S28-L47), C (S28-L33), C2 (S28-L49): every contrast reproduced
+from the rows to four decimals with `s27/s28_D_attack_{A2,B}_chain.py`, `s28_D_c2_poolmember.py`
+and `s28_D_c2_chain_null.py`; the comparator was production through a shared code path on
+every lane (lane B's and lane A's own re-projections at 0.0; the S28-L18 floor is lane A's
+1e-14 input difference, not the projection's). Three FAIL18 "regime" readings were tested
+against a random-18-subset null: the raw A2 step's is noise (p 0.06 / 0.25), the circuit
+step's is a real set property and harm (p 0.001 / 0.003), the R3 readout's is S27 L9's
+readout regime at J = 0 (p 0.0000) and not J's. No positive is on the board.
+
 ## ORACLE DIAGNOSTIC
 
 OD1. The pool-percentile table of D6 is ORACLE (every structure but production is chosen against
@@ -117,12 +127,10 @@ S28-L25/L29/L26/L31).
 
 ## OPEN (my queue, as of the resume 2026-09-19)
 
-- Lane C2's built-chain entry: CAGEO's preference expected to collapse on ideal-geometry chains
-  (S28-L36 note a); the pool-member control for all 31 scorers; the max-over-31 null.
-- `python s26/examine.py` at the close (the deferred files ran in the quiet window, S28-L<close>).
-Closed from the earlier queue: lane A's entries (S28-L13, L20, L27b, L40), lane B's point cloud
-and built chain (S28-L22, L43), B2's endpoint (S28-L47), lane C's Part 2 chain (S28-L33),
-reproductions 102 to 106, the suite close (S28-L45).
+- Nothing. The queue is empty at the close (S28-L45 suite; S28-L49 the last check).
+Closed: lane A's entries (S28-L13, L20, L27b, L40), lane B's point cloud and built chain
+(S28-L22, L43), B2's endpoint (S28-L47), lane C's Part 2 chain (S28-L33), C2's CA level and
+built chain (S28-L36, L49), reproductions 101 to 106, the suite close (S28-L45).
 
 ## What damaged my own expectations
 
@@ -155,6 +163,12 @@ reproductions 102 to 106, the suite close (S28-L45).
 - Did not run any endpoint experiment of my own; every number here is a recomputation from a
   lane's artefact, a reproduction of S27, or a synthetic-data test.
 - Did not post on lane A's ORACLE ceilings before lane A's own entry (H1 is held here).
+- Did not run AMB on C2's projected chains (lane C2 deferred it, contract rule 8) and did not
+  ask for it: a 32nd scorer cannot change a closure that 18 informative scorers carry, and the
+  pool-member control for AMB would need the members' all-atom energies, which exist only for
+  the S27 subset.
+- Did not run a second control seed for C2's chain audit: the pool-member percentile has no
+  draw, so a second seed of RAND_SIGNED cannot change the control that decides the entry.
 
 ## Qualifier table (every number that would reach a report, and what is said beside it)
 
@@ -169,4 +183,5 @@ reproductions 102 to 106, the suite close (S28-L45).
 | A2 (built chain): the deployable step along the shipped objective's descent direction is null at 0.1 A (-0.004, 0.21x), sign-only worse at 0.3 A (+0.018, 0.74x, 5/5) and worse at 1 A (+0.105, 2.1x); indistinguishable from a random direction of the same size at every e (0.0x to 0.3x MDE, fold CI including zero) | the comparator is production projected through the same code path from a bit-identical cloud (`s28_A2_prodcheck.json` 4/4; the chain job's clouds equal the ladder rows' at 0.0 on 13 x 126); the e-grid "residual survives" is the smallest-e column (-0.0433 = the split-half transfer), not a per-target signal; the random best-of-2 is NOT A SIGNAL; the raw step's FAIL18 "WORSE [Type-M]" is the whole-set harm on 18 targets (random-18 null p 0.06 / 0.25; 0.24 / 0.50 without 2NB7), not a regime; the CIRCUIT step's FAIL18 excess (+0.117 / +0.348 vs -0.002 / +0.093) is a real set property (p 0.001 / 0.003, survives dropping 2NB7, present on the point cloud, not a function of production's RMSD) and is HARM; the random control is cheap on FAIL18 by geometry (its cost falls with production's RMSD, Spearman -0.29) | S28-L39, S28-L40, S28-L42 |
 | B (built chain): the deployed readout R1 emits production at every projected J, graph and seed (within 0.0125 A, 0.46x MDE); R2 / R3 are +0.25 to +0.37 A worse than production at every J including J = 0; the exact ground state at J = 1 re-selects the DIS top-75 and ties production (-0.003 / -0.006, 0.1x) | the comparator is S27's production chain, re-projected in B's own process bit-for-bit on 126/126 (`s28_B_prodcheck.json`), so no floor enters (the S28-L18 floor is lane A's 1e-13 input difference); the "BETTER" cells (s1 REAL J0.1 R3 -0.037, 1.24x; s1 PERM J0.3 R3 -0.047) are 0.28 A-worse readouts climbing 0.04 A toward production, unreplicated on seed 0 (+0.004) and matched by PERM (-0.030; REAL - PERM -0.007, 0.18x); the nine screen cells priced within readout family transfer nothing (R3 five: split-half 0%; R1 pair: 0.06x MDE); the 49% "residual" on the mixed matrix is the R1-vs-R3 readout gap; the nine are 2 R1 / 2 R2 / 5 R3 cells; FAIL18: R2 / R3 are -0.34 to -0.47 on the 18 and +0.37 to +0.51 on the 108 (random-18 null p 0.0000), S27 L9's readout regime present at J = 0, Type-M on the 18, no native-free switch | S28-L41, S28-L43 |
 | B2 (k = 10 kNN graph, J = 3): the deployed readout is within 0.37x MDE of production and 0.42x of J = 0 on both graphs and seeds; R3 is +0.29 A worse on the point cloud and +0.31 A on the built chain, within 0.35x of its J = 0 twin; the kNN eigensolver is a PR-53 cluster around the argmin and ties production (0.54x) | the one cell the S28-L11 mechanism licensed, run under the S28-L43 gate with both conditions met (addendum 3 committed 7 s before the job started; class counts, no mean-coherence sentence); the circuit lands in the coherent basin on 49 / 33 of 126 (Gaussian 43 / 32) and moves further (TV 0.29 / 0.35) with no measurable endpoint change; the registered class split is inside a random-subset null on the chain (seeds disagree in sign, p 0.41 / 0.24); no graph was disconnected at k = 10 so no DEGENERATE label was due; the two chain cells crossed 0.7x in the WORSE direction | S28-L46, S28-L47 |
+| C2 (built chain, 31 scorers): the closure claim stands on the reporting basis; 18 informative scorers prefer the projected production average to a 0.25 A ORACLE chain with the fold CI below 0.5 (DIS on 93%, LEG on 79%); CAGEO's CA-level 0.611 collapses to 0.421 on ideal geometry (pool-member contrast -0.108, the wrong way) | ORACLE diagnostic, nothing deployable; the one two-clause pass, CONTACT@chain (0.583 [0.530, 0.645]; +0.107 over one draw of RAND_SIGNED), is the expected maximum of 31 null scorers on pref (p_max 0.39) and Type-M on the pool-member control (+0.140, 1.23x, 4/5); its pool-member contrast is NOT a chance maximum (my sign-flip null over 27: p 0.010) so its sign is measured, and it is still not a candidate: it separates native-like from typical at 0.59 = the native's 0.59, below DIS's 0.63, and S27 priced it deployably (selector +0.52 A WORSE, every DIS+CONTACT mix null-to-worse); the 16 backbone scorers' pool-member contrasts are cross-basis (projected vs real torsions) and none is evidence of anti-recognition; 5 chain scorers are tie-dominated | S28-L48, S28-L49 |
 | B, the middle leg: the J = 3 gap between the circuit's reached F (-5.5 / -5.3) and the ground state's (-7.31) is OPTIMISATION by basin selection, not expressivity | the fit to the ground state caps at squared overlap 0.85 (16 starts, 80 and 400 iterations, spread 0.016: an expressivity cap on the STATE, PR 465 vs 301) but F at the fitted state is below F_gs on 10/12 and below every reached F (24/24), so the circuit holds a state 2.8 below what the optimiser reached on 17/24 cells; the ground state optimises <H>, not F, so "the exact optimum" of the leg was a proxy and my S28-L26 overlap rule was too coarse (R-D2); F_fit is an upper bound on the family's minimum F; 7/24 cells reached within 0.041 of the fitted F (the coherent basin), 17/24 sit at the J = 0 state; on the 126 the trained J = 3 state is fully coherent on 43 / 32 draws and at the J = 0 state on the rest, none in between (R4: never "collects X% of its bound"); "finding the basin makes no measurable difference to the endpoint" (post-hoc subgroup 0.26x / 0.09x, random-subset p 0.28 / 0.15), NOT "slightly worse" | S28-L41, S28-L43, `s28_B_represent.json` |
