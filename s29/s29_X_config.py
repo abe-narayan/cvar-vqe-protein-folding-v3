@@ -915,6 +915,9 @@ def analyse(pdbs: Optional[Sequence[str]] = None) -> Dict:
         cmp("VQE_g1_s0|R2", "EXACT_topm_matched", basis, f"C-ordstat VQE R2 - EXACT top-m ({b})")
         cmp("EXACT_top75", "PRODUCTION", basis, f"D2 EXACT top-75 - PRODUCTION ({b})")
     out["fmt"].update(d1)
+    out["production"] = dict(cloud=float(np.mean([prod[p]["rmsd_cloud"] for p in names])),
+                             chain=float(np.mean([prod[p]["rmsd_chain"] for p in names])),
+                             source="s27/results/chain_rows.jsonl :: DIS seed 0")
     for k in ("pr", "r3_mass", "m"):
         v = [idx[p]["VQE_g1_s0|R2"].get(k) for p in names if k in idx[p]["VQE_g1_s0|R2"]]
         if v:
