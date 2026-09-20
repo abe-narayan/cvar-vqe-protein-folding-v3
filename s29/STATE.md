@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:30 Pacific.
+Last update: 2026-09-20 00:32 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -464,7 +464,39 @@ second.
    it is the IDENTITY by algebra, and replaced it with a zero-information member swap. That was
    the right call and I record it as my error.
 
+
+## Integration note 13 (2026-09-20 00:32, after S29-L20 and S29-L21): TWO FAMILIES CLOSED AT THEIR ORACLE CEILINGS
+1. RUNG 6 (H1, the typicality axis): the falsifier fires on both clauses and lane O reports the
+   kill is stronger than the one I registered. H1 is closed.
+2. RUNG 8 (lane T's one-parameter family, the signed-readout collapse of any centered or
+   agreement-matrix Hamiltonian): T predicted the ORACLE ceiling of production + eta*PC1 would be
+   under 0.15 A better than production. IT IS EXACTLY ZERO: the best GLOBAL eta over a 61-point
+   grid is eta = 0.0 and the mean is 3.0483, production to the last digit. The deployable
+   leave-fold-out arm is +0.0071 (worse). And the family is not degenerate: the pool's spread
+   along PC1 is 1.068 A and PC1 carries 36.3% of the members' deviation variance, so this is an
+   informative-LOOKING direction that is empty.
+   THE MEASUREMENT THAT MATTERS IS THE SIGN. Best per-target eta with a free sign buys -0.4543
+   (an ORDER STATISTIC over 61 values); forcing the sign positive buys -0.2142 and negative
+   -0.2455. So most of the apparent per-target gain IS the freedom to choose the sign per
+   target, which is exactly what lane T's theorem 2 says the marginals cannot supply. Theory
+   predicted the family, predicted its collapse to one parameter, predicted the sign would be
+   the binding quantity, and predicted the ceiling's magnitude; measurement confirmed all four
+   at the floor.
+   CONSEQUENCE: lane B's REDIRECTED build (the signed readout over a centered/agreement
+   Hamiltonian) is dead at its ceiling and must not be run. Lane B's NEW build (the
+   tail-then-aggregate lift, note 11) is a different object -- it is about the objective's
+   flatness, not about PC1 -- and stays live.
+3. Standing tally of what the sprint has closed by MEASUREMENT AT AN ORACLE CEILING rather than
+   by a null endpoint run: the typicality axis (rung 6), the PC1 family (rung 8), the
+   better-conditioned coupling matrix (derived, S29-L11), the non-commuting free-energy cell in
+   the candidate-index encoding (derived, S29-L15), the QA import route (literature, S29-L1),
+   a scorer that prefers the near-native answer (perception-distortion, S29-L12), and
+   "average more or differently" (bounded at 0.008 A, S29-L8). Seven routes, none of which cost
+   a 126-target endpoint run to close.
+
 ## Closed in S29
+- The PC1 / signed-readout family (S29-L21): ORACLE best global eta is exactly 0.000; the
+  per-target gain is the SIGN, which the marginals cannot supply.
 - The non-commuting free-energy cell IN THE CANDIDATE-INDEX ENCODING (S29-L15 Q2, derived):
   the thermal state's leading quantum content is a classical degree reweighting.
 - The "better-conditioned coupling matrix" family (S29-L11, derived): gradient visibility needs
