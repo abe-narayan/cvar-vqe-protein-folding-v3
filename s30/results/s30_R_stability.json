@@ -1,0 +1,113 @@
+{
+ "n_targets_drawn_twice": 38,
+ "targets": [
+  "1A1P",
+  "1CB3",
+  "1D0W",
+  "1D6X",
+  "1FUV",
+  "1G89",
+  "1I93",
+  "1ID6",
+  "1KMR",
+  "1KWE",
+  "1LB7",
+  "1M02",
+  "1N9U",
+  "1NIZ",
+  "1S9Z",
+  "1TOR",
+  "2BFI",
+  "2BP4",
+  "2FBU",
+  "2JN5",
+  "2LM8",
+  "2LNG",
+  "2LWU",
+  "2MAA",
+  "2MFV",
+  "2MID",
+  "2MK7",
+  "2MLQ",
+  "2MSA",
+  "2N5C",
+  "2NB7",
+  "2NBC",
+  "2O0S",
+  "2P5H",
+  "3BTB",
+  "3SGO",
+  "5MXS",
+  "5NVB"
+ ],
+ "note": "two INDEPENDENT ladder draws of the same targets, an accidental but real reproducibility probe caused by a process-dependent seed (fixed in s30_R_ladder.py after this run)",
+ "rho_A_part": {
+  "corr": 0.9122524678359933,
+  "mean_abs_diff": 0.07921587218510522,
+  "mean_draw1": 0.0990938897165353,
+  "mean_draw2": 0.08732391572211594,
+  "n_cells": 1566
+ },
+ "rho_ANCHOR_part": {
+  "corr": 0.1471300646657458,
+  "mean_abs_diff": 0.2349547364601734,
+  "mean_draw1": 0.10709286071293317,
+  "mean_draw2": 0.08142599680155235,
+  "n_cells": 1567
+ },
+ "rho_B_part": {
+  "corr": 0.6908527898581642,
+  "mean_abs_diff": 0.13469638557364347,
+  "mean_draw1": 0.08950412035828903,
+  "mean_draw2": 0.09863767313262244,
+  "n_cells": 1567
+ },
+ "rho_B_part_anchor": {
+  "corr": 0.575765650528146,
+  "mean_abs_diff": 0.14057062100285317,
+  "mean_draw1": 0.07529837810188283,
+  "mean_draw2": 0.07621109234133873,
+  "n_cells": 1567
+ },
+ "pref_near": {
+  "corr": 0.9821909816599983,
+  "mean_abs_diff": 0.026942175630011823,
+  "mean_draw1": 0.3772716181015181,
+  "mean_draw2": 0.37625093574297613,
+  "n_cells": 1606
+ },
+ "pref_pool": {
+  "corr": 1.0,
+  "mean_abs_diff": 0.0,
+  "mean_draw1": 0.4164601494396015,
+  "mean_draw2": 0.4164601494396015,
+  "n_cells": 1606
+ },
+ "rho_rg_A": {
+  "corr": 0.9853503202906809,
+  "mean_abs_diff": 0.06385716406078683,
+  "mean_draw1": -0.0405375297626491,
+  "mean_draw2": -0.047409551290254925,
+  "n_cells": 1566
+ },
+ "d_local": {
+  "mean_draw1": -0.1268268219927593,
+  "mean_draw2": -0.13419267544558958
+ },
+ "d_global": {
+  "mean_draw1": 0.6194326200133432,
+  "mean_draw2": 0.5964799050409376
+ },
+ "r2_global": {
+  "mean_draw1": 0.9062412812079846,
+  "mean_draw2": 0.8945323890777968
+ },
+ "r2_m_only": {
+  "mean_draw1": 0.28680866119464155,
+  "mean_draw2": 0.29805248403685913
+ },
+ "anchor_confound": {
+  "mean_draw1": 0.20991632495649631,
+  "mean_draw2": 0.20970289571792602
+ }
+}

@@ -358,7 +358,12 @@ def target_row(pdb, seed=0):
     assert seq == cand.seq, f"{pdb}: peptide_db seq {seq} != cand {cand.seq}"
 
     sampler = Sampler(fold, seq)
-    rng = np.random.default_rng(abs(hash(("s30R", pdb, seed))) % (2 ** 32))
+    # A STABLE seed.  `hash()` on str is randomised per process (PYTHONHASHSEED), so the first
+    # S30-L2 run drew a DIFFERENT ladder in each shard process for the same target.  That defect
+    # is disclosed in the ledger and its cost is measured: 13 targets were drawn twice and the
+    # two independent draws are compared as a stability check.  Fixed here for every later run.
+    import zlib
+    rng = np.random.default_rng(zlib.crc32(f"s30R|{pdb}|{seed}".encode()) & 0xFFFFFFFF)
     grid = tuple(m for m in M_GRID if m <= n)
 
     # --- ladder A: anchored on the native's own torsions
