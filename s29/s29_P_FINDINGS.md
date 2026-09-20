@@ -82,6 +82,27 @@ removing the inconsistency removes the price -- the correlation is equally consi
 cannot repair" (S29-L12: the contraction is Jensen's inequality, and Jensen's shrink is not
 uniform, so it cannot be undone by one scalar). The 126-target run separates those two.
 
+P7. **The lane sits on lane L's perception-distortion curve, and the framing was theirs before
+it was mine.** S29-L12 (lane L, topic 3) reads the same +0.164 A as "a MEASURED point on P(D)"
+and says the probe "should be framed that way -- interpretable whichever way it comes out":
+the coordinate average is the low-distortion off-manifold end (Jensen contraction, 22% in the
+bond) and the ideal-geometry chain is the on-manifold end. Under Blau & Michaeli's Theorem 3
+the +0.164 A is the local slope of returning to the manifold. Two consequences this lane adopts:
+(a) a rescale can only move ALONG the curve, it cannot move the curve, so a scalar that lowers
+RMSD by making the emitted chain more compact is buying distortion with realism and must be
+caught -- hence the contraction check (emitted Rg against the native's) in the analysis;
+(b) the Jensen shrink is NOT uniform (bond 22% short, envelope 6%), so one scalar cannot undo
+it, which is the mechanical form of this lane's registered null prior.
+
+P8. **A second, free question the same run answers: is production's projection even SOLVED?**
+Every arm emits an ideal-geometry chain, which is a feasible point of the shipped projection
+problem for production's own cloud. Recording the shipped objective `obj0` for each arm turns
+the arm set into a native-free WIDER MULTI-START of `core.project.fit_multi`, whose docstring
+already concedes that its four generic starts under-optimise and which S26 L88 prices at 0.08 A
+to a perfect chooser. PREREG addendum 4 registers MS-OBJ (native-free pick), MS-MEAN (the
+zero-information pick) and MS-ORACLE, and registers the prediction that MS-OBJ lowers the
+objective and NOT the RMSD -- the projection-stage instance of charter finding 3.
+
 ## HYPOTHESIS
 
 ## REFUTED
