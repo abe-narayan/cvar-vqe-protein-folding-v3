@@ -539,6 +539,17 @@ def target_row(pdb, seed=0):
                     conc[q] += ok[s2].sum(); cnt[q] += s2.sum()
         cell["conc"] = [float(conc[q] / cnt[q]) if cnt[q] > 0 else None for q in range(len(DELTA_LABELS))]
         cell["conc_n"] = [int(cnt[q]) for q in range(len(DELTA_LABELS))]
+        # --- features for the LEAVE-FOLD-OUT combination (prereg item 6).  Rank-z over the union
+        # of ladder A, the pool and the fixed rungs, so every target contributes on one scale.
+        from s27.ham_lib import zrank
+        sub = np.concatenate([iA, np.arange(K), [iFIX["PROD"]]])
+        z = zrank(v[sub])
+        zA, zP, zprod = z[:len(iA)], z[len(iA):len(iA) + K], float(z[-1])
+        nearmask = rmsd_nat[iA] <= NEAR_NATIVE_A
+        farmask = rmsd_nat[iA] >= 3.0
+        cell["d_near"] = float(np.mean(zA[nearmask]) - zprod) if nearmask.any() else None
+        cell["d_far"] = float(np.mean(zA[farmask]) - zprod) if farmask.any() else None
+        cell["d_pool"] = float(np.mean(zP) - zprod)
         row["ch"][name] = cell
 
     row["secs"] = time.time() - t0
@@ -593,7 +604,7 @@ def cmd_run(a):
 def main(argv=None):
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for nm in ("prep", "run"):
+    for nm in ("prep", "run", "both"):
         s = sub.add_parser(nm)
         s.add_argument("--limit", type=int, default=0)
         s.add_argument("--shard", type=int, default=0)
@@ -605,6 +616,9 @@ def main(argv=None):
     if a.cmd == "prep":
         cmd_prep(a)
     elif a.cmd == "run":
+        cmd_run(a)
+    elif a.cmd == "both":
+        cmd_prep(a)
         cmd_run(a)
     else:
         from s30 import s30_R_agg
