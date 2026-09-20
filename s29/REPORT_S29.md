@@ -470,7 +470,72 @@ original 12, which lane D verified independently (S29-L38). The pre-fix rows are
 
 ## 8. Uncertainty, MDE, fold CI, concentration
 
-[PENDING]
+Every comparison in this report went through one function, `s24.stats_lib.compare`, which emits the
+same block for every arm. This section says what each quantity is for and where it bit.
+
+### 8.1 MDE is per-comparison, never per-instrument
+
+`MDE = 2.8016 × SE`, computed for **each** contrast from its own paired differences. The project
+previously quoted a single 0.084 Å constant across all comparisons; that figure is wrong by up to
+**84× in both directions**, which is why every number in this report carries its own MDE. The
+spread in this sprint alone runs from 0.0576 (lane M's LOG − LOGW) to 0.3188 (lane M's LOGPERM),
+a factor of 5.5 between contrasts on the same instrument.
+
+The charter's rule — **below 0.7× MDE is not a result** — was applied to this sprint's own positives
+without exception. It disqualified:
+
+```
+lane B, the non-prefix choice (the actual hypothesis)   +0.0804   0.73×   NOT MEASURED
+lane B, the pair-level contrast                          +0.0934   0.69×   NOT MEASURED
+lane M, F1 primary (LOG − PROD)                          +0.0822   0.55×   NOT MEASURED
+lane M, F1 against its zero-information control          +0.0202   0.14×   NOT MEASURED
+```
+
+### 8.2 Fold-clustered CIs, not i.i.d. CIs
+
+The 126 targets sit in 5 pinned folds, and targets within a fold are not independent. Every
+comparison reports both intervals and the **fold** one governs. The difference is not cosmetic —
+lane B's non-prefix term has an i.i.d. CI of [+0.0081, +0.1618] (excludes zero) and a fold CI of
+[+0.0280, +0.1354] (also excludes zero) yet is still NOT MEASURED at 0.73× MDE, which is exactly
+why a CI excluding zero is never quoted here as if it were a result on its own.
+
+**Folds-same-sign** is reported beside every mean. A 5/5 with a sub-MDE effect and a 3/5 with a
+clearing effect mean very different things, and the report states both rather than choosing.
+
+### 8.3 Concentration, against a uniform-effect null
+
+A mean improvement driven by three targets is not the same finding as one spread over 126. But a
+raw drop-top threshold is **not a valid test** — it misfired in this project before — so every
+concentration claim is scored against a **uniform-effect null**: drop-top10 is compared to the
+null's p10/p50/p90 and reported as a percentile.
+
+This mattered most where it produced a *negative* result. Lane B's m = 5 arm sits at the **52nd
+percentile** of its null, i.e. the +0.2451 Å is genuinely distributed rather than a handful of
+targets — which is what licenses reading it as a real aggregate effect rather than an outlier
+story. The same check on lane M's F1 arms returns 0.516–0.546: also uniform, also honest.
+
+### 8.4 Power and Type-M
+
+Reported for every contrast, because a sub-MDE result with power 0.07 and one with power 0.53 are
+different statements. Type-M (exaggeration ratio) is the guard against reading an underpowered
+positive at face value: lane M's F1-versus-control contrast has **Type-M 6.07**, meaning that if
+there were a true effect there, the measured one would be inflated roughly sixfold — so the
+correct reading of +0.0202 is not "a small gain" but "no measurement".
+
+### 8.5 The sealed benchmark, and what the numbers are on
+
+All figures are on the **126 dev targets**. The sealed benchmark was not spent. There is no fresh
+alternative: all 204 clusters of 9–16mers are consumed, and the containment-fresh world supply is
+16 targets, 10 of them amyloid fibrils. Any claim in this report is therefore a claim about this
+instrument, and the report does not extrapolate beyond it.
+
+### 8.6 Where the statistics were checked rather than trusted
+
+Two verification passes were run against the sprint's own record before this report was written
+(§4.6): **S29-L46**, an existence check on all 160 artefact paths cited in the ledger, and
+**S29-L48**, an independent recomputation of every headline number *from its artefact* rather than
+from the entry reporting it. Lane B's and lane O's figures reproduced to every digit. The second
+pass caught an error of mine that several re-readings of the prose had not.
 
 ## 9. Every control, and what it ruled out
 
