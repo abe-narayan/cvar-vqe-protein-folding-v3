@@ -31,3 +31,5 @@
 ## X
 - 2026-09-19 23:45 running: brief, contract (S29+S28), charter, STATE, S13 dossier, S15 dossier 1/4/5, S20 L1-L4, S21 L1-L28, STATE_BRIEF 4-5, core/quantum.py, d_harness, instrument, stats_lib, s28_B_hop, D's meter draft read; encoding (ii) chosen (3-mer fragments of the DIS top-8, recombined; q = 3*ceil(n/3) <= 18); prereg being written.
 - next: s29/PREREG_S29_X.md (nine questions, new angle vs S13/S15/S20/S21/S28-L21, falsifiers, prior), then s29_X_config.py + tests, then the 12-target probe under jobrun.
+- 2026-09-20 00:02 running: PREREG_S29_X committed (c0535f01); s29_X_config.py + tests/test_s29_X.py green (12 tests: parents rebuild bit-exactly, H_diag recomputed independently on 3 configs, gamma=0 == core.quantum.free_energy to 0.0e+00, mixer grad vs FD 8.6e-09, uniform readout == coordinate_average 0.0e+00, NaN-poison); probe job s29X_probe1 (2P5H) exit 0, 60.1 s, peak RSS 0.298 GB; s29X_probe12 running on all 12.
+- next: analyse -> ledger S29-L<n> with D1/D2/P1-P5 verdicts; lane D's meter already ran cost_nll (ladder rho +0.018 vs DIS -0.182, +0.200 at 1.45x MDE 5/5 folds; native pctile 0.378; gradient zero on 99.2% of coordinates).
