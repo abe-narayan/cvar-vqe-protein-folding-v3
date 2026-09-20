@@ -1306,3 +1306,115 @@ Artefacts: `s29/THEORY.md` sections Q1 and Q2; `s29/s29_T_reach.py`;
 per-target free-energy-gap block is queued as job s29T_reach behind the launch cap and is not
 quoted above -- every number quoted comes from the rank-ladder computation or from
 `s27/results/s28_B_rows.jsonl`).
+
+## S29-L16 -- TOPIC 6, RANKING INSIDE A MATCHED-REALISM BAND: NOBODY HAS DONE IT (THE CLOSEST METHODOLOGICAL PAPER DOCUMENTS THE CONFOUND AND DECLINES THE FIX), SO LANE D's MEASUREMENT IS NOVEL; THE DESIGN IS PUBLISHED AND HUMAN-VALIDATED (PIRM 2018) AND ITS OWN RESULT IS A WARNING -- THE REALISM INDEX CORRELATES 0.83 *BETWEEN* BANDS AND UNRELIABLY *WITHIN* THEM; AND THE QUANTITY BEING MEASURED HAS A CLOSED FORM, THE PARTIAL CORRELATION rho_SY.R, WHICH IS EXACTLY ZERO IFF A SCORER's LINK TO ACCURACY IS FULLY MEDIATED BY REALISM (2026-09-20 00:23, L)
+
+Question (coordinator's topic 6, following S29-L12): supply lane D with the literature on
+building a matched-realism band and on what to expect inside it -- (a) band-restricted evaluation
+in the perception-distortion literature, (b) equal-energy-shell ranking in statistical physics and
+energy-matched decoys in QA, (c) whether any published QA evaluation has conditioned on a realism
+statistic before correlating with GDT/RMSD, (d) a bound on surviving in-band signal analogous to
+the Ueda-Nakano coefficient. No experiment; literature only.
+
+(a) THE DESIGN IS PUBLISHED, AND ITS RESULT IS A WARNING. Blau, Mechrez, Timofte, Michaeli,
+Zelnik-Manor, "The 2018 PIRM Challenge on Perceptual Image Super-resolution", ECCV 2018 Workshops,
+arXiv:1809.07517, is exactly this construction in transpose (fix distortion, rank by realism). Its
+rationale is ours: methods at different distortion levels "cannot be compared or ranked using
+these common metrics". "the perception-distortion plane was divided into three regions by setting
+thresholds on the RMSE values (regions 1/2/3 were defined by RMSE <= 11.5/12.5/16 respectively).
+In each region, the goal was to obtain the best mean perceptual quality." The realism axis
+PI = (1/2)((10 - Ma) + NIQE) is built from NO-REFERENCE measures, i.e. native-free, the property
+we need; it was validated by 35 human raters scoring "how realistic the image looked" WITHOUT
+sight of the ground truth. THE RESULT LANE D MUST PRE-REGISTER AGAINST, verbatim: "while the PI is
+well correlated with the human-opinion-scores on a coarse scale (in between regions), it is not
+always well-correlated with these scores on a finer scale (rankings within the regions)" --
+Spearman 0.83 across bands, unreliable within them. That is this project's own global-vs-in-band
+split (distogram +0.653 global, +0.091 in-band) reproduced independently in vision on this exact
+design. Expect a SMALL in-band effect and power for it. Also verbatim, and it is our contracted
+average in another field: "the outputs of EDSR, a state-of-the-art algorithm in terms of
+distortion, are mostly voted as 'definitely fake'. This is due to the aggressive averaging causing
+blurriness as a consequence of optimizing for distortion." And PIRM observed "the tradeoff appears
+to be stronger in the low distortion regime", which is Theorem 3's convexity measured -- we
+operate at that end, so the band must be NARROW to mean anything, which is the experiment's
+central design tension.
+
+(b) THE PHYSICS GIVES THE CLEANEST STATEMENT, AND IT IS WHY THE EXPERIMENT IS INTERPRETABLE EITHER
+WAY. Inside an exactly constant-energy shell the Boltzmann weight is constant, so the energy
+induces ZERO ordering within the shell and everything in-band is carried by the density of states.
+Generalised: banding on a statistic R destroys R's own discriminating power by construction, so an
+in-band ranking experiment measures EXACTLY what is orthogonal to R. A positive is therefore
+direct evidence of information orthogonal to realism -- the quantity `s29/STATE.md`'s H0 says the
+system lacks; a null says the library carries nothing beyond realism. Umbrella sampling (Torrie &
+Valleau 1977) with WHAM (Kumar et al. 1992) supplies the discipline for an imposed selection:
+unbias with the known bias, or confine every claim to the band -- a within-band mean is NOT an
+estimate of a pool mean. On "energy-matched decoys": the QA literature has restricted sets
+(CASP11's best150 = the 150 best by consensus; sel20 = 20 maximally different models; VoroMQA's
+BZQ15 = models from three strong servers) but none is realism-matched, and their own lesson is a
+warning. Olechnovic & Venclovas (2017), verbatim: "for sel20 sets, every method that is based
+solely on analyzing geometric features and applying statistical potentials (GOAP, DOOP, dDFIRE and
+all the VoroMQA variations) achieved worse results than the best-performing composite methods
+incorporating evolutionary information"; and a trivial HHpred-agreement score (TM-score to a
+homology model, i.e. agreement with an INDEPENDENT predictor) matched ProQ2 on sel20 while being
+"much worse than all the other tested QA scores for best150 and BZQ15". WHICH METHOD WINS DEPENDS
+ON HOW THE SUBSET WAS BUILT, and pure-geometry scorers swap places with information-carrying ones
+between subsets: the band's construction is not neutral, must be pre-registered with its
+rationale, and a result on one band definition does not transfer to another. Corroboration from
+our own field: ANDIS (Yu et al., Bioinformatics 2019) frames it as "native recognition emphasizes
+the differences of overall structure quality between native and decoy structures, while decoy
+discrimination generally focuses on the backbone differences among decoy structures ... The
+potential's abilities of native recognition and decoy discrimination cannot be optimized
+simultaneously with the same parameter sets" -- the protein-potential community arriving at
+Blau & Michaeli's conclusion empirically, without the theorem.
+
+(c) NOBODY HAS DONE IT, STATED EXPLICITLY AS THE COORDINATOR ASKED. I found no published QA
+evaluation that conditions on a native-free realism statistic and then measures a score's
+correlation with GDT or RMSD inside the band. The closest and most careful paper is Hamelryck et
+al., "Artefacts and biases affecting the evaluation of scoring functions on decoy sets for protein
+structure prediction" (PMC2677743): it establishes that for "139 out of 149 of the decoy sets
+considered" the native is trivially discriminable through individual energy terms (improper
+torsions, vdW clashes) rather than fold quality, that MD decoys violate i.i.d. with correlations
+that "arise primarily as a consequence of differences _between_ the five trajectories", and that
+near-native enrichment inflates performance -- and it explicitly does NOT implement matching or
+conditioning on a confounder, nor analyse a narrow quality range; its mitigations concern
+effective sample size. So the field's most careful methodological paper identified the confound
+and stopped short of the fix. LANE D's MEASUREMENT IS NOVEL, NOT DERIVATIVE. Standard caveat on a
+negative literature claim: this is a targeted search across the QA, decoy-evaluation and
+perception-distortion literatures, not a proof of absence.
+
+(d) THE BOUND, AND IT IS EXACT. Let Y be accuracy, R the realism statistic defining the band, S a
+scorer. For jointly Gaussian (S, Y, R) the conditional covariance of (S,Y) given R = r is
+Sigma_SY - Sigma_SR Sigma_RR^{-1} Sigma_RY, which does NOT depend on r, so the in-band correlation
+is the partial correlation, constant across the band:
+    rho_SY.R = (rho_SY - rho_SR rho_RY) / sqrt((1 - rho_SR^2)(1 - rho_RY^2)).
+Its ZERO is the whole experiment: rho_SY.R = 0 exactly when rho_SY = rho_SR rho_RY, i.e. when a
+scorer's entire association with accuracy is MEDIATED by realism. The matched-realism band is
+precisely a test of whether any scorer carries accuracy information beyond its realism content.
+THREE OPERATIONAL CONSEQUENCES FOR D. (i) The answer is PREDICTABLE BEFORE ANY ENDPOINT RUN from
+three native-free-computable correlations (rho_SY needs the native and is ORACLE, so it is a
+diagnostic, but rho_SR is not) -- computing them first IS the pre-registration. (ii) Band WIDTH
+interpolates: conditioning on R in [a,b] is not conditioning on R = r, so in-band skill runs
+monotonically from the global rho_SY (wide) to rho_SY.R (thin). Report skill as a CURVE over band
+widths and extrapolate rather than picking one width: it answers the multiplicity objection with
+one pre-registered curve instead of k bands, and converts the width-versus-power tension into a
+measured trend instead of one underpowered point. (iii) The classical name for the attenuation is
+range restriction (Thorndike's case II); a raw within-band correlation must never be compared to a
+raw global correlation without stating the selection. THE PROJECT HAS MET THIS LOGIC TWICE
+ALREADY: `shared-referent-floor` (two quantities measured against a common reference correlate by
+construction; measuring the floor "turned '2/3 sequence-independent' into '1/5'") is this
+correction applied as a diagnostic, and `decorrelated-errors-exist-but-are-unusable` reports
+truth-partialled error correlations of 0.04-0.26 with fusion worth +0.004-0.011 "because the gain
+goes as the SQUARE of the weaker channel's skill". The squared-skill law is the honest prior for
+the Angstrom value: a small partial correlation buys nearly nothing, so a positive here would be
+most valuable as a MECHANISM result (information orthogonal to realism exists) rather than as an
+accuracy result. I quote no invented effect size.
+
+VERDICT. KEPT 7, NOTED 1; no importable operator -- the deliverable is a design, a bound, a prior
+and a warning. The five lines for lane D: the design is published and human-validated (PIRM); the
+measurement is novel (nobody has conditioned on realism); the target quantity has a closed form
+(rho_SY.R, zero iff fully mediated) and is predictable in advance; report skill versus band width
+as a curve; and expect the existing library to underperform, because every scorer in it was fitted
+for the BETWEEN-band task (ANDIS), so a null from the current library would NOT close the in-band
+question -- it would say the library is the wrong instrument for it, which is a weaker and
+different claim that must be stated before the run.
+Multiplicity: 0 endpoint comparisons; no new measurement in this entry.
+Artefacts: `s29/lit/L_6_matched_realism.md`; `s29/lit/L_INDEX.md`.

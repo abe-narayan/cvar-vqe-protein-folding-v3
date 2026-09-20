@@ -106,3 +106,24 @@ BLOSUM on the chain; structural keys worsen pool-best 1.711 -> 2.161 and the ORA
 
 ## Topic 5 -- peptide prediction at 9-16 residues (`L_5_peptide_ceiling.md`)
 (pending)
+
+## Topic 6 -- ranking within a matched-realism band (`L_6_matched_realism.md`, ledger S29-L16)
+
+Commissioned by the coordinator after S29-L12; the literature lane's brief for lane D's experiment.
+
+| source | what it gives lane D | verdict |
+|---|---|---|
+| Blau Y, Mechrez R, Timofte R, Michaeli T, Zelnik-Manor L. The 2018 PIRM Challenge on Perceptual Image Super-resolution. ECCV 2018 Workshops, arXiv:1809.07517 | the banded-evaluation design with a NO-REFERENCE realism axis, human-validated; and the warning that the realism index correlates 0.83 BETWEEN bands but "is not always well-correlated ... on a finer scale (rankings within the regions)" | KEPT -- the design template and the prior (expect a small in-band effect; power for it) |
+| the same, on tradeoff shape | the tradeoff "appears to be stronger in the low distortion regime", where we operate, so the band must be narrow | KEPT as a design constraint |
+| the microcanonical / constant-energy-shell argument (textbook statistical mechanics) | banding on R destroys R's own ordering power by construction, so an in-band result measures exactly what is ORTHOGONAL to R | KEPT -- this is what makes the experiment interpretable whichever way it lands |
+| Torrie GM, Valleau JP (1977) umbrella sampling; Kumar S et al. WHAM (1992) | discipline for an imposed selection: unbias with the known bias, or confine every claim to the band; a within-band mean is not a pool mean | KEPT as discipline |
+| CASP11 best150 / sel20 / BZQ15 subsets, via Olechnovic & Venclovas, Proteins 85:1131 (2017) | restricted-set evaluation exists, but WHICH METHOD WINS CHANGES with how the subset was built; sel20's rescue came from agreement with an independent predictor | NOTED -- the band's construction is not neutral and must be pre-registered; none of these is realism-matched |
+| ANDIS, Yu Z et al., Bioinformatics 35:1499 (2019) | "native recognition and decoy discrimination ... cannot be optimized simultaneously with the same parameter sets" | KEPT as corroboration and as a prediction: library scorers were fitted for the BETWEEN-band task |
+| Hamelryck T et al. Artefacts and biases affecting the evaluation of scoring functions on decoy sets. (PMC2677743) | the confounds documented (139/149 decoy sets trivially discriminable; MD non-independence; near-native enrichment) -- and the matching fix explicitly NOT done | KEPT -- the basis for "nobody has done this" |
+| Gaussian conditional correlation = partial correlation (textbook) | the thin-band limit rho_SY.R = (rho_SY - rho_SR rho_RY)/sqrt((1-rho_SR^2)(1-rho_RY^2)), constant across the band, exactly zero iff a scorer's link to accuracy is fully mediated by realism | KEPT -- the analogue of the Ueda-Nakano coefficient for the banding route |
+| Thorndike case II range restriction (psychometrics) | the name and correction for selection-induced attenuation | KEPT as reporting discipline |
+
+Topic 6 running count: 9 entries, 7 KEPT, 1 NOTED, no importable operator. **(c) is answered NO:**
+no published QA evaluation conditions on a native-free realism statistic before measuring accuracy
+ordering, so lane D's measurement is novel rather than derivative (targeted search, not a proof of
+absence).
