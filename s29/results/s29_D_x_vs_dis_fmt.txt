@@ -1,0 +1,8 @@
+  ladder rho (S28 rungs, CA level): X cost_nll - shipped DIS (POSITIVE = X better; ST's WORSE label is its RMSD convention)
+    a 0.0179 (med -0.0526)   b -0.1818 (med -0.2000)   n=126
+    effect +0.1998   median +0.0000   SE 0.0490   MDE 0.1374   effect/MDE +1.45
+    iid  CI95 [+0.1077, +0.2961]
+    fold CI95 [+0.0995, +0.3431]   folds same sign 5/5   per-fold 0:+0.153 1:+0.472 2:+0.205 3:+0.161 4:+0.054
+    30W/57L/39T   worst degradation +2.0000 (1MF6)   p90 +0.9737   power 0.98  Type-M 1.01
+    concentration: drop-top10 +0.2846 vs uniform-effect null p10/p50/p90 +0.2188/+0.2809/+0.3430 -> pctile 0.530
+    VERDICT: WORSE

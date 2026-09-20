@@ -420,3 +420,166 @@ for it (identity parameters reproduce the deployed operator; NaN-poison). Lane O
 and is in this run; lane X's is registered in its prereg and is not yet on disk.
 Multiplicity: no comparison. Artefacts: `s26/jobs_done/s29D_pytest_light.json`,
 `s26/logs/s29D_pytest_light.log`.
+
+## S29-L6 -- THE METER'S FIRST CUSTOMER: LANE X's PAIR LOG-SCORE IS THE FIRST COST IN THE RECORD THAT DOES NOT ANTI-ORDER THE NEAR-NATIVE LADDER (+0.200 rho ABOVE THE SHIPPED COST, FOLD CI [+0.100, +0.343], 5/5 FOLDS) -- AND IT STILL DOES NOT RECOGNISE NATIVENESS (NATIVE AT THE 37.8th PERCENTILE OF ITS OWN POOL, PRODUCTION PREFERRED TO THE NATIVE ON 62% OF TARGETS); ITS GRADIENT IS UNDEFINED ON 114/126 (2026-09-20 00:01, D)
+
+EVERY NUMBER HERE IS ORACLE. Nothing is deployable, nothing is tuned, and this is a GATE
+reading, not a result: it says what lane X's Hamiltonian can and cannot be expected to do
+BEFORE its probe spends compute (contract rule 19; my S29-L2's standing offer).
+Cost metered: `s29.s29_X_config:cost_nll` (commit 08b5153c), the PAIR half of lane X's H_diag
+-- the 17-bin distogram posterior's negative log score summed over pairs, eps 1e-4. The
+Ramachandran half is a function of torsions and is not visible from a CA cloud, so the meter
+sees the pair term only; lane X's own docstring says so and this entry repeats it. Basis CA,
+n = 126, 18.6 s. Artefact `s29/results/s29_D_cost_audit_X_cost_nll_ca.json`; the comparator is
+`s29_D_cost_audit_DIS_ca.json` (S29-L2); the contrast block `s29/results/s29_D_x_vs_dis_fmt.txt`.
+
+THE FOUR NUMBERS (shipped cost beside it, same 126 targets, same rungs, same code path):
+| | X pair log-score | shipped DIS |
+|---|---|---|
+| (a) ladder rho, S28 rungs (the binding ladder, pre-specified in S29-L2) | +0.018 [-0.069, +0.123] | -0.182 [-0.308, -0.053] |
+| (a) ladder rho, CHARTER rungs | +0.294 [+0.209, +0.343] | +0.260 [+0.201, +0.321] |
+| (a) ladder rho, FULL nine rungs | +0.192 [+0.107, +0.266] | +0.118 [+0.064, +0.166] |
+| (b) gradient cosine at production | +0.110 on 12 of 126 targets -- NOT A MEASUREMENT (below) | -0.034 on 126 |
+| (c) native's percentile in its own pool | 0.378 [0.311, 0.429] | 0.368 [0.306, 0.405] |
+| (c) production scores below the native on | 78/126 | 98/126 |
+| (d) pref(ORACLE circ_best vs PROD) | 0.341 [0.268, 0.423] | 0.206 [0.113, 0.293] |
+| (d) pref(NATIVE vs PROD) | 0.381 | 0.222 |
+| (d) pool-member control pct(PROD) | 0.249 | 0.126 |
+| (d) contrast vs the pool member | +0.092, 0.88x MDE, fold [+0.060, +0.128], 5/5 | +0.080, 0.83x, fold [+0.006, +0.144], 4/5 |
+| (d) head-to-head, the NATIVE below a random pool member | 0.622 | 0.632 |
+
+THE ONE MEASURED DIFFERENCE, `ST.fmt` verbatim (paired per target; POSITIVE = X better; the
+word WORSE in the block is `ST.compare`'s RMSD convention and is not the reading here, and for
+the same reason its W/L columns are reversed: 57 targets where X's rho is HIGHER, 30 lower,
+39 tied):
+```
+  ladder rho (S28 rungs, CA level): X cost_nll - shipped DIS (POSITIVE = X better; ST's WORSE label is its RMSD convention)
+    a 0.0179 (med -0.0526)   b -0.1818 (med -0.2000)   n=126
+    effect +0.1998   median +0.0000   SE 0.0490   MDE 0.1374   effect/MDE +1.45
+    iid  CI95 [+0.1077, +0.2961]
+    fold CI95 [+0.0995, +0.3431]   folds same sign 5/5   per-fold 0:+0.153 1:+0.472 2:+0.205 3:+0.161 4:+0.054
+    30W/57L/39T   worst degradation +2.0000 (1MF6)   p90 +0.9737   power 0.98  Type-M 1.01
+    concentration: drop-top10 +0.2846 vs uniform-effect null p10/p50/p90 +0.2188/+0.2809/+0.3430 -> pctile 0.530
+    VERDICT: WORSE
+```
+On the CHARTER ladder the difference is 0.43x MDE (NOT MEASURED) and on the FULL nine 0.93x
+(NOT MEASURED): the gain is specifically on the near-native half, which is the half that
+matters and the one S29-L2 pre-specified as binding. The preference difference is +0.135
+[+0.044, +0.252], 1.33x, 4/5 folds; the native-percentile difference is +0.011, 0.25x (NOT
+MEASURED) -- the two costs place the native in the same place in the pool.
+
+READING (ORACLE diagnostic; three sentences the lane should carry into its probe).
+1. LANE X's COST IS NOT ADVERSARIAL WHERE THE SHIPPED COST IS. The shipped cost's ladder rho
+   on the near-native rungs is -0.182 with the fold CI below zero (S29-L2); lane X's is +0.018
+   with the fold CI straddling zero, and the paired difference +0.200 clears 1.45x its own MDE
+   with 5/5 folds and power 0.98. This is the first cost in this project's record to be
+   UNINFORMATIVE rather than ANTI-INFORMATIVE on the ladder from production to the native.
+   Mechanism, stated because rule 18 asks: the shipped cost is a BAYES RISK (an expected L1
+   distance error under a ~2x over-confident posterior, S25 L2), whose minimiser is a
+   contracted structure; the pair log-score is a PROPER SCORING RULE of the same posterior,
+   whose minimiser is not driven to contract. Same information, different functional, and the
+   functional is worth +0.200 of ladder rho.
+2. IT DOES NOT SOLVE RECOGNITION, AND CHARTER FINDING 8 SURVIVES IT. The native sits at the
+   37.8th percentile of its own 500-member pool under lane X's cost (the shipped cost: 36.8th;
+   difference 0.25x MDE, NOT MEASURED), production scores below the native on 78/126 targets,
+   and the cost prefers production to a 0.29 A ORACLE structure on 66% of targets. The
+   pool-member contrast (+0.092) is in the Type-M zone at 0.88x MDE, exactly where the shipped
+   cost's sits. Lane X's prereg accepted finding 8 as its risk; this is that risk, priced,
+   before the probe runs. An objective that ORDERS the ladder better but still ranks the native
+   at the 38th percentile cannot, by itself, move the endpoint: it can only stop making things
+   worse.
+3. THE GRADIENT IS NOT DEFINED FOR THIS COST AND THE +0.110 MUST NOT BE QUOTED. `cost_nll` is a
+   bin lookup (`np.digitize` into 17 bins), so 99.2% of its finite-difference gradient
+   components are exactly zero at h = 1e-3 A and the cosine is NaN on 114 of 126 targets. The
+   +0.110 is computed on the 12 targets where some pair distance happened to sit within 1e-3 A
+   of a bin edge -- a selected subsample of the targets nearest a discontinuity, not a
+   measurement of the cost's local behaviour. If a local reading is ever wanted for this cost
+   it needs A2's smoothed finite difference (h = 0.5 A, labelled "smoothed FD" as S28-L23b did
+   for the four step-function channels), and the meter takes `--fd-h 0.5`. This costs lane X
+   nothing: it optimises over a discrete space of at most 262,144 configurations and never
+   takes a gradient in coordinates.
+WHAT THIS DOES NOT SAY. It does not say lane X's probe will help the endpoint (its own prereg's
+registered prior is that P1 is WORSE by 0.1 to 0.4 A on the built chain, and I agree with that
+prior). It does not license the Ramachandran half, which was not metered. It does not measure
+the chimera space, only the cost on S28's nine rungs. And the +0.200 is a rho difference, not
+an Angstrom: `averaging-space-beats-the-objective` priced the whole objective channel at 0.171 A
+through a fixed readout, and `better-matrix-worse-ranking` is on the record for exactly this
+shape of result (five interventions improved a proxy and not the ranking).
+Multiplicity: 4 ORACLE diagnostic contrasts in this entry (three ladders and the percentile,
+plus the preference), 0 endpoint comparisons; the S28-ladder contrast was pre-specified as the
+binding one in S29-L2 before this cost existed, so it is not a best-of-three pick, and the
+other two are reported because they are the same statistic on other rungs. The sprint's endpoint
+comparison count is unchanged (`s29/STATE.md`: 0).
+Verdict: PASSES THE METER AS A BETTER-BEHAVED COST THAN THE INCUMBENT ON THE BINDING LADDER, AND
+FAILS IT ON RECOGNITION. Lane X's probe may run on its own pre-registered falsifiers (S29-L4);
+this entry is the gate reading rule 19 requires, and its second reading is the one to carry:
+the objective is now uninformative rather than adversarial, and uninformative does not fold a
+peptide.
+Artefacts: `s29/results/s29_D_cost_audit_X_cost_nll_ca.json`, `s29_D_cost_audit_DIS_ca.json`,
+`s29/results/s29_D_x_vs_dis_fmt.txt`, code `s29/s29_D_cost_audit.py`, `s29/s29_X_config.py :: cost_nll`.
+
+## S29-L7 -- THEORY SECTION 2: AN OBJECTIVE BUILT FROM THE PER-PAIR MARGINALS IS LOCALLY INFORMATIVE ONLY TO SECOND ORDER AND ONLY ABOUT THE POOL; THE COSINE'S SIGN IS MINUS THE SIGN OF (beta - 1) WHERE beta IS THE POSTERIOR'S OVER-DEVIATION FROM TYPICAL; AND A POSITIVE COSINE IS PURCHASABLE WITH NO INFORMATION BY SHRINKING THE TARGET MAP TOWARD TYPICALITY (2026-09-20 00:01, T)
+
+Question (`s29/briefs/S29T.md` item 2; charter finding 5 and 8): given only the marginals
+p_ij, which objectives f(C) have positive expected cosine between their steepest descent at the
+production cloud and the direction to the native, under the record's error model (68% common
+mode, S23 L9; every predictor emits the typical peptide, S18/S19; score-selected sources have
+parallel biases, cos 0.943, S24 L3)? DERIVATION, no experiment; `s29/THEORY.md` section 2.
+
+THE EXACT IDENTITY (2.5), which is the whole of "the gradient is blind" in one scalar product:
+with g = grad_D Phi the objective's per-pair coefficients at c, r = Jc u the first-order per-pair
+signal toward the native and u = t - c,
+    cos(-grad f(c), u) = -<g, r> / (||Jc^T g|| ||u||).
+An objective is locally informative iff its per-pair force coefficients are negatively correlated
+with production's own signed per-pair error against the native. Nothing about its functional form,
+normalisation, temperature, readout or ansatz enters. Two corollaries: (C1) at a true minimiser
+grad f = 0 and the cosine is 0/0 -- the shipped cosine is read off a residual (|grad S| 0.0488
+A^-1 RMS per atom against |u| 3.048 A, S28-L23b); (C2) grad f = Jc^T g annihilates ker(Jc^T),
+dimension P - (3N-6) = 25 of 55 at N = 12, so 45% of pair space is invisible to ANY marginal
+objective at the gradient level and a "make the target map embeddable" repair buys exactly zero
+there.
+
+THEOREM 2 (assumptions A1 marginal class, A2 proper risk so phi'(median) = 0, A3 coherence of the
+pool's and the posterior's deviations from typical, A4 nothing in the system sees the native's
+deviation from typical): with d(c) = tau + a, m = tau + b, d(t) = tau + n,
+    E[<g, r>] = -sum_ij w kappa var(a) (1 - beta),   beta = cov(a,b)/var(a),
+so E[cos] contains NO term in n, is second order in the small quantities, and is exactly zero at
+beta = 1 -- when the posterior's median map and the production structure deviate from typical in
+the same way and by the same amount, which is what "the average already sits at the posterior's
+per-pair median" (S28-L26b) says. Corollary 2a: no function of the marginals, separable or not,
+can have an expected cosine whose size is set by n. Corollary 2b: the SIGN is -sign(beta - 1);
+the measured -0.034 (and -0.143 on FAIL18) says beta > 1, which is expected because m is an
+unconstrained per-pair object and is generally not a realisable distance matrix while c is an
+average of real windows. Corollary 2c: non-separability buys nothing (the extra freedom cannot
+introduce a term in n, and its component in ker(Jc^T) is annihilated).
+Magnitude check (2.8): E[cos] ~ cos_random sqrt(P(1-rho)/2) sigma_a/sigma_n = 0.036 at P = 55,
+rho = 0.943 (S24 L3, used as a proxy and labelled one), sigma_a/sigma_n = 0.2 (S12 coord_null:
+sequence conditioning is worth 0.776 A of a 3.989 A blind pipeline), against the measured 0.034.
+The magnitude match uses two proxies and is not a fit; the sign is a separate statement.
+
+THE WARNING FOR RULE 19, which is the operational output. Shrinking the objective's target map
+toward typicality, m -> tau + s(m - tau), drives beta -> s beta and turns the cosine POSITIVE with
+zero information added, while moving the emitted structure toward the typical map (production is
+already 22% contracted, S23 L1). Meter number 2 is therefore gameable on its own; any candidate
+objective that gains cosine must report the implied shrink, or be read beside the native
+percentile, which the shrink moves the wrong way.
+
+WHAT A NEW SOURCE MUST BREAK (section 2.5's table): a second differently biased pool, the pool's
+dispersion and a joint over the same information all attack A3 or nothing, and A3 is worth a
+second-order quantity (at rho = 0.65, the UNSELECTED blind library, |E[cos]| ~ 0.12, still at the
+random reference 0.140 -- and that source is 0.76 A worse, S24 L2). Only a channel that sees n
+changes the ORDER of the answer: a physics term evaluated on the emitted structure (outside M, so
+outside the theorem; measured worse than random, S25 L16) or a learned residual (first order by
+construction; S19's error-coherence tax). This is charter finding 8 and S24's prior-derivative
+lever (-2.15 A per unit) derived rather than observed.
+
+PREDICTION, three clauses, all ORACLE diagnostics on existing artefacts, checkable by LANE D in
+minutes with `s27/results/s28_A2_cosine_rows.jsonl` + `s12/cache/disto_*.npz` + lane O's blind-pool
+mean map: (1) the identity holds to relative error < 1e-6 on 126/126; (2) beta > 1 on at least 2/3
+of targets and sign(cos_DIS) = -sign(beta - 1) on at least 70%, exceptions concentrated where
+|beta - 1| is smallest -- falsified if median beta <= 1 or the sign agreement is inside a coin-toss
+CI; (3) re-scoring with the shrunk target map at s in (1.0, 0.75, 0.5) raises the cosine
+monotonically, crossing zero near s = 1/median(beta), while the native percentile worsens over the
+same grid.
+Multiplicity: 0 endpoint comparisons; 3 registered predictions, none yet measured.
+Artefacts: `s29/THEORY.md` section 2 (commit d4b52a6c). No job, no native read by me.

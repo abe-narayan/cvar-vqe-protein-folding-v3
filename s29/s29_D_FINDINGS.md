@@ -48,6 +48,18 @@ skipped (the `VERIFY_SLOW` opt-ins), 0 failed, exit 0, 115.2 s, peak RSS 0.93 GB
 (`s26/jobs_done/s29D_pytest_light.json`). `test_pipeline.py`, `test_integration.py` and the two
 AMBER files are deferred to the coordinator's quiet window, as in S28-L5.
 
+D4. **The meter's first customer, lane X's pair log-score (S29-L6).** On the binding S28 ladder
+it is +0.200 rho above the shipped cost (fold CI [+0.100, +0.343], 5/5 folds, 1.45x MDE, power
+0.98), which makes it the first cost in the record that is UNINFORMATIVE (+0.018, CI straddling
+zero) rather than ANTI-INFORMATIVE (-0.182, CI below zero) on the ladder from production to the
+native. On the charter's rungs the difference is 0.43x MDE and on all nine 0.93x: the gain is
+specifically on the near-native half. Recognition is unchanged: the native sits at the 37.8th
+percentile of its own pool (shipped 36.8th, difference 0.25x MDE), production scores below the
+native on 78/126, and the pool-member contrast (+0.092, 0.88x) is in the same Type-M zone as
+the shipped cost's. Its gradient is undefined (a bin lookup; 99.2% zero components, cosine NaN
+on 114/126), so the +0.110 printed on the surviving 12 is not a measurement and is not quoted.
+`s29/results/s29_D_cost_audit_X_cost_nll_ca.json`.
+
 ## ORACLE DIAGNOSTIC
 
 OD1. The four meter numbers are ORACLE by construction (the ladder is scored against the
@@ -62,6 +74,15 @@ preference, with the mechanism (the minimiser is a structure no real trace resem
 
 ## HYPOTHESIS
 
+H2. **A proper scoring rule of the same posterior is not adversarial where its Bayes risk is
+(S29-L6).** The shipped cost is an expected-L1 Bayes risk under a ~2x over-confident posterior
+and its minimiser contracts; the pair log score is a proper scoring rule of the same posterior
+and its minimiser does not. Same information, different functional, +0.200 of ladder rho.
+Prediction, so it can be wrong: the difference will NOT survive to an endpoint RMSD through a
+fixed readout, because ordering the ladder is not recognising the native and the native's
+percentile did not move (`better-matrix-worse-ranking`; `averaging-space-beats-the-objective`
+prices the whole objective channel at 0.171 A).
+
 H1. **Rung 6 of lane O and P3 of lane X are both confounded with CONTRACTION until controlled
 (S29-L3(a), S29-L4(c)).** Production is a 22%-contracted trace; the shipped cost prefers it to
 87% of real pool members on that alone (S28-L36). Lane O's step displaces production along a
@@ -75,7 +96,12 @@ scale-only control. Registered as a prediction here so it can be wrong.
 
 ## OPEN (my queue)
 
-- Lane O's rung-6 numbers, when posted: the three required controls of S29-L3 (random direction
+- Lane O's rung-6 numbers, when posted (its artefact `s29/results/s29_O_lfo.json` already shows
+  the leave-fold-out step selecting t = 0 on all five folds, so the arm IS production and the
+  three controls of S29-L3 are moot for a null arm -- as S29-L3 said they would be; what still
+  needs saying in that entry is that the per-target ORACLE argmin sits at the grid's LEFT edge
+  (t = -1, the blind average) on 29 of 126 targets, i.e. the grid truncates the operator in the
+  direction OPPOSITE to H1): the three required controls of S29-L3 (random direction
   of matched displacement, scale-only, and the blind-difference cosine null) and F6a's measured
   signed-mean reference.
 - Lane X's D1 and P1 to P5, when posted: the scrambled-chimera control, the participation-ratio

@@ -25,6 +25,8 @@
 ## D
 - 2026-09-19 23:56 done: cost-RMSD meter built and posted (S29-L2; all four S28 anchors reproduce); prereg checks of O (S29-L3) and X (S29-L4); suite gate 378/3/0 on 17 light files (S29-L5).
 - next: attack every positive within the hour; O's rung-6 controls and X's D1/P3 controls when their numbers land; heavy test files in the coordinator's quiet window; hourly S28 reproduction.
+- 2026-09-20 00:05 done: S29-L6, the meter's first customer -- lane X's pair log-score is +0.200 ladder rho above the shipped cost on the binding S28 ladder (fold CI [+0.100,+0.343], 5/5) and is the first cost in the record that is uninformative rather than anti-informative there; recognition unchanged (native at the 37.8th percentile, 0.25x MDE from the shipped cost's) and its gradient is undefined on 114/126. Reproduction seed 201 (2FBU / DIS+0.5*LEG_compactness) exact, abs diff 0.0.
+- next: lanes M, T, O entries as they post; every lane's proposed cost through the meter on request (`--f module:function`).
 
 ## X
 - 2026-09-19 23:45 running: brief, contract (S29+S28), charter, STATE, S13 dossier, S15 dossier 1/4/5, S20 L1-L4, S21 L1-L28, STATE_BRIEF 4-5, core/quantum.py, d_harness, instrument, stats_lib, s28_B_hop, D's meter draft read; encoding (ii) chosen (3-mer fragments of the DIS top-8, recombined; q = 3*ceil(n/3) <= 18); prereg being written.
