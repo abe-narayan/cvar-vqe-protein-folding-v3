@@ -311,17 +311,17 @@ and the report must not let the first stand in for the second.
 
 CORRECTION TO MY OWN HEADLINE. The 2.76 A I had here was a **POINT-CLOUD** number. The
 charter's endpoint is the **BUILT CHAIN**, and the S28 steer was explicit about exactly this
-distinction. On the endpoint the deployed architecture's ORACLE ceiling is **2.9122 A**
-(n = 121, production 3.2206 on the same targets, delta -0.3084, MDE 0.1003, 3.1x MDE).
+distinction. On the endpoint the deployed architecture's ORACLE ceiling is **2.9027 A**
+(n = 126 FINAL, production 3.2105, delta -0.3079, MDE 0.0982, 3.14x MDE).
 The conclusion survives and hardens: the charter's 2.5 A is **unreachable through this
 architecture even with the native in hand**, and 3.0 A only via a per-target ORACLE m.
 
 THE NEW PART, and the sharpest architectural statement of the sprint. Inside the
 **IDENTICAL** top-128 candidate set:
-  - prefix-average readout (what the architecture uses), ORACLE m per target: **2.9122 A**
-  - single best member of the same 128 (a clean order statistic, **7 bits**): **2.1549 A**
-  - free convex combination of the same 128 (expressiveness only, ~128 dof): 1.8604 A
-The readout costs **0.757 A at 4.0x MDE** with the candidates held fixed. Lane O had
+  - prefix-average readout (what the architecture uses), ORACLE m per target: **2.9027 A**
+  - single best member of the same 128 (a clean order statistic, **7 bits**): **2.1435 A**
+  - free convex combination of the same 128 (expressiveness only, ~128 dof): 1.8538 A
+The readout costs **0.7592 A at 4.18x MDE** with the candidates held fixed (n = 126 final). Lane O had
 already shown the field of view is not the constraint (75 -> 128 buys 0.0663 A); the pool
 is not the constraint either (its convex hull expresses 1.1235 A built chain, 6.9x MDE
 below production). **The constraint is how the candidates are consumed, and then above

@@ -4155,3 +4155,28 @@ disappears.
 **STANDING CONSEQUENCE.** This check is cheap and it is now a report gate: it runs again
 immediately before the S29 report is published, and the report cites its result. A ledger whose
 paths all resolve is the minimum condition for the report's numbers to be checkable by anyone else.
+
+### THIRD ADDENDUM to S29-L44 (2026-09-20 02:26): FINAL FIGURES AT n = 126 -- LANE O's LAST SHARD (`s29O_chEF2`, exit 0) HAS LANDED AND THE CEILING IS STABLE
+
+S29-L44 was computed at n = 121 while `s29O_chEF2` was still running. It is now complete and every
+arm below is the full 126 targets. The numbers moved by hundredths; **nothing in the entry or its
+two addenda changes**. Recorded because quoting an n = 121 figure in the report when 126 exists
+would be the same class of slip as quoting the cloud for the chain.
+
+| contrast (BUILT CHAIN, the charter's endpoint) | n | a | b | delta | MDE | x MDE |
+|---|---|---|---|---|---|---|
+| architecture's ORACLE ceiling vs production | 126 | **2.9027** | 3.2105 | -0.3079 | 0.0982 | **3.14** |
+| best-of-128 (argmin) vs the prefix average | 126 | **2.1435** | 2.9027 | -0.7592 | 0.1815 | **4.18** |
+| top-128 hull (expressiveness) vs prefix average | 126 | 1.8538 | 2.9027 | -1.0489 | 0.1858 | 5.65 |
+| K=500 hull (expressiveness) vs production | 126 | 1.1235 | 3.2105 | -2.0870 | 0.3004 | 6.95 |
+
+**The three statements the report carries, in final form.**
+1. The deployed architecture's ORACLE ceiling on the endpoint is **2.9027 A**. The charter's 2.5 A
+   is unreachable through it *with the native in hand*; 3.0 A is reachable only by an oracle
+   choosing m per target.
+2. Holding the candidate set fixed at the top-128 the quantum stage sees, switching the terminal
+   operator from the prefix average to argmin **and** supplying 7 bits is worth **0.7592 A at
+   4.18x MDE**. Per addendum 2 this prices the operator switch plus the bits, NOT a ranking
+   improvement fed to the shipped average, because that operator consumes the set mean.
+3. The pool itself **expresses** 1.1235 A on the endpoint. Generation is not the constraint.
+   (Expressiveness only -- a 500-dof per-target fit; grid oracles are order statistics.)
