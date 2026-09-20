@@ -10,6 +10,9 @@ Arms, all through the IDENTICAL pool / top-75 / uniform average / production pro
     LOGW    the same, weighted by the shipped 1/(sd+0.5)  (LOG - LOGW prices the weight)
     L2RISK  mean_p w_p sum_c prob[p,c] (d_p - C_c)^2      matched functional control
     LOGPERM LOG scoring pair p's distance against pair perm(p)'s posterior  information control
+    SWAPCTL PROD's top-75 with k_swap members exchanged at random for candidates from ranks
+            76..500, where k_swap is the count PROD keeps and LOG drops -- the ZERO-INFORMATION
+            re-ordering at LOG's own exchange rate, 4 draws (PREREG addendum 1)
 
 Per target it also records the MECHANISM (contract rule 18): the emitted cloud's mean virtual
 CA-CA bond and radius of gyration against the native's, the projection price, the top-75 set
@@ -56,7 +59,10 @@ EPS_P = 1e-4
 #: the pinned probe set (`s29/s29_X_config.py:120`, = P.targets()[::11][:12])
 PROBE = ["1A13", "1I6Y", "1M02", "2BFI", "2LWS", "2MP9",
          "2P5H", "5Z5W", "6MBM", "7JGX", "8HVS", "9KAR"]
-ARMS = ("PROD", "LOG", "LOGW", "L2RISK", "LOGPERM")
+ARMS = ("PROD", "LOG", "LOGW", "L2RISK", "LOGPERM", "SWAPCTL")
+#: SWAPCTL draws (PREREG addendum 1: the zero-information re-ordering at LOG's own
+#: exchange rate, matched in the operator's space)
+N_SWAP_DRAWS = 4
 NATIVE_BOND = 3.8122          # ARCHITECTURE.md section 0, the natives' mean virtual CA-CA bond
 
 
@@ -99,6 +105,47 @@ def err_vector(X, nat):
     return (Xs - np.asarray(nat, float)).ravel()
 
 
+def swap_control(cand, prod_order, k_swap, pdb, prod_err, floor):
+    """The zero-information re-ordering at LOG's own exchange rate (PREREG addendum 1).
+
+    Exchange `k_swap` members of PROD's top-75, chosen uniformly at random, for `k_swap`
+    candidates drawn uniformly from PROD's ranks 76..500. `N_SWAP_DRAWS` independent draws
+    through the IDENTICAL average and projection; the arm's value is the mean over draws.
+    """
+    inside = np.asarray(prod_order[:RP.M], int)
+    outside = np.asarray(prod_order[RP.M:], int)
+    ch_v, cl_v, bd_v, ov_v, cos_v = [], [], [], [], []
+    t0 = time.time()
+    for d in range(N_SWAP_DRAWS):
+        rng = RP.rng_for(pdb, "F1swap%d" % d)
+        if k_swap > 0:
+            drop = rng.choice(len(inside), size=k_swap, replace=False)
+            add = rng.choice(len(outside), size=k_swap, replace=False)
+            top = np.concatenate([np.delete(inside, drop), outside[add]])
+        else:
+            top = inside.copy()
+        C, _ = H.readout_uniform(cand, top)
+        ca = H.readout_projected(cand, C)
+        bond, rg, rg_nat = geometry_of(C, cand.nat_ca)
+        cl_v.append(float(I.ca_rmsd(C, cand.nat_ca)))
+        ch_v.append(float(I.ca_rmsd(ca, cand.nat_ca)))
+        bd_v.append(bond)
+        ov_v.append(float(len(set(top.tolist()) & set(inside.tolist())) / RP.M))
+        e = err_vector(ca, cand.nat_ca)
+        cos_v.append(float(np.dot(e, prod_err) / max(np.linalg.norm(e) * np.linalg.norm(prod_err), 1e-12))
+                     if prod_err is not None else float("nan"))
+    return dict(pdb=pdb, n=int(cand.n), fold=int(cand.fold), arm="SWAPCTL",
+                rmsd_cloud=float(np.mean(cl_v)), rmsd_chain=float(np.mean(ch_v)),
+                rmsd_chain_sd=float(np.std(ch_v, ddof=1)) if len(ch_v) > 1 else 0.0,
+                rmsd_chain_draws=[float(v) for v in ch_v],
+                bond_cloud=float(np.mean(bd_v)), bond_chain=float("nan"),
+                rg_cloud=float("nan"), rg_native=float(np.sqrt(((cand.nat_ca - cand.nat_ca.mean(0)) ** 2).sum(1).mean())),
+                overlap_prod=float(np.mean(ov_v)), tie_frac_at_cut=float("nan"),
+                floor_rate=floor, medoid=-1, k_swap=int(k_swap), n_draws=int(N_SWAP_DRAWS),
+                cos_err_vs_prod=float(np.nanmean(cos_v)), err_norm=float("nan"),
+                secs=float(time.time() - t0))
+
+
 def run_target(pdb, done):
     todo = [a for a in ARMS if (pdb, a) not in done]
     if not todo:
@@ -122,10 +169,19 @@ def run_target(pdb, done):
     sc["LOGPERM"] = lp[perm][rows_ix, b].sum(1)
 
     key = RP.rng_for(pdb, "tiekey").random(cand.k)
-    prod_top = set(np.lexsort((key, RP.zr(sc["PROD"])))[:RP.M].tolist())
+    prod_order = np.lexsort((key, RP.zr(sc["PROD"])))
+    prod_top = set(prod_order[:RP.M].tolist())
+    log_top = set(np.lexsort((key, RP.zr(sc["LOG"])))[:RP.M].tolist())
+    k_swap = int(len(prod_top - log_top))
     prod_err = None
     rows = []
     for arm in ARMS:
+        if arm == "SWAPCTL":
+            if arm in todo:
+                rows.append(swap_control(cand, prod_order, k_swap, pdb, prod_err, floor))
+            continue
+        if arm != "PROD" and arm not in todo:
+            continue          # already on disk; PROD is always recomputed for prod_err
         t0 = time.time()
         E = RP.zr(sc[arm])
         order = np.lexsort((key, E))
@@ -140,6 +196,8 @@ def run_target(pdb, done):
         cos = float(np.dot(e, prod_err) / max(np.linalg.norm(e) * np.linalg.norm(prod_err), 1e-12)) \
             if prod_err is not None else float("nan")
         cut = float(E[top].max())
+        if arm not in todo:
+            continue
         rows.append(dict(
             pdb=pdb, n=int(cand.n), fold=int(cand.fold), arm=arm,
             rmsd_cloud=float(I.ca_rmsd(C, cand.nat_ca)),

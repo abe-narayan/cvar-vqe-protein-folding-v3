@@ -168,3 +168,101 @@ projections. Measured cost of the projection in the audit: ~3 s per target per a
 targets x 5 arms) ~ 3 min; full run (126 x 5) ~ 30 min, one process, peak RSS ~0.6 GB by the audit's
 measurement. Both go through `python s26/jobrun.py --agent S29M --tag CPU`, checkpointed per target
 to `s29/results/s29_M_F1_rows.jsonl` and resumable.
+
+---
+
+# ADDENDUM 1 (2026-09-20 00:2x, lane M) -- THE MECHANISM CLAIM IS WITHDRAWN BEFORE THE FULL RUN; THE ARM AND THE FALSIFIER STAND; ONE CONTROL IS ADDED
+
+Appended, not edited (contract rule 7). Written after the 12-target probe's four arms existed and
+BEFORE the 126-target run, and before the LOGPERM control was repaired. The primary falsifier in
+section 3 is unchanged.
+
+## A1.1 What the coordinator corrected
+
+Two lanes corrected the framing this prereg inherited from `s29/STATE.md` integration note 3:
+
+- **S29-L10 (lane D):** the shipped cost's own descent direction **EXPANDS** the structure
+  (bond x1.0438, Rg x1.0248; only 18 of 126 contract). There is no contraction story at the
+  gradient level.
+- **S29-L12 (lane L):** the Bayes estimator of an over-confident posterior is **not contracted**:
+  a symmetric width error moves neither the mean nor the median. The emitted cloud's 22 to 26%
+  contraction is **Jensen's inequality on the coordinate average** (`||E X - E Y|| <= E||X - Y||`,
+  an arithmetic property of averaging real windows), not a property of the posterior or of the L1
+  functional.
+
+**Consequence for this prereg.** Section 0's sentence "whose minimiser is a **contracted**
+structure" is **withdrawn**. F1 is no longer "remove the contraction at the selection stage". What
+F1 tests is exactly this and nothing more:
+
+> **The two functionals order the near-native half of the pool differently (+0.200 of ladder rho,
+> 5/5 folds, S29-L6). Does that ordering difference survive to the built chain?**
+
+The arms, the endpoint, the statistics and the PRIMARY FALSIFIER in section 3 are unchanged: they
+never depended on the mechanism story. The registered prior is unchanged and is now better
+motivated: **null to worse**, because the terminal operator consumes the retained set's MEAN
+(`operator-consumes-set-mean`: d_out = 1.16 x set mean + 0.04 x set best, R2 0.89) and a re-ordering
+that keeps most of the same 75 members moves that mean very little.
+
+## A1.2 The contraction measurement STAYS, demoted to a diagnostic -- and the probe already speaks to it
+
+The bond/Rg measurement registered in section 3 is kept, no longer as "the mechanism" but as a
+diagnostic of what the functional swap does to the emitted geometry. It is worth keeping because
+the 12-target probe already shows, independently of lanes D and L, that **contraction and RMSD do
+not track across functionals** (`s29/results/s29_M_F1_rows.jsonl`, n = 12, PROBE -- not evidence for
+the instrument):
+
+    arm      built chain   point cloud   mean cloud bond (native 3.8122)
+    PROD       3.3816        3.2529        2.9874
+    LOG        3.6161        3.4711        3.1063      contracts LESS, and is WORSE
+    L2RISK     3.5632        3.3633        2.8675      contracts MORE, and is WORSE
+
+Two functionals move the contraction in **opposite** directions and both move the endpoint the
+**same** way. On this evidence the contraction is not the lever, which agrees with S29-L10 and
+S29-L12 from a third direction.
+
+## A1.3 The control the corrected framing needs, and why it cannot be the one the coordinator named
+
+The coordinator asks that the matched control -- "a monotone re-ranking of the shipped score, which
+changes the functional's SHAPE but not its information" -- become the main comparison. **That
+control is the identity arm and cannot be run as a measurement.** Through a top-m selection readout
+the retained set depends only on the score's ORDER, and a strictly monotone map preserves the order
+exactly; the emitted structure is therefore bit-identical to PROD's by algebra, not by measurement.
+Reporting its null would be reporting an algebraic identity as evidence -- the failure mode
+`s25/QUANTUM.md` section 5 exists to prevent. (This was already stated as C3 in section 2 and is
+asserted once numerically as a harness check.)
+
+What the corrected framing actually needs is a control matched on the thing that DOES vary: **how
+many members of the retained set the re-ordering exchanges**. The probe measures LOG's top-75
+overlap with PROD at **0.687**, i.e. LOG swaps about **23 of 75** members. So:
+
+**SWAPCTL (added here; the main comparison for the corrected framing).** Per target, let
+`k_swap = |PROD_top75 \ LOG_top75|`. Remove `k_swap` members of PROD's top-75 chosen uniformly at
+random, and replace them with `k_swap` candidates drawn uniformly at random from PROD's ranks 76 to
+500. Stable RNG `rng_for(pdb, "F1swap<d>")`, **4 independent draws**, each through the identical
+uniform average and production projection; the arm's value is the mean over draws and the per-draw
+sd is recorded. This is the **zero-information re-ordering at LOG's own exchange rate**, matched in
+the operator's space.
+
+**The comparison this licenses, pre-registered now:**
+- If `LOG - PROD` is statistically indistinguishable from `SWAPCTL - PROD`, then the endpoint
+  difference is the **price of exchanging members at that rate**, and the log functional's ordering
+  information contributes nothing at the endpoint -- whatever its ladder rho.
+- If `LOG - PROD` is **better** than `SWAPCTL - PROD` by more than 1.0x the MDE of that paired
+  contrast with the fold CI excluding zero, the log functional's ordering carries endpoint-relevant
+  information even though it does not beat PROD.
+- If `LOG - PROD` is **worse** than `SWAPCTL - PROD`, the log functional is actively
+  anti-informative at the endpoint -- it swaps out better members than chance would.
+
+`LOG - SWAPCTL` is added to the multiplicity count (section 3): F1 now runs **6 endpoint
+comparisons** at n = 126 (LOG, LOGW, L2RISK, LOGPERM, SWAPCTL against PROD, plus LOG - SWAPCTL);
+the primary is still **LOG vs PROD**, pre-specified before any number existed.
+
+## A1.4 The averaging bound, recorded
+
+Lane L (S29-L12) derives from the Krogh-Vedelsby / Ueda-Nakano (1 - 1/M) coefficient that an
+**infinite** pool of the same kind returns 3.040 A against the shipped 3.0483 -- "average more
+members" is worth at most about **0.008 A**, with the aggregate-to-RMSD map about 3% loose. **F1
+holds M = 75 fixed in every arm**, including SWAPCTL (which exchanges members, never changes the
+count), so the bound does not bind on any F1 arm. It is recorded here so that no future variant of
+F1 changes m without pricing it against that ceiling, and it is added to
+`s29/CONVENIENCE_CHOICES.md` C21/C23.

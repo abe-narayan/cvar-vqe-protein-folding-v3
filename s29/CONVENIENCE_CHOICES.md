@@ -313,6 +313,14 @@ but **five independent router constructions fail to predict it native-free**, tw
 harmful held out (S22 L7, S23 L7). S17 L12's mechanism: the readout consumes the set MEAN, so the
 rung trades purity against variance reduction.
 
+**AND THE CEILING ON THE OTHER DIRECTION IS NOW DERIVED** (added 2026-09-20 from lane L, S29-L12):
+S23 L9's error identity is the Krogh-Vedelsby ambiguity decomposition, and the Ueda-Nakano
+`(1 - 1/M)` coefficient on the covariance term gives an **infinite** pool of the same kind returning
+**3.040 A against the shipped 3.0483** -- "average more members" is worth **at most about 0.008 A**
+(the aggregate-to-RMSD map is ~3% loose; an exact per-target version is five minutes in lane O).
+So m is bounded above by arithmetic: no enlargement of the retained set can buy a hundredth of an
+Angstrom. Any operator that changes m must be priced against that ceiling.
+
 ---
 
 ## D. The readout and the projection
@@ -327,7 +335,13 @@ cancelling error.
 `s12/instrument.py:119`. S17 L17 measured the ORACLE-greedy subset average and found it never beats
 the best member on a 5-target smoke; **S17 L18 corrected it at n = 126: the averaging ceiling DOES
 beat the best-member ceiling.** Cite L18, not L17. S23 L9 prices the operator: averaging is worth
--0.6554 A (17.7%) on 126/126 targets, and it removes only the 32% idiosyncratic share of the error.
+-0.6554 A (17.7%) on 126/126 targets, and it removes only the 32% idiosyncratic share of the error. Lane L (S29-L12) adds two things to this entry: the identity IS Krogh-Vedelsby,
+so charter finding 11 is a **law rather than a defect**; and the emitted cloud's 22 to 26%
+contraction is **Jensen's inequality on the average** (`||E X - E Y|| <= E||X - Y||`), an arithmetic
+property of averaging real windows -- **not** a property of the posterior or of the L1 functional
+(and lane D's S29-L10 measures the shipped cost's own descent direction as EXPANDING the structure,
+bond x1.0438). Anyone proposing to "remove the contraction" must therefore change the AVERAGING
+operator or the projection, not the score.
 
 ### C24. The MEDOID frame -- **UNTESTED, and it is the one readout choice with no measurement**
 `s12/instrument.py:119-125` (`b = medoid(P)`, then superpose all members on member b and mean);
