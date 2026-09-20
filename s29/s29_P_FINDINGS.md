@@ -211,6 +211,36 @@ queued behind 8 others rather than running, and that delay is mine, not the sche
 
 When slots free, the deferred half is the same command with `--phase oracle`.
 
+P12. **[PROBE, n=4; the 126 run is queued] The coordinator's lane-T question is answered, and
+the answer goes AGAINST my own result's reach: separation-band re-weighting of the SELECTION
+objective is NOT the same operation as rescaling the emitted cloud, so S29-L22 result 5 does NOT
+close lane T's route.** `s29/s29_P_bandsel.py` (falsifier registered in its docstring before any
+number: the operators are DIFFERENT if any band weighting moves the emitted profile's |i-j| = 1
+ratio by more than 0.02).
+
+Construction: replace production's UNIFORM mean over pairs in `s12.instrument.shipped_score`
+with a weighted mean whose weights depend only on |i - j|, re-select the top 75 with the same
+tie key and the same m, coordinate-average, and measure the emitted cloud's separation profile.
+The `uniform` arm reproduces production's cloud RMSD at **max |diff| 0.000e+00**, so the
+re-scoring path is the production path.
+
+On the 4-target probe the |i-j| = 1 ratio moves from production's 0.885 to **0.802** under
+`local_only` (all weight on |i-j| <= 3), a move of **0.083, four times the 0.02 threshold**,
+with only 46% of the top-75 shared with production's. **THE FALSIFIER FIRES.** Selection can
+materially reshape the distortion, because it changes WHICH structures are averaged and hence
+how much the pool disagrees at each band.
+
+So the two operators are not the same operation seen twice, and my result 5 -- which refutes
+correcting the profile of an ALREADY-AVERAGED cloud -- does not reach an operator that acts
+upstream of the averaging. The distinction is the one I gave before running this: result 5 acts
+downstream of the Jensen contraction, band re-weighting acts upstream of it. What result 5 still
+contributes to T's route is the burden of proof: the profile is manufactured by averaging, so a
+re-weighted selection inherits a profile of its OWN, and T must show the re-weighting reduces
+POOL DISAGREEMENT rather than that it corrects a profile. NOTE: n = 4 is a probe and is never
+evidence for the instrument; the 126-target run is queued. The probe is quoted here only for the
+QUALITATIVE claim (the operators are distinguishable), which a 0.083 move at 46% set overlap
+establishes on its own.
+
 ## WHAT DAMAGED MY OWN EXPECTATIONS
 
 ## WHAT I DID NOT DO AND WHY
