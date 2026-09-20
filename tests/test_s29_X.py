@@ -263,3 +263,20 @@ def test_f_value_matches_f_and_grad(space):
         f0 = X.f_and_grad(circ, th, space.E, X.ALPHA, X.TEMP, gam, xors)[0]
         f1 = X.f_value(circ, th, space.E, X.ALPHA, X.TEMP, gam, xors)[0]
         assert f0 == f1
+
+
+def test_temp_path_is_process_unique():
+    """Two processes writing the same target must not share a temp path: `os.replace` is
+    atomic but the WRITE into a shared temp file is not (coordinator, 2026-09-20)."""
+    import inspect
+    src = inspect.getsource(X.main)
+    assert 'f + ".tmp"' not in src, "shared temp path: concurrent writers can interleave"
+    assert "os.getpid()" in src and "os.replace(tmp, f)" in src
+
+
+def test_run_is_checkpoint_aware():
+    """A relaunch must skip completed targets (this is what made the duplicate run
+    self-limiting to the single overlapping target)."""
+    import inspect
+    src = inspect.getsource(X.main)
+    assert "os.path.exists(f) and not a.force" in src

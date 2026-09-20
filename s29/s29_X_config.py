@@ -1136,7 +1136,12 @@ def main() -> None:
                 continue
             t0 = time.time()
             out = run_target(pdb, chain=not a.no_chain)
-            tmp = f + ".tmp"
+            # HARNESS DEFECT, found by the coordinator 2026-09-20 after two processes ran
+            # the same unsharded command: a SHARED temp path is not made safe by os.replace.
+            # Two writers of the same target write the same `.tmp` and can interleave INSIDE
+            # it, after which the rename publishes a corrupt file atomically.  The temp name
+            # must be unique per process.
+            tmp = f + ".%d.tmp" % os.getpid()
             with open(tmp, "w") as fh:
                 json.dump(out, fh, indent=1,
                           default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
@@ -1151,7 +1156,12 @@ def main() -> None:
                 continue
             t0 = time.time()
             out = run_bestofn(pdb, chain=not a.no_chain)
-            tmp = f + ".tmp"
+            # HARNESS DEFECT, found by the coordinator 2026-09-20 after two processes ran
+            # the same unsharded command: a SHARED temp path is not made safe by os.replace.
+            # Two writers of the same target write the same `.tmp` and can interleave INSIDE
+            # it, after which the rename publishes a corrupt file atomically.  The temp name
+            # must be unique per process.
+            tmp = f + ".%d.tmp" % os.getpid()
             with open(tmp, "w") as fh:
                 json.dump(out, fh, indent=1,
                           default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
