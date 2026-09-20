@@ -1,13 +1,20 @@
 # Sprint 29 — CVaR-VQE Protein Folding: the path below 2.5 Å
 
-**Status: DRAFT IN PROGRESS.** Sections marked `[PENDING]` await runs still in flight
-(lane B's 126-target endpoint, lane M's F1 and F2, lane D's B3-at-n and the heavy test suite,
-lane P's falsifier arms, lane X's 12-target configuration probes, lane T's 126-target compactness).
-The charter requires the report only after everything is finished; this file is assembled as
-results land so that nothing is reconstructed from memory at the end.
+**Status: FINAL, closed 2026-09-20 03:52 Pacific.** Every lane has reported; no run is outstanding.
+
+Before publication, two checks were run against this report's own claims and both are reproducible
+from the repository:
+
+- `python s29/s29_audit_paths.py` — an existence check on every artefact path the ledger cites.
+  **205 of 217 resolve**, and the twelve that do not are itemised in S29-L46's addendum rather than
+  rounded away: six are extraction artefacts, two a rename recorded in git, one an older sprint's,
+  two this audit's own tool cited by its scratchpad name (corrected), and **one a genuine dangling
+  citation** — `s7/debias_tune.json`, which never existed.
+- `python s29/s29_verify_report.py` — every headline number recomputed from its artefact rather
+  than copied from the entry that reported it. **58 of 58 match, 0 mismatches.**
 
 Branch `s26` · benchmark: 126 dev targets, 9–16 aa · endpoint: **mean built-chain Cα RMSD**
-Ledger: `s29/LEDGER.md` (S29-L0 … S29-L46, no L43 — see the numbering note)
+Ledger: `s29/LEDGER.md` (56 entries, S29-L0 … S29-L56; there is no L43 — see the numbering note in the ledger)
 Running state: `s29/STATE.md` · Contract: `s29/S29_CONTRACT.md` · Charter: `s29/BRIEF.md`
 
 ---
@@ -725,11 +732,43 @@ For scale, and against the right comparator — lane X's 12 targets are harder t
 average, so quoting its arms against the full-benchmark mean would flatter them:
 
 ```
-production, all 126 targets              cloud 3.0483   chain 3.2105
-production, lane X's own 12 targets      cloud 3.2529   chain 3.3866
-lane X's best non-ORACLE arm             cloud 3.4501            → +0.1972 vs production
-   … and that arm is the UNTRAINED circuit, ahead of every trained variant
+production, all 126 targets              cloud 3.0483   chain 3.2126
+production, lane X's own 12 targets      cloud 3.2529   chain 3.3816   (+0.2046 / +0.1690 harder)
+every native-free chimera arm            0.31 to 0.57 Å above production on the chain
 ```
+
+The deficit is real rather than a hard-subset artefact, which is precisely what the restricted
+comparator establishes and why it was the first number asked for.
+
+**Thirteen controls, all NOT MEASURED.** R2−R1 +0.0198 (0.19×) · PR-matched random weights +0.0271 ·
+Gibbs at matched entropy −0.0254 · Γ vs Γ = 0 −0.1171 · the exact CVaR-optimal law +0.0446 · untrained
++0.1450 · product state −0.0355 · second seed +0.0426 · exact ground state −0.0380 · permuted
+posterior +0.1319 · exact top-m +0.0228 · **best-of-N − trained VQE −0.0088 (0.07×)**.
+
+**A correction to something I had been repeating.** On the 5-target probe the *untrained* circuit
+was the best non-ORACLE arm, ahead of every trained variant, and I quoted that more than once.
+**At n = 12 it collapses to 0.08–0.55× MDE — not measured.** And the readout I had singled out as
+the one that separates the arms, R3, turns out to be the **least** informative of the three
+(separation-to-noise 0.459 against R1's 1.047). Both of my readings of the 5-target probe were
+wrong, and both were wrong in the direction of finding structure in a small sample. The durable
+statement is the control, not the ranking: **best-of-N from the untrained circuit is
+indistinguishable from the trained VQE at matched budget (0.07× MDE) while the optimiser plainly
+works** — F falls by half or more on every arm (117.3→73.9, 88.1→82.0, 325.1→108.5).
+
+**And the objective's exact optimum is no better than a random point in the space it enumerated.**
+`corr(H_diag, RMSD) = +0.0199` over all configurations; the ORACLE-best chimera sits at the
+**62nd percentile** of the objective's ordering; the native's pair term is worse than 71.7% of
+chimeras (79.3% after the native is put through the production projection, so not a manifold
+artefact); and the **exact argmin emits 3.9125 against a space mean of 3.8771**. That is S13 and
+S21's result reproduced in a third, exhaustively enumerated space.
+
+**Multiplicity, handled rather than mentioned.** The lane produced 125 formatted contrasts, 48 of
+them arm-versus-production; at K = 48 the chance of at least one spurious result at 0.05 is
+**0.9147**, and the Bonferroni two-sided bar is z = 3.279 against 1.96. **Only P1 was pre-specified
+and only P1 is read as a result.** The per-target maximum over the 21 native-free arms is priced
+with `best_of_k_within`: observed −0.4476 Å against a best-of-k null of −0.6088, **share accounted
+136%**, k_eff 6.93, and **split-half transfer −0.0312 Å — 7% of the oracle gain**. Entirely an order
+statistic; nothing transfers.
 
 **Why this is not a re-run.** The lane's own pre-registration argues the point: S13 closed the
 per-residue torsion-bin lattice by exhaustive enumeration; S19–S21 closed the basin latent (a prior
@@ -738,9 +777,17 @@ as a *source* is +0.390 worse; S28-L21 closed the candidate-index register. This
 structurally different space — and it closes the same way, with the added information that it is
 *worse than its own source*.
 
+**Scope, so it is not over-read** — the lane's own words. This closes F = 8 DIS-top parents ×
+contiguous 3-mer segments × q ≤ 15, with that Hamiltonian, on 12 targets. It does **not** close
+fragment recombination in general: a different parent set, overlapping or non-contiguous segments,
+or more than 8 parents are untested. What it closes is this lane's hypothesis, and the reason is a
+**ceiling** rather than a selector — no operator can recover 0.65 Å that the space does not contain.
+
 That is a divergent lane doing its job. The most useful thing it could have returned was a
 disagreement with the rest of the report. It looked for one in a space nobody had tried, with exact
-enumeration rather than sampling, and did not find it.
+enumeration rather than sampling, and did not find one — and it reported that the space it built is
+*worse than the pool it was cut from*, which is the least flattering possible version of its own
+result.
 
 ## 7. The final built-chain RMSD, with full statistics
 
