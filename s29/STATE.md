@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:17 Pacific.
+Last update: 2026-09-20 00:24 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -319,7 +319,48 @@ compute-bound, not memory-bound, and manufacturing memory pressure to reach 94% 
 real jobs for a number. If a memory-heavy step becomes scientifically justified (an ESM re-embed,
 a full 500x500x126 tensor), RAM rises then.
 
+
+## Integration note 9 (2026-09-20 00:24, after S29-L15): THE SPRINT HAS CONVERGED, AND THE MECHANISM IS DERIVED
+THE MECHANISM FOR THE CENTRAL PUZZLE, complete and derived (lane T, Q1). By the envelope theorem
+the deployed CVaR is EXACTLY constant along 437 of 511 simplex directions at the realised tail
+(85.5%); the entropy term resolves those by flattening, so the exact optimum is uniform ABOVE
+the VaR and exponentially enhanced below it, with p* a function of (alpha, T) ALONE because
+E = zrank is the same rank ladder on every target to 1.18% of range. The readout consumes only
+the tail SET; the set is a prefix fixed by the ordering; the one scalar left is where the prefix
+cuts. THE DEPLOYED CVaR-VQE IS EQUIVALENT AT THE ENDPOINT TO CHOOSING ONE NUMBER m -- and the
+m-ladder has been priced three times. That is "the optimiser reduces the objective on 126/126
+and the structure does not move", derived rather than observed, and it supersedes the
+flat-minimiser-set story from lane L (Barkoutsos's overlap condition has probability e^-46 here;
+the envelope argument needs no overlap assumption and holds at every point).
+THE CONTROL IT IMPLIES (now lane D's M6, and the sprint's sharpest): replace the entire quantum
+stage by the target-independent rank-weight profile p*(alpha, T), no circuit, no optimiser, no
+per-target computation, and run it to the built chain. T predicts agreement with the deployed
+arm on >= 120/126. This is the charter's "removing the quantum stage must degrade the result"
+at its sharpest and the report carries it whatever else happens.
+THE ARCHITECTURE THE THEORY ENDORSES, and three lanes now agree on it. Lane L: non-classicality
+needs non-commuting terms AND a non-eigenvector target. Lane T Q2: DERIVED NO for that cell in
+the candidate-index encoding (the Duhamel first-order term vanishes for zero-diagonal couplings,
+so the thermal state's leading quantum content is a classical reweighting by squared-similarity
+degree -- exactly what S28's degree-matched control held fixed), and the only operator class that
+escapes the trainability obstruction is a sum of LOCAL PAULI terms: for a transverse field
+r_stable = D/n, the slope is exactly -1 per qubit and J* is 11.8 instead of 90. A local mixer is
+meaningful only where basis states have local structure, i.e. in a CONFIGURATION-SPACE encoding.
+SMALLEST QUALIFYING FORMULATION: basis state = per-residue configuration assignment; H = 1- and
+2-body posterior terms + Gamma sum_q X_q; a thermal / free-energy target, never an eigenvector;
+readout = the CVaR tail's coordinate average. That is lane X's encoding plus a mixer, and lane X
+is redirected to build exactly it, running T's falsifier ladder cheapest first: TV > 0.45 on the
+sampled distribution (below it the readout provably cannot resolve the difference, S25 L15),
+then the correct classical counterpart (a thermal sampler or SA over the same space at matched
+evaluations, NOT an eigensolver), then the endpoint.
+HONEST CEILING ON IT, stated now so no entry overclaims: by theorem 2 this cell creates no
+information about the native's deviation from typical, so its upside is the charter's
+"classically irreproducible contribution at unchanged RMSD" unless the configuration space's own
+posterior carries more than the pool's marginals -- lane X's premise, to be measured by the
+meter, not asserted.
+
 ## Closed in S29
+- The non-commuting free-energy cell IN THE CANDIDATE-INDEX ENCODING (S29-L15 Q2, derived):
+  the thermal state's leading quantum content is a classical degree reweighting.
 - The "better-conditioned coupling matrix" family (S29-L11, derived): gradient visibility needs
   stable rank growing with the register; no dense kernel and no Gram matrix of deviations can.
 - H1, the typicality axis (S29-L<O's entry>): the ORACLE global step is exactly zero; the axis
