@@ -5,7 +5,8 @@ written first because the coordinator gates every build on them; then Q1 and Q2 
 two questions of 2026-09-20 00:20, taken ahead of the rest); then 1, 4, 5, 7 in the brief's order.
 **Section 6 (the entropy term) is answered inside Q1 and is not repeated.**
 
-    order in this file:  2  3  Q1  Q2  1  4  5  7
+    order in this file:  2  3  Q1  Q2  1  4  5  7  8   (8 = the achievable native-free bound,
+                                                        the coordinator question of 00:35)
     ledger entries:      S29-L7 (2), S29-L11 (3), S29-L15 (Q1, Q2), S29-L17 (1, 4), and the
                          entry for 5 and 7 posted with this file's final commit.
 
@@ -1079,3 +1080,171 @@ are therefore:
    here and precedented at this length (S29-L1), and whose natural quantum home is exactly Q2's
    configuration-space cell with a local mixer -- the one non-commuting operator family whose
    stable rank grows with the register.
+
+---
+
+## 8. THE ACHIEVABLE NATIVE-FREE BOUND
+
+(The coordinator's question of 2026-09-20 00:35. Given exactly what the system has -- 500 real
+windows with a 68% common-mode error, the 17-bin posterior's marginals, and no channel carrying
+covariance with the native's deviation from typical -- what is the best expected built-chain RMSD
+attainable by ANY native-free operator?)
+
+### 8.1 Every operator is a displacement, and one scalar decides its value
+
+Let `c` be production and `e = t - c` the (ORACLE) error, `|e| = RMSD_prod` per atom. Any
+native-free operator `A` emits `A = c + u` for some displacement `u` computed from the data alone
+-- selection, re-weighting, a gradient step, a basin average, a signed readout, a projection, a
+quantum tail, all of them. Exactly,
+
+    |A - t|^2 = |e|^2 - 2 <u, e> + |u|^2 = |e|^2 ( 1 - 2 rho s + s^2 ),
+    rho = cos(u, e),  s = |u|/|e|,                                                               (8.1)
+
+minimised over the step size at `s = rho`, giving
+
+    **RMSD_achievable  =  RMSD_prod * sqrt( 1 - rho_max^2 )**,                                   (8.2)
+
+`rho_max` the best EXPECTED cosine any native-free displacement field achieves with the direction
+to the native. **(8.2) is the whole bound.** It is exact in the frame where `c` and `t` are
+superposed, to first order in `s` under re-superposition (the rigid-body components are projected
+out of `u`, the S28-L23b convention; the Kabsch re-fit's correction is `O(s^2)`), and it collapses
+every operator class in the project -- and every one lane O is laddering -- onto a single number.
+Inverting it gives the prices:
+
+    target RMSD (built chain)   3.21     3.00     2.50     2.31     1.71
+    required rho_max            0        0.36     0.628    0.70     0.847                        (8.3)
+
+> **To reach the charter's 2.5 A from production, a native-free direction field must have mean
+> cosine 0.628 with the direction to the native.** For scale: the cosine of a RANDOM shape field
+> with `e` is 0.140 at this instrument's `3N - 6` degrees of freedom (S28-L23b, 16 draws per
+> target), so 0.628 is **4.5 standard random directions**. Nothing in this project or in the
+> literature lane L read is within a factor of ten of it.
+>
+> **A conflation to avoid before it happens.** S14's "0.638 needed" is an in-band SPEARMAN over
+> pool members for a 2.0 A target; the 0.628 above is a COSINE between two vectors in `R^{3N}` for
+> a 2.5 A target. The numerical near-equality is a coincidence of two different quantities and two
+> different targets, and the two must never be quoted as the same threshold.
+
+### 8.2 What the record measures for `rho`, channel by channel
+
+Every number here is ORACLE (it needs `t`) and is a diagnostic, not an operator.
+
+| displacement field `u` | measured `rho` (signed, mean over 126) | entry |
+|---|---|---|
+| the shipped objective's steepest descent | **-0.034** (SE 0.021; -0.143 on FAIL18) | S28-L23b |
+| every other S27 channel with a gradient (RG_LAW, DISTPOT, CONTACT, ENV, CAGEO) | +0.034 to -0.006 | S28-L23b |
+| the typicality axis, conditioned minus blind (H1) | **-0.058** (below the 0.144 random field at 2.19x MDE; -0.317 on FAIL18) | S29-L20 |
+| the pool's first shape mode PC1 (lane B's Hamiltonian, reduced) | per-target `\|rho\| ~ 0.37`, **sign correct on 52%** of targets, so signed `rho ~ 0.37 x 0.04 = 0.015` | S29-L21 |
+| a random shape field (the reference, `E[rho] = 0`, `E\|rho\| = 0.140`) | 0 | S28-L23b |
+
+The conversion used in row 4, and it is the useful one: if a field has per-target magnitude
+`|rho|` and gets the SIGN right with probability `q`, its expected signed cosine is
+`|rho| (2q - 1)`, so by (8.2)
+
+    gain = RMSD_prod ( 1 - sqrt( 1 - rho^2 (2q-1)^2 ) ).                                         (8.4)
+
+Lane O's ORACLE one-global-sign ceiling for PC1 (-0.214 / -0.246 A on 3.0483) inverts to
+`|rho| = 0.37`; its measured sign accuracy is 52%, i.e. chance; and its leave-fold-out arm is
+**+0.0071 A worse** than production. (8.4) reproduces that triple exactly, which is the bound's
+one end-to-end check against a measurement made after it was derived.
+
+### 8.3 The bound, assembled
+
+Substituting the measured `rho` into (8.2):
+
+    field                                        rho used        bound on the built chain
+    every native-free field ever built here      |rho| <= 0.04   **>= 3.210 A**  (a 0.003 A gain)
+    a field as strong as a RANDOM one, with
+      the sign right on every target             0.140           >= 3.181 A     (0.032 A)
+    the best structured field known (PC1) with
+      a PERFECT ORACLE per-target sign           0.37            >= 2.98 A      (0.23 A)
+    the charter's target                         0.628           2.50 A         (0.71 A)
+
+Three separate levers are already inside (8.2) and do not add to it, because each is a
+displacement and is priced by its own cosine; for the record, their independent ceilings agree:
+
+* **Enlarging or re-weighting the set.** Ueda-Nakano's coefficient `1/M + (1 - 1/M) rho_cov` moves
+  by 0.0037 between `M = 75` and `M = 500` at `rho_cov = 0.676`, worth **<= 0.008 A** and an upper
+  bound at that (S29-L8). The Krogh-Vedelsby identity says why the class is capped at all: any
+  selection that raises the members' mean quality also destroys ambiguity, and S27 section 6
+  measured the two cancelling with the wrong sign (the channels with the most correct ranking
+  information hurt most, +0.286 A for CONS).
+* **Ordering inside the pool.** The achievable in-band ranking skill is 0.600 across targets
+  against 0.638 needed for 2.0 A, with capacity saturated by a LINEAR model and a flat learning
+  curve (S14; S12; S29-L19). Native-free compactness proxies reach 0.24 to 0.37 against the
+  oracle's 0.909.
+* **Scale and geometry.** `s* = <c,t>/|c|^2` is a function of `ebar` alone -- the component the
+  pool cannot see -- so it is unreachable in principle, not merely unmeasured (S23 L6/L9), and a
+  mismatched same-length native serves it equally well.
+
+> **THE BOUND. Under assumptions (B1) to (B4) below, no native-free operator over the present
+> information reaches below about 3.18 A on the built chain, and the honest central estimate is
+> 3.21 A -- production. The nearest thing to a real margin is 2.98 A, and claiming it requires a
+> per-target SIGN for the pool's own principal mode, which is measured at chance (52%).**
+>
+> The gap to the charter's 2.5 A is not a search gap, not an expressivity gap (a 27-parameter
+> family holds a 0.25 A structure on every target, S28-L26b), not an aggregation gap (the hull of
+> the shipped top-75 contains a 2.00 A point and the pool's hull a 1.12 A point, lane O's ladder)
+> and not an optimisation gap. **It is one number: a native-free direction field with cosine 0.63,
+> where everything ever measured is at 0.04.**
+
+### 8.4 The assumptions, and which one a new source must break
+
+> **(B1) NATIVE-FREE.** `u` is measurable with respect to the pool, the posterior and the sequence.
+> Breaking it is leakage, not progress.
+> **(B2) THE COSINE CEILING.** `rho_max <= 0.14` for every field constructible from the present
+> information. This is the load-bearing assumption. It is *derived* for the marginal class
+> (Theorem 2: the expected cosine is second order and contains no term in the native's deviation
+> from typical) and *measured* outside it (31 scorers, S28-L48; 38 native-free signals, S12; eight
+> routers; the typicality axis, S29-L20; PC1, S29-L21).
+> **(B3) FRAME.** Rigid-body components are projected out of `u` and the identity is read to first
+> order in `s = |u|/|e|`; at `s = rho <= 0.14` the neglected term is under 2% of the gain.
+> **(B4) EXPECTATION OVER TARGETS.** `rho_max` is a mean over the 126. A field that is excellent on
+> some targets and reversed on others enters at its mean, which is (8.4)'s `|rho|(2q-1)`; buying
+> the per-target sign is therefore worth exactly as much as buying the direction, and the record
+> says the sign is the harder half (`in-band-ordering-is-per-target`; S29-L21's 52%).
+
+**Which assumption a new source must break: (B2), and only (B2).** By the table in section 7 the
+only classes that can are a better distance prior (it moves the posterior median toward the
+native, so it changes `e` itself rather than `u` -- the one lever with a measured slope, -2.15 A
+per unit), a learned residual whose errors are decorrelated from the predictor's (blocked by
+error coherence, S19), and a physics term evaluated on the emitted structure in its FREE-energy
+form (outside the marginal class, so Theorem 2 does not bound it; its single-point form is
+measured worse than random, S25 L16). A second pool, the pool's dispersion, an attention map and a
+joint all leave (B2) intact, which is why they price at 0.002 to 0.03 A whenever they are run.
+
+### 8.5 The falsifier, and it is a single measurement
+
+> **Exhibit one native-free displacement field whose mean cosine with `t - c` over the 126 targets
+> exceeds the random reference 0.140 with the fold-clustered CI excluding it.** That single number
+> falsifies the bound, and by (8.2) it is immediately worth at least 0.032 A with the size of the
+> prize scaling as `rho^2`. The measurement already exists and runs in minutes: it is meter number
+> 2 (`s29/s29_D_cost_audit.py`), now with its mandatory shrink signature (S29-L10) so that a
+> cosine bought by contracting toward typicality is rejected automatically.
+>
+> Two secondary falsifiers, in case the first is too strict: (i) any operator whose **built-chain**
+> mean beats 3.181 A with a fold CI excluding production, since (8.2) says that requires
+> `rho > 0.14` whether or not anyone measured the cosine; (ii) a per-target sign predictor for any
+> known field (PC1 first) with held-out accuracy above 0.58, which at `|rho| = 0.37` buys 0.02 A
+> and at 0.75 buys 0.09 A -- small, but it would prove the sign is learnable, which is the one
+> claim in (B4) with no derivation behind it.
+
+### 8.6 What this says for the sprint, stated plainly
+
+The bound is the charter's "decisive measurement of what imposes the ceiling", in the form the
+charter asked for: **the ceiling is not imposed by the pool (its hull holds a 1.12 A point), by the
+circuit (it holds a 0.25 A structure), by the optimiser (it reaches the objective's optimum on
+126/126) or by the readout (a convex combination of the shipped top-75 reaches 2.00 A). It is
+imposed by the absence of any native-free vector with a cosine above 0.14 to the direction that
+matters, and 2.5 A requires 0.628.** Every S29 measurement so far is consistent with it and two
+were made after it was derived (lane O's rungs 6 and 8, at -0.058 and 52%).
+
+That makes the sprint's remaining value three things, in order: (i) **lane D's band experiment**,
+because an in-band ranker is the one route to a cosine that has never been measured under a
+matched-realism control; (ii) **section 4.5's structural CVaR**, which is the first formulation in
+the project's history whose classical counterpart genuinely goes away -- and which, by this bound,
+will not move the RMSD unless (i) succeeds first; and (iii) **the free-energy class**, the only
+first-order class that is both unmeasured here and precedented at this length. If (i) closes
+negative, the honest headline of S29 is (8.2) with its table, and the next sprint's question is
+not an architecture at all -- it is whether the distance prior can be improved, which is the only
+lever the record has ever measured with a steep slope.

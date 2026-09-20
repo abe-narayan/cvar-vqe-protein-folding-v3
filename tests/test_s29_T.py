@@ -182,3 +182,37 @@ def test_transverse_field_stable_rank_is_D_over_n():
         assert abs(fro2 - n * D) < 1e-8
         assert abs(lam - n) < 1e-8
         assert abs(fro2 / lam ** 2 - D / n) < 1e-8
+
+
+# ------------------------------------------------------------ section 8: the displacement bound
+def test_displacement_identity_and_the_cosine_price_table():
+    """THEORY 8.1 (8.2): RMSD(c + rho*|e|*u_hat) = RMSD_prod * sqrt(1 - rho^2), and the price
+    table (8.3) inverts it. Checked as exact algebra in the aligned frame."""
+    rng = np.random.default_rng(11)
+    N = 12
+    t = rng.normal(size=(N, 3))
+    c = t + rng.normal(size=(N, 3))
+    e = (t - c).ravel()
+    ne = float(np.linalg.norm(e))
+    for rho in (0.04, 0.14, 0.37, 0.628):
+        # a displacement with exactly this cosine, at the optimal step size s = rho
+        g = rng.normal(size=e.shape)
+        g -= (g @ e) / ne ** 2 * e
+        g /= np.linalg.norm(g)
+        u_hat = rho * e / ne + np.sqrt(1 - rho ** 2) * g
+        u = rho * ne * u_hat
+        got = float(np.linalg.norm(c.ravel() + u - t.ravel()))
+        assert abs(got - ne * np.sqrt(1 - rho ** 2)) < 1e-9
+    prod = 3.2126
+    assert abs(prod * np.sqrt(1 - 0.628 ** 2) - 2.50) < 0.005      # the 2.5 A price
+    assert abs(prod * np.sqrt(1 - 0.140 ** 2) - 3.181) < 0.002     # the random-field price
+    assert abs(prod * np.sqrt(1 - 0.374 ** 2) - 2.98) < 0.005      # PC1 with a perfect sign
+
+
+def test_sign_accuracy_enters_as_two_q_minus_one():
+    """THEORY 8.2 (8.4): a field with per-target magnitude |rho| and sign accuracy q enters at
+    |rho|(2q-1); at PC1's measured 52% that is 4% of its magnitude."""
+    rho, q = 0.37, 0.52
+    assert abs(rho * (2 * q - 1) - 0.0148) < 1e-4
+    gain = 3.2126 * (1 - np.sqrt(1 - (rho * (2 * q - 1)) ** 2))
+    assert gain < 0.001                                            # indistinguishable from zero
