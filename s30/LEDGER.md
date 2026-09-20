@@ -3336,3 +3336,283 @@ lane that had just read the entry about it. And my original brief -- hunt for a 
 rho = 0.3398, 3.01x anything we own; 10.1 orthogonal channels to reach 3.00 A against a measured
 stable rank of 2.057) prices decorrelation out before any measurement, and my section 1 confirms it
 from the other side.
+
+## S30-L26 -- TWO ANSWERS, AND **MY REGISTERED PRIOR IS WRONG ON BOTH**. (1) THE AVERAGING-ARTIFACT LITERATURE'S UNMEASURED CLAIM IS **CONFIRMED ON OUR INSTRUMENT, BOTH HALVES**: pool divergence -> corrupted average at rho **+0.947**, and divergence -> relax value at rho **-0.316** (permutation null p = 0.000, **length-matched** split **-0.0406 at 3.56x MDE, 5/5 folds**), with **97.2% OF THE GAIN IN THE DIVERGENT HALF** AND THE OTHER HALF AT **-0.0012** -- BUT **DIVERGENCE IS NOT THE PRODUCTION TAIL**, SO E2 IS **NOT** A TAIL INTERVENTION: FAIL18 GETS **-0.0113 AGAINST THE 108's -0.0239**. (2) Q2 IS **NO**, AND IT IS A **THEOREM PLUS A MEASUREMENT WITH THE EASY EXPLANATION REMOVED**: BY CLASSICAL MDS EVERY REFLECTION-INVARIANT SINGLE-STRUCTURE CHANNEL **IS** A DISTANCE-MAP READING, SO THE THREE CLOSED BUCKETS ARE COMPLETE UP TO **CHIRAL FUNCTIONALS** -- WHICH I BUILT, WHICH ARE **GENUINELY EXERCISED** ON OUR MANIFOLD (OCCUPANCY **0.69-0.97 AGAINST DIS's 0.23-0.35**, SO THE CLASS IS **NOT** EMPTY IN PRACTICE, REFUTING MY OWN REGISTERED MECHANISM), AND WHOSE BEST ANCHOR CONTRAST IS **+0.0405 AGAINST A MAX-OVER-3 NULL MEAN OF +0.0408, p_max 0.430** (2026-09-20 13:52, G)
+
+Prereg `s30/PREREG_S30_G.md` @ **78b65521**, committed before the first number. Code and rows @ 44cfc9f7.
+Lane R's floor travels with every Q2 sentence: **the torsion rebuild is 0.347 A, not 0** -- reproduced
+exactly by my run, which is the check that the ladder is bit-identical.
+
+---
+
+# Q1 -- WHERE DOES THE k=30 AMBER-RELAX GAIN LIVE?
+
+**Artefact, verified before planning (rule 13).** `s16/results/repair_A.json` (126 per-target rows)
+and `s16/results/repair_report.json`, both in git at a15406c8.
+`settings.k30_full.vs_proj_ungated` = `mean_diff -0.0221, se 0.0070, n 126, W/L 67/59` -- exactly the
+memory's `-0.022 [-0.036,-0.009]`. **Nothing was recomputed.** `d_t = rmsd(f0_k30_full) - rmsd(proj)`.
+
+## THE POWER NOTE, REGISTERED BEFORE THE SPLIT -- AND THE SPLIT BEAT IT
+
+```
+sd(d_t) = 0.0789        half-split MDE 0.0394      FAIL18-vs-108 MDE 0.0563
+whole sample            -0.0221  fold CI [-0.0297,-0.0159]  1.12x MDE  5/5 folds
+```
+
+I registered that **a half-split cannot reach its own MDE unless MORE than 100% of a 0.022 A effect
+sits in one half**, and therefore that the continuous statistic was primary and a null would mean
+*"we could not localise it"*, never *"it is uniform"*. **More than 100% of it does sit in one half.**
+
+## F-G1 FIRES ON EVERY FORM
+
+```
+                    rho(d, disp)   perm-null sd   xMDE    p2      split hi-lo      fold CI              folds
+DISP_rmsd             -0.316          0.089      -1.27   0.000     -0.0417   [-0.0620,-0.0222]          5/5
+DISP_S                -0.304          0.089      -1.22   0.001     -0.0420   [-0.0597,-0.0188]          4/5
+DISP_rg               -0.355          0.088      -1.43   0.000     -0.0564   [-0.0658,-0.0462]          5/5
+
+high-dispersion half  -0.0429        low half  -0.0012        share of gain in the high half  97.2%
+uniform-effect null (rule 5): observed gap at pctile 0.001 of [-0.0264,+0.0289]   (all three variables)
+```
+
+The null is **fold-preserving** (labels permuted within fold) so fold structure in either variable
+cannot manufacture it. **Multiplicity is ~1 comparison, not 3**: the three dispersion variables
+correlate at **0.93 to 1.000** with each other, and `DISP_rg` reproduces lane F's own
+`F4_top75_rg_sd` at **rho = 1.0000**.
+
+## I THEN TRIED TO DESTROY IT, FOUR WAYS
+
+**(a) Is it the ten winners relabelled?** 10 targets carry 66.8% of the whole-sample gain, so this
+was the real risk.
+
+```
+              whole sample   hi-lo split    fold CI              xMDE   folds   rho
+drop top 0      -0.0221        -0.0417   [-0.0620,-0.0222]     -1.48    5/5   -0.316
+drop top 5      -0.0144        -0.0407   [-0.0574,-0.0240]     -1.73    5/5   -0.292
+drop top 10     -0.0080        -0.0310   [-0.0509,-0.0161]     -1.19    5/5   -0.223
+drop top 20     +0.0028        -0.0095   [-0.0229,+0.0044]     -0.46    3/5   -0.104
+```
+
+**It survives removing the ten biggest winners** and dies only at drop-top-20 -- where the arm itself
+has **no gain left to localise** (+0.0028). So it is a gradient, not a relabelling; and the gradient
+is exactly coextensive with the effect. The top-10 winners' median dispersion percentile is 0.833,
+but 3 of the 10 sit below the median, so they are not the high-dispersion half by another name.
+
+**(b) Chain length.** `rho(n, DISP) = +0.267`, so this had to be checked. Partialling n **strengthens**
+the effect (-0.316 -> **-0.338**, p2 0.000), `rho(n, d) = +0.036`, and the **length-matched split** --
+high vs low dispersion *within* chain-length tertiles -- is **-0.0406 [-0.0481,-0.0319], 3.56x MDE,
+5/5 folds**, the strongest form of the result. Not length.
+
+**(c) Mediation.** `rho(DISP, contraction) = +0.947` and `rho(DISP, raw-average Ramachandran-ok) =
+-0.763`. Partialling contraction leaves `rho(DISP, d) = -0.178`; partialling DISP collapses
+`rho(contraction, d)` from -0.276 to **+0.078**. **Divergence is the primary variable and contraction
+is its shadow**, not the reverse.
+
+**(d) The stratum.** Declared in the prereg: FAIL18 is defined by the *filter's* in-band recall
+(S30-L23), not by `d_t`, so this is not the S30-L8 failure mode -- but it is reported as a
+**descriptive** split, and fold 0 contains no FAIL18 target.
+
+# AND THIS IS THE PART THAT DECIDES THE COORDINATOR'S QUESTION: **DIVERGENCE IS NOT THE TAIL**
+
+```
+rho(DISP, production RMSD)             +0.514
+rho(DISP, pool mean)  ORACLE           +0.699
+FAIL18 dispersion vs the 108           +0.4583  [-0.3845,+1.0472]   0.47x MDE   NOT MEASURED
+ORACLE worst18-by-pool-mean dispersion +1.6116  [+0.5832,+2.0755]   1.44x MDE   (ORACLE)
+FAIL18 in the high-dispersion half     11 of 18   (9 expected if independent)
+
+relax gain on FAIL18    -0.0113        relax gain on the other 108    -0.0239
+ORACLE worst18-by-pool-mean            -0.0192   0.31x MDE   NOT MEASURED
+```
+
+> The brief's inference was *"if it concentrates on divergent pools it is a tail intervention, and
+> the tail is where the prize is."* **The premise holds and the conclusion does not**, because the
+> two tails are different objects. Divergent pools are harder on an ORACLE definition (+1.61, 1.44x
+> MDE) but **FAIL18 is not measurably more divergent** (0.47x MDE), and the gain is **smaller on
+> FAIL18 than on the other 108** -- the wrong direction.
+
+**ENDPOINT ARITHMETIC.** The whole arm is **-0.0221 A = 0.69% of the 3.2105 baseline**; applying it
+only to the divergent half is worth **-0.0215**, i.e. the targeting buys nothing extra because the
+other half was already contributing nothing. Against the opening counterfactual's ask of **-0.30 A**
+from capping the worst 10 at 3.00 A, **E2 is not on that scale and does not reach that stratum.**
+
+**VERDICT. The literature's claim is CONFIRMED -- and, as far as lane L's search found, measured here
+for the first time, on both halves: divergence -> artifact (rho +0.947) and artifact -> repair value
+(rho -0.316).** But **escape E2 does not become a tail intervention**, because pool divergence and the
+production failure tail are not the same set. E2 remains what S30-L13 priced: a real, mechanistically
+explained, divergence-graded 0.7%-of-baseline effect whose restraint constant still has **no
+native-free selection rule** (`averaging-space-beats-the-objective`: the non-circular rule picks
+k=10 at +0.001).
+
+**MY PRIOR WAS WRONG AND THE REASONING THAT PRODUCED IT WAS TOO.** I registered 2-to-1 *against*
+concentration, arguing from `corr(S,B) = +0.085` that spread is orthogonal to bias and from the 68%
+common-mode result that averaging's residual is the shared component. Both are true and **neither
+governs this operator**: the relax does not repair the bias, it repairs the *geometry* the averaging
+destroyed, and the destruction scales with spread at rho 0.947. **I am the second lane to revise lane
+L's "it concentrates" downward on independent reasoning -- L went to even odds on lane F's
+dispersion null, I went to 2-to-1 against on the common-mode argument -- and the convergence was
+wrong in both directions at once.** Lane F's null was about a different outcome (filter failure);
+mine was about a different mechanism (bias vs geometry). Two lanes agreeing does not make a prior.
+
+---
+
+# Q2 -- CAN A NATIVE-FREE CHANNEL WITH GENUINE GLOBAL REACH BE CONSTRUCTED AT ALL?
+
+## THEOREM G1, THE CHIRALITY DICHOTOMY (registered before any number)
+
+For a single-structure channel `S: R^{n x 3} -> R` invariant under rotation and translation, **with
+the sequence held fixed as a parameter** (reflection does not touch the sequence, so burial, SASA and
+hydrophobicity-weighted terms are covered):
+
+> **`S` is a function of the pairwise distance matrix `D` IFF `S` is also invariant under
+> reflection.**
+>
+> *Proof.* Classical MDS gives `G = -1/2 J D^2 J = X X^T`, so `D` fixes the centred coordinates up to
+> `Q in O(3) = SO(3) x {+-I}`. After quotienting the rotations this project actually uses -- proper
+> rotation Kabsch with the det correction, `s12/instrument.py:kabsch_rmsd_batch` -- the residual
+> ambiguity is **exactly reflection**, so a reflection-invariant `S` is constant on the fibre and
+> descends to a function of `D`. Conversely `D` is reflection-invariant. **QED**
+
+**COROLLARY -- the brief's whole candidate list falls on one ground, not one at a time.** Long-range
+contact topology, the radius-of-gyration **profile**, principal-axis / inertia-tensor structure
+(asphericity, acylindricity, shape anisotropy), end-to-end and intermediate-separation distance
+distributions, lane L's separation profile, contact order, excluded volume, packing density and
+burial/SASA are **each reflection-invariant** -- a mirrored peptide has identical contacts, identical
+inertia spectrum, identical separation profile, identical solvent-accessible surface. By G1 every one
+is a function of `D`. **They are not new channels; they are coordinate systems on the distance map.**
+
+**AND THE REFERENCE, NOT THE FUNCTIONAL, IS WHERE THE INFORMATION LIVES.** A function of `D` is a
+shape descriptor; to score *nativeness* it must be compared to an expectation, and this project has
+exactly three sources of one -- which **are** the brief's three closed buckets:
+
+| reference | bucket | why closed |
+|---|---|---|
+| the predicted distogram | (a) class M | bounded by theorem 2 |
+| the pool | (b) consensus | typicality; anchor contrasts CONS -0.056, DMAP_CONS -0.053, POOLGO -0.050 |
+| universal physics (AMBER, DOPE/LEG, Ramachandran, a hydrophobicity table) | -- | **target-independent by construction**, so it cannot supply the per-target sign that `in-band-ordering-is-per-target` says is the only leverage -- and it is exactly what lane R's ladder matches rung for rung |
+
+> **So the three buckets are complete up to EXACTLY ONE family: CHIRAL functionals.** This also
+> *explains* lane R's split verdict rather than merely surviving it: all 43 of its channels are
+> either per-residue sums (blind by D1) or `D`-functionals against one of those three references.
+> **There was no fourth kind in the library to test.**
+
+## THE PRE-CHECK -- AND IT REFUTES MY OWN REGISTERED MECHANISM
+
+I predicted F-G2 would fail because at n = 9-16 the chiral coordinate would be *near-constant*: local
+helical handedness matched by the fold's Ramachandran draw. The coordinator required that be measured
+rather than inferred. `occupancy = sd(X)/sqrt(sd(X)^2+mean(X)^2)`, which is exactly
+`sd(X over candidates) / sd(X over candidates UNION their mirrors)` -- 1.0 means the chiral axis is
+fully exercised, 0 means the set sits on one side of it:
+
+```
+channel          set        mean       sd     |mean|/sd   occupancy   frac>0
+WRITHE           pool      0.5903   0.5363      1.105       0.685      0.782
+CHIRAL3          pool      0.0352   0.1636      0.262       0.953      0.669
+CHIRAL3_LONG     pool      0.0276   0.1701      0.218       0.965      0.661
+DIS              pool      2.4870   0.8730      3.610       0.345      1.000
+DIS              ladderA   2.4310   0.5656      4.853       0.231      1.000
+```
+
+> **THE ESCAPE CLASS IS NOT EMPTY IN PRACTICE. The chiral coordinate is more fully exercised on our
+> manifold than the shipped cost is** (0.69-0.97 against DIS's 0.23-0.35), and both signs are
+> occupied (frac>0 = 0.62-0.78). **My registered mechanism is refuted**, which makes the negative
+> below *stronger*, not weaker: the easy explanation is gone.
+
+## F-G2 DOES NOT FIRE -- ON LANE R's OWN LADDER, CONTROLS AND STATISTICS
+
+Bit-identical ladder (same `Sampler`, same `crc32` seed rule, same call order); the **0.347 A rebuild
+floor reproduces exactly**, which is the check that it is the same instrument.
+
+```
+channel          rho_A_part  rho_ANCHOR  A-ANCHOR   fold CI             xMDE  folds
+WRITHE             -0.207      -0.247     +0.0405  [-0.0255,+0.1015]   +0.41   3/5
+CHIRAL3            -0.044      -0.008     -0.0363  [-0.0933,+0.0147]   -0.32   3/5
+CHIRAL3_LONG       -0.038      +0.001     -0.0391  [-0.0982,+0.0139]   -0.35   3/5
+DIS                +0.349      +0.225     +0.1238  [+0.0800,+0.1666]   +1.42   5/5
+
+max-over-3 sign-flip null (lane R's statistic):  observed 0.0405   null mean 0.0408   p95 0.0852
+                                                 p_max = 0.430
+```
+
+Registered bar was **+0.10** with a fold CI excluding zero. Best chiral channel: **+0.0405, CI
+includes zero, 3/5 folds, 0.41x MDE** -- and **sitting on its own null to three decimal places.**
+
+**THE MATCHED CONTROL, AND IT IS WHAT MAKES THIS A CLOSURE RATHER THAN A NULL.** Each chiral channel's
+**achiral twin `|X|`** is reflection-invariant, hence by G1 a distance-map reading; same functional,
+same scale, same ladder, differing in **nothing but chirality**:
+
+```
+                 ordering          anchor contrast     preference
+WRITHE          +0.0054 (0.11x)    +0.0170 (0.29x)    +0.0471 (0.53x)   all CIs include zero
+CHIRAL3         -0.0760 (-1.02x)   -0.0160 (-0.15x)   -0.0381 (-0.30x)
+CHIRAL3_LONG    -0.0808 (-1.06x)   -0.0141 (-0.13x)   -0.0372 (-0.29x)
+```
+
+> **Whatever WRITHE can do, its own reflection-invariant shadow already does. The chiral content
+> contributes nothing measurable** -- and the two purely non-local chiral channels are *worse* than
+> their twins at ordering, with CIs excluding zero and 5/5 folds.
+
+**AUDIT, asserted in code and stored in the artefact rather than claimed in prose** (worst over all
+126 targets): reflection flips `X` at error **0.00e+00**, leaves `|X|` at **0.00e+00** and leaves `D`
+at **0.00e+00**; rotation invariance **4.19e-13**. The audit also **caught a real bug**: my first
+Klenin-Langowski sign term was not rotation-invariant (rot_err 2.03) and the assertion stopped the
+run before any number existed.
+
+## A POSITIVE I FOUND, CHASED, AND KILLED MYSELF -- AND IT IS THE ENTRY'S METHODOLOGICAL OUTPUT
+
+`contrast_pref = pref_near - pref_pool` for WRITHE is **+0.1641 [+0.1016,+0.2282], 2.17x MDE, 5/5
+folds, max-over-3 null p = 0.000**, with `pref_near = 0.771` -- which clears **both** of lane R's
+registered preference clauses (bar 0.65, margin 0.10) that **none of its 43 channels cleared**.
+
+**It is cross-kind, in exactly the way S30-L1 withdrew S28-L48 for.** `pref_pool`'s control set is the
+500 pool members, which **keep their DEPOSITED coordinates** (`W[:k] = cand.W`), while the near-native
+rungs are **ideal-geometry rebuilds**. A raw geometric shape statistic separates those two
+constructions whether or not it sees nativeness. Lane R's ladder matched kind for the **ordering**
+contrast; the **preference** contrast is against production and the pool, and is not kind-matched for
+a channel of this type.
+
+**The internally matched statistic settles it** -- the rebuilt native's percentile inside its **own**
+ladder, every member an ideal rebuild from the same table at the same budget, chance exactly 0.5:
+
+```
+WRITHE        0.6061 [0.5609,0.6522]  5/5   WORSE than chance
+ABS_WRITHE    0.6732 [0.6556,0.6890]  5/5   WORSE than chance
+CHIRAL3       0.5049 [0.4782,0.5368]  5/5   at chance
+CHIRAL3_LONG  0.5020 [0.4760,0.5361]  5/5   at chance
+DIS           0.2876 [0.2617,0.3144]  5/5   better than chance
+```
+
+> **WRITHE ranks the native at the 61st percentile of the native's own perturbations.** A channel
+> that does that is not recognising nativeness; it is separating production from everything else.
+> The +0.164 is withdrawn by me before it was ever quoted. `|WRITHE|` clears the same bars
+> (`pref_near` 0.724) and is *worse* still on the matched read (0.673), which is the tell.
+
+One small real thing in the other direction, reported because it is in the table: `ABS_CHIRAL3` and
+`ABS_CHIRAL3_LONG` put the native at **0.443** and **0.435**, CIs excluding 0.5, 5/5 folds -- better
+than chance. They are **achiral**, hence `D`-functionals inside the already-closed class, and their
+anchor contrasts are the wrong sign (-0.020, -0.025). Worth a line, not a claim.
+
+## THE ANSWER
+
+> **NO.** Every achiral native-free single-structure channel **is** a distance-map reading (G1); the
+> only three references available to score one against are the three closed buckets; and the single
+> family the theorem leaves open was built, is **genuinely exercised on the manifold we occupy**, and
+> carries **no nativeness signal** -- its best anchor contrast sits on its own max-over-channels null
+> (+0.0405 vs +0.0408, p_max 0.430), its entire apparent skill is reproduced by its own achiral
+> shadow, and it ranks the native **worse than chance** inside its own matched ladder.
+>
+> **This completes the sprint's ceiling argument rather than adding to it**: lane R's "the null for
+> every per-residue channel is a theorem" now has a companion -- *and the null for every non-chiral
+> channel is a theorem too*, leaving one family, which is measured and empty.
+
+**SCOPE, stated so it is not over-quoted.** G1 bounds **single-structure** channels. It does not bound
+set-referenced channels -- those are bucket (b) and are closed separately. It does not bound a channel
+with access to a **fourth reference this project does not have**, e.g. an experimental observable;
+`torsion-restraints-reach-the-target` already prices that route. And the measurement is at peptide
+length: the non-local chiral content of a 13-mer is small, so G1's *survivor* family may be worth
+testing again if this project ever works at 40+ residues -- the **theorem** does not depend on length,
+only the emptiness does.
+
+**MULTIPLICITY.** 3 registered chiral channels + 3 twins + DIS = 7 channels x 2 contrasts. The
+max-over-3 sign-flip null is reported for both contrasts. The one comparison that cleared its bar is
+withdrawn above on a kind argument, not on its p-value.
