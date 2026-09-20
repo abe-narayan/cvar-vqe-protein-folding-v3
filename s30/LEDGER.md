@@ -2118,6 +2118,55 @@ entries claim the same closure.
   no direction transfers, and I measure that the missing quantity is six per-target coefficients.
   A non-transferable direction in a 6-dimensional subspace IS six per-target coefficients.
 
+### 3c. **RETRACTION OF MY OWN SECTION 1 HEADLINE, ON MY OWN K = 5,000** (M6)
+
+Lane Q asked me to price my search as the best-of-K it is, the coordinator endorsed it, and the
+answer retracts my reading. `s30/s30_T_transfer.py`, n = 126, K = 5,000, with a **common direction
+bank** across targets (columns made comparable by a deterministic native-free sign convention --
+each PC's largest-|loading| entry positive -- so column k is the same RULE on every target and
+`best_of_k_within` is well posed):
+
+```
+                      observed   across-target null   accounted   split-half transfer   k_eff
+  HALFSPACE  K=5000   -1.7881         -3.5038           196%        -0.3319 (19%)       118
+  QUADRIC    K=5000   -1.5663         -2.9368           188%        -0.3148 (20%)       110
+  verdict: NOT A SIGNAL in both (transfer < 25% of the oracle)
+```
+
+The across-target null **exceeds** the observed gain, exactly as lane Q predicted for my larger K.
+And because a 19% transfer is not zero and could be misread as a route, the decisive check:
+
+    PREFIX (deployed)                            3.0507 A
+    HALFSPACE mean over the 5,000 directions     3.8550 A
+    the transferable rule (K-mean + split-half)  3.5231 A
+    vs PREFIX  +0.4724   1.88x MDE   5/5 folds   39W/87L   ->  **WORSE**
+
+> **RETRACTED: "HALFSPACE - PREFIX -0.9816 A ... BETTER" in section 1 above is withdrawn AS A
+> STATEMENT ABOUT THE CLASS's VALUE.** It is a per-target best-of-5,000 and 196% of it is an
+> across-target order statistic; the class's transferable content lands **0.472 A worse than what
+> ships**. **The halfspace class is reachable, not exploitable, and as a rule it is negative.**
+> My matched random-subset null was too weak: it asks whether a structured class beats an
+> unstructured one at equal budget, not whether the winning direction is the same direction twice.
+
+**Unaffected:** (i) the QUADRIC - HALFSPACE contrast, a like-for-like comparison at matched budget
+that a null shifting both does not touch; (ii) section 2's M5, which is a projection with no
+maximum over draws anywhere in it; (iii) section 3's conclusion, which this **strengthens** -- a
+non-transferable direction in a six-dimensional subspace IS six per-target coefficients.
+
+### 3d. SCOPE ON THE STABLE RANK, ADOPTED FROM LANE Q IN FULL
+
+Lane Q verified 1.859 independently through the DEPLOYED path (`s29_O_ladder.load_pool` +
+`s28_A_amp.Frame`, 12 pools): 1.862 mean, PC1 54.4%, k90 5.6. **But the collapse is a property of
+the PAIR-DISTANCE feature space, not of the pool.** In COORDINATE space it is **3.404** (mine) /
+**3.619** (Q's), with **k90 = 11.2 directions** -- comfortably above my P3b threshold of 2.0. The
+sparse/weighted readout and every second-moment construction act on **coordinates**.
+
+> **"stable rank 1.86" must never appear without its feature space in the same sentence.** It is
+> the right number for a distance-map lift and an overstatement for a coordinate-space one, and the
+> two differ by ~2x in the direction that matters. At the coordinate figure the lift is still only
+> an 11-parameter family (cap ~80 bits against 300.6), so the VERDICT is unchanged -- but it now
+> rests on the direct measurements in section 1 and 3c, not on the rank threshold.
+
 ### 4. WHAT THIS DOES AND DOES NOT CLOSE
 
 - **CLOSES** the second-moment / quadric tail class as a ceiling-improver (M4), and with S30-L9's
