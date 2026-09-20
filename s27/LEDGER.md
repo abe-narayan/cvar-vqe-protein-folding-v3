@@ -2654,3 +2654,41 @@ channels on the members' real torsions), per S28-L36(b), and D's prediction (a) 
 preference collapses on the projected chains is the registered expectation for it. Also for the
 record: S28-L35's time stamp (23:15) was written ahead of the clock; it posted at about 22:52.
 
+## S28-L38 -- SUITE STATUS (resume) AND HOUR-6 REPRODUCTION: THE SEVEN S28 LANE FILES PASS 72/72 AFTER THE PAUSE (70 AT THE PAUSE; LANE B's TWO REPRESENTABILITY-FIT TESTS ARE NEW); SEED 106 (vqe ROW 3BTB / DSSPHB) REPRODUCES TO THE LAST DIGIT, SIX OF SIX; THE B CHAIN's J = 0 ANCHOR IS BIT-EXACT ON 104/104 TARGETS, BOTH SEEDS (2026-09-19 20:16, lane D)
+Question: does the green gate still hold after the five-day pause, and does S27 still reproduce
+from its artefacts on the resumed box?
+- Suite: job `s28D_pytest_lanes_v4` (TEST, `s26/jobs_done/s28D_pytest_lanes_v4.json`: exit 0,
+  wall 135 s of which 120 s queued behind the cap of 3 and one governor suspension at 95% RAM,
+  peak RSS 0.328 GB; log `s26/logs/s28D_pytest_lanes_v4.log`): `tests/test_s28_A.py` 23,
+  `A2` 5, `B` 16, `B2` 6, `C` 11, `C2` 6, `D` 5 = 72 pass / 0 fail / 0 skip (the pause gate was
+  70; the two new tests are lane B's `test_represent_*` in `tests/test_s28_B.py`, the
+  representability fit I asked for in S28-L26, module `s27/s28_B_represent.py`). The light
+  non-AMBER files (286 pass / 3 skip, S28-L4) were not re-run: no production or core file has
+  changed since (`git diff fafbc5bf --stat -- core tests s5 s7 s8 s9` touches only
+  `tests/test_s28_B.py`). Green gate on the runnable files: 358 pass / 3 skip / 0 fail. The
+  deferred heavy files (pipeline, integration, the two AMBER files) still wait for the quiet
+  window (S28-L5).
+- Hour-6 reproduction, seed 106, kind vqe (`s27/s28_D_reproduce.py --seed 106 --kind vqe`, job
+  `s28D_reproduce_seed106`, exit 0, 5 s): row 11058 of 20160 in `s27/results/vqe_rows.jsonl`,
+  3BTB / DSSPHB, stored 4.826544566817036, the genuine CVaR-VQE re-run 4.826544566817036, abs
+  diff 0.0, m 76 = 76 (`s27/results/s28_D_reproduce_vqe_seed106.json`). Six of six reproductions
+  across the three bases (pool, chain, vqe) are exact to the last digit; the resumed box changes
+  nothing.
+- Pre-check of the B chain rows without a job (`s27/results/s28_B_chain_rows.jsonl`, 1,872 rows
+  = 104 targets x 18 arms): `rmsd_cloud` of `vqe|s0|NONE|J0|R1` and `vqe|s1|NONE|J0|R1` equals
+  `vqe_rows.jsonl :: DIS rmsd_vqe` (seeds 0 and 1) at 0.0 on 104/104 targets each: the S28-L9
+  anchor (2 targets x 2 seeds) extends to every chain target done. The chain job's comparator
+  against production is S27's `chain_rows.jsonl :: DIS` (no production arm is re-projected in
+  the B chain job), so every "vs production" contrast in B's verdict crosses a code path and
+  carries the S28-L18/L27b floor (mean 0.006 A, tail 0.5 A on 2LNG); the "vs J = 0 R1" contrasts
+  share the code path and do not.
+- Machine: the governor killed `s28C2_chain3` at 20:10:48 (RAM 97.3%, 81/126 rows intact) and
+  `s28B_chain_r2` at 20:12:33 (stall rule, 104/126 rows intact); both are the lanes' to relaunch
+  from their checkpoints (the coordinator set cap 2 at 987a8538); nothing scientific was lost.
+Tooling (mine, committed with this entry): `s27/s28_D_attack.py --nested-arms arms` reads lane
+A's merged chain rows (last record per pdb); `s27/s28_D_c2_poolmember.py --rows --scores-key
+--out` runs the pool-member control on the C2 chain rows' two score blocks; its default
+reproduces `s27/results/s28_D_c2_poolmember.json` at 0.0 on 1,368 numeric fields.
+Verdict: the gate holds (72/72 lane files; 358 / 3 / 0 on the runnable set); S27 reproduces.
+Artefacts: `s26/jobs_done/s28D_pytest_lanes_v4.json`, `s26/logs/s28D_pytest_lanes_v4.log`,
+`s27/results/s28_D_reproduce_vqe_seed106.json`, `s26/jobs_done/s28D_reproduce_seed106.json`.

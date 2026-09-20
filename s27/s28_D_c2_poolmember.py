@@ -40,23 +40,34 @@ from s24 import stats_lib as ST            # noqa: E402
 ROWS = os.path.join(HERE, "results", "s28_C2_ca_rows.jsonl")
 OUT = os.path.join(HERE, "results", "s28_D_c2_poolmember.json")
 STRUCTS = ("PROD", "circ_best", "circ_s0", "NATIVE", "RAND_SIGNED[0]", "GAUSS_MATCHED[0]")
+#: 2026-09-19 (resume): the same control on the C2 BUILT-CHAIN rows (`s28_C2_chain_rows.jsonl`),
+#: whose scores live in two blocks: `scores` (the 16 backbone scorers on the projected chains) and
+#: `scores_ca_on_chain` (the 15 CA scorers re-evaluated on them). `--rows`, `--scores-key`, `--out`
+#: select them; the defaults reproduce the S28-L36 artefact unchanged. The pool channels in
+#: `s27/cache` are on the members' REAL torsions / real CA traces, the rows' structures are
+#: PROJECTED (ideal geometry): pct(X) then compares a projected structure against real ones, which
+#: is the same mismatch C2's chain audit carries, stated beside every number.
 
 
-def main():
-    rows = [json.loads(l) for l in open(ROWS, encoding="utf-8")]
+def main(rows_path=ROWS, scores_key="scores", out_path=OUT):
+    rows = [json.loads(l) for l in open(rows_path, encoding="utf-8") if l.strip()]
     pdbs = [r["pdb"] for r in rows]
     folds = ST.pinned_folds(pdbs)
     fail = np.array([p in set(I.FAIL18) for p in pdbs])
-    scorers = list(rows[0]["scores"].keys())
+    scorers = list(rows[0][scores_key].keys())
     caches = {p: np.load(os.path.join(HERE, "cache", f"{p}.npz")) for p in pdbs}
 
     def score(r, sc, name):
-        return float(r["scores"][sc][r["names"].index(name)])
+        return float(r[scores_key][sc][r["names"].index(name)])
 
-    out = {"n": len(rows), "scorers": {}, "structures": list(STRUCTS)}
+    out = {"n": len(rows), "scorers": {}, "structures": list(STRUCTS),
+           "rows": os.path.relpath(rows_path, ROOT).replace(os.sep, "/"), "scores_key": scores_key}
     for sc in scorers:
         if sc not in caches[pdbs[0]].files:
             out["scorers"][sc] = {"note": "no pool channel of this name in s27/cache (pool-relative adapter)"}
+            continue
+        if any(np.isnan(score(r, sc, k)) for r in rows for k in STRUCTS):
+            out["scorers"][sc] = {"note": "NaN score on some structure; skipped"}
             continue
         pct = {k: [] for k in STRUCTS}
         for r in rows:
@@ -92,9 +103,15 @@ def main():
               f"diff {c_cb['effect']:+.4f} x{c_cb['effect_over_mde']:+.2f} fold[{c_cb['ci95_fold'][0]:+.3f},{c_cb['ci95_fold'][1]:+.3f}] {c_cb['folds_same_sign']}/5 | "
               f"h2h cb {1-pct['circ_best'].mean():.3f} nat {1-pct['NATIVE'].mean():.3f} rand {1-pct['RAND_SIGNED[0]'].mean():.3f} | "
               f"pct PROD {pct['PROD'].mean():.3f} (med {np.median(pct['PROD']):.2f}) cb {pct['circ_best'].mean():.3f} nat {pct['NATIVE'].mean():.3f}")
-    ST.save_atomic(OUT, out, complete_keys=["n", "scorers", "structures"], module_file=__file__)
-    print("wrote", OUT)
+    ST.save_atomic(out_path, out, complete_keys=["n", "scorers", "structures"], module_file=__file__)
+    print("wrote", out_path)
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--rows", default=ROWS)
+    ap.add_argument("--scores-key", default="scores", help="scores | scores_ca_on_chain")
+    ap.add_argument("--out", default=OUT)
+    a = ap.parse_args()
+    main(a.rows, a.scores_key, a.out)

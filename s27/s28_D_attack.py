@@ -77,6 +77,20 @@ def get_value(r, value_col):
     return float(v)
 
 
+def flatten_nested_arms(rows, arms_key="arms"):
+    """Lane A's chain rows: one merged record per pdb with `arms: {arm: {rmsd_chain, ...}}`; the
+    LAST record per pdb is the complete one (S28 resume note, lane A). Returns flat rows with
+    `arm` and `pdb` columns and the per-arm fields, so the kit's `table` reads them unchanged."""
+    last = {}
+    for r in rows:
+        last[r["pdb"]] = r
+    flat = []
+    for pdb, r in last.items():
+        for arm, d in r[arms_key].items():
+            flat.append({"arm": arm, "pdb": pdb, **{k: v for k, v in d.items()}})
+    return flat
+
+
 def table(rows, arm_col, arm_expr, value_col):
     T = {}
     for r in rows:
@@ -121,8 +135,11 @@ def main():
     ap.add_argument("--arms", nargs="*", default=None)
     ap.add_argument("--family", default=None, help="regex over arm names: best_of_k_within on the matrix")
     ap.add_argument("--out", default=None)
+    ap.add_argument("--nested-arms", default=None, help="rows carry one record per pdb with this dict of arms (lane A's chain rows: 'arms')")
     a = ap.parse_args()
     rows = load_rows(a.rows)
+    if a.nested_arms:
+        rows = flatten_nested_arms(rows, a.nested_arms)
     T = table(rows, a.arm_col, a.arm_expr, a.value_col)
     prod = T[a.prod_arm] if a.prod_arm else production(a.basis)
     names = a.arms or sorted(T)
