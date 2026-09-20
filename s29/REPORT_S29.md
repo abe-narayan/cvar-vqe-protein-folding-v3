@@ -1,9 +1,8 @@
 # Sprint 29 — CVaR-VQE Protein Folding: the path below 2.5 Å
 
-**Status: FINAL, closed 2026-09-20 03:54 Pacific.** No run is outstanding and the box is idle. Seven of
-the eight lanes filed closing reports; **lane P's own ledger entry never landed**, and its result
-appears here as a verified recomputation from its committed rows — recorded as a gap in §9.2c
-rather than filled in.
+**Status: FINAL, closed 2026-09-20 09:15 Pacific.** No run is outstanding and the box is idle. **All eight lanes filed closing reports.** Lane P's entry (S29-L57) landed after the first
+close and §9.2c now carries its reading; the gap that paragraph recorded is closed, and its
+interpretation corrected an over-reading of my own in §11.3.
 
 Before publication, two checks were run against this report's own claims and both are reproducible
 from the repository:
@@ -253,7 +252,7 @@ killed it, so the reader can check rather than take it on report:
 | A transferable prefix length *m* | ORACLE global m = 72 worth −0.0018 Å; leave-fold-out +0.0079 Å **worse** | FALSIFIED |
 | 21 native-free displacement fields | `beats_random_reference` False on all 21; best 0.1128 vs 0.1398 | FALSIFIED |
 | The profile correction | +0.582 Å **even ORACLE-fitted** | FALSIFIED |
-| The projection stage's bond-length correction | +0.7222 Å, **inside the 8-draw random band** [+0.6504, +0.8152] — worth what a random displacement of the same size is worth | FALSIFIED |
+| The projection stage's bond-length correction | **0.03× MDE from the mean of 8 matched random displacements** — all magnitude, no direction; the fit works (residual −4%) and costs 0.72 Å | FALSIFIED |
 | Within-band ordering (F2) | Fails on 58/70 — conditioning on realism *removes* skill | FALSIFIED |
 | A cost function that orders the ladder **better** (F1) | LOG − SWAPCTL = +0.0202 at **0.14× MDE**; error-direction cosine with production **0.924** | NOT MEASURED |
 | Chimera / configuration state space (§6.4) | ORACLE **+0.6533 Å worse than the pool it was cut from**; pre-registered primary +0.4572 Å at 1.18× MDE; 87% of recombination's apparent value is an order statistic | WORSE |
@@ -1007,53 +1006,73 @@ first become quotable**, not uniformly across the experiment. A matched null at 
 future retraction into a cheap in-flight correction. Every retraction in §14(e) is a step that had
 no such control; every "caught before it was claimed" in this report is a step that did.
 
-### 9.2c The projection stage's own falsifier, and why eight random draws were worth insisting on
+### 9.2c The projection stage: the mechanism is confirmed and the hypothesis is refuted
 
-Lane P tested whether the projection stage's distortion can be corrected by a native-free rule.
-Its design carries **eight matched random draws** rather than one — I originally called that set
-"a quarter of the cells" and wanted it trimmed; lane P corrected me (it is 58% of them, because the
-falsifier requires all eight) and kept them. That decision is what makes the result readable.
+Lane P asked whether the projection stage's distortion can be corrected by a native-free rule. Its
+design carries **eight matched random draws** rather than one — I originally called that set "a
+quarter of the cells" and wanted it trimmed; lane P corrected me (it is 58% of them, because the
+falsifier needs all eight) and kept them. That decision is what makes the result sayable.
 
-On the built chain, n = 126, every arm paired against production with fold-clustered statistics:
+**The headline is the random-band contrast, not the production contrast** (built chain, n = 126):
 
 ```
-arm            effect     MDE     ×MDE   folds   W/L        verdict
-BOND          +0.7222   0.3220   +2.24    5/5    34/92      WORSE
-SPAN          +0.1220   0.0738   +1.65    5/5    43/83      WORSE
-ISO           +0.0737   0.0589   +1.25    4/5    54/72      WORSE (Type-M zone)
-CTRL-INV      +0.1671   0.1763   +0.95    4/5    49/77      NOT MEASURED
-FLOOR         −0.0077   0.0137   −0.56    3/5    58/68      NOT MEASURED
-CTRL-GLOBAL   +0.6578   0.1870   +3.52    5/5    21/105     WORSE
+BOND − CTRL-RAND (mean of 8)   −0.0087   MDE 0.2868   0.03×   2/5 folds   60W/66L   NOT MEASURED
+BOND − production              +0.7222   MDE 0.3220   2.24×   5/5 folds             WORSE
+CTRL-RAND (mean 8) − prod      +0.7308               3.58×   5/5 folds             WORSE
+SPAN  +0.1220 (1.65×, 5/5, WORSE)     ISO  +0.0737 (1.25×, 4/5, WORSE, Type-M zone)
+CTRL-GLOBAL +0.6578 (3.52×, WORSE)    CTRL-INV +0.1671 (0.95×, NOT MEASURED)
 ```
 
-Read against production alone, BOND is decisively **worse** — 2.24× MDE, 5/5 folds. That is not the
-finding. The finding is what the eight draws make visible:
+Read against production alone, BOND is decisively worse. That is not the finding. **BOND sits
+0.03× MDE from the mean of eight matched random displacements**: the whole of its effect is its
+**magnitude** and none of it is its **direction**. F-P1, F-P2 and F-P3 all fail to fire, and not
+narrowly.
 
-> The eight matched random displacements produce effects of **+0.6504 to +0.8152** (mean +0.7308).
-> **BOND's +0.7222 sits inside that band**, −0.0087 from the random mean.
+**The part interpretation adds, and it is the reason this subsection is not just another null.**
 
-**The bond-length correction is worth exactly what a random displacement of the same size is worth.**
-Its entire effect is magnitude, not direction — which is §5.1 again, on a stage that generates its
-displacement by a completely different construction from the 21 fields of §9.4. Two independent
-routes to the same conclusion.
+> **The mechanism is confirmed and the hypothesis is refuted.**
 
-`FLOOR` sitting at −0.0077 (0.56× MDE) is the design's internal check and it behaves: the arm that
-should be zero is zero.
+Making the cloud geometrically consistent *genuinely works as a fit*: under BOND the emitted chain
+sits **24% closer to its own input cloud** (projection residual 0.8135 → 0.6191 Å, native-free).
+The fit really was biased, and the bias really is removable. **Removing it costs 0.72 Å.** The
+reason is the shear (§5 and lane P's own S29-L22): the distortion is *monotone in sequence
+separation*, so setting the bond length right **inflates the long-range distances that were already
+too long**. Emitted radius of gyration against the native's 6.6009 — production 6.4820 (1.011×),
+BOND **8.1353 (1.272×)**.
 
-*Attribution, and a gap this report does not paper over.* **Lane P's own ledger entry never
-landed.** Its arms completed at 03:03 and its final job exited 0, but the lane produced no further
-artefact and did not drain two messages sent to it over the following fifty minutes; it was still
-marked running when this report was closed. The figures above are therefore **my own recomputation**
-from its committed rows (`s29/results/s29_P_rows_shard*.jsonl` — 1,896 rows, 126 targets on every
-arm, all eight random draws present), paired through `s24.stats_lib.compare` with the rows' own fold
-labels, and they are covered by the verification pass (§4.6) like every other number here.
+**And a trap in my own §11.3, which lane P caught.** Under BOND the projection price does fall,
+exactly as S28-L39 predicted for a de-contracted cloud: **+0.1643 → −0.1512**. I had written that
+the price is a function of cloud accuracy and that improving the cloud is therefore worth more than
+it looks. That is true, and it licenses the converse error: **the price falling is not the price
+being saved.** Here it falls *because the cloud got worse*. So production's +0.164 Å is the **cost
+of the geometry constraint**, not a recoverable loss, and paying it earlier costs more. Lane P
+registered that reading in its pre-registration before the numbers existed.
 
-What is missing is not the measurement but **lane P's interpretation of it** — the reading of *why*
-the bond-length correction lands where a random displacement does, and whatever its author would
-have said about the ISO and SPAN arms. Recorded as an absence rather than quietly filled in. The
-one substantive judgement in this subsection that is mine rather than the lane's is the decision to
-lead with the random-band comparison instead of the production comparison; if lane P's entry
-surfaces later and reads it differently, lane P's reading governs.
+**Two things that did not go lane P's way, reported as such.**
+
+- **Its registered prior was wrong in magnitude.** It registered "null, 0.0 to 0.3× MDE"; BOND at
+  2.24× worse is not null. The direction was right. Lane P's own note is the one worth quoting:
+  a null prior and a harm prediction are different claims, and **it is not entitled to credit for
+  the sharper later prediction by having written the vaguer earlier one.**
+- **No regime effect — the opposite of what S28 kept finding.** FAIL18's effect sits at percentile
+  0.902 of 2,000 random 18-subsets for BOND, 0.888 for SPAN, 0.859 for ISO: all inside the band.
+  The harm is carried by the 108; FAIL18 is merely noisier.
+
+**Chronology** (contract rule 27, after my own false provenance claim earlier in the sprint):
+falsifiers and prior registered 00:10 (commit `f721ab3b`); the mechanism prediction that BOND would
+be harmful published 00:37 in S29-L22; lane T's bound published 00:43. The prediction precedes the
+bound by six minutes and the falsifiers precede both by half an hour.
+
+Also in the entry: the branch-flip floor measured on this path (mean |diff| 0.0139 Å, max 0.5088);
+every arm contrasted against FLOOR as well as production with no conclusion moving; concentration
+(median +0.2502 against a mean of +0.7222 is the free warning, but drop-top10 at percentile 0.522
+of a uniform-effect null says uniform harm with a heavy tail, not a few targets); multiplicity
+(5 deployable contrasts, max 3.52× against a joint sign-flip null, p = 0.000); and a deferred grid
+marked with the S29-L31 instruction that its per-target argmin is an **incidental parameter** and
+may not be written up as headroom.
+
+`FLOOR` sitting at −0.0077 Å (0.56× MDE) is the design's internal check, and it behaves: the arm
+that should be zero is zero.
 
 ### 9.3 Controls against our own enthusiasm
 
@@ -1246,6 +1265,13 @@ This has a practical consequence the project has not been using: **any improveme
 cloud is worth more at the endpoint than it looks on the cloud**, because it also reduces the
 projection's own penalty. It is the first time this stage has been characterised as anything but a
 fixed tax.
+
+**And it licenses an error, so the guard belongs beside it (§9.2c).** A falling price is *not*
+evidence of a better answer. Lane P's BOND arm drives the price from +0.1643 to −0.1512 — a
+textbook de-contraction result — while the emitted structure gets **0.72 Å worse**. The price fell
+because the cloud got worse. So production's +0.164 Å is the **cost of the geometry constraint**
+rather than a recoverable loss, and anything that "saves" it by relaxing the constraint is paying
+more elsewhere.
 
 ### 11.4 The honest summary
 
