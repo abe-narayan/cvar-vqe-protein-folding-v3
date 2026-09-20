@@ -540,6 +540,55 @@ This bounds the endpoint arm: a classical exhaustive/greedy search over the same
 strict upper bound on what the CVaR-VQE could find under it, and that search does not beat
 production.
 
+### 6.1 The endpoint: the mechanism is alive, and irrelevant
+
+Claim 1 above says the f-optimal subset is *not* the energy prefix on 90–98% of targets. The
+obvious next question is whether a VQE actually run on that objective emits a better structure. It
+does not, and the way it fails is the sprint's thesis in miniature.
+
+Lane B's pre-registration (addenda 2 and 3, both committed before the run) set the falsifier: the
+arm is refuted unless some λ beats **both** production **and** its own λ = 0 by 0.7× MDE with the
+fold CI excluding zero, **on both seeds**. On the built chain, 126/126, 9 arms:
+
+```
+λ = 1   +0.104 / +0.116 Å above production   (0.95× / 1.03× MDE, the two seeds)
+λ = 3   +0.103 / +0.106 Å                      (0.80× / 0.81×)
+```
+
+**F5b is refuted, and the registered prior — lane B's and mine, written independently — held on
+both clauses: the mechanism works and the endpoint does not move.**
+
+What makes this more than another null is the pair of facts underneath it:
+
+- **The objective moves the set hard.** Jaccard overlap with the DIS top-75 falls from **0.93 to
+  0.52**, and the realised tail size from **m = 74 to m = 39**. The new objective genuinely
+  re-populates the tail; this is not an arm that failed to do anything.
+- **And the deployed tail-set readout is flat at every λ** — |effect| ≤ 0.046 Å, every cell
+  NOT MEASURED. The set changes by half its membership and the emitted structure does not move.
+
+That is §5.4 arriving from the quantum side: the terminal operator consumes the set *mean*, so
+changing *which* candidates are in the set, while keeping the operator, moves the answer almost not
+at all. The fixed-profile control (M6) sits 0.31× from the trained circuit — i.e. the trained
+circuit is not distinguishable from a fixed rank-weight profile.
+
+**And the deployed VQE never escaped set-equality at all.** The CVaR tail is still the energy
+prefix by construction, at every λ. So the non-prefix optimum that claim 1 establishes is available
+*in principle* — an exhaustive search finds it on 114/126 targets — and the circuit running this
+objective does not take it. The escape and the arm are two different things, and this report keeps
+them apart.
+
+**One artefact lane B caught in its own output before it became a claim.** Its `tail_is_prefix`
+column briefly suggested the tail had escaped; it was a tie-convention artefact. Lane B found it,
+named it, and reported the correct conclusion — which is the *opposite* of the more interesting one
+it could have claimed. This is the second defect lane B found in its own code this sprint, after the
+tie rule; both were in the direction that would have flattered its own hypothesis.
+
+**A known pathology reproduced exactly, and declared.** Lane B's production point cloud equals
+S27's cached `DIS` values to **3.7e−14** on 126/126. Its *projection* does not: 3.210534 against
+S27's 3.212625, with a per-target maximum difference of 0.5174 Å on 125 of 126 targets. That is the
+input-difference floor of the multi-start projection documented in S28 (a branch flip, not a bug),
+reproduced here rather than glossed. Every MDE in this report sits far above it.
+
 **Controls.** [PENDING — lane X's 94-arm ladder, including the untrained-circuit and best-of-N
 controls, and lane B's endpoint arm.]
 
