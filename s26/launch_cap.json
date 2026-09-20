@@ -1,4 +1,4 @@
 {
- "max_concurrent": 4,
- "note": "S28 21:13: cap 4; RAM 84% with three 0.3 GB chain jobs; chrome 4.5 GB"
+ "max_concurrent": 3,
+ "note": "S28 resume 2026-09-19 20:10: cap 3 for the three chain relaunches"
 }

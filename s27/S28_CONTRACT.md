@@ -88,3 +88,13 @@ Production anchors: point cloud 3.048338 (DIS top-75), built chain 3.2126 (rebui
 15. No positive is accepted, built on, or reported until lane D has posted STANDS or STANDS WITH
     CAVEAT on it; D attacks within the hour of the entry, starting with the built chain if only
     the point cloud was quoted.
+
+## Addendum 2 (2026-09-19 20:15, coordinator; the resume)
+16. The sprint resumed from `s27/RESUME_S28.md` on 2026-09-19. Every committed artefact, row,
+    checkpoint, ledger entry, finding and resume note is authoritative existing work: reuse it,
+    never recompute it. A chain with partial rows continues from its last row; completed
+    targets are never re-run. Ambiguity about whether something was computed is settled by
+    reading the artefact first.
+17. Commit trailer from the resume onward: a single line
+    `Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>` (the session line is no longer
+    added). Existing commits stand as they are.
