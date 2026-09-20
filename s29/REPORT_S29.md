@@ -186,7 +186,44 @@ original 12, which lane D verified independently (S29-L38). The pre-fix rows are
 
 ## 10. The literature relied on, and rejected
 
-[PENDING — lane L's 17 findings and the five-paper reading list for S30.]
+Lane L ran as a permanent role and produced ~2,600 lines across eight topics
+(`s29/lit/L_1..L_8*.md`, `L_INDEX.md`) plus 17 findings (`s29/s29_L_FINDINGS.md`).
+
+**Relied on, load-bearing:**
+
+- **Barkoutsos et al.**, CVaR eq (12) — CVaR is defined on *sorted* samples for diagonal
+  Hamiltonians. This is what makes the deployed tail provably a prefix, and therefore what lane B's
+  result escapes. A **definition**, not an empirical claim, which is why it is safe to build on.
+- **Blau & Michaeli (2018)**, perception–distortion tradeoff, Thm 3 — closes the
+  "train a scorer that prefers near-native" class for *any* distortion measure.
+- **Neyman & Scott (1948)**, incidental parameters — makes the missing per-target sign a
+  statistical impossibility rather than a modelling gap, and identifies the only standard remedy.
+- **Krogh & Vedelsby**, ambiguity decomposition; **Ueda & Nakano** (1 − 1/M) — bound the entire
+  averaging class at ≤ 0.008 Å.
+
+**Rejected, with the reason:**
+
+- **The published peptide "ceiling" of 1.96–2.6 Å at 9–25 aa.** No paper states a ceiling, and none
+  of the published numbers is like-for-like: curated NMR sets, different targets, different
+  metrics. Quoting them as a benchmark would have been a category error. (S29-L14)
+- **The QA / model-quality-assessment literature as an import route.** Nothing has been trained or
+  evaluated below 40–50 residues, and all four of the field's signal classes degenerate at peptide
+  length. (S29-L1)
+- **In-band ranking methodology.** Nobody has done it; the closest methodological paper documents
+  the confound and explicitly declines to fix it, which makes lane D's band design novel but also
+  unsupported by precedent. (S29-L16)
+
+**A correction that belongs here.** Lane L's S29-L1 stated that S8's free-energy stage was
+"committed and resumable." The module, its tests and all four artefacts are absent from disk **and
+from git history** — lane T found it, lane L verified it independently and owned that the clause was
+its own addition rather than something the source said (S29-L41, S29-L42). The literature finding is
+untouched; only its cost changed, from a resume of minutes to a rebuild of a lane-week. The
+generalisable lesson is now in project memory: *an artefact path in prose is a claim, not a
+citation*, and the check belongs **during** the reading.
+
+**Reading list carried to S30** (lane L): Neyman & Scott 1948; Blau & Michaeli 2018;
+Brown/Wyatt/Tiňo 2005 eqs 9–10; McDonald 2023; Cerezo 2025.
+
 
 ## 11. The best architecture, and why
 
@@ -202,4 +239,65 @@ original 12, which lane D verified independently (S29-L38). The pre-fix rows are
 
 ## 14. Every hypothesis entertained and killed, with the reason
 
-[PENDING — the full table. Seven routes closed without an endpoint run; several more by measurement.]
+The charter asked for all of them, with reasons. Grouped by *how* they died, because the how is the
+transferable part. **Seven were closed without spending a full endpoint run** — five by derivation
+or by a measurement already in the record, which is the cheapest kind of progress available.
+
+### (a) Closed by derivation — no run needed
+
+| hypothesis | why it died | entry |
+|---|---|---|
+| Centre the coupling matrix to fix trainability (λ₂/λ₁ 0.138 → 0.465) | Gradient variance is `Var[∂F/∂θ] = r_stable(A)/D²` and nothing else. Centring makes the decay **worse** (−2.305 vs −1.830). **This was my own premise and lane T refuted it.** | S29-L11 |
+| A non-commuting free-energy cell in the candidate-index encoding | Derived to be unreachable in that encoding | S29-L15/L17 |
+| A better-conditioned objective buys gradient signal | Design rule: an off-diagonal term is gradient-visible only if stable rank grows with the register | S29-L11 |
+| Posterior calibration as a route | The deployed CVaR is exactly constant on 85.5% of simplex directions; the entropy term sets those to uniform | S29-L15 |
+| Contraction is what averaging does to the backbone | It is an exact variance identity, `d(C)² = ⟨d_k²⟩ − s²` — the pool's own 32%, and a calibration cannot touch it. Restated as a **separation-dependent shear** crossing 1.0 near \|i−j\| = 8, not a contraction | S29-L17, L24 |
+
+### (b) Closed by a theorem from the literature
+
+| hypothesis | why it died | entry |
+|---|---|---|
+| Train a scorer that prefers near-native structures | **Perception–distortion theorem** (Blau & Michaeli 2018, Thm 3): for *any* distortion measure, the distortion-optimal estimator's distribution must diverge from real signals. Charter finding 8 is a necessity, not a defect | S29-L12 |
+| Better averaging / more ensemble members | **Krogh–Vedelsby** ambiguity decomposition plus Ueda–Nakano (1 − 1/M): the whole class is bounded at **≤ 0.008 Å** | S29-L8 |
+| Supply the per-target sign from other targets | **Neyman–Scott (1948) incidental parameter**: not estimable from other targets' answers as a matter of statistical theory. The standard remedy (a conditional likelihood) *eliminates* it rather than estimating it — and that remedy is lane D's own band design | S29-L31 |
+| Import a published QA / model-quality method | No published QA method has ever been trained or evaluated below 40–50 residues; the field's four signal classes are all unavailable or degenerate at 9–16 aa | S29-L1 |
+
+### (c) Closed by a measurement that already existed in the record
+
+| hypothesis | why it died | entry |
+|---|---|---|
+| Train an in-band ranker | The record answers it twice: 0.986 within a target, 0.600 across, against the 0.638 needed; capacity saturated by a **linear** model | S29-L19 |
+| Calibrate the posterior | Closed by an S12 measurement predating the sprint | STATE note, §12 |
+| Rank inside a matched-realism band | Nobody in the literature has done it; the closest methodological paper documents the confound and declines the fix | S29-L16 |
+
+### (d) Closed by a measurement made this sprint
+
+| hypothesis | falsifier fired | entry |
+|---|---|---|
+| The typicality axis (rung 6) | ORACLE step **exactly 0**; both clauses of the registered falsifier fired, and harder than registered | S29-L20 |
+| The PC1 one-parameter family (rung 8) | ORACLE best global η **exactly 0** — lane T's prediction confirmed at its floor | S29-L21 |
+| Widen the quantum stage's field of view | 75 → 128 buys **0.0663 Å**; the full K=500 only 0.1543 Å further. The field of view is not the constraint | S29-L30 |
+| A transferable prefix length *m* | The ORACLE global prefix is m = 72 (worth −0.0018 Å, i.e. the shipped 75); the leave-fold-out prefix is **+0.0079 Å worse** than production at 0.30× MDE | S29-L30 |
+| Any of 39 native-free displacement fields | **Not one** beats the random-shape reference 0.1398; best field at its ORACLE step is worth 0.019 Å | S29-L35 |
+| Escape the CVaR prefix (tail-then-aggregate) | The escape is real (90–98% of targets) and buys **nothing measurable**: +0.0804 at 0.73× MDE | S29-L45 |
+| Within-band ordering | F1 fires, **F2 fails on 58/70** — conditioning on realism *removes* ordering skill on every informative score | S29-L33 |
+| The profile correction | +0.582 Å **even ORACLE-fitted** | STATE note, §12 |
+
+### (e) Killed by their own authors — the sprint's own claims, withdrawn
+
+This category exists because the contract required it, and it is the one I would point a sceptical
+reader at first.
+
+| claim | who withdrew it, and why |
+|---|---|
+| **Corollary 2b** (lane T's sign law) | Lane T withdrew it at its own registered bar after both limbs fired, then ran its own 126-target post-mortem: the verdict is **not** saturation — the law fails on saturated and unsaturated subsets alike — and in the linear regime where the derivation actually applies β = 0.947–0.961, essentially at the degenerate point β = 1 where the kept term vanishes. **"Not merely wrong, but vacuous in its own valid regime."** (S29-L29, L39) |
+| **Rule 20's cosine justification** | Lane D's shrink experiment **refuted** it: shrinking the target map toward typicality makes the cosine *more* negative (−0.034 → −0.056), never rises, never crosses zero. The percentile half was confirmed (0.369 → 0.491, monotone). The rule stands on the surviving half only (contract addendum 5). (S29-L37) |
+| **My trainability premise** | Lane B was spawned on it; lane T's derivation killed it (row 1 of table (a)). |
+| **My provenance claim** | I told the user lane T's sign formula "was derived before those numbers were read." Lane D certified from git that `2q−1` first appears **7.5 minutes after** lane O's numbers. Lane T went further: the \|ρ\| = 0.37 was *inverted from* those numbers, so they were an input. (S29-L28) |
+| **My flatness gate** | I told lane B "if the flat fraction does not fall materially, the idea is dead." Lane B registered *before measuring* that it **could not** fall — the same envelope argument zeroes both terms — and supplied the right quantity instead. (S29-L27) |
+| **My architectural-ceiling figure** | Quoted on the point cloud for most of the sprint while the charter's endpoint is the built chain. Corrected to 2.9027 Å. (S29-L44) |
+| **My "absent instantiation" framing** | I told lane M a class closes if nothing native-free supplies it. Lane M declined: five native-free rules already supply the shell profile, measured leave-fold-out since S12. The closure is a **measured supply gap**, which is stronger. |
+| **My "7 bits" reading** | Lane M again: the bits cannot be spent through an averaging readout, because the operator consumes the set mean. (S29-L44 addendum 2) |
+| **Lane L's resumable-item claim** | Lane L owned that the clause "committed and resumable as `python -m s8.relax best`" was its own addition and is false — the stage does not exist on disk or in git. It annotated both entries in place with the original wording standing. (S29-L41, L42) |
+| **Lane D's ±3 Å bracket** | Lane D hardened its own B3 check to ±6 Å and found the residual is **not** uniformly 1e-4: it grows with step size, reaching −0.93% mean at a 2.03 Å step. Its own n = 2 file is superseded by the 126-target run. |
+
