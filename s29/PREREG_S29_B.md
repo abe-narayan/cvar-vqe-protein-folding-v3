@@ -527,3 +527,125 @@ The gate of section 5.5 (now with condition 5), the J grid, the control set (PER
 eigensolver, untrained, product-state, matched budget, both seeds), the registered priors
 (measurement 1's B1 refuted; measurement 2's gate does not open), the ORACLE labelling, the
 multiplicity accounting, and section 9's closure statement.
+
+---
+
+# ADDENDUM 2 (2026-09-20 00:33 Pacific, registered before any number of the build it describes)
+
+The coordinator has directed this lane to a second build, derived by lane T in **S29-L15 (Q1)** and
+**S29-L17 (section 4b)**: "TAIL THEN AGGREGATE". Both entries read in full before this addendum.
+The compatibility-Hamiltonian measurements 1 and 2 (sections 4 and 5 above) are already running and
+are finished and posted as registered -- measurement 2 is the ORACLE diagnostic that decides
+whether a *centered* off-diagonal term can help at all, and it is worth its two minutes whatever
+happens to the new build. Measurement 3 (that lane's endpoint) is gated on it as registered and I
+do not expect to spend it. What follows is a **new measurement 5**, with its own falsifiers.
+
+## B2.1 The object
+    F(theta) = CVaR_alpha(E; p_theta) - T H(p_theta) + lam f(R_alpha(p_theta)),
+    R_alpha(p)  = (1/alpha) [ sum_{x in S(p)} p_x W_x + (alpha - mass(S)) W_{x_q} ],
+S(p) the strict CVaR tail along the E order, x_q the boundary state. R_alpha is the tail's own
+coordinate average **as a function of p**, so the objective sees *which candidates populate the
+tail and with what weight* -- the freedom S29-L15 proves the deployed objective is indifferent to.
+Envelope gradient (S29-L17): dR/dp_y = (W_y - W_{x_q})/alpha on the strict tail, so dF/dp_y gains
+lam <grad f(R), W_y - W_{x_q}>/alpha there, and the parameter-shift chain costs the same 2P circuit
+evaluations as the deployed objective. The tail's ORDER stays a per-state scalar (E), so the cells
+are indexed by the SET and R is linear in p on each; a convex f makes F convex on each cell.
+
+## B2.2 Why this is not S28 lane A, stated with both ledger lines
+Lane A (`s27/PREREG_S28_A.md`, endpoint **S28-L27b**, refuted) put lam f(C) on the **amplitude**
+readout C = sum psi_i W_i / sum psi_i -- signed affine weights over the whole pool -- and was
+refuted for accuracy. Here f acts on the **CVaR tail's own average**, which lane A never tested,
+the weights are non-negative and confined to the tail, and the first-instance claim is not accuracy
+but **FLATNESS**: the object S29-L15 shows the deployed spine cannot see.
+
+## B2.3 A derivation that corrects the flatness gate BEFORE it is measured
+The coordinator's gate is "recompute M5 (the fraction of readout-relevant directions along which
+the objective is exactly constant at production, deployed 437/511 = 85.5%); if it does not fall
+materially the idea is dead". **I register, before measuring, that the raw 85.5% will NOT fall, and
+that this does not kill the idea**, because the two numbers are different quantities:
+
+For y strictly above the VaR, p_y does not appear in R_alpha and (generically) perturbing it moves
+neither S(p) nor q, so **dR_alpha/dp_y = 0 by the same envelope argument that gives
+dCVaR/dp_y = 0**. The f term is therefore flat on *exactly the same* 437-direction subspace as the
+CVaR term. Clause (i) below is predicted UNCHANGED at 85.5% for every lam.
+
+What changes is the **overlap**. Under the deployed pair (CVaR + entropy, uniform-average-over-the-
+tail-SET readout) the emitted structure is a piecewise-constant function of p: along every
+continuous simplex direction its derivative is exactly zero, and it moves only when the SET
+changes, i.e. through the single discrete scalar m (S29-L15's reduction). Under TTA the emitted
+structure is R_alpha, which is differentiable on each cell and whose non-zero directions are
+**exactly** the objective's 74 non-flat ones. So the honest M5 has three clauses and I register all
+three:
+
+  (i)   flat_obj: the fraction of the D-1 simplex directions on which dF/ddelta is exactly 0 at
+        production. Deployed 85.5%. **Predicted unchanged** under TTA at every lam.
+  (ii)  flat_readout: the same for the emitted structure. Deployed: 100% of continuous directions
+        (the readout is piecewise constant). **Predicted 85.5% under TTA** (the same 437).
+  (iii) **THE ONE THAT MATTERS -- the overlap**: among the directions along which the EMITTED
+        STRUCTURE moves, the fraction along which the OBJECTIVE is exactly constant. Deployed:
+        undefined over continuous directions, and operationally one discrete scalar, which the
+        objective does fix. TTA: **predicted 0%** -- every direction the readout consumes, the
+        objective sees.
+
+**Registered gate G5 (replacing "does 85.5% fall").** The mechanism works iff (iii) is 0% or near
+it while (i) stays at 85.5%, AND the emitted structure's realised sensitivity to the tail weights
+is non-zero (measured as the norm of dC/dp along the tail directions, which is identically zero for
+the deployed readout). If (iii) does not fall, the idea is dead and I say so in one line. If clause
+(i) *does* fall, my derivation above is wrong and I say **that**, loudly, in the same entry.
+
+## B2.4 The readout question, which decides whether this is a real arm at all
+For the objective to steer what is emitted, the **emitted structure must be R_alpha**, the
+p-weighted tail average -- NOT production's uniform average over the tail set. That is a change of
+readout, and the record is against sharper-than-uniform weights (`s24.d_harness.readout_uniform`'s
+own docstring: every departure measured -- sharper weights, clustering, smaller m, amplitude
+weighting -- attacks the variance reduction that makes averaging work; S28-L21 / L41 measured the
+p-weighted-over-the-whole-pool readout at +0.25 to +0.37 A WORSE than production). At the deployed
+optimum p rises 8.4x across the prefix (S29-L15), so R_alpha is a materially sharper average.
+Two arms are therefore registered and BOTH reported:
+
+  - **TTA-w** (the honest one): objective and readout are both R_alpha.
+  - **TTA-u** (the diagnostic): objective on R_alpha, emitted structure the deployed uniform
+    average over the same tail set. The objective then steers a quantity it does not emit, so a
+    gain here is weaker evidence; it is carried to separate "the readout change hurt" from "the
+    steering did not help".
+
+**Registered zero-lam anchor, measured before anything else:** TTA-w at lam = 0 against production.
+If the readout change alone is already worse than production by more than the effect any lam could
+plausibly buy, that is reported in the first sentence of the entry and the arm is priced against
+*its own* lam = 0, never against production alone.
+
+## B2.5 f, and the price it pays
+f is the shipped distogram risk evaluated on R_alpha -- a **marginal-class** objective, so by lane
+T's theorem 2 (S29-L7) and contract addendum 1 rule 21 it cannot be locally informative about the
+native's deviation from typical, and by S29-L2 its ladder correlation on the near-native rungs is
+-0.182 (CA) / -0.402 (chain). f goes through lane D's meter
+(`--f s29.s29_B_tta:cost_tail_avg`) **before** the endpoint run, with rule 20's three companions
+(implied shrink, native percentile, emitted bond and Rg). If lane D's band experiment finds a
+scorer with positive in-band skill, that scorer is registered as an alternative f and the
+substitution is reported as a separate arm, not a replacement.
+
+## B2.6 Falsifiers and controls for measurement 5
+- **F5a (mechanism)**: G5 above. Minutes, no endpoint run, reported whatever it says.
+- **F5b (endpoint, 12 targets first)**: lam on the pre-registered grid
+  **lam in {0, 0.1, 0.3, 1.0, 3.0}**, seeds 0 and 1, against (a) production, (b) its own lam = 0,
+  (c) lane D's **fixed-profile control M6** (the target-independent rank-weight profile
+  p*(alpha, T) applied to the target's own DIS order, no circuit and no optimiser -- the control
+  that matters, S29-L15), (d) the untrained circuit at best-of-16, (e) matched budget. Refuted as
+  registered if no arm beats BOTH production and its own lam = 0 by 0.7x MDE with the fold CI
+  excluding zero on both seeds. The grid is priced with `ST.best_of_k_within`.
+- **F5c (the classical counterpart rule 15 requires, from S29-L17)**: greedy plus local search over
+  75-subsets minimising f(mean of the subset). T predicts it beats the DIS top-75 on the OBJECTIVE
+  by at least 0.10 and is WORSE than production on the built chain by at least 0.1 A. If the second
+  clause fails -- the aggregate-optimal subset is BETTER than production -- that is the sprint's
+  first genuine opening and goes to 126 immediately. This control runs BEFORE the VQE endpoint,
+  because it is cheaper and it bounds what the VQE could find.
+
+## B2.7 My registered prediction for measurement 5
+The **mechanism works and the endpoint does not move, or moves the wrong way**: (iii) falls to 0%,
+the emitted structure becomes genuinely sensitive to the tail's internal weights, and the endpoint
+is WORSE -- partly because f is marginal-class (theorem 2) and steers toward the contracted typical
+average, and partly because R_alpha is a sharper-than-uniform average and the record prices that at
++0.25 to +0.37 A. This is the same prediction the coordinator registered, reached from the same two
+theory entries, and I record it as agreement rather than as independent support. **If the endpoint
+improves, I hand it to lane D the same hour with the three-way split and do not write it up as a
+result first.**
