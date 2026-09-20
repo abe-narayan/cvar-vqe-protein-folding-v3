@@ -740,8 +740,8 @@ def run_target(pdb: str, chain: bool = True, verbose: bool = True) -> Dict:
     # reproduce it" cannot be confounded by PERM having a flatter energy landscape.
     out["spectrum"] = dict(real_sd=float(sp.E.std()), real_range=float(np.ptp(sp.E)),
                            perm_sd=float(perm_E.std()), perm_range=float(np.ptp(perm_E)),
-                           real_gap75=float(np.sort(sp.E)[:75].ptp()),
-                           perm_gap75=float(np.sort(perm_E)[:75].ptp()),
+                           real_gap75=float(np.ptp(np.sort(sp.E)[:75])),
+                           perm_gap75=float(np.ptp(np.sort(perm_E)[:75])),
                            perm_seed="stable_rng(pdb,'perm',salt='s29X')")
     ordP = np.argsort(perm_E, kind="stable")
     emit(sp, "PERM_EXACT_top75", weighted_average(sp.CA[ordP[:75]], None, pdb, "permtop"),
