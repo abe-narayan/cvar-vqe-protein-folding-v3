@@ -146,6 +146,46 @@ entries can manufacture significance by volume. The discipline used:
   positives, including lane B's non-prefix term (0.73×), lane M's F1 primary (0.55×) and the
   pair-level contrast (0.69×).
 
+### 1.4 The data path, audited before anything was built on it
+
+The charter required the full path reconstructed and its convenience choices named. Lane M produced
+`DATAPATH.md` (13 stages, every function cited by file and line, every object's shape and unit),
+`CONVENIENCE_CHOICES.md` (**31 entries, 17 never tested**) and a nine-check harness audit
+(`s29_M_harness_audit.md`, S29-L9). All nine checks pass and the harness is sound: `ca_rmsd` agrees
+with an independent Kabsch to 3.7e−14 and forbids reflections; the 3.2126 Å anchor reproduces at
+**0.000e+00** from a fresh re-projection; an in-process benchmark poison shows **0 benchmark reads**
+across 6 rebuilds and 126 cold distograms.
+
+Five facts from it bear directly on how this report should be read:
+
+- **The production anchor never passes through the quantum stage.** `Config.quantum = False`
+  (`s27/run_vqe_chain.py:124-130`); the cache record carries `quantum: null`. Every quantum result
+  here is therefore a statement about a stage that is not in the deployable path — which is exactly
+  why the architectural ceiling (§0) is the right way to price it.
+- **Retrieval is the only stage that creates coordinates.** Everything downstream re-weights,
+  re-ranks or re-averages what retrieval produced. That is the structural reason every operator in
+  §5.1 is a displacement.
+- **Leave-fold-out constrains only 9.5% of the distogram's training data.** The 6,003-fragment bank
+  is shared across all five folds. The fold discipline is real but narrower than "the model has not
+  seen this fold", and the report does not claim more than that.
+- **The distogram memorises training peptides by 8×** (ORACLE check 9): the deployed own-fold model
+  is **+2.075 nats worse** than the four models that *did* see its fold, at 4.88× MDE with 5/5 folds.
+  This cuts both ways — it is direct evidence that leave-fold-out is doing real work, **and** it
+  means every *in-sample* corpus diagnostic in the project's record has to be recomputed
+  out-of-fold before it can be believed. That is an S30 item this report does not discharge.
+- **The s12 cache is not bit-identical to a fresh recomputation** (check 8): candidate *order*
+  differs on 2 of 126 targets, the *set* on 0, and the resulting RMSD on 0. Declared rather than
+  papered over; it moves nothing here, and every S29 MDE is far above it.
+
+One framing from the data path is worth quoting on its own, because it locates where the
+information is lost before any operator gets to act:
+
+> Choosing 500 windows from 17,088 is **log₂ C(17088, 500) ≈ 3,252 bits** of retrieval choice, and
+> it is resolved by a key whose rank correlation with true RMSD is **+0.066**.
+
+And one convenience choice deserves naming: **the CVaR temperature T = 0.5 has no recorded criterion
+anywhere in the project.** It was not tested this sprint either.
+
 ### 1.3 What was deliberately not spent
 
 - **The sealed benchmark was not touched.** Every number is on the 126 dev targets.
@@ -1084,6 +1124,10 @@ B3 is no longer an open assumption; it is a measured curve with a stated domain.
   It was believed to be "committed and resumable"; it does not exist on disk or in git history
   (S29-L41/L42), so it is a lane-week rebuild from a prose spec, not a resume. **It remains the
   most defensible single item for S30.**
+- **Every in-sample corpus diagnostic in the record.** Lane M's ORACLE check 9 measured that the
+  distogram memorises its training peptides by 8× (+2.075 nats, 4.88× MDE, 5/5 folds). Any
+  diagnostic in the project's history computed *in sample* is therefore suspect and needs
+  recomputing out-of-fold. This report did not do that, and does not rely on any such number.
 - **A fresh benchmark.** There is none: all 204 clusters of 9–16mers are spent, and the
   containment-fresh world supply is 16 targets, 10 of them amyloid fibrils. Every result in this
   report is on the 126 dev targets, and the sealed benchmark was not spent, per the charter.
