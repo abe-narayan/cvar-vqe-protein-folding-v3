@@ -121,8 +121,7 @@ S28-L25/L29/L26/L31).
   (S28-L36 note a); the pool-member control for all 31 scorers; the max-over-31 null.
 - The B2 endpoint entry (k = 10, J = 3; gate opened in S28-L43 with two conditions: the
   coherence class per cell and no mean-coherence sentences) when it posts.
-- The deferred suite files (pipeline, integration, the two AMBER files) in the coordinator's
-  quiet window; `python s26/examine.py` at the end.
+- `python s26/examine.py` at the close (the deferred files ran in the quiet window, S28-L<close>).
 Closed from the earlier queue: lane A's entries (S28-L13, L20, L27b, L40), lane B's point cloud
 and built chain (S28-L22, L43), lane C's Part 2 chain (S28-L33), reproductions 102 to 106.
 
@@ -132,6 +131,7 @@ and built chain (S28-L22, L43), lane C's Part 2 chain (S28-L33), reproductions 1
   84 to 87% baseline the full 10-file job peaked at 2.03 GB and was killed, then
   `test_pipeline.py` alone forked two workers (tree 1.46 GB) and took lane B's train job down as
   collateral (S28-L5). The test suite is not free on a loaded box; it is a job like any other.
+  In the quiet window (box at 72 to 77%) the same file ran clean at 1.563 GB peak in 145 s.
 - I expected lane B's "-1.27 for the diagonal control" to support its own reading weakly; it
   supports it strongly once the n = 9 outlier is dropped (the two controls decay at the same
   rate on 4..8).
