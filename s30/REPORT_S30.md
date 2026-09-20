@@ -48,7 +48,66 @@ not deliver it.
 
 ## 2. What was tested
 
-[PENDING — the eight lanes, their pre-registrations, and the multiplicity ledger.]
+### 2.1 The lanes
+
+Twelve lanes ran, never more than eight concurrently, against the charter's floor of four whenever
+meaningful work was available. Ledger entries `S30-L0` … `S30-L27`, 28 in all.
+
+| lane | remit | entries | outcome |
+|---|---|---|---|
+| **D** | adversary, permanent; owns and extends the cost/RMSD meter | 7 | Closed the field-combination question; withdrew two published numbers, one of them S29's |
+| **L** | literature, permanent | 5 | Three theorems (reference-state compactness, common-mode non-identifiability, set-selection); found the one paper that contradicts our E2 |
+| **T** | theory: the bit accounting, and when the CVaR tail stops being a prefix | 3 | **T1** (the tail is always a prefix); the codebook reframe; the value-of-a-bit law. Retracted its own headline |
+| **F** | the failure tail — highest leverage by the opening arithmetic | 3 | Tail is **selection-limited, not pool-limited**; shape not scale; closed filter width by ceiling |
+| **X** | divergent, permanent: should the quantum stage select at all, or generate? | 2 | The set-mean decomposition — generation closed **jointly with the readout** |
+| **R** | is nativeness recognisable from one structure at all (L11) | 2 | Ordering survives, **preference fails on all 43 channels**; the local-feature null is a theorem |
+| **Q** | L5 and L6 together: subset objectives and sparse readouts | 2 | Both closed; named the null that made lane T retract |
+| **P** | the prior — the one measurement the whole bound reduced to | 3 | The registered null, **and** the coherence result that explains it |
+| **G** | the two questions nobody had measured | 1 | **G1**, the chirality dichotomy; confirmed a claim two lanes had talked themselves out of |
+| **V** | report adversary (rule 28: the main team may not approve its own positive) | — | Auditing sections 1, 3, 4 and Appendix A against the artefacts |
+| **W** | what the CVaR-VQE actually contributed (charter items 12–19) | — | Investigating |
+| **Y** | synthesis over the sprint's own record (items 23, 25, 26) | — | Reading |
+
+### 2.2 Pre-registration
+
+**Ten pre-registration files**, every one committed before the number it predicted existed:
+`PREREG_S30_{D_gram, F1, F2, F3, G, P, Q_sparse, R, T, X}.md`. Three lanes' registered falsifiers
+then **failed**, and all three reported the failure as the result:
+
+- **Lane D** — its own falsifier for the combination question was not met (S30-L21).
+- **Lane T** — retracted its own headline on a null lane Q told it to run (S30-L16).
+- **Lane G** — **both** registered priors were directionally wrong, and it said so first (S30-L26).
+
+Lane P registered its bars at **1.96% / 12.82% / 39.44%** R² before the regression existed and came
+in at **0.83%**. Lane G registered a power note stating a half-split *could not* reach its own MDE
+unless more than 100% of the effect sat in one half — then measured that more than 100% does.
+
+> **A pre-registration that only ever confirms is decoration.** Four of ten fired against the lane
+> that wrote them, which is the evidence that they were real.
+
+### 2.3 The permanent roles, honestly assessed
+
+The charter required three permanent roles. Two were honoured as written; one was not.
+
+- **Adversary — honoured in substance, NOT in the form the charter asked.** The charter says
+  *"rotate the adversary role so no agent is only ever attacking its own prior conclusions."*
+  **Lane D held the named role for essentially the whole sprint and it was not rotated.** What
+  happened instead is that adversarial action distributed itself: lane D attacked lane F's headline
+  (S30-L23), lane Q named the null that made lane T retract, lane F closed a mechanism I had
+  synthesised one minute earlier, lane G attacked lane L's prior and its own, and lane V was stood
+  up at the end specifically to audit *my* report. The charter's purpose was served; its mechanism
+  was not followed, and a sprint that relied on distribution happening spontaneously got lucky.
+- **Divergent — honoured.** Lane X held it permanently and used it to overturn my premise rather
+  than to explore variations.
+- **Literature — honoured.** Lane L read for the whole sprint, not only at the start, and returned
+  mid-sprint as §6 of the charter asks.
+
+### 2.4 Controls
+
+This sprint's controls are unusually load-bearing — several results died to their own control, and
+one control **refuted its lane's stated mechanism while strengthening its conclusion**. The full
+register of every control run and what each one ruled out is **§7.3**, compiled from the ledger.
+
 
 ---
 
