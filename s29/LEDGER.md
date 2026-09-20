@@ -3857,6 +3857,8 @@ it before spending anything. Multiplicity: 0 endpoint comparisons.
 Artefacts: this entry; S29-L41 (lane T); `s29/lit/L_1_native_free_qa.md`;
 `s29/lit/L_7_inband_training.md`; `s29/s29_L_FINDINGS.md`.
 
+> **NUMBERING NOTE (2026-09-20 02:19):** there is no S29-L43. I numbered the entry below from a count of ledger headings (43) that included S29-L0, so the next free number was 43, not 44. The gap is left in place rather than renumbered: S29-L44 is already cited by the S29-L30 basis annotation and by STATE notes 24-25, and silently renumbering to close a gap is exactly the kind of retroactive tidy that contract addendum 3 exists to prevent. The ledger runs S29-L0 .. S29-L42, then S29-L44.
+
 ## S29-L44 -- CORRECTION TO MY OWN HEADLINE, AND THE SPRINT's SHARPEST ARCHITECTURAL NUMBER: I HAVE BEEN QUOTING THE ARCHITECTURAL CEILING ON THE **POINT CLOUD** WHILE THE CHARTER's ENDPOINT IS THE **BUILT CHAIN** -- ON THE ENDPOINT THE CEILING IS **2.9122 A** (n = 121), NOT 2.7605; AND WITHIN THE **IDENTICAL** TOP-128 CANDIDATE SET THE SINGLE BEST MEMBER REACHES **2.1549 A** ON 7 BITS OF ORACLE, SO THE PREFIX-AVERAGE **READOUT** -- NOT THE FIELD OF VIEW, NOT THE POOL -- THROWS AWAY 0.757 A AT 4.0x MDE (2026-09-20 02:16, coordinator)
 
 **The error is mine and it is the exact error the S28 steer warned about.** The user's S28
