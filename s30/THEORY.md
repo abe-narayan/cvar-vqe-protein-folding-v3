@@ -496,6 +496,20 @@ Three consequences.
    estimate of 0.33–0.36 corresponds to `s_1 = 1/11`, i.e. a Gram of full rank 11 — which nothing
    built from one distogram and one pool has.
 
+**Scored against lane D's S30-L6, which reported after this was committed.** Measured: per-target
+Gram stable rank **1.681** (aggregate 2.057), `λ₁ = 10.21` of 21 so `s_1 = 0.486`; ORACLE global
+combination **ρ = 0.1693**. The formula predicts
+`ρ_comb = ρ_0/sqrt(s_1) = 0.1214/sqrt(0.486) = 0.174` from lane D's own best single field, or
+0.162 from the 0.1128 I registered with — **both within 0.008 of the measurement**. P5a and P5b
+held; P5c did not, and its mechanism was wrong (lane D tuned the ridge by nested CV inside the
+training folds, so its 21-parameter arm *degenerated* to ρ = 0.0124 rather than over-fitting
+upward — a better-built arm than the one I anticipated).
+
+> **This is the section's real content: the combination ceiling is `ρ_0/sqrt(s_1)`, so it is set by
+> the Gram's RANK and the field count cancels exactly.** Eleven significant fields that span two
+> directions combine like ~two fields, not like eleven. Adding a twenty-second field built the same
+> way lands in the same span; the Gram is the one-line test to run before building it.
+
 **What B2 covers, then:** all functions of `(posterior, pool)`, with a one-number characterisation
 and a one-measurement falsifier. **What it does not cover:** a genuinely new information source,
 which changes `S` and therefore changes the number. That is unchanged from S29 and it is the only
@@ -516,7 +530,9 @@ door §8's six coefficients could come through.
 | P4a quadric vs halfspace | within 0.10 Å | +0.086 | **HELD** |
 | P4b free vs prefix | within 0.15 Å | −0.125, not measured | **HELD** |
 | **P4c class gain over prefix** | **< 0.6 Å** | **0.982 Å** | **MISSED by 64%** (falsifier was 1.0) |
-| P5a–c lane D's combination | see §9 | *pending* | prospective |
+| **P5a** Gram stable rank / `s_1` | [1.3, 3.5] / [0.45, 0.80] | **1.681** per-target (2.057 aggregate); `λ₁ = 10.21/21` ⟹ `s_1 = 0.486` | **HELD, both clauses** |
+| **P5b** LFO/global ORACLE combination `ρ` | **[0.11, 0.22]**, point est. 0.15, not above 0.25 | **0.1693** (lane D S30-L6) | **HELD** |
+| P5c in-sample inflation | 0.25–0.45 | lane D tuned the ridge by nested CV, so its 21-parameter arm **degenerated** (ρ 0.0124) instead of inflating | **NOT SCORED — and my mechanism was wrong** |
 | P5d subspace concentration | — | 0.607 | **NOT A PREREGISTRATION** (§8.4) |
 | M6 halfspace transfer (lane Q's request, unregistered by me) | — | 196% accounted, transfer 19%, rule +0.472 Å worse | **RETRACTS my §4.2 reading** |
 
