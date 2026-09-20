@@ -111,6 +111,23 @@ the first tied index in ARRAY order despite its comment, which biases toward the
 therefore conservative for its own claim; tie sets were size 1 or 2 and it changed nothing.
 `s29/results/s29_D_bcheck_pairs.json`.
 
+D10. **M6 on the built chain closes the charter's central control (S29-L55).** The deployed
+CVaR-VQE arm emits 3.2187 A on the reporting basis; a fixed target-independent prefix applied to
+each target's own rank order -- no circuit, no optimiser, no per-target computation -- emits
+3.2105 A at m = 75, an effect of -0.0082 A at 0.27x MDE with the fold CI including zero. No cell
+of the registered sweep exceeds 0.45x MDE. The m-ladder's slope is -0.00047 A per unit of m and
+the sweep's best cell transfers -5% of its oracle under `best_of_k_within` (share accounted
+1.12, k_eff 4.67): not a signal. Lane T's "equals on 120/126" fails at the structure level here
+as on the cloud (42/126 within the 0.006 A floor, worst target 0.69 A) and holds only as an
+endpoint statement. `s29/results/s29_D_m6_chain_seed0.json`.
+
+D11. **The suite closes green, all four heavy files run this sprint (S29-L55).** pipeline 35
+passed / 2 skipped; integration + equivalence under VERIFY_SLOW=1 **39 passed / 0 skipped**;
+amber 16 passed; amber_frame_invariance 3 passed; all exit 0. With S29-L5's light-file run (378
+passed / 3 skipped over 17 files) every test file in the tree has run with 0 failures, and the
+light run's 3 skips are exactly the VERIFY_SLOW opt-ins the integration job then exercised, so
+no opt-in is left unexercised.
+
 ## ORACLE DIAGNOSTIC
 
 OD1. The four meter numbers are ORACLE by construction (the ladder is scored against the
@@ -216,3 +233,6 @@ scale-only control. Registered as a prediction here so it can be wrong.
 | lane B's claim 1 stands | reproduced under a SECOND functional (the exact shipped lookup) as well as the surrogate, because three of the twelve gaps are smaller than the two readings' typical difference; and the tie-rule defect is recorded as conservative-for-B, not as a flaw in the result | S29-L38 |
 | lane B's claim 2 (+0.4278 A at 0.59x MDE, n = 12) | read it in BOTH directions: not evidence the lift helps, and at power 0.38 not strong evidence it hurts either (Type-M 1.61 says the magnitude is inflated ~60% if it is noise-significant); n = 35 clears its own MDE and n = 126 costs 16 minutes | S29-L38 |
 | the deployed VQE arm vs a fixed target-independent prefix | -0.0097 A at 0.43x MDE on the point cloud (NOT MEASURED); the built chain is the registered primary and decides; T's "equals on 120/126" is false at the structure level (43/126 within the chain floor) and true only as an endpoint statement | S29-L26 |
+| M6 on the built chain: -0.0082 A at 0.27x MDE | the registered primary of `s29/PREREG_S29_D_m6.md`, both sides projected in the SAME job so the S28-L18 floor does not enter; F-M6a (structure equality on >= 120/126) FAILS at 42/126 and the equivalence is an ENDPOINT statement only; the sweep's best cell (m = 70) is an order statistic that transfers -5% and its apparent 0.0075 A gain over production is additionally cross-code-path | S29-L55 |
+| "the deployed quantum stage contributes nothing at the endpoint" | say the honest half in the same sentence: the optimiser DOES reduce F and the tail IS the classical prefix to 1.14e-13, so this measures what that reduction buys at the endpoint, not whether the circuit trains | S29-L55, S29-L26 |
+| the suite is green | name the basis: 4 heavy files + 17 light files, 0 failures, and the light run's 3 skips were exercised by the VERIFY_SLOW integration job; the two AMBER files ran CONCURRENTLY against contract rule 8's "one AMBER process at a time" (the governor's MAX_AMBER is 2), which is recorded as an operational finding rather than hidden | S29-L55, S29-L52 |
