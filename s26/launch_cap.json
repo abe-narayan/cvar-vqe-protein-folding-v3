@@ -1,4 +1,4 @@
 {
- "max_concurrent": 3,
- "note": "S28 resume 20:40: cap 3, RAM 82%; C2 chain4 wrapper waiting on a slot"
+ "max_concurrent": 6,
+ "note": "S29 start: cap 6; band 92-94, hard 95.5"
 }
