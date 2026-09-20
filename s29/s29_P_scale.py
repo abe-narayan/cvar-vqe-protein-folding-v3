@@ -658,7 +658,12 @@ def cmd_analyse(rows_paths=None, out=None):
     #: even though the prereg registered it as a direction control. Enlarging K is the
     #: conservative amendment (a higher bar), never the permissive one.
     dep = ("BOND", "SPAN", "ISO", "CTRL-GLOBAL", "CTRL-INV")
-    D = np.column_stack([col(a) - prod for a in dep])
+    Dcols = [col(a) - prod for a in dep]
+    dep_names = list(dep)
+    if "MS|MS-OBJ" in C:                      # prereg addendum 4: MS-OBJ is deployable, K = 6
+        Dcols.append(ms_pick - prod); dep_names.append("MS-OBJ")
+    dep = tuple(dep_names)
+    D = np.column_stack(Dcols)
     obs = np.max(np.abs(D.mean(0)) / (ST.MDE_K * D.std(0, ddof=1) / _m.sqrt(len(pdbs))))
     null = _max_over_k_null(D)
     say("MULTIPLICITY: max |effect|/MDE over the %d deployable contrasts %s" % (len(dep), list(dep)))
@@ -711,7 +716,11 @@ def cmd_analyse(rows_paths=None, out=None):
                bok["null_across_targets"], 100 * bok["share_accounted"], bok["k_eff"],
                bok["split_half"], bok["verdict"]))
         cnt = {s: int((oracle_argmin == s).sum()) for s in ORACLE_GRID}
-        say("  argmin histogram %s" % cnt)
+        nties = int(sum((np.isclose(M_grid[r], M_grid[r].min(), rtol=1e-9, atol=1e-12)).sum() > 1
+                        for r in range(len(gridp))))
+        say("  argmin histogram %s   (the VALUE ORACLE-SCALE reports is the row minimum and is "
+            "tie-free; the histogram's ties, %d rows, are broken by grid order and are labelled "
+            "so rather than read)" % (cnt, nties))
     bokr = ST.best_of_k_within(M_rand)
     say("  CTRL-RAND best-of-8 priced: observed %+.4f, valid null %+.4f (%.0f%%), split-half "
         "%+.4f -> %s" % (bokr["observed_gain"], bokr["null_across_targets"],
@@ -742,6 +751,11 @@ def cmd_analyse(rows_paths=None, out=None):
         say("  mean shipped objective: PROD %.4f -> best-over-arms %.4f (a strict improvement "
             "of the quantity production minimises)"
             % (col("PROD", "obj0").mean(), OBJ.min(1).mean()))
+        pen_share = col("PROD", "obj0") - col("PROD", "fit_resid0")
+        say("  the lam * ramah term contributes %.3e of PROD's objective (mean), max %.3e over "
+            "targets: the shipped hinge penalty is inactive at the optimum, so obj0 is the fit "
+            "residual to within that -- stated, not assumed"
+            % (pen_share.mean(), np.nanmax(np.abs(pen_share))))
         for lab, v in (("MS-OBJ (native-free pick)", ms_pick),
                        ("MS-MEAN (zero-information pick)", ms_mean_arm),
                        ("MS-ORACLE [ORACLE] (pick by RMSD)", ms_oracle)):
