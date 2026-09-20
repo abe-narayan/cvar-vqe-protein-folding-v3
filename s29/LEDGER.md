@@ -2514,3 +2514,120 @@ Verdict: **S29-L7 clause 1 STANDS (as a correctness check). Clause 2 is VETOED a
 registered bar under four variants. S29-L15's M6 equivalence claim STANDS WITH CAVEAT: false as
 a structure-level equality (43/126 at the floor, not 120/126), true as an ENDPOINT statement
 (0.43x MDE) on the point cloud, chain pending.**
+
+## S29-L27 -- THE FLATNESS MEASUREMENT (METER CLAUSE M5) FOR TAIL-THEN-AGGREGATE, AND A CORRECTION TO THE GATE THAT WAS REGISTERED BEFORE IT WAS MEASURED: THE RAW 85.5% DOES NOT FALL AND CANNOT -- THE f TERM IS FLAT ON EXACTLY THE CVaR TERM'S 437 DIRECTIONS BY THE SAME ENVELOPE ARGUMENT -- BUT THE QUANTITY THAT MATTERS MOVES ALL THE WAY: THE DEPLOYED READOUT MOVES ALONG 0 OF 511 CONTINUOUS SIMPLEX DIRECTIONS AND TTA's MOVES ALONG 74, AND THE OBJECTIVE SEES ALL 74 (OVERLAP 0.0000 AT EVERY lam, 12/12 TARGETS); AND THE READOUT CHANGE COSTS +0.027 A (0.43x MDE, NOT MEASURED) WITH NO CONTRACTION (2026-09-20 00:55, B)
+Question (`s29/PREREG_S29_B.md` ADDENDUM 2 sections B2.3 / B2.4, gate G5, registered at 00:33
+before any number; the coordinator's instruction of 00:35; lane T's **S29-L15 (Q1)**, which derives
+that the deployed CVaR is exactly constant on 437 of 511 simplex directions and proposes meter
+clause M5, and **S29-L17 section 4(b)**, which derives the objective). The coordinator's gate was
+"recompute M5 for the new objective against the deployed 85.5%; if it does not fall materially, the
+idea is dead". **I registered, before measuring, that it would NOT fall and that this does not kill
+the idea**, with the derivation and the replacement gate. Both halves are now measured.
+
+**THE DERIVATION, registered in prereg B2.3.** For y strictly above the VaR, p_y does not appear in
+R_alpha(p) = (1/alpha)[sum_{x in S} p_x W_x + (alpha - mass) W_{x_q}], and a generic infinitesimal
+perturbation moves neither the tail set S nor the quantile q; hence **dR_alpha/dp_y = 0 by the same
+envelope argument that gives dCVaR/dp_y = 0**. The f term is therefore flat on EXACTLY the CVaR
+term's subspace, at every lam. What changes is not the flat fraction but the OVERLAP: under the
+deployed pair (CVaR + entropy, uniform average over the tail SET) the emitted structure is a
+piecewise-constant function of p and moves along NO continuous direction -- only through the single
+discrete scalar m, which is S29-L15's reduction; under TTA the emitted structure is R_alpha, whose
+non-zero directions are exactly the objective's non-flat ones.
+
+**THE MEASUREMENT.** `s29/s29_B_tta.py :: flat_report`, at the DEPLOYED optimum (lam = 0 VQE, seed
+0, alpha 0.18, T 0.5, depth 3, 80 iterations -- `core.quantum.free_energy`'s loop line for line),
+directions delta_y = e_y - e_{y0} with y0 the highest-E state, D - 1 = 511 of them, "exactly
+constant" meaning exactly (tolerance 0.0). Job `s29B_tta_flat2`
+(`s26/jobs_done/s29B_tta_flat2.json` exit 0, wall 10 s, peak RSS 0.32 GB), rows
+`s29/results/s29_B_tta_flat_rows.jsonl`, analysis `s29/results/s29_B_tta_flat.json`, 12 targets
+(S27 T11's set). Medians over the 12:
+
+    lam    flat_cvar  flat_f  flat_info  flat_total  readout_TTA  readout_DEPLOYED  OVERLAP  n_moving
+    0.0     0.8552    0.8552   0.8552      0.0000      0.8552          1.0000        0.0000     74
+    0.1     0.8552    0.8552   0.8552      0.0000      0.8552          1.0000        0.0000     74
+    0.3     0.8552    0.8552   0.8552      0.0000      0.8552          1.0000        0.0000     74
+    1.0     0.8552    0.8552   0.8552      0.0000      0.8552          1.0000        0.0000     74
+    3.0     0.8552    0.8552   0.8552      0.0000      0.8552          1.0000        0.0000     74
+    (per-target range of flat_cvar 0.8376 to 0.8904; realised m_strict 56 to 83, median 74)
+
+- **flat_cvar = 0.8552 reproduces lane T's 85.5% independently** (T computed 437/511 from the
+  realised m = 74.1; this is the same quantity measured per target at each target's own optimum).
+- **flat_f is identical to flat_cvar on every target and at every lam**, as derived. The raw
+  flatness does not fall, and no choice of lam can make it fall. If the gate had been read as
+  written, the idea would have been killed by a quantity that is constant by construction.
+- **flat_total = 0.0000**: the entropy term is non-flat in every direction, which is S29-L15's
+  "the entropy term fills those directions uniformly", measured. It carries no information, which
+  is why the gate reads the information-bearing part (CVaR + lam f) separately.
+- **OVERLAP = 0.0000 at every lam**: of the 74 directions along which the TTA readout's emitted
+  structure moves, the objective is exactly constant along NONE. The deployed readout moves along
+  **0 of 511** continuous directions, so its overlap is undefined by construction -- the honest
+  statement of the contrast is 0 moving directions against 74, with the objective seeing all 74.
+- The realised sensitivity is not an artefact of a near-zero derivative: the mean norm of
+  dC/dp_y over the tail directions is 55.7 A per unit probability (range 5.9 to 93.0).
+
+**GATE G5 (as registered): PASSED on the mechanism.** The objective can now see which candidates
+populate the tail and with what weight; the set is no longer forced to be a prefix (measured
+separately in S29-L25, where the f-optimal subset is non-prefix on 11/12 and 12/12); and the
+emitted structure is a differentiable function of exactly the directions the objective is
+non-flat in. This is the mechanism result and it stands whatever the endpoint does.
+
+**THE READOUT ANCHOR (prereg B2.4), ORACLE, point cloud, 12 targets, at the same deployed optimum;
+production = DIS top-75 uniform, 3.2529.** The change TTA requires is that the emitted structure
+be R_alpha, the p-weighted tail average, instead of production's uniform average over the tail
+set. The record is against sharper-than-uniform weights (S28-L21 / L41: p-weighted over the whole
+pool is +0.25 to +0.37 A worse), and I registered the expectation that this alone would put the
+arm in a hole. **It does not:**
+
+  rmsd_R_alpha - production (point cloud, ORACLE)
+    a 3.2800 (med 2.7147)   b 3.2529 (med 2.6820)   n=12
+    effect +0.0271   median +0.0006   SE 0.0223   MDE 0.0625   effect/MDE +0.43
+    iid  CI95 [-0.0072, +0.0763]
+    fold CI95 [-0.0148, +0.0781]   folds same sign 3/5   per-fold 0:+0.107 1:-0.030 2:+0.046 3:+0.000 4:-0.015
+    6W/6L/0T   worst degradation +0.2402 (7JGX)   p90 +0.0873   power 0.23  Type-M 2.09
+    VERDICT: NOT MEASURED (|effect| 0.0271 <= its own MDE 0.0625, 0.43x)
+
+  rmsd_tail_uniform - production (point cloud, ORACLE)
+    a 3.3049 (med 2.7202)   b 3.2529 (med 2.6820)   n=12
+    effect +0.0520   median +0.0000   SE 0.0490   MDE 0.1373   effect/MDE +0.38
+    iid  CI95 [-0.0105, +0.1565]
+    fold CI95 [-0.0110, +0.1507]   folds same sign 2/5   per-fold 0:+0.213 1:-0.007 2:+0.030 3:-0.010 4:-0.012
+    5W/4L/3T   worst degradation +0.5799 (7JGX)   p90 +0.0779   power 0.19  Type-M 2.36
+    VERDICT: NOT MEASURED (|effect| 0.0520 <= its own MDE 0.1373, 0.38x)
+
+Both are NOT MEASURED at n = 12 and neither is claimed. The descriptive reading: the p-weighted
+tail average is 0.027 A from production with 6W/6L, and the deployed tail-set average is 0.052 A
+from it with 5W/4L/3T -- i.e. the two readouts and production are the same object at this power,
+which is S28-L21's set-equality result read from the readout side. **Two contraction diagnostics
+beside them (contract addendum 1 rule 20's spirit, memory `averaging-space-beats-the-objective`):
+the R_alpha cloud's radius of gyration is 0.9995 of production's and its mean virtual CA-CA bond
+is 1.0036 of production's** -- the sharper average does NOT contract, although its weights span a
+factor 6.82 across the tail (T derived 8.4x across the prefix). So the readout change is not the
+hole I registered, and the endpoint arm is not starting in one.
+
+**WHAT THIS DOES NOT SAY.** It says nothing about accuracy: no lam was optimised, no endpoint was
+run, and the flatness is a property of the objective, not evidence about the pool (contract rule 9
+applies -- no slope or flat fraction here is called a plateau or its absence). By lane T's theorem
+2 (S29-L7) f is a marginal-class objective and cannot be locally informative, and S29-L25 has
+already measured that the sets this objective prefers are WORSE. The registered prediction (prereg
+B2.7, and the coordinator's, independently) is that the mechanism works and the endpoint does not
+move or moves the wrong way; half of that pair is now measured, and the half that remains is HELD
+for lane D's in-band ranking experiment, on the coordinator's instruction, because f must clear the
+meter's numbers 3 and 4 before 126 targets are projected through it.
+
+**One implementation note for the record, because it cost a job.** My first version of the
+production gate asserted `I.ca_rmsd(C_prod, frame.Wf[top].mean(0)) < 1e-8` and it FIRED. The
+clouds are in fact bit-identical (max |diff| exactly 0.0): `s12.instrument.ca_rmsd` has a
+Kabsch/SVD floor of **1.274e-07 A on identical input**, so no "agrees to 1e-8" claim can ever be
+met through `ca_rmsd`, and any such claim in the record should be read as "agrees to about 1.3e-7".
+The gate now asserts on the raw arrays, which is strictly stronger. Separately confirmed against
+lane P's verified path: `RP.topm(zr(DIS), 75, key)` equals `np.lexsort((key, DIS))[:75]` exactly on
+1A13, and `d_harness.readout_uniform` equals `I.coordinate_average` to 0.0 -- so the sprint's three
+implementations of the production cloud agree and no fourth was written.
+
+Multiplicity: 2 ORACLE diagnostic comparisons on 12 targets (the two readout anchors), 0 endpoint
+comparisons. The flatness numbers are property measurements, not contrasts.
+Artefacts: `s29/results/s29_B_tta_flat_rows.jsonl`, `s29/results/s29_B_tta_flat.json`;
+`s26/jobs_done/s29B_tta_flat2.json`, `s26/logs/s29B_tta_flat2.log`; code `s29/s29_B_tta.py`,
+tests `tests/test_s29_B.py` (18 pass, including
+`test_flat_report_reproduces_the_derived_flat_set`, which asserts flat_f == flat_cvar and
+overlap == 0 symbolically); prereg addendum 2 commit `d3ccf6b6`, before the job.

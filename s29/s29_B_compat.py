@@ -462,6 +462,32 @@ def _shard(pdbs: List[str], spec: Optional[str]) -> List[str]:
     return [p for j, p in enumerate(pdbs) if j % k == i]
 
 
+def shard_path(path: str, spec: Optional[str]) -> str:
+    """One rows file per shard: concurrent appends to one file are not atomic on Windows."""
+    if not spec:
+        return path
+    i, k = (int(x) for x in spec.split("/"))
+    return path.replace(".jsonl", f".s{i}of{k}.jsonl")
+
+
+def load_all(path: str) -> List[Dict]:
+    """Every shard of a rows file, de-duplicated by (pdb, and the row's own cell key)."""
+    import glob
+    out, seen = [], set()
+    pats = [path] + sorted(glob.glob(path.replace(".jsonl", ".s*of*.jsonl")))
+    for f in pats:
+        if not os.path.exists(f):
+            continue
+        for r in load(f):
+            key = (r.get("pdb"), r.get("matrix"), r.get("J"), r.get("n"),
+                   r.get("lam"), r.get("kind"), r.get("greedy_m"))
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append(r)
+    return out
+
+
 def run_phase(phase: str, pdbs: List[str], path: str, fn) -> None:
     done = _done(path)
     t0 = time.time()
@@ -498,9 +524,9 @@ def main(argv=None):
             pdbs = pdbs[:a.limit]
         pdbs = _shard(pdbs, a.shard)
         if a.grad:
-            run_phase("grad", pdbs, GRAD_ROWS, grad_target)
+            run_phase("grad", pdbs, shard_path(GRAD_ROWS, a.shard), grad_target)
         if a.gs:
-            run_phase("gs", pdbs, GS_ROWS, gs_target)
+            run_phase("gs", pdbs, shard_path(GS_ROWS, a.shard), gs_target)
     if a.analyse1:
         from s29 import s29_B_analyse as AN
         AN.analyse1()
