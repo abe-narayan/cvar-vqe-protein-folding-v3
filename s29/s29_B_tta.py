@@ -216,9 +216,13 @@ def flat_target(pdb: str) -> List[Dict]:
     # the production point: the DEPLOYED optimum (lam = 0), seed 0, exactly as shipped
     p0, th0, circ, _ = run_tta_vqe(E, ALPHA, TEMP, 0.0, Wf, sur, int(cand.n), enc.n_qubits, seed=0)
     lam_w0, strict0, x_q0, _, _ = tail_lambda(E, p0, ALPHA)
-    C_uni = frame.Wf[np.sort(np.union1d(strict0, [x_q0]))[
-        np.sort(np.union1d(strict0, [x_q0])) < k]].mean(0).reshape(int(cand.n), 3)
-    C_prod = frame.Wf[top].mean(0).reshape(int(cand.n), 3)
+    tail_idx = np.sort(np.union1d(strict0, [x_q0])).astype(int)
+    tail_idx = tail_idx[tail_idx < k]                  # real candidates only (padding never in tail)
+    # the DEPLOYED readout operator, in the retained set's OWN medoid frame, exactly as shipped
+    C_uni = I.coordinate_average(cand.W[tail_idx])[0]
+    C_prod = I.coordinate_average(cand.W[top])[0]
+    # frame.Wf[top].mean(0) is the same object in the top-75 medoid frame; assert they agree
+    assert abs(float(I.ca_rmsd(C_prod, frame.Wf[top].mean(0).reshape(int(cand.n), 3)))) < 1e-8
     R0 = (lam_w0 @ Wf).reshape(int(cand.n), 3)
     pad_mass = float(p0[k:].sum())
     for lam_f in LAM_GRID:
@@ -237,7 +241,10 @@ def flat_target(pdb: str) -> List[Dict]:
                      fold=int(cand.fold), k=int(k), at="deployed_optimum_seed0",
                      label="ORACLE-SCORED ACHIEVABLE READOUTS",
                      rmsd_prod=orc(C_prod), rmsd_tail_uniform=orc(C_uni), rmsd_R_alpha=orc(R0),
-                     m_tail=int(len(strict0) + 1), pad_mass=pad_mass,
+                     m_tail=int(len(tail_idx)), pad_mass=pad_mass,
+                     tail_is_prefix=bool(np.array_equal(
+                         np.sort(tail_idx),
+                         np.sort(np.asarray(RP.topm(E_real, len(tail_idx), key), int)))),
                      lam_w_max=float(lam_w0.max()), lam_w_ratio=float(
                          lam_w0.max() / max(lam_w0[lam_w0 > 0].min(), 1e-300)),
                      rg_prod=float(np.sqrt(((C_prod - C_prod.mean(0)) ** 2).sum(1).mean())),
