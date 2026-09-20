@@ -287,3 +287,16 @@ deterministic function of the cached cloud, the scalar s and lam, computed in a 
 process (`OMP/MKL/OPENBLAS_NUM_THREADS = 1`), and the PROD arm's bit-exact reproduction gate is
 re-asserted **per target inside the 126 run**, not only on the probe. The 6-target probe and its
 1e-9 gate run first, unsharded, exactly as pre-registered in section 10.
+
+## ADDENDUM 2 (2026-09-20 00:21; execution only, no scientific change)
+
+Inside each shard the work runs in two phases: **primary** (PROD, BOND, SPAN, ISO, CTRL-INV,
+CTRL-GLOBAL, CTRL-LAM, BOND-LAMFIX, the 8 CTRL-RAND draws and FLOOR -- every cell the
+pre-registered falisifer F-P1/F-P2/F-P3 needs) and then **oracle** (the 9 remaining points of
+the ORACLE s-grid, which is a labelled ceiling and not part of any falsifier). The box is
+CPU-saturated (8 to 9 concurrent single-threaded jobs against 6.43 core-equivalents, the
+governor suspending on the 94% CPU ceiling), so ordering the work this way lets the endpoint
+verdict be read before the ceiling grid completes. Each cell is a deterministic function of the
+cached cloud, its scalar and lam, so phase order changes no number. The analysis reports the
+primary-complete target count and the grid-complete target count separately and refuses to form
+the ORACLE contrast until the grid is complete on every analysed target.
