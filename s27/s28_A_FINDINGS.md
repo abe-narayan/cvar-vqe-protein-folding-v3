@@ -1,19 +1,18 @@
-DRAFT (paused 2026-09-14 23:30 on the user's order): complete except section 4.3, the A2 step ladder on the built chain (job `s28A2_chain` running, 88/126 at the pause).
-
 # S28 LANE A FINDINGS -- THE AMPLITUDE READOUT (a CVaR-VQE read as a SIGNED combination), AND A2 (the objective's local behaviour at the production point)
 
-Sprint 28, 2026-09-14. Pre-registration `s27/PREREG_S28_A.md` (addenda 1 to 4, every one
-written before the run it governs). Code `s27/s28_A_amp.py` (the readout, the surrogate, the
-exact gradients, the circuit and the classical families, the ORACLE ceilings, the three phases),
-`s27/s28_A_analyse.py`, `s27/s28_A_objdiag.py`, `s27/s28_A2_local.py`, `s27/s28_A2_analyse.py`.
+Sprint 28, 2026-09-14, paused 2026-09-14 23:30 and completed 2026-09-19 (the A2 built chain).
+Pre-registration `s27/PREREG_S28_A.md` (addenda 1 to 4, every one written before the run it
+governs). Code `s27/s28_A_amp.py` (the readout, the surrogate, the exact gradients, the circuit
+and the classical families, the ORACLE ceilings, the three phases), `s27/s28_A_analyse.py`,
+`s27/s28_A_objdiag.py`, `s27/s28_A2_local.py`, `s27/s28_A2_analyse.py`, `s27/s28_A2_prodcheck.py`.
 Tests `tests/test_s28_A.py` (23) and `tests/test_s28_A2.py` (5), all passing. Ledger entries
-S28-L1b, L12, L17, L18b, L19, L23b, L26b, L27, L30; lane D's checks S28-L1, L13, L20, L23,
-L27b (every one STANDS or STANDS WITH CAVEAT, the caveats answered in the entries named).
-Every number carries its artefact path; nothing is quoted from memory. Basis is stated on both
-sides of every contrast; the built chain is the verdict basis.
+S28-L1b, L12, L17, L18b, L19, L23b, L26b, L27, L30, L39; lane D's checks S28-L1, L13, L20, L23,
+L27b, L31 (every one STANDS or STANDS WITH CAVEAT, the caveats answered in the entries named;
+the check of S28-L39 is lane D's next). Every number carries its artefact path; nothing is
+quoted from memory. Basis is stated on both sides of every contrast; the built chain is the
+verdict basis.
 
-STATUS: complete except section 4.3 (the A2 step ladder on the built chain; job `s28A2_chain`,
-13 projections per target, running under the governor; its entry follows).
+STATUS: complete. Lanes A and A2 close with S28-L39 (section 4.3).
 
 ## 1. The question
 
@@ -148,11 +147,57 @@ pipeline's own output is blind (cosine -0.03), and its ordering puts the native 
 average on 99/126 targets; a signed readout, which can reach 0.25 A on every target, therefore
 walks the wrong way, and so does every convex re-weighting that leaves production.
 
-**4.3 Built chain (the verdict basis): PENDING**, job `s28A2_chain` (step e x 3, random draws 0
-and 1 x 3, the circuit's nearest point, circuit steps x 3; 13 projections per target; production
-re-projected in the same job). Falsifier: some e beats production beyond MDE with the fold CI
-excluding zero on 5/5 folds AND beats the random-direction mean (of the same two projected
-draws) beyond MDE. Prior: does not fire.
+**4.3 Built chain (the verdict basis; 126/126; S28-L39).** `s27/results/s28_A_chain_rows.jsonl`
+(the 13 A2 arms per target; jobs `s28A2_chain` 94/126 on 2026-09-14 and `s28A2_chain_r2` the
+remaining 32 on 2026-09-19, 2221.6 s wall with three governor suspensions, peak RSS 0.313 GB),
+`s27/results/s28_A2_summary.json :: contrasts (chain:*), chain_strata, chain_projection_price,
+chain_rand_best_of_2, chain_circP, chain_step_e_grid_bok, chain_circ_e_grid_bok,
+falsifier_A22_chain`. The comparator is production's chain from the primary chain job (S28-L26b,
+3.2071): the identical stored cloud through the identical code path, re-projected today on
+2LNG / 1A13 / 9BFL / 6RRO bit-for-bit (4/4, `s28_A2_prodcheck.json`), so the S28-L18 / L27b
+floor does not apply. ST.fmt verbatim for every contrast in S28-L39.
+
+| arm (built chain) | mean | vs production | x MDE | fold CI | folds | W/L | verdict |
+|---|---|---|---|---|---|---|---|
+| production (S28-L26b) | 3.2071 | | | | | | comparator |
+| gradient step e = 0.1 A | 3.2034 | -0.0037 | 0.21 | [-0.016, +0.007] | 2/5 | 67/59 | NOT MEASURED |
+| gradient step e = 0.3 | 3.2249 | +0.0178 | 0.74 | [+0.009, +0.027] | 5/5 | 57/69 | NOT MEASURED (sign only; Type-M zone) |
+| gradient step e = 1 | 3.3116 | +0.1045 | 2.10 | [+0.081, +0.128] | 5/5 | 39/87 | WORSE |
+| random direction, mean of the SAME two projected draws, e = 0.1 / 0.3 / 1 | 3.2084 / 3.2250 / 3.3255 | +0.0014 / +0.0180 / +0.1185 | 0.08 / 0.99 / 2.64 | | 2/5, 4/5, 5/5 | | NOT MEASURED / NOT MEASURED / WORSE |
+| step vs that random mean, e = 0.1 / 0.3 / 1 | | -0.0051 / -0.0001 / -0.0139 | 0.22 / 0.00 / 0.26 | all include zero | | 70/56, 72/54, 70/56 | NOT MEASURED at every e |
+| circP (the family's nearest point to production; residual 0.114 A RMS) | 3.2143 | +0.0072 | 0.38 | [-0.010, +0.023] | 3/5 | 65/61 | NOT MEASURED |
+| circuit one step vs circP, e = 0.1 / 0.3 / 1 | 3.2143 / 3.2220 / 3.3364 | +0.0000 / +0.0078 / +0.1222 | 0.00 / 0.21 / 1.34 | e = 1: [+0.068, +0.162] | e = 1: 5/5 | e = 1: 45/81 | NOT MEASURED / NOT MEASURED / WORSE |
+
+- The falsifier (some e beats production beyond MDE, fold CI, 5/5, AND beats the random mean
+  beyond MDE) does not fire at any e, decided from the stored contrasts. The prior held on every
+  measurable count: the step degrades at e = 0.3 (sign) and e = 1 (2.1x MDE); nothing is measured
+  at e = 0.1 on either side; the random direction degrades about equally; the circuit's one step
+  degrades from its own baseline at e = 1 (1.34x, WORSE).
+- Like for like (lane D's S28-L23 (c)): against the mean of the SAME two projected draws the step
+  is 0.0x to 0.3x MDE with the fold CI including zero at every e. On the point cloud (4.1) the
+  same contrast carried a sign (fold CI above zero, under MDE); the projection removed it. The
+  random best-of-2 is 72 to 83% accounted by the across-target null, split-half NOT A SIGNAL.
+- The e grid (D's (b)): the per-target minimum over e is 93% (step) / 94% (circuit) accounted,
+  k_eff 2.7; the split-half "residual" (-0.043 / -0.038) is the column-mean effect of the
+  smallest step (its column mean sits 0.0433 below the average of the three), i.e. the choice
+  "e = 0.1", whose own contrast with production is the null -0.0037. No e is chosen.
+- FAIL18 / 108 (`chain_strata`; FAIL18 spans 4 folds): at e = 1 the step is worse in both strata
+  (FAIL18 +0.134, 1.01x, Type-M, 4/4, 4W/14L; the 108 +0.100, 1.85x, 5/5, WORSE); at e <= 0.3
+  nothing is measured in either; the circuit step at e = 0.1 / 0.3 costs +0.041 / +0.117 on
+  FAIL18 (1.08 to 1.09x, Type-M, sign only) and 0.05x on the 108: where the distogram is wrong
+  its descent costs more (3.3's -0.14 cosine, in Angstroms), and no regime is helped.
+- Through the projection: the step's harm at e = 1 shrinks from +0.237 (cloud) to +0.105
+  (chain) and the same two random draws' from +0.212 to +0.119, because a 1 A displacement
+  de-contracts the average (projection price +0.159 for production, +0.026 for the step, +0.06
+  to +0.07 for the random draws; emitted Rg 6.48 production, 6.88 step e = 1, 6.56 random). The
+  objective's descent from production is largely an expansion of the contracted average, not
+  toward the native (cosine -0.03), and the emitted chain ends where a random step's does. S~
+  falls as asked: 1.674 -> 1.619 on 126/126 at e = 0.1, 1.541 on 113/126 at 0.3, 1.533 on
+  79/126 at 1.
+- Verdict: REFUTED for accuracy ("the objective is locally informative at the production
+  point"). 0.1 A from production is free and worthless, 0.3 A costs the sign, 1 A costs 0.10 A,
+  and at every size the price is a random step's. A trust region around production has nothing
+  to follow. No seed-1 run is owed. Lanes A and A2 close here.
 
 ## 5. HYPOTHESIS / REFUTED / OPEN
 
@@ -162,7 +207,10 @@ draws) beyond MDE. Prior: does not fire.
 - REFUTED: "the circuit's inductive bias regularises the objective's failure" (F2 moot; the
   circuit is the least bad signed family and worse than the convex simplex; A2's one-step arm
   degrades like the raw step).
-- REFUTED (A2 prior held): "the objective is locally informative at the production point".
+- REFUTED (A2 prior held, built chain, S28-L39): "the objective is locally informative at the
+  production point": the deployable step is null at 0.1 A, worse in sign at 0.3, worse at 1
+  (2.1x MDE), and at every size worth a random step of the same size (0.0x to 0.3x MDE
+  against the mean of the same two projected draws); the circuit family adds nothing.
 - ORACLE DIAGNOSTIC, standing: the 27-parameter signed family contains a structure within
   0.29 A (point cloud) / 0.25 A (emitted) of the native on every target; a curved 27-parameter
   family is more expressive than a linear one of the same count by 0.16 A on the median.
@@ -205,6 +253,12 @@ draws) beyond MDE. Prior: does not fire.
 - On the A2 built chain only random draws 0 and 1 per e are projected (16 projections per
   target would be the budget's limit; D's S28-L23 caveat (c): the step is paired against the
   mean of the SAME two draws).
+- Production was not re-projected inside the A2 chain job (the arm list is the 13 A2 arms);
+  the comparator is the primary chain job's projection of the identical stored cloud by the
+  identical code path, and instead of asserting determinism I measured it on four targets
+  including the branch-flip target 2LNG (bit-identical 4/4, `s28_A2_prodcheck.json`, D's (d)).
+- No seed-1 replication of the random control's draws (no positive to replicate); no e was
+  chosen (the grid's split-half transfer is the column-mean effect of the smallest step).
 
 ## 8. Resources
 
@@ -213,5 +267,9 @@ Jobs (all under `s26/jobrun.py --agent S28A`, tag CPU; peak RSS from `s26/jobs_d
 governor kill at 43/126, resumed from the per-target checkpoint); `s28A_chain_oracle` + `_r2`
 (killed at 20/126 and 22/126 by the governor at 95 to 96% RAM from the user's load; both
 resumed); `s28A_chain_primary_1` 4262 s / 0.311 GB (one suspension); `s28A2_cosine_126` 60 s /
-0.298 GB; `s28A2_ladder_126` 436 s / 0.26 GB; `s28A_objdiag` 30 s / 0.26 GB. Every job
+0.298 GB; `s28A2_ladder_126` 436 s / 0.26 GB; `s28A_objdiag` 30 s / 0.26 GB; `s28A2_chain`
+(2026-09-14, 94/126, 13 projections per target, died with the harness's low-memory kill of
+its session at the pause) + `s28A2_chain_r2` (2026-09-19, the remaining 32 targets, 2221.6 s
+wall of which three governor suspensions under the user's 93 to 95% box load, peak 0.313 GB);
+`s28A2_prodcheck` 25 s / 0.308 GB. Every job
 checkpoints per target and is resumable; every result file is provenance-stamped.

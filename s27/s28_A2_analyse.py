@@ -134,20 +134,97 @@ def main():
     if chn and a2_arms:
         say("\n" + "=" * 100 + "\nA2.2 BUILT CHAIN (the verdict basis; vs production re-projected in the same job)  arms: %s" % a2_arms)
         pch = AN.arm_vec(chn, pdbs, "prod", "rmsd_chain")
+        n_full = int(sum(all(a in chn[p]["arms"] for a in a2_arms) for p in pdbs if p in chn))
+        say("  targets carrying every A2 arm on the chain: %d / %d" % (n_full, len(pdbs)))
+        summary["n_chain_a2_complete"] = n_full
+        summary["chain_means"] = {"prod": float(np.nanmean(pch))}
+        summary["chain_strata"] = {}
+        summary["chain_projection_price"] = {"prod": float(np.nanmean(pch - AN.arm_vec(chn, pdbs, "prod", "rmsd_cloud")))}
+
+        def strata(v, b, label):
+            """FAIL18 / other-108 split of a paired chain contrast: raw means, then `ST.compare`
+            within each stratum (S28-L26b's form; FAIL18 spans 4 of the 5 pinned folds)."""
+            ok = np.isfinite(v) & np.isfinite(b); d = v - b
+            say("    FAIL18 mean d %+.4f (n=%d)   other 108 mean d %+.4f (n=%d)" % (np.nanmean(d[fail & ok]), (fail & ok).sum(), np.nanmean(d[~fail & ok]), (~fail & ok).sum()))
+            st = {}
+            for nm, m in (("FAIL18", fail & ok), ("other108", ~fail & ok)):
+                if m.sum() < 3:
+                    continue
+                rr = ST.compare(v[m], b[m], folds[m], names=[p for p, o in zip(pdbs, m) if o], label="%s, %s (BUILT CHAIN)" % (label, nm))
+                st[nm] = rr
+                say("    %-8s effect %+.4f  SE %.4f  MDE %.4f  %+.2fx  fold CI [%+.4f, %+.4f]  folds %d/%d  %dW/%dL  %s"
+                    % (nm, rr["effect"], rr["se"], rr["mde"], rr["effect_over_mde"], rr["ci95_fold"][0], rr["ci95_fold"][1],
+                       rr["folds_same_sign"], rr["n_folds"], rr["n_better"], rr["n_worse"], rr["verdict"]))
+            return st
+
         for arm in a2_arms:
             v = AN.arm_vec(chn, pdbs, arm, "rmsd_chain")
+            summary["chain_means"][arm] = float(np.nanmean(v))
+            summary["chain_projection_price"][arm] = float(np.nanmean(v - AN.arm_vec(chn, pdbs, arm, "rmsd_cloud")))
             say("")
             r = AN.contrast(v, pch, folds, pdbs, "%s vs production (BUILT CHAIN)" % arm)
             summary["contrasts"]["chain:" + arm] = r
             if r is not None:
-                ok = np.isfinite(v) & np.isfinite(pch); d = v - pch
-                say("    FAIL18 mean d %+.4f (n=%d)   other 108 mean d %+.4f (n=%d)" % (np.nanmean(d[fail & ok]), (fail & ok).sum(), np.nanmean(d[~fail & ok]), (~fail & ok).sum()))
+                summary["chain_strata"][arm] = strata(v, pch, "%s vs production" % arm)
+        say("\n  projection price (chain minus point cloud, mean over targets): " +
+            "  ".join("%s %+.3f" % (k, val) for k, val in summary["chain_projection_price"].items()))
+        # the like-for-like random control (S28-L23 (c)): the MEAN of the SAME two projected draws;
+        # the best-of-2 is an order statistic and is priced with best_of_k_within on the (n, 2) matrix
+        summary["chain_rand_best_of_2"] = {}
         for e in L.STEPS:
             s_arm, r_arms = "step_e%g" % e, [a for a in a2_arms if a.startswith("rand") and a.endswith("_e%g" % e)]
             if s_arm in a2_arms and r_arms:
-                rm = np.nanmean(np.column_stack([AN.arm_vec(chn, pdbs, a, "rmsd_chain") for a in r_arms]), 1)
+                R = np.column_stack([AN.arm_vec(chn, pdbs, a, "rmsd_chain") for a in r_arms])
+                rm = np.nanmean(R, 1)
+                sv = AN.arm_vec(chn, pdbs, s_arm, "rmsd_chain")
                 say("")
-                summary["contrasts"]["chain:step_vs_rand_e%g" % e] = AN.contrast(AN.arm_vec(chn, pdbs, s_arm, "rmsd_chain"), rm, folds, pdbs, "gradient step e=%g vs random direction (mean of %d draws) (BUILT CHAIN)" % (e, len(r_arms)))
+                summary["contrasts"]["chain:rand_mean_e%g" % e] = AN.contrast(rm, pch, folds, pdbs, "random direction e=%g A, MEAN of the %d projected draws (%s), vs production (BUILT CHAIN)" % (e, len(r_arms), ",".join(r_arms)))
+                summary["chain_strata"]["rand_mean_e%g" % e] = strata(rm, pch, "random mean-of-%d e=%g vs production" % (len(r_arms), e))
+                say("")
+                summary["contrasts"]["chain:step_vs_rand_e%g" % e] = AN.contrast(sv, rm, folds, pdbs, "gradient step e=%g vs random direction (mean of the SAME %d projected draws) (BUILT CHAIN)" % (e, len(r_arms)))
+                summary["chain_strata"]["step_vs_rand_e%g" % e] = strata(sv, rm, "step e=%g vs random mean-of-%d" % (e, len(r_arms)))
+                ok = np.isfinite(R).all(1)
+                if ok.sum() > 20 and R.shape[1] > 1:
+                    w = ST.best_of_k_within(R[ok])
+                    say("    random best-of-%d (order statistic) mean %.4f; priced: observed %+.4f, valid null %+.4f (%.0f%%), k_eff %.2f, split-half %+.4f, %s"
+                        % (R.shape[1], np.nanmean(np.nanmin(R, 1)), w["observed_gain"], w["null_across_targets"], 100 * w["share_accounted"], w["k_eff"], w["split_half"], w["verdict"]))
+                    summary["chain_rand_best_of_2"]["e%g" % e] = dict(mean_best=float(np.nanmean(np.nanmin(R, 1))), **{k: w[k] for k in ("observed_gain", "null_across_targets", "share_accounted", "k_eff", "split_half", "verdict")})
+        # the circuit one-step arm against its OWN projected baseline (S28-L23 (e)); circP's residual beside its own RMSD
+        if "circP" in a2_arms:
+            cP = AN.arm_vec(chn, pdbs, "circP", "rmsd_chain")
+            res = np.array([lad[p]["arms"]["circP"]["residual_rms_to_prod"] if p in lad and "circP" in lad[p]["arms"] else np.nan for p in pdbs])
+            say("\n  circP (the family's nearest point to production): residual RMS to C0 mean %.3f A (median %.3f, max %.3f); its own RMSD: point cloud %.4f, BUILT CHAIN %.4f (production %.4f)"
+                % (np.nanmean(res), np.nanmedian(res), np.nanmax(res), np.nanmean(AN.arm_vec(chn, pdbs, "circP", "rmsd_cloud")), np.nanmean(cP), np.nanmean(pch)))
+            summary["chain_circP"] = dict(residual_rms_mean=float(np.nanmean(res)), residual_rms_median=float(np.nanmedian(res)), residual_rms_max=float(np.nanmax(res)),
+                                          rmsd_cloud=float(np.nanmean(AN.arm_vec(chn, pdbs, "circP", "rmsd_cloud"))), rmsd_chain=float(np.nanmean(cP)))
+            for e in L.STEPS:
+                c_arm = "circ_e%g" % e
+                if c_arm in a2_arms:
+                    say("")
+                    summary["contrasts"]["chain:%s_vs_circP" % c_arm] = AN.contrast(AN.arm_vec(chn, pdbs, c_arm, "rmsd_chain"), cP, folds, pdbs, "circuit one-step e=%g vs the family's nearest point to production, circP (BUILT CHAIN)" % e)
+        # the e grid is a grid of three (S28-L23 (b)): the per-target minimum over e is priced for the step arm and the circuit arm
+        for nm, pref in (("step", "step_e%g"), ("circ", "circ_e%g")):
+            grid = [pref % e for e in L.STEPS if (pref % e) in a2_arms]
+            if len(grid) == len(L.STEPS):
+                M = np.column_stack([AN.arm_vec(chn, pdbs, a, "rmsd_chain") for a in grid])
+                ok = np.isfinite(M).all(1) & np.isfinite(pch)
+                if ok.sum() > 20:
+                    w = ST.best_of_k_within(M[ok])
+                    say("\n  %s arm, per-target min over the e grid %s priced (best_of_k_within): observed %+.4f, valid null %+.4f (%.0f%%), k_eff %.2f, argmin counts %s, split-half %+.4f, %s"
+                        % (nm, grid, w["observed_gain"], w["null_across_targets"], 100 * w["share_accounted"], w["k_eff"], w["argmin_counts"], w["split_half"], w["verdict"]))
+                    summary["chain_%s_e_grid_bok" % nm] = {k: w[k] for k in ("observed_gain", "null_across_targets", "share_accounted", "k_eff", "argmin_counts", "split_half", "verdict")}
+                    say("    best-of-3 over e (order statistic) mean %.4f vs production %.4f" % (np.nanmean(M[ok].min(1)), np.nanmean(pch[ok])))
+        # the registered falsifier (addendum 4, A2.2), decided from the stored contrasts, not by eye
+        def _beats(r):
+            return bool(r is not None and r["effect"] < 0 and abs(r["effect"]) > r["mde"] and r["ci95_fold"] is not None
+                        and r["ci95_fold"][1] < 0 and r["folds_same_sign"] == r["n_folds"])
+        fz = {}
+        for e in L.STEPS:
+            rp, rr = summary["contrasts"].get("chain:step_e%g" % e), summary["contrasts"].get("chain:step_vs_rand_e%g" % e)
+            fz["e%g" % e] = dict(beats_production=_beats(rp), beats_random_mean=_beats(rr), fires=_beats(rp) and _beats(rr))
+        summary["falsifier_A22_chain"] = dict(fz, fires_any=any(v["fires"] for v in fz.values()))
+        say("\n  falsifier A2.2 (some e beats production beyond MDE, fold CI excluding zero, 5/5, AND beats the random mean beyond MDE): %s  %s"
+            % ("FIRES" if summary["falsifier_A22_chain"]["fires_any"] else "DOES NOT FIRE", fz))
 
     path = os.path.join(RESULTS, "s28_A2_summary.json")
     ST.save_atomic(path, dict(summary, text="\n".join(OUT)), module_file=__file__)

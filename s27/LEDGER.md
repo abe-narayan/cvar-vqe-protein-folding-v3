@@ -2692,3 +2692,409 @@ reproduces `s27/results/s28_D_c2_poolmember.json` at 0.0 on 1,368 numeric fields
 Verdict: the gate holds (72/72 lane files; 358 / 3 / 0 on the runnable set); S27 reproduces.
 Artefacts: `s26/jobs_done/s28D_pytest_lanes_v4.json`, `s26/logs/s28D_pytest_lanes_v4.log`,
 `s27/results/s28_D_reproduce_vqe_seed106.json`, `s26/jobs_done/s28D_reproduce_seed106.json`.
+
+## S28-L39 -- A2.2 THE STEP LADDER ON THE BUILT CHAIN (VERDICT, 126/126): A STEP ALONG THE SHIPPED OBJECTIVE'S DESCENT DIRECTION FROM PRODUCTION IS NULL AT e = 0.1 A (-0.004, 0.21x MDE), WORSE IN SIGN ONLY AT 0.3 (+0.018, 0.74x, FOLD CI ABOVE ZERO, 5/5) AND WORSE AT 1 (+0.105, 2.1x, 5/5); AGAINST THE MEAN OF THE SAME TWO PROJECTED RANDOM DIRECTIONS IT IS 0.0x TO 0.3x MDE AT EVERY e WITH THE FOLD CI INCLUDING ZERO; THE CIRCUIT'S ONE STEP DEGRADES FROM ITS OWN BASELINE AT e = 1 (+0.122, 1.3x); THE FALSIFIER DOES NOT FIRE; THE PRIOR HELD ON EVERY COUNT; LANES A AND A2 CLOSE (2026-09-19 20:54, A2)
+
+Basis: BUILT CHAIN, `s12.instrument.project`. Pre-registered `s27/PREREG_S28_A.md` ADDENDUM 4,
+A2.2 (falsifier and prior written 2026-09-14 21:30, before any A2 number). Artefacts:
+`s27/results/s28_A_chain_rows.jsonl` (126 rows; the LAST row per pdb is the complete one; every
+target carries the 13 A2 arms `step_e{0.1,0.3,1}`, `rand{0,1}_e{0.1,0.3,1}`, `circP`,
+`circ_e{0.1,0.3,1}`, no non-finite value), `s27/results/s28_A2_summary.json` (`contrasts` with
+every `chain:` key, `chain_means`, `chain_strata`, `chain_projection_price`,
+`chain_rand_best_of_2`, `chain_circP`, `chain_step_e_grid_bok`, `chain_circ_e_grid_bok`,
+`falsifier_A22_chain`, `text`), `s27/results/s28_A2_prodcheck.json`. Jobs: `s28A2_chain`
+(2026-09-14, 94/126 targets, died with the harness's low-memory kill of its session, checkpoint
+per target) and `s28A2_chain_r2` (2026-09-19 20:07 to 20:44, resumed at target 95 (6RRO), the
+remaining 32; `s26/jobs_done/s28A2_chain_r2.json` exit 0, wall 2221.6 s including three
+governor suspensions under the user's 93 to 95% box load, peak RSS 0.313 GB);
+`s28A2_prodcheck` (25 s, 0.308 GB). Code `s27/s28_A_amp.py` (chain phase),
+`s27/s28_A2_local.py` (the ladder), `s27/s28_A2_analyse.py` (extended today with the
+per-stratum `ST.compare`, the best-of-2 pricing, the e-grid pricing, the circP residual and the
+falsifier decision computed from the stored contrasts), `s27/s28_A2_prodcheck.py`.
+
+Setup (S28-L30): C0 = the production point cloud (DIS top-75 uniform average, medoid frame,
+3.048338); g = dS~/dC with rigid-body components removed; C(e) = C0 - e g / rms(g), e in
+0.1 / 0.3 / 1.0 A of RMS displacement; the random-direction control at the same RMS displacement
+(draws 0 and 1 projected; the MEAN of the two is the control, lane D's S28-L23 (c)); the circuit
+family's nearest point to C0 (circP, theta_P) and its one steepest-descent step scaled to the
+same e. The deployable arms never see the native; the native is read only by the scorer of the
+emitted chain (S28-L10 item 3).
+
+THE COMPARATOR (lane D's S28-L23 (d)). Production on the built chain is the PRIMARY chain job's
+projection (`s28A_chain_primary_1`, S28-L26b, mean 3.2071) of the identical stored cloud
+(`s27/results/s28_A_structs/<pdb>.npz :: prod`) through the identical code path
+(`s28_A_amp.run_chain_target` -> `I.project`); it was not re-projected inside the A2 job. The
+S28-L18 / S28-L27b floor needs an input difference (a branch flip under a 1e-13 perturbation).
+Measured today: re-projecting `prod` on 2LNG (the 0.513 A branch-flip target of S28-L27b), 1A13,
+9BFL and 6RRO reproduces the stored chain RMSD bit-for-bit on 4/4 (max |diff| 0.0,
+`s28_A2_prodcheck.json`). The two sides of every contrast below share one code path and one
+input; the floor does not apply.
+
+The analysis block, verbatim (`s28_A2_summary.json :: text`; every A2 arm vs production, the
+random mean of the SAME two projected draws vs production, the step vs that mean, circP vs
+production, the circuit step vs circP; FAIL18 / 108 raw means and per-stratum `ST.compare`
+beneath each; FAIL18 spans 4 of the 5 pinned folds, so its fold count reads k/4):
+
+A2.2 BUILT CHAIN (the verdict basis; vs production re-projected in the same job)  arms: ['circP', 'circ_e0.1', 'circ_e0.3', 'circ_e1', 'rand0_e0.1', 'rand0_e0.3', 'rand0_e1', 'rand1_e0.1', 'rand1_e0.3', 'rand1_e1', 'step_e0.1', 'step_e0.3', 'step_e1']
+  targets carrying every A2 arm on the chain: 126 / 126
+
+  circP vs production (BUILT CHAIN)
+    a 3.2143 (med 2.9852)   b 3.2071 (med 2.9661)   n=126
+    effect +0.0072   median -0.0001   SE 0.0067   MDE 0.0187   effect/MDE +0.38
+    iid  CI95 [-0.0060, +0.0199]
+    fold CI95 [-0.0102, +0.0226]   folds same sign 3/5   per-fold 0:-0.019 1:-0.016 2:+0.022 3:+0.023 4:+0.023
+    65W/61L/0T   worst degradation +0.2623 (7VI4)   p90 +0.1033   power 0.19  Type-M 2.33
+    concentration: drop-top10 +0.0198 vs uniform-effect null p10/p50/p90 +0.0118/+0.0193/+0.0271 -> pctile 0.534
+    VERDICT: NOT MEASURED (|effect| 0.0072 <= its own MDE 0.0187, 0.38x)
+    FAIL18 mean d +0.0060 (n=18)   other 108 mean d +0.0074 (n=108)
+    FAIL18   effect +0.0060  SE 0.0164  MDE 0.0460  +0.13x  fold CI [-0.0230, +0.0430]  folds 2/4  9W/9L  NOT MEASURED (|effect| 0.0060 <= its own MDE 0.0460, 0.13x)
+    other108 effect +0.0074  SE 0.0073  MDE 0.0205  +0.36x  fold CI [-0.0098, +0.0228]  folds 3/5  56W/52L  NOT MEASURED (|effect| 0.0074 <= its own MDE 0.0205, 0.36x)
+
+  circ_e0.1 vs production (BUILT CHAIN)
+    a 3.2143 (med 2.9157)   b 3.2071 (med 2.9661)   n=126
+    effect +0.0072   median +0.0022   SE 0.0093   MDE 0.0260   effect/MDE +0.28
+    iid  CI95 [-0.0101, +0.0261]
+    fold CI95 [-0.0098, +0.0230]   folds same sign 3/5   per-fold 0:-0.022 1:-0.004 2:+0.004 3:+0.018 4:+0.035
+    62W/64L/0T   worst degradation +0.6570 (1D6X)   p90 +0.0928   power 0.12  Type-M 3.13
+    concentration: drop-top10 +0.0231 vs uniform-effect null p10/p50/p90 +0.0118/+0.0224/+0.0345 -> pctile 0.540
+    VERDICT: NOT MEASURED (|effect| 0.0072 <= its own MDE 0.0260, 0.28x)
+    FAIL18 mean d +0.0413 (n=18)   other 108 mean d +0.0016 (n=108)
+    FAIL18   effect +0.0413  SE 0.0135  MDE 0.0380  +1.09x  fold CI [+0.0140, +0.0753]  folds 4/4  5W/13L  WORSE [TYPE-M ZONE: magnitude inflated ~1.08x]
+    other108 effect +0.0016  SE 0.0105  MDE 0.0294  +0.05x  fold CI [-0.0145, +0.0190]  folds 2/5  57W/51L  NOT MEASURED (|effect| 0.0016 <= its own MDE 0.0294, 0.05x)
+
+  circ_e0.3 vs production (BUILT CHAIN)
+    a 3.2220 (med 3.0550)   b 3.2071 (med 2.9661)   n=126
+    effect +0.0150   median +0.0138   SE 0.0128   MDE 0.0360   effect/MDE +0.42
+    iid  CI95 [-0.0097, +0.0403]
+    fold CI95 [-0.0075, +0.0321]   folds same sign 4/5   per-fold 0:-0.029 1:+0.012 2:+0.040 3:+0.031 4:+0.021
+    59W/67L/0T   worst degradation +0.5913 (2NB7)   p90 +0.1626   power 0.21  Type-M 2.17
+    concentration: drop-top10 +0.0389 vs uniform-effect null p10/p50/p90 +0.0238/+0.0386/+0.0543 -> pctile 0.507
+    VERDICT: NOT MEASURED (|effect| 0.0150 <= its own MDE 0.0360, 0.42x)
+    FAIL18 mean d +0.1167 (n=18)   other 108 mean d -0.0020 (n=108)
+    FAIL18   effect +0.1167  SE 0.0384  MDE 0.1077  +1.08x  fold CI [+0.0569, +0.2193]  folds 4/4  4W/14L  WORSE [TYPE-M ZONE: magnitude inflated ~1.09x]
+    other108 effect -0.0020  SE 0.0129  MDE 0.0362  -0.05x  fold CI [-0.0174, +0.0155]  folds 3/5  55W/53L  NOT MEASURED (|effect| 0.0020 <= its own MDE 0.0362, 0.05x)
+
+  circ_e1 vs production (BUILT CHAIN)
+    a 3.3364 (med 3.0959)   b 3.2071 (med 2.9661)   n=126
+    effect +0.1294   median +0.1330   SE 0.0323   MDE 0.0906   effect/MDE +1.43
+    iid  CI95 [+0.0673, +0.1927]
+    fold CI95 [+0.0658, +0.1753]   folds same sign 5/5   per-fold 0:+0.006 1:+0.146 2:+0.192 3:+0.122 4:+0.172
+    47W/79L/0T   worst degradation +1.1332 (8HVS)   p90 +0.5274   power 0.98  Type-M 1.01
+    concentration: drop-top10 +0.1892 vs uniform-effect null p10/p50/p90 +0.1477/+0.1886/+0.2298 -> pctile 0.506
+    VERDICT: WORSE
+    FAIL18 mean d +0.3476 (n=18)   other 108 mean d +0.0930 (n=108)
+    FAIL18   effect +0.3476  SE 0.0779  MDE 0.2183  +1.59x  fold CI [+0.2380, +0.4848]  folds 4/4  4W/14L  WORSE
+    other108 effect +0.0930  SE 0.0343  MDE 0.0962  +0.97x  fold CI [+0.0413, +0.1355]  folds 5/5  43W/65L  NOT MEASURED (|effect| 0.0930 <= its own MDE 0.0962, 0.97x)
+
+  rand0_e0.1 vs production (BUILT CHAIN)
+    a 3.2092 (med 2.9743)   b 3.2071 (med 2.9661)   n=126
+    effect +0.0022   median +0.0004   SE 0.0071   MDE 0.0199   effect/MDE +0.11
+    iid  CI95 [-0.0119, +0.0162]
+    fold CI95 [-0.0115, +0.0164]   folds same sign 2/5   per-fold 0:-0.012 1:-0.002 2:-0.015 3:+0.029 4:+0.012
+    63W/63L/0T   worst degradation +0.3481 (9BFL)   p90 +0.0519   power 0.06  Type-M 7.78
+    concentration: drop-top10 +0.0161 vs uniform-effect null p10/p50/p90 +0.0081/+0.0156/+0.0240 -> pctile 0.536
+    VERDICT: NOT MEASURED (|effect| 0.0022 <= its own MDE 0.0199, 0.11x)
+    FAIL18 mean d -0.0141 (n=18)   other 108 mean d +0.0049 (n=108)
+    FAIL18   effect -0.0141  SE 0.0150  MDE 0.0419  -0.34x  fold CI [-0.0513, +0.0185]  folds 3/4  11W/7L  NOT MEASURED (|effect| 0.0141 <= its own MDE 0.0419, 0.34x)
+    other108 effect +0.0049  SE 0.0079  MDE 0.0221  +0.22x  fold CI [-0.0078, +0.0213]  folds 3/5  52W/56L  NOT MEASURED (|effect| 0.0049 <= its own MDE 0.0221, 0.22x)
+
+  rand0_e0.3 vs production (BUILT CHAIN)
+    a 3.2127 (med 2.9131)   b 3.2071 (med 2.9661)   n=126
+    effect +0.0057   median +0.0051   SE 0.0094   MDE 0.0262   effect/MDE +0.22
+    iid  CI95 [-0.0125, +0.0248]
+    fold CI95 [-0.0182, +0.0262]   folds same sign 3/5   per-fold 0:-0.007 1:+0.032 2:-0.037 3:+0.028 4:+0.015
+    62W/64L/0T   worst degradation +0.4750 (6RRO)   p90 +0.1274   power 0.09  Type-M 3.99
+    concentration: drop-top10 +0.0237 vs uniform-effect null p10/p50/p90 +0.0123/+0.0234/+0.0346 -> pctile 0.513
+    VERDICT: NOT MEASURED (|effect| 0.0057 <= its own MDE 0.0262, 0.22x)
+    FAIL18 mean d +0.0073 (n=18)   other 108 mean d +0.0054 (n=108)
+    FAIL18   effect +0.0073  SE 0.0248  MDE 0.0693  +0.10x  fold CI [-0.0616, +0.0541]  folds 2/4  9W/9L  NOT MEASURED (|effect| 0.0073 <= its own MDE 0.0693, 0.10x)
+    other108 effect +0.0054  SE 0.0102  MDE 0.0285  +0.19x  fold CI [-0.0154, +0.0297]  folds 3/5  53W/55L  NOT MEASURED (|effect| 0.0054 <= its own MDE 0.0285, 0.19x)
+
+  rand0_e1 vs production (BUILT CHAIN)
+    a 3.3175 (med 3.1021)   b 3.2071 (med 2.9661)   n=126
+    effect +0.1104   median +0.1113   SE 0.0203   MDE 0.0567   effect/MDE +1.95
+    iid  CI95 [+0.0708, +0.1494]
+    fold CI95 [+0.0838, +0.1362]   folds same sign 5/5   per-fold 0:+0.119 1:+0.148 2:+0.064 3:+0.134 4:+0.094
+    42W/84L/0T   worst degradation +0.6667 (6RRO)   p90 +0.3881   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.1466 vs uniform-effect null p10/p50/p90 +0.1192/+0.1460/+0.1727 -> pctile 0.512
+    VERDICT: WORSE
+    FAIL18 mean d +0.0536 (n=18)   other 108 mean d +0.1199 (n=108)
+    FAIL18   effect +0.0536  SE 0.0464  MDE 0.1299  +0.41x  fold CI [-0.0499, +0.1240]  folds 2/4  6W/12L  NOT MEASURED (|effect| 0.0536 <= its own MDE 0.1299, 0.41x)
+    other108 effect +0.1199  SE 0.0223  MDE 0.0624  +1.92x  fold CI [+0.0882, +0.1594]  folds 5/5  36W/72L  WORSE
+
+  rand1_e0.1 vs production (BUILT CHAIN)
+    a 3.2076 (med 2.9725)   b 3.2071 (med 2.9661)   n=126
+    effect +0.0006   median +0.0030   SE 0.0078   MDE 0.0218   effect/MDE +0.03
+    iid  CI95 [-0.0131, +0.0162]
+    fold CI95 [-0.0126, +0.0187]   folds same sign 1/5   per-fold 0:-0.005 1:-0.007 2:-0.016 3:-0.008 4:+0.032
+    52W/74L/0T   worst degradation +0.6305 (1D6X)   p90 +0.0393   power 0.05  Type-M 32.35
+    concentration: drop-top10 +0.0150 vs uniform-effect null p10/p50/p90 +0.0051/+0.0141/+0.0242 -> pctile 0.550
+    VERDICT: NOT MEASURED (|effect| 0.0006 <= its own MDE 0.0218, 0.03x)
+    FAIL18 mean d +0.0007 (n=18)   other 108 mean d +0.0005 (n=108)
+    FAIL18   effect +0.0007  SE 0.0111  MDE 0.0310  +0.02x  fold CI [-0.0196, +0.0189]  folds 3/4  8W/10L  NOT MEASURED (|effect| 0.0007 <= its own MDE 0.0310, 0.02x)
+    other108 effect +0.0005  SE 0.0089  MDE 0.0249  +0.02x  fold CI [-0.0140, +0.0198]  folds 1/5  44W/64L  NOT MEASURED (|effect| 0.0005 <= its own MDE 0.0249, 0.02x)
+
+  rand1_e0.3 vs production (BUILT CHAIN)
+    a 3.2373 (med 2.9953)   b 3.2071 (med 2.9661)   n=126
+    effect +0.0303   median +0.0230   SE 0.0083   MDE 0.0231   effect/MDE +1.31
+    iid  CI95 [+0.0149, +0.0461]
+    fold CI95 [+0.0114, +0.0482]   folds same sign 4/5   per-fold 0:+0.032 1:+0.014 2:-0.003 3:+0.061 4:+0.045
+    44W/82L/0T   worst degradation +0.3049 (2N9M)   p90 +0.1415   power 0.96  Type-M 1.03
+    concentration: drop-top10 +0.0453 vs uniform-effect null p10/p50/p90 +0.0353/+0.0447/+0.0550 -> pctile 0.530
+    VERDICT: WORSE
+    FAIL18 mean d +0.0270 (n=18)   other 108 mean d +0.0308 (n=108)
+    FAIL18   effect +0.0270  SE 0.0233  MDE 0.0652  +0.41x  fold CI [-0.0210, +0.0662]  folds 2/4  7W/11L  NOT MEASURED (|effect| 0.0270 <= its own MDE 0.0652, 0.41x)
+    other108 effect +0.0308  SE 0.0089  MDE 0.0249  +1.24x  fold CI [+0.0111, +0.0499]  folds 4/5  37W/71L  WORSE [TYPE-M ZONE: magnitude inflated ~1.04x]
+
+  rand1_e1 vs production (BUILT CHAIN)
+    a 3.3336 (med 3.1066)   b 3.2071 (med 2.9661)   n=126
+    effect +0.1265   median +0.1173   SE 0.0194   MDE 0.0544   effect/MDE +2.33
+    iid  CI95 [+0.0884, +0.1645]
+    fold CI95 [+0.1107, +0.1418]   folds same sign 5/5   per-fold 0:+0.123 1:+0.148 2:+0.103 3:+0.111 4:+0.145
+    38W/88L/0T   worst degradation +0.9325 (9BAF)   p90 +0.3917   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.1593 vs uniform-effect null p10/p50/p90 +0.1334/+0.1586/+0.1841 -> pctile 0.519
+    VERDICT: WORSE
+    FAIL18 mean d +0.0716 (n=18)   other 108 mean d +0.1357 (n=108)
+    FAIL18   effect +0.0716  SE 0.0420  MDE 0.1177  +0.61x  fold CI [+0.0053, +0.1213]  folds 3/4  6W/12L  NOT MEASURED (|effect| 0.0716 <= its own MDE 0.1177, 0.61x)
+    other108 effect +0.1357  SE 0.0215  MDE 0.0602  +2.26x  fold CI [+0.1096, +0.1691]  folds 5/5  32W/76L  WORSE
+
+  step_e0.1 vs production (BUILT CHAIN)
+    a 3.2034 (med 3.0037)   b 3.2071 (med 2.9661)   n=126
+    effect -0.0037   median -0.0019   SE 0.0063   MDE 0.0176   effect/MDE -0.21
+    iid  CI95 [-0.0156, +0.0087]
+    fold CI95 [-0.0163, +0.0073]   folds same sign 2/5   per-fold 0:-0.024 1:-0.019 2:+0.006 3:+0.011 4:+0.005
+    67W/59L/0T   worst degradation +0.3162 (2NB7)   p90 +0.0298   power 0.09  Type-M 4.07
+    concentration: drop-top10 +0.0087 vs uniform-effect null p10/p50/p90 +0.0013/+0.0082/+0.0157 -> pctile 0.534
+    VERDICT: NOT MEASURED (|effect| 0.0037 <= its own MDE 0.0176, 0.21x)
+    FAIL18 mean d +0.0202 (n=18)   other 108 mean d -0.0077 (n=108)
+    FAIL18   effect +0.0202  SE 0.0184  MDE 0.0515  +0.39x  fold CI [-0.0057, +0.0872]  folds 2/4  7W/11L  NOT MEASURED (|effect| 0.0202 <= its own MDE 0.0515, 0.39x)
+    other108 effect -0.0077  SE 0.0066  MDE 0.0185  -0.42x  fold CI [-0.0196, +0.0040]  folds 3/5  60W/48L  NOT MEASURED (|effect| 0.0077 <= its own MDE 0.0185, 0.42x)
+
+  step_e0.3 vs production (BUILT CHAIN)
+    a 3.2249 (med 3.0356)   b 3.2071 (med 2.9661)   n=126
+    effect +0.0178   median +0.0116   SE 0.0087   MDE 0.0243   effect/MDE +0.74
+    iid  CI95 [+0.0017, +0.0354]
+    fold CI95 [+0.0085, +0.0270]   folds same sign 5/5   per-fold 0:+0.003 1:+0.016 2:+0.033 3:+0.010 4:+0.024
+    57W/69L/0T   worst degradation +0.5317 (2LNG)   p90 +0.1166   power 0.54  Type-M 1.36
+    concentration: drop-top10 +0.0319 vs uniform-effect null p10/p50/p90 +0.0202/+0.0313/+0.0432 -> pctile 0.521
+    VERDICT: NOT MEASURED (|effect| 0.0178 <= its own MDE 0.0243, 0.74x)
+    FAIL18 mean d +0.0529 (n=18)   other 108 mean d +0.0120 (n=108)
+    FAIL18   effect +0.0529  SE 0.0242  MDE 0.0679  +0.78x  fold CI [+0.0126, +0.1215]  folds 4/4  5W/13L  NOT MEASURED (|effect| 0.0529 <= its own MDE 0.0679, 0.78x)
+    other108 effect +0.0120  SE 0.0092  MDE 0.0258  +0.47x  fold CI [+0.0066, +0.0173]  folds 5/5  52W/56L  NOT MEASURED (|effect| 0.0120 <= its own MDE 0.0258, 0.47x)
+
+  step_e1 vs production (BUILT CHAIN)
+    a 3.3116 (med 3.1215)   b 3.2071 (med 2.9661)   n=126
+    effect +0.1045   median +0.0839   SE 0.0177   MDE 0.0497   effect/MDE +2.10
+    iid  CI95 [+0.0701, +0.1399]
+    fold CI95 [+0.0813, +0.1277]   folds same sign 5/5   per-fold 0:+0.068 1:+0.131 2:+0.138 3:+0.080 4:+0.105
+    39W/87L/0T   worst degradation +0.6393 (9BAF)   p90 +0.3619   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.1341 vs uniform-effect null p10/p50/p90 +0.1107/+0.1337/+0.1576 -> pctile 0.513
+    VERDICT: WORSE
+    FAIL18 mean d +0.1336 (n=18)   other 108 mean d +0.0997 (n=108)
+    FAIL18   effect +0.1336  SE 0.0474  MDE 0.1328  +1.01x  fold CI [+0.0660, +0.2182]  folds 4/4  4W/14L  WORSE [TYPE-M ZONE: magnitude inflated ~1.12x]
+    other108 effect +0.0997  SE 0.0192  MDE 0.0538  +1.85x  fold CI [+0.0791, +0.1241]  folds 5/5  35W/73L  WORSE
+
+  projection price (chain minus point cloud, mean over targets): prod +0.159  circP +0.167  circ_e0.1 +0.163  circ_e0.3 +0.151  circ_e1 +0.087  rand0_e0.1 +0.158  rand0_e0.3 +0.144  rand0_e1 +0.072  rand1_e0.1 +0.154  rand1_e0.3 +0.159  rand1_e1 +0.059  step_e0.1 +0.149  step_e0.3 +0.146  step_e1 +0.026
+
+  random direction e=0.1 A, MEAN of the 2 projected draws (rand0_e0.1,rand1_e0.1), vs production (BUILT CHAIN)
+    a 3.2084 (med 2.9752)   b 3.2071 (med 2.9661)   n=126
+    effect +0.0014   median +0.0019   SE 0.0063   MDE 0.0176   effect/MDE +0.08
+    iid  CI95 [-0.0115, +0.0140]
+    fold CI95 [-0.0109, +0.0144]   folds same sign 2/5   per-fold 0:-0.009 1:-0.005 2:-0.016 3:+0.010 4:+0.022
+    59W/67L/0T   worst degradation +0.3177 (1D6X)   p90 +0.0467   power 0.06  Type-M 10.89
+    concentration: drop-top10 +0.0140 vs uniform-effect null p10/p50/p90 +0.0073/+0.0138/+0.0207 -> pctile 0.517
+    VERDICT: NOT MEASURED (|effect| 0.0014 <= its own MDE 0.0176, 0.08x)
+    FAIL18 mean d -0.0067 (n=18)   other 108 mean d +0.0027 (n=108)
+    FAIL18   effect -0.0067  SE 0.0115  MDE 0.0323  -0.21x  fold CI [-0.0296, +0.0172]  folds 3/4  9W/9L  NOT MEASURED (|effect| 0.0067 <= its own MDE 0.0323, 0.21x)
+    other108 effect +0.0027  SE 0.0071  MDE 0.0198  +0.14x  fold CI [-0.0093, +0.0159]  folds 3/5  50W/58L  NOT MEASURED (|effect| 0.0027 <= its own MDE 0.0198, 0.14x)
+
+  gradient step e=0.1 vs random direction (mean of the SAME 2 projected draws) (BUILT CHAIN)
+    a 3.2034 (med 3.0037)   b 3.2084 (med 2.9752)   n=126
+    effect -0.0051   median -0.0078   SE 0.0082   MDE 0.0231   effect/MDE -0.22
+    iid  CI95 [-0.0210, +0.0108]
+    fold CI95 [-0.0155, +0.0093]   folds same sign 3/5   per-fold 0:-0.015 1:-0.014 2:+0.022 3:+0.000 4:-0.016
+    70W/56L/0T   worst degradation +0.4589 (9BAF)   p90 +0.0528   power 0.09  Type-M 3.93
+    concentration: drop-top10 +0.0119 vs uniform-effect null p10/p50/p90 +0.0026/+0.0111/+0.0205 -> pctile 0.544
+    VERDICT: NOT MEASURED (|effect| 0.0051 <= its own MDE 0.0231, 0.22x)
+    FAIL18 mean d +0.0269 (n=18)   other 108 mean d -0.0104 (n=108)
+    FAIL18   effect +0.0269  SE 0.0217  MDE 0.0607  +0.44x  fold CI [-0.0008, +0.1014]  folds 3/4  6W/12L  NOT MEASURED (|effect| 0.0269 <= its own MDE 0.0607, 0.44x)
+    other108 effect -0.0104  SE 0.0089  MDE 0.0248  -0.42x  fold CI [-0.0207, +0.0010]  folds 4/5  64W/44L  NOT MEASURED (|effect| 0.0104 <= its own MDE 0.0248, 0.42x)
+    random best-of-2 (order statistic) mean 3.1874; priced: observed -0.0211, valid null -0.0174 (83%), k_eff 2.00, split-half +0.0031, NOT A SIGNAL (split-half transfers -15% of the oracle)
+
+  random direction e=0.3 A, MEAN of the 2 projected draws (rand0_e0.3,rand1_e0.3), vs production (BUILT CHAIN)
+    a 3.2250 (med 3.0169)   b 3.2071 (med 2.9661)   n=126
+    effect +0.0180   median +0.0139   SE 0.0065   MDE 0.0181   effect/MDE +0.99
+    iid  CI95 [+0.0061, +0.0308]
+    fold CI95 [-0.0012, +0.0338]   folds same sign 4/5   per-fold 0:+0.013 1:+0.023 2:-0.020 3:+0.045 4:+0.030
+    52W/74L/0T   worst degradation +0.3573 (6RRO)   p90 +0.0970   power 0.79  Type-M 1.13
+    concentration: drop-top10 +0.0298 vs uniform-effect null p10/p50/p90 +0.0217/+0.0295/+0.0376 -> pctile 0.518
+    VERDICT: NOT MEASURED (|effect| 0.0180 <= its own MDE 0.0181, 0.99x)
+    FAIL18 mean d +0.0171 (n=18)   other 108 mean d +0.0181 (n=108)
+    FAIL18   effect +0.0171  SE 0.0199  MDE 0.0557  +0.31x  fold CI [-0.0331, +0.0586]  folds 2/4  7W/11L  NOT MEASURED (|effect| 0.0171 <= its own MDE 0.0557, 0.31x)
+    other108 effect +0.0181  SE 0.0068  MDE 0.0191  +0.95x  fold CI [-0.0017, +0.0369]  folds 4/5  45W/63L  NOT MEASURED (|effect| 0.0181 <= its own MDE 0.0191, 0.95x)
+
+  gradient step e=0.3 vs random direction (mean of the SAME 2 projected draws) (BUILT CHAIN)
+    a 3.2249 (med 3.0356)   b 3.2250 (med 3.0169)   n=126
+    effect -0.0001   median -0.0147   SE 0.0095   MDE 0.0267   effect/MDE -0.00
+    iid  CI95 [-0.0179, +0.0190]
+    fold CI95 [-0.0220, +0.0281]   folds same sign 4/5   per-fold 0:-0.009 1:-0.007 2:+0.053 3:-0.034 4:-0.006
+    72W/54L/0T   worst degradation +0.5641 (2LNG)   p90 +0.1029   power 0.05  Type-M 171.65
+    concentration: drop-top10 +0.0137 vs uniform-effect null p10/p50/p90 +0.0016/+0.0135/+0.0266 -> pctile 0.511
+    VERDICT: NOT MEASURED (|effect| 0.0001 <= its own MDE 0.0267, 0.00x)
+    FAIL18 mean d +0.0358 (n=18)   other 108 mean d -0.0061 (n=108)
+    FAIL18   effect +0.0358  SE 0.0299  MDE 0.0838  +0.43x  fold CI [-0.0007, +0.1409]  folds 3/4  6W/12L  NOT MEASURED (|effect| 0.0358 <= its own MDE 0.0838, 0.43x)
+    other108 effect -0.0061  SE 0.0099  MDE 0.0277  -0.22x  fold CI [-0.0270, +0.0171]  folds 4/5  66W/42L  NOT MEASURED (|effect| 0.0061 <= its own MDE 0.0277, 0.22x)
+    random best-of-2 (order statistic) mean 3.1772; priced: observed -0.0479, valid null -0.0359 (75%), k_eff 1.99, split-half -0.0112, NOT A SIGNAL (split-half transfers 23% of the oracle)
+
+  random direction e=1 A, MEAN of the 2 projected draws (rand0_e1,rand1_e1), vs production (BUILT CHAIN)
+    a 3.3255 (med 3.1150)   b 3.2071 (med 2.9661)   n=126
+    effect +0.1185   median +0.1078   SE 0.0160   MDE 0.0449   effect/MDE +2.64
+    iid  CI95 [+0.0887, +0.1502]
+    fold CI95 [+0.0989, +0.1359]   folds same sign 5/5   per-fold 0:+0.121 1:+0.148 2:+0.083 3:+0.123 4:+0.119
+    28W/98L/0T   worst degradation +0.7795 (9BAF)   p90 +0.3101   power 1.00  Type-M 1.00
+    concentration: drop-top10 +0.1450 vs uniform-effect null p10/p50/p90 +0.1241/+0.1443/+0.1653 -> pctile 0.517
+    VERDICT: WORSE
+    FAIL18 mean d +0.0626 (n=18)   other 108 mean d +0.1278 (n=108)
+    FAIL18   effect +0.0626  SE 0.0350  MDE 0.0982  +0.64x  fold CI [+0.0220, +0.1158]  folds 4/4  4W/14L  NOT MEASURED (|effect| 0.0626 <= its own MDE 0.0982, 0.64x)
+    other108 effect +0.1278  SE 0.0177  MDE 0.0495  +2.58x  fold CI [+0.1047, +0.1600]  folds 5/5  24W/84L  WORSE
+
+  gradient step e=1 vs random direction (mean of the SAME 2 projected draws) (BUILT CHAIN)
+    a 3.3116 (med 3.1215)   b 3.3255 (med 3.1150)   n=126
+    effect -0.0139   median -0.0234   SE 0.0189   MDE 0.0529   effect/MDE -0.26
+    iid  CI95 [-0.0507, +0.0223]
+    fold CI95 [-0.0420, +0.0211]   folds same sign 4/5   per-fold 0:-0.053 1:-0.017 2:+0.055 3:-0.043 4:-0.014
+    70W/56L/0T   worst degradation +0.5072 (8HVS)   p90 +0.2498   power 0.11  Type-M 3.30
+    concentration: drop-top10 +0.0210 vs uniform-effect null p10/p50/p90 -0.0030/+0.0202/+0.0438 -> pctile 0.518
+    VERDICT: NOT MEASURED (|effect| 0.0139 <= its own MDE 0.0529, 0.26x)
+    FAIL18 mean d +0.0710 (n=18)   other 108 mean d -0.0281 (n=108)
+    FAIL18   effect +0.0710  SE 0.0400  MDE 0.1121  +0.63x  fold CI [+0.0208, +0.1875]  folds 4/4  6W/12L  NOT MEASURED (|effect| 0.0710 <= its own MDE 0.1121, 0.63x)
+    other108 effect -0.0281  SE 0.0208  MDE 0.0581  -0.48x  fold CI [-0.0509, +0.0047]  folds 4/5  64W/44L  NOT MEASURED (|effect| 0.0281 <= its own MDE 0.0581, 0.48x)
+    random best-of-2 (order statistic) mean 3.2253; priced: observed -0.1002, valid null -0.0720 (72%), k_eff 1.98, split-half +0.0032, NOT A SIGNAL (split-half transfers -3% of the oracle)
+
+  circP (the family's nearest point to production): residual RMS to C0 mean 0.114 A (median 0.104, max 0.377); its own RMSD: point cloud 3.0472, BUILT CHAIN 3.2143 (production 3.2071)
+
+  circuit one-step e=0.1 vs the family's nearest point to production, circP (BUILT CHAIN)
+    a 3.2143 (med 2.9157)   b 3.2143 (med 2.9852)   n=126
+    effect +0.0000   median +0.0032   SE 0.0093   MDE 0.0260   effect/MDE +0.00
+    iid  CI95 [-0.0179, +0.0186]
+    fold CI95 [-0.0107, +0.0094]   folds same sign 2/5   per-fold 0:-0.002 1:+0.012 2:-0.019 3:-0.005 4:+0.012
+    61W/65L/0T   worst degradation +0.5456 (1D6X)   p90 +0.0655   power 0.05  Type-M 514.70
+    concentration: drop-top10 +0.0195 vs uniform-effect null p10/p50/p90 +0.0092/+0.0185/+0.0294 -> pctile 0.553
+    VERDICT: NOT MEASURED (|effect| 0.0000 <= its own MDE 0.0260, 0.00x)
+
+  circuit one-step e=0.3 vs the family's nearest point to production, circP (BUILT CHAIN)
+    a 3.2220 (med 3.0550)   b 3.2143 (med 2.9852)   n=126
+    effect +0.0078   median +0.0187   SE 0.0129   MDE 0.0362   effect/MDE +0.21
+    iid  CI95 [-0.0179, +0.0323]
+    fold CI95 [-0.0029, +0.0197]   folds same sign 3/5   per-fold 0:-0.010 1:+0.028 2:+0.017 3:+0.008 4:-0.001
+    56W/70L/0T   worst degradation +0.4451 (2BP4)   p90 +0.1461   power 0.09  Type-M 4.01
+    concentration: drop-top10 +0.0337 vs uniform-effect null p10/p50/p90 +0.0183/+0.0334/+0.0482 -> pctile 0.512
+    VERDICT: NOT MEASURED (|effect| 0.0078 <= its own MDE 0.0362, 0.21x)
+
+  circuit one-step e=1 vs the family's nearest point to production, circP (BUILT CHAIN)
+    a 3.3364 (med 3.0959)   b 3.2143 (med 2.9852)   n=126
+    effect +0.1222   median +0.1393   SE 0.0325   MDE 0.0911   effect/MDE +1.34
+    iid  CI95 [+0.0581, +0.1835]
+    fold CI95 [+0.0683, +0.1624]   folds same sign 5/5   per-fold 0:+0.026 1:+0.163 2:+0.170 3:+0.099 4:+0.149
+    45W/81L/0T   worst degradation +1.0202 (2LNG)   p90 +0.5537   power 0.96  Type-M 1.02
+    concentration: drop-top10 +0.1829 vs uniform-effect null p10/p50/p90 +0.1429/+0.1820/+0.2229 -> pctile 0.511
+    VERDICT: WORSE
+
+  step arm, per-target min over the e grid ['step_e0.1', 'step_e0.3', 'step_e1'] priced (best_of_k_within): observed -0.0767, valid null -0.0714 (93%), k_eff 2.74, argmin counts [68.0, 30.0, 28.0], split-half -0.0432, residual survives: -0.0432 transfers of -0.0767 oracle
+    best-of-3 over e (order statistic) mean 3.1699 vs production 3.2071
+
+  circ arm, per-target min over the e grid ['circ_e0.1', 'circ_e0.3', 'circ_e1'] priced (best_of_k_within): observed -0.1269, valid null -0.1188 (94%), k_eff 2.71, argmin counts [66.0, 20.0, 40.0], split-half -0.0380, residual survives: -0.0380 transfers of -0.1269 oracle
+    best-of-3 over e (order statistic) mean 3.1306 vs production 3.2071
+
+  falsifier A2.2 (some e beats production beyond MDE, fold CI excluding zero, 5/5, AND beats the random mean beyond MDE): DOES NOT FIRE  {'e0.1': {'beats_production': False, 'beats_random_mean': False, 'fires': False}, 'e0.3': {'beats_production': False, 'beats_random_mean': False, 'fires': False}, 'e1': {'beats_production': False, 'beats_random_mean': False, 'fires': False}}
+
+Reading (verdict basis):
+1. FALSIFIER (addendum 4, A2.2: some e beats production beyond its MDE with the fold CI
+   excluding zero on 5/5 folds AND beats the random-direction mean beyond its MDE): DOES NOT
+   FIRE at any e, decided from the stored contrasts (`falsifier_A22_chain`: beats_production
+   False / False / False, beats_random_mean False / False / False). The step vs production is
+   -0.0037 at e = 0.1 (0.21x MDE, fold CI [-0.016, +0.007], 2/5 folds: NOT MEASURED), +0.0178 at
+   0.3 (0.74x, fold CI [+0.009, +0.027], 5/5: the SIGN is measured, the size is not; Type-M
+   zone), +0.1045 at 1 (2.10x, fold CI [+0.081, +0.128], 5/5, 39W/87L: WORSE). The prior
+   ("the step degrades at every e; the random direction degrades about equally; the circuit's
+   one-step arm degrades from its own baseline") held on every count that is measurable: at
+   e = 0.1 nothing is measured on either side.
+2. LIKE FOR LIKE (S28-L23 (c)). The control is the MEAN of the SAME two projected draws
+   (rand0, rand1) at each e. It costs +0.0014 / +0.0180 / +0.1185 against production (0.08x /
+   0.99x / 2.64x; only e = 1 is measured, WORSE, 5/5). The step against it: -0.0051 / -0.0001 /
+   -0.0139 (0.22x / 0.00x / 0.26x, fold CI including zero at every e): on the verdict basis the
+   objective's descent direction is INDISTINGUISHABLE from a random direction of the same size.
+   On the point cloud (S28-L30) the same contrast read +0.003 / +0.009 / +0.034 with the fold CI
+   ABOVE zero at every e (sign only); the projection has removed that sign, and both bases are
+   under MDE. The best-of-2 over the two random draws is an order statistic: priced with
+   `best_of_k_within` on the (126 x 2) matrix it is 83% / 75% / 72% accounted by the
+   across-target null, k_eff 2.0, split-half -15% / +23% / -3% of the oracle: NOT A SIGNAL at
+   every e (`chain_rand_best_of_2`).
+3. THE e GRID (S28-L23 (b)). The per-target minimum over the three e for the step arm: observed
+   gain -0.0767 against its row mean, valid null -0.0714 (93% accounted), k_eff 2.74, argmin
+   counts 68 / 30 / 28; `split_half` -0.0432 and the kit prints "residual survives". That
+   residual is the COLUMN-MEAN effect, not a per-target signal: the three columns have means
+   3.2034 / 3.2249 / 3.3116, the smallest step is the best column, and its deviation from the
+   average of the column means is -0.0433 = the split-half transfer to the fourth decimal. What
+   transfers is the choice "e = 0.1", and that choice's own contrast with production is item 1's
+   -0.0037 at 0.21x: NOT MEASURED. Same for the circuit arm: 94% accounted, k_eff 2.71,
+   split-half -0.0380 against a column-mean deviation of -0.0433 (means 3.2143 / 3.2220 /
+   3.3364). The best-of-3 means (3.170 step, 3.131 circuit, against 3.2071) are order
+   statistics and are not quoted as achievable. No e is chosen.
+4. THE CIRCUIT'S BASELINE (S28-L23 (e)). circP, the family's nearest point to C0, has residual
+   0.114 A RMS (median 0.104, max 0.377; `s28_A2_ladder_rows.jsonl :: residual_rms_to_prod`) and
+   its own built chain is 3.2143 against production's 3.2071 (+0.0072, 0.38x, 65W/61L: NOT
+   MEASURED). It starts AT production within noise, so "degrades from its own baseline" is
+   read from 3.2143 and is not "starts below production". The circuit's one step against circP:
+   +0.0000 / +0.0078 / +0.1222 (0.00x / 0.21x / 1.34x; e = 1 WORSE, fold CI [+0.068, +0.162],
+   5/5, 45W/81L); against production +0.0072 / +0.0150 / +0.1294 (e = 1 WORSE, 1.43x, 5/5). The
+   family's inductive bias adds nothing at the local scale on the verdict basis, as it added
+   nothing at the optimum (S28-L26b) and on the point cloud (S28-L30).
+5. FAIL18 / 108 (contract addendum 1 item 14 (a); `chain_strata`). At e = 1 the step is worse
+   in BOTH strata: FAIL18 +0.134 (SE 0.047, 1.01x MDE, fold CI [+0.066, +0.218], 4/4, 4W/14L,
+   Type-M zone) and the 108 +0.100 (1.85x, fold CI [+0.079, +0.124], 5/5, 35W/73L, WORSE); the
+   random mean at e = 1: FAIL18 +0.063 (0.64x), the 108 +0.128 (2.58x, WORSE); the step vs the
+   random mean at e = 1: FAIL18 +0.071 (0.63x), the 108 -0.028 (0.48x): nothing. At e = 0.3:
+   step +0.053 (0.78x) / +0.012 (0.47x); at e = 0.1: +0.020 (0.39x) / -0.008 (0.42x): nothing
+   measured in either stratum. The circuit step at e = 0.1 / 0.3 on FAIL18 is +0.041 / +0.117
+   (1.09x / 1.08x, 4/4, 5W/13L / 4W/14L, Type-M zone, sign only) against 0.05x on the 108: where
+   the distogram is wrong its descent costs more (S28-L23b's -0.14 cosine on FAIL18, seen in
+   Angstroms), at the Type-M level, and no regime is helped anywhere. No native-free switch is
+   implied (S22/S23/S26; S28-L6).
+6. THROUGH THE PROJECTION (addendum 1 item 14 (a), second half). The step's harm at e = 1
+   shrinks from +0.237 (point cloud, S28-L30) to +0.105 (chain), the same two random draws'
+   mean from +0.212 (their point-cloud values in the chain rows) to +0.119: the projection
+   price (`chain_projection_price`) is +0.159 for production
+   and +0.026 (step) / +0.059 to +0.072 (random) / +0.087 (circuit) at e = 1, because a 1 A
+   displacement de-contracts the average (emitted Rg after projection: production 6.478, step
+   e = 1 6.877, random e = 1 6.563, circuit e = 1 6.856; every projected chain at the ideal
+   virtual bond 3.804). The shipped objective's descent direction is largely an EXPANSION of the
+   contracted average; the expansion is not toward the native (S28-L23b, cosine -0.03) and the
+   emitted structure ends where a random step's does. S~ itself falls as asked: 1.674 -> 1.619
+   on 126/126 targets at e = 0.1, 1.541 on 113/126 at 0.3, 1.533 on 79/126 at 1 (the linear
+   surrogate overshoots on 47 at the largest step; `s28_A2_ladder_rows.jsonl`).
+7. NEW RELATIVE TO S26 / S27 (addendum 1 item 14 (b)): the first measurement, on the verdict
+   basis, of the objective's LOCAL behaviour at the pipeline's own output. It goes beyond
+   S28-L26b (the objective's optimum over signed families is away from the native) and S28-L23b
+   (its gradient at production is blind, ORACLE) by pricing the first DEPLOYABLE step in
+   Angstroms: 0.1 A is free and worthless, 0.3 A costs the sign, 1 A costs 0.10 A, and at every
+   size the price is a random step's. It goes beyond S16 (the steering arms that chose "do
+   nothing") in that the descent direction itself was measured, not a steering rule. The
+   trust-region reading for the report: around production there is no direction to follow.
+8. THREE-WAY SPLIT (addendum 1 item 14 (c)): (i) OBJECTIVE: the descent does what it is asked
+   (S~ falls on 126/126 at e = 0.1) and the structure does not improve: the failing leg, as in
+   S28-L26b and S28-L30 item 4 (the ordering (pool's best-scoring member) < (production) <
+   (native)). (ii) THE CIRCUIT'S REACHED STATE: circP is within 0.114 A RMS of production and
+   its step tracks the raw step; nothing in the family's bias resists the objective. (iii) THE
+   EMITTED STRUCTURE: null at e <= 0.3 (sign at 0.3), worse at 1, above.
+Verdict on the built chain: REFUTED for accuracy ("the objective is locally informative at the
+production point", the last open half of lane A; the falsifier is silent at every e, the step
+is worth a random step at every e, the circuit family adds nothing). No seed-1 run is owed (no
+positive; addendum 4's replication clause is moot). Lane D's S28-L23 caveats: (a) answered in
+S28-L23b; (b) item 3; (c) item 2; (d) the comparator paragraph and `s28_A2_prodcheck.json`;
+(e) item 4. With this entry lanes A and A2 close: S28-L1b (ORACLE expressivity 0.288 point
+cloud / 0.252 emitted), S28-L26b (recognition refuted at every lam), S28-L23b (the gradient is
+blind, ORACLE), S28-L30 and this entry (the deployable step is worth a random step). Nothing
+quantum was earned; what stands is the mechanism: the family can express the native, the
+optimiser reaches the objective's optimum, and the objective is wrong at its optimum, wrong in
+its ordering, and blind at production. Lane D attacks this entry next; nothing is built on it.
