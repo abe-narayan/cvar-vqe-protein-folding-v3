@@ -134,3 +134,31 @@ def test_run_main_binds_the_addendum_2_scope_and_restores_it(monkeypatch):
     with pytest.raises(ValueError):
         B2.run_main(5, limit=1)
     assert (B.kernel_graph, B.J_GRID, B.GRAPHS) == original
+
+
+def test_chain_main_binds_the_b2_row_files_and_restores(monkeypatch, tmp_path):
+    """`chain_main` must hand `s28_B_hop.chain_main` the B2 point-cloud rows and the B2 chain
+    file (and a `load_rows` whose default is the B2 rows, since the original binds its default
+    at definition time), then restore all three even when the run raises; k != 10 is refused."""
+    original = (B.ROWS, B.CHAIN_ROWS, B.load_rows)
+    captured = {}
+
+    def fake_chain_main(arms):
+        captured["ROWS"] = B.ROWS
+        captured["CHAIN_ROWS"] = B.CHAIN_ROWS
+        captured["default_rows"] = B.load_rows.__defaults__[0]
+        captured["arms"] = list(arms)
+        raise RuntimeError("stop")
+
+    monkeypatch.setattr(B, "chain_main", fake_chain_main)
+    monkeypatch.setattr(B2, "RESULTS", str(tmp_path))
+    with pytest.raises(RuntimeError):
+        B2.chain_main(10, ["vqe|s0|REAL|J3|R3"])
+    assert captured["ROWS"].endswith("s28_B2_rows_k10.jsonl")
+    assert captured["CHAIN_ROWS"].endswith("s28_B2_chain_rows_k10.jsonl")
+    assert captured["default_rows"] == captured["ROWS"]
+    assert captured["arms"] == ["vqe|s0|REAL|J3|R3"]
+    assert (B.ROWS, B.CHAIN_ROWS, B.load_rows) == original
+    with pytest.raises(ValueError):
+        B2.chain_main(5, ["vqe|s0|REAL|J3|R3"])
+    assert (B.ROWS, B.CHAIN_ROWS, B.load_rows) == original

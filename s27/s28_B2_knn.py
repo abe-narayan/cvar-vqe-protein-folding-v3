@@ -356,11 +356,38 @@ def run_main(k: int, limit: int = 0):
     print("done:", rows_path)
 
 
+def chain_main(k: int, arms):
+    """Built chain for named B2 arms (`source|s<seed>|graph|J<j>|R<k>`), addendum 2's clause
+    "the built chain only if a cell reaches 0.7x MDE on the point cloud against production or
+    J = 0". Reuses `s28_B_hop.chain_main` unchanged (the same `readout_projected` call as
+    S28-L41's rows and the in-process production re-projection, `s28_B_prodcheck.json`),
+    bound to the B2 row files for the call and restored afterwards; resumable per (arm, pdb).
+    """
+    if k != K_ENDPOINT:
+        raise ValueError(f"the B2 endpoint is scoped to k = {K_ENDPOINT} (prereg addendum 2), got {k}")
+    rows_path = os.path.join(RESULTS, f"s28_B2_rows_k{k}.jsonl")
+    chain_path = os.path.join(RESULTS, f"s28_B2_chain_rows_k{k}.jsonl")
+    real = (B.ROWS, B.CHAIN_ROWS, B.load_rows)
+    real_load = B.load_rows
+
+    def load_rows(path: str = rows_path):                # `load_rows` binds its default at def time
+        return real_load(path)
+
+    B.ROWS, B.CHAIN_ROWS, B.load_rows = rows_path, chain_path, load_rows
+    try:
+        B.chain_main(list(arms))
+    finally:
+        B.ROWS, B.CHAIN_ROWS, B.load_rows = real
+    return chain_path
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--train", action="store_true")
     ap.add_argument("--run", action="store_true")
     ap.add_argument("--share", action="store_true")
+    ap.add_argument("--chain", action="store_true")
+    ap.add_argument("--arms", default="", help="comma-separated B2 arms for --chain")
     ap.add_argument("--k", type=int, default=10)
     ap.add_argument("--limit", type=int, default=0)
     a = ap.parse_args()
@@ -370,6 +397,8 @@ def main():
         share_main()
     if a.run:
         run_main(a.k, a.limit)
+    if a.chain:
+        chain_main(a.k, [x for x in a.arms.split(",") if x])
 
 
 if __name__ == "__main__":
