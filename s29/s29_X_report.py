@@ -95,7 +95,11 @@ def main() -> None:
                  v["m_over_alphaM"]["mean"]))
     se = o.get("set_equality", {})
     if se:
-        print("\n  THE TAIL UNDER A NON-COMMUTING TERM (the S24/S28-L21 set-equality property):")
+        print("\n  THE TAIL UNDER A NON-COMMUTING TERM. NOT A DISCOVERY: `cvar_from_probs`")
+        print("  allocates the alpha mass along the ENERGY ORDER, so a full-support state's")
+        print("  tail is a prefix BY CONSTRUCTION of the extraction (lane L, S29-L13: this is")
+        print("  Barkoutsos eq 12, a definition). It is printed because it shows the mixer did")
+        print("  not produce exact zeros, so the ONLY channel it leaves open is m:")
         for k, v in se.items():
             print("    %-12s tail is an energy PREFIX on %d/%d, EQUALS the classical top-m on %d/%d"
                   % (k, v["is_prefix"], v["n"], v["equals_topm"], v["n"]))
