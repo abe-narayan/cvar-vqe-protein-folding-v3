@@ -518,7 +518,7 @@ def cmd_analyse(rows_paths=None, out=None):
     ns = np.array([cell[(p, "PROD")]["n"] for p in pdbs])
 
     def col(arm, key="rmsd_chain"):
-        return np.array([cell[(p, arm)][key] for p in pdbs])
+        return np.array([cell[(p, arm)].get(key, np.nan) for p in pdbs])
 
     # ---- the gate, re-asserted on the full run
     prod = col("PROD")
@@ -643,6 +643,17 @@ def cmd_analyse(rows_paths=None, out=None):
     say("  CTRL-RAND best-of-8 priced: observed %+.4f, valid null %+.4f (%.0f%%), split-half "
         "%+.4f -> %s" % (bokr["observed_gain"], bokr["null_across_targets"],
                          100 * bokr["share_accounted"], bokr["split_half"], bokr["verdict"]))
+    say("")
+
+    # ---- the mechanism: does a geometrically consistent cloud admit a better ideal-chain fit?
+    say("MECHANISM (NATIVE-FREE): THE PROJECTION RESIDUAL")
+    say("  fit_resid  = CA-RMSD(emitted chain, the cloud THAT ARM was fitted to)")
+    say("  fit_resid0 = CA-RMSD(emitted chain, PRODUCTION's cloud) -- comparable across arms")
+    say("  %-16s %10s %10s" % ("arm", "fit_resid", "fit_resid0"))
+    for nm, _ in named:
+        if nm in arm_names:
+            say("  %-16s %10.4f %10.4f"
+                % (nm, np.nanmean(col(nm, "fit_resid")), np.nanmean(col(nm, "fit_resid0"))))
     say("")
 
     # ---- g diagnostics
