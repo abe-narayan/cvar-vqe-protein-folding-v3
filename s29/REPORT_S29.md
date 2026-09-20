@@ -307,10 +307,18 @@ tests/test_integration.py + test_equivalence.py (VERIFY_SLOW=1)
 **One qualification, caught while writing this section rather than after.** The VERIFY_SLOW
 integration run's job record carries `reaped_by_governor` and **no exit code**, and its log ends at
 the `[100%]` progress line with **no pytest summary**. Thirty-nine dots with no `F` or `E` means
-every collected test that ran, passed — but the process was killed before pytest reported, so
-"39 passed" is not a claim this report is entitled to make from that artefact. Lane D relaunched it
+every test that ran, passed — but without the summary line or an exit code, "39 passed" is not a
+claim this report is entitled to make from that artefact. Lane D relaunched it
 (`s29D_pytest_integration2`) and the confirmed figure replaces this paragraph when it lands. The
 other three files exited 0 with full summaries and are quoted without qualification.
+
+*And a second correction inside the first, which is why this paragraph exists in this form:* my
+first reading was that the governor had **killed** the run. It had not. `REAP` in
+`s26/governor.log` reads "*is gone; registration removed*" — the governor observed a process that
+had already exited and cleaned up its registration. The same line appears for `m_f1_full`, whose
+output is complete and was analysed without incident. So the missing summary is unexplained rather
+than caused by a kill, and the honest statement is that the artefact is incomplete, not that
+something interrupted it.
 
 The commitment made before running them was that a failure would appear here as a finding rather
 than being fixed and omitted. None failed, so there is nothing to report on that count — but the
