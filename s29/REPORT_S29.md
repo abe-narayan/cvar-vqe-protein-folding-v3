@@ -252,7 +252,7 @@ killed it, so the reader can check rather than take it on report:
 ### 3.2 Claims made in this sprint that did not survive it
 
 The contract required these to be listed, and I would point a sceptical reader here first.
-**16 claims were withdrawn during the sprint, 9 of them mine.** The full table is §14(e); the shape of it is:
+**17 claims were withdrawn during the sprint, 10 of them mine.** The full table is §14(e); the shape of it is:
 
 - **Lane T withdrew its own Corollary 2b** at its own registered bar, then ran a 126-target
   post-mortem establishing that it is *vacuous in its own valid regime* — a harder verdict than
@@ -264,7 +264,7 @@ The contract required these to be listed, and I would point a sceptical reader h
   with the original wording left standing.
 - **Lane D superseded its own B3 bracket**, finding that a ±3 Å window had hidden a residual that
   grows with step size.
-- **My own nine** are in §14(e): a trainability premise, a false provenance claim to the user, a
+- **My own 10** are in §14(e): a trainability premise, a false provenance claim to the user, a
   flatness gate that was a constant, a point-cloud/built-chain basis error, an "absent
   instantiation" framing, a "7 bits" reading, a field count of 39 against a file holding 21, a
   standing expectation about compactness that the measurement refuted (§12.0), and a test count
@@ -1511,4 +1511,5 @@ reader at first.
 | **Lane M’s F2 prior** | Registered at 0.16–0.24, "genuinely close to the line"; measured **0.090**. Wrong in the flattering direction on *both* inputs — the ORACLE cosine it had inferred by inverting an identity ran 37% high (0.66 against a measured 0.483). |
 | **Lane B’s `tail_is_prefix` column** | Briefly suggested the deployed VQE had escaped set-equality. A tie-convention artefact; lane B found it, named it, and asked that the report not make the stronger claim (§6.1). |
 | **Lane T’s compactness prior** | Registered at 3-to-1 that lane L’s objection would hold. It did not (§12.0). |
+| **My "the chimera family is expressive"** | Written into §6.4 from my own recomputation while lane X was still analysing, and marked provisional. Lane X’s entry says the opposite and is right: the space is **poorer than the pool it was cut from** (ORACLE +0.6533 Å). I had compared its ORACLE against *production*; the informative comparison is against the *pool’s own* ORACLE. |
 
