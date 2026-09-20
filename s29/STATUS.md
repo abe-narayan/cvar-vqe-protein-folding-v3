@@ -15,7 +15,7 @@
 - next: `s29/CONVENIENCE_CHOICES.md` (20+ choices with the ledger line that tested each or a cheap decisive test), then the harness audit with commands and a ledger entry.
 
 ## T
-- 2026-09-20 00:05 running: brief + contract + charter 4/7/11/12 + S28 report + S28-L8b/L11/L18b/L21/L23b/L26b/L35/L36/L41/L43/L48 + QUANTUM.md + S13 locality/Pauli + REPORT V.1-V.10 read; job s29T_spectra launched (spectra + hop-only gradient variance for A, A_c, DD^T at n=4..9, 12 targets).
+- 2026-09-19 23:57 running: brief + contract + charter 4/7/11/12 + S28 report + S28-L8b/L11/L18b/L21/L23b/L26b/L35/L36/L41/L43/L48 + QUANTUM.md + S13 locality/Pauli + REPORT V.1-V.10 read; job s29T_spectra launched (spectra + hop-only gradient variance for A, A_c, DD^T at n=4..9, 12 targets).
 - next: THEORY.md sections 2 (locally informative class) and 3 (spectral condition) written and committed, ledger entries with their predictions.
 
 ## O
