@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:52 Pacific.
+Last update: 2026-09-20 00:55 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -194,6 +194,42 @@ genuinely escapes the prefix. And fixing it did not help, because the scoring fu
 is still bound by theorem 2 and the bound of S29-L23. THE FLATNESS WAS NEVER THE BARRIER; THE
 INFORMATION IS. That is the sprint's thesis, and it is now demonstrated from the constructive side
 as well as the destructive one.
+
+
+## Integration note 17 (2026-09-20 00:55, after S29-L26): THE ADVERSARY FALSIFIES PART OF THE THEORY, AND REFINES THE M6 CONTROL
+Lane D wrote its checkers from the STATEMENTS in THEORY.md, importing neither lane T's nor lane
+B's code, so agreement cannot come from a shared implementation error. Three outcomes.
+1. THE INFORMATIVENESS IDENTITY HOLDS to a relative 2e-14 on 126/126, and lane D is right that
+   this is a CORRECTNESS CHECK on two implementations rather than evidence for the theorem. The
+   geometric compression reproduces too: ker(Jc^T) is 48.0% of pair space averaged over the 126
+   (T's illustrative 45%).
+2. THE SIGN LAW IS FALSIFIED AT ITS OWN REGISTERED BAR, BOTH LIMBS. T registered "beta > 1 on at
+   least 2/3 of targets and sign(cos) = -sign(beta - 1) on at least 70%". Measured: beta median
+   0.756, above 1 on 13%, sign agreement 49% with a coin-toss CI of [41%, 59%]. Lane D attacked
+   the STRONGEST version first (the w*kappa-weighted regression the expectation actually
+   implies, a third reference map, the discrete posterior median, and a per-shell breakdown):
+   every variant is below 1 and none reaches the bar. The third sub-clause fails in the opposite
+   direction to its prediction.
+   WHAT THIS KILLS: corollary 2b as a predictive law on this instrument. WHAT IT DOES NOT TOUCH:
+   theorem 2's central result, that the expectation contains no term in the native's deviation
+   from typical -- a statement about what the marginals CANNOT do, independent of beta's value.
+   The bound (S29-L23) rests on that half, not on 2b.
+   OPERATIONAL CONSEQUENCE FOR MY OWN CONTRACT RULE 20: the rule (report the implied shrink and
+   the native percentile beside any cosine gain) STANDS as prudence, but its stated MECHANISM
+   ("shrinking moves beta and therefore the cosine") is now unsupported on this instrument and
+   must not be asserted until lane D's shrink grid measures it directly. That job is running.
+3. M6, THE FIXED-PROFILE CONTROL, REFINES T's Q1 RATHER THAN CONFIRMING IT. Lane D's independent
+   computation of the optimal rank-weight profile lands on T's numbers to the third decimal
+   (t* -1.5329 vs -1.534; F* -4.7221 vs -4.7237; m* 30 vs 29; PR 340.4 vs 342.3). But T's
+   prediction that the deployed arm's emitted structure matches the fixed profile on >= 120 of
+   126 targets FAILS: exact set equality on 3 to 10 targets, structure agreement within the
+   built-chain floor on 43/126 and within 0.02 A on 77/126, worst target 0.58 A apart.
+   AND YET the endpoint contrast does not fire: the fixed prefix minus the deployed VQE arm is
+   -0.0097 A at 0.43x MDE (NOT MEASURED, fold CI straddling zero, power 0.22).
+   THE HONEST STATEMENT, which the report will use: the deployed quantum stage is NOT
+   bit-reproducible by a fixed target-independent rank profile, but it is STATISTICALLY
+   INDISTINGUISHABLE from one at the endpoint. T's reduction is right in effect and too strong
+   in detail, and lane D's measurement is the version that goes in the report.
 
 ## Integration note 1 (2026-09-19 23:55, after S29-L1)
 Lane L's topic 1 closes the "import a QA method" route from outside: no published native-free
