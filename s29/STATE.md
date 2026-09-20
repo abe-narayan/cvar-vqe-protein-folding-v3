@@ -612,6 +612,18 @@ No OpenMM, no rebuild, 32 channels where the original had 2, and native-free whe
 Lane L calls it a strictly better instrument for its own question and I agree.
 
 
+## Integration note 26 (2026-09-20 02:20, lane M's caveat on my own note 25): THE 7 BITS ARE NOT SPENDABLE THROUGH THE SHIPPED READOUT
+Note 25 said the readout costs 0.757 A on 7 bits. Lane M corrected the reading and it is right:
+best-of-128 is an ARGMIN readout, the shipped one is an AVERAGE, so 0.757 A prices a readout
+SWITCH plus the bits, not a ranking improvement fed to the shipped operator. The operator law
+(d_out = 1.16 x set_mean + 0.04 x set_best, R^2 0.89) says a perfect rank-1 is worth -1.74 A
+through argmin and -0.03 A through the m = 75 average. So: the architecture caps at 2.9122 A
+under its own operator BEFORE ranking skill is discussed, and that same operator makes ranking
+skill nearly worthless. Two sides of one decision, and jointly the reason several sprints of
+ranking work came back flat. NOT a route: argmin is the operator that punishes a bad objective
+(S12/S19), and m* = 75 is correct FOR an objective of the shipped quality. See S29-L44 addendum 2.
+This is the third lane correction of the coordinator this sprint, and the second in one hour.
+
 ## Integration note 24 (2026-09-20 02:18): TWO ERRORS OF MINE IN ONE HOUR, BOTH CAUGHT, BOTH THE SAME SHAPE
 **(a) The basis error.** I promoted lane O's 2.7605 A into the STATE headline and into reports to
 the user as "the architectural ceiling" without its basis label. It is a POINT-CLOUD number; the

@@ -4070,3 +4070,41 @@ Artefacts: `s29/results/s29_B_tta_subset_rows.s0of4.jsonl` .. `.s3of4.jsonl` (12
 `s29/results/s29_B_tta_subset_rows_pre_tiefix.jsonl` (the 12 pre-fix rows, kept);
 `s26/jobs_done/s29B_sub126_*.json`; code `s29/s29_B_tta.py` (fix `7b2e83e1`), tests
 `tests/test_s29_B.py` (19 pass); lane D's check `S29-L38`.
+
+### SECOND ADDENDUM to S29-L44 (2026-09-20 02:20, on lane M's caveat (a)): THE SEVEN BITS CANNOT BE SPENT THROUGH AN AVERAGING READOUT -- THE CONTRAST PRICES A READOUT **SWITCH**, NOT A RANKING IMPROVEMENT
+
+Lane M flagged this against its own F2 instrument and it lands on my entry above, so I am
+recording it here rather than only there.
+
+`best1_top128` (2.1549 A) is an **argmin** readout. `bestm128` (2.9122 A) is an **averaging**
+readout. The 0.757 A between them therefore prices *switching the terminal operator from an
+average to a selection* **and** supplying the 7 bits -- not supplying 7 bits to the operator that
+currently ships. Those are different interventions and only the first has the 0.757 A attached.
+
+The reason is a law already in the record. The terminal operator consumes the set **MEAN**, not the
+set best: d_out = 1.16 x d_set_mean + 0.04 x d_set_best, R^2 = 0.89. So a perfect rank-1 signal is
+worth about **-1.74 A through argmin and about -0.03 A through the m = 75 average**. Feeding a
+perfect ranker into the shipped averaging readout moves essentially nothing; the 0.04 coefficient is
+the whole channel.
+
+**What survives, stated precisely.** Inside the fixed top-128 set, with equal 7-bit oracle budgets:
+  - spend them on *m* (prefix length), keep the average  ->  2.9122 A   (-0.3084 vs production)
+  - spend them on *which member*, **and switch to argmin** ->  2.1549 A   (-1.0657 vs production)
+The architecture's ceiling under its own readout is 2.9122 A. The 2.1549 A is reachable only by a
+different terminal operator. Both remain ORACLE and both sit on the far side of the bound.
+
+**What this does to the "the readout is the binding constraint" claim (STATE note 25).** It
+sharpens it and narrows it. The claim is NOT "improve the ranking and collect 0.757 A" -- that is
+the exact over-read the operator law forbids, and it is the mistake this second addendum exists to
+prevent. The claim is: *the choice of terminal operator caps the architecture at 2.91 A before any
+question of ranking skill arises*, and the averaging operator is also the one that makes ranking
+skill nearly worthless (0.04 coefficient). Those two facts are the same architectural decision seen
+from two sides, and together they explain why several sprints of ranking work returned flat.
+
+**The known counterweight, so this is not read as a licence to switch.** Argmin is far more
+sensitive to a bad objective than the average is: S12's and S19's results are that searching harder
+on a bad objective HURTS through argmin and is neutral through an average, and the m* ladder
+(500 -> 75 -> 20 -> 3-5 as the objective improves) says the shipped m = 75 is the right operator
+*for an objective of the shipped quality*. A readout switch is therefore conditional on an
+objective the project does not have, which is the bound again. Nothing here is a route; it is a
+diagnosis of where the 2.5 A went.
