@@ -5204,3 +5204,95 @@ Artefacts: `s29/results/s29_B_tta_end_rows.s0of4.jsonl` .. `.s3of4.jsonl`,
 `s29/results/s29_B_tta_end_cloud.json`; `s26/jobs_done/s29B_end126_*.json`,
 `s29B_chain_*.json`, `s29B_end12_*.json`; code `s29/s29_B_tta.py`, `s29/s29_B_analyse.py`;
 prereg `s29/PREREG_S29_B.md` addenda 2 and 3 (commits d3ccf6b6, c89e3106), both before the run.
+
+## S29-L55 -- M6 ON THE BUILT CHAIN, THE REPORTING BASIS (126/126): **THE DEPLOYED CVaR-VQE ARM IS INDISTINGUISHABLE FROM A FIXED TARGET-INDEPENDENT PREFIX** (-0.0082 A AT 0.27x MDE, FOLD CI INCLUDING ZERO); F-M6b DOES NOT FIRE, F-M6a FAILS AGAIN AT THE STRUCTURE LEVEL (42/126 WITHIN THE FLOOR, NOT 120); THE WHOLE m-LADDER IS FLAT AT -0.00047 A PER UNIT OF m AND ITS BEST CELL IS AN ORDER STATISTIC THAT TRANSFERS -5%; AND THE SUITE CLOSES GREEN ON ALL FOUR HEAVY FILES (2026-09-20 03:21, D)
+
+Pre-registered in `s29/PREREG_S29_D_m6.md` before any contrast was computed, with a written
+declaration of the row statistics I had already seen. Every RMSD is the endpoint. Job
+`s26/jobs_done/s29D_m6_chain.json` (126 targets x 7 projections); rows
+`s29/results/s29_D_m6_chain_rows_seed0.jsonl`; summary `s29/results/s29_D_m6_chain_seed0.json`.
+**Both sides are projected IN THIS JOB from clouds built by the same code path**, so the
+S28-L18 branch-flip floor cannot enter the contrast (S28-L43's discipline).
+
+**THE RESULT, on the basis the charter names.** Deployed CVaR-VQE arm (config DIS, seed 0,
+alpha 0.18, T 0.5, layers 3, 80 iterations): **3.2187 A** built chain. The fixed profile applied
+to each target's own rank order, with no circuit, no optimiser and no per-target computation:
+| control | chain mean | effect vs the deployed arm | x MDE | fold CI | within the 0.006 floor | within 0.02 |
+|---|---|---|---|---|---|---|
+| m = 30 (p*'s own prefix) | 3.2350 | +0.0163 | +0.21 | [-0.0412, +0.0692] | 8/126 | 25/126 |
+| m = 70 | 3.2051 | -0.0136 | -0.45 | [-0.0277, -0.0007] | 34/126 | 60/126 |
+| m = 71 | 3.2117 | -0.0071 | -0.25 | [-0.0167, +0.0019] | 38/126 | 66/126 |
+| m = 74 | 3.2118 | -0.0069 | -0.22 | [-0.0282, +0.0150] | 37/126 | 66/126 |
+| **m = 75 (production's own prefix)** | **3.2105** | **-0.0082** | **-0.27** | **[-0.0310, +0.0098]** | 42/126 | 68/126 |
+| m = 80 | 3.2184 | -0.0003 | -0.01 | [-0.0213, +0.0190] | 39/126 | 64/126 |
+`ST.fmt` verbatim for the registered primary (negative = the fixed prefix is better):
+```
+  fixed prefix m75 minus the deployed VQE arm (BUILT CHAIN, seed 0)
+    a 3.2105 (med 2.9661)   b 3.2187 (med 2.9801)   n=126
+    effect -0.0082   median +0.0000   SE 0.0110   MDE 0.0307   effect/MDE -0.27
+    iid  CI95 [-0.0300, +0.0134]
+    fold CI95 [-0.0310, +0.0098]   folds same sign 3/5   per-fold 0:-0.052 1:+0.021 2:-0.001 3:-0.016 4:+0.006
+    58W/59L/9T   worst degradation +0.3865 (9BAF)   p90 +0.0690   power 0.12  Type-M 3.27
+    concentration: drop-top10 +0.0177 vs uniform-effect null p10/p50/p90 +0.0073/+0.0171/+0.0268 -> pctile 0.536
+    VERDICT: NOT MEASURED (|effect| 0.0082 <= its own MDE 0.0307, 0.27x)
+```
+**F-M6b DOES NOT FIRE.** No fixed profile differs from the deployed arm by more than 0.45x its
+own MDE on the reporting basis, and the registered primary sits at 0.27x with the fold CI
+including zero. **Removing the entire quantum stage -- the circuit, the optimiser, and every
+per-target computation -- and replacing it with one number chosen once for all 126 targets costs
+or buys nothing measurable on the built-chain endpoint.** That is the charter's central
+requirement tested at its sharpest on the deployed spine, and the answer is the one the S29
+contract already conceded in prose, now measured on the basis that counts.
+**F-M6a FAILS AGAIN, as it did on the cloud.** Lane T's "the deployed arm's emitted structure
+equals that control to within the built-chain input floor on at least 120 of 126" is not met by
+any m* in the registered sweep: the best is **42 of 126** within 0.006 A and 68 within 0.02 A,
+with a worst-target difference of 0.69 A. The equivalence is an ENDPOINT statement, not a
+structure-level one, and the report should carry it in those words.
+**THE ONE SCALAR IS WORTH ALMOST NOTHING.** The m-ladder's slope on the built chain is
+**-0.00047 A per unit of m** across m in [30, 80] -- the entire range the deployed circuit
+explores is worth about 0.01 A, and the profile's own optimum at m = 30 is 0.024 A WORSE than
+the prefix the pipeline already ships.
+**THE SWEEP's BEST CELL IS AN ORDER STATISTIC AND I PRICE IT AS ONE**, because I would demand
+this of any other lane. m = 70 at 3.2051 is the best of six and looks 0.0075 A better than S27's
+production chain rows -- but `ST.best_of_k_within` over the (126 x 6) matrix gives an observed
+per-target gain of -0.1252 against an across-target null of -0.1402 (**share accounted 1.12**,
+k_eff 4.67) and a **split-half transfer of +0.0068, i.e. -5% of the oracle: NOT A SIGNAL**. The
+argmin counts are m30 50, m80 33, m71 16, m70 11, m74 9, m75 7 -- the per-target best m is
+scattered across the sweep's ends, which is what noise looks like. And the m = 70 vs production
+contrast is **-0.0075 A at 0.27x MDE, fold CI [-0.0347, +0.0141], 3/5 folds, power 0.12,
+Type-M 3.18, NOT MEASURED** -- and it is additionally a CROSS-CODE-PATH contrast (my projections
+against S27's stored rows), so the S28-L18 floor applies to it and not to the within-job table
+above. **No m is a candidate for anything.**
+**HONEST FRAMING, as lane T asked for and as I repeat here.** None of this diminishes the
+trainability result: the optimiser does reduce F (S28-L21, S29-L15), the CVaR tail is the
+classical prefix to 1.14e-13, and the circuit does what it is asked. This measures what that
+reduction buys at the endpoint, and the answer on the built chain is: nothing that one
+target-independent number does not already buy.
+Multiplicity: 2 endpoint comparisons as declared in the prereg (point cloud S29-L26, built chain
+here), plus the 5 sweep cells reported as a curve and priced with `best_of_k_within`. Seed 1 is
+available in the same artefact family if a replication is wanted; the effect is null on seed 0,
+so a second seed cannot rescue it and is not run (contract rule 6 applies to positives).
+
+**THE SUITE CLOSES: ALL FOUR HEAVY FILES RAN THIS SPRINT AND ALL FOUR ARE GREEN.**
+| file | exit | result | wall | peak RSS |
+|---|---|---|---|---|
+| `tests/test_pipeline.py` | 0 | **35 passed, 2 skipped, 0 failed** | 236 s | 1.56 GB |
+| `tests/test_integration.py` + `test_equivalence.py`, **VERIFY_SLOW=1** | 0 | **39 passed, 0 skipped, 0 failed** | 140 s | 1.14 GB |
+| `tests/test_amber.py` | 0 | **16 passed** | 291 s | 0.87 GB |
+| `tests/test_amber_frame_invariance.py` | 0 | **3 passed** | 281 s | 0.32 GB |
+With the light files (S29-L5: 378 passed / 3 skipped / 0 failed on 17 files) **every test file in
+the tree has run this sprint with 0 failures**, and the 3 skips of the light run are the
+VERIFY_SLOW opt-ins that the integration job then ran and passed -- so the sprint's suite has no
+unexercised opt-in left. Jobs `s29D_pytest_{pipeline,integration2,amber1,amber2}`.
+**Two operational notes.** (a) The heavy files were placed by the GOVERNOR's queue
+(`s26/queue/001, 005-008`), not by polling `jobrun`: the first polling attempt waited 25 minutes
+and a second waited 30 more, each losing freed slots to other lanes' pollers, while a queued spec
+was placed in 90 seconds and 3 minutes respectively. No threshold was changed and nothing was
+overridden. (b) I killed one job of my own: a duplicate `s29D_fields_b3` (started 02:45) that was
+recomputing an artefact already committed, which was occupying the slot the report-gating
+integration file needed (contract addendum 16: never recompute completed work). The committed
+`s29_D_fields_b3.json` is unchanged and verified after the kill (n = 126, EXPAND +1.29e-04,
+PROJ corr +0.651).
+Verdict: **THE DEPLOYED QUANTUM STAGE CONTRIBUTES NOTHING MEASURABLE AT THE ENDPOINT THAT A
+SINGLE TARGET-INDEPENDENT NUMBER DOES NOT. M6 CLOSES ON THE REPORTING BASIS; F-M6a is refuted at
+the structure level and confirmed as an endpoint statement; the suite closes green.**
