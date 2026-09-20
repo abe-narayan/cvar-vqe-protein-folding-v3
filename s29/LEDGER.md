@@ -921,3 +921,98 @@ are a property measurement, not a contrast.
 Artefacts: `s29/THEORY.md` section 3 (commit 70d45dec); `s29/results/s29_T_spectra.json`,
 `s29_T_spectra_rows.jsonl`, `s29_T_grad_rows.jsonl`; `s26/jobs_done/s29T_spectra.json`;
 `s26/logs/s29T_spectra.log`.
+
+## S29-L12 -- TOPIC 3, DECISION THEORY: THE PERCEPTION-DISTORTION THEOREM (BLAU & MICHAELI 2018) MAKES CHARTER FINDING 8 A NECESSITY -- FOR *ANY* DISTORTION MEASURE THE DISTORTION-OPTIMAL ESTIMATOR'S OUTPUT DISTRIBUTION MUST DIVERGE FROM THE REAL ONE, MOST STEEPLY AT LOW DISTORTION, SO EVERY REALISM-TYPE SCORER (WHICH IS EVERY SCORER IN THE LIBRARY) MUST DISPREFER THE RMSD-OPTIMAL ANSWER; THE 25.8% CONTRACTION IS JENSEN'S INEQUALITY; AND POST-HOC CALIBRATION IS CLOSED BY ARGMAX/MEDIAN INVARIANCE (2026-09-20 00:07, L)
+
+Question (brief topic 3): what does decision theory say about structure point estimates (L1/L2 in
+coordinate vs distance space, medoid vs mean under multimodality), about proper scoring rules for
+distograms and about calibrating an over-confident distance posterior -- and is there a result
+that the Bayes estimator of an over-confident posterior is contracted? No experiment; literature
+only. Falsifier for the framing claim: a construction that attains both minimal distortion and
+the correct output distribution under a non-invertible degradation.
+
+THE RESULT. Blau Y, Michaeli T, "The Perception-Distortion Tradeoff", CVPR 2018 (arXiv:1711.06077).
+Distortion is E[delta(X, Xhat)] for any per-sample measure; perceptual quality is a divergence
+d(p_X, p_Xhat) between the estimator's OUTPUT DISTRIBUTION and the distribution of real signals
+(with total variation, d is the best achievable probability of telling an output from a real
+signal). P(D) = min d(p_X, p_Xhat) s.t. E[Delta] <= D (their eq 11). THEOREM 3, verbatim: "If
+d(p,q) of (4) is convex in its second argument, then the perception-distortion function P(D) of
+(11) is 1) monotonically non-increasing; 2) convex", and "Theorem 3 requires no assumptions on
+the distortion measure Delta. This implies that a tradeoff between perceptual quality and
+distortion exists for any distortion measure". Convexity puts the steepest part of the tradeoff
+at the LOW-DISTORTION end, which is where this project operates. THEOREM 1: if the degradation is
+non-invertible and the distortion-minimising estimator is unique, that distortion measure is not
+stably distribution-preserving. The mechanism, verbatim, is ours: "the average of valid images is
+not necessarily a valid image, so that the MMSE estimate frequently 'falls off' the natural image
+manifold".
+
+WHY THIS IS FINDING 8. Our distortion measure is CA-RMSD (the endpoint). Every native-free scorer
+in the S27 library is, up to a monotone map, a log-density of real structures -- a realism
+measure, i.e. an estimate of the d-axis. Theorem 3 then says the RMSD-optimal answer is precisely
+the answer a realism scorer is most confident is fake. S28-L48 is that statement measured: 20 of
+31 scorers prefer the projected production average to a 0.25 A ORACLE structure, and CAGEO
+"prefers any real trace to a contracted one" (S28-L36). The scorers are not broken; they read the
+correct axis, and the endpoint rewards the other one. The project's own two operator families are
+the two ends of P(D): the coordinate average is the low-distortion off-manifold end (contracted
+25.8%, cloud 3.0483) and the medoid/pool member is the on-manifold higher-distortion end (which
+is why realism prefers it, and why consensus is capped at the pool's mode). The built chain's
+projection is a MEASURED point on the curve: +0.164 A to return to ideal geometry (3.0483 cloud
+-> 3.2126 chain, `s27/results/chain_rows.jsonl`), so the coordinator's wave-2 probe P1 is a
+measurement of P(D)'s local slope and should be framed that way -- interpretable whichever way it
+comes out.
+
+WHAT IT DOES NOT LICENSE. The theorem constrains an estimator's output DISTRIBUTION, not the
+per-target ranking of a fixed candidate set: ranking two structures of MATCHED realism by accuracy
+is not forbidden. So the one version of finding 8's question that is not answered "no" in advance
+is IN-BAND-BY-REALISM ranking -- match plausibility first, then rank. The pool-member control
+(S28-L36/L37) is a crude form of exactly that, and the same paper supplies the converse that makes
+the control mandatory: "we could achieve perfect perceptual quality by randomly drawing natural
+images that have nothing to do with the original ground-truth images. In this case the distortion
+would be quite large."
+
+THE CONTRACTION IS JENSEN, NOT A BIAS. For any X, Y: ||E[X] - E[Y]|| = ||E[X-Y]|| <= E[||X-Y||],
+strict unless X-Y is a.s. a fixed direction. So a coordinate average shrinks every interatomic
+distance, by more when the pool disagrees more. The measured 25.8% backbone contraction
+(`averaging-space-beats-the-objective`) needs no distogram-bias explanation and cannot be
+reweighted away -- only projected (the +0.164 A above) or avoided by not averaging in coordinate
+space. This is also the formal sibling of the shrink-toward-typicality loophole behind contract
+rule 20: both improve a distance-space objective while degrading realism.
+
+CALIBRATION IS CLOSED FOR A MECHANISM REASON. Guo et al., ICML 2017 (arXiv:1706.04599): temperature
+scaling divides logits by one scalar fitted by NLL and "does not alter which class receives the
+highest predicted probability (argmax) or change classification accuracy". For a per-pair L1 Bayes
+readout it is also MEDIAN-invariant whenever the per-pair posterior is symmetric about its centre,
+so a pure temperature change can act only through (i) the 17-bin asymmetry and (ii) the
+discretisation (S25 L7: 17 distinct per-pair target values, gaps to 4 A). Both are artefacts, so
+S25 L2's "the posterior is ~2x over-confident and calibrating it makes RMSD WORSE" is now explained
+rather than merely observed. Note for the record: this ANSWERS the brief's question "is there a
+result that the Bayes estimator of an over-confident posterior is contracted?" -- NO, not from
+over-confidence per se. A symmetric width error does not move the median or the mean. The
+contraction in this system comes from AVERAGING (Jensen) and from shrinkage toward the prior's
+centre (the typicality axis), not from miscalibrated width.
+
+PROPER SCORING RULES. Gneiting & Raftery, JASA 102(477):359-378 (2007): S is proper if honest
+reporting minimises expected score. The distogram is trained by 17-bin cross-entropy, which IS the
+logarithmic score and IS strictly proper -- the training objective is already decision-theoretically
+correct, and S25's 51 arms of re-reading gave corr(progress-toward-truth, endpoint) = +0.054. What
+is worth importing is the diagnostic: CRPS is the distance-sensitive generalisation of absolute
+error to predictive distributions, where "the logarithmic score assigns harsh penalties regardless
+of closeness". Any future comparison of two posteriors should use CRPS, never MAE -- which the
+project reached empirically twice (`prior-mae-prices-selected-rmsd` r = 0.19;
+`error-shape-not-mae-decides-ranking`).
+
+ROUTE NOTE. AlphaFold1 (Senior et al., Nature 577:706, 2020) minimised a potential fitted to the
+distance histogram; AlphaFold2 (Jumper et al., Nature 596:583, 2021) abandoned the distogram
+potential for a structure module and predicts its own accuracy (lDDT-Ca = 0.997 pLDDT - 1.17,
+r = 0.76). Neither post-hoc calibrates the distogram. The field's answer to an over-confident
+per-pair posterior was to STOP TAKING A PER-PAIR POINT ESTIMATE. The project's analogue of
+"consume the posterior jointly" is lane X's configuration space.
+
+VERDICT. KEPT (5, as framing/diagnostic/route, none importable as an operator): the classical
+Bayes estimators plus the Jensen contraction; Blau & Michaeli Theorems 1 and 3; their converse
+(realism alone buys nothing = the pool-member control's theoretical form); Gneiting & Raftery's
+CRPS as the posterior-comparison metric; the AlphaFold route note. REJECTED (2 levers): post-hoc
+temperature calibration of the distogram (argmax- and median-invariant, no information added;
+independently closed by S25 L2) and changing the training scoring rule (the log score is already
+strictly proper). Multiplicity: 0 endpoint comparisons; no new measurement in this entry.
+Artefacts: `s29/lit/L_3_decision_theory.md`; `s29/lit/L_INDEX.md`.

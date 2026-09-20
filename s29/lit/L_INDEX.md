@@ -49,8 +49,22 @@ Derived in the note (arithmetic on `s23/results/errdecomp.json`, not a new measu
 an infinite pool of the same kind returns 3.040 A against the shipped 3.0483 point cloud, so
 "average more members" is worth <= ~0.008 A.
 
-## Topic 3 -- decision theory of structure point estimates (`L_3_decision_theory.md`)
-(pending)
+## Topic 3 -- decision theory of structure point estimates (`L_3_decision_theory.md`, ledger S29-L12)
+
+| paper | what it adds | verdict |
+|---|---|---|
+| Classical Bayes estimators (L2 -> posterior mean, L1 -> median, 0-1 -> mode), Berger ch. 4; with the Jensen contraction \|\|E X - E Y\|\| <= E\|\|X - Y\|\| | the one-line proof that a coordinate average must shrink every interatomic distance | KEPT as framing: the measured 25.8% contraction is Jensen, not a distogram bias, and cannot be reweighted away |
+| Blau Y, Michaeli T. The Perception-Distortion Tradeoff. CVPR 2018 (arXiv:1711.06077), Thm 1 and Thm 3 | for ANY distortion measure, the distortion-optimal estimator's output distribution must diverge from the real one, most steeply at low distortion | KEPT -- the framing theorem for charter finding 8: realism-type scorers must disprefer the RMSD-optimal answer |
+| the same paper's converse (perfect realism by drawing unrelated real signals) | realism alone buys no accuracy | KEPT -- the theoretical form of the pool-member control (S28-L36/L37) |
+| Guo C, Pleiss G, Sun Y, Weinberger KQ. On Calibration of Modern Neural Networks. ICML 2017 (arXiv:1706.04599) | temperature scaling is argmax-invariant (and median-invariant for symmetric posteriors) | REJECTED as a lever; KEPT as the mechanism behind S25 L2's "calibrating makes RMSD worse" |
+| Gneiting T, Raftery AE. JASA 102(477):359-378 (2007) | properness (the distogram's cross-entropy IS the strictly proper log score); CRPS as the distance-sensitive diagnostic | REJECTED as a training change; KEPT as the correct posterior-comparison metric, in place of MAE |
+| Senior AW et al. Nature 577:706 (2020); Jumper J et al. Nature 596:583 (2021) | the field's answer to an over-confident per-pair posterior was to stop taking a per-pair point estimate | KEPT as a route note supporting lane X; not importable |
+
+Topic 3 running count: 6 entries, 5 KEPT (framing/diagnostic/route), 2 levers REJECTED.
+Answer to the brief's specific question ("is the Bayes estimator of an over-confident posterior
+contracted?"): NO, not from over-confidence per se -- a symmetric width error moves neither the
+mean nor the median. The contraction here is averaging (Jensen) plus shrinkage toward the prior's
+centre (the typicality axis).
 
 ## Topic 4 -- quantum (`L_4_quantum.md`)
 (pending)
