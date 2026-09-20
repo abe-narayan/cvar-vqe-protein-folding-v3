@@ -308,3 +308,41 @@ built chain only if a cell reaches 0.7x MDE on the point cloud against productio
 and then paired against production on the chain. Registered prior: WORSE or null (the kNN
 ground state is a tight cluster of PR 53 around the argmin, the consistency mechanism). The
 job runs only after the S28B built-chain verdict entry is posted and lane D has checked it.
+
+## ADDENDUM 3 -- B2 ENDPOINT: THE COHERENCE CLASS SPLIT, REGISTERED BEFORE THE JOB (2026-09-19 21:10, written after S28-L41 / S28-L43 and BEFORE any B2 endpoint number; the B2 job `s28B2_run` has not been launched)
+
+S28-L41 measured that the Gaussian-graph VQE state at J = 3 is BIMODAL: every (target, seed)
+cell is either fully sign-coherent (coherence > 0.5, in practice > 0.6, hopping at its
+same-sign bound, F near the exact ground state's) or fully incoherent (coherence <= 0.1,
+hopping 0, F at the J = 0 value), with no cell in between; which basin a run lands in is a
+property of the draw. S28-L43 (lane D) makes two conditions on the B2 endpoint: (1) report the
+coherence CLASS of every trained state and the endpoint contrast on the two classes
+separately, which is a post-hoc subgroup split unless registered here; (2) never write "the
+circuit collects X% of its bound" from a mean coherence; write the class counts.
+
+Registered here, before the run:
+- CLASS RULE (native-free, read from the trained state only): a cell is COHERENT if its sign
+  coherence (sum psi)^2 / (sum |psi|)^2 > 0.5 and INCOHERENT if <= 0.1; a cell in (0.1, 0.5]
+  is reported as MIXED and counted (the Gaussian run had zero such cells at J = 3 on 126 x 2;
+  the kNN graph's spread spectrum may separate share and coherence, S28-L29, so the count is
+  not assumed zero). The class is fixed per (target, seed, graph) by the J = 3 REAL row and
+  applied to the PERM row of the same seed by ITS OWN coherence.
+- WHAT IS REPORTED: the class counts per seed and graph (coherent / mixed / incoherent of
+  126; targets coherent on both seeds, on either, on neither); and, for the registered cells
+  (VQE R1 and R3 at J = 3, REAL and PERM, both seeds), `ST.compare` of the cell against its
+  J = 0 twin and against production on the COHERENT cells and on the INCOHERENT cells
+  separately, beside the all-126 contrast. Each subgroup contrast carries its own n, SE and
+  MDE; a subgroup contrast is a REGISTERED planned analysis, not post hoc, and it changes NO
+  verdict: the endpoint verdict is the all-126 contrast on the registered comparators
+  (production, S28-L2(a); the same readout at J = 0; PERM), as in addendum 2. The subgroup
+  reading answers one question only: does landing in the coherent basin change the emitted
+  structure (prior, from S28-L41 / L43: no measurable difference; the coherent cells' R1 moves
+  through m only).
+- NO "collects X%": the share of the same-sign bound and the sign coherence are reported as
+  class counts and as per-class means, never as one mean over the 126.
+- The GS R3 row at J = 3 carries the k = 10 graph's component count per target and is
+  DEGENERATE wherever it exceeds one (S28-L23(b)); the count is written in the entry.
+- Nothing else changes: scope k = 10, J in {0, 3}, graphs REAL and PERM, both seeds, VQE R1 / R3,
+  GS R3, point cloud; chain only for a registered cell at 0.7x MDE against production or J = 0,
+  then paired against production on the chain (production re-projected in this lane's process,
+  `s28_B_prodcheck.json`, identical on 126/126). Prior: WORSE or null (addendum 2).
