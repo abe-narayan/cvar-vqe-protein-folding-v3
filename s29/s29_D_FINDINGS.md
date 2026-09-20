@@ -60,6 +60,16 @@ the shipped cost's. Its gradient is undefined (a bin lookup; 99.2% zero componen
 on 114/126), so the +0.110 printed on the surviving 12 is not a measurement and is not quoted.
 `s29/results/s29_D_cost_audit_X_cost_nll_ca.json`.
 
+D5. **Addendum 20 is mechanical, and the shipped cost's descent EXPANDS (S29-L10).** Every
+cosine the meter prints now carries its shrink signature: descend 0.3 A along -grad f from
+production and report the bond and Rg ratios with the count of contracting targets. Shipped
+cost: bond x1.0438, Rg x1.0248, 18/126 contract. Lane X's pair log-score: x1.0232 / x1.0065,
+3/12. Neither buys its cosine by shrinking, so "the cost just prefers contracted things" is
+measured FALSE at the gradient level for both -- while remaining true of the shipped cost's
+RANKING (production beats 87% of real traces, S28-L36). Two defects in my own meter were found
+and fixed in the same patch (an all-NaN cosine axis crashed the renderer after the run had
+completed; a partially defined cosine was printed as a measurement), with regression tests.
+
 ## ORACLE DIAGNOSTIC
 
 OD1. The four meter numbers are ORACLE by construction (the ladder is scored against the
@@ -122,6 +132,14 @@ scale-only control. Registered as a prediction here so it can be wrong.
   decimal (0.3676 vs 0.3688) and on the CA ladder rho in the third (−0.1818 vs −0.1857),
   because the table is piecewise constant and creates ties the surrogate breaks. Any anchor
   quoted to three decimals must say which of the two it came from.
+- I expected my own meter to be the one thing in the sprint that could not lose a result. It
+  lost a 126-target CAGEO run to a print statement (an all-NaN cosine axis, `ci95_fold = None`,
+  TypeError in `render` AFTER every target had been computed). The lesson is the S24 stats_lib
+  one restated: the axis that is undefined is the axis nobody wrote a test for.
+- I expected the shipped cost's descent direction to contract the structure, because its
+  ranking prefers contraction (S28-L36) and its minimiser is a contracted average (S25 L2). It
+  expands: bond x1.044, Rg x1.025, 18/126 contracting. Ranking preference and gradient direction
+  are different statements about the same cost and I had them fused.
 - I expected finite differences on a piecewise-linear cost to be safe at h = 0.01 A. They are
   not: the distogram's risk grid has 0.05 A spacing, so h = 0.01 straddles knots and the cosine
   drifts by up to 1e-2. h = 1e-3 holds to 3e-4.
