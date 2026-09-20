@@ -664,3 +664,242 @@ arbitrary label and `X_q` flips a candidate's index bit.
 > contribution at unchanged RMSD", not an accuracy result -- unless the configuration space's own
 > posterior carries more than the pool's marginals, which is lane X's premise and is measured by
 > lane D's meter, not by me.
+
+---
+
+## 1. THE CONTRACTION THEOREM
+
+### 1.1 The L1 Bayes risk is minimised at the median map, and its local form is a weighted L2
+
+Per pair, `phi_alpha(d) = E_{p_alpha}|T - d|` is convex with `phi'_alpha(d) = 2 F_alpha(d) - 1`, so it
+is minimised exactly at the posterior **median** `m_alpha` and, near it,
+`phi_alpha(d) = phi_alpha(m_alpha) + (kappa_alpha/2)(d - m_alpha)^2 + O((d-m)^3)`,
+`kappa_alpha = 2 p_alpha(m_alpha)`. Hence, for structures,
+
+    S(C) = const + (1/2) || D(C) - m ||^2_{w kappa} + O(3),                                       (1.1)
+
+the **weighted squared distance of the structure's distance map from the per-pair median map**.
+Two consequences used below. (i) The unconstrained minimiser over `R^P` is `m` itself, which is
+generally **not a realisable distance map** (no structure has it); the minimiser over structures is
+the projection of `m` onto the realisable set in the `w kappa` metric. (ii) Because `phi'`
+saturates at `+-1`, the true objective is a Huber-like robustification of (1.1): a pair 10 A wrong
+pulls no harder than one 1 A wrong, so the projection is dominated by the many near-median pairs.
+
+### 1.2 The average contracts, exactly, and the amount is the pool's idiosyncratic variance
+
+Let `C = (1/K) sum_k W_k` in one common frame. For any pair, with `v_k = W_{k,i} - W_{k,j}`,
+`vbar = mean_k v_k` and `delta_k = v_k - vbar`:
+
+    d_alpha(C) = |vbar|,      mean_k d_alpha(W_k)^2 = |vbar|^2 + mean_k |delta_k|^2,
+    => **d_alpha(C)^2 = mean_k d_alpha(W_k)^2 - s_alpha^2**,  s_alpha^2 = mean_k |delta_k|^2.     (1.2)
+
+(1.2) is an identity, not an inequality; Jensen (`|mean v| <= mean |v|`) is its weaker corollary. The
+same algebra with deviations from each member's centroid gives the envelope version,
+
+    Rg(C)^2 = mean_k Rg(W_k)^2 - Delta^2,   Delta^2 = (1/N) sum_i mean_k |W_{k,i} - C_i|^2,        (1.3)
+
+and `Delta^2` is precisely S23 L9's **idiosyncratic** term (`mean_k |d_k|^2 = 63.82 A^2` summed over
+atoms, against the common term `|ebar|^2 = 160.36`). So:
+
+> **Contraction is not an artefact and not a bug: it is the variance decomposition of the pool.
+> The average's distances are short by exactly the pool's within-pool spread, which is the 32% of
+> the squared error that averaging removes. The operator cannot take the 68% and cannot avoid
+> paying the 32% in contraction.**
+
+Quantitatively. The measured 22% bond contraction (2.961 vs the pool's 3.81, S23 L1) requires, by
+(1.2), `s^2 / mean_k d^2 = 1 - (2.961/3.81)^2 = 0.396`: the per-pair vector spread is 40% of the
+mean squared pair length at separation 1. The envelope check with (1.3): pool mean Rg 6.80
+(S28-L18b item 6), `Delta^2 = 63.82/N = 5.19` at the instrument's mean length, predicting
+`Rg(C) = sqrt(6.80^2 - 5.19) = 6.41` against the measured 6.21 -- 3% high, with the caveats that
+`63.82` is a per-target sum averaged over targets of varying length and that the members are
+superposed onto the medoid rather than mutually centred. **The separation dependence is the whole
+of S23 L1's "averaging smooths":** `s_alpha^2` is roughly the superposition residual and does not
+grow with separation, while `d_alpha^2` does, so the fractional contraction
+`1 - sqrt(1 - s^2/<d^2>)` falls with `|i-j|` -- 22% at the bond, 6% at the envelope, with no extra
+assumption.
+
+### 1.3 When the average's cost beats a member's
+
+By (1.1) the comparison is a distance to `m`. Write the member maps as `m + b + e_k` (`b` the
+systematic offset of the pool from the median map, `e_k` the member's own deviation, mean 0,
+per-pair variance `sigma_p^2`) and the average's map as `m + b + c` with `c` the contraction of
+(1.2). Then
+
+    S(C) - S(W_k) = (1/2)[ ||b + c||^2 - ||b + e_k||^2 ]_{w kappa},
+    E_k[S(W_k)] - S(C) = (1/2)[ sum w kappa sigma_p^2 - (2<b,c> + ||c||^2) ]_{w kappa}.            (1.4)
+
+**The average beats the typical member by the pool's own dispersion and loses a term
+`2<b,c> + |c|^2` to the contraction.** It beats a *particular* member `k` iff that member's map is
+farther from the median map than `b + c` -- i.e. the members that beat the average are exactly
+those inside the ball of radius `|b + c|` about `m`. Measured: 12.6% of the 500 members score below
+production under DIS (`pct(PROD) = 0.126`, S28-L36), so that ball holds an eighth of the pool. The
+pool is centred on the median map by construction (it was *selected* by this score), which is why
+`b` is small and the average ends up at the median map's own location -- S28-L26b's "the
+objective's own error is the common-mode error of the pool: a per-pair posterior median that the
+average already sits at", derived.
+
+### 1.4 What a 2x over-confident posterior does to the minimiser: almost nothing, and why
+
+S25 L1 measured `z_sd = 1.996` with `z_mean = -0.052`: the posterior is **centred and twice too
+narrow**. In (1.1) the posterior enters twice, and the two entries behave completely differently:
+
+* through the **median map `m`** -- the target. A width error leaves the median unchanged, so
+  **the minimiser is unchanged to first order.** This is S25 L2's null (calibration does not move
+  the endpoint) and S25 L7's retraction (width and location equally flat) derived rather than
+  measured, and it is why tempering (which preserves the bin order, hence the median) moved the
+  endpoint by 0.003 A while convolution (which moves mass across bins, hence the median) did not
+  work either.
+* through the **metric `w kappa`** -- the pair weights. `kappa_alpha = 2 p_alpha(m_alpha) ~
+  1/sigma_alpha` and the shipped weight is `w_alpha = 1/(sd_alpha + 0.5)` (`core/predict.py:420`
+  with `shell = 1`, `gamma = 1`, S25 L7), so `w kappa ~ 1/sigma^2`. **A uniform over-confidence
+  multiplies the whole metric by a constant and changes no minimiser at all.** Only the
+  *heterogeneity* of the miscalibration matters, and S25 L1 measured it: `z_sd` is 1.23 at
+  separations 2-2, 2.05 at 4-5, 1.87 at 6-8, 1.28 at 9-15. Relative to a calibrated posterior the
+  shipped objective therefore over-weights **mid-range pairs by about `(2.05/1.25)^2 = 2.7x`** and
+  under-weights the two ends.
+
+> **Correction to the standing programme (`s27/REPORT_S28.md` section 12, item 2: "calibrate the 2x
+> over-confident posterior leave-fold-out and re-read the meter").** Calibration cannot move the
+> median map, so it cannot move the Bayes-risk minimiser, and it cannot touch the contraction,
+> which by (1.2) is the pool's dispersion and has nothing to do with the posterior. The only thing
+> a calibration can change is the relative weight of separation bands. Whatever the meter reads
+> after calibration is a re-weighting effect, and it should be run as a **separation-band
+> re-weighting** (one or two parameters), not as a calibration, or it will be a slow way to
+> discover 1.4.
+
+### 1.5 Prediction: the sign of `dS/d(scale)` at production (12 targets, minutes)
+
+For a uniform dilation `C -> lambda C`, `d_alpha(lambda C) = lambda d_alpha(C)`, so exactly
+
+    dS/dlambda |_{lambda = 1} = sum_alpha w_alpha d_alpha(c) ( 2 F_alpha(d_alpha(c)) - 1 ).        (1.5)
+
+The sign is whether production's distances sit above or below their posterior medians, weighted by
+`w d` (which favours long pairs). Registered predictions:
+
+1. **`dS/dlambda < 0` on at least 75% of targets** -- the shipped objective wants production
+   *expanded*, because the average is contracted below the median map by (1.2).
+2. **ORACLE, the opposite:** the native-optimal scale is below 1 on 73 of 126 targets
+   (`s*` mean 0.9417, range 0.252 to 1.924, S23 L9) -- the native wants *contraction* on a
+   majority. So the sign agreement between the objective's scale derivative and the truth's is
+   **below a coin toss**, which is the scale-axis instance of Theorem 2.
+3. **Calibration does not repair it:** widening the posterior to `z_sd = 1` leaves the sign of
+   (1.5) unchanged on at least 90% of targets (the median is unchanged; only `kappa` and the
+   saturation move) and changes its magnitude by a factor 0.4 to 0.7.
+
+Falsified if (1) holds on under half the targets, or if (3) flips the sign on more than 25%. Who
+checks: **lane D or M**, on 12 cached distograms and the 12 production clouds; every input exists
+(`s12/cache/disto_*.npz`, `s27/results/vqe_rows.jsonl`), and S25's `temper.py` already has the
+widening operator (use the mean-preserving one of S25 L7 section 3, not `_widen_sd`).
+
+---
+
+## 4. CVaR OVER A STRUCTURAL OBSERVABLE
+
+### 4.1 Two inequivalent generalisations, and only one of them is new
+
+The deployed CVaR acts on a scalar per basis state, `E_x`, and its tail is a prefix of the `E`
+order (V.6). Lifting it to a structural observable admits exactly two constructions:
+
+* **(a) SCALARISE THEN TAIL.** Define a per-state structural loss `L(x) = l(W_x)` and take
+  `CVaR_alpha(L; p)`. Everything in the record transfers verbatim, including the set-equality
+  theorem with `E` replaced by `L`: the tail is the classical top-`m` of `L`. S27's 80 diagonal
+  energies are this construction, and its verdict is S27 L6/L7.
+* **(b) TAIL THEN AGGREGATE.** The observable is the tail's own coordinate average,
+
+      R_alpha(p) = sum_x lambda_x(p) W_x,   lambda_x(p) = (mass the tail takes from x)/alpha,      (4.1)
+
+  a **vector-valued** functional of `p` (the tail's average structure), and the objective is
+  `F(p) = f(R_alpha(p))` for a structural cost `f`. This is not a function of the basis-state
+  energies alone, and it is the construction the charter's "CVaR over a structural observable"
+  means. Note what it is not: there is no total order on `R^d`, so a literal multivariate CVaR
+  (Hamel-Rudloff set-valued, or a depth-based multivariate quantile) is not needed here -- (4.1)
+  keeps a scalar order to FORM the tail and lets the structure be aggregated inside it.
+
+### 4.2 The subgradient of (b), and its cost
+
+With the tail formed by a per-state scalar order (energies `E`, quantile `q`, boundary state
+`x_q`), the same envelope argument that gives `dCVaR/dp = (E - q)/alpha` gives
+
+    dR_alpha/dp_y = ( W_y - W_{x_q} ) / alpha   for y in the strict tail,   0 otherwise,           (4.2)
+
+    dF/dp_y = < grad f(R_alpha), W_y - W_{x_q} > / alpha,                                          (4.3)
+
+and `dF/dtheta_k = sum_y (dF/dp_y)(dp_y/dtheta_k)` with the exact two-term shift rule, i.e. **the
+same 2P circuit evaluations per gradient as the deployed objective** (`s25/QUANTUM.md` 4.1). (4.3)
+is a genuinely different selection rule from the energy order: a state's marginal value is how much
+its structure, *relative to the boundary member's*, moves the current aggregate along `f`'s descent
+direction. It depends on `W_y`, on `R_alpha` and on `x_q`, none of which a per-state energy sees.
+
+### 4.3 Where it is not differentiable
+
+Three sets, in increasing order of nuisance. (i) Where the quantile crosses a state or energies
+tie -- the same measure-zero set as the scalar case (`s25/QUANTUM.md` 3.5). (ii) Where `f` itself
+kinks: the shipped risk is piecewise linear in each distance with breakpoints at the 17 bin
+centres, so `grad f` jumps on a codimension-1 set; the Clarke subdifferential is non-empty
+everywhere and a subgradient method is well posed. (iii) **If the ORDER that forms the tail is
+allowed to depend on `R_alpha` itself** (a self-consistent structural order), the map `p -> R` can
+be multivalued and the objective discontinuous at order permutations. **Recommendation: keep the
+order fixed by a per-state scalar and let only the aggregate be structural.** Then the non-smooth
+set is exactly the scalar CVaR's, and the landscape is a union of convex cells indexed by the tail
+SET (on each cell `R` is linear in `p`, so `f` convex makes `F` convex there).
+
+### 4.4 Shot noise: (b) is *cheaper* on hardware than the deployed objective
+
+The deployed gradient needs `dCVaR/dp(x)` for every basis state, i.e. the full `2^n`-outcome
+distribution resolved -- distribution reconstruction, whose cost scales with the support
+(`s25/QUANTUM.md` 7.3). By (4.3) the structural version needs only (i) the empirical
+`alpha`-quantile of a scalar (plug-in bias `O(1/(alpha S))`) and (ii) the **mean** structure over
+the tail, whose estimator variance is `Cov(W | tail)/(alpha S)` -- a mean, not a distribution. With
+`alpha = 0.18` and `S = 10^4` shots the tail carries 1,800 samples and the aggregate's per-atom
+standard error is `sd_tail / 42`, well under the built chain's own floor. **The structural
+observable is the more device-realisable of the two.**
+
+### 4.5 THE SET-EQUALITY THEOREM FAILS FOR (b), WITH A THREE-STATE COUNTEREXAMPLE
+
+For the scalar objective the theorem says the optimiser's selection is determined by the classical
+sort of the very quantity being optimised: `p_theta` can delete a member of the top-`m`, never add
+one from outside. The content is that **the selection carries no information the sort does not**.
+For (b) that content is gone, and the smallest witness has three states and two dimensions.
+
+    W_1 = (+1, 0),   W_2 = (-1, 0),   W_3 = (0, 0.1);   target t = (0,0);   f(R) = |R - t|;
+    tail size 2 (alpha = 2/3 on a uniform p).
+
+    per-state loss l_i = |W_i - t|:   l_3 = 0.1  <  l_1 = l_2 = 1.
+    the l-prefix of size 2 is {3,1} or {3,2}:  mean = (+-0.5, 0.05),  f = 0.5025.
+    the set {1,2}:                              mean = (0, 0),        f = 0.
+
+The optimal 2-subset is the one whose members' errors **cancel**, and it contains the two worst
+states by every per-state criterion. Formally: `V(S) = f(mean_{i in S} W_i)` is neither additive
+nor monotone in `S`, so no greedy rule on per-state scores is optimal, and the gap is not
+measure-zero (it is `0.5` of the objective's own range in an open neighbourhood of the example).
+
+> **This is the one place in the project where the theorem that makes the deployed spine classical
+> genuinely breaks.** Under (b) the tail's composition -- which states share the mass -- changes the
+> objective, so "which set" is a real optimisation variable rather than a read-out of the sort.
+> That answers charter question (5)/(7) in the affirmative *in principle*: the quantum stage's
+> freedom is no longer reproducible by a classical sort of the same quantity.
+>
+> **Three caveats, all binding.** (i) Escaping the theorem creates no information: `f` is still
+> subject to Theorem 2, and if `f` is the distogram risk then the set that cancels best is the set
+> whose average sits at the median map -- the contracted average, again (section 1.3). (ii) The
+> classical counterpart is no longer an eigensolver or a sort, but it is not absent: it is
+> **greedy plus local search over subsets**, and contract rule 15 requires it as a control. (iii)
+> The landscape becomes combinatorial (subset selection with a non-linear set function), which is
+> the right *shape* for a variational method and also the shape in which a classical local search
+> is usually very hard to beat at `D = 512`.
+
+### 4.6 Prediction (native-free, minutes; lane D or X)
+
+On the shipped instrument with `f` = the distogram Bayes risk of the emitted average and `m = 75`:
+
+1. **The set-equality gap is real and large in the objective.** A greedy-plus-local-search 75-subset
+   chosen to minimise `f(mean of the subset)` achieves `f` at least 0.10 below the DIS top-75's
+   (S at production is 1.674, and the circuit's signed optimum already reaches 1.34, S28-L18b, so
+   0.10 is a conservative bar). Falsified if the improvement is under 0.02.
+2. **And it moves the RMSD the wrong way.** That same subset's coordinate average is *worse* than
+   production on the built chain, by at least 0.1 A, because the objective's ladder correlation is
+   -0.40 (S29-L2) and its minimiser is away from the native (S28-L18b).
+3. Therefore: **escaping the set-equality theorem is necessary and not sufficient**, and any lane
+   that builds (b) must carry an objective that survives the meter first. If clause 2 fails -- if
+   the aggregate-optimal subset is *better* than production -- that is the sprint's first genuine
+   opening and it should be run to 126 immediately.
