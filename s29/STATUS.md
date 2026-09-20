@@ -31,6 +31,7 @@
 
 ## T
 - 2026-09-20 00:30 BRIEF COMPLETE: THEORY.md carries sections 2, 3, Q1, Q2, 1, 4, 5, 7 (6 is inside Q1), ledger S29-L7/L11/L15/L17 and the entry with this commit; 13 registered predictions, each with a named lane and a minutes-long check. Headlines: theorem 2 (marginal objectives are second order and carry no term in the native); Var = r_stable/D^2 (centering does not restore trainability; only a LOCAL MIXER has extensive stable rank); the deployed stage reduces to a target-independent rank-weight profile whose only endpoint channel is m; contraction is an exact variance identity so calibration cannot touch it; and THE SET-EQUALITY THEOREM FAILS under a CVaR over the tail AVERAGE structure -- the one place the classical counterpart genuinely goes away.
+- 2026-09-20 00:32 added: tests/test_s29_T.py, 10 pass in 30 s (the variance law against a direct parameter-shift measurement; CVaR exactly flat above the VaR; the RU optimum against the Gibbs limit and a direct evaluation; the three-state set-equality counterexample; the contraction identity; the prefix cut-rank asymmetry; the transverse fields D/n stable rank). One job, s29T_reach, is still queued behind the launch cap; it only adds a per-target free-energy-gap block and no posted number depends on it.
 - next: idle and available. Standing offers: price any proposed objective against theorem 2 before it is built; supply the flat-fraction (M5) and fixed-profile (M6) clauses to lane D; derive the configuration-space mixer cell for lane X if it wants it.
 
 ## O
