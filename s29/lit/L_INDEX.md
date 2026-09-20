@@ -127,3 +127,27 @@ Topic 6 running count: 9 entries, 7 KEPT, 1 NOTED, no importable operator. **(c)
 no published QA evaluation conditions on a native-free realism statistic before measuring accuracy
 ordering, so lane D's measurement is novel rather than derivative (targeted search, not a proof of
 absence).
+
+## Topic 7 -- training an in-band ranker (`L_7_inband_training.md`, ledger S29-L19)
+
+Commissioned before lane D's in-band result lands, as the follow-up the sprint needs if it is null.
+
+| source | what it adds | verdict |
+|---|---|---|
+| Burges CJC et al. RankNet, ICML 2005; LambdaRank; Cao Z et al. ListNet (2007) | pairwise within-group objectives, and the exact cancellation of a per-group additive confound: s(x)=f(x)+g(group) implies s_i-s_j=f(x_i)-f(x_j) | KEPT as framing -- names D's design as a MATCHED CASE-CONTROL construction with conditional logistic regression as its estimator |
+| LambdaRank's metric-weighted pairs | weight each in-band pair by \|Delta RMSD\| rather than equally (S28-L48's learner used unweighted sign pairs) | NOTED, not KEPT -- a loss refinement, not an information change (contract rule 14) |
+| the LTR literature on the grouping variable | nothing: LTR treats the group as a QUERY to serve, never as a confound to remove | RECORDED as a negative literature result; the confound framing belongs to matched-design statistics, not LTR |
+| Jing X, Dong Q et al. Sorting protein decoys by machine-learning-to-rank (PMC4987638) | within-target pairwise SVMrank beats regression (wmPMCC 0.88 -> 0.95, AUC 0.94 -> 0.95) -- on 3DRobot decoys spanning RMSD 0-12 A, with no cross-target transfer analysis | REJECTED as an import: the gain is BETWEEN-band, and transfer is the quantity S14 already measured here |
+| Hurtado DM, Uziela K, Elofsson A. ProQ4 (arXiv:1804.06281) | the QA literature's Siamese rank loss; R-per-model 0.56 vs ProQ3D's 0.61, its edge being first-rank loss | REJECTED -- same features, different loss |
+| Protein quality assessment with a loss function designed for high-quality decoys, Front Bioinform (2023), PMC10616882 | a quality-dependent epsilon-insensitive loss, eps 0.45 at scores 0-0.1 narrowing to 0.01 above 0.8; overall R 0.75 -> 0.90 | KEPT as corroboration -- even the paper aimed at high-quality decoys reports NO disaggregated in-band performance |
+| Numata J, Wan M, Knapp EW (2007), beyond the quasi-harmonic approximation; Karplus M, Kushick JN (1981) | S_qh is an UPPER bound on entropy when converged (so F_qh under-estimates the free energy); severe convergence problems; single-minimum assumption | KEPT -- fixes the bias direction of S8's F_qh |
+| my reading of the two sources, labelled | the finite-sample bias (down) and the functional-form bias (up) have OPPOSITE signs and do not cancel per candidate, so a 4 ps F_qh ranking is not merely noisy | RECORDED as a reading, not a measurement |
+| my hypothesis, labelled | entropy at peptide length tracks BASIN WIDTH, which is plausibly compactness-like -- so the free-energy class may not be orthogonal to the realism axis at all | RECORDED; gate the AMBER spend on a three-target orthogonality diagnostic |
+| S14 `in-band-ordering-is-per-target`; S12 `in-band-signal-limited-not-sample-limited` | the record already answers topic 7: 0.986 within-target with a -0.0005 overfitting gap vs 0.600 across (0.638 needed), capacity saturated by a LINEAR model, transfer gap 770x the overfitting gap; and a flat learning curve against a loud leaked control | KEPT -- topic 7's honest prior, and the reason not to build another in-band ranker |
+
+Topic 7 running count: 10 entries, 5 KEPT, 1 NOTED, 4 RECORDED, 2 REJECTED. No importable operator.
+**THE URGENT ITEM, for lane D before it fixes its band:** the in-band ordering axis IS compactness
+(+0.909 with the native's z-scored Rg, +0.951 with rho(contacts, RMSD)), and every realism
+statistic in the S27 library is compactness-like, so a compactness-loaded band would crush
+rho_SY.R toward zero BY CONSTRUCTION and yield a SELF-FULFILLING null. Measure rho(R, Rg) for the
+chosen band statistic and report it beside the result.

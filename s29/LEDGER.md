@@ -1580,3 +1580,392 @@ comparisons by this lane in the whole sprint; 13 registered predictions, 0 measu
 Artefacts: `s29/THEORY.md`; `s29/s29_T_spectra.py` + `s29/results/s29_T_spectra{.json,_rows.jsonl}`
 + `s29_T_grad_rows.jsonl` (job s29T_spectra, exit 0, 100.2 s, 0.337 GB);
 `s29/s29_T_reach.py` + `s29/results/s29_T_reach.json`.
+
+## S29-L19 -- TOPIC 7, TRAINING AN IN-BAND RANKER: THE RECORD ALREADY ANSWERS IT TWICE (S14's 0.986 WITHIN / 0.600 ACROSS AGAINST 0.638 NEEDED, CAPACITY SATURATED BY A LINEAR MODEL; S12's FLAT LEARNING CURVE AGAINST A LOUD LEAKED CONTROL), THE LITERATURE's PAIRWISE GAINS ARE ALL MEASURED *BETWEEN* BANDS (RMSD 0-12 A), AND -- THE URGENT ITEM -- THE IN-BAND AXIS IS COMPACTNESS (+0.909 WITH THE NATIVE's z-SCORED Rg), SO A COMPACTNESS-LOADED REALISM BAND WOULD PRODUCE A SELF-FULFILLING NULL; D MUST MEASURE rho(R, Rg) BEFORE FIXING THE BAND (2026-09-20 00:30, L)
+
+Question (coordinator's topic 7, commissioned before D's in-band result lands): (a) what does
+learning-to-rank say about within-group ranking when the grouping variable is the dominant signal
+and has been conditioned away; (b) has anyone trained a structure scorer on same-target PAIRS
+rather than absolute labels, and what did it buy; (c) what are the cheap surrogates for
+conformational entropy at peptide length and how well do they approximate the converged answer;
+(d) given the record, what is the honest prior for a trained in-band ranker? No experiment;
+literature plus the record.
+
+**THE URGENT ITEM FIRST, because it affects lane D's design and not just its interpretation.**
+S14's flip diagnostic (`in-band-ordering-is-per-target`) found that per-target in-band skill
+correlates **+0.909 with the native's z-scored RADIUS OF GYRATION** and **+0.951 with
+rho(contacts, RMSD)**. The in-band ordering axis IS compactness. Every realism statistic available
+in the S27 library is compactness-like: Legacy is explicitly a compactness model (top-75 Rg
+-0.758 A), and RG_LAW, RG_UNIV, EXVOL, CAGEO, CONTACT and ENV are all functions of packing. So if
+D bands on a compactness-loaded realism statistic R, the band removes the exact axis that carries
+whatever in-band skill exists, and by S29-L16's partial-correlation bound rho_SY.R is crushed
+toward zero BY CONSTRUCTION OF THE BAND. The resulting null would be SELF-FULFILLING and
+uninterpretable as evidence about in-band signal. THE FIX IS CHEAP AND MUST PRECEDE THE RUN:
+measure rho(R, Rg) for the chosen band statistic and report it beside the result. Three cases:
+(i) strongly compactness-loaded -- the design is self-defeating and R must be changed or
+length-residualised; (ii) weakly loaded -- valid, and rho(R, Rg) is exactly the number needed to
+interpret the effect size; (iii) orthogonal -- clean, and the experiment is then testing for a
+SECOND in-band axis beyond the one S14 found, which is the most interesting version and should be
+stated as the hypothesis. Constructive corollary already in the record: native-free compactness
+proxies reach residualised r = 0.244 (pool mean Rg), 0.313 (distogram-predicted Rg), 0.365
+(incumbent emitted Rg) against the ORACLE's 0.909, all three CIs excluding zero, i.e. "roughly 61%
+sign accuracy, against a project where fusion gain goes as the SQUARE of the weaker channel's
+skill".
+
+(d) THE RECORD ALREADY ANSWERS TOPIC 7, TWICE. S14: in-sample 0.986, same-target-held-out 0.986
+with an overfitting gap of -0.0005 [-0.0011, +0.0000], cross-target 0.600 [0.549, 0.655] -- a
+transfer gap of -0.3859, **770x the overfitting gap**, against the 0.638 required for 2.0 A
+through a top-100 operator. "A LINEAR 4,125-parameter pair potential already saturates the
+within-target problem at 0.986, so nonlinearity, capacity, equivariance, graph or geometric
+architectures cannot improve on it and none of them touches transfer, where the entire loss sits."
+The learning curve DECLINES with more targets (m=1 at -0.348 beats m=12 at -0.162) because
+averaging across targets cancels a per-target axis whose sign flips. S12: a set-transformer over
+the full signed deviation map -- the last untested architecture class -- has a FLAT learning curve
+(3.043 / 3.049 / 3.046 / 3.036 / 3.026 at n = 8/16/32/64/75) while the identical harness with a
+LEAKED label is loud at n=8 (2.534). Signal-limited, not sample-limited. HONEST PRIOR: a trained
+in-band ranker will train beautifully within a target and transfer at ~0.600 against a 0.638
+requirement, and no change of loss (pairwise, listwise, lambda-weighted, contrastive) or
+architecture will move it, because the measured bottleneck is the per-target SIGN of the axis,
+which inference cannot observe. The literature in (a) and (b) offers losses and architectures; the
+record says the constraint is neither. IF D's RESULT IS NULL, the follow-up should NOT be a better
+in-band ranker but the per-target SIGN question, which is the one direction S14 named as open:
+"the only direction with leverage is anything that supplies the PER-TARGET SIGN of the in-band
+axis at inference: a conditioning signal, not a better objective."
+
+(a) LTR SUPPLIES THE OPERATION, NOT THE INTENT. RankNet (Burges et al., ICML 2005) models
+P(i beats j) = sigma(s_i - s_j) within a query with a cross-entropy loss; LambdaRank weights each
+pair's gradient by the metric change from swapping it; ListNet/ListMLE replace pairs with a
+Plackett-Luce likelihood. THE PROPERTY THAT MATTERS, in one line: if s(x) = f(x) + g(group), then
+within a group s_i - s_j = f(x_i) - f(x_j) and the per-group confound CANCELS EXACTLY. So a
+matched-realism band plus a pairwise objective is formally a MATCHED CASE-CONTROL DESIGN with
+CONDITIONAL LOGISTIC REGRESSION as its estimator -- that is the correct statistical name for what
+the sprint is about to do, and it carries the right warnings. NEGATIVE LITERATURE RESULT: nothing
+in LTR treats the grouping variable as a NUISANCE TO BE REMOVED; it treats it as a QUERY to be
+served, where cross-query incomparability is not a defect but the task definition. The algebra is
+identical, the inferential claim is not: in LTR, good within-query order with no cross-query
+calibration is a success; here it may still be useless, because the deployed operator must choose
+among candidates the band discarded. The confound framing belongs to matched-design statistics and
+causal inference, not LTR. POWER CAUTION: pairwise training on n items per group yields O(n^2)
+pairs that are NOT independent; the effective sample size for a cross-target claim is TARGETS, not
+pairs. Any in-band pairwise result must be powered on targets. ONE UNEXPLOITED REFINEMENT:
+LambdaRank's metric weighting -- weight each in-band pair by |Delta RMSD| instead of equally (the
+project's S28-L48 pairwise learner used unweighted sign pairs). NOTED, not KEPT: it is a loss
+refinement, not an information change, so contract rule 14 excludes it as an import on its own.
+
+(b) YES, IT EXISTS, AND THE GAINS ARE BETWEEN-BAND. Jing X, Dong Q et al., "Sorting protein decoys
+by machine-learning-to-rank" (PMC4987638): SVMrank, linear kernel, and "training instances are
+pairs of decoys from the same proteins" -- within-target pairs, our design. Features are
+knowledge-based potentials (DFIRE, DOPE, GOAP, RWplus, ...) plus QA-program outputs. On 3DRobot:
+classification 0.30 wmPMCC / 0.68 AUC, regression 0.88 / 0.94, **pairwise ranking 0.95 / 0.95**.
+THE ASSUMPTION THAT BREAKS THE TRANSFER: 3DRobot spans **RMSD 0 to 12 A** -- the widest possible
+between-band comparison -- and the paper does not analyse cross-target transfer at all, which is
+exactly the quantity S14 measured here and found to collapse. ProQ4's Siamese rank loss is the QA
+literature's own pairwise variant (R-per-model 0.56 vs ProQ3D's 0.61; its edge is in first-rank
+loss, the selection metric). The Frontiers in Bioinformatics 2023 paper (PMC10616882) designs a
+quality-dependent epsilon-insensitive loss L(y,y') = max(0, |y - y'| - eps(y)) with eps narrowing
+as quality rises (0.45 at scores 0-0.1, 0.01 above 0.8) because "the model should not try too hard
+to accurately fit poor-quality decoys where we do not need good accuracy anyhow" -- overall
+correlation 0.75 -> 0.90 in ablation, but it reports NO disaggregated performance on the
+high-quality subset it was designed for, independently corroborating S29-L16's "nobody reports
+in-band skill". THE INFORMATION TEST: a pairwise model sees the SAME features with a different
+loss -- nothing new. And the project has already run it: S28-L48's nested pairwise-logistic over
+all 31 scorers reached 0.960 held-out sign accuracy against a 0.502 null, while the SAME rule on
+RAND_SIGNED reached 0.952 with head-to-head 0.492. It learned "is this a real protein trace" --
+the realism axis, which is exactly what the band removes. USEFUL PREDICTION FOR D: if the band is
+correctly constructed, re-running that pairwise learner inside it should collapse the 0.960 toward
+chance. That is a cheap validity check ON THE BAND ITSELF, before anything is concluded from a
+null.
+
+(c) THE FREE-ENERGY CLASS: BIASED, BADLY CONVERGENT, AND PROBABLY NOT ORTHOGONAL. Quasi-harmonic
+entropy (Karplus & Kushick 1981) diagonalises the coordinate covariance and sums harmonic-oscillator
+entropies. Numata, Wan & Knapp (2007), "Conformational entropy of biomolecules: beyond the
+quasi-harmonic approximation": the largest classical eigenvalues "tend to be more anharmonic and
+show statistical dependence beyond correlation", and a k-nearest-neighbour correction "calculates a
+tighter UPPER LIMIT to entropy than the quasi-harmonic approximation" -- so S_qh is an UPPER BOUND
+when converged and F_qh = <E> - T S_qh is correspondingly an UNDERestimate of the free energy. The
+literature also reports "severe convergence problems" and a single-minimum assumption "too crude
+for flexible structures"; normal-mode entropy is "very computationally expensive" and usually
+truncated. RECONCILIATION FOR S8's STAGE, labelled as my reading of two sources: `docs/FINDINGS.md`
+calls S8's S_qh "noisy and downward-biased" at 4 ps / 100 snapshots over up to 42 CA dof, which is
+NOT in conflict with "upper bound" -- the functional form is an upper bound once converged, while
+finite sampling underestimates the covariance and pushes S_qh down. The two biases have OPPOSITE
+signs and different per-candidate magnitudes, so neither cancels in a within-target ranking; a
+4 ps F_qh ranking is not merely noisy. THE POINT NOBODY HERE HAS STATED, flagged as a hypothesis:
+F = E - TS ranks differently from E only if S varies across candidates non-collinearly with E, and
+what S tracks for a 9-16-mer is BASIN WIDTH -- compact well-packed conformations have narrower
+basins, extended ones wider. So the entropy term is plausibly COMPACTNESS-LIKE, i.e. on the same
+axis as Legacy, RG_LAW, RG_UNIV, EXVOL and CAGEO -- not the orthogonal information source S29-L1
+hoped for. Both of the sprint's live ideas (the matched-realism band and the free-energy stage)
+would then be acting on the SAME axis, in opposite directions. RECOMMENDATION: gate the AMBER
+spend on a three-target diagnostic answering one question -- is the entropy term orthogonal to
+compactness? Correlate S8's `width` / `S_msf` channels against Rg and the existing compactness
+channels. If not orthogonal, the class closes cheaply; if orthogonal, that orthogonality is itself
+the result and justifies the full cost. THE COORDINATOR's CAVEAT, RESTATED AS ASKED: any
+free-energy arm needs the ENTROPY term to rescue a channel (AMBER single-point) measured **+0.455
+A worse than a random subset** as a ranker, 5/5 folds (S25 L16) -- a strong claim for a term
+estimated from 4 ps of Langevin dynamics with two opposed biases.
+
+VERDICT. KEPT 5 (the LTR framing as a matched case-control design; the high-quality-loss paper as
+corroboration of the novelty claim; the quasi-harmonic bias direction; S14 and S12 as topic 7's
+honest prior). NOTED 1 (LambdaRank metric weighting -- a loss refinement, excluded by rule 14).
+RECORDED 4 (LTR does not address the confound case; my two-bias reconciliation; my
+entropy-is-compactness-like hypothesis; the self-fulfilling-null warning). REJECTED 2 (the
+decoy-LTR and ProQ4 pairwise imports -- same features, different loss, gains measured between
+bands). No importable operator. Multiplicity: 0 endpoint comparisons; no new measurement in this
+entry; every number is cited to its sprint or its paper.
+Artefacts: `s29/lit/L_7_inband_training.md`; `s29/lit/L_INDEX.md`.
+
+## S29-L20 -- RUNG 6, THE TYPICALITY-AXIS PROBE (H1): THE FALSIFIER FIRES ON BOTH CLAUSES AND THE KILL IS STRONGER THAN THE ONE REGISTERED -- THE ORACLE COSINE BETWEEN THE CONDITIONED-MINUS-BLIND AXIS AND THE NATIVE DIRECTION IS -0.058 (BELOW THE RANDOM-FIELD |cos| 0.144 AT 2.19x MDE, INDISTINGUISHABLE FROM A RANDOM SIGNED DIRECTION AT 0.73x), THE ORACLE BEST GLOBAL STEP IS EXACTLY t = 0 (ONE SCALAR WITH THE NATIVE IN HAND CANNOT BEAT DOING NOTHING), AND THE LEAVE-FOLD-OUT STEP IS BIT-IDENTICAL TO PRODUCTION ON 126/126 TARGETS ON THE BUILT CHAIN; ON FAIL18 THE AXIS POINTS AWAY FROM THE NATIVE HARDER (-0.317 vs -0.015, RANDOM-18 p 0.0006), THE OPPOSITE SIGN TO THE REGISTERED PRIOR (2026-09-20 00:30, O)
+
+H1 (`s29/STATE.md`) IS DEAD ON THE MEASUREMENT IT NAMED. Pre-registration `s29/PREREG_S29_O.md`
+sections 4 and 5 (written and committed at 1e9bb035 before the first number). EVERY NUMBER IN THIS
+ENTRY IS ORACLE (it reads `nat_ca`) EXCEPT the leave-fold-out arm, which is the lane's one
+DEPLOYABLE contrast and is labelled so in its own block.
+
+Question. Per target, in the production cloud's own frame: u = (shipped top-75 average) minus
+(sequence-blind average), v = (native) minus (shipped average), both with the 6-dim rigid-body
+tangent space removed. Does u point toward the native, and does one scalar step along it help?
+
+Falsifiers, registered. F6a: the fold CI of the mean ORACLE cos(u, v) includes the random
+reference, or the mean cos is at or below the random fields' mean |cos| with the fold CI including
+it. F6b: the leave-fold-out step does not clear 0.7x its own MDE with the fold CI excluding zero
+in the improving direction. Registered prior (S24 L2/L3's geometry, the coordinator's own stated
+objection): cos near zero or negative, the step null. STATE.md's alternative prior: cos +0.2 to
++0.4 on the 108, higher on FAIL18.
+
+The blind clouds, rebuilt from S24's OWN stable RNGs and GATED against S24's artefacts (not new
+draws): LIB75 = `s24/biasalign.py`'s C1, a uniform 75-window draw from the target's leakage-safe
+universe (no retrieval, no score: the "typical peptide of this length"), ORACLE mean 3.8055 A;
+BPRIME = `s24/qmatch.py`'s B', the top-75 by the shipped score of 2,000 uniform windows with the
+BLOSUM pool excluded, ORACLE mean 3.1128 A. Gate: each cloud's RMSD, its native-frame bias cosine
+with production and production's own RMSD must equal `s24/results/biasalign.json` /
+`s24/results/qmatch.json` to 1e-6 on EVERY target; max deviation over 126 x 2 gates = 0.0
+(the rebuild is exact, `s29/results/s29_O_cloud_rows.jsonl :: axis.<def>.gate`). Production's
+cloud reproduces S28-L1b's frame to 2.1e-14 and the pinned 3.048338 over 126.
+
+### F6a: the cosine. FIRES.
+ORACLE mean cos(u, v) over 126, PRIMARY definition LIB75: **-0.0584** (SE 0.0324, median -0.0804);
+positive on 55/126; above its own target's random-field |cos| on 37/126. The random reference is
+16 Gaussian shape fields per target in the same 3n-6 space: signed mean +0.0075, mean |cos| 0.1443
+(analytic sqrt(2/(pi(3n-6))) 0.1413 -- measured and analytic agree, `control-must-match-the-operators-space`).
+```
+  cos(u,v) vs random-field signed cos [LIB75]
+    a -0.0584 (med -0.0804)   b 0.0075 (med 0.0067)   n=126
+    effect -0.0659   median -0.0830   SE 0.0324   MDE 0.0908   effect/MDE -0.73
+    iid  CI95 [-0.1272, -0.0036]
+    fold CI95 [-0.0989, -0.0320]   folds same sign 5/5   per-fold 0:-0.014 1:-0.082 2:-0.124 3:-0.078 4:-0.039
+    72W/54L/0T   worst degradation +0.7355 (8TXS)   p90 +0.3854   power 0.53  Type-M 1.37
+    concentration: drop-top10 -0.0135 vs uniform-effect null p10/p50/p90 -0.0560/-0.0137/+0.0298 -> pctile 0.502
+    VERDICT: NOT MEASURED (|effect| 0.0659 <= its own MDE 0.0908, 0.73x)
+  cos(u,v) vs random-field |cos| [LIB75]
+    a -0.0584 (med -0.0804)   b 0.1443 (med 0.1423)   n=126
+    effect -0.2027   median -0.2024   SE 0.0330   MDE 0.0924   effect/MDE -2.19
+    iid  CI95 [-0.2669, -0.1389]
+    fold CI95 [-0.2355, -0.1663]   folds same sign 5/5   per-fold 0:-0.142 1:-0.216 2:-0.256 3:-0.223 4:-0.183
+    89W/37L/0T   worst degradation +0.6383 (8TXS)   p90 +0.2696   power 1.00  Type-M 1.00
+    concentration: drop-top10 -0.1492 vs uniform-effect null p10/p50/p90 -0.1925/-0.1480/-0.1044 -> pctile 0.489
+    VERDICT: BETTER
+```
+Read: against the random fields' SIGNED cosine the axis is indistinguishable (0.73x MDE, NOT
+MEASURED); against their |cos| it is WORSE at 2.19x MDE with the fold CI [-0.2355, -0.1663] entirely
+below zero and 5/5 folds. Either clause of F6a fires. The axis carries no more direction toward
+the native than a random shape field, and its signed mean is on the wrong side of zero.
+Secondary definition BPRIME: cos -0.0087 (SE 0.0309), same picture (vs signed 0.12x, vs |cos| -1.81x,
+5/5 folds), and |u| is only 2.348 A against LIB75's 8.949 A (S24 L3 measured B's bias cosine with
+production at 0.943: there is almost no axis there to step along).
+
+### F6b: the step. FIRES, and harder than registered.
+The ORACLE mean curve over t (t = -1 is the blind average, t = 0 production, t > 0 the
+extrapolation S24 never ran), LIB75:
+```
+t      -1.0   -0.8   -0.6   -0.4   -0.2    0.0   +0.2   +0.4   +0.6   +0.8   +1.0   +1.5   +2.0
+RMSD 3.806  3.572  3.367  3.201  3.089  3.048  3.107  3.256  3.475  3.744  4.047  4.915  5.875
+```
+**The ORACLE best GLOBAL step is t = -0.0, i.e. production itself, ORACLE mean 3.0483 = the
+production anchor exactly.** Interpolating toward the blind answer is monotonically worse (S24 L2's
+mixture curve, reproduced from a different construction); extrapolating away from it is worse
+faster. The curve's minimum over 31 grid values IS the do-nothing point. That is a stronger
+statement than the registered falsifier: not "a deployable step fails", but "no step exists,
+with the native in hand, at one scalar for all targets".
+Every leave-fold-out choice is therefore t = 0 on all five folds (ties 1 each), the DEPLOYABLE
+structure is bit-identical to production on 126/126 targets (max |deviation| 0.0), and both
+contrasts are exact zeros:
+```
+  lfo_LIB75 vs prod (POINT CLOUD, DEPLOYABLE step)
+    a 3.0483 (med 2.8373)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0000   median +0.0000   SE 0.0000   MDE 0.0000   effect/MDE +nan
+    iid  CI95 [+0.0000, +0.0000]
+    fold CI95 [+0.0000, +0.0000]   folds same sign 5/5   per-fold 0:+0.000 1:+0.000 2:+0.000 3:+0.000 4:+0.000
+    0W/0L/126T   worst degradation +0.0000 (1A13)   p90 +0.0000   power nan  Type-M nan
+    concentration: drop-top10 +0.0000 vs uniform-effect null p10/p50/p90 +0.0000/+0.0000/+0.0000 -> pctile 0.000  FLAG
+    VERDICT: NOT MEASURED (|effect| 0.0000 <= its own MDE 0.0000, nanx)
+  lfo_LIB75 vs prod (BUILT CHAIN, DEPLOYABLE step)
+    a 3.2105 (med 2.9661)   b 3.2105 (med 2.9661)   n=126
+    effect +0.0000   median +0.0000   SE 0.0000   MDE 0.0000   effect/MDE +nan
+    iid  CI95 [+0.0000, +0.0000]
+    fold CI95 [+0.0000, +0.0000]   folds same sign 5/5   per-fold 0:+0.000 1:+0.000 2:+0.000 3:+0.000 4:+0.000
+    0W/0L/126T   worst degradation +0.0000 (1A13)   p90 +0.0000   power nan  Type-M nan
+    concentration: drop-top10 +0.0000 vs uniform-effect null p10/p50/p90 +0.0000/+0.0000/+0.0000 -> pctile 0.000  FLAG
+    VERDICT: NOT MEASURED (|effect| 0.0000 <= its own MDE 0.0000, nanx)
+```
+(The 126 ties are the correct reading of a NOT MEASURED verdict here: the operator emitted
+production. Chain price +0.1622 for both arms, identically, because they are the same cloud.)
+Secondary BPRIME: leave-fold-out t per fold {'0': -0.0, '1': -0.0, '2': -0.2, '3': -0.1, '4': -0.0}; the arm moves 48/126 clouds and is
+**+0.0042 A WORSE on the point cloud (0.45x MDE) and +0.0037 A worse on the built chain (0.29x MDE)**,
+NOT MEASURED in either basis, fold CI straddling zero, 1/5 folds same sign:
+```
+  lfo_BPRIME vs prod (BUILT CHAIN, DEPLOYABLE step)
+    a 3.2142 (med 3.0222)   b 3.2105 (med 2.9661)   n=126
+    effect +0.0037   median +0.0000   SE 0.0045   MDE 0.0126   effect/MDE +0.29
+    iid  CI95 [-0.0047, +0.0128]
+    fold CI95 [-0.0040, +0.0145]   folds same sign 1/5   per-fold 0:+0.000 1:+0.000 2:+0.025 3:-0.007 4:+0.000
+    25W/23L/78T   worst degradation +0.2693 (7BX2)   p90 +0.0204   power 0.13  Type-M 2.97
+    concentration: drop-top10 +0.0110 vs uniform-effect null p10/p50/p90 +0.0054/+0.0106/+0.0165 -> pctile 0.545
+    VERDICT: NOT MEASURED (|effect| 0.0037 <= its own MDE 0.0126, 0.29x)
+```
+
+### The mechanism, measured beside the outcome (contract rule 18)
+Per target the optimal step is t* = (|v|/|u|) cos(u, v) for a locally linear RMSD, so the sign of
+t* must follow the sign of cos. It does: **rho(cos(u,v), t*) = +0.810** (LIB75; +0.865 for BPRIME).
+And the signs cancel across targets -- 54% of targets want t* < 0 (toward the typical answer),
+36% want t* > 0, 10% want exactly zero -- which is precisely why the global step is zero.
+The per-target ORACLE step is worth 2.7422 A (-0.3061 vs production) and is an order statistic over 31
+grid values whose transferable part is nil: choosing the global t on half the targets and applying
+it to the other half is worth **+0.0056 A [+0.0000, +0.0346]** over 2,000 splits, i.e. zero. This is
+S23 L6's scale result again from a new direction (a per-target correction that is real, ORACLE,
+and provably not a property of anything native-free), and S16's "every arm chose do nothing" with
+the arm's own optimum now located rather than assumed.
+
+### The regime question, answered with the sign REVERSED from the prior
+STATE.md registered "cos 0.2 to 0.4 on the 108, higher on FAIL18". Measured (ORACLE): the 108 sit
+at -0.0153 and FAIL18 at **-0.3171** -- the axis points AWAY from the native three times harder where
+the distogram fails. Against the registered random-18 null (20,000 random 18-subsets of the 126,
+one-sided in the observed direction) that IS a set property: **p = 0.0006** [null 2.5/97.5
+-0.2118, +0.0984], and it survives the Bonferroni bar over this lane's 2 stratum tests. BPRIME's
+FAIL18 cos -0.0959 vs +0.0058 on the 108 is NOT a set property (p 0.123) and is not quoted as one.
+The mechanism is already in the record: on FAIL18 the sequence-BLIND pipeline BEATS the shipped one
+(5.425 vs 6.019, `sequence-conditioning-hurts-the-failures`, S12 `coord_null`), so on those targets
+production is FURTHER from the native than the typical answer is and u = production - blind points
+outward by construction. H1's premise -- "the conditioned answer lies between the typical answer
+and the native" -- is false exactly where it was hoped to be most true.
+
+### Verdict
+**H1 IS FALSIFIED on both registered clauses, on the PRIMARY and the SECONDARY blind definition,
+on the point cloud and on the built chain.** Nothing about the typicality axis is deployable and
+nothing about it is even ORACLE-usable at one scalar. The coordinator's own stated objection
+(S24 L2/L3's geometry) is confirmed: the axis has a component along the shared error and a large
+component that is minus the blind cloud's orthogonal error. The leading hypothesis becomes H0.
+What is NOT closed by this entry: a per-target step exists (-0.3061 A ORACLE) and its SIGN is the
+whole content -- any future operator claiming this axis must supply the per-target sign natively,
+and this lane's random-18-nulled measurement says the sign correlates with the regime (FAIL18 vs
+the 108), which is the one thing the record says is not predictable native-free (S22 L7, S23 L7,
+S28-L39's three routers).
+
+Comparisons this entry: 4 deployable endpoint contrasts (2 blind definitions x {point cloud,
+built chain}); 2 stratum tests, each against the random-18 null; every other number ORACLE
+diagnostic. Multiplicity: all four are NOT MEASURED, two of them exact zeros, so no max-over-K
+bar applies.
+Artefacts: `s29/results/s29_O_cloud_rows.jsonl` (126 rows, gates included),
+`s29/results/s29_O_lfo.json` (the curves, the fold choices, every ST block),
+`s29/results/s29_O_chain_rows.jsonl` (prod / lfo_LIB75 / lfo_BPRIME, 378 projections),
+`s29/results/s29_O_structs/<pdb>.npz`; code `s29/s29_O_ladder.py`, tests `tests/test_s29_O.py`
+(11 pass, including the leave-fold-out NaN-poison and the rigid-body removal); prereg
+`s29/PREREG_S29_O.md`; jobs `s26/jobs_done/s29O_{probe1,probe2,cloud126,lfo,chainA}.json`
+(probe 1KWE,1KZ2,1LB7 peak RSS 0.308 GB; the 126-target cloud 300 s at peak RSS 0.321 GB; chain
+group A 378 projections, peak RSS 0.108 GB).
+Chain anchor, reported not gated: production re-projected in this job is **3.2105** over 126 against
+S28-L26b's 3.2071 (mean difference +0.00347, 18/126 targets differ by more than 0.02 A, 3 by more
+than 0.1, max 0.176) and S27's DIS 3.2126 (-0.00209, max 0.517). That is S28-L18's branch-flip floor
+of the multi-start projection under a 1e-14 input perturbation, it is identical on both sides of
+every contrast here (same code path, same job), and it is why S27's rows are not used as the
+comparator.
+
+## S29-L21 -- RUNG 8, LANE T's ONE-PARAMETER FAMILY (S29-L11 PREDICTION 4): T's PREDICTION IS CONFIRMED AT ITS FLOOR -- THE ORACLE BEST GLOBAL eta ALONG THE POOL's FIRST SHAPE MODE IS EXACTLY ZERO (0.000 A, NOT "UNDER 0.15"), THE BEST PER-TARGET eta IS POSITIVE ON 52% OF TARGETS SO THE SIGN IS A COIN FLIP EXACTLY AS T DERIVED, THE ONE-GLOBAL-SIGN CEILINGS ARE -0.214 / -0.246 A AND STILL PER-TARGET IN MAGNITUDE, AND THE LEAVE-FOLD-OUT eta IS +0.0071 A WORSE THAN PRODUCTION (0.82x MDE); LANE B's CENTERED-HAMILTONIAN BUILD HAS AN ACHIEVABLE CEILING OF ZERO THROUGH THIS READOUT (2026-09-20 00:30, O)
+
+Question, set by the coordinator from lane T's S29-L11 prediction 4: a centered or agreement-matrix
+Hamiltonian consumed by a signed readout collapses to X(eta) = production + eta*PC1, PC1 the pool's
+first shape mode. What is that family's ceiling? T predicted under 0.15 A better than production
+and flagged above 0.30 A as "lane B's build is worth much more than the theory says".
+PC1 IS NATIVE-FREE (`s29/s29_O_ladder.py :: pool_pc1`): the top right-singular vector of the
+top-75 members' deviations from the production average, in the average's own medoid frame, with
+the rigid-body component removed, scaled so that ||PC1|| = sqrt(n) and eta is in ANGSTROM of
+point-cloud RMSD displacement. Its SIGN is fixed by a deterministic native-free convention (the
+largest-|component| entry positive), which is exactly T's point: the marginals cannot supply the
+sign. eta grid {-3.0, ..., +3.0} step 0.1 (61 values), fixed in the module before the first number.
+EVERY eta BELOW IS ORACLE except the leave-fold-out arm.
+
+The pool's own spread along PC1 is 1.068 A (sd of the members' projections, a real and large
+direction) and PC1 carries 36.3% of the members' deviation variance. So the family is not
+degenerate -- it is informative-looking and empty.
+
+| arm | mean (point cloud) | vs production 3.0483 |
+|---|---|---|
+| ORACLE best GLOBAL eta (one scalar, 126 targets) | **3.0483** at eta = +0.0 | **+0.0000** |
+| ORACLE best per-target eta (an ORDER STATISTIC over 61) | 2.5940 | -0.4543 |
+| ORACLE best per-target \|eta\| with the sign forced POSITIVE | 2.8341 | -0.2142 |
+| ORACLE best per-target \|eta\| with the sign forced NEGATIVE | 2.8028 | -0.2455 |
+| leave-fold-out eta (DEPLOYABLE; eta per fold {'0': -0.1, '1': 0.0, '2': 0.0, '3': 0.1, '4': 0.1}) | 3.0554 | **+0.0071** |
+
+```
+  ORACLE PC1 global eta vs prod (POINT CLOUD)
+    a 3.0483 (med 2.8373)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0000   median +0.0000   SE 0.0000   MDE 0.0000   effect/MDE +nan
+    iid  CI95 [+0.0000, +0.0000]
+    fold CI95 [+0.0000, +0.0000]   folds same sign 5/5   per-fold 0:+0.000 1:+0.000 2:+0.000 3:+0.000 4:+0.000
+    0W/0L/126T   worst degradation +0.0000 (1A13)   p90 +0.0000   power nan  Type-M nan
+    concentration: drop-top10 +0.0000 vs uniform-effect null p10/p50/p90 +0.0000/+0.0000/+0.0000 -> pctile 0.000  FLAG
+    VERDICT: NOT MEASURED (|effect| 0.0000 <= its own MDE 0.0000, nanx)
+  ORACLE PC1 per-target eta vs prod (POINT CLOUD, an order statistic)
+    a 2.5940 (med 2.3715)   b 3.0483 (med 2.8373)   n=126
+    effect -0.4543   median -0.1659   SE 0.0527   MDE 0.1476   effect/MDE -3.08
+    iid  CI95 [-0.5588, -0.3539]
+    fold CI95 [-0.5319, -0.4102]   folds same sign 5/5   per-fold 0:-0.405 1:-0.613 2:-0.409 3:-0.425 4:-0.434
+    122W/0L/4T   worst degradation +0.0000 (1D0W)   p90 -0.0071   power 1.00  Type-M 1.00
+    concentration: drop-top10 -0.3285 vs uniform-effect null p10/p50/p90 -0.3981/-0.3292/-0.2663 -> pctile 0.505
+    VERDICT: BETTER
+```
+The deployable arm, the only non-ORACLE row:
+```
+  PC1 one-parameter family, LEAVE-FOLD-OUT eta vs prod (POINT CLOUD, DEPLOYABLE)
+    a 3.0554 (med 2.8384)   b 3.0483 (med 2.8373)   n=126
+    effect +0.0071   median +0.0000   SE 0.0031   MDE 0.0086   effect/MDE +0.82
+    iid  CI95 [+0.0012, +0.0130]
+    fold CI95 [+0.0011, +0.0125]   folds same sign 3/5   per-fold 0:+0.016 1:+0.000 2:+0.000 3:+0.006 4:+0.012
+    34W/44L/48T   worst degradation +0.0924 (2MK7)   p90 +0.0626   power 0.64  Type-M 1.26
+    concentration: drop-top10 +0.0124 vs uniform-effect null p10/p50/p90 +0.0084/+0.0123/+0.0162 -> pctile 0.514
+    VERDICT: NOT MEASURED (|effect| 0.0071 <= its own MDE 0.0086, 0.82x)
+```
+
+Reading. (1) **The achievable ceiling of the one-parameter family is 0.0000 A.** The mean curve's
+minimum over 61 values of eta is at eta = 0: with the native in hand, one global step along the
+pool's first shape mode cannot beat doing nothing. T predicted "under 0.15"; the answer is the
+floor of that interval, and the 0.30 A flag does not fire on any arm a deployable operator could
+imitate. (2) **The sign is a coin flip, measured**: the ORACLE best eta is positive on 52% of
+targets (median |eta| 0.9 A), so the two one-global-sign ceilings (-0.2142 and -0.2455) are the price
+of guessing it, and both of those still choose the MAGNITUDE per target. (3) The per-target eta is
+worth -0.4543 A ORACLE and is an order statistic: `best_of_k_within` reads 190% accounted by its
+across-target null at k_eff 36.1, and the honest transfer measurement -- the leave-fold-out arm in
+the last row -- is **+0.0071 A, i.e. worse than production**, 0.82x MDE, NOT MEASURED, 3/5 folds,
+48/126 targets untouched. Nothing about eta transfers between targets.
+(4) Mechanism beside outcome: this is the same shape as rung 6 (S29-L20) and as S23 L6's
+per-target scale -- a real per-target direction whose sign and magnitude are properties of the
+(pool, native) PAIR and carry no native-free content. Two independent one-parameter families
+(the typicality axis and the pool's first shape mode) both have an ORACLE global optimum of
+EXACTLY do-nothing on this instrument.
+
+Verdict for lane B (the coordinator's gate): **a centered / agreement-matrix Hamiltonian consumed
+by a signed readout that collapses to this family has an achievable ceiling of 0.000 A through the
+deployed readout, and its ORACLE per-target ceiling (2.594 A) is entirely sign-and-magnitude
+information that no arm in this project's record can supply.** T's prediction 4 stands as derived.
+Built chain NOT taken: the coordinator's condition was "only if it clears 0.15 A"; the achievable
+arm clears nothing and is on the wrong side of zero, so 126 projections are not spent on it.
+
+Comparisons this entry: 1 deployable endpoint contrast (leave-fold-out eta vs production, point
+cloud), NOT MEASURED; the rest ORACLE diagnostics. Artefacts:
+`s29/results/s29_O_pc1_rows.jsonl` (126 rows: the per-target curve, PC1's sd and variance share),
+`s29/results/s29_O_pc1.json` (every ST block and the fold choices); code
+`s29/s29_O_ladder.py :: pool_pc1, pc1_row, analyse_pc1`; job `s26/jobs_done/s29O_pc1.json`
+(331 s, peak RSS 0.266 GB). The rung is an addendum to `s29/PREREG_S29_O.md` (section 3 as
+amended by the coordinator's instruction of 2026-09-20; the eta grid, the sign convention and both
+one-global-sign arms were fixed in code before the first number, and this entry is the first
+number).
