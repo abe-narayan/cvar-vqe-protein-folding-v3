@@ -539,6 +539,15 @@ of `E`, `alpha` and `T` only. Hence:
 > which candidate the distogram put at which rank -- i.e. no information the classical sort does
 > not already have. S25 L17's "two trained states in the whole deployment" is this, derived.
 
+The  map, computed exactly from (Q1.3) on the  ladder
+():
+
+    (alpha, T)   (0.10,0.5) (0.18,0.25) (0.18,0.5) (0.25,0.3) (0.18,1.0) (0.40,0.5) (1.0,0.3)
+    m at the optimum     17        20         29         31         43         71       512
+    (uniform state: m = alpha D = 92 at alpha = 0.18; the deployed CIRCUIT realises m = 74.1,
+     i.e. it sits where the OPTIMUM would sit at alpha = 0.40: it is under-trained by about one
+     rung of the alpha grid, and that displacement is the whole of its endpoint freedom.)
+
 Two measured corroborations, both native-free: the realised `m` over 126 targets at the deployed
 cell has sd 6.74 and correlation **+0.026 with chain length** (seed 1: 71.2, sd 7.94, -0.104) (my computation over
 `s27/results/s28_B_rows.jsonl`, seed 0, J = 0), against a between-cell spread of 29 to 92 as
@@ -903,3 +912,165 @@ On the shipped instrument with `f` = the distogram Bayes risk of the emitted ave
    that builds (b) must carry an objective that survives the meter first. If clause 2 fails -- if
    the aggregate-optimal subset is *better* than production -- that is the sprint's first genuine
    opening and it should be run to 126 immediately.
+
+---
+
+## 5. THE REACHABLE SET
+
+Ansatz: `RY` on every wire, CNOT chain plus ring closure, depth 3, real amplitudes;
+`P = n L = 27` parameters at the S27/S28 register `n = 9` (`core/quantum.py:818-903`).
+
+### 5.1 The dynamical Lie algebra, measured
+
+`s29/s29_T_reach.py --dla` -> `s29/results/s29_T_reach.json :: dla`, using `s26/q_dla.py`'s exact
+Pauli-set closure (each generator is `C^k Y_q C^{-k}`, a single string up to sign because `C` is
+Clifford; the closure is the BFS under "commute with a generator"), cross-checked at every cell
+with `n <= 5` against an independent dense nested-commutator closure with SVD rank (12 of 12
+agree). `dim so(2^n) = 2^{n-1}(2^n - 1)`.
+
+    n     L=1    L=2      L=3      L=4        dim so(2^n)   full at
+    3      3       8       16        28            28        L = 4      <- NEW (this lane)
+    4      4     120      120       120           120        L = 2
+    5      5     496      496       496           496        L = 2
+    6      6     510     1023      2016          2016        L = 4      (S26 L27, reproduced)
+    7      7    8128     8128      8128          8128        L = 2      (S26)
+    8      8   32640    32640     32640         32640        L = 2      (S26)
+    9      9   32766    65535    130816        130816        L = 4      (S26)
+    10,11  n    full     full      full          full        L = 2      (S26)
+
+**The n = 3 row is new and it turns S26's unexplained observation into a rule over `n = 3..11`:
+the obstruction occurs exactly when `3 | n`.** In those cases the closure is, at `L = 2`,
+`2 dim su(2^{n-2})` (n = 6: 510 = 2 x 255; n = 9: 32766 = 2 x 16383) and, at `L = 3`,
+`dim su(2^{n-1})` (n = 6: 1023; n = 9: 65535), i.e. it climbs a chain of proper subalgebras
+`... subset u(2^{n-1}) subset so(2^n)` one rung per layer. (n = 3 is the small-`n` edge case:
+`8 = 2 dim u(2)` and `16 = dim u(4)`, the unitary rather than the special-unitary rung.) I label
+the mechanism a CONJECTURE -- the three-step structure of the CNOT chain plus ring leaves the first
+conjugation rounds inside the stabiliser of a complex structure when the ring length is divisible
+by 3 -- and note that its next test, `n = 12`, is not runnable at the current cap
+(`dim su(2^11) = 4,194,303` against `s26/q_dla.py`'s `CAP = 2^21`).
+
+**Scope correction to `s26/REPORT.md` V.9.** "The algebra at the deployed cell is maximal" is true
+at `n = 7, L = 3` (8128 = so(128)) and **false at the S27/S28 register `n = 9, L = 3`, where it is
+65535 = dim su(256), exactly half of `dim so(512) = 130816`.** The plateau conclusion is unchanged
+(su(256) is still exponentially large), but the sentence needs its `n`.
+
+### 5.2 The algebra is not the obstruction; the parameter count is
+
+`su(N)` acts transitively on the unit sphere of `C^N ~ R^{2N}`, so even the proper subalgebra
+`su(256) subset so(512)` generates a group whose orbit of `|0...0>` is the whole real sphere
+`S^511`. **Nothing is unreachable by the algebra.** What is unreachable is everything outside the
+image of a smooth map `R^27 -> S^511`: a semialgebraic set of dimension at most 27 in 511, hence
+measure zero, and by dimension counting a *generic* target state has best squared overlap of order
+`P/D = 27/512 = 0.05`. S28 measured 0.80 to 0.88 against the `J = 3` ground state (S28-L41), so
+that state is very far from generic: both it and the family's states are near-uniform (PR 301
+against the family's ~465), which is why the cap is high. **The correct "provably not reachable"
+statement for this ansatz is a dimension statement, not a Lie-algebra statement, and any argument
+that reaches for controllability here is answering the wrong question.**
+
+### 5.3 (a) A uniform superposition over an arbitrary subset: the cut-rank obstruction
+
+`L` entangling layers of a CNOT chain give a state of bond dimension exactly `2^L` with no
+truncation (S25 2.2, verified to 3.3e-16); the ring closure adds at most one factor of 2, so the
+deployed depth-3 state has Schmidt rank `<= 16` at every cut. For the uniform superposition over a
+set `S`, the amplitude vector reshaped at cut `k` is the indicator matrix of `S`, whose rank is the
+number of distinct suffix-sets. Measured (`--sets`, `n = 9`, 200 random subsets per size):
+
+    |S|                       8      16      32      75     128
+    random subset, max-cut rank (median)   7      10      14      16      16
+    PREFIX {0..|S|-1}, max-cut rank        1       1       1       2       1
+    (the generic maximum at n = 9 is min(2^k, 2^{9-k}) = 16; the depth-3 chain gives 8, the ring 16)
+
+> **The deployed encoding makes exactly the classical prefixes cheap and every other set
+> expensive.** A prefix of the energy order is a rank-2 object; a generic 75-subset saturates the
+> register's maximum. This is an **ansatz-side** mechanism for "the circuit reproduces the
+> classical top-m", entirely independent of the CVaR clip that the set-equality theorem argues
+> from -- two separate reasons for the same fact. At `n = 9` the gap is a factor 2 (8 against 16)
+> and therefore weak; it grows with the register (at `n = 12, L = 3` it is 8 against 64), which
+> matters for any formulation that widens the register to make an off-diagonal term trainable
+> (section 3b, option (b)).
+>
+> **A design variable nobody has used:** `s22/qcand_lib.py :: Encoding` takes a free permutation
+> `label` of the `2^n` basis indices, and the deployment sets it to the identity (candidate `i` at
+> bit `i`, sorted by `E`). The permutation decides which FAMILY of candidate sets is cheap. If a
+> formulation wants the circuit to select non-prefix sets, relabelling is the zero-cost lever, and
+> it comes with the matching control (a random relabelling) built in.
+
+### 5.4 (b) The sign-coherent ground states, and the cap as a function of depth
+
+S28 measured the best squared overlap with the `J = 3` ground state at 0.796 to 0.880 (median
+0.849) over 16 starts, identical at 80 and 400 iterations with a spread of at most 0.016 -- an
+expressivity cap, not a budget or start effect -- while the SAME amplitude profile with
+Perron-aligned signs is representable at median 0.986 (S28-L41). **So the cap is not about the
+signs; it is the amplitude concentration** (ground-state PR 301 against the family's 465).
+
+Prediction, from dimension counting (the deficit should scale as the inverse parameter count,
+`1 - F ~ 0.151 x 27/(9L)`):
+
+    depth L        3        4        6        8
+    P = 9L        27       36       54       72
+    predicted F   0.849*   0.887    0.925    0.943        (* the measured anchor, S28-L41)
+
+**Falsifier: `F` at `L = 6` outside [0.88, 0.96] on the median of 4 targets.** The alternative
+hypothesis (an exponential in `P`) predicts `F(6) ~ 0.98` and is distinguished by the same run.
+Checkable in about ten minutes by re-running `s27/s28_B_represent.py` with `layers` in {4, 6, 8} on
+4 of its 12 targets (the module reads `B.LAYERS`; it needs a one-line parameterisation). Note what
+the answer does and does not buy: S28 already showed that reaching the coherent basin changes the
+emitted structure by nothing measurable, so this is a property of the ansatz, to be used when
+DESIGNING a state worth reaching -- not an accuracy experiment.
+
+---
+
+## 7. WHAT AN OBJECTIVE MUST KNOW
+
+The meter's four numbers (rule 19): ladder Spearman > 0, gradient cosine above the 0.14 random
+reference, native percentile below 5, preference above 0.5 against the pool-member control. The
+shipped cost reads -0.402 / -0.034 / 0.369 / 0.071 (S29-L2). Sections 1 to 6 say what it would take
+to move them, and the answer is uncomfortably narrow.
+
+**What the four numbers actually measure.** Theorem 2 (section 2) shows that the *gradient cosine*
+is second-order in the pool's own error and carries no term in `n` (the native's deviation from
+typical) for any objective in the marginal class; section 2.4 shows it is purchasable with no
+information by shrinking the target map toward typicality; section 1.5 shows the same thing on the
+scale axis. The *native percentile* and the *preference* are the two that cannot be gamed this way:
+both require the objective to rank a near-native structure above a typical one, which is exactly a
+statement about `cov(channel, n)`. **The meter's binding numbers are 3 and 4, and 2 is a
+diagnostic that must always be read beside 3.**
+
+**The one-line criterion.** By (2.7) an objective's expected local informativeness is
+`sum w kappa var(a)(1 - beta)` -- a property of the pool and the posterior -- plus a first-order
+term `-sum w kappa cov(a - b, n)` that is identically zero unless some input correlates with the
+native's deviation from typical. **Every candidate source is therefore judged by one question: does
+it carry `cov(., n) != 0` given the distogram?** Ranked by what the record says each carries:
+
+| rank | source | assumption broken | what the record prices it at | verdict |
+|---|---|---|---|---|
+| 1 | **a better distance prior** (a larger/structure-trained predictor) | (A4) directly: it moves `m` toward `d(t)` | -2.15 A per unit of prior improvement, concave, the only steep lever (S24 `priorladder`); 0.1 of the way buys -0.215 A at 2.45x MDE | the only first-order lever in the record; blocked by hardware and leakage, not by theory |
+| 2 | **a learned residual** (predict the pool's common-mode error from features) | (A4) by construction, if it trains | S19: a corrector trained on the predictor's own features inherits its error structure; at 0.688 sign accuracy coherent mistakes emit **+0.31 A**; the error-coherence tax is the binding constraint, not the accuracy | first order in principle, and the only class where a new head could act; needs a feature set demonstrably decorrelated from the distogram's own errors |
+| 3 | **a physics term on the emitted structure** | outside class M entirely (it is not a function of the marginals), so Theorem 2 does not bound it | S25 L16: both energies measurably worse than a random subset (AMBER +0.455, Legacy +0.330, 5/5 folds); S13: CVaR at small alpha is exactly a steric-clash filter; BUT lane L's S29-L1 finds the only native-free selectors that work at 9 to 25 aa are free energies over a self-generated ensemble | the class is not excluded by any theorem here; it is excluded by every measurement of its single-point form. The untested form is a FREE energy (entropy included), and S8's `F_qh` machinery exists and was never finished |
+| 4 | **a second, differently biased pool** | (A3) only: it lowers `rho_ab` | S24 L2/L3: 31% angular independence only when UNSELECTED, and then q = 1.231 (0.76 A worse); score selection restores cos 0.943; the union is worth +0.002 | second order by Theorem 2 -- at `rho = 0.65` the expected cosine is still at the random reference. Not worth a build |
+| 5 | **an ESM-attention pairwise map** | (A4) only if it adds `cov(., n)` beyond the distogram, which already consumes ESM-2 650M PCA-32 | S17: in-band content, length-gated, no shortlist value; S29-L1: AF2's own pLDDT has no within-target skill on 588 peptides of 10 to 40 aa | almost certainly redundant with the distogram; the cheap test is the partial correlation with `n` given DIS, not an endpoint run |
+| 6 | **the pool's own dispersion / prediction-pool disagreement** | neither: it is a second moment of the observable 32% | S23 L9; `prediction-pool-disagreement-is-a-native-free-signal` (signal demonstrated, Angstrom value NOT measured) | can predict the error's MAGNITUDE, never its SIGN, and the cosine and the percentile both need the sign |
+| 7 | **a joint over the same marginals** (triangle repair, embeddability, a learned map-level head) | (A1) formally, (A4) not at all | section 2 C2: the repair moves `g` partly into `ker(Jc^T)`, which the gradient annihilates exactly (45% of pair space at N = 12) | buys zero locally by construction; it can move the minimiser, which is section 1's projection question, not an information question |
+
+**Where that leaves the sprint.** Rows 4 to 7 are the ones a quantum formulation naturally reaches
+for, and Theorem 2 prices them all at second order. Rows 1 to 3 are the only first-order classes,
+and two of them are outside this sprint's hardware or measured worse than random. The honest
+reading of sections 1 to 6 together is that **the charter's finding 8 is not a gap in the scorer
+library; it is a corollary of the information the system holds**, and that the reachable results
+are therefore:
+
+1. **Mechanism, which sections 2, 3 and Q1 now supply in closed form** -- why the objective is
+   blind (Theorem 2), why no pool-geometry coupling can be trained at `D = 512` (the stable-rank
+   law), and why the deployed stage reduces to one scalar `m` (Q1.3). Each of these is a falsifiable
+   statement with a named lane and a minutes-long check.
+2. **The one structural opening**, section 4.5: under a CVaR over the tail's AVERAGE structure the
+   set-equality theorem genuinely fails, so "which set" becomes a real optimisation variable that
+   no classical sort of the same quantity reproduces. That satisfies the charter's hard constraint
+   at last -- and by Theorem 2 it will not move the RMSD unless the `f` it optimises is one of rows
+   1 to 3. **The correct order of work is therefore: find an `f` that clears meter numbers 3 and 4
+   first, and only then build the CVaR that consumes it.** Building the structural CVaR around the
+   shipped cost would reproduce S28 with more machinery.
+3. **The free-energy class (row 3)**, which is the only first-order class that is both unmeasured
+   here and precedented at this length (S29-L1), and whose natural quantum home is exactly Q2's
+   configuration-space cell with a local mixer -- the one non-commuting operator family whose
+   stable rank grows with the register.
