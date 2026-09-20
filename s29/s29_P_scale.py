@@ -534,8 +534,11 @@ def cmd_analyse(rows_paths=None, out=None):
 
     # ---- means table
     say("MEAN BUILT-CHAIN RMSD AND THE PROJECTION PRICE PER ARM")
-    say("  %-16s %8s %8s %8s %9s %8s %8s %8s %8s"
-        % ("arm", "chain", "cloud_in", "price", "s_mean", "bond_in", "rg_in", "bond_out", "rg_out"))
+    say("  price = chain minus THIS ARM's own input cloud; price0 = chain minus PRODUCTION's cloud")
+    say("  %-16s %8s %8s %8s %8s %8s %7s %7s %8s %7s"
+        % ("arm", "chain", "cloud_in", "price", "price0", "s_mean", "bond_in", "rg_in",
+           "bond_out", "rg_out"))
+    cloud0 = col("PROD", "rmsd_cloud_in")
     named = [("PROD", prod), ("BOND", col("BOND")), ("SPAN", col("SPAN")), ("ISO", col("ISO")),
              ("CTRL-GLOBAL", col("CTRL-GLOBAL")), ("CTRL-INV", col("CTRL-INV")),
              ("CTRL-LAM", col("CTRL-LAM")), ("BOND-LAMFIX", col("BOND-LAMFIX")),
@@ -544,13 +547,15 @@ def cmd_analyse(rows_paths=None, out=None):
     for nm, v in named:
         src = nm if (nm, ) and nm in arm_names else None
         if src:
-            say("  %-16s %8.4f %8.4f %+8.4f %9.4f %8.3f %8.3f %8.3f %8.3f"
+            say("  %-16s %8.4f %8.4f %+8.4f %+8.4f %8.4f %7.3f %7.3f %8.3f %7.3f"
                 % (nm, v.mean(), col(src, "rmsd_cloud_in").mean(),
-                   v.mean() - col(src, "rmsd_cloud_in").mean(), col(src, "s").mean(),
+                   v.mean() - col(src, "rmsd_cloud_in").mean(), v.mean() - cloud0.mean(),
+                   col(src, "s").mean(),
                    col(src, "bond_in").mean(), col(src, "rg_in").mean(),
                    col(src, "bond_out").mean(), col(src, "rg_out").mean()))
         else:
-            say("  %-16s %8.4f  (derived over columns)" % (nm, v.mean()))
+            say("  %-16s %8.4f %8s %8s %+8.4f  (derived over columns)"
+                % (nm, v.mean(), "-", "-", v.mean() - cloud0.mean()))
     if "FLOOR" in arm_names:
         fl = np.abs(col("FLOOR") - prod)
         say("")
