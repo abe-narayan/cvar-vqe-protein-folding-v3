@@ -127,6 +127,24 @@ def block(X, y, fd, tgt, label, rng):
     return out
 
 
+# NESTED blocks.  The response is `expected - d_nat` and several features contain `expected`,
+# so a raw R^2 carries a SHARED-REFERENT FLOOR (`shared-referent-floor`) plus the distogram's own
+# calibration/shrinkage, which the record has already closed as a route
+# (`error-shape-not-mae-decides-ranking`: slope +0.376, "post-hoc correction is closed"; S25-L2:
+# calibrating the posterior makes RMSD worse).  Only the INCREMENT over N1 can be new information.
+NEST = {
+    "N0_separation_prior": ["sep", "n", "sep_over_n"],
+    "N1_plus_calibration": ["sep", "n", "sep_over_n", "expected", "expected_over_n"],
+    "N2_plus_posterior_shape": ["sep", "n", "sep_over_n", "expected", "expected_over_n", "sd",
+                                "entropy", "exp_minus_median", "exp_minus_mode", "prob_tail_hi",
+                                "prob_tail_lo", "post_sd_mean"],
+    "N3_plus_pool": FEATS,
+    "N1_plus_pool_only": ["sep", "n", "sep_over_n", "expected", "expected_over_n", "pool75_mean",
+                          "pool500_mean", "pool75_sd", "exp_minus_pool75", "exp_minus_pool500",
+                          "rg_disagree", "d_prod", "score_sd"],
+}
+
+
 def main():
     X, y, sep, tgt, fd = rows()
     rng = np.random.default_rng(300204)
@@ -134,8 +152,23 @@ def main():
     masks = {"all_pairs": np.ones(len(y), bool), "LONGRANGE_sep_ge7": sep >= 7,
              "shortrange_sep_le4": sep <= 4, "mid_sep_5_6": (sep >= 5) & (sep <= 6)}
     res = {"bars": {"B2": 0.0196, "primary": 0.1282, "ambitious": 0.3944},
-           "features": FEATS, "no_distogram_features": [FEATS[k] for k in ind], "blocks": {}}
+           "features": FEATS, "no_distogram_features": [FEATS[k] for k in ind],
+           "blocks": {}, "nested": {}}
     for nm, mk in masks.items():
+        prev = 0.0
+        for bn, fl in NEST.items():
+            cols = [FEATS.index(f) for f in fl]
+            b = block(X[mk][:, cols], y[mk], fd[mk], tgt[mk], nm + "|" + bn, rng)
+            b["increment_over_previous"] = b["R2_oof"] - prev
+            if bn != "N1_plus_pool_only":
+                prev = b["R2_oof"]
+            res["nested"].setdefault(nm, {})[bn] = b
+        res["nested"][nm]["N1_plus_pool_only"]["increment_over_N1"] = (
+            res["nested"][nm]["N1_plus_pool_only"]["R2_oof"]
+            - res["nested"][nm]["N1_plus_calibration"]["R2_oof"])
+        res["nested"][nm]["N3_plus_pool"]["increment_over_N1"] = (
+            res["nested"][nm]["N3_plus_pool"]["R2_oof"]
+            - res["nested"][nm]["N1_plus_calibration"]["R2_oof"])
         res["blocks"][nm] = block(X[mk], y[mk], fd[mk], tgt[mk], nm, rng)
         res["blocks"][nm + "|nodist"] = block(X[mk][:, ind], y[mk], fd[mk], tgt[mk],
                                               nm + "|nodist", rng)
@@ -143,9 +176,57 @@ def main():
             X[mk][:, [FEATS.index(f) for f in ("exp_minus_pool75", "exp_minus_pool500",
                                                "pool75_sd", "rg_disagree", "sep", "n")]],
             y[mk], fd[mk], tgt[mk], nm + "|poolonly", rng)
+    # ---- THE APPLIED ARM: take the leave-fold-out per-pair prediction as the correction and
+    #      measure the EMITTED structure.  An R^2 that does not survive being applied is a
+    #      statistic about the prior, not a route to the endpoint.
+    from s30.s30_P_prior import score_shift, emit
+    res["applied"] = {}
+    preds = {}
+    for bn in ("N1_plus_calibration", "N2_plus_posterior_shape", "N3_plus_pool"):
+        preds[bn] = lfo_r2(X[:, [FEATS.index(f) for f in NEST[bn]]], y, fd, tgt)
+    # MANDATORY NULL (`error-coherence-decides-correctors`): a corrector with the SAME out-of-fold
+    # R^2 whose mistakes are i.i.d. rather than inherited from the pool.  Same R^2, same applied
+    # pipeline; if the fitted one hurts and this one helps, the discriminator is COHERENCE.
+    for bn in ("N3_plus_pool", "N1_plus_calibration"):
+        r2 = float(1 - ((y - preds[bn]) ** 2).sum() / ((y - y.mean()) ** 2).sum())
+        r2 = max(min(r2, 0.999), 0.0)
+        sy = float(y.std())
+        preds["IIDmatched_R2_%.3f" % r2] = (r2 * (y - y.mean())
+                                            + np.sqrt(r2 * (1 - r2)) * sy
+                                            * rng.standard_normal(len(y)) + y.mean())
+    for bn, yh in preds.items():
+        off, vals, base = 0, [], []
+        for t in I.targets():
+            pdb = t["pdb"]; n = int(t["n"])
+            u = I.load_univ(pdb); rec = I.shipped_record(pdb); dg = I.distogram(pdb)
+            ii, jj = I.pair_index(n, MIN_SEP); m = len(ii)
+            pool = np.asarray(u["order"], int)[:POOL_K]
+            W = np.asarray(u["W"], float)[pool]
+            nat = np.asarray(u["nat_ca"], float)
+            D = np.linalg.norm(W[:, ii, :] - W[:, jj, :], axis=2)
+            vals.append(emit(W, score_shift(dg, D, -yh[off:off + m]), nat)[0])
+            base.append(emit(W, score_shift(dg, D, np.zeros(m)), nat)[0])
+            off += m
+        c = ST.compare(np.array(vals), np.array(base),
+                       folds=np.array([t["fold"] for t in I.targets()]),
+                       names=[t["pdb"] for t in I.targets()], label="applied|" + bn)
+        res["applied"][bn] = {"mean_cloud": float(np.mean(vals)), "prod": float(np.mean(base)),
+                              "delta": c["effect"], "mde": c["mde"],
+                              "x_mde": c["effect_over_mde"], "ci95_fold": c["ci95_fold"],
+                              "W": c["n_better"], "L": c["n_worse"], "verdict": c["verdict"]}
     with open(OUT, "w") as fh:
         json.dump(res, fh, indent=1,
                   default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
+    for nm, d in res["nested"].items():
+        print("--", nm)
+        for bn, b in d.items():
+            print("   %-26s R2 %+.4f  increment %+.4f  sign %.3f (always+ %.3f)"
+                  % (bn, b["R2_oof"], b.get("increment_over_N1", b["increment_over_previous"]),
+                     b["sign_acc"], b["sign_acc_baseline_always_plus"]))
+    for bn, a in res["applied"].items():
+        print("APPLIED %-26s %.4f vs prod %.4f  delta %+.4f  %.2fxMDE  %dW/%dL  %s"
+              % (bn, a["mean_cloud"], a["prod"], a["delta"], abs(a["x_mde"]), a["W"], a["L"],
+                 a["verdict"]))
     for k, b in res["blocks"].items():
         print("%-32s n=%6d  R2 %+.4f  randfeat %+.4f  permrows %+.4f  excess %+.4f | "
               "sign %.3f vs always+ %.3f (%+.3f)"
