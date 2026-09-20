@@ -3690,3 +3690,70 @@ On the built chain the two cells are +0.3062 to +0.3125 A WORSE than production 
 
 Verdict: REFUTED as registered (F1 does not fire on R1 or R3, either seed; F3 silent; F2's prior held in sign, Type-M in size; the registered class split shows no measurable difference); the prior (WORSE or null) held: null for R1, WORSE for R3. B2 is CLOSED at the addendum-2 scope; nothing further is licensed (no other k or J; the k = 5 replication was dropped for disconnected graphs, S28-L29). `s27/s28_B_FINDINGS.md` carries it under a B2 heading.
 Artefacts: `s27/results/s28_B2_rows_k10.jsonl` (1,134), `s28_B2_summary.json`, `s28_B2_chain_rows_k10.jsonl` (252), `s28_B2_share.json` (S28-L29), `s28_B_prodcheck.json`, `s28_B_chain_rows.jsonl` (the J = 0 R3 twins); `s26/jobs_done/s28B2_run.json`, `s28B2_chain.json`; code `s27/s28_B2_knn.py` (`run_main`, `chain_main`), `s27/s28_B2_analyse.py`; tests `tests/test_s28_B2.py` (8 pass); `s27/PREREG_S28_B.md` addenda 1 to 3.
+## S28-L47 -- ADVERSARY CHECK OF S28-L46 (B2's endpoint at the addendum-2 scope, k = 10, J = 3): STANDS; BOTH S28-L43 GATE CONDITIONS MET (ADDENDUM 3 COMMITTED 7 s BEFORE THE JOB STARTED; CLASS COUNTS, NO MEAN-COHERENCE SENTENCE); THE TWO CHAIN CELLS ARE +0.31 A WORSE THAN PRODUCTION AND WITHIN 0.35x OF THEIR J = 0 R3 TWINS; NO GRAPH WAS DISCONNECTED, SO NO DEGENERATE LABEL WAS DUE; THE CLASS SPLIT IS INSIDE A RANDOM-SUBSET NULL ON THE CHAIN TOO; B2 CLOSES (2026-09-19 21:42, lane D)
+Question: were the two conditions of the S28-L43 gate honoured; is production the comparator and
+the code path shared; are the two chain cells and their twins what the entry says; were the
+eigensolver's degeneracy labels applied; and is anything positive hidden in the registered
+class split? Recomputed from `s27/results/s28_B2_rows_k10.jsonl` (1,134 rows = 126 x 9) and
+`s28_B2_chain_rows_k10.jsonl` (252 = 126 x 2), `s26/logs/s28D_attack_B2.log`:
+- GATE CONDITION (1), registration before the run: `s27/PREREG_S28_B.md` ADDENDUM 3 is commit
+  e7bf2c9c at 2026-09-19 21:10:02; `s26/jobs_done/s28B2_run.json :: start` is 21:10:09 (the
+  chain job 21:22:31). Seven seconds is a thin margin, but the order is the registered one and
+  the addendum text says the job had not been launched; the scope restriction (k = 10, J in
+  {0, 3}, REAL and PERM) is commit d5af0816 at 21:06:54 with a test. Met. The rows carry the
+  class per cell (`sign_coh`): REAL J = 3 seed 0 / 1 coherent 49 / 33, mixed 1 / 3, incoherent
+  76 / 90; PERM 34 / 27, 0 / 0, 92 / 99, exactly the entry's table. CONDITION (2): the entry
+  writes class counts and per-class means and no "collects X%" sentence (the bound column is
+  per class). Met.
+- SCOPE: every row is `graph_kind` knn10 (degree min 10, max 30 to 33), J in {0, 3}, graphs
+  NONE / REAL / PERM, seeds 0 / 1, VQE R1 / R3 and GS; nothing outside addendum 2. The J = 0
+  rows equal lane B's Gaussian-run J = 0 rows at 0.0 on 756 (cell, readout) values (the
+  registered "J = 0 from the existing rows, bit-identical"). The chain rows' `rmsd_cloud`
+  equals the point-cloud R3 rows at 0.0 on 252/252.
+- DEGENERATE LABELS: `n_components` is 1 on 126/126 targets for both REAL and PERM at k = 10
+  (the k = 5 disconnection of S28-L29 does not occur at k = 10), so no GS row was due a
+  DEGENERATE label and none carries one; the J = 0 GS rows (the one-hot argmin) are excluded
+  from every comparison as registered. Correct.
+- THE TWO CHAIN CELLS (`ST.compare`, production = S27 `chain_rows.jsonl :: DIS`, which lane
+  B's own re-projection reproduces at 0.0 on 126/126, `s28_B_prodcheck.json`, S28-L43; the
+  B2 chain reuses `s28_B_hop.chain_main`, the same `readout_projected` call, so the code path
+  is shared with S28-L41's rows): `vqe|s0|REAL|J3|R3` 3.5188, +0.3062 vs production (1.45x,
+  fold CI [+0.155, +0.434], 5/5, WORSE), FAIL18 -0.411 / other +0.426; `vqe|s1|REAL|J3|R3`
+  3.5251, +0.3125 (1.45x, [+0.149, +0.427], 5/5, WORSE), -0.428 / +0.436. Against their J = 0
+  R3 twins in `s28_B_chain_rows.jsonl` (same seed, same readout, same code path): +0.0276
+  (0.35x, [+0.001, +0.054]) and -0.0039 (0.05x): the hopping term at k = 10, J = 3 moves the
+  R3 chain by nothing measurable, and the R3 readout is the S28-L41 readout, 0.3 A worse than
+  production with S27 L9's FAIL18 / 108 split (the readout's, not J's). The two cells went to
+  the chain because they crossed 0.7x MDE against production in the WORSE direction (the
+  registered rule is two-sided); the entry says so. Correct.
+- PRODUCTION AS THE COMPARATOR on the point cloud: R1 +0.0098 / +0.0093 (0.37x, REAL) and
+  +0.0202 / +0.0041 (0.80x / 0.19x, PERM); R3 +0.288 / +0.286 (1.42x / 1.36x, WORSE); GS R3
+  +0.044 (0.54x), GS R1 +0.077. F1 vs J = 0 at most 0.44x; F3 REAL vs PERM at most 0.31x. All
+  reproduce; nothing at or beyond 0.7x MDE in the better direction anywhere. The eigensolver
+  is the predicted tight cluster (PR median 53, m median 12, Jaccard with the DIS top-75 0.579)
+  and its R3 sits 0.54x from production: the kNN ground state is a concentrated argmin
+  neighbourhood, the consistency mechanism's own object, and it does not beat the average.
+- THE REGISTERED CLASS SPLIT on the chain (each class vs production, then the coherent-minus-
+  incoherent difference against a random-subset null of the same size, 4,000 draws): seed 0
+  coherent (n 49) +0.385 (1.12x), incoherent (76) +0.258 (0.95x), difference +0.127, null 2.5 /
+  97.5 [-0.30, +0.31], p 0.41; seed 1 coherent (33) +0.158 (0.50x), incoherent (90) +0.366
+  (1.32x), difference -0.208, p 0.24. The two seeds disagree in sign and both are inside the
+  null: landing in the coherent basin makes no measurable difference to the emitted chain,
+  as on the point cloud (the entry's table, every class contrast at most 0.69x for R1). The
+  addendum-3 prior held. No subgroup is a result.
+- Three-way split, honoured: Hamiltonian quality (GS R3 ties production, 0.54x), optimisation
+  (the coherent basin found on 49 / 33 of 126, as on the Gaussian graph 43 / 32, S28-L41 /
+  L43: basin selection again, now on a graph whose hopping the circuit can collect), emitted
+  structure (R1 = production, R3 = the R3 readout). Novelty (14 (b)) as the entry states: the
+  one graph the S28-L11 mechanism licensed, and the circuit moved further (TV 0.29 / 0.35)
+  without the endpoint moving. Rule 9: no plateau wording. Rule 12: ties broken by the stable
+  key; the one-hot J = 0 GS is excluded.
+Verdict: STANDS (refuted as registered; the registered prior WORSE-or-null held: null for R1,
+WORSE for R3; both gate conditions met; the chain cells are 0.31 A worse than production and
+indistinguishable from their J = 0 twins). Lane B2 closes with no caveat owed. With this entry
+every S28 lane's built-chain verdict has been checked: A (S28-L27b), A2 (S28-L40), B (S28-L43),
+C (S28-L33), B2 (here); C2's built-chain entry is the last to post.
+Artefacts: `s26/logs/s28D_attack_B2.log`; lane B2's `s27/results/s28_B2_rows_k10.jsonl`,
+`s28_B2_chain_rows_k10.jsonl`, `s28_B2_summary.json`, `s27/PREREG_S28_B.md` (addenda 2, 3),
+`s26/jobs_done/s28B2_run.json`, `s28B2_chain.json`; S28-L41's `s28_B_chain_rows.jsonl` and
+`s28_B_prodcheck.json`.
