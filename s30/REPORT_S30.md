@@ -219,7 +219,65 @@ the raw material, not a defect.**
 
 ## Appendix A — claims withdrawn during this sprint
 
-The sprint's most distinctive feature was lanes destroying their own results. Recorded in full
-because the charter asks for it and because it is why the surviving results are trustworthy.
+The sprint's most distinctive feature was lanes destroying their own results, usually before anyone
+asked. Recorded in full because the charter requires it and because it is the reason the surviving
+results are worth anything.
 
-[PENDING — the full table.]
+### A.1 The coordinator's (mine)
+
+| claim | how it died |
+|---|---|
+| **The "two qubits" synthesis** — a selecting readout over a wider register aimed at the tail | Written at 13:07, corrected at 13:08. Lane F closed filter width by ceiling (the ORACLE global argmin over k **is** the shipped 75) and showed the widening-rescues-the-tail result does not replicate on either filter-independent tail (≈0, and *reversed* at +0.73 on one) |
+| **"The median target is worse than chance"** — reported to the user twice | `7 − log₂r` is right-skewed. Null mean 1.4050, null **median 0.9888**, null win rate 62.5%. "Below random on 82 of 126" is what a random ranking does to itself (null expects 78.8, z = +0.60). I read a median against a mean's baseline |
+| **"LEG_torsion is at chance"** | My wording, not lane R's. Its anchor contrast is **+0.024 with the fold CI excluding zero** — it *does* order slightly above its control. It fails by being a quarter of the required margin, not by being noise |
+| **The ceiling gate I handed lane X** — "measure the ceiling first, always" | An **anti-predictor**: 1 of 10 cells correct on predicting the endpoint's direction, against 5/6 for the set-mean law; mean residual 0.333 Å vs 0.0153 — **22×** |
+| **"Nobody has built a typical-good generator"** | Somebody had, and **diversity is the correct design**. For an averaging terminal spread is the raw material; the most concentrated source ever built is the worst endpoint in the record |
+| **"Run `selftest` and confirm it reproduces the baselines"** | `selftest` is a synthetic 8-residue check that runs in 0.4 s and **would pass on a meter whose every number had drifted**. The instruction was unsatisfiable. A real `verify` now exists |
+| **The 0.3688 anchor in lane D's brief** | That is **DIS_SURR's**; the shipped cost is 0.3676. I listed it beside five `DIS` numbers |
+| **"Find a source with decorrelated errors"** | Priced by lane L: a *perfectly orthogonal* channel is worth a **5.1% discount** on the requirement and must be **3.01× better** than anything owned. **Decorrelation is not the lever; skill is** |
+| **Quoting stable rank 1.86 without its feature space** | 1.86 is **pair-distance** space; **coordinate space is 3.4–3.6** with k90 = 11.2 not 5.6 — and sparse readouts and second-moment constructions act on coordinates |
+| **Citing S28-L48 as established** | Every rung in that ladder differs in **kind** as well as nativeness, so it measured a cross-kind preference that perception–distortion already predicts (lane R, S30-L1, posted before its own numbers existed) |
+
+### A.2 Lane T's — four, three toward its own hypothesis
+
+| claim | how it died |
+|---|---|
+| **P2b: retrieval worth +0.10–0.30 Å** | Measured **0.07**; its copula reasoning overestimated by 2–4× |
+| **P4c: searched classes beat prefix by < 0.6 Å** | Measured **0.982** — missed by 64%, in the flattering direction |
+| **"12 bits ≈ six coefficients — two independent routes"** | An **unregistered aside**; a coincidence, not a derivation. Withdrawn and corrected *downward* to 3.78 bits, and flagged louder precisely because it had no bar attached |
+| **"HALFSPACE − PREFIX = −0.9816 Å, BETTER"** — its own headline | Lane Q named the null; lane T ran it with a common direction bank: **196% accounted**, split-half transfer 19%, and the **transferable rule lands +0.472 Å WORSE than production** (1.88× MDE, 5/5 folds). Its own diagnosis: the matched random-subset null asked whether a structured class beats an unstructured one, not whether **the winning direction is the same direction twice** |
+
+### A.3 Lane L's
+
+| claim | how it died |
+|---|---|
+| **EDM projection / triangle repair as a route** | Grepped the codebase after deriving it: S19 had already measured it and left a **named prohibition**. Refuted in the *unexpected* direction — an incoherent magnitude-matched field is worse on realisability and lands **1.24 Å better** |
+| **The deployable half of its own reference-state proposal** | Its own algebra refutes it: the score decomposes additively, so the size-matched field **is** the deflated field, and deflation reallocates rank without creating any |
+| **"The AMBER-relax benefit concentrates on divergent pools", 2:1** | Lowered to **roughly even** by lane L itself, on lane F's dispersion null (−0.128, CI includes zero) — adjacent evidence pointing the other way |
+| **"Two independent arrivals" on confidently-wrong** | Downgraded to one literature result plus one project result on a *different object*, after lane F measured error×confidence (−0.729) as **worse** than error alone (−0.799) |
+
+### A.4 Lane X's
+
+| claim | how it died |
+|---|---|
+| **Its own S30-L10 admission condition** | Amended to be **stricter**: Δ(set mean) is two channels, not one, so `ADMIT iff Δ(bias B) + 0.298·Δ(set best) < 0` |
+| **Its counting falsifier** | Volunteered as having **essentially tied its bar — 24.80% against 25%** — and therefore deciding nothing; the verdict rests on the transfer arm alone |
+| **A −0.4744 correlation it could have quoted** | Flagged as **driven by one arm**; drop it and the value is +0.0851. "The strong negative is an artefact and must not be quoted" |
+
+### A.5 Lane F's, lane D's, lane R's, lane Q's
+
+| claim | how it died |
+|---|---|
+| **Lane F's F1c FAIL18 row** (+1.7674 Å) | The adversary: FAIL18 is *defined* as the targets whose top-75 retained **zero** in-band members, so **49% is forced arithmetic** and the rest is truncation-inflated. Lane F *had* checked circularity against production; the predicate is the **filter's own recall**. **"A matched control in the right space does not rescue a stratum defined by the outcome"** |
+| **Lane F's own F2a and F2c** | Both refuted by its own measurements — no knee in filter width, and its widening result flagged by itself as circular |
+| **Three defects in lane D's own combination arms** | An untuned ridge returning a negative cosine; a least-squares objective violating its own consistency floor (caught because ρ fell below the best single field, impossible for a true maximum); selection leakage worth 0.019 in ρ |
+| **Lane R's 0.500/0.500/0.500 cell** | A **null-input artefact** — three identical values across three different questions is what caught it |
+| **Lane Q's framing of my point 4** | "The framing survives; the operator does not" — identity is not only the better question but the **cheaper** one, so a sparse weighted readout is the expensive way to ask it |
+
+### A.6 The three checklist entries this sprint earned
+
+1. **A matched control in the right space does not rescue a stratum defined by the outcome.**
+2. **When a statistic is a nonlinear transform, its mean, median and win-rate have three different
+   nulls** — never read one against another's baseline.
+3. **"The winning direction is the same direction twice"** is a failure mode distinct from the
+   order-statistic one, and needs a common direction bank to detect.
