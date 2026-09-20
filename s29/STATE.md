@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-19 23:55 Pacific.
+Last update: 2026-09-20 00:00 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -116,7 +116,31 @@ P2 THE TWO-SOURCE CONTRAST at the level lane O is already measuring (rung 6).
 P3 The centered compatibility Hamiltonian's spectrum (lane T section 3c) if T finds the
 gradient-variance decay flattens.
 
+
+## Integration note 2 (2026-09-20 00:00): H1 IS DEAD; THE S28 HAMILTONIAN CLOSURE IS SCOPED; EIGHT LANES
+1. H1 (the typicality axis) is FALSIFIED on its own ORACLE ceiling, before any deployable arm:
+   in `s29/results/s29_O_lfo.json` the ORACLE global step t along u = (shipped average minus the
+   blind average) is EXACTLY 0.0 on every fold and the ORACLE global mean equals production to
+   the last digit (3.048338). Even with the native, one global step along that axis buys nothing;
+   the per-target step (2.742) is an order statistic over 31 choices. This reproduces S16's
+   "every arm chose do nothing" and confirms the S24 L3 geometry the objection cited. The
+   leading hypothesis is now H0. (Lane O posts the entry with the controls lane D required.)
+2. CHARTER FINDING 7 IS SCOPED, AND IT IS THE SPRINT'S FIRST REAL OPENING. Lane T measured, on
+   12 real pools (`s29/results/s29_T_spectra_rows.jsonl`, 72 cells): lambda_2/lambda_1 at n = 9
+   is 0.138 for the raw Gaussian similarity A (S28's matrix, near rank one, the mechanism that
+   killed the hopping term), 0.465 for the double-centered A_c, and 0.634 for the signed
+   agreement matrix G = D D^T of deviations from the pool mean. The S28 closure was about ONE
+   DEGENERATE SIMILARITY MEASURE, not about off-diagonal Hamiltonians. G is also the charter's
+   "Hamiltonian encoding the disagreement between the prior and the pool" and it removes the
+   68% common mode by construction instead of averaging it in. Lane B is spawned to build it.
+3. Eight lanes now (the charter's maximum): L literature, M map and audit, T theory, O ladder,
+   D adversary and meter, X configuration space, P projection price, B compatibility Hamiltonian.
+   Roles kept distinct: B and X are different state spaces, not variants; D attacks both; L
+   keeps reading; O finishes the ceiling ladder that tells us what any of them could reach.
+
 ## Closed in S29
+- H1, the typicality axis (S29-L<O's entry>): the ORACLE global step is exactly zero; the axis
+  carries no deployable signal, and the per-target step is an order statistic.
 - Importing a native-free QA method from the literature (S29-L1, lane L): no method exists at
   this length; the four signal classes are absent, ours, or measured dead. The route is closed
   from the outside as well as from the inside (S28-L48).
