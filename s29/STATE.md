@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:08 Pacific.
+Last update: 2026-09-20 00:09 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -223,6 +223,34 @@ to 46x and lane D's J* = 85.7 as 88, with NO free parameter. Consequences:
     production; above 0.30 A would mean the build is worth much more than the theory says).
 This is the charter's method working: theory before the build killed a justification I had
 already acted on, and replaced it with a sharper, cheaper, falsifiable claim.
+
+
+## Integration note 6 (2026-09-20 00:09, after lane D's first turn): TWO CORRECTIONS THAT BIND EVERY LATER NUMBER
+1. THE LADDER'S SIGN IS LADDER-DEPENDENT, AND THE CHARTER'S RUNGS ARE THE WEAKER TEST. For the
+   shipped cost, ladder rho is -0.182 (CA) / -0.402 (chain) on S28's five rungs, but +0.260 (CA)
+   / -0.092 (chain) on the charter's six, and +0.118 / -0.236 on all nine. The cost orders the
+   BULK correctly and anti-orders the NEAR-NATIVE half; a ladder weighted toward the bulk
+   therefore reports a positive rho for a cost that is adversarial exactly where it matters
+   (the memory `decoy-bank-not-a-pool-proxy` is this shape). STANDING RULE for the rest of the
+   sprint and for the report: a candidate cost must beat the shipped cost ON S28's RUNGS; a
+   positive charter rho beside a negative S28 rho is the expected failure mode and is quoted as
+   such. Every "-0.40" in any S29 text names its ladder.
+2. MY CONTRACTION STORY IS HALF WRONG, AND THE HALF THAT IS WRONG IS THE GRADIENT. Lane D's
+   shrink signature (contract rule 20, now mechanical in the meter) measures what a 0.3 A
+   descent along -grad f does to the emitted geometry: for the SHIPPED cost the descent EXPANDS
+   (bond x1.0438, Rg x1.0248; only 18/126 contract). So the shipped cost's local blindness is
+   NOT a contraction artefact at the gradient level, though contraction remains true of its
+   RANKING (production sits at the 12.6th percentile of its own pool, S28-L36). Integration
+   note 3's framing survives for the ranking and for F1, and dies for any gradient-level story.
+   P1 (the projection rescale) and F1 (the functional swap) are unaffected as experiments, but
+   their entries must not claim a gradient mechanism.
+3. H1's GRAVE, ONE DETAIL WORTH KEEPING: lane D reports the per-target ORACLE argmin sits at
+   the grid's LEFT edge (t = -1, i.e. AT the blind average) on 29/126 targets. Where the axis
+   has any ORACLE content at all, it points TOWARD the sequence-blind answer on a quarter of
+   targets, the direction opposite to H1's hypothesis. Lane O states it in the rung-6 entry.
+4. Lane D's own two defects, recorded because the sprint's standard applies to the Adversary:
+   an all-NaN cosine axis crashed the renderer after a completed 126-target run, and a
+   partially defined cosine was printed as a measurement. Both fixed with regression tests.
 
 ## Closed in S29
 - The "better-conditioned coupling matrix" family (S29-L11, derived): gradient visibility needs
