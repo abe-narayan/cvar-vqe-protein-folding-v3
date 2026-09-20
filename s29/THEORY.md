@@ -225,3 +225,241 @@ Three clauses, all on existing artefacts, all ORACLE diagnostics:
 Who checks: **lane D** (it owns `s29/s29_D_cost_audit.py` and the four numbers), using
 `s27/results/s28_A2_cosine_rows.jsonl`, `s12/cache/disto_*.npz` and lane O's blind-pool map. Clause
 1 is minutes; clauses 2 and 3 are one pass over 126 cached distograms.
+
+---
+
+## 3. THE SPECTRAL CONDITION FOR A MEANINGFUL NON-DIAGONAL HAMILTONIAN
+
+**The question.** S28 found the pool's Gaussian similarity graph near rank one (Perron vector 95
+to 99% uniform) and the hopping term's gradient variance decaying at -1.7 to -1.8 per qubit
+"because of the SPECTRUM, not the off-diagonality" (S28-L8b, L11). This section derives the
+spectrum from the pool's geometry (3a), derives the gradient variance from the spectrum (3b),
+measures the centered and agreement matrices on 12 real pools and answers whether the decay goes
+flat (3c), and says what the ground state of `diag(E) - J A_c` is and whether it is the
+consistency mechanism S27 section 6 measured as harmful (3d).
+
+Measurements in this section are mine: `s29/s29_T_spectra.py` -> `s29/results/s29_T_spectra.json`
+and `s29_T_spectra_rows.jsonl` (72 spectra cells) / `s29_T_grad_rows.jsonl` (216 gradient cells),
+job `s26/jobs_done/s29T_spectra.json` (exit 0, 100.2 s, peak RSS 0.337 GB), 12 targets (S27's T11
+set, `P.targets()[::11][:12]`), native-free: the module reads no native and no RMSD. The hop-only
+gradient cells reproduce S28's `s28_B_train.json :: hop_only|J1` **exactly** at n = 4 to 8
+(4.0612e-03, 7.2844e-04, 2.8167e-04, 5.8983e-05, 3.9483e-05) and to 7% at n = 9 (4.4466e-06 vs
+4.1567e-06; S28's n = 9 register orders the 500 candidates differently under the same graph).
+
+### 3a. Why `lambda_2/lambda_1` is 0.11 to 0.14, from the band
+
+`A_ij = exp(-d_ij^2 / 2 sigma^2)` off the diagonal, `sigma` = median off-diagonal `d`, normalised
+to unit spectral norm (`s27/s28_B_hop.py :: kernel_graph`). Write `a_ij = exp(-d_ij^2/2 sigma^2)`,
+`abar` its mean, and expand about the mean exponent. For a pool whose members are a cloud
+`x_1..x_M` in shape space (`d_ij = |x_i - x_j|` to the accuracy of the RMSD superposition),
+
+    d_ij^2/2 sigma^2 = ( |x_i|^2 + |x_j|^2 - 2 <x_i, x_j> ) / 2 sigma^2,
+    A = abar (1 1^T - I) + Delta,      Delta ~= -abar [ u 1^T + 1 u^T - (1/sigma^2) X X^T ],    (3.1)
+
+with `u_i = (|x_i|^2 - mean)/2 sigma^2`. The rank-2 part mixes into the Perron direction; the
+non-uniform structure is the pool's Gram matrix `X X^T`. Hence
+
+    lambda_1(A) ~= abar M,   lambda_2(A) ~= (abar/sigma^2) lambda_1(X X^T) = (abar/sigma^2) M s_1^2,
+
+    **lambda_2 / lambda_1  ~=  s_1^2 / sigma^2  =  f_1 * <d^2> / (2 sigma^2)**,                 (3.2)
+
+where `s_1^2` is the largest eigenvalue of the pool's shape covariance, `f_1 = s_1^2 / sum_k s_k^2`
+is its share of the pool's total shape variance, and `<d^2> = 2 sum_k s_k^2` is the mean squared
+pairwise distance. **The ratio is the top shape mode's share of the pool's variance, discounted by
+how much of the distance distribution the kernel width spans**, and nothing else to first order.
+
+Measured on the 12 pools at the deployed register (n = 9, the 500-window pool): `f_1 = 0.324`,
+effective shape dimension `(sum s^2)^2/sum s^4 = 6.11`, `<d^2>/2 sigma^2 = 0.534`, so (3.2)
+predicts `0.173` against a measured `lambda_2/lambda_1 = 0.138` (median over 12, range [0.104,
+0.211]) -- the S28 number reproduced (S28-L8b: 0.138 at n = 9) and predicted from the pool's own
+geometry to 25%. The prediction over-estimates because `d_max/sigma = 2.56` is not small and the
+exponential's curvature damps the far tail. (Convention note: I order eigenvalues by `|lambda|`,
+so at n <= 6 "lambda_2" is sometimes the most negative eigenvalue and the ratio prints negative on
+half the targets; the n >= 7 rows are unambiguous.)
+
+> **The reading.** `lambda_2/lambda_1 ~ 0.13` is not a defect of the Gaussian kernel or of `sigma`.
+> It says the pool has about 6 effective shape modes with the leading one carrying a third of the
+> variance, and any similarity kernel that is a smooth decreasing function of `d` will have the
+> same ratio to first order, because it is a property of the POOL, not of the kernel. Tuning
+> `sigma` moves `<d^2>/2 sigma^2` and nothing else: to reach `lambda_2/lambda_1 = 0.5` one needs
+> `sigma^2 ~ 0.65 <d^2>`, i.e. `sigma` about 1.15x the RMS pairwise distance, at which point every
+> off-diagonal entry is within 20% of 1 and the graph is a constant plus noise. **The band is a
+> trap: wide `sigma` flattens the spectrum by making the graph uninformative.**
+
+### 3b. Gradient variance from the spectrum: the stable rank is the whole story
+
+Let `F(theta) = <psi(theta)| A |psi(theta)>` on the real RY/CNOT ansatz. Each parameter enters
+through `psi -> exp(theta_k Gt_k) psi` with `Gt_k` real antisymmetric and `Gt_k^2 = -I/4` (the
+generator is `-i Y_q/2` conjugated by a Clifford; `g_kk = 1/4` exactly, S13 section 11). Then
+
+    dF/dtheta_k = psi^T (A Gt_k + Gt_k^T A) psi = <psi| [A, Gt_k] |psi>,                        (3.3)
+
+exact, with `[A, Gt_k]` symmetric. For `psi` distributed as a real 2-design on `S^{D-1}`,
+`D = 2^n`, and any symmetric `M`, `E[psi^T M psi] = tr M / D` and
+`Var[psi^T M psi] = 2 (D tr M^2 - (tr M)^2) / (D^2 (D+2))`. With `tr[A, Gt] = 0`,
+
+    Var_theta[ dF/dtheta_k ] ~= 2 ||[A, Gt_k]||_F^2 / D^2,
+    ||[A, Gt]||_F^2 = 2 tr((A Gt)^2) + tr(A^2)/2   (using Gt^2 = -I/4),
+    => **Var[dF/dtheta] ~= tr(A_0^2) / D^2 = r_stable(A) / D^2 when ||A||_2 = 1**,               (3.4)
+
+with `A_0 = A - (tr A/D) I` the traceless part (the identity has no gradient) and the **stable
+rank** `r_stable = ||A||_F^2 / ||A||_2^2 = sum_a (lambda_a/lambda_1)^2`. The cross term
+`2 tr((A Gt)^2)` is the only place the observable's BASIS enters; it is bounded by `tr(A^2)/2` and
+averages small over the ansatz's generators, which is why (3.4) carries no diagonal-versus-
+off-diagonal term at leading order.
+
+**This derives and sharpens S28's mechanism.** S28 said the decay is "the near-rank-one spectrum's,
+not off-diagonality's" and supported it with a diagonal same-spectrum control decaying at the same
+rate (S28-L11 caveat (b)). (3.4) says why: the variance depends on `A` only through `||A||_F^2`,
+which is basis-independent, so a diagonal matrix with the same spectrum must decay identically.
+It also converts the observation into a design rule, because `r_stable` is a free design variable:
+
+| observable, unit spectral norm | `r_stable` | predicted slope of `log2 Var` per qubit |
+|---|---|---|
+| near-rank-one dense kernel (S28's A) | `1 + (l2/l1)^2 + ... ~ 1.04` | -2 (measured -1.83) |
+| a `k`-regular sparse graph, `A/k` | `M/k` | -1 (S28-B2 measured -1.00 / -1.03 at k = 5 / 10) |
+| the rank-standardised diagonal energy `diag(E)/max E` | `D/3` (E has sd 1, range +-sqrt 3) | -1 (S25 measured -0.649 at depth 3) |
+| a single Pauli string or a permutation | `D` | 0 |
+
+Three checks with no free parameter. (i) **S28's Gaussian graph**: `r_stable = 1.036` at n = 9 gives
+`Var = 1.036/512^2 = 3.95e-6` against the measured `4.16e-6` (S28) and `4.45e-6` (mine): **within
+7%**. At n = 4, `1.117/256 = 4.36e-3` against `4.06e-3`: within 7%. (ii) **S28-B2's kNN graph**, for
+which the entry recorded a mechanism-free "30 to 60x the variance at n = 9": a `k`-regular graph
+has `||A||_F^2/lambda_1^2 = M/k`, so `Var = M/(k D^2) = 500/(10 * 512^2) = 1.9e-4`, i.e. **46x** the
+Gaussian's -- the measured factor, predicted. (iii) The `J` at which the hopping term's gradient
+variance equals the diagonal terms' is `J* = D sqrt(Var_diag / r_stable)`; with
+`Var_diag = 3.05e-2` (S28-L8b) and `r_stable = 1.04`, `J* = 512 * 0.171 = 88`, against lane D's
+independently computed `J* = 85.7` (S28-L11 item 1).
+
+> **Design rule (the spectral condition).** An off-diagonal term is visible to the circuit's
+> gradient at the deployed width if and only if its **stable rank grows with the register**:
+> `Var_hop / Var_diag = r_stable / (D^2 Var_diag)`, so parity at `n = 9` needs
+> `r_stable ~ 8000`, i.e. `r_stable ~ 16 D`. **No dense similarity kernel can do this, centered or
+> not**; a `k`-regular sparse graph reaches `r_stable = M/k` (parity would need `k ~ 0.06`, below
+> one neighbour: unreachable); and **any Gram matrix of structural deviations is capped by its
+> rank, `r_stable <= rank <= 3 N_res - 6 <= 42` on this instrument**. The conclusion is not
+> "off-diagonal Hamiltonians cannot be trained" -- it is that at `D = 512` **no pool-geometry
+> operator can be gradient-dominant at `J = O(1)`**, and the honest options are (a) accept
+> `J ~ 60 to 90`, at which the hopping term IS the energy and CVaR acts on a perturbation,
+> (b) shrink the register (at `D = 64` parity needs `r_stable ~ 120`, above a Gram cap of 42 but
+> within reach of a sparse graph), or (c) put the compatibility structure in the ENERGY (diagonal,
+> `r_stable = D/3` by construction) rather than in a hopping term.
+
+### 3c. The centered graph and the signed agreement matrix, measured on 12 real pools
+
+Three matrices on the same sub-pool of the `2^n` best DIS candidates, each at unit spectral norm:
+`A` (S28's Gaussian kernel), `A_c = H A H` with `H = I - 11^T/M` (double centering: the uniform,
+typicality mode projected out exactly; measured uniform overlap of the top eigenvector `1.4e-31`),
+and `G = Delta Delta^T / N_res`, the **signed agreement matrix** of the members' deviations from
+the pool mean in the medoid frame.
+
+    n = 9 (the deployed register), median over 12 pools    A        A_c       G
+    lambda_2 / lambda_1                                  0.138    0.465    0.634
+    lambda_3 / lambda_1                                  ~0.10    0.276    0.346
+    r_stable = ||.||_F^2 / lambda_1^2                    1.036    1.591    1.675
+    effective rank  (sum l^2)^2 / sum l^4                1.07     2.35     2.35
+    participation ratio of the top eigenvector / dim     0.905    0.514    0.255
+    top eigenvector's squared overlap with uniform       0.969    0.000    0.007
+
+    hop-only gradient variance (n = 4..9, 120 theta draws, seed 1009, depth 3, the S28 law)
+    matrix   n=4        n=5        n=6        n=7        n=8        n=9      slope   pred slope
+    A      4.061e-03  7.284e-04  2.817e-04  5.898e-05  3.948e-05  4.447e-06  -1.830    -2.020
+    A_c    9.590e-03  3.112e-03  6.011e-04  1.203e-04  2.196e-05  3.599e-06  -2.305    -2.512
+    G      3.141e-03  1.375e-03  3.892e-04  9.907e-05  2.093e-05  5.051e-06  -1.900    -1.962
+    (measured / predicted by (3.4), median over the 18 cells: 0.90; range 0.31 to 2.50, the
+     extremes at n <= 6 for A_c, where D <= 64 and the 2-design approximation is worst)
+
+> **THE ANSWER TO 3c, AND IT CORRECTS A READING ALREADY IN `s29/STATE.md`.** Centering the graph
+> raises `lambda_2/lambda_1` by 3.4x (0.138 -> 0.465) and the signed agreement matrix by 4.6x
+> (-> 0.634): in *that* sense the S28 degeneracy is removed, and the coordinator's integration
+> note 2 is right that S28 closed one similarity measure and not the class. **But the
+> gradient-variance decay does NOT go flat, and it does not even improve: the centered graph decays
+> at -2.30 per qubit against the raw graph's -1.83, and the agreement matrix at -1.90.** At n = 9
+> both sit within a factor of 1.5 of the uncentered Gaussian (3.60e-6 and 5.05e-6 against
+> 4.45e-6). The mechanism is (3.4): the gradient sees the **stable rank**, which rises only from
+> 1.04 to 1.59 / 1.68, because after centering the second mode is merely comparable to the first,
+> not because the spectrum has become extensive. A matrix with `lambda_2/lambda_1 = 0.63` and a
+> fast tail still has `||A||_F^2 = O(1)` at unit spectral norm.
+>
+> **Consequence for lane B, before it builds:** the centered or agreement Hamiltonian at `J = O(1)`
+> is as gradient-invisible at `n = 9` as S28's was (`J* = 512 sqrt(0.0305/1.6) = 71`, against 88
+> for the raw graph: a 19% reduction in the required `J`, not an order of magnitude), and the Gram
+> cap `r_stable <= 3 N_res - 6` means no re-weighting of the agreement matrix fixes it. What is
+> genuinely new in `A_c` and `G` is the **meaning of the ground state** (3d), not the trainability;
+> a build justified by "the spectrum is no longer degenerate" is justified by the wrong number.
+
+### 3d. What the ground state of `diag(E) - J A_c` is, and the symmetry that cancels it
+
+For `G = Delta Delta^T`, the quadratic form is `<v|G|v> = |sum_i v_i delta_i|^2 / N_res`: the top
+eigenvector is **exactly the signed combination of members whose deviations from the pool mean add
+up to the largest displacement**, i.e. the pool's first principal shape mode, and
+`sqrt(lambda_1(G))` is that displacement's length. For `A_c` the same holds to first order by
+(3.1): the centered kernel is `-(abar/sigma^2) X X^T` with the uniform mode projected off, so its
+top eigenvector is the same principal contrast up to sign conventions. So:
+
+> At large `J`, the ground state of `diag(E) - J A_c` (or `-J G`) is the pool's **principal
+> contrast**: amplitudes positive on the members that deviate one way along the pool's first shape
+> mode and negative on those that deviate the other way. It is a coherent set only in the signed
+> sense; in probability it is **bimodal over the two poles of that mode**.
+
+**The symmetry that cancels it, and it is fatal for a `p`-based readout.** Every deployed readout
+(R1 the CVaR tail, R2 the `p`-weighted average, R3 the `p`-top-m) is a function of `p_i = psi_i^2`
+and is therefore blind to the amplitude's sign. Write the members as
+`W_i = cbar + s_i |v_i| delta + eps_i` with `s_i = sign(v_i)` along the principal mode. The
+`p`-weighted average is
+
+    sum_i v_i^2 W_i  =  cbar + delta ( sum_{s_i>0} v_i^2 - sum_{s_i<0} v_i^2 ) + O(eps),        (3.5)
+
+and the bracket is the **imbalance between the two poles**, which centering makes small by
+construction (`v` is orthogonal to the uniform vector). **A centered off-diagonal Hamiltonian
+consumed by any probability readout is self-cancelling to first order: it selects both poles of
+the mode it discovered and averages them back to the pool mean.** The residual imbalance is
+whatever `diag(E)` -- the distogram -- contributes, which is no new information (section 2).
+
+Two corollaries, both cheap to check and both binding on lane B's design:
+
+* **B must use a signed readout** (`C = sum_i psi_i W_i / sum_i psi_i`, S28 lane A's) or break the
+  pole symmetry explicitly. S28 refuted that readout *for accuracy under the shipped objective*
+  (+0.23 to +0.26 A, S28-L26b) -- but that was a refutation of the OBJECTIVE, not of the readout
+  (S28's own reading: given sign freedom, the objective uses it to move away from the native).
+  Pairing a centered Hamiltonian with a signed readout is legitimate and new; pairing it with a
+  `p` readout is provably null by (3.5).
+* **The whole family collapses to a one-parameter ORACLE question.** Under the signed readout the
+  ground state emits `production +- eta * PC1(pool)` for a scalar `eta`. So the build's accuracy
+  ceiling -- before any circuit, any `J`, any CVaR -- is
+  `min_eta mean_targets RMSD(c + eta PC1, native)` with sign and step chosen ORACLE. **Lane O can
+  measure this in minutes** from pools it already has, and it prices the whole build. My prior, and
+  it is assumption (A3) of theorem 2 again: PC1 of the pool is a *within-pool* direction, i.e. it
+  lives in the 32% idiosyncratic component that averaging already removes (S23 L9), and is by
+  construction nearly orthogonal to the 68% common-mode error the answer needs.
+
+**Is this the S27 section-6 mechanism?** Not the same, and the distinction matters. S27's
+consistency channels (CONS, DMAP_CONS, POOLGO) select the pool's **mode** -- the lowest-dispersion
+subset -- which by the set-mean law (`operator-consumes-set-mean`) moves the retained set's mean
+toward the pool's centre, and was measured harmful (+0.286 A for CONS, S27 section 6). The centered
+Hamiltonian selects the **extremes of a contrast**, which moves the set mean *away* from the pool
+centre along `+-PC1`. It is a different operator and the S27 closure does not transfer. What does
+transfer is the law behind both: the terminal operator consumes the retained set's mean, so the
+only question is whether the displacement's SIGN is right -- and section 2 says the marginals do
+not supply a sign. The predicted outcome is a wash (half the targets improve, half worsen, mean
+inside MDE) unless an `n`-carrying channel picks the pole.
+
+### 3e. Prediction (checkable in minutes; lanes B, O, D)
+
+1. **The decay (lane B, the measurement it was spawned to make).** On the centered graph `A_c` and
+   the agreement matrix `G`, the hop-only gradient variance at n = 4..9 has log2 slope
+   **-2.3 +- 0.3 and -1.9 +- 0.3 respectively, NOT flat**, and at n = 9 both are within a factor of
+   1.5 of the uncentered Gaussian's. Falsified if either slope is above -1.3, or if either n = 9
+   variance exceeds 3e-5. Reproducible in 100 s: `python s29/s29_T_spectra.py --grad`.
+2. **The stable-rank law (lane B or D).** For ANY unit-spectral-norm observable the project builds,
+   `Var[dF/dtheta_0] = r_stable/D^2` within a factor of 2 at `n >= 7`, and the implied
+   `J* = D sqrt(0.0305/r_stable)`. Predicted for `G` at n = 9: `Var = 6.4e-6`, `J* = 71`. Falsified
+   by any observable at `n >= 7` whose measured variance departs from `r_stable/D^2` by over 3x.
+3. **The pole symmetry (lane B, before any endpoint run).** With a `p`-based readout the emitted
+   structure of the `J -> infinity` ground state of `diag(E) - J A_c` differs from the pool mean by
+   less than the projection floor on at least 80% of targets. With the SIGNED readout it differs by
+   `eta PC1`, `eta` the amplitude imbalance.
+4. **The family's ORACLE ceiling (lane O, minutes).** `min_eta mean RMSD(c + eta PC1(pool), t)`
+   with the best global `eta` chosen leave-fold-out: predicted **under 0.15 A** better than
+   production, with the per-target sign an order statistic priced by `best_of_k_within`. If it is
+   above 0.30 A my prediction fails and the B build is worth considerably more than I think.
