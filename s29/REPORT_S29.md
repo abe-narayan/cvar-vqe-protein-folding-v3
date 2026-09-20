@@ -51,7 +51,7 @@ three numbers that did not exist before, all on the charter's own endpoint:
    | free convex combination of the full K=500 pool (*expressiveness only*) | 1.1235 |
 
    Choosing *m* and choosing *which member* cost the **same 7 bits** and are worth −0.3079 and
-   −1.0657 against production. Same information budget, **3.5× the payoff**, differing only in what
+   −1.0670 against production. Same information budget, **3.5× the payoff**, differing only in what
    it is spent on. The architecture spends its information on the wrong question.
 
 And the reason those 7 bits cannot simply be supplied: **the per-target sign is an incidental
