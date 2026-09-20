@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:14 Pacific.
+Last update: 2026-09-20 00:17 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -288,6 +288,36 @@ already acted on, and replaced it with a sharper, cheaper, falsifiable claim.
    of barren plateaus often implies classical simulability. The project's one genuine quantum
    positive (the optimiser trains, no plateau at any measured width) sits in that regime. It is
    not retracted; it is scoped, and rule 9 already forbids the reading that would be wrong.
+
+
+## Integration note 8 (2026-09-20 00:17, after S29-L14): THE COMPARISON SPLITS, AND IT VALIDATES THE SPRINT'S TARGET
+Lane L's topic 5: there is NO published ceiling for native-free peptide prediction at 9 to 16
+residues; the field reports method scores on small curated sets (PEP-FOLD 2.6 A on 25 NMR
+peptides, APPTEST 1.96 A on 42, AF2 best-of-5 by class 2.2 to 4.5 A, MD folds 10 to 20-mers at
+1e5 to 1e6 CPU-hours). None is like-for-like with this instrument on three counts: composition
+(curated NMR peptides with regular secondary structure, versus 126 identity-clustered PDB targets
+whose hard stratum is 56% steric-zipper amyloid and lasso peptides that no linear-window
+retrieval can represent), reporting (best-of-N there, one deployable answer here), and regime
+(every published method selects inside an ensemble ITS OWN energy generated, which S29-L1 showed
+is the only regime where native-free selection works at this length; we rank 500 real windows
+from other proteins with an independently constructed objective).
+THE USEFUL OUTPUT, and it is the report's framing: the comparison SPLITS.
+  GENERATION: our ORACLE ceilings, 2.31 A (top-75) and 1.71 A (pool best), sit INSIDE or below
+  the published band. Generation is not this project's problem, and the charter's 2.5 A target
+  is inside the pool.
+  SELECTION: the 0.9 to 1.5 A between 3.2126 and those ceilings is the ENTIRE gap, and the
+  field's own best selector has no in-band skill at this length either.
+Also recorded: reporting 3.21 against 1.96 without those three caveats would be misleading in
+the project's own disfavour, and lane L says so explicitly. And if S29 produces a MEASURED bound
+on native-free selection for 9 to 16-mers with controls, that is a contribution to the field and
+not only to the project -- which is the shape the sprint's H0 outcome would take.
+
+## Resource note (2026-09-20 00:17)
+CPU 94%, the band the user asked for, with 8 governed jobs on 8 cores (lane O's chain ladder in
+4 shards plus PC1, lane P's probe, lane X's probe, lane D's checks). RAM 71.6%: this work is
+compute-bound, not memory-bound, and manufacturing memory pressure to reach 94% would risk the
+real jobs for a number. If a memory-heavy step becomes scientifically justified (an ESM re-embed,
+a full 500x500x126 tensor), RAM rises then.
 
 ## Closed in S29
 - The "better-conditioned coupling matrix" family (S29-L11, derived): gradient visibility needs
