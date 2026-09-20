@@ -519,17 +519,17 @@ def endpoint_target(pdb):
     return rows
 
 
-def chain_main(arms, readout="C_Ralpha"):
+def chain_main(arms, readout="C_Ralpha", shard=""):
     """Built chain for named arms, resumable per (arm, pdb, readout)."""
     from s24 import d_harness as H
     from s29 import s29_B_compat as C
     rows = C.load_all(END_ROWS)
     by = {(r["arm"], r["pdb"]): r for r in rows}
+    path = C.shard_path(CHAIN_ROWS, shard)
     done = set()
-    if os.path.exists(CHAIN_ROWS):
-        for r in C.load_all(CHAIN_ROWS):
-            done.add((r["arm"], r["pdb"], r["readout"]))
-    pdbs = sorted(set(r["pdb"] for r in rows))
+    for r in C.load_all(CHAIN_ROWS):
+        done.add((r["arm"], r["pdb"], r["readout"]))
+    pdbs = C._shard(sorted(set(r["pdb"] for r in rows)), shard)
     t0 = time.time()
     for i, pdb in enumerate(pdbs):
         todo = [a for a in arms if (a, pdb, readout) not in done and (a, pdb) in by]
@@ -548,13 +548,13 @@ def chain_main(arms, readout="C_Ralpha"):
                             rmsd_cloud=float(I.ca_rmsd(Cc, cand.nat_ca)) if nat_ok else float("nan"),
                             rmsd_chain=float(I.ca_rmsd(ca, cand.nat_ca)) if nat_ok else float("nan"),
                             fail18=bool(pdb in FAIL18), secs=float(time.time() - t1)))
-        with open(CHAIN_ROWS, "a", encoding="utf-8") as fh:
+        with open(path, "a", encoding="utf-8") as fh:
             for r in out:
                 fh.write(json.dumps(r) + "\n")
         print("  [chain %d/%d] %s %d arms %.1fs (elapsed %.1f min)"
               % (i + 1, len(pdbs), pdb, len(out), sum(r["secs"] for r in out),
                  (time.time() - t0) / 60.0), flush=True)
-    print("done:", CHAIN_ROWS, flush=True)
+    print("done:", path, flush=True)
 
 
 def main(argv=None):
@@ -592,7 +592,7 @@ def main(argv=None):
         pdbs = C._shard(pdbs, a.shard)
         C.run_phase("end", pdbs, C.shard_path(END_ROWS, a.shard), endpoint_target)
     if a.chain:
-        chain_main([x for x in a.chain.split(",") if x], a.readout)
+        chain_main([x for x in a.chain.split(",") if x], a.readout, a.shard)
     if a.analyse_flat:
         analyse_flat()
     return 0
