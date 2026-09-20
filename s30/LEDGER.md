@@ -2738,14 +2738,16 @@ Ridge over 40 channels, fit on four folds, evaluated on the fifth (prereg item 6
 ```
 near-native (<=1 A) vs PROD   real       pref 0.930   pool-member control 1.000   margin -0.070
                                          fold CI [-0.110, -0.028]   1.04x MDE   n = 114
-GARBAGE CHECK far (>=3 A) vs PROD  real  pref 1.000   control 1.000              margin +0.000
+GARBAGE CHECK far (>=3 A) vs PROD  real  pref 1.000   control 1.000   (both SATURATED)
 near-native, label-shuffled              pref 0.439   control 0.325              margin +0.114
 ```
 
 **Read it in this order.** The combination prefers a 0.55 A structure to production on 93.0% of
 held-out targets. Quoted alone that is a headline. It prefers an **arbitrary real pool member** on
 **100%**, and a **3 A rung** on **100%** -- i.e. it prefers structures that are FARTHER from the
-native MORE often than the near-native one. It has learned *"is this the projected production
+native MORE often than the near-native one. (Those two saturate at 1.000, so the garbage-check
+margin is not a measured contrast and is not quoted as one; the *near*-vs-control margin is the
+measured number, **-0.070 [-0.110, -0.028], 1.04x MDE, 4/5 folds**.) It has learned *"is this the projected production
 average?"*, not *"is this near-native"*. The margin excludes zero in the wrong direction.
 This is `decoy-bank-not-a-pool-proxy` and the S28-L36 veto, reproduced on the cleanest instrument
 the project owns, and it is the reason clause (ii) had a control clause at all.
@@ -2821,9 +2823,13 @@ the rebuilt NATIVE sits at the 0.503 percentile of its OWN Rama-resampled ladder
 resolution in the near-native band: 0.507 / 0.525 / 0.567 / 0.574
 ```
 
-**It is at chance.** It neither orders nativeness above its own anchor control nor prefers a
-near-native structure to production, and it ranks the native at the exact median of the native's
-own perturbations. S29's caveat -- that in-band skill is not deployable value -- turns out to
+**Correction to my own wording, made on recomputing from the artefact rather than from this
+entry's prose (the S29-L48 standing rule):** "at chance" is too strong and I withdraw it. The
+anchor contrast is **+0.024 with fold CI [+0.010, +0.038], which EXCLUDES zero** -- LEG_torsion
+does order nativeness slightly above its own anchor control. What is true is the weaker and still
+decisive statement: that contrast is **a quarter of the registered +0.10 margin**, the channel
+prefers a near-native structure to production on 0.503 of targets against a pool-member control of
+0.698, and it ranks the native at the exact median of the native's own perturbations. S29's caveat -- that in-band skill is not deployable value -- turns out to
 understate it: here the in-band skill does not even reappear as ordering once kind and budget are
 matched. **Row 3 of S29 section 7 should now be closed, negatively, with a mechanism (D1: it is a
 per-residue sum, and the signal is not in per-residue features).**
