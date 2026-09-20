@@ -309,3 +309,84 @@ def test_ties_never_break_by_array_order_in_the_R3_readout():
     assert not np.array_equal(ia, ib)                 # different keys -> different tied choices
     assert not np.array_equal(ia, np.arange(10))      # and neither is the array order
     del rng
+
+
+# ================================================== measurement 5: tail-then-aggregate (TTA)
+def test_tail_lambda_is_the_deployed_cvar_tail_and_sums_to_one():
+    from s29 import s29_B_tta as TT
+    rng = np.random.default_rng(17)
+    D = 64
+    E = np.sort(rng.normal(0.0, 1.0, D))
+    p = rng.random(D)
+    p = p / p.sum()
+    lam, strict, x_q, q, mass = TT.tail_lambda(E, p, 0.18)
+    assert abs(float(lam.sum()) - 1.0) < 1e-12
+    assert (lam >= 0).all()
+    # the tail's E-average equals the exact CVaR value
+    v, q2, _ = Q.cvar_exact(E, p, 0.18)
+    assert abs(float(lam @ E) - v) < 1e-10 and abs(q - q2) < 1e-12
+    # the strict tail carries p/alpha and everything above the VaR carries nothing
+    assert np.max(np.abs(lam[strict] - p[strict] / 0.18)) < 1e-12
+    above = np.array([y for y in range(D) if y not in set(strict.tolist()) and y != x_q])
+    assert np.max(np.abs(lam[above])) == 0.0
+
+
+def test_tta_gradient_matches_finite_differences():
+    """The envelope gradient dR/dp = (W_y - W_xq)/alpha, chained through parameter shift."""
+    from s27 import s28_A_amp as AMP
+    from s29 import s29_B_tta as TT
+    rng = np.random.default_rng(19)
+    n_qubits, n_res = 5, 9
+    circ = Q.StatevectorCircuit(n_qubits, 3)
+    D = circ.dim
+    E = np.sort(rng.normal(0.0, 1.0, D))
+    Wf = rng.normal(0.0, 3.0, (D, 3 * n_res))
+
+    class _Sur:                                   # a smooth surrogate with an exact gradient
+        def value_grad(self, C):
+            C = np.asarray(C, float)
+            return float((C ** 2).sum()), 2.0 * C
+
+    sur = _Sur()
+    th = rng.normal(0.0, 0.6, circ.n_params())
+    lam_f = 0.7
+    val, g, p, _ = TT.objective_theta(circ, th, E, 0.18, 0.5, lam_f, Wf, sur, n_res)
+    h = 1e-6
+    gfd = np.zeros_like(g)
+    for kk in range(len(th)):
+        tp, tm = th.copy(), th.copy()
+        tp[kk] += h
+        tm[kk] -= h
+        vp = TT.objective_theta(circ, tp, E, 0.18, 0.5, lam_f, Wf, sur, n_res)[0]
+        vm = TT.objective_theta(circ, tm, E, 0.18, 0.5, lam_f, Wf, sur, n_res)[0]
+        gfd[kk] = (vp - vm) / (2 * h)
+    assert np.max(np.abs(g - gfd)) < 1e-4 * max(1.0, float(np.abs(g).max()))
+    del AMP, val
+
+
+def test_flat_report_reproduces_the_derived_flat_set():
+    """Prereg B2.3: the f term is flat on EXACTLY the CVaR term's 437 directions, so the raw flat
+    fraction is unchanged and the OVERLAP is what moves."""
+    from s29 import s29_B_tta as TT
+    rng = np.random.default_rng(23)
+    n_res, D = 9, 64
+    E = np.sort(rng.normal(0.0, 1.0, D))
+    Wf = rng.normal(0.0, 3.0, (D, 3 * n_res))
+    p = rng.random(D) ** 3
+    p = p / p.sum()
+
+    class _Sur:
+        def value_grad(self, C):
+            C = np.asarray(C, float)
+            return float((C ** 2).sum()), 2.0 * C
+
+    r0 = TT.flat_report(E, p, 0.18, 0.5, 0.0, Wf, _Sur(), n_res)
+    r1 = TT.flat_report(E, p, 0.18, 0.5, 1.0, Wf, _Sur(), n_res)
+    assert r0["flat_cvar"] == r1["flat_cvar"]
+    assert r1["flat_f"] == r1["flat_cvar"]              # the same flat subspace, derived
+    assert r1["flat_info_bearing"] == r1["flat_cvar"]
+    assert r1["flat_readout_tta"] == r1["flat_cvar"]    # the readout's flat set is the same
+    assert r1["overlap_tta"] == 0.0                     # every moving direction is seen
+    assert r1["flat_readout_deployed"] == 1.0           # the deployed readout moves nowhere
+    assert r1["nmove_readout_tta"] == r1["m_strict"]
+    assert 0.0 < r1["flat_cvar"] < 1.0
