@@ -187,7 +187,19 @@ not share).
 
 The orthogonal estimate 0.33-0.36 corresponds to `s_1 = 1/11 = 0.09`, i.e. a Gram of full rank 11.
 
-## M5 -- THE COMBINATION CEILING FROM THE POOL's GEOMETRY (registered before the run)
+## M5 -- THE COMBINATION CEILING FROM THE POOL's GEOMETRY
+
+> **DECLARED DEFECT, AND IT IS MINE. P5d BELOW WAS WRITTEN AFTER M5 HAD ALREADY RUN.** The heading
+> on this block originally read "registered before the run" and that was false: I wrote
+> `s30_T_combo.py`, ran it on all 126, saw the answer, and only then wrote this addendum. P5d
+> therefore records what I *expected* and is **NOT a pre-registration**; it carries no evidential
+> weight as a passed or failed prediction, and the fact that it comes out FALSIFIED must not be
+> read as a registered falsification. P5a/P5b/P5c above ARE prospective -- they concern lane D's
+> combination, which has not reported -- and only those three are to be scored.
+>
+> I am leaving the clause in rather than deleting it, because a deleted wrong prior is
+> unauditable and because the direction of my error is itself information: I expected the span to
+> bind and it does not.
 
 Any native-free operator that reweights or selects pool members emits
 `u = sum_x w_x (W_x - c)` with `sum w_x = 1`, so it lies in the span of the pool's deviations about
