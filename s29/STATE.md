@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 01:01 Pacific.
+Last update: 2026-09-20 01:02 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -286,6 +286,37 @@ this is the second operational error of mine this hour, after the flatness gate 
 killed a live idea by measuring a constant.
 FOLLOW-UP FOR A LATER SPRINT, not now: the governor should log a STARVED warning when a suspended
 job's suspension exceeds some multiple of MIN_SUSPEND, and jobrun should surface it.
+
+
+## Integration note 20 (2026-09-20 01:02, after S29-L29): A MODEL WITHDRAWAL, AND ONE FINDING INSIDE IT
+Lane T accepted all three of lane D's findings without qualification, amended THEORY.md IN PLACE
+rather than rewriting it, re-ran nothing and recomputed no number of its own to fit. Corollary 2b
+is withdrawn at its own registered bar. Theorem 2's central result and corollaries 2a and 2c are
+untouched, and section 8's bound rests on the MAGNITUDE of the achievable cosine rather than on
+its sign, so the sprint's headline is unaffected.
+THE POST-MORTEM IS THE VALUABLE PART, because a withdrawal without a diagnosis is not a result.
+The measured beta < 1 substituted into the theory predicts a POSITIVE cosine while the measurement
+is negative, so a dropped term is bigger than the kept one. Two candidates, both measurable:
+(i) THE LINEARISATION SATURATES. The risk's derivative 2F - 1 saturates at +-1, and lane T measured
+    |2F-1| > 0.9 on 3.8% of pairs for one target, 5.5% for another and 53.8% for a third, with the
+    worst saturation on a FAIL18 target, which is exactly where the cosine is most negative
+    (-0.143). Where it saturates the coefficient stops being a function of the regression slope at
+    all and depends on corr(sign(a-b), a), which beta does not measure.
+(ii) ASSUMPTION A4 IS AN IDEALISATION, and this is the interesting half: the measured sign implies
+    cov(a, n) > cov(b, n) -- THE POOL'S DEVIATION FROM TYPICAL TRACKS THE NATIVE BETTER THAN THE
+    POSTERIOR'S MEDIAN MAP DOES, which is consistent with the pool being made of real structures
+    and the median map not being one. The system does hold a weak native channel (sequence
+    conditioning is worth 0.776 A, S12), and this says it sits in the POOL rather than in the
+    posterior's summary of it. That is a pointer worth carrying into the report and the next
+    sprint: it is an argument for operators that read the pool's own dispersion rather than the
+    posterior's marginals, and it is orthogonal to everything the sprint has closed.
+FOLLOW-UP, cheap and available to lane D when its queue clears: recompute the beta law on the
+UNSATURATED pairs only (|2F-1| < 0.5). If the sign agreement clears the coin-toss CI there, (i) is
+the mechanism and 2b is a statement about the risk's linear regime; if not, (ii) is.
+ALSO AMENDED BY THE SAME SATURATION: section 1.4's mid-range over-weighting is 2.7x in the linear
+regime and 1.6x where the derivative is saturated, so the honest figure is a target-dependent 1.6
+to 2.7x. Direction unchanged. And lane T endorses my M6 phrasing without change and restates its
+clause in the file as an ENDPOINT-equivalence control rather than a bit-equivalence one.
 
 ## Integration note 1 (2026-09-19 23:55, after S29-L1)
 Lane L's topic 1 closes the "import a QA method" route from outside: no published native-free
