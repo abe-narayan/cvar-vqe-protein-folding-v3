@@ -93,6 +93,16 @@ its entry posts (not pre-empted here).
 
 ## REFUTED
 
+R-D2. **My own S28-L26 rule for the middle leg, and my S28-L11 wording (R4).** "Overlap near 1
+-> optimisation shortfall, well below 1 -> expressivity" was too coarse: the measured 0.85 is
+neither, and the leg's quantity is the objective F, of which the ground state is not the
+optimum (it optimises <H>; the fitted state has lower F on 10/12); on F the shortfall is
+optimisation by basin selection (S28-L41, S28-L43, `s27/results/s28_B_represent.json`). And
+"the circuit collects a third of its same-sign hopping bound" read a mixture (43 / 32 of 126
+draws fully coherent at J = 3, the rest at the J = 0 state, none in between;
+`s28_B_rows.jsonl`) as a partial alignment. No number changes; the sentence forms are retired
+(`s27/RETRACTIONS_S28.md` R4).
+
 R-D1. **My own S28-L18 scope ("max 0.02 A per target", 22 targets).** On 126 targets the
 built chain's branch-flip tail reaches 0.513 A (2LNG), 12 targets above 0.02, mean -0.0056
 (`s27/results/s28_A_chain_rows.jsonl :: prod` vs `chain_rows.jsonl :: DIS`). The reading (two
@@ -107,19 +117,14 @@ S28-L25/L29/L26/L31).
 
 ## OPEN (my queue, as of the resume 2026-09-19)
 
-- Lane B's built-chain verdict (18 arms): production as the comparator (S28-L2(a)), the nine
-  0.7x cells priced as a best-of-nine, FAIL18 / 108, the shared-code-path floor (its "vs
-  production" contrasts cross a code path, S28-L38), the three-way split with the
-  representability fit (`s27/s28_B_represent.py`, landed after the pause, not yet run at 12
-  targets), never GS R2's W/L as evidence.
-- Lane A2's built-chain entry: the step ladder vs production and vs the mean of the SAME two
-  projected random draws (S28-L23(c)); e-grid priced; the circP residual beside its RMSD.
 - Lane C2's built-chain entry: CAGEO's preference expected to collapse on ideal-geometry chains
   (S28-L36 note a); the pool-member control for all 31 scorers; the max-over-31 null.
+- The B2 endpoint entry (k = 10, J = 3; gate opened in S28-L43 with two conditions: the
+  coherence class per cell and no mean-coherence sentences) when it posts.
 - The deferred suite files (pipeline, integration, the two AMBER files) in the coordinator's
   quiet window; `python s26/examine.py` at the end.
-Closed from the earlier queue: lane A's entries (S28-L13, L20, L27b), lane C's Part 2 chain
-(S28-L33), lane B's point cloud (S28-L22), reproductions 102 to 106.
+Closed from the earlier queue: lane A's entries (S28-L13, L20, L27b, L40), lane B's point cloud
+and built chain (S28-L22, L43), lane C's Part 2 chain (S28-L33), reproductions 102 to 106.
 
 ## What damaged my own expectations
 
@@ -130,6 +135,14 @@ Closed from the earlier queue: lane A's entries (S28-L13, L20, L27b), lane C's P
 - I expected lane B's "-1.27 for the diagonal control" to support its own reading weakly; it
   supports it strongly once the n = 9 outlier is dropped (the two controls decay at the same
   rate on 4..8).
+- I expected the representability fit to answer my S28-L26 dichotomy; instead it showed the
+  dichotomy was posed on the wrong quantity (fidelity to a state that is not the objective's
+  optimum) and that the mean coherence I had quoted as "a third of the bound" was two
+  populations. The answer (basin selection) is cleaner than either horn I offered (R-D2).
+- I expected the FAIL18 stratum of lane A2's chain entry to be noise on every arm; the circuit
+  step's excess harm on the 18 survived a random-subset null and the 2NB7 drop (p 0.001 to
+  0.014), so "18 targets" is not always noise; it is harm, and a set property, not a function
+  of production's RMSD (S28-L40).
 
 ## What I did not do and why
 
@@ -154,3 +167,6 @@ Closed from the earlier queue: lane A's entries (S28-L13, L20, L27b), lane C's P
 | B: the hopping term moves the deployed readout by at most 0.013 A at any J (point cloud) | the largest F1 cell (R3 seed 1 J 0.1, -0.021, 1.05x MDE) fails its seed-0 twin (+0.0001) and is matched by the PERM control (-0.022), and the arm is +0.25 A WORSE than production; the eigensolver at J = 1 re-selects the DIS top-75 (Jaccard 0.960); the nine chain cells are nine of 72 correlated contrasts (best-of-nine pricing); never quote GS R2's 79W/47L as evidence (mean -0.004, 0.09x) | S28-L21, S28-L22 |
 | A2: the objective's steepest-descent direction at production has cosine -0.03 (SE 0.02) with the direction to the native, -0.14 on FAIL18 (ORACLE) | inside the random-direction null (mean abs cos 0.140); 21 sign tests, one at p 0.008 (CAGEO on FAIL18, a third of the null's magnitude) is not a result; Spearman(cos, RMSD) -0.37 is not a shared-referent artefact (zero floor by symmetry) | S28-L23b, S28-L24 |
 | A: the amplitude family's ORACLE ceiling is 0.288 A point cloud | ORACLE, best of 5 starts (116% order statistic; single start 0.36 to 0.42); affine hulls are exactly complete by dimension counting (75 > 3n); the like-for-like contrast with a random 27-dim linear family is -0.156 A on the median (not -0.320); the native-free objective prefers the 3.05 A average to the 0.29 A ORACLE structure on 101/126 | S28-L1b, S28-L13 |
+| A2 (built chain): the deployable step along the shipped objective's descent direction is null at 0.1 A (-0.004, 0.21x), sign-only worse at 0.3 A (+0.018, 0.74x, 5/5) and worse at 1 A (+0.105, 2.1x); indistinguishable from a random direction of the same size at every e (0.0x to 0.3x MDE, fold CI including zero) | the comparator is production projected through the same code path from a bit-identical cloud (`s28_A2_prodcheck.json` 4/4; the chain job's clouds equal the ladder rows' at 0.0 on 13 x 126); the e-grid "residual survives" is the smallest-e column (-0.0433 = the split-half transfer), not a per-target signal; the random best-of-2 is NOT A SIGNAL; the raw step's FAIL18 "WORSE [Type-M]" is the whole-set harm on 18 targets (random-18 null p 0.06 / 0.25; 0.24 / 0.50 without 2NB7), not a regime; the CIRCUIT step's FAIL18 excess (+0.117 / +0.348 vs -0.002 / +0.093) is a real set property (p 0.001 / 0.003, survives dropping 2NB7, present on the point cloud, not a function of production's RMSD) and is HARM; the random control is cheap on FAIL18 by geometry (its cost falls with production's RMSD, Spearman -0.29) | S28-L39, S28-L40, S28-L42 |
+| B (built chain): the deployed readout R1 emits production at every projected J, graph and seed (within 0.0125 A, 0.46x MDE); R2 / R3 are +0.25 to +0.37 A worse than production at every J including J = 0; the exact ground state at J = 1 re-selects the DIS top-75 and ties production (-0.003 / -0.006, 0.1x) | the comparator is S27's production chain, re-projected in B's own process bit-for-bit on 126/126 (`s28_B_prodcheck.json`), so no floor enters (the S28-L18 floor is lane A's 1e-13 input difference); the "BETTER" cells (s1 REAL J0.1 R3 -0.037, 1.24x; s1 PERM J0.3 R3 -0.047) are 0.28 A-worse readouts climbing 0.04 A toward production, unreplicated on seed 0 (+0.004) and matched by PERM (-0.030; REAL - PERM -0.007, 0.18x); the nine screen cells priced within readout family transfer nothing (R3 five: split-half 0%; R1 pair: 0.06x MDE); the 49% "residual" on the mixed matrix is the R1-vs-R3 readout gap; the nine are 2 R1 / 2 R2 / 5 R3 cells; FAIL18: R2 / R3 are -0.34 to -0.47 on the 18 and +0.37 to +0.51 on the 108 (random-18 null p 0.0000), S27 L9's readout regime present at J = 0, Type-M on the 18, no native-free switch | S28-L41, S28-L43 |
+| B, the middle leg: the J = 3 gap between the circuit's reached F (-5.5 / -5.3) and the ground state's (-7.31) is OPTIMISATION by basin selection, not expressivity | the fit to the ground state caps at squared overlap 0.85 (16 starts, 80 and 400 iterations, spread 0.016: an expressivity cap on the STATE, PR 465 vs 301) but F at the fitted state is below F_gs on 10/12 and below every reached F (24/24), so the circuit holds a state 2.8 below what the optimiser reached on 17/24 cells; the ground state optimises <H>, not F, so "the exact optimum" of the leg was a proxy and my S28-L26 overlap rule was too coarse (R-D2); F_fit is an upper bound on the family's minimum F; 7/24 cells reached within 0.041 of the fitted F (the coherent basin), 17/24 sit at the J = 0 state; on the 126 the trained J = 3 state is fully coherent on 43 / 32 draws and at the J = 0 state on the rest, none in between (R4: never "collects X% of its bound"); "finding the basin makes no measurable difference to the endpoint" (post-hoc subgroup 0.26x / 0.09x, random-subset p 0.28 / 0.15), NOT "slightly worse" | S28-L41, S28-L43, `s28_B_represent.json` |
