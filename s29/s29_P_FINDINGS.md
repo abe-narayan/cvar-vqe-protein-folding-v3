@@ -144,6 +144,48 @@ crossing 1 near |i-j| = 8 -- is identical under all three statistics.
 
 ## REFUTED
 
+P13. **THE LANE'S VERDICT (S29-L57, 126/126, BUILT CHAIN): every registered falsifier fails, and
+the bond-length correction is worth exactly what a matched random displacement is worth.**
+`s29/results/s29_P_summary.json`, 1896 rows over 4 shard files, PROD reproducing production at
+max |diff| 0.000e+00 on 126/126.
+
+    BOND - CTRL-RAND(mean of 8)   -0.0087   SE 0.1024  MDE 0.2868   0.03x   fold CI [-0.1776,+0.1027]  2/5  NOT MEASURED
+    BOND        - PROD            +0.7222   2.24x  5/5 folds  WORSE
+    CTRL-RAND(mean8) - PROD       +0.7308   3.58x  5/5 folds  WORSE
+    SPAN        - PROD            +0.1220   1.65x  5/5 folds  WORSE
+    ISO         - PROD            +0.0737   1.25x  4/5 folds  WORSE [Type-M zone]
+    CTRL-GLOBAL - PROD            +0.6578   3.52x  5/5 folds  WORSE
+    CTRL-INV    - PROD            +0.1671   0.95x  4/5 folds  NOT MEASURED
+
+The whole of BOND's effect is its MAGNITUDE and none of it is its DIRECTION -- a statement only
+available because all eight matched-magnitude draws were kept when the run was cut.
+
+P14. **The most useful line in the lane: the MECHANISM is confirmed and the HYPOTHESIS is
+refuted.** Making the cloud geometrically consistent genuinely improves the fit -- the emitted
+chain sits **24% closer to its own input cloud** (projection residual 0.8135 -> 0.6191 A,
+native-free) -- and the structure is 0.72 A WORSE. The fit was biased, the bias is removable,
+and removing it costs accuracy, because by P9 the distortion is a monotone SHEAR in sequence
+separation and a scalar inflates the long-range distances that were already too long. Emitted Rg
+against the native's 6.6009: PROD 6.4820 (1.011x), BOND 8.1353 (**1.272x**). The projection price
+falls under BOND exactly as S28-L39 predicted for a de-contracted cloud (+0.1643 -> -0.1512), and
+**the price falling is not the price being saved** -- it falls because the cloud got worse. So the
++0.164 A is the cost of the geometry constraint, not a recoverable loss; paying it earlier costs
+more.
+
+P15. **No regime claim, and it did not go my way.** FAIL18 vs the 108 with a 2000-draw random-18
+null: BOND's FAIL18 effect sits at percentile 0.902 of random 18-subsets, SPAN 0.888, ISO 0.859 --
+all inside the band. The harm is carried by the 108 and FAIL18 is merely noisier. Concentration:
+BOND's median (+0.2502) is far below its mean (+0.7222), the free early warning -- but the valid
+test disagrees, drop-top10 +0.8796 at percentile 0.522 of a uniform-effect null. A uniform harm
+with a heavy right tail, not a few targets.
+
+P16. **The branch-flip floor, measured on this path.** A 1e-13 RELATIVE perturbation of the cloud,
+zero geometric change: mean |diff| 0.0139 A, **max 0.5088 A on 2LNG**, above 0.02 A on 14/126,
+above 0.1 A on 3. Every deployable arm is contrasted against FLOOR as well as PROD and no
+conclusion moves. The signed FLOOR mean is -0.0077 A: production's own branch choice is very
+slightly worse than a random redraw of it, inside its own noise but a free reminder that the
+multi-start is not solved.
+
 P10. **The shape distortion of P9 is REAL but NOT CORRECTABLE -- and an ORACLE-fitted profile is
 no better than a native-free one.** `s29/results/s29_P_sepprofile_cloud.json`. Operator: divide
 each cloud's distance map by the population separation profile r(|i-j|), re-embed by classical
