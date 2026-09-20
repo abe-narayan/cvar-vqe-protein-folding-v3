@@ -1,4 +1,4 @@
 {
- "max_concurrent": 3,
- "note": "S28 resume 2026-09-19 20:10: cap 3 for the three chain relaunches"
+ "max_concurrent": 2,
+ "note": "S28 resume 20:13: cap 2; box 94-97% from the user (chrome 5.5, Code 2.1); C2 chain on the governor queue"
 }
