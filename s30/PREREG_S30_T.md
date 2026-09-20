@@ -111,3 +111,53 @@ report the exact reachable-set cap in bits against the 300.6 bits of set choice.
   in THEORY.md section 1.3.
 - M3 measures the pool's feature geometry, not any Hamiltonian's spectrum. It bounds the lift's
   reachable class; it does not price the lift in Angstroms.
+
+---
+
+# ADDENDUM 1 -- M4, THE QUADRIC CEILING (registered 2026-09-20, before the run)
+
+Asked for by the coordinator after M3 closed the halfspace lift: *what is the ceiling of the
+second-moment (quadric) class, before anyone builds it?* Same ceiling-before-compute discipline
+that M3 just paid for.
+
+**Construction.** Per target: superpose all 500 pool windows onto the pool medoid ONCE (an
+EXOGENOUS frame -- declared, because a tail-dependent frame is an unstated operator). Feature map
+`Psi` = the centred pair-distance map; project onto its top `k = 6` principal directions (`k90`
+measured at 5.61 in M3b) and standardise -> `Z (500, 6)`. Fix `m = 75`. The emitted structure is
+the plain coordinate mean of the selected 75 in the fixed frame; the score is ORACLE CA-RMSD to
+`nat_ca`.
+
+Four classes, and note their sizes at fixed `m`:
+
+| class | order | free parameters | class size at fixed m |
+|---|---|---|---|
+| PREFIX | the deployed `DIS` energy | 0 | **exactly 1 set** |
+| HALFSPACE | `<g, z_x>` | 6 | O(D^6) |
+| QUADRIC | `z_x' G z_x + <g, z_x>` | 27 | O(D^27) |
+| FREE | any 75-subset | -- | C(500,75) = 300.6 bits |
+
+`HALFSPACE` is the `G = 0` slice of `QUADRIC`, so a deficit for QUADRIC at matched budget is a
+statement about SEARCHABILITY, not about containment, and will be reported as such.
+
+**Budget matching, because this is exactly the `grid-oracles-are-order-statistics` trap.** Each of
+HALFSPACE, QUADRIC and FREE gets the SAME `K = 5,000` ORACLE-scored draws. The matched null is the
+FREE arm: best-of-5,000 uniformly random 75-subsets. Any class that does not beat FREE at the same
+K has bought nothing but an order statistic.
+
+**P4a.** QUADRIC's ORACLE best is within **0.10 A** of HALFSPACE's at matched K.
+*Falsified* if QUADRIC beats HALFSPACE by more than 0.20 A -- in which case the second moment is a
+real and findable enrichment and lane Q should build it.
+
+**P4b.** FREE (best-of-5,000 random 75-subsets) is within **0.15 A** of PREFIX. Rationale:
+`operator-consumes-set-mean` (`d_out = 1.16*d_set_mean + 0.04*d_set_best`) plus the common-mode
+identity (S23-L9: 68% of the pool's squared error is a shift every member shares, and a set mean
+cannot touch it), so set means concentrate and 5,000 draws cannot separate them.
+*Falsified* if the gap exceeds 0.30 A.
+
+**P4c.** All three searched classes beat PREFIX by **less than 0.6 A**, i.e. far less than the
+1.31 A the same pool yields to a single-member ORACLE argmin (M1's fitted floor). Rationale: the
+mean is the wrong operator to spend selection on, which is the law's own content.
+*Falsified* if any class beats PREFIX by more than 1.0 A.
+
+**What M4 cannot say.** Every arm is ORACLE. M4 measures the CLASS's reachable ceiling, not any
+deployable operator, and no native-free rule is proposed here that selects within any class.
