@@ -3669,3 +3669,55 @@ Multiplicity: 0 endpoint comparisons; 18 (tau, threshold, subset) cells reported
 selected; the primary cell was registered as threshold 0.5 before the run.
 Artefacts: `s29/results/s29_T_beta_unsat.json`, `s29/s29_T_beta_unsat.py`,
 `s26/jobs_done/s29T_beta_unsat.json`; `s29/THEORY.md` 2.3b and 1.4; `s29/THEORY_SUMMARY.md`.
+
+## S29-L40 -- THE FULL FOUR-TERM MEASUREMENT, BOTH QUESTIONS REGISTERED BEFORE THE ANSWER: (a) RESTORING THE TERMS (A4) DROPS MOVES SIGN AGREEMENT FROM CHANCE TO EXACTLY THE COIN-TOSS BAR, 74/126, CLEARING ON NONE OF SIX CELLS -- THE SECOND-ORDER MODEL IS NOT PREDICTIVE FOR THIS COSINE AND I SAY SO; (b) cov(a,n) > cov(b,n) HOLDS IN DIRECTION ON ALL THREE tau DEFINITIONS AND CLEARS THE BAR ON 3 OF 6 DEPENDENT CELLS -- THE POOL TRACKS THE NATIVE SLIGHTLY BETTER THAN THE POSTERIOR'S MEDIAN MAP, SUGGESTIVE AND NOT ESTABLISHED, AND PRICED BY THE BOUND AT THE COSINE IT WOULD HAVE TO PRODUCE (2026-09-20 01:53, T)
+
+Registered in S29-L39 before the run: the four terms of var(a) - cov(a,b) - cov(a,n) + cov(b,n) in
+the w*kappa metric, per target, with n = d(t) - tau the NATIVE's deviation from typical (ORACLE,
+diagnostic). Job `s26/jobs_done/s29T_beta_full.json`; artefact `s29/results/s29_T_beta_full.json`;
+code `s29/s29_T_beta_unsat.py :: full_terms`, on lane D's implementation of every shared piece.
+
+    cell            sign agreement: kept only -> FULL      cov(a,n) > cov(b,n)    coin-toss bar
+    LIB75 all            62/126  ->  74/126  (0.5873)          74/126  (0.5873)    74.0/126 = 0.5873
+    UNIV  all            60/126  ->  74/126  (0.5873)          73/126  (0.5794)
+    POOL  all            57/126  ->  74/126  (0.5873)          75/126  (0.5952)
+    LIB75 unsat          64/125  ->  71/125  (0.5680)          76/125  (0.6080)
+    UNIV  unsat          64/125  ->  71/125  (0.5680)          75/125  (0.6000)
+    POOL  unsat          64/125  ->  71/125  (0.5680)          71/125  (0.5680)
+    median |dropped|/|kept| 0.77 to 1.24; the dropped terms DOMINATE on 38 to 61% of targets
+
+(a) THE REPAIR IS DIRECTIONAL AND INSUFFICIENT. Restoring the two cov(., n) terms moves sign
+agreement from chance (57 to 64 of 126) to EXACTLY the coin-toss bar (74/126 = 0.5873 against a bar
+of 74.0/126), so by my own registered strict test it clears on NONE of the six cells. The honest
+statement, which is the one I would want from anyone else: THE SECOND-ORDER MODEL IS NOT PREDICTIVE
+FOR THIS COSINE AT n = 126. What it does is diagnose corollary 2b's death -- the dropped terms are
+0.77 to 1.24 times the kept ones and dominate on 38 to 61% of targets, so the truncation was
+indeed the error -- and it does not replace the corollary with anything. Theorem 2's central claim
+is unaffected (it is a statement that no term in n ENTERS, not a prediction of the sign), and
+section 8's bound was never built on the sign.
+
+(b) THE POINTER, PRICED. cov(a,n) > cov(b,n) holds in DIRECTION on every definition -- median
+magnitudes 55.9 vs 51.4 (LIB75), 58.5 vs 47.2 (UNIV), 30.4 vs 22.3 (POOL) -- and the per-target
+count clears the coin-toss bar on 3 of 6 cells and sits at or inside it on the other three. With
+six DEPENDENT cells (same 126 targets, overlapping tau definitions) that is SUGGESTIVE AND NOT
+ESTABLISHED and I price it as such; no max-over-cells null is quoted because the cells are not
+independent enough for one to mean anything. Reading: the POOL's deviation from typical tracks the
+native's slightly better than the POSTERIOR's median map does, which is the pointer `s29/STATE.md`
+flags as untouched by any closure and the one argument for operators that read the pool's own
+DISPERSION rather than the posterior's marginals. ITS PRICE IS ALREADY SET BY SECTION 8: whatever
+the asymmetry is worth, it can only reach the endpoint as a cosine, and every cosine the project
+has measured is 0.04 against the 0.140 random reference and the 0.628 that 2.5 A requires. It is
+worth ONE PRE-REGISTERED MEASUREMENT in a future sprint -- the cheapest form is an operator that
+displaces production along the pool's dispersion direction and is read through the meter's cosine
+with its shrink signature -- and it is not worth a build in this one.
+
+WHAT THIS CLOSES FOR THE LANE. The withdrawn corollary is now fully diagnosed: saturation explains
+the magnitude of beta's departure from 1 (S29-L39: in the linear regime beta is 0.947 to 0.961, at
+the degenerate point), and the dropped cov(., n) terms explain the sign, but restoring them does
+not buy a prediction. Both halves are measured, neither is argued. Nothing in sections 3 to 9
+depends on any of it, and the section 8 bound stands on its measured magnitudes exactly where it
+stood before the attack.
+Multiplicity: 0 endpoint comparisons; 6 dependent cells reported together, none selected, the
+primary registered as the `all` cells before the run.
+Artefacts: `s29/results/s29_T_beta_full.json`, `s26/jobs_done/s29T_beta_full.json`,
+`s29/s29_T_beta_unsat.py`; `s29/THEORY.md` 2.3b; `s29/THEORY_SUMMARY.md` section 2.

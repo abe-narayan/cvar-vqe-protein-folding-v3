@@ -95,10 +95,19 @@ of zero). **And saturation fully explains beta's magnitude:** on the linear-regi
 place the derivation claims to apply -- `beta` is 0.947 to 0.961 with a third of targets above 1,
 i.e. essentially at the degenerate point where the kept term vanishes. **So corollary 2b is not
 merely wrong, it is VACUOUS in its own valid regime**: the kept term is zero to measurement
-precision and the dropped `cov(.,n)` terms carry the whole sign. Reading (ii) -- `cov(a,n) >
-cov(b,n)`, the pool tracking the native better than the posterior's median map does -- is the one
-pointer this sprint produced that none of its closures touch, and it argues for operators that read
-**the pool's own dispersion** rather than the posterior's marginals.
+precision and the dropped `cov(.,n)` terms carry the whole sign. **The four-term measurement (S29-L40) then closed the repair and left the pointer.**
+Restoring the two `cov(., n)` terms moves sign agreement from chance (57-64 of 126) to exactly the
+coin-toss bar (74/126 = 0.5873, the bar being 74.0/126), so it clears on none of six cells: **the
+second-order model is not predictive for this cosine**, it only diagnoses the withdrawal (the
+dropped terms are 0.77 to 1.24 times the kept ones and dominate on 38 to 61% of targets). And
+`cov(a,n) > cov(b,n)` -- **the pool's deviation tracking the native slightly better than the
+posterior's median map does** -- holds in direction on all three `tau` definitions (median 55.9 vs
+51.4, 58.5 vs 47.2, 30.4 vs 22.3) and clears the coin-toss bar on 3 of 6 dependent cells:
+suggestive, not established. It is the one pointer this sprint produced that none of its closures
+touch and the one argument for operators that read **the pool's own dispersion** rather than the
+posterior's marginals -- and its price is set by the bound, since it can only reach the endpoint as
+a cosine and every measured cosine is 0.04. One pre-registered measurement next sprint, not a
+build in this one.
 
 ---
 

@@ -195,11 +195,35 @@ Substituting (2.6) and (A2) into (2.4), using `r = n - a` to first order,
 > scope: in its own valid regime it is not wrong, it is VACUOUS** -- the kept term is zero to
 > measurement precision and the dropped terms carry the whole signal. That is a cleaner death than
 > the one lane D's falsifier delivered, and it is mine to report.
-> **The measurement this licenses, now running:** the four terms of
-> `var(a) - cov(a,b) - cov(a,n) + cov(b,n)` in the `w kappa` metric, per target, with the question
-> stated before the answer -- does the FULL expression's sign predict the measured cosine where the
-> truncated one does not, and is `cov(a,n) > cov(b,n)` (the pool tracking the native better than the
-> posterior's median map does)? `s29_T_beta_unsat.py --full`, artefact `s29_T_beta_full.json`.
+> **THE FULL FOUR-TERM MEASUREMENT, RUN ON 126 (S29-L40; `s29_T_beta_full.json`, job
+> `s26/jobs_done/s29T_beta_full.json`), with both questions registered before the answer.**
+>
+>     cell            sign agreement: kept only -> FULL      cov(a,n) > cov(b,n)     coin-toss bar
+>     LIB75 all            62/126  ->  74/126  (0.587)            74/126  (0.587)     74/126 = 0.5873
+>     UNIV  all            60/126  ->  74/126  (0.587)            73/126  (0.579)
+>     POOL  all            57/126  ->  74/126  (0.587)            75/126  (0.595)
+>     LIB75 unsat          64/125  ->  71/125  (0.568)            76/125  (0.608)
+>     UNIV  unsat          64/125  ->  71/125  (0.568)            75/125  (0.600)
+>     POOL  unsat          64/125  ->  71/125  (0.568)            71/125  (0.568)
+>     median |dropped| / |kept| 0.77 to 1.24; the dropped terms DOMINATE on 38 to 61% of targets
+>
+> **(a) The truncation was the problem, directionally, and repairing it is still not enough.**
+> Restoring the two `cov(., n)` terms moves sign agreement from chance (57 to 64 of 126) to
+> **exactly the coin-toss bar, 74/126 = 0.5873** -- and the bar is 74.0/126, so by my own registered
+> strict test it clears on **none** of the six cells. The honest statement is the one I would want
+> from anyone else: **the second-order model is not predictive for this cosine at n = 126.** It
+> diagnoses corollary 2b's death (the dropped terms are as large as the kept ones, ratio 0.77 to
+> 1.24) and it does not replace it.
+> **(b) `cov(a,n) > cov(b,n)` holds in direction on every definition and is marginal by count.** The
+> median magnitudes favour the pool on all three `tau` (55.9 vs 51.4, 58.5 vs 47.2, 30.4 vs 22.3),
+> and the per-target count clears the coin-toss bar on **3 of 6 cells** and sits at or inside it on
+> the other three -- with six dependent cells, that is suggestive and not established, and I price
+> it as such. **The pool's deviation from typical does appear to track the native's slightly better
+> than the posterior's median map does**, which is the pointer `s29/STATE.md` flags as untouched by
+> any closure and the one argument for operators that read the pool's own dispersion rather than
+> the posterior's marginals. **Its price is already set by section 8:** whatever this asymmetry is
+> worth, it can only reach the endpoint as a cosine, and every measured cosine is 0.04. It is worth
+> one pre-registered measurement in a future sprint, not a build in this one.
 
 > **Corollary 2c (non-separable objectives buy nothing by being non-separable).** For `f in M \ M0`
 > the same computation runs with `g = grad_D Phi`; the only new freedom is that `g_alpha` may
