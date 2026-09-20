@@ -297,7 +297,8 @@ which is why this is stated as a refuted mechanism and not as a headline.
 
 The charter asked where the 1.44 usable bits went and where the other 5.56 were spent. The question
 is not well-posed: **the 500 deposited backbones carry the structure and the index only names it**,
-so bits are not conserved across an index. Seven index bits move the ORACLE ladder 4.108 → 1.898 Å,
+so bits are not conserved across an index. Seven index bits move the ORACLE ladder 4.108 → 1.898 Å
+**on the CA point cloud**,
 which through the displacement bound is ρ = 0.887.
 
 **The multiplier that follows is a free parameter and this sprint corrected it downward, so it is
@@ -341,6 +342,7 @@ radial share of the Gram trace                        0.5798  [+0.545, +0.603]
 cos(dominant principal direction, radial)             0.947 mean / 0.984 median
 radial share of lambda_1 (ratio of trace shares, NOT a projection)   91.2%
 stable rank with radial removed                       1.705 -> 2.642
+   (ALL of the above are PAIR-DISTANCE space; coordinate space is 3.4-3.6 -- A.1)
 
 cos(direction to the native, radial), all targets    -0.0675
 cos(direction to the native, radial), FAIL18         -0.2524
@@ -376,7 +378,8 @@ no projection, no averaging, no contraction — the verdict splits:
   removed, comes out **sharper**.
 - The leave-fold-out combination prefers the near-native rung to production on **93.0%** of held-out
   targets — and prefers an **arbitrary pool member on 100%** and a **3 Å rung on 100%**. Margin
-  **−0.070 [−0.110, −0.028]**. *It learned "is this production?", not "is this near-native".*
+  **−0.070 [−0.110, −0.028]** — *1.04× MDE at 4/5 folds, so it only just clears its own bar.*
+  *It learned "is this production?", not "is this near-native".*
 
 **And the mechanism makes the null a theorem on this instrument.** Held-out R² at matched capacity:
 local features give **ΔR² −0.089**, global features **+0.600** — and the local block is
@@ -384,7 +387,8 @@ local features give **ΔR² −0.089**, global features **+0.600** — and the l
 beyond knowing the perturbation budget. **A sum of per-residue terms cannot see a lever arm.**
 
 Resolution, which bounds what any support rule could ever select on: DIS concordance inside the near
-band is **0.520** at |Δ| = 0–0.25 Å, reaching 0.822 only above 4 Å. **Coarse triage and nothing
+band is **0.520** at |Δ| = 0–0.25 Å; concordance reaches 0.822 only above 4 Å, **and that figure
+comes from the all-pairs table rather than the near band**. **Coarse triage and nothing
 else.**
 
 ### 4.5 Generation is closed jointly with the readout
@@ -399,7 +403,7 @@ set mean improved purely by concentration is worth **zero by algebra**, and the 
 the endpoint, which is non-identifiable from pool data at any K.
 
 The extreme case settles it: the most concentrated source ever built here (spread 0.568 against the
-pool's 1.577) is **the worst endpoint in the record, 3.789**. **For an averaging terminal, spread is
+pool's 1.577) is **the worst endpoint in the record, 3.789 on the built chain**. **For an averaging terminal, spread is
 the raw material, not a defect.**
 
 ---
