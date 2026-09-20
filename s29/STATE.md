@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:09 Pacific.
+Last update: 2026-09-20 00:14 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -251,6 +251,43 @@ already acted on, and replaced it with a sharper, cheaper, falsifiable claim.
 4. Lane D's own two defects, recorded because the sprint's standard applies to the Adversary:
    an all-NaN cosine axis crashed the renderer after a completed 126-target run, and a
    partially defined cosine was printed as a measurement. Both fixed with regression tests.
+
+
+## Integration note 7 (2026-09-20 00:14, after S29-L13): THE CONDITION FOR NON-CLASSICALITY, AND A RECORD CORRECTION
+1. RECORD CORRECTION (emphasis, not fact). The project's "set-equality theorem" (the CVaR tail's
+   support is a prefix of the energy order; S25, S28-L21) is equation (12) of Barkoutsos et al.,
+   Quantum 4:256 (2020): CVaR is DEFINED on sorted samples and the paper scopes itself to
+   diagonal Hamiltonians. It is a definition restated, not a discovery. Every future citation of
+   it in this project, including the S28 report and its published page, cites Barkoutsos eq (12)
+   beside it. The S28 measurement (the identity holds to 1e-13 at every J on a NON-diagonal H,
+   where the definition alone does not guarantee it) stands as a measurement.
+2. THE CONDITION FOR A GENUINELY NON-CLASSICAL FORMULATION, which is the charter's "real quantum
+   result" target stated precisely for the first time in this project: BOTH
+   (C1) the Hamiltonian's terms do not commute, so the eigenbasis is not the computational
+        basis (S28's hopping H satisfied this, with a degenerate off-diagonal), AND
+   (C2) the prepared object is NOT an eigenvector, so an eigensolver is not the classical
+        counterpart either -- satisfied by a thermal/Gibbs state, by a state whose role is to be
+        a sampling distribution, or by a free-energy objective.
+   THE PROJECT HAS NEVER SATISFIED BOTH. Everything diagonal is a sort; S28's non-diagonal arm
+   targeted a ground state, so its counterpart was an eigensolver, and it tied one. Caveat from
+   lane L: for a DIAGONAL H the Gibbs state is a classical Boltzmann distribution over
+   candidates and S21 enumerated the latent exhaustively on 75/126, so (C2) alone buys nothing.
+   The untested cell is (C1) AND (C2) together: a free-energy / Gibbs objective over a
+   NON-COMMUTING Hamiltonian. Lane T is asked whether that cell can contain anything measurable
+   here before any lane builds it.
+3. A CANDIDATE MECHANISM FOR THE SPRINT'S CENTRAL PUZZLE, from the same paper and new to this
+   record: for any theta* whose state has overlap rho with the best candidate, theta* is a
+   GLOBAL minimum of CVaR_alpha for alpha <= rho. The global-minimiser set is therefore
+   {theta : overlap with the best candidate >= alpha}: large and flat, and the objective is
+   indifferent to exactly the freedom an averaging readout consumes (which OTHER candidates
+   populate the tail). That is a candidate explanation for "the optimiser reaches the optimum
+   on 126/126 and the emitted structure does not move" (S28-L18b, S28-L26b). Lane T checks it;
+   lane D adds the clause that any accuracy change attributed to CVaR optimisation must be shown
+   not to be a tie-break inside that flat set.
+4. THE WARNING WE INHERIT: Cerezo et al., Nat Commun 16:7907 (2025), argue that provable absence
+   of barren plateaus often implies classical simulability. The project's one genuine quantum
+   positive (the optimiser trains, no plateau at any measured width) sits in that regime. It is
+   not retracted; it is scoped, and rule 9 already forbids the reading that would be wrong.
 
 ## Closed in S29
 - The "better-conditioned coupling matrix" family (S29-L11, derived): gradient visibility needs
