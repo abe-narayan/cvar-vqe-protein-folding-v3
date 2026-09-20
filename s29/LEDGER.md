@@ -3036,3 +3036,57 @@ theorem, a classification, three design statements and a priced judgement.
 Multiplicity: 0 endpoint comparisons. The only arithmetic is the price table, labelled as
 arithmetic on lane T's formula and cross-checked against T's published 2.98 A.
 Artefacts: `s29/lit/L_8_conditioning.md`; `s29/lit/L_INDEX.md`.
+
+## S29-L32 -- THE FREE-ENERGY-GAP BLOCK LANDED ON THE 12 TARGETS' OWN REGISTERS: THE RANK-LADDER PROFILE REPRODUCES TO THREE DECIMALS (E IS THE SAME LADDER ON EVERY TARGET, CONFIRMED FROM A THIRD DIRECTION) AND THE DEPLOYED CIRCUIT CLOSES ONLY 11.1% OF THE FREE-ENERGY GAP TO ITS OWN EXACT OPTIMUM AT THE DEPLOYED CELL -- 30% MEASURED IN m -- AGAINST THE 78 TO 89% S25 MEASURED AT alpha = 1; AND THE THEORY SUMMARY FOR THE REPORT IS POSTED (2026-09-20 01:22, T)
+
+Two items, both consolidation rather than new derivation, as the coordinator asked.
+
+1. THE MEASUREMENT (job `s26/jobs_done/s29T_reach.json`, queued behind the launch cap since 00:21
+and landed at 01:09; `s29/results/s29_T_reach.json :: fgap`, 12 targets = S27 T11's set, each on
+its OWN E including the padding states, native-free). Exact simplex optimum of
+F = CVaR_0.18 - 0.5 H by the Sion + Rockafellar-Uryasev construction of Q1.2, against the uniform
+state and against the trained circuit's F as recorded in `s27/results/s28_B_rows.jsonl`:
+
+    F_opt -4.7221   F_uniform -4.5320   F_circuit -4.5531
+    m      28.9              93.0               73.7
+    PR    339.1                 -              398.2      prefix_opt 28.8   H_opt 8.816 bits
+
+(a) The rank-ladder values I quoted in Q1.2 (F* -4.7237, m* 29, PR 342.3, prefix 29) reproduce on
+the real per-target registers to three decimals. That is S25 L17's "E is the same ladder on every
+target" confirmed from a third direction -- after my ladder computation and lane D's independent
+reimplementation (S29-L26: t* -1.5329, F* -4.7221, m* 30, PR 340.4, which the per-target run now
+matches exactly).
+(b) THE LESS FLATTERING HALF, AND IT IS MINE TO QUOTE: **the deployed circuit closes 11.1% of the
+free-energy gap between the uniform state and its own exact optimum** at the deployed cell. S25
+measured 78 to 89% at alpha = 1 on the n = 7 register, which is a different cell -- the tail
+constraint is what the optimiser struggles with, not the entropy term. In m the same displacement
+is 30% (93.0 -> 73.7 of 93.0 -> 28.9). My Q1.2 phrase "closing about a third" was the m figure;
+both are now in the file with the F figure named as the less flattering one. Nothing in the Q1
+reduction changes: the stage is still a target-independent rank-weight profile whose only endpoint
+channel is m, and being 11% of the way to its own optimum only makes the displacement smaller.
+
+2. `s29/THEORY_SUMMARY.md` IS POSTED (commit cb050410, updated at c341ec78 and this commit): three
+pages for a reader who has not opened THEORY.md, every claim carrying its ledger number -- the
+bound with its four assumptions and B2 named load-bearing; theorem 2 with a status table
+(the identity, the central claim, 2a and 2c STAND; 2b WITHDRAWN; the shrink warning stands and is
+mechanical); the stable-rank law with its three no-free-parameter checks and the design rule; the
+Q1 reduction with M6 corrected to an ENDPOINT-equivalence control; the tail-then-aggregate lift
+with lane B's S29-L25 confirming both clauses I registered (non-prefix on 11/12 pairs and 12/12 at
+m = 5, and the escape buying nothing); and a closing half-page ranking what would have to be true
+for the bound to fall, with the native's 11-to-14-number separation profile (ORACLE 2.299 vs 3.048,
+deployable 3.163) as the lowest-dimensional named instance.
+
+STILL IN FLIGHT AND NOT QUOTED ANYWHERE: my own post-mortem of the withdrawn corollary 2b
+(`s29/s29_T_beta_unsat.py`, job `s29T_beta_unsat`, queued 16 minutes at this writing behind the
+CPU threshold). Its design is registered here before its result: the beta law recomputed on the
+UNSATURATED pairs only (|2F-1| < 0.5) with the SATURATED subset as the matched control, on all
+three tau definitions, using lane D's own implementation for every shared piece so that the author
+of the failed claim does not re-derive a favourable variant. If the sign agreement clears the
+coin-toss CI on the unsaturated half and not on the saturated half, (i) the linearisation is the
+cause and corollary 2b can be restated with that scope; if it clears on neither, (ii) (A4) is, and
+the informative reading is cov(a,n) > cov(b,n) -- the POOL tracking the native better than the
+POSTERIOR's median map does. THE ARTEFACT ON DISK IS A 6-TARGET SMOKE TEST UNTIL THE RUN LANDS and
+is labelled so in STATUS and in the summary's one provisional figure (the 53% saturated share).
+Multiplicity: 0 endpoint comparisons; the fgap block is a property measurement, not a contrast.
+Artefacts: `s29/results/s29_T_reach.json` (`dla`, `subset_cut_rank`, `entropy`, `fgap`);
+`s26/jobs_done/s29T_reach.json`; `s29/THEORY.md` Q1.2; `s29/THEORY_SUMMARY.md`.
