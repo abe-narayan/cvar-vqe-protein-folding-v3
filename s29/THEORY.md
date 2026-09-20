@@ -539,8 +539,8 @@ of `E`, `alpha` and `T` only. Hence:
 > which candidate the distogram put at which rank -- i.e. no information the classical sort does
 > not already have. S25 L17's "two trained states in the whole deployment" is this, derived.
 
-The  map, computed exactly from (Q1.3) on the  ladder
-():
+The `(alpha, T) -> m` map, computed exactly from (Q1.3) on the `n = 9` ladder
+(`s29/results/s29_T_reach.json :: entropy`):
 
     (alpha, T)   (0.10,0.5) (0.18,0.25) (0.18,0.5) (0.25,0.3) (0.18,1.0) (0.40,0.5) (1.0,0.3)
     m at the optimum     17        20         29         31         43         71       512
