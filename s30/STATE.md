@@ -336,6 +336,87 @@ sprint, a published report and a published artifact because everyone downstream 
 quoted the **verdict string**. A verdict string is a claim about a computation and is worth exactly
 what reading the computation is worth.
 
+
+## SYNTHESIS (2026-09-20 13:07): SIX LANES CONVERGED ON ONE PLACE, AND IT IS TWO QUBITS WIDE
+
+Everything closed today points at the same intervention, reached independently. Stating it as a
+hypothesis with its falsifier, not as a result.
+
+### THE CHAIN
+
+1. **The tail is selection-limited, not pool-limited** (F). ORACLE best of the FAIL18 pools is
+   **2.2842 Å** — already under the 3.00 cap. 13 of 18 have a member under 3.00.
+2. **The score has no ranking skill there.** In-pool ρ is **+0.1066 on the tail (fold CI includes
+   zero)** against **+0.6446 on the 108** (F).
+3. **And its filter is actively worse than random on the tail** — 0W/18L, median per-target
+   percentile 0.99999, random-18 null p = 0 (F).
+4. **The tail's answer is OUTSIDE the register.** On FAIL18 the ORACLE best candidate sits at rank
+   **128–500**, beyond the top-128 window the quantum stage sees (`core/pipeline.py:758`).
+   Widening 128 → 512 is worth **−1.9004 Å on FAIL18** and −0.1907 on the 108; difference of
+   stratum means −1.7097, SE 0.2207, **2.77× MDE** (Q).
+5. **Widening helps a SELECTING readout and hurts an AVERAGING one**, and neither lane's number
+   says this alone. Lane F has the ORACLE *set mean* worsening with width on the 108 (3.116 →
+   4.201) and improving on FAIL18 (6.159 → 5.755); lane Q has the *argmin* improving sharply with
+   width on FAIL18. **The pair is the statement.**
+6. **And the argmin is the cheap operator, not the expensive one.** Lane Q priced support and
+   weights in the readout's own currency: the argmin over top-2^B **dominates the sparse weighted
+   family at every budget** (B=9: 1.7108 vs 2.4375). On the built chain, 2-of-75 with free
+   continuous weights gives 2.1683 Å at 11.4+ bits; **argmin over top-128 gives 2.1435 Å at 7.0
+   bits and no weight channel.** S29's last unclosed ladder class is closed **by price**, not by
+   ceiling — the 1.4315 Å figure was never a route.
+
+### SO THE CANDIDATE MECHANISM IS
+
+> **A selecting readout over a wider register, aimed at the tail.** Two qubits take 128 → 512.
+> It is quantum-relevant, it is in the stratum the opening arithmetic says holds the prize, and
+> every closed direction today points away from the alternatives.
+
+### WHAT MUST BE TRUE FOR IT TO PAY, AND IT IS THE HARD PART
+
+**All of step 4–5 is ORACLE.** It says the candidate *is there*, not that anything can find it.
+The mechanism needs a **native-free selector** that works on hard pools — and lane F measured that
+the deployed score has no in-pool skill there at all. So this does not escape the recognition
+problem; **it relocates it and prices it.** The register question is cheap and settled; the
+selector question is lane R's and lane D's and is open.
+
+Stated as the falsifier: *if no native-free rule can order the top-512 on FAIL18 better than the
+top-128, widening buys nothing and the mechanism is dead.*
+
+### WHAT IS CLOSED, AND BY WHAT
+
+| direction | closed by | how |
+|---|---|---|
+| sparse weighted readout (L6) | Q, S30-L11 | **by price** — argmin dominates at every budget |
+| second-moment / quadric escape (L5) | Q **and** T, independently | +0.086 Å (T, 2.95× MDE) and +0.2059 (Q, 1.81×); the structured `disp2` form scores 3.3585 vs production 3.0483 |
+| subset objective through an averaging readout | T, S30-L9 | the tail is **always** a prefix — of the order induced by ∇V at the optimum; S29 §4.3 and §4.5 are incompatible |
+| generative structural spaces | X, S30-L10 | closed **jointly with the readout**: at ρ≈0 the endpoint is near-unit-slope in the set **mean**, and width buys ceiling while costing mean |
+| torsion/configuration encodings | T | arithmetically infeasible — 48 bits needed against 7 deployed |
+| common-mode correction from pool data | L, S30-L7 | **non-identifiable**: the likelihood depends on (t, μ) only through t+μ at any K; m_eff = **1.4** of 75 |
+| E1 (prior on μ's form) | L, S30-L13 | three independent ways |
+| E2 (constraint repair) | L, S30-L13 | field-scale result: 98% of clashes removed costs **+0.08 Å**; works here only because 2/n is 15.4% at n=13 |
+
+### CORRECTIONS TO MY OWN INSTRUCTIONS, BOTH FROM LANE X
+
+- **The gate I handed lane X — "measure the ceiling first, always" — is an ANTI-PREDICTOR.**
+  Scored on predicting the direction the endpoint moves: **1 of 10** cells correct, against 5/6 for
+  the set-mean law, mean |residual| 0.333 Å vs 0.0153 — **22×**. Enlarging the source improves the
+  ORACLE ceiling monotonically by 0.846 Å while the endpoint gets monotonically 0.081 Å **worse**.
+  The replacement, and it is usable: **admit G against P iff Δ(set mean) < −(0.32…0.37)·Δ(set
+  best)** — at fixed ceiling the mean is worth **2.7–3.1×** what the best is worth.
+- **"Candidate generation closed on five instruments" is supported by one.** Four of the five
+  measured only the endpoint and carry no oracle field at all. Recomputed: an untrained
+  per-residue-type Ramachandran sampler **beats the entire K=500 pool's best member on 45 of 126
+  targets** and the endpoint still worsens. The verdict should read *"no achievable source produces
+  candidates the shipped score can convert into Ångströms"*, not *"no alternative source contains
+  better structures"* — which is false and has been used to rule proposals out.
+
+### THE SCOPE CAVEAT ON A NUMBER I HAVE BEEN QUOTING
+
+Stable rank **1.86 is the PAIR-DISTANCE feature space**. In **coordinate** space it is **3.619**
+(k90 = 11.2 directions, not 5.6) — above lane T's own 2.0 threshold. Sparse/weighted readouts and
+second-moment constructions act on **coordinates**. I wrote the number without a space attached in
+note 4; both values must always carry one.
+
 ## WHAT I AM TREATING AS BINDING FROM S29 (until a lane breaks it)
 
 - Every native-free operator is a displacement; its whole value is one cosine. 3.00 Å needs
