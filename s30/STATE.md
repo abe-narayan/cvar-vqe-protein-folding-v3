@@ -125,6 +125,69 @@ or shows the escape must come from outside the pool. I have asked for the quanti
 invisible *from within the pool* is very different from invisible *to any method*, and the
 difference is where the sprint's remaining hope lives.
 
+
+## NOTE 3 (2026-09-20 12:46, lane F, S30-L2): **THE TAIL IS SELECTION-LIMITED, AND THE DAMAGE IS IN ONE STAGE**
+
+The sprint's first real mechanism, and it redirects the lane.
+
+**The tail is NOT pool-limited.** The ORACLE best member of the FAIL18 pools is **2.2842 Å**
+(chain 2.2845) -- already below the 3.00 Å cap the opening counterfactual asks for. **13 of the 18
+have an ORACLE pool member under 3.00 Å**, and the worst tail pool bottoms out at 3.54. The
+material to cap the tail is already inside the candidate sets we hand the pipeline. The
+retrieval/generation branch of lane F is closed on its own evidence.
+
+**The gap decomposes, and one stage owns the tail** (ORACLE, point cloud):
+
+```
+                          FAIL18    other 108
+G_retr  pool - universe    0.644      0.356
+G_filt  top75 - pool       2.393      0.296     <- 67.5% of the tail gap vs 30.5%
+G_read  prod - top75       1.155      0.673
+G_tot                      3.548      0.969
+```
+
+**Retrieval is exonerated at every stratum.** BLOSUM's 500 against a random 500 of the same
+universe is NOT MEASURED everywhere, and most pointedly on FAIL18 (0.01× its own MDE). This
+**revises the mechanism recorded in project memory** as `sequence-conditioning-hurts-the-failures`:
+the harm is the distogram **filter**, not the retrieval corpus.
+
+**The filter is worse than chance on every single tail target.** Score's top-75 against a random 75
+of the same pool: other-108 NOT MEASURED (−0.027, 0.24×); **FAIL18 +1.7674 at 3.87× MDE, 4/4 folds,
+0W/18L**, median per-target percentile **0.99999** -- on the median tail target essentially every
+random 75-subset of the same pool contains a better member than the score's 75 does. Random-18
+null, 20,000 draws: **p = 0**.
+
+**Why it reaches the endpoint.** The terminal operator consumes the set mean, so best-member is not
+an endpoint story by itself. On the set mean the filter buys **−1.0855 on the 108** (5.11× MDE,
+5/5 folds, 100W/8L) and that benefit **vanishes on the tail** (+0.1947, 0.39× -- NOT MEASURED, and
+lane F does not claim degradation). Through the operator's 1.16 coefficient a vanished −1.09 is
+~+1.26 Å of emitted RMSD -- the right order for the record's blind-beats-shipped gap on FAIL18
+(5.425 vs 6.019).
+
+**CIRCULARITY, declared and calibrated by lane F before anyone asked.** FAIL18 is defined by
+production, which is the filtered set's average, so a bad filter mechanically lands a target in
+FAIL18. Two filter-independent tails through the same null: worst-18 by pool mean **+0.6708**
+(p = 0.0148), worst-18 by ORACLE best-in-pool **+0.6320** (p = 0.0300). Both clear; FAIL18's +1.77
+is inflated **~2.7×** by its own definition and the smaller figures are quoted beside it.
+**The load-bearing, non-circular corroboration:** 44/126 targets have a filter worse than 90% of
+random 75-subsets; **26 of them are outside FAIL18**, and their production mean is 3.1360 against
+2.4095 for the other 82.
+
+**WHAT I HAVE ASKED FOR NEXT.** (1) Price the deployable no-filter/soften-filter family on the
+**endpoint** -- the only route-(b) member on the table, expected to lose net because the 108's
+−1.09 cannot be given up. (2) **The variable is filter WIDTH, not filter on/off** -- if the 108's
+benefit saturates early in k while the tail harm grows with aggressiveness, a wider filter keeps
+the benefit and sheds the harm **with no detection at all**. Production's top-75 is *both* filter
+and averaging set, so these must be separated: filter to k, average over m ≤ k. S29's flat m-ladder
+(−0.00047 Å per unit) is a property of the **averaging** width and says nothing about the filter
+width. (3) Then open the score: *what is the distogram confidently wrong about on those pools* --
+not a ninth router, which the charter closes explicitly.
+
+**Two joins to lane L.** If hard pools differ in Rg dispersion, a scale-loaded score behaves
+differently on them for **algebraic** reasons (note 2). And if common-mode error is unidentifiable
+from within the pool, a score computed over the pool is structurally blind to the shared component
+-- which would say why confident wrongness concentrates where it does.
+
 ## WHAT I AM TREATING AS BINDING FROM S29 (until a lane breaks it)
 
 - Every native-free operator is a displacement; its whole value is one cosine. 3.00 Å needs
