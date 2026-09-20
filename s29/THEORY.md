@@ -137,13 +137,42 @@ Substituting (2.6) and (A2) into (2.4), using `r = n - a` to first order,
 > cosine whose *size* is set by the native's deviation from typical. The only quantity it can
 > extract is the disagreement between two estimates of the typical map.
 >
-> **Corollary 2b (the sign).** `E[cos] < 0` iff `beta > 1`: the objective points away from the
-> native exactly when the posterior's median map deviates from typical *more* than a real structure
-> can. This is expected here, because `m` is an unconstrained per-pair object and is generally not
-> a realisable distance matrix, while `c` is an average of real windows. The measured sign
-> (`-0.034`, and `-0.143` on FAIL18 where the posterior is worst, S28-L23b) is the sign of
-> `-(beta - 1)`.
+> **Corollary 2b (the sign). WITHDRAWN 2026-09-20 by S29-L26; see 2.3b below.** As registered it
+> said `E[cos] < 0` iff `beta > 1`, with the measured `-0.034` being the sign of `-(beta - 1)`.
+> Lane D measured `beta` on all 126 targets under four definitions and it is **below 1** (median
+> 0.756 / 0.753 / 0.569 / 0.69), above 1 on 10 to 13%, with sign agreement 48 to 50% inside a
+> coin-toss CI. Both of my own falsifying conditions fired. The corollary is dead as a predictive
+> law on this instrument; **Theorem 2's central result -- no term in `n`, hence a second-order
+> expected cosine -- does not depend on it and is untouched**, and so is the bound of section 8,
+> which rests on the magnitude and not on the sign.
 >
+> **2.3b WHAT THE MEASURED `beta < 1` MEANS, AND WHERE MY SECOND-ORDER BOOKKEEPING FAILED.**
+> `beta = cov(a,b)/var(a) < 1` says production's deviation from typical carries a component the
+> posterior's median map does not -- which is simply the pool's idiosyncratic 32% (S23 L9) showing
+> up in `a` and not in `b`. Substituted into (2.7) that predicts a *positive* expected cosine,
+> and the measurement is negative, so a term I dropped is larger than the term I kept. Two
+> candidates, both measurable and neither rhetorical:
+> (i) **THE LINEARISATION (A2) IS THE WEAK ONE.** `phi' = 2F - 1` saturates at `+-1`, and at
+> production it is saturated on a share that varies enormously by target: `|2F-1| > 0.9` on
+> **3.8% of pairs for 1A13, 5.5% for 2BFI and 53.8% for 9KAR** (mean `|phi'|` 0.44 / 0.44 / 0.76;
+> my own measurement, `s12.instrument.distogram` + the DIS top-75 average). Where `phi'` is
+> saturated the per-pair coefficient is `w sign(a - b)`, not `w kappa (a - b)`, and the expectation
+> is no longer a function of the regression slope at all -- it depends on the correlation between
+> `sign(a-b)` and `a`, which `beta` does not measure. The saturation is worst on a FAIL18 target,
+> which is where the cosine is most negative (-0.143, S28-L23b).
+> (ii) **(A4) IS AN IDEALISATION AND THE DROPPED TERMS ARE NOT ZERO.** In full,
+> `E[(a-b)(a-n)] = var(a) - cov(a,b) - cov(a,n) + cov(b,n)`; (A4) sets the last two to zero. The
+> system does hold a weak `n` channel -- the whole sequence conditioning is worth 0.776 A (S12
+> `coord_null`) -- so the honest reading of the measured sign is `cov(a,n) - cov(b,n) > var(a) -
+> cov(a,b)`: the POOL's deviation tracks the native's better than the POSTERIOR's does. That is
+> consistent with the pool being made of real structures and the median map not being one, and it
+> is second order either way.
+> **The cheap follow-up that would localise it (lane D, minutes, on the artefacts it already
+> built):** recompute the `beta` law on the UNSATURATED pairs only (`|2F-1| < 0.5`). If the sign
+> agreement rises above the coin-toss CI there, (i) is the mechanism and the corollary is a
+> statement about the risk's linear regime; if it does not, (ii) is, and the interesting half is
+> that `cov(a,n) > cov(b,n)` -- a first-order channel, already priced at 0.776 A in total.
+
 > **Corollary 2c (non-separable objectives buy nothing by being non-separable).** For `f in M \ M0`
 > the same computation runs with `g = grad_D Phi`; the only new freedom is that `g_alpha` may
 > depend on the whole map. By (A4) that freedom cannot introduce a term in `n`, and by C2 the part
@@ -222,6 +251,9 @@ Three clauses, all on existing artefacts, all ORACLE diagnostics:
    `beta > 1` on at least 2/3 of targets, and `sign(cos_DIS) = -sign(beta - 1)` on at least 70% of
    targets**, with the exceptions concentrated where `|beta - 1|` is smallest. Falsified if `beta`
    has median <= 1, or if the sign agreement is inside a coin-toss CI.
+   **[FIRED, BOTH LIMBS, 2026-09-20: S29-L26 measured beta median 0.756 / 0.753 / 0.569 / 0.69
+   under four definitions, above 1 on 10 to 13%, sign agreement 48 to 50% against a coin-toss CI
+   of [41, 59], with the exceptions in the opposite third. Corollary 2b is withdrawn; see 2.3b.]**
 3. **The shrink experiment (the warning).** Re-score the shipped objective with the target map
    shrunk to `tau + s(m - tau)` for `s in {1.0, 0.75, 0.5}` and re-read the meter's cosine at
    production. **Prediction: the cosine rises monotonically with decreasing `s` and crosses zero
@@ -585,10 +617,18 @@ and the `m`-ladder has been priced three times (S22's ladder, S27 T5, S28's `s28
 * **(M6) THE FIXED-PROFILE CONTROL, which is stronger than "a classical equivalent".** Replace the
   whole quantum stage by the target-independent weight profile `p*(alpha, T)` of (Q1.3) applied to
   the target's own rank order -- no circuit, no optimiser, no per-target computation at all.
-  **Prediction: the deployed arm's emitted structure equals this control to within the built-chain
-  input floor (S28-L43) on at least 120 of 126 targets.** Any new formulation that claims the
-  quantum stage contributes something must break this control; if it does not, the stage is a
-  lookup table indexed by rank. Minutes to run, and it needs no VQE.
+  **My registered prediction -- "equals this control to within the built-chain input floor on at
+  least 120 of 126" -- is FALSE at the structure level and was measured so (S29-L26): exact set
+  equality on 3 to 10 targets, agreement within the floor on 43 of 126 and within 0.02 A on 77,
+  worst target 0.58 A apart. It holds at the ENDPOINT: the contrast is -0.0097 A at 0.43x MDE and
+  does not fire.** I accept the correction and restate the clause: **M6 is an ENDPOINT-equivalence
+  control, not a bit-equivalence one.** The deployed stage is not bit-reproducible by a fixed
+  profile -- per-target `m` and the weights genuinely differ -- but it is statistically
+  indistinguishable from one, which is S25 L15's readout slack appearing a third time: the readout
+  cannot resolve a distributional difference of 45% of the mass, and it cannot resolve this one
+  either. Any new formulation that claims the quantum stage contributes something must break M6 at
+  the endpoint; if it does not, the stage is an expensive way to reach a lookup table indexed by
+  rank. Minutes to run, and it needs no VQE.
 
 ---
 
@@ -771,8 +811,11 @@ narrow**. In (1.1) the posterior enters twice, and the two entries behave comple
   multiplies the whole metric by a constant and changes no minimiser at all.** Only the
   *heterogeneity* of the miscalibration matters, and S25 L1 measured it: `z_sd` is 1.23 at
   separations 2-2, 2.05 at 4-5, 1.87 at 6-8, 1.28 at 9-15. Relative to a calibrated posterior the
-  shipped objective therefore over-weights **mid-range pairs by about `(2.05/1.25)^2 = 2.7x`** and
-  under-weights the two ends.
+  shipped objective therefore over-weights **mid-range pairs by `(2.05/1.25)^2 = 2.7x` in the
+  linear regime of the risk and by `(2.05/1.25) = 1.6x` where `phi'` is saturated** (only `w`
+  survives there, not `w kappa`), so the true factor is between 1.6 and 2.7 and is target-
+  dependent: the saturated share runs 3.8% to 53.8% across three targets (2.3b). Either way it
+  over-weights the middle and under-weights the two ends.
 
 > **Correction to the standing programme (`s27/REPORT_S28.md` section 12, item 2: "calibrate the 2x
 > over-confident posterior leave-fold-out and re-read the meter").** Calibration cannot move the
@@ -1150,8 +1193,15 @@ The conversion used in row 4, and it is the useful one: if a field has per-targe
 
 Lane O's ORACLE one-global-sign ceiling for PC1 (-0.214 / -0.246 A on 3.0483) inverts to
 `|rho| = 0.37`; its measured sign accuracy is 52%, i.e. chance; and its leave-fold-out arm is
-**+0.0071 A worse** than production. (8.4) reproduces that triple exactly, which is the bound's
-one end-to-end check against a measurement made after it was derived.
+**+0.0071 A worse** than production. (8.4) reproduces that triple exactly.
+**PROVENANCE CORRECTION (2026-09-20, mine; lane D certified it from git and rule 27 applies to me
+too).** An earlier draft of this paragraph called that "a check against a measurement made after
+it was derived". It is not: `2q-1` first enters this file at commit 53c42bd4, 00:38:49, which is
+7.5 minutes AFTER lane O posted S29-L21 at 00:31:19, and the `|rho| = 0.37` in the row above is
+*inverted from* lane O's -0.214 / -0.246, so lane O's numbers are an INPUT here and cannot be a
+prediction of mine. The arithmetic is elementary and the agreement is real, but it is a POST HOC
+consistency reading and is labelled so. The one provenance claim of mine that does hold is the
+rung-8 prediction (S29-L11 prediction 4, posted 00:06 with its failure threshold, measured 00:30).
 
 ### 8.3 The bound, assembled
 
