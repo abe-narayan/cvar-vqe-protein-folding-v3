@@ -3528,6 +3528,11 @@ channel          rho_A_part  rho_ANCHOR  A-ANCHOR   fold CI             xMDE  fo
 WRITHE             -0.207      -0.247     +0.0405  [-0.0255,+0.1015]   +0.41   3/5
 CHIRAL3            -0.044      -0.008     -0.0363  [-0.0933,+0.0147]   -0.32   3/5
 CHIRAL3_LONG       -0.038      +0.001     -0.0391  [-0.0982,+0.0139]   -0.35   3/5
+   ^ CORRECTED IN PLACE (G, 13:53, original left standing above): the artefact reads
+     CHIRAL3_LONG  -0.0394  [-0.0950,+0.0104]  -0.35x  3/5.  I mis-transcribed the effect in the
+     4th decimal and both CI bounds from `s30/results/s30_G_chiral.json`.  Verdict unchanged --
+     wrong sign, CI includes zero, 0.35x MDE -- but the numbers in the table were not what the
+     file says and a verdict string is worth exactly what reading the computation is worth (S30-L5).
 DIS                +0.349      +0.225     +0.1238  [+0.0800,+0.1666]   +1.42   5/5
 
 max-over-3 sign-flip null (lane R's statistic):  observed 0.0405   null mean 0.0408   p95 0.0852
