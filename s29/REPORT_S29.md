@@ -344,11 +344,22 @@ cloud. First time this stage has been characterised as anything but a fixed tax.
 
 ### 4.6 The process held
 
-Two verification passes were run against the sprint's own record before writing this report:
-**S29-L46** — all 160 artefact paths cited in the ledger resolve — and **S29-L48** — every headline
-number recomputed from its artefact rather than copied from the entry that reported it. Lane B's and
-lane O's figures reproduced to every digit quoted. The second pass caught an error of mine that
-several re-readings of the prose had not.
+Two verification passes were run against the sprint's own record before writing this report, and
+both are committed as re-runnable tools rather than described:
+
+- **`s29/s29_audit_paths.py` (S29-L46)** — an existence check on every artefact path the ledger
+  cites. **205 of 217 resolve.** The twelve that do not are itemised in the entry's addendum, not
+  rounded away: six are extraction artefacts, two a rename recorded in git history, one an older
+  sprint's file, **two were this audit's own tool cited by its scratchpad name** (an entry about
+  unresolvable citations containing one — corrected), and **one is a genuine dangling citation**,
+  `s7/debias_tune.json`, absent from disk and from git history. That is the fourth such path found
+  this sprint.
+- **`s29/s29_verify_report.py` (S29-L48)** — every headline number recomputed from its artefact
+  rather than copied from the entry that reported it. **49 of 49 match, 0 mismatches.** Lane B's and
+  lane O's figures reproduced to every digit quoted.
+
+The second pass caught an error of mine that several re-readings of the prose had not — a field
+count of 39 against a file holding 21. The first caught one in the very entry that announced it.
 
 **And the test suite was actually run, including the files that are usually deferred.** This report
 was gated on it: the heavy files had been self-policed against a "≤ 3 jobs" condition that was
