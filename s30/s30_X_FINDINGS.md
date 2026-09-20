@@ -301,3 +301,139 @@ which is true, useful, and is not a cap on generation. The same memory's own con
 `s30/results/s30_X_ensemble.json` (126 per-target rows). Sources read, all pre-existing:
 `docs/FINDINGS.md` §S7-6 and §S8-4, `s24/results/c_ladder.json`, `s29/results/s29_X_probe_*.json`,
 `bench_results/baseline_tuning126.json`, `results/monomer_manifest.json`, `pdbs/`, `pdbs_ext/`.
+
+---
+
+# PART II — H-X3: THE COORDINATOR'S QUESTION. THE ANSWER IS **NO**, AND IT IS STRUCTURAL.
+
+Pre-registration `s30/PREREG_S30_X.md` **ADDENDUM 1 @ 539de5a8**, committed before any number
+here existed. Code `s30/s30_X_typicalgood.py`; results `s30/results/s30_X_typicalgood.json`
+(504 cells + 126 pool rows). No VQE or pipeline compute.
+
+> *"Can a generator be built whose TYPICAL member is better than the pool's — Δ(set mean) ≈ −0.2 Å
+> — rather than one whose BEST member is better? Measure the set mean first."*
+
+I measured the set mean first, and measuring it shows **it is two quantities, and only one of them
+converts.** That is a correction to my own S30-L10 as much as an answer.
+
+## II.1 The decomposition, which makes half the question free
+
+For a coordinate-average terminal over m members, the common-mode identity gives, per target:
+
+```
+    set_mean^2  ~=  B^2 + S^2        B = RMSD(set average, native) = THE ENDPOINT
+    endpoint     =  B                S = the set's spread about its own centroid
+```
+
+**A set mean improved purely by CONCENTRATION (S down, B fixed) moves the endpoint by zero, by
+algebra.** Only B converts — and B *is* the endpoint. Measured, n = 126 per row:
+
+```
+  arm            set_mean   B (endpoint)      S    avg gain |  d_set_mean     d_B      d_S   winsBOTH
+  POOL (top-75)    3.5507      3.0483     1.5770    0.5023  |      --         --       --        --
+  T0_helix         3.8663      3.7892     0.5676    0.0771  |   +0.3156   +0.7408  -1.0094    22/126
+  T1_blind         4.0218      3.2435     2.2242    0.7784  |   +0.4712   +0.1951  +0.6472    31/126
+  T2_restype       3.9563      3.2065     2.1267    0.7498  |   +0.4056   +0.1581  +0.5497    36/126
+  T3_pool          3.5916      3.1752     1.4791    0.4164  |   +0.0409   +0.1269  -0.0979    36/126
+```
+
+## II.2 FOUR INDEPENDENT REASONS THE ANSWER IS NO
+
+**(1) Nothing in the record improves the set mean AT ALL.** Every `d_set_mean` is **positive**:
++0.3156 / +0.4712 / +0.4056 / +0.0409, the first three at 5/5 folds with fold CIs excluding zero.
+The best is T3_pool at **+0.0409, SE 0.0254, MDE 0.0712, 0.57x MDE, fold CI [-0.0134, +0.0887],
+4/5 folds — NOT MEASURED**, i.e. a statistical **tie** with the pool, not an improvement. The
+target was −0.2 Å. **The record's best is a tie at zero**, and its endpoint is +0.1269 worse.
+
+**(2) The concentration half is worth zero, as the algebra says.** The averaging gain is a
+function of the spread and essentially nothing else:
+
+```
+    avg_gain  =  0.4143 * S  -  0.1559        r = 0.8854, n = 630
+```
+
+**The terminal's entire value is spread extraction.** A concentrated source hands it nothing to
+extract. And within target, `corr(S, B) = +0.0851` once the degenerate arm is removed (n = 504):
+**concentration is orthogonal to bias.** It neither buys nor costs the endpoint.
+
+> *Honesty on that correlation:* the headline within-target `corr(S, B) = -0.4744` (n = 630) is
+> **driven by T0_helix alone**; excluding it the correlation is +0.0851. My registered prediction
+> was "near zero or negative" and both readings satisfy it, but **the strong negative is an
+> artefact of the zero-information arm and must not be quoted.** The durable number is +0.085.
+
+**(3) The extreme case proves it directly.** `T0_helix` is by a wide margin the most concentrated
+source in the record — **S = 0.5676 against the pool's 1.5770**, i.e. −1.01 Å of spread. It is
+exactly the "typical-good" generator the question asks for, built from a constant alpha-helix plus
+15° jitter. **It is the WORST endpoint in the record: 3.7892 against the pool's 3.0483.** Its
+averaging gain collapses to 0.0771 against the pool's 0.5023 — the terminal had nothing left to
+extract, so the endpoint fell back onto B.
+
+**(4) The cells that do win on both do not transfer.** 125 of 504 cells (**24.80%**) beat the pool
+on set mean *and* endpoint.
+
+> **This essentially TIED its registered bar: 24.80% against 25%, a miss of 0.20 percentage
+> points.** The counting half of the falsifier decided nothing and I will not pretend otherwise.
+
+The verdict rests entirely on the transfer arm, which is unambiguous. Choosing the arm that wins
+on both most often in half the targets and scoring it on the other half:
+
+```
+    split-half transfer of d_B  =  +0.1597   CI95 [+0.0676, +0.2687]     400 splits
+```
+
+**Wrong sign, CI excluding zero.** The selection makes the endpoint **0.16 Å worse**. The
+wins-on-both cells are an order statistic, exactly as `grid-oracles-are-order-statistics` requires
+be checked. **VERDICT: H-X3 STANDS.**
+
+## II.3 WHY THIS IS A CEILING AND NOT A MISS
+
+Endpoint = B = the shared bias. So *"improve the typical member"* decomposes into
+
+- a **spread** half — free, worth **0** at the endpoint (r = 0.885 that the terminal already
+  extracts it; orthogonal to B at r = +0.085), and
+- a **bias** half — worth everything, but it **is** the endpoint.
+
+Lane L's S30-L7 closes the second half structurally: under "member = native + shared bias + i.i.d.
+noise" the likelihood depends on `(t, mu)` only through `t + mu`, so **mu is non-identifiable at
+any K**, and candidates from *different sources* carry provenance cosine **0.9432** against a
+**0.9330** within-source control — **mu is a property of the prior candidates are scored against,
+not of where they come from.** So the only half of "typical-good" that pays is the half no source
+change can move.
+
+**Lane L's falsifier is applied and already failed, before any endpoint run** (its own rule:
+require provenance cosine < 0.9330 first). S24's quality-matched retrieval-free source measures
+**0.9432 at n = 126** (`s24/results/qmatch.json`, S24 L3, independently replicated by S24 lane E).
+No new endpoint run was spent.
+
+## II.4 THE PREMISE, INVERTED
+
+The question came with a premise: *"every sampler in the record was built to be diverse, not
+typical-good. Nobody has built one to be typical-good."*
+
+**Somebody did, and diversity is the correct design.** `T0_helix` is a typical-good generator — the
+most concentrated source in the record — and it is the worst thing in it. Meanwhile the arms with
+the *largest* spread have the largest averaging gains (T1 S 2.224 -> gain 0.778; T2 S 2.127 ->
+0.750) and the record's best generated endpoints. **For an averaging terminal, spread is the raw
+material, not a defect. "Typical-good" is the wrong design goal, and the samplers were not built
+wrong.**
+
+## II.5 CORRECTION TO MY OWN S30-L10 (rule 15 — original wording stands above)
+
+S30-L10's admission condition reads `Δ(set mean) < −(0.32…0.37)·Δ(set best)`. **It treats
+Δ(set mean) as one channel when it is two, and only the bias channel converts.** Amended:
+
+> **ADMIT G against P iff Δ(bias B) + 0.298·Δ(set best) < 0.** Δ(set mean) is admissible as a
+> proxy **only** to the extent it reflects ΔB; the spread component of any set-mean improvement
+> converts at ≈ 0 (r = +0.085 to B; the terminal already extracts it at r = 0.885).
+
+Everything in S30-L10 §1–§2 — the ceiling gate at 1/10, the frozen law passing at 0.0153 Å —
+stands unchanged. What is amended is the *interpretation* of its `set_mean` term, and the
+amendment makes the condition **stricter**, not looser: the cheap half of it was free all along.
+
+## II.6 WHAT I DID NOT DO
+
+- Build a generator. Lane L's gate fails on an already-measured number, and §II.2(1) shows the
+  record's best set mean is a tie at zero against a −0.2 Å requirement.
+- Propose a torsion/configuration encoding — lane T's register arithmetic (48 bits against 7
+  deployed; the pool is a codebook at 5.2x) rules it out and I accept it as binding.
+- Compose any of this with lane F's S30-L2, which is a gate change and outside this law's scope.

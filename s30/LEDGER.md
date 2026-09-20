@@ -2945,3 +2945,125 @@ held the box at 99.8%), so the three run shards went out **detached rather than 
 governor**. RAM -- the binding constraint per `machine-fits-two-heavy-jobs` -- had 4.0 GB free and
 peak per process was ~0.35 GB. The inherited gate defect named in `s30/STATUS.md` is real and it
 bit exactly as predicted.
+
+## S30-L20 -- **NO.** A GENERATOR CANNOT HAVE A BETTER TYPICAL MEMBER IN ANY SENSE THAT PAYS, BECAUSE "SET MEAN" IS **TWO** QUANTITIES AND ONLY ONE CONVERTS: `set_mean^2 = B^2 + S^2` WITH `B` = THE ENDPOINT ITSELF. THE SPREAD HALF IS WORTH **ZERO** (THE TERMINAL ALREADY EXTRACTS IT AT r = 0.885; IT IS ORTHOGONAL TO BIAS AT r = +0.085) AND THE BIAS HALF **IS** THE ENDPOINT, WHICH LANE L PROVED NON-IDENTIFIABLE AT ANY K. **NOTHING IN THE RECORD IMPROVES THE SET MEAN AT ALL** -- THE BEST IS A TIE AT 0.57x MDE -- AND THE MOST CONCENTRATED SOURCE EVER BUILT (`T0_helix`, S = 0.57 AGAINST THE POOL'S 1.58) IS **THE WORST ENDPOINT IN THE RECORD AT 3.789**. ALSO A CORRECTION TO MY OWN S30-L10 (2026-09-20 13:29, X)
+
+Pre-registration `s30/PREREG_S30_X.md` **ADDENDUM 1 @ 539de5a8**, committed before any number
+below existed, with my registered prediction that the answer would be NO. Findings
+`s30/s30_X_FINDINGS.md` PART II. Code `s30/s30_X_typicalgood.py`. Results
+`s30/results/s30_X_typicalgood.json` (504 cells + 126 pool rows). **No VQE or pipeline compute.**
+
+### 0. The question, and why measuring it answers a different one
+
+> *"Can a generator be built whose TYPICAL member is better than the pool's -- Δ(set mean) ≈ −0.2 Å
+> -- rather than one whose BEST member is better? Measure the set mean first."*
+
+I measured it first, as instructed, and **the set mean turns out to be two quantities.** For a
+coordinate-average terminal over m members the common-mode identity gives, per target:
+
+```
+    set_mean^2  ~=  B^2 + S^2        B = RMSD(set average, native) = THE ENDPOINT
+    endpoint     =  B                S = the set's spread about its own centroid
+```
+
+**A set mean improved purely by CONCENTRATION (S down, B fixed) moves the endpoint by zero, by
+algebra.** Only B converts, and B *is* the endpoint. Measured, n = 126 per row:
+
+```
+  arm            set_mean   B (endpoint)      S    avg gain |  d_set_mean     d_B      d_S   winsBOTH
+  POOL (top-75)    3.5507      3.0483     1.5770    0.5023  |      --         --       --        --
+  T0_helix         3.8663      3.7892     0.5676    0.0771  |   +0.3156   +0.7408  -1.0094    22/126
+  T1_blind         4.0218      3.2435     2.2242    0.7784  |   +0.4712   +0.1951  +0.6472    31/126
+  T2_restype       3.9563      3.2065     2.1267    0.7498  |   +0.4056   +0.1581  +0.5497    36/126
+  T3_pool          3.5916      3.1752     1.4791    0.4164  |   +0.0409   +0.1269  -0.0979    36/126
+```
+
+### 1. FOUR INDEPENDENT REASONS THE ANSWER IS NO
+
+**(1) Nothing in the record improves the set mean at all.** Every `d_set_mean` is **positive**
+(+0.3156 / +0.4712 / +0.4056 / +0.0409), the first three at 5/5 folds with fold CIs excluding zero.
+The best, T3_pool: **+0.0409, SE 0.0254, MDE 0.0712, 0.57x MDE, fold CI [-0.0134, +0.0887], 4/5 --
+NOT MEASURED**, a statistical **tie** with the pool. Against a −0.2 Å requirement, **the record's
+best is a tie at zero**, and even that arm's endpoint is +0.1269 worse.
+
+**(2) The concentration half is worth zero, as the algebra says.**
+
+```
+    avg_gain  =  0.4143 * S  -  0.1559        r = 0.8854,  n = 630
+```
+
+**The terminal's entire value is spread extraction**; a concentrated source hands it nothing to
+extract. Within target, `corr(S, B) = +0.0851` (n = 504): **concentration is orthogonal to bias.**
+
+> *Honesty note on that correlation.* The raw within-target `corr(S, B) = -0.4744` (n = 630) is
+> **driven by T0_helix alone**; drop that one arm and it is +0.0851. My registered prediction was
+> "near zero or negative" and both satisfy it, but **the strong negative is an artefact of the
+> zero-information arm and must not be quoted.** The durable number is +0.085.
+
+**(3) The extreme case proves it.** `T0_helix` -- a constant alpha-helix with 15° jitter -- is by a
+wide margin the most concentrated source ever built here, **S = 0.5676 against the pool's 1.5770**.
+It *is* the typical-good generator the question asks for. **It is the worst endpoint in the record:
+3.7892 against 3.0483.** Its averaging gain collapses to 0.0771 against the pool's 0.5023 -- the
+terminal had nothing left to extract, so the endpoint fell back onto B.
+
+**(4) The cells that win on both do not transfer.** 125 of 504 cells (**24.80%**) beat the pool on
+set mean *and* endpoint.
+
+> **That essentially TIED its registered bar -- 24.80% against 25%, a miss of 0.20 percentage
+> points. The counting half decided nothing and I will not pretend otherwise.**
+
+The verdict rests on the transfer arm, which is unambiguous. Pick the arm winning on both most
+often in half the targets, score it on the other half, 400 splits:
+
+```
+    split-half transfer of d_B  =  +0.1597    CI95 [+0.0676, +0.2687]
+```
+
+**Wrong sign, CI excluding zero** -- the selection makes the endpoint **0.16 Å worse**. The
+wins-on-both cells are an order statistic (`grid-oracles-are-order-statistics`).
+**VERDICT: H-X3 STANDS.**
+
+### 2. WHY THIS IS A CEILING AND NOT A MISS
+
+Endpoint = B = the shared bias. *"Improve the typical member"* decomposes into a **spread** half --
+free, worth 0, already extracted -- and a **bias** half, which **is** the endpoint. **Lane L's
+S30-L7 closes the second half structurally**: the likelihood depends on `(t, mu)` only through
+`t + mu`, so mu is non-identifiable at any K, and provenance cosine **0.9432** vs a **0.9330**
+within-source control says mu is a property of **the prior candidates are scored against, not of
+where they come from.** The only half of "typical-good" that pays is the half no source change can
+move.
+
+**Lane L's falsifier is applied and ALREADY FAILED before any endpoint run**, on its own rule
+(require cosine < 0.9330 first): the measured value is 0.9432 at n = 126
+(`s24/results/qmatch.json`, S24 L3, replicated independently by S24 lane E). **No endpoint run was
+spent.** Lane T's register arithmetic is accepted as binding and no torsion-vector encoding is
+proposed.
+
+### 3. THE PREMISE, INVERTED
+
+The question came with a premise -- *"every sampler was built to be diverse, not typical-good;
+nobody has built one to be typical-good."* **Somebody did, and diversity is the correct design.**
+T0_helix is that generator and it is the worst thing in the record, while the arms with the
+*largest* spread have the largest averaging gains (T1 S 2.224 -> 0.778; T2 S 2.127 -> 0.750) and
+the best generated endpoints. **For an averaging terminal, spread is the raw material, not a
+defect. "Typical-good" is the wrong design goal and the samplers were not built wrong.**
+
+### 4. CORRECTION TO MY OWN S30-L10 (rule 15; the original wording stands there unedited)
+
+S30-L10's admission condition reads `Δ(set mean) < -(0.32..0.37)*Δ(set best)`. **It treats
+Δ(set mean) as one channel when it is two, and only the bias channel converts.** Amended:
+
+> **ADMIT G against P iff `Δ(bias B) + 0.298*Δ(set best) < 0`.** Δ(set mean) is admissible as a
+> proxy **only** to the extent it reflects ΔB; the spread component converts at ≈ 0.
+
+S30-L10 §1-§2 stand unchanged -- the ceiling gate at 1/10, the frozen law passing at 0.0153 Å. What
+is amended is the *interpretation* of its set-mean term, and the amendment makes the condition
+**stricter, not looser**: the cheap half of it was free all along.
+
+### 5. What this is NOT
+
+`set_mean` is the arithmetic mean of member RMSDs, not the RMS, so S is Jensen-biased **small** --
+it understates concentration and **cannot manufacture** the effect reported here. The primary
+counting test tied its bar and is reported as undecided. Only H-X3's two pre-registered arms are
+read as results; the per-arm decompositions are descriptive. No native was used to set any
+parameter; every ceiling and every per-member RMSD row is ORACLE and says so in its field name.
