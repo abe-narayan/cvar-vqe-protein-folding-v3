@@ -177,33 +177,58 @@ def second_order(pdbs):
             dh = d / A2.rms(d)
             #: the ORACLE best step along this field, on a fine grid (the largest step a real arm
             #: could take, not a nominal one), and the RMSD actually measured there
-            ss = np.linspace(-3.0, 3.0, 241)
-            r = np.array([I.ca_rmsd(C0 + t * dh, cand.nat_ca) for t in ss])     # ORACLE
+            #: a SYMMETRIC bracket: a negative best step on a negative cosine is the correct
+            #: direction (moving along -d, whose cosine with u is positive), but a best step AT
+            #: the bracket edge would mean the search is reporting its own bound, so the edge
+            #: flag below is checked on every cell rather than assumed.
+            ss = np.linspace(-6.0, 6.0, 481)
+            #: batched Kabsch over the whole grid: identical arithmetic to `I.ca_rmsd`, which is
+            #: `kabsch_rmsd_batch` on a single-element stack.
+            r = np.asarray(I.kabsch_rmsd_batch(C0[None] + ss[:, None, None] * dh[None], cand.nat_ca), float)   # ORACLE
             b = int(np.argmin(r))
             pred = rec["rmsd_prod"] * float(np.sqrt(max(1 - rho ** 2, 0.0)))
             rec["fields"][nm] = dict(cos=rho, disp_rms=A2.rms(d), best_step=float(ss[b]),
                                      rmsd_at_best=float(r[b]), predicted_by_bound=pred,
                                      residual=float(r[b] - pred),
-                                     rel_residual=float((r[b] - pred) / max(pred, 1e-12)))
+                                     rel_residual=float((r[b] - pred) / max(pred, 1e-12)),
+                                     at_bracket_edge=bool(b == 0 or b == len(ss) - 1),
+                                     step_times_cos=float(ss[b] * rho),
+                                     step_in_A=float(abs(ss[b])),
+                                     rmsd_at_zero=float(r[int(np.argmin(np.abs(ss)))]))
         rows.append(rec)
         if (q + 1) % 6 == 0:
             print(f"  [{q+1}/{len(pdbs)}]", flush=True)
     out = dict(check="S29-L23 assumption B3: the neglected term at the ORACLE best step", n=len(rows), rows=rows)
+    folds_all = ST.pinned_folds([r["pdb"] for r in rows]) if len(rows) >= 5 else None
     names = sorted({k for r in rows for k in r["fields"]})
     print(f"  {'field':12s} {'mean cos':>9s} {'best step':>10s} {'measured':>9s} {'bound pred':>11s} {'residual':>9s} {'rel':>7s}")
     for nm in names:
         v = [r["fields"][nm] for r in rows if nm in r["fields"]]
         if not v:
             continue
-        out[nm] = dict(n=len(v), mean_cos=float(np.mean([x["cos"] for x in v])),
+        rel = np.array([x["rel_residual"] for x in v], float)
+        idx = [q for q, r in enumerate(rows) if nm in r["fields"]]
+        ci = (ST.compare(rel, np.zeros(len(rel)), folds_all[idx], label="rel residual " + nm,
+                         seed_parts=("s29Db3",))["ci95_fold"] if folds_all is not None and len(rel) >= 5 else None)
+        out[nm] = dict(n=len(v), rel_residual_fold_ci=ci,
+                       max_abs_rel_residual=float(np.abs(rel).max()),
+                       n_at_bracket_edge=int(sum(x["at_bracket_edge"] for x in v)),
+                       mean_step_abs=float(np.mean([x["step_in_A"] for x in v])),
+                       max_step_abs=float(np.max([x["step_in_A"] for x in v])),
+                       corr_relres_vs_step=float(np.corrcoef(np.abs(rel), [x["step_in_A"] for x in v])[0, 1])
+                       if len(rel) >= 5 else float("nan"),
+                       mean_cos=float(np.mean([x["cos"] for x in v])),
                        mean_best_step=float(np.mean([x["best_step"] for x in v])),
                        mean_rmsd_at_best=float(np.mean([x["rmsd_at_best"] for x in v])),
                        mean_predicted=float(np.mean([x["predicted_by_bound"] for x in v])),
                        mean_residual=float(np.mean([x["residual"] for x in v])),
                        mean_rel_residual=float(np.mean([x["rel_residual"] for x in v])))
         d = out[nm]
+        cis = ("[%+.2e, %+.2e]" % tuple(d["rel_residual_fold_ci"])) if d["rel_residual_fold_ci"] else "(n<5)"
         print(f"  {nm:12s} {d['mean_cos']:+9.4f} {d['mean_best_step']:+10.3f} {d['mean_rmsd_at_best']:9.4f} "
-              f"{d['mean_predicted']:11.4f} {d['mean_residual']:+9.4f} {100*d['mean_rel_residual']:+6.1f}%")
+              f"{d['mean_predicted']:11.4f} {d['mean_residual']:+9.4f} {100*d['mean_rel_residual']:+7.4f}%  "
+              f"relres fold CI {cis}  max|rel| {d['max_abs_rel_residual']:.2e}  edge {d['n_at_bracket_edge']}/{d['n']}  "
+              f"step mean {d['mean_step_abs']:.2f} max {d['max_step_abs']:.2f} A  corr(|rel|, step) {d['corr_relres_vs_step']:+.2f}")
     ST.save_atomic(os.path.join(RESULTS, "s29_D_fields_b3.json"), out, module_file=__file__)
     return out
 
