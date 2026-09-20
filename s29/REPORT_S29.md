@@ -301,7 +301,65 @@ Brown/Wyatt/Tiňo 2005 eqs 9–10; McDonald 2023; Cerezo 2025.
 
 ## 11. The best architecture, and why
 
-[PENDING]
+**The best architecture is the one that shipped, and this sprint is the strongest evidence for it
+the project has.** That is an uncomfortable conclusion to write after eight lanes and ~50 ledger
+entries, so it is worth being precise about *why* it is a conclusion rather than a default.
+
+### 11.1 The shipped path, and what each stage is worth
+
+```
+BLOSUM62 retrieval, K = 500
+   → leave-fold-out ESM-2 650M distogram (17 bins)
+   → L1 Bayes-risk score
+   → top-75 coordinate average          → point cloud   3.0483
+   → multi-start ideal-geometry projection → BUILT CHAIN 3.2105
+   → (optional AMBER relax)
+```
+
+Note that `core/pipeline.py:179` has `quantum: bool = False`. **The 3.2105 Å anchor never passes
+through the quantum stage at all.** Every quantum result in this report is therefore a statement
+about a stage that is not currently in the deployable path, which is exactly why the architectural
+ceiling (§0, item 2) is the right way to price it: it asks what turning it on could ever buy.
+
+### 11.2 Why each proposed alternative is worse or unreachable
+
+- **A different prefix length *m*.** The ORACLE global prefix is m = 72 — worth −0.0018 Å, i.e.
+  the shipped 75 — and the leave-fold-out prefix is **+0.0079 Å worse** than production. The shipped
+  value is not a convenience choice that nobody checked; it is within 0.002 Å of the ORACLE global
+  optimum. (S29-L30)
+- **A wider field of view.** 75 → 128 is worth 0.0663 Å ORACLE; the entire K=500 only 0.1543 Å
+  further. (S29-L30)
+- **A different terminal operator.** argmin has a higher ceiling (§0 item 3) but is the operator
+  that *punishes* a bad objective — S12/S19: searching harder on a bad objective hurts through
+  argmin and is neutral through an average — and the m\* ladder (500 → 75 → 20 → 3–5 as the
+  objective improves) says **m = 75 is the correct operator for an objective of the shipped
+  quality**. Switching is conditional on an objective the project does not have.
+- **Any native-free re-weighting or displacement.** 39 fields, none beats the random reference
+  (§9.4).
+- **More or better averaging.** Bounded at ≤ 0.008 Å by Krogh–Vedelsby + Ueda–Nakano (S29-L8).
+- **A trained in-band ranker.** Capacity is saturated by a linear model; 0.600 across targets
+  against the 0.638 needed (S29-L19).
+
+### 11.3 One architectural fact that is new, and that changes how to price future work
+
+Lane O measured the projection stage's cost as a **function**, not a constant:
+`corr(cloud RMSD, chain − cloud) = +0.866` across 32 arms. The price is **≤ 0 below ≈ 2.31 Å** of
+cloud accuracy and **> +0.10 above ≈ 2.41 Å**. The ideal-geometry projection *helps* an accurate
+cloud and *hurts* an inaccurate one; production sits at 3.0483 on the cloud, deep in the hurting
+regime, paying +0.1622.
+
+This has a practical consequence the project has not been using: **any improvement to the point
+cloud is worth more at the endpoint than it looks on the cloud**, because it also reduces the
+projection's own penalty. It is the first time this stage has been characterised as anything but a
+fixed tax.
+
+### 11.4 The honest summary
+
+The architecture is well-chosen at every stage where a choice was available, and its limit is not
+any of those choices. Its limit is that the readout it uses caps at 2.9027 Å built chain even with
+an oracle, and that the 7 bits per target which would justify a different readout are an incidental
+parameter. **The architecture is not the problem; the information is.**
+
 
 ## 12. What remains unresolved
 
