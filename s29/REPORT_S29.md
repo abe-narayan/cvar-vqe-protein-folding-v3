@@ -217,6 +217,18 @@ claims were withdrawn, **eight of them mine**. The full table is §14(e); the sh
   but the slots were taken from other lanes. Now in project memory.
 - **36 result artefacts were untracked** until late in the sprint, including the rows the corrected
   ceiling is computed from. Found by S29-L46's existence check, not by anyone noticing.
+- **The contract and the governor disagreed about AMBER concurrency, and the governor won.**
+  Contract rule 8 says one AMBER process at a time; `s26/governor.py` has `MAX_AMBER = 2`. Lane D
+  queued both AMBER test files, the governor launched them 65 s apart, and two AMBER-tagged jobs ran
+  concurrently. Nothing was contaminated — both are pytest files, both peaked under 0.9 GB, both
+  passed — and lane D reported it against itself rather than leaving it in a job log. But the
+  mismatch is real and is the kind that eventually costs a result rather than a test run: **a rule
+  that lives only in prose is not enforced by the thing that schedules the work.** Reconciling
+  `MAX_AMBER` with rule 8 is an S30 item.
+- **A duplicate job ran for 57 minutes**, holding a contended slot. Two lane X jobs with *different*
+  names ran the identical unsharded command and converged on the same target; I stopped the younger.
+  A name-based check would not have caught it — the invariant is one process per unit of *work*, not
+  per name.
 
 
 ## 4. What succeeded
