@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:25 Pacific.
+Last update: 2026-09-20 00:27 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -393,6 +393,42 @@ explicitly declines the matching fix. D's measurement is novel rather than deriv
 HONEST PRIOR on its value: the record's squared-skill law means a small partial correlation buys
 nearly nothing in Angstroms, so a positive is a MECHANISM result first and a candidate operator
 second.
+
+
+## Integration note 11 (2026-09-20 00:27, after S29-L17): THE SPRINT'S THESIS, AND THE BUILD THAT TESTS IT
+1. CONTRACTION IS AN EXACT VARIANCE IDENTITY, not Jensen loosely and not a posterior bias:
+   d_ij(C)^2 = mean_k d_ij(W_k)^2 - s_ij^2 and Rg(C)^2 = mean_k Rg(W_k)^2 - Delta^2, where
+   Delta^2 is EXACTLY S23 L9's idiosyncratic term. The operator cannot take the 68% common mode
+   and cannot avoid paying the 32% in contraction. The fractional contraction falls from 22% at
+   the bond to 6% at the envelope because the spread does not grow with separation while the
+   distance does, which derives S23 L1's "averaging smooths".
+   CORRECTION TO MY OWN PUBLISHED PROGRAMME (`s27/REPORT_S28.md` section 12 item 2 and the
+   published page): "calibrate the posterior and re-read the meter" is DEAD as written. A width
+   error does not move the median map (so not the minimiser, deriving S25 L2's null), a uniform
+   over-confidence multiplies the metric by a constant and moves no minimiser at all, and
+   calibration cannot touch the contraction because that is the pool's dispersion. The only
+   live version is a SEPARATION-BAND RE-WEIGHTING with one or two parameters: the shipped
+   objective over-weights mid-range pairs by about 2.7x against a calibrated one (z_sd 1.23 /
+   2.05 / 1.87 / 1.28 across separations 2-2 / 4-5 / 6-8 / 9-15). Lane M or D runs T's
+   12-target prediction on it; the artifact update at the sprint's end must carry this.
+2. THE SPRINT'S THESIS, NOW BUILDABLE. T's section 4 gives the lift that fixes the flatness:
+   CVaR over a STRUCTURAL observable, "tail then aggregate", F = CVaR - T H + lam f(R_alpha(p))
+   with R_alpha the TAIL'S OWN coordinate average (the deployed readout as a function of p).
+   The objective then SEES which candidates populate the tail -- precisely the freedom it is
+   currently blind to. Derived and ready: the envelope gradient dR/dp_y = (W_y - W_x_q)/alpha,
+   the same 2P parameter-shift cost as the deployed objective, convex cells indexed by the tail
+   SET, non-smooth only where the scalar CVaR already is, and it is the MORE device-realisable
+   lift (a quantile plus a mean structure, not the full 2^n distribution). It is NOT S28 lane A,
+   which put the same term on the signed-amplitude readout.
+   MY REGISTERED PREDICTION, on the record before lane B runs it: the flatness FALLS (the
+   mechanism works) and the endpoint gets WORSE, because f is a marginal-class objective bound
+   by theorem 2 and the shipped score's near-native ladder correlation is -0.182. If that is
+   what happens, the sprint has demonstrated rather than asserted its thesis: THE FLATNESS WAS
+   FIXABLE AND THE INFORMATION WAS THE BARRIER. If the endpoint improves, lane D attacks it the
+   same hour and the sprint has its first movement.
+3. The two questions now hang together: lane B's lift makes the objective see the set, and lane
+   D's band experiment asks whether ANY scorer can order structures of equal realism. If D finds
+   one, it is the f that lane B's lift should carry.
 
 ## Closed in S29
 - The non-commuting free-energy cell IN THE CANDIDATE-INDEX ENCODING (S29-L15 Q2, derived):
