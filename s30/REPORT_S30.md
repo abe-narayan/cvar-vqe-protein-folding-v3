@@ -12,12 +12,91 @@ Charter: `s30/BRIEF.md`
 
 ## 0. The answer, up front
 
-[PENDING — written last, once lane P's decisive measurement lands.]
-
 The charter asked for the first real accuracy breakthrough, with a primary target of < 3.0 Å and an
 ambitious target of < 2.5 Å against production's **3.2105 Å**. It also said, explicitly, that *"a
 well-evidenced ceiling argument that redirects the next three sprints is worth more than a fragile
 2.98 Å."*
+
+### 0.1 The endpoint did not move
+
+| # | question | answer |
+|---|---|---|
+| 1 | Strongest new architecture? | **None was deployed.** Every candidate was closed — by measurement, by theorem, or by price — before it reached the pipeline |
+| 2 | Final mean built-chain RMSD? | **3.2105 Å**, unchanged |
+| 3 | Did it beat 3.21? | **No** |
+| 4 | Did it beat 3.0? | **No** |
+| 5 | Did it beat 2.5? | **No** |
+| 6 | Exact paired effect vs production? | **Zero — nothing was deployed.** The best *measured, applied* prior correction emits **+0.0554 Å WORSE**. The one confirmed deployable effect (AMBER relax at k = 30) is **−0.0406 Å**, 3.56× MDE, 5/5 folds on a length-matched split — **0.69% of baseline, and its restraint constant still has no native-free selection rule** |
+| 7 | Fold-clustered CI? | Per comparison; every one is reported beside its effect. No sprint-wide constant |
+| 8 | MDE? | Per comparison, MDE = 2.8016 × SE. **Below 0.7× is not a result; 0.7–1.0× is NOT MEASURED** |
+| 9 | What happened on FAIL18? | **Unchanged.** And one of the sprint's own headlines died here: FAIL18 is defined by the filter's own recall, so claims about the filter's effect on it are partly forced arithmetic (§Appendix A) |
+| 10 | What happened on the other 108? | **Unchanged** |
+| 11 | What information source produced the gain? | **There was no gain.** The sprint's contribution is the reason why |
+
+### 0.2 What the sprint established instead
+
+**The target is reachable. Nothing we own can reach it.** Both halves are measured, and they are
+worth more than a fragile 2.98 would have been.
+
+> **Five ORACLE signs on long-range pairs are worth −0.3259 Å on the built chain — 3.2126 → 2.8867,
+> 2.05× MDE, 5/5 folds. That clears the charter's primary target.** The prize is **five bits per
+> target**, concentrated ~4× on the tail and 68% in `|i−j| ≥ 7`.
+
+And the reason those five bits are unobtainable is **mechanistic, not a failed search**:
+
+1. **The source enumeration collapses to two** — sequence and library — with physics an *operator*
+   on either, not a third source (theorem G1, repaired by lane P).
+2. **Both are measured.** Sequence: out-of-fold R² **0.83%** against a pre-registered 1.96% bar.
+   Pool: genuinely informative at **+0.0758**, and **strictly harmful when applied.**
+3. **The mechanism is a theorem about *which part* is identifiable.** The predictable part of the
+   prior's error *is* the pool's common mode — and the common mode is exactly the component proved
+   non-identifiable from pool data at any K.
+
+> ### What can be predicted is coherent and therefore harmful; what would help is incoherent and therefore unpredictable.
+
+A corrector fitted on the distogram and pool emits **+0.0554 Å worse**; a synthetic i.i.d. one at
+**identical out-of-fold R² = 0.2355** emits **−0.2466 Å better**. *A 0.30 Å swing at matched
+accuracy.* The i.i.d. arm is **ORACLE-constructed and not deployable** — it is the price of a
+channel nobody has, never an achievement.
+
+### 0.3 The deliverable
+
+Not a number — **a gate**, cheap and native-free, that no measurement in this project's history
+would have passed:
+
+```
+coh = corr(a corrector's residual, the pool's common-mode pair error)
+
+    uncorrected                               0.6931
+    every corrector this project owns          0.783 / 0.786 / 0.917   <- ALL RAISE IT
+    imposed-structure ORACLE arms only         0.587 / 0.537
+
+    ADMIT iff coh < 0.6931.     R2 0.16 -> -0.126 A;  R2 0.24 -> -0.247 A
+```
+
+**This is not "decorrelated from the distogram"** — orthogonality was priced at a 5.1% discount on
+the requirement. Incoherence is a different condition, and it separates a −0.25 Å corrector from a
++0.06 Å one at identical accuracy.
+
+### 0.4 How much of this report is negative, and why that is the point
+
+Twelve lanes, 28 ledger entries, ten pre-registrations. **Four of the ten registered falsifiers
+fired against the lane that wrote them.** Directions closed this sprint: the field combination, the
+sparse weighted readout, subset objectives through an averaging readout, the second-moment escape
+(twice, independently), generative spaces, torsion encodings, common-mode correction, filter width,
+achiral single-structure channels, and recognition from single-structure geometry.
+
+**Thirty-odd claims were withdrawn, eleven of them mine, and one withdrawal was itself withdrawn.**
+The report adversary then found ten further defects in this document — two of which inverted a
+headline — and they are fixed in place with the original error stated. That process is the reason
+the surviving results are worth anything, and §Appendix A records all of it.
+
+**The one thing the sprint got wrong about itself:** it claimed, in its own opening ledger entry,
+to have saved the charter to disk, and did not — while that same entry was recording four prior
+instances of exactly that failure as a reason to check rather than assume. The file was written 77
+minutes later. The fix is now mechanical: the verifier asserts that every path the ledger claims to
+have written exists.
+
 
 ---
 
