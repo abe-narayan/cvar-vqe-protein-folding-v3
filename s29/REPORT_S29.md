@@ -250,8 +250,8 @@ killed it, so the reader can check rather than take it on report:
 
 ### 3.2 Claims made in this sprint that did not survive it
 
-The contract required these to be listed, and I would point a sceptical reader here first. Eleven
-claims were withdrawn, **eight of them mine**. The full table is §14(e); the shape of it is:
+The contract required these to be listed, and I would point a sceptical reader here first.
+**16 claims were withdrawn during the sprint, 9 of them mine.** The full table is §14(e); the shape of it is:
 
 - **Lane T withdrew its own Corollary 2b** at its own registered bar, then ran a 126-target
   post-mortem establishing that it is *vacuous in its own valid regime* — a harder verdict than
@@ -263,10 +263,12 @@ claims were withdrawn, **eight of them mine**. The full table is §14(e); the sh
   with the original wording left standing.
 - **Lane D superseded its own B3 bracket**, finding that a ±3 Å window had hidden a residual that
   grows with step size.
-- **My own eight** are in §14(e) and §13's note: a trainability premise, a false provenance claim
-  to the user, a flatness gate that was a constant, an "absent instantiation" framing, a "7 bits"
-  reading, a point-cloud/built-chain basis error, a field count of 39 against a file containing 21,
-  and a standing expectation about compactness that the measurement refuted (§12.0).
+- **My own nine** are in §14(e): a trainability premise, a false provenance claim to the user, a
+  flatness gate that was a constant, a point-cloud/built-chain basis error, an "absent
+  instantiation" framing, a "7 bits" reading, a field count of 39 against a file holding 21, a
+  standing expectation about compactness that the measurement refuted (§12.0), and a test count
+  asserted from an incomplete log. Four were caught by a lane, three by recomputing from an
+  artefact, and two by re-running the thing itself.
 
 ### 3.3 What failed operationally
 
@@ -1412,4 +1414,10 @@ reader at first.
 | **My "7 bits" reading** | Lane M again: the bits cannot be spent through an averaging readout, because the operator consumes the set mean. (S29-L44 addendum 2) |
 | **Lane L's resumable-item claim** | Lane L owned that the clause "committed and resumable as `python -m s8.relax best`" was its own addition and is false — the stage does not exist on disk or in git. It annotated both entries in place with the original wording standing. (S29-L41, L42) |
 | **Lane D's ±3 Å bracket** | Lane D hardened its own B3 check to ±6 Å and found the residual is **not** uniformly 1e-4: it grows with step size, reaching −0.93% mean at a 2.03 Å step. Its own n = 2 file is superseded by the 126-target run. |
+| **My field count** | I wrote "39 displacement fields" in this report’s own §0; the file holds **21**, and my STATE note said "eighteen". Caught by recomputing from the artefact (S29-L48), not by re-reading the prose — which I had done several times. |
+| **My compactness expectation** | I told lane L in writing that its objection would close B2’s last exit. Lane T’s pre-registered falsifier **refuted** me at n = 126 (§12.0). |
+| **My "39 passed"** | Written from a log showing 39 dots, no summary line and a job record with no exit code — then compounded by asserting the governor had *killed* the run, when `REAP` fires for processes already gone. The re-run confirmed exit 0 (§4.6). |
+| **Lane M’s F2 prior** | Registered at 0.16–0.24, "genuinely close to the line"; measured **0.090**. Wrong in the flattering direction on *both* inputs — the ORACLE cosine it had inferred by inverting an identity ran 37% high (0.66 against a measured 0.483). |
+| **Lane B’s `tail_is_prefix` column** | Briefly suggested the deployed VQE had escaped set-equality. A tie-convention artefact; lane B found it, named it, and asked that the report not make the stronger claim (§6.1). |
+| **Lane T’s compactness prior** | Registered at 3-to-1 that lane L’s objection would hold. It did not (§12.0). |
 
