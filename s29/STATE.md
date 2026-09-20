@@ -1,6 +1,6 @@
 # S29 STATE (coordinator; the running written state the charter requires; updated as results arrive)
 
-Last update: 2026-09-20 00:27 Pacific.
+Last update: 2026-09-20 00:30 Pacific.
 
 ## Leading hypothesis (H1: the typicality axis)
 The missing information is not in any scorer; it is in the SIGN of the pool's systematic error.
@@ -429,6 +429,40 @@ second.
 3. The two questions now hang together: lane B's lift makes the objective see the set, and lane
    D's band experiment asks whether ANY scorer can order structures of equal realism. If D finds
    one, it is the f that lane B's lift should carry.
+
+
+## Integration note 12 (2026-09-20 00:30, after lane M's three deliverables): THE ANCHOR IS CLASSICAL
+1. THE HEADLINE, AND IT REFRAMES THE CHARTER'S CONSTRAINT. The 3.2126 A production anchor NEVER
+   PASSES THROUGH THE QUANTUM STAGE. `core/pipeline.py:179` has `quantum: bool = False` as the
+   production default (I verified the line independently), `s27/run_vqe_chain.py --chain` is the
+   classical tie-safe top-75, `arm_vqe` runs only under `--vqe`, and the production cache record
+   carries `quantum: null, n_top: 75`. So every S28 and S29 endpoint contrast "against
+   production" is against a CLASSICAL pipeline, and the CVaR-VQE arm is a parallel arm whose
+   S25 point-cloud number is 3.0580 against the classical 3.0483. This is consistent with, and
+   explains, S28-L21: the CVaR tail equals the classical top-m prefix to 1e-13, so running the
+   quantum stage reproduces the classical set. It is not a defect and nothing is retracted, but
+   the final report must say it in the first paragraph: the charter's "CVaR-VQE remains the
+   central component" is a requirement about the FUTURE architecture, because in the deployed
+   present the quantum stage is switched off and would change nothing if switched on.
+2. LEAVE-FOLD-OUT CONSTRAINS ONLY 9.5% OF THE DISTOGRAM'S TRAINING DATA: `fold_fragments`
+   removes 0 to 15 of 6,003 fragments per fold, so 90.5% of every fold model's chains are shared
+   across all five folds. With the 8x memorisation (check 9) this bounds how independent the
+   five fold models are, and therefore how much a fold-clustered CI can protect against a
+   corpus-level artefact. Lanes quoting fold CIs keep this in view; it does not invalidate them.
+3. T = 0.5 HAS NO RECORDED CRITERION ANYWHERE in the repository. Neither does the 17-bin edge
+   set (the outer centres 4.0 and 25.0 are invented), the soft-bin sigma 0.6, or the medoid
+   frame (the one readout choice with no measurement, and the frame in which S23 L9's
+   decomposition is defined). 17 of lane M's 31 convenience choices are untested.
+4. ASSIGNED, one line of code and it bounds every production quantum arm: the ORACLE ceiling of
+   the TOP-128 set (the prefix the quantum stage actually sees), which is absent from the record.
+   Lane O takes it as a ladder rung.
+5. F1's 12-target probe (NOT evidence for the instrument): PROD 3.3816, LOG 3.6161 (+0.2345,
+   0.35x MDE), L2RISK 3.5632. The mechanism corroboration is the useful part and it is the THIRD
+   independent one: LOG contracts LESS (bond 3.106 vs 2.987) and is worse; L2RISK contracts MORE
+   (2.868) and is worse. CONTRACTION AND RMSD DO NOT TRACK ACROSS FUNCTIONALS. Lane M also
+   declined my literal matched control (a monotone re-ranking) because through a top-m readout
+   it is the IDENTITY by algebra, and replaced it with a zero-information member swap. That was
+   the right call and I record it as my error.
 
 ## Closed in S29
 - The non-commuting free-energy cell IN THE CANDIDATE-INDEX ENCODING (S29-L15 Q2, derived):
