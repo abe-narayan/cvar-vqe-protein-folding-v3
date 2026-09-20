@@ -35,8 +35,14 @@ three numbers that did not exist before, all on the charter's own endpoint:
    3.0483 to 3.0289: a gain of **0.0195 ± 0.001 Å** (a closed form; §9.4 gives its measured model
    error). Stated at three levels: **≥ 3.210 Å** for every field the project has built,
    **≥ 3.181 Å** for a random-strength field handed a perfect sign, and **≥ 2.98 Å** for the best
-   structured field handed a perfect ORACLE *per-target* sign — a level no method could reach, and
-   it still misses the interim target.
+   structured field handed a perfect ORACLE *per-target* sign.
+
+   Lane D then measured that last level across the whole field class rather than deriving it for
+   one family, and got a **lower and therefore more demanding** answer: per-target |cos| runs
+   **0.25–0.33 on every one of the 21 fields**, about twice random, so **a perfect per-target sign
+   would reach 2.708 Å**. That is the strongest version of the result. **Hand this pipeline a
+   per-target oracle for the *sign* of the best displacement it can build — information no method
+   can supply (§5.3) — and it still does not reach 2.5 Å.**
    **Scope, and it is not a formality (§12.0):** this is a bound over the operators we *built* and
    measured. Its assumption B2 — that ρ ≤ 0.14 for *every* field constructible from the present
    information — was attacked and survived on 21 fields, but a measurement made late in the sprint
@@ -917,6 +923,18 @@ step band     n     mean |rel residual|
 Interior cells with step ≤ 1 Å: mean |rel| 3.4e−04 and 95th percentile 1.4e−03 — **0.0010 Å mean and
 0.0044 Å at the 95th percentile** on a 3.05 Å structure. Against the 0.0195 Å gain that is 5% of the
 effect at the mean and 23% at the 95th percentile, not 110%.
+
+**The per-target structure, and why it does not rescue the bound.** The *signed mean* cosines above
+are small, but per-target |cos| is 0.25–0.33 on every field — roughly twice random. The magnitude
+is there; the sign is not. Granting a perfect per-target sign across this class reaches **2.708 Å**,
+which is below lane T's PC1-specific 2.98 Å and is the number this report quotes as the
+sign-oracle ceiling. It is still above the charter's 2.5 Å.
+
+Lane D also found that this alignment is a **FAIL18 set property** — 10 of 21 fields clear a
+20,000-draw random-18 null where 1 would be expected — and checked whether that moves the bound.
+**It does not:** the n = 18 intervals are wide and CONS_TRIM's lower bound (0.128) sits below the
+0.140 reference. Reported because it is the one place in the survey where a real structure appears,
+and it was tested rather than left as a suggestive observation.
 
 Two things make this cut *toward* the bound rather than against it. **"No field beats the random
 reference" never depended on the closed form at all** — it rests on measured cosines
