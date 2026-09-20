@@ -26,7 +26,7 @@ from s24 import stats_lib as ST            # noqa: E402
 
 RESULTS = os.path.join(HERE, "results")
 ROWS = os.path.join(RESULTS, "s29_M_F1_rows.jsonl")
-ARMS = ("PROD", "LOG", "LOGW", "L2RISK", "LOGPERM")
+ARMS = ("PROD", "LOG", "LOGW", "L2RISK", "LOGPERM", "SWAPCTL")
 
 
 def load():
@@ -52,14 +52,18 @@ def main():
     def col(arm, key):
         return np.array([by[arm][p][key] for p in pdbs], float)
 
-    out["means"] = {arm: dict(chain=float(col(arm, "rmsd_chain").mean()),
-                              cloud=float(col(arm, "rmsd_cloud").mean()),
-                              bond_cloud=float(col(arm, "bond_cloud").mean()),
-                              rg_cloud=float(col(arm, "rg_cloud").mean()),
-                              overlap_prod=float(col(arm, "overlap_prod").mean()),
-                              tie_frac=float(col(arm, "tie_frac_at_cut").mean()),
-                              cos_err_vs_prod=float(np.nanmean(col(arm, "cos_err_vs_prod"))))
+    def nm(arm, key):
+        return float(np.nanmean(col(arm, key)))
+
+    out["means"] = {arm: dict(chain=nm(arm, "rmsd_chain"), cloud=nm(arm, "rmsd_cloud"),
+                              bond_cloud=nm(arm, "bond_cloud"), rg_cloud=nm(arm, "rg_cloud"),
+                              overlap_prod=nm(arm, "overlap_prod"),
+                              tie_frac=nm(arm, "tie_frac_at_cut"),
+                              cos_err_vs_prod=nm(arm, "cos_err_vs_prod"))
                     for arm in ARMS if arm in by}
+    if "SWAPCTL" in by:
+        out["means"]["SWAPCTL"]["k_swap"] = float(np.mean([by["SWAPCTL"][p]["k_swap"] for p in pdbs]))
+        out["means"]["SWAPCTL"]["draw_sd"] = float(np.mean([by["SWAPCTL"][p]["rmsd_chain_sd"] for p in pdbs]))
     out["rg_native"] = float(col("PROD", "rg_native").mean())
     out["floor_rate"] = float(col("LOG", "floor_rate").mean())
 
@@ -68,7 +72,9 @@ def main():
     for arm, label, tag in (("LOG", "PRIMARY  LOG - PROD (built chain)", "primary"),
                             ("LOGW", "control  LOGW - PROD (built chain)", "control"),
                             ("L2RISK", "control  L2RISK - PROD (built chain)", "control"),
-                            ("LOGPERM", "control  LOGPERM - PROD (built chain)", "control")):
+                            ("LOGPERM", "control  LOGPERM - PROD (built chain)", "control"),
+                            ("SWAPCTL", "control  SWAPCTL - PROD (built chain): the ZERO-INFORMATION "
+                                        "re-ordering at LOG's own exchange rate, mean of 4 draws", "control")):
         if arm not in by:
             continue
         c = ST.compare(col(arm, "rmsd_chain"), col("PROD", "rmsd_chain"), folds=folds,
@@ -86,6 +92,16 @@ def main():
                        label="decomposition  LOG - LOGW (built chain): what the shipped weight costs",
                        seed_parts=("s29M", "F1"))
         out["contrasts"]["LOG_minus_LOGW"] = c
+        lines.append(ST.fmt(c))
+
+    # ---- THE MAIN COMPARISON under PREREG addendum 1: is LOG's re-ordering worth anything
+    # beyond exchanging that many members at random?
+    if "SWAPCTL" in by:
+        c = ST.compare(col("LOG", "rmsd_chain"), col("SWAPCTL", "rmsd_chain"), folds=folds, names=pdbs,
+                       label="ADDENDUM-1 MAIN  LOG - SWAPCTL (built chain): does the log functional's "
+                             "ORDERING beat a random exchange of the same number of members?",
+                       seed_parts=("s29M", "F1"))
+        out["contrasts"]["LOG_minus_SWAPCTL"] = c
         lines.append(ST.fmt(c))
 
     # ---- MECHANISM (rule 18): contraction, measured beside the outcome
