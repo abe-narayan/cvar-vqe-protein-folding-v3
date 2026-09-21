@@ -184,6 +184,20 @@ one target). The project's standing measurement is that coordinate averaging **c
 backbone by 25.8%**. That suggests a third terminal operator which is neither the average nor the
 medoid:
 
+> **CORRECTION, appended 2026-09-21 00:05 — the 25.8% in the paragraph above is WITHDRAWN and the
+> original wording is left standing (contract rule 13).** The coordinator supplied it from project
+> memory `averaging-space-beats-the-objective`; it is carried stale there and at
+> `s30/LEDGER.md:129`, and it was withdrawn at `s15/coord_FINDINGS.md:914-921`. **This was the
+> coordinator's error, not this lane's, and it is recorded that way at the coordinator's own
+> request.** The corrected measurement is *contraction against true distances = 3.5%*, and — far
+> more importantly — the distortion is **not a scale effect at all**. See §10.
+>
+> `AVG_RG` is therefore a correction of the **wrong shape**, and it is retained in the run only as
+> a **registered negative control**: it is the uniform-scale fix that the corrected mechanism says
+> should *not* work. Its ~1:2-against prior is now closer to ~1:5 against. Retaining it is
+> deliberate — a pre-registered arm is not deleted because its motivation was withdrawn, and an
+> arm that fails for the newly-understood reason is evidence for the new mechanism.
+
 * **AVG_RG** — the uniform coordinate average, rescaled about its own centroid so that its radius
   of gyration equals the **mean Rg of the 75 members** that produced it, then projected through the
   same stage 3b.
@@ -196,3 +210,142 @@ Registered prior: **~1:2 against**, because stage-3b projection restores ideal b
 therefore *already* a partial de-contraction, so the correction may be double-counted.
 
 This raises lane F's registered comparison count from 28 to **32**.
+
+---
+
+## 9. SECOND ADDENDUM — a native-free gate variable I did not think of first, and exactly what I
+had seen when I added it
+
+**Appended 2026-09-20 23:58. FULL DISCLOSURE, because this is registered mid-run and the honest
+thing is to say what was on the screen.** At the moment of writing, the main run had emitted
+**8 of 126 rows**, and the two things visible in them were: (i) `P(MED)` is ≈ 0 to ±0.003 Å on
+every row, exactly as §2 derived; (ii) `P(AVG)` is *not* one-signed — on `1D6X` it is **−0.309 Å**,
+i.e. stage-3b projection sometimes *improves* the average. **No aggregate, no gate, no contrast and
+no F1 number existed.**
+
+Fact (ii) is what prompted this. `P(AVG)` is ORACLE (it needs the native), but the closely related
+
+```
+MOVE(op)  =  CA-RMSD( input cloud ,  its stage-3b projection )
+```
+
+is **fully native-free** — both arguments are available at inference. It measures *how far the
+projection has to drag the operator's output to make it a chain at all*, which is the mechanism
+§2 identified, measured directly instead of through the dispersion proxy `DISP`.
+
+* **G3** — `MOVE(AVG) > median(MOVE(AVG))` → MED, else AVG. 0 free parameters, native-free.
+* **G3τ** — leave-fold-out threshold on `MOVE(AVG)`: **ORACLE-ADJACENT**, diagnostic only.
+
+**Falsifier, identical in form to G0:** `mean_chain(G3) − mean_chain(AVG)` must reach `−1.0 × MDE`
+with a fold CI excluding zero. `> −0.7 × MDE` refutes it. **G3 is declared EXPLORATORY** — it was
+registered after the run began — and if it is the only arm that clears, it is reported as
+*exploratory, requiring confirmation*, never as the lane's confirmed result, and it carries a
+split-half transfer arm.
+
+Registered prior for G3: **~1:2 against**, better than G0's ~1:4 because it measures the mechanism
+instead of a proxy for it, but still against, because §2's inequality has the medoid's cost rising
+with the same quantity.
+
+Lane F's registered comparison count rises from 32 to **36**. The run was restarted from zero so
+that every row carries the `MOVE` columns; the 8 rows seen above were discarded and recomputed.
+
+---
+
+## 10. THIRD AMENDMENT — the withdrawn 25.8%, the corrected mechanism, and a defect of my own
+
+**Appended 2026-09-21 00:10, on the coordinator's course correction, with the run stopped at 8 rows
+and restarted from zero. No F1 aggregate exists at this point.**
+
+### 10.1 The withdrawal (the coordinator's error, recorded as such at their request)
+
+The brief that opened this lane asserted *"averaging contracts the backbone by 25.8%."* **That
+number is withdrawn** at `s15/coord_FINDINGS.md:914-921`, in its author's own words: *"the magnitude
+was overstated by a factor of seven."* I verified the withdrawal at that path rather than accepting
+the relay (contract rule 14). It is still carried stale at `s30/LEDGER.md:129` and in project memory
+`averaging-space-beats-the-objective`. The corrected figures:
+
+```
+contraction against TRUE distances          3.5%   (not 25.8%)
+contraction against PREDICTED distances     9.5%
+separation profile, monotone                0.773 at the virtual bond -> 1.10 at |i-j| = 13,
+                                            crossing 1.00 near |i-j| = 8
+```
+
+Every sentence of this prereg that rested on the 25.8% is annotated in place above with the
+original wording left standing (contract rule 13). §2's derivation does **not** rest on it — it
+rests on `P(AVG) = chain − cloud = +0.1622 Å`, which is measured on the endpoint basis and is
+unaffected.
+
+### 10.2 The corrected mechanism, and it is sharper than the one it replaces
+
+The distortion is **not a scale effect**. It is a **separation-dependent shape distortion**:
+averaging *contracts* short-range CA–CA distances and *expands* long-range ones, crossing unity
+near |i−j| = 8. Beside two results already on disk:
+
+* the tail's error is **83.1% shape**, with scale **refuted** as the mechanism (partial
+  ρ = −0.067, p = 0.46, against shape's −0.641);
+* **68% of the recoverable prize is in |i−j| ≥ 7**, concentrating ~4× on both filter-independent
+  tails.
+
+**The averaging operator's distortion crosses unity almost exactly where the prize lives.**
+
+### 10.3 What I am adding, and its falsifier
+
+1. **Instrumentation (ORACLE diagnostic, no parameter):** every arm's **separation profile** —
+   mean CA–CA distance at each s = 1..n−1 — for the native, the 75 members, and every operator
+   output on **both** the cloud and the chain basis. Registered questions: *is the medoid's profile
+   flatter than the average's in the s ≥ 7 band?* and *does `chain(MED) − chain(AVG)` correlate
+   with the average's s ≥ 7 distortion?*
+   **Mechanism falsifier, band version:** the medoid's advantage must be larger in the s ≥ 7 band's
+   distortion than in the s < 7 band's. If the medoid's profile is *not* flatter at long range, the
+   separation-band framing is refuted for this operator pair and I say so.
+2. **A fourth operator, AVG_SEP (native-free, 0 free parameters):** rescale the average's pair
+   distances so that its per-separation mean matches **the 75 members' own per-separation mean**,
+   re-embed by classical MDS, project through the same stage 3b. This is the correction *matched to
+   the corrected mechanism*, where `AVG_RG` is the correction matched to the *withdrawn* one.
+   **Falsifier:** `mean_chain(AVG_SEP) − mean_chain(AVG) ≤ −1.0 × MDE` with a fold CI excluding
+   zero; `> −0.7 × MDE` refutes it. Registered prior **~1:3 against**, because §10.4's record shows
+   every *scale* correction of the average is already closed on the endpoint basis and a
+   per-separation correction is a richer member of the same family.
+3. **`AVG_RG` is demoted to a registered negative control** and to a reproduction check against the
+   closed `pool`-scale arm (+0.095 Å, CI excluding zero on the bad side).
+
+### 10.4 A DEFECT OF MY OWN, declared before it can be found for me
+
+**I wrote §§1–3 of this prereg without searching the record for a prior medoid-as-terminal
+measurement, and there is one.** `s12/agg_FINDINGS.md:43-70`:
+
+```
+medoid75      3.2822 (CA POINT CLOUD)   +0.2339 vs avg75   CI [+0.162, +0.305]   34W/92L
+              FAIL18 6.100 vs avg75's 5.832   other108 2.813 vs 2.584
+```
+
+That is contract rule 14 in the other direction — I should have run the `grep` before writing the
+registration, and lane C had already found it. **Two things follow and I record both:**
+
+* **My §2 derivation predicted this before I saw it** — it says the medoid must lose on the cloud,
+  by a margin that grows with the spread, and the record's +0.2339 is *larger* than the entire
+  projection budget of +0.1622. **That is my own registered pre-check firing against my lane's
+  hypothesis, and it is the best thing in this registration.** The whole-sample F1 arm is therefore
+  expected to be **refuted**, with an implied chain-basis value near +0.2339 − 0.1622 ≈ **+0.07 Å
+  worse**, and I am writing that predicted number down now so it can be checked against the
+  measurement.
+* **What is NOT on disk, and is what this lane still measures:** the medoid on the **built-chain**
+  basis (the record is cloud-only and the projection is exactly the medoid's advantage); the
+  **dispersion- and MOVE-gated** per-target choice; the **separation-band mechanism**; and the
+  tail behaviour on the two **filter-independent** tails (the record's tail column is FAIL18, which
+  cannot measure the filter that defines it).
+
+I am **not** re-deriving the convex-reweighting rung: lane C reports the convex optimum under the
+deployed objective converges to **3.0522 CA cloud**, i.e. to the uniform average production already
+emits, on two independent constructions. The medoid/average *choice* is a different object.
+
+### 10.5 The three readouts, named so my arms cannot be confused
+
+| code | what it emits | this lane's arm |
+|---|---|---|
+| `core/pipeline.py:951` `average_struct`, called at `:1116` | uniform coordinate mean of the top-75 → a **new** point cloud | **AVG** (the deployed terminal) |
+| `core/pipeline.py:795` `consensus_medoid` | an **index** — one real deposited pool member | **MED** |
+| `core/pipeline.py:880-895` `average_weighted`, called at `:1110` | p_θ-weighted convex mean → a **new** point cloud | **not run here** — it needs the VQE's `p`, and its convex ceiling is closed at 3.0522 (lane C) |
+
+Lane F's registered comparison count rises from 36 to **44**.
