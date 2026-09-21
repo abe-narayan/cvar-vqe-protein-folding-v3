@@ -199,3 +199,81 @@ R1 fails if `argmin(P p)` over the reachable `p` is not confined to the index se
 code path lets the stage emit a structure that is not a pool member -- or if point 2's arrangement
 argument is wrong about the reachable set. Both are checkable in an hour and lane A was asked to
 attack them.
+
+---
+
+## S31-L2 -- **THERE ARE TWO QUANTUM READOUTS AND THE DEPLOYABLE PATH USES THE WEAK ONE.** THE CHARTER'S "THE CIRCUIT CAN EXPRESS GOOD SOLUTIONS" IS ABOUT THE OTHER ONE -- AND THE REAL FINDING IS THE INVERSE: **EXPRESSIVITY WITHOUT AN ALIGNED OBJECTIVE IS HARMFUL** (2026-09-20 23:53, coordinator)
+
+Read from the code. Handed to C (whose remit it reframes) and A (whose premise it qualifies).
+
+### The two readouts
+
+**Readout 1 -- deployable** (`core/pipeline.py:795-803`, used by `quantum_stage`):
+
+```python
+v = Dblock @ (w / sum(w));  return int(np.argmin(v))     # w = measurement PROBABILITIES
+```
+
+Returns **one pool member**. **7 bits** at the deployed `vqe_qubits = 7` (R1, S31-L1).
+ORACLE ceiling, argmin over 128: **2.1435 A** (CA cloud).
+
+**Readout 2 -- every ceiling experiment** (`s27/s28_A_amp.py:105-117`):
+
+```python
+w = psi / psi.sum();  C = (w @ frame.Wf).reshape(n, 3)   # psi = real AMPLITUDES
+```
+
+`psi` are **amplitudes, not probabilities**, so `w` sums to 1 but **individual weights may be
+negative**. This is an **affine** combination and it can leave the candidates' convex hull. Hence
+`circ_best` = **0.2516 A** built chain while the best single pool member averages 1.7108 A.
+
+### What this does to the charter's §5E
+
+The charter concludes, from 0.2516 A (ORACLE objective) against 3.4330 A (deployed objective),
+that *"the circuit can express good solutions; the objective does not point at them."* **Both
+numbers use readout 2** (`circ_opt` is `circ_l1_i80` through the same amplitude readout), so the
+comparison is fair *on readout* and **the conclusion holds -- for readout 2.** It says nothing
+about readout 1, which is what a deployable quantum stage would use. **The report must not inherit
+that conflation.**
+
+### AND THE FINDING, WHICH IS THE INVERSE OF THE FRAMING
+
+Readout 2 is enormously more expressive than readout 1. Under the deployed objective it emits
+**3.4330 A on the built chain -- WORSE than the uniform average's 3.2071**, and the uniform average
+is simply the **heavily regularised special case** of the same affine readout (all weights `1/k`,
+no negatives).
+
+> **Expressivity without an aligned objective is not neutral, it is harmful.** More degrees of
+> freedom let a coherent-error objective do more damage. This is S30's coherence result --
+> *what can be predicted is coherent and therefore harmful* -- arriving at the readout.
+
+**Corollary, and it is why this is useful rather than merely deflating:** a sparse or norm-bounded
+readout is not a bit-budget compromise, it is **the regulariser standing between a degenerate
+affine class and a usable one.** That converts charter §7C from *"can sparsity buy capacity"* into
+*"what is the right constraint set on a readout that is otherwise too expressive to be safe"* --
+and makes non-negativity, an `ess` floor, an `||w||_1` bound and group sparsity **principled**
+rather than heuristic.
+
+### Two cautions handed to lane C with the work
+
+1. **Readout 2's ORACLE ceiling is probably vacuous.** For n = 9-16 the coordinate space is
+   3n = 27-48 dimensional and the affine hull of 128-500 candidates generically **spans it** --
+   `oracle_affine_ls` reportedly reaches the native to 1e-7, which is what a degenerate ceiling
+   looks like. Coordinate-space stable rank is ~3.4-3.6 with k90 = 11.2, so severe
+   ill-conditioning is expected: reaching the native should require enormous cancelling weights.
+   `weight_diag` already returns `frac_neg`, `neg_mass`, `ess`. **Measure them.** If the ceiling
+   needs a tiny `ess`, it is a numerical artefact of an ill-conditioned basis, not a reachable
+   structure.
+2. **The published ladder is non-monotonic because the candidate SET changes.** 2-of-75 with free
+   weights (2.1683 A, 11.4+ bits) is *worse* than argmin-over-128 (2.1435 A, 7 bits) -- but 75 != 128.
+   **Hold the candidate set fixed across the ladder or the comparison is not about the readout.**
+   This alone may explain S30's "argmin dominates at every bit budget".
+
+### The deficit this sprint actually has to close, stated plainly
+
+`quantum: bool = False` in `PROD = Config()` (`core/pipeline.py:179, :241`): **the 3.2105 A endpoint
+is produced with the quantum stage OFF.** Turning it on, as built, costs **+0.2260 A on the built
+chain** (`circ_opt` 3.4330 against PROD 3.2071 in the S30 meter cache). So a quantum-spine
+architecture must recover **0.226 A to reach parity with the classical path it replaces**, and then
+**0.211 A more** to take 3.2105 below 3.00 -- **~0.437 A in total**, not the 0.21 A that
+"3.21 -> 3.00" suggests.
