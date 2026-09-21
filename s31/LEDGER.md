@@ -3146,6 +3146,33 @@ score's inability to rank its own pool there** -- best member at rank 391/500, f
 3.4x against the readout's 1.9x. That is not this lane's remit and this lane has no result there;
 it is stated because it is what the measurement says.
 
+### 9b. THE COMPLETE READOUT-CHOICE CEILING, AND WHY IT IS MOSTLY AN ORDER STATISTIC
+
+*Appended 2026-09-21 01:05; an unregistered arm, declared as such.* With the native in hand and a
+free per-target choice among **all four** operators in this entry:
+
+```
+ORACLE min over {AVG, MED, AVG_RG, AVG_SEP}   3.0655 built chain
+  vs production (same job)                    -0.1471   2.54x MDE   fold CI [-0.167, -0.122]  100W/0L
+```
+
+**ORACLE / NOT DEPLOYABLE.** And it is a per-target minimum over K = 4 -- precisely the construction
+S31-L11 audited -- so it is read with that entry's discipline:
+
+* the argmin is **nearly uniform across the four operators: 26 / 46 / 25 / 29**
+  (chi-square 9.18, p = 0.027 against uniform). If one operator were right for an *identifiable*
+  class of targets the argmin would concentrate; it does not.
+* **79.4% of targets have an ORACLE winner that is not the average**, yet three of the four arms
+  are measurably worse on average -- so the choice is selecting *variance*, not a property.
+* `split_half_transfer` degenerates here for the same reason it does at K = 2 (a CI of width 1e-16,
+  because `AVG` dominates globally); **its 49% must not be quoted**, and it is recorded only so that
+  nobody quotes it later.
+* the per-target gain is **median -0.0570** against a mean of -0.1471 with **p90 exactly 0.0000** --
+  a small number of large wins, which is the shape of a maximum over draws.
+
+**So even the complete ORACLE readout-choice prize is 0.147 A, most of the way to being best-of-4,
+and no rule for realising it exists.** That is the strongest form of this entry's recommendation.
+
 ### 10. WHAT IS NOT CLAIMED
 
 * The `0.59x MDE` positive dispersion contrast in §4 is **below MDE and is not a result**; it
