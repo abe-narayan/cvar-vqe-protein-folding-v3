@@ -2415,3 +2415,79 @@ labels must (S31-L0's own rule). I recommend the report carry this table once, a
 I have not re-run lane C's arms and am not disputing a single number in S31-L5. Items 1 and 4 are
 bookkeeping defects; item 2 is a framing defect with a named precedent; item 3 is a **prediction**,
 not a measurement, and is labelled as one.
+
+---
+
+## S31-L17 -- **THE CVaR-VQE's HAMILTONIAN IS A TARGET-INDEPENDENT CONSTANT. THE QUANTUM STAGE CARRIES ZERO TARGET-SPECIFIC INFORMATION** -- STRONGER THAN T1 AND R1 TOGETHER (2026-09-21 00:36, lane P, verified independently by the coordinator)
+
+Found by lane P at n = 36 of 126. **I verified it myself before recording it**, because it is the
+sprint's headline and because every cross-lane claim I have made this sprint has been wrong.
+
+### The fact
+
+`core/pipeline.py` ~838 builds the Hamiltonian diagonal as `E = _zrank(pool["sc"][o])`, and
+`_zrank` (`core/pipeline.py:788-792`) is `rankdata` followed by standardisation. **The ranks of any
+128 distinct values are 1..128**, so the standardised vector is a **constant**. Verified on three
+independent random score vectors:
+
+```
+trial 0  first5: [-1.718572 -1.691507 -1.664443 -1.637379 -1.610315]   last3: [1.664443 1.691507 1.718572]
+trial 1  first5: [-1.718572 -1.691507 -1.664443 -1.637379 -1.610315]   last3: [1.664443 1.691507 1.718572]
+trial 2  first5: [-1.718572 -1.691507 -1.664443 -1.637379 -1.610315]   last3: [1.664443 1.691507 1.718572]
+```
+
+**Identical to six decimals.** Up to the pool's tie structure, `E` is **the same vector on every
+target in the benchmark.**
+
+### The consequence
+
+`p*` is a closed-form function of `(E, alpha, T)` alone (S31-L4), and `run_cvar_vqe` is seeded at 0.
+Therefore **both the closed-form optimum and the circuit's output are ONE FIXED WEIGHTING CURVE PER
+alpha**, identical across targets. Lane P's measurement:
+
+```
+H(p*) = 4.9136 bits at alpha = 1     sd across 126 targets = 1.4e-4
+H(p*) = 6.6392 bits at alpha = 0.25  sd across 126 targets = 4.5e-3
+ESS(p*) = 22.19 / 128  and  58.32 / 128
+```
+
+> **The quantum stage carries ZERO target-specific information.** The target enters the answer only
+> through the readout's own `P` and `W` -- never through the objective, the Hamiltonian, the CVaR,
+> or the state.
+
+**This is strictly stronger than both of the sprint's earlier capacity theorems.** T1 said the state
+specifies **one integer**. R1 said the selection readout's alphabet is **6.886 bits**. This says the
+state specifies **nothing at all**: the stage answers *"what fixed weight should rank k receive?"*,
+which is a **128-number global hyperparameter, not a per-target computation.** The rank -> candidate
+*mapping* is target-specific; the *weight on each rank* is not.
+
+### Why it explains every other negative in the sprint
+
+- **Why the objective does not point at good solutions** (charter §5E): it is not a function of the
+  target. There is nothing for it to point *at*.
+- **Why alpha does nothing beyond reshaping a fixed curve**, and why alpha = 1 on three of five
+  pinned folds makes CVaR inactive by construction (lane A).
+- **Why the circuit's 0.930-bit optimisation gap cancels in the mean** (lane A: readouts differ at
+  0.088x MDE while differing per-target by 0.102 A) -- both arms are the same fixed curve, perturbed.
+- **Why S31-L2's convex optimum over that family converged to the uniform average** (3.0522 from
+  production): the family's whole design space had already been searched, and the answer is uniform.
+
+### The deployed temperature, which corrects S31-L4
+
+`core/pipeline.py:113`: `VQE_LFO = {0:(1.0,0.3), 1:(0.25,0.3), 2:(0.25,0.3), 3:(1.0,0.3),
+4:(1.0,0.3)}` -- **T = 0.3 on every fold.** Lane L's 12 verification cells were run at T = 0.1 and
+0.05, so **none was at the deployed temperature**, and its statement that the closed form is always
+the more entropic distribution **reverses at the deployed T**: at alpha = 1 (folds 0/3/4, three of
+five) `H* = 4.91` against `H_vqe = 5.67` -- the circuit is *more* entropic than the optimum. Lane L
+has closed; recorded here against its entry with the original standing. Lane P's own registered
+prediction rests on the reversed premise and it is reporting that prediction as **falsified** rather
+than dropping it.
+
+### A control nobody asked for, which calibrates every built-chain comparison this project makes
+
+Lane P found that arm A uses `I.coordinate_average` while arms D/E/F use
+`core.pipeline.average_weighted` -- **the same operator in two implementations, agreeing only to
+~1e-14**, fed through a projection with **~1e13 amplification** (S31-L6). So `D - A` and `F - A`
+contain an unknown amount of pure implementation noise. It is running `A2 = average_weighted(uniform,
+top-75)` so that `A2 - A` **measures that noise on the built chain** and `F - A2` is the clean
+effect. **Without it the sprint would have published a contaminated number on a row I promoted.**

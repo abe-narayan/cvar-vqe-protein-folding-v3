@@ -352,6 +352,40 @@ def rows_path(shard=None):
     return ROWS if shard is None else ROWS.replace(".jsonl", ".s%d.jsonl" % int(shard))
 
 
+def e_constancy(pdbs):
+    """MEASURE the zero-information claim at the HAMILTONIAN, not only at the state.
+
+    `E = _zrank(dis[order[:128]])`.  `rankdata` of 128 distinct values is 1..128 and
+    standardising that is a constant vector, so `E` is the SAME diagonal on every target up
+    to the pool's tie structure.  This reports the largest per-element deviation of any
+    target's `E` from the tie-free reference `zrank(0..127)`, and how many targets carry a
+    tie in their top-128 at all -- the only mechanism by which `E` can vary.
+
+    It also reports how many targets' top-128 SET differs between the DIS order used here
+    (production tie key) and `np.argsort(sc, kind="stable")` as `core/pipeline.py:757` forms
+    it, because an exact tie at the 128 boundary can admit a different candidate.
+    """
+    ref = PL._zrank(np.arange(DIM, dtype=float))
+    worst, n_tied, n_setdiff, setdiff = 0.0, 0, 0, []
+    for p in pdbs:
+        z = CA.load(p)
+        dis = np.asarray(z["dis"], float)
+        order = np.asarray(z["order"], int)
+        o = order[:DIM]
+        E = PL._zrank(dis[o])
+        worst = max(worst, float(np.abs(np.sort(E) - ref).max()))
+        if len(np.unique(dis[o])) < DIM:
+            n_tied += 1
+        st = np.argsort(dis, kind=PL.PROD.tie_break)[:DIM]
+        if set(o.tolist()) != set(st.tolist()):
+            n_setdiff += 1
+            setdiff.append(p)
+    return dict(max_abs_dev_from_tiefree_reference=worst, n_targets_with_ties_in_top128=n_tied,
+                n_targets_top128_set_differs_from_stable_argsort=n_setdiff,
+                top128_set_differs_pdbs=setdiff, reference_first5=ref[:5].tolist(),
+                reference_last3=ref[-3:].tolist())
+
+
 def read_a2():
     out = {}
     for f in sorted(glob.glob(A2_ROWS.replace(".jsonl", "*.jsonl"))):
@@ -547,6 +581,7 @@ def phase_analyse(write=True):
     #: of `(E, alpha, T)` alone and `run_cvar_vqe` is seeded at 0, so BOTH distributions are
     #: (to within the ties) one fixed vector per `alpha`.  Measured, not asserted: the
     #: within-alpha spread of every scalar summary of them.
+    cert["E_constancy"] = e_constancy(pdbs)
     al = G("alpha")
     cert["target_independence"] = {}
     for a_val in sorted(set(al.tolist())):
@@ -702,6 +737,31 @@ def render(out):
                 c["armA_minus_canonical_mean"]))
     L.append("  worst per-target reprojection deviation %.4f A, %d targets above the %.4f A floor"
              % (c["armA_max_abs_dev_per_target"], c["armA_n_moved_over_floor"], CHAIN_FLOOR))
+    L.append("")
+    ec = c["E_constancy"]
+    L.append("THE HAMILTONIAN DIAGONAL IS A TARGET-INDEPENDENT CONSTANT")
+    L.append("  E = zrank(dis[order[:128]]); rankdata of 128 distinct values is 1..128, so E is")
+    L.append("  the fixed vector %s ... %s on EVERY target."
+             % (np.round(ec["reference_first5"], 6).tolist(),
+                np.round(ec["reference_last3"], 6).tolist()))
+    L.append("  max |sort(E_target) - tie-free reference| over %d targets: %.3e"
+             % (n, ec["max_abs_dev_from_tiefree_reference"]))
+    L.append("  targets with any tie inside the top-128: %d/%d   top-128 SET differs from"
+             % (ec["n_targets_with_ties_in_top128"], n))
+    L.append("  np.argsort(sc, kind='%s') on %d/%d targets %s"
+             % (PL.PROD.tie_break, ec["n_targets_top128_set_differs_from_stable_argsort"], n,
+                ec["top128_set_differs_pdbs"]))
+    L.append("")
+    L.append("TARGET-INDEPENDENCE OF BOTH DISTRIBUTIONS (E = zrank of 128 values is the SAME")
+    L.append("vector on every target up to ties, so p* and p_vqe are ONE FIXED RANK-WEIGHTING")
+    L.append("per alpha -- they carry no target-specific information at all)")
+    for a_val, v in sorted(c["target_independence"].items()):
+        L.append("  alpha=%s  H*  %.4f bits (sd %.1e, range %.1e)   ESS* %.2f of %d (sd %.1e)"
+                 % (a_val, v["H_star_bits"]["mean"], v["H_star_bits"]["sd"],
+                    v["H_star_bits"]["range"], v["ess_star"]["mean"], DIM, v["ess_star"]["sd"]))
+        L.append("            H_vqe %.4f bits (sd %.1e, range %.1e)  ESS_vqe %.2f (sd %.1e)"
+                 % (v["H_vqe_bits"]["mean"], v["H_vqe_bits"]["sd"], v["H_vqe_bits"]["range"],
+                    v["ess_vqe"]["mean"], v["ess_vqe"]["sd"]))
     L.append("")
     L.append("BY ALPHA (the DEPLOYED T is 0.3 on every fold; L1.1's 12 cells were at T=0.1/0.05,")
     L.append("so none of them is at the deployed temperature -- and the entropy ORDERING differs)")

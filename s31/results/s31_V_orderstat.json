@@ -1,0 +1,314 @@
+{
+ "seed": 31099,
+ "n": 126,
+ "basis": "CA POINT CLOUD",
+ "ORACLE": "every arm here is ORACLE / NOT DEPLOYABLE -- each is a per-target minimum taken against the native",
+ "prereg": "s31/AUDIT_V.md V1, registered before this script was run",
+ "reproduction": {
+  "best1_top128_recomputed": 2.145797484156169,
+  "best1_top128_s31C_ladder": 2.1457974841561676,
+  "note": "lane C's ORACLE_argmin128; agreement gates everything below",
+  "max_abs_dev_vs_C": 1.3322676295501878e-15
+ },
+ "V1a_exhaustive_pairs_vs_argmin": {
+  "cmp": {
+   "label": "V1.exhaustive 2-of-128 uniform (K=8128) - argmin over 128 (K=128), CLOUD",
+   "mean_a": 1.9070009615207406,
+   "mean_b": 2.145797484156169,
+   "effect": -0.2387965226354284,
+   "median_effect": -0.19136607109283493,
+   "se": 0.022345541198677953,
+   "mde": 0.06260326822221615,
+   "effect_over_mde": -3.8144417922048066,
+   "ci95_fold": [
+    -0.2732786293038508,
+    -0.21127822799668236
+   ],
+   "folds_same_sign": 5,
+   "W": 108,
+   "L": 18,
+   "n": 126
+  },
+  "gate": "MEASURED"
+ },
+ "V1b_MATCHED_K_pairs_vs_argmin": {
+  "cmp": {
+   "label": "V1.MATCHED-K 2-of-128 uniform (K=128 random pairs) - argmin over 128, CLOUD",
+   "mean_a": 2.222918718222934,
+   "mean_b": 2.145797484156169,
+   "effect": 0.07712123406676534,
+   "median_effect": 0.053465262402055236,
+   "se": 0.02482608038153997,
+   "mde": 0.06955274679692239,
+   "effect_over_mde": 1.1088165114735318,
+   "ci95_fold": [
+    0.040168290575505916,
+    0.11112200310035254
+   ],
+   "folds_same_sign": 5,
+   "W": 44,
+   "L": 82,
+   "n": 126
+  },
+  "gate": "MEASURED",
+  "n_draws": 8,
+  "per_draw_mean": [
+   2.2248746695498025,
+   2.213017956716101,
+   2.248248494220728,
+   2.2100678773974334,
+   2.2480757591505505,
+   2.2316630637438872,
+   2.2094080456839014,
+   2.197993879321071
+  ],
+  "per_draw_sd": 0.018599994775703694,
+  "note": "MEAN over draws, never the maximum (contract rule 10)"
+ },
+ "V1_REGISTERED_BAR": {
+  "bar": "'the 0.076 A is an order statistic, not error cancellation' FIRES if the matched-K pair family fails to beat the 128 singletons by >= 0.7 x MDE",
+  "exhaustive_gain_vs_argmin": -0.23879652263542828,
+  "matched_K_gain_vs_argmin": 0.07712123406676508,
+  "share_of_exhaustive_gain_surviving_at_matched_K": -0.32295794434371394,
+  "BAR_FIRES": true
+ },
+ "V1c_order_statistic_growth": {
+  "pairs_min_over_K": {
+   "1": 3.3421828191898793,
+   "2": 3.0728243368343517,
+   "4": 2.877653643903954,
+   "8": 2.6729432848664376,
+   "16": 2.5440242791066203,
+   "32": 2.4107542387720082,
+   "64": 2.3184385836098604,
+   "128": 2.2242056956354843,
+   "256": 2.1482728519224983,
+   "512": 2.0798696689568117,
+   "1024": 2.0252850741084893,
+   "2048": 1.979809490359758,
+   "4096": 1.9367107339606444,
+   "8128": 1.9070009615207406
+  },
+  "singles_min_over_K": {
+   "1": 3.565092351988936,
+   "2": 3.2048519409210527,
+   "4": 2.974616457786813,
+   "8": 2.732696213923558,
+   "16": 2.5517999124925557,
+   "32": 2.407055161021896,
+   "64": 2.263047742329718,
+   "128": 2.145797484156169
+  },
+  "note": "mean over 126 targets of the per-target minimum over K randomly chosen variants; NDRAW draws per cell, mean over draws"
+ },
+ "V1d_bit_budget_vs_S30_own_reference": {
+  "argmin_ref": {
+   "0": 3.4540004952559396,
+   "1": 3.2568036880758076,
+   "2": 3.0890168178649176,
+   "3": 2.904027348709485,
+   "4": 2.7159066951227566,
+   "5": 2.5115276226212107,
+   "6": 2.3431625802602087,
+   "7": 2.1457974866978704,
+   "8": 1.938308710971522,
+   "9": 1.7108244199364904
+  },
+  "T128_arms": [
+   {
+    "arm": "T128_s2_L1",
+    "mean": 2.161170052967789,
+    "sup_bits": 12.98868468677218,
+    "w_bits": 0.9999999999999996,
+    "total_bits": 13.98868468677218
+   },
+   {
+    "arm": "T128_s2_L16",
+    "mean": 1.914000837250387,
+    "sup_bits": 12.98868468677218,
+    "w_bits": 4.0874628412503435,
+    "total_bits": 17.076147528022524
+   },
+   {
+    "arm": "T128_s2_L2",
+    "mean": 1.9651570641874898,
+    "sup_bits": 12.98868468677218,
+    "w_bits": 1.5849625007211574,
+    "total_bits": 14.573647187493338
+   },
+   {
+    "arm": "T128_s2_L3",
+    "mean": 1.9419088833859943,
+    "sup_bits": 12.98868468677218,
+    "w_bits": 1.9999999999999984,
+    "total_bits": 14.988684686772178
+   },
+   {
+    "arm": "T128_s2_L32",
+    "mean": 1.9133173033831898,
+    "sup_bits": 12.98868468677218,
+    "w_bits": 5.044394119358463,
+    "total_bits": 18.033078806130643
+   },
+   {
+    "arm": "T128_s2_L4",
+    "mean": 1.9321687595095869,
+    "sup_bits": 12.98868468677218,
+    "w_bits": 2.3219280948873644,
+    "total_bits": 15.310612781659543
+   },
+   {
+    "arm": "T128_s2_L8",
+    "mean": 1.917478695549531,
+    "sup_bits": 12.98868468677218,
+    "w_bits": 3.169925001442311,
+    "total_bits": 16.15860968821449
+   },
+   {
+    "arm": "T128_s2_cont",
+    "mean": 1.9137592944099184,
+    "sup_bits": 12.98868468677218,
+    "w_bits": Infinity,
+    "total_bits": Infinity
+   },
+   {
+    "arm": "T128_s2_unif",
+    "mean": 2.069965657791884,
+    "sup_bits": 12.98868468677218,
+    "w_bits": 0.0,
+    "total_bits": 12.98868468677218
+   },
+   {
+    "arm": "T128_s3_L1",
+    "mean": 2.156815388053382,
+    "sup_bits": 18.381002109550913,
+    "w_bits": 1.5849625007211574,
+    "total_bits": 19.96596461027207
+   },
+   {
+    "arm": "T128_s3_L16",
+    "mean": 1.8445946123509662,
+    "sup_bits": 18.381002109550913,
+    "w_bits": 7.2573878426926495,
+    "total_bits": 25.638389952243564
+   },
+   {
+    "arm": "T128_s3_L2",
+    "mean": 1.9442498428835404,
+    "sup_bits": 18.381002109550913,
+    "w_bits": 2.584962500721156,
+    "total_bits": 20.965964610272067
+   },
+   {
+    "arm": "T128_s3_L3",
+    "mean": 1.885940391731591,
+    "sup_bits": 18.381002109550913,
+    "w_bits": 3.3219280948873626,
+    "total_bits": 21.702930204438275
+   },
+   {
+    "arm": "T128_s3_L32",
+    "mean": 1.8434474957114577,
+    "sup_bits": 18.381002109550913,
+    "w_bits": 9.131856960608808,
+    "total_bits": 27.51285907015972
+   },
+   {
+    "arm": "T128_s3_L4",
+    "mean": 1.8687385967815604,
+    "sup_bits": 18.381002109550913,
+    "w_bits": 3.9068905956085227,
+    "total_bits": 22.287892705159436
+   },
+   {
+    "arm": "T128_s3_L8",
+    "mean": 1.8496550711451452,
+    "sup_bits": 18.381002109550913,
+    "w_bits": 5.491853096329675,
+    "total_bits": 23.872855205880587
+   },
+   {
+    "arm": "T128_s3_cont",
+    "mean": 1.8438531081351388,
+    "sup_bits": 18.381002109550913,
+    "w_bits": Infinity,
+    "total_bits": Infinity
+   },
+   {
+    "arm": "T128_s3_unif",
+    "mean": 2.005684596134142,
+    "sup_bits": 18.381002109550913,
+    "w_bits": 0.0,
+    "total_bits": 18.381002109550913
+   },
+   {
+    "arm": "T128_s5_L1",
+    "mean": 2.1523555463939563,
+    "sup_bits": 27.979054609712584,
+    "w_bits": 2.3219280948873644,
+    "total_bits": 30.30098270459995
+   },
+   {
+    "arm": "T128_s5_L16",
+    "mean": 1.805908218887058,
+    "sup_bits": 27.979054609712584,
+    "w_bits": 12.242280950302451,
+    "total_bits": 40.221335560015035
+   },
+   {
+    "arm": "T128_s5_L2",
+    "mean": 1.9304432424617504,
+    "sup_bits": 27.979054609712584,
+    "w_bits": 3.906890595608522,
+    "total_bits": 31.885945205321107
+   },
+   {
+    "arm": "T128_s5_L3",
+    "mean": 1.8653236783159397,
+    "sup_bits": 27.979054609712584,
+    "w_bits": 5.129283016944967,
+    "total_bits": 33.10833762665755
+   },
+   {
+    "arm": "T128_s5_L32",
+    "mean": 1.8042579158850163,
+    "sup_bits": 27.979054609712584,
+    "w_bits": 15.846102478274922,
+    "total_bits": 43.825157087987506
+   },
+   {
+    "arm": "T128_s5_L4",
+    "mean": 1.8414023911885922,
+    "sup_bits": 27.979054609712584,
+    "w_bits": 6.1292830169449655,
+    "total_bits": 34.10833762665755
+   },
+   {
+    "arm": "T128_s5_L8",
+    "mean": 1.813229771756,
+    "sup_bits": 27.979054609712584,
+    "w_bits": 8.951284714966972,
+    "total_bits": 36.93033932467956
+   },
+   {
+    "arm": "T128_s5_cont",
+    "mean": 1.803654198384532,
+    "sup_bits": 27.979054609712584,
+    "w_bits": Infinity,
+    "total_bits": Infinity
+   },
+   {
+    "arm": "T128_s5_unif",
+    "mean": 2.0771560558295707,
+    "sup_bits": 27.979054609712584,
+    "w_bits": 0.0,
+    "total_bits": 27.979054609712584
+   }
+  ],
+  "reading": "S30-L11's claim is 'a plain argmin dominates at EVERY BIT BUDGET'. On S30's own argmin_ref curve the plain argmin reaches 1.9383 at 8 bits and 1.7108 at 9 bits, against T128_s2_unif's 2.0700 at 12.99 support bits. The claim is NOT inverted by the set-matched ladder; what lane C showed is that S30 SUPPORTED a correct claim with a set-mismatched pair."
+ },
+ "multiplicity": {
+  "family": "s31_V_orderstat",
+  "comparisons_emitted": 2
+ }
+}

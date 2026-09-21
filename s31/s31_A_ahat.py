@@ -147,7 +147,19 @@ def main(limit=None):
                 ah = ahat[k][i]
                 r[f"rho_{k}"] = float(np.corrcoef(ah, d["a"])[0, 1])
                 r[f"rmsd_{k}"] = rms(min_quad_simplex(-d["B"], ah))
+                r[f"amp_{k}"] = float(ah.std() / max(d["a"].std(), 1e-12))
+                # IN-BAND rho: corr(a_hat, a) restricted to the 24 truly best candidates.
+                # ORACLE band definition -- diagnostic only.  
+                bnd = np.argsort(d["a"], kind="stable")[:24]
+                r[f"rhoIB_{k}"] = float(np.corrcoef(ah[bnd], d["a"][bnd])[0, 1])
+                # FULL-AMPLITUDE twin: same SHAPE, rescaled to the oracle sd of a.  This is
+                # exactly the price curve s parameterisation, so it separates a_hat s SHAPE
+                # from its CALIBRATED AMPLITUDE.  ORACLE -- NOT DEPLOYABLE.
+                ahf = zs(ah) * d["a"].std()
+                r[f"rmsdFULL_{k}"] = rms(min_quad_simplex(-d["B"], ahf))
             r["rho_4_CONST"] = 0.0
+            r["amp_4_CONST"] = 0.0
+            r["rmsdFULL_4_CONST"] = 0.0
             r["rmsd_4_CONST"] = rms(min_quad_simplex(-d["B"], np.zeros(DIM)))
             # shuffled-B control on arm 3, and a shuffled-feature control
             sh = []
@@ -190,13 +202,21 @@ def main(limit=None):
                 ("1_DIS", "2_CONS", "3_DIS+CONS", "4_CONST")},
         "rmsd": {k: float(g(f"rmsd_{k}").mean()) for k in
                  ("1_DIS", "2_CONS", "3_DIS+CONS", "4_CONST")},
+        "rho_inband_top24_ORACLE": {k: float(g(f"rhoIB_{k}").mean()) for k in
+                 ("1_DIS", "2_CONS", "3_DIS+CONS")},
+        "amplitude_ratio_sd_ahat_over_sd_a": {k: float(g(f"amp_{k}").mean()) for k in
+                 ("1_DIS", "2_CONS", "3_DIS+CONS")},
+        "rmsd_FULL_AMPLITUDE_ORACLE_scale": {k: float(g(f"rmsdFULL_{k}").mean()) for k in
+                 ("1_DIS", "2_CONS", "3_DIS+CONS")},
         "LFO_betas": betas,
         "shufB_3_per_draw_mean": S3.mean(0).round(4).tolist(),
         "comparisons": [cmp(g(f"rmsd_{k}") - g("r_prod"), f"{k} - PROD75")
                         for k in ("1_DIS", "2_CONS", "3_DIS+CONS", "4_CONST")]
         + [cmp(g("rmsd_3_DIS+CONS") - g("rmsd_1_DIS"), "3_DIS+CONS - 1_DIS"),
            cmp(g("rmsd_3_DIS+CONS") - S3.mean(1), "3 - shuffledB(mean of 8)"),
-           cmp(g("rmsd_3_DIS+CONS") - g("rmsd_3_shuffeat"), "3 - shuffled-feature")],
+           cmp(g("rmsd_3_DIS+CONS") - g("rmsd_3_shuffeat"), "3 - shuffled-feature"),
+           cmp(g("rmsdFULL_3_DIS+CONS") - g("r_prod"), "ORACLE-scale 3 - PROD75"),
+           cmp(g("rmsdFULL_2_CONS") - g("r_prod"), "ORACLE-scale 2_CONS - PROD75")],
     }
     with open(OUT, "w") as fh:
         json.dump(summ, fh, indent=2)
