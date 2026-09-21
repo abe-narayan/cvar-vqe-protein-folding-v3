@@ -467,6 +467,44 @@ benchmark's reference is a **better-than-random** ensemble member — which stre
 
 ---
 
+## D8 — LOW. THE R1 CAPACITY FIGURE HAS TWO VALUES IN CIRCULATION, AND THE FORMULA WRITTEN BESIDE THE CORRECT ONE PRODUCES THE OTHER (JENSEN)
+
+**Claimed** — two versions, both live in `s31/LEDGER.md`:
+
+* `:208` and `:217`, the **"Final form of R1, third restatement"**: *"its capacity is
+  **log2(118.45) = 6.888 bits** mean, 6.555 worst"* and *"the number of distinct candidates
+  (**6.888 bits** mean)"*.
+* `:1817`, `:1827`, `:2459`, lane A's later S31-L13: *"**Corrected capacity: log₂(118.45) = 6.886
+  bits** mean"*, *"the **6.886**-bit alphabet"*, *"R1 said the selection readout's alphabet is
+  **6.886 bits**"*.
+
+**What the artefact says** — `s31/results/s31_A_cap.json` and `s31_A_cap_rows.jsonl`, 126 rows:
+
+```
+CAPACITY_bits_alphabet_mean (artefact)        6.886162
+MEAN over targets of log2(n_distinct_t)       6.886162   <- reproduces the artefact EXACTLY
+log2(MEAN n_distinct) = log2(118.452381)      6.888163   <- what the WRITTEN FORMULA gives
+n_distinct                                    min 94, max 128
+log2(94) = 6.5546                                        <- reproduces the quoted "6.555 worst"
+```
+
+**The artefact computes the mean of the per-target logs; the formula written beside it is the log of
+the mean.** By Jensen these differ systematically (`mean log ≤ log mean`), here by 0.002 bits. So
+**6.886 is the right number and `log2(118.45)` is the wrong formula for it**, while the entry that
+calls itself the *final form of R1* carries **6.888**, the value that formula actually produces.
+
+**Immaterial to every conclusion** — the point is only that 7 bits is not attained. It is recorded
+because two values for one quantity in one ledger is how a number drifts, and because the mean-of-
+logs is the quantity a "mean capacity" should be.
+
+**Corrected sentence:**
+
+> The selection readout's alphabet is the number of **byte-distinct** candidates, so its capacity is
+> `mean_t log2(n_distinct_t)` = **6.886 bits** (worst 6.555 at `n_distinct` = 94; 7.000 attained only
+> where `n_distinct` = 128) — **not 7**. `log2(mean n_distinct) = log2(118.45) = 6.888` is a
+> different quantity and should not be written as the formula for 6.886.
+
+---
 # CONFIRMED
 
 * **S31-L17's algebra is CORRECT** and I confirmed the step its own evidence did not test:
@@ -518,3 +556,36 @@ Family `s31_V_orderstat`: **2 fold-clustered paired comparisons** (V1a exhaustiv
 plus a 14-point × 2-family descriptive growth curve that spends no α (nothing is accepted or
 rejected on it). **One pre-registered falsifier, k = 1 for its own purposes.** Appended to
 `s31/MULTIPLICITY.md`.
+
+
+---
+
+# THE PATTERN ACROSS ALL NINE DEFECTS
+
+Every one is a quantity **transplanted across a boundary its definition does not cross**:
+
+| | boundary crossed |
+|---|---|
+| **D0** | an **object** — a distogram-corrector residual's baseline applied to readout outputs |
+| **D1, D2** | a **search size** — a min over 8128 read against a min over 128 |
+| **D3** | a **basis** — a built-chain value labelled CA cloud and differenced against a cloud baseline |
+| **D6** | a **data regime** — a tie-free synthetic draw standing in for a benchmark that ties 125/126 |
+| **D7** | a **moment** — a squares identity applied to first moments of a CV-1.12 distribution |
+| **D8** | **Jensen** — log of a mean written as the formula for a mean of logs |
+| **D4, D5** | **provenance** — a superseded draw, and a commit history that does not say who registered what |
+
+ NOTE 13 says cross-lane syntheses fail because nobody owns both halves. **D0 and D6
+show the same failure happening INSIDE a lane**, when a lane re-uses a number from an earlier sprint
+whose definition it has not re-read. The rule that covers both:
+
+> **A number carries its definition, not just its value. Re-read the definition at the source before
+> re-using it across a sprint boundary — and check that the formula you write beside it is the one
+> that produces it.**
+
+That is  applied to numbers rather than to memory files.
+
+**And the instrument lesson, which is the one I would keep:** the verifier asked whether a basis was
+**named** and passed 97/97 while the headline carried a **misnamed** one. **An audit that checks for
+an absent label cannot catch a wrong label.** The cross-basis check now added asks the second
+question and carries a self-test that fails loudly if it stops catching the defect that motivated it.
+
