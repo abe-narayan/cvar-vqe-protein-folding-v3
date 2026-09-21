@@ -383,17 +383,42 @@ def main():
     # M5 -- coherence with the pool common mode
     if m5:
         keys = [k for k in m5[0] if k not in ("pdb", "fold", "sd_mu")]
-        out["M5_coherence"] = {"n": len(m5), "admission_bar_S30": 0.6931,
+        # CORRECTED 2026-09-21 by lane V (s31/AUDIT_V.md D0), annotated in place with the
+        # original left standing (contract rule 13).  Until this edit these lines read:
+        #     out["M5_coherence"] = {"n": len(m5), "admission_bar_S30": 0.6931, ...}
+        #     ... admitted=bool(v.mean() < 0.6931))
+        # S30's 0.6931 is corr(UNCORRECTED DISTOGRAM PREDICTION ERROR, mu) -- a prior
+        # CORRECTOR's residual, an INPUT to scoring -- and S30's admission rule is stated for
+        # correctors.  Every arm here is an EMITTED READOUT error, an OUTPUT.  They share only
+        # the second argument.  Production reads 0.6931 in S30's corrector table and 0.9780
+        # here: same pipeline, same 126 targets, same mu, 0.285 apart, because they are two
+        # different errors.  NO READOUT-SPACE BAR HAS BEEN ESTABLISHED, so no pass/fail is
+        # emitted.  What survives -- and it is the valuable part -- is lane B's THEOREM: for
+        # any sum(a) = 1 the common mode passes through with coefficient exactly one, so coh
+        # tracks the readout's CONCENTRATION and not the ranker.  Contract rule 8, and rule 7.
+        out["M5_coherence"] = {"n": len(m5),
+                               "BAR_STRUCK": ("S30's 0.6931 admission bar is a CORRECTOR-space "
+                                              "quantity and is NOT applicable to these readout "
+                                              "arms; see s31/AUDIT_V.md D0. Compare arms to each "
+                                              "other, or to production's own readout (0.9780), "
+                                              "never to 0.6931."),
                                "note": ("coh = within-target corr(readout pair error, pool "
                                         "common-mode pair error mu). ORACLE / NOT DEPLOYABLE: "
                                         "both arguments need the native."),
                                "rows": m5}
+        ref = None
+        for k in keys:
+            v = np.array([r[k] for r in m5], float)
+            v = v[np.isfinite(v)]
+            if k in ("coordinate_average", "AVG"):
+                ref = float(v.mean())            # production's OWN readout: the matched reference
         for k in keys:
             v = np.array([r[k] for r in m5], float)
             v = v[np.isfinite(v)]
             out["M5_coherence"][k] = dict(mean=float(v.mean()), median=float(np.median(v)),
                                           sd=float(v.std()), n=int(len(v)),
-                                          admitted=bool(v.mean() < 0.6931))
+                                          vs_production_readout=(None if ref is None
+                                                                 else float(v.mean() - ref)))
 
     # M3 / M4
     out["M3_rho"] = {}
@@ -472,12 +497,20 @@ def main():
                 p.get("folds_same_sign", 0), g2.get("mean", float("nan"))))
     if "M5_coherence" in out:
         print("\nM5  COHERENCE with the pool common mode (ORACLE / NOT DEPLOYABLE)")
-        print("    S30 admission bar: ADMIT a corrector iff coh < 0.6931; uncorrected = 0.6931")
+        # CORRECTED 2026-09-21 by lane V (D0).  This line used to read:
+        #   "S30 admission bar: ADMIT a corrector iff coh < 0.6931; uncorrected = 0.6931"
+        # -- a CORRECTOR-space rule printed over READOUT-space arms.  Left standing above.
+        print("    NO readout-space bar exists. S30's 0.6931 grades a prior CORRECTOR's "
+              "residual,\n    not an emitted readout; production reads 0.6931 there and "
+              "0.9780 here.\n    Compare arms to production's own readout, never to 0.6931. "
+              "(s31/AUDIT_V.md D0)")
         for k, v in sorted(((k, v) for k, v in out["M5_coherence"].items()
                             if isinstance(v, dict) and "mean" in v),
                            key=lambda kv: -kv[1]["mean"]):
-            print("    %-28s coh = %.4f  (median %.4f, sd %.4f, n %d)  admitted=%s"
-                  % (k, v["mean"], v["median"], v["sd"], v["n"], v["admitted"]))
+            d = v.get("vs_production_readout")
+            print("    %-28s coh = %.4f  (median %.4f, sd %.4f, n %d)  vs production readout %s"
+                  % (k, v["mean"], v["median"], v["sd"], v["n"],
+                     "n/a" if d is None else "%+.4f" % d))
     print("\nG5  |rho| channel MINUS |rho| constant-alpha-helix control (paired, fold-clustered)")
     for k, v in out["G5_vs_helix_control"].items():
         print("    %-24s %+8.4f   %5.2fx MDE   %d/5 folds   CI [%+.4f, %+.4f]" % (

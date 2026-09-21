@@ -457,6 +457,50 @@ try:
           dig(fc, "coh_AVG_SEP_minus_AVG", "effect_over_mde"), basis="none")
     check("AVG_SEP affine-hull residual, RMS per coordinate", 0.0452,
           dig(fc, "affine_hull_departure", "AVG_SEP_residual_rms_A", "mean"), basis="none")
+
+    # ---- D0 REGRESSION GUARD (lane V).  A withdrawal that is not enforced comes back: the bar
+    # was struck from prose once already and was still hardcoded in two sources afterwards.
+    # FLAG is non-fatal, so this surfaces an outstanding fix in the verdict line without
+    # breaking the build.  Delete this guard only when 0.6931 is gone from S31 sources.
+    for _src in ("s31/s31_F_coh.py", "s31/s31_B2_inpool.py", "s31/s31_verify.py"):
+        if not os.path.exists(_src):
+            continue
+        # A mention in a COMMENT or a STRING is documentation of the withdrawal and is fine
+        # (contract rule 13 wants it left standing).  A NUMBER token is a LIVE numeric use.
+        # Tokenising is exact where a substring test is not: a first version of this guard
+        # matched the annotation strings in the very files that had been correctly fixed, and
+        # matched its own message text -- a guard that cannot pass is as useless as one that
+        # cannot fail.
+        import tokenize as _tk
+        _live = []
+        try:
+            with _tk.open(_src) as _fh:
+                for _t in _tk.generate_tokens(_fh.readline):
+                    if _t.type != _tk.NUMBER:
+                        continue
+                    try:
+                        _v = float(_t.string)          # per-token: `1j` etc. must not abort the file
+                    except ValueError:
+                        continue
+                    if abs(_v - 0.6931) < 1e-9 and _t.line.find("_v - 0.6931") < 0:
+                        _live.append(_t.start[0])
+        except Exception as _e:
+            # NEVER swallow this: a guard that cannot read a file reports "clean" for exactly
+            # the file it failed on.  A first version of this guard did precisely that -- one
+            # stray `1j` literal raised inside a blanket `except`, and the ONE file that still
+            # had the live bar was reported clean.  Surface it instead.
+            FLAG.append(("D0 guard COULD NOT PARSE (not evidence of clean): %r" % (_e,), _src))
+            print("  FLAG  %-46s D0 guard could not parse: %r" % (_src, _e))
+            continue
+        if _live:
+            FLAG.append(("D0: 0.6931 is a LIVE numeric use at line(s) %s"
+                         % ",".join(str(x) for x in _live), _src))
+            print("  FLAG  %-46s live 0.6931 at line(s) %s"
+                  % (_src, ",".join(str(x) for x in _live)))
+    # and the artefact must no longer publish a pass/fail derived from it
+    for _arm in ("AVG", "MED", "AVG_RG", "AVG_SEP", "ORACLE_best"):
+        if dig(fc, "coh", _arm, "admitted") is not None:
+            FLAG.append(("D0: artefact still publishes 'admitted'", "coh.%s" % _arm))
 except Exception as e:
     MISSING.append("lane F coh block (%s)" % e)
 

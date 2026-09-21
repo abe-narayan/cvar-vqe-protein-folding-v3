@@ -505,6 +505,84 @@ logs is the quantity a "mean capacity" should be.
 > different quantity and should not be written as the formula for 6.886.
 
 ---
+## D0 — CLOSED 2026-09-21 00:58. STRUCK FROM ALL THREE SOURCES AND NOW ENFORCED BY A REGRESSION GUARD
+
+* `s31/s31_F_coh.py` — struck by lane F; `BAR` removed, the artefact re-run at 00:55:43 and now
+  carrying a `STRUCK` field. **Verified: zero live numeric uses remain.**
+* `s31/s31_verify.py` — the two certified booleans removed, replaced by the **paired** contrast
+  `coh(AVG_SEP) − coh(AVG) = −0.0090, −2.3710× MDE, 5/5 folds`, with the originals quoted in place.
+* `s31/s31_B2_inpool.py` — **struck by lane V** (lane B has closed): `admission_bar_S30` and the
+  per-arm `admitted` boolean are gone, replaced by `vs_production_readout`, the difference against
+  **production's own readout** — a matched reference that needs nothing imported. The original lines
+  and the original stdout line are quoted in place (contract rule 13).
+* **A regression guard now enforces it** (`s31_verify.py`): it tokenises each source and FLAGs any
+  **NUMBER token** equal to 0.6931, so an annotation recording the withdrawal passes and a live use
+  does not. Verifier: **129 matched / 0 mismatched / 0 not-found / 0 FLAGGED.**
+
+**One artefact is deliberately NOT re-run:** `s31/results/s31_B2_inpool.json` still contains
+`admission_bar_S30` and per-arm `admitted` fields from its original run. Historical artefacts are
+immutable (rule 13) and its `coh` values are correct — **it is only the `admitted` booleans that are
+withdrawn, and they must not be quoted.** The script will not emit them again.
+
+---
+
+## D9 — MODERATE, AND IT WAS IN THE VERIFIER ITSELF. A CHECK WRITTEN AGAINST A KEY THAT HAS NEVER EXISTED
+
+**Claimed** — while D0 was being fixed, `s31/s31_verify.py` acquired
+
+```python
+check("coh(AVG_SEP) - coh(AVG), the paired contrast that carries the claim",
+      -0.0090, dig(fc, "coh_contrast", "AVG_SEP_minus_AVG", "effect"), basis="in-band")
+```
+
+**What the artefacts say.** `s31/s31_F_coh.py:177` writes `out["coh_AVG_SEP_minus_AVG"]`, and
+`s31/results/s31_F_coh.json` has top-level keys
+`['seed','n','STRUCK','ORACLE','basis','theorem','coh','coh_AVG_SEP_minus_AVG',
+'affine_hull_departure']`. **`coh_contrast` has never existed in either the script or any artefact.**
+
+**Consequence, which is why this is not cosmetic.** `dig` returns `None` for a missing path, `check`
+routes that to `MISSING`, and the verifier exits non-zero. For a window the sprint's trust anchor
+read **`MATCHED: 127 / KEYS NOT FOUND: 1`** — i.e. **the instrument that certifies every headline
+number was itself failing**, on a check written against an assumed key rather than a read one. It was
+repaired concurrently (the file now reads `coh_AVG_SEP_minus_AVG`) and the verifier is back to
+129/0/0/0.
+
+**This is contract rule 14 — *"prose is not evidence of code; run `ls` and read the file"* — committed
+inside the tool that exists to enforce it.** Seventh instance in the project's record.
+
+**Corrected sentence:** the verifier must read the artefact's key list before asserting a path.
+Recommend `dig` gain a strict mode for headline checks that names the keys that *do* exist when a
+path misses, so the failure says *"you meant `coh_AVG_SEP_minus_AVG`"* rather than *"not found"*.
+
+---
+
+## V-SELF — THREE ERRORS OF MY OWN, RECORDED BECAUSE THE THIRD IS THE BEST ILLUSTRATION IN THIS FILE
+
+Contract rule 24 makes me the auditor; it does not exempt me.
+
+1. **Multiplicity row numbered 913** off a regex that matched a `k`-column instead of a row index.
+   Caught on the next read, renumbered to 18 before anything quoted it.
+2. **Two backtick spans eaten by the shell** — I built a section inside a double-quoted
+   `python -c` string, so bash expanded `` `s31/STATE.md` `` and
+   `` `read-the-memory-body-not-the-index-line` `` as command substitutions and dropped them.
+   Repaired with the Edit tool so no shell is involved.
+3. **My D0 regression guard reported "clean" for the one file that still had the defect.** The first
+   version tested `"0.6931" in line and not line.startswith("#")`, which flagged the *annotation
+   strings* in the files that had been correctly fixed and flagged its own message text. The second
+   version tokenised — correct — but wrapped the whole file in `except Exception: continue`, and
+   `s31_B2_inpool.py` contains a `1j` complex literal, so `float('1j')` raised and **the entire file
+   was skipped silently.** The guard printed nothing for `s31_B2_inpool.py` and I would have read
+   that as passing.
+
+> **Error 3 is this audit's own thesis, committed by the auditor, within an hour of writing it: a
+> check that cannot fire is indistinguishable from a check that passed.** It is fixed two ways — the
+> `float()` conversion is now per-token so one odd literal cannot abort a file, and a parse failure
+> now **FLAGs with the exception text** instead of returning silently, because *"could not read"* must
+> never render as *"clean"*. It is recorded here rather than quietly repaired, which is the same
+> standard I applied to every other lane.
+
+---
+
 # CONFIRMED
 
 * **S31-L17's algebra is CORRECT** and I confirmed the step its own evidence did not test:
