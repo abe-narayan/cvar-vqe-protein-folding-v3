@@ -37,7 +37,7 @@ produced it, and this entry is provisional until it does.
 ```
 best sparse convex combination, K=500, s=10   1.1139      <- 2.10 A of headroom
 best single member, K=500                     1.7078      <- 1.50 A of headroom
-  + retrieval filter K=500 -> 128            +0.4357  ->  2.1435   [see the S32-L3 correction: 0.2477 of this is a pure ORDER STATISTIC and the
+  + distogram SCORE prefix 500 -> 128            +0.4357  ->  2.1435   [see the S32-L3 correction: 0.2477 of this is a pure ORDER STATISTIC and the
                                                         remaining 0.1872 has the SCORE performing WORSE THAN RANDOM]
   + prefix 128 -> 75                         +0.1620  ->  2.3055
   + selection / readout (uniform average)    +0.9051  ->  3.2105   PRODUCTION
@@ -165,5 +165,62 @@ score's value is outlier rejection for the average rather than best-member selec
 endpoint improves, that is deployable immediately — random selection needs no native information,
 which is the wall every other route has hit.** ≥ 8 draws, draw mean and draw-to-draw sd reported,
 never the best draw.
+
+---
+
+## S32-L4 -- **THE ENDPOINT'S DEFINITION, RECOVERED: 3.2105 IS NOT A STORED QUANTITY, AND THE CHAIN RUNG IS DISCONTINUOUS IN ITS INPUT AT ONE ULP** (2026-09-21 08:14, lane V)
+
+Lane V's charter Step 4. Artefacts `s32/results/s32_V_step4_endpoint.json`, `s32/s32_step4_rebuild.py`.
+
+**Everything upstream of the chain reproduces bit-exactly.** Targets 126; folds 25/23/25/23/30; the
+top-75 **set** reproduced 126/126 from an independent rescoring; the recomputed coordinate average
+matches the stored one to **1.42e-14**; CA cloud **3.048338** (want 3.0483); set mean **3.550683**;
+pool best K=500 **1.710824**; top-75 best **2.306153**; shipped argmin **3.454000** to six decimals.
+
+**The chain does not, and the reason is structural. Five different objects, not five estimates of
+one:**
+
+| value | what it actually is |
+|---|---|
+| 3.048338 | the CA point cloud — top-75 coordinate average, unprojected (`rmsd_avg`) |
+| 3.204076 | the **λ = 0** arm — nearest ideal geometry, no Ramachandran penalty (`rmsd_fit`) |
+| 3.214765 | the **λ = 0.3** arm — **the production pipeline's own emitted chain** (`rmsd_arm` / `ca`) |
+| 3.235460 | that chain **after AMBER relaxation** (`rmsd_full`) — AMBER costs **+0.0207 Å** |
+| **3.210534** | **the canonical 3.2105**: a **re-projection of the stored cloud**, λ = 0.3 arm, the 126 `item="prod"` rows of `s29/results/s29_O_chain_rows*.jsonl` |
+
+> **The canonical endpoint is not a cached scalar.** Its full definition is *the λ=0.3 multi-start
+> projection arm of `s12/instrument.project` applied to the production top-75 coordinate average,
+> CA-RMSD to native, averaged over tuning126*. On its own terms it reproduces exactly (3.210533995).
+> **It is 0.0043 Å better than the chain production itself emits (3.2148).**
+
+**And the mechanism behind the residual, which is the part that binds future measurement:**
+
+```
+2LNG   max|C_rebuilt - C_stored| = 7.1e-15   (one float64 ULP; cloud RMSD identical to 9 dp)
+         stored cloud  -> chain 4.778535      rebuilt cloud -> chain 4.879181    0.1006 A apart
+6QAX   max|dC| = 3.6e-15                      stored 4.226989 / rebuilt 4.078647  0.1483 A apart
+```
+
+**The projection is perfectly deterministic given bit-identical input — three in-process repeats
+identical to 9 dp, thread count 1/2/4/8 irrelevant — and it is DISCONTINUOUS in that input.**
+7e-15 × the ~1e13 amplification = 0.07–0.15 Å, which is exactly what is measured. An independent
+re-projection therefore disagrees with the S29 canonical on **126/126** targets: mean **+0.0021**,
+p90 **0.026**, max **0.5174** (2LNG — *the same target and magnitude S31's projection pin recorded
+as its s27-vs-s29 defect*).
+
+**Consequence, and contract rule 3 is hereby strengthened:** *"same cloud value" is not enough — it
+must be the same float64 bits.* Both sides of any chain contrast must be projected in one job from
+bit-identical clouds. **Unpaired cross-job chain claims below ~0.03 Å are not resolvable.** Paired
+comparisons are untouched: SE of the chain mean is 0.1543, so an unpaired MDE against production is
+**0.4324 Å**, and the anchor's 0.002–0.03 wobble cannot threaten a properly paired contrast.
+
+**Ties at the top-75 cut: 22/126 targets (20 with 2, 3 with 3), and they do NOT leak.** Production
+uses a seeded random tie key (`rng_for(pdb,"tiekey")`); lane V's independent stable argsort agrees on
+the top-75 **set** for 126/126. *But the tie key exists, and an `argmin` on a tied score in new lane
+code would leak the pool order* — the defect that once invented a 1.386 Å winner.
+
+**`ok: False` was exactly two assertions, and they are the same one:** built-chain mean 3.212625 vs
+3.2105 (+0.0021, tol 5e-4) and the projection price 0.164287 vs 0.1622 (+0.0021, inherited, since
+the cloud is exact).
 
 ---

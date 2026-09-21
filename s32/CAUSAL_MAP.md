@@ -19,8 +19,9 @@ sequence
   ▼
 K=500 pool ......................... best member   1.7078
   │                            best sparse s=10    1.1139   ⚠  <- the pool ALREADY contains this
-  │  score filter, 500 → 128
-  ▼                                                          +0.4357   LARGEST upstream loss
+  │  DISTOGRAM SCORE prefix, 500 → 128  (128 = 2^7, the VQE register: "the quantum field of view")
+  ▼                                                          +0.4350   57% order statistic,
+                                                                       43% score WORSE than random
 top-128 ............................ best member   2.1435
   │  prefix, 128 → 75
   ▼                                                          +0.1620
@@ -28,7 +29,7 @@ top-75 ............................. best member   2.3055
   │  UNIFORM COORDINATE AVERAGE  (the shipped readout)
   ▼                                                          +0.7378   (to cloud 3.0483)
 average CA cloud ................................. 3.0483
-  │  multi-start ideal-geometry projection, λ-ladder ending at λ = 0
+  │  multi-start ideal-geometry projection, λ-ladder (0.0 → 0.3); the CANONICAL arm is λ = 0.3
   ▼                                                          +0.1622
 BUILT CHAIN (PRODUCTION) ......................... 3.2105
 ```
@@ -52,15 +53,18 @@ information; every arrow after it only chooses or destroys.
 | **known** | the best-matching window has **12% identity** — *structure and sequence are decoupled at this length*; yet BLOSUM beats random at **every** K, and a perfect scorer over the retrieved set caps at 1.838 Å |
 | **could a better solution disappear here?** | Yes, and irreversibly — but **the pool it produces already supports 1.1139 Å**, so this is not where the *current* 3.21 Å is lost |
 
-### 2. K=500 → top-128  (the score filter)  — **+0.4357 Å, the largest upstream loss**
+### 2. K=500 → top-128  (the DISTOGRAM SCORE PREFIX — *not* retrieval)  — +0.4350 Å, **57% of it an order statistic**
 
 | | |
 |---|---|
-| **transformation** | keep the 128 best by the shipped L1 Bayes-risk distogram score |
+| **transformation** | keep the 128 best by the shipped L1 Bayes-risk **distogram score**. `s29_O_ladder.py` calls this *"rung 9: the top-128 prefix (**the quantum field of view**)"* — **128 = 2⁷, the VQE register width**. Retrieval is the earlier arrow (universe → K=500); calling this one "the retrieval filter", as I first did, attributes a score-stage loss to the retrieval stage |
 | **destroyed** | 372 candidates, among them the ones that made 1.7078 reachable |
 | **assumption** | that the score orders by structural quality |
 | **known** | the score's **in-band** skill is ≈ 0: ρ_in-band **−0.0262** (DIS) against ρ_global +0.1176. Its global correlation is outlier rejection, not ranking |
-| **OPEN (lane P)** | is the 0.4357 recoverable by *any* native-free rule, or is it information no rule could have kept? Price best-of-K first — "best member of a larger set" is mostly an order statistic |
+| **MEASURED (lane V, 2000 draws, cloud, ORACLE)** | the +0.4350 is **+0.2477 pure set-size order statistic** (a *random* 128 of the 500 loses that much) **+ 0.1872 the score ordering performing WORSE THAN RANDOM** (1.06× MDE, 72W/54L, Type-M inflated ~1.10×). The 128→75 arrow splits the same way: +0.0907 size, **+0.0696 ordering, also wrong-signed** |
+| **the mechanism, and it is clean** | over the pool the score lifts mean candidate quality 4.4533 → 3.5847 and **halves the spread** (sd 1.3206 → 0.6384), but the **5th percentile is unchanged** (2.6098 → 2.6184). ***It concentrates on the mode and buys nothing in the good tail***, so a random 128 samples the pool's fat left tail and the score's 128 does not |
+| **why that cuts both ways at arrow 4** | by S32-L2 the readout rewards **low ⟨w,a⟩ AND high spread**. The score improves the first and **destroys the second**. Which dominates at the endpoint is **not** decidable from this measurement and is a live experiment (lane P) |
+| **the survival statistic** | the K=500 best member survives into the top-128 on **63/126 targets — a coin flip** — at mean rank **170/500** |
 
 ### 3. top-128 → top-75  (the prefix)  — +0.1620 Å
 
@@ -84,10 +88,11 @@ information; every arrow after it only chooses or destroys.
 
 | | |
 |---|---|
-| **transformation** | L-BFGS-B over (φ, ψ) minimising CA-RMSD to the cloud plus `λ·pen(φ,ψ)`, from four generic starts, down a λ-ladder **ending at λ = 0** |
+| **transformation** | L-BFGS-B over (φ, ψ) minimising CA-RMSD to the cloud plus `λ·pen(φ,ψ)`, from four generic starts, down the λ-ladder **(0.0 → 0.3)**. **The canonical emitted chain is the λ = 0.3 arm**; `fit_ca` (λ=0) is a diagnostic. *An earlier version of this file said the final rung is λ=0 — wrong, and corrected here.* The Ramachandran prior is therefore **already active and already selecting among branches**: `lam_path`'s docstring — *"the prior's real job is choosing among near-degenerate solutions, and it can only do that if the optimiser can see them"* |
 | **the cost is a property of the OBJECT, not a constant** | real member **−0.0007 to −0.0030**; sparse combination s=10 **+0.0002**; dense prefix average **+0.1701**; production **+0.1622**. A 75-structure mean has a contracted backbone and is **not a valid chain**; the projection must re-expand it and that repair is **5% of the endpoint** |
 | **the degeneracy, from the module's own docstring** | *"A CA trace admits two ideal-geometry torsion solutions at near-equal objective distance, **one Ramachandran-plausible and one not**, and a warm-started optimiser cannot cross between them."* And: *"**THE REFERENCE DISAGREES WITH ITSELF, by up to 1.6 Å** … the structures this stage returns on those targets are **not determined by the objective; they are determined by the arithmetic**"* |
-| **why λ = 0 matters** | at the final rung the Ramachandran penalty has **zero weight**, so the branch is decided by a coordinate-distance gap of ~1e-7 among branches ~1e-1 apart in RMSD — amplification ~1e13, **73/126** targets below a 1e-6 margin |
+| **the degeneracy survives the prior** | lane V measured, **on the canonical λ=0.3 arm**, that a **one-ULP (7e-15 Å) change in the input cloud moves the built chain 0.10–0.15 Å**; an independent re-projection disagrees with the S29 canonical on **126/126** targets (mean +0.0021, p90 0.026, **max 0.5174**). The stage is perfectly deterministic given bit-identical input and **discontinuous in it** |
+| **a penalty is not a selector** | the prior enters as a **term in the objective**, biasing the optimisation. **Post-hoc ranking of converged branches by Ramachandran likelihood is a different operator and is untested.** Hint, same job, paired: λ=0.3 is **+0.0107 Å worse on the chain than λ=0** (3.2148 vs 3.2041) — the prior costs about a hundredth while buying plausibility. Get the MDE before reading anything into it |
 | **OPEN (lane R)** | ORACLE-best branch (priced as best-of-N, with split-half transfer); and whether a **native-free chiral** criterion picks it in band |
 
 ---
