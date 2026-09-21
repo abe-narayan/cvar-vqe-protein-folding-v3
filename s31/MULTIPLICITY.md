@@ -79,9 +79,9 @@ so **with the correlation measured**, not by preference.)
 
 | # | date time | lane | family | k | basis | claimed |
 |---|-----------|------|--------|---|-------|---------|
-| 1 | 2026-09-21 00:0x | D | D-B projection determinism: per-target pass-1 vs pass-2 bit-identity | 126 | built chain, 126 targets | determinism assertion only; no effect claimed |
-| 2 | 2026-09-21 00:0x | D | D-B 1e-14 input perturbation vs unperturbed reprojection | 126 | built chain, 126 targets | instrument property (noise floor); no effect claimed |
-| 3 | 2026-09-21 00:0x | D | D-B reprojection vs s29 canonical rows, and vs s27 DIS rows | 2 | built chain, 126 targets | agreement check; no effect claimed |
+| 1 | 2026-09-21 00:06 | D | D-B projection determinism: per-target pass-1 vs pass-2 bit-identity | 126 | built chain, 126 targets | determinism assertion only; no effect claimed |
+| 2 | 2026-09-21 00:06 | D | D-B 1e-14 input perturbation vs unperturbed reprojection | 126 | built chain, 126 targets | instrument property (noise floor); no effect claimed |
+| 3 | 2026-09-21 00:06 | D | D-B reprojection vs s29 canonical rows, and vs s27 DIS rows | 2 | built chain, 126 targets | agreement check; no effect claimed |
 
 *(Rows 1–3 are instrument characterisation, not hypothesis tests: they carry no α budget because
 nothing was accepted or rejected on them. They are registered anyway, because the rule is that
@@ -90,3 +90,34 @@ here, in the open, rather than by whoever would benefit from the answer.)*
 | 4 | 2026-09-20 23:57 | E | E1 direction: cos/corr(mu_hat, mu) levels + 2 matched controls, 2 pair masks | 28 | within-target cosine, 126 (106 long-range) targets | **1 pre-registered primary** (uncentered cos, all pairs, vs the permutation control) named in `PREREG_S31_E.md` §2 before any number; the other 27 are its robustness surface and carry no separate claim |
 | 5 | 2026-09-20 23:57 | E | E2/E3 applied correction arms: 14 arms x {built chain, CA cloud} vs PROD | 28 | both bases, 126 targets | **5 pre-registered** (E2/E3 native-free; E2o/E3o/class-ceiling under AMENDMENT 1) + 3 mandatory matched controls; the ORACLE decomposition arms are bounds, not hypothesis tests |
 | 6 | 2026-09-20 23:57 | E | E3 orthogonal SSE decomposition of y against mu and mu_hat | 18 | ORACLE energy/SSE shares, 126 targets | descriptive mechanism decomposition; **no effect accepted or rejected on it** -- it is the explanation of an effect S30 already measured |
+| 7 | 2026-09-21 00:10 | D | S31-L8 branch experiment: B4 vs PROD, ORACLE_B4 vs PROD | 2 | built chain, 126 targets (the CA cloud is the INPUT and is identical across arms, so there is no second basis) | **both pre-registered in `s31/PREREG_S31_D_branch.md` before any arm was computed**, with the decision rule and the expected outcome (H0) fixed in advance. ORACLE_B4 −0.0938 Å, 2.92× MDE, **ORACLE / NOT DEPLOYABLE**. B4 −0.0055 Å, **0.44× MDE, NOT A RESULT**. Secondaries (conditioning, tail, FAIL18/108) are descriptive and named in the prereg. |
+| 8 | 2026-09-21 00:10 | D | S31-L8 secondary strata: FAIL18 and the other 108 | 2 | built chain | pre-specified in the prereg §5.3; both reported (+0.0049 at 0.08×, −0.0072 at 0.69×), neither a result, **no stratum rescue attempted** |
+| 9 | 2026-09-21 00:16 | B | S31-L10 B1 achirality: ff14SB phase table (F2), U(x) vs U(Rx) with a matched rotation control (F1), Legacy 11-term parity (F3) | 0 | potential-function property checks | **spends no alpha** -- these are properties of the force field, not comparisons against a null. Recorded because F1's registered 1e-6 threshold FIRED and the matched control inverted the reading; the row exists so that is not invisible. |
+| 10 | 2026-09-21 00:16 | B | S31-L10 sweep parity: 19 chain/CA costs x {total, even, odd} preference contrast | 57 | built chain rungs, 126 targets | EXPLORATORY diagnostic of the S30 meter. No cost was accepted or rejected on it; it decomposes a published statistic. The reproduction of the published values to four decimals is a verification, not a claim. |
+| 11 | 2026-09-21 00:16 | B | S31-L10 in-pool: 11 channels x 2 bands x {rho, rho|DIS, rho|RG} plus the G5 control contrasts | 78 | per-candidate CA point cloud, 126 targets | **G2, G3 and G5 are pre-registered primaries** in `s31/PREREG_S31_B.md` with falsifiers fixed before any number (k = 1 each for their own purposes). The remaining cells are exploratory and are reported at the adjusted multiplier. G2 fired, G3 did not, **G5 fired at 1.81-3.85x MDE**. |
+| 12 | 2026-09-21 00:16 | B | S31-L10 candidate graph: C1 collapse (2) + C2 node statistics rho and rho\|medoid (9) | 11 | top-75 band, CA cloud, 126 targets | pre-check requested by the coordinator and run BEFORE anything was built on it. C1 did not fire, C2 fired. Nothing was deployed from it. |
+
+### Running total
+
+**k = 478 comparisons registered** as of 2026-09-21 00:16
+(the 332 below plus lane B's **146** in rows 9-12; the earlier 332 line is left standing
+immediately after this one rather than overwritten)
+
+**k = 332 comparisons registered** as of 2026-09-21 00:10
+(126 + 126 + 2 + 28 + 28 + 18 + 2 + 2 = 332, recomputed — the first version of this line said
+187, which was wrong by 145 and is corrected in place rather than silently; a multiplicity
+register whose own total does not add up is worse than none).
+
+**α-spending families only: k = 60 + lane B's 146 = 206** (rows 4, 5, 7, 8, 10, 11, 12; lane B
+counts rows 10-12 as α-spending in full even though row 10 is a decomposition of someone else's
+published statistic and row 11's three primaries were pre-registered -- the conservative choice is
+the honest one here). *Original line, left standing:* **α-spending families only: k = 60** (rows 4, 5, 7, 8). Rows 1–3 are instrument
+characterisation and row 6 is a descriptive decomposition: nothing was accepted or rejected on
+them, so they spend no α, and that judgement is recorded here in the open rather than left to
+whoever would benefit from it.
+
+At **k = 60** the adjusted multiplier is **4.183**, i.e. **1.49× the single-comparison MDE**, for
+any cell of an exploratory family. Pre-registered primaries keep 2.8016.
+
+*Lanes: append your row when you emit the family. A lower bound in the hundreds is what S30
+ended with and it is not a number anyone can correct with.*
