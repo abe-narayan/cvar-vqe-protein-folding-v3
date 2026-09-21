@@ -50,8 +50,8 @@ from s12 import instrument as I          # noqa: E402
 from s32.s32_D1_inband import spear, spear_partial, rg   # noqa: E402
 
 RES = os.path.join(HERE, "results")
-PER_FOLD = 3
-NCAND = 40
+PER_FOLD = 1
+NCAND = 24
 K_REST = 0.0          # free relaxation: the largest move physics can make
 STEPS = 200
 TOL = 5.0
@@ -142,7 +142,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--shard", type=int, default=0)
     ap.add_argument("--of", type=int, default=1)
+    ap.add_argument("--per-fold", type=int, default=PER_FOLD)
+    ap.add_argument("--ncand", type=int, default=NCAND)
     a = ap.parse_args()
+    globals()["PER_FOLD"] = a.per_fold
+    globals()["NCAND"] = a.ncand
     tg = chosen_targets()
     os.makedirs(RES, exist_ok=True)
     jl = os.path.join(RES, "s32_D2_basin_%d_%d.jsonl" % (a.shard, a.of))

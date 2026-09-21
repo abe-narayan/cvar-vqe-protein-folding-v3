@@ -348,3 +348,113 @@ with a same-job statement (CLEAN); and **ST5, which asserts its own input can ex
 S31's "verified a tie claim on random floats" failure, closed by construction.
 
 ---
+
+## S32-L(D1) -- **PHYSICS IS CLOSED AS A RANKER AND OPEN AS A MOVER; AND THE IN-BAND PROBLEM IS THE SIGN, NOT THE SIGNAL** (2026-09-21 09:05, lane D)
+
+Pre-registration `s32/PREREG_S32_D.md`, committed **`34973b1b`** before the first number.
+Artefacts: `s32/results/s32_D1_inband.json`, `s32_D1_signrandom.json`, `s32_D1_signshare.json`.
+**Basis: in-band Spearman ρ against true Cα-RMSD inside each target's shipped top-75 band, per
+target, aggregated over n = 126. This is a diagnostic, not a chain RMSD, and is never differenced
+against one.** ORACLE `rr` is an evaluation label; no arm reads it.
+
+### (a) What lane D closed by derivation, before spending anything
+
+Charter §13 permits reopening a closed direction with a named mechanism; **D0 requires the same
+burden in reverse — an observable may not be built until it names the hypothesis of G1 it breaks.**
+Doing that first closed more than it opened:
+
+- **Theorem D-E.** An achiral potential's stochastic propagator is `O(3)`-equivariant
+  (`−∇U` equivariant, thermal noise isotropic), so `⟨A⟩_{x,T,t}` for any achiral invariant `A` is
+  **itself an achiral invariant single-structure functional of the seed** — a distance-map reading by
+  G1. **Charter §23 (MD, short trajectory ensembles, conformational covariance, basin transitions,
+  state populations, metastability, transition rates, autocorrelation, dynamic modes) and §24's
+  ensemble reweighting and temperature-dependent response are closed as scalar rankers.** S31 §8
+  closed only the single-structure half and recorded that *no thermodynamics was computed*; this
+  closes the stochastic half on the same ground.
+- **D-E1.** Stochasticity is not an escape: the estimand is deterministic, the thermostat adds
+  variance. *Noise is not information.*
+- **D-E3.** A deterministic minimiser trajectory is a function of its start. **"Relax it and score
+  it" does not escape G1.**
+- **Theorem D-F.** `⟨F(x), G(x)⟩` for two `O(3)`-equivariant fields is `O(3)`-**invariant**, hence
+  achiral, hence a distance-map reading. **Force-vs-prior-gradient alignment, physics/prior
+  consistency and every other contraction of equivariant objects are closed.**
+- **Corollary D-G.** The only surviving escape is to **emit a displacement and apply it**.
+  *Physics is closed as a ranker and open as a mover* — which is also the shape of the prize, since
+  S31 §20.1 prices a **direction**.
+- **§0.2c, from the code not from the record.** A pool candidate stores **only** a Cα trace and
+  `φ/ψ`; sidechains are **modal rotamers**, hydrogens are **frozen local frames**, and there is no
+  PDBFixer in the repository. Every atom AMBER sees is `Ψ(seq, φ, ψ)` for a deterministic `Ψ`.
+  **AMBER has no resolution advantage over the torsions, so the "all-atom is a finer map" door is
+  closed and no all-atom static score was built.**
+
+**Two claims about chirality corrected against the record before measuring, not after.** The shipped
+`ff14SB + gbn2` is **reflection-invariant** (S31 Lemma B1, verified: 1340 torsion phases at distance
+0.000e+00 from {0, π}, no CMAP) — **AMBER is not a chiral scorer; this project has none.** And
+`core/project.py`'s *"the distance objective is exactly mirror-blind"* is a warning about a
+counterfactual objective: its **next sentence** says the shipped one *"is a COORDINATE distance and
+is chirality-sensitive"*, with an L-handedness assertion in `test_project.py`.
+
+### (b) AMBER and Legacy measured in band on the shipped instrument — charter §§32, 33
+
+```
+                    IN BAND (top-75)          WHOLE POOL (K=500)
+scorer            rho      se    xMDE       rho      se    xMDE   folds
+AMBER         +0.0000  0.0202    0.00    -0.0266  0.0213    0.45   3/5   62W/64L
+DIS           +0.0652  0.0282    0.83    +0.5678  0.0327    6.20   4/5
+LEG_total     +0.0376  0.0316    0.42    +0.3073  0.0339    3.23   3/5
+LEG_torsion   +0.0444  0.0243    0.65    +0.1676  0.0305    1.96   5/5
+RG (control)  +0.0501  0.0403    0.44    +0.2794  0.0382    2.61   3/5
+```
+
+**AMBER's mean in-band ranking skill is exactly zero**, and it is the *only* scorer here whose
+whole-pool ρ is also wrong-signed. `DIS` at 0.83× and `LEG_torsion` at 0.65× **reproduce S31 §9's
+own two figures exactly** — an independent replication of that table on a separately written
+instrument.
+
+### (c) The control that changes what the zero means — D1-N
+
+Within-band label permutation (score vector and band size held fixed, 24 draws per target, own
+distribution reported):
+
+```
+scorer        mean|rho|    null    ratio   xMDE  folds
+AMBER            0.1779  0.0948     1.88   2.36   5/5
+DIS              0.2496  0.0939     2.66   3.05   5/5
+LEG_total        0.2819  0.0908     3.10   3.52   5/5
+LEG_torsion      0.2142  0.0947     2.26   2.77   5/5
+```
+
+`Var(ρ) > 0` with `E[ρ] = 0`. **In-band ordering content exists on every scorer measured — including
+the one with exactly zero mean skill — and what is missing is the per-target SIGN.** This reproduces
+memory `in-band-ordering-is-per-target` on a channel it had never been measured on, and it means
+*"AMBER cannot rank"* is the wrong sentence: **AMBER ranks, sign-ambiguously.**
+
+### (d) The sign is not shared between independent Hamiltonians, and the reason is compactness
+
+AMBER and `LEG_total` agree on the in-band sign on **36.5%** of targets (z = **−3.0**, *anti*-agreement,
+survives Bonferroni at 10 tests). Mechanism: **`LEG_total`'s in-band sign agrees with plain `Rg`'s on
+68.3% (z = +4.1) and AMBER's on 31.7% (z = −4.1)** — Legacy tracks compactness in band, AMBER
+anti-tracks it, and that is *why* they disagree. Orienting AMBER by Legacy's sign is **−0.0508,
+0.92× MDE — NOT MEASURED and pointing the wrong way.**
+
+**ORACLE / NOT DEPLOYABLE price of the sign** (`mean|ρ|`, what the scorer would be worth given a
+perfect per-target sign): `RG` +0.3709, `LEG_total` +0.2819, `DIS` +0.2496, **AMBER +0.1779**, all
+4.9–5.7× MDE. Memory `in-band-ordering-is-per-target` prices 2.0 Å at ρ = 0.638, so **even a perfect
+sign oracle leaves the best of these short of the crossing price by more than 2×.**
+
+### (e) Chirality — D0-X, with a registered prediction that FAILED
+
+The chiral Cα pseudo-torsion scalar has real whole-pool skill (**+0.3302, 2.85× MDE, 5/5 folds**)
+that is **lost in band (+0.0607, 0.58× — NOT MEASURED)**. The registered prediction *"in-band share
+of chiral variance < 15%"* **failed at 23.6%** and is recorded as failed. What survives is the
+gradient: the top-75 filter removes **79% of the pool's chiral variance** (sd 0.3774 → 0.1678),
+which is a mechanism for two sprints' *"empty at 9–16 residues"* scope note rather than a restatement
+of it.
+
+### (f) The caveat on (b), measured rather than asserted
+
+The cached AMBER energies are **unminimised single points on the ideal-geometry rebuild and are
+clash-dominated**: median per-target pool median **29,668 kcal/mol**, p90 **6.83e6**, median
+per-target max **1.80e16**, and **58.6% of every 500-pool above 1e4 kcal/mol**. **(b) prices
+unminimised AMBER, not AMBER.** Rungs D2-R (relaxed energies in band) and D3-M (physics as mover)
+are running and settle it.
