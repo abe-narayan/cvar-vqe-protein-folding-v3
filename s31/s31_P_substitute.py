@@ -389,8 +389,10 @@ def phase_check():
     print("  Bayes-risk score under the HELD-OUT-fold model;  (alpha,T) = VQE_LFO[fold].")
     print("  The only oracle read in this module is `_oracle_rmsd`, after structures are final.")
     src = open(os.path.abspath(__file__)).read()
-    assert src.count('["nat_ca"]') == 1, "more than one native read site"
-    assert 'oracle_rr' not in src and 'z["rr"]' not in src, "an oracle rr read crept in"
+    #: the needle is assembled at run time so that this assertion does not count ITSELF.
+    needle = '["' + "nat" + '_ca"]'
+    assert src.count(needle) == 1, "more than one native read site"
+    assert ("oracle" + "_rr") not in src and ('z["' + 'rr"]') not in src, "an oracle rr read crept in"
     print("  asserted: exactly one `nat_ca` read site, no oracle `rr` read.")
     print("\ncheck OK")
 

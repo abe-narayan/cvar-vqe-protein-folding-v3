@@ -361,9 +361,14 @@ def phase_analyse():
     print("\n  F-C2b best native-free triple: %s j=%d %s -> %.4f (%+.4f vs production)  ->  %s" %
           (b["map"], b["j"], b["rule"], b["mean"], b["vs_production"],
            "FIRES" if out["F_C2b"]["fires"] else "REFUTED"))
-    print("  grid %s  split-half transfer %s" %
-          (out["F_C2b"]["grid_shape"], ST.fmt(out["F_C2b"]["split_half_transfer"])
-           if hasattr(ST, "fmt") else out["F_C2b"]["split_half_transfer"]))
+    sh = out["F_C2b"]["split_half_transfer"]; bk = out["F_C2b"]["best_of_k_within"]
+    print("  grid %s over 72 cells; per-target best-of-k priced: %s" %
+          (out["F_C2b"]["grid_shape"],
+           {k: (round(v, 4) if isinstance(v, float) else v)
+            for k, v in list(bk.items())[:6] if not isinstance(v, (list, dict))}))
+    print("  split-half transfer: %s" %
+          {k: (round(v, 4) if isinstance(v, float) else v)
+           for k, v in list(sh.items())[:6] if not isinstance(v, (list, dict))})
     print("  Gray prefix partition identical to binary on all targets: %s" %
           out["gray_prefix_partition_identical_on_all"])
     print("\n  wrote %s" % OUT)

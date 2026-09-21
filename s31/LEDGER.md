@@ -1561,3 +1561,335 @@ fraction is not "40%", it is negative.**
   `best1_top128` at -1.0657 is a different arm and is untouched here.
 * Nothing here is a deployable gain. Lane F emitted **12 comparisons** in this family; the
   registered family count is 7. Appended to `s31/MULTIPLICITY.md`.
+
+---
+
+## S31-L12 -- **THE COLLAPSE TO ONE SOURCE IS TRUE AND, AS AN INFORMATION STATEMENT, VACUOUS**: ANFINSEN MAKES `I(N;sequence) = H(N)`, SO THE DPI BOUND READS "THE POOL CONTAINS AT MOST EVERYTHING" AND CANNOT LIMIT ACCURACY -- AND **`bestm128 = 2.9027` SURVIVES AS A BOUND BUT ITS "LEAD" FRAMING WAS FALSIFIED IN S29 ITSELF** (2026-09-21 00:19, L)
+
+Requested by the coordinator, who asked to be attacked rather than agreed with. Full working:
+`s31/LIT_L.md` §L2.2, §L3.1.
+
+### PART 1 -- THE PREMISE SURVIVES, THE CONCLUSION DOES NOT
+
+**Premise, upheld.** `pool = f(sequence; library)` with a universal library is processing, so
+`I(N;pool) <= I(N;sequence)`. A codebook indexed by a sequence-derived key carries no target
+argument. **I could not break it.** Enumerating sources is closed: no field, energy, graph
+statistic or free energy is a second source.
+
+**Caveat the premise needs:** the library is NOT independent of the native for every target.
+`containment-threshold-is-at-the-null` records **4/126 targets carrying a verbatim copy in
+their own distogram's training set**. For those `N -> S -> pool` is broken and the DPI does not
+apply. That is **LEAKAGE, NOT A CHANNEL** -- it argues for excluding those 4, never for
+counting the library as a source.
+
+**Conclusion, REFUTED.** By Anfinsen the native is a function of the sequence, so
+
+```
+I(N ; sequence) = H(N)      -- the sequence already contains ALL of it
+```
+
+The DPI bound therefore reads **"the pool contains at most everything"**: true, and empty. It
+places **no constraint whatever on achievable accuracy**.
+
+> **If "all target-specific information is the sequence" implied a ceiling, AlphaFold would be
+> impossible.** A different computation on the same single source extracts far more than ours.
+
+**And this project has its own internal counterexample.** `esm-adds-nothing-for-short-peptides`
+was OVERTURNED: on SELECTION, ESM buys **0.288 A over one-hot (p = 0.005, n = 126)** -- a pure
+computation on the sequence beating a weaker computation on the same sequence, no new source,
+no new measurement. Under the strong reading that gain could not exist. It does.
+
+### WHAT THE ARGUMENT ACTUALLY LICENSES
+
+**NOT** "you need a measurement of the molecule, not a computation" -- that is unlicensed and
+adopting it would wrongly close the two escapes the field actually used. What is licensed:
+
+> **No re-combination of the objects we currently hold can help. The remaining moves are a
+> better ESTIMATOR or a better LIBRARY -- not a further source.**
+
+### THE DISTINCTION THE COLLAPSE INVITES US TO LOSE
+
+The library plays **two roles** and the enumeration conflates them:
+
+| role | verdict |
+|---|---|
+| as an information SOURCE | a constant, no target argument -- **not a source**. Coordinator is right |
+| as an architectural CEILING | **binding and measured**: ORACLE distances still give only ~1.95-2.0 A through this library |
+
+**"Not a source" does not mean "not a constraint."** The ~2.0 A figure is a LIBRARY statement,
+and it survives perfect information -- which is exactly what an informational argument can
+never produce. The two constraints that actually bind are both estimator/architecture facts:
+(1) in-band ordering **0.600** across targets vs **0.638** needed for 2.0 A; (2) ORACLE
+distances capping at **~1.95-2.0 A** through this library.
+
+### PART 2 -- AUDIT OF `bestm128 = 2.9027 A` (coordinator's §5)
+
+**The transfer arm EXISTS, in the entry that produced the number.** `s29/LEDGER.md:2777`,
+S29-L30 heading: *"ITS TRANSFERABLE PART IS ZERO -- THE ORACLE GLOBAL PREFIX IS m = 72 (WORTH
+-0.0018 A, i.e. THE SHIPPED 75) AND THE LEAVE-FOLD-OUT PREFIX IS +0.0079 A WORSE THAN
+PRODUCTION AT 0.30x MDE."* The 33-arm ladder (`s29/LEDGER.md:4288-4290`) carries a dedicated
+**`transferable`** column saying the same on all three prefix-m rungs, and
+`s29/REPORT_S29.md:252` lists *"A transferable prefix length m"* with verdict **FALSIFIED**.
+
+So the per-target ORACLE gain of **-0.3079 A is ~99.4% order statistics**, and S29 measured
+that and said so. **`grid-oracles-are-order-statistics` was HONOURED here, not violated.**
+
+**THE NUMBER DOES NOT DEFLATE. ITS USE DOES.** The intuition runs the wrong way:
+
+> Order-statistics inflation makes an ORACLE number **optimistically biased** -- and an
+> optimistically biased **UPPER BOUND IS STILL A VALID UPPER BOUND**.
+
+So S29's actual inference -- *"2.5 A is unreachable through this architecture"* -- is **safe,
+and safer than stated**: the true ceiling is WORSE than 2.9027, which strengthens
+unreachability. **The "architectural ceiling" framing was licensed.**
+
+What is **NOT** licensed is reading 2.9027 as *"a -0.3079 A lead available to a better
+selector."* S29 priced that at **-0.0018 A global / +0.0079 A LFO** and marked it FALSIFIED. If
+this sprint treats "close the gap to 2.9027" as its most promising remaining lead, that lead
+was measured at **0.6% of face value two sprints ago** and the caveat was dropped in
+re-quotation -- exactly the L3 pattern.
+
+### THE ONE THING GENUINELY STILL OPEN, FOR LANE F
+
+The transfer numbers were measured on the **POINT CLOUD** (S29-L30's arm is 2.7605 vs
+production 3.0483, both cloud). **2.9027 is the BUILT CHAIN**, and the cloud->chain price on
+that rung is **+0.1422**. So *"the transferable part is zero"* is quoted **ACROSS BASES**.
+Very likely fine, but not literally measured on the chain, and the charter's basis discipline
+forbids silent cross-basis transfer.
+
+> **Lane F: do not re-derive the ladder -- S29 already did. Pin the one open thing: run the
+> global-m and leave-fold-out-m arms ON THE BUILT CHAIN.** A two-arm measurement, not a
+> sprint. It either closes the last gap in a two-sprint-old claim or finds the only place it
+> could move.
+
+## S31-L13 -- **THE EXACT OBJECTIVE OF EVERY AVERAGING READOUT IS AN IDENTITY: ||C-t||^2 = <w,a> - 1/2 w'Bw, WITH THE NATIVE-FREE HALF PAIRWISE AND **REPULSIVE**. SO THE READOUT AND RANKING QUESTIONS ARE ONE PROBLEM AND THE WHOLE DEFICIT IS : CROSSING PRICE rho = 0.211 AGAINST THE SHIPPED SCORE'S 0.1176, ORACLE CEILING 1.829 A AGAINST PRODUCTION 3.048. THE DEPLOYABLE ARMS ARE **WORSE** (+0.133 A, 1.17x MDE, 5/5) AND THE SHUFFLED-B CONTROL FIRES ON THE ONE POSITIVE. R1 IS HALF FALSIFIED AND THE SURVIVING HALF CAPS CAPACITY AT **6.886 BITS, NOT 7** (2026-09-21 00:21, A)
+
+**Basis: CA POINT CLOUD throughout (production 3.0483 Å). Nothing here is on the built chain
+(production 3.2105 Å).** Fold-clustered SE on the pinned 5 folds, MDE = 2.8016 × SE.
+Pre-registration `s31/PREREG_S31_A.md`, committed inside 8ce5e1a0 before any number existed.
+Full working `s31/THEORY_A.md`. Code `s31/s31_A_r1.py`, `s31_A_cap.py`, `s31_A_readout.py`.
+Artefacts `s31/results/s31_A_{r1,cap,readout}.json` + `*_rows.jsonl`.
+
+**Instrument validated before anything was claimed:** my reconstruction of production's uniform
+DIS-top-75 average gives **3.048338 Å** against the canonical **3.0483**, and the shipped score
+argmin gives **3.4540** against the 3.454 asserted in `core/quantum.py`.
+
+---
+
+### 1. THE IDENTITY — the exact objective of every averaging readout, and it forces the sign
+
+For **every** `w` with `Σ_x w_x = 1` (non-negativity NOT required, so it covers the selection,
+convex and affine readouts in one formula) and any fixed frame:
+
+```
+|| Σ_x w_x W_x − t ||²_F   =   ⟨w, a⟩  −  ½ w' B w        EXACT
+   a_x  = ||W_x − t||²_F     ORACLE       (per-candidate squared error)
+   B_xy = ||W_x − W_y||²_F   NATIVE-FREE  (and ½w'Bw = tr Σ_w, the weighted dispersion)
+```
+
+Verified to **1.66e-11 max relative error** over 126 targets × 80 draws, on simplex draws *and*
+affine draws with negative weights. Four consequences, all derived, not measured:
+
+1. **The readout question and the ranking question are the same problem, with an equals sign.**
+   `B` is free and exact; `a` is the entire deficit.
+2. **The native-free half carries a MINUS sign** — at fixed quality the readout should
+   *maximise* weighted mutual spread. The brief's `H = diag(zrank) − λ·W(similarity)` with
+   `λ > 0` is attractive; the derivation says repulsive.
+3. **The attractive branch cannot produce a distribution at all.** `B` is a squared-distance
+   matrix, hence conditionally negative definite, so `w ↦ w'Bw` is **concave on the simplex**;
+   the objective is convex for `γ > 0` and **concave for `γ < 0`**, and a concave function on a
+   polytope is minimised at a **vertex** — i.e. the negative branch degenerates to the shipped
+   argmin, **by theorem**, and no tuning could have rescued it.
+4. **The forced operator is mean-field, not a Hamiltonian.** `∂/∂w_x = â_x − (Bw)_x` is the VMC
+   local energy of `H[w] = diag(â) − B`; the energy is **quartic in ψ**, so there is no per-shot
+   eigenvalue and no CVaR-VQE. Independent confirmation of lane L's S31-L4 closure from the
+   readout side.
+
+> **Caveat I am enforcing on myself: the deployed `Pt` is NOT `B`.** `Pt` is pairwise RMSD with
+> *per-pair* optimal superposition; `B` needs one *common* frame. Substituting `n·Pt²` breaks
+> the identity at **2.39 % median relative error**. Small, real, and not licensed.
+
+### 2. THE DERIVED READOUT IS MEASURED AND IT IS WORSE THAN PRODUCTION
+
+| arm (cloud, n = 126) | mean | status |
+|---|---|---|
+| shipped score argmin | 3.4540 | deployable |
+| `GAM(LFO)` — one LFO scalar γ | 3.1942 | deployable |
+| **`MEB` = `argmax_Δ ½w'Bw`** — quality-blind, **zero parameters, no score** | **3.1919** | deployable |
+| `CAL` — LFO-calibrated `â`, γ = 1 exactly | 3.1817 | deployable |
+| best cell of the whole γ grid (γ = 2) | 3.1687 | not a selection rule |
+| **`PROD75`** | **3.0483** | production |
+| ORACLE convex QP over the simplex | **1.8290**, support 6.54/128 | **ORACLE — NOT DEPLOYABLE** |
+| ORACLE affine (readout 2) | **0.0000**, rank 32.9 | **ORACLE — NOT DEPLOYABLE** |
+
+| comparison | mean | SE | × MDE | folds | verdict |
+|---|---|---|---|---|---|
+| **PRIMARY `CAL − PROD75`** | **+0.1334** | 0.0409 | 1.17 | 5/5 | **WORSE** |
+| `GAM(LFO) − PROD75` | +0.1459 | 0.0471 | 1.10 | 5/5 | WORSE |
+| `MEB − PROD75` | +0.1436 | 0.0420 | 1.22 | 5/5 | WORSE |
+| **`MEB − argmin(score)`** | **−0.2621** | 0.0342 | 2.74 | 5/5, 81W/45L | **BETTER** |
+| `γ=1 − shuffled-B` (8 draws) | −0.0250 | 0.0165 | **0.54** | — | **NOT A RESULT** |
+| `γ=1 − shuffled-score` | −0.0500 | 0.0306 | 0.58 | — | **NOT A RESULT** |
+
+> **The one positive, demolished by its own control.** Quality-blind dispersion maximisation
+> beats the shipped argmin by **−0.2621 Å at 2.74× MDE**. But replacing `B` with a **random
+> relabelling of itself** costs only **0.0250 Å at 0.54× MDE — NOT A RESULT**. The mechanism is
+> *"spread the weights over many candidates"*, not *"spread them along the real geometry"*.
+> **No part of the −0.2621 Å may be attributed to the pairwise structure the derivation is
+> about.** That is `operator-consumes-set-mean` again, and the control was placed at the
+> decisive step precisely so it could fire.
+
+### 3. THE PRICE OF `a` (ORACLE sweep — NOT DEPLOYABLE)
+
+`â` interpolated from the shipped DIS z-rank toward the true `a`, γ at the derived value 1:
+
+| ρ(`â`,`a`) | 0.118 | 0.330 | 0.604 | 0.853 | 0.974 | 1.000 |
+|---|---|---|---|---|---|---|
+| cloud RMSD | 3.170 | 2.893 | 2.614 | 2.332 | 2.027 | **1.829** |
+
+> **The shipped DIS score supplies ρ = 0.1176.** The derived readout crosses production at
+> **ρ = 0.211**, reaches **3.00 Å cloud at ρ = 0.248**, and 2.50 Å cloud at ρ = 0.705. Beating
+> production costs **1.79× in ρ (3.2× in ρ²)**; 3.00 Å cloud costs **2.11× in ρ (4.4× in ρ²)**.
+
+This ρ is **a different quantity** from S30 THEORY §8.3's `cos(u,e)`; the closeness of 0.1176 to
+that document's 0.1128 is a coincidence of two different objects and must not be quoted as two
+instruments agreeing.
+
+### 4. R1, ATTACKED — half survives and is stronger; half is falsified
+
+* **Falsified (point 4, and it makes capacity *lower*).** `argmin(P e_j) = j` needs `P[i,j] > 0`
+  for `i ≠ j`; duplicate candidates give `P[i,j] = 0` and `np.argmin` returns the first.
+  Reachable vertices **118.45 mean, 94 min**, and that count **equals the byte-distinct
+  structure count on every one of the 126 targets** — mechanism confirmed, not inferred.
+  `filter_pool` already dedups (`core/pipeline.py:766-773`); the readout does not.
+  **Corrected capacity: log₂(118.45) = 6.886 bits mean, 6.555 worst — not 7.**
+* **Falsified (points 1-3) for the arm that emits structure.** The cited `:869-871` are
+  `quantum_stage`'s *selector*. `average_weighted` (`:880-895`) uses the medoid only as the
+  superposition **frame** (`:890`) and emits a continuous convex combination at **`:894`**. The
+  emitted structure is **1.1144 Å (min 0.0730) from the nearest pool member**. `p` enters
+  through a ≤7-bit piecewise-constant frame **and** a continuous (D−1)-dimensional weight
+  vector; only the frame is capped.
+* **Realised capacity, ORACLE bits delivered (S30 currency) — ORACLE, NOT DEPLOYABLE:**
+  `p_θ`-weighted medoid **1.805**, `p*`-weighted **1.876**, score argmin **1.693**, uniform
+  medoid **1.659**. The stage moves the selection on **77.8 %** of targets and delivers
+  **0.112 bits** over the plain score argmin — **1.6 % of the 6.886-bit alphabet** — and the
+  closed form delivers more of them than the circuit does.
+
+### 5. EVERY DEPLOYED-QUANTUM CLOUD COMPARISON AT n = 126 IS BELOW 0.4× MDE
+
+| comparison | mean | SE | × MDE | verdict |
+|---|---|---|---|---|
+| quantum synthesis − PROD75 | +0.0178 | 0.0170 | 0.37 | NOT A RESULT |
+| quantum synthesis − uniform-128 (matched set) | +0.0125 | 0.0165 | 0.27 | NOT A RESULT |
+| sel(p_θ) − sel(uniform medoid) | −0.0308 | 0.0321 | 0.34 | NOT A RESULT |
+| quantum synthesis − `p*` synthesis | −0.0044 | 0.0177 | 0.09 | NOT A RESULT |
+
+**Correction to my own message to the coordinator:** I quoted the +0.0178 and +0.0125 without
+their MDEs, which made them read as measured costs. They are **NOT A RESULT**. The honest
+statement is that on the cloud basis the deployed quantum stage is **indistinguishable** from
+every classical alternative it competes with, including the closed form that replaces it.
+
+### 6. A1 — THE DEPLOYED OBJECTIVE'S OPTIMUM IS ONE SCALAR (independent of lane L's S31-L4)
+
+`p*_x ∝ exp((μ − E_x)_+/(αT))`, μ fixed by `Σ_{E_x<μ} p*_x = α`. Derived by simplex KKT +
+Rockafellar–Uryasev; lane L reached the same object by Sion duality. Two independent routes.
+At **α = 1 — three of the five pinned folds — `CVaR₁ = ⟨E,p⟩` and the CVaR is doing nothing at
+all**; the law collapses to plain Boltzmann and agrees with mirror descent to **1.4e-15**.
+
+Measured against the circuit: `KL(p_θ‖p*) = 0.930 bits` mean (median 1.298), TV 0.378, and
+`F(closed) ≤ F(numeric)` at **+1.8e-15**. Yet the emitted structures differ by **−0.0044 Å at
+0.088× MDE** while differing **0.102 Å per target in absolute value**. **The optimisation gap is
+real and cancels in the mean** — the sharpest available statement of "the readout discards what
+the objective computes".
+
+### 7. THE ANSATZ'S INDUCTIVE BIAS (coordinator's redirect (b))
+
+Schmidt ranks of `ψ(θ)` across the six cuts: **2, 4, 8, 8, 4, 2** — an **MPS Born machine of
+bond dimension exactly `2^layers = 8`**, which pins lane L's Han-et-al. framing to this ansatz
+rather than to Born machines in general. R² of `log p` on the objective's own shape (the hinge
+`(μ−E)₊`, on which `log p*` scores 1.000 by construction): **random θ 0.0071, best of 400
+draws 0.0538, optimised `p_θ` 0.467.**
+
+> **One sentence: the reachable set starts essentially orthogonal to the objective's shape,
+> optimisation carries it to half of it, and it stops there.** That is not a bias *toward*
+> anything structural — it is a ceiling at about half the right shape, which is lane L's
+> expressivity floor in a different currency.
+
+**My own explanation of the residual, refuted.** I predicted a *basis* mismatch (a product
+state's log-probability is additive over bits, hence a function of `popcount(x)`; `log p*` is a
+hinge in the rank's *value*). The registered native-free intervention — relabel so rank `i` goes
+to the `i`-th bitstring in `(popcount, value)` order — made it **worse**: KL 0.967 vs 0.930,
+cloud **−0.0031 Å at 0.060× MDE, NOT A RESULT**; popcount adds 0.016 of R² beyond the hinge.
+**I have no replacement explanation and am not fitting one after the fact.**
+
+### 8. DEFECT FIXED: `core/quantum.py` free_energy docstring, on the real instrument
+
+Asserted: *"for ANY alpha the minimiser concentrates p on the lowest-energy basis states … state
+entropy 0.01 bits at alpha=1 … and it is a property of CVaR, not of the optimiser."* Measured at
+`T = 0`, 8 seeds/target, deployed per-fold α:
+
+| | n | entropy at `T = 0` |
+|---|---|---|
+| α = 1 (folds 0, 3, 4) | 78 | **0.258 bits** |
+| α = 0.25 (folds 1, 2) | 48 | **3.596 bits** |
+
+At α = 1 the minimiser is the unique argmin vertex and the collapse **is** a property of CVaR.
+At α < 1 the argmin set is `{p : p_x₀ ≥ α}`, a face of **positive volume**, so the objective
+does not determine `p` at all and the optimiser's path picks the point — **no collapse, and the
+entropy belongs to the optimiser**, the opposite of the sentence. The quantifier "for ANY alpha"
+is **false by theorem**. Corrected in place with the original quoted, as lane D did for
+`pipeline.py:821`.
+
+### 9. WHAT THIS CLOSES
+
+1. **Q1** — escaping a fixed order needs a `λ`/`ψ`-dependent gradient; non-diagonal `H` supplies
+   one only under the VMC local energy, which is not a measurement. Under computational-basis or
+   spectral CVaR a **generalised prefix theorem** applies (A2).
+2. **Q2 as a quantum question** — mean-field, quartic in ψ, no per-shot eigenvalue; and a
+   candidate-index register's Hilbert dimension *is* the candidate count, so every operator on
+   it is one `eigh` away. Agrees with lane L by two independent arguments.
+3. **Q2's proposed sign** — the consensus/attractive branch degenerates to the shipped argmin,
+   by theorem.
+4. **The derived objective as a deployable readout** — 0.12–0.15 Å worse than production at
+   1.1–1.2× MDE, 5/5 folds, with the shuffled-B control showing the pairwise content is not
+   producing even the part that works.
+5. **Q3** — every construction in this lane is classically reducible: A1's optimum is one
+   bisection (`O(D log 1/ε)`), any diagonal `H` is one sort, any non-diagonal `H` on a candidate
+   register is one `eigh` (`O(D³)` ≈ 1 ms at D = 512), the mean-field objective is a convex QP.
+   **Nothing here is a quantum mechanism, and the reason is the encoding, not the Hamiltonian.**
+
+### 10. WHAT IT OPENS — the only thing in this lane worth compute
+
+> The exact objective is `⟨w,a⟩ − ½w'Bw`. **Half is free and exact; the entire deficit is `a`.**
+> ORACLE ceiling of the convex readout **1.829 Å** against production 3.048, crossing price
+> **ρ(â,a) = 0.211** against the shipped **0.1176**.
+
+Two consequences for other lanes:
+
+* **Charter §7C (sparse weighted readout): the exact optimum is already sparse — 6.54 of 128
+  members with no sparsity penalty imposed.** Sparsity is an *output* of the correct objective,
+  not a design choice; and any sparse-readout work that does not improve `â` is spending effort
+  on the half that is already exact.
+* **Readout 2's ORACLE ceiling is exactly 0 Å**, by rank (`rank(aff{W_x}) = 32.9 ≥ 3n−3` on all
+  126; measured residual 0.0000 on every target). It is an over-parameterised interpolator: 127
+  weights against ~33 residual dimensions. So **"0.2516 Å under an ORACLE objective" is a
+  statement about a regulariser, not a class ceiling** — and the simplex constraint is exactly
+  the regulariser the uniform average enjoys for free. That *derives* S31-L2(2) ("expressivity
+  without an aligned objective is harmful") rather than observing it.
+
+### 11. REGISTERED PREDICTIONS, SCORED (full table in `s31/THEORY_A.md` §8)
+
+**HELD:** A3-i (identity 1.66e-11); A3-frame (2.39 %); A3-sign (LFO γ > 0 on **5 of 5** folds);
+A1-e readout half (0.09× MDE); A1-d `T=0` seed sd (0.162 > 0.15).
+**REFUTED / MISSED:** A1-v as written (the statistic measured my reference solver, not the
+closed form — my error); A1-e KL (0.930 vs `< 0.10`, **10×**); A1-d deployed-`T` seed sd
+(0.096 vs `< 0.05`); **A3 PRIMARY** (+0.1334 vs the registered `[−0.15,+0.10]`); A3-meb
+magnitude (+0.144 vs `[+0.3,+1.5]`); **A3-oracle** (1.829 vs `< 1.2`, by 0.63 Å); the popcount
+relabel hypothesis.
+
+**Direction of the misses:** two ran *against* my hypothesis (the primary landed worse than my
+band; the KL was 10× my prediction) and two ran *toward* it (I put the ORACLE ceiling 0.63 Å too
+low, and over-predicted how badly quality-blind MEB would do, which flattered the derivation by
+making its failure look inevitable). `A3-frame` is the only clause where being right cost me
+something — it forbade substituting the deployed `Pt` for `B`.
+

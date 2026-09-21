@@ -323,9 +323,9 @@
  },
  "provenance": {
   "module": "s31_C_index.py",
-  "started_utc": "2026-09-21T07:18:59+00:00",
-  "source_sha256": "fb9bad2e8af74dd8",
-  "git_commit": "e41dd3de8dcb",
+  "started_utc": "2026-09-21T07:19:23+00:00",
+  "source_sha256": "411a698349e18c46",
+  "git_commit": "bdef6e2a2dab",
   "git_dirty": true
  },
  "F_C2c": {

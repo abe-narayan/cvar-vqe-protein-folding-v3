@@ -272,10 +272,217 @@ tests fact 3 directly by putting the objective into the ansatz's basis.
 
 ## 7. MEASUREMENTS
 
-*(filled from `s31/results/s31_A_r1.json`, `s31_A_cap.json`, `s31_A_readout.json`)*
+n = 126, CA point-cloud basis, fold-clustered SE on the pinned 5 folds, MDE = 2.8016 × SE.
+Artefacts: `s31/results/s31_A_r1.json`, `s31_A_cap.json`, `s31_A_readout.json` and the three
+`*_rows.jsonl` beside them. Data path validated: my reconstruction of production's uniform
+DIS-top-75 average gives **3.048338 Å** against the canonical **3.0483**, and the shipped
+score argmin gives **3.4540** against the 3.454 quoted in `core/quantum.py`.
+
+### 7.1 The deployed quantum stage, on the cloud basis
+
+| comparison | mean | SE | × MDE | verdict |
+|---|---|---|---|---|
+| quantum synthesis − PROD75 | +0.0178 | 0.0170 | 0.37 | **NOT A RESULT** |
+| quantum synthesis − uniform-128 (matched set) | +0.0125 | 0.0165 | 0.27 | **NOT A RESULT** |
+| uniform-128 − PROD75 | +0.0053 | 0.0152 | 0.12 | **NOT A RESULT** |
+| sel(p_θ) − sel(uniform medoid) | −0.0308 | 0.0321 | 0.34 | **NOT A RESULT** |
+| quantum synthesis − `p*` synthesis | −0.0044 | 0.0177 | 0.09 | **NOT A RESULT** |
+
+> **On the CA cloud at n = 126, every comparison involving the deployed quantum stage is below
+> 0.4× MDE.** It is not measurably better or worse than the classical alternatives it competes
+> with, including the closed form that replaces it. I earlier quoted the +0.0178 and +0.0125 to
+> the coordinator without their MDEs, which made them look like measured costs. They are not.
+
+### 7.2 R1 and realised capacity
+
+| quantity | value |
+|---|---|
+| byte-distinct candidates in the top-128 | **118.45 mean, 94 min** |
+| reachable vertices of `argmin(P e_j)` | **118.45 mean, 94 min** — equal on every target |
+| alphabet capacity | **6.886 bits mean, 6.555 worst** (not 7) |
+| emitted structure to nearest pool member | **1.1144 Å mean, 0.0730 Å min** |
+| `sel(p_θ)` agrees with `sel(uniform)` | 22.2 %, i.e. the weighting moves it on **77.8 %** |
+
+ORACLE bits delivered (S30 currency, `k − E[log₂ rank]`), **ORACLE — NOT DEPLOYABLE**:
+
+| selector | bits |
+|---|---|
+| `p_θ`-weighted medoid | **1.805** |
+| `p*`-weighted medoid | 1.876 |
+| score argmin (no quantum stage) | 1.693 |
+| uniform medoid | 1.659 |
+
+> The quantum stage moves the selection on 78 % of targets and delivers **0.112 bits more than
+> the plain score argmin**, against an alphabet of 6.886 — **1.6 % of the register's capacity**.
+> And the closed form `p*` delivers more of them than the circuit does.
+
+### 7.3 The readout identity and its arms
+
+Identity max relative error over 126 × 80 draws (simplex **and** affine with negatives):
+**1.66e-11**. Deployed `Pt` substituted for `B`: **2.39 % median relative error** — the
+distinction is real and `Pt` is not licensed by the derivation.
+
+| arm | mean cloud RMSD | status |
+|---|---|---|
+| shipped score argmin | 3.4540 | deployable |
+| `GAM(LFO)` | 3.1942 | deployable, one LFO scalar |
+| **`MEB` = `argmax_Δ ½w'Bw`, quality-blind** | **3.1919** | **deployable, ZERO parameters, no score** |
+| `CAL` (LFO-calibrated `â`, γ = 1) | 3.1817 | deployable, one LFO scalar |
+| best cell of the whole γ grid (γ = 2) | 3.1687 | not a deployable selection rule |
+| **`PROD75`** | **3.0483** | production |
+| ORACLE convex QP over the simplex | **1.8290** (support 6.54 / 128) | **ORACLE — NOT DEPLOYABLE** |
+| ORACLE affine (readout 2) | **0.0000** (rank 32.9) | **ORACLE — NOT DEPLOYABLE** |
+
+| comparison | mean | SE | × MDE | folds | verdict |
+|---|---|---|---|---|---|
+| **PRIMARY `CAL − PROD75`** | **+0.1334** | 0.0409 | **1.17** | 5/5 | **WORSE** |
+| `GAM(LFO) − PROD75` | +0.1459 | 0.0471 | 1.10 | 5/5 | WORSE |
+| `MEB − PROD75` | +0.1436 | 0.0420 | 1.22 | 5/5 | WORSE |
+| **`MEB − argmin(score)`** | **−0.2621** | 0.0342 | **2.74** | 5/5, 81W/45L | **BETTER** |
+| `γ=1 − shuffled-B (8 draws)` | −0.0250 | 0.0165 | 0.54 | — | **NOT A RESULT** |
+| `γ=1 − shuffled-score` | −0.0500 | 0.0306 | 0.58 | — | **NOT A RESULT** |
+| ORACLE convex QP − PROD75 | −1.2193 | 0.0454 | 9.59 | 5/5, 126W | ORACLE |
+| ORACLE affine − PROD75 | −3.0483 | 0.0907 | 12.00 | 5/5, 126W | ORACLE |
+
+> **The one positive, and its own control demolishing the reason for it.** Pure dispersion
+> maximisation with **no score at all** beats the shipped argmin selector by **−0.2621 Å at
+> 2.74× MDE, 5/5 folds**. But the **shuffled-B control fires**: replacing `B` with a random
+> relabelling of itself costs only 0.0250 Å at **0.54× MDE — NOT A RESULT**. So the mechanism
+> is **"spread the weights over many candidates"**, not **"spread them along the real
+> geometry"**. `B`'s *content* is not being used, only its effect on the support's size. That
+> is `operator-consumes-set-mean` arriving once more, and **no part of the −0.2621 Å may be
+> attributed to the pairwise structure the derivation is about.**
+
+Within the derived family the score is worth 0.050 Å (0.58× MDE, NOT A RESULT), and the whole
+family — quality-blind or not — sits **0.12 to 0.15 Å below production**, measured.
+
+### 7.4 The price of the quality estimate (ORACLE sweep — NOT DEPLOYABLE)
+
+`â` interpolated from the shipped DIS z-rank toward the true `a`, γ at the derived value 1 in
+Å²:
+
+| ρ(`â`, `a`) | 0.118 | 0.330 | 0.604 | 0.853 | 0.974 | 1.000 |
+|---|---|---|---|---|---|---|
+| cloud RMSD | 3.170 | 2.893 | 2.614 | 2.332 | 2.027 | **1.829** |
+
+> **The shipped DIS score supplies ρ = 0.1176.** The derived readout crosses production at
+> **ρ = 0.211**, reaches **3.00 Å cloud at ρ = 0.248**, and **2.50 Å cloud at ρ = 0.705**.
+> Beating production costs a factor of **1.79 in ρ (3.2× in ρ²)**; 3.00 Å cloud costs
+> **2.11× in ρ (4.4× in ρ²)**.
+
+This is a **different `ρ`** from S30 THEORY §8.3's `cos(u, e)`. The numerical proximity of
+0.1176 to that document's 0.1128 is a coincidence of two different quantities and must not be
+quoted as agreement between two instruments.
+
+### 7.5 The inductive bias (the coordinator's redirect (b))
+
+| quantity | value |
+|---|---|
+| Schmidt ranks of `ψ(θ)` across the six contiguous cuts | **2, 4, 8, 8, 4, 2** — capped at `2^layers` |
+| R² of `log p*` on the hinge `(μ − E)₊` | **1.000** (by construction — the yardstick) |
+| R² of `log p_θ` on the hinge | **0.467** |
+| R² of `log p_θ` on popcount(x) | 0.122 |
+| R² of `log p_θ` on hinge + popcount jointly | 0.483 |
+| R² of `log p` on the hinge, **random θ from the init law**, mean of 400 | **0.0071** |
+| the same, **best of 400** | **0.0538** |
+| entropy at random θ | 4.889 bits |
+
+> **In one sentence: the reachable set is an MPS Born machine of bond dimension `2^layers = 8`
+> over the bits of the DIS rank; it starts essentially orthogonal to the objective's shape
+> (R² 0.007, best-of-400 0.054), optimisation carries it to R² 0.467, and it stops there.**
+> That is not a bias *toward* anything structural — it is a **ceiling at about half the right
+> shape**, which is the same statement as lane L's expressivity floor in a different currency.
+
+**A hypothesis of mine, refuted.** I predicted the residual was a *basis* mismatch: a product
+state's log-probability is additive over bits and, at equal per-qubit odds, a function of
+`popcount(x)` alone, whereas `log p*` is a hinge in the rank's *value*. The registered
+native-free intervention — relabel so rank `i` goes to the `i`-th bitstring in
+`(popcount, value)` order, putting the objective into the ansatz's own basis — **made it
+slightly worse**: KL to `p*` 0.967 against 0.930, cloud RMSD **−0.0031 Å at 0.060× MDE, NOT A
+RESULT**. Popcount adds only 0.016 of R² beyond the hinge. **The residual is not a
+popcount-versus-value basis mismatch.** I do not have a replacement explanation and would
+rather say so than fit one after the fact.
+
+### 7.6 The `core/quantum.py` entropy-collapse claim, corrected on the real instrument
+
+The docstring asserted that "for ANY alpha the minimiser concentrates p on the lowest-energy
+basis states … state entropy 0.01 bits at alpha=1 … and it is a property of CVaR, not of the
+optimiser." Measured at `T = 0`, 8 seeds per target, at the deployed per-fold α:
+
+| | n | entropy at `T = 0` | seed sd of cloud RMSD |
+|---|---|---|---|
+| `α = 1` (folds 0, 3, 4) | 78 | **0.258 bits** | 0.1634 Å |
+| `α = 0.25` (folds 1, 2) | 48 | **3.596 bits** | 0.1599 Å |
+
+At `α = 1`, `CVaR₁ = ⟨E,p⟩` and the minimiser is the unique argmin vertex, so the collapse is
+real and **is** a property of CVaR. At `α < 1` the argmin set is `{p : p_x₀ ≥ α}`, a face of
+**positive volume**, so the objective does not determine `p` at all and the optimiser's path
+picks the point — **3.596 bits, no collapse, and the entropy that exists belongs to the
+optimiser**, which is the opposite of the sentence. The quantifier "for ANY alpha" is false by
+theorem. Corrected in place, with the original quoted.
 
 ---
 
 ## 8. REGISTERED PREDICTIONS AND THEIR OUTCOMES
 
-*(scored in §8 of the ledger entry)*
+| clause | registered | measured | verdict |
+|---|---|---|---|
+| A1-v | `max abs(closed − numeric) < 1e-8` | 3.6e-4 | **REFUTED AS WRITTEN** — the statistic measures my reference *solver*, not the closed form. The correct check, `F(closed) ≤ F(numeric)`, holds at **+1.8e-15**. My clause, my error. |
+| A1-e (KL) | `KL(p_θ ‖ p*) < 0.10` bits | **0.930** | **FALSIFIED, ~10×** |
+| A1-e (readout) | the two readouts within 0.02 Å | −0.0044, 0.09× MDE | **HELD** |
+| A1-d (`T = 0` seed sd) | `> 0.15 Å` | 0.162 | **HELD** |
+| A1-d (deployed `T` seed sd) | `< 0.05 Å` | 0.096 | **REFUTED, 1.9×** |
+| A3-i | identity max rel err `< 1e-10` | 1.66e-11 | **HELD** |
+| A3-frame | deployed `Pt` breaks it by `> 1 %` | 2.39 % | **HELD** |
+| **A3 PRIMARY** | `CAL − PROD75` in `[−0.15, +0.10]` | **+0.1334, 1.17× MDE, WORSE** | **MISSED** by 0.033 — and it is the direction I said in §6 of the prereg I would report plainly rather than search past |
+| A3-sign | LFO γ `> 0` on `≥ 4` of 5 folds | **5 of 5** (5.0, 2.0, 3.0, 1.5, 1.0) | **HELD**, and the negative branch is closed by theorem rather than by the grid |
+| A3-meb | `MEB − PROD75` in `[+0.3, +1.5]` WORSE | +0.1436 WORSE | **direction HELD, magnitude MISSED** (2× too small) |
+| A3-oracle | `QPORACLE < 1.2 Å` | **1.829** | **REFUTED** by 0.63 Å |
+| (b) popcount relabel | the residual bias is popcount-versus-value | −0.0031 Å, 0.060× MDE; KL worse | **REFUTED** |
+
+**Direction of my misses, recorded because it is the only thing that makes the rest
+trustworthy.** Two ran *against* my hypothesis (the primary landed worse than my band; A1-e's
+KL was 10× my prediction). Two ran *toward* it: I put the convex ORACLE ceiling 0.63 Å too low,
+and I over-predicted how badly the quality-blind MEB arm would do, which flattered the
+derivation by making its failure look inevitable. `A3-frame` is the only clause where being
+right cost me something — it forbids substituting the deployed `Pt` for `B`, which would have
+been convenient.
+
+---
+
+## 9. WHAT THIS LANE CLOSES, AND THE ONE THING IT OPENS
+
+**Closed.**
+
+1. **Q1** — the escape from a fixed order needs a `λ`- or `ψ`-dependent gradient; non-diagonal
+   `H` supplies one only under the VMC local energy, which is not a measurement (§2).
+2. **Q2 as a quantum question** — the forced operator is mean-field and quartic in `ψ`, with no
+   per-shot eigenvalue (§3.1 item 4); independently, a candidate-index register's Hilbert
+   dimension *is* the candidate count, so every operator on it is an `eigh` away (§5).
+3. **Q2's proposed sign** — the attractive/consensus branch is concave on the simplex and
+   therefore degenerates to the shipped argmin, by theorem (§3.1 item 3).
+4. **The derived objective as a deployable readout** — `CAL`, `GAM` and `MEB` are all
+   **0.12–0.15 Å worse than production at 1.1–1.2× MDE, 5/5 folds**, and the shuffled-B control
+   shows the pairwise content is not what produces even the part that works (§7.3).
+5. **My own popcount explanation of the ansatz gap** (§7.5).
+
+**Open, and it is the only thing in this lane worth compute next sprint.**
+
+> The exact objective for every averaging readout is `⟨w,a⟩ − ½w'Bw`. **Half of it is free and
+> exact. The entire deficit is `a`.** The convex readout's ORACLE ceiling is **1.829 Å** against
+> production's 3.048, and the crossing price is **ρ(â,a) = 0.211** against the shipped score's
+> **0.1176**.
+
+Two consequences the sprint should carry:
+
+* **The readout question and the ranking question are one problem, with an equals sign.** Any
+  future work on "sparse weighted readout" (charter §7C) that does not improve `â` is spending
+  effort on the half that is already exact. And the exact optimum is *already* sparse —
+  **6.54 of 128 members, with no sparsity penalty imposed** — so sparsity is an output of the
+  correct objective, not a design choice to be tuned.
+* **Readout 2's ORACLE ceiling is exactly 0 Å**, by rank (`rank(aff{W_x}) = 32.9 ≥ 3n−3` on all
+  126, measured residual 0.0000). It is an over-parameterised interpolator: 127 weights against
+  ~33 residual dimensions. So "0.2516 Å under an ORACLE objective" is a statement about a
+  *regulariser*, not about a class ceiling — and the simplex constraint is precisely the
+  regulariser the uniform average enjoys for free. That is the mechanism behind S31-L2(2)
+  ("expressivity without an aligned objective is harmful"), derived rather than observed.

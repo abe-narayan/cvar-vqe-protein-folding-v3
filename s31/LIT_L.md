@@ -286,28 +286,11 @@ a bound on where this can go, not a diagnosis of where it is stuck now.
 
 ---
 
-## L2 — THE NEW-OBSERVABLE QUESTION (in progress)
+## L2-PRELIM — superseded, kept only as a record of what was believed first
 
-Theorem G1 leaves **chiral** and **many-body** observables open. First pass on the
-chiral side:
-
-**Vibrational circular dichroism (VCD) and Raman optical activity (ROA)** are genuinely
-chirality-sensitive — they measure differential response to circularly polarised light, so
-they are *not* functions of the achiral distance map and therefore sit outside G1. Unlike
-most of the structural-biology literature this project has had to discount, they work **in
-our length band**: VCD is "sensitive to short-range order" and discriminates beta-sheet
-from helices and disorder, and ROA has been applied to model peptides of ~6 residues
-(*Chem. Rev.* 2020, 120:3381 and refs.).
-
-**But the likely wall is data availability, not physics** — the same wall as chemical
-shifts (`torsion-restraints-reach-the-target`: shifts exist for only 54/126 targets, and
-ORACLE-perfect torsions on all of them still leave the instrument at 2.021 A). A
-forward-computable observable with no measured target values is a *re-reading of the
-structure*, not a new channel. Checking coverage next; **I will not report VCD/ROA as a
-live channel until I can state how many of the 126 targets have measured spectra.**
-
----
-
+My first pass said VCD/ROA look open on the chiral side and that *"the likely wall is
+data availability, not physics."* That guess was right, and §L2 below replaces this
+section with the measurement that settles it (92.9% NMR) — **read §L2, not this.**
 
 ---
 

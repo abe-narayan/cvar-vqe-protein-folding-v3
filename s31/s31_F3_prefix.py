@@ -25,6 +25,7 @@ import os
 import sys
 
 import numpy as np
+from zlib import crc32
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -136,7 +137,10 @@ def run_randfamily():
                                % (pdb, dev))
         rows_rand = []
         for d in range(NDRAW):
-            rng = np.random.default_rng(SEED + 1000 * d + abs(hash(pdb)) % 997)
+            # crc32, NOT hash(): Python salts str hashing per process (PYTHONHASHSEED), so the
+            # first version of this line produced draws that could not be regenerated in another
+            # process.  Defect found by lane F and annotated in place in S31-L11.
+            rng = np.random.default_rng(SEED + 1000 * d + crc32(pdb.encode()))
             v = np.empty(K128)
             for m in range(1, K128 + 1):
                 S = rng.choice(K128, m, replace=False) if m < K128 else np.arange(K128)
