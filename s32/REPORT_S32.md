@@ -10,6 +10,8 @@ Branch `s26` · instrument `tuning126`, 126 targets, 9–16 aa · endpoint **mea
 Charter `s32/BRIEF.md` (verbatim, 2,087 lines) · Ledger `s32/LEDGER.md` · State `s32/STATE.md`
 Contract `s32/S32_CONTRACT.md` · Causal map `s32/CAUSAL_MAP.md` · Verifier `s32/s32_verify.py`
 Multiplicity `s32/MULTIPLICITY.md` · Theory `s32/THEORY_Q.md`
+Published: <https://claude.ai/artifact/BiAF9fiysaHGTHH1CYNQmL> · rebuild with `python s32/build_report_page.py`
+(the page renders this file client-side, so the artifact and the repository cannot drift)
 
 ---
 
