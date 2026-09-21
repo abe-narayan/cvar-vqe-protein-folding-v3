@@ -735,7 +735,8 @@ ZERO windows at `n ≥ 26`** — `peptide_db` caps at 25 and `fragment_db` at 20
 
 **The MDE it can resolve**, built chain, realised: **1.29 Å** pool headroom, **1.45 Å** selection,
 **0.48 Å** retrieval, **0.46 Å** sparse gain, **0.82 Å** filter skill — roughly **4× wider** than the
-canonical instrument's. **Anything under ~0.46 Å here is unresolvable and is reported as such.**
+canonical instrument's — **and it varies per rung, so it is quoted per comparison rather than as one
+constant.** **Anything under ~0.46 Å here is unresolvable and is reported as such.**
 
 ### 7.2 The ladder, BUILT CHAIN, both lengths, complete
 
@@ -772,6 +773,21 @@ against 3.5 : 1 at L ≈ 13. **P3** (projection cost tracks non-physicality): a 
 **+0.0385** and a dense 75-member average for **+0.3356**.
 
 > ### The readout's share of the recoverable loss is **77.9% at L ≈ 13 and 82.0% at L ≈ 55**. The shape is preserved and **the readout's share GROWS.** This sprint's conclusions are not a peptide-length artefact.
+
+**But say *which* shape is preserved, because one rung does not replicate.** `filter_skill` — the
+shipped `avg75` against a matched **random-75** control — is **−0.1421 at 1.27× MDE (a RESULT)** at
+L ≈ 13 and **−0.3171 at 0.39× MDE (NOT A RESULT)** at L ≈ 55. ***BLOSUM's endpoint filter value does
+not replicate at length.*** The shape is preserved **in the ORACLE rungs and the readout rung**, not
+universally.
+
+**And one absolute comparison that must NOT be made.** An earlier draft of this section said
+*"averaging buys more in absolute terms at length (−2.58 Å against −1.16 Å)."* **That is
+arithmetically right and misleading twice.** Everything at length is ~2.9× larger, so a 2.2× larger
+absolute gain is **relatively smaller** (1.35 → 1.27) — *a number crossing a boundary its definition
+does not cross.* And more seriously, **at length `m = 75` is past the optimum**: the cloud m-curve
+minimises at **m = 3** (8.130) against 9.409 at m = 75, so the comparison is an artefact of the
+`pool_mean` reference. **Correctly-sized averaging would buy much more, and m = 75 specifically is
+1.28 Å worse than the best prefix.**
 
 **But contract rule 16's CONSTANTS do not survive, only its ORDERING.** *"A real deposited member
 projects for free, −0.0007 to −0.0030"* becomes **+0.0385 at L ≈ 55 — 13–55× larger.** The rule is
@@ -997,9 +1013,9 @@ space at this length** rather than anything retrieval discovered.
    saturated.
 
    **And the one named engineering prerequisite:** the deployed distance prior is **hard-capped
-   at peptide length** —  sets ,  tops out at 24, so at
+   at peptide length** — `core/predict.py` sets `MAXLEN = 26`, `SEP_BINS` tops out at 24, so at
    n = 55 **27% of all pairs collapse into a single terminal bin** that in training held only
-   |i−j| ∈ {24, 25}, and the MLP carries raw  and raw  fitted only on n ∈ [8, 26].
+   |i−j| ∈ {24, 25}, and the MLP carries raw `n` and raw `j−i`, fitted only on n ∈ [8, 26].
    ***It is evaluated outside its fitted support by construction.*** **Retraining it is the
    single largest named piece of work a long deployment needs**, and until it is done the
    distogram-defined rungs of the ladder cannot be evaluated at length at all.
