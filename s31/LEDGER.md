@@ -1436,7 +1436,7 @@ this entry that beats `DIS` in band (`DIS` is 0.83×, NOT MEASURED).
 | **pair-level** graph quantities | **OPEN** | C1 did not fire; needs a pair-level operator |
 | chiral functionals at 40+ residues | **still open, still unaskable here** | the theorem is length-free, the emptiness is not |
 
-## S31-L11 -- **`bestm128 = 2.9027` IS AN ORDER STATISTIC, AND THE PREFIX AXIS IS A *WORSE-THAN-ARBITRARY* 7-BIT INDEX.** A MATCHED RANDOM-SUBSET FAMILY OVER THE SAME TOP-128, SAME OPERATOR, SAME K, SAME SIZE DISTRIBUTION, BUYS **-0.4191 A** AGAINST THE PREFIX FAMILY'S **-0.2879 A** -- **146% OF IT.** BOTH PRE-REGISTERED BARS FIRE (2026-09-21 00:17, F)
+## S31-L11 -- **`bestm128 = 2.9027` IS AN ORDER STATISTIC, AND THE PREFIX AXIS IS A *WORSE-THAN-ARBITRARY* 7-BIT INDEX.** A MATCHED RANDOM-SUBSET FAMILY OVER THE SAME TOP-128, SAME OPERATOR, SAME K, SAME SIZE DISTRIBUTION, BUYS **-0.4191 A** AGAINST THE PREFIX FAMILY'S **-0.2879 A** -- **146% OF IT.** BOTH PRE-REGISTERED BARS FIRE (2026-09-21 00:17, F) *[annotated 00:45: the control was re-run from zero with reproducible seeding after I found a `hash(pdb)` defect in my own code; the reproducible figures are -0.4279 and **149%**, and the headline should be quoted from those. The 146% above is left standing per rule 13. Both fire the 80% bar by more than 60 points. See 5b.]*
 
 **Pre-registered** in `s31/PREREG_S31_F.md` §11 (commit `de852bef`), **before any aggregate of this
 family existed**, with two bars written so they could fire. Both fired.

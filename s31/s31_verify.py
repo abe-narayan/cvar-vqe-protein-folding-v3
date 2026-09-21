@@ -383,6 +383,69 @@ if not paths_only:
     except Exception as e:
         MISSING.append("s26 governor/jobrun agreement check (%s)" % e)
 
+# ================================================== LANE F -- S31-L11 (F3) and the coh diagnostic
+print()
+print("--- lane F: S31-L11, the prefix-length order-statistic audit ---")
+try:
+    f3 = load("s31/results/s31_F3_prefix.json")
+    check("F3a bestm128 vs production", -0.3079,
+          dig(f3, "F3a_chain", "cmp", "effect"), basis="chain")
+    check("F3a bestm128 mean", 2.9027, dig(f3, "F3a_chain", "cmp", "mean_a"), basis="chain")
+    check("F3a production mean (re-projected by S29, same rows)", 3.2105,
+          dig(f3, "F3a_chain", "cmp", "mean_b"), basis="chain")
+    check("F3a bestm128 vs m=75", -0.2879, dig(f3, "F3a_cloud", "cmp", "effect"), basis="cloud")
+    # the two registered bars, recomputed from the artefact rather than read from prose
+    gp = dig(f3, "F3e_matched_random_family", "gain_prefix")
+    gr = dig(f3, "F3e_matched_random_family", "gain_random_mean")
+    check("F3e matched random family, gain", -0.4279, gr, basis="cloud")
+    check("F3e share of the prefix gain", 1.4864, gr / gp, basis="cloud")
+    exact("F3e BAR 'the m axis is an order statistic' FIRES (>= 0.80)",
+          True, bool(gr / gp >= 0.80))
+    exact("F3e prefix curve reproduces S29's curve128 bit-for-bit", 0.0,
+          dig(f3, "F3e_matched_random_family", "prefix_curve_repro_maxdev"))
+    check("F3c ORACLE global m", -0.0018,
+          dig(f3, "F3c_global_m", "ORACLE_global", "cmp", "effect"), basis="cloud")
+    check("F3c leave-fold-out m (WORSE)", 0.0079,
+          dig(f3, "F3c_global_m", "LFO", "cmp", "effect"), basis="cloud")
+    check("F3d split-half transfer, fraction of the oracle gain", 0.0123,
+          dig(f3, "F3d_split_half_transfer", "frac_of_oracle"), basis="cloud")
+    be = dig(f3, "F3f_summary", "best_effect")
+    bm = dig(f3, "F3f_native_free_rules", dig(f3, "F3f_summary", "best_rule"), "cmp", "mde")
+    check("F3f best native-free LFO m-rule", -0.0221, be, basis="cloud")
+    exact("F3f BAR 'no part of it is deployable' FIRES (> -0.7x its own MDE)",
+          True, bool(be > -0.7 * bm))
+    # the order-statistic growth curve must be MONOTONE and UNSATURATED in both families
+    for fam in ("prefix", "random"):
+        g = dig(f3, "F3e_MECHANISM", "order_statistic_growth_gain_vs_k", fam)
+        ks = sorted((int(k) for k in g), key=int)
+        mono = all(g[str(ks[i + 1])] <= g[str(ks[i])] + 1e-12 for i in range(len(ks) - 1))
+        still = (g[str(ks[-1])] - g[str(ks[-2])]) < -0.005
+        exact("F3e growth curve MONOTONE in k (%s)" % fam, True, mono)
+        exact("F3e growth curve STILL FALLING at k=128 (%s)" % fam, True, still)
+except Exception as e:
+    MISSING.append("lane F S31-L11 block (%s)" % e)
+
+print()
+print("--- lane F: the affine-hull / coh diagnostic (ORACLE) ---")
+try:
+    fc = load("s31/results/s31_F_coh.json")
+    exact("coh(uniform mean in pair space) == 1 exactly (lane B's derivation)",
+          True, abs(dig(fc, "coh", "uniform_mean_pairspace", "mean") - 1.0) < 1e-12)
+    check("coh(coordinate average) reproduces lane B's 0.9780", 0.9780,
+          dig(fc, "coh", "AVG", "mean"), basis="in-band")
+    check("coh(ORACLE best member) reproduces lane B's 0.6708", 0.6708,
+          dig(fc, "coh", "ORACLE_best", "mean"), basis="in-band")
+    check("coh(AVG_SEP)", 0.9689, dig(fc, "coh", "AVG_SEP", "mean"), basis="in-band")
+    check("coh(MED)", 0.8886, dig(fc, "coh", "MED", "mean"), basis="in-band")
+    exact("AVG_SEP does NOT pass the 0.6931 admission bar",
+          False, dig(fc, "coh", "AVG_SEP", "admitted"))
+    exact("AVG_SEP passes on 0 of 126 targets", 0.0,
+          dig(fc, "coh", "AVG_SEP", "frac_targets_under_bar"))
+    check("AVG_SEP affine-hull residual, RMS per coordinate", 0.0452,
+          dig(fc, "affine_hull_departure", "AVG_SEP_residual_rms_A", "mean"), basis="none")
+except Exception as e:
+    MISSING.append("lane F coh block (%s)" % e)
+
 # ================================================== EVERY PATH THE LEDGER CLAIMS TO HAVE WRITTEN
 print()
 print("--- every path any S31 ledger entry names (parsed from the ledger, not hand-kept) ---")
