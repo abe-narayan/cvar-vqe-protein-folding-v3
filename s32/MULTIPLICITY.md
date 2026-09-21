@@ -894,3 +894,24 @@ artefact, offered so two vocabularies are not mistaken for two findings:
   single global leave-fold-out step, is worth **+0.1835 Å** of the 3.0776 Å common mode. That is the
   same conclusion as lane D's "a free perfect sign still leaves you 2–3× short of ρ = 0.638": **a
   real finding and a closed route.**
+
+### LANE L — SELF-DECLARED DEFECT (found by lane L, before any ladder number was quoted)
+
+`s32_L_ladder.run_target` seeds the `avg75_random` zero-information control with
+`RNG_SEED + abs(hash(pdb)) % 10000`. **Python's string `hash()` is randomised per process**
+(`PYTHONHASHSEED` is unset here; two interpreters return 3567782200507830974 and
+4032705310864098348 for the same string). Therefore:
+
+- the control's draws are **not bit-reproducible** across runs, and differ between the two
+  worker processes within the same run;
+- the drawn subsets are still uniform and the arm is **unbiased**; the reported quantity is
+  the **draw mean over N_DRAW = 3** with the **draw-to-draw sd** beside it, as contract
+  rule 10 requires, so no conclusion rests on a single lucky draw;
+- but a re-run will not reproduce the control column exactly, and the `L2_ladder_*.jsonl`
+  artefacts are the only record of the draws actually used (each row carries its three
+  per-draw values under `draws`, so the arm can be audited even though it cannot be
+  replayed).
+
+Every other lane-L arm is deterministic. The fix (a stable digest of the pdb code in place
+of `hash`) is applied to the module **after** this run so that code and artefact are never
+silently inconsistent; the artefact predating the fix is flagged here.
