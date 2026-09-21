@@ -545,14 +545,30 @@ therefore **achiral** by theorem G1; **so a chiral criterion should be able to p
 an achiral one provably cannot.** Lane V tested it as a deployable argmin arm, chain basis, paired
 in the same job, tie-averaged, independently of lane R (n = 126; **production in that job is exactly 3.2105**, so these arms sit on the canonical realisation):
 
-```
-branches/target 204.4;  distinct at 1e-3 A 153.3 (74%);  within-cluster spread median 0.00e+00
+**The decision is real.** 126/126 targets have ≥ 2 distinct branches (median 149 of 158, union-find
+at 1e-3 Å); the RMSD spread across distinct branches is mean **0.5542**, **> 0.3 Å on 86 targets**;
+and the λ = 0.3 objective gap between the best two is **below 1e-3 on 102/126**. *Structurally
+distinct branches, chosen by a near-degenerate objective.* **A self-test that could have failed:**
+production's own selection rule, re-executed on the recorded branch scalars, reproduces `prod_chain`
+on **126/126 with max |error| exactly 0.0** — the branch set provably contains production's answer.
 
-ORACLE best branch                    3.0927   -0.1178 vs production   ORACLE / NOT DEPLOYABLE
-  SPLIT-HALF TRANSFER                          -0.0037  =  3.3% of the oracle  ->  NOT A SIGNAL
-random branch, 300 draws              3.2146   +0.0041 +- 0.0076
-PRODUCTION (lane R, in job)           3.2105   -- exactly the canonical value
 ```
+                                      chain     vs PROD    xMDE     W/L        ORACLE / NOT DEPLOYABLE
+ORACLE best over GEN4      (K=4)     3.1751    -0.0355    1.73x   103W/8L
+ORACLE best over GEN4+GEN4D (K=8)    3.1168    -0.0938    2.92x   114W/0L    <- replicates S31-D exactly
+ORACLE best over ALL       (K=158)   3.0941    -0.1165    3.43x   124W/0L
+  SPLIT-HALF TRANSFER                          -0.0046   =  4% of the oracle  ->  NOT A SIGNAL
+  RAND0 zero-signal control (arbitrary column index by construction)    3%
+random branch, 5 draws               3.2106    (draw sd 0.0028)
+best of 29 deployable arms           3.2006    -0.0100    0.61x              NOT MEASURED
+PRODUCTION (lane R, in job)          3.2105    -- exactly the canonical value
+```
+
+**The K = 8 row replicates S31-D from a different job and script**: S31 recorded 3.1167631446217534,
+−0.09377085032154638, 2.924×, 114W/0L; this run gives 3.1168, −0.0938, 2.92×, 114W/0L. *A cross-sprint
+number reproduced rather than quoted.*
+
+> ### Production's multi-start argmin is worth **0.0001 Å** over a coin. Any branch rule competes for 0.117 Å of ORACLE headroom — **96% of it an order statistic** — against an incumbent indistinguishable from random.
 
 > ### Production's multi-start argmin is worth 0.005 A over picking a branch with a coin. Any branch-selection rule is competing for 0.11 A of oracle headroom against an incumbent that is 0.005 A better than random — and **95% of that 0.11 A is an order statistic that does not survive a split half.**
 
@@ -583,7 +599,24 @@ four starts — **nothing is a result in either direction**, largest 0.46×. *Pr
 contain no branch bad enough for any criterion to be punished for. The large ARGMAX effects are a
 property of having ~200 branches to find a bad one among, not of the criteria.*
 
-**The chiral Ramachandran criterion this lane was opened for lands at 0.20×.**
+**And the chiral hypothesis this lane was opened on is falsified — along with the ARGUMENT behind
+it.** In-band ρ across the branch set:
+
+```
+d_to_C      +0.1122        obj1  +0.0742        disto_risk  +0.0702        obj0  +0.0603
+rama_nlp    +0.0153   fold CI [-0.0461, +0.0608]   median -0.0740   positive on 54/126
+```
+
+> ### The ACHIRAL distance-map channels beat the chiral one FOUR TO ONE. Registered prediction P3.3 is falsified, and so is the reasoning that produced it: *"every native-free ranker is a distance-map function and therefore achiral, so a chiral criterion should see what they cannot."* **At this stage they see more, not less.**
+
+**And lane R's first explanation of *why* was refuted by its own data**, which is the better result.
+It proposed that the λ = 0.3 branches must all already be Ramachandran-plausible, leaving the
+criterion nothing to discriminate. They are not: positive-φ spread **0.632**, **31.2% of branches
+above the 17.5% rate of a completely unconstrained fit**, **126/126** targets carrying one, against a
+real-library rate of 5.40%. ***The criterion has an enormous amount to discriminate and carries no
+information anyway — Ramachandran plausibility and native proximity are orthogonal among the branches
+this projection admits.*** That is S9-2's *"validity for free, no accuracy"* re-derived one level
+down.
 
 **An independent confirmation arriving from a different stage:** `disto_risk` and `disto_mae` ARGMIN
 are **RESULTs at 1.03–1.13× in the WORSE direction** — *picking the branch the distogram likes best is
@@ -881,7 +914,41 @@ space at this length** rather than anything retrieval discovered.
 
 ## Appendix A — every claim withdrawn this sprint
 
-[PENDING]
+**Sixteen defects were found in work already written down. The coordinator wrote the largest share,
+and most were caught by machine rather than by memory.**
+
+| claim | whose | how it died |
+|---|---|---|
+| *"the retrieval filter costs +0.4357"* | coordinator | **Mislabelled.** 500→128 is the **distogram score prefix** — `s29_O_ladder.py`'s own *"the quantum field of view"*, 128 = 2⁷. Retrieval is the earlier arrow |
+| *"the score is worse than random at retaining the best candidate"* | coordinator, from lane V | **Entirely 18 circular targets.** On the other 108 the score is marginally **better**; `n_better = 72` means the score wins on 72 of 126 and I read the W/L backwards; the median **−0.0380** also favours the score and I did not report it |
+| the ladder line *"+0.4350 → 2.1435"* | coordinator | **Basis error** — +0.4350 is the **member** basis, the chain increment is **+0.4357**. Caught by AUDIT 9 on its first run: *every ladder block's increments must close on ONE basis* |
+| *"gain exactly 1 means no noise suppression"* | coordinator + lane Q | **Backwards.** Gain 0 on ~33 dimensions is **TOTAL** suppression — ~87% of a generic error annihilated; at ε = 4.0 a 3.66 Å estimate emits at 2.23 Å. The headline survives on the **hull floor** `d = 1.8290` |
+| the convexity check for S32-L2 | coordinator | **VACUOUS** — accumulator initialised at the pass threshold, max over always-negative quantities, **could not fail on any input.** Written one hour after I wrote the rule forbidding exactly that |
+| *"sparse combinations barely leave the manifold"* | coordinator | **False.** Sparse sits **farther** off-manifold (0.8503 vs 0.8150) and pays 800× less. The tax is **direction**, not distance |
+| *"the final rung runs at λ = 0, the prior is inactive"* | coordinator | **False.** The ladder is (0.0 → 0.3), the canonical arm is **λ = 0.3**, and the prior is already selecting among branches |
+| *"λ = 0.3 costs +0.0107 at the endpoint"* | coordinator | **A cross-job difference, not an effect.** Measured in one job on one cloud: **+0.0055, 0.35× MDE, NOT MEASURED** |
+| *"typicality is a RESULT in the wrong direction"* | coordinator, from lane V | **Inverted.** `typicality` is a **distance**, so the arm was the **least** typical branch. Most typical: −0.0054, 0.29×, a null |
+| *"a CHIRAL criterion can pick the branch where achiral ones cannot"* | **coordinator — the hypothesis the lane was opened on** | **FALSIFIED, and the argument itself fails.** In-band ρ: `d_to_C` **+0.1122**, `obj1` +0.0742, `disto_risk` +0.0702 — against `rama_nlp` **+0.0153, fold CI [−0.0461, +0.0608], median −0.0740.** ***The achiral distance-map channels beat the chiral one four to one*** |
+| *"the chirality/filter synthesis"* | **coordinator** | **CIRCULAR — controlled and refuted before publication.** Lane D's 0.271 and lane V's 0.272 are **one number, not two** |
+| *"the λ=0.3 branches must all already be Ramachandran-plausible"* | lane R — its own explanation of the above | **Refuted by its own data**: positive-φ spread **0.632**, **31.2%** of branches above the 17.5% unconstrained rate, **126/126** targets carrying one. *The criterion has enormous variation to work with and carries no information anyway* |
+| *"3.210533994943299 to sixteen digits"* | lane R | **Its own verifier asserted it and FAILED.** Per-target is exact (630 RMSDs, max Δ = 0); a **reduction over 126 float64s** depends on summation order |
+| `n_distinct` as a structural claim | lane R, caught by lane V | **A greedy-seed count, not connected components.** Fixed by union-find; **39 of 126 targets changed** |
+| `split_half_transfer` on a 16-criterion grid | lanes V **and** R, independently | **Baseline artefact** — it centres on the grid's column mean. Read −0.0254 with a CI excluding zero; against production **+0.0026, CI centred on zero** |
+| the READOUT cell is the largest; set-best ratio ≥ 5× | lane P | **Both failed.** Readout and ranking are **tied** (−1.05 vs −1.09), and the measured ratio is **2.85×** — *the set best is not unreachable* |
+
+**Plus the reproducibility class, which was invisible to every prose-level check.** AUDIT 11 asks
+whether any `.py` actually **writes** a given artefact. It found **seven artefacts with no provenance
+block and no producing script**, two of which carried §5.3. Lane R then **ran the same audit over its
+own lane and found two more of its own** — four in one lane, all first computed in inline shell
+heredocs. Lane D's `s32_D1_signtransfer.json` was the **third** instance of this shape in the
+project's history and **the first caught by machine**; `s32_R_gen4d_start.json` had a committed script
+that **had never actually run**, dying on a `KeyError` before writing.
+
+> **Every one is the same shape as S31's: a number re-used across a boundary its definition does not
+> cross** — a basis, an object, a moment, a stratum, a direction, a baseline, a job.
+
+---
+
 
 ## Appendix B — multiplicity and the search that was run
 
