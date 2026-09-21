@@ -224,3 +224,69 @@ code would leak the pool order* — the defect that once invented a 1.386 Å win
 the cloud is exact).
 
 ---
+
+## S32-L5 -- **THE READOUT IS THE EUCLIDEAN PROJECTION OF THE NATIVE ONTO THE CANDIDATE HULL, WITH GAIN EXACTLY ONE. SO A QUALITY ESTIMATE GOOD ENOUGH TO MAKE IT WORTH SOLVING IS ALREADY GOOD ENOUGH TO EMIT -- AND S31's SHARPEST OPEN QUESTION IS CLOSED: `a` AND `mu` ARE ONE OBJECT** (2026-09-21 08:22, lane Q; re-derived independently by the coordinator)
+
+Lane Q's derivation. **Re-derived by the coordinator in a separate script before publication**
+(contract rule 7): support size 5 of 14, the two objective forms agreeing to **9 decimals**, gain
+**0.9991** inside the active affine hull and **5.9e-03** outside, with the check able to distinguish
+them. Lane Q's own finite differences: **1.0000000 (sd 3.1e-09)** and **4.3e-08**.
+
+**The identity, read for what it means.** By S32-L2, `‖Σ w_x W_x − t‖² = ⟨w,a⟩ − ½ w'Bw`. The
+left-hand side *is* the squared distance from the native to a point of the candidate hull, so
+
+> **the readout's optimisation is the Euclidean projection of the native onto the convex hull of the
+> candidates**, `min_{w∈Δ} ‖U'w − t‖²`.
+
+**Consequence 1 — the sufficient statistic.** `∂x*/∂t` is the orthogonal projector onto the
+**active** candidates' affine hull: **gain exactly 1 inside it, exactly 0 outside.** So `a` must be
+known only along `|S|−1` directions — **about 5 numbers locally, ~33 globally** — and *everything
+else in `a` is exactly invisible to the emitted structure*. That is the minimal-information subspace
+charter §12 asks for, and it is far smaller than 128.
+
+**Consequence 2 — and this is the closure.** Gain exactly 1 means **no noise suppression**. The
+program is a faithful, non-contracting transcription of whatever estimate it is handed, with
+`‖P_C(t̂) − t‖ ≤ ε + d`.
+
+> ### A structure estimate good enough to make the readout worth solving is already good enough to emit.
+
+**That turns S31's measurement into a theorem.** S31 found that solving the CVaR objective exactly
+*"reshuffles the answer on 66 of 126 targets and buys nothing"* (−0.0112 Å at 0.19× MDE) and
+recorded it as a surprising null. **It is not surprising and it is not a coincidence — it is forced.**
+
+**Consequence 3 — S31 §20.3 is RESOLVED.** `a` is affine in `t` (3.0e-15 relative), and `Σw = 1`
+makes the `‖t‖²` term an additive constant, so the readout-relevant part of `a` is `P_aff{W} t`.
+Replacing `t` by `P_aff{W} t` and re-solving moves `w` by **2.5e-14** and the structure by
+**6.1e-14 Å**. Since `t = X̄ − μ`, the map **`μ ↔ t ↔ a` is a native-free affine bijection**:
+
+> **A per-candidate quality estimator with in-band skill IS a structure predictor, and a common-mode
+> corrector IS a per-candidate quality estimator. One missing channel described in two vocabularies
+> — not two requirements.**
+
+S31 left this explicitly open as *"the sharpest question this sprint produces, stated as open rather
+than resolved by assertion."* **It is now closed, by derivation.**
+
+**A near-miss lane Q killed with its own control, recorded so nobody re-finds it.** Projecting a
+*noisy* structure estimate onto the pool hull looks like a large win — a 3.0 Å estimate emits at
+2.15 Å. It is **entirely shrinkage**: against a shrinkage toward the pool mean **norm-matched to the
+projection's own displacement**, hull projection is WORSE at every noise level up to 3.0 Å (+0.23 at
+ε = 2.0, **6.10×**) and NOT A RESULT at 4.0 (−0.14, 0.41×). *The hull adds nothing over shrinkage.*
+(Smoke test n = 3; full-instrument run in flight.)
+
+**What this does NOT close.** Arms that leave the simplex — signed weights, arms that re-embed, or a
+cardinality constraint that genuinely binds — are outside the derivation's hypotheses (`Σw = 1`,
+unconstrained simplex). **Sparse `s`-of-`K` is the last formulation standing**, and the number that
+decides it is whether the cardinality constraint **binds**: if the unconstrained convex optimum's
+support is already ≤ s, then the "combinatorial" problem *is* the convex program and the 2.10 Å
+sparse headroom is a **convex prize, not a quantum one**. Lane Q is measuring exactly that.
+
+**Q0 separately CONFIRMED S31 rather than falsifying it**, with a self-test that fires on a
+deliberately tied vector (0.1221) and a deliberately unsorted one (3.3830) before touching real data
+— *unlike S31's, it can fail*. On the real 126: `sc[o]` non-decreasing 126/126; the block model
+reproduces `E` **bit-for-bit, max error 0.0e+00, on all 126**; `max|E − ramp| = 0.0406840`. Priced
+at **0.26× MDE** (cloud), with the selection readout **identically tied 126/126**, and the
+operator-matched control — keep the block *sizes*, relocate the blocks — at **0.38×, the same size**.
+**The residual channel is the existence of duplicates, not which candidates duplicate: one integer
+per target.** S31 is sharper, not wrong.
+
+---
