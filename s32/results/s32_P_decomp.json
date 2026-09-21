@@ -1,0 +1,192 @@
+{
+ "prereg": "s32/PREREG_S32_P.md @ 33dfe0d3",
+ "hypothesis": "H-P1",
+ "basis": "CA POINT CLOUD; ORACLE / NOT DEPLOYABLE for every ORACLE_* arm",
+ "n": 126,
+ "ms": [
+  1,
+  3,
+  5,
+  10,
+  25,
+  50,
+  75
+ ],
+ "production_cloud": 3.0483380938795324,
+ "curve_SCORE_prefix": {
+  "1": {
+   "cloud": 3.4540004861635283,
+   "setmean": 3.4540004952559396,
+   "setbest": 3.4540004952559396,
+   "wBw": 0.0,
+   "f_common": 1.0
+  },
+  "3": {
+   "cloud": 3.274098998040933,
+   "setmean": 3.4678318785138864,
+   "setbest": 3.1653291355995905,
+   "wBw": 51.29188672549402,
+   "f_common": 0.8625176249020753
+  },
+  "5": {
+   "cloud": 3.231195464559842,
+   "setmean": 3.4839768659027794,
+   "setbest": 3.0253399388184623,
+   "wBw": 67.60936492552247,
+   "f_common": 0.8211275445492192
+  },
+  "10": {
+   "cloud": 3.145531361595569,
+   "setmean": 3.477884898985189,
+   "setbest": 2.8340958387605726,
+   "wBw": 82.83164977560875,
+   "f_common": 0.7751685418474304
+  },
+  "25": {
+   "cloud": 3.074921180760094,
+   "setmean": 3.5015553476602315,
+   "setbest": 2.6086837147909496,
+   "wBw": 103.18815227486155,
+   "f_common": 0.7260389886699146
+  },
+  "50": {
+   "cloud": 3.067630575708357,
+   "setmean": 3.5386825431575857,
+   "setbest": 2.403353420396646,
+   "wBw": 118.59692639638968,
+   "f_common": 0.6986718512474706
+  },
+  "75": {
+   "cloud": 3.0483380938795324,
+   "setmean": 3.5506829818026735,
+   "setbest": 2.3061526409453816,
+   "wBw": 127.6387041660351,
+   "f_common": 0.6779975280532181
+  }
+ },
+ "curve_ORACLE_prefix": {
+  "1": {
+   "cloud": 1.7108244242394086,
+   "setmean": 1.7108244199364904,
+   "setbest": 1.7108244199364904,
+   "wBw": 0.0,
+   "f_common": 1.0
+  },
+  "3": {
+   "cloud": 1.496122119658925,
+   "setmean": 1.8511403272785838,
+   "setbest": 1.7108244199364904,
+   "wBw": 42.07249989117048,
+   "f_common": 0.6598613922372966
+  },
+  "5": {
+   "cloud": 1.481323579631233,
+   "setmean": 1.9337851644508421,
+   "setbest": 1.7108244199364904,
+   "wBw": 55.273375031481585,
+   "f_common": 0.6011031235287068
+  },
+  "10": {
+   "cloud": 1.5180369441769157,
+   "setmean": 2.0709436708499513,
+   "setbest": 1.7108244199364904,
+   "wBw": 70.6953069560741,
+   "f_common": 0.5509878173150624
+  },
+  "25": {
+   "cloud": 1.6436832136258412,
+   "setmean": 2.302533627493041,
+   "setbest": 1.7108244199364904,
+   "wBw": 95.03023752861014,
+   "f_common": 0.5240325193909896
+  },
+  "50": {
+   "cloud": 1.8246176559143001,
+   "setmean": 2.530256504179939,
+   "setbest": 1.7108244199364904,
+   "wBw": 113.55724810524148,
+   "f_common": 0.5332880639233897
+  },
+  "75": {
+   "cloud": 1.9630468028074672,
+   "setmean": 2.685511122219777,
+   "setbest": 1.7108244199364904,
+   "wBw": 123.8038128774002,
+   "f_common": 0.5447922930826151
+  }
+ },
+ "cells": {
+  "WITHIN_POOL_RANKING": {
+   "what": "ORACLE top-75 by rr, THEN the unchanged medoid-superposed uniform average",
+   "value": 1.9630468028074672,
+   "vs_production": {
+    "label": "ORACLE top-75 through the DEPLOYED operator - production (CLOUD)",
+    "mean_a": 1.9630468028074672,
+    "mean_b": 3.0483380938795324,
+    "effect": -1.0852912910720653,
+    "median_effect": -0.6934922655690908,
+    "se": 0.09102370994542888,
+    "mde": 0.25501202578311355,
+    "effect_over_mde": -4.255843573412887,
+    "ci95_fold": [
+     -1.1805013508487374,
+     -0.9595427581728367
+    ],
+    "folds_same_sign": 5,
+    "n_better": 125,
+    "n_worse": 1,
+    "verdict": "BETTER"
+   },
+   "note": "this is the cell the S29 ladder does not have: it idealises the RANKER and leaves the READOUT shipped.  The ladder's `best single member` changes both at once."
+  },
+  "WITHIN_POOL_RANKING_best_m_ORACLE": {
+   "what": "ORACLE top-m through the deployed average, m chosen ORACLE-globally",
+   "m": 5,
+   "value": 1.481323579631233,
+   "vs_production": {
+    "label": "ORACLE top-5 through the DEPLOYED operator - production (CLOUD)",
+    "mean_a": 1.481323579631233,
+    "mean_b": 3.0483380938795324,
+    "effect": -1.5670145142482992,
+    "median_effect": -1.1413087978600773,
+    "se": 0.10817881568805716,
+    "mde": 0.30307377003166097,
+    "effect_over_mde": -5.170406248236524,
+    "ci95_fold": [
+     -1.71331830969538,
+     -1.4098858358979534
+    ],
+    "folds_same_sign": 5,
+    "n_better": 126,
+    "n_worse": 0,
+    "verdict": "BETTER"
+   }
+  },
+  "POOL_DIVERSITY": {
+   "n_distinct_of_75": 69.23015873015873,
+   "mean_pairwise_rmsd": 2.4862526531102427,
+   "sd_pairwise_rmsd": 0.777209430593985,
+   "wBw": 127.6387041660351
+  },
+  "POOL_COMMON_MODE": {
+   "f_common_on_the_shipped_75": 0.6779975280532181,
+   "f_common_on_the_ORACLE_75": 0.5447922930826151,
+   "note": "f is descriptive only and is NOT a screen (S24 correction); |ebar|^2 = n*RMSD^2 exactly, so the numerator is not independent evidence"
+  },
+  "POOL_QUALITY": {
+   "pool_best_K500": 1.7108244199364904,
+   "pool_mean_K500": 4.453250250458717,
+   "note": "the universe-wide best (1.3134) and the matched-random controls live in s32_P_ladder.json; generation headroom on the BEST axis is 1.7108 -> 1.3134"
+  }
+ },
+ "operator_law": {
+  "basis": "CLOUD, both prefix families, m in 3..75",
+  "intercept": -0.25363322499055385,
+  "coef_set_mean": 0.6730437351516287,
+  "coef_set_best": 0.3255781093562925,
+  "ratio": 2.067226621846039,
+  "R2": 0.946679530324885,
+  "registered_prediction": "coef_set_mean >= 5x coef_set_best"
+ },
+ "multiplicity_emitted": 2
+}

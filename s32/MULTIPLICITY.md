@@ -538,3 +538,6 @@ AMBER 0.365/0.397 (low/high), `DIS` **0.460/0.635**, `LEG_total` **0.619/0.571**
 the guess is not supported and is not claimed.** (`DIS`'s 0.635 on its high-|ρ| half is a **post-hoc
 subgroup selected by an ORACLE quantity** — |ρ| is not knowable natively — and is recorded as an
 observation, not a lead.)
+| P-28 | ORACLE top-75 through the **DEPLOYED** uniform average vs production | CLOUD, ORACLE | REGISTERED (H-P1) | **−1.0853, 4.26× MDE, 125W/1L, 5/5** |
+| P-29 | ORACLE top-m (m=5, ORACLE-global) through the deployed average vs production | CLOUD, ORACLE | REGISTERED (H-P1) | **−1.5670, 5.17× MDE, 126W/0L, 5/5** |
+| P-30 | operator law `out ~ set_mean + set_best`, both prefix families, m=3..75 | CLOUD | REGISTERED (H-P2b-1) | 0.6730 / 0.3256, **ratio 2.07 — the registered ≥5× PREDICTION FAILS** |
