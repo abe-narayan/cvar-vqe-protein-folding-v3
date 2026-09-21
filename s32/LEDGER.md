@@ -706,3 +706,71 @@ leave-fold-out combination **0.0948**).
 
 **Contract rule 7 in action:** this is a cross-lane claim, it was re-derived from the raw artefacts
 in one script by one person before anyone wrote it down, and it did not survive.
+
+## S32-L9 -- **THE PROJECTION DOES NOT TAX YOU FOR LEAVING THE VALID-CHAIN MANIFOLD. IT TAXES YOU FOR LEAVING IT IN A DIRECTION UNRELATED TO YOUR ERROR. IT IS NOT SPARSITY THAT IS CHEAP -- IT IS ALIGNMENT** (2026-09-21 09:11, lane R; corrects the coordinator's mechanism in S32-L1 and contract rule 16)
+
+Artefact `s32/results/s32_R_ladder_null.json`, script `s32/s32_R_ladder_null.py`. **All five rungs
+projected in the same process per target.** n = 16 at the time of writing — **INTERIM**.
+
+```
+rung                cloud   chain      d  |  obs price  orthog null  rule16 |  xMDE    cos
+prod               2.7337  2.8725  0.7054 |   +0.1387     +0.1303   +0.1622 |  0.05  -0.05
+dense avg (bestm)  2.3832  2.5346  0.8001 |   +0.1514     +0.1579   +0.1701 |  0.06  +0.03
+best1_pool         1.9027  1.8966  0.1075 |   -0.0061     +0.0079   -0.0030 |  0.42  +0.06
+sparse K=500 s=10  1.1375  1.1446  0.8435 |   +0.0072     +0.2832   +0.0002 |  2.40  +0.40
+sparse K=500 s=20  1.1364  1.1272  0.8444 |   -0.0092     +0.2844   -0.0052 |  2.40  +0.42
+```
+
+**My mechanism in S32-L1 was wrong.** I wrote that *"sparse combinations barely leave the manifold
+and a 75-structure mean sits 0.7 Å off it."* **Sparse combinations sit FARTHER off-manifold than
+production — 0.844 against 0.705 — and pay 20× less.** The object-dependence contract rule 16 records
+is real, but it is **not through `d`**.
+
+**What separates them is direction**, obtained by inverting the triangle:
+`cos = (e² + d² − chain²)/(2ed)`, where 0 means the displacement is orthogonal to the native error
+and +1 means it removes error one-for-one. Production **−0.05**, dense average **+0.03**, sparse
+**+0.40 / +0.42**. The lane's registered prediction P1.2 (*price not below the orthogonal null*)
+**holds for production at 0.05× MDE and is FALSIFIED for both sparse rungs at 2.40× MDE.**
+
+> **The native is (near enough) on the manifold, so snapping back toward it is error-REMOVAL if your
+> off-manifold component is part of your error, and pure noise-addition if it is not. A sparse
+> combination's off-manifold component IS part of its error; a 75-member uniform average's is the
+> averaging contraction — which is common-mode, and is not.**
+
+**That connects the projection stage directly to the sprint's common-mode spine, as a testable claim
+rather than a metaphor.** And it gives the readout lever a sharper form than "stay near the
+manifold": **two objects equally far off-manifold, one paying 20× the other.**
+
+**Reproduction, and it is stronger than I asked for.** Every one of the five rungs reproduces S29's
+own recorded `rmsd_chain` **bit-for-bit — mean |Δ| and max |Δ| both exactly 0.000e+00, 16/16
+bit-identical** — from a different job, a different script and a different process. Paired with lane
+V's finding that an independent *recomputation* of the cloud disagrees on 126/126, the two say
+precisely: ***the operator is bit-reproducible; the input is what is fragile.***
+
+---
+
+## S32-L10 -- **THE MISSING PER-TARGET SIGN IS A REAL LATENT PROPERTY OF THE TARGET, AND IT TRANSFERS ACROSS A SPLIT HALF** (2026-09-21 09:11, lane D)
+
+Sign estimated on half A of a target's top-75 band, applied to **held-out half B**, 16 random splits
+per target, against a matched label-permutation null:
+
+```
+scorer         transfer     null    excess    xMDE   folds
+AMBER           +0.1125   -0.0056   +0.1181   2.57    5/5
+DIS             +0.1890   -0.0033   +0.1923   3.04    5/5
+LEG_total       +0.2263   -0.0003   +0.2266   3.41    5/5
+LEG_torsion     +0.1499   -0.0008   +0.1507   2.75    5/5
+```
+
+**This establishes what `Var(ρ) > 0` alone could not: the latent is a property of the TARGET, not of
+the sample.** AMBER goes from **+0.0000 → +0.1125** and Legacy from **+0.0376 → +0.2263** once the
+sign is supplied. Four independent scorers, all 5/5 folds, all past 2.5× MDE.
+
+**ORACLE / NOT DEPLOYABLE — and the reason is exactly the bottleneck.** Estimating the sign requires
+**native labels on half the band**. So this prices the prize rather than collecting it: *there is a
+one-bit-per-target latent that four unrelated Hamiltonians all respond to, it is real and it
+transfers, and nothing native-free has yet been shown to read it.* Lane D's D1-S already closed the
+obvious route — **AMBER and Legacy anti-agree on that bit (36.5%, z = −3.0)** via compactness, so it
+cannot be recovered by consensus between Hamiltonians.
+
+---
