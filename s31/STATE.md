@@ -21,9 +21,19 @@ the deployed one. Reading the code moved the diagnosis one stage later:
 > most k bits** and **cannot emit anything outside the pool** — and that is a property of the
 > **readout**, not the Hamiltonian. T1's one-integer result is the diagonal special case.
 
-**Value is not capped the same way.** ORACLE argmin-over-128 is **2.1435 Å (CA cloud, ORACLE / NOT
-DEPLOYABLE)** against production's 3.0483 — ~0.90 Å of headroom. So the cap is on *information*,
-not on *value*, and the two must not be conflated.
+**Value is not capped the same way.** ORACLE argmin-over-128 is **2.1435 Å on the BUILT CHAIN**
+(the CA-cloud value is 2.1458) against production's **3.2105 Å** — **1.067 Å of headroom**
+(**ORACLE / NOT DEPLOYABLE**). So the cap is on *information*, not on *value*.
+
+> **CORRECTED (2026-09-21 00:43, lane V's D3).** This sentence originally read *"2.1435 Å (CA cloud) against
+> production's 3.0483 — ~0.90 Å of headroom."* **2.1435 is the built chain, not the cloud**, and it
+> was differenced against the cloud production — so the headline **understated its own headroom by
+> 0.16 Å** in the sentence carrying the framing claim. NOTE 6 has the same five numbers labelled
+> correctly, so this was **synthesis error, not lane error**. And it exposes a gap in the
+> instrument: `s31_verify.py` audits for an **unstated** basis and reports "none", but an audit for
+> an unstated basis **does not catch a misstated one**, and the sprint had exactly one of the
+> latter, in its headline. The basis audit should assert each number against the value on the basis
+> it names.
 
 **Strongest live objection to R1:** the realised capacity may be far *below* k bits if the ansatz
 cannot reach the cells — which would be worse and more interesting than R1 itself. Lane A owns the
@@ -184,8 +194,14 @@ distribution, each variant a **random subset** instead of the score-ordered pref
 
 ```
 per-target min over 128 score-ordered PREFIXES   -0.2879 A   <- this IS bestm128
-per-target min over 128 RANDOM SUBSETS           -0.4191 A   sd 0.0065 over 4 draws
-share of the prefix gain reached by the null       146%      (registered bar: >= 80%)
+per-target min over 128 RANDOM SUBSETS           -0.4279 A   sd 0.0273 over 4 draws
+share of the prefix gain reached by the null       149%      (registered bar: >= 80%)
+
+   [SUPERSEDED VALUES, kept per rule 13: -0.4191, sd 0.0065, 146%. Lane F found its own hash()
+    seeding defect -- Python salts hash() per process, so the subsets were not regenerable --
+    repaired it to crc32 and RE-RAN THE CONTROL FROM ZERO. The conclusion strengthens. Note the
+    draw sd is 4.2x LARGER than the superseded figure, and the draw sd is what a reader judges a
+    draw control by.]
 ```
 
 **The prefix ordering loses to an arbitrary 7-bit index by 0.13 Å.** Mechanism measured: prefix
@@ -701,7 +717,23 @@ readouts, not one and not two** — selection (≤ k bits, pool members, **R1 ex
 compounded the error in S31-L2 by merging the last two; the distinction is load-bearing because
 **the convex one ships and the affine one does not.** Both entries annotated in place.
 
-**(b) The set-matched ladder inverts S30-L11.** That entry says argmin dominates *"at every measured
+**(b) The set-matched ladder inverts S30-L11.**
+
+> **WITHDRAWN (2026-09-21 00:43, lane V's D2) — THIS IS A WITHDRAWAL THAT IS ITSELF WRONG, WHICH IS
+> CONTRACT RULE 25 AND IT IS MINE.** S30-L11's claim is *"a plain argmin dominates at every **bit
+> budget**"*, and **S30 computed the reference curve for exactly that claim, in the same file as the
+> sparse arms** — `s30_Q_sparse.json :: argmin_ref` has the argmin at **1.9383 at 8 bits** and
+> **1.7108 at 9 bits**, against `T128_s2_unif`'s 2.0700 at **12.99 bits**. Lane V priced the sparse
+> arm independently (~512 random pairs already reach 2.0799, so the greedy arm is worth ~**9.1
+> bits**) and at 9 bits naming gives **1.7108 — 0.36 Å better at matched information.**
+> **Nothing in the ladder beats the argmin at a matched budget. S30's SUPPORT was mismatched; its
+> CONCLUSION survives, and lane V's V1 strengthens it.** The original wording stands below.
+>
+> **And the "zero weight bits" sentence in this note is withdrawn too** — lane C formally withdrew
+> it (`T128_s2_unif`'s *support* is ORACLE-greedy at 12.99 bits, which S30 did charge) and I carried
+> it forward here unannotated until lane V caught it.
+
+That entry says argmin dominates *"at every measured
 bit budget"* — established by comparing **2-of-75 against 1-of-128**. At a **fixed top-128**
 (ORACLE / NOT DEPLOYABLE, CA cloud, n = 126):
 
@@ -714,6 +746,36 @@ argmin over 128            7.0 bits              2.1458
 
 **As classes at a fixed candidate set, combining beats naming; as an Å-per-bit question across sets,
 naming wins.** S30 published only the second and supported it with a set-mismatched pair.
+
+> **CORRECTED (2026-09-21 00:43, lane V's D1) — AT MATCHED SEARCH SIZE THE 0.076 Å IS A 0.077 Å PENALTY.
+> SAME MAGNITUDE, OPPOSITE SIGN.** `2-of-128` is a per-target minimum over **C(128,2) = 8128**
+> ORACLE supports; `argmin over 128` is a minimum over **128**. **A 64× larger oracle search**, read
+> as though the arms differed only in what they emit. Lane V pre-registered the objection before
+> computing it:
+>
+> ```
+>                                                  mean     vs argmin over the SAME 128
+> ORACLE argmin over 128 singletons   (K=128)     2.1458          --
+> 2-of-128 uniform, 128 RANDOM pairs  (K=128)     2.2229     +0.0771  WORSE
+>                           1.11x MDE, fold CI [+0.040,+0.111], 5/5 folds, 44W/82L, MEASURED
+> 2-of-128 uniform, EXHAUSTIVE        (K=8128)    1.9070     -0.2388  better (3.81x MDE)
+> ```
+>
+> **And it decomposes exactly, which is why it is a finding and not a null:**
+>
+> ```
+> family LEVEL  singles 3.5847  pairs 3.3469   -0.2378   <- error cancellation IS REAL
+> dispersion loss (pairing compresses the family, so best-of-128 reaches less)   +0.3149
+> net at matched K                                                              +0.0771  pairs WORSE
+> ```
+>
+> **Error cancellation is real and worth −0.238 Å in LEVEL — and is then MORE than consumed by
+> averaging compressing the family's DISPERSION.** This is lane F's S31-L11 law, **second
+> independent instance, opposite operator**: F decorrelated a family and its minimum **grew**; V
+> contracted a family and its minimum **shrank**.
+>
+> **And it corrects my own model:** `sqrt(0.68 + 0.32/m)` prices the **level** and is **silent on
+> the minimum**, which is the quantity actually being quoted. Original wording stands below.
 
 **My prediction handed back, because the uniform row is the interesting one:** 2-of-128 uniform
 beats the single best of the same 128 while spending **zero weight bits**, so that 0.076 Å is
