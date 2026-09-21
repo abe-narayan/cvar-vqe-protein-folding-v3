@@ -61,7 +61,9 @@ rungs bit-for-bit from a different job, script and process.
 > change in the cloud moves the built chain by **0.10–0.15 Å** — deterministic given identical bits,
 > **discontinuous** in them.
 
-**Consequence:** the anchor carries ~**±0.002 Å** of pure arithmetic noise. The charter's targets stay
+**Consequence:** the anchor carries ~**±0.003 Å** of pure arithmetic noise — the draw-to-draw sd of the
+endpoint over five 1e-14 Å perturbations (3.207688, 3.207625, 3.206217, 3.203375, 3.211812); the
+three independent honest recomputations of the same average span **0.0042**. The charter's targets stay
 checkable (< 3.00 is 0.21 Å away, < 2.50 is 0.71 Å). **Unpaired cross-job chain claims below ~0.03 Å
 are not resolvable**, and "the same cloud value" does not license a comparison — it must be the same
 float64 bits.
@@ -274,43 +276,40 @@ random branch, 300 draws              3.1914   +0.0049  (draw sd 0.0079)
 
 > ### Production's multi-start argmin is worth 0.005 A over picking a branch with a coin. Any branch-selection rule is competing for 0.11 A of oracle headroom against an incumbent that is 0.005 A better than random — and **95% of that 0.11 A is an order statistic that does not survive a split half.**
 
-And the sixteen native-free criteria, x {all branches, GEN4-only} = **32 comparisons**:
+And the sixteen native-free criteria, tested in **BOTH DIRECTIONS** on the full branch set and on
+production's own four starts — **64 comparisons**. *Testing one direction only would have been an
+unregistered choice that halves the apparent multiplicity, and it is what produced the inverted
+gloss an earlier draft of this section carried.* (n = 123; production in-job 3.2198.)
 
 ```
-best of 32:   d_to_C      -0.0095   0.56x   5/5   58W/43L    NOT A RESULT
-              obj0        -0.0071   0.42x        rg        +0.0052  0.18x
-              rama_nlp    +0.0006   0.03x        ramah     -0.0007  0.04x
-              disto_risk  +0.0562   0.98x  NOT MEASURED, wrong direction
-              typicality  +0.3434   2.35x  RESULT -- in the WRONG direction, 27W/75L
+                 ARGMIN (best-looking)            ARGMAX (worst-looking)
+d_to_C        -0.0082  0.51x  not a result     +0.3417  2.62x  RESULT (worse)
+rg            -0.0037  0.12x  not a result     +0.3371  2.82x  RESULT (worse)
+typicality    -0.0038  0.20x  not a result     +0.3406  2.61x  RESULT (worse)
+obj1          -0.0058  0.30x  not a result     +0.3503  2.72x  RESULT (worse)
+rama_nlp      -0.0031  0.16x  not a result     +0.2908  2.31x  RESULT (worse)
+legacy        +0.0079  0.30x  not a result     +0.2887  2.30x  RESULT (worse)
+disto_risk    +0.0577  1.12x  RESULT (worse)   +0.2986  2.36x  RESULT (worse)
+ramah         +0.0009  0.04x  not a result     +0.1731  1.91x  RESULT (worse)
 ```
 
-**`rama_nlp` — the chiral Ramachandran criterion the lane was opened for — lands at 0.03x MDE.**
-Nothing reaches even the 0.7x band except in the wrong direction, and that is *before* charging the
-search: the best of 32 comparisons has an achieved MDE well above its nominal one. On the
-**compute-matched** GEN4-only subset — production searches 4 starts, so an arm searching ~200 and
-winning is a bigger search rather than a better selector — the best is 0.42x.
+> ### Every criterion's ARGMAX is a large, 5/5-fold, 2–3× MDE RESULT in the WORSE direction, and every criterion's ARGMIN is nothing. **The criteria carry real information about branch quality — they reliably identify disasters — and none of it converts into finding a winner.**
 
-***The `typicality` arm is load-bearing as a positive control***: the machinery *can* emit a RESULT,
-so the sixteen nulls are a measurement rather than a broken pipeline.
+**And the compute-matched control kills even that.** On **GEN4-only** — production's own four starts —
+**nothing is a RESULT in either direction**; the largest is 0.46×. *So the big ARGMAX effects are a
+property of having ~200 branches to find a bad one among, not of the criteria. Production's four
+starts contain no branch bad enough for any criterion to be punished by.*
 
-**But read its direction carefully — `typicality` in these rows is a DISTANCE** (mean Cα-RMSD of a
-branch to the production top-75), so **lower means more typical**, the sense the consensus medoid
-uses. The adversary maximised it. Both directions, from the raw branch rows in one script (n = 111,
-tie-averaged argmin, paired to production in-job):
+**The chiral Ramachandran criterion the lane was opened for is −0.0031 at 0.16×.**
 
-```
-ARGMIN typicality = the MOST typical branch    3.1499   -0.0041   0.21x MDE   62W/48L   NOT MEASURED
-ARGMAX typicality = the LEAST typical branch   3.4957   +0.3417   2.42x MDE   31W/80L   WORSE
-branch-set MEAN (zero-skill reference)         3.1589   +0.0049
-PRODUCTION                                     3.1540
-```
+**The search, accounted** (baseline **production**, not the grid mean — see the note on
+`split_half_transfer` in Appendix C): choosing the criterion out of sample is worth **+0.0028 Å, CI
+[−0.0054, +0.0128]** — *a CI centred on zero.* The ORACLE per-target best criterion is −0.0983 and
+the best single arm is 0.51× its own nominal MDE.
 
-**So the RESULT is that the most ATYPICAL branch is much worse** — the *expected* direction, and it
-**supports** consensus-as-outlier-avoidance rather than contradicting it. *The most typical branch is
-a plain null at 0.21x and belongs with the other fifteen.* An earlier draft of this section called it
-*"a RESULT in the wrong direction"*; **that was an inverted reading and is corrected here.** The trap
-was a column named after the property it is *inversely* related to — lane R has stated the direction
-explicitly in every artefact rather than renaming a column other lanes are already reading.
+**Honest comparison count: ~60, not 64.** `vbond_mean` and `vbond_sd` are **degenerate by
+construction** — every branch has ideal geometry, so 203 of 203 branches tie — and `ramah` min (58
+tied) and `posphi_frac` min (92 tied) are heavily degenerate. Tie-averaging handles them correctly.
 
 **Two checks came out in the lane's favour and are recorded as such.** The branches are **genuinely
 distinct structures, not arithmetic noise** — 207.5 per target, 152.7 distinct at 1e-3 A, with
