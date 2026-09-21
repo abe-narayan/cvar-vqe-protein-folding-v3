@@ -629,3 +629,36 @@ a 59/41 label.** Every arm is under 0.7× MDE — NOT A RESULT.
 | L-3 | leakage filter `identity(norm="shorter")` vs composition-shuffled null, 60 targets × 3 shuffles | **registered control** (instrument admission) | rejection rate | **At the null**: rejects 100% of real AND 100% of shuffled at every threshold ≤ 0.9. Filter discarded. `verbatim` separates (real 0.330, shuffled 0.000) and is used instead. |
 | L-4 | `long40` ladder: pool_best / sparse_s10 / top75_best / avg75 / avg75_random, at L 40–60 and L 9–16 | **registered** (L-H2, P1–P3) | built chain, pre-AMBER | in progress |
 
+| P-37 | rank of the pool's deviation matrix vs 3n−6 | cloud, native-free | EXPLORATORY (structural) | **exact on 126/126**; μ lies inside that span on 126/126, which is why μ is exactly recoverable |
+
+### Registered — D3-M: PHYSICS AS MOVER. Interim read at n = 72 (full n = 126 in the ledger entry).
+
+The lane's primary registered arm, and the only escape from G1 that survived D0 (Corollary D-G:
+physics is closed as a ranker and open as a mover). AMBER relaxes the production built chain; the
+move is converted to pair-distance space, `Δd = d(x_relaxed) − d(x_production)`, and contrasted with
+the ORACLE error vectors. **Endpoint arms are BUILT CHAIN, projected in the same process as their
+paired production rows.** Registered prediction: **median `cos(Δd, −e_prod)` ≥ +0.10.**
+
+Interim, n = 72 of 126 — final numbers, W/L and fold CIs go in the ledger:
+
+| rung | `cos(Δd, −e_prod)` (ORACLE) | ×MDE | magnitude-matched random control | ENDPOINT Δ (built chain) | ×MDE | folds |
+|---|---|---|---|---|---|---|
+| k=100 | −0.0018 | 0.02 | −0.0019 | **+0.0119** | 2.46 | 5/5 |
+| k=10 (production) | +0.0180 | 0.21 | −0.0052 | **+0.0310** | 1.80 | 5/5 |
+| k=1 | +0.0190 | 0.19 | −0.0000 | **+0.0758** | 1.78 | 5/5 |
+| k=0 (free) | +0.0247 | 0.23 | −0.0010 | **+0.1045** | 1.89 | 5/5 |
+
+**Registered prediction FAILED, and the falsifier fired on its own terms.** `cos` is 0.02–0.23× MDE
+and **indistinguishable from a magnitude-matched random direction in the same space**. The scale
+ladder does not rescue it: **every α ∈ {0.25, 0.50, 0.75, 1.0} is positive (worse)** at every rung,
+best case α=0.25 at +0.0027. Cα displacement from production: 0.083 Å (k=100) → 0.627 Å (k=0), and
+the endpoint damage grows monotonically with it.
+
+**Mechanism: the physical relaxation displacement is ORTHOGONAL to the production structure's error.**
+Physics-as-mover cannot reach the prize however it is scaled, because it is not pointing at it —
+and applying it costs **+0.012 to +0.105 Å** at the endpoint.
+
+**A cross-check that came free and is worth more than the arm.** `cos(e_prod, e_pool75) = +0.9519`:
+the production chain's own pair-distance error and the pool's common-mode error point in **almost
+exactly the same direction**. S31 §20.1's common-mode story, confirmed from a different object
+(the production chain's error, not the prior's) in a different lane.
