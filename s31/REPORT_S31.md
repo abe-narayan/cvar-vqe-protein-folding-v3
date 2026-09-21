@@ -802,11 +802,29 @@ turns over.** *That is why no gate can work, not merely why these gates did not.
 - **Useful candidates are present and badly ranked.** The pool's best member sits at **rank 391 of
   500** under the shipped score on the outcome tail against **134** elsewhere (286 against 151 on
   the pool-mean tail).
-- **The tail is disproportionately a FILTER failure.** Filter loss (pool-best → set-best) is 0.595
-  whole-sample against **1.452 / 2.050** on the two filter-independent tails — **2.4 to 3.4×** —
-  while readout loss (set-best → average) is 0.742 against 1.434 / 1.445, **1.9× on both**. And
-  `n_top75_under3` is **5.7** on the pool-mean tail and **0.0** on the chain tail, against ~34
-  elsewhere.
+- **Whether the tail is a filter failure or a readout failure is NOT MEASURED** — and the attempt
+  to say otherwise is instructive. A table of *means* showed filter loss growing 2.4–3.4× on the
+  tails against readout loss at 1.9×, which reads as *"disproportionately a filter failure."* **The
+  statistic that claim requires** — per target, `(filter loss) − (readout loss)`, tail minus rest,
+  fold-clustered — **does not clear MDE on either filter-independent stratum:**
+
+  ```
+  T_POOL  (filter-independent)      +0.1925   0.16x MDE   fold CI [-0.401,+1.256]   2/5 folds
+  T_BEST  (filter-independent)      +0.4298   0.38x MDE   fold CI [-0.271,+1.270]   2/5 folds
+  T_CHAIN (defined by the OUTCOME)  +0.8781   0.84x MDE   fold CI [+0.312,+1.559]   4/5 folds
+  FAIL18  (the filter's OWN zero-recall set)
+                                    +1.6165   1.24x MDE   fold CI [+1.026,+2.933]   4/4 folds
+  ```
+
+  > **The effect size rises monotonically with how circular the stratum is — 0.16×, 0.38×, 0.84×,
+  > 1.24×. That gradient *is* the signature of the stratum's definition doing the work**, and it is
+  > S30-L2's failure mode exactly.
+
+  **The defensible statement:** on a filter-independent tail, **the filter's loss and the readout's
+  loss are both roughly doubled, and which is hurt more is NOT MEASURED.** Likewise
+  `n_top75_under3 = 0.0` is outcome-defined; the clean version is **5.7 against 33.9** on the
+  pool-mean tail. *(An earlier draft of this report carried the stronger claim, and the lane
+  retracted it with its own registered control before anything was published.)*
 - **The tail's pool is COHERENTLY wrong, not diversely wrong.** `S/B` falls 0.78 → 0.42 while
   `n_distinct` is unchanged (70.3 against 69.0). ***The pools are not smaller or less varied — they
   are displaced together.***
@@ -815,8 +833,18 @@ turns over.** *That is why no gate can work, not merely why these gates did not.
 - **The readout is not failing in a way that favours the medoid**: `chain(MED) − chain(AVG)` is
   +0.087 / +0.203 / +0.173 on the three tails against +0.066 / +0.046 / +0.051 elsewhere.
 
-> **The third bullet is the sprint's strongest cross-lane agreement, and neither half is a
-> synthesis.** Lane F measured that the tail's pools are *displaced together*; lane E measured,
+**And the consequence that retires the readout direction by derivation rather than by exhaustion.**
+Every readout tested in this sprint is an affine combination with `Σa = 1`, and §3(iv)'s theorem says
+such a readout passes the common mode through **with coefficient exactly one, whatever the weights**.
+
+> **An operator cannot remove the component that carries the prize.** `AVG_SEP` was the attempt to
+> leave that hull and measured **0.045 Å from it**. So the readout is not where the tail is lost —
+> and this lane's four refutations are **four instances of one theorem**, which is a better reason to
+> stop spending on the readout than its ORACLE ceiling of 0.078 Å, *because it is a derivation
+> rather than an exhausted search.*
+
+> **The coherently-wrong finding above is the sprint's strongest cross-lane agreement, and neither
+> half is a synthesis.** Lane F measured that the tail's pools are *displaced together*; lane E measured,
 > independently and on a different object, that **the entire recoverable prize lies along the pool's
 > common mode** (−0.8102 Å) while the orthogonal component is harmful. **"The tail's pools are
 > displaced together" and "the prize is the common mode" are the same fact** — and it is why the
