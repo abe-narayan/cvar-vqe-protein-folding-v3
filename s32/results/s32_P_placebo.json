@@ -1,0 +1,84 @@
+{
+ "prereg": "s32/PREREG_S32_P.md @ 33dfe0d3 (H-P3 extension, EXPLORATORY)",
+ "basis": "CA POINT CLOUD, score-top-128 medoid frame",
+ "ORACLE": "ORACLE / NOT DEPLOYABLE -- every cos and payoff reads the native to SCORE a direction that is itself native-free",
+ "n": 126,
+ "n_excluded_no_same_length_partner": 0,
+ "arms": {
+  "cos_placebo": {
+   "what": "c - t' for a MISMATCHED same-length deposited native",
+   "cos_mean": -0.008808597020376185,
+   "cos_se": 0.0234830102650019,
+   "cos_median": 0.004681917353415707,
+   "frac_positive": 0.5238095238095238,
+   "payoff_A": 0.0,
+   "step": 0.0,
+   "vs_uncorrected": {
+    "effect": 0.0,
+    "se": 0.0,
+    "mde": 0.0,
+    "effect_over_mde": NaN,
+    "ci95_fold": [
+     0.0,
+     0.0
+    ],
+    "folds_same_sign": 5,
+    "n_better": 0,
+    "n_worse": 0,
+    "verdict": "NOT MEASURED (|effect| 0.0000 <= its own MDE 0.0000, nanx)"
+   }
+  },
+  "cos_popmean": {
+   "what": "c - mean(same-length deposited natives)",
+   "cos_mean": -0.008003273647035345,
+   "cos_se": 0.0418508896933366,
+   "cos_median": 0.006809410207419994,
+   "frac_positive": 0.5,
+   "payoff_A": -0.0009997042510354603,
+   "step": 0.009523809523809523,
+   "vs_uncorrected": {
+    "effect": 0.0009997042510359107,
+    "se": 0.0005672537249100097,
+    "mde": 0.0015892180357078834,
+    "effect_over_mde": 0.6290541817256773,
+    "ci95_fold": [
+     0.0,
+     0.002117020766899576
+    ],
+    "folds_same_sign": 2,
+    "n_better": 19,
+    "n_worse": 29,
+    "verdict": "NOT MEASURED (|effect| 0.0010 <= its own MDE 0.0016, 0.63x)"
+   }
+  },
+  "cos_shrink": {
+   "what": "c itself: pure shrink toward the frame origin",
+   "cos_mean": 0.05116727942979563,
+   "cos_se": 0.034237779290711444,
+   "cos_median": 0.0327428743988527,
+   "frac_positive": 0.5555555555555556,
+   "payoff_A": -0.001484598252606606,
+   "step": 0.10535714285714286,
+   "vs_uncorrected": {
+    "effect": 0.0014845982526076273,
+    "se": 0.0038056620609999304,
+    "mde": 0.010661942830097405,
+    "effect_over_mde": 0.13924275118196863,
+    "ci95_fold": [
+     -0.003132461849039197,
+     0.008215523082615602
+    ],
+    "folds_same_sign": 3,
+    "n_better": 62,
+    "n_worse": 64,
+    "verdict": "NOT MEASURED (|effect| 0.0015 <= its own MDE 0.0107, 0.14x)"
+   }
+  }
+ },
+ "VERDICT": {
+  "shared_referent_floor": 0.05116727942979563,
+  "placebo_excess_over_floor": -0.059975876450171814,
+  "reading": "the placebo direction's cos is reported ONLY beside the floor; a cos that does not exceed the shrink-toward-origin arm is the shared `c` and nothing else"
+ },
+ "baseline_mu_rmsd": 3.0776158149148833
+}

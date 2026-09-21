@@ -541,3 +541,10 @@ observation, not a lead.)
 | P-28 | ORACLE top-75 through the **DEPLOYED** uniform average vs production | CLOUD, ORACLE | REGISTERED (H-P1) | **−1.0853, 4.26× MDE, 125W/1L, 5/5** |
 | P-29 | ORACLE top-m (m=5, ORACLE-global) through the deployed average vs production | CLOUD, ORACLE | REGISTERED (H-P1) | **−1.5670, 5.17× MDE, 126W/0L, 5/5** |
 | P-30 | operator law `out ~ set_mean + set_best`, both prefix families, m=3..75 | CLOUD | REGISTERED (H-P2b-1) | 0.6730 / 0.3256, **ratio 2.07 — the registered ≥5× PREDICTION FAILS** |
+| R-12 | R | RANDSPARSE s=10 (3 draws) + SCORESPARSE vs PROD: price, d, cos | **E** | built chain n=126 | pending | pending | EXPLORATORY; the control L9 demands -- separates "sparse is cheap" from "aligned is cheap". Matched to the operator's space: same s, same averaging operator, same projection, same job; only the native's involvement in choosing members differs |
+| R-13 | R | d(prod) vs top-75 member spread; d vs cos | **E** | cloud+chain n=126 | pending | pending | EXPLORATORY; is production's off-manifold deviation the AVERAGING artefact (native-free both sides)? |
+| R-14 | R | s_nf dilation (ideal bond) at CLOUD basis | R (P1.3) | CLOUD n=126 | +1.0425 | 2.79x | WORSE, 5/5 folds -- P1.3 FALSIFIED |
+| R-15 | R | Rg-matched dilation at CLOUD basis | **E** | CLOUD n=126 | +0.0622 | 1.47x | WORSE, 5/5 folds |
+| P-31 | cos(μ̂, μ) for μ̂ = c − t′ (a MISMATCHED same-length deposited native — native-free at inference) | cloud, ORACLE-scored | EXPLORATORY | **−0.0088 ± 0.0235**, 52% positive — zero |
+| P-32 | shared-referent FLOOR for P-31: the pure scale direction c−mean(c) | cloud, ORACLE-scored | EXPLORATORY (control, measured first) | +0.0512 ± 0.0342 — the floor is also ~zero, so P-31 is not floor-inflated, it is empty |
+| P-33 | cos(μ̂, μ) for μ̂ = c − mean(same-length deposited natives) | cloud, ORACLE-scored | EXPLORATORY | −0.0080 ± 0.0419 |
