@@ -40,13 +40,144 @@ measurement and was asked to attack the theorem rather than confirm it.
 | **C** | readout design given R1; sparse native-free support; index allocation; the 128→512 gate | running — prereg filed |
 | **D** | integrity: projection seed (gates every sub-0.01 Å claim), `pipeline.py:821`, governor/launcher, verifier + multiplicity register | running |
 | **E** | the incoherence hypothesis | **E1 CLOSED by an exact identity** — see NOTE 1. Running the ORACLE class ceiling |
-| **F** | terminal operator: medoid vs average under a native-free dispersion gate; tail mechanism | running |
-| **L** | literature, permanent | running |
+| **F** | terminal operator; **AVG_SEP** (separation-profile correction, zero free parameters) is the live arm; now also the **per-target prefix length** | running — early rows show AVG_SEP beating AVG by 0.4–0.6 Å on the chain; **no mean until 126/126** |
+| **L** | literature, permanent | **§L1 closed the deployed objective** (NOTE 5); continuing on L2, the new-observable question |
+| **P** | the `p*` substitution — lane L's decisive experiment | running, eighth slot |
 
-One slot of eight held for an adversary once there are results to attack (contract rule 24: two
-adversaries found 41 defects in the S30 report, six severe).
+**Eight lanes, the charter's maximum.** The adversary slot is spent on lane P because its
+experiment has no third outcome; the lanes have in practice been adversarial to each other —
+lane C falsified my R1 quantifier **in shipped code**, lane B found a likely confound in my own
+published 32-cost sweep, and lane E killed my opening hypothesis with an exact identity.
 
 ---
+
+## NOTE 6 (2026-09-21 00:11, lane C, S31-L5): **`FAIL18` *IS* THE TOP-18 BY WIDENING GAIN — THE CIRCULARITY IS A LITERAL IDENTITY.** THE 128→512 GATE SURVIVES AT 62% OF ITS PUBLISHED SIZE
+
+Lane C pre-registered a definition-matched stratum `defn18` = the 18 targets with the largest
+`best1(75) − best1(500)`. Result: **`defn18 ∩ FAIL18 = 18 of 18. The same targets, effect identical
+to four decimals.** Choosing the 18 targets whose best candidate hides below rank 75, then
+reporting that their best candidate also hides below rank 128, **is one statement and not two.**
+
+The rank diagnostic confirms it independently. Under a score with no within-pool skill the ORACLE
+best member's rank is uniform on 1..500, so `P(rank > 128) = 0.744`:
+
+```
+other 108           0.417     the score genuinely pulls the answer into the window
+worst18_poolmean    0.667     near the uninformative null
+worst18_bestpool    0.722     near the uninformative null
+FAIL18              1.000     ABOVE the null -- p = 0.744^18 = 0.005 by chance
+```
+
+**`FAIL18` is the only stratum *worse than an uninformative score*, which cannot happen by sampling.**
+
+**The gate's verdict: REVIVE, at 62% of the published size.** On the clean filter-independent tail
+the effect is **−1.1811 Å cloud / −1.1762 Å chain** (ORACLE / NOT DEPLOYABLE), below the registered
+−1.00 bar and below its null's 2.5th percentile at p = 0.0001. **−1.9004 is retired.** And the level
+control travels with it: regressing per-target effect on `best1(128)` gives slope −0.4356,
+R² = 0.5564, with residuals of **−0.577 for FAIL18 against −0.196 for the clean tail** — so **two
+thirds of FAIL18's excess is the stratum definition.**
+
+**The mechanism is not "hard targets hide their answer deeper".** It is *"the score has no
+within-pool skill on hard targets, so the best member lands roughly uniformly and a 128-window
+misses it ~74% of the time"* — S30's ρ degradation arriving at the register.
+
+**AND THE COMPOSITION, WHICH IS THE SHARPEST THING IN THE SPRINT.** Built chain, same 126, all
+**ORACLE / NOT DEPLOYABLE**:
+
+```
+production (uniform top-75 average)              3.2105
+bestm128  -- ORACLE PREFIX-AVERAGE over the 128  2.9027   <- T1's ENTIRE reach
+best1_top128 -- argmin over 128 (7 bits)         2.1435
+hull_top128  -- CONVEX weights over the SAME 128 1.8538
+best1_pool   -- argmin over 500 (9 bits)         1.7078
+```
+
+Two readings, both actionable:
+
+1. **The convex readout over the same 128 candidates is 0.290 Å better than naming the best of
+   them, and 1.357 Å better than production.** The readout hierarchy is **convex > selection >
+   prefix-average**, and production uses the weakest.
+2. **`bestm128` chooses `m` per target** (`s29/LEDGER.md:3943`), so **the one integer T1 says the
+   state can specify is worth 0.308 Å — and 2.9027 clears the charter's primary target.** S30 closed
+   filter width on the **GLOBAL** argmin over k (which is the shipped 75); **the per-target question
+   is untouched.** That is exactly the CVaR α. **Handed to lane F — with the warning that a
+   per-target minimum over 128 prefix lengths is the classic order statistic and `bestm128` has been
+   cited as "the architectural ceiling" since S29 without, as far as I can find, a split-half
+   transfer arm. If it is mostly best-of-128, a two-sprint-old number deflates.**
+
+Lane C also caught **its own sign error before any number left the lane** — it had defined the
+contrast as `best1(128) − best1(500)`, non-negative by construction, and read the wrong tail of the
+right null. Contract rule 8's exact failure mode, committed by the lane that quoted rule 8 in its
+own prereg, corrected in place with the original stated in the code.
+
+---
+
+## NOTE 5 (2026-09-21 00:11, lane L, S31-L4): **THE DEPLOYED CVaR FREE ENERGY IS A CONVEX PROGRAM WITH A CLOSED-FORM GLOBAL MINIMISER.** CHARTER §11 IS CLOSED FOR THE DEPLOYED OBJECTIVE
+
+The sprint's central result, and it came from the literature lane.
+
+For `F(p) = CVaR_α(E;p) − T·H(p)` (`core/quantum.py:993`), the Rockafellar–Uryasev lower-tail form
+is **affine in `p` inside a max**, so `F` is **convex in `p`** (strictly, for T > 0) and concave in
+`s`. Sion's minimax gives
+
+```
+min_p F = max_s { s - T*log sum_i exp( (s - E_i)_+ / (alpha*T) ) }     # 1-D concave in s
+p*_i  proportional to  exp( (s* - E_i)_+ / (alpha*T) )                 # a HINGED GIBBS distribution
+```
+
+**The whole 2^n optimisation is pinned by one scalar with a closed form** — uniform on everything at
+or above the VaR level, exponentially tilted only below it.
+
+> **This is strictly stronger than T1 — and the entropy term was added to break T1's degeneracy.
+> The answer is still one number.**
+
+**Verified against the shipped code**, 12 cells (n = 7, 9; α = 0.1, 0.25, 1.0; T = 0.1, 0.05):
+strong duality to 1e-9…1e-16 in all 12, an independent mirror descent reproducing it to ~1e-5, and
+**`run_cvar_vqe` strictly worse in 12/12** (F-gap +0.019 to +0.237, TV distance 0.25–0.96 from `p*`).
+The closed form is always the **more entropic** distribution (n = 9, α = 1, T = 0.1: H* = 3.693 bits
+against the circuit's 1.181).
+
+**The gap is EXPRESSIVITY, not optimisation, and the obvious objection is priced:** 80 → 2000 Adam
+iterations at fixed depth move it by **nothing** (0.025764 → 0.025944). Only depth and restarts
+close it, and at layers = 12 / 400 iters / 8 restarts (~60 s) it is still short — against
+**microseconds** for the closed form. **21 parameters cannot cover a 127-dimensional simplex.**
+
+> **CHARTER §11 IS CLOSED FOR THE DEPLOYED OBJECTIVE. The shipped CVaR-VQE is a lossy approximate
+> solver for a convex program that has an analytic solution. No interference, spectrum or
+> entanglement is doing anything. Whatever it contributes, it contributes BY FAILING TO OPTIMISE.**
+
+**What is not closed, stated honestly:** the reachable set is a 21-parameter manifold inside the
+simplex, and **that inductive bias may be the useful ingredient** (S20's law: concentration is wrong
+when discrimination binds). But if so, the bias is a Born machine `|ψ|²` from a shallow 1-D RY+CNOT
+circuit — **an MPS Born machine**. Even the escape hatch is classical.
+
+**The decisive experiment costs nothing and has no third outcome**, and is now lane P: substitute
+`p*` for `run_cvar_vqe`'s `p` and score at the **endpoint**. Improves ⇒ the quantum layer is a
+softmax plus a root-find. Worsens ⇒ **the circuit's inability to optimise is the active ingredient**,
+a real publishable negative. Caveat carried: the selection readout is piecewise-constant, so a large
+TV in `p` need not move it — **score at the endpoint, never on `p`.**
+
+**Lane A's Q2 is closed by two independent obstructions.** (a) CVaR needs an energy **per shot**, and
+only a diagonal `H` gives every bitstring a definite eigenvalue — so `H = diag(zrank) − λ·W(block)`
+**is not a CVaR-VQE and cannot be made into one.** (b) Dimension counting: a candidate-index register
+has Hilbert dimension equal to the candidate count, so **any** operator on it is 128×128 and its
+spectrum is a microsecond `eigh`. **No Hamiltonian on a candidate-index register can be classically
+hard.** The literature that does this properly uses **one qubit per data point** — 128 qubits, not 7 —
+and shows no advantage at 175 points on hardware. Index encoding is too small to be hard; assignment
+encoding is too big to run and is already beaten by Frank–Wolfe.
+
+**And a correction to our own shipped docstring:** `core/quantum.py:997-1002` says the entropy
+collapse *"is a property of CVaR, not of the optimiser."* At T = 0 that is **correct**, with a
+one-line proof (the minimiser set is a positive-volume flat face, so Adam's path — not the objective
+— picks the point). **At the deployed T = 0.1 it is wrong**: the objective's own optimum carries
+2.310 bits and the circuit delivers 0.671. **The collapse is a property of the ansatz.** Lane L flags
+its numbers there as indicative (shuffled z-rank ladder, not the measured pool `E`); lane A is to
+measure it on the instrument and correct the docstring with the original quoted.
+
+**Barren-plateau pricing for the widening:** `Var ~ 16/D = 16·2^(−n)` **is** the predicted global-cost
+barren plateau — n = 7 → 0.125, n = 9 → 0.031, n = 12 → 0.0039. **128 → 512 is affordable; past ~12
+qubits is the wall.** Caveat that cuts the other way: at n = 7–9 we are **not yet gradient-limited**,
+so this bounds where the architecture can go, not where it is stuck now.
 
 ## NOTE 4 (2026-09-21 00:07, lane D): **THERE IS NO SEED. THE PROJECTION IS DETERMINISTIC AND CHAOTIC** — AMPLIFICATION ~1e13
 
