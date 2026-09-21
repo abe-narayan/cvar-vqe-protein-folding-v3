@@ -198,7 +198,16 @@ def run_target(kind, t, corpus=None):
     out["chain"]["avg75"] = I.ca_rmsd(_project(Cd, seq, fold), nat)
 
     # E -- ZERO-INFORMATION CONTROL, matched to D's own space; the DRAW MEAN is reported
-    rng = np.random.default_rng(RNG_SEED + abs(hash(t["pdb"])) % 10_000)
+    # REPRODUCIBILITY FIX, applied AFTER the run that produced `L2_ladder_*.jsonl` and
+    # recorded in `s32/MULTIPLICITY.md` under "LANE L -- SELF-DECLARED DEFECT".  The run on
+    # disk used `abs(hash(pdb))`, and Python's string hash is RANDOMISED PER PROCESS, so
+    # that run's control draws are unbiased but NOT replayable (each row carries its three
+    # per-draw values under `draws`, so the arm is still auditable).  `zlib.crc32` is a
+    # stable digest and makes every future run reproducible.  The fix is deliberately NOT
+    # back-applied: the artefact and this line are known to differ, and saying so is better
+    # than a silent edit that makes them look consistent.
+    import zlib
+    rng = np.random.default_rng(RNG_SEED + zlib.crc32(t["pdb"].encode()) % 10_000)
     dc, dh = [], []
     for _ in range(N_DRAW):
         idx = rng.choice(len(W), M, replace=False)

@@ -1568,3 +1568,181 @@ reproduces `s29_O_chain_rows` at mean |Δ| 0.0123 and p90 0.0260 — inside the 
 on 2LNG, against the contract's recorded 0.2285 max.**
 
 ---
+
+## S32-L(L1-L4) -- **LENGTH IS NOT THE ARTEFACT IT LOOKED LIKE: A 45-TARGET, 44-60 RESIDUE INSTRUMENT SAYS THE LADDER'S SHAPE SURVIVES A 4.2x LENGTH CHANGE AND THE READOUT'S SHARE GROWS -- AND MY OWN PRIMARY HYPOTHESIS WAS KILLED BY ITS REGISTERED FALSIFIER** (2026-09-21, lane L)
+
+PREREG `s32/PREREG_S32_L.md` @ **88f2da39**, committed before the first comparison.
+Verifier `s32/s32_L_verify.py`: **8 checks, 8 pass**, each recomputed from per-target rows.
+
+### The instrument
+
+**`long40`** -- 45 targets, **44-60 residues (mean 54.71)**, five frozen folds of nine,
+assigned by greedy balanced packing of whole identity-clusters **before the first arm ran**.
+Funnel: 293 in band -> 170 monomers -> 90 after leakage -> **45** after redundancy clustering
+at identity 0.40 (keep lowest PDB code, a rule fixed in the prereg). Verified **zero overlap
+with `tuning126`**; `benchmark60` never opened. Built from `prots/`, because **the deployed
+library serves exactly ZERO windows at n >= 26** (`peptide_db` caps at 25, `fragment_db` at 20)
+while `prots/` serves **1.71 M** at n = 45.
+
+**The MDE it can resolve** (per comparison, never a shared constant), built chain, realised:
+**1.29 A** pool headroom, **1.45 A** selection, **0.48 A** retrieval, **0.46 A** sparse gain,
+**0.82 A** filter skill -- roughly **4x wider** than the canonical instrument's on the same
+rungs. Anything under ~0.46 A on this instrument is unresolvable and is reported as such.
+
+### L-H1 -- FALSIFIED BY ITS OWN REGISTERED FALSIFIER
+
+I pre-registered that the ideal-geometry representation would be the barrier at length, with
+the falsifier *"< 1.0 A at L = 45"*. The **deployed projector** (`lam_path` at lambda = 0,
+multi-start -- the exact stage-3b call) run on the native itself:
+
+| arm | n | L | mean | median | SE | p90 | max |
+|---|---|---|---|---|---|---|---|
+| `PROJ_NAT_SHORT` | 126 | 9-16 | **0.0429** | 0.0228 | 0.0053 | 0.104 | 0.431 |
+| `PROJ_NAT_LONG` | 60 | 41-60 | **0.7002** | 0.7444 | 0.0295 | 0.956 | 1.129 |
+
+ORACLE / NOT DEPLOYABLE. Mean, median **and p90** all sit below the falsifier.
+**L-H1 is false: the representation is not the obstacle at 40-60 residues.**
+
+**The by-product outlives the hypothesis.** The motivating quantity -- the **native-torsion
+rebuild** -- rises as `0.0299 * L^1.239` (R2 0.9958, **paired within the same 371 molecules**,
+0.430 A at L = 9 to 5.212 A at L = 70) and is **NOT the representability floor**. It overstates
+the distance to the emittable set by **3.9x** at L ~ 52 (2.742 vs 0.700) and **8.1x** on the
+canonical 126 (0.347 vs 0.0429). `fragment_db.REBUILD_TOL = 1.0` and `data.REBUILD_TOL = 1.5`
+gate library admission on exactly this quantity, on the stated rationale that above it *"the
+deposited geometry carries something the representation cannot express."* **That does not
+follow**, and members are being excluded that the projector can express ~8x better than the
+gate assumes. Not acted on: changing library admission would change `tuning126`'s pools.
+
+### L-H2 -- THE LADDER, BUILT CHAIN, BOTH LENGTHS, COMPLETE (n = 126 and n = 45)
+
+One ladder that is **length-portable at every rung** (BLOSUM retrieval, ORACLE best member,
+ORACLE sparse convex combination, uniform averaging), run through the SAME code at both
+lengths. Basis **built chain (projector output), pre-AMBER** at both lengths, so every rung
+DIFFERENCE is unaffected by stage 4's absence.
+
+| rung | L ~ 13 (n=126) | L ~ 55 (n=45) |
+|---|---|---|
+| `pool_best` ORACLE | **1.7078** | 5.0182 |
+| `sparse_s10` ORACLE | **1.1192** | 3.6648 |
+| `top75_best` ORACLE | 2.1004 | 5.8691 |
+| `avg75` | 3.4822 | 9.7450 |
+| `avg75_random` control | 3.6244 | 10.0622 |
+
+**INDEPENDENT REPRODUCTION.** `pool_best` 1.7078 matches contract rule 17's 1.7078 exactly and
+`sparse_s10` 1.1192 matches its 1.1139 to 0.005 -- from different code, from coordinates. The
+cloud arm likewise returns `pool_best` **1.7108**, the value pinned in `s12/instrument.py`'s
+own selfcheck.
+
+| difference (LOWER IS BETTER) | L ~ 13 | L ~ 55 |
+|---|---|---|
+| headroom `avg75 - pool_best` | +1.7744, MDE 0.3225, **5.50x**, W/L 2/124 | +4.7268, MDE 1.2867, **3.67x**, W/L 1/44 |
+| retrieval `top75_best - pool_best` | +0.3926, 3.25x | +0.8509, 1.79x |
+| selection `avg75 - top75_best` | +1.3818, **4.74x** | +3.8760, **2.68x** |
+| sparse gain `sparse_s10 - pool_best` | -0.5887, 6.31x | -1.3534, 2.97x |
+| filter skill `avg75 - avg75_random` | -0.1421, 1.27x, W/L 74/52 | -0.3171, **0.39x -> NOT A RESULT** |
+
+**ALL THREE REGISTERED PREDICTIONS HOLD.**
+
+- **P1 (pool headroom >= 0.75 A): HOLDS** -- **+4.73 A** at 3.67x MDE on 44/45 targets.
+  Generation is **less** the bottleneck at length, not more.
+- **P2 (selection is the largest deployable rung): HOLDS** -- selection 3.876 against
+  retrieval 0.851, a **4.6:1** ratio at L ~ 55 against **3.5:1** at L ~ 13.
+- **P3 (projection cost tracks non-physicality): HOLDS** -- a real member projects for
+  **+0.0385** (under the registered 0.05) and a dense 75-member average for **+0.3356**.
+  Contract rule 16's ORDERING survives; its CONSTANTS do not -- "real deposited member
+  ~FREE (-0.0007 to -0.0030)" becomes **+0.0385** at L ~ 55, 13-55x larger.
+
+**Readout share of the recoverable loss: 77.9% at L ~ 13, 82.0% at L ~ 55** (built chain;
+75.1% / 80.7% on the cloud). **The shape is preserved and the readout's share GROWS.**
+
+### The mechanism, measured rather than asserted (contract rule 15 -- `avg75` CONSTRUCTS)
+
+| | L ~ 13 (n=126) | L ~ 55 (n=45) |
+|---|---|---|
+| mean pairwise CA-RMSD among the 75 averaged | 4.031 A | **10.247 A** |
+| virtual CA-CA bond of the average | 2.440 A | **1.802 A** |
+| that as a fraction of the native bond | 0.640 | **0.474** |
+| Rg of the average / Rg of the native | 0.939 | 0.881 |
+
+The object handed to the projector at L ~ 55 has **less than half a real backbone's bond
+length**, because the set it averages is spread 2.5x further apart. That is why the readout
+rung grows, and it is a property of the OPERATOR meeting a wider set -- not of the pool.
+
+### L4 -- **m = 75 IS A PEPTIDE-LENGTH CONSTANT** (CLOUD basis; a LEAD, not a result)
+
+| | L ~ 13 (n=126) | L ~ 55 (n=45) |
+|---|---|---|
+| cloud curve minimum | flat over m = 30/50/75 (3.304/3.293/3.293) | **m = 3** (8.130); m=75 is 9.409 |
+| ONE global m fitted OUT-OF-FOLD vs m=75 | +0.0201, **0.47x -> NOT A RESULT** | -1.0127, MDE 1.4156, **0.72x -> NOT MEASURED** |
+| m chosen per fold | 75/75/50/50/50 | **3/5/3/3/5** |
+
+Every fold's out-of-fold choice at length is m in {3, 5}; the shipped m = 75 sits **1.28 A past
+the curve's minimum**. **Reported as a LEAD:** 0.72x MDE, and W/L 21/24 beside a large mean is
+the concentration warning, and the whole arm is on the **cloud** and has not been carried to
+the chain -- where a dense average at this length costs +0.34 A to project. **This is NOT a
+proposal to change the canonical pipeline:** on `tuning126` the same arm says m = 75 is already
+right (0.47x). It is a statement about what would have to change to deploy at length.
+
+### L3 -- which standing findings are length-scoped
+
+- **Common mode is NOT length-scoped.** f = 0.4683 (SE 0.0163) at L ~ 13 vs **0.5303**
+  (SE 0.0269) at L ~ 55; diff +0.062, **0.70x MDE -> NOT MEASURED**. Over a 4x length change it
+  does not measurably move, and if anything it rises. Bias-variance identity verified to
+  **1.6e-15** (a frame mismatch -- the likely bug -- breaks it). **DEFINITION:** BLOSUM top-75
+  at both lengths; the 0.676 on record is the DISTOGRAM top-75, a different object, never
+  differenced against it.
+- **`structure-and-sequence-are-decoupled` SURVIVES at length.** In-band Spearman inside the
+  K=500 pool is -0.0464 (SE 0.0074) at L ~ 13 and **+0.0261** (SE 0.0304) at L ~ 55 -- the
+  WRONG SIGN at length; contrast 0.83x -> NOT MEASURED. **My exploratory hypothesis that the
+  sequence channel strengthens with length is NOT SUPPORTED.** What does grow is a different
+  statistic: the head-of-order advantage (top-1 vs pool mean, 8% -> 25%).
+- **The deployed distance prior is hard-capped at peptide length.** `core/predict.py` sets
+  `MAXLEN = 26`; `SEP_BINS` tops out at 24, so **every pair with |i-j| >= 24 collapses into one
+  terminal bin** that in training held only |i-j| in {24, 25} -- at n = 55 that is **27% of all
+  pairs**; `sep/26.0` and `n/26.0` reach 1.7-2.3; the MLP carries raw `n` and raw `j - i`,
+  fitted only on n in [8, 26]. **It is evaluated outside its fitted support by construction.**
+  This is why the canonical ladder's distogram-defined middle rungs cannot be evaluated at
+  length at all, and why retraining it is the single largest named piece of work a long
+  deployment needs.
+
+### A methodological failure caught by its own null, before any RMSD existed
+
+The pre-registered admission filter (`identity(norm="shorter") >= 0.4` against the banks)
+rejected **140 of 170 monomers and left ZERO targets**. Measured against its own null -- 60
+targets x 3 composition-preserving shuffles -- it **rejects 100% of REAL and 100% of SHUFFLED
+sequences at every threshold up to 0.9.** It was measuring chance, not leakage (normalised by a
+9-residue fragment, four chance matches already score 0.44) -- the same failure project memory
+records at peptide length, reproduced here at worse odds. The **verbatim-substring** statistic
+separates perfectly (real 0.330, **shuffled 0.000**) and is what `long40` uses. **The correction
+was made on a null measurement, with no RMSD computed on any target at the time**, and the
+threshold was set where the null allows rather than where survivors are maximised. The leakage
+it finds is real: the average 40-60 residue `prots/` chain contains a bank member **verbatim**
+over 33% of its length.
+
+### The adversarial check on the headline, threshold fixed before reading
+
+A 4.73 A pool headroom is the shape a leakage artefact takes. Provenance of the ORACLE best
+member, all 45 targets: window identity to target **median 0.189** (mean 0.231, p90 0.400, max
+0.519); longest verbatim common substring **median 3, max 7** (below the 9-mer filter).
+Withdrawal threshold was median > 0.40. **HOLDS -- the long pool's headroom is retrieval reach,
+not PDB redundancy.**
+
+### NOT RUN, and stated as not run
+
+**The donor-pool hull-capacity control at long length is NOT RUN.** Lane V established that at
+`3n ~ 39` the ORACLE hull is fragment-space CAPACITY rather than retrieval (DONOR500 1.1626 vs
+BLOSUM500 1.1167, NOT A RESULT at 0.49x). At L ~ 55, `3n ~ 164`, so the control should FAIL.
+The arm is written and ready at `s32/s32_L_hull_capacity.py` -- lane V's solver, rounds, rho and
+frame seeding verbatim, plus a uniform window sampler that draws in proportion to per-chain
+window counts so the draw is uniform over WINDOWS and not over chains -- but it was **not
+executed**; the sprint closed first. **It ships as a falsifiable prediction, not a measurement.**
+
+### Self-declared defect, and its resolution
+
+`avg75_random`'s draw seed used `abs(hash(pdb))`, and Python's string hash is **randomised per
+process**, so that arm is **unbiased but not replayable**. Declared in `s32/MULTIPLICITY.md`
+**before any ladder number was quoted**; the draw mean and the draw-to-draw sd are both reported
+(contract rule 10) and every row carries its three per-draw values under `draws`, so the arm
+remains auditable. Fixed to `zlib.crc32` **after** the run and deliberately not back-applied,
+with the divergence stated in the code -- a silent edit would have made artefact and code merely
+*look* consistent.
