@@ -291,3 +291,99 @@ as results. Every grid maximum is reported with its split-half transfer and neve
 
 *Registered by lane C, 2026-09-20. No number produced by this lane exists in this document; none
 existed when it was committed.*
+
+---
+
+# AMENDMENT 1 — 2026-09-21, BEFORE THE FIRST LANE-C NUMBER
+
+**Nothing above is deleted.** This amendment is appended because a record search completed after
+the registration and because the coordinator posted S31-L1 (R1) and a follow-up. Every number cited
+here is an existing artefact, not a lane-C measurement. **No lane-C number existed when this was
+committed either.**
+
+## A1.1 Most of C1's registered weight families are ALREADY CLOSED in the record
+
+The families W1, W2, W3, W5 and the one-dimensional form of W4 are closed, several **by ceiling**
+rather than by a failed fit. Running them again would be decoration. Sources, all CA point cloud
+unless marked:
+
+| registered family | status in the record | source |
+|---|---|---|
+| **W1 soft score** | **CLOSED, twice, one of them by ceiling.** 30 deployable operator arms, best `wscore_T2.0_75` **3.0445** (-0.0038, CI straddles zero, reverses on drop-top-10); the leakage-ORACLE grid over rank-power and distance-to-medoid **selects the uniform point as optimal** — "no headroom to reach, not merely an unreached one"; score-softmax **0.12x its own MDE** in sample and evaporates under nested CV; Boltzmann(T=0.3) minus the deployed state **-0.0002, 0.00x MDE** | `s12/agg_FINDINGS.md:43-70`; `s23/LEDGER.md:99-116`; `s25/LEDGER.md:282-290` |
+| **W2 typicality** | **CLOSED and measurably HARMFUL.** `wcons_T1.0_75` **+0.0364 [+0.002,+0.069], 47W/79L — CI excluding zero on the bad side**; `medoid75` +0.2339; the real outlier-strip rule is **+0.142 A worse with a matched random-removal control at a dead null** — "the outliers are not noise, they are load-bearing" | `s12/agg_FINDINGS.md:48-55`; `s23/LEDGER.md:117-136` |
+| **W3 cluster-select** | **CLOSED.** 192 native-free mode arms (3 clusterings x k = 2...5 x 13 rules); best `ward5_modeavg` **+0.0131**. And "every achievable cluster-choice rule (size / score / combined / random) at every (m, k) is at or worse than the incumbent", against an ORACLE ceiling of -0.26 to -0.48 A that is **unreachable by any declared rule** | `s12/agg_FINDINGS.md:129-158`; `s23/LEDGER.md:103-106` |
+| **W4, 1-D form** | **CLOSED on both registered clauses, both blind definitions, both bases.** The typicality axis: ORACLE global step is **t = -0.0**, `lfo_LIB75` **+0.0000 cloud and +0.0000 chain**, bit-identical on 126/126. PC1 of the top-75 deviations: ORACLE global **eta = +0.0 exactly**, LFO eta **+0.0071 worse**, ORACLE-best eta positive on **52%** of targets — the sign is a measured coin flip | `s29/LEDGER.md:1718-1837`, `1883-1936` |
+| **W4, unconstrained form** | **CLOSED catastrophically.** lambda = 0 circuit read as signed weights **6.1366, +2.930, 4.36x MDE, 5/5 folds**; untrained circuit **~ +19.1**; unconstrained signed weights 3.4880 (75) / 3.5755 (500); random 27-dim affine subspace 3.5445. **And the convex control pins it: the simplex optimum under the same objective converges to 3.0522, i.e. to production** | `s27/LEDGER.md:1059,1070-1076,1232`; `s27/s28_A_FINDINGS.md:21,42,50` |
+| **W5 adaptive cardinality** | **CLOSED.** chain slope **-0.00047 A per unit m**; ORACLE global m = 72 worth -0.0018; LFO m **+0.0079 worse**; best cell priced at 112% across-target null with **-5% split-half transfer** | `s29/LEDGER.md:5208-5265`, `4288-4290` |
+| **the rescale / de-contraction idea** | **CLOSED on the ENDPOINT basis.** All four native-free scale arms are worse with every CI excluding zero (distogram +0.123, pool +0.095, both +0.080), ORACLE true scale -0.275; correlation of every native-free scale estimator with the true scale **+0.027 / -0.001 / +0.106 / +0.070, i.e. zero**. And the global scale scalar is unreachable **in principle**: `s* = 1 - <c,ebar>/||c||^2` is a function of the common-mode error and of nothing else | `s15/coord_FINDINGS.md:930-996`; `s23/LEDGER.md:143-176`, `291-321` |
+
+**Consequence:** C1 as registered would have re-run seven closed things. **C1 is narrowed** to A1.3
+below, and the closures above are reported as the answer to §7C's "can a native-free mechanism
+identify a small set of members and weights" — *it has been asked seven ways and the answer is on
+disk*.
+
+## A1.2 A withdrawn number my registration leaned on
+
+**"Coordinate averaging contracts the backbone 25.8%" is WITHDRAWN** — `s15/coord_FINDINGS.md:914-921`
+records the withdrawal in its author's own words ("magnitude was overstated by a factor of seven").
+The defensible figures are **3.5% against true distances**, and a *monotone separation profile*
+(0.773 at the virtual bond, crossing 1.00 near |i-j| = 8, reaching **1.10 at 13**) — the cloud is
+short locally and **long** at long range. `s30/LEDGER.md:129` and project memory
+`averaging-space-beats-the-objective` both still carry the stale 25.8%. **No lane-C arm is built on
+a de-contraction premise.**
+
+## A1.3 What C1 becomes: the constrained-affine ladder and the identifiability arm
+
+The coordinator's follow-up asks the right question in the right place — *not* "can sparsity buy
+capacity" but **"what is the right constraint set on an affine readout that is otherwise too
+expressive to be safe"** — and the record shows both endpoints of that ladder are already measured
+and both are bad: unconstrained affine is +2.9 to +19 A worse, and the convex optimum under the
+deployed objective **is** production. **The open rung is the bounded middle.** Registered now:
+
+- **C1-L (the ladder), ORACLE ceilings first, candidate set HELD FIXED at the top-128** — because
+  S30-L11's published pair did not hold it fixed and that is the one methodological defect in it:
+  `argmin` over 128 . uniform-s-of-128 for s in {2,3,5,10,20} . convex hull of 128 (**this row does
+  not exist on disk and is the missing rung**) . affine with ||w||_1 <= B for B on a grid .
+  unconstrained affine. Each row reports `ess`, `frac_neg`, `neg_mass` beside its RMSD, so the
+  ceiling is priced by conditioning and not just by A. **Every row is ORACLE / NOT DEPLOYABLE.**
+- **F-C1d — REGISTERED FALSIFIER.** The ORACLE unconstrained affine ceiling over the top-128 is
+  **vacuous by dimension counting** (3n <= 48 against 128 generic windows), so it reaches ~ 0 with
+  ill-conditioned cancelling weights. *Fires (i.e. the ceiling is informative rather than
+  degenerate) if the ORACLE affine solution has `ess` >= 5 and `neg_mass` <= 1.0 on a majority of
+  targets.* I expect it to be refuted; `s27/s28_A_FINDINGS.md:85-90` already calls the affine hull
+  a tautology and says not to quote it as a bound. **This is a pre-check that can only remove my own
+  excuse** (contract rule 22): if refuted, no affine ceiling is quotable and the ladder's x-axis
+  must be the constraint, not the A.
+- **F-C1c stands unchanged** (identifiability of the ORACLE hull weights from native-free features,
+  5% out-of-fold R^2 bar). It is the one genuinely new C1 arm and it is the one that produces a
+  closure rather than another null.
+- **F-C1a and F-C1b stand**, but are now evaluated against the **constrained-affine** ladder rather
+  than against W1-W5, whose verdicts are inherited from the table in A1.1 and not re-measured.
+
+## A1.4 One correction to a published S30 headline, registered before I measure it
+
+`s30/results/s30_Q_sparse.json` contains set-matched rows (`T128_*`) that S30-L11 did not use in its
+headline sentence. **I register in advance that I expect the set-matched ladder to show the sparse
+weighted readout beating the argmin at a fixed candidate set**, and that S30-L11's closure survives
+only in its *price across sets* form. If the set-matched rows do not show that, this paragraph is a
+failed prediction and will be reported as one.
+
+## A1.5 R1's scope, registered as a disagreement before I measure anything
+
+S31-L1 states that the quantum stage "cannot emit anything outside the pool" and "carries at most k
+bits". **That is true of the SELECTION readout `consensus_medoid(block, p)` (`core/pipeline.py:795-803`)
+and false of `average_weighted` (`core/pipeline.py:880-895`)**, which is also shipped, is called at
+`:1110` and `:1116`, is scored as `rmsd_q_avg` / `rmsd_q_synth` / `rmsd_u_synth` at `:1179-1182`,
+and emits a p-weighted coordinate average that is generically not a pool member. Because `p` is a
+measurement distribution it is non-negative, so that readout is **convex**, not affine: its
+reachable set is the convex hull of the posed candidates. The affine readout (`s27/s28_A_amp.py:105-117`)
+is in the measurement harness, **not** in `core/pipeline.py`. Registered here so the disagreement
+is on record before, not after, my numbers.
+
+## A1.6 Revised prior odds
+
+C1 as a source of a deployable gain: **now 15:1 against**, up from 6:1, on the strength of A1.1.
+C3 and C2 are unchanged. **The lane's expected output is a closure and a correction, not a gain**,
+and that is registered here rather than discovered later.
+
+*Amendment committed before the first lane-C number.*
