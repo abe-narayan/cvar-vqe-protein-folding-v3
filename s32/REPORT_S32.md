@@ -995,6 +995,14 @@ space at this length** rather than anything retrieval discovered.
    falsifiable prediction: **the donor-pool control of §2.0 should FAIL there.** Run that first — it
    is cheap, and it decides whether this project's architecture has a regime where it is not
    saturated.
+
+   **And the one named engineering prerequisite:** the deployed distance prior is **hard-capped
+   at peptide length** —  sets ,  tops out at 24, so at
+   n = 55 **27% of all pairs collapse into a single terminal bin** that in training held only
+   |i−j| ∈ {24, 25}, and the MLP carries raw  and raw  fitted only on n ∈ [8, 26].
+   ***It is evaluated outside its fitted support by construction.*** **Retraining it is the
+   single largest named piece of work a long deployment needs**, and until it is done the
+   distogram-defined rungs of the ladder cannot be evaluated at length at all.
 2. **Weight toward the set best.** The re-measured operator law is
    `out = −0.9934 + 0.9219·set_mean + 0.3232·set_best`, **ratio 2.85, R² 0.9162** — against a
    registered prediction of ≥ 5×. **The set best is not unreachable; it reaches the output about a
