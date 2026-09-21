@@ -418,13 +418,145 @@ own torsion distribution, with 70.6% of targets above the pool's 95th percentile
 
 ## 10. Sparse / readout work
 
-[PENDING]
+### 10.1 The readout class question, answered — with its information cost attached
+
+Built chain, n = 126, **ORACLE / NOT DEPLOYABLE**, from `s29/results/s29_O_chain_rows*.jsonl`
+(nothing reprojected):
+
+```
+production (uniform top-75 average)                3.2105
+bestm128   ORACLE prefix-average over the 128      2.9027    T1's entire reach
+best1_128  ORACLE argmin over 128                  2.1435    7 BITS
+hull_128   ORACLE CONVEX weights over the SAME 128 1.8538    128 REAL NUMBERS
+best1_pool ORACLE argmin over 500                  1.7078    9 BITS
+```
+
+**Combining reaches further than naming at a fixed candidate set. Naming wins per bit.** Both
+sentences are needed and only the pair is honest — and the second is the one that governs, because
+the project's scarce resource is information, not expressiveness.
+
+> **Every lever comparison in this report carries its information cost in the same sentence as its
+> Ångströms.** Reading `hull_128 = 1.8538` against `best1_128 = 2.1435` as *"the readout class is
+> the larger lever"* compares **7 bits against 128 free reals**, and that is the error S30 §9.4
+> already named as this project's characteristic one. It is a **larger ceiling at unpriced cost**,
+> not a larger lever.
+
+**And S30-L11's conclusion survives its own mismatched support.** S30 claimed *"a plain argmin
+dominates at every bit budget"* and supported it with 2-of-**75** against 1-of-**128**. The support
+was mismatched — but **S30 computed the correct reference curve in the same file**
+(`s30_Q_sparse.json :: argmin_ref`: 1.9383 at 8 bits, **1.7108 at 9**), and the sparse arm prices
+out at ~**9.1 bits**, where naming gives 1.7108 — **0.36 Å better at matched information. Nothing
+in the ladder beats the argmin at a matched budget.** *An earlier draft of this report stated that
+the set-matched ladder "inverts" S30-L11. That was a withdrawal that was itself wrong; it is
+retracted here.*
+
+### 10.2 The matched-search-size correction, which is a finding
+
+`2-of-128` is a per-target minimum over **C(128,2) = 8128** ORACLE supports; `argmin over 128` is a
+minimum over **128**. Comparing them directly is a **64× oracle-search mismatch**. Measured at
+matched `K` (**ORACLE / NOT DEPLOYABLE**, CA cloud):
+
+```
+ORACLE argmin over 128 singletons   (K=128)     2.1458        --
+2-of-128 uniform, 128 RANDOM pairs  (K=128)     2.2229   +0.0771  WORSE  1.11x MDE, 5/5, 44W/82L
+2-of-128 uniform, EXHAUSTIVE        (K=8128)    1.9070   -0.2388  better (3.81x MDE)
+```
+
+**And it decomposes exactly:**
+
+```
+family LEVEL   singles 3.5847  pairs 3.3469   -0.2378   <- error cancellation IS real
+dispersion loss (pairing compresses the family)        +0.3149
+net at matched K                                       +0.0771  pairs WORSE
+```
+
+> **Error cancellation is real and worth −0.238 Å in level — and is then more than consumed by
+> averaging compressing the family's dispersion.** This is §11's prefix law, **second independent
+> instance, opposite operator**: one lane decorrelated a family and its minimum **grew**; another
+> contracted one and its minimum **shrank**.
+
+### 10.3 The native-free channel, measured exactly
+
+§3(iii)'s identity gives the closure. A sum-to-one readout beats the set mean **only** through the
+cross term, and:
+
+```
+                        cross    ||Dw||^2   emitted rmsd (CA cloud)
+unif_prefix_m128       +0.0000    0.0000        3.0435
+soft_T4.00             -0.0353    0.0257        3.0391
+soft_T1.00             -0.2025    0.3097        3.0442
+typicality T1.00       +0.1844    0.2708        3.0957   <- WRONG SIGN
+ORACLE convex128      -10.3193    4.2054        1.7977   <- 2.45x
+```
+
+> **ORACLE convex runs at 2.45×; every native-free rule runs at ≈ 1.** The score's orientation
+> toward the native is **real** and is cancelled, to within **0.01 Å²**, by the dispersion that
+> concentration costs. Sharpening buys cross monotonically and pays dispersion faster every time.
+> **The best native-free rule captures 3.99% of the ORACLE convex cross term — that number is the
+> size of the entire native-free readout channel.**
+
+### 10.4 The constrained-affine middle has no selection rule
+
+- **No knee by ceiling.** The ridge path from uniform to unconstrained affine is smooth and
+  monotone (`||w||₁` 1.01 → 28.3 gives ORACLE 2.7318 → 0.0000), and at `||w||₁ = 2.09` the ORACLE
+  already beats the argmin over the whole 500. **There is no ORACLE answer to "what is the right
+  constraint".**
+- **No answer by fit either.** ORACLE weights are not identifiable: out-of-fold **R² = 0.021**
+  against a 5% bar, and **applied it is +0.0309 Å worse**.
+
+**So a constrained-affine readout cannot be selected by ceiling and cannot be selected by fit.**
+
+**And sparsity is an output, not a design choice:** the exact objective's optimum is **already
+sparse — 6.54 of 128 members with no sparsity penalty imposed.** Sparse-readout work that does not
+improve `â` is spending effort on the half of the objective that is already exact.
+
+### 10.5 The affine readout's ceiling is vacuous by rank
+
+`rank(aff{W_x}) = 32.9 ≥ 3n−3`, so the affine hull of 128 candidates **spans the residual space**
+and the ORACLE affine ceiling is **exactly 0.0000 Å on all 126 targets** — 127 weights against ~33
+dimensions, an over-parameterised interpolator (median `ess` **1.13 of 128**, `neg_mass` 3.38).
+
+> **Therefore "0.2516 Å under an ORACLE objective" is a statement about a REGULARISER, not a class
+> ceiling** — and the simplex constraint is precisely the regulariser the uniform average enjoys for
+> free. That *derives* "expressivity without an aligned objective is harmful" instead of observing
+> it: the uniform average is the heavily regularised special case of the same affine readout, and
+> under the deployed objective it **beats** the unconstrained optimisation.
 
 ---
 
 ## 11. Candidate-index information
 
-[PENDING]
+**Closed. Re-labelling cannot buy information, and in practice it does not buy anything else
+either.**
+
+- **Gray coding is a proven no-op** — the j-bit prefix partition is **identical to binary's on
+  126/126 targets** (asserted in code); measured ceiling difference **−0.0014 Å at 0.03× MDE**.
+- **Structure-aware indexing helps the ORACLE and hurts the deployable**, by construction: it
+  raises the ORACLE value of a partial measurement (2.4216 → 2.2712) and **lowers** its deployable
+  value (3.2369 → 3.3721). *Differentiating the cells makes the best cell better and the chosen
+  cell worse, because a coherent cell is a concentrated set* — §3(iii) arriving at the index.
+- **The best index map for a deployable partial readout is the random permutation** — the same
+  phenomenon §12 finds at the prefix length.
+- **No index bit carries meaningful information about candidate quality.** Mutual information
+  between an index bit and "in the ORACLE-best decile": deployed map's best bit **0.0343 bits**,
+  best map **0.0658**, permutation control 0.005. **The best available map doubles a quantity that
+  is 0.03 bits.**
+
+**The 128 → 512 register widening** survives its circularity gate at **−1.1811 Å cloud / −1.1762
+chain** on a filter-independent tail (**ORACLE / NOT DEPLOYABLE**, p = 0.0001), **62% of the
+published −1.9004** which is retired as a near-tautology. But **it only pays if a selector exists**,
+and three facts held by three different lanes compose into a prediction that it would not:
+
+1. **On the tail, the score is worse than uninformative:** FAIL18's ORACLE-best member sits below
+   rank 128 at frequency **1.000** against an uninformative-score null of **0.744**.
+2. **Widening degrades the very selector it requires:** `Var ~ 16/D` is the predicted global-cost
+   barren plateau; 128 → 512 costs **4×** in gradient variance.
+3. **`operator-consumes-set-mean`:** admitting 384 more candidates to a set the selector cannot
+   order **raises the set mean**, consumed at coefficient 1.16.
+
+> **PREDICTION, labelled as one and not run: a DEPLOYABLE 128 → 512 arm should come out WORSE than
+> production, not merely flat.** Caveat carried because it cuts the other way: at n = 7–9 we are
+> **not yet gradient-limited**, so fact 2 bounds the direction without quantifying the Ångströms.
 
 ---
 
@@ -472,7 +604,32 @@ own torsion distribution, with 70.6% of targets above the pool's 95th percentile
 
 ## 19. ORACLE ceilings
 
-[PENDING]
+Every number here is **ORACLE / NOT DEPLOYABLE**. They bound what an operator could reach with
+perfect information; none is achievable, and several are vacuous for reasons worth stating.
+
+| ceiling | basis | value | note |
+|---|---|---|---|
+| affine readout over 128 | CA cloud | **0.0000** | **vacuous by rank** — 127 weights against ~33 residual dimensions |
+| convex readout over 128 | CA cloud | **1.7977** | support 6.54/128 *without* a sparsity penalty; 9.59× MDE, 119W/0L |
+| convex readout over 128 | built chain | 1.8538 | S29's rows, quoted unchanged |
+| argmin over 500 (9 bits) | built chain | 1.7078 | |
+| argmin over 128 (7 bits) | built chain | 2.1435 | **1.067 Å of headroom below production** |
+| per-target prefix length `m` | built chain | 2.9027 | **an order statistic — see §12** |
+| best pool member, genuinely worst 18 | built chain | 2.5298 | the tail is selection-limited |
+| branch choice among the 8 already computed | built chain | **−0.0938 vs production** | 2.92× MDE, 114W/0L; free to compute |
+
+**Two of these deserve their caveat repeated in any quotation.**
+
+**The affine ceiling is not a bound.** `rank(aff{W_x}) = 32.9 ≥ 3n−3`, so the hull spans the space
+and the "ceiling" is an interpolation artefact. The source file's own instruction is *"do not quote
+any affine-hull ceiling as a bound."*
+
+**`bestm128 = 2.9027` is an order statistic, and the framing that was licensed is narrower than the
+one that was used.** See §12. The *ceiling* interpretation stands — **an optimistically biased upper
+bound is still a valid upper bound**, so "2.5 Å is unreachable through this architecture" is safe
+and **safer than stated**. The *lead* interpretation — "0.308 Å available to a better selector" —
+was priced at **−0.0018 global / +0.0079 leave-fold-out** and marked **FALSIFIED in S29**, and the
+caveat was dropped in re-quotation.
 
 ---
 
