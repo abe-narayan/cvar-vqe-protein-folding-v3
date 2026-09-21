@@ -415,6 +415,28 @@ if not selftest_only:
                                     ">=1 arm", clears[:3]))
         print("%-56s %s" % ("  positive control: arms clearing 1.0x MDE", clears[:3] or "*** NONE ***"))
 
+    # --------------- lane V: the prefix comparison, stratified (the THIRD instance of D3)
+    print()
+    print("--- lane V: BLOSUM top-75 vs SCORE top-75 on the best member, stratified ---")
+    pj = load("s32/results/s32_V_prefix_strata.json")
+    if pj:
+        check("BLOSUM top-75 best member [ORACLE]", 2.1041, dig(pj, "blosum75_best"),
+              tol=1e-3, basis="member")
+        check("SCORE top-75 best member [ORACLE]", 2.3062, dig(pj, "score75_best"),
+              tol=1e-3, basis="member")
+        for k, lab in (("all126", "ALL 126"), ("fail18", "FAIL18 (outcome-defined)"),
+                       ("other108", "OTHER 108")):
+            c = dig(pj, k, "compare") or {}
+            g = ("RESULT" if abs(c.get("effect_over_mde", 0)) >= 1.0
+                 and (c.get("folds_same_sign") or 0) >= 4
+                 else "NOT MEASURED" if abs(c.get("effect_over_mde", 0)) >= 0.7 else "NOT A RESULT")
+            print("  %-26s effect %+0.4f  median %+0.4f  %.2fx  folds %s/5  %dW/%dL  %s"
+                  % (lab, c.get("effect", 0), c.get("median_effect", 0),
+                     c.get("effect_over_mde", 0), c.get("folds_same_sign"),
+                     c.get("n_better", 0), c.get("n_worse", 0), g))
+        show("  -> the THIRD instance of the same shape",
+             "entirely FAIL18", "a best-member prefix comparison is circular there by definition")
+
     # ---------------- lane V: is the ladder's top rung retrieval, or fragment-space capacity?
     print()
     print("--- lane V: hull capacity -- is 1.1167 a property of THIS pool? (s32_V_hull_capacity) ---")
@@ -972,6 +994,16 @@ if _sj:
         STRATA_REG[round(float(_d["all_mean"]), 4)] = dict(
             arm=_arm, all=float(_d["all_mean"]), fail18=float(_d["fail18_mean"]),
             rest=float(_d["rest108_mean"]), gate=_d.get("rest108_gate"))
+#: the same shape again: BLOSUM top-75 vs the SCORE top-75 on the best member is -0.2020
+#: overall, -1.5871 on FAIL18 (18W/0L) and +0.0288 on the other 108 (0.26x, NOT A RESULT).
+#: THIRD instance -- any prefix comparison scored on the BEST MEMBER is entirely FAIL18,
+#: because FAIL18 is DEFINED as the targets whose prefix excludes the good band.
+_pj = load("s32/results/s32_V_prefix_strata.json")
+if _pj:
+    STRATA_REG[round(float(_pj["all_mean"]), 4)] = dict(
+        arm="BLOSUM top-75 vs SCORE top-75 (best member)", all=float(_pj["all_mean"]),
+        fail18=float(_pj["fail18_mean"]), rest=float(_pj["rest108_mean"]),
+        gate=_pj.get("rest108_gate"))
 #: what counts as qualifying the quotation.  Either the stratification is named, or the MEDIAN
 #: is quoted beside the mean -- which is contract rule 1's own requirement and is what makes the
 #: opposite-signed strata visible in the first place.
