@@ -10,6 +10,7 @@ Branch `s26` · instrument: `tuning126`, 126 targets, 9–16 aa · endpoint: **m
 Charter: `s31/BRIEF.md` (verbatim, 1,660 lines) · Ledger: `s31/LEDGER.md` · State: `s31/STATE.md`
 Contract: `s31/S31_CONTRACT.md` (32 rules) · Verifier: `s31/s31_verify.py` · Multiplicity:
 `s31/MULTIPLICITY.md`
+Published: <https://claude.ai/artifact/BJ6WTXG3cjtq5jQ95LqgSS> · rebuild with `python s31/build_report_page.py` (the page renders this file client-side, so the two cannot drift)
 
 ---
 
@@ -113,13 +114,13 @@ native-free quality estimate measured has **in-band skill that is zero or the wr
 
 ### 0.4 How much of this report is negative, and the pattern in the errors
 
-Nine lanes, 21 ledger entries, ten pre-registrations. **Six registered predictions fired against the
+Nine lanes, 24 ledger entries (S31-L0…L23), ten pre-registrations. **Six registered predictions fired against the
 lane that wrote them, three of those six mine.** The sprint's only live deployable candidate,
 `AVG_SEP`, is **refuted at +0.4609 Å, 2.34× MDE** — and the *"0.4–0.6 Å better"* that circulated
 mid-sprint was **the magnitude of that deficit with the sign inverted**, read off partial rows the
 lane itself had refused to average.
 
-**Fourteen claims of mine were withdrawn, and the distribution is the finding:**
+**Fifteen claims of mine were withdrawn, and the distribution is the finding:**
 
 > **Every single-lane result held. Every cross-lane synthesis of mine failed** — four for four before
 > an adversary was assigned, then eleven more defects, four severe. **A single-lane claim is audited
@@ -1454,6 +1455,7 @@ cross-lane synthesis by the coordinator failed.**
 | **The lever comparison** — *"the convex readout is 0.290 Å better, so the readout class is the larger lever"* | **Unequal information cost**: 7 bits against **128 free reals**. A larger *ceiling at unpriced cost*, not a larger lever — **the error S30 §9.4 had already named as this project's characteristic one** |
 | **"`bestm128` may deflate"** | **Inverted.** The transfer arm existed *in the entry that produced the number*, and S29 marked it **FALSIFIED**. Order-statistic inflation makes an oracle number **optimistically biased, and an optimistically biased upper bound is still a valid upper bound** — so the ceiling reading was licensed. **My use of it as a "0.308 Å lead" was not**, and I had dropped S29's caveat in re-quotation |
 | **The widening null as 0.35×** | That is `D − A`; the widening is `F − A2` at **0.42×** |
+| **"The basis was doing the work"** (§14.6, written and corrected within the hour) | **Overstated.** S29-L30's prefix transfer was cloud and mine is chain, but **both are nulls** and the sign difference is noise inside the null. Lane F found why it carries: the cloud→chain price is **flat across prefixes** (0.1422–0.1643), so `m` conclusions transfer by construction. *The repair makes the claim measured on its own basis; it does not overturn it.* |
 | **My 2:1 reasoning on E2/E3** | Right in direction, **wrong in mechanism, twice**: I predicted the orthogonal complement would be *noise*. It is **94% predictable and actively harmful** |
 
 ### A.2 The lanes'

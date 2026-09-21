@@ -5,6 +5,14 @@ pre-registered falsifier, what each lane is doing, and what is closed and why. N
 newest-first below the headline. **With 7 lanes an unwritten research state is how contradictory
 conclusions coexist unnoticed.**
 
+**SPRINT CLOSED 2026-09-21 01:27. Report `s31/REPORT_S31.md` is FINAL (1,518 lines, 22 sections
++ 2 appendices); verifier `s31/s31_verify.py` at 271 matched / 0 mismatched / 0 not-found /
+0 flagged. Published: <https://claude.ai/artifact/BJ6WTXG3cjtq5jQ95LqgSS> — rebuild with
+`python s31/build_report_page.py`, which renders `REPORT_S31.md` client-side so the page and
+the repository cannot drift. All nine lanes handed back. Do not respawn them.**
+
+---
+
 Endpoint: **mean built-chain Cα RMSD, `tuning126`, n = 126 — production 3.2105 Å.**
 CA point cloud is **3.0483 Å** and the *set mean* is 3.5507 Å. Three different objects.
 
