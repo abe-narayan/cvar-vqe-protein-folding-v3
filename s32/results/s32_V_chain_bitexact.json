@@ -1,0 +1,88 @@
+{
+ "canonical_mean_s29": 3.210533994943299,
+ "n_canonical": 126,
+ "arms": {
+  "s29 struct npz ['prod']": {
+   "n": 126,
+   "mean": 3.210533994943299,
+   "mean_diff": 0.0,
+   "max_abs_diff": 0.0,
+   "n_bit_identical": 126,
+   "n_within_1e9": 126,
+   "note": "the input chain_item actually reads",
+   "worst": [
+    [
+     "1A13",
+     2.634371516571869,
+     2.634371516571869
+    ],
+    [
+     "1A1P",
+     3.4599283770893683,
+     3.4599283770893683
+    ],
+    [
+     "1CB3",
+     2.934431643055904,
+     2.934431643055904
+    ]
+   ]
+  },
+  "production cache avg_ca": {
+   "n": 126,
+   "mean": 3.2147651542109985,
+   "mean_diff": 0.004231159267698433,
+   "max_abs_diff": 0.41676499078667373,
+   "n_bit_identical": 0,
+   "n_within_1e9": 0,
+   "note": "same average, other float64 bits",
+   "worst": [
+    [
+     "2LNG",
+     4.778535407482649,
+     4.361770416695975
+    ],
+    [
+     "2NDN",
+     2.6456703649581588,
+     2.822147589520931
+    ],
+    [
+     "7JS6",
+     7.142519913635159,
+     6.966116472622261
+    ]
+   ]
+  },
+  "recomputed coordinate average": {
+   "n": 126,
+   "mean": 3.212625219723354,
+   "mean_diff": 0.002091224780054017,
+   "max_abs_diff": 0.5174101434362743,
+   "n_bit_identical": 0,
+   "n_within_1e9": 0,
+   "note": "same average, recomputed in-process",
+   "worst": [
+    [
+     "2LNG",
+     4.87918056013225,
+     4.361770416695975
+    ],
+    [
+     "6QAX",
+     4.078647277175354,
+     4.2063211732889245
+    ],
+    [
+     "8TXS",
+     2.6178435287612323,
+     2.6844483321273658
+    ]
+   ]
+  }
+ },
+ "max_abs_cloud_diff_over_targets": 5.684341886080802e-14,
+ "endpoint_reproduces_bit_exactly": true,
+ "verdict": "THE CANONICAL 3.2105 REPRODUCES BIT-FOR-BIT FROM ITS STATED INPUT (s29_O_structs/<pdb>.npz['prod']); the two other bit-representations of the SAME average give a different chain on nearly every target.",
+ "selftest_detects_ulp_perturbed_input": true
+}

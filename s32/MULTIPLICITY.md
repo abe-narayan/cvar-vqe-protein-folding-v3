@@ -280,3 +280,73 @@ a factor of two.**
 |ρ| sits in the noise, and the two ρ's being compared are estimated against a **common** referent
 (`rr`), so memory `shared-referent-floor` applies to their correlation. The *anti*-agreements are the
 robust half of this table; the near-chance rows are uninformative either way.
+| P-21 | sign(⟨pc1, μ⟩): 9 native-free sign rules, LFO polarity | cloud, ORACLE bit | EXPLORATORY (9-rule family; read with that multiplicity) | best accuracy 0.5952 ± 0.0226 (1.51×); best payoff **+0.0032 Å** |
+| P-22 | the ORACLE bit: sign + ONE global LFO step | cloud, ORACLE | EXPLORATORY | **+0.1835 Å** of the 3.0776 Å common mode; random sign −0.0016 ± 0.0030 (200 draws) |
+| P-23 | the ORACLE bit + ORACLE per-target step (1 bit + 1 real) | cloud, ORACLE | EXPLORATORY | +0.4589 Å — **not one bit; quote P-22 for one bit** |
+| P-24 | PLACEBO: cos²(pc1, c−t′) for mismatched same-length natives | cloud, ORACLE | EXPLORATORY (control) | 0.2024 vs true 0.2277 vs random 0.0316 — **87.1% of the alignment is placebo** |
+
+### Registered — D0-X-C: the circularity control the coordinator asked for. **THE SYNTHESIS IS CIRCULAR.**
+
+The coordinator proposed that lane D's *"the top-75 filter removes 79% of the pool's chiral
+variance"* and lane V's *"the score prefix halves the pool's quality spread"* are **the same event
+from two sides**, and that the arm implied is to apply the chiral observable at 500 → 128 where the
+chiral variance still exists. He asked to be told if the two halves are one variance measured twice.
+**They are.** `s32/results/s32_D0X_circularity.json`.
+
+**Control: the variance each coordinate RETAINS under the shipped top-75 filter, with a size-matched
+random-75 control beside it, and with the EXACT achiral twin of the chiral coordinate** — `mean cos τ`
+against `mean sin τ` over the same Cα pseudo-torsions, same functional family, same scale, differing
+in nothing but parity under reflection (S30's own twin design).
+
+| coordinate | variance retained, score-75 | random-75 control |
+|---|---|---|
+| `DIS` — *the filter's own criterion* | **0.037** | 0.964 |
+| `RG` | 0.111 | 0.979 |
+| **`CHI_even_cos` — the ACHIRAL TWIN** | **0.196** | 0.978 |
+| `E2E` | 0.244 | 0.957 |
+| **`CHI_odd_sin` — the CHIRAL coordinate** | **0.271** | 0.975 |
+| **`RR_ORACLE` — lane V's quantity** | **0.272** | 0.965 |
+| `LEG_total` | 0.323 | 0.973 |
+
+| # | reg? | comparison | effect | se | ×MDE | folds | W/L |
+|---|---|---|---|---|---|---|---|
+| D-30 | R | chiral retention **minus its own achiral twin's** | **+0.0755** | 0.0114 | **2.35** | 5/5 | 53/73 |
+
+**Three readings, and all three go against the proposal.**
+
+1. **The filter shrinks everything, not chirality.** The random-75 control retains 0.96–0.98 on every
+   coordinate, so the shrinkage is selection and not subsetting — but it is *general* selection. The
+   chiral coordinate is the **second-least** shrunk thing measured.
+2. **Chirality is shrunk LESS than its own achiral twin**, by +0.0755 at 2.35× MDE, 5/5 folds. *"The
+   filter removes the chiral variance"* is exactly backwards as a chirality-specific claim.
+3. **Lane D's 0.271 and lane V's 0.272 are the same number to three decimals.** They are not two
+   facts. They are one fact — *a score filter narrows every coordinate correlated with the score* —
+   and chirality and ORACLE quality happen to correlate with `DIS` at similar strength. **The
+   synthesis is circular and must not be written down.**
+
+### D0-X-P: the proposed 500 → 128 arm's precondition, and why it is NOT RUN
+
+| # | reg? | global ρ vs `rr`, K=500 pool | effect | se | ×MDE | folds |
+|---|---|---|---|---|---|---|
+| D-31 | R | `CHI_odd_sin` (chiral) | +0.3302 | 0.0413 | 2.85 | 5/5 |
+| D-32 | R | **`CHI_even_cos` (the ACHIRAL TWIN)** | **−0.3359** | 0.0440 | 2.72 | 5/5 |
+| D-33 | R | chiral, `DIS` partialled | +0.1302 | 0.0324 | 1.44 | 5/5 |
+| D-34 | R | chiral, `Rg` partialled | +0.2574 | 0.0498 | 1.84 | 5/5 |
+| D-35 | E | `DIS`, chiral partialled | +0.4657 | 0.0289 | 5.75 | 5/5 |
+
+rank-corr(chiral, `Rg`) = **+0.464**; rank-corr(chiral, `DIS`) = **+0.374**.
+
+**The arm is not run, and the reason is a derivation, not a budget.** The chiral coordinate's achiral
+twin reaches **the same magnitude with the opposite sign** (−0.3359 against +0.3302). By S30's own
+twin criterion — *"whatever WRITHE can do, its own reflection-invariant shadow already does"* — **the
+G1 escape is not what is doing the work here, for the third time in this project** (WRITHE S30-L26,
+XTWIST S31 §9, this). What is left is a weakly-independent global coordinate (+0.1302 past `DIS`,
+44% of it shared with `Rg`) proposed as an addition to a global filter — which is **S30-L21's closed
+question**: the available fields span ~2 directions, and the best ORACLE global combination of 21 of
+them reaches 0.1693, leave-fold-out **0.0948**. Spending AMBER-free CPU on it is allowed; spending
+the lane's remaining AMBER window on it is not, and the mechanism that motivated it is refuted above.
+
+### The falsifier that fired, kept in the record rather than overshadowed
+
+D-12: the registered prediction *"in-band share of chiral variance < 15%"* **FAILED at 23.6%.** The
+79%/21% split it was meant to explain is, per D-30, **not chirality-specific**. Both statements stand.

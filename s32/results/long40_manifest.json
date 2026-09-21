@@ -1,0 +1,755 @@
+{
+ "name": "long40",
+ "band": [
+  40,
+  60
+ ],
+ "leak_identity": 0.4,
+ "cluster_identity": 0.4,
+ "n_folds": 5,
+ "fold_sizes": [
+  9,
+  9,
+  9,
+  9,
+  9
+ ],
+ "funnel": {
+  "in_band": 293,
+  "monomer": 170,
+  "leakage_survivors": 90,
+  "leakage_rejected": {
+   "own-pdb-in-bank": 30,
+   "verbatim-bank-member": 50
+  },
+  "n_clusters": 45
+ },
+ "n": 45,
+ "lengths": {
+  "mean": 54.71111111111111,
+  "min": 44,
+  "max": 60
+ },
+ "targets": [
+  {
+   "ok": true,
+   "n": 56,
+   "seq": "MQYKLILNGKTLAGETTTEAVDAATAEKVFKQYANDNGVDGEWTYDDATKTFTVTE",
+   "rebuild": 3.6102028202405383,
+   "rg": 10.291340336598164,
+   "pdb": "12LO",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\12LO.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 6,
+   "cluster_members": [
+    "12LO",
+    "2GI9",
+    "2ON8",
+    "2QMT",
+    "2ZW0",
+    "6NLA"
+   ],
+   "fold": 3
+  },
+  {
+   "ok": true,
+   "n": 58,
+   "seq": "PWATAEYDYDAAEDNELTFVENDKIINIEFVDDDWWLGELEKDGSKGLFPSNYVSLGN",
+   "rebuild": 4.818995098011302,
+   "rg": 9.6373598712359,
+   "pdb": "1JO8",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\1JO8.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "1JO8"
+   ],
+   "fold": 2
+  },
+  {
+   "ok": true,
+   "n": 55,
+   "seq": "TDICKLPKDEGTCRDFILKWYYDPNTKSCARFWYGGCGGNENKFGSQKECEKVCA",
+   "rebuild": 3.0995303625910005,
+   "rg": 10.363945537857921,
+   "pdb": "1KNT",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\1KNT.pdb",
+   "verbatim_bank_coverage": 0.2,
+   "cluster_size": 2,
+   "cluster_members": [
+    "1KNT",
+    "2KNT"
+   ],
+   "fold": 3
+  },
+  {
+   "ok": true,
+   "n": 52,
+   "seq": "AKLSCKICGYIYDEDEGDPDNGISPGTKFEDLPDDWVCPLCGAPKSEFERIE",
+   "rebuild": 2.2833958443285156,
+   "rg": 9.631975383600054,
+   "pdb": "1YK4",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\1YK4.pdb",
+   "verbatim_bank_coverage": 0.21153846153846154,
+   "cluster_size": 5,
+   "cluster_members": [
+    "1YK4",
+    "2PYA",
+    "9TA4",
+    "9TA6",
+    "9ZDO"
+   ],
+   "fold": 4
+  },
+  {
+   "ok": true,
+   "n": 58,
+   "seq": "GQVKVFRALYTFEPRTPDELYFEEGDIIYITDMSDTNWWKGTSKGRTGLIPSNYVAEQ",
+   "rebuild": 3.8949418443925916,
+   "rg": 9.843073664189268,
+   "pdb": "1ZLM",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\1ZLM.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 11,
+   "cluster_members": [
+    "1ZLM",
+    "4LE9",
+    "5ECA",
+    "7A2O",
+    "7A2P",
+    "7A2Q",
+    "7A2S",
+    "7A2T",
+    "7NES",
+    "7PVY",
+    "7PW2"
+   ],
+   "fold": 0
+  },
+  {
+   "ok": true,
+   "n": 56,
+   "seq": "ENKVLYAYVQKDDDEITITPGDKISLVARDTGSGWTKINNDTTGETGLVPTTYIRI",
+   "rebuild": 2.8360458643408686,
+   "rg": 9.647377892817161,
+   "pdb": "1ZUU",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\1ZUU.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "1ZUU"
+   ],
+   "fold": 3
+  },
+  {
+   "ok": true,
+   "n": 53,
+   "seq": "NPCACFRNYVPVCGSDGKTYGNPCMLNCAAQTKVPGLKLVHEGRCQRSNVEQF",
+   "rebuild": 3.9483780665365056,
+   "rg": 10.632822681623972,
+   "pdb": "2ERW",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\2ERW.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "2ERW"
+   ],
+   "fold": 4
+  },
+  {
+   "ok": true,
+   "n": 55,
+   "seq": "AYVINEACISCGACEPECPVNAISSGDDRYVIDADTCIDCGACAGVCPVDAPVQA",
+   "rebuild": 2.595568342782515,
+   "rg": 9.424530330979431,
+   "pdb": "2FDN",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\2FDN.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "2FDN"
+   ],
+   "fold": 0
+  },
+  {
+   "ok": true,
+   "n": 59,
+   "seq": "EACKFLHQERMDVCETHLHWHTVAKETCSEKSTNLHDYGMLLPCGIDKFRGVEFVCCPL",
+   "rebuild": 6.484233140855746,
+   "rg": 11.496312260909999,
+   "pdb": "2FMA",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\2FMA.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "2FMA"
+   ],
+   "fold": 1
+  },
+  {
+   "ok": true,
+   "n": 59,
+   "seq": "SNATFGMGDRVRKKSGAAWQGQIVGWYCTNLTPEGYAVESEAHPGSVQIYPVAALERIN",
+   "rebuild": 4.152619246446092,
+   "rg": 10.512618841046619,
+   "pdb": "2GQV",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\2GQV.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 7,
+   "cluster_members": [
+    "2GQV",
+    "2P4T",
+    "2RH2",
+    "2RK1",
+    "3SFM",
+    "6NY0",
+    "9CUM"
+   ],
+   "fold": 2
+  },
+  {
+   "ok": true,
+   "n": 55,
+   "seq": "AAECTVPIGWSEPVKGLCKARFTRYYCMGNCCKVYEGCYTGGYSRMGECARNCPG",
+   "rebuild": 4.3799956481154,
+   "rg": 11.192397791867599,
+   "pdb": "2UUX",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\2UUX.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "2UUX"
+   ],
+   "fold": 2
+  },
+  {
+   "ok": true,
+   "n": 51,
+   "seq": "TFTSFQLEELEKAFSRTHYPDVFTREELAMKIGLTEARIQVWFQNRRAKWR",
+   "rebuild": 2.064279090354178,
+   "rg": 9.846068670477695,
+   "pdb": "3A02",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\3A02.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "3A02"
+   ],
+   "fold": 3
+  },
+  {
+   "ok": true,
+   "n": 57,
+   "seq": "KRYRAVYDYSAADEDEVSFQDGDTIVNVQQIDDGWMYGTVERTGDTGMLPANYVEAI",
+   "rebuild": 4.983459455467386,
+   "rg": 9.486295054857562,
+   "pdb": "3I35",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\3I35.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "3I35"
+   ],
+   "fold": 4
+  },
+  {
+   "ok": true,
+   "n": 48,
+   "seq": "GSGSPLAQQIKNIHSFIHQAKAAGRMDEVRTLQENLHQLMHEYFQQSD",
+   "rebuild": 1.6120389705711968,
+   "rg": 11.616170235646617,
+   "pdb": "3V1A",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\3V1A.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "3V1A"
+   ],
+   "fold": 0
+  },
+  {
+   "ok": true,
+   "n": 59,
+   "seq": "SERPFFCNFCGKTYRDASGLSRHRRAHLGYRPRSCPECGKCFRDQSEVNRHLKVHQNKP",
+   "rebuild": 4.149985557950852,
+   "rg": 14.989001848931531,
+   "pdb": "4GZN",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\4GZN.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "4GZN"
+   ],
+   "fold": 1
+  },
+  {
+   "ok": true,
+   "n": 46,
+   "seq": "HKSIKEIEKEEIIKVLKEVNFNKKLASEILGIPLRTLYKRLKEYGI",
+   "rebuild": 2.2990864434183935,
+   "rg": 9.96885935120701,
+   "pdb": "4L5E",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\4L5E.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "4L5E"
+   ],
+   "fold": 2
+  },
+  {
+   "ok": true,
+   "n": 58,
+   "seq": "ADNKFNKEQQNAFYEILHLPNLTEEQRNGFIQSLKDDPSVSKEILAEAKKLNDAQAPK",
+   "rebuild": 7.480170529536327,
+   "rg": 11.56012397644998,
+   "pdb": "4NPE",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\4NPE.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "4NPE"
+   ],
+   "fold": 3
+  },
+  {
+   "ok": true,
+   "n": 57,
+   "seq": "LSPKQERFIEEYFINDMNATKAAIAAGYSKNSASAIGAENLQKPAIRARIDARLKEI",
+   "rebuild": 2.9670049026758982,
+   "rg": 10.174741864421145,
+   "pdb": "4ZC3",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\4ZC3.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "4ZC3"
+   ],
+   "fold": 4
+  },
+  {
+   "ok": true,
+   "n": 44,
+   "seq": "SDLAALVSLVESVRHEQQQLRNLCEMILEQQQRAKEFGENLYFQ",
+   "rebuild": 0.949989090068175,
+   "rg": 19.206102522746583,
+   "pdb": "5AL6",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\5AL6.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "5AL6"
+   ],
+   "fold": 0
+  },
+  {
+   "ok": true,
+   "n": 59,
+   "seq": "ADDRTLLMAGVSHDLRTPLTRIRLATEMMSEQDGYLAESINKDIEECNAIIEQFIDYLR",
+   "rebuild": 1.941671999762735,
+   "rg": 14.371792525594762,
+   "pdb": "5B1N",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\5B1N.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "5B1N"
+   ],
+   "fold": 1
+  },
+  {
+   "ok": true,
+   "n": 45,
+   "seq": "KKRKRCGTCDPCRRLENCGSCTSCTNRRTHQICKLRKCEVLKKKA",
+   "rebuild": 6.633095638406198,
+   "rg": 10.92355912367857,
+   "pdb": "5EXH",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\5EXH.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "5EXH"
+   ],
+   "fold": 2
+  },
+  {
+   "ok": true,
+   "n": 49,
+   "seq": "MGCTYTIQPGDTFWAIAQRRGTTVDVIQSLNPGVNPARLQVGQVINVPC",
+   "rebuild": 2.955295952906728,
+   "rg": 9.517544634110136,
+   "pdb": "5K2L",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\5K2L.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "5K2L"
+   ],
+   "fold": 3
+  },
+  {
+   "ok": true,
+   "n": 57,
+   "seq": "RPSFCNLPVKPGPCKAFFSAFYYSQKTNKCHSFTYGGCKGNANRFSTLEKCRRTCVG",
+   "rebuild": 4.2922155042928285,
+   "rg": 10.450521183544295,
+   "pdb": "5M4V",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\5M4V.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 2,
+   "cluster_members": [
+    "5M4V",
+    "5PTI"
+   ],
+   "fold": 4
+  },
+  {
+   "ok": true,
+   "n": 60,
+   "seq": "VNQKEIEIAIEYFKNYISVGEIVATMDLKARGISNPQAVISKLIEMGIIEKGEGCYNLVR",
+   "rebuild": 3.598838873877757,
+   "rg": 9.907257730990409,
+   "pdb": "5N41",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\5N41.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "5N41"
+   ],
+   "fold": 4
+  },
+  {
+   "ok": true,
+   "n": 58,
+   "seq": "EVVVVAKFDYVAQQEQELDIKKNERLWLLDDSKSWWRVRNSMNKTGFVPSNYVERKNS",
+   "rebuild": 3.1335636859057936,
+   "rg": 14.284803054498662,
+   "pdb": "5QU8",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\5QU8.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "5QU8"
+   ],
+   "fold": 0
+  },
+  {
+   "ok": true,
+   "n": 53,
+   "seq": "GPLGSEVVRCICEVQEENDFMIQCEECQSWQHGVCMGLLEENVPEKYTCYVCQ",
+   "rebuild": 2.9327566745676483,
+   "rg": 10.410548847993438,
+   "pdb": "5TAB",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\5TAB.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "5TAB"
+   ],
+   "fold": 1
+  },
+  {
+   "ok": true,
+   "n": 60,
+   "seq": "GPLPNKLWCICRQPHNNRFMICCDLCEDWFHGTCVGVTKAMGTDMENKGIDWKCPKCVKR",
+   "rebuild": 3.1804663133014035,
+   "rg": 11.492635638493283,
+   "pdb": "5WLF",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\5WLF.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "5WLF"
+   ],
+   "fold": 2
+  },
+  {
+   "ok": true,
+   "n": 49,
+   "seq": "GAMDMSWTDERVSTLKKLWLDGLSASQIAKQLGGVTRNAVIGKVHRLGL",
+   "rebuild": 1.6723437538057713,
+   "rg": 9.949744028804203,
+   "pdb": "5YIU",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\5YIU.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "5YIU"
+   ],
+   "fold": 3
+  },
+  {
+   "ok": true,
+   "n": 55,
+   "seq": "AKYTGKCTKSKNECKYKNDAGKDTFIKCPKFDNKKCTKDNNKCTVDTYNNAVDCD",
+   "rebuild": 3.4332400450758698,
+   "rg": 9.955604656727852,
+   "pdb": "6HA4",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\6HA4.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 11,
+   "cluster_members": [
+    "6HA4",
+    "6HAH",
+    "7BAE",
+    "7BAF",
+    "7ZTF",
+    "7ZTJ",
+    "7ZUT",
+    "7ZVH",
+    "7ZW2",
+    "9FQF",
+    "9FQG"
+   ],
+   "fold": 1
+  },
+  {
+   "ok": true,
+   "n": 54,
+   "seq": "GSNMVHPNVICDGCNGPVVGTRYKCSVCPDYDLCSVCEGKGLHRGHTKLAFPSP",
+   "rebuild": 3.193574043119972,
+   "rg": 9.94922695202983,
+   "pdb": "6MJ7",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\6MJ7.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "6MJ7"
+   ],
+   "fold": 4
+  },
+  {
+   "ok": true,
+   "n": 57,
+   "seq": "TARSKVGGSGDQTWVQCDACLKWRKLPDGMDQLPEKWYCSNNPDPQFRNCEVPEEPE",
+   "rebuild": 3.528007715681097,
+   "rg": 10.413685821936214,
+   "pdb": "6O5W",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\6O5W.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "6O5W"
+   ],
+   "fold": 0
+  },
+  {
+   "ok": true,
+   "n": 59,
+   "seq": "DRPSLCDLPADSGSGTKAEKRIYYNSARKQCLRFDYTGQGGNENNFRRTYDCARTCLYT",
+   "rebuild": 4.815588003923324,
+   "rg": 10.824130637100996,
+   "pdb": "6Q61",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\6Q61.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "6Q61"
+   ],
+   "fold": 1
+  },
+  {
+   "ok": true,
+   "n": 48,
+   "seq": "LVTGSEYETMLTEIMSMGYERERVVAALRASGNNPHRAVEYLLTGIPG",
+   "rebuild": 2.3355799953394305,
+   "rg": 9.813859061680452,
+   "pdb": "6W2I",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\6W2I.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 3,
+   "cluster_members": [
+    "6W2I",
+    "7TGP",
+    "9PTF"
+   ],
+   "fold": 0
+  },
+  {
+   "ok": true,
+   "n": 57,
+   "seq": "MEKRIENLNKKVDDGFLDIWTYNAELLVLLENERTLDYHDSNVKNLYEKVRSQLKNN",
+   "rebuild": 1.39063963037167,
+   "rg": 15.200917624615164,
+   "pdb": "6Z2T",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\6Z2T.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "6Z2T"
+   ],
+   "fold": 2
+  },
+  {
+   "ok": true,
+   "n": 48,
+   "seq": "DCHGTICHPVNEFCYVATERCHPCIEVCNNQTHNYDAFLCAKECSAYK",
+   "rebuild": 4.21862067778604,
+   "rg": 9.97793615307238,
+   "pdb": "6ZSY",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\6ZSY.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "6ZSY"
+   ],
+   "fold": 3
+  },
+  {
+   "ok": true,
+   "n": 52,
+   "seq": "MPHRFKVYNYMSPTFCDHCGSLLWGLVKQGLKCEDCGMNVHHKCREKVANLC",
+   "rebuild": 5.646289502029106,
+   "rg": 10.023213767725926,
+   "pdb": "7KND",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\7KND.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 3,
+   "cluster_members": [
+    "7KND",
+    "7LF3",
+    "9ECS"
+   ],
+   "fold": 1
+  },
+  {
+   "ok": true,
+   "n": 55,
+   "seq": "VMDKCKKVYENYPVSKCQLANQCNYDCKLDKHARSGECFYDEKANLQCICDYCEY",
+   "rebuild": 4.25000538906399,
+   "rg": 10.811704225708688,
+   "pdb": "7W8E",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\7W8E.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "7W8E"
+   ],
+   "fold": 4
+  },
+  {
+   "ok": true,
+   "n": 59,
+   "seq": "SKVTLNGQQIDFDAAVNLMDAELREELHSAQEWTNDQEFLDAYVQAHAAKFDGEEFQVA",
+   "rebuild": 3.103884612436725,
+   "rg": 10.666639851318976,
+   "pdb": "7YHR",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\7YHR.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "7YHR"
+   ],
+   "fold": 0
+  },
+  {
+   "ok": true,
+   "n": 58,
+   "seq": "VLVVTSKVKKLIKEKGQMNTSAETIDVLSKAIEQLCLKGVESAKADGRKTVMARDIVI",
+   "rebuild": 1.5535892277469001,
+   "rg": 14.51840914389738,
+   "pdb": "8CMP",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\8CMP.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "8CMP"
+   ],
+   "fold": 1
+  },
+  {
+   "ok": true,
+   "n": 60,
+   "seq": "NNGSYPCPCCGNKTIDEPGCYEICPICGWEDDPVQSADPDFSGGANSPSLNEAKRAFNEQ",
+   "rebuild": 3.5027626535387246,
+   "rg": 10.221602062219512,
+   "pdb": "8EY3",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\8EY3.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "8EY3"
+   ],
+   "fold": 2
+  },
+  {
+   "ok": true,
+   "n": 44,
+   "seq": "GKKVVARVAEARAEDVGKRVVRVDKAERAKVGVKVGDVVEVKKV",
+   "rebuild": 3.23271017555963,
+   "rg": 11.24602455873024,
+   "pdb": "8JVN",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\8JVN.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 3,
+   "cluster_members": [
+    "8JVN",
+    "8JVP",
+    "8JVQ"
+   ],
+   "fold": 2
+  },
+  {
+   "ok": true,
+   "n": 53,
+   "seq": "FVNQHLCGSHLVEALYLVCGERGFFYTPKAMKGIVEQCCTSICSLYQLENYCN",
+   "rebuild": 4.695564610243143,
+   "rg": 9.561035322609724,
+   "pdb": "8PI4",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\8PI4.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "8PI4"
+   ],
+   "fold": 3
+  },
+  {
+   "ok": true,
+   "n": 59,
+   "seq": "MEAVLYSTFRNHLKDYMKKVNDEFEPLTVVNKNPDEDIVVLSKSEWDSIQETLRIAQNK",
+   "rebuild": 5.564595431423312,
+   "rg": 13.577433378160547,
+   "pdb": "8YZG",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\8YZG.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 1,
+   "cluster_members": [
+    "8YZG"
+   ],
+   "fold": 4
+  },
+  {
+   "ok": true,
+   "n": 60,
+   "seq": "DDKAACADGIAAVKARVEKLAPEAVPQKLKRALKIAEREQGEGEFDECLEALDDAKRALP",
+   "rebuild": 2.754045312180452,
+   "rg": 10.781963262322687,
+   "pdb": "9C8Z",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\9C8Z.pdb",
+   "verbatim_bank_coverage": 0.0,
+   "cluster_size": 2,
+   "cluster_members": [
+    "9C8Z",
+    "9C90"
+   ],
+   "fold": 0
+  },
+  {
+   "ok": true,
+   "n": 58,
+   "seq": "GKELLLVLYDYQEKSPRELTVKKGDILTLLNSTNKDWWKVEWNDRQGFLPAAYLKKLD",
+   "rebuild": 3.424508126072037,
+   "rg": 9.934250352625035,
+   "pdb": "9EYC",
+   "path": "C:\\Users\\abena\\Protein-Folding-Algorithm\\prots\\9EYC.pdb",
+   "verbatim_bank_coverage": 0.1724137931034483,
+   "cluster_size": 2,
+   "cluster_members": [
+    "9EYC",
+    "9IH7"
+   ],
+   "fold": 1
+  }
+ ]
+}

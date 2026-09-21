@@ -77,49 +77,57 @@ def proj_simplex(v):
     return np.maximum(v - css[rho] / (rho + 1.0), 0.0)
 
 
-def simplex_qp(G, g, iters=4000, tol=1e-14):
-    """min_w w'Gw - 2w'g over the simplex.  FISTA, then an EXACT active-set polish.
+def simplex_qp(U, t, rho=None, tol=1e-9, _G=None):
+    """min_w ||U'w - t||^2 over the simplex, by NNLS on the sum-to-one-augmented system.
 
-    Returns (w, support, kkt_residual).  The polish makes the answer machine-precision, and
-    the KKT residual is returned as a CERTIFICATE rather than assumed.
+    WHY NOT FISTA, which is what this function did first.  A 4000-iteration FISTA plus a
+    drop-only polish passed a 3-target smoke and then FAILED ITS OWN KKT CERTIFICATE on the
+    full instrument -- max residual 1.26 at K=128 and 10.85 at K=500 -- because a drop-only
+    polish never ADDS a violated index back, so a support that FISTA got wrong stays wrong.
+    The certificate caught it; the smoke did not.  Lawson-Hanson NNLS is a finite exact
+    active-set method, so the support is right by construction.
+
+    The sum-to-one constraint is imposed by appending the row `sqrt(rho) * 1'` with target
+    `sqrt(rho)`; `|sum w - 1|` is returned so the penalty is CHECKED, not assumed.
+
+    Returns (w, support, kkt_residual, sum_err).  KKT for `min w'Gw - 2w'g` on the simplex is
+    `(Gw - g)_i = nu` on the support and `>= nu` off it.
     """
-    K = len(g)
-    L = 2.0 * float(np.linalg.eigvalsh(G)[-1]) + 1e-12
-    w = np.full(K, 1.0 / K)
-    y, tk = w.copy(), 1.0
-    for _ in range(iters):
-        grad = 2.0 * (G @ y - g)
-        wn = proj_simplex(y - grad / L)
-        tn = 0.5 * (1.0 + np.sqrt(1.0 + 4.0 * tk * tk))
-        y = wn + ((tk - 1.0) / tn) * (wn - w)
-        if np.abs(wn - w).max() < tol:
-            w, tk = wn, tn
-            break
-        w, tk = wn, tn
-    S = np.flatnonzero(w > 1e-9)
-    # exact equality-constrained solve on the support
-    for _ in range(40):
+    from scipy.optimize import nnls
+    U = np.asarray(U, float)
+    t = np.asarray(t, float)
+    K = U.shape[0]
+    G = U @ U.T if _G is None else _G
+    g = U @ t
+    if rho is None:
+        rho = 1e6 * max(float(np.abs(G).max()), 1.0)
+    A = np.vstack([U.T, np.sqrt(rho) * np.ones((1, K))])
+    b = np.concatenate([t, [np.sqrt(rho)]])
+    w, _res = nnls(A, b, maxiter=50 * K)
+    S = np.flatnonzero(w > 1e-12)
+    # exact equality-constrained polish on the NNLS support (removes the penalty's bias)
+    for _ in range(60):
         s = len(S)
-        A = np.zeros((s + 1, s + 1))
-        A[:s, :s] = G[np.ix_(S, S)]
-        A[:s, s] = -1.0
-        A[s, :s] = 1.0
-        b = np.concatenate([g[S], [1.0]])
-        sol, *_ = np.linalg.lstsq(A, b, rcond=None)
-        wS, nu = sol[:s], sol[s]
-        if (wS >= -1e-12).all():
+        M = np.zeros((s + 1, s + 1))
+        M[:s, :s] = G[np.ix_(S, S)]
+        M[:s, s] = -1.0
+        M[s, :s] = 1.0
+        sol, *_ = np.linalg.lstsq(M, np.concatenate([g[S], [1.0]]), rcond=None)
+        wS = sol[:s]
+        if (wS >= -1e-13).all():
             w = np.zeros(K)
             w[S] = np.maximum(wS, 0.0)
             break
-        S = S[wS > -1e-12]
+        S = S[wS > -1e-13]
         if len(S) == 0:
             break
     r = G @ w - g
-    S = np.flatnonzero(w > 1e-9)
+    S = np.flatnonzero(w > 1e-12)
     nu = float(r[S].mean()) if len(S) else 0.0
     kkt = max(float(np.abs(r[S] - nu).max()) if len(S) else 0.0,
               float(max(0.0, (nu - r).max())))
-    return w, S, kkt
+    kkt /= max(1.0, float(np.abs(r).max()))                 # RELATIVE, so the bar is scale-free
+    return w, S, kkt, float(abs(w.sum() - 1.0))
 
 
 # ------------------------------------------------------------------ per target
@@ -179,8 +187,8 @@ def do_target(pdb, draws, rng):
     hull_gap = float(np.linalg.norm(t - t_par)) / scale                # RMSD units, ORACLE
 
     G = U @ U.T
-    w_full, S_full, kkt_full = simplex_qp(G, U @ t)
-    w_par, S_par, kkt_par = simplex_qp(G, U @ t_par)
+    w_full, S_full, kkt_full, sum_full = simplex_qp(U, t, _G=G)
+    w_par, S_par, kkt_par, _sp = simplex_qp(U, t_par, _G=G)
     err3 = float(np.abs(w_full - w_par).max())
     x_full = U.T @ w_full
     x_par = U.T @ w_par
@@ -201,12 +209,17 @@ def do_target(pdb, draws, rng):
     else:
         Pa = np.zeros((d, d))
         rs = 0
-    h = 1e-6 * scale
+    h = 1e-7 * scale
     sens_rel, gain_in, gain_out = [], [], []
+    n_moved = 0
+    set0 = set(S_full.tolist())
     for _ in range(draws):
         dt = rng.normal(size=d)
         dt = h * dt / np.linalg.norm(dt)
-        w2, _S2, _k2 = simplex_qp(G, U @ (t + dt))
+        w2, S2, _k2, _s2 = simplex_qp(U, t + dt, _G=G)
+        if set(S2.tolist()) != set0:      # Q1-T2 is stated FOR A FIXED ACTIVE SET
+            n_moved += 1
+            continue
         dx = U.T @ (w2 - w_full)
         pred = Pa @ dt
         sens_rel.append(float(np.linalg.norm(dx - pred) / max(np.linalg.norm(pred), 1e-30)))
@@ -215,13 +228,15 @@ def do_target(pdb, draws, rng):
         nin = float(np.linalg.norm(din))
         if nin > 1e-30:                       # |S| == 1 => the in-hull subspace is EMPTY
             din = h * din / nin               # and the gain is undefined, not zero
-            w3, _S3, _k3 = simplex_qp(G, U @ (t + din))
-            gain_in.append(float(np.linalg.norm(U.T @ (w3 - w_full)) / np.linalg.norm(din)))
+            w3, S3, _k3, _s3 = simplex_qp(U, t + din, _G=G)
+            if set(S3.tolist()) == set0:
+                gain_in.append(float(np.linalg.norm(U.T @ (w3 - w_full)) / np.linalg.norm(din)))
         dout = rng.normal(size=d)
         dout = dout - Pa @ dout
         dout = h * dout / max(np.linalg.norm(dout), 1e-30)
-        w4, _S4, _k4 = simplex_qp(G, U @ (t + dout))
-        gain_out.append(float(np.linalg.norm(U.T @ (w4 - w_full)) / np.linalg.norm(dout)))
+        w4, S4, _k4, _s4 = simplex_qp(U, t + dout, _G=G)
+        if set(S4.tolist()) == set0:
+            gain_out.append(float(np.linalg.norm(U.T @ (w4 - w_full)) / np.linalg.norm(dout)))
 
     # ---- Q4: the pricing curve in REAL NUMBERS.  ORACLE / NOT DEPLOYABLE.
     #      truncate t's representation to the top-r candidate-spread directions (the ORDERING
@@ -231,7 +246,7 @@ def do_target(pdb, draws, rng):
         if r > rk:
             continue
         tr = Ub + (V[:r].T @ coef[:r] if r else 0.0)
-        wr, _Sr, _kr = simplex_qp(G, U @ tr)
+        wr, _Sr, _kr, _sr = simplex_qp(U, tr, _G=G)
         xr = U.T @ wr
         curve.append({"r": int(r),
                       "fixed": float(np.linalg.norm(xr - t)) / scale,
@@ -246,7 +261,7 @@ def do_target(pdb, draws, rng):
             e = rng.normal(size=d)
             e = eps * scale * e / np.linalg.norm(e)
             th = t + e
-            wn, _Sn, _kn = simplex_qp(G, U @ th)
+            wn, _Sn, _kn, _sn = simplex_qp(U, th, _G=G)
             xn = U.T @ wn
             dir_v.append(float(geo.ca_rmsd(th.reshape(n, 3), nat)))
             prj_v.append(float(geo.ca_rmsd(xn.reshape(n, 3), nat)))
@@ -261,7 +276,7 @@ def do_target(pdb, draws, rng):
     W5 = cc.superpose_batch(W, ref)
     U5 = W5.reshape(len(W5), -1)
     G5 = U5 @ U5.T
-    w5, S5, kkt5 = simplex_qp(G5, U5 @ t, iters=6000)
+    w5, S5, kkt5, sum5 = simplex_qp(U5, t, _G=G5)
     x5 = U5.T @ w5
 
     return {
@@ -275,10 +290,14 @@ def do_target(pdb, draws, rng):
         "support": int(len(S_full)), "kkt": kkt_full, "kkt_par": kkt_par,
         "support_aff_dim": rs,
         "hull_fixed": hull_fixed, "hull_kabsch": hull_kabsch,
-        "sens_rel_mean": float(np.mean(sens_rel)), "sens_rel_max": float(np.max(sens_rel)),
+        "sens_rel_mean": float(np.mean(sens_rel)) if sens_rel else float("nan"),
+        "sens_rel_max": float(np.max(sens_rel)) if sens_rel else float("nan"),
+        "n_sens": int(len(sens_rel)), "n_activeset_moved": int(n_moved),
+        "sum_err": float(sum_full), "k500_sum_err": float(sum5),
         "gain_in_mean": float(np.mean(gain_in)) if gain_in else float("nan"),
         "n_gain_in": int(len(gain_in)),
-        "gain_out_mean": float(np.mean(gain_out)),
+        "gain_out_mean": float(np.mean(gain_out)) if gain_out else float("nan"),
+        "n_gain_out": int(len(gain_out)),
         "curve": curve, "noise": noise,
     }
 

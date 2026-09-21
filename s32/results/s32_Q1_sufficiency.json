@@ -1,0 +1,170 @@
+{
+  "prereg_commit": "a8f9d6a7",
+  "label": "ORACLE / NOT DEPLOYABLE -- every arm reads the native",
+  "basis": "CA point cloud (diagnostic).  NOT the 3.2105 built-chain endpoint.",
+  "n": 126,
+  "T1": {
+    "err_identity_rel_max": 9.766887156621137e-12,
+    "err_a_affine_in_t_rel_max": 5.835693243098676e-13,
+    "err_sufficient_w_max": 6.9583783179894e-12,
+    "err_sufficient_x_rmsd_max": 2.8584030331526923e-12,
+    "rank_aff_mean": 32.88095238095238,
+    "rank_aff_min": 21,
+    "rank_aff_max": 42,
+    "d_mean": 38.88095238095238,
+    "hull_gap_rmsd_mean": 1.4828065222979098e-14,
+    "kkt_max": 1.962092277278554e-12
+  },
+  "T2": {
+    "support_mean": 6.253968253968254,
+    "support_median": 6.0,
+    "support_max": 16,
+    "support_aff_dim_mean": 5.253968253968254,
+    "sens_rel_mean": 318751647653336.4,
+    "sens_rel_max": 3.0715490403707732e+16,
+    "gain_in_mean": NaN,
+    "gain_in_sd": NaN,
+    "gain_out_mean": 4.069054362012833e-06,
+    "gain_out_max": 3.932975446678027e-05
+  },
+  "hull": {
+    "fixed_mean": 1.8548753540189837,
+    "kabsch_mean": 1.8290426304300011,
+    "kabsch_se": 0.1178041689887394
+  },
+  "Q1C_cardinality_ORACLE": {
+    "k500_support_mean": 10.055555555555555,
+    "k500_support_median": 10.0,
+    "k500_support_max": 23,
+    "k500_support_p90": 13.0,
+    "frac_support_le_10": 0.6111111111111112,
+    "k500_kabsch_mean": 1.153520348074457,
+    "k500_kabsch_se": 0.06689972862891923,
+    "k500_kkt_max": 2.0094484017311335e-12
+  },
+  "Q4_curve_ORACLE": [
+    {
+      "r": 0,
+      "n": 126,
+      "fixed_mean": 3.0776158149150357,
+      "kabsch_mean": 3.0532087339709815,
+      "kabsch_se": 0.14554129347689707
+    },
+    {
+      "r": 1,
+      "n": 126,
+      "fixed_mean": 2.645557446597566,
+      "kabsch_mean": 2.5803747869782914,
+      "kabsch_se": 0.13070219173427244
+    },
+    {
+      "r": 2,
+      "n": 126,
+      "fixed_mean": 2.41737565680661,
+      "kabsch_mean": 2.37518353866473,
+      "kabsch_se": 0.12391000876566198
+    },
+    {
+      "r": 3,
+      "n": 126,
+      "fixed_mean": 2.297966950140455,
+      "kabsch_mean": 2.263814002516442,
+      "kabsch_se": 0.12331121449276404
+    },
+    {
+      "r": 4,
+      "n": 126,
+      "fixed_mean": 2.1938326595331734,
+      "kabsch_mean": 2.161339706839217,
+      "kabsch_se": 0.12013358692132316
+    },
+    {
+      "r": 5,
+      "n": 126,
+      "fixed_mean": 2.112747274063412,
+      "kabsch_mean": 2.082251809421054,
+      "kabsch_se": 0.11726007944835744
+    },
+    {
+      "r": 6,
+      "n": 126,
+      "fixed_mean": 2.0603921196236192,
+      "kabsch_mean": 2.0311982093376084,
+      "kabsch_se": 0.1162466379609187
+    },
+    {
+      "r": 8,
+      "n": 126,
+      "fixed_mean": 1.978425537258856,
+      "kabsch_mean": 1.9508265547284875,
+      "kabsch_se": 0.11636173166211855
+    },
+    {
+      "r": 10,
+      "n": 126,
+      "fixed_mean": 1.938542206361119,
+      "kabsch_mean": 1.91096285416686,
+      "kabsch_se": 0.11636628931328691
+    },
+    {
+      "r": 12,
+      "n": 126,
+      "fixed_mean": 1.9083201038557671,
+      "kabsch_mean": 1.8821250811235515,
+      "kabsch_se": 0.11660965872007989
+    },
+    {
+      "r": 16,
+      "n": 126,
+      "fixed_mean": 1.8853998467178437,
+      "kabsch_mean": 1.858448100128585,
+      "kabsch_se": 0.11717900260297377
+    },
+    {
+      "r": 20,
+      "n": 126,
+      "fixed_mean": 1.8677791506758665,
+      "kabsch_mean": 1.8421556559024004,
+      "kabsch_se": 0.11760108883476099
+    }
+  ],
+  "noise_ORACLE": [
+    {
+      "eps": 0.5,
+      "direct_mean": 0.4577915555881793,
+      "proj_mean": 1.8475650366424092,
+      "proj_draw_sd_mean": 0.009680907150866747
+    },
+    {
+      "eps": 1.0,
+      "direct_mean": 0.9145880921430259,
+      "proj_mean": 1.8856228547895373,
+      "proj_draw_sd_mean": 0.026984416751575795
+    },
+    {
+      "eps": 1.5,
+      "direct_mean": 1.3738381601871827,
+      "proj_mean": 1.9373988741822388,
+      "proj_draw_sd_mean": 0.05256185231318564
+    },
+    {
+      "eps": 2.0,
+      "direct_mean": 1.8304780719163223,
+      "proj_mean": 1.9927686158834448,
+      "proj_draw_sd_mean": 0.07104131543972061
+    },
+    {
+      "eps": 3.0,
+      "direct_mean": 2.7516321079607757,
+      "proj_mean": 2.117147276067197,
+      "proj_draw_sd_mean": 0.13154618469564858
+    },
+    {
+      "eps": 4.0,
+      "direct_mean": 3.653273247771914,
+      "proj_mean": 2.2380237727417693,
+      "proj_draw_sd_mean": 0.18551184388503533
+    }
+  ],
+  "elapsed_s": 40.79590034484863
+}

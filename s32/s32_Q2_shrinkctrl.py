@@ -42,7 +42,7 @@ for _v in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS", "NUMEXP
 import core                                                            # noqa: E402
 from core.pipeline import consensus_medoid                             # noqa: E402
 from s8 import consensus2 as cc                                        # noqa: E402
-from s32.s32_Q1_sufficiency import simplex_qp                          # noqa: E402
+from s32.s32_Q1_sufficiency import simplex_qp  # (U, t, _G=G) -> w, S, kkt, sum_err                          # noqa: E402
 
 CACHE = os.path.join(ROOT, "s31", "results", "s31_C_cache")
 OUT = os.path.join(HERE, "results")
@@ -90,7 +90,7 @@ def main():
                 e = rng.normal(size=d)
                 e = eps * scale * e / np.linalg.norm(e)
                 th = t + e
-                w, _S, _k = simplex_qp(G, U @ th)
+                w, _S, _k, _se = simplex_qp(U, th, _G=G)
                 xp = U.T @ w
                 xs = Ub + V.T @ (V @ (th - Ub))                        # span only
                 rp = np.linalg.norm(xp - Ub)

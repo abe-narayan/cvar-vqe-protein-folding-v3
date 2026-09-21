@@ -1,0 +1,137 @@
+{
+ "n_targets": 60,
+ "n_shuffles_per_target": 3,
+ "n_bank": 6790,
+ "thresholds": [
+  0.3,
+  0.4,
+  0.5,
+  0.6,
+  0.7,
+  0.8,
+  0.9,
+  1.0
+ ],
+ "stats": {
+  "shorter": {
+   "real_mean": 1.0,
+   "real_max": 1.0,
+   "shuffled_mean": 0.9655310430310432,
+   "shuffled_max": 1.0,
+   "reject_rate": {
+    "0.3": {
+     "real": 1.0,
+     "shuffled": 1.0
+    },
+    "0.4": {
+     "real": 1.0,
+     "shuffled": 1.0
+    },
+    "0.5": {
+     "real": 1.0,
+     "shuffled": 1.0
+    },
+    "0.6": {
+     "real": 1.0,
+     "shuffled": 1.0
+    },
+    "0.7": {
+     "real": 1.0,
+     "shuffled": 1.0
+    },
+    "0.8": {
+     "real": 1.0,
+     "shuffled": 1.0
+    },
+    "0.9": {
+     "real": 1.0,
+     "shuffled": 0.95
+    },
+    "1.0": {
+     "real": 1.0,
+     "shuffled": 0.6388888888888888
+    }
+   }
+  },
+  "longer": {
+   "real_mean": 0.35294314795188797,
+   "real_max": 0.4878048780487805,
+   "shuffled_mean": 0.2687600763986119,
+   "shuffled_max": 0.375,
+   "reject_rate": {
+    "0.3": {
+     "real": 0.7666666666666667,
+     "shuffled": 0.10555555555555556
+    },
+    "0.4": {
+     "real": 0.21666666666666667,
+     "shuffled": 0.0
+    },
+    "0.5": {
+     "real": 0.0,
+     "shuffled": 0.0
+    },
+    "0.6": {
+     "real": 0.0,
+     "shuffled": 0.0
+    },
+    "0.7": {
+     "real": 0.0,
+     "shuffled": 0.0
+    },
+    "0.8": {
+     "real": 0.0,
+     "shuffled": 0.0
+    },
+    "0.9": {
+     "real": 0.0,
+     "shuffled": 0.0
+    },
+    "1.0": {
+     "real": 0.0,
+     "shuffled": 0.0
+    }
+   }
+  },
+  "verbatim": {
+   "real_mean": 0.3297921647509555,
+   "real_max": 0.4878048780487805,
+   "shuffled_mean": 0.0,
+   "shuffled_max": 0.0,
+   "reject_rate": {
+    "0.3": {
+     "real": 0.7333333333333333,
+     "shuffled": 0.0
+    },
+    "0.4": {
+     "real": 0.21666666666666667,
+     "shuffled": 0.0
+    },
+    "0.5": {
+     "real": 0.0,
+     "shuffled": 0.0
+    },
+    "0.6": {
+     "real": 0.0,
+     "shuffled": 0.0
+    },
+    "0.7": {
+     "real": 0.0,
+     "shuffled": 0.0
+    },
+    "0.8": {
+     "real": 0.0,
+     "shuffled": 0.0
+    },
+    "0.9": {
+     "real": 0.0,
+     "shuffled": 0.0
+    },
+    "1.0": {
+     "real": 0.0,
+     "shuffled": 0.0
+    }
+   }
+  }
+ }
+}
