@@ -151,6 +151,88 @@ repeated error). It reached shipped code in two lanes before anyone read the def
 
 ---
 
+## D10 — SEVERE, AND IT INVERTS THE SPRINT'S ONLY LIVE DEPLOYABLE CANDIDATE. `AVG_SEP` IS **0.4609 Å WORSE** THAN PRODUCTION, NOT 0.4–0.6 Å BETTER. ITS OWN REGISTERED FALSIFIER IS **REFUTED**
+
+**Claimed** — `s31/STATE.md`, LANES table, lane F row: *"**AVG_SEP** (separation-profile correction,
+zero free parameters) is the live arm … **early rows show AVG_SEP beating AVG by 0.4–0.6 Å on the
+chain**; no mean until 126/126."*
+
+**What the artefact says.** `s31/results/s31_F_terminal_rows.jsonl` is **complete at 126/126**
+(126 distinct pdbs, job finished, governor shows no running job — contract rule 15 checked, not
+assumed). Both arms are in the **same row of the same job**, so lane D's standing rule 2 is satisfied
+by construction. Recomputed independently in `s31/s31_V_avgsep.py` →
+`s31/results/s31_V_avgsep.json`:
+
+```
+BUILT CHAIN (the endpoint)      AVG_SEP 3.6736     AVG 3.2126     +0.4609 A  WORSE
+   2.34x MDE   fold CI [+0.3783, +0.5646]   5/5 folds same sign   41W / 85L
+CA POINT CLOUD                  AVG_SEP 3.4966     AVG 3.0483     +0.4483 A  WORSE
+```
+
+**Direct arithmetic, with no statistics library involved: `mean(chain_AVG_SEP) = 3.6736`,
+`mean(chain_AVG) = 3.2126`. AVG_SEP is better on 41 of 126 targets.** Both bases agree to 0.013 Å,
+so this is not a projection artefact, and the median (+0.2045) has the same sign as the mean, so it
+is not a tail artefact either — **AVG_SEP is worse on the majority AND worse in the mean.**
+
+**Lane F's own registered falsifier, applied verbatim** (`PREREG_S31_F.md` §10.3: *CONFIRMED iff
+effect ≤ −1.0 × MDE with a fold CI excluding zero; **REFUTED iff effect > −0.7 × MDE***):
+
+> **VERDICT: REFUTED.** The effect is not merely short of the bar — it is **positive and significant
+> in the wrong direction**, at 2.34× MDE with a fold CI that excludes zero on the bad side.
+
+**The mechanism of the error is the project's named sign trap.** The final magnitude is **0.4609 Å
+with a fold CI of [0.378, 0.565]** — *exactly* the "0.4–0.6 Å" band STATE reports, **with the sign
+inverted**. `s24.stats_lib.compare` is **lower-is-better** (`d = a − b`, negative = `a` better), so a
+`+0.4–0.6` deficit reads as a `0.4–0.6` gain to anyone who takes the magnitude and assumes the
+direction. That is **contract rule 8 and lane D's standing rule 7** — *"quote the gate, never
+`.verdict`"* — committed in the STATE line describing **the sprint's only live deployable
+candidate**.
+
+**Lane F's own discipline is what contained it.** The lane wrote *"no mean until 126/126"* and did
+not publish an aggregate; the inverted reading is in the **coordinator's summary of the lane's
+partial rows**, not in the lane's own output. **A partial-rows reading is not a result, and the sign
+is exactly what a partial reading gets wrong.**
+
+**A second, independent defect in the same arm: its registered geometry diagnostics were never
+recorded.** `PREREG_S31_F.md` §3 registers, as a reported secondary for every arm, the projection
+penalty `P` and the Rg contraction. Present in the rows:
+
+| arm | bond_cloud | bond_chain | rg_cloud | rg_chain | move | P |
+|---|---|---|---|---|---|---|
+| AVG | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| MED | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| AVG_RG | ✓ | — | ✓ | ✓ | ✓ | ✓ |
+| **AVG_SEP** | **—** | **—** | **—** | **—** | ✓ | ✓ |
+
+**The only arm with none of its four geometry diagnostics is the only arm proposed for deployment**
+— and it is the one arm that builds a *new* structure by rescaling pair distances and re-embedding
+by **classical MDS**, where invalid geometry is a live possibility rather than a formality. Its
+`move_AVG_SEP` is **0.7921 Å mean, 1.7457 max**, i.e. stage-3b has to drag its output a long way to
+make it a chain at all, against `AVG`'s much smaller displacement. That is consistent with the
+refutation and would have been visible earlier had the registered diagnostics been recorded.
+
+**Corrected sentences:**
+
+> **(a)** *(STATE lanes table)* **`AVG_SEP` is REFUTED at 126/126.** Built chain **3.6736 Å against
+> production's in-job **3.2126 Å** — **+0.4609 Å WORSE**, 2.34× MDE, fold CI [+0.378, +0.565], 5/5
+> folds, 41W/85L; CA cloud +0.4483 Å worse. Its own registered falsifier (`PREREG_S31_F.md` §10.3)
+> returns **REFUTED**. The earlier "beating AVG by 0.4–0.6 Å" was a **partial-rows reading with the
+> sign inverted** — `stats_lib.compare` is lower-is-better.
+>
+> **(b)** The sprint has **no live deployable candidate**. That is a clean negative and should be
+> reported as one: a zero-free-parameter, native-free correction matched to the *corrected*
+> separation-profile mechanism makes the endpoint **worse**, significantly and on both bases.
+
+**And the reading that makes this a result rather than only a retraction.** `AVG_RG` was demoted to a
+**registered negative control** — the correction matched to the *withdrawn* uniform-scale mechanism.
+`AVG_SEP` was the correction matched to the *corrected* per-separation mechanism and was expected to
+work where `AVG_RG` would not. **Both fail, and `AVG_SEP` fails hard.** The per-separation distortion
+is real and measured, and *correcting it does not help* — which says the distortion is a **symptom of
+averaging, not the mechanism of its error**, and closes the whole "repair the average's shape"
+family, not just this arm.
+
+---
+
 ## D1 — SEVERE. `0.076 Å of error cancellation` IS, AT MATCHED SEARCH SIZE, A `0.077 Å` PENALTY. THE REGISTERED BAR FIRED AND THE SIGN REVERSES
 
 **Claimed** — `s31/STATE.md` NOTE 2(b), the coordinator's own handed-back prediction, still

@@ -1,0 +1,148 @@
+{
+ "seed": 31098,
+ "n": 126,
+ "BASIS": "BUILT CHAIN (the endpoint, contract rule 1)",
+ "source": "C:\\Users\\abena\\Protein-Folding-Algorithm\\s31\\results\\s31_F_terminal_rows.jsonl",
+ "same_job": "both arms read from the SAME row of the SAME job, so lane D standing rule 2 is satisfied by construction",
+ "reproduction": {
+  "in_job_AVG_mean": 3.212625219723354,
+  "canonical_prod": 3.210533994943299,
+  "diff": 0.0020912247800546346,
+  "record_column_mean": 3.2040761603809194,
+  "max_abs_per_target_vs_record": 0.32557401265746844,
+  "note": "the in-job AVG is the correct baseline for the contrast; the canonical 3.2105 is quoted only to show the instrument is in its usual place"
+ },
+ "V3_endpoint": {
+  "cmp": {
+   "label": "V3.AVG_SEP - AVG (BUILT CHAIN, same job, native-free)",
+   "mean_a": 3.6735563926907977,
+   "mean_b": 3.212625219723354,
+   "effect": 0.4609311729674438,
+   "median_effect": 0.20446814294501636,
+   "se": 0.07020025259402736,
+   "mde": 0.19667302766742706,
+   "effect_over_mde": 2.343642025722387,
+   "ci95_fold": [
+    0.3782877582889772,
+    0.5645608391424886
+   ],
+   "folds_same_sign": 5,
+   "W": 41,
+   "L": 85,
+   "n": 126
+  },
+  "gate": "MEASURED",
+  "mean_AVG_SEP": 3.6735563926907977,
+  "mean_AVG": 3.212625219723354
+ },
+ "registered_falsifier": {
+  "rule": "PREREG_S31_F.md s10.3: CONFIRMED iff effect <= -1.0 x MDE AND fold CI excludes zero; REFUTED iff effect > -0.7 x MDE; otherwise NOT MEASURED",
+  "effect": 0.4609311729674438,
+  "mde": 0.19667302766742706,
+  "ci_excludes_zero": true,
+  "VERDICT": "REFUTED"
+ },
+ "floors": {
+  "mean_floor": 0.0107,
+  "effect_abs": 0.4609311729674438,
+  "clears_mean_floor": true,
+  "ratio_to_mean_floor": 43.07767971658353,
+  "per_target_floor": {
+   "mean": 0.0134,
+   "p90": 0.0329,
+   "max": 0.2285
+  },
+  "frac_targets_inside_per_target_mean_floor": 0.15873015873015872,
+  "frac_targets_inside_per_target_p90_floor": 0.1984126984126984,
+  "note": "the per-target floor does NOT invalidate a MEAN effect -- independent per-target noise averages down by sqrt(n). It bounds per-target STATEMENTS. Reported so the distinction is explicit rather than assumed."
+ },
+ "concentration": {
+  "mean": 0.4609311729674438,
+  "median": 0.20446814294501636,
+  "sd": 0.7879958810155171,
+  "W": 41,
+  "L": 85,
+  "tied": 0,
+  "top5_gain": [
+   [
+    "6BX9",
+    -0.7327577364326965
+   ],
+   [
+    "1NIZ",
+    -0.6797200586972272
+   ],
+   [
+    "9BFL",
+    -0.6395948388953636
+   ],
+   [
+    "1I6Y",
+    -0.57843394769889
+   ],
+   [
+    "2LU6",
+    -0.575255502625164
+   ]
+  ],
+  "top5_loss": [
+   [
+    "2RUO",
+    2.2065278389957355
+   ],
+   [
+    "6BJF",
+    2.375944389161006
+   ],
+   [
+    "2MJQ",
+    2.6130999044044443
+   ],
+   [
+    "1CEK",
+    2.6259156545114024
+   ],
+   [
+    "1S9Z",
+    2.9877614100658523
+   ]
+  ],
+  "share_of_total_from_best_5": -0.055198167789775016,
+  "note": "median-vs-mean is the free early warning; a raw drop-top threshold is NOT a valid test and is not run here"
+ },
+ "geometry_instrumentation": {
+  "AVG": {
+   "bond_cloud": true,
+   "bond_chain": true,
+   "rg_cloud": true,
+   "rg_chain": true,
+   "move": true,
+   "P": true
+  },
+  "MED": {
+   "bond_cloud": true,
+   "bond_chain": true,
+   "rg_cloud": true,
+   "rg_chain": true,
+   "move": true,
+   "P": true
+  },
+  "AVG_RG": {
+   "bond_cloud": true,
+   "bond_chain": false,
+   "rg_cloud": true,
+   "rg_chain": true,
+   "move": true,
+   "P": true
+  },
+  "AVG_SEP": {
+   "bond_cloud": false,
+   "bond_chain": false,
+   "rg_cloud": false,
+   "rg_chain": false,
+   "move": true,
+   "P": true
+  }
+ },
+ "geometry_note": "PREREG_S31_F.md s3 registers, as a reported secondary, the projection penalty P and the Rg contraction for every arm. Any arm with False above has a registered diagnostic that was not recorded."
+}
