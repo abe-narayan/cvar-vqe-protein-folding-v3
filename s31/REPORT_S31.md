@@ -752,9 +752,75 @@ establishes is what the charter needed: **the optimisation quality of the deploy
 invisible at the endpoint**, with certificates at the deployed settings (duality gap 3.56e-09, KKT
 2.67e-15, **circuit strictly worse 126/126**, `p*` at 0.0012 s against 0.0985 s).
 
-### 14.4 The terminal-operator arms
+### 14.4 The terminal-operator arms — the answer is keep the uniform top-75 average
 
-[PENDING — lane F's `AVG_SEP` at 126/126, and the `F3` chain arms.]
+n = 126, built chain, comparator = **production re-projected in the same job** (3.2126, not the
+canonical 3.2105 — the per-target deviation from the record reaches **0.3256 Å**, above lane P's
+0.2285 same-operator maximum, which is exactly why the comparator must be re-projected rather than
+quoted):
+
+| arm | mean | vs production | × MDE | verdict |
+|---|---|---|---|---|
+| `MED` — the consensus medoid, a real deposited member | 3.2814 | +0.0688 | 0.81× | NOT MEASURED |
+| `AVG_RG` — uniform Rg restore | 3.2602 | +0.0475 | 1.11× | **MEASURED WORSE** |
+| `AVG_SEP` — per-separation restore + MDS re-embed | 3.6736 | **+0.4609** | **2.34×** | **MEASURED MUCH WORSE** |
+
+**`AVG_SEP` was the sprint's only live deployable candidate and it is dead.** Its full paired
+distribution: mean +0.4609, **median +0.2045**, sd 0.788, **41W/85L**, p10 −0.2283, **p90 +1.7176**,
+best −0.7328, **worst +2.9878**. *The early 0.4–0.6 Å wins seen at ~50/126 were the left tail of a
+distribution whose right tail is three times longer* — **and no mean was computed before 126/126.**
+
+**Every gate failed in the registered direction** (dispersion→MED +0.0591, move→MED +0.0600,
+move→AVG_SEP +0.1412, dispersion→AVG_SEP +0.1457), and the ORACLE per-target `min(AVG, MED)` is
+worth only **−0.0782 Å** with a split-half transfer of −0.0323 whose CI spans zero. **Choosing
+per-target between the two best operators, with the native in hand, is worth 0.078 Å.**
+
+**The lane's pre-registration predicted its own endpoint.** §2, written before any number existed,
+derived `d_MED² ≈ B² + s_b²` and therefore a chain cost of `+0.2339 − 0.1622 ≈ +0.0717`. **Measured
++0.0688.**
+
+**And the mechanism I proposed is refuted, monotonically.** The registered falsifier required the
+high-minus-low dispersion contrast of `chain(MED) − chain(AVG)` to be **negative**; it is **+0.0990**,
+rising across dispersion tertiles (+0.0049 / +0.0604 / +0.1410). Both halves of the trade-off scale
+with dispersion — but **the medoid's own cost scales faster, so there is no operating point where it
+turns over.** *That is why no gate can work, not merely why these gates did not.*
+
+> **A correction to my corrected mechanism, and it is mine to carry.** After the 25.8% contraction
+> figure was withdrawn I offered *"averaging contracts short-range and expands long-range, crossing
+> unity near \|i−j\| = 8"*. **That is wrong as stated.** The 75 members' own profile also rises (to
+> 1.448 at s = 14), and **the average is below the members at every single separation.** Averaging
+> **contracts everywhere and contracts least at long range**, against a pool that is already long
+> there — *the crossing of 1.00 near s = 8 is an artefact of comparing the average to the NATIVE
+> instead of to the members that produced it.* The band falsifier fired too: the medoid is **less**
+> flat at long range (0.2918 against 0.2824). What the projection actually does is **repair the
+> short band** (0.1609 → 0.1033) and leave the long band alone.
+
+### 14.5 What distinguishes the tail, on filter-independent strata
+
+`FAIL18` used only as a cross-check (§12). CA point cloud throughout.
+
+- **Useful candidates are present and badly ranked.** The pool's best member sits at **rank 391 of
+  500** under the shipped score on the outcome tail against **134** elsewhere (286 against 151 on
+  the pool-mean tail).
+- **The tail is disproportionately a FILTER failure.** Filter loss (pool-best → set-best) is 0.595
+  whole-sample against **1.452 / 2.050** on the two filter-independent tails — **2.4 to 3.4×** —
+  while readout loss (set-best → average) is 0.742 against 1.434 / 1.445, **1.9× on both**. And
+  `n_top75_under3` is **5.7** on the pool-mean tail and **0.0** on the chain tail, against ~34
+  elsewhere.
+- **The tail's pool is COHERENTLY wrong, not diversely wrong.** `S/B` falls 0.78 → 0.42 while
+  `n_distinct` is unchanged (70.3 against 69.0). ***The pools are not smaller or less varied — they
+  are displaced together.***
+- Independent confirmation of the long-range concentration: chain `|ratio−1|` at `s ≥ 7` is **0.915**
+  on the tail against 0.177 elsewhere (**5.2×**), against 0.200/0.087 (2.3×) at `s < 7`.
+- **The readout is not failing in a way that favours the medoid**: `chain(MED) − chain(AVG)` is
+  +0.087 / +0.203 / +0.173 on the three tails against +0.066 / +0.046 / +0.051 elsewhere.
+
+> **The third bullet is the sprint's strongest cross-lane agreement, and neither half is a
+> synthesis.** Lane F measured that the tail's pools are *displaced together*; lane E measured,
+> independently and on a different object, that **the entire recoverable prize lies along the pool's
+> common mode** (−0.8102 Å) while the orthogonal component is harmful. **"The tail's pools are
+> displaced together" and "the prize is the common mode" are the same fact** — and it is why the
+> along-`mu` correction pays **4× on the tail**: *the tail is where the common mode is large.*
 
 ---
 
@@ -838,13 +904,43 @@ that is noted — it is the charter's §24 ladder working as intended, and it is
 
 ## 17. What improved
 
-[PENDING]
+**Nothing at the endpoint.** No arm was deployed; every arm tested is NOT MEASURED or worse.
+
+**What did improve is the instrument and the record**, and several of these gate future measurement:
+
+| improvement | why it matters |
+|---|---|
+| **The projection's real defect diagnosed** — there is no RNG; the λ=0 argmin is decided at a 1e-7 spread among branches 1e-1 apart, amplification ~1e13 | A **seed** story had propagated through four sprints' documents and a verifier. Now corrected in `core/project.py` itself, where the next person will look |
+| **The per-target built-chain floor measured** — 0.0134 mean / 0.0329 p90 / **0.2285 max**, from the *same operator written twice* | The 0.0107 Å figure had been quoted as bounding per-target statements. **It does not.** This calibrates every arm-to-arm comparison the project makes |
+| **A withdrawn positive removed from shipped code** (`core/pipeline.py`, the +0.113 Å CVaR-tail claim) | Recorded as a defect in S26 and **still wrong four sprints later**. *Recording a defect in a table is not fixing it* |
+| **The launcher now imports its gate from the governor** rather than duplicating it | The governor changed four times in S29 and the launcher never followed. **The pair can no longer drift** — the first fix that makes the next instance impossible |
+| **A cross-basis audit with a self-test** | The verifier passed 97/97 on *"is a basis named?"* while the headline carried a **misnamed** basis. **An audit that checks for an absent label cannot catch a wrong one** |
+| **The verifier grew to 136 checks** and parses the sprint's documents for every path they name | A hand-kept list is exactly what fails |
+| **A sprint-wide multiplicity register**, written to as comparisons were emitted | The build item S30 carried forward |
 
 ---
 
 ## 18. What did not improve
 
-[PENDING]
+**The endpoint, and every arm proposed to move it.**
+
+| arm | basis | result |
+|---|---|---|
+| `p*` substituted for the VQE's `p`, shipped readout | built chain | **−0.0112, 0.19× — NULL** |
+| `p*`, selection readout | built chain | −0.0280, 0.29× — NULL |
+| The shipped quantum stage, on | built chain | +0.0175, 0.35× — NULL (and a **cost**) |
+| The derived convex readout at γ = 1 | CA cloud | **+0.1334, 1.17× — WORSE** |
+| Quality-blind dispersion maximisation | CA cloud | +0.1436, 1.22× — WORSE *(and its one positive against the argmin was killed by its own shuffled-`B` control)* |
+| `DIS + CONS` leave-fold-out through the convex readout | CA cloud | +0.1347, 1.71× — WORSE |
+| `AVG_SEP` — per-separation restore | built chain | **+0.4609, 2.34× — MUCH WORSE** |
+| `AVG_RG` — uniform Rg restore | built chain | +0.0475, 1.11× — WORSE |
+| The consensus medoid | built chain | +0.0688, 0.81× — NOT MEASURED |
+| Branch-carry at λ = 0.3 | built chain | −0.0055, 0.44× — NOT A RESULT *(a conditioning fix, 1082×, with a null accuracy effect)* |
+| The per-target prefix length `m` | built chain | Transfer **1.2%** of the ORACLE gain, CI spanning zero |
+| Orthogonal-only prior correction (E2/E3) | built chain | +0.0414 / +0.0323 — **FALSIFIED as registered** |
+| Native-free index maps | CA cloud | Best −0.0160; **the best map is the random permutation** |
+
+**Not one deployable arm in the sprint reached its own MDE in the helpful direction.**
 
 ---
 
