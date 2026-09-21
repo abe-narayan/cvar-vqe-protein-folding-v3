@@ -146,9 +146,27 @@ dense prefix average, K=500                +0.1701
 PRODUCTION (75-member uniform average)     +0.1622
 ```
 
-**Do not quote "the projection costs 0.16 Å" as a constant.** It costs ~0 for anything near the
-manifold of valid chains and ~0.16 for a dense average, which is not a valid chain. Any readout
-proposal must state which regime it lands in.
+**Do not quote "the projection costs 0.16 Å" as a constant.** But the mechanism is **NOT distance
+from the manifold** — that framing is **corrected by lane R (S32-L9)**, which measured the actual
+`d` per rung in one job:
+
+```
+rung                cloud   chain      d  |  obs price   orthogonal null  |   cos
+prod               2.7337  2.8725  0.7054 |   +0.1387        +0.1303      |  -0.05
+dense avg (bestm)  2.3832  2.5346  0.8001 |   +0.1514        +0.1579      |  +0.03
+sparse K=500 s=10  1.1375  1.1446  0.8435 |   +0.0072        +0.2832      |  +0.40
+```
+
+**Production and the sparse combinations sit at essentially the SAME manifold distance (0.705 vs
+0.844) and pay +0.139 against +0.007 — a factor of 20.** What separates them is **direction**:
+`cos = (e² + d² − chain²)/(2ed)`, where 0 means the displacement is orthogonal to the native error
+and +1 means it removes error one-for-one.
+
+> **The projection does not tax you for leaving the valid-chain manifold. It taxes you for leaving it
+> in a direction that has nothing to do with your error. It is not sparsity that is cheap — it is
+> ALIGNMENT.**
+
+Any readout proposal must state its **`d` and its `cos`**, not merely "sparse" or "dense".
 
 ## 17. The pool is not the bottleneck; say what is, with the ladder in the sentence
 

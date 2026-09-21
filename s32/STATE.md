@@ -15,8 +15,10 @@ Primary target < 3.00 Å. Ambitious < 2.50 Å.
 
 1. **The readout is the Euclidean projection of the native onto the candidate hull, with gain exactly
    1** (lane Q, re-derived by me). `a` is needed only along `|S|−1` ≈ 33 directions; everything else
-   is *exactly invisible*. And gain 1 means **no noise suppression**, so ***a structure estimate good
-   enough to make the readout worth solving is already good enough to emit.*** **Arrow 4 is closed by
+   is *exactly invisible*. Gain is 1 on that hull and **0 on its ~33-dimensional complement — total
+   suppression, not none** [corrected]. The closure is the **hull floor `d = 1.8290`**, which the
+   readout cannot beat: ***a structure estimate good enough to make the readout worth solving is
+   already good enough to emit.*** **Arrow 4 is closed by
    derivation**, and S31's "solving it exactly buys nothing" is now forced rather than surprising.
 2. **`a` and `μ` are ONE object** — `μ ↔ t ↔ a` is a native-free affine bijection. **S31's sharpest
    open question is resolved.** In-band skill and common-mode correction are one missing channel in
@@ -26,7 +28,7 @@ Primary target < 3.00 Å. Ambitious < 2.50 Å.
    distinct objects live near it.
 4. **The chain rung is discontinuous at one ULP**: 7e-15 Å in → **0.10–0.15 Å out**, deterministic
    given identical bits. Contract rules 20–22 written from this.
-5. **The score prefix is worse than random** at retaining the best candidate (+0.1872, 1.06× MDE,
+5. **The score prefix is worse than random** at retaining the best candidate (+0.1872, 1.06× MDE, (median −0.0380; **entirely FAIL18** — −0.0296 at 0.30× on the other 108, NOT A RESULT)
    Type-M ~1.10×), and **57% of what I called a filter loss is a bare order statistic**. Mechanism:
    *the score concentrates on the mode and buys nothing in the good tail* — 5th percentile unchanged
    (2.6098 → 2.6184) while the spread halves.

@@ -38,7 +38,7 @@ produced it, and this entry is provisional until it does.
 best sparse convex combination, K=500, s=10   1.1139      <- 2.10 A of headroom
 best single member, K=500                     1.7078      <- 1.50 A of headroom
   + distogram SCORE prefix 500 -> 128            +0.4357  ->  2.1435   [see the S32-L3 correction: 0.2477 of this is a pure ORDER STATISTIC and the
-                                                        remaining 0.1872 has the SCORE performing WORSE THAN RANDOM]
+                                                        remaining 0.1872 has the SCORE performing WORSE THAN RANDOM] (median −0.0380; **entirely FAIL18** — −0.0296 at 0.30× on the other 108, NOT A RESULT)
   + prefix 128 -> 75                         +0.1620  ->  2.3055
   + selection / readout (uniform average)    +0.9051  ->  3.2105   PRODUCTION
 ```
@@ -136,10 +136,10 @@ best member of the SCORE-selected top-128   2.1458
 ```
 total   best500 -> best128                  +0.4350
   pure ORDER STATISTIC (any 128 of 500)     +0.2477   57% of it -- a random 128 loses this too
-  attributable to the SCORE                 +0.1872   the score is WORSE THAN RANDOM
+  attributable to the SCORE                 +0.1872   the score is WORSE THAN RANDOM (median −0.0380; **entirely FAIL18** — −0.0296 at 0.30× on the other 108, NOT A RESULT)
 ```
 
-`compare(score128, random128)` = **+0.1872, MDE 0.1764, 1.06× — WORSE, 72W/54L**, with `stats_lib`
+`compare(score128, random128)` = **+0.1872, MDE 0.1764, 1.06× — WORSE, 72W/54L**, with `stats_lib` (median −0.0380; **entirely FAIL18** — −0.0296 at 0.30× on the other 108, NOT A RESULT)
 flagging **`TYPE-M ZONE: magnitude inflated ~1.10×`** — so the honest effect is ~0.17 and it sits
 barely past MDE. Top-75 against a random 75 of the 128: **+0.0696 at 1.02×, 65W/61L**, same
 direction, barely measured. **The K=500 best member survives into the top-128 on 63/126 targets — a
@@ -246,13 +246,21 @@ known only along `|S|−1` directions — **about 5 numbers locally, ~33 globall
 else in `a` is exactly invisible to the emitted structure*. That is the minimal-information subspace
 charter §12 asks for, and it is far smaller than 128.
 
-**Consequence 2 — and this is the closure.** Gain exactly 1 means **no noise suppression**. The
-program is a faithful, non-contracting transcription of whatever estimate it is handed, with
-`‖P_C(t̂) − t‖ ≤ ε + d`.
+**Consequence 2 — and this is the closure. [CORRECTED 09:05 by lane V; my original reason was
+false.]** I first wrote *"gain exactly 1 means no noise suppression."* **That is backwards.** Gain is
+1 on the active affine hull (dimension `|S| − 1` ≈ **5.25**) and **0 on its orthogonal complement —
+≈ 33 of ≈ 39 dimensions** (`gain_out_mean` 3.87e-06). **Gain zero is TOTAL suppression, not none**:
+the readout annihilates ~87% of a generic error vector by construction, and lane Q's own
+`noise_ORACLE` table shows it turning a 3.66 Å estimate into a 2.23 Å emission at ε = 4.0.
+
+**The closure stands, but on the LOWER bound, not on an absence of suppression:**
+`d ≤ ‖P_C(t̂) − t‖ ≤ d + ε`, with the **hull floor `d = 1.8290 ± 0.1178`** (CA cloud, ORACLE). The
+readout cannot beat the hull floor however good the estimate is, and the measured crossover against
+direct emission sits at **ε ≈ 2.2**.
 
 > ### A structure estimate good enough to make the readout worth solving is already good enough to emit.
 
-**That turns S31's measurement into a theorem.** S31 found that solving the CVaR objective exactly
+**(The headline is unaffected: it rests on the measured crossover at ε ≈ 2.2 against the hull floor d = 1.8290, not on the struck claim.) That turns S31's measurement into a theorem.** S31 found that solving the CVaR objective exactly
 *"reshuffles the answer on 66 of 126 targets and buys nothing"* (−0.0112 Å at 0.19× MDE) and
 recorded it as a surprising null. **It is not surprising and it is not a coincidence — it is forced.**
 
@@ -551,13 +559,13 @@ SCORE top-75 vs RANDOM 75 of 128
 
 ```
                  ALL 126              FAIL18 (n=18)      OTHER 108
-500 -> 128   +0.1872 (med -0.0380)   +1.4879  0W/18L   -0.0296 (med -0.0743, 72W/36L)  0.30x  NOT A RESULT
+500 -> 128   +0.1872 (med -0.0380)   +1.4879  0W/18L   -0.0296 (med -0.0743, 72W/36L)  0.30x  NOT A RESULT (median −0.0380; **entirely FAIL18** — −0.0296 at 0.30× on the other 108, NOT A RESULT)
 128 ->  75   +0.0696 (med -0.0045)   +0.3611  3W/15L   +0.0210 (med -0.0090, 62W/46L)  0.38x  NOT A RESULT
 ```
 
 The ten worst targets in the 500→128 contrast — **2BFI, 2NB7, 2JN5, 8T63, 9KAR, 3SGO, 1LB7, 5W52,
 3BTB, 2N5C — are all ten in FAIL18**, and the score loses **18 of 18**. Drop the 10 worst and the
-aggregate falls from +0.1872 to **+0.0294**; drop 20 and it goes **negative, −0.0567**.
+aggregate falls from +0.1872 to **+0.0294**; drop 20 and it goes **negative, −0.0567**. (median −0.0380; **entirely FAIL18** — −0.0296 at 0.30× on the other 108, NOT A RESULT)
 
 **FAIL18 is defined in `s12/instrument.py::selfcheck` as the targets where no pool member within
 1.5 Å of the pool best survives into the production top-75.** A contrast asking *"does the score's
@@ -577,7 +585,7 @@ the wrong place.**
 
 **Contract rule 10, properly applied.** The random arm is a per-target mean over 2000 draws; the
 draw-to-draw sd of the **126-target aggregate** is **0.0232** (500→128) and **0.0167** (128→75). A
-single random draw — which is what a deployment actually gets — gives +0.1872 ± 0.0232, and **only
+single random draw — which is what a deployment actually gets — gives +0.1872 ± 0.0232, and **only (median −0.0380; **entirely FAIL18** — −0.0296 at 0.30× on the other 108, NOT A RESULT)
 69.5% of single draws clear this comparison's own MDE**; for 128→75, **53.6% — a coin flip.**
 
 **The corrected increment sentence, which supersedes S32-L1's:** *narrowing 500 → 128 → 75 costs
