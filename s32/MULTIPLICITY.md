@@ -1085,3 +1085,61 @@ defect of my own, found by lane V and fixed in place** (D1-T's missing script an
 readout's share GROWS. `top75_best` here is the **BLOSUM** top-75, not the distogram top-75
 (2.3062 on record) — a different object, never differenced against it.
 | R-20 | R | rama headroom: is there plausibility variation left among lam=0.3 branches? | **E** | diagnostic, n=126 | posphi within-target spread 0.632; 31.2% of branches above the 17.5% unconstrained rate; 126/126 targets carry one | n/a | EXPLORATORY; REFUTED my own first mechanism for R3's negative |
+
+---
+
+## AUDIT 11, lane D self-audit — five artefacts re-emitted from a committed script. **ALL FIVE REPRODUCE BIT-FOR-BIT.**
+
+`s32/s32_D_reemit.py`. Five lane-D artefacts were produced by **inline `python -c` commands**: no
+`provenance` block, no module, no git commit, no source hash, no pinned seed, and **no `.py` in the
+repository wrote their filenames** — while `s32/REPORT_S32.md` §4 and `s32/LEDGER.md` quote numbers
+from three of them. This is the fourth instance sprint-wide and the **second in this lane** (D1-T
+was the first).
+
+**Two of the five were worse than "no provenance": their headline numbers were not in the file at
+all.** `s32_D0X_circularity.json` and `s32_D4X_rgsign.json` stored only per-target `rows`; the
+variance-retention table and the *"positive on 81% of targets"* figure existed **only in stdout**.
+They are now computed and stored under an `AGGREGATES` key.
+
+**Reproduction.** Seeds pinned to the original inline values (`32004`, `320041`) and the RNG draw
+**order** reproduced exactly (the scorer iteration order is load-bearing for the stream). Every file
+carries a `reemit_check` block diffing every shared numeric leaf against the previous artefact:
+
+| artefact | shared numeric leaves | max abs diff | verdict |
+|---|---|---|---|
+| `s32_D1_signrandom.json` | 40 | **0.000e+00** | **REPRODUCES** |
+| `s32_D1_signshare.json` | 48 | **0.000e+00** | **REPRODUCES** |
+| `s32_D0X_circularity.json` | 3024 | **0.000e+00** | **REPRODUCES** |
+| `s32_D4X_rgsign.json` | 756 | **0.000e+00** | **REPRODUCES** |
+| `s32_D5_signprice.json` | 117 | **0.000e+00** | **REPRODUCES** |
+
+**3,985 shared numeric leaves, max |diff| exactly 0.000e+00. No number in the report changes.** The
+load-bearing values are verified present inside the files: the permutation-null table (AMBER 1.88×,
+`DIS` 2.66×, `LEG_total` 3.10×, `LEG_torsion` 2.26×, all 5/5 folds), `rg_disagree` **positive on
+81.0%** of targets with corr **+0.199** to the quantity it must predict, the retention table
+(chiral 0.271 vs achiral twin 0.196 vs lane V's `RR_ORACLE` 0.272, random-75 control 0.96–0.98),
+and the marginal-versus-LFO-accuracy table.
+
+### An attribution correction the report needs
+
+**The `−0.2101 Å, 1.66× MDE` price of the ORACLE bit is NOT in `s32_D5_signprice.json`.** It is in
+**`s32_D5_signchain_LEG_total.json`**, produced by the committed `s32/s32_D5_signchain.py`, which
+already carries a provenance block — that number was never unbacked. `s32_D5_signprice.json` holds
+the **marginal** table and the **CLOUD-basis** screen, whose corresponding figure is
+**`−0.1287 Å at 1.52× MDE`**. *The two are different bases and must not be swapped* (contract rule 0
+and rule 4).
+
+### The one artefact that still has no provenance, and it is deliberate
+
+`s32_D1_signtransfer.json` — the **superseded** original. Retained **unchanged** under contract rule
+13 (*retractions in place, not by deletion*) and now annotated **inside the file** with `SUPERSEDED`,
+`SUPERSEDED_BY`, `SUPERSEDED_REASON`, its own numbers for the record, and the replacement
+deduplicated numbers. It should be classified *superseded*, not *undocumented*.
+
+### A standing rule this lane endorses, because it caught itself twice
+
+> **AUDIT 11 — "does any `.py` actually write this filename?" — must become a standing project rule,
+> not an S32 one.** Seven artefacts sprint-wide, two more found by lane R on itself, five more here.
+> It is invisible to every prose-level check, and the D0X/D4X cases show the stronger form of the
+> failure: **an artefact can exist, be cited, and not contain the number being cited.** The check
+> should therefore be *"a `.py` writes this name AND the quoted number is a leaf inside it."*

@@ -1,4 +1,21 @@
 {
+ "SUPERSEDED": true,
+ "SUPERSEDED_BY": "s32/results/s32_D1_signtransfer_v2.json (produced by s32/s32_D1_signtransfer.py)",
+ "SUPERSEDED_REASON": "AUDIT 11: produced by an inline python -c with no producing script, no provenance block and no pinned seed, while two downstream scripts quoted its numbers as a ceiling.  Its null (nullPERM) also could not test the per-target claim, and it was not deduplicated.  RETAINED UNCHANGED under contract rule 13 (retractions in place, not by deletion); DO NOT QUOTE.  The re-emitted v2 adds a cross-target null, a NOISE self-test and deduplication.",
+ "SUPERSEDED_NUMBERS_FOR_THE_RECORD": {
+  "AMBER": 0.1125,
+  "DIS": 0.189,
+  "LEG_total": 0.2263,
+  "LEG_torsion": 0.1499
+ },
+ "REPLACEMENT_NUMBERS_DEDUP": {
+  "AMBER": 0.1163,
+  "DIS": 0.1901,
+  "LEG_total": 0.218,
+  "LEG_torsion": 0.1492,
+  "RG": 0.3228,
+  "NOISE_selftest": 0.0056
+ },
  "note": "D1-T split-half per-target in-band SIGN transfer, 16 random splits/target, matched label-permutation null. ORACLE rr is the label; this prices what a PARTIAL oracle would buy and is NOT DEPLOYABLE as such.",
  "n_splits": 16,
  "res": {
