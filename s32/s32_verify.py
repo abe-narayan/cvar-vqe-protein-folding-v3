@@ -415,6 +415,31 @@ if not selftest_only:
                                     ">=1 arm", clears[:3]))
         print("%-56s %s" % ("  positive control: arms clearing 1.0x MDE", clears[:3] or "*** NONE ***"))
 
+    # ---------------- lane V: is the ladder's top rung retrieval, or fragment-space capacity?
+    print()
+    print("--- lane V: hull capacity -- is 1.1167 a property of THIS pool? (s32_V_hull_capacity) ---")
+    hc = load("s32/results/s32_V_hull_capacity.json")
+    if hc:
+        check("A BLOSUM500 hull [ORACLE] (== s29 hull_pool 1.1167)", 1.1167,
+              dig(hc, "blosum500", "mean"), tol=1e-3, basis="cloud")
+        check("B RAND500 hull, retrieval-blind [ORACLE]", 1.1495,
+              dig(hc, "rand500", "mean"), tol=1e-3, basis="cloud")
+        check("C DONOR500 hull, TARGET-blind [ORACLE]", 1.1626,
+              dig(hc, "donor500", "mean"), tol=1e-3, basis="cloud")
+        for a, b, lab in (("rand500", "blosum500", "retrieval"), ("donor500", "blosum500", "target")):
+            c = dig(hc, "%s_vs_%s" % (a, b)) or {}
+            g = ("RESULT" if abs(c.get("effect_over_mde", 0)) >= 1.0 else
+                 "NOT MEASURED" if abs(c.get("effect_over_mde", 0)) >= 0.7 else "NOT A RESULT")
+            show("  %s-blind vs the shipped pool" % lab,
+                 "%+0.4f at %.2fx" % (c.get("effect", 0), c.get("effect_over_mde", 0)),
+                 "%s, %dW/%dL" % (g, c.get("n_better", 0), c.get("n_worse", 0)))
+        show("  -> retrieval's share of the 2.10 A top rung",
+             "%.3f A = %.1f%%" % (dig(hc, "donor500_vs_blosum500", "effect") or 0,
+                                  100 * (dig(hc, "donor500_vs_blosum500", "effect") or 0) / 2.10),
+             "the rest is 500 points in a 39-dim space")
+        show("  hull support (why sparse s=10 ~ the full hull)",
+             "%.1f members" % (dig(hc, "blosum500", "support_mean") or 0), "")
+
     # ------------------------------------ lane V: is lane R's cos_align independent evidence?
     print()
     print("--- lane V: lane R's cos_align -- identity check (s32_V_cos_identity.json) ---")
