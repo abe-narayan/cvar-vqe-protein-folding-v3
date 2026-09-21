@@ -574,7 +574,7 @@ Every one is a quantity **transplanted across a boundary its definition does not
 | **D8** | **Jensen** — log of a mean written as the formula for a mean of logs |
 | **D4, D5** | **provenance** — a superseded draw, and a commit history that does not say who registered what |
 
- NOTE 13 says cross-lane syntheses fail because nobody owns both halves. **D0 and D6
+`s31/STATE.md` NOTE 13 says cross-lane syntheses fail because nobody owns both halves. **D0 and D6
 show the same failure happening INSIDE a lane**, when a lane re-uses a number from an earlier sprint
 whose definition it has not re-read. The rule that covers both:
 
@@ -582,7 +582,7 @@ whose definition it has not re-read. The rule that covers both:
 > re-using it across a sprint boundary — and check that the formula you write beside it is the one
 > that produces it.**
 
-That is  applied to numbers rather than to memory files.
+That is `read-the-memory-body-not-the-index-line` applied to numbers rather than to memory files.
 
 **And the instrument lesson, which is the one I would keep:** the verifier asked whether a basis was
 **named** and passed 97/97 while the headline carried a **misnamed** one. **An audit that checks for
