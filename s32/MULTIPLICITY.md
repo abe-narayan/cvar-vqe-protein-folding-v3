@@ -485,3 +485,5 @@ dynamic range on this pool is spent on a rotamer-placement artefact that carries
 information, and the 0.5 Å of Cα motion it buys leaves the band's quality unchanged (−0.008 Å) and
 its best member slightly worse (+0.038 Å).** That is *why* the force field cannot rank here, stated
 as a mechanism rather than as a null.
+| R-10 | R | ladder rungs x5: observed price vs ORTHOGONAL isotropic null | R | built chain n=126 | pending | pending | R1 registered test |
+| R-11 | R | ladder rungs x5: cos_align + on-manifold null sqrt(e^2-d^2) | **E** | built chain n=126 | pending | pending | EXPLORATORY, added after seeing 10 of 126 ladder rows; the registered test said only "orthogonal or not", the first rows said not, in a direction |

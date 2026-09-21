@@ -66,6 +66,19 @@ def main():
         chain = g("chain_rmsd")
         obs = chain - e
         nullp = np.hypot(e, d) - e
+        #: EXPLORATORY, added 2026-09-21 AFTER seeing the first 10 ladder rows and recorded
+        #: as exploratory in s32/MULTIPLICITY.md.  The registered test above asks only
+        #: "is the displacement orthogonal to the native error?".  The first rows said no,
+        #: and in a specific direction, so the two bracketing hypotheses are named:
+        #:   cos = 0   displacement uncorrelated with the error   -> sqrt(e^2 + d^2)
+        #:   cos = +1  displacement removes error one-for-one     -> e - d
+        #:   cos = -1  displacement adds error one-for-one        -> e + d
+        #: and the law of cosines inverts the observed triangle for the realised alignment.
+        #: RMSD-after-superposition is not a global Euclidean norm, so this is a
+        #: FIRST-ORDER directional diagnostic, not an identity.
+        denom = np.maximum(2.0 * e * d, 1e-12)
+        cos_align = (e ** 2 + d ** 2 - chain ** 2) / denom
+        nullp_on = np.sqrt(np.maximum(e ** 2 - d ** 2, 0.0)) - e
         ref = np.array([rows[p]["rungs"][key].get("s29_chain_rmsd") or np.nan for p in have])
         ok = np.isfinite(ref)
         rec = {
@@ -81,6 +94,11 @@ def main():
             "price_observed_mean": float(obs.mean()),
             "price_observed_se": float(obs.std(ddof=1) / math.sqrt(len(have))),
             "price_isotropic_null_mean": float(nullp.mean()),
+            "EXPLORATORY_price_onmanifold_null_mean": float(nullp_on.mean()),
+            "EXPLORATORY_cos_align_mean": float(np.nanmean(cos_align)),
+            "EXPLORATORY_cos_align_median": float(np.nanmedian(cos_align)),
+            "EXPLORATORY_cos_align_se": float(np.nanstd(cos_align, ddof=1) / math.sqrt(len(have))),
+            "EXPLORATORY_n_cos_positive": int(np.nansum(cos_align > 0)),
             "price_contract_rule16": cprice,
             "abs_err_vs_contract": abs(float(obs.mean()) - cprice),
             "s29_reproduction": {
@@ -98,16 +116,22 @@ def main():
     ST.save_atomic(os.path.join(RESULTS, "s32_R_ladder_null.json"), out, module_file=__file__)
 
     print("n = %d targets%s\n" % (n, "  (INCOMPLETE)" if n < 126 else ""))
-    hdr = ("%-18s %8s %8s %8s | %9s %9s %9s | %8s %6s"
-           % ("rung", "cloud", "chain", "d", "obs price", "iso null", "rule16", "xMDE", "verdict"))
+    hdr = ("%-17s %7s %7s %7s | %8s %8s %8s %8s | %6s %7s"
+           % ("rung", "cloud", "chain", "d", "obs", "orthog", "onmanif", "rule16",
+              "xMDE", "cos"))
     print(hdr); print("-" * len(hdr))
     for k, v in out["rungs"].items():
         c = v["observed_minus_null"]
-        print("%-18s %8.4f %8.4f %8.4f | %+9.4f %+9.4f %+9.4f | %8.2f %s"
+        print("%-17s %7.4f %7.4f %7.4f | %+8.4f %+8.4f %+8.4f %+8.4f | %6.2f %+7.3f"
               % (k, v["cloud_mean"], v["chain_mean"], v["d_mean"],
                  v["price_observed_mean"], v["price_isotropic_null_mean"],
+                 v["EXPLORATORY_price_onmanifold_null_mean"],
                  v["price_contract_rule16"], abs(c["effect_over_mde"]),
-                 "BELOW null" if c["effect"] < 0 else "above null"))
+                 v["EXPLORATORY_cos_align_mean"]))
+    print("\n  cos = 0 orthogonal (the REGISTERED null); +1 displacement removes error"
+          " one-for-one; -1 adds it."
+          "\n  cos column is EXPLORATORY (added after the first 10 rows;"
+          " logged in s32/MULTIPLICITY.md).")
     print("\nreproduction of S29's own chain RMSD per rung:")
     for k, v in out["rungs"].items():
         s = v["s29_reproduction"]
