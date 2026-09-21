@@ -1095,9 +1095,18 @@ leave-fold-out `m` result (+0.0075, 63W/63L) stands.
 
 **BIT-EXACT REPRODUCTION, IN THE STRONG FORM.** All **630** chain RMSDs (126 targets x 5 rungs)
 reproduce the value S29 recorded for the same `(pdb, item)` **bit-for-bit**: mean |d| exactly
-`0.000e+00`, max exactly `0.000e+00`, 126/126 bit-identical on every rung. Production comes back as
-**3.210533994943299**, all sixteen digits, and the cloud as 3.048338093879531 -- from a different job,
-a different script and a different process. Beside lane V's S32-L6 (an independent *recomputation* of
+`0.000e+00`, max exactly `0.000e+00`, 126/126 bit-identical on every rung -- from a different job, a
+different script and a different process. Production's mean returns as **3.210533994943299** and the
+cloud's as 3.048338093879531.
+
+> **CORRECTED IN PLACE 2026-09-21 10:50, by this lane's own verifier** (contract rule 13). An earlier
+> draft of this paragraph said production "comes back as 3.210533994943299, **all sixteen digits**".
+> `s32/s32_R_verify.py` asserted exactly that and **FAILED**: recomputing the mean in a different
+> iteration order returns `3.210533994943300`. **No structure differs** -- the per-target rows are
+> bit-identical, which the 630-row check above asserts and which is order-independent -- but the
+> *mean* of 126 float64s carries a last ULP that depends on summation order. **The bit-identity claim
+> is PER-TARGET; the mean agrees to 1e-12 and not beyond.** The check is kept at 1e-12 rather than
+> deleted, because it is what caught the overclaim. Beside lane V's S32-L6 (an independent *recomputation* of
 the cloud disagrees on 126/126) this pins the statement exactly:
 ***the operator is bit-reproducible; the input is what is fragile.***
 
