@@ -9,6 +9,56 @@ Primary target < 3.00 Å. Ambitious < 2.50 Å.
 
 ---
 
+## NOTE 3 (2026-09-21 11:19, coordinator): **ALL SIX LANES CLOSED. THE ENDPOINT IS UNMOVED AND THE CAUSAL ACCOUNT IS COMPLETE**
+
+**Zero deployable built-chain improvements clearing 1.0× MDE, across all 56 artefacts.** Thirty arms
+clear MDE on *some* basis — ~20 read the native, 4 are pool-mean diagnostics, 6 are in-band. That is
+exhaustive over the artefacts rather than over memory.
+
+**The four results that make the failure necessary rather than unlucky:**
+
+1. **The readout is the Euclidean projection of the native onto the candidate hull**, gain exactly 1
+   on ~5 active directions and 0 on ~33. *A structure estimate good enough to make it worth solving
+   is already good enough to emit.* The binding constraint is the hull floor **d = 1.8290**.
+2. **`a` and `μ` are ONE object** — a native-free affine bijection, proved by two lanes independently
+   and in opposite directions. **S31's sharpest open question is closed.** And `rank(d) = 3n − 6`
+   **exactly on 126/126**, so the requirement is **~39 real numbers with no compression available**.
+3. **The 2.10 Å of “pool headroom” is a FIT, not a RETRIEVAL.** 500 fragments from a *different
+   protein* reach 1.1626 Å against the retrieved pool's 1.1167 — **NOT A RESULT.** Retrieval's share
+   is **2.2%**; what retrieval buys is the pool **mean**, which is what a uniform average consumes.
+4. **“In-band skill is zero” means the SIGN is missing, not the information** — and a *free, perfect*
+   sign still leaves the best scorer **2–3× short** of the ρ ≈ 0.638 that 2.0 Å needs. Worse: positive
+   in-band skill **does** exist on the deployable band, it is **typicality**, and **the terminal
+   operator is already its argmin.**
+
+**One asymmetry appeared three times, from three stages, by three lanes that were not looking for
+it:** the score prefix, consensus, and the branch criteria all have **real skill at identifying the
+worst candidate and none at identifying a better one than the incumbent already picks.**
+
+**Charter §14 answered: NO on this instrument, and the binding reason is chain length.** `2^n_res ≤
+65536` on 126/126. The two properties a problem would need — a decision space that grows with the
+target, and a genuinely stochastic energy — **must hold together and this project has never had
+either.** That is the user's “test on longer proteins” arriving as a **derived requirement**.
+
+**My own hypothesis died, and the argument behind it died with it.** I opened lane R on the claim
+that a **chiral** criterion could pick the projection branch where achiral distance-map rankers
+provably cannot. In-band: `d_to_C` **+0.1122** against `rama_nlp` **+0.0153** with a fold CI spanning
+zero. ***The achiral channels beat the chiral one four to one.*** And lane R's own first explanation
+of *why* was refuted by its own data — the branches are **not** all already plausible (31.2% above
+the unconstrained positive-φ rate); **Ramachandran plausibility and native proximity are simply
+orthogonal among these branches.**
+
+**Sixteen defects were found in work already written down and I wrote the largest share** — a basis
+error in a ladder, a convexity check that could not fail written one hour after I wrote the rule
+forbidding it, an inverted gloss, a circular synthesis, and the chirality hypothesis itself. **Most
+were caught by machine**: the verifier grew 58 → 138 checks with 18 self-tests and eleven audits,
+each built from the defect that motivated it.
+
+**Outstanding:** five lane D artefacts with no producing script (the report cites three), and lane
+L's close-out. Everything else is committed.
+
+---
+
 ## NOTE 2 (2026-09-21 09:37, coordinator): **LANE Q CLOSED. THE QUANTUM QUESTION IS ANSWERED — NO ON THIS INSTRUMENT — AND THE REASON IS CHAIN LENGTH**
 
 `S32-L(Q1)–L(Q3)`. Three things settled:
