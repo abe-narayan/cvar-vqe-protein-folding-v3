@@ -770,3 +770,100 @@ was not fitted on; a miss falsifies it for random gates.
 | P-39 | scored: predicted `R128 − PROD` cloud **+0.144**, measured **+0.1369** | REGISTERED | **HIT** (error 0.007) |
 | P-40 | scored: predicted `R75 − PROD` cloud **+0.524**, measured **+0.3740** | REGISTERED | **MISS** (error 0.150) — the law over-predicts a large gate change; it is a local linearisation |
 | P-48 | PROD reproduction against `s29_O_chain_rows` | REGISTERED (rule 3 check) | mean \|Δ\| 0.0123 (within the 0.0134 floor), p90 0.0260, **max 0.5174 on 2LNG — ABOVE the contract's 0.2285 max floor** |
+
+---
+
+## D1-T RE-EMITTED, and the old artefact SUPERSEDED — `s32/s32_D1_signtransfer.py` → `s32_D1_signtransfer_v2.json`
+
+**A reproducibility defect of mine, recorded in place rather than by deletion (contract rule 13).**
+D1-T's first four numbers (D-36…D-39) were produced by an **inline `python -c` one-liner**. The
+resulting `s32/results/s32_D1_signtransfer.json` carries **no provenance block, no module, no git
+commit, no source hash and no pinned seed, and no script in the repository produced it** — while two
+downstream scripts quoted its numbers as a ceiling and the ledger quoted them as a headline. Charter
+§61 requires verifiable experiments, artefacts and seeds; it failed all three. **Project memory
+records this exact shape twice already (`findings-prose-is-not-evidence-of-code`); this is the
+third.** The old artefact is **SUPERSEDED and must not be quoted.** D-36…D-39 stand as originally
+written, annotated here, and the table below replaces them.
+
+### Three nulls, not one — and the first one could not test the claim
+
+`nullPERM` (mine) permutes `rr` inside half B, destroying **all** structure, so it sits at ~0 for
+every scorer **including pure noise**. It answers *"is there any relation?"*, not *"is the
+relation's SIGN a property of the target?"* **`nullXTGT` — another target's sign applied to this
+target's held-out half, 200 draws, own distribution — is the null the claim needs**, and
+`globalSGN` (one leave-one-fold-out majority sign for all test targets) prices the global
+alternative. `NOISE` is the self-test: **an instrument that scored noise as PER-TARGET would be
+broken** (contract rule 5).
+
+**DEDUPLICATED numbers are the ones to quote.** 7.7% of band members are exact coordinate
+duplicates (**122/126 targets, mean 69.2 distinct of 75**); a duplicate in both halves buys sign
+agreement for free.
+
+| # | reg? | scorer | transfer (DEDUP) | nullPERM | **nullXTGT** | globalSGN | ×MDE vs nullXTGT | folds | verdict |
+|---|---|---|---|---|---|---|---|---|---|
+| D-67 | R | **AMBER** | **+0.1163** | +0.0058 | +0.0004 | −0.0725 | **2.61** | 5/5 | **PER-TARGET** |
+| D-68 | R | `DIS` | +0.1901 | +0.0010 | +0.0088 | +0.0649 | 3.19 | 5/5 | PER-TARGET |
+| D-69 | R | `LEG_total` | +0.2180 | +0.0042 | +0.0082 | +0.0426 | 3.10 | 5/5 | PER-TARGET |
+| D-70 | R | `LEG_torsion` | +0.1492 | +0.0046 | +0.0017 | +0.0460 | 2.68 | 5/5 | PER-TARGET |
+| D-71 | R | **`RG`** — one line of numpy, not a Hamiltonian | **+0.3228** | +0.0014 | +0.0053 | +0.0489 | **4.15** | 5/5 | PER-TARGET |
+| D-72 | R | **`NOISE`** — the self-test | **+0.0056** | −0.0004 | +0.0016 | +0.0123 | **0.15** | 2/5 | **NOT A RESULT** (correct) |
+
+Raw (non-dedup) numbers move by at most 0.012 and no verdict changes, so **duplicates were not
+driving it.** `DIS` at **+0.1901** replicates lane V's independently coded **+0.1911** to 0.001.
+
+### Two corrections to how this must be framed
+
+**(i) They are not unrelated Hamiltonians — they all load on compactness, and plain `Rg` loads
+hardest.** `RG` (+0.3228) beats every Hamiltonian measured: `LEG_total` +0.2180, `DIS` +0.1901,
+`LEG_torsion` +0.1492, AMBER +0.1163. My own D-20 already said it — `LEG_total`'s in-band sign
+agrees with `Rg`'s on **68.3%**. ***The bit is very likely "is the native more or less compact than
+its own band", and the Hamiltonians are reading it through their compactness terms.***
+
+**(ii) This is largely a CONFIRMATION on a new instrument, not a discovery.** Memory
+`in-band-ordering-is-per-target` already records *"the only leverage supplies the per-target SIGN at
+inference — and native-free compactness proxies reach 0.24–0.37 (all CIs exclude zero) against the
+oracle's 0.909."* **`RG` at 0.3228 lands inside that interval.** What is new here is the
+**cross-target-null verdict on four physical scorers including AMBER**, the **NOISE self-test**, and
+the ceiling below.
+
+### THE CEILING, which is the lane's real deliverable
+
+Memory `in-band-ordering-is-per-target` prices **2.0 Å at in-band ρ ≈ 0.638**. A **perfect, free**
+per-target sign oracle delivers:
+
+```
+AMBER        +0.1163   = 18% of the 0.638 crossing price
+LEG_torsion  +0.1492   = 23%
+DIS          +0.1901   = 30%
+LEG_total    +0.2180   = 34%
+RG           +0.3228   = 51%
+NOISE        +0.0056   =  1%      (the self-test)
+```
+
+> ### Even a free, perfect per-target sign leaves the best in-band scorer 2–3x short of the useful range.
+> ### The sign is closed as a ROUTE and kept as a FINDING.
+
+### Registered — D5-B: the Ångström price of the bit on the **BUILT CHAIN**, n = 126
+
+`s32/s32_D5_signchain.py` → `s32_D5_signchain_LEG_total.json`. All three arms projected **in one
+process**, so the pairing is within-job (contract rule 3). `PROD` rebuilds to **3.2126** against the
+canonical **3.2105** — a **0.0021** gap, inside the 0.0107 mean projection floor. Geometry
+secondaries on row one: **virtual-bond mean 3.80395 and sd about 1e-15 on all three arms** — every
+arm is a valid ideal-geometry chain.
+
+| # | reg? | arm | mean (chain) | effect | median | se | ×MDE | folds | W/L |
+|---|---|---|---|---|---|---|---|---|---|
+| D-73 | R | **ORACLE sign**, m=25, vs PROD | 3.0921 | **−0.1206** | −0.0485 | 0.0322 | 1.34 | 4/5 | 86/40 |
+| D-74 | R | **const +1** (zero-info control), m=25, vs PROD | 3.3022 | **+0.0896** | +0.0270 | 0.0355 | 0.90 | 4/5 | 49/77 |
+| D-75 | R | **PRICE OF ONE ORACLE BIT** = ORACLE vs its own matched const | — | **−0.2101** | **+0.0000** | 0.0453 | **1.66** | **5/5** | **43/9** |
+
+**ORACLE / NOT DEPLOYABLE.** The median is **exactly +0.0000 and W/L is 43/9 with 74 ties — and that
+is structural, not concentration**: the bit's marginal is 0.587, so on the 58.7% of targets where the
+sign is `+1` the ORACLE arm *is* the const arm and the difference is identically zero. **The whole
+effect is carried by the 52 targets where the bit is `−1`, on which it is worth about −0.51 Å.**
+(Memory `median-vs-mean-is-the-free-warning` asks for this to be checked; here the explanation is
+the marginal, and it is checkable from the artefact's `bit_marginal_frac_positive = 0.587`.)
+
+**Order-of-magnitude context, same basis:** S31 §20.1 prices the ORACLE common-mode **direction** at
+**−0.8102 Å on the built chain**. One ORACLE **bit** per target is **−0.2101 Å on the built chain**
+— **26% of the direction**, and, per D4-S / D4-M, supplied by nothing native-free.

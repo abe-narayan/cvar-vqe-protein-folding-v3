@@ -1027,6 +1027,16 @@ the ORTHOGONAL NULL -- matched to the operator's *own* displacement, contract ru
 `price = sqrt(e^2 + d^2) - e`. The realised alignment is recovered from the triangle,
 `cos = (e^2 + d^2 - chain^2) / (2ed)`: **0 = orthogonal, +1 = the displacement removes error one for one.**
 
+> **ANNOTATED IN PLACE 2026-09-21 10:25 after lane V's check (`s32/results/s32_V_cos_identity.json`,
+> contract rule 16 as amended at `168c156b`).** `cos` is a **bijection with the price given `(e, d)`**
+> -- rebuilding the price from `(e, d, cos)` returns it with max |error| `0.000e+00`. **So no sentence
+> in this entry may count the price and the cos as two pieces of support; they are one measurement,
+> and `cos` is its interpretation.** What is *not* circular is (a) that the inverted quantity is a
+> genuine alignment cosine rather than a shape-space triangle defect -- V measured `cos_algebraic`
+> -0.0519 against a direct in-frame `cos_direct` -0.0557, mean difference 0.0038, `|cos| > 1` on 0 of
+> 79 -- and (b) **the RANDSPARSE control below, which is a different object with its own independently
+> measured price.** The control, not the cosine, is what carries this entry.
+
 ```
 rung                cloud    chain       d |    price   orthogonal |  cos   | obs-vs-null
 prod (PRODUCTION)  3.0483   3.2105  0.8150 |  +0.1622      +0.1504 | -0.061 | 0.24x  NOT MEASURED
