@@ -140,6 +140,42 @@ score placing its window wrongly, and is NOT MEASURED on the other 108.*
 **41/126**. *On half the targets the best available candidate is gone before the readout ever sees
 it.*
 
+### 2.2 The decisive deployable test: replacing the score's window with a random one, at the endpoint
+
+The one intervention in this sprint that needs **no native information at all** — and therefore the
+cheapest possible deployable gain — is to throw the score's prefix away. Lane P ran it end to end:
+**random 128 of the 500, then the score's top-75 within it, BUILT CHAIN, every arm projected in the
+same process as `PROD` for that target, 8 draws, n = 126.**
+
+```
+                      effect    xMDE    W/L      draws better    verdict
+ALL 126              +0.1648    0.92    52/74      0 of 8        NOT MEASURED, and worse in sign
+FAIL18 (circular)    -0.4149    0.70    15/3                     NOT MEASURED -- random HELPS here
+OTHER 108            +0.2614    1.52    37/71                    WORSE
+```
+
+**The aggregate is two opposite effects cancelling, and the stratification inverts.** Randomising the
+window **helps on the 18 targets where the score misplaces it** (15 of 18 win) and **hurts on the
+other 108** (1.52x MDE, WORSE). The draw-to-draw sd is **0.0187** against an effect of 0.1648 and
+**0 of 8 draws beat production**, so the *direction* is not in doubt even though the paired
+per-target MDE says NOT MEASURED.
+
+> ### The score's value is real and it is MEAN CANDIDATE QUALITY FOR AN AVERAGE. Its failure is WINDOW PLACEMENT on one target in seven. Randomising discards the first to fix the second, and the first is worth more.
+
+**This is charter §29's trap, confirmed at the endpoint rather than argued.** A filter can retain a
+*worse best member* than random and still produce a *better prediction*, because production averages
+75 candidates and never takes a best member. **Every conclusion in §2.1 is about the best member and
+none of it transfers to the endpoint** — which is why it was run.
+
+**My registered prediction, committed before the arm reported, was "unchanged or worse".** It holds.
+The prediction was made *less* safe mid-flight by lane V's discovery that the score also halves the
+pool's spread — a term S32-L2 shows the readout *rewards* — and it survived that anyway: the
+mean-quality gain (pool mean 4.4533 → 3.5847) outweighs the spread loss.
+
+**What it leaves open, and it is the only live route in this arrow:** keep the score, and **detect
+the 18 targets whose window is misplaced.** That detector must be native-free, and it is the same
+missing quantity as §4's per-target sign — not an independent opportunity.
+
 ---
 
 ## 3. The readout is a hull projection, and that closes a family
