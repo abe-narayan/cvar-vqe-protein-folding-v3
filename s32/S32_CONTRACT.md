@@ -166,6 +166,15 @@ and +1 means it removes error one-for-one.
 > in a direction that has nothing to do with your error. It is not sparsity that is cheap — it is
 > ALIGNMENT.**
 
+> **AND ALIGNMENT IS NOT A LEVER — lane R's n=126 control (S32-L(R1)) closes it.** The *same*
+> `s = 10` combination pays **+0.0002 when the native chose its ten members and +0.1988 when it did
+> not**. Same sparsity, same averaging operator, same projection, same job, three pinned draws.
+> **The cheap price was ORACLE-induced.** The deployable version — score-top-10 — is **+0.1371 at
+> 1.46× MDE on the WRONG side of its own orthogonal null**, and production at **+0.1622 against a
+> null of +0.1504 is 0.24×, NOT MEASURED**. ***Every object the native did not touch sits at or
+> above its own orthogonal null.*** So `d` and `cos` are the right *diagnostics* and neither is an
+> available *intervention*.
+
 Any readout proposal must state its **`d` and its `price`** — not merely "sparse" or "dense".
 
 > **But `cos` is an INTERPRETATION of the price, never corroboration of it.** Lane V verified (`s32/results/s32_V_cos_identity.json`, n = 79) that rebuilding the price from `(e, d, cos)` returns the observed price with **max |error| = 0.000e+00**. `cos = (e² + d² − chain²)/(2ed)` is the law of cosines inverted on three numbers the row already carries, so it is a **bijection** with the price given `(e, d)`. ***Any sentence quoting the price AND the cos as two pieces of support is double-counting one measurement.***

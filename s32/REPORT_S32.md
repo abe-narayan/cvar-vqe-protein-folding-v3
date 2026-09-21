@@ -154,9 +154,66 @@ it.*
 
 ---
 
-## 5. The projection taxes direction, not distance
+## 5. The projection is not the earliest irreversible loss — it faithfully transmits an upstream defect
 
-[PENDING — S32-L9, R-13's off-manifold law, the dilation refutations.]
+The reconstruction costs **+0.1622 A, 5.05% of the endpoint**, and the charter (§31) asks whether it
+is destroying structural improvements. **It is not.**
+
+### 5.1 The cheap projection price was ORACLE-induced
+
+The obvious reading of the S29 ladder — *sparse combinations project for free, dense averages do
+not* — is **wrong**, and the control that shows it is the sharpest in the sprint. Same sparsity,
+same averaging operator, same projection, same job, three pinned draws (n = 126):
+
+```
+arm                          cloud   chain      d  |   price   orthog null |   cos   | vs null
+ORACLE sparse s=10          1.1136  1.1139  0.7023 |  +0.0002      +0.2124 |  +0.380 | 4.65x BETTER
+RANDSPARSE s=10, 3 draws    3.5541  3.7529  1.1701 |  +0.1988      +0.2088 |  +0.019 | 0.22x NOT MEASURED
+SCORESPARSE s=10 (top-10)   3.1455  3.2826  0.6274 |  +0.1371      +0.0905 |  -0.076 | 1.46x WORSE
+PROD s=75                   3.0483  3.2105  0.8150 |  +0.1622      +0.1504 |  -0.061 | 0.24x NOT MEASURED
+```
+
+> ### The same s = 10 combination pays +0.0002 when the native chose its members and +0.1988 when it did not. **Every object the native did not touch sits at or above its own orthogonal null**, and the deployable score-top-10 is on the *wrong* side of it at 1.46x MDE.
+
+**So neither sparsity nor alignment is an available intervention.** They are diagnostics of an
+object that was already good.
+
+### 5.2 The price is set upstream, by a native-free quantity
+
+Production's off-manifold distance `d` is **rank-determined by the pool's own disagreement**:
+`spearman(d, mean pairwise RMSD of the 75 members)` = **+0.9646**, partial on chain length **+0.967**,
+partial on the native error **+0.953**, per fold 0.935 / 0.971 / 0.982 / 0.961 / 0.967. **Both sides
+are native-free.** The shared-referent floor was measured *first* — permuting the spread within
+chain-length strata gives ρ ≈ **+0.10**, max **+0.466** over 4000 draws. Honest limit: the *ratio* has
+cv 0.467, so the relation is **monotone, not a proportionality** — quote ρ, never a coefficient.
+
+The whole price therefore decomposes with **only the last link reading the native**:
+
+> **pool disagreement → (ρ +0.965) → `d` → (cos −0.061, orthogonal to slightly adverse) → price
+> = +0.1622 = 5.05% of the endpoint.**
+
+**Charter §56, answered for this stage: the projection is bit-reproducible, it reproduces its own
+historical numbers exactly, and it adds error in quadrature at a rate fixed upstream. It transmits a
+retrieval defect; it does not create one.**
+
+### 5.3 Scalar dilation is closed in both calibrations, and it reconciles two long-quoted numbers
+
+Registered P1.3, **falsified by its own falsifier**: dilating the cloud to ideal virtual-bond length
+is **WORSE by +1.0425 at 2.79x MDE, 5/5 folds**; the better-motivated Rg-matched dilation is also
+worse, **+0.0622 at 1.47x**. The reason is that the contraction is **separation-dependent**:
+
+> **22.15% at |i−j| = 1, and only 5.40% in the radius of gyration.**
+
+*One scalar matched to one moment is wrong at the others.* **That reconciles two figures this project
+has been quoting past each other** — the "3.5% contraction" in project memory and
+`core/project.py`'s "2.96 against 3.80" are **both right and measure different separations. Neither
+may be substituted for the other.**
+
+### 5.4 Bit-exactness, the strong form
+
+**All 630 chain RMSDs (126 targets x 5 ladder rungs) reproduce S29's recorded values bit-for-bit**,
+mean and max |Δ| exactly **0.000e+00**, from a different job, script and process. Production returns
+**3.210533994943299** to sixteen digits; the cloud **3.048338093879531**.
 
 ---
 
