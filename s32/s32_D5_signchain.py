@@ -8,9 +8,11 @@ the SAME job as its paired production rows.
 
 Charter section 41 asks whether the five-bit oracle result is a hard limit or a pricing clue.  D1-N,
 D1-T and D4-S have reduced the missing in-band quantity to exactly ONE BIT PER TARGET -- the sign
-of the scorer's in-band ordering -- shown to be real (1.88-3.10x a matched permutation null), to
-TRANSFER across a split half of a target's own band, and to be UNPREDICTABLE above its own marginal
-from native-free per-target features.  This file prices that bit in Angstroms on the endpoint.
+of the scorer's in-band ordering -- shown to be real (1.88-3.10x a matched permutation
+null), to TRANSFER across a split half of a target's own band against a CROSS-TARGET null
+(s32_D1_signtransfer_v2.json, deduplicated: AMBER +0.1163, LEG_total +0.2180, RG +0.3228, and a
+NOISE self-test at +0.0056 that correctly returns NOT A RESULT), and to be UNPREDICTABLE above its
+own MARGINAL from native-free per-target features.  This file prices that bit in Angstroms on the endpoint.
 
 ARMS, all projected in THIS process so the pairing is within-job (contract rule 3):
   PROD           uniform coordinate average of the shipped top-75  -> STAGE 3b chain.

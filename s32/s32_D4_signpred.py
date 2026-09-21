@@ -12,7 +12,10 @@ only NATIVE-FREE per-target features, can supply it.
 READOUT, chosen to be directly comparable to D1-T's numbers:
       oriented in-band rho  =  mean over targets of  sign(rho_hat_lfo) * rho_true
   rho_hat_lfo is a leave-one-FOLD-out ridge prediction of the target's in-band rho.
-  D1-T's ORACLE-partial ceiling on the same readout: AMBER +0.1125, LEG_total +0.2263.
+  D1-T's ORACLE-partial ceiling on the same readout, from the RE-EMITTED and DEDUPLICATED
+  s32_D1_signtransfer_v2.json (the original s32_D1_signtransfer.json is SUPERSEDED -- it had no
+  script, no provenance and no seed): AMBER +0.1163, LEG_total +0.2180, DIS +0.1901,
+  LEG_torsion +0.1492.  Plain Rg, not a Hamiltonian, reaches +0.3228 and beats all of them.
   The do-nothing floor is the unoriented in-band rho: AMBER +0.0000, LEG_total +0.0376.
 
 CONTROLS
@@ -148,8 +151,11 @@ def main():
                     "in-band rho.  No feature reads rr or nat_ca; the training TARGETS are other "
                     "folds' in-band rho and are native-derived, which is the shipped "
                     "leave-fold-out discipline."),
-           "oracle_ceiling_from_D1T": {"AMBER": 0.1125, "DIS": 0.1890,
-                                       "LEG_total": 0.2263, "LEG_torsion": 0.1499},
+           "oracle_ceiling_from_D1T_v2_DEDUP": {"AMBER": 0.1163, "DIS": 0.1901,
+                                                "LEG_total": 0.2180, "LEG_torsion": 0.1492,
+                                                "RG": 0.3228, "NOISE_selftest": 0.0056},
+           "oracle_ceiling_source": "s32/results/s32_D1_signtransfer_v2.json "
+                                    "(s32_D1_signtransfer.json is SUPERSEDED: no script/provenance/seed)",
            "arms": {}}
     print("%-13s %10s %10s %10s %9s %6s %6s" % (
         "scorer", "oriented", "const(+1)", "shuffled", "excess", "xMDE", "folds"))
