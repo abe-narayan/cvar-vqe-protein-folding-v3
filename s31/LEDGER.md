@@ -2545,3 +2545,123 @@ lanes were asked to report must be read **against this null, not against zero**.
 per-target while cancelling to -0.0044 in the mean"* was measured on the **CA cloud**, where this
 noise is 3.6e-14 and therefore **cannot** explain it -- but any **chain**-basis version of that
 sentence needs the A2 null beside it.
+
+## S31-L19 -- **ARM 3 (DIS + CONSENSUS) IS REFUTED AT +0.1347 A, 1.71x MDE, 5/5 FOLDS, AND CONSENSUS ADDS 0.02x MDE OVER DIS. THE REASON CLOSES THE ROUTE BY IDENTITY: THE MEDOID CRITERION **IS** THE DISPERSION TERM’S MEAN-FIELD GRADIENT (PEARSON 0.9667, n=126), SO USING IT AS THE QUALITY ESTIMATE CANCELS THE FREE HALF INSTEAD OF COMPLEMENTING IT. ITS rho_global +0.428 IS ALL OUTLIER DETECTION -- **IN BAND IT IS -0.284, THE WRONG SIGN** -- WHICH WITHDRAWS MY OWN rho = 0.211 CROSSING PRICE AS PATH-DEPENDENT. AND THE 2x2 LOCATES THE DEFICIT: THE SET IS WORTH 0.005 A (0.14x), THE **WEIGHTING RULE** COSTS +0.110 A AT 2.68x ON PRODUCTION’S OWN SET (2026-09-21 00:44, A)
+
+**Basis: CA POINT CLOUD (production 3.0483 Å).** n = 126, fold-clustered SE on the pinned 5
+folds, MDE = 2.8016 × SE. Code `s31/s31_A_ahat.py`, `s31/s31_A_setweights.py`; artefacts
+`s31/results/s31_A_{ahat,setweights,consensus_is_gradient}.json` + `s31_A_ahat_rows.jsonl`.
+Requested by the coordinator against a registered prior of ~4:1 against. **Arm 3 fails, and the
+reason is better than the arm would have been.**
+
+---
+
+### 1. THE ARMS, ρ FIRST AS ASKED
+
+Every `â` is fitted **leave-fold-out** on the pinned folds (fold `f`'s coefficients come from
+the other four) as the conditional mean of `a` in Å², which is the correct plug-in because the
+objective `⟨w,â⟩ − ½w'Bw` is **linear** in `â`. `a` is ORACLE and enters only as a training
+label on the four training folds and as the evaluation label.
+
+| arm | ρ **global** | ρ **IN BAND** (top-24 by true `a`, ORACLE) | amplitude sd(â)/sd(a) | cloud RMSD |
+|---|---|---|---|---|
+| 1 `DIS` z-rank | 0.1176 | **−0.0262** | 0.142 | 3.1846 |
+| 2 `CONS` (lane B's `P.mean(1)`) | **0.4278** | **−0.2837** | 0.601 | 3.1826 |
+| 3 **`DIS + CONS`, LFO** | **0.4281** | **−0.2827** | 0.602 | **3.1830** |
+| 4 `const` (= MEB) | 0 | — | 0 | 3.1919 |
+| — `PROD75` | | | | **3.0483** |
+
+| comparison | mean | SE | × MDE | folds | verdict |
+|---|---|---|---|---|---|
+| **3 `DIS+CONS` − PROD75** | **+0.1347** | 0.0282 | **1.71** | 5/5, 48W/78L | **WORSE** |
+| 2 `CONS` − PROD75 | +0.1342 | 0.0280 | 1.71 | 5/5 | WORSE |
+| 1 `DIS` − PROD75 | +0.1363 | 0.0405 | 1.20 | 5/5 | WORSE |
+| 4 `const` − PROD75 | +0.1436 | 0.0420 | 1.22 | 5/5 | WORSE |
+| **3 − 1 (what consensus ADDS)** | **−0.0016** | 0.0351 | **0.02** | 3/5 | **NOT A RESULT** |
+| 3 − shuffled-`B` (8 draws) | −0.0585 | 0.0295 | 0.71 | 4/5 | NOT MEASURED |
+| 3 − shuffled-feature | −0.0156 | 0.0417 | 0.13 | 3/5 | NOT A RESULT |
+| ORACLE-scale (full-amplitude) 3 − PROD75 | +0.1130 | 0.0191 | 2.11 | 5/5 | WORSE |
+
+> **Consensus adds 0.02× MDE on top of DIS.** The LFO regression puts essentially all its weight
+> on consensus (β_CONS ≈ 0.30–0.36, β_DIS ≈ 0.004–0.015) and the endpoint does not move. Arm 3
+> is refuted, the coordinator's 4:1 prior held, and the shuffled-`B` control still does not
+> separate.
+
+### 2. WHY — AND IT CORRECTS MY OWN HEADLINE NUMBER
+
+**ρ(â,a) global is NOT a sufficient statistic, and my crossing price of ρ = 0.211 is withdrawn
+as a target.** Consensus reaches **ρ_global = 0.4278**, double the crossing price, and its
+full-amplitude ORACLE-scaled twin lands at **3.1614** where S31-L13's price curve predicts
+≈ 2.80 at that ρ. The two are not the same `â`:
+
+> **Consensus's ρ_global = +0.428 is entirely OUTLIER DETECTION. In band it is −0.284 — it
+> points the WRONG WAY among the candidates that matter.** `DIS` in band is −0.026, i.e. also
+> negative but nearly null. The price curve's rungs interpolate toward the truth, so their
+> in-band ρ rises with λ; consensus's does not. **The binding axis is in-band ρ, not global ρ**,
+> which is `in-band-is-the-only-ranking-metric` and `consensus-is-outlier-avoidance` arriving
+> together on the exact objective.
+
+**Corrected form of S31-L13 §3:** ρ_global = 0.211 is the crossing price **along the
+interpolation path only** — it is necessary-not-sufficient and must never be quoted as a target
+for a real feature. Amplitude is not the escape either: the full-amplitude twins move the
+endpoint by only 0.02 Å and remain 2.1× MDE WORSE.
+
+### 3. THE STRUCTURAL REASON CONSENSUS CAN NEVER BE THE `â` — an identity, not a measurement
+
+The dispersion term's mean-field gradient at uniform weights is `(B·1/D)_x = mean_y ‖W_x−W_y‖²`.
+Lane B's medoid criterion is `mean_y ‖W_x−W_y‖_RMSD`. Measured over **all 126 targets**:
+
+    corr( medoid criterion , (B @ uniform) ) = 0.9667 Pearson (min 0.809)
+                                             = 0.9659 Spearman (min 0.740)
+
+> **The consensus criterion IS the free half of the objective, read at uniform weights.** The QP
+> gradient is `â_x − (Bw)_x`; setting `â ∝ +consensus` therefore **cancels** the term it was
+> supposed to complement instead of adding information to it. The entire arm-2/3 family is one
+> scalar κ = (consensus coefficient)/(dispersion coefficient): κ < 1 gives MEB (3.192), κ → ∞
+> gives the uniform medoid, a single candidate (3.344). **Production's uniform top-75 average
+> (3.048) is not on that axis at all.**
+
+This closes "consensus as the missing `â`" by **identity**, which is stronger than closing it by
+the measurement above, and it explains why lane B found every node-level graph observable
+absorbed by consensus: they are all absorbed by the *same* object.
+
+### 4. THE 2×2: THE DEFICIT IS THE WEIGHTING RULE, NOT THE SET
+
+`{top-75, top-128} × {uniform, MEB}`, `â ≡ const` so the quality model cannot confound it. All
+four cells native-free and deployable.
+
+| | uniform | MEB (derived weights) |
+|---|---|---|
+| **top-75** | **3.0483** (= production) | 3.1585 |
+| top-128 | 3.0532 | 3.1919 |
+
+| effect | mean | × MDE | verdict |
+|---|---|---|---|
+| **SET** (top-128 − top-75) at uniform | +0.0049 | **0.14** | **NOT A RESULT** |
+| **WEIGHTS** (MEB − uniform) on the SAME top-75 | **+0.1102** | **2.68**, 5/5, 49W/77L | **WORSE** |
+| WEIGHTS on top-128 | +0.1387 | 1.28 | WORSE |
+| both | +0.1436 | 1.22 | WORSE |
+
+> **The entire +0.144 Å is the weighting rule. The set is worth 0.005 Å.** On production's own
+> set, replacing uniform weights with the exact objective's optimum-under-`â = const` is
+> **2.68× MDE worse**. The MEB support is 6.33 of 75 — it loads the extreme points, and the
+> extreme points really are worse, which is `consensus-is-outlier-avoidance` measured *through*
+> the exact objective rather than beside it.
+
+### 5. WHAT THIS CLOSES, AND THE CLOSING SENTENCE IT EARNS
+
+* **Arm 3 (DIS + consensus) is refuted**: +0.1347 at 1.71× MDE, 5/5 folds, and it adds 0.02× MDE
+  over DIS alone.
+* **Consensus as a quality estimate is closed by identity** (§3), not merely by measurement.
+* **My own ρ_global = 0.211 crossing price is withdrawn as a target** and restated as
+  path-dependent and necessary-not-sufficient (§2).
+* **The deficit is located**: it is the weighting rule, on production's own set (§4).
+
+> **The objective question closes with a price attached rather than a shrug.** The readout's
+> objective is exact and half of it is free; the conversion from any quality estimate to an
+> endpoint is a tuning-free convex program; the ORACLE ceiling of that program is 1.829 Å
+> against production's 3.048. **What is missing is a per-candidate quality estimate with
+> positive IN-BAND skill.** Every native-free candidate now measured — the shipped distogram
+> (−0.026), consensus (−0.284), and every graph observable consensus absorbs — has in-band
+> skill that is **zero or negative**. Not small: *the wrong sign*.
+
