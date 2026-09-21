@@ -1,0 +1,179 @@
+{
+ "seed": 31007,
+ "n": 126,
+ "basis": "BUILT CHAIN, all arms projected in ONE job from the same stored clouds; variant selected on the CLOUD for every arm",
+ "ORACLE": "ORACLE / NOT DEPLOYABLE -- every arm is a per-target minimum over K = 128",
+ "means": {
+  "M75": 3.212625219723354,
+  "PREFIX": 2.902668439905362,
+  "M_GLOBAL": 3.2082742889050633,
+  "M_LFO": 3.2201139412045117,
+  "RANDOM_per_draw": [
+   2.765860257896489,
+   2.7881176507996392
+  ],
+  "RANDOM_mean": 2.776988954348064,
+  "RANDOM_sd_over_draws": 0.01573835345335085
+ },
+ "PREFIX_vs_M75": {
+  "label": "F3chain.PREFIX(bestm128) - M75 (BUILT CHAIN)",
+  "mean_a": 2.902668439905362,
+  "mean_b": 3.212625219723354,
+  "effect": -0.3099567798179921,
+  "median_effect": -0.19116624862112863,
+  "se": 0.034941107194323896,
+  "mde": 0.09789100591561783,
+  "effect_over_mde": -3.166345844736494,
+  "ci95_fold": [
+   -0.3604817877784999,
+   -0.25611865658138555
+  ],
+  "folds_same_sign": 5,
+  "W": 118,
+  "L": 8,
+  "n": 126
+ },
+ "M_GLOBAL_vs_M75": {
+  "label": "F3chain.ORACLE global m - M75 (BUILT CHAIN)",
+  "mean_a": 3.2082742889050633,
+  "mean_b": 3.212625219723354,
+  "effect": -0.004350930818290405,
+  "median_effect": -0.0010181504698554278,
+  "se": 0.00799371822181614,
+  "mde": 0.0223952009702401,
+  "effect_over_mde": -0.19427960588842882,
+  "ci95_fold": [
+   -0.026254590660560895,
+   0.013700771304150008
+  ],
+  "folds_same_sign": 3,
+  "W": 69,
+  "L": 57,
+  "n": 126
+ },
+ "M_LFO_vs_M75": {
+  "label": "F3chain.leave-fold-out m - M75 (BUILT CHAIN)",
+  "mean_a": 3.2201139412045117,
+  "mean_b": 3.212625219723354,
+  "effect": 0.007488721481157795,
+  "median_effect": -2.483987016704825e-05,
+  "se": 0.011907953851558961,
+  "mde": 0.033361323510527584,
+  "effect_over_mde": 0.22447315313478602,
+  "ci95_fold": [
+   -0.0043271800741625085,
+   0.019672569184771185
+  ],
+  "folds_same_sign": 2,
+  "W": 63,
+  "L": 63,
+  "n": 126
+ },
+ "RANDOM_vs_M75": [
+  {
+   "label": "F3chain.RANDOM draw 0 - M75 (BUILT CHAIN)",
+   "mean_a": 2.76586025789649,
+   "mean_b": 3.212625219723354,
+   "effect": -0.44676496182686354,
+   "median_effect": -0.2733979905982278,
+   "se": 0.04414359560990758,
+   "mde": 0.12367269746071707,
+   "effect_over_mde": -3.6124785098082968,
+   "ci95_fold": [
+    -0.4855431432379768,
+    -0.41136594738389237
+   ],
+   "folds_same_sign": 5,
+   "W": 119,
+   "L": 7,
+   "n": 126
+  },
+  {
+   "label": "F3chain.RANDOM draw 1 - M75 (BUILT CHAIN)",
+   "mean_a": 2.788117650799639,
+   "mean_b": 3.212625219723354,
+   "effect": -0.42450756892371455,
+   "median_effect": -0.2523166808792576,
+   "se": 0.043312819883309775,
+   "mde": 0.12134519618508068,
+   "effect_over_mde": -3.4983467188617685,
+   "ci95_fold": [
+    -0.4599433709852326,
+    -0.39280185128972483
+   ],
+   "folds_same_sign": 5,
+   "W": 120,
+   "L": 6,
+   "n": 126
+  }
+ ],
+ "RANDOM_vs_PREFIX": [
+  {
+   "label": "F3chain.RANDOM draw 0 - PREFIX (BUILT CHAIN)",
+   "mean_a": 2.76586025789649,
+   "mean_b": 2.902668439905362,
+   "effect": -0.1368081820088714,
+   "median_effect": -0.10607061133304385,
+   "se": 0.043116667589621266,
+   "mde": 0.12079565591908294,
+   "effect_over_mde": -1.1325587908601178,
+   "ci95_fold": [
+    -0.20562939598898422,
+    -0.06319731068607452
+   ],
+   "folds_same_sign": 5,
+   "W": 90,
+   "L": 36,
+   "n": 126
+  },
+  {
+   "label": "F3chain.RANDOM draw 1 - PREFIX (BUILT CHAIN)",
+   "mean_a": 2.788117650799639,
+   "mean_b": 2.902668439905362,
+   "effect": -0.11455078910572244,
+   "median_effect": -0.07465838286961657,
+   "se": 0.044170154986280546,
+   "mde": 0.12374710620956358,
+   "effect_over_mde": -0.9256845886297548,
+   "ci95_fold": [
+    -0.18860282837685563,
+    -0.05426703477017974
+   ],
+   "folds_same_sign": 5,
+   "W": 83,
+   "L": 43,
+   "n": 126
+  }
+ ],
+ "share_of_prefix_gain_BUILT_CHAIN": 1.4054742265392501,
+ "BAR_FIRES_on_chain": true,
+ "cloud_cross_check": {
+  "M75": 3.0483380938795324,
+  "PREFIX": 2.7604686020122555,
+  "M_GLOBAL": 3.046504513702423,
+  "M_LFO": 3.0562158323355733,
+  "cloud_to_chain_price": {
+   "M75": 0.1642871258438211,
+   "PREFIX": 0.14219983789310578,
+   "M_GLOBAL": 0.16176977520264121,
+   "M_LFO": 0.1638981088689388
+  },
+  "RANDOM_mean": 2.6359453271033555,
+  "note": "must agree with s31_F3_prefix.json's cloud figures (2.7605 prefix) up to the reseeding of the random family"
+ },
+ "geometry": {
+  "M75": {
+   "bond_mean": 3.803954938363982,
+   "bond_sd": 9.209877768520543e-16
+  },
+  "PREFIX": {
+   "bond_mean": 3.803954938363982,
+   "bond_sd": 9.68907663274584e-16
+  },
+  "RANDOM0": {
+   "bond_mean": 3.803954938363982,
+   "bond_sd": 9.068969672315449e-16
+  }
+ },
+ "multiplicity_emitted": 7
+}

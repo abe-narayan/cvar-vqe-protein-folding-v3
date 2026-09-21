@@ -713,6 +713,39 @@ try:
 except Exception as e:
     MISSING.append("lane E S31-L22 direction-control block (%s)" % e)
 
+print()
+print("--- lane F: S31-L11 s5d, the F3 arms on the BUILT CHAIN (one job) ---")
+try:
+    fc3 = load("s31/results/s31_F3_chain.json")
+    check("F3chain production M75, same job", 3.2126, dig(fc3, "means", "M75"), basis="chain")
+    check("F3chain PREFIX = bestm128 reproduces S29's 2.9027", 2.9027,
+          dig(fc3, "means", "PREFIX"), basis="chain")
+    check("F3chain PREFIX - M75", -0.3100, dig(fc3, "PREFIX_vs_M75", "effect"), basis="chain")
+    gm = dig(fc3, "M_GLOBAL_vs_M75")
+    lf = dig(fc3, "M_LFO_vs_M75")
+    check("F3chain ORACLE global m = 72, on the CHAIN", -0.0044, gm["effect"], basis="chain")
+    check("F3chain leave-fold-out m, on the CHAIN (WORSE)", 0.0075, lf["effect"], basis="chain")
+    exact("  the ORACLE global m is NOT A RESULT on the chain (<0.7x MDE)", True,
+          bool(abs(gm["effect_over_mde"]) < 0.7))
+    exact("  the LFO m is WORSE than production on the chain", True, bool(lf["effect"] > 0))
+    check("F3chain matched random family, share of the prefix gain", 1.4055,
+          dig(fc3, "share_of_prefix_gain_BUILT_CHAIN"), basis="chain")
+    exact("  the order-statistic bar FIRES on the BUILT CHAIN too", True,
+          dig(fc3, "BAR_FIRES_on_chain"))
+    rp = [o["effect"] for o in dig(fc3, "RANDOM_vs_PREFIX")]
+    exact("  every random draw BEATS bestm128 directly on the chain", True,
+          bool(max(rp) < 0))
+    check("  RANDOM draw 0 - PREFIX", -0.1368, rp[0], basis="chain")
+    # the cloud->chain price must be FLAT across prefixes, which is why S29's cloud arms transfer
+    pr = dig(fc3, "cloud_cross_check", "cloud_to_chain_price")
+    exact("  the cloud->chain price is flat across prefixes (spread < 0.03 A)", True,
+          bool(max(pr.values()) - min(pr.values()) < 0.03))
+    for k in ("M75", "PREFIX", "RANDOM0"):
+        exact("  %s emits ideal geometry (bond sd < 1e-9)" % k, True,
+              bool(dig(fc3, "geometry", k, "bond_sd") < 1e-9))
+except Exception as e:
+    MISSING.append("lane F S31-L11 s5d block (%s)" % e)
+
 # ================================================== EVERY PATH THE LEDGER CLAIMS TO HAVE WRITTEN
 print()
 print("--- every path any S31 ledger entry names (parsed from the ledger, not hand-kept) ---")

@@ -1596,6 +1596,55 @@ selector. My sentence *"must never again be quoted as the architectural ceiling"
 and is withdrawn**; the correct restriction is the one in the display block above it, which
 restricts what the number licenses rather than forbidding its use as a bound.
 
+### 5d. **CLOSED ON THE BUILT CHAIN, 2026-09-21 01:24.** §5c's open item is done, in ONE JOB
+
+`s31/s31_F3_chain.py` -> `s31/results/s31_F3_chain.json`, `s31_F3_chain_rows.jsonl` (126 rows).
+**Every arm projected in the same process from the same stored clouds** (lane D: the lam = 0
+multi-start argmin is decided at a 1e-7 spread between branches 1e-1 apart, amplification ~1e13, so
+cross-job chain comparisons are unsafe). The variant is selected on the CLOUD for every arm, exactly
+as `s29_O_ladder.py:542` selects `m_best`, so the oracles are matched in what they may see.
+
+| arm | BUILT CHAIN | vs M75 | MDE | xMDE | fold CI | folds | W/L | verdict |
+|---|---|---|---|---|---|---|---|---|
+| `M75` (production's own prefix) | **3.2126** | -- | -- | -- | -- | -- | -- | comparator, same job |
+| `PREFIX` = **`bestm128`** | **2.9027** | **-0.3100** | 0.0979 | **-3.17** | [-0.361, -0.256] | 5/5 | 118/8 | **MEASURED, ORACLE / NOT DEPLOYABLE** |
+| **ORACLE global `m` = 72** | 3.2083 | **-0.0044** | 0.0224 | -0.19 | [-0.026, +0.014] | 3/5 | 69/57 | **NOT A RESULT** |
+| **leave-fold-out `m`** (70/108/72/72/72) | 3.2201 | **+0.0075 WORSE** | 0.0334 | +0.22 | [-0.004, +0.020] | 2/5 | 63/63 | **NOT A RESULT** |
+| matched RANDOM family, draw 0 | 2.7659 | **-0.4468** | 0.1237 | -3.61 | [-0.486, -0.411] | 5/5 | 119/7 | ORACLE min over a NULL family |
+| matched RANDOM family, draw 1 | 2.7881 | -0.4245 | 0.1213 | -3.50 | [-0.460, -0.393] | 5/5 | 120/6 | ORACLE min over a NULL family |
+
+**`PREFIX` reproduces S29's 2.9027 exactly** on an independent job, so the number is confirmed
+before it is re-read.
+
+**(i) S29-L30's transfer claim is now quoted on ONE basis, and it holds.** Its arms were CA point
+cloud (-0.0018 and +0.0079). On the **built chain** they are **-0.0044 (0.19x MDE)** and
+**+0.0075 worse (0.22x MDE)**. *"The transferable part of the prefix axis is zero"* is true on the
+endpoint basis, measured, and no longer quoted across bases. The reason it carries is visible in the
+cloud-to-chain price, which is **flat across arms**: M75 +0.1643, PREFIX +0.1422, global-m +0.1618,
+LFO-m +0.1639. The projection charges every prefix the same, so cloud conclusions about `m` transfer.
+
+**(ii) The 149% control is confirmed on the BUILT CHAIN at 140.6%**, and now as a *direct paired
+contrast* rather than a ratio of two gains:
+
+```
+RANDOM draw 0 - PREFIX   -0.1368   MDE 0.1208   1.13x   fold CI [-0.206, -0.063]   5/5   90W/36L
+RANDOM draw 1 - PREFIX   -0.1146   MDE 0.1237   0.93x   fold CI [-0.189, -0.054]   5/5   83W/43L
+```
+
+**A per-target minimum over 128 ARBITRARY subsets of the top-128 beats the per-target minimum over
+the 128 SCORE-ORDERED PREFIXES of the same set, on the endpoint, by 0.11-0.14 A, on 83-90 of 126
+targets, with both fold CIs excluding zero.** Draw 0 clears 1.0x MDE; draw 1 is at 0.93x and is
+**NOT MEASURED** on its own -- *both are reported, and the claim rests on the mean of the draw
+distribution (contract rule 10), not on the better draw.*
+
+**(iii) Geometry.** All three emitted arms have mean virtual bond **3.804 with sd 0.000** -- ideal
+by construction, since stage 3b is parameterised by `(phi, psi)`.
+
+**So the sentence in §5 stands on the endpoint basis, with its restriction and not its overreach:**
+2.9027 A is a valid ORACLE **upper bound**; it is **not** a 0.31 A lead available to a better
+selector; the transferable content of `m` is **-0.0044 at 0.19x MDE on the built chain**; and an
+arbitrary 7-bit index over the same candidate set **beats** the prefix axis on the endpoint.
+
 ### 5c. OPEN, AND OWNED
 
 The **cloud-to-chain price on this rung is +0.1422** (2.7605 cloud, 2.9027 chain), and S29-L30's
