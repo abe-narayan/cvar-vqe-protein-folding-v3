@@ -301,6 +301,61 @@ def main():
                                      (DISP <= np.quantile(DISP, (q + 1) / 3.0))).sum()))
                          for q in range(3)])
 
+    # ---------------------------------------------------------------- AVG_SEP: mechanism + risks
+    d_SA = ch_S - ch_A
+    def worst18_(v):
+        m = np.zeros(len(R), bool); m[np.argsort(-v)[:18]] = True; return m
+    pool_mean0, pool_best0 = col(R, "pool_mean"), col(R, "pool_best")
+    tails0 = {"T_POOL_worst18_by_pool_mean": worst18_(pool_mean0),
+              "T_BEST_worst18_by_pool_best": worst18_(pool_best0),
+              "T_CHAIN_worst18_by_production_chain": worst18_(ch_A),
+              "FAIL18_DIAGNOSTIC_ONLY": np.array([r["fail18"] for r in R], bool)}
+    out["AVG_SEP_mechanism"] = dict(
+        basis="BUILT CHAIN, paired, n=126",
+        registered_prediction="if the separation-band story is right the gain must CONCENTRATE on "
+                              "high-dispersion targets, because averaging's distortion scales with "
+                              "spread (rho(DISP, contraction) = +0.947). A FLAT profile in "
+                              "dispersion refutes the mechanism even if the number is good.",
+        full_paired_distribution=dict(
+            mean=float(d_SA.mean()), median=float(np.median(d_SA)), sd=float(d_SA.std(ddof=1)),
+            W=int((d_SA < 0).sum()), L=int((d_SA > 0).sum()),
+            worst_degradation=float(d_SA.max()),
+            worst_target=names[int(np.argmax(d_SA))],
+            best_improvement=float(d_SA.min()),
+            best_target=names[int(np.argmin(d_SA))],
+            p10=float(np.percentile(d_SA, 10)), p90=float(np.percentile(d_SA, 90))),
+        by_DISP_half=two_group(d_SA, folds, hi, "AVG_SEP.hi-minus-lo DISP of chain(SEP)-chain(AVG)"),
+        mean_hi=float(d_SA[hi].mean()), mean_lo=float(d_SA[~hi].mean()),
+        rho_DISP_vs_dSA=spearman(DISP, d_SA),
+        rho_MOVE_vs_dSA=spearman(MOVE_A, d_SA),
+        by_tail={k: dict(tail_mean=float(d_SA[m].mean()), rest_mean=float(d_SA[~m].mean()),
+                         n_tail=int(m.sum()),
+                         CAVEAT=("FAIL18 is defined by the filter's own recall "
+                                 "(s12/instrument.py:271-278) and cannot measure it; diagnostic "
+                                 "cross-check only" if k.startswith("FAIL18") else None))
+                 for k, m in tails0.items()},
+        coherence_cross_check=dict(
+            source="s31/results/s31_F_coh.json",
+            note="ORACLE / NOT DEPLOYABLE: coh(AVG_SEP) = 0.9689 against AVG's 0.9780 and the "
+                 "0.6931 bar, 0/126 targets under the bar, and the direct affine-hull residual is "
+                 "0.045 A RMS per coordinate. AVG_SEP does NOT leave the pool's affine hull, so "
+                 "any endpoint gain it shows is NOT explained by lane B's non-affine mechanism."))
+    out["physical_validity"] = dict(
+        virtual_bond_A_from_the_separation_profile=dict(
+            native=float(np.mean([r["prof_nat"][0] for r in R])),
+            members=float(np.mean([r["prof_members"][0] for r in R])),
+            cloud_AVG=float(np.mean([r["prof_cloud_AVG"][0] for r in R])),
+            cloud_MED=float(np.mean([r["prof_cloud_MED"][0] for r in R])),
+            cloud_AVG_SEP=float(np.mean([r["prof_cloud_AVG_SEP"][0] for r in R])),
+            chain_AVG=float(np.mean([r["prof_chain_AVG"][0] for r in R])),
+            chain_MED=float(np.mean([r["prof_chain_MED"][0] for r in R])),
+            chain_AVG_SEP=float(np.mean([r["prof_chain_AVG_SEP"][0] for r in R]))),
+        note="every CHAIN arm is the output of stage 3b, which is parameterised by (phi, psi) on "
+             "IDEAL peptide geometry -- so peptide bond geometry, chirality and continuity are "
+             "guaranteed BY CONSTRUCTION for all arms, and the virtual-bond column is the check "
+             "that the builder was actually used. The CLOUD arms are NOT structures and their "
+             "virtual bond says so; that is the point, not a defect.")
+
     # ---------------------------------------------------------------- F1: geometry vs accuracy
     rg_nat = col(R, "rg_nat")
     bA = np.array([r["bond_cloud_AVG"][0] for r in R]); bAs = np.array([r["bond_cloud_AVG"][1] for r in R])
@@ -460,7 +515,8 @@ def main():
         json.dump(out, fh, indent=1, default=float)
     print(json.dumps({k: out[k] for k in ("reproduction", "S2_theorem", "S2_precheck",
                                           "F1_operators", "F1_gates", "F1_gate_variables",
-                                          "F1_mechanism", "F1_geometry_vs_accuracy",
+                                          "F1_mechanism", "AVG_SEP_mechanism",
+                                          "physical_validity", "F1_geometry_vs_accuracy",
                                           "MECH_separation_band", "multiplicity")},
                      indent=1, default=float))
     print("\nwrote", OUT)

@@ -236,9 +236,18 @@ def row_for(pdb, verbose=True):
     r_h, _Xh, wh = O29.oracle_hull(Wf, nat, n, support=np.asarray(idx, int))
     wh_full = np.zeros(TOP); wh_full[:] = np.asarray(wh, float)
     r_h = float(I.ca_rmsd(emit(Wt, wh_full, n), nat))
-    wc = wc if r_f <= r_h else wh_full
+    #: DEFECT FOUND IN SELF-AUDIT AND FIXED: on 4 of 126 targets (1ID6, 2BP4, 2NDM, 9L1M -- three
+    #: of them FAIL18, i.e. the ill-conditioned sets) both iterative solvers returned a point
+    #: WORSE than the best simplex VERTEX, which is feasible, so the returned value could not have
+    #: been the convex optimum.  The vertex is now a third candidate and the bound is ASSERTED.
+    #: Effect on the aggregate: 1.8008 -> 1.7977 A, i.e. the original figure was conservative.
+    wv = np.eye(TOP)[int(np.argmin(rr[idx]))]
+    r_v = float(rr[idx].min())
+    cands = [(r_f, wc, "fista"), (r_h, wh_full, "hull"), (r_v, wv, "vertex")]
+    r_best, wc, solver = min(cands, key=lambda t: t[0])
+    assert r_best <= r_v + 1e-9, "convex optimum worse than a feasible vertex"
     put("ORACLE_convex128", wc, True,
-        dict(solver="fista" if r_f <= r_h else "hull", rmsd_fista=r_f, rmsd_hull=r_h))
+        dict(solver=solver, rmsd_fista=r_f, rmsd_hull=r_h, rmsd_vertex=r_v))
     wa = oracle_affine(A, natp, ones)
     put("ORACLE_affine128", wa, True)
     for lam in LAM:

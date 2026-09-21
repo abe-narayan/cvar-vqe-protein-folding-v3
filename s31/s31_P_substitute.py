@@ -302,13 +302,85 @@ def target_row(pdb, verbose=True):
 
 
 # ============================================================ rows io
+A2_ROWS = os.path.join(RESULTS, "s31_P_a2_rows.jsonl")
+
+
+def a2_row(pdb, verbose=True):
+    """ARM A2 -- THE CODE-PATH CONTROL, and it is not optional.
+
+    Arm A is `I.coordinate_average(W[top75])` (the stored canonical cloud).  Arms D/E/F are
+    `core.pipeline.average_weighted(...)`.  With UNIFORM weights on the SAME top-75 those two
+    are the same operator -- superpose on the medoid, take the mean -- but they are DIFFERENT
+    IMPLEMENTATIONS (`s12.instrument.superpose_batch` vs `s8.consensus2.superpose_batch`) and
+    they agree only to ~1e-14.  S31-L4 measured that a 1e-14 relative cloud perturbation moved
+    one target's built chain by 0.511 A, amplification ~1e13.
+
+    So `F - A` and `D - A` contain an unknown amount of pure implementation noise, and without
+    this control I could not tell that from a result.  A2 is `average_weighted` with uniform
+    weights on the top-75: same set as A, same weights as A, other implementation.  `A2 - A`
+    IS the code-path noise on the built chain, measured rather than assumed, and `F - A2` is
+    then the clean top-75 -> top-128 widening effect with both sides on one implementation.
+    """
+    global _SFM
+    if _SFM is None:
+        _SFM = seq_fold_map()
+    t0 = time.time()
+    seq, fold, n = _SFM[pdb]
+    z = CA.load(pdb)
+    W = np.asarray(z["W"], float)
+    top = np.sort(np.asarray(z["top75"], int))
+    nat = np.asarray(I.load_univ(pdb)["nat_ca"], float)   # ORACLE, scoring only
+    P75 = I.pairwise_rmsd(W[top])
+    C1, _b = I.coordinate_average(W[top], P75)
+    C2 = PL.average_weighted(W[top], P75, np.ones(len(top)), PL.Clock())
+    with np.load(os.path.join(STRUCTS, "%s.npz" % pdb), allow_pickle=True) as zs:
+        C0 = np.asarray(zs["prod"], float)
+    pr = I.project(C2, seq, fold)
+    row = dict(pdb=pdb, n=n, fold=fold,
+               cloud_dev_A2_vs_A=float(np.abs(C2 - C0).max()),
+               cloud_dev_recomputed_vs_stored=float(np.abs(C1 - C0).max()),
+               cloud_A2=_oracle_rmsd(C2, nat),                 # ORACLE
+               chain_A2=_oracle_rmsd(pr["ca"], nat),           # ORACLE
+               secs=time.time() - t0)
+    if verbose:
+        print("  %s A2 chain %.4f  cloud dev vs A %.3e (%.1fs)"
+              % (pdb, row["chain_A2"], row["cloud_dev_A2_vs_A"], row["secs"]), flush=True)
+    return row
+
+
 def rows_path(shard=None):
     return ROWS if shard is None else ROWS.replace(".jsonl", ".s%d.jsonl" % int(shard))
+
+
+def read_a2():
+    out = {}
+    for f in sorted(glob.glob(A2_ROWS.replace(".jsonl", "*.jsonl"))):
+        with open(f) as fh:
+            for line in fh:
+                if line.strip():
+                    r = json.loads(line)
+                    out[r["pdb"]] = r
+    return out
+
+
+def phase_a2(pdbs, shard=None, n_shards=1):
+    done = read_a2()
+    if shard is not None:
+        pdbs = [p for k, p in enumerate(pdbs) if k % int(n_shards) == int(shard)]
+    todo = [p for p in pdbs if p not in done]
+    path = A2_ROWS if shard is None else A2_ROWS.replace(".jsonl", ".s%d.jsonl" % int(shard))
+    print("a2 shard %s/%s: %d to do -> %s" % (shard, n_shards, len(todo),
+                                              os.path.basename(path)), flush=True)
+    for p in todo:
+        append_row(path, a2_row(p))
+    print("a2 rows:", path)
 
 
 def read_rows():
     out = {}
     for f in sorted(glob.glob(ROWS.replace(".jsonl", "*.jsonl"))):
+        if "_a2_" in f:
+            continue
         with open(f) as fh:
             for line in fh:
                 line = line.strip()
@@ -466,6 +538,28 @@ def phase_analyse(write=True):
         secs_vqe_mean=float(G("secs_vqe").mean()),
         secs_star_mean=float(G("secs_star").mean()),
     )
+    #: per-alpha breakdown.  Lane L's L1.1 verified the closed form at T = 0.1 and T = 0.05;
+    #: the DEPLOYED T is 0.3 for every fold (`core/pipeline.py:113`), so none of its 12 cells
+    #: is at the deployed temperature.  This block is here because the entropy ordering is
+    #: NOT the same at T = 0.3 as in L1.1's table, and the difference is alpha-dependent.
+    al = G("alpha")
+    cert["by_alpha"] = {}
+    for a_val in sorted(set(al.tolist())):
+        m = al == a_val
+        cert["by_alpha"]["%.2f" % a_val] = dict(
+            n=int(m.sum()),
+            folds=sorted(set(G("fold")[m].astype(int).tolist())),
+            H_star_bits=float(G("H_star_bits")[m].mean()),
+            H_vqe_bits=float(G("H_vqe_bits")[m].mean()),
+            ess_star=float(G("ess_star")[m].mean()), ess_vqe=float(G("ess_vqe")[m].mean()),
+            tv_star_vqe=float(G("tv_star_vqe")[m].mean()),
+            tv_star_unif=float(G("tv_star_unif")[m].mean()),
+            tv_vqe_unif=float(G("tv_vqe_unif")[m].mean()),
+            F_gap=float(G("F_gap_vqe_minus_star")[m].mean()),
+            n_disagree=int(sum(bool(rows[p]["disagree"]) for p, k in zip(pdbs, m) if k)),
+            chain_A=float(chain["A"][m].mean()), chain_D=float(chain["D"][m].mean()),
+            chain_E=float(chain["E"][m].mean()), chain_F=float(chain["F"][m].mean()))
+
     # arm A reproduction of the canonical endpoint
     can = _canon_prod()
     a_can = np.array([can[p] for p in pdbs], float)
@@ -507,6 +601,29 @@ def phase_analyse(write=True):
                     n_zero=int((ad == 0.0).sum()),
                     n_above_chain_floor=int((ad > CHAIN_FLOOR).sum()),
                     rms=float(np.sqrt((ad ** 2).mean())))
+
+    #: ARM A2, the code-path control.  Present only after `phase_a2` has run; if it is
+    #: missing the lane says so rather than silently dropping the control.
+    a2 = read_a2()
+    have_a2 = all(p in a2 for p in pdbs)
+    if have_a2:
+        chain["A2"] = np.array([a2[p]["chain_A2"] for p in pdbs], float)
+        cloud["A2"] = np.array([a2[p]["cloud_A2"] for p in pdbs], float)
+        table["A2"] = dict(chain_mean=float(chain["A2"].mean()),
+                           chain_se=float(chain["A2"].std(ddof=1) / math.sqrt(len(pdbs))),
+                           chain_median=float(np.median(chain["A2"])),
+                           cloud_mean=float(cloud["A2"].mean()))
+        cert["a2_max_cloud_dev_vs_A"] = float(max(a2[p]["cloud_dev_A2_vs_A"] for p in pdbs))
+        CMP = CMP + [("X1_A2_minus_A", "A2", "A",
+                      "CODE-PATH CONTROL: average_weighted(uniform, top-75) vs "
+                      "coordinate_average(top-75) -- the SAME operator, two implementations "
+                      "agreeing to ~1e-14, through a projection that amplifies ~1e13 "
+                      "(BUILT CHAIN)"),
+                     ("X2_F_minus_A2", "F", "A2",
+                      "top-75 -> top-128 widening, both sides on the SAME implementation "
+                      "(BUILT CHAIN)")]
+    else:
+        cert["a2_present"] = False
 
     comps = {}
     for key, a, b, lab in CMP:
@@ -570,6 +687,17 @@ def render(out):
     L.append("  worst per-target reprojection deviation %.4f A, %d targets above the %.4f A floor"
              % (c["armA_max_abs_dev_per_target"], c["armA_n_moved_over_floor"], CHAIN_FLOOR))
     L.append("")
+    L.append("BY ALPHA (the DEPLOYED T is 0.3 on every fold; L1.1's 12 cells were at T=0.1/0.05,")
+    L.append("so none of them is at the deployed temperature -- and the entropy ORDERING differs)")
+    for a_val, v in sorted(c["by_alpha"].items()):
+        L.append("  alpha=%s folds %s n=%d | H* %.2f vs H_vqe %.2f bits | ESS %.1f vs %.1f | "
+                 "TV(p*,vqe) %.3f | TV to unif: p* %.3f vqe %.3f | Fgap %+.4f | medoid DIFF %d/%d"
+                 % (a_val, v["folds"], v["n"], v["H_star_bits"], v["H_vqe_bits"],
+                    v["ess_star"], v["ess_vqe"], v["tv_star_vqe"], v["tv_star_unif"],
+                    v["tv_vqe_unif"], v["F_gap"], v["n_disagree"], v["n"]))
+        L.append("            chain A %.4f  D %.4f  E %.4f  F %.4f"
+                 % (v["chain_A"], v["chain_D"], v["chain_E"], v["chain_F"]))
+    L.append("")
     L.append("THE DISAGREEMENT COUNT (lane L's caveat)")
     L.append("  consensus_medoid(block, p*) != consensus_medoid(block, p_vqe) on %d / %d targets"
              % (c["n_disagree"], n))
@@ -580,8 +708,9 @@ def render(out):
              "C": "C  ON, p*,      SELECTION readout  ",
              "D": "D  ON, VQE p,   CONVEX readout     ",
              "E": "E  ON, p*,      CONVEX readout     ",
-             "F": "F  ON, uniform, CONVEX readout     "}
-    for a in ARMS:
+             "F": "F  ON, uniform, CONVEX readout     ",
+             "A2": "A2 code-path control (unif top-75)"}
+    for a in (ARMS + ("A2",) if "A2" in tb else ARMS):
         L.append("  %s %.4f +- %.4f   median %.4f   [cloud %.4f]"
                  % (names[a], tb[a]["chain_mean"], tb[a]["chain_se"], tb[a]["chain_median"],
                     tb[a]["cloud_mean"]))
@@ -592,10 +721,13 @@ def render(out):
                 "NOT MEASURED" if abs(v["effect_over_mde"]) < 1.0 else "MEASURED")
         if v["below_chain_floor"]:
             gate += " / BELOW CHAIN FLOOR"
-        ci = v.get("ci95_fold", [float("nan")] * 2)
+        ci = v.get("ci95_fold") or [float("nan")] * 2
         L.append("  %-14s %+.4f A  SE %.4f  MDE %.4f  %.2fx  %dW/%dL/%dT  fold CI [%+.4f, %+.4f]  %s"
                  % (k, v["effect"], v["se"], v["mde"], abs(v["effect_over_mde"]),
                     v["n_better"], v["n_worse"], v["n_tied"], ci[0], ci[1], gate))
+        L.append("                 median %+.4f   %d/%d folds same sign   verdict: %s"
+                 % (v["median_effect"], v.get("n_folds", 0) and v["folds_same_sign"],
+                    v.get("n_folds", 0), v["verdict"]))
     L.append("")
     L.append("PER-TARGET |DELTA| DISTRIBUTION (AMENDMENT 1: a null mean with a wide spread is")
     L.append("NOT 'no effect' -- it is 'the answer changes on most targets and cancels')")
@@ -620,7 +752,7 @@ def render(out):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("phase", choices=["check", "run", "analyse"])
+    ap.add_argument("phase", choices=["check", "run", "a2", "analyse"])
     ap.add_argument("--shard", type=int, default=None)
     ap.add_argument("--n-shards", type=int, default=1)
     ap.add_argument("--limit", type=int, default=0)
@@ -639,7 +771,10 @@ def main():
         pdbs = [p for p in pdbs if p in want]
     if a.limit:
         pdbs = pdbs[:a.limit]
-    phase_run(pdbs, a.shard, a.n_shards)
+    if a.phase == "a2":
+        phase_a2(pdbs, a.shard, a.n_shards)
+    else:
+        phase_run(pdbs, a.shard, a.n_shards)
 
 
 if __name__ == "__main__":

@@ -2267,3 +2267,110 @@ at 0.005) and is **two orders of magnitude short in size.**
 5 fold-clustered contrasts for F-C2a; 1 grid maximum priced two ways. **Read as results: F-C2a,
 F-C2b, F-C2c and the Gray no-op -- 4.** The 72-cell grid is never quoted without its
 order-statistic price.
+
+---
+
+## S31-L16 -- **CROSS-LANE AUDIT, RUN AHEAD OF THE REQUEST BECAUSE CROSS-LANE SYNTHESIS IS WHERE THIS SPRINT'S ERRORS LIVE (4/4).** LANE C's ENTRY IS CLEAN AND SELF-GUARDED; THE RISK IS ENTIRELY IN RE-QUOTATION -- **A BROKEN CROSS-REFERENCE, A LEVER COMPARISON AT UNEQUAL INFORMATION COST, FIVE DIFFERENT "WORST 18" STRATA, AND A WIDENING WHOSE DEPLOYABLE SIGN IS PREDICTED *NEGATIVE* RATHER THAN NEUTRAL** (2026-09-21 00:24, L)
+
+The coordinator reports his cross-lane syntheses are **4 for 4** on carrying the sprint's errors
+(this lane's two, plus lane C's falsification of his R1 quantifier, lane B's correction to his
+sweep reading, and lane A's catch of his wrong-operator deficit). **That is a measurement, and the
+implication is that cross-lane claims need the same adversary single-lane claims get.** Serving the
+standing request now rather than at report time, because a synthesis is cheapest to kill before it
+is written down. Working: `s31/LIT_L.md` §L3.2.
+
+### FIRST, THE PART THAT IS NOT A FAULT
+
+**Lane C's S31-L5 is among the best-disciplined entries in the sprint** and I want that on the
+record, because an auditor who only ever finds faults is useless. It labels **every number ORACLE
+AND NOT DEPLOYABLE** in its own heading block; it found its circularity was a **literal identity**
+(`defn18 INTERSECT FAIL18 = 18 of 18`) and withdrew the published -1.9004 as a near-tautology; it
+carries a **level control** showing only -0.196 A of the clean tail's -1.181 A survives the
+`best1(128)` level; it **self-caught a sign error** before any number left the lane; and its
+"WHAT THIS DOES AND DOES NOT LICENCE" section says in its own words *"It does not say two more
+qubits are worth 1.18 A... Widening only pays if a selector exists, and recognition is closed."*
+**Nothing below is a criticism of the lane's own work.** All four items are re-quotation hazards.
+
+### 1. A BROKEN CROSS-REFERENCE -- `ledger-numbers-collide-under-parallel-lanes`, FOURTH INSTANCE
+
+S31-L5 says the result *"composes with the set-matched readout ladder (**S31-L6, next**)."*
+**S31-L6 is lane D's projection-conditioning defect entry.** I checked: it contains neither
+`1.8538`, nor `2.1435`, nor a readout ladder. Lane C reserved the next number in prose and lane D
+took it first -- the same read-modify-write with no lock that collided three times in S30. A reader
+following the pointer lands on an unrelated entry.
+
+**The numbers are also not S31 lane work.** `1.8538` and `2.1435` originate in **S29**
+(`s29/LEDGER.md:4170`), so the sentence re-quotes a two-sprint-old ORACLE ladder in a voice that
+reads as this sprint's finding. Fix the pointer to the S29 origin, not to any S31 number.
+
+### 2. THE LEVER COMPARISON IS MADE AT UNEQUAL INFORMATION COST -- AND S30 ALREADY NAMED THIS ERROR
+
+S31-L5 concludes: *"the convex readout over the same 128 reaches 1.8538 A ... where the argmin over
+those 128 reaches 2.1435, so the register width and the readout class are separable levers and
+**the second one is larger** at the deployed width."*
+
+The two ceilings do not cost the same:
+
+```
+best1_top128 = 2.1435   ORACLE argmin      -- costs 7 BITS (naming one of 128)
+hull_top128  = 1.8538   ORACLE CONVEX weights over 128 -- costs 128 REAL NUMBERS, unbounded bits
+```
+
+S29 labels that rung **`[EXPRESSIVENESS]`** with **free weights** (`s29/LEDGER.md:4249`), and lane
+F's own S31 line states it correctly: *"hull_top128 -- ORACLE CONVEX weights over the 128."* The
+0.290 A is bought with unbounded oracle real numbers, so **"larger lever" is not established --
+only "larger ceiling at unpriced cost."**
+
+**S30 §9.4 already identified exactly this comparison as the project's characteristic error**: 2
+members with ORACLE *weights* reach 1.4315 A against 75 with ORACLE *membership* at 2.3055, while
+choosing 2 of 500 costs ~17.9 bits against 7 for the top-128 argmin -- from which S30 drew
+*"solving the set problem better is worth nothing; what is scarce is the information needed to
+SPECIFY a good set."* **Any lever comparison in this project must carry its bit cost in the same
+sentence as its Angstroms.**
+
+### 3. THE WIDENING'S DEPLOYABLE SIGN IS PREDICTED **NEGATIVE**, NOT NEUTRAL
+
+Lane C's caveat is *"widening only pays if a selector exists."* Three facts compose to something
+sharper, and no single lane holds all three:
+
+1. **Lane C's own rank diagnostic is the strongest anti-deployment evidence in its entry, and is
+   not flagged as such.** FAIL18's ORACLE-best member sits below rank 128 with frequency **1.000**
+   against an uninformative null of **0.744** -- the score is **worse than uninformative** on
+   exactly the targets widening is meant to help.
+2. **My S31-L4 / §L1.4 gradient law**: widening 128 -> 512 costs **4x in gradient variance**
+   (`Var ~ 16/D = 16*2^(-n)`; n=7 -> 0.125, n=9 -> 0.031). Widening *degrades the very selector it
+   would require.*
+3. **`operator-consumes-set-mean`** (`d_out = 1.16*d_set_mean + 0.04*d_set_best`, R2 0.89):
+   admitting 384 more candidates to a set whose selector cannot order them **raises the set mean**,
+   which the terminal operator consumes at coefficient 1.16.
+
+> **Prediction, falsifiable and cheap: a DEPLOYABLE 128 -> 512 arm should come out WORSE than
+> production, not merely flat.** That is a stronger and more useful statement than "it does not
+> pay," and it should be measured before anyone widens anything. **Caveat that cuts the other way:
+> my gradient law is measured at n=7-9 where we are NOT yet gradient-limited (§L1.4), so item 2 is
+> a bound on the direction, not a quantified Angstrom cost.**
+
+### 4. FIVE DIFFERENT "WORST 18" STRATA ARE NOW IN PLAY, WITH MATERIALLY DIFFERENT NUMBERS
+
+This is the quotation hazard most likely to fire, because all five are called *"the worst 18"* in
+prose somewhere:
+
+```
+stratum                          defined by                          a headline number
+FAIL18                           the filter's own recall             best1_500 = 2.2842
+defn18                           top-18 by best1(75)-best1(500)      = FAIL18, 18 of 18 (identity)
+worst18_poolmean                 pool mean                           best1_500 = 2.2286  <- lane C's headline
+worst18_bestpool                 best pool member                    best1_500 = 3.0930
+"the genuinely worst 18" (S31-L0) charter's arithmetic                ORACLE best pool member 2.5298
+worst 18 by production RMSD (L)  production endpoint                 mean RMSD 6.0291 (n=111 matched)
+```
+
+`worst18_bestpool` at **3.0930** and `FAIL18` at **2.2842** differ by **0.81 A** on the same-named
+quantity. **Every "worst 18" number must name its stratum in the same sentence**, exactly as ORACLE
+labels must (S31-L0's own rule). I recommend the report carry this table once, as a key.
+
+### WHAT I AM *NOT* CLAIMING
+
+I have not re-run lane C's arms and am not disputing a single number in S31-L5. Items 1 and 4 are
+bookkeeping defects; item 2 is a framing defect with a named precedent; item 3 is a **prediction**,
+not a measurement, and is labelled as one.

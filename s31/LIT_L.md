@@ -585,4 +585,62 @@ charter's basis discipline says not to transfer across bases silently.
 
 ---
 
+
+---
+
+## L3.2 — CROSS-LANE AUDIT: THE SYNTHESES ARE WHERE THE ERRORS ARE, AND THAT IS NOW MEASURED
+
+Full entry: **ledger S31-L16**. Summary and the durable lesson here.
+
+### The measurement that justifies auditing syntheses specifically
+
+The coordinator reports his cross-lane syntheses at **4 for 4** on carrying the sprint's
+errors: this lane killed two (the "measurement not computation" conclusion, and the 2.9027
+"lead" framing), lane C falsified his R1 quantifier, lane B corrected his sweep reading, and
+lane A caught his wrong-operator deficit. **Every single-lane result held; every cross-lane
+synthesis failed.**
+
+That is not a coincidence and the mechanism is plain: **a single-lane claim is audited by the
+lane that owns the data; a cross-lane claim is audited by nobody, because each contributing
+lane sees only its own half and assumes the other half was checked.** The synthesis inherits
+both lanes' caveats and carries neither.
+
+> **Durable rule: a claim that combines two lanes' numbers needs a named owner who holds both,
+> and it must carry both caveats in the sentence that carries the number.** Cheapest to apply
+> before the synthesis is written down, which is why I ran this ahead of the request.
+
+### What the audit found (lane C's S31-L5 as the test case)
+
+**Lane C's entry is among the best-disciplined in the sprint** — every number labelled ORACLE
+and NOT DEPLOYABLE, the circularity found to be a *literal identity* and the published
+−1.9004 Å withdrawn as a near-tautology, a level control, a self-caught sign error, and an
+explicit "WHAT THIS DOES AND DOES NOT LICENCE" section. **None of the four findings is a
+criticism of the lane's own work — all four are re-quotation hazards.**
+
+1. **Broken cross-reference.** S31-L5 points at *"the set-matched readout ladder (S31-L6,
+   next)"*; S31-L6 is lane D's projection-conditioning entry and contains neither `1.8538`
+   nor `2.1435` nor a readout ladder. Lane C reserved the next number in prose, lane D took
+   it first — `ledger-numbers-collide-under-parallel-lanes`, fourth instance. The numbers are
+   also **S29's**, not S31's.
+2. **A lever comparison at unequal information cost.** `best1_top128 = 2.1435` costs **7
+   bits**; `hull_top128 = 1.8538` costs **128 real numbers** (S29 labels the rung
+   `[EXPRESSIVENESS]`, free weights). Calling the readout "the larger lever" without pricing
+   the bits is the error **S30 §9.4 already named** — *"solving the set problem better is
+   worth nothing; what is scarce is the information needed to SPECIFY a good set."* **Every
+   lever comparison must carry its bit cost in the same sentence as its Ångströms.**
+3. **The widening's deployable sign is predicted NEGATIVE, not neutral** — and no single lane
+   holds all three facts. Lane C's own rank diagnostic (FAIL18 below rank 128 at frequency
+   **1.000** against a **0.744** uninformative null: the score is *worse than uninformative*
+   there) + my §L1.4 gradient law (**4× variance cost** 128→512, so widening degrades the
+   selector it requires) + `operator-consumes-set-mean` (coefficient **1.16** on the set mean,
+   and 384 more unorderable candidates raise it). *Caveat that cuts the other way: §L1.4 also
+   says we are not yet gradient-limited at n=7–9, so the gradient term bounds the direction
+   without quantifying the Ångströms.* **This is a prediction, labelled as one.**
+4. **Five "worst 18" strata** are now in play, all called "the worst 18" in prose somewhere,
+   with `worst18_bestpool` (3.0930) and `FAIL18` (2.2842) differing by **0.81 Å** on the
+   same-named quantity. **Recommend the report carry the stratum key once**, and that every
+   "worst 18" number name its stratum in the same sentence — the same rule ORACLE labels obey.
+
+---
+
 *(file continues; entries appended as the sprint runs)*
