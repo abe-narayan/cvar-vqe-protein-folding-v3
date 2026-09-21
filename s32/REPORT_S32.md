@@ -519,12 +519,11 @@ retrieval defect; it does not create one.**
 
 ### 5.3 Scalar dilation is closed in both calibrations, and it reconciles two long-quoted numbers
 
-> **⚠ PROVENANCE PENDING — do not finalise this section until it clears.** Lane V's AUDIT 11
-> finds `s32_R_dilation_cloud.json` and `s32_R_dilation_rg_cloud.json` have **no provenance block and
-> no script in the repository that writes them**. These are two RESULT-grade endpoint numbers and a
-> registered falsification that **nobody can currently re-run**. The 22.15% / 5.40% reconciliation
-> below is a genuinely valuable output and must not rest on an artefact with no producer. *Lane D hit
-> the same defect on D1-T and fixed it by committing the producing script; this needs the same.*
+> **✓ PROVENANCE CLEARED.** `s32/s32_R_dilation.py` is committed at `63608f9d` with
+> `ST.provenance(__file__)` and the grid pinned in source; **both artefacts were re-emitted
+> and every number reproduced exactly.** *It should not have rested on a heredoc — and the
+> audit that caught it, asking whether any `.py` actually WRITES the filename, catches a
+> failure mode that prose-level checks miss entirely.*
 
 Registered P1.3, **falsified by its own falsifier**: dilating the cloud to ideal virtual-bond length
 is **WORSE by +1.0425 at 2.79x MDE, 5/5 folds**; the better-motivated Rg-matched dilation is also
@@ -544,51 +543,57 @@ solutions *"one Ramachandran-plausible and one not"*, with the reference disagre
 up to 1.6 A; every native-free ranker this project has tested is a distance-map function and
 therefore **achiral** by theorem G1; **so a chiral criterion should be able to pick the branch where
 an achiral one provably cannot.** Lane V tested it as a deployable argmin arm, chain basis, paired
-in the same job, tie-averaged, independently of lane R (n = 103 at the time of writing; production
-in that job is **3.1865** over the subset, and every arm is paired to *it*):
+in the same job, tie-averaged, independently of lane R (n = 126; **production in that job is exactly 3.2105**, so these arms sit on the canonical realisation):
 
 ```
-ORACLE best branch                    3.0768   -0.1097 vs production   ORACLE / NOT DEPLOYABLE
-  SPLIT-HALF TRANSFER                          -0.0051  =  5.0% of the oracle  ->  NOT A SIGNAL
-random branch, 300 draws              3.1914   +0.0049  (draw sd 0.0079)
+branches/target 204.4;  distinct at 1e-3 A 153.3 (74%);  within-cluster spread median 0.00e+00
+
+ORACLE best branch                    3.0927   -0.1178 vs production   ORACLE / NOT DEPLOYABLE
+  SPLIT-HALF TRANSFER                          -0.0037  =  3.3% of the oracle  ->  NOT A SIGNAL
+random branch, 300 draws              3.2146   +0.0041 +- 0.0076
+PRODUCTION (lane R, in job)           3.2105   -- exactly the canonical value
 ```
 
 > ### Production's multi-start argmin is worth 0.005 A over picking a branch with a coin. Any branch-selection rule is competing for 0.11 A of oracle headroom against an incumbent that is 0.005 A better than random — and **95% of that 0.11 A is an order statistic that does not survive a split half.**
 
 And the sixteen native-free criteria, tested in **BOTH DIRECTIONS** on the full branch set and on
-production's own four starts — **64 comparisons**. *Testing one direction only would have been an
-unregistered choice that halves the apparent multiplicity, and it is what produced the inverted
-gloss an earlier draft of this section carried.* (n = 123; production in-job 3.2198.)
+production's own four starts — **64 comparisons, n = 126, paired in-job.** *Testing one direction only
+would have been an unregistered choice that halves the apparent multiplicity, and it is what produced
+the inverted gloss an earlier draft of this section carried.* **Lane R's in-job production is exactly
+3.2105** — it projects the canonical input — so these arms sit on the canonical realisation.
 
 ```
-                 ARGMIN (best-looking)            ARGMAX (worst-looking)
-d_to_C        -0.0082  0.51x  not a result     +0.3417  2.62x  RESULT (worse)
-rg            -0.0037  0.12x  not a result     +0.3371  2.82x  RESULT (worse)
-typicality    -0.0038  0.20x  not a result     +0.3406  2.61x  RESULT (worse)
-obj1          -0.0058  0.30x  not a result     +0.3503  2.72x  RESULT (worse)
-rama_nlp      -0.0031  0.16x  not a result     +0.2908  2.31x  RESULT (worse)
-legacy        +0.0079  0.30x  not a result     +0.2887  2.30x  RESULT (worse)
-disto_risk    +0.0577  1.12x  RESULT (worse)   +0.2986  2.36x  RESULT (worse)
-ramah         +0.0009  0.04x  not a result     +0.1731  1.91x  RESULT (worse)
+                 ARGMIN (best-looking)             ARGMAX (worst-looking)
+d_to_C        -0.0091  0.57x  not a result     +0.3324  2.59x  RESULT (worse)  34W/92L
+obj1          -0.0068  0.35x  not a result     +0.3408  2.69x  RESULT (worse)  30W/96L
+rg            -0.0011  0.04x  not a result     +0.3261  2.76x  RESULT (worse)  30W/95L
+typicality    -0.0054  0.29x  not a result     +0.3314  2.58x  RESULT (worse)  35W/91L
+rama_nlp      -0.0037  0.20x  not a result     +0.2829  2.28x  RESULT (worse)  38W/88L
+legacy        +0.0055  0.21x  not a result     +0.2813  2.29x  RESULT (worse)
+ramah         -0.0004  0.02x  not a result     +0.1672  1.88x  RESULT (worse)
+disto_risk    +0.0571  1.13x  RESULT (worse)   +0.2923  2.36x  RESULT (worse)
+disto_mae     +0.0549  1.03x  RESULT (worse)   +0.2715  2.18x  RESULT (worse)
+vbond_mean/sd +0.0041 == max   DEGENERATE: 204 of 204 branches tied (ideal geometry makes these constant)
 ```
 
-> ### Every criterion's ARGMAX is a large, 5/5-fold, 2–3× MDE RESULT in the WORSE direction, and every criterion's ARGMIN is nothing. **The criteria carry real information about branch quality — they reliably identify disasters — and none of it converts into finding a winner.**
+> ### Every criterion identifies the WORST branch at 1.9–2.8× MDE with 5/5 folds. Not one identifies a BETTER branch than production already picks. **This is the third time in the sprint that exact asymmetry appears** — after the score prefix and after consensus. *Native-free observables have real skill at avoiding disasters and none at finding winners.*
 
-**And the compute-matched control kills even that.** On **GEN4-only** — production's own four starts —
-**nothing is a RESULT in either direction**; the largest is 0.46×. *So the big ARGMAX effects are a
-property of having ~200 branches to find a bad one among, not of the criteria. Production's four
-starts contain no branch bad enough for any criterion to be punished by.*
+**And the compute-matched control removes even the asymmetry.** On **GEN4-only** — production's own
+four starts — **nothing is a result in either direction**, largest 0.46×. *Production's four starts
+contain no branch bad enough for any criterion to be punished for. The large ARGMAX effects are a
+property of having ~200 branches to find a bad one among, not of the criteria.*
 
-**The chiral Ramachandran criterion the lane was opened for is −0.0031 at 0.16×.**
+**The chiral Ramachandran criterion this lane was opened for lands at 0.20×.**
 
-**The search, accounted** (baseline **production**, not the grid mean — see the note on
-`split_half_transfer` in Appendix C): choosing the criterion out of sample is worth **+0.0028 Å, CI
-[−0.0054, +0.0128]** — *a CI centred on zero.* The ORACLE per-target best criterion is −0.0983 and
-the best single arm is 0.51× its own nominal MDE.
+**An independent confirmation arriving from a different stage:** `disto_risk` and `disto_mae` ARGMIN
+are **RESULTs at 1.03–1.13× in the WORSE direction** — *picking the branch the distogram likes best is
+measurably worse than production's objective argmin.* That is §2's finding about the deployed score,
+reproduced at the reconstruction stage by a job not looking for it.
 
-**Honest comparison count: ~60, not 64.** `vbond_mean` and `vbond_sd` are **degenerate by
-construction** — every branch has ideal geometry, so 203 of 203 branches tie — and `ramah` min (58
-tied) and `posphi_frac` min (92 tied) are heavily degenerate. Tie-averaging handles them correctly.
+**The search, accounted** (baseline **production**, not the grid mean — Appendix C): choosing the
+criterion out of sample is worth **+0.0026 Å, CI [−0.0067, +0.0141]**. ORACLE per-target best criterion
+−0.1000; best single arm 0.57× its own nominal MDE. **Honest comparison count ~60, not 64** —
+`vbond_mean` and `vbond_sd` are **degenerate by construction**, 204 of 204 branches tied.
 
 **Two checks came out in the lane's favour and are recorded as such.** The branches are **genuinely
 distinct structures, not arithmetic noise** — 207.5 per target, 152.7 distinct at 1e-3 A, with
@@ -880,7 +885,37 @@ space at this length** rather than anything retrieval discovered.
 
 ## Appendix B — multiplicity and the search that was run
 
-[PENDING]
+**Six lanes, 24 ledger entries, ten pre-registrations, 56 result artefacts.** Comparisons emitted:
+lane P **38**, lane D **92**, lane V **32 on the chain basis plus 8 in-band**, lane R **64** in the
+branch family alone.
+
+**The sprint-level accounting, walked over every `effect_over_mde` in every artefact:**
+
+```
+improvements clearing 1.0x MDE on the BUILT CHAIN, deployable:        0
+improvements clearing 1.0x MDE on any basis:                         30
+   of which ORACLE (read the native to select):                     ~20
+   of which filter-vs-random on the POOL MEAN (a diagnostic):         4
+   of which in-band Spearman diagnostics:                             6
+```
+
+**The three largest ORACLE ceilings**, all **NOT DEPLOYABLE**: ORACLE top-5 through the deployed
+operator **−1.567 (5.17×, cloud)**; ORACLE per-target scale **−0.1352 (3.84×, chain)** — but **122%
+accounted by the across-target order statistic**, and its leave-fold-out factor is +0.0044 at 0.14×;
+ORACLE best branch **−0.1178 (chain)** — **3.3% survives a split half**.
+
+**Searches priced rather than quoted:**
+
+- The branch family: **64 comparisons** (honestly ~60 — four are degenerate with 204 of 204 tied).
+  Best single arm **0.57× its nominal MDE**; **out-of-sample search value +0.0026, CI [−0.0067,
+  +0.0141]**.
+- The prefix family: every best-member contrast against an alternative prefix is **entirely FAIL18**,
+  three instances — random-128 (+1.4879 / −0.0296), random-75-of-128 (+0.3611 / +0.0210), BLOSUM-75
+  (−1.5871 / +0.0288). **In each the aggregate clears or approaches MDE and the non-circular 108 is
+  NOT A RESULT.** This is now a **registered general property of the instrument**, not three
+  coincidences, and the verifier flags any line quoting one without its strata.
+- Draw distributions, never best draws: random-128 **0 of 8 draws better** (draw sd 0.0187);
+  random-75 **0 of 8** (0.0381); random branch **300 draws**, ±0.0076.
 
 ---
 
