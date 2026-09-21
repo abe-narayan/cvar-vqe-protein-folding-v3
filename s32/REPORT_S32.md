@@ -1,7 +1,10 @@
 # Sprint 32 — Where the RMSD is lost, and what it would take to get it back
 
-**Status: DRAFT IN PROGRESS.** Sections marked `[PENDING]` await lanes still running. Assembled as
-results land so nothing is reconstructed from memory at the end.
+**Status: FINAL — 2026-09-21 11:38.** All six lanes closed; no section is pending. Assembled as
+results landed, so nothing here is reconstructed from memory at the end. Every number is
+asserted against the artefact that produced it by `s32/s32_verify.py` at **143 recomputed,
+0 mismatched, 0 flagged, 18/18 self-tests** across **eleven audits** — each built from the defect
+that motivated it, and each carrying a self-test that must trip on that defect.
 
 Branch `s26` · instrument `tuning126`, 126 targets, 9–16 aa · endpoint **mean built-chain Cα RMSD**
 Charter `s32/BRIEF.md` (verbatim, 2,087 lines) · Ledger `s32/LEDGER.md` · State `s32/STATE.md`
