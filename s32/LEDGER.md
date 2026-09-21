@@ -37,7 +37,8 @@ produced it, and this entry is provisional until it does.
 ```
 best sparse convex combination, K=500, s=10   1.1139      <- 2.10 A of headroom
 best single member, K=500                     1.7078      <- 1.50 A of headroom
-  + retrieval filter K=500 -> 128            +0.4357  ->  2.1435
+  + retrieval filter K=500 -> 128            +0.4357  ->  2.1435   [see the S32-L3 correction: 0.2477 of this is a pure ORDER STATISTIC and the
+                                                        remaining 0.1872 has the SCORE performing WORSE THAN RANDOM]
   + prefix 128 -> 75                         +0.1620  ->  2.3055
   + selection / readout (uniform average)    +0.9051  ->  3.2105   PRODUCTION
 ```
@@ -113,5 +114,56 @@ semidefiniteness holds in all four.
 **Recorded against myself deliberately.** S31's finding was that the coordinator's own claims are
 the ones no lane audits. This is the first S32 instance and it was caught by re-reading my own
 output, not by a lane.
+
+---
+
+## S32-L3 -- **THE SCORE FILTER IS WORSE THAN RANDOM AT RETAINING THE BEST CANDIDATE, AND MOST OF WHAT I CALLED A "FILTER LOSS" IN S32-L1 WAS A PURE ORDER STATISTIC** (2026-09-21 08:10, coordinator, on lane V's artefact)
+
+Lane V's control, `s32/results/s32_V_ladder_orderstat.json`, **2000 draws**, **CA POINT CLOUD**, all
+**ORACLE / NOT DEPLOYABLE**. Aggregate re-derived by the coordinator in one script from lane V's raw
+rows, per contract rule 7 (a cross-lane claim gets re-derived once before anyone acts on it).
+
+```
+best member of K=500                        1.7108
+best member of a RANDOM 128 of the 500      1.9586
+best member of the SCORE-selected top-128   2.1458
+```
+
+**Decomposition of the +0.4350 I called a "filter loss" in S32-L1:**
+
+```
+total   best500 -> best128                  +0.4350
+  pure ORDER STATISTIC (any 128 of 500)     +0.2477   57% of it -- a random 128 loses this too
+  attributable to the SCORE                 +0.1872   the score is WORSE THAN RANDOM
+```
+
+`compare(score128, random128)` = **+0.1872, MDE 0.1764, 1.06× — WORSE, 72W/54L**, with `stats_lib`
+flagging **`TYPE-M ZONE: magnitude inflated ~1.10×`** — so the honest effect is ~0.17 and it sits
+barely past MDE. Top-75 against a random 75 of the 128: **+0.0696 at 1.02×, 65W/61L**, same
+direction, barely measured. **The K=500 best member survives into the top-128 on 63/126 targets — a
+literal coin flip — at mean rank 170/500.**
+
+> **On half the targets the best available candidate is already gone before the readout ever sees
+> it.** That is a far sharper statement of the selection wall than the in-band correlations, and it
+> is measured rather than inferred.
+
+**My S32-L1 framing was wrong and is annotated in place.** I called the whole +0.4350 a filter loss.
+**57% of it is a pure order statistic** — a minimum over 500 is lower than a minimum over 128 for any
+subset — and that part is not attributable to the score at all. *This is contract rule 9 firing
+against the coordinator on his own ledger entry, one entry after he wrote the rule.*
+
+**What is NOT established, and it is charter §29's exact trap.** That production would be better with
+a random 128. **Production does not take the best member; it averages 75.** By S32-L2 the readout
+program rewards low `⟨w,a⟩` **and high spread `w'Bw`**, and a score-selected set is *less diverse than
+a random one by construction* — so a score whose *best* member is worse may still select a set that
+*averages* better. Consensus has ρ_global **+0.43** and in-band **−0.28**; rejecting outliers for an
+average is a different job from finding the best member, and this measurement cannot separate them.
+
+**Registered prediction, before the arm is run** (lane P owns it): replacing the top-128 with a
+random 128 and measuring the **built-chain endpoint** leaves it **unchanged or worse**, because the
+score's value is outlier rejection for the average rather than best-member selection. **If the
+endpoint improves, that is deployable immediately — random selection needs no native information,
+which is the wall every other route has hit.** ≥ 8 draws, draw mean and draw-to-draw sd reported,
+never the best draw.
 
 ---
