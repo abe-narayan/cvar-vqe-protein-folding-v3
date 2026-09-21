@@ -52,13 +52,29 @@ observable whose error is **incoherent** with the pool's common mode. Measured w
 **and** a perfect direction, an incoherent correction is worth **+0.0747 Å: harmful.**
 
 ```
-correcting ONLY the along-mu half    -0.8102 A   3.29x MDE, 5/5 folds, 121W/5L    <- the WHOLE prize
+correcting ONLY the along-mu half    -0.8102 A   3.29x MDE, 5/5 folds, 121W/5L    <- the whole prize by SIZE
 correcting ONLY the orthogonal half  +0.0747 A   0.87x MDE, 57W/69L               <- worth less than nothing
+      ^ the SIZE is real; that it is a separate MECHANISM is NOT -- the along arm is NOT MEASURED against the shrink curve
 ```
 
 And the reason is an **identity, not a fit**: `mu_hat = mu − y` forces `y_perp = −P_perp(mu_hat; mu)`
 to 9.3e-15, so out-of-fold `R²` is **+0.9403** on the orthogonal half and **−0.0051** on the
 along-`mu` half. **The predictable half is not predicted — it is observed.**
+
+**And `mu` survives its own falsifier.** The asymmetry could have been magnitude or generic
+geometry; an **energy-matched** arbitrary direction — same captured fraction of `y`, otherwise
+arbitrary — gives an along-half worth **0.13 Å less** and a perp-half worth **0.38 Å more** than
+`mu`'s (2.07× and 2.53× MDE, both 5/5 folds). **Two qualifications belong here and not only in
+§20.1.** *First*, that same arbitrary direction still shows along-beating-perp by −0.3734, so **≈42%
+of the raw −0.8848 asymmetry is generic geometry** and `mu` supplies 58% — ***`mu` doubles an
+asymmetry that is already there rather than creating one.*** *Second, and larger:* `y_along(mu)`
+carries **84% of `y`'s energy**, and against its own magnitude control — the shrink curve — it is
+**NOT MEASURED** (0.94× and 0.64×, 65W/61L at c = 0.90). ***The controlled half of this result is
+the negative one — that the orthogonal complement is specifically worthless. The positive half
+restates, at matched magnitude, that most of a perfect correction is most of the prize.*** And that
+negative half is exactly what charter §14 and contract rule 29 proposed to build on. And **three
+quarters of a perfect correction buys 97% of its benefit**, so the channel §21 asks for must point
+the right way, not be accurate.
 
 > ### What can be predicted is the component ORTHOGONAL to the common mode, and it is harmful.
 > ### What would help is the common mode itself, and it is unpredictable.
@@ -1139,8 +1155,9 @@ the ORACLE ideal correction `y` against the ORACLE common mode `mu` per target (
 **ORACLE / NOT DEPLOYABLE**):
 
 ```
-correcting ONLY the along-mu half    -0.8102 A   3.29x MDE, 5/5 folds, 121W/5L   <- the WHOLE prize
+correcting ONLY the along-mu half    -0.8102 A   3.29x MDE, 5/5 folds, 121W/5L   <- the whole prize by SIZE
 correcting ONLY the orthogonal half  +0.0747 A   0.87x MDE, 57W/69L              <- worth less than nothing
+      ^ the SIZE is real; that it is a separate MECHANISM is NOT -- the along arm is NOT MEASURED against the shrink curve
 along vs perp, paired                -0.8848 A   3.50x MDE, 5/5 folds, 118W/8L
 ```
 
@@ -1185,6 +1202,35 @@ energy-matched PERP   vs true perp-mu   -0.3797  2.53   5/5   114/12    true mu 
 0.13 Å *more* than an arbitrary direction carrying identical energy; its perp-component is worth
 0.38 Å *less*. The control was built so that a null result would have refuted the section, and it
 did not fire.
+
+**Which half of the finding that actually controls, stated plainly, because the two halves are not
+equally earned.** `y_along(mu)` carries **84% of `y`'s energy** (rms 3.12 of 3.70), and against the
+shrink curve — *its own* magnitude control — it is **NOT MEASURED in both directions**:
+
+```
+ALONG-mu vs SHRINK_Y_075   -0.0614   0.94x MDE   81W/45L   NOT MEASURED
+ALONG-mu vs SHRINK_Y_090   -0.0405   0.64x MDE   65W/61L   NOT MEASURED   <- a coin flip
+```
+
+***"Correcting along `mu` is the whole prize" is, at matched magnitude, the same statement as "most
+of a perfect correction is the whole prize."*** The along arm is not a separate mechanism; it is 84%
+of the right answer, delivered by a direction that happens to select it. **The controlled half of
+this section is the NEGATIVE one** — that the orthogonal complement is *specifically* worthless,
+worse than its own norm-matched shrinkage (**+0.6169, 3.25×**) and worse than an energy-matched
+arbitrary direction (**+0.3797, 2.53×**) — **and the negative half is exactly what charter §14 and
+contract rule 29 proposed to build on.**
+
+**`mu`'s direction still does the selecting, though, which is why the section is not vacuous.** An
+*energy-matched arbitrary* direction's along-half **is** distinguishable from the same shrink
+(**+0.0912, 1.43× MDE**) while `mu`'s is not. *Any direction capturing 84% of `y` gets 84% of `y`'s
+magnitude; only `mu` gets 84% of `y`'s* **value**.
+
+> **A trap worth recording, because I walked up to it.** `CTRL_SHRINK_ORACLE_Y` is the perfect
+> correction shrunk **to the perp arm's norm (1.99)**, not the along arm's (3.12). Differencing the
+> along arm against it reads **−0.2680 at 2.06× — an apparently controlled positive** — and it is
+> meaningless, because the control is matched to the *other* arm. That is this sprint's signature
+> defect exactly (**a number carries its definition**), one boundary from being quoted as the
+> headline. The along arm's magnitude control is the shrink curve, and it says NOT MEASURED.
 
 **But the asymmetry is not entirely `mu`'s, and that qualification is the honest one.** At matched
 energy an arbitrary direction *still* shows along-beating-perp, by **−0.3734 (1.98× MDE, 5/5,

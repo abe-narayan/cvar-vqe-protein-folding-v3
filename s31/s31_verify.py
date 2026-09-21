@@ -679,6 +679,37 @@ try:
         exact("cross-job PROD_%s is BIT-identical (this is what makes the "
               "comparison legal)" % _b, True, bool(_d == 0.0))
     exact("  and it covers all 126 targets", 126, len(_com))
+    # --- WHICH HALF IS CONTROLLED: the along arm against its OWN magnitude control ---
+    e7 = dig(load("s31/results/s31_E7_contrasts.json"), "contrasts")
+    # c=0.90 from lane E's own artefact, c=0.75 from this session's -- two independent files
+    for k, cl_e, cl_x in (("ALONG-mu vs SHRINK_Y_075", -0.0614, 0.94),
+                          ("ALONG-mu vs SHRINK_Y_090", -0.0405, 0.64)):
+        check(k, cl_e, dig(ec, k, "effect"), basis="chain")
+        check("  x MDE", cl_x, abs(dig(ec, k, "effect_over_mde")), tol=1e-2, basis="none")
+        exact("  NOT MEASURED -- the along arm is inside the shrink curve", True,
+              bool(abs(dig(ec, k, "effect_over_mde")) < 1.0))
+    check("  and lane E's INDEPENDENT file agrees on the c=0.90 bracket", -0.0405,
+          dig(e7, "ORACLE_Y_ALONG_MU vs SHRINK_Y_090", "chain", "effect"), basis="chain")
+    exact("the along arm's norm is BRACKETED by the two shrink arms it ties", True,
+          bool(0.75 * 3.70 < 3.12 < 0.90 * 3.70))
+    check("energy-matched ALONG vs the same shrink (mu's direction still selects)", 0.0912,
+          dig(e7, "ENERGYMATCHED_ALONG vs SHRINK_Y_090", "chain", "effect"), basis="chain")
+    exact("  and THAT one IS measured (>= 1.0x MDE), unlike mu's", True,
+          bool(abs(dig(e7, "ENERGYMATCHED_ALONG vs SHRINK_Y_090", "chain", "x_mde")) >= 1.0))
+    check("the PERP arm against its own norm-matched control", 0.6169,
+          dig(e7, "ORACLE_Y_PERP_MU vs CTRL_SHRINK_ORACLE_Y", "chain", "effect"), basis="chain")
+    exact("  the NEGATIVE half IS controlled (>= 1.0x MDE)", True,
+          bool(abs(dig(e7, "ORACLE_Y_PERP_MU vs CTRL_SHRINK_ORACLE_Y", "chain", "x_mde")) >= 1.0))
+    # the recorded trap: CTRL_SHRINK_ORACLE_Y is matched to the PERP arm's norm, not the ALONG arm's
+    _T = "TRAP ALONG-mu vs PERP-matched shrink"
+    check("THE TRAP: along vs the PERP-matched shrink reads an apparent controlled positive",
+          -0.2680, dig(ec, _T, "effect"), basis="chain")
+    exact("  it is >= 1.0x MDE and therefore quotable-looking, which is why it is recorded", True,
+          bool(abs(dig(ec, _T, "effect_over_mde")) >= 1.0))
+    exact("  the report does NOT quote it as the along arm's control", True,
+          bool("0.2680" in io.open("s31/REPORT_S31.md", encoding="utf-8").read() and
+               "meaningless, because the control is matched to the *other* arm" in
+               io.open("s31/REPORT_S31.md", encoding="utf-8").read()))
 except Exception as e:
     MISSING.append("lane E S31-L22 direction-control block (%s)" % e)
 

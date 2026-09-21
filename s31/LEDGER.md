@@ -3408,6 +3408,26 @@ energy-matched PERP   vs true perp-mu    -0.3797   2.53x MDE   5/5 folds   114W/
 
 **`mu` is special on both sides, both past MDE, both 5/5 folds.** Magnitude is not the explanation.
 
+**But only the NEGATIVE half is controlled, and lane E said so against its own interest before I
+checked.** `y_along(mu)` carries **84% of `y`'s energy** (rms 3.12 of 3.70), and the shrink curve
+**brackets that norm** (0.75·3.70 = 2.78 < 3.12 < 3.33 = 0.90·3.70). Against both brackets the along
+arm is **NOT MEASURED**: −0.0614 at **0.94x** (81W/45L) and −0.0405 at **0.64x** (65W/61L, a coin
+flip). ***"Correcting along `mu` is the whole prize" is, at matched magnitude, the same statement as
+"most of a perfect correction is the whole prize."*** What IS controlled is that the orthogonal
+complement is **specifically** worthless — +0.6169 (3.25x) against its own norm-matched shrink and
++0.3797 (2.53x) against an energy-matched arbitrary direction. **And the negative half is exactly
+what charter §14 and rule 29 proposed to build on.** `mu`'s direction still does the selecting: an
+energy-matched arbitrary along-half **is** distinguishable from the same shrink (+0.0912, 1.43x)
+while `mu`'s is not — *any direction capturing 84% of `y` gets 84% of its magnitude; only `mu` gets
+84% of its* **value**.
+
+**A trap recorded because the coordinator walked up to it.** `CTRL_SHRINK_ORACLE_Y` is shrunk to the
+**PERP** arm's norm (1.99), not the along arm's (3.12). Differencing the along arm against it reads
+**−0.2680 at 2.06x, 94W/32L — an apparently controlled positive** — and it is meaningless, because
+the control is matched to the *other* arm. One boundary from being quoted as the headline; it is the
+sprint's signature defect (**a number carries its definition**) and `s31_verify.py` now asserts both
+the trap's value and that the report refuses it.
+
 **The qualification, which is mine to state because it weakens my own section.** At matched energy an
 *arbitrary* direction still shows along-beating-perp by **−0.3734 (1.98x MDE, 5/5, 84W/42L)**. Against
 the true split's **−0.8848**, **≈42% of the asymmetry is generic geometry** and `mu` supplies the other

@@ -35,7 +35,14 @@ A=lambda s,n,b: np.array([s[p][n+'_'+b] for p in com])
 KEY=[('ENERGYMATCHED_ALONG',E5,'ORACLE_Y_ALONG_MU',E2,'EM-ALONG vs true along-mu'),
      ('ENERGYMATCHED_PERP', E5,'ORACLE_Y_PERP_MU', E2,'EM-PERP  vs true perp-mu'),
      ('ENERGYMATCHED_ALONG',E5,'ENERGYMATCHED_PERP',E5,'EM-ALONG vs EM-PERP'),
-     ('RANDDIR_ALONG',E5,'PROD',E5,'RANDDIR-ALONG vs PROD')]
+     ('RANDDIR_ALONG',E5,'PROD',E5,'RANDDIR-ALONG vs PROD'),
+     # the along arm against its OWN magnitude control: the shrink curve brackets its norm
+     # (0.75*3.70 = 2.78  <  ||y_along(mu)|| = 3.12  <  3.33 = 0.90*3.70)
+     ('ORACLE_Y_ALONG_MU',E2,'SHRINK_Y_075',E5,'ALONG-mu vs SHRINK_Y_075'),
+     ('ORACLE_Y_ALONG_MU',E2,'SHRINK_Y_090',E5,'ALONG-mu vs SHRINK_Y_090'),
+     # RECORDED TRAP: this control is matched to the PERP arm's norm (1.99), NOT the along
+     # arm's (3.12).  It reads as a controlled positive and is meaningless.  Never quote it.
+     ('ORACLE_Y_ALONG_MU',E2,'CTRL_SHRINK_ORACLE_Y',E2,'TRAP ALONG-mu vs PERP-matched shrink')]
 out={}
 for n1,s1,n2,s2,lab in KEY:
     v=A(s1,n1,'chain'); b=A(s2,n2,'chain')
