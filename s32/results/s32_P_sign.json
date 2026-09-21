@@ -11,7 +11,15 @@
   "rank_d_min": 21,
   "rank_d_max": 42,
   "mu_rmsd_mean": 3.0776158149148833,
-  "mu_rmsd_note": "|mu|/sqrt(n): the RMSD the common mode alone would give"
+  "mu_rmsd_note": "|mu|/sqrt(n): the RMSD the common mode alone would give",
+  "rank_identity": {
+   "statement": "rank(d) == 3n - 6 EXACTLY on 126/126 targets",
+   "n_matching": 126,
+   "n_total": 126,
+   "why": "superposing every member AND the native on the uniform medoid removes 3 translations and 3 rotations, so the deviation space is the internal-coordinate space of dimension 3n-6; 128 fragments span it FULLY.  mu = c - t lies inside it on 126/126 (mu_par_frac 1.0000), which is why mu is exactly recoverable from {a_k, d_k}.",
+   "median_3n_minus_6": 33.0,
+   "consequence": "the readout's sufficient statistic is exactly 3n-6 numbers -- the pool has NO rank deficiency to exploit, so there is no low-dimensional compression of the requirement hiding in the pool's geometry."
+  }
  },
  "pc_spectrum": {
   "cos2_by_pc": [
