@@ -163,6 +163,37 @@ def main():
             BEST=cmp2(A["B75_best"], A["S75_best"], "BLOSUM top-75 - score top-75, BEST"),
             MEAN=cmp2(A["B75_mean"], A["S75_mean"], "BLOSUM top-75 - score top-75, MEAN")),
         multiplicity_emitted=int(NCOMP[0]))
+
+    # ------------------------------------------------------------------ CONCENTRATION, and the
+    # stratum that makes the BEST-axis headline unquotable as a broad effect.  The coordinator
+    # retracted "the score is WORSE than random" on exactly this ground: `n_better` counts
+    # targets where the SCORE wins, so 72W/54L means the score wins on 72 of 126 while losing
+    # more on the ones it loses.  `median-vs-mean-is-the-free-warning` says print both, plus a
+    # uniform-effect null, as ONE verdict.
+    f18 = np.array([p in I.FAIL18 for p in names], bool)
+    conc = {}
+    for nm, child, rnd in (("R2_500_to_128_BEST", A["S128_best"], A["R128_best"]),
+                           ("R2b_500_to_75_BEST", A["S75_best"], A["R75of500_best"]),
+                           ("R1_universe_to_500_BEST", A["B500_best"], A["R500u_best"])):
+        d_ = child - rnd
+        c = ST.concentration(d_, seed_parts=("s32Plad", nm))
+        conc[nm] = dict(mean=float(d_.mean()), median=float(np.median(d_)),
+                        W_score_better=int((d_ < 0).sum()), L_score_worse=int((d_ > 0).sum()),
+                        concentration=c,
+                        FAIL18_CIRCULAR_mean=float(d_[f18].mean()),
+                        other108_mean=float(d_[~f18].mean()),
+                        other108_over_mde=float(d_[~f18].mean() /
+                                                (2.8016 * d_[~f18].std(ddof=1) / np.sqrt((~f18).sum()))),
+                        share_of_total_from_FAIL18=float(d_[f18].sum() / d_.sum()) if d_.sum() else None,
+                        note="FAIL18 is defined by no pool member within 1.5 A of the pool best "
+                             "surviving the top-75 filter, so a filter-vs-random contrast on it "
+                             "is NEAR-CIRCULAR; the other-108 row is the quotable one")
+    out["concentration_and_strata"] = conc
+    out["per_target"] = {k: [float(v) for v in A[k]] for k in
+                         ("UNI_best", "B500_best", "S128_best", "S75_best", "R500u_best",
+                          "R128_best", "R75of500_best", "UNI_mean", "B500_mean", "S128_mean",
+                          "S75_mean", "R500u_mean", "R128_mean", "R75of500_mean")}
+    out["names"] = names
     with open(OUT, "w") as fh:
         json.dump(out, fh, indent=1, default=float)
     print(json.dumps(out, indent=1, default=float))

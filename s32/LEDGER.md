@@ -751,6 +751,8 @@ precisely: ***the operator is bit-reproducible; the input is what is fragile.***
 
 ## S32-L10 -- **THE MISSING PER-TARGET SIGN IS A REAL LATENT PROPERTY OF THE TARGET, AND IT TRANSFERS ACROSS A SPLIT HALF** (2026-09-21 09:11, lane D)
 
+> **This is the coordinator's summary of lane D's result; the lane's own entry is `S32-L(D2)` above, which is authoritative and carries the fuller record including the 9–16-residue scope work. Kept rather than deleted because it was written first and was quoted to lane D, but read L(D2) for the lane's own wording.**
+
 Sign estimated on half A of a target's top-75 band, applied to **held-out half B**, 16 random splits
 per target, against a matched label-permutation null:
 

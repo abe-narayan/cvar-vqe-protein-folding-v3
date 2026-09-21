@@ -596,3 +596,6 @@ direction at **−0.8102 Å on the BUILT CHAIN**. One oracle bit per target is w
 CLOUD**. *The bit is real and it is roughly an order of magnitude smaller than the direction* — which
 is charter §41's question answered in the currency it asked for: **the five-bit result is a pricing
 clue, not a limit, and per-bit the price is small.**
+| P-34 | R2/R2b/R1 BEST-axis deficits, stratified FAIL18 vs other-108 | cloud, ORACLE | REGISTERED (H-P5) | 500→128: mean +0.1853, **median −0.0371**, 72 of 126 favour the score; FAIL18 +1.4773 = **114% of the total**, other-108 −0.0300 at 0.30× — **NOT A RESULT off the circular stratum** |
+| P-35 | same for the DEPLOYABLE 500→75 filter | cloud, ORACLE | REGISTERED (H-P5) | mean +0.2260, median +0.0046, 62W/64L; FAIL18 +1.7713 = 112%, other-108 −0.0316 at 0.27× |
+| P-36 | same for universe→500 BLOSUM | cloud, ORACLE | REGISTERED (H-P5) | mean −0.0718; FAIL18 contributes **0%**, other-108 −0.0833 at 0.98× — NOT MEASURED, and a different SHAPE from the score's |

@@ -201,8 +201,17 @@ strongest; the absolute residual covers all 126.*
    against a hull floor **`d = 1.8290 ± 0.1178`** (CA cloud, **ORACLE / NOT DEPLOYABLE**).
    *A structure estimate good enough to make the readout worth solving is already good enough to
    emit.*
-3. **Gain exactly 1 means no noise suppression.** There is no regime in which a noisy `â` is
-   cleaned up by the convex program. This is why S31 measured "solving the objective exactly
+3. ~~**Gain exactly 1 means no noise suppression.** There is no regime in which a noisy `â` is
+   cleaned up by the convex program.~~ **STRUCK by lane V's audit — this lane's own `noise_ORACLE`
+   table refutes it twice.** Gain is 1 on the active affine hull (`|S|−1` ≈ 5.25) and **0 on its
+   ≈ 33-dimensional orthogonal complement**, and *gain zero is TOTAL suppression, not none* — a
+   generic error vector is ~87% annihilated by construction, and at ε = 4.0 the program turns a
+   3.65 Å estimate into a 2.23 Å emission. **The conclusion below is unaffected and rests on the
+   LOWER bound instead**: `d ≤ ‖P_C(t̂) − t‖ ≤ d + ε` with the hull floor `d = 1.8290 ± 0.1178`,
+   which the readout cannot beat however good the estimate is, and a measured crossover against
+   direct emission at **ε ≈ 2.2**. *Charter §4 lists "a theorem was stronger than the empirical
+   conclusion" as a named S31 failure mode; this was one.* Original wording left standing per
+   rule 13. This is why S31 measured "solving the objective exactly
    reshuffles the answer everywhere and buys nothing": the program is a faithful, non-contracting
    transcription of whatever quality estimate it is handed.
 
@@ -386,8 +395,10 @@ currency, so the two are never differenced.*
   never the binding constraint:** the numbers required are the native's coordinates in the pool's
   basis, and no encoding manufactures them.
 - *Could a nonlinear observable amplify it?* **No.** Q1-T2 gives gain exactly 1; a nonlinear
-  readout of a state that does not contain `P_aff t` cannot create it, and by consequence (c) there
-  is no noise-suppression regime to exploit.
+  readout of a state that does not contain `P_aff t` cannot create it, and ~~by consequence (c) there
+  is no noise-suppression regime to exploit~~ — **corrected: there IS a suppression regime (gain 0 on
+  ≈33 dimensions), but it cannot take the output below the hull floor `d = 1.8290`, which is the
+  binding constraint.**
 - *Is the five-bit structure an artefact of the oracle construction?* **Yes, in the specific sense
   that it prices an alphabet and the decision is continuous** — and the honest replacement is the
   `r`-reals curve above, which is a different currency and is never differenced against a bit count.
