@@ -548,3 +548,51 @@ observation, not a lead.)
 | P-31 | cos(μ̂, μ) for μ̂ = c − t′ (a MISMATCHED same-length deposited native — native-free at inference) | cloud, ORACLE-scored | EXPLORATORY | **−0.0088 ± 0.0235**, 52% positive — zero |
 | P-32 | shared-referent FLOOR for P-31: the pure scale direction c−mean(c) | cloud, ORACLE-scored | EXPLORATORY (control, measured first) | +0.0512 ± 0.0342 — the floor is also ~zero, so P-31 is not floor-inflated, it is empty |
 | P-33 | cos(μ̂, μ) for μ̂ = c − mean(same-length deposited natives) | cloud, ORACLE-scored | EXPLORATORY | −0.0080 ± 0.0419 |
+
+### Registered — D4-M: the MARGINAL, which is the baseline a one-bit classifier must beat
+
+A constant sign predictor gets `max(p, 1−p)` where `p` is the bit's marginal. **Reported first, as it
+must be** — D-46…D-49's accuracies mean nothing without it. `s32/results/s32_D5_signprice.json`.
+
+| # | reg? | scorer | **marginal** (constant predictor) | leave-fold-out accuracy | beats it? | per-fold LFO accuracy |
+|---|---|---|---|---|---|---|
+| D-50 | R | **AMBER** | 0.508 | **0.381** | **no — worse than constant** | 0.44 0.39 0.36 0.30 0.40 |
+| D-51 | R | `DIS` | 0.548 | 0.548 | no — **exactly** the marginal | 0.64 0.39 0.60 0.52 0.57 |
+| D-52 | R | `LEG_total` | 0.587 | 0.595 | **+0.008 = one target in 126** | 0.56 0.52 0.64 0.52 0.70 |
+| D-53 | R | `LEG_torsion` | 0.556 | 0.556 | no — **exactly** the marginal | 0.60 0.70 0.44 0.43 0.60 |
+
+**No scorer's sign is predictable above its own marginal.** The coordinator's registered prediction
+was 55–65% accuracy; the accuracies *are* in that range and it means nothing, because **the marginal
+is already there**. Per-fold accuracy swings 0.30–0.44 (AMBER) and 0.52–0.70 (`LEG_total`) — the
+`LEG_total` mean is one fold's 0.70 against two folds at 0.52. *This is exactly the case the
+coordinator flagged: "if the bit is 70/30, a 70%-accurate classifier is nothing."*
+
+### Registered — D5-C: the Ångström price of one ORACLE bit per target. **CLOUD BASIS — a SCREEN.**
+
+`s32/results/s32_D5_signprice.json`. **CA point cloud, 3.0483 reproduced exactly on PROD** (an
+instrument check). This basis is a screen for whether the bit is worth projecting; **it is never
+differenced against a built-chain number.** Arm = uniform coordinate average of the best `m` of the
+shipped top-75 by the (signed) score. All ORACLE rows **ORACLE / NOT DEPLOYABLE**.
+
+| # | reg? | arm (CLOUD) | mean | Δ vs PROD | se | ×MDE | folds |
+|---|---|---|---|---|---|---|---|
+| D-54 | R | `LEG_total` m=25 **ORACLE sign** | **2.9196** | **−0.1287** | 0.0303 | 1.52 | 4/5 |
+| D-55 | R | `LEG_total` m=25 **const +1** (zero-info control) | 3.1399 | **+0.0916** | 0.0328 | 1.00 | 5/5 |
+| D-56 | R | `DIS` m=25 ORACLE | 2.9308 | −0.1176 | 0.0229 | 1.83 | 5/5 |
+| D-57 | R | `DIS` m=25 const | 3.0749 | +0.0266 | 0.0269 | 0.35 | 3/5 |
+| D-58 | R | **AMBER** m=25 ORACLE | 2.9602 | −0.0881 | 0.0194 | 1.62 | 5/5 |
+| D-59 | R | AMBER m=25 const | 3.1377 | +0.0894 | 0.0263 | 1.21 | 5/5 |
+| D-60..63 | R | the four m=50 arms | 2.9740–3.0866 | −0.0743…+0.0383 | — | 0.67–1.89 | 4–5/5 |
+
+**Every zero-information (`const +1`) arm is WORSE than the production top-75 average** — selecting
+the best 25 by an unsigned scorer costs +0.027 to +0.092 Å. This is lane V's *"the score prefix is
+worse than random at retaining the best candidate"* arriving independently through a different
+operator. **The ORACLE bit turns a loss into a gain**, and the paired price of the bit itself is
+measured on the built chain by `s32_D5_signchain.py` (running; the arms are projected in one process
+so the pairing is within-job).
+
+**Order-of-magnitude context, and it is the honest framing:** S31 §20.1 prices the ORACLE common-mode
+direction at **−0.8102 Å on the BUILT CHAIN**. One oracle bit per target is worth **~0.13 Å on the
+CLOUD**. *The bit is real and it is roughly an order of magnitude smaller than the direction* — which
+is charter §41's question answered in the currency it asked for: **the five-bit result is a pricing
+clue, not a limit, and per-bit the price is small.**
