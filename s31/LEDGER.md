@@ -3507,3 +3507,53 @@ is legal here because the two jobs' `PROD` rows are **bit-identical on all 126 t
 *differing* inputs, not nondeterminism.** The rule is therefore sharper than *"always project in one
 job"*: **identical clouds give identical chains to the last bit, and the check costs one line.**
 `s31_verify.py` recomputes it from the raw rows.
+
+## S31-L23 -- **THE PER-TARGET PREFIX LENGTH DOES NOT SURVIVE THE TRIP TO THE ENDPOINT: THE DEPLOYABLE LEAVE-FOLD-OUT ARM IS +0.0075 A, 63W/63L, 2/5 FOLDS -- A COIN FLIP WITH THE WRONG SIGN. S29-L30's TRANSFER ARMS WERE QUOTED ON THE CLOUD AND THE CLOUD->CHAIN PRICE ON THIS RUNG IS +0.14 TO +0.16 A. AND S31-L11's REFUTATION CARRIES: A MATCHED RANDOM-SUBSET FAMILY REACHES 141% OF THE PREFIX GAIN ON THE BUILT CHAIN (149% ON CLOUD)** (2026-09-21 01:26, F/coordinator)
+
+Closes the last open item of the sprint. Code `s31/s31_F3_chain.py`; artefacts
+`s31/results/s31_F3_chain_rows.jsonl` (126 rows), `s31/results/s31_F3_chain.json`,
+`s31/results/s31_F3_prefix.json`. Seed 31007. **Every arm projected in ONE process from the same
+stored clouds**, every variant selected on the CLOUD so both oracles see the same thing, comparator
+**M75 = 3.2126 re-projected in that same job** (contract rule: lane D's ~1e13 amplification makes
+cross-job chain comparison unsafe unless the inputs are bit-identical).
+
+```
+PREFIX   per-target ORACLE m (bestm128)   2.9027   -0.3100   3.17x MDE   5/5   118W/8L   MEASURED (ORACLE)
+M_GLOBAL one ORACLE global m* = 72        3.2083   -0.0044   0.19x MDE   3/5    69W/57L  NULL (still ORACLE)
+M_LFO    leave-fold-out m (DEPLOYABLE)    3.2201   +0.0075   0.22x MDE   2/5    63W/63L  NULL, WRONG SIGN
+RANDOM   matched random-subset family     2.7770   -0.4356               5/5             ORACLE, BEATS PREFIX
+```
+
+**The deployable arm is a literal coin flip on the endpoint (63W/63L).** On the cloud the same
+transfer read −0.0039, **1.2% of the ORACLE gain**; on the built chain it is **−2.4%**. ***Both are
+nulls and the sign difference is noise inside the null — not an inversion.***
+
+**What the repair buys, stated so it is not oversold.** S29-L30's transfer arms were **cloud**
+numbers quoted as endpoint statements, which was unlicensed at the time. Measured on the endpoint,
+**the conclusion is unchanged** — it is now true on the basis it is stated on, in one job. **And the
+reason it carries generalises past these four arms:** the cloud→chain price is **flat across
+prefixes** (M75 +0.1643, PREFIX +0.1422, global-`m` +0.1618, LFO-`m` +0.1639), so *the projection
+charges every prefix nearly the same and conclusions about `m` transfer from cloud to chain by
+construction.* **That is a licence for the `m` axis specifically and nowhere else** — `AVG_SEP` pays
+a completely different price because it re-embeds. Credit to lane F for finding it; my first
+write-up claimed the basis had been doing the work in the *conclusion*, and it had not.
+
+**S31-L11 carries to the endpoint intact.** The matched random family — same top-128, same operator,
+same `K`, same size distribution, arbitrary subsets instead of the score-ordered prefix — beats
+`PREFIX` by **−0.1368 (1.13x MDE, 5/5 folds, 90W/36L)** on draw 0 and −0.1146 (0.93x, 5/5, 83W/43L)
+on draw 1, **draw-to-draw sd 0.0157** (so not a lucky draw: the spread is 11% of the effect).
+***Draw 1 is at 0.93x and is NOT MEASURED on its own; the claim rests on the mean of the draw
+distribution, not on the better draw*** — contract rule 10, and the lane flagged it rather than
+quoting draw 0. The lane's registered bar *"no part of it is deployable"* **fires on the chain as it
+fired on the cloud**.
+
+**The mechanism was measured, not asserted.** Prefix variants are **nested** (`curve[m]` and
+`curve[m+1]` share `m` members), so they are far more correlated than random subsets of the same
+sizes — **lag-1 autocorrelation 0.917 against 0.112**, 25.3 local minima against 42.0. A family of
+less-correlated variants has a **larger per-target minimum**. ***The prefix ordering does not merely
+fail to beat an arbitrary index — it loses to one***, so `2.9027` is a **best-of-K order statistic**
+and its `K_eff` is well under 128 (only **6.3** values of `m` within 0.01 Å of the minimum, **30.1**
+within 0.05 — the argmin is not sharply identified).
+
+**Geometry valid on every arm** (virtual bond 3.80395 Å, sd ~1e-15), so none of this is the
+invalid-structure artefact that killed `AVG_SEP`. Verifier **270/270, 0 mismatched**.

@@ -993,6 +993,58 @@ such a readout passes the common mode through **with coefficient exactly one, wh
 > displaced together" and "the prize is the common mode" are the same fact** — and it is why the
 > along-`mu` correction pays **4× on the tail**: *the tail is where the common mode is large.*
 
+### 14.6 The prefix-length arms on the built chain — S29-L30's cross-basis quotation, repaired
+
+S29-L30's transfer arms were quoted on the **CA point cloud**; the cloud→chain price on this rung is
+**+0.14 to +0.16 Å**, so they were never endpoint statements. All six arms below are
+**projected in one process from the same stored clouds**, every variant selected on the cloud so the
+two oracles see the same thing, comparator **M75 = 3.2126 re-projected in that same job**:
+
+| arm | chain | vs M75 | × MDE | folds | W/L | verdict |
+|---|---|---|---|---|---|---|
+| `PREFIX` — per-target ORACLE `m` (`bestm128`) | 2.9027 | **−0.3100** | **3.17×** | 5/5 | 118/8 | **MEASURED** — ORACLE |
+| `M_GLOBAL` — one ORACLE global `m* = 72` | 3.2083 | −0.0044 | 0.19× | 3/5 | 69/57 | **NULL** — still ORACLE |
+| `M_LFO` — leave-fold-out `m`, the deployable arm | 3.2201 | **+0.0075** | 0.22× | 2/5 | **63/63** | **NULL, and the wrong sign** |
+| `RANDOM` — matched random-subset family, 2 draws | 2.7770 | −0.4356 | — | 5/5 | — | **ORACLE, and it BEATS the prefix** |
+
+**The deployable arm is a coin flip on the endpoint: 63W/63L, +0.0075 Å, 2/5 folds.** On the cloud
+the same transfer read −0.0039 (**1.2%** of the ORACLE gain, CI spanning zero); on the built chain it
+is **−2.4%**. ***Both are nulls, and the sign difference between them is noise inside the null — not
+an inversion.***
+
+> **What the repair actually buys, stated so it is not oversold.** S29-L30's transfer arms were
+> **cloud** numbers quoted as endpoint statements, which was unlicensed *at the time*. Measured on
+> the endpoint, **the conclusion is unchanged** — *"the transferable part of the prefix axis is
+> zero"* is now true on the basis it is stated on, in one job. **And lane F found the reason it
+> carries, which generalises past these four arms:** the cloud→chain price is **flat across
+> prefixes** — M75 **+0.1643**, PREFIX **+0.1422**, global-`m` **+0.1618**, LFO-`m` **+0.1639**.
+> *The projection charges every prefix nearly the same, so conclusions about `m` transfer from cloud
+> to chain by construction.* **That is a licence for the `m` axis specifically, and it is not a
+> licence anywhere else** — §14.4's `AVG_SEP` pays a completely different price because it
+> re-embeds.
+
+**And S31-L11's refutation carries to the endpoint intact.** A matched random-subset family — same
+top-128, same operator, same `K`, same size distribution, but an arbitrary subset instead of the
+score-ordered prefix — reaches **141% of the prefix gain on the built chain** (149% on the cloud),
+beating `PREFIX` by **−0.1368 (1.13× MDE, 5/5 folds, 90W/36L)** on draw 0 and −0.1146 (0.93×, 5/5,
+83W/43L) on draw 1, with a **draw-to-draw sd of 0.0157** — 11% of the effect, so not a lucky draw.
+***Draw 1 is at 0.93× and is NOT MEASURED on its own; the claim rests on the mean of the draw
+distribution, not on the better draw*** (contract rule 10, and the lane flagged it rather than
+quoting draw 0). The lane's registered bar (*"no part of it is deployable"*) **fires on the chain as
+it fired on the cloud.**
+
+> **The mechanism is an order statistic, and the lane measured it rather than asserting it.** Prefix
+> variants are **nested** — `curve[m]` and `curve[m+1]` share `m` members — so they are far more
+> correlated than random subsets of the same sizes (lag-1 autocorrelation **0.917 against 0.112**;
+> 25.3 local minima against 42.0). **A family of less-correlated variants has a larger per-target
+> minimum.** *The prefix ordering does not merely fail to beat an arbitrary index — it loses to
+> one*, and `2.9027` is therefore a **best-of-K order statistic**, not a property of the score axis.
+> Its `K_eff` is well under 128: only **6.3** values of `m` lie within 0.01 Å of the minimum and
+> **30.1** within 0.05, so the argmin is not sharply identified.
+
+**Geometry is valid on every arm** (virtual bond 3.80395 Å, sd ~1e-15), so none of this is an
+invalid-structure artefact — the check that `AVG_SEP` failed in §14.4.
+
 ---
 
 ## 15. Statistical analysis
@@ -1107,7 +1159,7 @@ that is noted — it is the charter's §24 ladder working as intended, and it is
 | `AVG_RG` — uniform Rg restore | built chain | +0.0475, 1.11× — WORSE |
 | The consensus medoid | built chain | +0.0688, 0.81× — NOT MEASURED |
 | Branch-carry at λ = 0.3 | built chain | −0.0055, 0.44× — NOT A RESULT *(a conditioning fix, 1082×, with a null accuracy effect)* |
-| The per-target prefix length `m` | built chain | Transfer **1.2%** of the ORACLE gain, CI spanning zero |
+| The per-target prefix length `m` (leave-fold-out, the deployable arm) | built chain | **+0.0075, 0.22× MDE, 2/5 folds, 63W/63L — a coin flip** (§14.6). *The **1.2%** figure quoted before is **CA cloud**; the endpoint reads −2.4%, and **both are nulls** — the conclusion is unchanged, it is now measured on the basis it is stated on* |
 | Orthogonal-only prior correction (E2/E3) | built chain | +0.0414 / +0.0323 — **FALSIFIED as registered** |
 | Native-free index maps | CA cloud | Best −0.0160; **the best map is the random permutation** |
 
@@ -1127,7 +1179,7 @@ perfect information; none is achievable, and several are vacuous for reasons wor
 | convex readout over 128 | built chain | 1.8538 | S29's rows, quoted unchanged |
 | argmin over 500 (9 bits) | built chain | 1.7078 | |
 | argmin over 128 (7 bits) | built chain | 2.1435 | **1.067 Å of headroom below production** |
-| per-target prefix length `m` | built chain | 2.9027 | **an order statistic — see §12** |
+| per-target prefix length `m` | built chain | 2.9027 | **an order statistic — see §12**; confirmed on the chain in §14.6, where a matched random family reaches **141%** of it |
 | best pool member, genuinely worst 18 | built chain | 2.5298 | the tail is selection-limited |
 | branch choice among the 8 already computed | built chain | **−0.0938 vs production** | 2.92× MDE, 114W/0L; free to compute |
 

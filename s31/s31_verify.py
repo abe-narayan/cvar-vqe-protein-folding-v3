@@ -746,6 +746,60 @@ try:
 except Exception as e:
     MISSING.append("lane F S31-L11 s5d block (%s)" % e)
 
+# ================================================== LANE F, F3 ON THE BUILT CHAIN (S29-L30 REPAIR)
+print()
+print("--- F3 on the BUILT CHAIN: the prefix-length transfer arms, repaired from cloud ---")
+try:
+    f3 = load("s31/results/s31_F3_chain.json")
+    m = dig(f3, "means")
+    check("PREFIX (bestm128) on the built chain", 2.9027, m["PREFIX"], basis="chain")
+    check("M75 (production) re-projected in the same job", 3.2126, m["M75"], basis="chain")
+    check("ORACLE global m on the built chain", 3.2083, m["M_GLOBAL"], basis="chain")
+    check("leave-fold-out m on the built chain", 3.2201, m["M_LFO"], basis="chain")
+    check("  PREFIX vs M75", -0.3100, dig(f3, "PREFIX_vs_M75", "effect"), basis="chain")
+    check("  x MDE", 3.17, abs(dig(f3, "PREFIX_vs_M75", "effect_over_mde")), tol=1e-2, basis="none")
+    check("  ORACLE global m vs M75", -0.0044, dig(f3, "M_GLOBAL_vs_M75", "effect"), basis="chain")
+    exact("  ORACLE global m is a NULL (< 0.7x MDE)", True,
+          bool(abs(dig(f3, "M_GLOBAL_vs_M75", "effect_over_mde")) < 0.7))
+    check("  leave-fold-out m vs M75", 0.0075, dig(f3, "M_LFO_vs_M75", "effect"), basis="chain")
+    exact("  THE DEPLOYABLE ARM HAS THE WRONG SIGN on the endpoint", True,
+          bool(dig(f3, "M_LFO_vs_M75", "effect") > 0))
+    exact("  and it is a coin flip: W == L", True,
+          bool(dig(f3, "M_LFO_vs_M75", "W") == dig(f3, "M_LFO_vs_M75", "L") == 63))
+    exact("  2/5 folds same sign", 2, int(dig(f3, "M_LFO_vs_M75", "folds_same_sign")))
+    show("  the LFO transfer as a share of the ORACLE gain (built chain)",
+         round(dig(f3, "M_LFO_vs_M75", "effect") / dig(f3, "PREFIX_vs_M75", "effect"), 4),
+         "negative = the wrong direction")
+    # S31-L11 carried to the endpoint
+    check("the matched random family's share of the prefix gain, BUILT CHAIN", 1.4055,
+          dig(f3, "share_of_prefix_gain_BUILT_CHAIN"), tol=1e-3, basis="chain")
+    exact("  the random family BEATS the prefix on the chain (share > 1)", True,
+          bool(dig(f3, "share_of_prefix_gain_BUILT_CHAIN") > 1.0))
+    exact("  the lane's registered bar FIRES on the chain as it did on the cloud", True,
+          bool(dig(f3, "BAR_FIRES_on_chain")))
+    rp = dig(f3, "RANDOM_vs_PREFIX")
+    check("  random draw 0 vs PREFIX", -0.1368, rp[0]["effect"], basis="chain")
+    exact("  both draws agree in sign and both are 5/5 folds", True,
+          bool(rp[0]["effect"] < 0 and rp[1]["effect"] < 0 and
+               rp[0]["folds_same_sign"] == rp[1]["folds_same_sign"] == 5))
+    check("  draw-to-draw sd of the random family", 0.0157,
+          dig(f3, "means", "RANDOM_sd_over_draws"), tol=1e-3, basis="chain")
+    exact("  the draw spread is far smaller than the effect (not a lucky draw)", True,
+          bool(dig(f3, "means", "RANDOM_sd_over_draws") < 0.25 * abs(rp[0]["effect"])))
+    # the basis price that made S29-L30's quotation wrong
+    cp = dig(f3, "cloud_cross_check", "cloud_to_chain_price")
+    check("the cloud->chain price on production", 0.1643, cp["M75"], basis="none")
+    exact("every arm pays a cloud->chain price of 0.14-0.17 A -- which is why the "
+          "cloud transfer was never an endpoint statement", True,
+          bool(all(0.13 < v < 0.17 for v in cp.values())))
+    # geometry: none of this is an invalid-structure artefact
+    g = dig(f3, "geometry")
+    for k in g:
+        exact("  %s has valid geometry (virtual bond 3.804, sd ~0)" % k, True,
+              bool(abs(g[k]["bond_mean"] - 3.80395) < 1e-3 and g[k]["bond_sd"] < 1e-12))
+except Exception as e:
+    MISSING.append("lane F F3-chain block (%s)" % e)
+
 # ================================================== EVERY PATH THE LEDGER CLAIMS TO HAVE WRITTEN
 print()
 print("--- every path any S31 ledger entry names (parsed from the ledger, not hand-kept) ---")
