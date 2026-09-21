@@ -75,7 +75,7 @@ float64 bits.
 ```
 best sparse convex combination, K=500, s=10      1.1139        2.10 A of headroom
 best single member, K=500                        1.7078        1.50 A of headroom
-  + distogram SCORE prefix, 500 -> 128          +0.4350   ->   2.1435
+  + distogram SCORE prefix, 500 -> 128          +0.4357   ->   2.1435
   + prefix 128 -> 75                            +0.1620   ->   2.3055
   + selection / readout (uniform average)       +0.9051   ->   3.2105   PRODUCTION
 ```
@@ -131,8 +131,8 @@ endpoint; and a matched **random-subset** family reaches **141%** of the prefix 
 chain, because prefix variants are nested (lag-1 autocorrelation 0.917 against 0.112) so a
 less-correlated family has a larger per-target minimum.
 
-**The corrected increment sentence:** *narrowing 500 → 128 → 75 costs 0.595 A of oracle-best
-headroom; 0.338 is the set-size order statistic; the remaining 0.257 is 18 targets' worth of the
+**The corrected increment sentence:** *narrowing 500 → 128 → 75 costs **0.598 A on the BUILT CHAIN** (0.595 on the member/cloud basis —
+name the basis) of oracle-best headroom; 0.338 is the set-size order statistic; the remaining 0.257 is 18 targets' worth of the
 score placing its window wrongly, and is NOT MEASURED on the other 108.*
 
 **Rank moments, both true and different:** the K=500 best member sits at mean rank **170.3**, median
@@ -244,6 +244,53 @@ worse, **+0.0622 at 1.47x**. The reason is that the contraction is **separation-
 has been quoting past each other** — the "3.5% contraction" in project memory and
 `core/project.py`'s "2.96 against 3.80" are **both right and measure different separations. Neither
 may be substituted for the other.**
+
+### 5.5 The branch-selection hypothesis was mine, and it is falsified on the endpoint
+
+**I opened lane R on a specific mechanism**: `core/project.py` documents two ideal-geometry torsion
+solutions *"one Ramachandran-plausible and one not"*, with the reference disagreeing with itself by
+up to 1.6 A; every native-free ranker this project has tested is a distance-map function and
+therefore **achiral** by theorem G1; **so a chiral criterion should be able to pick the branch where
+an achiral one provably cannot.** Lane V tested it as a deployable argmin arm, chain basis, paired
+in the same job, tie-averaged, independently of lane R (n = 103 at the time of writing; production
+in that job is **3.1865** over the subset, and every arm is paired to *it*):
+
+```
+ORACLE best branch                    3.0768   -0.1097 vs production   ORACLE / NOT DEPLOYABLE
+  SPLIT-HALF TRANSFER                          -0.0051  =  5.0% of the oracle  ->  NOT A SIGNAL
+random branch, 300 draws              3.1914   +0.0049  (draw sd 0.0079)
+```
+
+> ### Production's multi-start argmin is worth 0.005 A over picking a branch with a coin. Any branch-selection rule is competing for 0.11 A of oracle headroom against an incumbent that is 0.005 A better than random — and **95% of that 0.11 A is an order statistic that does not survive a split half.**
+
+And the sixteen native-free criteria, x {all branches, GEN4-only} = **32 comparisons**:
+
+```
+best of 32:   d_to_C      -0.0095   0.56x   5/5   58W/43L    NOT A RESULT
+              obj0        -0.0071   0.42x        rg        +0.0052  0.18x
+              rama_nlp    +0.0006   0.03x        ramah     -0.0007  0.04x
+              disto_risk  +0.0562   0.98x  NOT MEASURED, wrong direction
+              typicality  +0.3434   2.35x  RESULT -- in the WRONG direction, 27W/75L
+```
+
+**`rama_nlp` — the chiral Ramachandran criterion the lane was opened for — lands at 0.03x MDE.**
+Nothing reaches even the 0.7x band except in the wrong direction, and that is *before* charging the
+search: the best of 32 comparisons has an achieved MDE well above its nominal one. On the
+**compute-matched** GEN4-only subset — production searches 4 starts, so an arm searching ~200 and
+winning is a bigger search rather than a better selector — the best is 0.42x.
+
+***`typicality` at +0.3434, 2.35x, 5/5 folds is load-bearing as a positive control***: the machinery
+*can* emit a RESULT, so the sixteen nulls are a measurement rather than a broken pipeline. (That it
+is a RESULT in the *wrong* direction — the most typical branch is much worse — is consistent with
+consensus being outlier avoidance rather than a nativeness signal.)
+
+**Two checks came out in the lane's favour and are recorded as such.** The branches are **genuinely
+distinct structures, not arithmetic noise** — 207.5 per target, 152.7 distinct at 1e-3 A, with
+within-cluster `rmsd_nat` spread of median **0.00e+00** and p95 4.1e-04 — so the ULP discontinuity
+does *not* dissolve the arm. The adversary went looking for that and did not find it.
+
+> **The hypothesis was specific, the mechanism was named in advance, the falsifier was the right one,
+> and it fired. That is the cleanest negative in the sprint and it is the coordinator's.**
 
 ### 5.4 Bit-exactness, the strong form
 

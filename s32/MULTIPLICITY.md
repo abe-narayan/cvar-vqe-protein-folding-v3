@@ -915,3 +915,6 @@ artefact, offered so two vocabularies are not mistaken for two findings:
 Every other lane-L arm is deterministic. The fix (a stable digest of the pdb code in place
 of `hash`) is applied to the module **after** this run so that code and artefact are never
 silently inconsistent; the artefact predating the fix is flagged here.
+| R-16 | R | GEN4D named-start choice: ORACLE global + LEAVE-FOLD-OUT vs PROD | **E** | built chain n=126 | pending | pending | EXPLORATORY; written after best-of-K showed GEN4D is the only family whose split-half transfer is materially non-zero (-0.1338, 64% of its own oracle) |
+| R-17 | R | MEDOID_EXTRA / SCALE_NF / SCALE_NF_MED vs PROD (CHAIN basis) | R (R4) | built chain n=126 | pending | pending | R4 deployable arms |
+| R-18 | R | SCALE_GRID per-target ORACLE, priced best-of-K + split-half | R (R1) | built chain n=126 | pending | pending | order-statistic pricing of the scale axis |
