@@ -3022,6 +3022,37 @@ geometry. **Peptide geometry, chirality and continuity are guaranteed by constru
 emitted arm; no arm here buys a cloud RMSD with impossible coordinates.** The *cloud* arms are not
 structures and their bond statistics say so -- that is the point, not a defect.
 
+### 7b. A LESSON ABOUT `AVG_SEP` THAT IS NOT ABOUT `AVG_SEP`
+
+*Appended 2026-09-21 01:12 after the adversary's read, and it is a criticism I accept.*
+**`AVG_SEP` was the only arm in this entry carrying none of the four registered geometry
+secondaries**, while `AVG` and `MED` carried all four -- and it is the one arm that **constructs**
+a structure (rescale the distance matrix, re-embed by MDS) rather than **selecting or averaging**
+existing ones. **Invalid geometry is live for a constructing operator and merely formal for a
+selecting one, so the arm that needed the geometry columns most was the one that had them least.**
+The row schema was written when the arm did not exist and I extended the arm without extending the
+schema.
+
+What the one column it did carry already said, and which I did not report until asked:
+
+```
+MOVE = CA-RMSD between an operator's output and its stage-3b projection, n = 126, NATIVE-FREE
+  AVG       0.8135 mean   1.7815 max
+  MED       0.0500 mean   0.4282 max     <- a real backbone; the projection barely touches it
+  AVG_SEP   0.7921 mean   1.7457 max     <- the MDS embedding is as un-chain-like as the average
+```
+
+**`AVG_SEP` was built to repair the average's geometry and it does not repair it at all**: stage 3b
+has to drag it essentially as far as it drags the average. That was visible in a native-free column
+before any endpoint number existed. *It is not a predictor of the damage* --
+`rho(MOVE(AVG_SEP), chain(AVG_SEP) - chain(AVG)) = -0.061` -- so it would not have been a gate; it
+would have been an **early warning that the operator does not do what its name claims**, which is
+`stats_lib.achieved`'s whole purpose and which I did not run on my own arm.
+
+**The rule for any future arm that CONSTRUCTS rather than SELECTS: carry the geometry secondaries
+from its first row, and check `achieved` -- does the operator do the thing it is named for -- before
+reading its endpoint.**
+
 ### 8. F2 -- WHAT ACTUALLY DISTINGUISHES THE TAIL
 
 **Primary strata are FILTER-INDEPENDENT.** `T_POOL` = worst 18 by `pool_mean` (a property of
