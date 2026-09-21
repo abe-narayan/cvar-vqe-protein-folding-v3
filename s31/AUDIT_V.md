@@ -50,6 +50,107 @@ C's `ORACLE_argmin128` **2.1457974841561676**, deviation **1.3e-15**. Same objec
 
 # DEFECTS
 
+## D0 — SEVERE, AND LIVE IN TWO LANES' CODE. THE `0.6931` COHERENCE BAR IS MEASURED ON A DIFFERENT OBJECT THAN EVERY ARM IT GRADES
+
+**Claimed** — `s31/STATE.md` NOTE 10, whose heading is *"NO RANKER CAN EVER PASS THE COHERENCE BAR"*:
+
+> *"`ORACLE best member 0.6708` ← the only arm under the **0.6931** bar … the ORACLE ceiling of all
+> in-pool ranking is 0.6708 against a 0.6931 bar — **even perfect selection barely clears it**. The
+> bar can only be passed by LEAVING THE POOL'S AFFINE HULL."*
+
+and, most consequentially: *"it predicts lane F's `AVG_SEP` should work … **if it passes it is the
+first native-free operator in the project's history to do so.**"*
+
+**What the artefacts say. The two `coh`s have different first arguments.**
+
+**S30's `coh`** (`s30/LEDGER.md` §4, the definition, verbatim): *"For a candidate **corrector** with
+residual `r_{t,p} = (expected − d_nat) − correction`, its coherence is
+`coh = mean over targets of corr_p(r_{t,p}, mu_{t,p})`."* The `0.6931` row is labelled
+**`UNCORRECTED (production)`, `R2_oof 0.000`, `applied delta 0 (baseline)`** — i.e. `correction = 0`,
+so **`r = expected − d_nat`: the DISTOGRAM'S OWN PREDICTION ERROR**, an *input* to scoring. S30's
+admission rule is stated for exactly that object: *"a **prior corrector** is worth building iff it
+LOWERS `coh` below the uncorrected error's own +0.6931."*
+
+**Lane B's / lane F's `coh`** (`s31/s31_B2_inpool.py:386-388`, verbatim): *"coh = within-target
+corr(**readout pair error**, pool common-mode pair error mu)"* — the **EMITTED STRUCTURE'S** error,
+the *output* of the pipeline.
+
+**They share only their second argument `mu`.** And the arithmetic proves the mismatch without any
+interpretation:
+
+```
+production, as it appears in S30's CORRECTOR table   coh = 0.6931   (distogram prediction error)
+production, as it appears in lane B / F's READOUT    coh = 0.9780   (emitted coordinate average)
+```
+
+**Same pipeline, same 126 targets, same `mu` — two numbers 0.285 apart, because they are two
+different errors.** `0.6931` is not, and has never been, a readout-space quantity.
+
+**Where it is live in code, not only in prose:**
+
+* `s31/s31_B2_inpool.py:386, 396, 475` — `admission_bar_S30: 0.6931` and a per-arm boolean
+  `admitted = bool(v.mean() < 0.6931)`.
+* `s31/s31_F_coh.py:46` — `BAR = 0.6931`; `s31/results/s31_F_coh.json` emits `admitted` and
+  `frac_targets_under_bar` for `AVG`, `MED`, `AVG_RG`, **`AVG_SEP`** and `ORACLE_best`.
+
+**`AVG_SEP` is the sprint's live deployable arm and it is being graded against this bar right now.**
+
+**And the matched analogue flips the verdict.** S30's rule takes its reference from *the object being
+corrected, uncorrected*. In readout space that reference is **production's own readout, 0.9780** —
+not 0.6931. Against the matched reference:
+
+```
+AVG (production, the reference itself)   0.9780      --
+AVG_SEP                                  0.9689   LOWER  -> admitted
+AVG_RG                                   0.9592   LOWER  -> admitted
+MED                                      0.8886   LOWER  -> admitted
+argmin by the shipped DIS                0.8288   LOWER  -> admitted
+argmin by a RANDOM pool member           0.8244   LOWER  -> admitted
+ORACLE best member                       0.6708   LOWER  -> admitted
+```
+
+**Everything passes.** The headline inverts from *"nothing can pass the bar"* to *"the bar as
+transplanted is uninformative in this space, and no readout-space bar has been established at all."*
+I flag my own construction as a construction: the honest minimum is that **0.6931 must not be used
+here**, and the direction of the flip is why it matters.
+
+**Independent arithmetic that the two families do not share a scale.** S30 calibrated coh→Å on
+correctors: 0.6931 → 0.5868 buys −0.126 Å, and → 0.5365 buys −0.247 Å (≈1.2–1.6 Å per unit coh). In
+readout space, 0.9780 → 0.6708 (`ORACLE_best`) is worth `best1_top75` 2.3055 against production
+3.2105 = **−0.9050 Å built chain** (≈2.9 Å per unit coh). Different reference points, ~2× different
+slope.
+
+**What SURVIVES, and it is the valuable part.** Lane B's **theorem** is sound and independently
+checks out: for any `Σ a_m = 1` the common mode passes through with coefficient exactly one, so
+`coh` is a function of the readout's **concentration** and not of the ranker — verified numerically
+at `uniform_mean_pairspace = 1.0000, sd 1.2e-16`. So is the empirical consequence that **the shipped
+cost and a random pool member differ by 0.0044 in `coh`**, a valid within-space comparison and a
+strong result. **Lane F also ran the correctly matched contrast alongside the mismatched one:**
+`coh(AVG_SEP) − coh(AVG) = −0.0090, 2.37× MDE, fold CI [−0.0108, −0.0066], 5/5 folds`. *That* is the
+meaningful number and it should carry the claim.
+
+**Corrected sentences:**
+
+> **(a)** `0.6931` is S30's coherence of the **uncorrected distogram prediction error** with the pool
+> common mode, and S30's admission rule is stated for **prior correctors**. It is not a readout-space
+> quantity and **must not be applied to terminal operators or rankers.** Production's own readout
+> sits at **0.9780** in readout space.
+>
+> **(b)** Lane B's theorem stands as derived: `Σa = 1` passes the common mode through with
+> coefficient exactly one, so `coh` tracks the readout's **concentration**, not the ranker — which is
+> why the shipped cost and a random pool member are 0.0044 apart. **No claim about "passing a bar"
+> follows, because no readout-space bar has been established.**
+>
+> **(c)** `AVG_SEP`'s coherence result is `coh(AVG_SEP) − coh(AVG) = −0.0090, 2.37× MDE, 5/5 folds`,
+> a matched paired contrast against production's own readout. It is **ORACLE / NOT DEPLOYABLE** (both
+> arguments need the native) and is a diagnostic of *why* an operator works, never a gate.
+
+**This is contract rule 8's sixth instance** (*"a statistic read against another statistic's null"*)
+**and contract rule 7's** (*"a control must match the operator's own space"* — the project's most
+repeated error). It reached shipped code in two lanes before anyone read the definition at source.
+
+---
+
 ## D1 — SEVERE. `0.076 Å of error cancellation` IS, AT MATCHED SEARCH SIZE, A `0.077 Å` PENALTY. THE REGISTERED BAR FIRED AND THE SIGN REVERSES
 
 **Claimed** — `s31/STATE.md` NOTE 2(b), the coordinator's own handed-back prediction, still
