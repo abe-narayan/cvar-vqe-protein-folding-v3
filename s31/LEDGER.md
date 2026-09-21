@@ -1662,7 +1662,7 @@ forbids silent cross-basis transfer.
 > sprint. It either closes the last gap in a two-sprint-old claim or finds the only place it
 > could move.
 
-## S31-L13 -- **THE EXACT OBJECTIVE OF EVERY AVERAGING READOUT IS AN IDENTITY: ||C-t||^2 = <w,a> - 1/2 w'Bw, WITH THE NATIVE-FREE HALF PAIRWISE AND **REPULSIVE**. SO THE READOUT AND RANKING QUESTIONS ARE ONE PROBLEM AND THE WHOLE DEFICIT IS : CROSSING PRICE rho = 0.211 AGAINST THE SHIPPED SCORE'S 0.1176, ORACLE CEILING 1.829 A AGAINST PRODUCTION 3.048. THE DEPLOYABLE ARMS ARE **WORSE** (+0.133 A, 1.17x MDE, 5/5) AND THE SHUFFLED-B CONTROL FIRES ON THE ONE POSITIVE. R1 IS HALF FALSIFIED AND THE SURVIVING HALF CAPS CAPACITY AT **6.886 BITS, NOT 7** (2026-09-21 00:21, A)
+## S31-L13 -- **THE EXACT OBJECTIVE OF EVERY AVERAGING READOUT IS AN IDENTITY: ||C-t||^2 = <w,a> - 1/2 w'Bw, WITH THE NATIVE-FREE HALF PAIRWISE AND **REPULSIVE**. SO THE READOUT AND RANKING QUESTIONS ARE ONE PROBLEM AND THE WHOLE DEFICIT IS THE PER-CANDIDATE QUALITY `a`: CROSSING PRICE rho = 0.211 AGAINST THE SHIPPED SCORE'S 0.1176, ORACLE CEILING 1.829 A AGAINST PRODUCTION 3.048. THE DEPLOYABLE ARMS ARE **WORSE** (+0.133 A, 1.17x MDE, 5/5) AND THE SHUFFLED-B CONTROL FIRES ON THE ONE POSITIVE. R1 IS HALF FALSIFIED AND THE SURVIVING HALF CAPS CAPACITY AT **6.886 BITS, NOT 7** (2026-09-21 00:21, A)
 
 **Basis: CA POINT CLOUD throughout (production 3.0483 Å). Nothing here is on the built chain
 (production 3.2105 Å).** Fold-clustered SE on the pinned 5 folds, MDE = 2.8016 × SE.
@@ -1893,3 +1893,325 @@ low, and over-predicted how badly quality-blind MEB would do, which flattered th
 making its failure look inevitable). `A3-frame` is the only clause where being right cost me
 something — it forbade substituting the deployed `Pt` for `B`.
 
+
+## S31-L14 -- **S30's "THE ARGMIN DOMINATES AT EVERY BIT BUDGET" IS A SET-MISMATCH ARTEFACT: ON A FIXED TOP-128 THE CONVEX READOUT IS -0.3450 A BETTER THAN THE ARGMIN (4.38x MDE, 5/5 FOLDS, 119W/4L).** AND THE WHOLE NATIVE-FREE CLASS IS CLOSED BY AN **EXACT IDENTITY**: A SUM-TO-ONE READOUT CAN ONLY ACT THROUGH THE CROSS TERM `2<c,Dw>`, AND EVERY NATIVE-FREE RULE MEASURED CAPTURES **3.96%** OF THE ORACLE'S WHILE PAYING DISPERSION THAT CANCELS IT TO WITHIN **0.01 A^2** (2026-09-21 00:20, C)
+
+Pre-registration `s31/PREREG_S31_C.md` at **8ce5e1a0**, amendment 1 at **2e12e02c**, both before the
+first lane-C number. Code `s31/s31_C_ladder.py`, `s31/s31_C_ident.py`. Artefacts
+`s31/results/s31_C_ladder.json`, `s31_C_ladder_rows.jsonl` (126), `s31_C_ident.json`.
+**Basis: CA POINT CLOUD** except the block headed BUILT CHAIN, which re-uses s29 lane O's already
+built chains and projects nothing (S31 operational rule: both sides of a chain contrast must be
+projected in the same job).
+
+## 1. THE SET-MISMATCH, WHICH INVERTS A PUBLISHED CLOSURE
+
+S30-L11 closed the sparse weighted readout "by price -- a plain argmin dominates at every bit
+budget", and supported it on the chain with **2-of-75 (2.1683) against 1-of-128 (2.1435)**. Those
+are different candidate sets, so the comparison is not about the readout. Holding the set fixed at
+the deployed top-128 (**ORACLE / NOT DEPLOYABLE**, CA point cloud, n = 126):
+
+```
+arm                                rmsd     vs argmin over the SAME 128
+prod_top75_uniform               3.0483        +0.9025   4.65x MDE  5/5 folds    3W/123L
+unif_prefix_m128 (native-free)   3.0435        +0.8977
+ORACLE argmin over 128           2.1458             --
+ORACLE convex over 128           1.8008        -0.3450  -4.38x MDE  5/5 folds  119W/4L
+ORACLE affine over 128           0.0000        -2.1458   (a tautology -- see section 4)
+```
+
+**BUILT CHAIN, from `s29/results/s29_O_chain_rows*.jsonl`, nothing rebuilt:**
+
+```
+production (uniform top-75 average)                3.2105
+bestm128  -- ORACLE prefix-average over the 128    2.9027    <- T1's ENTIRE reach, 0.308 below prod
+best1_top128 -- ORACLE argmin over 128 (7 bits)    2.1435
+hull_top128  -- ORACLE CONVEX weights over the 128 1.8538    <- 0.290 better than naming one
+best1_pool   -- ORACLE argmin over 500 (9 bits)    1.7078
+```
+
+**The honest two-sentence form, and it is the correction:** *as classes at a fixed candidate set,
+combining beats naming -- the convex readout is 0.290 A better on the built chain than naming the
+single best of the same 128. As an A-per-bit question across sets, naming wins -- the argmin over
+the whole 500 reaches 1.7078 for 9 bits where 2-of-128 with free continuous weights needs 12.99
+support bits plus an unbounded weight channel to reach 1.9138.* S30 published only the second and
+supported it with a set-mismatched pair.
+
+**One correction I owe the coordinator, made against my own message.** I told him S30's
+`T128_s2_unif` = 2.0700 was "2-of-128 with uniform weights, so the 0.076 A over the argmin is pure
+error cancellation and costs zero weight bits". The weights are indeed free, but that arm's
+**support is ORACLE-chosen** (greedy against the native, 12.99 bits, charged by S30). The
+increment from 1 to 2 members at matched ORACLE support is error cancellation; the arm as a whole
+is not free, and my sentence implied it was.
+
+## 2. THE IDENTITY THAT CLOSES THE NATIVE-FREE CLASS
+
+For **any** weight vector with `sum(w) = 1`, in the deployed common frame:
+
+```
+||X(w) - nat||^2 / n  =  c2  +  2<c, Dw>/n  +  ||Dw||^2 / n
+        c = Xbar - nat   (Xbar the unweighted set mean)      D = W - Xbar
+```
+
+`c2` is a property of the candidate set and **no readout of this form can touch it**: the shared
+component is preserved exactly by every convex *and* every affine combination. A readout beats the
+set mean only by making the **cross term** negative faster than it pays in `||Dw||^2`. Measured
+(A^2, mean over 126, same fixed top-128):
+
+```
+                          cross      ||Dw||^2    cross + ||Dw||^2     emitted rmsd
+unif_prefix_m128         +0.0000       0.0000        +0.0000            3.0435
+soft_T4.00 (native-free) -0.0353       0.0257        -0.0096            3.0391
+soft_T2.00               -0.0846       0.0969        +0.0123            3.0383
+soft_T1.00               -0.2025       0.3097        +0.1072            3.0442
+soft_T0.50               -0.4122       0.7096        +0.2974            3.0638
+soft_T0.25               -0.6615       1.2107        +0.5492            3.0983
+typ_T1.00 (typicality)   +0.1844       0.2708        +0.4552            3.0957   <- WRONG SIGN
+ORACLE argmin128        -10.8999       6.6853        -4.2146            2.1458
+ORACLE convex128        -10.4214       3.9984        -6.4230            1.8008
+ORACLE affine128        -24.1357      12.0678         0.0000            0.0000
+```
+
+**A sum-to-one readout helps if and only if `|cross| > ||Dw||^2`.** The ORACLE convex optimum runs
+at `|cross| = 2.61 x ||Dw||^2`. **Every native-free rule runs at approximately 1** -- the score's
+orientation toward the native is real and is cancelled, to within **0.01 A^2**, by the dispersion
+the concentration costs. Sharpening the softmax buys cross monotonically (-0.035 -> -0.662 as
+T falls 4 -> 0.25) and pays `||Dw||^2` faster every time.
+
+**The best native-free rule captures 3.96% of the ORACLE convex cross term.** That single number is
+the size of the whole native-free readout channel.
+
+*Frame caveat, stated because the decomposition needs it:* the identity is exact in the deployed
+common frame while every RMSD elsewhere is Kabsch-optimal. On the `m = 128` arm the two differ by
+**0.0216 A** (3.0651 in-frame against 3.0435 optimally superposed), and that gap is the size of the
+approximation in reading the table above as A rather than as A^2 of the frame.
+
+## 3. THE SATURATION LAW THE COORDINATOR PREDICTED -- CONFIRMED AT R^2 = 0.997
+
+Uniform averages over **random** `m`-subsets of the 128 (the exchangeable arm; MEAN of 8 draws,
+never the per-target minimum, contract rule 10), fitted as mean-square across targets:
+
+```
+MS(m) = c2 + v2/m      c2 = 11.8495    v2 = 4.2120    R^2 = 0.99700
+common-mode share at m = 1:  0.7378        (the coordinator predicted 0.68)
+fitted floor  c_rms = 3.4423 A            (RMS across targets; the mean-RMSD reading is 3.0435)
+```
+
+The law holds, and the floor is the set mean's own error -- which by section 2's identity **no
+sum-to-one readout, convex or affine, can go below with native-free weights.** The measured share
+0.7378 sits above the project's published 67.6%; the two are measured on different sets (this one
+is the top-128, the published one the top-75) and the difference is not interpreted here.
+
+## 4. F-C1d REFUTED -- THE AFFINE CEILING IS A DIMENSION-COUNTING TAUTOLOGY
+
+Registered pre-check (contract rule 22): the ORACLE affine ceiling is informative only if
+`ess >= 5` and `neg_mass <= 1` on a majority of targets.
+
+```
+ORACLE affine over the 128:  rmsd 0.000000
+median ess 1.13 of 128 | median neg_mass 3.38 | median ||w||_1 7.76 | median 3n 39
+targets with ess >= 5 AND neg_mass <= 1:  1.6%
+```
+
+**REFUTED, as I registered I expected.** 128 generic windows span a 39-dimensional coordinate
+space, so the affine hull contains the native exactly, reached by cancelling weights with an
+effective sample size near one. `s27/s28_A_FINDINGS.md:85-90` already said not to quote an
+affine-hull ceiling as a bound; this is that statement measured on this set.
+
+## 5. THE NORM-BOUNDED MIDDLE HAS NO KNEE, SO THE CONSTRAINT CANNOT BE CHOSEN BY CEILING
+
+The registered ladder rung: `w = argmin ||Aw - nat||^2 + lam*||w - u||^2` s.t. `sum(w) = 1`,
+closed form on the zero-sum subspace. **ORACLE / NOT DEPLOYABLE.**
+
+```
+lam      1e4     3162    1000     316     100      31.6     10      3.16     1      0.01    1e-6
+rmsd   2.7318  2.4044  1.9957  1.5816  1.1977  0.8598  0.5855  0.3881  0.2555  0.0250  0.0000
+||w||_1  1.01    1.13    1.47    2.09    3.08    4.49    6.29    8.37   10.82   24.80   28.32
+ess    112.3    86.3    56.2    30.9    15.4     7.8     4.5     3.0     2.2     1.5     1.5
+neg_m   0.007   0.066   0.234   0.545   1.040   1.746   2.647   3.683   4.911  11.899  13.662
+```
+
+**Smooth and monotone; there is no interior structure to find.** At `||w||_1 = 2.09` -- 0.545 of
+negative mass, ess 31 -- the ORACLE already reaches **1.5816 A, better than the argmin over the
+whole 500 (1.7108)**. So the coordinator's reframe ("what is the right constraint set on an
+otherwise too-expressive affine readout") **has no ORACLE answer**: the ceiling is a continuous
+function of the norm budget. A constraint here must be chosen by *generalisation*, which is
+section 6.
+
+## 6. F-C1c REFUTED -- THE ORACLE WEIGHTS ARE NOT IDENTIFIABLE FROM NATIVE-FREE FEATURES
+
+Target: the ORACLE convex weight vector minus uniform. Features: 7 native-free per-candidate
+quantities (z-scored DIS, rank, typicality, distance to the set medoid, Rg, virtual-bond length,
+score gap) plus a constant. Ridge, **leave-fold-out on the pinned folds**.
+
+```
+out-of-fold R^2  0.02103   against a registered 5% bar   ->  REFUTED
+APPLIED (contract rule 21, never quote an implied conversion alone):
+   fitted weights   3.0792      against the score-prefix-75 on the same set   3.0483
+   effect           +0.0309     0.37x MDE, 60W/66L -- i.e. WORSE, and below its own MDE
+   ORACLE convex on the same set                                             1.8262
+```
+
+The S30 lane-P pattern exactly: the predictable part of the weight vector is not the part that
+pays. **F-C1a is REFUTED** (best native-free arm `soft_T2.00`, **-0.0101 A at 0.56x MDE, NOT A
+RESULT**, and the record already had -0.0038 from a 30-arm sweep and a leakage-ORACLE grid that
+selects uniform). **F-C1b is CONFIRMED**: no native-free arm moves the bias by 0.10 A; all of the
+movement is dispersion, or a cross term two orders of magnitude below the ORACLE's.
+
+## 7. WHAT WOULD IT TAKE -- the axis priced, ORACLE / NOT DEPLOYABLE
+
+Stepping a fraction `f` along the ORACLE convex direction, `w(f) = u + f*(w_or - u)`:
+
+```
+f      0.00   0.10   0.20   0.30   0.40   0.50   0.70   1.00
+rmsd  3.0651 2.9232 2.7845 2.6495 2.5189 2.3934 2.1631 1.8994
+f needed for 3.00 A: 0.06      f needed for 2.50 A: 0.42
+```
+
+**This is not comparable to the 3.96% cross capture and must not be read as "4% against 6%".** The
+native-free rules obtain their cross term in a *different direction* that costs far more in
+`||Dw||^2`; `f` prices the ORACLE direction only. The row is here to give the axis a scale, not to
+suggest the two are 2 percentage points apart.
+
+## CONVERGENCE WITH TWO LANES THAT LANDED WHILE THIS RAN
+
+**Lane A (S31-L13)** derives the same object from the other side -- `||C-t||^2 = <w,a> - (1/2)w'Bw`
+with the native-free half pairwise and **repulsive** -- and reports its deployable arms **worse**
+(+0.133 A, 1.17x MDE, 5/5 folds) with the shuffled-`B` control firing on its one positive. Section
+2 here is the same conclusion in the `c2 / cross / ||Dw||^2` basis, reached from a different
+construction and with a different control. **Two independent derivations agreeing is worth stating,
+and per contract rule 25 it is worth stating that they are the same object and not two.**
+
+**Lane F (S31-L11)** finds `bestm128 = 2.9027` is an order statistic and the *prefix* axis is a
+worse-than-arbitrary 7-bit index, a matched random-subset family buying 146% of the prefix
+family's gain. S31-L15's independent finding that the best index map for a **deployable** partial
+readout is the **random permutation** is the same phenomenon at the index rather than at the
+prefix length.
+
+## COMPARISONS MADE (contract rule 23)
+
+Ladder: 11 named arms x 1 aggregate = 11, plus a 21-point m-curve on two supports (prefix and
+random) = 42 descriptive, 8 fold-clustered contrasts against the argmin, 33 against production.
+Identifiability: 1 out-of-fold fit + 1 applied contrast. Cross accounting: 8 native-free + 3
+ORACLE cross terms. Ridge path: 21 lam values, descriptive. **Read as results: F-C1a, F-C1b,
+F-C1c, F-C1d and the set-matched inversion -- 5.** No per-target maximum is reported anywhere in
+this entry.
+
+
+## S31-L15 -- **RE-INDEXING THE 7-BIT CANDIDATE REGISTER IS WORTH -0.0655 A ON AN ORACLE CEILING AND NOTHING DEPLOYABLE**, AND THE MECHANISM IS A **CONFLICT BY CONSTRUCTION**: STRUCTURE-AWARE INDEXING RAISES THE ORACLE VALUE OF A PARTIAL MEASUREMENT (2.4216 -> 2.2712) AND **LOWERS** ITS DEPLOYABLE VALUE (3.2369 -> 3.3721) -- THE BEST MAP FOR A DEPLOYABLE PARTIAL READOUT IS THE **RANDOM PERMUTATION**. PLUS: GRAY CODING IS A PROVEN NO-OP HERE, AND NO INDEX BIT CARRIES 0.07 BITS ABOUT CANDIDATE QUALITY (2026-09-21 00:20, C)
+
+Pre-registration as above. Code `s31/s31_C_index.py`; artefacts `s31/results/s31_C_index.json`,
+`s31_C_index_rows.jsonl` (126). **CA point cloud, n = 126.** The candidate set is held at the same
+deployed top-128 for every map, so only the assignment of basis states to candidates varies
+(contract rule 7, the matched-space control).
+
+## THE SIX MAPS AND THE THREE MEASUREMENTS
+
+```
+map            rho(Hamming, RMSD)   product-state ORACLE ceiling   total MI (bits)
+score (deployed)     +0.0487                  2.0646                   0.0824
+gray                 +0.0494                  2.0631                   0.0865
+bisect               +0.1782                  2.0092                   0.1584
+bisect_score         +0.1843                  1.9991                   0.1650
+spectral             +0.1758                  2.0141                   0.1421
+perm (control)       -0.0005                  2.0846                   0.0395
+
+anchors: production top-75 uniform 3.0483 | uniform over the 128 3.0435
+         ORACLE argmin over the 128 2.1458 | ORACLE convex over the 128 1.8008
+```
+
+**The matched zero-information control lands at rho = -0.0005, which is where it must land**, and
+it is the reason the +0.0487 of the deployed map can be read as a real if tiny amount of
+structural locality in the score order.
+
+## F-C2c REFUTED AS REGISTERED, AND THE DIRECTION IS RIGHT
+
+The registered pre-check needed `bisect` and `spectral` to raise rho by **>= 0.15** over `score`.
+They raise it by **+0.130 and +0.127** -- a 3.7x multiple of a very small number, and short of the
+bar. Reported as refuted, with the direction stated, because a near-miss on a near-tautological
+pre-check is not evidence for the family.
+
+## GRAY CODING IS A NO-OP, PROVED AND THEN MEASURED
+
+Registered in advance as an analytic expectation: a `j`-bit prefix cell under the reflected Gray
+code is the same block as under binary, up to reflection, so Gray coding can change only Hamming
+geometry. **Asserted in code on 126/126 targets: the j-bit prefix PARTITION is identical for
+j = 1..6.** Measured consequence: rho +0.0494 against +0.0487, product-state ceiling **-0.0014 A at
+0.03x MDE**, partial-measurement cells identical to five decimals. **Gray-code candidate encoding
+is closed.**
+
+## F-C2a REFUTED -- the ORACLE ceiling moves, by less than the registered bar
+
+```
+map vs score, ORACLE product-state ceiling    effect    xMDE   fold CI            folds   W/L
+bisect_score                                  -0.0655  -1.34   [-0.0818,-0.0480]   5/5   82W/44L
+bisect                                        -0.0553  -1.11   [-0.0660,-0.0465]   5/5   80W/46L
+spectral                                      -0.0504  -0.84   [-0.0591,-0.0365]   5/5   73W/53L
+gray                                          -0.0014  -0.03   [-0.0262,+0.0313]   3/5   60W/66L
+perm                                          +0.0200  +0.34   [-0.0172,+0.0535]   4/5   61W/65L
+```
+
+Real, above its own MDE, 5/5 folds -- and **-0.0655 A against a registered -0.10 bar, on an ORACLE
+ceiling that deploys nothing.** REFUTED.
+
+## THE ROW THAT IS WORTH MORE THAN THE FALSIFIER
+
+The product-state ceilings are **2.0646 (score map) and 1.9991 (bisect_score)**, and the ORACLE
+argmin over the same 128 is **2.1458**. **ORACLE / NOT DEPLOYABLE, CA point cloud:**
+
+> **Seven qubits read out as a product-state weighted average beat the same seven qubits read out
+> as a selection, by 0.081 A on the deployed index map and 0.147 A on the best one.**
+
+And the product restriction costs **0.26 A** against the unrestricted convex optimum over the same
+128 (1.8008). So the ansatz's product structure is a real but second-order loss, and the readout
+class is the first-order one. This is the same ordering S31-L14 found from the classical side.
+
+## F-C2b REFUTED, AND ITS MECHANISM IS THE C2 FINDING
+
+Measuring `j` of the 7 bits localises a cell of `2^(7-j)` candidates, which is then averaged.
+ORACLE-best cell against two native-free cell rules (best mean DIS; most typical):
+
+```
+map            j    ORACLE   by_score   by_consensus   mean cell
+score          5    2.4216     3.2369      3.3126       3.2441
+bisect         5    2.2712     3.3721      3.3541       3.4093
+spectral       5    2.3022     3.2430      3.2840       3.3370
+perm           5    2.5170     3.1753      3.1932       3.1912
+```
+
+**Structure-aware indexing raises the ORACLE value of a partial measurement and lowers its
+deployable value, and the two move in opposite directions BY CONSTRUCTION.** Differentiating the
+cells makes the best cell better (2.4216 -> 2.2712) and the chosen cell worse (3.2369 -> 3.3721),
+because a coherent cell is a *concentrated* set and concentration is worth zero through an
+averaging terminal -- S31-L14's identity, arriving at the index.
+
+The best native-free triple over the whole 72-cell grid is **`perm`, j = 2, by_score -> 3.0323,
+i.e. -0.0160 A against production**, which is REFUTED against the -0.10 bar. **The best index map
+for a deployable partial readout is the random permutation.** Order-statistic price of the grid
+(contract rule 11): per-target best-of-72 gain -0.6466, across-target null -1.2522, **194%
+accounted**; split-half transfer **-0.1486, 23% of the ORACLE gain** -- so a per-target choice of
+(map, j, rule) is mostly best-of-k and the transferable part is not the arm reported above.
+
+## THE ANSWER TO "MAKE EACH QUBIT A MEANINGFUL DISTINCTION", IN BITS
+
+Mutual information between each index bit and "this candidate is in the ORACLE-best decile of the
+128" (ORACLE, and a diagnostic only):
+
+```
+bit             1       2       3       4       5       6       7     total
+score      0.0343  0.0176  0.0082  0.0067  0.0064  0.0044  0.0047   0.0824
+bisect     0.0658  0.0388  0.0236  0.0134  0.0091  0.0045  0.0032   0.1584
+perm       0.0053  0.0048  0.0065  0.0069  0.0045  0.0066  0.0050   0.0395
+```
+
+**The best available map doubles a quantity that is 0.034 bits.** No single index bit carries even
+0.07 bits about candidate quality, against the 7 bits the register nominally holds. The charter's
+goal -- make each qubit correspond to a scientifically meaningful candidate distinction -- is
+achievable in *direction* (bisect roughly doubles bits 1-3, and the permutation control sits flat
+at 0.005) and is **two orders of magnitude short in size.**
+
+## COMPARISONS MADE (contract rule 23)
+
+6 maps x (1 rho + 1 ceiling + 6 j-levels x 4 cell statistics + 7 bit MIs) = **222 descriptive**;
+5 fold-clustered contrasts for F-C2a; 1 grid maximum priced two ways. **Read as results: F-C2a,
+F-C2b, F-C2c and the Gray no-op -- 4.** The 72-cell grid is never quoted without its
+order-statistic price.
