@@ -71,3 +71,47 @@ the endpoint, and the ORACLE global `m` is −0.0044 at 0.19×. So the cost cann
 averaging fewer structures. Lane R owns whether it can be dodged at all.
 
 ---
+
+## S32-L2 -- **THE READOUT PROGRAM IS CONVEX AND REWARDS SPREAD; AND MY FIRST VERIFICATION OF THAT WAS VACUOUS** (2026-09-21 08:07, coordinator)
+
+Artefacts: `s32/s32_readout_identity.py`, `s32/results/s32_readout_identity.json`. Seed 320001.
+
+**The claim.** For any `Σw = 1`, with `a_x = ‖W_x − t‖²` (**ORACLE**) and `B_xy = ‖W_x − W_y‖²`
+(**native-free**):
+
+```
+|| sum_x w_x W_x - t ||^2  =  <w, a>  -  0.5 * w' B w
+```
+
+`B` is a Euclidean squared-distance matrix, so for `Σv = 0`, `v'Bv = −2‖Σ v_x u_x‖² ≤ 0` with
+`u_x = W_x − t`. Hence `w'Bw` is **concave** on the simplex, `−½w'Bw` is **convex** there, and the
+program is linear + convex = **convex, with no hyperparameter**.
+
+**Reading the two terms, which is the part worth having in one sentence:** minimising wants **low
+`⟨w,a⟩`** (individually good candidates) and **high `w'Bw`** (maximally *spread* candidates — the
+variance-cancellation term). ***Spread is rewarded, not penalised.*** That is why quality-blind
+dispersion maximisation — this same program with `a` held constant — picks garbage: S31 measured it
+at **+0.1436 Å, 1.22× MDE, WORSE**. **`a` is load-bearing and it is the only unknown.**
+
+Verified in four regimes chosen because they are what could break it: a generic pool, a pool **with
+duplicate candidates** (real pools have them), a **near-collinear** family, and **every candidate
+identical** so that `B = 0`. Identity holds to **6.2e-16** worst-case; conditional negative
+semidefiniteness holds in all four.
+
+> **AND THE VERIFICATION I RAN FIRST WAS VACUOUS, one hour after I wrote the rule that forbids it.**
+> Contract rule 5 says *a verification must be able to fail*. My first convexity check initialised
+> the accumulator at the pass threshold (`worst = 0.0`) and then took a **max over quantities that
+> are always negative** — so it reported `+0.000e+00` in every regime, including regimes where the
+> true value is `−2.6e-01`, and **it could not have failed on any input.** It is the same shape as
+> S31's tie claim "verified" on random floats, which never tie.
+>
+> **The fix is not a better threshold; it is a positive control.** The shipped version reports
+> **both ends** of the range — so a vacuous pass is visible on its face — and runs a symmetric
+> non-negative matrix that is **not** a squared-distance matrix, asserting the test **catches** it
+> (`+2.685e-01`, caught). *An audit ships with a self-test on the defect that motivated it.*
+
+**Recorded against myself deliberately.** S31's finding was that the coordinator's own claims are
+the ones no lane audits. This is the first S32 instance and it was caught by re-reading my own
+output, not by a lane.
+
+---

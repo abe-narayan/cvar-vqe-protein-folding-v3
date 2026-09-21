@@ -1,0 +1,42 @@
+{
+ "seed": 320001,
+ "regimes": {
+  "generic": {
+   "identity_rel_err": 4.601114433397609e-16,
+   "max_vBv": -0.2573437716963324,
+   "min_vBv": -1.0811715231078198,
+   "identity_ok": true,
+   "cnsd_ok": true
+  },
+  "duplicates": {
+   "identity_rel_err": 5.920476382305874e-16,
+   "max_vBv": -0.09385197432195713,
+   "min_vBv": -1.6567607699807498,
+   "identity_ok": true,
+   "cnsd_ok": true
+  },
+  "near_collinear": {
+   "identity_rel_err": 4.66416391333372e-16,
+   "max_vBv": -0.05207210575710624,
+   "min_vBv": -0.8622184852741325,
+   "identity_ok": true,
+   "cnsd_ok": true
+  },
+  "all_identical": {
+   "identity_rel_err": 2.9494916577736305e-16,
+   "max_vBv": 0.0,
+   "min_vBv": 0.0,
+   "identity_ok": true,
+   "cnsd_ok": true
+  }
+ },
+ "positive_control": {
+  "max_vBv": 0.26845041362617283,
+  "min_vBv": -1.1452614338379492,
+  "caught": true
+ },
+ "identity_holds_all_regimes": true,
+ "cnsd_holds_all_regimes": true,
+ "selftest_caught_control": true,
+ "CONCLUSION": "<w,a> - 0.5 w'Bw is linear + convex on the simplex; the program is convex and tuning-free. Spread is REWARDED, not penalised."
+}
