@@ -1,0 +1,777 @@
+{
+ "1A13": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 100
+ },
+ "1A1P": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 30
+ },
+ "1CB3": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 200
+ },
+ "1CEK": {
+  "method": "SOLID-STATE NMR",
+  "res": null,
+  "nres": 25,
+  "nconf": 24
+ },
+ "1CS9": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 9,
+  "nconf": 50
+ },
+ "1DEP": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": null
+ },
+ "1DJF": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 50
+ },
+ "1FUV": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 11,
+  "nconf": 100
+ },
+ "1G89": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 100
+ },
+ "1I6Y": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 200
+ },
+ "1I8E": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 200
+ },
+ "1ID6": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 750
+ },
+ "1IM7": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 50
+ },
+ "1KMR": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 78
+ },
+ "1KWE": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 100
+ },
+ "1KYC": {
+  "method": "X-RAY DIFFRACTION",
+  "res": [
+   1.45
+  ],
+  "nres": 16,
+  "nconf": null
+ },
+ "1LB7": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 80
+ },
+ "1MF6": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 15
+ },
+ "1N9U": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 10,
+  "nconf": 300
+ },
+ "1NIZ": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": null
+ },
+ "1RG4": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 40
+ },
+ "1RSW": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 50
+ },
+ "1TOR": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 10,
+  "nconf": null
+ },
+ "1U62": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 100
+ },
+ "2BAO": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 10,
+  "nconf": 50
+ },
+ "2BP4": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 1000
+ },
+ "2EFZ": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 100
+ },
+ "2JN5": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 250
+ },
+ "2L7T": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 11,
+  "nconf": 200
+ },
+ "2FBU": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 100
+ },
+ "2F3A": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 100
+ },
+ "2BFI": {
+  "method": "X-RAY DIFFRACTION",
+  "res": [
+   1.1
+  ],
+  "nres": 12,
+  "nconf": null
+ },
+ "1S9Z": {
+  "method": "X-RAY DIFFRACTION",
+  "res": [
+   2.01
+  ],
+  "nres": 18,
+  "nconf": null
+ },
+ "1M23": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 30
+ },
+ "1M02": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 100
+ },
+ "1KZ2": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 50
+ },
+ "1JBF": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 50
+ },
+ "1I93": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 200
+ },
+ "1D6X": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 97
+ },
+ "1D0W": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 100
+ },
+ "2LER": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 11,
+  "nconf": 100
+ },
+ "2LM8": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 100
+ },
+ "2LNG": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 100
+ },
+ "2LU6": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 100
+ },
+ "2LWS": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 50
+ },
+ "2MAA": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 20
+ },
+ "2MAI": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 20
+ },
+ "2MD2": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 10,
+  "nconf": 100
+ },
+ "2MFV": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 50
+ },
+ "2MID": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 20
+ },
+ "2MK7": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 11,
+  "nconf": 50
+ },
+ "2MLQ": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 100
+ },
+ "2MP9": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 20
+ },
+ "2MQ2": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 100
+ },
+ "2N9M": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 100
+ },
+ "2NB7": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 17,
+  "nconf": 200
+ },
+ "2NBC": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 17,
+  "nconf": 30
+ },
+ "2NDN": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 50
+ },
+ "2O0S": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 100
+ },
+ "2P5H": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 9,
+  "nconf": 100
+ },
+ "2RUO": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 100
+ },
+ "2XL1": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 24,
+  "nconf": 100
+ },
+ "3BTB": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 400
+ },
+ "5H1H": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 100
+ },
+ "5V5B": {
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "res": [
+   1.5
+  ],
+  "nres": 10,
+  "nconf": null
+ },
+ "5W52": {
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "res": [
+   1.4
+  ],
+  "nres": 11,
+  "nconf": null
+ },
+ "6A5J": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 100
+ },
+ "6B9K": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 10,
+  "nconf": 100
+ },
+ "5Z5W": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 200
+ },
+ "5NVB": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 200
+ },
+ "5MXS": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 30
+ },
+ "5MML": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 17,
+  "nconf": null
+ },
+ "3SGO": {
+  "method": "X-RAY DIFFRACTION",
+  "res": [
+   2.557
+  ],
+  "nres": 11,
+  "nconf": null
+ },
+ "2NDM": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 50
+ },
+ "2N9A": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 40
+ },
+ "2N5C": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 20
+ },
+ "2MSA": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 50
+ },
+ "2MJQ": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 11,
+  "nconf": 100
+ },
+ "2MIG": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 20
+ },
+ "2LWU": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 50
+ },
+ "6BJF": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 20
+ },
+ "6BX9": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 100
+ },
+ "6EY3": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 9,
+  "nconf": 100
+ },
+ "6F3V": {
+  "method": "SOLID-STATE NMR",
+  "res": null,
+  "nres": 9,
+  "nconf": 500
+ },
+ "6GIJ": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 200
+ },
+ "6HVK": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 100
+ },
+ "6QAX": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 100
+ },
+ "6RRL": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 100
+ },
+ "6RRO": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 11,
+  "nconf": 100
+ },
+ "6S0N": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 9,
+  "nconf": 20
+ },
+ "6TWG": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 100
+ },
+ "7BX2": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 100
+ },
+ "7JGX": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 50
+ },
+ "7JS6": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 100
+ },
+ "7N2I": {
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "res": [
+   1.402
+  ],
+  "nres": 9,
+  "nconf": null
+ },
+ "7P3M": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 200
+ },
+ "7QZV": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 100
+ },
+ "7T3H": {
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "res": [
+   1.05,
+   1.05
+  ],
+  "nres": 10,
+  "nconf": null
+ },
+ "7VI4": {
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "res": [
+   0.95
+  ],
+  "nres": 10,
+  "nconf": null
+ },
+ "7YFS": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 100
+ },
+ "8FLP": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 100
+ },
+ "8HVS": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 10,
+  "nconf": 100
+ },
+ "8TXS": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 200
+ },
+ "8UN8": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 2780
+ },
+ "9BAF": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 17,
+  "nconf": 100
+ },
+ "8ZG2": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 11,
+  "nconf": 200
+ },
+ "8T63": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 5000
+ },
+ "8T62": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 5000
+ },
+ "8T61": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 5000
+ },
+ "8IS3": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 10,
+  "nconf": 200
+ },
+ "8IL1": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 100
+ },
+ "7S3O": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 1000
+ },
+ "7LCW": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 100
+ },
+ "6WPB": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 100
+ },
+ "6Q08": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 200
+ },
+ "6OQP": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 100
+ },
+ "6MK8": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 100
+ },
+ "6MBM": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 16,
+  "nconf": 20
+ },
+ "6J9P": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 200
+ },
+ "6CEJ": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 100
+ },
+ "9BFL": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 11,
+  "nconf": 50
+ },
+ "9KAR": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 15,
+  "nconf": 50
+ },
+ "9S5G": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 13,
+  "nconf": 100
+ },
+ "9WXK": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 14,
+  "nconf": 200
+ },
+ "9UV5": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 10,
+  "nconf": 200
+ },
+ "9L1M": {
+  "method": "SOLUTION NMR",
+  "res": null,
+  "nres": 12,
+  "nconf": 20
+ }
+}

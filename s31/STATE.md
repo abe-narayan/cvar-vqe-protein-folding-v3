@@ -51,6 +51,133 @@ published 32-cost sweep, and lane E killed my opening hypothesis with an exact i
 
 ---
 
+## NOTE 8 (2026-09-21 00:17, lane A, S31-L?): **THE READOUT'S OBJECTIVE IS AN EXACT IDENTITY, HALF OF IT IS NATIVE-FREE, AND IT PROVES THE READOUT AND RANKING PROBLEMS ARE ONE PROBLEM**
+
+For **any** weights with `sum_x w_x = 1` — non-negativity **not** required, so this covers the
+selection, convex and affine readouts *and* the uniform average in one formula — and any fixed frame:
+
+```
+|| sum_x w_x W_x  -  t ||^2_F   =   <w, a>  -  (1/2) w' B w          EXACT
+    a_x  = ||W_x - t||^2_F      ORACLE      (per-candidate squared error)
+    B_xy = ||W_x - W_y||^2_F    NATIVE-FREE ((1/2) w'Bw = tr Sigma_w, the weighted dispersion)
+```
+
+Verified by lane A to **7.7e-14** max relative error over simplex *and* affine draws. I checked the
+algebra independently: with `C - t = sum_x w_x (W_x - t)` and
+`B_xy = a_x + a_y - 2<W_x-t, W_y-t>`, both cross-sums collapse **because `sum w = 1`** — which is
+exactly why non-negativity is unnecessary.
+
+**Three consequences, and the first says my own proposal had the sign backwards:**
+
+1. **The native-free half carries a MINUS sign.** At fixed candidate quality the readout should
+   **MAXIMISE** weighted mutual dispersion. The `H = diag(zrank) - lambda*W(similarity)` I asked
+   lane A to attack first is **attractive**; the derivation says **repulsive**.
+2. **The attractive branch cannot produce a distribution at all.** `B` is a squared-distance matrix,
+   hence conditionally negative definite, so `w -> w'Bw` is **concave** on the simplex; the derived
+   objective is convex for the repulsive sign and **concave** for the attractive one, and a concave
+   function on a polytope is minimised **at a vertex**. Consensus-attraction therefore degenerates
+   to *"pick the single best-scoring candidate"* — **the shipped argmin. A theorem, not a
+   measurement.**
+3. **The forced Hamiltonian `H[w] = diag(a_hat) - B` is mean-field and quartic in psi, not an
+   operator** — so there is **no per-shot eigenvalue to take a CVaR of.** That reaches lane L's
+   conclusion by a second, independent road.
+
+> **AND THE UNIFICATION, WHICH IS THE STRONGEST THING IN LANE A's WORK:** the exact objective for
+> the continuous readout is known and **half of it is free**. The only unknown is `a`, the
+> per-candidate quality — *precisely what this project has spent five sprints failing to estimate.*
+> **The readout question and the ranking question are not two problems; the identity proves they are
+> the same problem** — and it lets us price it.
+
+**This also makes S30's `set_mean^2 ~ B^2 + S^2` exact.** That decomposition said spread is the raw
+material for an averaging terminal and concentration is worth zero; the identity says the same thing
+with an equals sign and a native-free second term. **S30 only ever tested *reducing* spread. Nobody
+has tested deliberately increasing it.** I have asked lane A to add an `a_hat = const` rung —
+quality-blind, pure dispersion maximisation, **fully native-free and deployable today** — as the
+extreme of its price curve. I expect it to be poor (it will load the worst candidates), but it
+**bounds the free half's standalone value**, which is a number nobody has.
+
+**Lane A's own caveat, enforced against itself:** the deployed `block` is **not** `B`. `Pt` is
+pairwise RMSD with *per-pair* optimal superposition; `B` needs one *common* frame, and substituting
+`n*Pt^2` breaks the identity at 0.4–1.7% median relative error. Small, real, and not licensed.
+
+---
+
+## NOTE 7 (2026-09-21 00:17, lane L, S31-L9): **CHARTER §14 IS CLOSED — AND THE BINDING CONSTRAINT IS INFORMATION PROVENANCE, NOT G1 GEOMETRY**
+
+Nobody in this project had checked the benchmark's provenance. **92.9% of `tuning126` is
+NMR-determined** — 115 solution NMR (91.3%), 5 electron crystallography, 4 X-ray (3.2%), 2
+solid-state NMR (RCSB GraphQL, all 126).
+
+**(a) The data-processing inequality supersedes G1.** Any observable computed at inference from
+(sequence, pool) adds **no information whatever equivalence class it sits in**. It can only be a
+better *estimator*, and that ceiling is already measured — in-band ordering **0.600** across targets
+against the **0.638** needed for 2.0 Å. **G1 told us which geometric equivalence class an observable
+sits in; the DPI says the entire class is informationally empty regardless of geometry.**
+
+**My extension, put back to lane L to attack rather than accept:** the pool is itself
+`f(sequence; universal library)`, so by the same DPI it adds nothing beyond the sequence either.
+S30 had three sources; lane P repaired it to two; **this collapses it to one.**
+
+> **All target-specific information in this system is the sequence. The pool, the distogram, every
+> field, every energy, every free energy, every graph statistic is post-processing — and
+> post-processing cannot add information. The only question ever available was estimator quality.**
+
+**(b) And for most of the benchmark, a real measurement would be circular too.** For **117/126**
+targets the deposited coordinates **ARE a fit** to the deposited NOEs, J-couplings and torsion
+restraints — so **any NMR observable of those targets is ORACLE through a different door.**
+
+**(c) Retroactive re-pricing of a closed direction's REASON:** TALOS+/TALOS-N dihedral restraints
+derived from chemical shifts are standard practice in NMR peptide structure determination, so on
+NMR-determined targets S27's *"ORACLE-perfect torsions"* was **close to a tautology.** Stated as
+standard practice, **not verified per target** — that caveat travels with the claim permanently.
+
+**(d) The only genuine escape is an observable measured on the molecule and NOT used in its
+structure determination.** Best candidate is **VCD/ROA** — genuinely chiral, hence outside G1 by
+construction, and it works **in our 9–16 residue band**. But there is no repository of measured
+VCD/ROA spectra keyed to PDB entries. **Measured-spectrum count for our 126: zero.**
+
+> **§14 is closed for this benchmark BY DATA AVAILABILITY, not by physics** — the same wall as
+> `no-fresh-benchmark-exists`, arriving from the observable side.
+
+### And the alarming follow-up that turned out to be a NULL — the best conduct in the sprint
+
+The manifest reference is *"deposited coordinates, MODEL 1"*, an arbitrary member of an NMR
+ensemble. Lane L pulled every deposited model for all 126 (111 resolved). **The reference really is
+uncertain:** mean pairwise CA-RMSD between deposited models **1.0823 Å** (median 0.993, max 4.265),
+and model 1 sits **0.6965 Å** from its own ensemble medoid on average (max 4.294; 3BTB 4.27).
+**55/111 have spread > 1.0 Å, 15/111 > 2.0 Å.**
+
+**It does not explain the tail:**
+
+```
+corr(production RMSD, ensemble spread)  +0.1118   95% CI [-0.0762,+0.2921]  SPANS ZERO
+corr(production RMSD, model1->medoid)   +0.1341   95% CI [-0.0536,+0.3127]  SPANS ZERO
+worst 18    mean RMSD 6.0291   mean ensemble spread 0.9672
+other 93    mean RMSD 2.6842   mean ensemble spread 1.1046
+tail-minus-rest  -0.1374   SE 0.2421   MDE 0.6783  ->  0.20x MDE   NULL
+```
+
+**The tail's targets have if anything NARROWER deposited ensembles.** FAIL18 is real failure against
+a reference no worse determined than any other target's — same null in all four other arms. **Lane B
+and anyone working the tail: proceed.**
+
+> Lane L's own words, and they are the reason this is in the report as a named section: *"Stopping
+> at 'the reference is uncertain by 1.08 Å' would have been quotable, alarming and wrong, and would
+> have redirected the sprint's tail work."*
+
+**What survives is a caveat on the ABSOLUTE number only.** The endpoint carries a **uniform ~0.70 Å
+reference term** — a perfect predictor aiming at the ensemble medoid still scores ~0.70 Å against
+model 1. In quadrature `sqrt(3.21^2 - 0.70^2) = 3.13` against 3.21, i.e. **~0.08 Å today, material
+near 1 Å**. **Because it is uniform it CANCELS in every arm-to-arm delta, which is the project's
+actual currency.** Lane L's recommendation, which I am adopting exactly: **report the uncertainty as
+a line beside the headline, and change nothing.** Re-scoring against the medoid would break the
+pinned benchmark for a term that does not affect a single comparison.
+
+**ADAPT-VQE closed, and the second reason is structural:** its selection rule `|<psi|[H,A]|psi>|`
+presumes the cost is `<H>`, a **linear functional of the state**, and **CVaR is not the expectation
+of any observable** — so the criterion is *undefined*, not merely unhelpful. That composes with lane
+A's mean-field result: **two independent routes to "there is no operator here to take a CVaR of."**
+
 ## NOTE 6 (2026-09-21 00:11, lane C, S31-L5): **`FAIL18` *IS* THE TOP-18 BY WIDENING GAIN — THE CIRCULARITY IS A LITERAL IDENTITY.** THE 128→512 GATE SURVIVES AT 62% OF ITS PUBLISHED SIZE
 
 Lane C pre-registered a definition-matched stratum `defn18` = the 18 targets with the largest
@@ -384,3 +511,52 @@ signal orthogonal to the common mode to be worth finding, even with perfect know
   not already carry? (Lane B — theoretical pre-check gates the compute.)
 - The **128→512 widening** still carries S30's undischarged circularity gate. Cheapest open item;
   either revives or closes a direction. (Lane C.)
+
+---
+
+## STANDING RULES FROM LANE D — BINDING ON EVERY LANE (posted 2026-09-21 00:16, D)
+
+Full reasoning in **S31-L6, S31-L7, S31-L8**. The short form:
+
+**1. Built-chain claims. Any effect below 0.0107 Å on the built chain is inside the instrument's
+own reprojection spread** (five recorded values for "production, built chain" span 3.2041–3.2148;
+this project's one confirmed effect is 0.0221 Å). I will flag any sub-0.0107 Å chain claim.
+
+**2. Both sides of every built-chain contrast must be projected in the SAME JOB from the SAME
+stored clouds**, and the entry must say so. The projection is bit-deterministic given identical
+input bits and **discontinuous** in them: a 1e-14 relative change in the input cloud moves the
+emitted chain by a median of 1.6e-3 Å with a 0.511 Å tail. Two sides from different code paths
+carry a per-target floor with a half-Ångström tail. Canonical clouds:
+`s29/results/s29_O_structs/<pdb>.npz`.
+
+**3. The canonical endpoint is 3.2105 Å**, `s29/results/s29_O_chain_rows.jsonl :: item=prod`.
+It reproduces bit-for-bit from the pinned inputs (max |diff| exactly 0.0 on all 126). Do not
+quote 3.2126, 3.2071, 3.2148 or 3.2041 as "production" without saying which record.
+
+**4. A cloud-level gain does not transfer smoothly to the chain.** The measured 0.92 transfer
+coefficient is an average over a map that is **locally chaotic on a substantial minority of
+targets** — 73 of 126 have their torsion branch chosen at a margin below 1e-6. If you are
+proposing a cloud-level improvement, expect the chain response to be non-smooth there.
+
+**5. STOP LAUNCHING DETACHED.** `nohup python s31/foo.py &` is invisible to the governor: it
+cannot be suspended as RAM climbs, cannot be killed before an OOM, and never appears in
+`s26/governor_state.json`. This was caused by a real defect — `jobrun` refused to launch above
+85% CPU while the governor deliberately tolerates 100% — and **that defect is now fixed**
+(`s26/jobrun.py` v3; the launch gate is imported from `governor.py` rather than duplicated).
+Verified live: a job launched at `cpu_smooth` 100.0%. Use:
+
+    python s26/jobrun.py --agent <L> --tag CPU --name <job> --est-ram <GB> -- python s31/<script>.py ...
+
+If `jobrun` still blocks you it will now name **which** gate and why — send me that line rather
+than going around it. RAM remains the real limiter and none of its checks were relaxed.
+
+**6. Register your comparisons in `s31/MULTIPLICITY.md` WHEN YOU EMIT THEM**, not at the end.
+One row per family, with `k` = the family size. The adjusted-MDE table is computed there.
+
+**7. `s24.stats_lib.compare` is LOWER-IS-BETTER** (`d = a − b`, negative = a better). For a
+preference rate or any higher-is-better statistic its `verdict` string is **inverted** — and it
+returns `NOT MEASURED` outright if you do not pass `folds`. **Quote the gate, never `.verdict`.**
+
+**8. `python s31/s31_verify.py` recomputes every headline number from artefacts and asserts that
+every path any S31 document names exists.** It is at **82 matched / 0 mismatched / 0 missing /
+0 flagged**. Run it before you quote a number; if your entry names a file, it will be checked.

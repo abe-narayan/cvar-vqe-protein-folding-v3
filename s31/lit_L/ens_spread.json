@@ -1,0 +1,1136 @@
+[
+ {
+  "pdb": "1A13",
+  "n": 14,
+  "nmod": 14,
+  "spread": 1.1874613531207985,
+  "m1": 1.2093630083037847,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1A1P",
+  "n": 13,
+  "nmod": 21,
+  "spread": 0.8685827325450584,
+  "m1": 0.6351188727860239,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1CB3",
+  "n": 11,
+  "nmod": 40,
+  "spread": 1.6300757778130983,
+  "m1": 1.8702879026620944,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1CEK",
+  "n": 13,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "SOLID-STATE NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1CS9",
+  "n": 9,
+  "nmod": 7,
+  "spread": 2.565999039242366,
+  "m1": 1.7736431217587991,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1D0W",
+  "n": 12,
+  "nmod": 20,
+  "spread": 1.145049532514879,
+  "m1": 0.5895274500775688,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1D6X",
+  "n": 13,
+  "nmod": 19,
+  "spread": 1.6155753658651661,
+  "m1": 1.119442987182552,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1DEP",
+  "n": 15,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1DJF",
+  "n": 15,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1FUV",
+  "n": 11,
+  "nmod": 19,
+  "spread": 0.553045330237529,
+  "m1": 0.5604192391346833,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1G89",
+  "n": 13,
+  "nmod": 16,
+  "spread": 1.3691108754094572,
+  "m1": 0.972019217673203,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1I6Y",
+  "n": 11,
+  "nmod": 15,
+  "spread": 1.8022334746874928,
+  "m1": 2.120917208797334,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1I8E",
+  "n": 11,
+  "nmod": 15,
+  "spread": 0.8438036252606052,
+  "m1": 0.7670437479618433,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1I93",
+  "n": 11,
+  "nmod": 15,
+  "spread": 2.059349666626132,
+  "m1": 1.5430898320428639,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1ID6",
+  "n": 15,
+  "nmod": 11,
+  "spread": 1.6686920643923489,
+  "m1": 1.7905753118143501,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1IM7",
+  "n": 13,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1JBF",
+  "n": 15,
+  "nmod": 20,
+  "spread": 1.02096579071165,
+  "m1": 0.0,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1KMR",
+  "n": 15,
+  "nmod": 17,
+  "spread": 0.8684988423051374,
+  "m1": 0.12302849878363746,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1KWE",
+  "n": 16,
+  "nmod": 11,
+  "spread": 1.8459640681478382,
+  "m1": 1.23066073649402,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1KYC",
+  "n": 15,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "X-RAY DIFFRACTION",
+  "err": ""
+ },
+ {
+  "pdb": "1KZ2",
+  "n": 16,
+  "nmod": 39,
+  "spread": 0.34896496912789754,
+  "m1": 0.38474778733823306,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1LB7",
+  "n": 16,
+  "nmod": 20,
+  "spread": 1.2334432481965036,
+  "m1": 0.6057200577475593,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1M02",
+  "n": 12,
+  "nmod": 19,
+  "spread": 1.6719141797699908,
+  "m1": 0.6461149323152052,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1M23",
+  "n": 13,
+  "nmod": 10,
+  "spread": 0.1883021679598477,
+  "m1": 0.20061072499783386,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1MF6",
+  "n": 12,
+  "nmod": 15,
+  "spread": 0.8269955902264247,
+  "m1": 0.918105845345675,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1N9U",
+  "n": 10,
+  "nmod": 21,
+  "spread": 0.11574715916732674,
+  "m1": 0.0477364605465222,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1NIZ",
+  "n": 14,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1RG4",
+  "n": 16,
+  "nmod": 10,
+  "spread": 1.1030171742717743,
+  "m1": 0.6266591234725615,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1RSW",
+  "n": 12,
+  "nmod": 11,
+  "spread": 2.295441055002795,
+  "m1": 1.7836054661064704,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1S9Z",
+  "n": 16,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "X-RAY DIFFRACTION",
+  "err": ""
+ },
+ {
+  "pdb": "1TOR",
+  "n": 10,
+  "nmod": 5,
+  "spread": 0.7853937880393997,
+  "m1": 0.0,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "1U62",
+  "n": 11,
+  "nmod": 12,
+  "spread": 1.7225512372095413,
+  "m1": 1.0714586628894514,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2BAO",
+  "n": 10,
+  "nmod": 12,
+  "spread": 1.117445029411223,
+  "m1": 0.7584891084561058,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2BFI",
+  "n": 12,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "X-RAY DIFFRACTION",
+  "err": ""
+ },
+ {
+  "pdb": "2BP4",
+  "n": 16,
+  "nmod": 20,
+  "spread": 0.9782721362206536,
+  "m1": 1.133998563707453,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2EFZ",
+  "n": 16,
+  "nmod": 20,
+  "spread": 0.44779903690467177,
+  "m1": 0.45649254366103575,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2F3A",
+  "n": 13,
+  "nmod": 5,
+  "spread": 0.3112809337147593,
+  "m1": 0.3433495734304515,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2FBU",
+  "n": 12,
+  "nmod": 5,
+  "spread": 2.4428766212283453,
+  "m1": 1.339046243731223,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2JN5",
+  "n": 12,
+  "nmod": 10,
+  "spread": 0.3420949758290524,
+  "m1": 0.20030642790828898,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2L7T",
+  "n": 11,
+  "nmod": 10,
+  "spread": 2.0197614226740246,
+  "m1": 1.394221167898429,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2LER",
+  "n": 11,
+  "nmod": 20,
+  "spread": 0.5502929332978618,
+  "m1": 0.3858629534769183,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2LM8",
+  "n": 13,
+  "nmod": 20,
+  "spread": 0.16223404654364962,
+  "m1": 0.06547485556146385,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2LNG",
+  "n": 13,
+  "nmod": 40,
+  "spread": 1.0999506890563395,
+  "m1": 0.8370772190290782,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2LU6",
+  "n": 14,
+  "nmod": 19,
+  "spread": 1.6552396882111933,
+  "m1": 0.4400460094237558,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2LWS",
+  "n": 12,
+  "nmod": 20,
+  "spread": 0.15104305010855879,
+  "m1": 0.17605553188150289,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2LWU",
+  "n": 15,
+  "nmod": 20,
+  "spread": 0.31352082692427674,
+  "m1": 0.3978305006669143,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2MAA",
+  "n": 13,
+  "nmod": 20,
+  "spread": 0.039654846196643334,
+  "m1": 0.03206332061061192,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2MAI",
+  "n": 14,
+  "nmod": 20,
+  "spread": 0.4791906241358314,
+  "m1": 0.5272317918624716,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2MD2",
+  "n": 10,
+  "nmod": 10,
+  "spread": 0.41950686970712875,
+  "m1": 0.0,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2MFV",
+  "n": 14,
+  "nmod": 15,
+  "spread": 0.07970072318422451,
+  "m1": 0.10836415822607103,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2MID",
+  "n": 12,
+  "nmod": 10,
+  "spread": 2.136098287493087,
+  "m1": 1.3711392238452338,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2MIG",
+  "n": 12,
+  "nmod": 10,
+  "spread": 2.6286575768663365,
+  "m1": 2.4771243594939696,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2MJQ",
+  "n": 10,
+  "nmod": 20,
+  "spread": 0.5722617615172884,
+  "m1": 0.23457692992845822,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2MK7",
+  "n": 9,
+  "nmod": 16,
+  "spread": 1.8197726005778196,
+  "m1": 0.0,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2MLQ",
+  "n": 16,
+  "nmod": 20,
+  "spread": 2.0277415295181247,
+  "m1": 0.0,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2MP9",
+  "n": 12,
+  "nmod": 10,
+  "spread": 0.566306250265644,
+  "m1": 0.637265341639153,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2MQ2",
+  "n": 14,
+  "nmod": 20,
+  "spread": 0.4505552001082028,
+  "m1": 0.0,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2MSA",
+  "n": 14,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2N5C",
+  "n": 15,
+  "nmod": 15,
+  "spread": 0.6418902856064226,
+  "m1": 0.0,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2N9A",
+  "n": 11,
+  "nmod": 20,
+  "spread": 0.6636749632077458,
+  "m1": 0.294717590843517,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2N9M",
+  "n": 16,
+  "nmod": 20,
+  "spread": 1.9382867402730528,
+  "m1": 1.5089749787840332,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2NB7",
+  "n": 14,
+  "nmod": 20,
+  "spread": 0.4529741377814166,
+  "m1": 0.12192223691441054,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2NBC",
+  "n": 16,
+  "nmod": 20,
+  "spread": 0.30209511822251,
+  "m1": 0.25653324531421673,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2NDM",
+  "n": 13,
+  "nmod": 20,
+  "spread": 0.6810861361276069,
+  "m1": 0.32435982852960205,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2NDN",
+  "n": 16,
+  "nmod": 20,
+  "spread": 0.6626191582364792,
+  "m1": 0.4633128778111176,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2O0S",
+  "n": 12,
+  "nmod": 9,
+  "spread": 0.21418711927667125,
+  "m1": 0.27649223963195985,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2P5H",
+  "n": 9,
+  "nmod": 20,
+  "spread": 2.1561775458081485,
+  "m1": 0.0,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2RUO",
+  "n": 16,
+  "nmod": 20,
+  "spread": 0.5631229153028837,
+  "m1": 0.5718032640576698,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "2XL1",
+  "n": 15,
+  "nmod": 20,
+  "spread": 0.2976246513804132,
+  "m1": 0.0,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "3BTB",
+  "n": 15,
+  "nmod": 20,
+  "spread": 4.264818354192195,
+  "m1": 4.294274946985345,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "3SGO",
+  "n": 11,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "X-RAY DIFFRACTION",
+  "err": ""
+ },
+ {
+  "pdb": "5H1H",
+  "n": 16,
+  "nmod": 20,
+  "spread": 2.190501425540054,
+  "m1": 0.0,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "5MML",
+  "n": 16,
+  "nmod": 30,
+  "spread": 0.5924305533344363,
+  "m1": 0.4186915416815692,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "5MXS",
+  "n": 14,
+  "nmod": 20,
+  "spread": 0.6291592625385621,
+  "m1": 0.1662068718117316,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "5NVB",
+  "n": 15,
+  "nmod": 20,
+  "spread": 1.4332582135206986,
+  "m1": 0.8507763677267175,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "5V5B",
+  "n": 10,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "err": ""
+ },
+ {
+  "pdb": "5W52",
+  "n": 11,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "err": ""
+ },
+ {
+  "pdb": "5Z5W",
+  "n": 12,
+  "nmod": 20,
+  "spread": 1.0099112871575997,
+  "m1": 0.12285403686500995,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6A5J",
+  "n": 13,
+  "nmod": 20,
+  "spread": 0.18040973935106425,
+  "m1": 0.06283010958306307,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6B9K",
+  "n": 10,
+  "nmod": 20,
+  "spread": 2.2050912079488074,
+  "m1": 2.934124440780354,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6BJF",
+  "n": 13,
+  "nmod": 20,
+  "spread": 0.3935060856658234,
+  "m1": 0.268797734396326,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6BX9",
+  "n": 15,
+  "nmod": 20,
+  "spread": 0.6869477510519472,
+  "m1": 0.0,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6CEJ",
+  "n": 14,
+  "nmod": 20,
+  "spread": 4.199562532742914,
+  "m1": 3.391240806001389,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6EY3",
+  "n": 9,
+  "nmod": 40,
+  "spread": 2.673553887724377,
+  "m1": 1.4846721216938397,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6F3V",
+  "n": 9,
+  "nmod": 10,
+  "spread": 0.1981286282758417,
+  "m1": 0.05309920863595204,
+  "method": "SOLID-STATE NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6GIJ",
+  "n": 15,
+  "nmod": 20,
+  "spread": 2.957512948698775,
+  "m1": 2.462682724240992,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6HVK",
+  "n": 12,
+  "nmod": 10,
+  "spread": 0.09779192911861956,
+  "m1": 0.04753840817145262,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6J9P",
+  "n": 12,
+  "nmod": 10,
+  "spread": 0.22481719574600365,
+  "m1": 0.20977375620170394,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6MBM",
+  "n": 16,
+  "nmod": 10,
+  "spread": 1.0509061900061938,
+  "m1": 0.9626946772115657,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6MK8",
+  "n": 13,
+  "nmod": 5,
+  "spread": 0.7315984080000403,
+  "m1": 0.0,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6OQP",
+  "n": 13,
+  "nmod": 20,
+  "spread": 0.22619566553659978,
+  "m1": 0.017144205941835643,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6Q08",
+  "n": 14,
+  "nmod": 10,
+  "spread": 1.0861205529347526,
+  "m1": 0.6099838201492316,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6QAX",
+  "n": 13,
+  "nmod": 40,
+  "spread": 1.7568325054952847,
+  "m1": 1.3064391071036776,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6RRL",
+  "n": 12,
+  "nmod": 20,
+  "spread": 1.2537833715149025,
+  "m1": 0.3719559951900791,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6RRO",
+  "n": 11,
+  "nmod": 20,
+  "spread": 1.047963848683681,
+  "m1": 0.12778725996126777,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6S0N",
+  "n": 9,
+  "nmod": 20,
+  "spread": 1.279796873934241,
+  "m1": 0.8270794992001042,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6TWG",
+  "n": 13,
+  "nmod": 10,
+  "spread": 0.19738340930217643,
+  "m1": 0.15381537947972457,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "6WPB",
+  "n": 14,
+  "nmod": 10,
+  "spread": 0.29197429455156504,
+  "m1": 0.35897383394516774,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "7BX2",
+  "n": 14,
+  "nmod": 20,
+  "spread": 0.6457188548613854,
+  "m1": 0.7252271891270802,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "7JGX",
+  "n": 13,
+  "nmod": 20,
+  "spread": 1.13297027477641,
+  "m1": 0.7026220364188973,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "7JS6",
+  "n": 15,
+  "nmod": 20,
+  "spread": 1.1276284575192435,
+  "m1": 0.9038029277891407,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "7LCW",
+  "n": 15,
+  "nmod": 20,
+  "spread": 1.2029010305492336,
+  "m1": 0.5668310413478971,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "7N2I",
+  "n": 9,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "err": ""
+ },
+ {
+  "pdb": "7P3M",
+  "n": 13,
+  "nmod": 10,
+  "spread": 1.1489663311683094,
+  "m1": 0.7675716644109851,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "7QZV",
+  "n": 12,
+  "nmod": 20,
+  "spread": 1.4659992326857563,
+  "m1": 1.7372191597644375,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "7S3O",
+  "n": 13,
+  "nmod": 25,
+  "spread": 1.8860879149673595,
+  "m1": 0.6406255577816323,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "7T3H",
+  "n": 10,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "err": ""
+ },
+ {
+  "pdb": "7VI4",
+  "n": 10,
+  "nmod": 1,
+  "spread": NaN,
+  "m1": NaN,
+  "method": "ELECTRON CRYSTALLOGRAPHY",
+  "err": ""
+ },
+ {
+  "pdb": "7YFS",
+  "n": 16,
+  "nmod": 20,
+  "spread": 0.18302111462278214,
+  "m1": 0.07813152462281926,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "8FLP",
+  "n": 13,
+  "nmod": 20,
+  "spread": 0.6831615606697049,
+  "m1": 0.3998516380495548,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "8HVS",
+  "n": 10,
+  "nmod": 20,
+  "spread": 1.1511145377824559,
+  "m1": 0.369302073646054,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "8IL1",
+  "n": 14,
+  "nmod": 20,
+  "spread": 1.9486658693626746,
+  "m1": 1.153262709589447,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "8IS3",
+  "n": 9,
+  "nmod": 20,
+  "spread": 1.1606138722216321,
+  "m1": 0.9217149858980725,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "8T61",
+  "n": 16,
+  "nmod": 10,
+  "spread": 1.440984006491316,
+  "m1": 0.0,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "8T62",
+  "n": 16,
+  "nmod": 10,
+  "spread": 0.9929054275324986,
+  "m1": 1.0894457553191632,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "8T63",
+  "n": 16,
+  "nmod": 10,
+  "spread": 1.554892346657266,
+  "m1": 2.5509409881405483,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "8TXS",
+  "n": 16,
+  "nmod": 10,
+  "spread": 0.31762515830741017,
+  "m1": 0.025511997899227888,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "8UN8",
+  "n": 12,
+  "nmod": 23,
+  "spread": 0.0813045315635223,
+  "m1": 0.0311746024165262,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "8ZG2",
+  "n": 11,
+  "nmod": 20,
+  "spread": 0.516754746128333,
+  "m1": 0.12201743079200847,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "9BAF",
+  "n": 16,
+  "nmod": 20,
+  "spread": 0.8609220506692868,
+  "m1": 0.5802899217369295,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "9BFL",
+  "n": 10,
+  "nmod": 20,
+  "spread": 0.9071573016070913,
+  "m1": 0.5122564477125268,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "9KAR",
+  "n": 15,
+  "nmod": 15,
+  "spread": 0.09374243171740446,
+  "m1": 0.05541662694977105,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "9L1M",
+  "n": 12,
+  "nmod": 20,
+  "spread": 1.2447862932258396,
+  "m1": 0.44466618222635673,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "9S5G",
+  "n": 13,
+  "nmod": 15,
+  "spread": 1.0500410733063734,
+  "m1": 0.35024411888845963,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "9UV5",
+  "n": 9,
+  "nmod": 20,
+  "spread": 1.6911318147571484,
+  "m1": 1.3397589870173037,
+  "method": "SOLUTION NMR",
+  "err": ""
+ },
+ {
+  "pdb": "9WXK",
+  "n": 13,
+  "nmod": 20,
+  "spread": 0.06650984944536631,
+  "m1": 0.021507677419792166,
+  "method": "SOLUTION NMR",
+  "err": ""
+ }
+]
