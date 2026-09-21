@@ -135,6 +135,36 @@ def _cm():
             f"{abs(eff)/mde:.2f}x -> {band}")
 
 
+@check("L-5 cloud ladder: P1/P2 hold at full size, and it reproduces a pinned value")
+def _cloud():
+    d = _j("L2_cloud_ladder.json")
+    assert "CLOUD" in d["basis"].upper(), "basis label lost"
+    for kind, want in (("short", 126), ("long", 45)):
+        v = d[kind]
+        assert v["n"] == want, f"{kind}: n={v['n']}, expected {want}"
+        for q in ("pool_best", "top75_best", "avg75"):
+            got = float(np.mean([r[q] for r in v["rows"]]))
+            assert abs(got - v[q]["mean"]) < 1e-9, f"{kind}/{q} aggregate disagrees"
+    # IMPLEMENTATION CHECK -- this can fail: it is an independent recomputation of a
+    # value pinned in s12/instrument.py's own selfcheck, by different code, from
+    # coordinates. A retrieval, ordering or Kabsch error would move it.
+    assert abs(d["short"]["pool_best"]["mean"] - 1.7108) < 2e-3, \
+        "canonical pool_best does not reproduce the pinned 1.7108"
+    # P1 and P2 on the cloud, at full instrument size.
+    lg = d["long"]["comparisons"]
+    head = lg["headroom  avg75 - pool_best"]
+    read = lg["readout   avg75 - top75_best"]
+    retr = lg["retrieval top75_best - pool_best"]
+    assert head["effect"] >= 0.75, "P1 fails: no pool headroom at length"
+    assert abs(head["effect_over_mde"]) >= 1.0, "P1 headroom is below MDE"
+    assert read["effect"] > retr["effect"], "P2 fails: readout is not the largest rung"
+    sh = d["short"]["comparisons"]
+    return (f"canonical pool_best {d['short']['pool_best']['mean']:.4f} (pinned 1.7108); "
+            f"headroom {head['effect']:+.4f} at {abs(head['effect_over_mde']):.2f}x MDE; "
+            f"readout share {read['effect']/head['effect']:.1%} at L~55 vs "
+            f"{sh['readout   avg75 - top75_best']['effect']/sh['headroom  avg75 - pool_best']['effect']:.1%} at L~13")
+
+
 @check("L2 ladder: completeness, basis, and the registered predictions")
 def _ladder():
     p = os.path.join(R, "L2_ladder_verdict.json")
@@ -145,11 +175,18 @@ def _ladder():
     for kind, lad in d["ladders"].items():
         rows = [json.loads(l) for l in open(os.path.join(R, f"L2_ladder_{kind}.jsonl"))]
         seen = {r["pdb"] for r in rows}
-        assert lad["n"] == len(seen), f"{kind}: verdict row count disagrees with the jsonl"
+        # The jsonl GROWS while the run is live, so the verdict may legitimately be older
+        # than it.  What must never happen is the verdict claiming MORE rows than exist,
+        # or a finished-looking verdict built on an unfinished table.
+        assert lad["n"] <= len(seen), \
+            f"{kind}: verdict claims {lad['n']} rows but the jsonl holds {len(seen)}"
+        assert lad["complete"] == (lad["n"] >= lad["n_expected"]), \
+            f"{kind}: completeness flag disagrees with its own counts"
         for k in ("pool_best", "avg75"):
-            got = float(np.mean([r["chain"][k] for r in rows if r["pdb"] in seen][:lad["n"]]))
-            assert np.isfinite(got)
-        out.append(f"{kind} n={lad['n']}")
+            assert np.isfinite(np.mean([r["chain"][k] for r in rows]))
+        stale = "" if lad["n"] == len(seen) else f" (verdict STALE: jsonl now {len(seen)})"
+        out.append(f"{kind} n={lad['n']}/{lad['n_expected']}"
+                   f"{'' if lad['complete'] else ' PARTIAL'}{stale}")
     for k, v in d.get("predictions", {}).items():
         out.append(f"{k}={v['verdict']}")
     return "; ".join(out)
