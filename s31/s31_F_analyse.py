@@ -123,8 +123,12 @@ def main():
                prereg="s31/PREREG_S31_F.md @ 8a14edea + 49ee7c92")
 
     cl_A, cl_M, cl_R = col(R, "cloud_AVG"), col(R, "cloud_MED"), col(R, "cloud_AVG_RG")
+    cl_S = col(R, "cloud_AVG_SEP")
     ch_A, ch_M, ch_R = col(R, "chain_AVG"), col(R, "chain_MED"), col(R, "chain_AVG_RG")
+    ch_S = col(R, "chain_AVG_SEP")
     P_A, P_M, P_R = col(R, "P_AVG"), col(R, "P_MED"), col(R, "P_AVG_RG")
+    P_S = col(R, "P_AVG_SEP")
+    MOVE_A, MOVE_M = col(R, "move_AVG"), col(R, "move_MED")
     DISP, S, s_b = col(R, "DISP"), col(R, "S"), col(R, "s_b")
 
     # ---------------------------------------------------------------- reproduction
@@ -163,13 +167,29 @@ def main():
 
     # ---------------------------------------------------------------- F1: the operators
     ops = {}
-    for nm, v in (("MED", ch_M), ("AVG_RG", ch_R)):
+    for nm, v in (("MED", ch_M), ("AVG_RG", ch_R), ("AVG_SEP", ch_S)):
         o = cmp2(v, ch_A, folds, names, "F1.%s - AVG (BUILT CHAIN)" % nm)
         ops[nm] = dict(cmp=brief(o), verdict=verdict(o))
+        oc = cmp2({"MED": cl_M, "AVG_RG": cl_R, "AVG_SEP": cl_S}[nm], cl_A, folds, names,
+                  "F1.%s - AVG (CA POINT CLOUD)" % nm)
+        ops[nm]["cloud_cmp"] = brief(oc)
+    ops["MED"]["record_cross_check"] = dict(
+        source="s12/agg_FINDINGS.md:43-70 (predates this lane; found only AFTER the registration "
+               "was committed -- declared as lane F's own defect in PREREG s10.4)",
+        record_medoid75_cloud=3.2822, record_avg75_cloud=3.0483, record_delta=0.2339,
+        record_ci=[0.162, 0.305], record_WL="34/92",
+        this_run_cloud_MED=float(cl_M.mean()), this_run_cloud_AVG=float(cl_A.mean()),
+        this_run_delta=float((cl_M - cl_A).mean()),
+        prereg_predicted_chain_delta=0.0717)
+    ops["AVG_RG"]["record_cross_check"] = dict(
+        source="s23/LEDGER.md:143-176 via s31/PREREG_S31_C.md A1.1 -- the native-free `pool` scale "
+               "arm, CLOSED at +0.095 with the CI excluding zero on the bad side",
+        note="AVG_RG is a REGISTERED NEGATIVE CONTROL here, not a candidate")
     out["F1_operators"] = dict(basis="BUILT CHAIN, n=126, paired, fold-clustered CI on pinned folds",
                                chain_AVG_mean=float(ch_A.mean()),
                                chain_MED_mean=float(ch_M.mean()),
-                               chain_AVG_RG_mean=float(ch_R.mean()), arms=ops)
+                               chain_AVG_RG_mean=float(ch_R.mean()),
+                               chain_AVG_SEP_mean=float(ch_S.mean()), arms=ops)
 
     # ---------------------------------------------------------------- F1: the gates
     med_disp = float(np.median(DISP))
@@ -217,7 +237,52 @@ def main():
     gates["G2"] = dict(rule="per-target min(AVG, MED)",
                        ORACLE="ORACLE / NOT DEPLOYABLE -- this is best-of-2, not skill",
                        cmp=brief(o), verdict=verdict(o), split_half_transfer=sh)
+
+    # G3: the MOVE gate -- EXPLORATORY (registered mid-run, prereg s9)
+    med_move = float(np.median(MOVE_A))
+    him = MOVE_A > med_move
+    g3 = np.where(him, ch_M, ch_A)
+    o = cmp2(g3, ch_A, folds, names, "F1.G3 median-MOVE gate (hi->MED) - AVG (BUILT CHAIN)")
+    Mmat3 = np.stack([ch_A, ch_M], 1)
+    gates["G3"] = dict(rule="MOVE(AVG) > median(MOVE(AVG)) -> MED else AVG; 0 free parameters; "
+                            "NATIVE-FREE (both arguments of MOVE exist at inference)",
+                       EXPLORATORY="registered mid-run (PREREG s9) -- if this is the only arm that "
+                                   "clears it is exploratory and requires confirmation, never the "
+                                   "lane's confirmed result",
+                       threshold=med_move, n_to_MED=int(him.sum()),
+                       cmp=brief(o), verdict=verdict(o),
+                       split_half_transfer=ST.split_half_transfer(
+                           Mmat3, seed_parts=("s31F", str(SEED), "g3")))
+    g3r = np.where(him, ch_A, ch_M)
+    o = cmp2(g3r, ch_A, folds, names, "F1.G3rev median-MOVE gate (LO->MED) - AVG (BUILT CHAIN)")
+    gates["G3_reversed"] = dict(rule="the OPPOSITE direction, reported because the registered one "
+                                     "may fire against the lane", cmp=brief(o), verdict=verdict(o))
+    # G3tau: leave-fold-out MOVE threshold -- ORACLE-ADJACENT
+    gridm = np.quantile(MOVE_A, np.linspace(0.05, 0.95, 19))
+    g3t = np.empty(len(R)); tau_m = {}
+    for f in sorted(set(folds.tolist())):
+        tr = folds != f
+        best, bt = None, None
+        for tau in gridm:
+            v = np.where(MOVE_A[tr] > tau, ch_M[tr], ch_A[tr]).mean()
+            if best is None or v < best:
+                best, bt = v, float(tau)
+        tau_m[int(f)] = bt
+        g3t[folds == f] = np.where(MOVE_A[folds == f] > bt, ch_M[folds == f], ch_A[folds == f])
+    o = cmp2(g3t, ch_A, folds, names, "F1.G3tau leave-fold-out MOVE threshold - AVG (BUILT CHAIN)")
+    gates["G3tau"] = dict(rule="MOVE(AVG) > tau, tau fitted LEAVE-FOLD-OUT on native chain RMSD",
+                          ORACLE="ORACLE-ADJACENT / the threshold touches the native -- a "
+                                 "diagnostic, NOT a clean deployable",
+                          tau_by_fold=tau_m, cmp=brief(o), verdict=verdict(o))
     out["F1_gates"] = gates
+    out["F1_gate_variables"] = dict(
+        rho_DISP_vs_chain_MED_minus_AVG=spearman(DISP, ch_M - ch_A),
+        rho_MOVE_vs_chain_MED_minus_AVG=spearman(MOVE_A, ch_M - ch_A),
+        rho_DISP_vs_MOVE=spearman(DISP, MOVE_A),
+        rho_MOVE_vs_P_AVG=spearman(MOVE_A, P_A),
+        MOVE_AVG_mean=float(MOVE_A.mean()), MOVE_MED_mean=float(MOVE_M.mean()),
+        note="MOVE(MED) ~ 0 is the check that the medoid is already a chain; a nonzero MOVE(MED) "
+             "would mean the pool members are not ideal-geometry backbones")
 
     # ---------------------------------------------------------------- F1: the mechanism contrast
     d_MA = ch_M - ch_A
@@ -263,6 +328,70 @@ def main():
                                 P_AVG_hi=float(P_A[hi].mean()), P_AVG_lo=float(P_A[~hi].mean()),
                                 contrast=two_group(P_A, folds, hi, "F1.geom hi-minus-lo DISP of P(AVG)")))
 
+    # ---------------------------------------------------------------- the separation band
+    # The CORRECTED averaging mechanism (prereg s10): a separation-dependent SHAPE distortion,
+    # short contracted / long expanded, crossing unity near |i-j| = 8 -- not a uniform scale.
+    SMAX = 15
+    def ratio_tab(key, ref="prof_nat"):
+        """mean over targets of prof_op[s]/prof_ref[s], per separation s (ragged n handled)."""
+        acc = [[] for _ in range(SMAX)]
+        for r in R:
+            a = np.asarray(r[key], float); b = np.asarray(r[ref], float)
+            for s in range(len(a)):
+                acc[s].append(a[s] / b[s])
+        return [float(np.mean(v)) if v else float("nan") for v in acc], \
+               [len(v) for v in acc]
+
+    prof_tab, prof_n = {}, None
+    for key in ("prof_members", "prof_cloud_AVG", "prof_cloud_MED", "prof_cloud_AVG_SEP",
+                "prof_chain_AVG", "prof_chain_MED", "prof_chain_AVG_SEP"):
+        prof_tab[key], prof_n = ratio_tab(key)
+    prof_nf = {}
+    for key in ("prof_cloud_AVG", "prof_cloud_MED", "prof_chain_AVG", "prof_chain_MED"):
+        prof_nf[key], _ = ratio_tab(key, ref="prof_members")
+
+    def band_dev(r, key, lo, hi, ref="prof_nat"):
+        """mean |ratio - 1| over separations in [lo, hi] for ONE target."""
+        a = np.asarray(r[key], float); b = np.asarray(r[ref], float)
+        s = np.arange(1, len(a) + 1)
+        m = (s >= lo) & (s <= hi)
+        return float(np.abs(a[m] / b[m] - 1.0).mean()) if m.any() else float("nan")
+
+    bands = {}
+    for key in ("prof_cloud_AVG", "prof_cloud_MED", "prof_chain_AVG", "prof_chain_MED",
+                "prof_chain_AVG_SEP"):
+        sh_ = np.array([band_dev(r, key, 1, 6) for r in R])
+        lg_ = np.array([band_dev(r, key, 7, 99) for r in R])
+        bands[key] = dict(short_1_6=float(np.nanmean(sh_)), long_7plus=float(np.nanmean(lg_)),
+                          n_with_long=int(np.isfinite(lg_).sum()))
+    dev_long_A = np.array([band_dev(r, "prof_chain_AVG", 7, 99) for r in R])
+    dev_long_M = np.array([band_dev(r, "prof_chain_MED", 7, 99) for r in R])
+    dev_short_A = np.array([band_dev(r, "prof_chain_AVG", 1, 6) for r in R])
+    dev_short_M = np.array([band_dev(r, "prof_chain_MED", 1, 6) for r in R])
+    okl = np.isfinite(dev_long_A) & np.isfinite(dev_long_M)
+    NCOMP[0] += 2
+    out["MECH_separation_band"] = dict(
+        basis="ORACLE diagnostic (ratios are against the NATIVE's own per-separation distances); "
+              "no parameter is tuned here",
+        per_separation_vs_native=dict(s=list(range(1, SMAX + 1)), n_targets=prof_n, **prof_tab),
+        per_separation_vs_members_NATIVE_FREE=dict(s=list(range(1, SMAX + 1)), **prof_nf),
+        band_abs_deviation_from_native=bands,
+        registered_falsifier="the medoid's profile must be FLATTER than the average's in the "
+                             "s >= 7 band; if it is not, the separation-band framing is refuted "
+                             "for this operator pair",
+        long_band_MED_minus_AVG=float((dev_long_M - dev_long_A)[okl].mean()),
+        short_band_MED_minus_AVG=float((dev_short_M - dev_short_A).mean()),
+        cmp_long=brief(cmp2(dev_long_M[okl], dev_long_A[okl], folds[okl],
+                            [names[i] for i in np.where(okl)[0]],
+                            "MECH.long-band |ratio-1| MED - AVG (BUILT CHAIN, ORACLE)")),
+        cmp_short=brief(cmp2(dev_short_M, dev_short_A, folds, names,
+                             "MECH.short-band |ratio-1| MED - AVG (BUILT CHAIN, ORACLE)")),
+        rho_long_band_distortion_vs_dMA=spearman(dev_long_A[okl], (ch_M - ch_A)[okl]),
+        rho_short_band_distortion_vs_dMA=spearman(dev_short_A, ch_M - ch_A),
+        withdrawn="the 25.8%% backbone contraction is WITHDRAWN (s15/coord_FINDINGS.md:914-921); "
+                  "the corrected figure is 3.5%% against true distances and the distortion is "
+                  "separation-dependent, not uniform")
+
     # ---------------------------------------------------------------- F2: the tail
     pool_mean, pool_best = col(R, "pool_mean"), col(R, "pool_best")
     set_mean, set_best = col(R, "set_mean"), col(R, "set_best")
@@ -275,7 +404,10 @@ def main():
 
     tails = {"T_POOL": worst18(pool_mean), "T_BEST": worst18(pool_best),
              "T_CHAIN": worst18(ch_A), "FAIL18": fail18}
-    stats = dict(chain_AVG=ch_A, chain_MED=ch_M, cloud_AVG=cl_A, pool_mean=pool_mean,
+    stats = dict(chain_AVG=ch_A, chain_MED=ch_M, chain_AVG_SEP=ch_S,
+                 cloud_AVG=cl_A, MOVE_AVG=MOVE_A,
+                 long_band_dev_AVG=dev_long_A, short_band_dev_AVG=dev_short_A,
+                 pool_mean=pool_mean,
                  pool_best=pool_best, set_mean=set_mean, set_best=set_best,
                  DISP=DISP, S=S, s_b=s_b, P_AVG=P_A, P_MED=P_M,
                  rank_best_in_pool=col(R, "rank_best_in_pool").astype(float),
@@ -323,12 +455,13 @@ def main():
                     cloud_AVG=float(cl_A[tails["T_POOL"]].mean()),
                     chain_AVG=float(ch_A[tails["T_POOL"]].mean())))
 
-    out["multiplicity"] = dict(registered=32, emitted=int(NCOMP[0]))
+    out["multiplicity"] = dict(registered=44, emitted=int(NCOMP[0]))
     with open(OUT, "w") as fh:
         json.dump(out, fh, indent=1, default=float)
     print(json.dumps({k: out[k] for k in ("reproduction", "S2_theorem", "S2_precheck",
-                                          "F1_operators", "F1_gates", "F1_mechanism",
-                                          "F1_geometry_vs_accuracy", "multiplicity")},
+                                          "F1_operators", "F1_gates", "F1_gate_variables",
+                                          "F1_mechanism", "F1_geometry_vs_accuracy",
+                                          "MECH_separation_band", "multiplicity")},
                      indent=1, default=float))
     print("\nwrote", OUT)
 
