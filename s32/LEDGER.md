@@ -119,6 +119,8 @@ output, not by a lane.
 
 ## S32-L3 -- **THE SCORE FILTER IS WORSE THAN RANDOM AT RETAINING THE BEST CANDIDATE, AND MOST OF WHAT I CALLED A "FILTER LOSS" IN S32-L1 WAS A PURE ORDER STATISTIC** (2026-09-21 08:10, coordinator, on lane V's artefact)
 
+> **RETRACTED IN PART at 09:01 by lane V's stratification (S32-L8), and the headline of this entry is wrong as written.** The +0.1872 is **entirely 18 targets**. On the other 108 the score is *marginally better* than random (**−0.0296, 0.30× MDE, NOT A RESULT**, 72W/36L), and it loses on **18 of 18 FAIL18** targets (+1.4879) — a stratum **defined** as targets where no pool member within 1.5 Å of the pool best survives into the top-75, which makes this contrast near-circular on exactly those 18. **Two further errors of mine in this entry:** `n_better = 72` means the score is **BETTER** on 72 of 126 — I wrote “WORSE, 72W/54L”, which reads the W/L backwards — and the **median is −0.0380**, also favouring the score, which I did not report. *Mean +0.187, median −0.038, 57% of targets won by the score: the median-vs-mean gap is the project's free early warning and it fired here.* Original wording left standing per rule 13.*
+
 Lane V's control, `s32/results/s32_V_ladder_orderstat.json`, **2000 draws**, **CA POINT CLOUD**, all
 **ORACLE / NOT DEPLOYABLE**. Aggregate re-derived by the coordinator in one script from lane V's raw
 rows, per contract rule 7 (a cross-lane claim gets re-derived once before anyone acts on it).
@@ -525,5 +527,76 @@ exists, rather than in band where 79% of it is gone. Native-free, deployable, le
 labelled as one.** If lane D's 79% and lane V's spread-halving turn out to be the *same variance
 measured twice* rather than two facts, the synthesis is circular. **Every cross-lane synthesis in
 S31 failed, four for four**; this one is written down as unaudited on purpose.
+
+---
+
+## S32-L8 -- **THE SCORE IS NOT A GENERAL ANTI-ORDERING. ITS FAILURE IS TOTAL ON ONE TARGET IN SEVEN AND NOT MEASURED ON THE OTHER 108 -- AND THOSE 18 ARE THE STRATUM DEFINED BY THE THING BEING MEASURED** (2026-09-21 09:01, lane V; retracts part of S32-L3)
+
+Artefacts `s32/results/s32_V_orderstat_gate.json`, `s32_V_orderstat_strata.json`, script
+`s32/s32_V_orderstat_gate.py` — which regenerates the 2000 draws from the same pinned seed and
+**asserts it reproduces `s32_V_ladder_orderstat.json` per-target to 0.00e+00 before computing
+anything.** CA POINT CLOUD, ORACLE / NOT DEPLOYABLE.
+
+**Both contrasts formally clear the gate:**
+
+```
+SCORE top-128 vs RANDOM 128 of 500
+  effect +0.1872  SE 0.0630  MDE 0.1764  1.06x   MEDIAN -0.0380   72W/54L
+  folds {-0.1087, +0.2621, +0.2938, +0.2566, +0.2344}   CI95 [+0.0383, +0.2743]   4/5   type_m 1.10
+SCORE top-75 vs RANDOM 75 of 128
+  effect +0.0696  SE 0.0243  MDE 0.0681  1.02x   MEDIAN -0.0045   65W/61L   4/5
+```
+
+**And then the stratification, which is what the entry is about:**
+
+```
+                 ALL 126              FAIL18 (n=18)      OTHER 108
+500 -> 128   +0.1872 (med -0.0380)   +1.4879  0W/18L   -0.0296 (med -0.0743, 72W/36L)  0.30x  NOT A RESULT
+128 ->  75   +0.0696 (med -0.0045)   +0.3611  3W/15L   +0.0210 (med -0.0090, 62W/46L)  0.38x  NOT A RESULT
+```
+
+The ten worst targets in the 500→128 contrast — **2BFI, 2NB7, 2JN5, 8T63, 9KAR, 3SGO, 1LB7, 5W52,
+3BTB, 2N5C — are all ten in FAIL18**, and the score loses **18 of 18**. Drop the 10 worst and the
+aggregate falls from +0.1872 to **+0.0294**; drop 20 and it goes **negative, −0.0567**.
+
+**FAIL18 is defined in `s12/instrument.py::selfcheck` as the targets where no pool member within
+1.5 Å of the pool best survives into the production top-75.** A contrast asking *"does the score's
+prefix retain the good members?"* is therefore **near-circular on precisely those 18** — and
+*directly* circular for the 128→75 arm, which is about the top-75 itself. S31 measured effect size
+rising monotonically with a stratum's circularity and named that gradient *the stratum's definition
+doing the work*; **this is the same gradient with the stratum left inside the aggregate instead of
+named.** Filter-independent control as rule 12 requires: split by chain length (median 13) gives
+**+0.1826 short vs +0.1940 long — no gradient.** It is not a length effect. It is the 18.
+
+> ### The score is not a general anti-ordering. On 108 of 126 targets its top-128 retains a marginally *better* best-member than a random 128 — NOT A RESULT. Its failure is catastrophic and total on 14% of targets, and those are exactly the targets already named FAIL18. **The score's problem is not that it orders badly everywhere; it is that on one target in seven it places its window in the wrong part of the pool entirely.**
+
+That localises the loss instead of diffusing it, and it fits lane V's own spread mechanism better
+than the sentence it replaces: **the score compresses the same way on every target** (sd 1.32 → 0.64,
+5th percentile unchanged 2.6098 → 2.6184) — **but on 18 targets the compressed window is centred in
+the wrong place.**
+
+**Contract rule 10, properly applied.** The random arm is a per-target mean over 2000 draws; the
+draw-to-draw sd of the **126-target aggregate** is **0.0232** (500→128) and **0.0167** (128→75). A
+single random draw — which is what a deployment actually gets — gives +0.1872 ± 0.0232, and **only
+69.5% of single draws clear this comparison's own MDE**; for 128→75, **53.6% — a coin flip.**
+
+**The corrected increment sentence, which supersedes S32-L1's:** *narrowing 500 → 128 → 75 costs
+0.595 Å of oracle-best headroom; **0.338 is the set-size order statistic**; the remaining **0.257 is
+18 targets' worth of the score placing its window wrongly**, and is **NOT MEASURED** on the other
+108.*
+
+**Rank moments, both right and different:** mean **170.3**, median **134.0** of 500; the best member
+is in the top-128 on **63/126** and in the top-75 on **41/126**. **Name the moment in the same
+sentence as the number.**
+
+**Lane V retracted its own earlier sentence to me as part of this** (*"the deployed score's ordering
+is worse than chance"*, stated twice without stratification or median) and I propagated it into
+S32-L3 with the W/L read backwards on top. **Same failure shape as the whole S31 audit: a quantity
+re-used across a boundary its definition does not cross — here a moment and a stratum.**
+
+**Verifier:** now asserts all six stratified numbers, and adds a fourth audit — **any ledger line
+quoting an aggregate effect whose FAIL18 and non-FAIL18 strata have opposite signs is flagged
+automatically.** That is the generalisable form of this defect. State: 64 matched, 0 mismatched,
+0 missing, 0 flagged, 11/11 self-tests.
 
 ---
