@@ -18,13 +18,33 @@ Rules that bind every row:
 
 ## Running totals
 
+### The sprint-level fact, walked over every artefact rather than recalled
+
+`s32/results/*.json`, every `effect_over_mde` in every nested block:
+
+| | count |
+|---|---|
+| improvements clearing 1.0x MDE on the **BUILT CHAIN, deployable** | **0** |
+| improvements clearing 1.0x MDE on **any** basis | 30 |
+| … of which ORACLE (read the native to select) | ~20 |
+| … of which filter-vs-random on the **pool mean** (a diagnostic) | 4 |
+| … of which **in-band Spearman** diagnostics | 6 |
+
+**Not one deployable built-chain improvement anywhere in the sprint.** Every arm that clears MDE
+either reads the native, or is measured on a basis that is not the endpoint, or points the wrong
+way. The three largest ORACLE ceilings: `ORACLE top-5 through the deployed operator` **−1.567**
+(5.17x, cloud), `ORACLE per-target scale` **−0.1352** (3.84x, chain), `ORACLE best branch`
+**−0.1072** (2.93x, chain, split-half transfer **3%**).
+
+---
+
 *(Lane-V rows only; the per-lane sections below carry each lane's own count.)*
 
 | | count |
 |---|---|
-| audit arms (AUDIT, no hypothesis, no multiplicity cost) | 8 (V-A1 … V-A8) |
+| audit arms (AUDIT, no hypothesis, no multiplicity cost) | 10 (V-A1 … V-A10) |
 | confirmatory / independent replication arms (CONF) | 2 (V-A7 `cos`, V-A8 DIS row of D1-T) |
-| defects found and reported when found | 5 (D1 … D5) |
+| defects found and reported when found | 7 (D1 … D7) |
 | **lane-V comparisons emitted against the endpoint** | **0** |
 
 **Lane V emits no endpoint comparison by design.** Its arms are audits and replications, which
@@ -59,6 +79,8 @@ and two are logged here explicitly:
 | V-A6 | The ARITHMETIC-NOISE distribution of the endpoint: eps = 1e-14 A per coordinate, 5 draws x 126 | `s32/results/s32_V_ulp_distribution.json` | **draw-to-draw sd 0.0030 A**; per-target &#124;delta&#124; mean 0.0127 / p90 0.0248 / max 0.5006; cloud unchanged to 1.1e-13. *The irreducible sd on an unpaired built-chain mean.* |
 | V-A7 | Is lane R's `cos_align` independent evidence, and is it the cosine it is named for? | `s32/results/s32_V_cos_identity.json` | **NOT independent** — price rebuilt from (e,d,cos) to max error **0.000e+00**, a bijection. **But it IS a real cosine**: direct measurement in a common frame agrees to 0.0038 mean / 0.0642 max. Production mean cos **-0.052**, on the wrong side of the orthogonal null. |
 | V-A8 | Adversarial replication of lane D's D1-T sign transfer, with the three controls its artefact lacks | `s32/results/s32_V_D_signadversary.json` | see **D4** |
+| V-A9 | **Is the ladder's top rung retrieval, or fragment-space capacity?** Three size-matched ORACLE hull arms | `s32/results/s32_V_hull_capacity.json` | BLOSUM500 **1.1167** (reproduces s29 `hull_pool` to 4 dp); RAND500 **1.1495** (+0.0328, 0.38x, 63W/63L); DONOR500, *another target's fragments*, **1.1626** (+0.0459, 0.49x) — **neither a result.** Retrieval's share of the 2.10 A top rung is **2.2%**. |
+| V-A10 | BLOSUM top-75 vs the deployed SCORE top-75 on the best member, stratified | `s32/results/s32_V_prefix_strata.json` | −0.2020 overall (1.14x, RESULT) but **−1.5871 on FAIL18, 18W/0L**, and **+0.0288 on the other 108 (0.26x, NOT A RESULT)**; median over 126 **exactly 0.0000** — the third instance of D3 |
 
 ---
 
