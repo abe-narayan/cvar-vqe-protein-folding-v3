@@ -61,6 +61,45 @@ published 32-cost sweep, and lane E killed my opening hypothesis with an exact i
 
 ---
 
+## NOTE 15 (2026-09-21 01:20, coordinator, S31-L22 controls): **ONLY THE *NEGATIVE* HALF OF THE ALONG/PERP RESULT IS CONTROLLED, AND THE LANE SAID SO AGAINST ITS OWN INTEREST**
+
+Lane E's energy-matched direction control and shrink curve landed after it handed back. They were
+built so a null would refute §20.1. **A null did not fire on the direction question** — at matched
+energy an arbitrary direction's along-half is worth **+0.1317 more** (2.07× MDE, 5/5) and its
+perp-half **−0.3797 less** (2.53×, 5/5). **`mu` is special on both sides.**
+
+**But the two halves are not equally earned, and the report now says which is which.**
+`y_along(mu)` is **84% of `y`'s energy**, the shrink curve **brackets** that norm
+(0.75·3.70 = 2.78 < 3.12 < 3.33 = 0.90·3.70), and against both brackets the along arm is **NOT
+MEASURED** — −0.0614 at **0.94×** and −0.0405 at **0.64× (65W/61L, a coin flip)**.
+
+> ***"Correcting along `mu` is the whole prize" is, at matched magnitude, the same statement as
+> "most of a perfect correction is the whole prize."*** The controlled half is the **negative** one:
+> the orthogonal complement is *specifically* worthless (**+0.6169, 3.25×** against its own
+> norm-matched shrink; **+0.3797, 2.53×** against energy-matched). **And the negative half is
+> exactly what charter §14 and contract rule 29 proposed to build on.**
+
+**Two things this changes.** §21 now states **how big the ask is** — *"supply the common mode" is
+not a clever projection extracting a large gain from a small piece of information; it is a request
+for most of a perfect prior* — and §0.2 no longer claims more than is controlled. What survives
+undiminished is the part that is an **identity, not a fit**: the 94%-predictable orthogonal
+component is worth **+0.0747 Å, worse than doing nothing**. ***The corrector is not weak; it is
+aimed at the wrong component.***
+
+**A trap recorded because I walked up to it.** `CTRL_SHRINK_ORACLE_Y` is shrunk to the **PERP**
+arm's norm (1.99), **not** the along arm's (3.12). Differencing the along arm against it reads
+**−0.2680 at 2.06×, 94W/32L — an apparently controlled positive**, and it is meaningless. One
+boundary from being quoted as the headline; the sprint's signature defect (**a number carries its
+definition**) in its purest form. `s31_verify.py` now asserts the trap's value *and* that the report
+refuses it.
+
+**Instrument fact.** These arms ran in a different process from the split they are differenced
+against — legal because the two jobs' `PROD` rows are **bit-identical on 126/126 in both bases**.
+**The projection is deterministic; lane D measured sensitivity to *differing* inputs, not
+nondeterminism.** Verifier **230/230, 0 mismatched**.
+
+---
+
 ## NOTE 14 (2026-09-21 00:47, lane P, S31-L20): **THE DECISIVE SUBSTITUTION IS A NULL AT 0.19x MDE — AND "THERE IS NO THIRD OUTCOME" WAS ITSELF THE HYPOTHESIS THAT DIED**
 
 Lane L handed the sprint a clean dichotomy: replace `run_cvar_vqe`'s `p` with the closed-form

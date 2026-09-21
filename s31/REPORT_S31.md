@@ -1331,6 +1331,17 @@ is measured (§20.1), not argued. Three things make it a well-posed target rathe
    (S30-L7), so a channel that reads the pool — however cleverly — cannot supply it. *That is the
    one thing we now know for certain about where it must come from.*
 
+**How big the ask is, stated so the framing cannot flatter it.** `y_along(mu)` is **84% of the
+perfect correction's energy**, and applying it is **NOT MEASURED** against simply applying 75–90% of
+that perfect correction (§20.1). **So "supply the common mode" is not a clever projection that
+extracts a large gain from a small piece of information — it is a request for most of a perfect
+prior, expressed in the coordinates that make the *remaining* structure legible.** The reason to
+state it in those coordinates anyway is the part that *is* controlled: **the 94%-predictable
+orthogonal complement is worth +0.0747 Å, which is worse than doing nothing.** *The project's
+corrector is not weak — it is aimed at the wrong component*, and no amount of improvement to it
+changes that, because it is an **identity** (`mu_hat = mu − y`) and not a fit. **That is the
+durable result: it rules out a whole family of next steps rather than endorsing one.**
+
 **And the parallel requirement, which may or may not be the same one:** a per-candidate quality
 estimate with **positive in-band skill**. Every native-free candidate measured has zero or negative
 in-band skill (§20.2). **State which of the two any proposal addresses.**
