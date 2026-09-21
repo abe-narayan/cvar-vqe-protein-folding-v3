@@ -148,15 +148,15 @@
   "construction": "same top-128, same operator, same K=128, same size distribution 1..128; each variant a RANDOM subset of that size instead of the score-ordered prefix",
   "n_draws": 4,
   "gain_prefix": -0.28786949186727684,
-  "gain_random_mean": -0.4191301591518836,
+  "gain_random_mean": -0.427885696650558,
   "gain_random_per_draw": [
-   -0.42413301667683306,
-   -0.4246219486402494,
-   -0.4109971300357666,
-   -0.41676854125468527
+   -0.42322069325926254,
+   -0.4015648402930915,
+   -0.42055908480470733,
+   -0.4661981682451705
   ],
-  "gain_random_sd": 0.006504145777769814,
-  "share_of_prefix_gain": 1.4559728314146083,
+  "gain_random_sd": 0.02730124818183798,
+  "share_of_prefix_gain": 1.4863877859201422,
   "REGISTERED_BAR": "'the m axis is an order statistic' FIRES if the random family reaches >= 80%% of the prefix gain",
   "BAR_FIRES": true,
   "prefix_curve_repro_maxdev": 0.0
@@ -169,9 +169,9 @@
    "n_local_minima": 25.317460317460316
   },
   "random_family": {
-   "within_target_sd": 0.15592431454563813,
-   "lag1_autocorr_of_values": 0.12591889458288208,
-   "n_local_minima": 41.96825396825397
+   "within_target_sd": 0.15659797102761988,
+   "lag1_autocorr_of_values": 0.11246439743136723,
+   "n_local_minima": 42.023809523809526
   },
   "order_statistic_growth_gain_vs_k": {
    "prefix": {
@@ -185,14 +185,14 @@
     "128": -0.28786949186727684
    },
    "random": {
-    "1": 0.03481318790596655,
-    "2": -0.03774881494385118,
-    "4": -0.08242962635912354,
-    "8": -0.13166799990062428,
-    "16": -0.18535776422658845,
-    "32": -0.254708407814753,
-    "64": -0.33252814442115985,
-    "128": -0.4241330166768331
+    "1": 0.031016416583851125,
+    "2": -0.03914982866794858,
+    "4": -0.09313019813086099,
+    "8": -0.1434250152150396,
+    "16": -0.2010587055177564,
+    "32": -0.26620406081520853,
+    "64": -0.3429034072567454,
+    "128": -0.42322069325926215
    }
   },
   "reading": "the prefix variants are NESTED (curve[m] and curve[m+1] share m members) so they are far more correlated than random subsets of the same sizes; a family of less-correlated variants has a LARGER per-target minimum, which is the order-statistic mechanism itself. The prefix ordering does not merely fail to beat an arbitrary index -- it LOSES to one."

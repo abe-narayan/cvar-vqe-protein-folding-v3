@@ -1,0 +1,81 @@
+{
+ "seed": 31006,
+ "n": 126,
+ "admission_bar_S30": 0.6931,
+ "ORACLE": "ORACLE / NOT DEPLOYABLE -- coh needs the native in BOTH arguments; it is a diagnostic of why an operator works, never a deployable gate",
+ "basis": "CA POINT CLOUD, pair-distance space, min_sep 2, shipped top-75",
+ "theorem": "lane B, s31_B2_inpool.py:256-268 -- sum(a) = 1 passes the common mode through with coefficient exactly one, so coh depends on the CONCENTRATION of a and not on the ranker; only a readout OUTSIDE the affine hull moves it",
+ "coh": {
+  "uniform_mean_pairspace": {
+   "mean": 1.0,
+   "median": 1.0,
+   "sd": 1.2080532582046505e-16,
+   "n": 126,
+   "admitted": false,
+   "frac_targets_under_bar": 0.0
+  },
+  "AVG": {
+   "mean": 0.9779792771647142,
+   "median": 0.9889618573322672,
+   "sd": 0.03237786884429572,
+   "n": 126,
+   "admitted": false,
+   "frac_targets_under_bar": 0.0
+  },
+  "MED": {
+   "mean": 0.8885774455419863,
+   "median": 0.9442095751545598,
+   "sd": 0.15579073676703958,
+   "n": 126,
+   "admitted": false,
+   "frac_targets_under_bar": 0.07936507936507936
+  },
+  "AVG_RG": {
+   "mean": 0.9592285256005446,
+   "median": 0.9807188509062769,
+   "sd": 0.057169467288853866,
+   "n": 126,
+   "admitted": false,
+   "frac_targets_under_bar": 0.007936507936507936
+  },
+  "AVG_SEP": {
+   "mean": 0.9689454735837675,
+   "median": 0.9869222053005229,
+   "sd": 0.043686908110035366,
+   "n": 126,
+   "admitted": false,
+   "frac_targets_under_bar": 0.0
+  },
+  "ORACLE_best": {
+   "mean": 0.6708322168758447,
+   "median": 0.7565547715520224,
+   "sd": 0.30890548822432606,
+   "n": 126,
+   "admitted": true,
+   "frac_targets_under_bar": 0.3888888888888889
+  }
+ },
+ "coh_AVG_SEP_minus_AVG": {
+  "effect": -0.00903380358094693,
+  "se": 0.0013600046740394201,
+  "mde": 0.0038101890947888394,
+  "effect_over_mde": -2.370959381859126,
+  "ci95_fold": [
+   -0.01081967097494274,
+   -0.00664231755894031
+  ],
+  "folds_same_sign": 5,
+  "W": 109,
+  "L": 17
+ },
+ "affine_hull_departure": {
+  "AVG_SEP_residual_rms_A": {
+   "mean": 0.04524631021194162,
+   "median": 0.02950207503281841,
+   "min": 3.1350483319368127e-06,
+   "max": 0.22167458909705637
+  },
+  "AVG_residual_rms_A": 0.0,
+  "note": "RMS per-coordinate residual of AVG_SEP against the best affine (sum a = 1) combination of the superposed 75. AVG is exactly in the hull, so its residual is 0 by construction and is printed as the reference, not as a measurement."
+ }
+}

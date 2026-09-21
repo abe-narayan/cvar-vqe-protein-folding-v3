@@ -1552,6 +1552,58 @@ fraction is best-of-128; I registered ~4:1 and 8:1-against-deployability, in `PR
 measuring. **Both of us were directionally right and both of us were too generous: the surviving
 fraction is not "40%", it is negative.**
 
+### 5b. TWO ANNOTATIONS APPENDED IN PLACE AT 00:25, ORIGINAL WORDING LEFT STANDING (rule 13)
+
+**(i) A seeding defect in my own control, found and repaired by me.** The first version of
+`run_randfamily` seeded its draws with `hash(pdb)`, which Python salts per process
+(`PYTHONHASHSEED`), so the *specific* random subsets could not be regenerated in another process.
+The statistic was unaffected -- it is a mean over four draws of a matched family -- but the artefact
+was not reproducible, which is not acceptable for a control that carries a headline. Fixed to
+`crc32(pdb.encode())` and **the whole control was re-run from zero**. The original rows are kept at
+`s31/results/s31_F3_randfamily_rows_hashseed.jsonl`.
+
+```
+                                     hash-seeded (original)   crc32-seeded (reproducible)
+gain, prefix family                        -0.2879                    -0.2879
+gain, matched random family                -0.4191                    -0.4279
+  per draw                    -0.4241 -0.4246 -0.4110 -0.4168   -0.4232 -0.4016 -0.4206 -0.4662
+share of the prefix gain                     146%                       149%
+prefix curve vs S29's stored curve         0.0e+00                    0.0e+00
+```
+
+**Both versions fire the 80% bar by more than 60 points.** The headline is quoted from the
+reproducible run: **149%**, draw sd 0.0273 over 4 draws.
+
+**(ii) The coordinator's correction, and it makes this entry SMALLER and the record BETTER.** I was
+briefed on the premise that the split-half transfer had never been run on `bestm128`. **It had
+been, in the entry that produced the number.** S29-L30's own heading reads *"ITS TRANSFERABLE PART
+IS ZERO -- THE ORACLE GLOBAL PREFIX IS m = 72 (WORTH -0.0018 A) AND THE LEAVE-FOLD-OUT PREFIX IS
++0.0079 A WORSE THAN PRODUCTION AT 0.30x MDE"*, and S29's report lists *"A transferable prefix
+length m"* with verdict **FALSIFIED**. `grid-oracles-are-order-statistics` was **honoured, not
+violated** -- and my section 4 above independently re-derives S29's own numbers to the digit, which
+I did not realise at the time I wrote it.
+
+So this entry is **not** the discovery of a missed audit. It is a **second, independent support for
+a conclusion S29 already reached by a different route**: S29 showed the gain *does not transfer*;
+this entry shows the *axis is worse than an arbitrary 7-bit index at the same budget*. Different
+evidence, same conclusion, and the honest framing is one finding with two supports.
+
+One further correction to my own section 5, which over-reached: **order-statistic inflation makes an
+ORACLE number optimistically biased, and an optimistically biased upper bound is still a valid
+upper bound.** So S29's *"2.5 A is unreachable through this architecture"* is **safe, and safer than
+it was stated.** What was never licensed is reading 2.9027 as a -0.3079 A lead available to a better
+selector. My sentence *"must never again be quoted as the architectural ceiling"* is **too strong
+and is withdrawn**; the correct restriction is the one in the display block above it, which
+restricts what the number licenses rather than forbidding its use as a bound.
+
+### 5c. OPEN, AND OWNED
+
+The **cloud-to-chain price on this rung is +0.1422** (2.7605 cloud, 2.9027 chain), and S29-L30's
+transfer arms are **point-cloud**, so *"the transferable part is zero"* is currently quoted across
+two bases -- which the charter forbids and which this sprint has been bitten by three times.
+`s31/s31_F3_chain.py` runs the ORACLE-global-m and leave-fold-out-m arms, plus the matched random
+family, **on the built chain in one job from the same stored clouds**. Queued behind `AVG_SEP`.
+
 ### 6. What is NOT claimed
 
 * **The random-family control is CA point cloud only.** `F3-a` is confirmed on the built chain

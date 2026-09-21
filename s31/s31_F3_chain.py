@@ -41,11 +41,21 @@ from s24 import stats_lib as ST            # noqa: E402
 RESULTS = os.path.join(HERE, "results")
 ROWS = os.path.join(RESULTS, "s31_F3_chain_rows.jsonl")
 OUT = os.path.join(RESULTS, "s31_F3_chain.json")
-SEED, K128, NDRAW = 31007, 128, 4
+SEED, K128, NDRAW = 31007, 128, 2
 NCOMP = [0]
+PREFJSON = os.path.join(RESULTS, "s31_F3_prefix.json")
 
 
-def one(t):
+def m_settings():
+    """The ORACLE-global m and the leave-fold-out m, read from the cloud analysis that derived
+    them (`s31_F3_prefix.json` -> F3c), NOT re-derived here.  Both are S29-L30's own arms; this
+    job exists only to put them on the BUILT CHAIN, because S29-L30's transfer arms are point
+    cloud and the cloud->chain price on this rung is +0.1422."""
+    d = json.load(open(PREFJSON))["F3c_global_m"]
+    return int(d["m_star"]), {int(k): int(v) for k, v in d["m_by_fold"].items()}
+
+
+def one(t, m_star, m_fold):
     pdb = t["pdb"]
     u = I.load_univ(pdb); dg = I.distogram(pdb); n = int(u["n"])
     pool = np.asarray(u["order"], int)[:500]
@@ -68,7 +78,9 @@ def one(t):
         pref[m - 1] = I.ca_rmsd(Cp[m - 1], nat)
     mb = int(pref.argmin())
 
-    arms = {"M75": Cp[74], "PREFIX": Cp[mb]}
+    mlfo = int(m_fold[int(t["fold"])])
+    arms = {"M75": Cp[74], "M_GLOBAL": Cp[m_star - 1], "M_LFO": Cp[mlfo - 1],
+            "PREFIX": Cp[mb]}
     rand_cloud = {}
     for d in range(NDRAW):
         rng = np.random.default_rng(SEED + 1000 * d + crc32(pdb.encode()))
@@ -82,7 +94,9 @@ def one(t):
         rand_cloud["RANDOM%d" % d] = dict(cloud=float(v[k]), variant=k + 1)
 
     row = dict(pdb=pdb, n=n, fold=int(t["fold"]), fail18=bool(pdb in I.FAIL18),
-               m_best=mb + 1, cloud_M75=float(pref[74]), cloud_PREFIX=float(pref[mb]),
+               m_best=mb + 1, m_star=int(m_star), m_lfo=mlfo,
+               cloud_M75=float(pref[74]), cloud_M_GLOBAL=float(pref[m_star - 1]),
+               cloud_M_LFO=float(pref[mlfo - 1]), cloud_PREFIX=float(pref[mb]),
                **{("cloud_" + k): v["cloud"] for k, v in rand_cloud.items()},
                **{("variant_" + k): v["variant"] for k, v in rand_cloud.items()})
     for nm, C in arms.items():
@@ -101,10 +115,12 @@ def run():
             if ln.strip():
                 done.add(json.loads(ln)["pdb"])
     ts = I.targets(); t0 = time.time()
+    m_star, m_fold = m_settings()
+    print("ORACLE global m* = %d ; leave-fold-out m = %s" % (m_star, m_fold), flush=True)
     for k, t in enumerate(ts):
         if t["pdb"] in done:
             continue
-        r = one(t)
+        r = one(t, m_star, m_fold)
         with open(ROWS, "a") as fh:
             fh.write(json.dumps(r) + "\n")
         print("[%3d/%3d %5.0fs] %s m*=%3d | cloud M75 %6.3f PREFIX %6.3f RAND0 %6.3f | "
@@ -137,15 +153,19 @@ def analyse():
                     W=o["n_better"], L=o["n_worse"], n=o["n"])
 
     m75c, prefc = c("chain_M75"), c("chain_PREFIX")
+    glob_c, lfo_c = c("chain_M_GLOBAL"), c("chain_M_LFO")
     rnd = np.stack([c("chain_RANDOM%d" % d) for d in range(NDRAW)], 1)
     out = dict(seed=SEED, n=126, basis="BUILT CHAIN, all arms projected in ONE job from the same "
                                        "stored clouds; variant selected on the CLOUD for every arm",
                ORACLE="ORACLE / NOT DEPLOYABLE -- every arm is a per-target minimum over K = 128",
                means=dict(M75=float(m75c.mean()), PREFIX=float(prefc.mean()),
+                          M_GLOBAL=float(glob_c.mean()), M_LFO=float(lfo_c.mean()),
                           RANDOM_per_draw=[float(v) for v in rnd.mean(0)],
                           RANDOM_mean=float(rnd.mean(0).mean()),
                           RANDOM_sd_over_draws=float(rnd.mean(0).std(ddof=1))),
                PREFIX_vs_M75=cmp2(prefc, m75c, "F3chain.PREFIX(bestm128) - M75 (BUILT CHAIN)"),
+               M_GLOBAL_vs_M75=cmp2(glob_c, m75c, "F3chain.ORACLE global m - M75 (BUILT CHAIN)"),
+               M_LFO_vs_M75=cmp2(lfo_c, m75c, "F3chain.leave-fold-out m - M75 (BUILT CHAIN)"),
                RANDOM_vs_M75=[cmp2(rnd[:, d], m75c,
                                    "F3chain.RANDOM draw %d - M75 (BUILT CHAIN)" % d)
                               for d in range(NDRAW)],
@@ -158,6 +178,11 @@ def analyse():
     out["BAR_FIRES_on_chain"] = bool(gp and (gr / gp) >= 0.80)
     out["cloud_cross_check"] = dict(
         M75=float(c("cloud_M75").mean()), PREFIX=float(c("cloud_PREFIX").mean()),
+        M_GLOBAL=float(c("cloud_M_GLOBAL").mean()), M_LFO=float(c("cloud_M_LFO").mean()),
+        cloud_to_chain_price=dict(M75=float((c("chain_M75")-c("cloud_M75")).mean()),
+                                  PREFIX=float((prefc-c("cloud_PREFIX")).mean()),
+                                  M_GLOBAL=float((glob_c-c("cloud_M_GLOBAL")).mean()),
+                                  M_LFO=float((lfo_c-c("cloud_M_LFO")).mean())),
         RANDOM_mean=float(np.mean([c("cloud_RANDOM%d" % d).mean() for d in range(NDRAW)])),
         note="must agree with s31_F3_prefix.json's cloud figures (2.7605 prefix) up to the "
              "reseeding of the random family")
