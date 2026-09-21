@@ -570,7 +570,7 @@ try:
               bool(abs(r) < 0.7))
     ratios = [dig(fa, "F2_filter_vs_readout_MEASURED", "strata", st,
                   "excess_filter_over_readout", "effect_over_mde")
-              for st in ("T_POOL", "T_BEST", "T_CHAIN", "FAIL18_DIAGNOSTIC_ONLY")]
+              for st in ("T_POOL", "T_BEST", "T_CHAIN", "FAIL18")]
     exact("the F2 effect grows monotonically with the stratum's circularity", True,
           bool(ratios[0] < ratios[1] < ratios[2] < ratios[3]))
     # F2(c): the composition with lane E -- coherently wrong, not diversely wrong
