@@ -717,84 +717,142 @@ suggestion** — see §7.
 
 ## 7. Longer proteins — the requirement is derived, and the instrument now exists
 
-The charter closes with *"maybe test on longer proteins"*, and §6 turned that into a **derived
-requirement**: the quantum question fails condition A because `2^n_res ≤ 65536` at 9–16 residues, and
-the decision spaces that would grow with the target *exist only where one fragment no longer spans
-it*. §2.0 sharpens the same point from the other side: at `3n ≈ 39` a hull of 500 fragments is close
-to saturated, **so the top rung prices a fit rather than a retrieval.** Both statements predict that
-something changes when the chain gets long.
+§6 turned the charter's *"maybe test on longer proteins"* into a **derived requirement**: the quantum
+question fails condition A because `2^n_res ≤ 65536` at 9–16 residues. §2.0 sharpens it from the
+other side: at `3n ≈ 39` a hull of 500 fragments is close to saturated, so the top rung prices a fit.
+Both predict that something changes when the chain gets long.
 
-**An instrument was built: 45 targets, mean length 54.7 residues**, against the canonical 126 at mean
-12.96 — a **4.2×** increase. It is **separate from `tuning126`**, has its own folds, and no endpoint
-claim in this report is computed on it. From a census of 13,751 candidate files, 599 fell in band and
-191 were rejected for chain breaks.
+### 7.1 The instrument
 
-**The ladder at both lengths, on the BUILT CHAIN** (the projector's output, pre-AMBER; lane L's own
-ladder arms, so `avg75` is its construction rather than the production pipeline — the *ratios* are
-the result, not the absolute values):
+**`long40` — 45 targets, 44–60 residues (mean 54.71)**, five frozen folds of nine, assigned by greedy
+balanced packing of whole identity-clusters **before the first arm ran**. Funnel: 293 in band → 170
+monomers → 90 after leakage → **45** after redundancy clustering at identity 0.40. **Zero overlap with
+`tuning126`; `benchmark60` never opened.**
 
-```
-rung                short (n=126, 12.96 aa)   long (n=45, 54.71 aa)   long/short
-pool best                   1.7078                  5.0182               2.94
-top-75 best                 2.1004                  5.8691               2.79
-sparse s=10                 1.1192                  3.6648               3.27
-avg75 (the ladder's)        3.4822                  9.7450               2.80
-avg75 from a RANDOM 75      3.6244                 10.0622               2.78
-```
+It had to be built from `prots/`, and *why* is itself a finding: **the deployed library serves exactly
+ZERO windows at `n ≥ 26`** — `peptide_db` caps at 25 and `fragment_db` at 20 — while `prots/` serves
+**1.71 M** at `n = 45`.
 
-**Every rung scales by 2.8–3.3× while the chain grows 4.2×, so the pipeline degrades sub-linearly in
-length.** And the ratios that carry this sprint's conclusions barely move:
+**The MDE it can resolve**, built chain, realised: **1.29 Å** pool headroom, **1.45 Å** selection,
+**0.48 Å** retrieval, **0.46 Å** sparse gain, **0.82 Å** filter skill — roughly **4× wider** than the
+canonical instrument's. **Anything under ~0.46 Å here is unresolvable and is reported as such.**
+
+### 7.2 The ladder, BUILT CHAIN, both lengths, complete
+
+One ladder, length-portable at every rung, run through the **same code** at both lengths; basis
+**built chain (projector output), pre-AMBER** at both, so every rung *difference* is unaffected by
+stage 4's absence.
 
 ```
-                              short      long
-avg75 / pool best              2.04       1.94     <- the selection+readout loss, unchanged
-top-75 best / pool best        1.23       1.17     <- the filter's best-axis loss, unchanged
+rung                      L ~ 13 (n=126)     L ~ 55 (n=45)
+pool_best     ORACLE          1.7078             5.0182
+sparse_s10    ORACLE          1.1192             3.6648
+top75_best    ORACLE          2.1004             5.8691
+avg75                         3.4822             9.7450
+avg75_random  control         3.6244            10.0622
 ```
 
-### 7.0 All three registered predictions HOLD at 4.2× the chain length
+**Independent reproduction:** `pool_best` **1.7078 matches contract rule 17 exactly** and `sparse_s10`
+1.1192 matches its 1.1139 to 0.005 — *from different code, from coordinates*; the cloud arm returns
+1.7108, the value pinned in `s12/instrument.py`'s own selfcheck.
 
 ```
-P1  pool headroom            4.7268 against a 0.75 threshold   HOLDS
-      -> generation is NOT the bottleneck at 40-60 residues
-P2  selection is the largest cell (top75_best -> avg75)        HOLDS
-P3  projection cost is a property of the OBJECT projected      HOLDS
-      real member  +0.0385   vs   dense average  +0.3356
+difference (LOWER IS BETTER)          L ~ 13                    L ~ 55
+headroom   avg75 - pool_best      +1.7744  5.50x  2/124     +4.7268  3.67x  1/44
+retrieval  top75_best - pool_best  +0.3926  3.25x            +0.8509  1.79x
+selection  avg75 - top75_best      +1.3818  4.74x            +3.8760  2.68x
+sparse     sparse_s10 - pool_best  -0.5887  6.31x            -1.3534  2.97x
+filter     avg75 - avg75_random    -0.1421  1.27x  74/52     -0.3171  0.39x  NOT A RESULT
 ```
 
-> ### The loss ladder has the same shape at 4.2× the chain length, on the built chain, and all three structural claims survive. **This sprint's conclusions are not a peptide-length artefact.**
+**ALL THREE REGISTERED PREDICTIONS HOLD.** **P1** (pool headroom ≥ 0.75 Å): **+4.73 Å at 3.67× on
+44/45 targets** — *generation is **less** the bottleneck at length, not more.* **P2** (selection is the
+largest deployable rung): selection 3.876 against retrieval 0.851, a **4.6 : 1** ratio at L ≈ 55
+against 3.5 : 1 at L ≈ 13. **P3** (projection cost tracks non-physicality): a real member projects for
+**+0.0385** and a dense 75-member average for **+0.3356**.
 
-**And P3 is the sharpest of the three**, because it reproduces contract rule 16 on an instrument that
-had no part in writing it: **a real deposited member pays +0.0385 to be projected and a dense average
-pays +0.3356 — an 8.7× difference at the same chain length.** *The projection cost is a property of
-the object, measured twice, on two instruments, 4.2× apart in length.*
+> ### The readout's share of the recoverable loss is **77.9% at L ≈ 13 and 82.0% at L ≈ 55**. The shape is preserved and **the readout's share GROWS.** This sprint's conclusions are not a peptide-length artefact.
 
-### 7.1 What changes, and it is exactly what §6 predicted
+**But contract rule 16's CONSTANTS do not survive, only its ORDERING.** *"A real deposited member
+projects for free, −0.0007 to −0.0030"* becomes **+0.0385 at L ≈ 55 — 13–55× larger.** The rule is
+about the *object*, and that is what transfers; the numbers are peptide-length numbers.
 
-**At 54.7 residues `3n ≈ 164`, not 39.** Five hundred fragments cannot saturate a 164-dimensional
-space the way they saturate a 39-dimensional one, so **the donor-pool control of §2.0 should fail at
-this length** — a pool assembled for a different protein should *not* reach the target's hull. That
-is a concrete, falsifiable prediction which follows from the same geometry that produced §2.0, and it
-is the first place where retrieval should start to matter for the *ceiling* rather than only for the
-pool mean.
+### 7.3 Why the readout rung grows — measured, not asserted
 
-**Equally, `2^54.7` is not enumerable.** Condition A — the one that fails by chain length alone on
-`tuning126` — **passes** here. Fragment assembly and per-residue branch selection become real
-decisions rather than degenerate ones, because one fragment no longer spans the target.
+```
+                                          L ~ 13      L ~ 55
+mean pairwise CA-RMSD among the 75         4.031      10.247
+virtual CA-CA bond of the average          2.440       1.802
+  ... as a fraction of the native bond     0.640       0.474
+Rg of the average / Rg of the native       0.939       0.881
+```
 
-> **The honest summary: this sprint closed the quantum question *on this instrument* and simultaneously
-> produced the reason a different instrument might answer it differently. Those are the same fact seen
-> twice.**
+> **The object handed to the projector at L ≈ 55 has less than half a real backbone's bond length,
+> because the set it averages is spread 2.5× further apart.** That is why the readout rung grows — and
+> it is a property of **the operator meeting a wider set**, not of the pool.
 
-### 7.2 Caveats, stated rather than buried
+### 7.4 Two things that ARE length-scoped, and one that is not
 
-**This is the BUILT CHAIN at n = 45, not the built-chain endpoint at n = 126**, and the two are
-never differenced. Lane L's `avg75` is its own ladder arm, not the production operator — its short
-value is 3.4822 against production's 3.2105, so **only the ratios transfer, never the absolute
-numbers.** `n = 45` gives a much weaker instrument: the SEs above are **0.43 on the long pool
-best against 0.079 on the short**, so an MDE on the long instrument is roughly **5× wider** and only
-large effects are resolvable there. **No deployable claim is made on it.** Lane L also declared a
-reproducibility defect in one of its own controls before quoting it, and that declaration stands in
-the record.
+**`m = 75` is a peptide-length constant** (CLOUD basis, **a LEAD, not a result**). The curve is flat
+over m = 30/50/75 at L ≈ 13 and has its minimum at **m = 3** at L ≈ 55, where the shipped m = 75 sits
+**1.28 Å past it**; every fold's out-of-fold choice at length is m ∈ {3, 5}. Reported as a lead
+because it is **0.72× MDE with W/L 21/24 beside a large mean** — the concentration warning — and it is
+on the cloud, uncarried to the chain. **On `tuning126` the same arm says m = 75 is already right
+(0.47×).** *It is a statement about what would have to change to deploy at length, not a proposal to
+change the canonical pipeline.*
+
+**The deployed distance prior is hard-capped at peptide length.** `core/predict.py` sets
+`MAXLEN = 26` and `SEP_BINS` tops out at 24, so **every pair with |i−j| ≥ 24 collapses into one
+terminal bin** that in training held only |i−j| ∈ {24, 25} — at n = 55 that is **27% of all pairs**.
+`sep/26.0` and `n/26.0` reach 1.7–2.3, and the MLP carries raw `n` and raw `j−i`, fitted only on
+n ∈ [8, 26]. ***It is evaluated outside its fitted support by construction.*** This is why the
+canonical ladder's distogram-defined rungs cannot be evaluated at length at all, and **retraining it
+is the single largest named piece of work a long deployment needs.**
+
+**The common mode is NOT length-scoped.** `f` = 0.4683 (SE 0.0163) at L ≈ 13 against **0.5303**
+(SE 0.0269) at L ≈ 55 — difference **0.70× MDE, NOT MEASURED**, and if anything it *rises*. The
+bias-variance identity verifies to **1.6e-15**. *Definition, because this is exactly the boundary that
+gets crossed:* both are the **BLOSUM** top-75; the 0.676 on record is the **DISTOGRAM** top-75, a
+different object, never differenced against it.
+
+### 7.5 What the lane falsified, including its own hypothesis
+
+**L-H1 is FALSE: the representation is not the obstacle at 40–60 residues.** The lane pre-registered
+that the ideal-geometry representation would be the barrier at length, with the falsifier *"< 1.0 Å at
+L = 45"*. The **deployed projector** run on the native itself (ORACLE / NOT DEPLOYABLE):
+
+```
+arm                n     L        mean     median    SE       p90     max
+PROJ_NAT_SHORT    126   9-16     0.0429    0.0228   0.0053   0.104   0.431
+PROJ_NAT_LONG      60   41-60    0.7002    0.7444   0.0295   0.956   1.129
+```
+
+**Mean, median *and* p90 all sit below the falsifier.**
+
+> **And the by-product outlives the hypothesis.** The motivating quantity — the **native-torsion
+> rebuild** — rises as `0.0299 · L^1.239` (R² 0.9958, paired within 371 molecules) and **is not the
+> representability floor.** It overstates the distance to the emittable set by **3.9× at L ≈ 52** and
+> **8.1× on the canonical 126** (0.347 against 0.0429). **`fragment_db.REBUILD_TOL = 1.0` and
+> `data.REBUILD_TOL = 1.5` gate library admission on exactly this quantity**, on the rationale that
+> above it *"the deposited geometry carries something the representation cannot express."* **That does
+> not follow — members are being excluded that the projector can express ~8× better than the gate
+> assumes.** Not acted on, because changing library admission would change `tuning126`'s pools.
+
+**Two more of the lane's own hypotheses died.** Its exploratory claim that *the sequence channel
+strengthens with length* is **NOT SUPPORTED** — in-band Spearman inside the K=500 pool is −0.0464 at
+L ≈ 13 and **+0.0261** at L ≈ 55, the *wrong sign* at length, contrast 0.83× NOT MEASURED; so
+`structure-and-sequence-are-decoupled` **survives at length**. And its pre-registered admission filter
+(`identity ≥ 0.4` against the banks) **rejected 140 of 170 monomers and left ZERO targets** — caught
+**by its own null before any RMSD existed**, which showed it rejects **100% of real and 100% of
+shuffled** sequences alike.
+
+### 7.6 What was NOT run
+
+**The donor-pool control at long length was not run.** §2.0's finding — that 500 fragments from a
+*different protein* reach the target's hull at 9–16 residues — predicts that the same control should
+**FAIL** at `3n ≈ 164`. The script exists (`s32/s32_L_hull_capacity.py`) with the prediction registered
+in its header. **It ships as a prediction, not a measurement**, and §10 names it as the first thing
+S33 should run.
 
 ---
 
