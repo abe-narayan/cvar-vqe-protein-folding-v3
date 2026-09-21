@@ -59,7 +59,23 @@ historical 0.517 Å discrepancy exactly. **Amplification ~1e13. Not one target o
    contrast must be projected **in the same job from the same stored clouds**.
 2. **Canonical stays 3.2105 Å** — the run the endpoint was declared from, and the only one whose
    clouds are persisted per target. Not retro-fitted.
-3. **No built-chain claim below 0.0107 Å** — the spread across the five circulating values.
+3. **No built-chain MEAN claim below 0.0107 Å** — the spread across the five circulating
+   values. **And the per-target floor is far higher.** Lane P measured it directly (S31-L18)
+   by running the *same operator in two implementations* — `average_weighted(uniform,
+   top-75)` against `coordinate_average(top-75)`, whose **clouds agree to 3.6e-14**:
+
+   ```
+   built-chain MEAN     3.2108 vs 3.2105, paired +0.0003, 0.03x MDE  -- a null
+   PER TARGET  |d|      mean 0.0134   median 0.0026   p90 0.0329   MAX 0.2285 A
+                        exactly zero on 0 of 126; above 0.0107 on 28 of 126 (22%)
+   ```
+
+   > **A 1e-14 input difference — the same method written twice — moves the built chain by
+   > up to 0.23 Å on individual targets while cancelling to nothing in the mean.** Any
+   > per-target chain statement below **~0.03 Å** is indistinguishable from re-running the
+   > same computation in a different implementation. This is also a **matched null** for
+   > the chaos result above, arriving from shipped code rather than an injected
+   > perturbation, and with a distribution rather than a single worst case.
 
 **A consequence nobody had drawn:** the measured 0.92 cloud→chain transfer is **an average over a map
 that is locally chaotic on a substantial minority of targets.** A lane proposing a cloud-level gain
