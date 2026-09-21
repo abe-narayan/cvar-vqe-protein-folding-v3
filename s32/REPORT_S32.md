@@ -479,7 +479,9 @@ per-fold accuracy swings 0.30–0.70. The one mechanism-motivated single feature
 a constant wearing a label. A one-bit feature that is 81/19 cannot carry a 59/41 label.**
 
 **In Ångströms, BUILT CHAIN, n = 126, all arms in one process:** the price of **one ORACLE bit** is
-**−0.2101 Å, 1.66× MDE, 5/5 folds — ORACLE / NOT DEPLOYABLE.** Against S31's −0.8102 Å for the
+**−0.2101 Å, 1.66× MDE, 5/5 folds — ORACLE / NOT DEPLOYABLE** (`s32_D5_signchain_LEG_total.json`;
+*the cloud-basis figure in `s32_D5_signprice.json` is −0.1287 at 1.52× and the two are never
+differenced*). Against S31's −0.8102 Å for the
 common-mode *direction*, **one bit is 26% of it.** (Median exactly 0.0000 with 74 ties, and that is
 **structural**: where the bit is +1, ORACLE ≡ constant. The effect is carried by 52 targets at
 ≈ −0.51 Å each.)
@@ -1028,6 +1030,10 @@ perfectly deterministic and **discontinuous** in its input. Measured irreducible
 built-chain mean: **±0.003 Å**. Paired contrasts from bit-identical clouds in one job are unaffected;
 **nothing else below ~0.03 Å is resolvable.** And a *reduction* over 126 float64s is not exact either
 — the per-target identity is, the mean is not, which a lane found by having its own verifier fail.
+
+**2b. “Does a script write this file?” is not enough — the quoted number must be INSIDE it.** AUDIT 11 asks whether any `.py` writes a given artefact, which caught seven unreproducible files. But **two of lane D's five were worse than unbacked: their headline numbers were not in the file at all.** `s32_D0X_circularity.json` and `s32_D4X_rgsign.json` stored only per-target rows, and the cited variance-retention table and the *“positive on 81% of targets”* figure existed **only in stdout** — so a reader following the citation would have found a 126-row file that did not contain the cited number. **AUDIT 11 as written would have PASSED on both once a script existed.** The standing form of the rule is therefore: ***a `.py` writes this name AND the quoted number is a numeric leaf inside it.*** *The lane caught itself twice, and the second catch is the one the weaker form misses.*
+
+All five were then re-emitted from `s32/s32_D_reemit.py` with seeds and RNG draw **order** pinned, and **3,985 shared numeric leaves reproduce at max |diff| exactly 0.000e+00.** Each file carries a `reemit_check` block recording that diff, so the check is re-runnable rather than a claim. **No number in this report changed.**
 
 **3. An audit that cannot fail is decoration; an audit whose scope shrinks silently is worse.** Both
 happened here. A convexity check initialised its accumulator at the pass threshold and reported
