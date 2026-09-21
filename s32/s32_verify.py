@@ -623,6 +623,68 @@ if not selftest_only:
     completeness_audit()
 
 
+# ===== AUDIT 11: every result artefact must carry a PROVENANCE block (charter 61: verify seeds,
+# verify artefacts, verify experiment completeness).  S32-D5: the sprint's most-quoted in-band
+# result shipped as {note, n_splits, res} with no module, no git commit, no source hash and no
+# seed, and no script in the repo produced it -- the THIRD instance of the project's
+# `findings-prose-is-not-evidence-of-code` failure.  A number nobody can re-run is not a result.
+_S32_SOURCES = [(q, io.open(q, encoding="utf-8", errors="replace").read())
+                for q in sorted(glob.glob(os.path.join("s32", "*.py")))]
+
+
+def provenance_audit(quiet=False):
+    have, lack, soft = [], [], []
+    for f in sorted(glob.glob(os.path.join("s32", "results", "*.json"))):
+        if os.path.basename(f).startswith("_"):
+            continue
+        try:
+            d = json.load(io.open(f, encoding="utf-8"))
+        except Exception:                                            # noqa: BLE001
+            continue
+        if not isinstance(d, dict):
+            continue
+        pv = d.get("provenance")
+        mod = dig(d, "provenance", "module") if isinstance(pv, dict) else None
+        #: a seed is only required where something random happens; a recorded module always is,
+        #: because it is what makes the number re-runnable.
+        seedish = any(k for k in d
+                      if isinstance(k, str) and ("seed" in k.lower() or "n_draw" in k.lower()
+                                                 or "draws" in k.lower() or "split" in k.lower()))
+        seed = any(k for k in d if isinstance(k, str) and "seed" in k.lower())
+        base = os.path.basename(f)
+        stem = base[:-5]
+        #: the SHARPER test than a provenance block: does any script in the sprint actually
+        #: write this filename?  D5's defect was not a missing key, it was a missing producer.
+        producer = None
+        for src in _S32_SOURCES:
+            if base in src[1] or ('"%s"' % stem) in src[1] or ("'%s'" % stem) in src[1]                     or (stem.split("_rows")[0] in src[1] and stem.count("_") > 1
+                        and os.path.basename(src[0])[:-3] in stem):
+                producer = os.path.basename(src[0]); break
+        if mod:
+            have.append(f)
+            if seedish and not seed and not dig(d, "provenance", "seed"):
+                soft.append((f, "random arm with no recorded seed", producer))
+        elif producer:
+            soft.append((f, "no provenance block (producer %s exists)" % producer, producer))
+        else:
+            lack.append((f, "NO provenance block AND NO SCRIPT WRITES IT -- unreproducible", None))
+    if not quiet:
+        for f, why, _pr in lack:
+            FLAG.append((why, f.replace("\\", "/")))
+            print("  FLAG  %-46s %s" % (os.path.basename(f), why))
+        for f, why, _pr in soft[:8]:
+            print("  note  %-46s %s" % (os.path.basename(f), why))
+        print("  %d artefact(s) carry a provenance module; %d lack one but have a producer; "
+              "%d ARE UNREPRODUCIBLE (no provenance, no producer)" % (len(have), len(soft), len(lack)))
+    return have, lack
+
+
+if not selftest_only:
+    print()
+    print("--- AUDIT 11: every result artefact must be re-runnable (provenance + seed) ---")
+    provenance_audit()
+
+
 # =========== AUDIT 9: a ladder's increments must CLOSE, on ONE basis (S32-V, the basis-mix class)
 # A rung written `+0.4350 -> 2.1435` under a value of 1.7078 does not close: the chain increment
 # is +0.4357 and +0.4350 is the MEMBER-basis one.  Mixing a member/cloud increment into a

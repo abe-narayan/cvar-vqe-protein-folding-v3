@@ -277,7 +277,32 @@ arms, emitted so the search has an owner):
 
 | family | comparisons | best single arm | its x MDE | the search accounted |
 |---|---|---|---|---|
-| 16 native-free criteria x {all branches, GEN4-only} | 32 | `d_to_C` −0.0091 | 0.56x | **+0.0004, CI [−0.0091, +0.0116]** |
+| 16 criteria x **2 directions** x {all branches, GEN4-only} | **64** | `d_to_C` min −0.0082 | 0.51x | **+0.0028, CI [−0.0054, +0.0128]** |
+
+**Why 64 and not 32 — D7, an error of mine that the coordinator caught.** My first version fixed a
+direction per criterion (`MAXIMISE = {"typicality"}`), assuming the name meant "how typical". Lane
+R's `typicality` is a **distance**, so lower is more typical; I selected the *least* typical branch
+and reported "+0.3434, a RESULT in the wrong direction", which the report glossed as *"the most
+typical branch is much worse"*. **It is the most ATYPICAL branch that is much worse** — the expected
+direction, supporting consensus-as-outlier-avoidance.
+
+**The fix is not a corrected sign, it is no sign at all.** For a criterion with no a priori
+direction, testing one direction is an **unregistered choice that halves the apparent
+multiplicity**. Every criterion now runs both ways, both are reported, and the comparison count
+doubles — which the out-of-sample accounting then charges for. Doubling the search did not move the
+verdict: **+0.0004 → +0.0028, both CIs straddling zero.**
+
+**Degeneracy note:** `vbond_mean` and `vbond_sd` return identical min and max with **203 of 203
+branches tied** — every branch has ideal geometry, so those statistics are constant. **4 of the 64
+comparisons are degenerate by construction**; `ramah` min (58 tied) and `posphi_frac` min (92 tied)
+are heavily degenerate. Tie-averaging handles them, but the honest count is ~60.
+
+**And the two-direction table changed the interpretation, which is why it was worth doing.** Every
+criterion's ARGMAX is a **2–3x MDE, 5/5-fold RESULT in the WORSE direction** (+0.17 to +0.35) while
+every ARGMIN is nothing. *The criteria reliably identify disasters and never identify winners* —
+the same mechanism as D2/D3 and as consensus. On the **compute-matched GEN4-only** subset, where
+production's own four starts are the whole branch set, **nothing is a result in either direction**
+(max 0.46x): production's four starts contain no branch bad enough to be punished for.
 
 Supporting arms, not endpoint comparisons: the ORACLE best branch (**−0.11**, split-half
 transfer **5%**, NOT A SIGNAL), and the zero-information control (a uniformly random branch from

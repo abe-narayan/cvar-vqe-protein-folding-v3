@@ -53,7 +53,20 @@ N_DRAWS = 300
 #: criteria lane R records per branch.  Sign convention: all are minimised unless listed in
 #: MAXIMISE.  `rmsd_nat` and `d_to_prod` are ORACLE / diagnostic and never a deployable arm.
 ORACLE_KEYS = {"rmsd_nat", "d_to_prod"}
-MAXIMISE = {"typicality"}
+
+#: MY OWN ERROR, KEPT AS A COMMENT BECAUSE IT IS THE POINT.  The first version of this file set
+#: `MAXIMISE = {"typicality"}`, assuming the name meant "how typical".  Lane R's `typicality` is a
+#: DISTANCE -- the mean CA-RMSD of a branch to the production top-75 -- so LOWER is MORE typical.
+#: Maximising it therefore selected the LEAST typical branch and produced "+0.3434, 2.35x, a RESULT
+#: in the wrong direction", which the report glossed as "the most typical branch is much worse".
+#: It is the most ATYPICAL branch that is much worse -- the expected direction, and it SUPPORTS
+#: consensus-as-outlier-avoidance.  The coordinator caught it; this file no longer guesses.
+#:
+#: THE FIX IS NOT A CORRECTED SIGN, IT IS NO SIGN AT ALL.  For a criterion with no a priori
+#: direction, testing one direction is an unregistered choice and halves the apparent multiplicity.
+#: Every criterion is now run BOTH WAYS, both are reported, and the comparison count doubles
+#: accordingly -- which the out-of-sample search accounting then charges for.
+DIRECTIONS = (("min", False), ("max", True))
 
 
 def load_rows():
@@ -163,35 +176,38 @@ def main():
     print("  2. DEPLOYABLE ARMS -- argmin of each native-free criterion, chain basis, paired to "
           "the same job's production")
     print("     %-16s %8s %9s %8s %7s %7s %6s %8s  %s"
-          % ("criterion", "mean", "effect", "SE", "MDE", "xMDE", "folds", "W/L", "verdict"))
+          % ("criterion dir", "mean", "effect", "SE", "MDE", "xMDE", "folds", "W/L", "verdict"))
     out["arms"] = {}
     for sub, lab in (("ALL", "all branches"), ("GEN4", "GEN4 only (compute-matched to production)")):
         for k in keys:
-            v, nt = [], []
-            for p in pdbs:
-                rn = np.asarray(rows[p]["rmsd_nat"], float)
-                sc = np.asarray(rows[p][k], float)
-                if sub == "GEN4":
-                    m = np.array([f == "GEN4" for f in rows[p]["fam"]])
-                    if m.sum() == 0:
-                        v.append(np.nan); nt.append(0); continue
-                    rn, sc = rn[m], sc[m]
-                a, t = pick(sc, rn, maximise=(k in MAXIMISE))
-                v.append(a); nt.append(t)
-            v = np.array(v, float)
-            if not np.isfinite(v).all():
-                continue
-            c = ST.compare(v, prod, folds, names=pdbs,
-                           label="branch argmin(%s), %s vs production (BUILT CHAIN)" % (k, lab))
-            out["arms"]["%s|%s" % (sub, k)] = dict(compare=c, mean_tied=float(np.mean(nt)),
-                                                     subset=lab, per_target=v.tolist())
-            gate = ("RESULT" if abs(c["effect_over_mde"]) >= 1.0 and c["folds_same_sign"] >= 4
-                    and max(c["ci95_fold"]) * min(c["ci95_fold"]) > 0
-                    else "NOT MEASURED" if abs(c["effect_over_mde"]) >= 0.7 else "not a result")
-            print("     %-16s %8.4f %+9.4f %8.4f %7.4f %+7.2f %4d/5 %4d/%-3d  %s%s"
-                  % (k[:16], v.mean(), c["effect"], c["se"], c["mde"], c["effect_over_mde"],
-                     c["folds_same_sign"], c["n_better"], c["n_worse"], gate,
-                     "" if np.mean(nt) < 1.05 else "  (mean %.1f tied)" % np.mean(nt)))
+            for dname, dmax in DIRECTIONS:
+                v, nt = [], []
+                for p in pdbs:
+                    rn = np.asarray(rows[p]["rmsd_nat"], float)
+                    sc = np.asarray(rows[p][k], float)
+                    if sub == "GEN4":
+                        m = np.array([f == "GEN4" for f in rows[p]["fam"]])
+                        if m.sum() == 0:
+                            v.append(np.nan); nt.append(0); continue
+                        rn, sc = rn[m], sc[m]
+                    a, t = pick(sc, rn, maximise=dmax)
+                    v.append(a); nt.append(t)
+                v = np.array(v, float)
+                if not np.isfinite(v).all():
+                    continue
+                c = ST.compare(v, prod, folds, names=pdbs,
+                               label="branch arg%s(%s), %s vs production (BUILT CHAIN)"
+                                     % (dname, k, lab))
+                out["arms"]["%s|%s|%s" % (sub, k, dname)] = dict(
+                    compare=c, mean_tied=float(np.mean(nt)), subset=lab, direction=dname,
+                    per_target=v.tolist())
+                gate = ("RESULT" if abs(c["effect_over_mde"]) >= 1.0 and c["folds_same_sign"] >= 4
+                        and max(c["ci95_fold"]) * min(c["ci95_fold"]) > 0
+                        else "NOT MEASURED" if abs(c["effect_over_mde"]) >= 0.7 else "not a result")
+                print("     %-16s %-4s %8.4f %+9.4f %8.4f %7.4f %+7.2f %4d/5 %4d/%-3d  %s%s"
+                      % (k[:16], dname, v.mean(), c["effect"], c["se"], c["mde"],
+                         c["effect_over_mde"], c["folds_same_sign"], c["n_better"], c["n_worse"],
+                         gate, "" if np.mean(nt) < 1.05 else "  (%.0f tied)" % np.mean(nt)))
         print("     --- %s above ---" % lab)
 
     # ---- 4. THE SEARCH ITSELF, accounted.  Choosing the best of 32 comparisons is a best-of-K
@@ -203,7 +219,7 @@ def main():
     if names:
         best = min(names, key=lambda k: out["arms"][k]["compare"]["effect"])
         out["best_deployable_arm"] = best
-        out["n_comparisons_emitted"] = 2 * len(keys)
+        out["n_comparisons_emitted"] = 2 * 2 * len(keys)
         M2 = np.column_stack([np.array(out["arms"][k]["per_target"], float) for k in names])
         E = M2 - prod[:, None]                     # effect vs PRODUCTION, per target per criterion
 
@@ -233,15 +249,15 @@ def main():
                            + E[h1][:, int(np.argmin(E[h2].mean(0)))].mean())
         oracle_pt = float(E.min(1).mean())                 # per-target best criterion, ORACLE
         out["criterion_search"] = dict(
-            n_criteria=len(names), n_comparisons=2 * len(keys),
+            n_criteria=len(names), n_comparisons=2 * 2 * len(keys),
             oracle_per_target_best_criterion=oracle_pt,
             best_single_arm=best, best_single_effect=out["arms"][best]["compare"]["effect"],
             out_of_sample_transfer_vs_production=float(tr.mean()),
             ci95=[float(np.percentile(tr, 2.5)), float(np.percentile(tr, 97.5))],
             note="baseline is PRODUCTION, not the criterion mean")
         print()
-        print("  4. THE SEARCH, ACCOUNTED.  %d criteria x 2 subsets = %d comparisons emitted."
-              % (len(keys), 2 * len(keys)))
+        print("  4. THE SEARCH, ACCOUNTED.  %d criteria x 2 directions x 2 subsets = %d comparisons."
+              % (len(keys), 2 * 2 * len(keys)))
         print("     best single arm: %-16s effect %+0.4f at %.2fx its own (nominal) MDE"
               % (best.split("|")[1], out["arms"][best]["compare"]["effect"],
                  out["arms"][best]["compare"]["effect_over_mde"]))
