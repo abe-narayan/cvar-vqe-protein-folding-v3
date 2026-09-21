@@ -168,3 +168,31 @@ Any comparison beyond these is declared as unregistered when it is reported.
 
 `s31/s31_F_terminal.py` → `s31/results/s31_F_terminal_rows.jsonl`, `s31/results/s31_F_terminal.json`.
 Seed 31006. Config: top-75, POOL_K=500, MIN_SEP=2, `I.project(lam=0.3, multi=True, maxiter=300)`.
+
+---
+
+## 8. ADDENDUM — a third operator arm, registered before the main run produces any number
+
+**Appended 2026-09-20 (see the commit timestamp). No number from the main run exists at this
+point; the only numbers seen so far are the three-target scout (`s31/s31_F_scout.py`), whose role
+was the reproduction gate and the projection timing and whose values are reported in the ledger as
+a scout, not as a result.**
+
+§2's derivation says `AVG` pays `P(AVG) ≈ +0.1622 Å` at stage 3b because it emits a *contracted
+non-structure* (the scout saw a CA–CA bond mean of **1.97 Å** against a real backbone's 3.79 Å on
+one target). The project's standing measurement is that coordinate averaging **contracts the
+backbone by 25.8%**. That suggests a third terminal operator which is neither the average nor the
+medoid:
+
+* **AVG_RG** — the uniform coordinate average, rescaled about its own centroid so that its radius
+  of gyration equals the **mean Rg of the 75 members** that produced it, then projected through the
+  same stage 3b.
+
+The rescaling target is a property of the retained candidates only: **native-free, zero free
+parameters, deployable.** Falsifier identical in form to F1: `mean_chain(AVG_RG) − mean_chain(AVG)`
+must reach `−1.0 × MDE` with a fold CI excluding zero to count; `> −0.7 × MDE` refutes it.
+
+Registered prior: **~1:2 against**, because stage-3b projection restores ideal bond geometry and is
+therefore *already* a partial de-contraction, so the correction may be double-counted.
+
+This raises lane F's registered comparison count from 28 to **32**.
