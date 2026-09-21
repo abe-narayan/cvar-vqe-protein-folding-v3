@@ -1,0 +1,43 @@
+{
+ "seed": 310504,
+ "note": "ORACLE / NOT DEPLOYABLE -- the responses read d_nat",
+ "energy_share_pooled": {
+  "along": 0.710956874585753,
+  "perp": 0.28904312541424715
+ },
+ "responses": {
+  "y_FULL": {
+   "R2_oof": 0.23545312895964132,
+   "R2_oof_randfeat_control": -0.014290202216076464,
+   "R2_oof_vs_zero": 0.2499013530035218,
+   "sd_response": 3.668995730645777,
+   "corr_pred_truth_pooled": 0.48646692624391014,
+   "share_of_full_energy": 1.0,
+   "excess_over_randfeat": 0.2497433311757178
+  },
+  "y_ALONG_mu": {
+   "R2_oof": -0.005106720543528009,
+   "R2_oof_randfeat_control": -0.0038692220251508314,
+   "R2_oof_vs_zero": -0.004494364137960893,
+   "sd_response": 3.122334053997977,
+   "corr_pred_truth_pooled": 0.08632722437098149,
+   "share_of_full_energy": 0.710956874585753,
+   "excess_over_randfeat": -0.001237498518377178
+  },
+  "y_PERP_mu": {
+   "R2_oof": 0.9403102392493871,
+   "R2_oof_randfeat_control": -0.002587006902823319,
+   "R2_oof_vs_zero": 0.943120576074414,
+   "sd_response": 1.9440125792368692,
+   "corr_pred_truth_pooled": 0.9697190381035301,
+   "share_of_full_energy": 0.28904312541424715,
+   "excess_over_randfeat": 0.9428972461522104
+  }
+ },
+ "full_corrector_spends": {
+  "R2_of_its_ALONG_part_against_y_along": -0.0033883535002086074,
+  "R2_of_its_PERP_part_against_y_perp": 0.8650588682607132,
+  "energy_share_of_yhat_along": 0.11384457097540947,
+  "energy_share_of_yhat_perp": 0.8861554290245905
+ }
+}

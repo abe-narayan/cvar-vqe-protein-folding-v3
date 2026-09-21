@@ -1,0 +1,43 @@
+{
+ "seed": 310505,
+ "status": "ORACLE / NOT DEPLOYABLE -- every arm reads d_nat",
+ "energy_fraction_along_mu_per_target_mean": 0.5470008124777367,
+ "arms": {
+  "PROD": {
+   "rms": 0.0,
+   "norm_ratio_to_y": 0.0
+  },
+  "SHRINK_Y_025": {
+   "rms": 0.9260407150800442,
+   "norm_ratio_to_y": 0.25
+  },
+  "SHRINK_Y_050": {
+   "rms": 1.8520814301600883,
+   "norm_ratio_to_y": 0.5
+  },
+  "SHRINK_Y_075": {
+   "rms": 2.7781221452401326,
+   "norm_ratio_to_y": 0.7500000000000001
+  },
+  "SHRINK_Y_090": {
+   "rms": 3.3337465742881593,
+   "norm_ratio_to_y": 0.8999999999999999
+  },
+  "ENERGYMATCHED_ALONG": {
+   "rms": 3.123285622280219,
+   "norm_ratio_to_y": 0.8431825867424877
+  },
+  "ENERGYMATCHED_PERP": {
+   "rms": 1.991459117690599,
+   "norm_ratio_to_y": 0.5376273108894739
+  },
+  "RANDDIR_ALONG": {
+   "rms": 0.43744701910708744,
+   "norm_ratio_to_y": 0.11809605452101417
+  },
+  "RANDDIR_PERP": {
+   "rms": 3.67824178123865,
+   "norm_ratio_to_y": 0.9930021761842064
+  }
+ }
+}

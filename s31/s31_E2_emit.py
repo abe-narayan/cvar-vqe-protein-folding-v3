@@ -41,9 +41,10 @@ def main():
     ap.add_argument("--shard", type=int, default=0)
     ap.add_argument("--nshards", type=int, default=1)
     ap.add_argument("--rows", default=ROWS)
+    ap.add_argument("--deltas", default=DELTAS)
     a = ap.parse_args()
 
-    z = np.load(DELTAS, allow_pickle=False)
+    z = np.load(a.deltas, allow_pickle=False)
     off = z["off"]; names = [str(s) for s in z["names"]]
     D_ = {k: z["delta_" + k] for k in names}
     tg = I.targets()
