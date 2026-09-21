@@ -542,7 +542,23 @@ def phase_analyse(write=True):
     #: the DEPLOYED T is 0.3 for every fold (`core/pipeline.py:113`), so none of its 12 cells
     #: is at the deployed temperature.  This block is here because the entropy ordering is
     #: NOT the same at T = 0.3 as in L1.1's table, and the difference is alpha-dependent.
+    #: TARGET-INDEPENDENCE.  `E = zrank(dis[o])` is the standardised rank of 128 values, so up
+    #: to the pool's tie structure it is THE SAME VECTOR on every target.  `p*` is a function
+    #: of `(E, alpha, T)` alone and `run_cvar_vqe` is seeded at 0, so BOTH distributions are
+    #: (to within the ties) one fixed vector per `alpha`.  Measured, not asserted: the
+    #: within-alpha spread of every scalar summary of them.
     al = G("alpha")
+    cert["target_independence"] = {}
+    for a_val in sorted(set(al.tolist())):
+        m = al == a_val
+        blk = {}
+        for k in ("H_star_bits", "H_vqe_bits", "ess_star", "ess_vqe", "F_star", "F_vqe",
+                  "tv_star_vqe"):
+            v = G(k)[m]
+            blk[k] = dict(mean=float(v.mean()), sd=float(v.std(ddof=1)),
+                          range=float(v.max() - v.min()))
+        cert["target_independence"]["%.2f" % a_val] = blk
+
     cert["by_alpha"] = {}
     for a_val in sorted(set(al.tolist())):
         m = al == a_val
