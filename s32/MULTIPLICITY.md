@@ -918,3 +918,48 @@ silently inconsistent; the artefact predating the fix is flagged here.
 | R-16 | R | GEN4D named-start choice: ORACLE global + LEAVE-FOLD-OUT vs PROD | **E** | built chain n=126 | pending | pending | EXPLORATORY; written after best-of-K showed GEN4D is the only family whose split-half transfer is materially non-zero (-0.1338, 64% of its own oracle) |
 | R-17 | R | MEDOID_EXTRA / SCALE_NF / SCALE_NF_MED vs PROD (CHAIN basis) | R (R4) | built chain n=126 | pending | pending | R4 deployable arms |
 | R-18 | R | SCALE_GRID per-target ORACLE, priced best-of-K + split-half | R (R1) | built chain n=126 | pending | pending | order-statistic pricing of the scale axis |
+
+### Registered — D3-M FINAL, n = 126. **The registered prediction FAILED; the endpoint is a regression.**
+
+Supersedes the n = 72 interim above. `s32/results/s32_D3_mover_A_0_1.jsonl`, `s32_D_analyse.json`.
+**BUILT CHAIN, all arms produced in one process from the production chain they are paired against.**
+`PROD` = **3.2126** (canonical 3.2105; gap 0.0021, inside the 0.0107 mean floor) and reproduced to
+the same 3.2126 independently in `s32_D5_signchain`.
+
+| # | reg? | rung | `cos(Δd,−e_prod)` ORACLE | ×MDE | matched-random ctrl | **surplus over ctrl** | ×MDE | ENDPOINT Δ (chain) | ×MDE | folds | W/L |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| D-76 | R | k=100 | +0.0057 | 0.09 | −0.0019 | +0.0076 | 0.12 | **+0.0204** | 0.84 | 5/5 | 23/103 |
+| D-77 | R | k=10 (production) | +0.0412 | 0.63 | −0.0036 | +0.0448 | 0.69 | **+0.0336** | 1.26 | 5/5 | 40/86 |
+| D-78 | R | k=1 | +0.0555 | 0.69 | +0.0002 | +0.0553 | 0.69 | **+0.0726** | 1.96 | 5/5 | 33/93 |
+| D-79 | R | k=0 (free) | +0.0651 | 0.73 | +0.0014 | +0.0637 | 0.71 | **+0.0985** | 2.21 | 5/5 | 35/91 |
+| D-80..91 | R | the 12 scale-ladder arms, α ∈ {0.25, 0.50, 0.75} × 4 rungs | — | — | — | — | — | **+0.0039 … +0.0601, ALL POSITIVE** | — | — | — |
+
+**Registered prediction (median `cos ≥ +0.10`): FAILED.** Against its own magnitude-matched random
+direction the surplus is **0.12–0.71× MDE — NOT A RESULT at three rungs, NOT MEASURED at the
+fourth.** *The relaxation displacement is indistinguishable from a random direction of the same
+length.* The endpoint regression grows monotonically with the freedom given to the physics, 5/5
+folds at every rung. **The scale ladder does not rescue it** — every α at every rung is worse, best
+case **+0.0039 Å**. *A direction that is not pointing at the target cannot be fixed by shortening
+the step.*
+
+**Geometry secondaries, row one (contract rule 15).** Production's virtual bond is **3.80395 Å,
+sd 9.2e-16** — an exact ideal-geometry chain. Relaxed: **3.84913 Å sd 2.78e-02** (k=100),
+**3.86914 Å sd 4.66e-02** (k=0). **A systematic +1.2% to +1.7% Cα–Cα dilation with real scatter,
+growing with the same knob as the damage.** A dilation-only control was **not** run, so this is a
+named candidate mechanism, **not a demonstrated one**.
+
+**Free by-product, worth more than the arm:** `cos(e_prod, e_pool75) = +0.9443` and
+`cos(e_prod, e_disto) = +0.6621`. **The production chain's own pair-distance error is 94% aligned
+with the pool's common-mode error** — S31 §20.1's account confirmed from a different object, in a
+job that was not looking for it.
+
+### Lane D — closing tally
+
+**92 comparisons emitted** (D-1…D-91 plus the 3 exploratory Legacy per-term rows), of which
+**registered: D-1…D-17, D-30…D-59, D-64 not, D-67…D-91**; exploratory: D-8, D-9, D-18…D-29, D-35,
+D-64…D-66. **Registered predictions that FIRED AGAINST THE LANE: three** — the `<15%` chiral in-band
+variance share (D-12, measured 23.6%), the H-D2 basin horns (D-40/D-41, neither fired at 0.972 and
+0.5006 Å), and the D3-M `cos ≥ +0.10` (D-76…D-79, measured 0.09–0.73× MDE). **One reproducibility
+defect of my own, found by lane V and fixed in place** (D1-T's missing script and provenance).
+**Zero lane-D arms reached the endpoint as an improvement**, and the one ORACLE arm that did
+(D-75, −0.2101 Å) is **ORACLE / NOT DEPLOYABLE** with nothing native-free to supply it.

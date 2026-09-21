@@ -1178,3 +1178,97 @@ project's memory carries "the 25.8% contraction is WITHDRAWN (correct: 3.5%)", a
 the aggregate / Rg scale. Neither figure may be substituted for the other.
 
 ---
+
+---
+
+## S32-L(D3) -- **PHYSICS AS A MOVER IS CLOSED: THE RELAXATION DISPLACEMENT IS ORTHOGONAL TO THE ERROR, AND APPLYING IT IS A REGRESSION** (2026-09-21, lane D)
+
+Pre-registration `s32/PREREG_S32_D.md`, commit **`34973b1b`**. Artefacts
+`s32/results/s32_D3_mover_A_0_1.jsonl` (n = 126) and `s32_D_analyse.json`.
+**BASIS: BUILT CHAIN throughout. All arms produced in one process from the production chain that
+each row is paired against**, so contract rule 3 is satisfied without a bit-identity check. `PROD`
+rebuilds to **3.2126** against the canonical **3.2105** (gap **0.0021**, inside the 0.0107 mean
+projection floor) — and **independently to the same 3.2126 in `s32_D5_signchain`**, a separate
+process.
+
+### The arm, and why it was the only one D0 left open
+
+D0 closed every **scalar** a force field can produce about one structure: energies and components
+(S31 Cor. B1), ensemble averages and every dynamical observable (**Theorem D-E**), normal-mode and
+curvature spectra (S31 Cor. B1′), deterministic minimiser trajectories (**Cor. D-E3**), and every
+contraction of two equivariant fields such as force-vs-prior-gradient alignment (**Theorem D-F**).
+**Corollary D-G left exactly one escape: emit the displacement and APPLY it.** That is also the
+shape of the prize — S31 §20.1 prices a **direction** and says it *"does not have to be accurate, it
+has to point the right way."* D3-M tests it.
+
+### The result: it does not point the right way, and applying it costs Ångströms
+
+`Δd = d(x_relaxed) − d(x_production)` in pair-distance space; `e_prod = d(x_prod) − d_nat` is the
+production chain's own error (**ORACLE / NOT DEPLOYABLE**). A helpful move has `cos(Δd, −e_prod) > 0`.
+
+```
+rung   cos(dd,-e_prod)  xMDE folds | matched-random |  ENDPOINT built chain    xMDE folds   W/L   | move_ca
+k=100     +0.0057       0.09   3/5 |    -0.0019     |  +0.0204 se 0.0087       0.84   5/5   23/103 | 0.094
+k=10      +0.0412       0.63   3/5 |    -0.0036     |  +0.0336 se 0.0095       1.26   5/5   40/ 86 | 0.265
+k=1       +0.0555       0.69   4/5 |    +0.0002     |  +0.0726 se 0.0132       1.96   5/5   33/ 93 | 0.515
+k=0       +0.0651       0.73   4/5 |    +0.0014     |  +0.0985 se 0.0159       2.21   5/5   35/ 91 | 0.631
+```
+
+**The registered prediction — median `cos ≥ +0.10` — FAILED.** Against its own
+**magnitude-matched random direction in the same space**, paired, the surplus is **+0.0076 to
++0.0637 at 0.12–0.71× MDE, 3–4/5 folds: NOT A RESULT at three rungs and NOT MEASURED at the
+fourth.** *The physical relaxation displacement is, to the resolution of this instrument,
+indistinguishable from a random direction of the same length.*
+
+**And the endpoint is a regression that grows with the freedom given to the physics**: +0.0204 →
++0.0985 Å as the restraint falls from k=100 to free, **5/5 folds at every rung**, 91 of 126 targets
+worse at k=0.
+
+**The scale ladder does not rescue it.** S31's shrink curve says a correction pointing the right way
+buys 97% of its benefit at c = 0.75. **Every α ∈ {0.25, 0.50, 0.75, 1.0} at every rung is positive
+(worse)**, best case k=100 at α=0.25, **+0.0039 Å**. *A direction that is not pointing at the target
+cannot be fixed by shortening the step.*
+
+### Two mechanisms, both measured
+
+**(i) The energy is spent on a deterministic rotamer artefact, not on the fold.** Median energy
+**45,867 → −483 kcal/mol** for **0.094 Å** of Cα motion at k=100, 97.6% converged. By §0.2c the
+sidechains are **modal rotamers** and the hydrogens **frozen local frames** — a deterministic
+function of `(seq, φ, ψ)`, built the same way for every candidate. **AMBER's dynamic range on this
+pipeline is a rotamer-placement artefact carrying no candidate information.** D2-R measured the same
+thing on pool members: 3.18e9 → −558 kcal/mol for 0.50 Å, band quality unchanged (−0.008 Å) and its
+best member slightly worse (+0.038 Å).
+
+**(ii) Relaxation leaves the ideal-geometry manifold, and dilates.** Geometry secondaries, row one
+(contract rule 15): production's virtual bond is **3.80395 Å with sd 9.2e-16** — an exact
+ideal-geometry chain. The relaxed arms are **3.84913 Å sd 2.78e-02** (k=100) and **3.86914 Å sd
+4.66e-02** (k=0): **a systematic +1.2% to +1.7% Cα–Cα dilation with real bond-length scatter.**
+The endpoint damage and the dilation both grow monotonically with the restraint being released.
+**They are not separated here** — a dilation-only control was not run — so this is a named candidate
+mechanism, not a demonstrated one, and it is recorded as such.
+
+### The by-product that is worth more than the arm
+
+```
+cos(e_prod, e_pool75) = +0.9443          cos(e_prod, e_disto) = +0.6621
+```
+
+**The production chain's own pair-distance error is 94% aligned with the pool's common-mode error.**
+S31 §20.1's common-mode account, confirmed from a different object (the emitted chain's error rather
+than the prior's) in a different lane, in a job that was not looking for it.
+
+### Verdict
+
+**Door 3 — the equivariance escape from G1 — is closed by measurement, at the endpoint, with a
+matched control.** Combined with D0's derivations and D1/D2's measurements:
+
+> **Every use of a force field on this pipeline is now closed. As a RANKER it is closed by theorem
+> (achiral invariant scalars are distance-map readings, G1 + D-E + D-F) and by measurement (in-band
+> ρ exactly +0.0000, unchanged by convergence). As a MOVER it is closed by measurement (the
+> displacement is indistinguishable from a matched random direction, and applying it costs +0.02 to
+> +0.10 Å at any step length).**
+
+**What is NOT closed**, and it is the one rung the ladder did not reach: the **multi-structure**
+escape, `F‡(x_a → x_b)` — a function of a *pair*, which breaks G1's single-structure hypothesis
+(**Cor. D-E4**), left open by S31 §8 *"on price, not theory"*. D4-P was gated on D3-M showing a
+positive `cos`; it did not, so D4-P was not run. The gate was registered in advance.
