@@ -500,3 +500,41 @@ as a mechanism rather than as a null.
 | Q-6 | Q | Q1-T3 cardinality | support of the UNCONSTRAINED convex optimum, K=500 | REGISTERED | **CA cloud**, **ORACLE / NOT DEPLOYABLE** | `s*` mean 10.06, median 10, p90 13, max 23; 61.1% ≤ 10 | Closure is by MONOTONICITY and does not depend on where `s*` falls. Value 1.1535 ± 0.0669 is **not** differenced against S32-L1's 1.1139 built chain (different basis and frame). |
 | Q-7 | Q | Q4 pricing curve | emitted RMSD vs `r` retained principal components of `P_aff{W}t`, r = 0…33 | REGISTERED | **CA cloud**, **ORACLE / NOT DEPLOYABLE** | 3.0532 (r=0) → 2.0312 (r=6) → 1.8290 (r≈33) | A **ceiling curve in real numbers**, never differenced against a bit count. Each rung is a per-target ORACLE quantity, not a best-of-K. |
 | Q-8 | Q | hull projection vs shrinkage | `PROJ − SHRINK` (norm-matched to PROJ's own displacement), 7 noise levels × 8 draws | REGISTERED (control) | **CA cloud**, **ORACLE / NOT DEPLOYABLE** | ε 0.5/1.0/1.5: **+0.370 (4.71×) / +0.265 (3.17×) / +0.170 (1.96×) WORSE**; ε 2.0/2.5/3.0: 0.89×/0.01×/0.77× NOT MEASURED; ε 4.0: −0.137 (1.59×) better, **median −0.074 vs mean −0.137** | **The control fired and killed the arm.** 7 comparisons emitted in one family; the one that clears MDE has a mean/median ratio of 1.85 (concentration warning) and sits under an isotropic error model that is the most favourable geometry, not a neutral one. |
+
+### Registered — D4-S: can the per-target sign be supplied NATIVE-FREE?  **No.** `s32/results/s32_D4_signpred.json`
+
+The deployable form of D1-T. Leave-one-**fold**-out ridge (inner leave-fold-out alpha selection, so
+no test fold touches the hyperparameter) over **20 native-free per-target features** — band spread
+and its sd, `Rg` mean/sd, the predicted-vs-realised `Rg` disagreement, the chiral summary and its
+in-band sd, distogram posterior sd, in-band pair-distance sd, `expected` minus band mean, sequence
+composition (hydrophobic/Gly/Pro), peptide-DB fraction, BLOSUM similarity, per-scorer relative score
+spread, and `n`. **No feature reads `rr` or `nat_ca`.** Readout is directly comparable to D1-T:
+`oriented ρ = mean over targets of sign(ρ̂_lfo) · ρ_true`.
+
+| # | reg? | scorer | oriented (native-free) | **CONSTANT +1** (plausible zero-info control) | label-shuffled (32 draws) | excess over shuffled | ×MDE | folds |
+|---|---|---|---|---|---|---|---|---|
+| D-46 | R | **AMBER** | **−0.0355** | +0.0000 | −0.0645 | +0.0290 | 0.54 | 3/5 |
+| D-47 | R | `DIS` | +0.0674 | +0.0652 | +0.0624 | +0.0050 | 0.10 | 4/5 |
+| D-48 | R | `LEG_total` | +0.0373 | +0.0376 | +0.0252 | +0.0121 | 0.22 | 3/5 |
+| D-49 | R | `LEG_torsion` | +0.0444 | +0.0444 | +0.0392 | +0.0052 | 0.59 | 4/5 |
+
+**Nothing beats the plausible zero-information control, and AMBER is beaten by it.** Every excess
+over the matched label-shuffled control is **0.10–0.59× MDE — NOT A RESULT.** Leave-fold-out R² on
+ρ itself: AMBER **−0.0563**, `DIS` +0.0256, `LEG_total` −0.0228, `LEG_torsion` −0.0158. Sign accuracy
+0.381 / 0.548 / 0.595 / 0.556 against a chance of 0.50 *and against a constant-`+1` baseline that is
+already right on 50–58% of targets.*
+
+**The ORACLE gap this leaves, stated as the lane's closing number:** D1-T's partial-oracle ceiling is
+`LEG_total` **+0.2263**, AMBER **+0.1125**; the best native-free arm here is `DIS` **+0.0674**, which
+is its own constant control. **The sign is real, it transfers inside a target, and no per-target
+native-free summary feature carries it.** This is memory
+`in-band-signal-limited-not-sample-limited`'s flat learning curve, reproduced on an explicit
+20-feature tabular channel rather than a set transformer.
+
+**A mechanism I guessed and the data did NOT support, recorded because I looked.** I expected the
+model to get the sign right only where |ρ| is small. Splitting each scorer at its own median |ρ|:
+AMBER 0.365/0.397 (low/high), `DIS` **0.460/0.635**, `LEG_total` **0.619/0.571**, `LEG_torsion`
+0.508/0.603. **The split is scorer-dependent and goes the opposite way on `DIS` and `LEG_total`, so
+the guess is not supported and is not claimed.** (`DIS`'s 0.635 on its high-|ρ| half is a **post-hoc
+subgroup selected by an ORACLE quantity** — |ρ| is not knowable natively — and is recorded as an
+observation, not a lead.)
