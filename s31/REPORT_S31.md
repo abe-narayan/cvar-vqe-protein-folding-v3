@@ -401,7 +401,9 @@ trial 2  first5: [-1.718572 -1.691507 -1.664443 -1.637379 -1.610315]   last3: [1
 
 Since `p*` is a closed-form function of `(E, α, T)` alone and the circuit is seeded at 0, **both the
 closed-form optimum and the circuit's output are one fixed weighting curve per α**, identical across
-targets — the ties in a real pool leave a residual of **max deviation 4.07e-02** across the 126, but the vector is otherwise fixed. Measured: **`H(p*) = 4.9137` bits at α = 1 with standard deviation `3.1e-04` across the 126
+targets — the ties in a real pool leave a residual of **max deviation 4.07e-02** across the 126, but
+the vector is otherwise fixed. Measured: **`H(p*) = 4.9137` bits at α = 1 with standard deviation
+`3.1e-04` across the 126
 targets**; 6.6392 bits at α = 0.25 with sd 4.5e-3.
 
 > ### The quantum stage is target-independent to within a measured bound.
@@ -1307,7 +1309,11 @@ produces, and it is stated as open rather than resolved by assertion.**
 The circuit's expressivity (`p*` is free and closed-form, and substituting it is worth **−0.0112 Å at
 0.19× MDE**); the optimiser (80 → 2000 iterations move the gap by nothing); the CVaR α (inactive by
 construction on three of five folds); the ansatz depth; the register width (the 75 → 128 widening is
-a **+0.0307 Å COST** at **0.42× MDE, NOT MEASURED** — paid only to fill the `2**7` register (`core/pipeline.py:757`) and pointless when `quantum = False`, which is production; *its fold CI [+0.0028, +0.0557] excludes zero while the effect is 0.42×, the exact shape `_verdict` was hardened against, so the MDE gate binds and the CI does not rescue it*); the index encoding; the readout class (exact, and its
+a **+0.0307 Å COST** at **0.42× MDE, NOT MEASURED** — paid only to fill the `2**7` register
+(`core/pipeline.py:757`) and pointless when `quantum = False`, which is production; *its fold CI
+[+0.0028, +0.0557] excludes zero while the effect is 0.42×, the exact shape `_verdict` was hardened
+against, so the MDE gate binds and the CI does not rescue it*); the index encoding; the readout
+class (exact, and its
 native-free channel is **3.99%** of ORACLE); and the candidate set (the set effect is **+0.0049 Å at
 0.14× MDE — NOT A RESULT**, while the weighting rule costs **+0.1102 Å at 2.68× MDE**).
 
