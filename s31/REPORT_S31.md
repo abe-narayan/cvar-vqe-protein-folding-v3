@@ -1,7 +1,10 @@
 # Sprint 31 — CVaR-VQE Protein Folding: the objective, the readout, and where the information is not
 
-**Status: DRAFT IN PROGRESS.** Sections marked `[PENDING]` await lanes still running. Assembled as
-results land so nothing is reconstructed from memory at the end.
+**Status: FINAL — 2026-09-21 01:27.** All nine lanes closed; no section is pending. Assembled as
+results landed, so nothing here is reconstructed from memory at the end. Every number is asserted
+against its artefact by `s31/s31_verify.py` at **271 matched, 0 mismatched, 0 not-found,
+0 flagged**, which also parses these documents for every path they name and audits each number
+against the value on the **basis it names**.
 
 Branch `s26` · instrument: `tuning126`, 126 targets, 9–16 aa · endpoint: **mean built-chain Cα RMSD**
 Charter: `s31/BRIEF.md` (verbatim, 1,660 lines) · Ledger: `s31/LEDGER.md` · State: `s31/STATE.md`
