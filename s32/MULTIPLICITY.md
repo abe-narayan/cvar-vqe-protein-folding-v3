@@ -619,3 +619,13 @@ is **positive on 81.0% of targets**. `sign(rg_disagree)` is therefore *nearly a 
 its apparent accuracy is its target's marginal wearing a different label. Its correlation with the
 ORACLE quantity it is meant to predict is **+0.199**. **A one-bit feature that is 81/19 cannot carry
 a 59/41 label.** Every arm is under 0.7× MDE — NOT A RESULT.
+
+## LANE L (length generalisation) — prereg `s32/PREREG_S32_L.md` @ 88f2da39
+
+| # | comparison | type | basis | verdict |
+|---|---|---|---|---|
+| L-1 | PROJ_NAT_LONG (n=60, L 41–60) vs PROJ_NAT_SHORT (n=126, L 9–16) — deployed projector on the native, λ=0 | **registered** (L-H1) | CA cloud vs native, ORACLE / NOT DEPLOYABLE | 0.700 (SE 0.029) vs 0.0429 (SE 0.0053). **L-H1 FALSIFIED**: the registered falsifier was "< 1.0 Å at L=45"; measured mean 0.700, p90 0.956, max 1.129. The representation is NOT the obstacle at 40–60 residues. |
+| L-2 | native-torsion rebuild vs deployed-projector residual, same 60 chains | registered control (L-H1) | CA cloud, ORACLE | 2.742 vs 0.700 — the rebuild bound overstates the manifold distance by **3.9×** at L≈52 and by **8.1×** on the canonical 126 (0.347 vs 0.0429). |
+| L-3 | leakage filter `identity(norm="shorter")` vs composition-shuffled null, 60 targets × 3 shuffles | **registered control** (instrument admission) | rejection rate | **At the null**: rejects 100% of real AND 100% of shuffled at every threshold ≤ 0.9. Filter discarded. `verbatim` separates (real 0.330, shuffled 0.000) and is used instead. |
+| L-4 | `long40` ladder: pool_best / sparse_s10 / top75_best / avg75 / avg75_random, at L 40–60 and L 9–16 | **registered** (L-H2, P1–P3) | built chain, pre-AMBER | in progress |
+
