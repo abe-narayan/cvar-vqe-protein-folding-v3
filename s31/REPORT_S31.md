@@ -228,7 +228,7 @@ trial 2  first5: [-1.718572 -1.691507 -1.664443 -1.637379 -1.610315]   last3: [1
 
 Since `p*` is a closed-form function of `(E, α, T)` alone and the circuit is seeded at 0, **both the
 closed-form optimum and the circuit's output are one fixed weighting curve per α**, identical across
-targets. Measured: **`H(p*) = 4.9136` bits at α = 1 with standard deviation `1.4e-4` across the 126
+targets — the ties in a real pool leave a residual of **max deviation 4.07e-02** across the 126, but the vector is otherwise fixed. Measured: **`H(p*) = 4.9137` bits at α = 1 with standard deviation `3.1e-04` across the 126
 targets**; 6.6392 bits at α = 0.25 with sd 4.5e-3.
 
 > ### The quantum stage carries zero target-specific information.
@@ -592,7 +592,7 @@ that is noted — it is the charter's §24 ladder working as intended, and it is
 | direction | closed by | how |
 |---|---|---|
 | **The deployed CVaR objective as a quantum problem** | **theorem** | It is a **convex program with a closed-form global minimiser** pinned by one scalar. `run_cvar_vqe` is strictly worse in **126/126** targets at the deployed settings; `p*` costs 0.0012 s against 0.0985 s. Charter §11 closed for the deployed objective |
-| **Any target-specific role for the quantum state** | **derivation + measurement** | `E = _zrank(...)` is a **target-independent constant** (§5). `H(p*)` has sd **1.4e-4** across 126 targets. The stage answers a global hyperparameter question |
+| **Any target-specific role for the quantum state** | **derivation + measurement** | `E = _zrank(...)` is a **target-independent constant** (§5). `H(p*)` has sd **3.1e-04** across 126 targets. The stage answers a global hyperparameter question |
 | **A non-diagonal Hamiltonian** | **three independent theorems** | CVaR needs a per-shot eigenvalue; the forced operator is mean-field and quartic in ψ; and a candidate-index register's Hilbert dimension *is* the candidate count, so no operator on it can be classically hard |
 | **ADAPT-VQE / qubit-ADAPT** | **theorem** | Its selection rule `\|⟨ψ\|[H,A]\|ψ⟩\|` presumes the cost is `⟨H⟩`, a linear functional; **CVaR is not the expectation of any observable**, so the criterion is *undefined*, not merely unhelpful |
 | **The free-energy stage (§7A)** | **derivation, no compute** | `S` has no target argument, and the shipped potential is **reflection-invariant** (1340 torsion phases at distance 0.000e+00 from {0,π}), so `F`, `E`, `S` and every `dF/dT` are distance-map functions by G1 |
@@ -732,7 +732,7 @@ produces, and it is stated as open rather than resolved by assertion.**
 The circuit's expressivity (`p*` is free and closed-form, and substituting it is worth **−0.0112 Å at
 0.19× MDE**); the optimiser (80 → 2000 iterations move the gap by nothing); the CVaR α (inactive by
 construction on three of five folds); the ansatz depth; the register width (the 75 → 128 widening is
-a **+0.0307 Å cost**, NOT MEASURED); the index encoding; the readout class (exact, and its
+a **+0.0307 Å COST** at **0.42× MDE, NOT MEASURED** — paid only to fill the `2**7` register (`core/pipeline.py:757`) and pointless when `quantum = False`, which is production; *its fold CI [+0.0028, +0.0557] excludes zero while the effect is 0.42×, the exact shape `_verdict` was hardened against, so the MDE gate binds and the CI does not rescue it*); the index encoding; the readout class (exact, and its
 native-free channel is **3.99%** of ORACLE); and the candidate set (the set effect is **+0.0049 Å at
 0.14× MDE — NOT A RESULT**, while the weighting rule costs **+0.1102 Å at 2.68× MDE**).
 
