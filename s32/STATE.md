@@ -14,9 +14,12 @@ Primary target < 3.00 Å. Ambitious < 2.50 Å.
 **What is now established (L2–L5), and it is more than I expected this early:**
 
 1. **The readout is the Euclidean projection of the native onto the candidate hull, with gain exactly
-   1** (lane Q, re-derived by me). `a` is needed only along `|S|−1` ≈ 33 directions; everything else
-   is *exactly invisible*. Gain is 1 on that hull and **0 on its ~33-dimensional complement — total
-   suppression, not none** [corrected]. The closure is the **hull floor `d = 1.8290`**, which the
+   1** (lane Q, re-derived by me). **`a` is needed only along `|S|−1` ≈ 5.25 directions** — the
+   *active* support — out of an ambient `d_mean` ≈ 38.9; everything else is *exactly invisible*.
+   Gain is 1 on that support's affine hull and **0 on its ≈ 33-dimensional complement — total
+   suppression, not none** [corrected: I first wrote `|S|−1 ≈ 33`, conflating the *support*
+   dimension with the *annihilated complement* dimension. They are the two halves of the same
+   split, 5.25 + 33 ≈ 38.9, and only the first is what `a` must be known on]. The closure is the **hull floor `d = 1.8290`**, which the
    readout cannot beat: ***a structure estimate good enough to make the readout worth solving is
    already good enough to emit.*** **Arrow 4 is closed by
    derivation**, and S31's "solving it exactly buys nothing" is now forced rather than surprising.
@@ -74,8 +77,13 @@ combination, **+0.1622 for production's 75-member dense average**, which is not 
 > … the structures this stage returns on those targets are **not determined by the objective; they
 > are determined by the arithmetic."**
 
-The final rung runs at **λ = 0**, where the Ramachandran penalty has zero weight, so on degenerate
-targets a ~1e-7 coordinate-distance gap — i.e. rounding — picks the branch.
+~~The final rung runs at **λ = 0**, where the Ramachandran penalty has zero weight, so on degenerate
+targets a ~1e-7 coordinate-distance gap — i.e. rounding — picks the branch.~~
+**STRUCK — this was wrong.** The λ-ladder is `(0.0 → 0.3)` and **the canonical arm is λ = 0.3**
+(`s12/instrument.py:139`), so **the Ramachandran prior is already active and already selecting among
+branches** — `lam_path`'s docstring states that as its purpose. See contract rule 22. *A penalty is
+not a selector, though: post-hoc ranking of converged branches remains untested.* Original wording
+left standing per rule 13; it was sent to lane R before it was caught and is corrected there too.
 
 **Why this might be the first native-free signal with a reason to work.** Every ranking signal this
 project has tested is a distance-map function and therefore **achiral** (theorem G1). A torsion
