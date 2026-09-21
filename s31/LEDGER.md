@@ -128,3 +128,74 @@ than from incoherence per se, which sharpens what a fourth observable must suppl
 - **G1 (S30):** every achiral rotation/translation-invariant single-structure observable is a
   distance-map reading. Renaming one is not a new channel.
 - **ORACLE labels travel inside the sentence carrying the number**, not a paragraph later.
+
+---
+
+## S31-L1 -- **R1, THE READOUT CEILING: THE ENTIRE QUANTUM STAGE CARRIES AT MOST k BITS AND CANNOT EMIT ANYTHING OUTSIDE THE POOL -- AND THIS IS A PROPERTY OF THE READOUT, NOT THE HAMILTONIAN** (2026-09-20 23:50, coordinator)
+
+Derived from the code, not from prose, after the lanes were briefed. Handed to A (verify + measure
+realised capacity), C (design a readout that escapes it) and F (the medoid's ceiling). **Posted
+before any of them reported, so it is falsifiable by them rather than confirmed by them.**
+
+### The statement
+
+The quantum stage's output is exactly
+
+```
+v = P @ (p / sum(p));   return argmin_i v_i         # core/pipeline.py:795-803, :869-871
+```
+
+where `P` is the **pairwise Kabsch CA-RMSD matrix** between the top candidates
+(`Pt[a] = aud.kabsch_rmsd_batch(W64top, W64top[a])`, `core/pipeline.py:771-777`) and `p` is the
+state's measurement distribution. Four consequences:
+
+1. **The output is always one of the `2^k` pool members.** The stage cannot construct a structure;
+   it can only *name* a deposited one. `dim = min(1 << vqe_qubits, len(top))` with a hard `raise`
+   if the pool is smaller, so `k` qubits means exactly `2^k` candidates.
+2. **The state enters only through a linear map followed by an argmin.** `p` influences the answer
+   solely through which cell of the hyperplane arrangement `{(P_i - P_j) . p = 0}` it lands in --
+   a piecewise-constant map from the `(2^k - 1)`-simplex onto at most `2^k` outcomes.
+3. **Therefore the whole quantum stage carries at most `k` bits.** Seven at the deployed
+   `vqe_qubits = 7`.
+4. All `2^k` outcomes are reachable: at a vertex `p = e_j`, `(P e_j)_i = P[i,j]` and `P[j,j] = 0`,
+   so the argmin is `j`.
+
+### Why it matters more than T1
+
+T1 (S30) says a **diagonal** `H` makes the CVaR tail a prefix, so the state specifies one integer.
+R1 says something strictly stronger and **Hamiltonian-independent**:
+
+> **Even a perfect non-diagonal Hamiltonian cannot make this stage express more than `k` bits, and
+> cannot make it emit anything outside the pool.** The cap lives in the readout.
+
+This reframes the sprint. The charter's §6 asks what Hamiltonian the CVaR-VQE should optimise; R1
+says that question is **downstream of a readout question nobody had stated**. It also explains the
+Hamiltonian/readout decoupling recorded in S31-L0 from the other side: the readout already consumes
+the pairwise matrix `P` and is the thing actually choosing, so a Hamiltonian built to "see the
+pairwise geometry" is competing with the operator that consumes it.
+
+### What it does NOT say
+
+**It is a cap on information, not on value.** ORACLE argmin over 128 is **2.1435 A on the CA point
+cloud** against production's 3.0483 -- roughly **0.90 A of genuine headroom**, so this readout is
+*not* capped below production. **ORACLE / NOT DEPLOYABLE**, cloud basis; measured cloud->chain
+transfer for a correction is 0.92.
+
+It also does not say index redesign is worthless: re-labelling cannot raise capacity above `k`
+bits, but it can make a low-entropy or partially-measured state land in a better cell, and make
+each qubit correspond to a meaningful distinction. It *does* say that anyone hoping index redesign
+buys **information** should stop.
+
+### The open sub-question, which is sharper than the theorem
+
+How many outcomes does the deployed stage **actually** produce? R1 bounds capacity at `k` bits;
+the *realised* capacity could be far lower if the ansatz cannot reach the cells. Lane A owns this.
+**A realised capacity strictly below `k` bits would be a worse and more interesting result than R1
+itself.**
+
+### Falsifier
+
+R1 fails if `argmin(P p)` over the reachable `p` is not confined to the index set -- i.e. if any
+code path lets the stage emit a structure that is not a pool member -- or if point 2's arrangement
+argument is wrong about the reachable set. Both are checkable in an hour and lane A was asked to
+attack them.
