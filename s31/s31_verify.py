@@ -504,6 +504,90 @@ try:
 except Exception as e:
     MISSING.append("lane F coh block (%s)" % e)
 
+# ================================================== LANE F -- S31-L21 (the terminal operator)
+print()
+print("--- lane F: S31-L21, the terminal operator ---")
+try:
+    fa = load("s31/results/s31_F_analyse.json")
+    check("reproduction: recomputed AVG cloud vs the production record (max abs dev)", 0.0,
+          dig(fa, "reproduction", "cloud_max_abs_dev"), tol=1e-12, basis="cloud")
+    check("the in-process production comparator", 3.2126,
+          dig(fa, "F1_operators", "chain_AVG_mean"), basis="chain")
+    for nm, claimed in (("MED", 0.0688), ("AVG_RG", 0.0475), ("AVG_SEP", 0.4609)):
+        check("F1 %s - AVG" % nm, claimed,
+              dig(fa, "F1_operators", "arms", nm, "cmp", "effect"), basis="chain")
+    # the prereg predicted the medoid's chain cost BEFORE the run: assert the prediction is close
+    pred = dig(fa, "F1_operators", "arms", "MED", "record_cross_check",
+               "prereg_predicted_chain_delta")
+    meas = dig(fa, "F1_operators", "arms", "MED", "cmp", "effect")
+    exact("the prereg's pre-run prediction is within 0.005 A of the measurement",
+          True, bool(abs(pred - meas) < 0.005))
+    # the cloud arm must reproduce s12/agg_FINDINGS.md's medoid75 independently
+    check("MED cloud reproduces s12's medoid75 delta (+0.2339)", 0.2339,
+          dig(fa, "F1_operators", "arms", "MED", "cloud_cmp", "effect"), tol=1e-3, basis="cloud")
+    # EVERY gate must be WORSE in its registered direction
+    for g, claimed in (("G0", 0.0591), ("G3", 0.0600)):
+        v = dig(fa, "F1_gates", g, "cmp", "effect")
+        check("gate %s (registered direction)" % g, claimed, v, basis="chain")
+        exact("gate %s is WORSE, i.e. the registered direction FAILED" % g, True, bool(v > 0))
+    for g, claimed in (("G4", 0.1412), ("G5", 0.1457)):
+        v = dig(fa, "AVG_SEP_mechanism", "gates", g, "cmp", "effect")
+        check("gate %s (registered direction)" % g, claimed, v, basis="chain")
+        exact("gate %s is WORSE, i.e. the registered direction FAILED" % g, True, bool(v > 0))
+    check("ORACLE per-target min(AVG, MED) -- the whole readout-choice prize", -0.0782,
+          dig(fa, "F1_gates", "G2", "cmp", "effect"), basis="chain")
+    # the registered mechanism falsifier: the contrast had to be NEGATIVE
+    mc = dig(fa, "F1_mechanism", "contrast", "effect")
+    check("mechanism contrast, hi-minus-lo DISP of chain(MED)-chain(AVG)", 0.0990, mc,
+          basis="chain")
+    exact("the registered NEGATIVE mechanism direction is REFUTED", True, bool(mc > 0))
+    ter = [t["mean_dMA"] for t in dig(fa, "F1_mechanism", "by_DISP_tertile")]
+    exact("the DISP tertiles are monotone in the WRONG direction", True,
+          bool(ter[0] < ter[1] < ter[2]))
+    # the registered separation-band falsifier: the medoid had to be FLATTER at s >= 7
+    lb = dig(fa, "MECH_separation_band", "long_band_MED_minus_AVG")
+    check("long-band |ratio-1|, MED minus AVG", 0.0094, lb, basis="chain")
+    exact("the registered band falsifier is REFUTED (the medoid is LESS flat)", True, bool(lb > 0))
+    # the corrected contraction, and the refutation of the withdrawn 25.8%
+    rgn = dig(fa, "F1_geometry_vs_accuracy", "contraction_cloud", "AVG_rg_over_nat")
+    check("contraction of the average against the NATIVE (%)", 3.2654, (1.0 - rgn) * 100.0,
+          basis="cloud")
+    exact("the withdrawn 25.8% is refuted (measured contraction < 10%)", True,
+          bool((1.0 - rgn) * 100.0 < 10.0))
+    # physical validity: every CHAIN arm is ideal geometry, to 15 digits
+    vb = dig(fa, "physical_validity", "virtual_bond_A_from_the_separation_profile")
+    exact("every chain arm has the SAME ideal virtual bond to 1e-12", True,
+          bool(max(abs(vb["chain_AVG"] - vb[k]) for k in ("chain_MED", "chain_AVG_SEP")) < 1e-12))
+    check("the chain arms' virtual bond", 3.8040, vb["chain_AVG"], tol=1e-3, basis="none")
+    exact("the AVG CLOUD is not a structure (virtual bond < 3.2 A)", True,
+          bool(vb["cloud_AVG"] < 3.2))
+    # F2: the RETRACTED claim must be recorded as NOT MEASURED on the clean strata
+    for st, claimed in (("T_POOL", 0.1560), ("T_BEST", 0.3816)):
+        r = dig(fa, "F2_filter_vs_readout_MEASURED", "strata", st,
+                "excess_filter_over_readout", "effect_over_mde")
+        check("F2 filter-minus-readout excess, %s (xMDE)" % st, claimed, r, basis="cloud")
+        exact("F2 %s is NOT MEASURED (<0.7x MDE) -- the retraction stands" % st, True,
+              bool(abs(r) < 0.7))
+    ratios = [dig(fa, "F2_filter_vs_readout_MEASURED", "strata", st,
+                  "excess_filter_over_readout", "effect_over_mde")
+              for st in ("T_POOL", "T_BEST", "T_CHAIN", "FAIL18_DIAGNOSTIC_ONLY")]
+    exact("the F2 effect grows monotonically with the stratum's circularity", True,
+          bool(ratios[0] < ratios[1] < ratios[2] < ratios[3]))
+    # F2(c): the composition with lane E -- coherently wrong, not diversely wrong
+    check("S/B on the outcome tail", 0.4232,
+          dig(fa, "F2_tails", "T_CHAIN", "S_over_B", "tail"), basis="cloud")
+    check("S/B off the outcome tail", 0.7759,
+          dig(fa, "F2_tails", "T_CHAIN", "S_over_B", "rest"), basis="cloud")
+    nd = dig(fa, "F2_tails", "T_CHAIN", "n_distinct")
+    exact("n_distinct is UNCHANGED on the tail (within 2 structures)", True,
+          bool(abs(nd["tail"] - nd["rest"]) < 2.0))
+    check("rank of the pool's best member, filter-independent tail", 285.556,
+          dig(fa, "F2_tails", "T_POOL", "rank_best_in_pool", "tail"), tol=1e-2, basis="none")
+    check("rank of the pool's best member, off that tail", 151.130,
+          dig(fa, "F2_tails", "T_POOL", "rank_best_in_pool", "rest"), tol=1e-2, basis="none")
+except Exception as e:
+    MISSING.append("lane F S31-L21 block (%s)" % e)
+
 # ================================================== EVERY PATH THE LEDGER CLAIMS TO HAVE WRITTEN
 print()
 print("--- every path any S31 ledger entry names (parsed from the ledger, not hand-kept) ---")

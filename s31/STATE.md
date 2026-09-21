@@ -50,7 +50,7 @@ measurement and was asked to attack the theorem rather than confirm it.
 | **C** | readout design given R1; sparse native-free support; index allocation; the 128→512 gate | running — prereg filed |
 | **D** | integrity: projection seed (gates every sub-0.01 Å claim), `pipeline.py:821`, governor/launcher, verifier + multiplicity register | running |
 | **E** | the incoherence hypothesis | **E1 CLOSED by an exact identity** — see NOTE 1. Running the ORACLE class ceiling |
-| **F** | terminal operator; **AVG_SEP** (separation-profile correction, zero free parameters) is the live arm; now also the **per-target prefix length** | running — early rows show AVG_SEP beating AVG by 0.4–0.6 Å on the chain; **no mean until 126/126** |
+| **F** | terminal operator; **AVG_SEP** (separation-profile correction, zero free parameters) is the live arm; now also the **per-target prefix length** | **CLOSED. `AVG_SEP` is REFUTED at 126/126: +0.4609 Å WORSE on the chain** (2.34× MDE, 5/5 folds, 41W/85L), +0.4483 on the cloud. *The “0.4–0.6 Å better” in this cell was a PARTIAL-ROWS reading with the SIGN INVERTED — `stats_lib.compare` is lower-is-better, and 0.4609 with fold CI [0.378, 0.565] is exactly that band. The lane published no aggregate; the inverted reading was mine.* |
 | **L** | literature, permanent | **§L1 closed the deployed objective** (NOTE 5); continuing on L2, the new-observable question |
 | **P** | the `p*` substitution — lane L's decisive experiment | running, eighth slot |
 

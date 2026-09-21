@@ -785,6 +785,27 @@ rising across dispersion tertiles (+0.0049 / +0.0604 / +0.1410). Both halves of 
 with dispersion — but **the medoid's own cost scales faster, so there is no operating point where it
 turns over.** *That is why no gate can work, not merely why these gates did not.*
 
+**And the reading that makes this a result rather than only a retraction.** `AVG_RG` was demoted to
+a **registered negative control** — the correction matched to the *withdrawn* uniform-scale
+mechanism. `AVG_SEP` was the correction matched to the *corrected* per-separation mechanism, and was
+expected to work precisely where `AVG_RG` would not. **Both fail, and `AVG_SEP` fails hard.**
+
+> **The per-separation distortion is real and measured — and correcting it makes things worse. So
+> the distortion is a SYMPTOM of averaging, not the MECHANISM of its error**, which closes the
+> entire *"repair the average's shape"* family rather than just this arm.
+
+**Two process notes that belong with the number.** First, `AVG_SEP` is the **only arm carrying none
+of the four registered geometry secondaries** (`bond_cloud / bond_chain / rg_cloud / rg_chain`) —
+and it is the only arm that builds a *new* structure by rescaling pair distances and re-embedding by
+classical MDS, where invalid geometry is a live possibility rather than a formality. Its
+`move_AVG_SEP` is **0.792 Å mean, 1.746 max**: stage-3b has to drag its output a long way to make it
+a chain at all, which is consistent with the refutation and **would have been visible earlier**.
+Second, the interim *"0.4–0.6 Å better"* that circulated mid-sprint was **the magnitude of the
+deficit with the sign inverted** — `stats_lib.compare` is lower-is-better, and the final effect is
++0.4609 with fold CI [0.378, 0.565], *exactly that band*. **The lane published no aggregate before
+126/126; the inverted reading was the coordinator's summary of partial rows**, which is precisely
+what a partial reading gets wrong.
+
 > **A correction to my corrected mechanism, and it is mine to carry.** After the 25.8% contraction
 > figure was withdrawn I offered *"averaging contracts short-range and expands long-range, crossing
 > unity near \|i−j\| = 8"*. **That is wrong as stated.** The 75 members' own profile also rises (to
