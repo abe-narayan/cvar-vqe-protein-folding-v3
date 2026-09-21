@@ -104,21 +104,75 @@ by construction). Size-matched random null, 2000 draws/target, member basis (pro
 ```
 K=500 -> 128 TOTAL                        +0.4350
   size effect (uniform random 128 of 500) +0.2477     57% is bare set size
-  ordering effect (DIS 128 - random 128)  +0.1872     WRONG SIGN
+  ordering effect (DIS 128 - random 128)  +0.1872     [see D3: mean only]
 128 -> 75 TOTAL                           +0.1604
   size effect (random 75 of 128)          +0.0907
-  ordering effect (DIS 75 - random 75)    +0.0696     WRONG SIGN
+  ordering effect (DIS 75 - random 75)    +0.0696     [see D3: mean only]
 ```
 
-The deployed score's ordering is **worse than chance** at retaining oracle headroom.
 Mechanism (V-A4): the score improves the pool's mean rr 4.4533 -> 3.5847 and halves the spread
 (sd 1.3206 -> 0.6384) while leaving the 5th percentile **unchanged** (2.6098 -> 2.6184). It
-concentrates on the mode and buys nothing in the good tail, so a random 128 samples the pool's
-fat left tail and the score's 128 does not.
+concentrates on the mode and buys nothing in the good tail.
 
-Correct sentence: *"narrowing 500 -> 128 -> 75 costs 0.595 A of oracle-best headroom, of which
-0.338 is the set-size order statistic and 0.257 is the score ordering performing worse than
-random truncation."*
+> **RETRACTED IN PART, 2026-09-21, by D3 below, annotated in place per contract rule 13.**
+> The original wording of this paragraph read *"The deployed score's ordering is **worse than
+> chance** at retaining oracle headroom"* and the closing sentence read *"...and 0.257 is the
+> score ordering performing worse than random truncation."* **Both are true of the MEAN only.**
+> The median runs the other way (-0.0380), the score wins on 72 of 126 targets, and the entire
+> mean is the 18 outcome-defined FAIL18 targets. See D3.
+
+Corrected sentence: *"narrowing 500 -> 128 -> 75 costs 0.595 A of oracle-best headroom, of
+which 0.338 is the set-size order statistic; the remaining 0.257 is 18 targets' worth of the
+score placing its window in the wrong part of the pool, and is NOT MEASURED on the other 108."*
+
+### D3 — the ordering effect is entirely FAIL18, and FAIL18 is defined by it
+
+`s32/results/s32_V_orderstat_gate.json`, `s32/results/s32_V_orderstat_strata.json`,
+`s32/s32_V_orderstat_gate.py` (regenerates the 2000 draws from the pinned seed and asserts it
+reproduces `s32_V_ladder_orderstat.json` per-target to 0.00e+00 before computing anything).
+
+The full contract-rule-1 gate, of which S32-L3 quoted one third:
+
+```
+SCORE top-128 vs RANDOM 128 of 500
+  effect +0.1872  SE 0.0630  MDE 0.1764  1.06x   MEDIAN -0.0380   72W/54L
+  folds {0: -0.1087, 1: +0.2621, 2: +0.2938, 3: +0.2566, 4: +0.2344}
+  fold CI95 [+0.0383, +0.2743] excludes zero YES; folds same sign 4/5 YES; type_m 1.10 (flag)
+  >>> GATE: RESULT
+SCORE top-75 vs RANDOM 75 of 128
+  effect +0.0696  SE 0.0243  MDE 0.0681  1.02x   MEDIAN -0.0045   65W/61L   >>> GATE: RESULT
+```
+
+`stats_lib.compare` is LOWER IS BETTER, so `n_better = 72` means **the score is better on 72 of
+126 targets** while the mean runs against it. Mean +0.187 / median -0.038 with a near-even W/L
+is the median-vs-mean gap the project calls the free early warning, and it fired.
+
+Contract rule 10, on the aggregate rather than within target: the 126-target draw mean has sd
+0.0232 (500->128) and 0.0167 (128->75); **only 69.5% and 53.6% of SINGLE random draws clear
+their own comparison's MDE.** The second is a coin flip.
+
+Contract rule 12, which decides it:
+
+```
+                 ALL 126            FAIL18 (n=18)      OTHER 108
+500 -> 128   +0.1872 (med -0.0380)  +1.4879  0W/18L  -0.0296 (med -0.0743, 72W/36L)  -0.30x NOT A RESULT
+128 ->  75   +0.0696 (med -0.0045)  +0.3611  3W/15L  +0.0210 (med -0.0090, 62W/46L)  +0.38x NOT A RESULT
+```
+
+The ten worst targets are all in FAIL18. Drop the 10 worst and the aggregate falls +0.1872 ->
++0.0294; drop 20 and it is **negative**, -0.0567. **FAIL18 is defined** (`s12/instrument.py::
+selfcheck`) as the targets where no pool member within 1.5 A of the pool best survives into the
+production top-75 — so a contrast asking *"does the score's prefix retain the good members?"* is
+near-circular there, and directly circular for the 128->75 arm. Filter-independent control
+(length <= 13 vs >): +0.1826 vs +0.1940, **no gradient** — it is not a broad property, it is the 18.
+
+**What is true:** *the distogram score is not a general anti-ordering. On 108 of 126 targets its
+top-128 retains a marginally better best-member than a random 128 (NOT A RESULT). Its failure is
+catastrophic and total on 14% of targets — +1.49 A, 0 wins of 18 — and those are exactly FAIL18.*
+
+Audit 4 of `s32/s32_verify.py` now flags any document line quoting +0.1872 without its strata;
+it currently flags 6 live lines across LEDGER, STATE, MULTIPLICITY (this file, above) and
+CAUSAL_MAP. Self-tests ST6a/ST6b guard it.
 
 ---
 
