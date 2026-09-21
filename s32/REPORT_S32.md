@@ -211,6 +211,10 @@ PROD s=75                   3.0483  3.2105  0.8150 |  +0.1622      +0.1504 |  -0
 
 > ### The same s = 10 combination pays +0.0002 when the native chose its members and +0.1988 when it did not. **Every object the native did not touch sits at or above its own orthogonal null**, and the deployable score-top-10 is on the *wrong* side of it at 1.46x MDE.
 
+*The `price` and `orthog null` columns are **per-target means, averaged independently**, so they do
+not close against each other by arithmetic — for PROD, `sqrt(3.0483² + 0.8150²) − 3.0483 = 0.1071`
+against the table's 0.1504. **That gap is Jensen, not an error.**
+
 **So neither sparsity nor alignment is an available intervention.** They are diagnostics of an
 object that was already good.
 
@@ -233,6 +237,13 @@ historical numbers exactly, and it adds error in quadrature at a rate fixed upst
 retrieval defect; it does not create one.**
 
 ### 5.3 Scalar dilation is closed in both calibrations, and it reconciles two long-quoted numbers
+
+> **⚠ PROVENANCE PENDING — do not finalise this section until it clears.** Lane V's AUDIT 11
+> finds `s32_R_dilation_cloud.json` and `s32_R_dilation_rg_cloud.json` have **no provenance block and
+> no script in the repository that writes them**. These are two RESULT-grade endpoint numbers and a
+> registered falsification that **nobody can currently re-run**. The 22.15% / 5.40% reconciliation
+> below is a genuinely valuable output and must not rest on an artefact with no producer. *Lane D hit
+> the same defect on D1-T and fixed it by committing the producing script; this needs the same.*
 
 Registered P1.3, **falsified by its own falsifier**: dilating the cloud to ideal virtual-bond length
 is **WORSE by +1.0425 at 2.79x MDE, 5/5 folds**; the better-motivated Rg-matched dilation is also
