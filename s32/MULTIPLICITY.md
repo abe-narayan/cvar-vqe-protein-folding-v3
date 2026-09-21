@@ -867,3 +867,29 @@ the marginal, and it is checkable from the artefact's `bit_marginal_frac_positiv
 **Order-of-magnitude context, same basis:** S31 §20.1 prices the ORACLE common-mode **direction** at
 **−0.8102 Å on the built chain**. One ORACLE **bit** per target is **−0.2101 Å on the built chain**
 — **26% of the direction**, and, per D4-S / D4-M, supplied by nothing native-free.
+
+### Closing notes for LANE P
+
+**The duplicate-row class, resolved.** `s32_P_rand_rows.s*of3.jsonl` reached 150 raw lines over 126
+distinct pdbs because two launchers raced on shards 1 and 2 (the coordinator killed the surplus
+*wrappers*; lane P then found and killed their orphaned *workers*, pids 25196 and 25960 — killing a
+`jobrun` wrapper does **not** kill its child). `_rows()` in `s32_P_rand.py` deduped by pdb, asserted
+126 rows **and** 126 distinct pdbs, and checked every duplicate pair for **differing content** (0
+conflicting over all 150 lines) before any number was computed, so **no reported figure was ever
+computed over 150 rows.** The shard files were then deduped in place — lossless, because the pairs
+are byte-identical — and the analysis re-run: `PROD 3.2126`, `R128 +0.1648 (0.92×)`,
+`R75 +0.4086 (1.65×)`, **identical to four decimals.** `s32_verify.py` audit 8 no longer flags them.
+
+**Is lane P's `μ`-sign bit the same object as lane D's Rg sign?** Evidence from lane P's own
+artefact, offered so two vocabularies are not mistaken for two findings:
+- lane P's `RG_probe` sign rule — a two-sided compactness-vs-predicted-Rg probe along `pc1` —
+  predicts lane P's `sign(⟨pc1, μ⟩)` bit at **1.32× MDE**, above chance. The compactness axis
+  carries information about the `pc1` sign, so they are **not independent**.
+- both carry the identical signature: substantial |cos| (`pc1` cos² 0.2277, `RADIAL` cos² 0.1339,
+  against a measured same-space random null of 0.0316) with **mean cos indistinguishable from zero**
+  — the magnitude is generic, the per-target sign is the missing thing. That is S14's
+  `in-band-ordering-is-per-target` in a third vocabulary.
+- **Lane P prices the same bit in Ångströms rather than in ρ:** one *perfect* bit per target, with a
+  single global leave-fold-out step, is worth **+0.1835 Å** of the 3.0776 Å common mode. That is the
+  same conclusion as lane D's "a free perfect sign still leaves you 2–3× short of ρ = 0.638": **a
+  real finding and a closed route.**
