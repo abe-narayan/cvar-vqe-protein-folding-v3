@@ -1,0 +1,625 @@
+{
+ "prereg": "s32/PREREG_S32_P.md @ 33dfe0d3 (coordinator arm, EXPLORATORY)",
+ "basis": "CA POINT CLOUD -- a SCREEN, not an endpoint.  Nothing here is a chain result.",
+ "n": 126,
+ "floors": [
+  0.25,
+  0.5,
+  0.6,
+  0.75
+ ],
+ "ndraw": 5,
+ "seed": 3204477,
+ "degeneracy": "floor + score-ordered prefix == PRODUCTION exactly for every floor leaving >= 75 survivors; that control is not run because it is the incumbent under another name",
+ "PROD": {
+  "cloud": 3.0483380938795324,
+  "setmean": 3.5506829818026735,
+  "setbest": 2.3061526409453816,
+  "wBw": 127.6387041660351
+ },
+ "arms": {
+  "F25": {
+   "floor": 0.25,
+   "n_survivors": 375.0,
+   "SPREAD": {
+    "cloud": 3.6930782495338987,
+    "setmean": 4.668023912490361,
+    "setbest": 2.5661358894809845,
+    "wBw": 335.9332657717886,
+    "vs_PROD": {
+     "label": "SPREAD F25 - PROD (CLOUD SCREEN)",
+     "mean_a": 3.6930782495338987,
+     "mean_b": 3.0483380938795324,
+     "effect": 0.6447401556543659,
+     "median_effect": 0.5452612309395961,
+     "se": 0.11744516139689973,
+     "mde": 0.3290343641695543,
+     "effect_over_mde": 1.9594918521097866,
+     "ci95_fold": [
+      0.4851857351067003,
+      0.8263537626898588
+     ],
+     "folds_same_sign": 5,
+     "n_better": 38,
+     "n_worse": 88,
+     "verdict": "WORSE"
+    }
+   },
+   "RANDFLOOR": {
+    "cloud_draw_mean": 3.273503083913888,
+    "cloud_draw_sd": 0.026063419759895245,
+    "setmean": 4.046788708562574,
+    "wBw": 234.20999726246524,
+    "per_draw_vs_PROD": [
+     {
+      "label": "RANDFLOOR F25 draw 0 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.2373874168607406,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.18904932298120805,
+      "median_effect": 0.13867143078752966,
+      "se": 0.07438007194398154,
+      "mde": 0.20838320955825868,
+      "effect_over_mde": 0.9072195566138194,
+      "ci95_fold": [
+       0.055418475081077265,
+       0.31726300319050876
+      ],
+      "folds_same_sign": 4,
+      "n_better": 49,
+      "n_worse": 77,
+      "verdict": "NOT MEASURED (|effect| 0.1890 <= its own MDE 0.2084, 0.91x)"
+     },
+     {
+      "label": "RANDFLOOR F25 draw 1 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.3034488829658555,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.25511078908632273,
+      "median_effect": 0.2152619207542008,
+      "se": 0.07083254344196137,
+      "mde": 0.19844445370699898,
+      "effect_over_mde": 1.2855526285606902,
+      "ci95_fold": [
+       0.10673001594183618,
+       0.39021270331826974
+      ],
+      "folds_same_sign": 4,
+      "n_better": 46,
+      "n_worse": 80,
+      "verdict": "WORSE [TYPE-M ZONE: magnitude inflated ~1.03x]"
+     },
+     {
+      "label": "RANDFLOOR F25 draw 2 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.2851810328506628,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.23684293897113104,
+      "median_effect": 0.1691926669374315,
+      "se": 0.07333647176972802,
+      "mde": 0.20545945931007,
+      "effect_over_mde": 1.1527477964093078,
+      "ci95_fold": [
+       0.1085031105697884,
+       0.37003679192363037
+      ],
+      "folds_same_sign": 5,
+      "n_better": 47,
+      "n_worse": 79,
+      "verdict": "WORSE [TYPE-M ZONE: magnitude inflated ~1.06x]"
+     },
+     {
+      "label": "RANDFLOOR F25 draw 3 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.2572477260733095,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.20890963219377665,
+      "median_effect": 0.17555776652518074,
+      "se": 0.07473959611952519,
+      "mde": 0.20939045248846178,
+      "effect_over_mde": 0.9977037143338156,
+      "ci95_fold": [
+       0.07641058551026089,
+       0.33460361120105364
+      ],
+      "folds_same_sign": 4,
+      "n_better": 48,
+      "n_worse": 78,
+      "verdict": "NOT MEASURED (|effect| 0.2089 <= its own MDE 0.2094, 1.00x)"
+     },
+     {
+      "label": "RANDFLOOR F25 draw 4 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.284250360818866,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.2359122669393335,
+      "median_effect": 0.13217204691772855,
+      "se": 0.07042885246413703,
+      "mde": 0.1973134730635263,
+      "effect_over_mde": 1.1956216839961054,
+      "ci95_fold": [
+       0.10187556236336222,
+       0.36664723880386474
+      ],
+      "folds_same_sign": 4,
+      "n_better": 48,
+      "n_worse": 78,
+      "verdict": "WORSE [TYPE-M ZONE: magnitude inflated ~1.05x]"
+     }
+    ]
+   },
+   "SPREAD_vs_RANDFLOOR": {
+    "label": "SPREAD F25 - RANDFLOOR mean-of-draws (CLOUD SCREEN) -- THE CONTROL THAT DECIDES WHETHER SPREAD DOES ANY WORK",
+    "mean_a": 3.6930782495338987,
+    "mean_b": 3.2735030839138877,
+    "effect": 0.41957516562001135,
+    "median_effect": 0.27644010219722737,
+    "se": 0.09877709921298937,
+    "mde": 0.27673392115511103,
+    "effect_over_mde": 1.5161681801373275,
+    "ci95_fold": [
+     0.2064578343769026,
+     0.6459720832758749
+    ],
+    "folds_same_sign": 5,
+    "n_better": 50,
+    "n_worse": 76,
+    "verdict": "WORSE"
+   }
+  },
+  "F50": {
+   "floor": 0.5,
+   "n_survivors": 250.0,
+   "SPREAD": {
+    "cloud": 3.227910299026236,
+    "setmean": 4.075516492475279,
+    "setbest": 2.2385024773696114,
+    "wBw": 265.762058092721,
+    "vs_PROD": {
+     "label": "SPREAD F50 - PROD (CLOUD SCREEN)",
+     "mean_a": 3.227910299026236,
+     "mean_b": 3.0483380938795324,
+     "effect": 0.17957220514670283,
+     "median_effect": 0.16870652257647212,
+     "se": 0.07772487849995938,
+     "mde": 0.2177540196054862,
+     "effect_over_mde": 0.8246562128774526,
+     "ci95_fold": [
+      0.09543954080285273,
+      0.27661008338913273
+     ],
+     "folds_same_sign": 5,
+     "n_better": 48,
+     "n_worse": 78,
+     "verdict": "NOT MEASURED (|effect| 0.1796 <= its own MDE 0.2178, 0.82x)"
+    }
+   },
+   "RANDFLOOR": {
+    "cloud_draw_mean": 3.141472609051549,
+    "cloud_draw_sd": 0.007842611857693759,
+    "setmean": 3.7595432129019786,
+    "wBw": 177.81710293068926,
+    "per_draw_vs_PROD": [
+     {
+      "label": "RANDFLOOR F50 draw 0 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.136494545618255,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.08815645173872315,
+      "median_effect": 0.00046138247463201054,
+      "se": 0.05123118686660772,
+      "mde": 0.1435292931254882,
+      "effect_over_mde": 0.6142052943969258,
+      "ci95_fold": [
+       0.008221962264151084,
+       0.18297011695555915
+      ],
+      "folds_same_sign": 4,
+      "n_better": 63,
+      "n_worse": 63,
+      "verdict": "NOT MEASURED (|effect| 0.0882 <= its own MDE 0.1435, 0.61x)"
+     },
+     {
+      "label": "RANDFLOOR F50 draw 1 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.1507598615116206,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.10242176763208766,
+      "median_effect": 0.0312788053086554,
+      "se": 0.049092394575080994,
+      "mde": 0.13753725264154693,
+      "effect_over_mde": 0.7446838268539642,
+      "ci95_fold": [
+       0.03315059358586211,
+       0.17362925842906546
+      ],
+      "folds_same_sign": 4,
+      "n_better": 60,
+      "n_worse": 66,
+      "verdict": "NOT MEASURED (|effect| 0.1024 <= its own MDE 0.1375, 0.74x)"
+     },
+     {
+      "label": "RANDFLOOR F50 draw 2 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.1330609119387214,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.08472281805918876,
+      "median_effect": 0.002957137931270809,
+      "se": 0.051178800704959365,
+      "mde": 0.14338252805501417,
+      "effect_over_mde": 0.5908866248102532,
+      "ci95_fold": [
+       -0.006299867363602117,
+       0.16655847015663613
+      ],
+      "folds_same_sign": 4,
+      "n_better": 61,
+      "n_worse": 65,
+      "verdict": "NOT MEASURED (|effect| 0.0847 <= its own MDE 0.1434, 0.59x)"
+     },
+     {
+      "label": "RANDFLOOR F50 draw 3 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.1382408651491476,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.08990277126961517,
+      "median_effect": 0.04395595034336264,
+      "se": 0.05065752866175623,
+      "mde": 0.14192213229877626,
+      "effect_over_mde": 0.6334654772544618,
+      "ci95_fold": [
+       0.0055576670759483054,
+       0.16714423027466402
+      ],
+      "folds_same_sign": 4,
+      "n_better": 57,
+      "n_worse": 69,
+      "verdict": "NOT MEASURED (|effect| 0.0899 <= its own MDE 0.1419, 0.63x)"
+     },
+     {
+      "label": "RANDFLOOR F50 draw 4 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.148806861040003,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.10046876716047047,
+      "median_effect": 0.0195188208909558,
+      "se": 0.05080862641858463,
+      "mde": 0.1423454477743067,
+      "effect_over_mde": 0.7058094848229144,
+      "ci95_fold": [
+       0.021582193235454204,
+       0.1790451907611021
+      ],
+      "folds_same_sign": 4,
+      "n_better": 59,
+      "n_worse": 67,
+      "verdict": "NOT MEASURED (|effect| 0.1005 <= its own MDE 0.1423, 0.71x)"
+     }
+    ]
+   },
+   "SPREAD_vs_RANDFLOOR": {
+    "label": "SPREAD F50 - RANDFLOOR mean-of-draws (CLOUD SCREEN) -- THE CONTROL THAT DECIDES WHETHER SPREAD DOES ANY WORK",
+    "mean_a": 3.227910299026236,
+    "mean_b": 3.14147260905155,
+    "effect": 0.08643768997468579,
+    "median_effect": 0.0754821352287256,
+    "se": 0.07238332943063867,
+    "mde": 0.20278913573287732,
+    "effect_over_mde": 0.42624418543084713,
+    "ci95_fold": [
+     -0.05014573688441209,
+     0.23885521460353432
+    ],
+    "folds_same_sign": 3,
+    "n_better": 52,
+    "n_worse": 74,
+    "verdict": "NOT MEASURED (|effect| 0.0864 <= its own MDE 0.2028, 0.43x)"
+   }
+  },
+  "F60": {
+   "floor": 0.6,
+   "n_survivors": 200.0,
+   "SPREAD": {
+    "cloud": 3.0919297673869988,
+    "setmean": 3.8828548459054297,
+    "setbest": 2.1917464742584833,
+    "wBw": 230.88312204122886,
+    "vs_PROD": {
+     "label": "SPREAD F60 - PROD (CLOUD SCREEN)",
+     "mean_a": 3.0919297673869988,
+     "mean_b": 3.0483380938795324,
+     "effect": 0.04359167350746617,
+     "median_effect": 0.02609049951308018,
+     "se": 0.055811189345695726,
+     "mde": 0.15636062807090115,
+     "effect_over_mde": 0.2787893221284561,
+     "ci95_fold": [
+      0.00028887406878484674,
+      0.0914888927110884
+     ],
+     "folds_same_sign": 3,
+     "n_better": 60,
+     "n_worse": 66,
+     "verdict": "NOT MEASURED (|effect| 0.0436 <= its own MDE 0.1564, 0.28x)"
+    }
+   },
+   "RANDFLOOR": {
+    "cloud_draw_mean": 3.102361773298569,
+    "cloud_draw_sd": 0.008215729343219399,
+    "setmean": 3.6721040623355163,
+    "wBw": 160.27284681590282,
+    "per_draw_vs_PROD": [
+     {
+      "label": "RANDFLOOR F60 draw 0 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.108651861457767,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.06031376757823419,
+      "median_effect": 0.007156335103108313,
+      "se": 0.040783353758357156,
+      "mde": 0.11425864388941341,
+      "effect_over_mde": 0.5278705008665217,
+      "ci95_fold": [
+       -0.012479949821354542,
+       0.13776834794430778
+      ],
+      "folds_same_sign": 4,
+      "n_better": 60,
+      "n_worse": 66,
+      "verdict": "NOT MEASURED (|effect| 0.0603 <= its own MDE 0.1143, 0.53x)"
+     },
+     {
+      "label": "RANDFLOOR F60 draw 1 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.089043266317137,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.04070517243760465,
+      "median_effect": 0.017530236175143044,
+      "se": 0.04081900408485444,
+      "mde": 0.1143585218441282,
+      "effect_over_mde": 0.3559434992792772,
+      "ci95_fold": [
+       -0.01315646029764118,
+       0.1049864977400043
+      ],
+      "folds_same_sign": 4,
+      "n_better": 62,
+      "n_worse": 64,
+      "verdict": "NOT MEASURED (|effect| 0.0407 <= its own MDE 0.1144, 0.36x)"
+     },
+     {
+      "label": "RANDFLOOR F60 draw 2 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.1006021973072575,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.05226410342772448,
+      "median_effect": 0.009771128121193406,
+      "se": 0.03868452997033632,
+      "mde": 0.10837857916489424,
+      "effect_over_mde": 0.48223646988586616,
+      "ci95_fold": [
+       -0.0016066293519850484,
+       0.12151963260656354
+      ],
+      "folds_same_sign": 4,
+      "n_better": 61,
+      "n_worse": 65,
+      "verdict": "NOT MEASURED (|effect| 0.0523 <= its own MDE 0.1084, 0.48x)"
+     },
+     {
+      "label": "RANDFLOOR F60 draw 3 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.109136365505858,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.06079827162632539,
+      "median_effect": 6.379388569510702e-06,
+      "se": 0.04164548116214659,
+      "mde": 0.1166739800238699,
+      "effect_over_mde": 0.5210953771688159,
+      "ci95_fold": [
+       0.0007296838128886527,
+       0.13554806004054773
+      ],
+      "folds_same_sign": 3,
+      "n_better": 63,
+      "n_worse": 63,
+      "verdict": "NOT MEASURED (|effect| 0.0608 <= its own MDE 0.1167, 0.52x)"
+     },
+     {
+      "label": "RANDFLOOR F60 draw 4 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.1043751759048246,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.056037082025292305,
+      "median_effect": 0.006947190200868647,
+      "se": 0.04219265419716937,
+      "mde": 0.1182069399987897,
+      "effect_over_mde": 0.4740591544444519,
+      "ci95_fold": [
+       0.00428137812535001,
+       0.11736532179599357
+      ],
+      "folds_same_sign": 4,
+      "n_better": 58,
+      "n_worse": 68,
+      "verdict": "NOT MEASURED (|effect| 0.0560 <= its own MDE 0.1182, 0.47x)"
+     }
+    ]
+   },
+   "SPREAD_vs_RANDFLOOR": {
+    "label": "SPREAD F60 - RANDFLOOR mean-of-draws (CLOUD SCREEN) -- THE CONTROL THAT DECIDES WHETHER SPREAD DOES ANY WORK",
+    "mean_a": 3.0919297673869988,
+    "mean_b": 3.1023617732985693,
+    "effect": -0.010432005911570029,
+    "median_effect": -0.007938141991582132,
+    "se": 0.05371765364758589,
+    "mde": 0.15049537845907665,
+    "effect_over_mde": -0.06931778250191746,
+    "ci95_fold": [
+     -0.09906985120363794,
+     0.09249912845662031
+    ],
+    "folds_same_sign": 4,
+    "n_better": 66,
+    "n_worse": 60,
+    "verdict": "NOT MEASURED (|effect| 0.0104 <= its own MDE 0.1505, 0.07x)"
+   }
+  },
+  "F75": {
+   "floor": 0.75,
+   "n_survivors": 125.0,
+   "SPREAD": {
+    "cloud": 3.0559202199491584,
+    "setmean": 3.679856652349391,
+    "setbest": 2.224925675798976,
+    "wBw": 175.79153387356658,
+    "vs_PROD": {
+     "label": "SPREAD F75 - PROD (CLOUD SCREEN)",
+     "mean_a": 3.0559202199491584,
+     "mean_b": 3.0483380938795324,
+     "effect": 0.0075821260696257555,
+     "median_effect": 0.00440154838503623,
+     "se": 0.02522281994094035,
+     "mde": 0.07066425234653849,
+     "effect_over_mde": 0.10729790265724319,
+     "ci95_fold": [
+      -0.03350955438590652,
+      0.03341149129677711
+     ],
+     "folds_same_sign": 4,
+     "n_better": 59,
+     "n_worse": 67,
+     "verdict": "NOT MEASURED (|effect| 0.0076 <= its own MDE 0.0707, 0.11x)"
+    }
+   },
+   "RANDFLOOR": {
+    "cloud_draw_mean": 3.059831173007429,
+    "cloud_draw_sd": 0.006655228550511148,
+    "setmean": 3.5818193485172345,
+    "wBw": 139.9142482185655,
+    "per_draw_vs_PROD": [
+     {
+      "label": "RANDFLOOR F75 draw 0 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.0532360455283287,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.004897951648795904,
+      "median_effect": 0.008076540862816506,
+      "se": 0.023529495561145003,
+      "mde": 0.06592023476410384,
+      "effect_over_mde": 0.07430118637051686,
+      "ci95_fold": [
+       -0.01641330245310697,
+       0.018703998033423583
+      ],
+      "folds_same_sign": 4,
+      "n_better": 59,
+      "n_worse": 67,
+      "verdict": "NOT MEASURED (|effect| 0.0049 <= its own MDE 0.0659, 0.07x)"
+     },
+     {
+      "label": "RANDFLOOR F75 draw 1 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.0653710424886262,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.017032948609092997,
+      "median_effect": 0.003248247533986892,
+      "se": 0.024929978110046668,
+      "mde": 0.06984382667310675,
+      "effect_over_mde": 0.2438719271327026,
+      "ci95_fold": [
+       -0.0009592997226679342,
+       0.03502519694085394
+      ],
+      "folds_same_sign": 3,
+      "n_better": 61,
+      "n_worse": 65,
+      "verdict": "NOT MEASURED (|effect| 0.0170 <= its own MDE 0.0698, 0.24x)"
+     },
+     {
+      "label": "RANDFLOOR F75 draw 2 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.0631375762559396,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.014799482376406832,
+      "median_effect": -0.0017704290117281918,
+      "se": 0.024145634230316293,
+      "mde": 0.06764640885965413,
+      "effect_over_mde": 0.21877705891396673,
+      "ci95_fold": [
+       -0.010624230338930153,
+       0.03312000637286871
+      ],
+      "folds_same_sign": 4,
+      "n_better": 65,
+      "n_worse": 61,
+      "verdict": "NOT MEASURED (|effect| 0.0148 <= its own MDE 0.0676, 0.22x)"
+     },
+     {
+      "label": "RANDFLOOR F75 draw 3 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.0653957527717397,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.017057658892206867,
+      "median_effect": 0.003401628396286438,
+      "se": 0.023103215817595203,
+      "mde": 0.06472596943457472,
+      "effect_over_mde": 0.2635365532755569,
+      "ci95_fold": [
+       -0.004193122653308371,
+       0.03431372998966337
+      ],
+      "folds_same_sign": 4,
+      "n_better": 56,
+      "n_worse": 70,
+      "verdict": "NOT MEASURED (|effect| 0.0171 <= its own MDE 0.0647, 0.26x)"
+     },
+     {
+      "label": "RANDFLOOR F75 draw 4 - PROD (CLOUD SCREEN)",
+      "mean_a": 3.0520154479925132,
+      "mean_b": 3.0483380938795324,
+      "effect": 0.0036773541129805974,
+      "median_effect": -0.00309670894975822,
+      "se": 0.023750002463079296,
+      "mde": 0.06653800690056295,
+      "effect_over_mde": 0.05526697122858191,
+      "ci95_fold": [
+       -0.021706200199116468,
+       0.029954980648179193
+      ],
+      "folds_same_sign": 3,
+      "n_better": 67,
+      "n_worse": 59,
+      "verdict": "NOT MEASURED (|effect| 0.0037 <= its own MDE 0.0665, 0.06x)"
+     }
+    ]
+   },
+   "SPREAD_vs_RANDFLOOR": {
+    "label": "SPREAD F75 - RANDFLOOR mean-of-draws (CLOUD SCREEN) -- THE CONTROL THAT DECIDES WHETHER SPREAD DOES ANY WORK",
+    "mean_a": 3.0559202199491584,
+    "mean_b": 3.0598311730074292,
+    "effect": -0.003910953058270921,
+    "median_effect": -0.0063884283798356645,
+    "se": 0.026251281953545386,
+    "mde": 0.07354559152105275,
+    "effect_over_mde": -0.05317726021894043,
+    "ci95_fold": [
+     -0.026158475495379883,
+     0.014346392866322348
+    ],
+    "folds_same_sign": 2,
+    "n_better": 70,
+    "n_worse": 56,
+    "verdict": "NOT MEASURED (|effect| 0.0039 <= its own MDE 0.0735, 0.05x)"
+   }
+  }
+ },
+ "LFO_floor_by_fold": {
+  "0": 0.75,
+  "1": 0.75,
+  "2": 0.75,
+  "3": 0.75,
+  "4": 0.75
+ },
+ "SPREAD_LFO_vs_PROD": {
+  "label": "SPREAD, floor chosen leave-fold-out - PROD (CLOUD SCREEN)",
+  "mean_a": 3.0559202199491584,
+  "mean_b": 3.0483380938795324,
+  "effect": 0.0075821260696257555,
+  "median_effect": 0.00440154838503623,
+  "se": 0.02522281994094035,
+  "mde": 0.07066425234653849,
+  "effect_over_mde": 0.10729790265724319,
+  "ci95_fold": [
+   -0.03350955438590652,
+   0.03382856481868655
+  ],
+  "folds_same_sign": 4,
+  "n_better": 59,
+  "n_worse": 67,
+  "verdict": "NOT MEASURED (|effect| 0.0076 <= its own MDE 0.0707, 0.11x)"
+ },
+ "GATE": "DO NOT PROJECT -- no arm clears 1 MDE on the free screen",
+ "multiplicity_emitted": 29
+}

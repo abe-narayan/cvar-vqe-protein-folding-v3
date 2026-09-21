@@ -487,3 +487,16 @@ its best member slightly worse (+0.038 Å).** That is *why* the force field cann
 as a mechanism rather than as a null.
 | R-10 | R | ladder rungs x5: observed price vs ORTHOGONAL isotropic null | R | built chain n=126 | pending | pending | R1 registered test |
 | R-11 | R | ladder rungs x5: cos_align + on-manifold null sqrt(e^2-d^2) | **E** | built chain n=126 | pending | pending | EXPLORATORY, added after seeing 10 of 126 ladder rows; the registered test said only "orthogonal or not", the first rows said not, in a direction |
+| P-25 | SPREAD (score floor + max w'Bw over survivors) vs PROD, 4 floors | **CLOUD SCREEN**, gated | EXPLORATORY (coordinator arm) | +0.6447 / +0.1796 / +0.0436 / +0.0076 at floors 25/50/60/75% — 1.96× WORSE to 0.11× NOT MEASURED |
+| P-26 | SPREAD vs RANDFLOOR (random 75 from the SAME survivor set) — the control that decides whether spread does work | CLOUD SCREEN | EXPLORATORY (control) | +0.4196 / +0.0864 / −0.0104 / −0.0039 — **spread does no work at any floor** |
+| P-27 | SPREAD with the floor chosen leave-fold-out vs PROD | CLOUD SCREEN | EXPLORATORY | +0.0076, 0.11×, 59W/67L — **NOT MEASURED**; LFO picks the tightest floor (0.75) on 5/5 folds, i.e. converges on production |
+
+### LANE Q, continued — Q1/Q2/Q4
+
+| # | lane | family | arms | registered? | basis | emitted | notes |
+|---|---|---|---|---|---|---|---|
+| Q-4 | Q | Q1-T1 sufficiency | identity / `a`-affine-in-`t` / substitute `P_aff{W}t` for `t` / KKT | REGISTERED | derivation + numerical falsifier, n=126 | 1.3e-11 / 5.8e-13 / Δw 7.0e-12, Δx 2.9e-12 Å / KKT 2.0e-12 | **Not a comparison.** A theorem with a falsifier that can fail; falsifier did not fire. Resolves S31 §20.3. |
+| Q-5 | Q | Q1-T2 sensitivity | in-hull gain / orthogonal gain / `dx = P_aff(S)dt` | REGISTERED | derivation + finite differences, n=126×4 | 0.9999999999 (dev 1.2e-08) / 4.0e-09 / rel 3.2e-07 | Step size set by an h-sweep (residual scales as 1/h = roundoff), not by the outcome. Active set moved 0/504. |
+| Q-6 | Q | Q1-T3 cardinality | support of the UNCONSTRAINED convex optimum, K=500 | REGISTERED | **CA cloud**, **ORACLE / NOT DEPLOYABLE** | `s*` mean 10.06, median 10, p90 13, max 23; 61.1% ≤ 10 | Closure is by MONOTONICITY and does not depend on where `s*` falls. Value 1.1535 ± 0.0669 is **not** differenced against S32-L1's 1.1139 built chain (different basis and frame). |
+| Q-7 | Q | Q4 pricing curve | emitted RMSD vs `r` retained principal components of `P_aff{W}t`, r = 0…33 | REGISTERED | **CA cloud**, **ORACLE / NOT DEPLOYABLE** | 3.0532 (r=0) → 2.0312 (r=6) → 1.8290 (r≈33) | A **ceiling curve in real numbers**, never differenced against a bit count. Each rung is a per-target ORACLE quantity, not a best-of-K. |
+| Q-8 | Q | hull projection vs shrinkage | `PROJ − SHRINK` (norm-matched to PROJ's own displacement), 7 noise levels × 8 draws | REGISTERED (control) | **CA cloud**, **ORACLE / NOT DEPLOYABLE** | ε 0.5/1.0/1.5: **+0.370 (4.71×) / +0.265 (3.17×) / +0.170 (1.96×) WORSE**; ε 2.0/2.5/3.0: 0.89×/0.01×/0.77× NOT MEASURED; ε 4.0: −0.137 (1.59×) better, **median −0.074 vs mean −0.137** | **The control fired and killed the arm.** 7 comparisons emitted in one family; the one that clears MDE has a mean/median ratio of 1.85 (concentration warning) and sits under an isotropic error model that is the most favourable geometry, not a neutral one. |

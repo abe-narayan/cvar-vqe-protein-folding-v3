@@ -134,30 +134,61 @@ def run(shard, nshard):
     print("shard %d/%d complete" % (shard, nshard))
 
 
-def _rows():
-    R = []
+def _rows(strict=True):
+    """Collect the shard rows, deduping by pdb, and REFUSE to proceed on a silent inflation of n.
+
+    Two launchers were alive for two of the three shards for ~20 minutes (the project's
+    `job-name-is-not-a-lock` failure, one level deeper: killing the jobrun WRAPPER leaves its
+    WORKER running as an orphan).  Both copies appended to the same file, so the raw line count
+    over-counts.  A list-building aggregator would have read that count as `n` and shrunk every
+    SE and MDE in the optimistic direction.  Hence: dedupe by pdb, and assert loudly.
+
+    Identical duplicates are harmless once deduped.  DIFFERING duplicates would mean interleaved
+    writes and are a different, worse problem, so they are detected and raised, not warned about.
+    """
+    raw = []
     for f in sorted(glob.glob(os.path.join(RESULTS, "s32_P_rand_rows.s*of*.jsonl"))):
         for ln in open(f):
             if ln.strip():
-                R.append(json.loads(ln))
-    seen, out = set(), []
-    for r in sorted(R, key=lambda x: x["pdb"]):
-        if r["pdb"] not in seen:
-            seen.add(r["pdb"]); out.append(r)
+                raw.append((os.path.basename(f), json.loads(ln)))
+    by = {}
+    conflict = []
+    for src, r in raw:
+        p = r["pdb"]
+        if p in by:
+            prev_src, prev = by[p]
+            if json.dumps(prev, sort_keys=True) != json.dumps(r, sort_keys=True):
+                conflict.append((p, prev_src, src))
+        else:
+            by[p] = (src, r)
+    dups = len(raw) - len(by)
+    print("rows: %d raw lines, %d distinct pdbs, %d duplicate lines, %d CONFLICTING"
+          % (len(raw), len(by), dups, len(conflict)), flush=True)
+    if conflict:
+        raise RuntimeError("duplicate pdbs with DIFFERING content -- interleaved writes: %s"
+                           % conflict[:5])
+    out = [r for _, r in (by[p] for p in sorted(by))]
+    if strict:
+        pdbs = [r["pdb"] for r in out]
+        if len(out) != 126 or len(set(pdbs)) != 126:
+            raise RuntimeError("have %d rows / %d distinct pdbs, not 126/126 -- run unfinished"
+                               % (len(out), len(set(pdbs))))
     return out
 
 
 def analyse():
     R = _rows()
-    if len(R) != 126:
-        raise RuntimeError("have %d distinct rows, not 126 -- the run is not finished" % len(R))
     names = [r["pdb"] for r in R]
     folds = np.array([r["fold"] for r in R])
+    f18 = np.array([r["fail18"] for r in R], bool)
     g = lambda k: np.array([r[k] for r in R], float)                       # noqa: E731
 
-    def cmp2(a, b, lab):
+    def cmp2(a, b, lab, mask=None):
         NCOMP[0] += 1
-        o = ST.compare(a, b, folds=folds, names=names, label=lab, seed_parts=("s32P", str(SEED)))
+        m = np.ones(len(folds), bool) if mask is None else np.asarray(mask, bool)
+        o = ST.compare(np.asarray(a, float), np.asarray(b, float), folds=folds[m],
+                       names=[n for n, k in zip(names, m) if k], label=lab,
+                       seed_parts=("s32P", str(SEED)))
         return {k: o[k] for k in ("label", "n", "mean_a", "mean_b", "median_a", "median_b",
                                   "effect", "median_effect", "se", "mde", "effect_over_mde",
                                   "ci95_fold", "folds_same_sign", "n_better", "n_worse",
@@ -208,7 +239,18 @@ def analyse():
             n_draws_better=int(sum(o["effect"] < 0 for o in per)),
             AVG_OF_DRAWS_vs_PROD=cmp2(ch.mean(1), prod,
                                       "%s per-target mean over %d draws - PROD (BUILT CHAIN)"
-                                      % (fam, NDRAW)))
+                                      % (fam, NDRAW)),
+            #: registered before the numbers existed (coordinator, S32-L3 retraction): a gain
+            #: concentrated on FAIL18 is THE SAME 18 TARGETS A THIRD TIME.  FAIL18 is defined by
+            #: no pool member within 1.5 A of the pool best surviving into the top-75, so a
+            #: filter-change contrast on it is near-circular.  Reported, never headlined.
+            stratified=dict(
+                FAIL18_CIRCULAR=cmp2(ch.mean(1)[f18], prod[f18],
+                                     "%s - PROD on FAIL18 (BUILT CHAIN) [CIRCULAR STRATUM]" % fam,
+                                     mask=f18) if f18.sum() > 1 else None,
+                other108=cmp2(ch.mean(1)[~f18], prod[~f18],
+                              "%s - PROD on the other 108 (BUILT CHAIN)" % fam, mask=~f18),
+                n_fail18=int(f18.sum())))
 
     out["PROD"] = dict(chain=float(prod.mean()), cloud=float(g("cloud_PROD").mean()),
                        setmean=float(g("setmean_PROD").mean()),
