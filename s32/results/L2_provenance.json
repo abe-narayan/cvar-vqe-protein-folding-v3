@@ -1,0 +1,477 @@
+{
+ "n": 45,
+ "withdraw_threshold": 0.4,
+ "window_identity": {
+  "mean": 0.23069958865144058,
+  "median": 0.18867924528301888,
+  "p90": 0.39978609625668454,
+  "max": 0.5192307692307693
+ },
+ "chain_identity": {
+  "mean": 0.22537086358080613,
+  "median": 0.19230769230769232,
+  "max": 0.48333333333333334
+ },
+ "longest_verbatim": {
+  "mean": 3.0444444444444443,
+  "median": 3.0,
+  "max": 7
+ },
+ "oracle_pool_best_cloud": {
+  "mean": 4.979682998060229,
+  "median": 5.474594377516023
+ },
+ "verdict": "HOLDS: the ORACLE best members are not sequence homologs",
+ "rows": [
+  {
+   "pdb": "12LO",
+   "n": 56,
+   "rr": 4.294373565208376,
+   "source": "1HZ6_7",
+   "chain_identity": 0.29850746268656714,
+   "window_identity": 0.35714285714285715,
+   "longest_verbatim": 4,
+   "blosum_rank": 446
+  },
+  {
+   "pdb": "1JO8",
+   "n": 58,
+   "rr": 1.1875816762224431,
+   "source": "6IPY_3",
+   "chain_identity": 0.31343283582089554,
+   "window_identity": 0.3103448275862069,
+   "longest_verbatim": 5,
+   "blosum_rank": 1
+  },
+  {
+   "pdb": "1KNT",
+   "n": 55,
+   "rr": 0.7332604251059553,
+   "source": "5M4V_1",
+   "chain_identity": 0.3684210526315789,
+   "window_identity": 0.38181818181818183,
+   "longest_verbatim": 4,
+   "blosum_rank": 0
+  },
+  {
+   "pdb": "1YK4",
+   "n": 52,
+   "rr": 0.7403619696273548,
+   "source": "7A9A_4",
+   "chain_identity": 0.48333333333333334,
+   "window_identity": 0.5192307692307693,
+   "longest_verbatim": 4,
+   "blosum_rank": 4
+  },
+  {
+   "pdb": "1ZLM",
+   "n": 58,
+   "rr": 1.5363235952364875,
+   "source": "1PWT_2",
+   "chain_identity": 0.29508196721311475,
+   "window_identity": 0.27586206896551724,
+   "longest_verbatim": 3,
+   "blosum_rank": 2
+  },
+  {
+   "pdb": "1ZUU",
+   "n": 56,
+   "rr": 1.7293037276317866,
+   "source": "2V1Q_3",
+   "chain_identity": 0.2833333333333333,
+   "window_identity": 0.2857142857142857,
+   "longest_verbatim": 4,
+   "blosum_rank": 0
+  },
+  {
+   "pdb": "2ERW",
+   "n": 53,
+   "rr": 7.652926940114566,
+   "source": "4MZO_9",
+   "chain_identity": 0.15137614678899083,
+   "window_identity": 0.20754716981132076,
+   "longest_verbatim": 3,
+   "blosum_rank": 320
+  },
+  {
+   "pdb": "2FDN",
+   "n": 55,
+   "rr": 2.318609763748206,
+   "source": "1H98_2",
+   "chain_identity": 0.36363636363636365,
+   "window_identity": 0.43636363636363634,
+   "longest_verbatim": 7,
+   "blosum_rank": 0
+  },
+  {
+   "pdb": "2FMA",
+   "n": 59,
+   "rr": 7.810620101842266,
+   "source": "4B9C_37",
+   "chain_identity": 0.16,
+   "window_identity": 0.1864406779661017,
+   "longest_verbatim": 3,
+   "blosum_rank": 2
+  },
+  {
+   "pdb": "2GQV",
+   "n": 59,
+   "rr": 9.19132244509238,
+   "source": "5TZM_24",
+   "chain_identity": 0.2111111111111111,
+   "window_identity": 0.1694915254237288,
+   "longest_verbatim": 3,
+   "blosum_rank": 272
+  },
+  {
+   "pdb": "2UUX",
+   "n": 55,
+   "rr": 8.421301414922294,
+   "source": "6GRE_66",
+   "chain_identity": 0.17073170731707318,
+   "window_identity": 0.2,
+   "longest_verbatim": 2,
+   "blosum_rank": 11
+  },
+  {
+   "pdb": "3A02",
+   "n": 51,
+   "rr": 0.6945778147526717,
+   "source": "8PNA_11",
+   "chain_identity": 0.34328358208955223,
+   "window_identity": 0.4117647058823529,
+   "longest_verbatim": 4,
+   "blosum_rank": 2
+  },
+  {
+   "pdb": "3I35",
+   "n": 57,
+   "rr": 1.0730689017763795,
+   "source": "5ECA_2",
+   "chain_identity": 0.31666666666666665,
+   "window_identity": 0.3333333333333333,
+   "longest_verbatim": 3,
+   "blosum_rank": 6
+  },
+  {
+   "pdb": "3V1A",
+   "n": 48,
+   "rr": 2.164090641670576,
+   "source": "3AGT_13",
+   "chain_identity": 0.18045112781954886,
+   "window_identity": 0.16666666666666666,
+   "longest_verbatim": 2,
+   "blosum_rank": 83
+  },
+  {
+   "pdb": "4GZN",
+   "n": 59,
+   "rr": 2.1671673272436034,
+   "source": "6ML4_56",
+   "chain_identity": 0.23076923076923078,
+   "window_identity": 0.4576271186440678,
+   "longest_verbatim": 5,
+   "blosum_rank": 0
+  },
+  {
+   "pdb": "4L5E",
+   "n": 46,
+   "rr": 3.7789279948403363,
+   "source": "3BPV_23",
+   "chain_identity": 0.19708029197080293,
+   "window_identity": 0.08695652173913043,
+   "longest_verbatim": 3,
+   "blosum_rank": 224
+  },
+  {
+   "pdb": "4NPE",
+   "n": 58,
+   "rr": 7.105181233064976,
+   "source": "3S0D_58",
+   "chain_identity": 0.21008403361344538,
+   "window_identity": 0.13793103448275862,
+   "longest_verbatim": 3,
+   "blosum_rank": 299
+  },
+  {
+   "pdb": "4ZC3",
+   "n": 57,
+   "rr": 5.474594377516023,
+   "source": "7OU3_118",
+   "chain_identity": 0.15725806451612903,
+   "window_identity": 0.2631578947368421,
+   "longest_verbatim": 3,
+   "blosum_rank": 333
+  },
+  {
+   "pdb": "5AL6",
+   "n": 44,
+   "rr": 0.8483491215564095,
+   "source": "6L5H_16",
+   "chain_identity": 0.2716049382716049,
+   "window_identity": 0.22727272727272727,
+   "longest_verbatim": 3,
+   "blosum_rank": 93
+  },
+  {
+   "pdb": "5B1N",
+   "n": 59,
+   "rr": 3.79997289569846,
+   "source": "6W70_64",
+   "chain_identity": 0.20634920634920634,
+   "window_identity": 0.1694915254237288,
+   "longest_verbatim": 2,
+   "blosum_rank": 315
+  },
+  {
+   "pdb": "5EXH",
+   "n": 45,
+   "rr": 6.645560669970273,
+   "source": "3A9F_15",
+   "chain_identity": 0.19230769230769232,
+   "window_identity": 0.15555555555555556,
+   "longest_verbatim": 2,
+   "blosum_rank": 314
+  },
+  {
+   "pdb": "5K2L",
+   "n": 49,
+   "rr": 2.150429779390151,
+   "source": "9Q84_158",
+   "chain_identity": 0.14027149321266968,
+   "window_identity": 0.1836734693877551,
+   "longest_verbatim": 2,
+   "blosum_rank": 194
+  },
+  {
+   "pdb": "5M4V",
+   "n": 57,
+   "rr": 0.9355742311758508,
+   "source": "6Q61_1",
+   "chain_identity": 0.3559322033898305,
+   "window_identity": 0.3684210526315789,
+   "longest_verbatim": 3,
+   "blosum_rank": 0
+  },
+  {
+   "pdb": "5N41",
+   "n": 60,
+   "rr": 5.8144069356599015,
+   "source": "1R1T_20",
+   "chain_identity": 0.20408163265306123,
+   "window_identity": 0.1,
+   "longest_verbatim": 2,
+   "blosum_rank": 14
+  },
+  {
+   "pdb": "5QU8",
+   "n": 58,
+   "rr": 9.18088247250868,
+   "source": "9KOJ_168",
+   "chain_identity": 0.14028776978417265,
+   "window_identity": 0.1206896551724138,
+   "longest_verbatim": 2,
+   "blosum_rank": 104
+  },
+  {
+   "pdb": "5TAB",
+   "n": 53,
+   "rr": 5.946763685685657,
+   "source": "9Q88_18",
+   "chain_identity": 0.189873417721519,
+   "window_identity": 0.16981132075471697,
+   "longest_verbatim": 3,
+   "blosum_rank": 348
+  },
+  {
+   "pdb": "5WLF",
+   "n": 60,
+   "rr": 7.956006170858696,
+   "source": "5ANP_61",
+   "chain_identity": 0.1724137931034483,
+   "window_identity": 0.21666666666666667,
+   "longest_verbatim": 2,
+   "blosum_rank": 347
+  },
+  {
+   "pdb": "5YIU",
+   "n": 49,
+   "rr": 4.861688889145492,
+   "source": "2XPW_1",
+   "chain_identity": 0.15942028985507245,
+   "window_identity": 0.20408163265306123,
+   "longest_verbatim": 3,
+   "blosum_rank": 35
+  },
+  {
+   "pdb": "6HA4",
+   "n": 55,
+   "rr": 2.987007971831583,
+   "source": "9FQF_1",
+   "chain_identity": 0.45614035087719296,
+   "window_identity": 0.4727272727272727,
+   "longest_verbatim": 5,
+   "blosum_rank": 1
+  },
+  {
+   "pdb": "6MJ7",
+   "n": 54,
+   "rr": 8.80345694035082,
+   "source": "9MUG_8",
+   "chain_identity": 0.19205298013245034,
+   "window_identity": 0.14814814814814814,
+   "longest_verbatim": 4,
+   "blosum_rank": 476
+  },
+  {
+   "pdb": "6O5W",
+   "n": 57,
+   "rr": 7.577414676219539,
+   "source": "4D77_22",
+   "chain_identity": 0.13877551020408163,
+   "window_identity": 0.15789473684210525,
+   "longest_verbatim": 2,
+   "blosum_rank": 428
+  },
+  {
+   "pdb": "6Q61",
+   "n": 59,
+   "rr": 9.056662876061031,
+   "source": "4IRX_47",
+   "chain_identity": 0.1284722222222222,
+   "window_identity": 0.1864406779661017,
+   "longest_verbatim": 2,
+   "blosum_rank": 315
+  },
+  {
+   "pdb": "6W2I",
+   "n": 48,
+   "rr": 4.432030843192842,
+   "source": "5LJM_153",
+   "chain_identity": 0.1477832512315271,
+   "window_identity": 0.14583333333333334,
+   "longest_verbatim": 3,
+   "blosum_rank": 110
+  },
+  {
+   "pdb": "6Z2T",
+   "n": 57,
+   "rr": 6.086423437227699,
+   "source": "4Z9H_85",
+   "chain_identity": 0.17575757575757575,
+   "window_identity": 0.12280701754385964,
+   "longest_verbatim": 3,
+   "blosum_rank": 257
+  },
+  {
+   "pdb": "6ZSY",
+   "n": 48,
+   "rr": 7.680309270675468,
+   "source": "6EE7_17",
+   "chain_identity": 0.23076923076923078,
+   "window_identity": 0.14583333333333334,
+   "longest_verbatim": 3,
+   "blosum_rank": 299
+  },
+  {
+   "pdb": "7KND",
+   "n": 52,
+   "rr": 8.171336781261054,
+   "source": "3ZYQ_144",
+   "chain_identity": 0.13425925925925927,
+   "window_identity": 0.15384615384615385,
+   "longest_verbatim": 2,
+   "blosum_rank": 99
+  },
+  {
+   "pdb": "7W8E",
+   "n": 55,
+   "rr": 7.775995918997588,
+   "source": "7REE_42",
+   "chain_identity": 0.13448275862068965,
+   "window_identity": 0.16363636363636364,
+   "longest_verbatim": 2,
+   "blosum_rank": 254
+  },
+  {
+   "pdb": "7YHR",
+   "n": 59,
+   "rr": 6.574331418369331,
+   "source": "1DWK_8",
+   "chain_identity": 0.18421052631578946,
+   "window_identity": 0.1694915254237288,
+   "longest_verbatim": 3,
+   "blosum_rank": 456
+  },
+  {
+   "pdb": "8CMP",
+   "n": 58,
+   "rr": 4.634802630375166,
+   "source": "1A7W_4",
+   "chain_identity": 0.2647058823529412,
+   "window_identity": 0.1896551724137931,
+   "longest_verbatim": 4,
+   "blosum_rank": 3
+  },
+  {
+   "pdb": "8EY3",
+   "n": 60,
+   "rr": 8.334338902932947,
+   "source": "4UOB_132",
+   "chain_identity": 0.1446280991735537,
+   "window_identity": 0.13333333333333333,
+   "longest_verbatim": 3,
+   "blosum_rank": 406
+  },
+  {
+   "pdb": "8JVN",
+   "n": 44,
+   "rr": 7.513356739592249,
+   "source": "4CXP_4",
+   "chain_identity": 0.12549019607843137,
+   "window_identity": 0.13636363636363635,
+   "longest_verbatim": 2,
+   "blosum_rank": 158
+  },
+  {
+   "pdb": "8PI4",
+   "n": 53,
+   "rr": 6.651574359981803,
+   "source": "1K94_77",
+   "chain_identity": 0.17575757575757575,
+   "window_identity": 0.18867924528301888,
+   "longest_verbatim": 2,
+   "blosum_rank": 26
+  },
+  {
+   "pdb": "8YZG",
+   "n": 59,
+   "rr": 7.410601683812012,
+   "source": "4ACJ_29",
+   "chain_identity": 0.16167664670658682,
+   "window_identity": 0.2033898305084746,
+   "longest_verbatim": 2,
+   "blosum_rank": 33
+  },
+  {
+   "pdb": "9C8Z",
+   "n": 60,
+   "rr": 3.0794266028933746,
+   "source": "7DGW_25",
+   "chain_identity": 0.2765957446808511,
+   "window_identity": 0.25,
+   "longest_verbatim": 3,
+   "blosum_rank": 3
+  },
+  {
+   "pdb": "9EYC",
+   "n": 58,
+   "rr": 1.103435091669577,
+   "source": "3IQL_4",
+   "chain_identity": 0.30303030303030304,
+   "window_identity": 0.3103448275862069,
+   "longest_verbatim": 3,
+   "blosum_rank": 1
+  }
+ ]
+}

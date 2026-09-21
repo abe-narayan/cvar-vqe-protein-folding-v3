@@ -929,3 +929,87 @@ is now a property that can be checked rather than a hope.
 coordinator's call, not this lane's. That reconstruction-branch selection is worthless: conditions
 **B and C** hold for it and **C is open**, owned by lane R. Only **A and D** fail, and they fail on
 chain length alone.
+
+## S32-L12 -- **RULE 20 IS NOW A NUMBER (±0.0030 Å), AND THE PER-TARGET SIGN IS REAL BUT CEILINGED: A FREE, PERFECT SIGN STILL LEAVES THE BEST IN-BAND SCORER 2–3× SHORT** (2026-09-21 10:21, lane V)
+
+### The ULP distribution -- contract rule 20 priced at its source
+
+`s32/results/s32_V_ulp_distribution.json`. 5 draws × 126 targets, ε = 1e-14 Å per coordinate on the
+canonical cloud, with the sanity check that the perturbation is physically nothing
+(max |cloud RMSD shift| **1.09e-13 Å**):
+
+```
+endpoint per draw   3.207688  3.207625  3.206217  3.203375  3.211812
+draw mean 3.207343   draw-to-draw sd 0.003049   range 0.008438
+per-target |chain - canonical|   mean 0.0127   p50 0.0019   p90 0.0248   max 0.5006
+bit-identical on 0.0%
+```
+
+> **A built-chain mean carries ±0.003 Å of pure float64 noise before any science happens. The median
+> target moves 0.002 Å; the worst moves 0.50 Å.** Paired contrasts from bit-identical clouds in one
+> job are unaffected; **nothing else below ~0.03 Å is.**
+
+The per-target figures land on contract rule 3's independently measured same-operator floor
+(0.0134 / 0.0329 / 0.2285) — *the same phenomenon priced at its source*. And a detail worth keeping:
+**the canonical 3.210534 sits at the 80th percentile of the five draws** — *a slightly lucky ticket*,
+consistent with it being 0.0042 better than what production emits.
+
+### D1-T replicated independently, with the null the claim actually needs
+
+```
+scorer        transfer   nullPERM   nullXTGT   globalSGN   folds   verdict
+DIS            +0.1911    -0.0012    +0.0085    +0.0701    5/5     PER-TARGET (2.95x)
+TYPICALITY     +0.3233    -0.0014    +0.0948    +0.2200    5/5     two thirds needs NO oracle
+RG             +0.3316    +0.0015    +0.0035    +0.0458    5/5     PER-TARGET (4.39x)
+NOISE          -0.0078    -0.0016    -0.0002    +0.0064    2/5     NOT A RESULT (0.32x)
+```
+
+**Lane D's DIS row replicates at +0.1911 against +0.1890** — separate code, 0.002 apart.
+
+**But lane D's null could not test lane D's claim.** `nullPERM` permutes `rr` inside half B and
+destroys *all* structure, so it is ≈0 for every scorer **including pure noise**. It answers *"is
+there any relation"*, not *"is the relation's sign a property of the target"*. The correct null is
+**cross-target** — apply another target's sign — and under it DIS (+0.0085) and Rg (+0.0035) are
+genuinely per-target while **TYPICALITY is not: its cross-target null is +0.0948 against a
+leave-fold-out global-sign baseline of +0.2200, so two thirds of its transfer needs no oracle.**
+**NOISE fires correctly at 0.32×, 2/5 — the audit can fail.**
+
+**And the framing was overstated, mine included.** *"Four unrelated Hamiltonians all respond to it"*
+is wrong: **they all load on compactness**, and **Rg — one line of numpy, native-free, not a
+Hamiltonian — loads harder than any of them (+0.3316, 4.39×)**. The bit is most likely *whether the
+native is more or less compact than its own band*. **This is also largely a confirmation of the
+existing project finding that native-free compactness proxies reach 0.24–0.37**; typicality 0.3233
+and Rg 0.3316 land inside that interval. *A confirmation on a new instrument, not a discovery.*
+
+### The ceiling, which is this thread's real deliverable
+
+2.0 Å requires in-band ρ ≈ **0.638**. A **perfect, free** per-target sign oracle takes the best
+Hamiltonian to **0.2263** and Rg to **0.3316**.
+
+> ### Even a free, perfect sign leaves the best in-band scorer 2–3× short of the useful range. The sign is a real finding and a closed route.
+
+### Two defects recorded
+
+**(i) `s32_D1_signtransfer.json` has no provenance block and NO PRODUCING SCRIPT.** Four numbers
+quoted as a ceiling by two downstream scripts and as a ledger headline **that nobody can re-run**.
+Charter §61 requires verifying experiments, artefacts and seeds; this fails all three. **Project
+memory records this exact shape twice already — this is the third instance.** Lane V's replication
+covers DIS and all controls; AMBER, LEG_total and LEG_torsion must be re-emitted from a committed
+script with a pinned seed.
+
+**(ii) Band duplicates, which the split-half assumes away.** **7.7% of band members are exact
+coordinate duplicates, on 122/126 targets** (mean 69.2 distinct of 75). A duplicate landing in both
+halves contributes the same `(score, rr)` to each and **buys sign agreement for free.** All arms are
+being re-run deduplicated.
+
+### The verifier now enforces the retraction rule as a POSITIVE OBLIGATION
+
+**97 matched, 0 mismatched, 16/16 self-tests.** A struck claim is exempt **only if its replacement is
+stated in the same block**; a strike with no replacement is still flagged. **49 exemptions, every one
+printed with its file, line, audit and discharging token.** The three self-tests: a struck claim with
+its replacement is EXEMPT; **the same claim asserted live below the block is still CAUGHT** (the
+laundering guard); a strike with no replacement is NOT exempt. **AUDIT 8** aggregates rows vs distinct
+pdbs across shards and caught lane P (141 rows / 117 distinct, no repeat key) *and lane V's own*
+bitexact rows, since rewritten clean at 126/126.
+
+---
