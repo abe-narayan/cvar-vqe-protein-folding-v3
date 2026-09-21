@@ -59,7 +59,13 @@ def main():
         names = [r["pdb"] for r in rows]
         ch = _tab(rows, "chain"); cl = _tab(rows, "cloud")
         lens = np.array([r["n"] for r in rows], float)
-        lad = {"n": len(rows), "mean_len": float(lens.mean()),
+        # COMPLETENESS.  `core/project._outpath` records this failure twice: a run stopped
+        # early wrote the canonical filename and a partial table over an easier subset
+        # looked finished.  The expected count is stated here and carried in the artefact,
+        # so a reader can tell a finished ladder from an interrupted one.
+        want = (45 if kind == "long" else 126)
+        lad = {"n": len(rows), "n_expected": want, "complete": len(rows) >= want,
+               "mean_len": float(lens.mean()),
                "len_range": [int(lens.min()), int(lens.max())],
                "fold_sizes": {int(f): int((folds == f).sum()) for f in sorted(set(folds))}}
         for k in RUNGS:
@@ -117,6 +123,10 @@ def main():
             "verdict": "HOLDS" if (abs(pm) < 0.05 and av > abs(pm)) else "FAILS",
             "note": "contract rule 16: the cost is a property of the object projected"}
     out["predictions"] = v
+    out["complete"] = all(l["complete"] for l in out["ladders"].values())         and set(out["ladders"]) == {"short", "long"}
+    if not out["complete"]:
+        for d in v.values():
+            d["verdict"] = "PARTIAL -- " + d["verdict"]
     path = os.path.join(RESULTS, "L2_ladder_verdict.json")
     with open(path, "w") as fh:
         json.dump(out, fh, indent=1)
@@ -126,9 +136,10 @@ def main():
         if kind not in out["ladders"]:
             continue
         L = out["ladders"][kind]
+        tag = "" if L["complete"] else f"  ** PARTIAL {L['n']}/{L['n_expected']} **"
         print(f"\n===== {kind.upper()}  n={L['n']}  len {L['len_range'][0]}-"
               f"{L['len_range'][1]} (mean {L['mean_len']:.1f})   "
-              f"BASIS: built chain, pre-AMBER =====")
+              f"BASIS: built chain, pre-AMBER ====={tag}")
         print(f"{'rung':<16}{'chain':>9}{'median':>9}{'SE':>8}{'cloud':>9}{'proj cost':>11}")
         for k in RUNGS:
             d = L[k]

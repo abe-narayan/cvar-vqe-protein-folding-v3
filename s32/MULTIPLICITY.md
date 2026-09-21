@@ -186,6 +186,63 @@ CAUSAL_MAP. Self-tests ST6a/ST6b guard it.
 
 ---
 
+### D4 — lane D's D1-T survives the attack, but a one-line geometric scalar beats all four scorers
+
+`s32/results/s32_V_D_signadversary.json`, `s32/s32_V_D_signadversary.py`. Independent
+replication from the raw universe, lane D's protocol (16 splits/target, shipped top-75 band),
+plus three controls lane D's artefact does not contain.
+
+```
+scorer            transfer  nullPERM  nullXTGT  globalSGN  mean rho  mean|rhoB|  folds  per-target?
+DIS                +0.1952   -0.0015   +0.0086   +0.0642    +0.0652    0.2673     5/5   PER-TARGET 3.05x
+TYPICALITY         +0.3230   -0.0034   +0.1016   +0.2205    +0.2237    0.3731     5/5   PER-TARGET 2.93x
+RG                 +0.3323   -0.0031   +0.0016   +0.0487    +0.0501    0.3779     5/5   PER-TARGET 4.44x
+NOISE (falsifier)  -0.0012   -0.0017   +0.0006   +0.0073    +0.0100    0.1323     3/5   NOT A RESULT 0.07x
+DIS_DEDUP          +0.1856   +0.0052   +0.0095   +0.0708    +0.0677    0.2657     5/5   PER-TARGET 2.85x
+RG_DEDUP           +0.3210   +0.0039   +0.0057   +0.0451    +0.0488    0.3787     5/5   PER-TARGET 4.12x
+```
+
+- **Replication:** DIS +0.1952 (full band) / +0.1856 (deduplicated) against lane D's **+0.1890**.
+- **`nullPERM` cannot test the claim being made.** Permuting `rr` inside B destroys *all*
+  structure, so it is ~0 for every scorer **including pure noise**. It asks "is there any
+  relation", not "is the relation's SIGN a property of the target".
+- **`nullXTGT` is the null the claim needs** — another target's sign applied to this target's
+  held-out half, 200 shuffles; its expectation is exactly what a single GLOBAL sign delivers.
+  DIS +0.0086 and RG +0.0016, so those transfers really are per-target. **TYPICALITY +0.1016
+  against a leave-fold-out global-sign baseline of +0.2205: two thirds of its large transfer
+  needs no oracle at all.**
+- **Band duplicates:** mean **7.7%** of the 75 members are exact coordinate duplicates, on
+  **122/126** targets (mean 69.2 distinct). Deduplicating costs at most **0.012** of transfer —
+  **the split-half independence attack fails; the finding survives it.**
+
+**What does not survive is the framing.** *"A one-bit latent that four unrelated Hamiltonians
+all respond to"* overstates the independence: **Rg**, one line of numpy, native-free and not a
+Hamiltonian, has the largest latent of anything tested. The four all load on compactness and
+bare compactness loads harder. And `in-band-ordering-is-per-target` already records native-free
+compactness proxies at **0.24–0.37** — 0.3210 and 0.3204 land inside it. D1-T is a confirmation
+on a new instrument, not a discovery.
+
+**The ceiling worth quoting instead:** the same memory entry prices 2.0 Å at in-band rho ≈ 0.638.
+A *perfect, free* per-target sign takes the best scorer to 0.2263 and Rg to 0.3323. **Even a
+perfect sign oracle leaves the best in-band scorer 2–3x short of the useful range.**
+
+### D5 — the sprint's most-quoted result has no producing script and no provenance
+
+`s32/results/s32_D1_signtransfer.json` contains only `{note, n_splits, res}`: **no `provenance`
+block** — no module, no `git_commit`, no `source_sha256`, no seed — where every other artefact in
+this sprint carries `ST.provenance(__file__)`. And **no script in the repository produces it**:
+`grep -rn "signtransfer|D1-T" --include=*.py` returns only `s32/s32_D4_signpred.py` and
+`s32/s32_D5_signchain.py`, which *cite* its numbers as a ceiling.
+
+So D1-T is four numbers, quoted as a ceiling by two downstream scripts and as a ledger headline,
+that **cannot be re-run by anyone**. Charter §61 requires verifying experiments, artefacts and
+seeds; this fails all three. Project memory `findings-prose-is-not-evidence-of-code` records this
+exact shape twice already — **this is the third instance.** V-A8 covers the DIS row and all the
+controls; AMBER, LEG_total and LEG_torsion must be re-emitted from a committed script with a
+provenance block and a pinned seed before the report quotes them.
+
+---
+
 ## Standing attack surfaces for this sprint (charter §53)
 
 | lane | expected claim | the attack it must survive |

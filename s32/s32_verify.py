@@ -45,6 +45,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(ROOT)
 
 OK, BAD, MISSING, FLAG = [], [], [], []
+EXEMPT = []          # (file, line, audit, why) -- struck claims whose replacement IS stated
+
+#: what each phrase audit accepts as "the replacement is stated in the same block".  The
+#: exemption is a POSITIVE OBLIGATION, not a loophole: a strike with no replacement still flags.
+A5_CORRECTION = ["total suppression", "gain_out", "0 on its", "cleans up", "hull floor",
+                 "1.8290", "exactly 0"]
+A6_CORRECTION = ["5.25", "5.2", "rank(aff", "32.88", "globally"]
+A7_CORRECTION = ["0.3", "lam=0.3"]
 
 #: the reporting bases this project's numbers have.  A registered RMSD number must name one.
 BASES = ("chain", "cloud", "set-mean", "member", "selection", "in-band", "torsion", "none")
@@ -135,6 +143,53 @@ def exact(label, claimed, actual):
 
 def show(label, value, note=""):
     print("%-56s %-26s %s" % (label[:56], str(value)[:26], note))
+
+
+# ============================================ RETRACTION CONTEXTS (contract rule 13 vs the audits)
+#: Rule 13 retracts IN PLACE and never deletes, so a phrase-matching audit fires forever on every
+#: correctly-handled retraction, and the permanent-flag count grows monotonically until a genuine
+#: new flag is invisible.  The exemption below is deliberately NOT "the word 'corrected' is near
+#: it" -- that would let any claim be laundered by writing 'corrected' beside it.  A struck claim
+#: is exempt ONLY IF ITS REPLACEMENT IS STATED IN THE SAME BLOCK.  A strike with no replacement is
+#: itself a defect this project has committed, and is now caught rather than excused.
+RETRACT_OPEN = re.compile(r"(?i)(~~|\bSTRUCK\b|\bRETRACT(ED|ION)?\b|\[corrected|\bWITHDRAWN\b|"
+                          r"original wording|left standing per rule 13|\[false\b|is FALSE\b|"
+                          r"\bbackwards\b|\bI wrote\b|first wrote|\bthe correction\b|"
+                          r"\brefuted\b|\bwas wrong\b|\bannotated in place\b)")
+
+
+def _blocks(raw):
+    """Contiguous non-blank line runs, as (start, end_exclusive)."""
+    out, s = [], None
+    for k, l in enumerate(raw):
+        if l.strip() and s is None:
+            s = k
+        elif not l.strip() and s is not None:
+            out.append((s, k)); s = None
+    if s is not None:
+        out.append((s, len(raw)))
+    return out
+
+
+def retraction_exempt(raw, ln0, correction_tokens):
+    """True iff line `ln0` sits in a retraction context AND that context states the replacement.
+
+    `correction_tokens`: any one of these appearing in the same block (or inside the same ~~...~~
+    span) discharges the retraction.  Empty list => a retraction context alone never exempts.
+    """
+    line = raw[ln0]
+    blk = next(((a, b) for a, b in _blocks(raw) if a <= ln0 < b), (ln0, ln0 + 1))
+    ctx = "\n".join(raw[blk[0]:blk[1]])
+    struck = bool(RETRACT_OPEN.search(ctx)) or bool(re.search(r"~~.*~~", line))
+    if not struck:
+        return False, "not a retraction context"
+    if not correction_tokens:
+        return False, "retraction context, but no replacement token configured"
+    low = ctx.lower()
+    for t in correction_tokens:
+        if t.lower() in low:
+            return True, "struck, replacement '%s' stated in the same block" % t
+    return False, "STRUCK WITH NO REPLACEMENT STATED IN THE BLOCK"
 
 
 paths_only = "--paths" in sys.argv
@@ -297,6 +352,176 @@ if not selftest_only:
         check("mechanism: DIS top-128 sd rr", 0.6384, ts, tol=2e-3, basis="member")
         check("mechanism: pool 5th pct rr", 2.6098, p5, tol=2e-3, basis="member")
         check("mechanism: DIS top-128 5th pct rr (UNCHANGED)", 2.6184, t5, tol=2e-3, basis="member")
+
+
+    # ------------------------------------------- lane V: the ULP distribution of the endpoint
+    print()
+    print("--- lane V, S32-D1: the arithmetic-noise distribution of the endpoint ---")
+    up = load("s32/results/s32_V_ulp_distribution.json")
+    if up:
+        check("ULP job: n targets", 126, dig(up, "n_targets"), tol=0, basis="none")
+        check("ULP job: complete draws", 5, dig(up, "draws_complete"), tol=0, basis="none")
+        v = dig(up, "max_abs_cloud_rmsd_shift")
+        ok = v is not None and v < 1e-9
+        (OK if ok else BAD).append(("the perturbation leaves the CLOUD unchanged", "<1e-9", v))
+        print("%-56s %-11s %s" % ("  perturbation's max cloud-RMSD shift", "%.2e" % (v or 0),
+                                  "MATCH" if ok else "*** MISMATCH ***"))
+        check("draw-to-draw sd of the endpoint (THE RULE-20 NUMBER)", 0.0030,
+              dig(up, "draw_sd"), tol=5e-4, basis="chain", obj="chain CANONICAL (re-projection)")
+        show("  per-target |chain - canonical|",
+             "mean %.4f p90 %.4f max %.4f" % (dig(up, "per_target_abs_delta", "mean") or 0,
+                                              dig(up, "per_target_abs_delta", "p90") or 0,
+                                              dig(up, "per_target_abs_delta", "max") or 0),
+             "rule 3's floor: 0.0134 / 0.0329 / 0.2285")
+
+    # ------------------------------------ lane V: is lane R's cos_align independent evidence?
+    print()
+    print("--- lane V: lane R's cos_align -- identity check (s32_V_cos_identity.json) ---")
+    ci = load("s32/results/s32_V_cos_identity.json")
+    if ci:
+        v = dig(ci, "price_reconstructed_from_cos_max_abs_err")
+        exact("  price rebuilt from (e,d,cos) alone: max abs error", 0.0, v)
+        show("  -> cos_align is a bijection with the price given (e,d)",
+             "NOT independent evidence", "quoting both double-counts one measurement")
+        show("  cos_algebraic vs cos_direct (common frame)",
+             "mean diff %.4f, max %.4f" % (dig(ci, "cos_difference", "abs_mean") or 0,
+                                           dig(ci, "cos_difference", "max") or 0),
+             "the Kabsch triangle IS near-Euclidean here")
+        show("  production cos_align, mean", "%+.4f" % (dig(ci, "cos_algebraic", "mean") or 0),
+             "registered null is 0 (orthogonal); negative = slightly anti-aligned")
+
+    # ------------------------------- lane V: the adversarial replication of lane D's D1-T
+    print()
+    print("--- lane V: lane D's D1-T sign transfer, replicated with the controls it lacks ---")
+    ds = load("s32/results/s32_V_D_signadversary.json")
+    if ds:
+        check("replication of lane D's DIS transfer (+0.1890)", 0.1890,
+              dig(ds, "scorers", "DIS", "transfer"), tol=0.01, basis="in-band")
+        for nm in ("DIS", "TYPICALITY", "RG", "NOISE", "DIS_DEDUP", "RG_DEDUP"):
+            r = dig(ds, "scorers", nm)
+            if r:
+                print("  %-18s transfer %+0.4f  nullPERM %+0.4f  nullXTGT %+0.4f  globalSGN %+0.4f  %s"
+                      % (nm, r["transfer"], r["null_perm"], r["null_xtarget_mean"],
+                         r["global_sign_lfo"], r["verdict_per_target"]))
+        nz = dig(ds, "scorers", "NOISE", "verdict_per_target")
+        ok = nz == "NOT A RESULT"
+        (OK if ok else BAD).append(("the pure-noise falsifier reports NOT A RESULT", "NOT A RESULT", nz))
+        print("%-56s %s" % ("  falsifier: pure noise must be NOT A RESULT", nz))
+        show("  band duplicates (the split-half independence assumption)",
+             "%.1f%% of 75, on %d/126" % (100 * (dig(ds, "band_duplicates", "mean_frac") or 0),
+                                          dig(ds, "band_duplicates", "n_targets_with_any") or 0),
+             "dedup moves the transfer by <=0.012")
+
+    # ---------------------------------------------------------------- lane Q: the readout identity
+    print()
+    print("--- lane Q, S32-L5: the readout program's gain (s32_Q1_sufficiency.json) ---")
+    q1 = load("s32/results/s32_Q1_sufficiency.json")
+    if q1:
+        show("  label", dig(q1, "label"), "")
+        show("  basis", dig(q1, "basis"), "")
+        check("Q1-T1 identity, max relative error", 0.0, dig(q1, "T1", "err_identity_rel_max"),
+              tol=1e-9, basis="none")
+        check("Q1-T2 gain INSIDE the active affine hull", 1.0, dig(q1, "T2", "gain_in_mean"),
+              tol=1e-4, basis="none")
+        check("Q1-T2 gain OUTSIDE it (total suppression, not none)", 0.0,
+              dig(q1, "T2", "gain_out_mean"), tol=1e-4, basis="none")
+        check("active affine-hull dimension |S|-1, mean", 5.2540,
+              dig(q1, "T2", "support_aff_dim_mean"), tol=1e-3, basis="none")
+        check("ambient dimension d = 3n, mean", 38.8810, dig(q1, "T1", "d_mean"), tol=1e-3, basis="none")
+        check("hull floor d (kabsch) [ORACLE]", 1.8290, dig(q1, "hull", "kabsch_mean"), basis="cloud")
+        nz = dig(q1, "noise_ORACLE") or []
+        for r in nz:
+            dd = r["proj_mean"] - r["direct_mean"]
+            print("  %-30s direct %.4f  projected %.4f   %s"
+                  % ("noise eps=%.1f [ORACLE]" % r["eps"], r["direct_mean"], r["proj_mean"],
+                     "the projection CLEANS UP %.4f A" % -dd if dd < 0
+                     else "the projection costs %.4f A" % dd))
+
+        # --- the contradiction audit: the phrase vs the artefact that is supposed to support it
+        print()
+        print("--- AUDIT 5: 'no noise suppression' vs the measured gain (S32-V, lane Q) ---")
+        gout = dig(q1, "T2", "gain_out_mean")
+        dim_out = (dig(q1, "T1", "d_mean") or 0) - (dig(q1, "T2", "support_aff_dim_mean") or 0)
+        cleaned = [r for r in nz if r["proj_mean"] < r["direct_mean"] - 1e-6]
+        contradicted = (gout is not None and gout < 1e-3 and dim_out > 1) or bool(cleaned)
+        hits = []
+        for src in DOCS:
+            if not os.path.exists(src):
+                continue
+            raw = io.open(src, encoding="utf-8").read().splitlines()
+            for ln0, line in enumerate(raw):
+                if not (re.search(r"no\s+noise[- ]suppression", line, re.I) and contradicted):
+                    continue
+                ex, why = retraction_exempt(raw, ln0, A5_CORRECTION)
+                if ex:
+                    EXEMPT.append((src, ln0 + 1, "AUDIT 5", why))
+                    continue
+                hits.append((src, ln0 + 1, line.strip()[:80]
+                             + ("   [%s]" % why if "NO REPLACEMENT" in why else "")))
+        for s, ln, t in hits:
+            FLAG.append(("'no noise suppression' but gain_out=%.1e on a %.0f-dim complement, "
+                         "and %d noise rows ARE cleaned up" % (gout or 0, dim_out, len(cleaned)),
+                         "%s:%d" % (s, ln)))
+            print("  FLAG %s:%d  %s" % (s, ln, t))
+        print("  gain_out_mean %.2e on a %.1f-dimensional complement; %d of %d noise rows show the "
+              "projection CLEANING UP the estimate; %d unqualified claim(s) of 'no noise suppression'"
+              % (gout or 0, dim_out, len(cleaned), len(nz), len(hits)))
+
+        # --- the two-quantities-one-symbol audit: |S|-1 is 5.25, rank(aff{W}) is 32.88
+        print()
+        print("--- AUDIT 6: |S|-1 (the ACTIVE support, 5.25) vs rank(aff{W}) (ALL candidates, 32.88) ---")
+        sdim = dig(q1, "T2", "support_aff_dim_mean")
+        radim = dig(q1, "T1", "rank_aff_mean")
+        n6 = 0
+        for src in DOCS:
+            if not os.path.exists(src):
+                continue
+            raw = io.open(src, encoding="utf-8").read().splitlines()
+            for ln0, line in enumerate(raw):
+                if not (re.search(r"\|S\|\s*[-−]\s*1", line) and re.search(r"\b3[0-9]\b", line)
+                        and "rank" not in line.lower() and "globally" not in line.lower()):
+                    continue
+                ex, why = retraction_exempt(raw, ln0, A6_CORRECTION)
+                if ex:
+                    EXEMPT.append((src, ln0 + 1, "AUDIT 6", why))
+                    continue
+                FLAG.append(("'|S|-1' given as ~3x while |S|-1 = %.2f and rank(aff{W}) = %.2f"
+                             % (sdim or 0, radim or 0), "%s:%d" % (src, ln0 + 1)))
+                print("  FLAG %s:%d  %s %s" % (src, ln0 + 1, line.strip()[:78],
+                                               "[%s]" % why if "NO REPLACEMENT" in why else ""))
+                n6 += 1
+        print("  |S|-1 mean %.2f (the ACTIVE support); rank(aff{W}) mean %.2f (ALL 128 candidates); "
+              "%d conflation(s)" % (sdim or 0, radim or 0, n6))
+
+    # --- AUDIT 7: the deployed projection arm is lambda=0.3, asserted from the SOURCE
+    print()
+    print("--- AUDIT 7: which lambda arm does the deployed chain come from? (asserted from source) ---")
+    _src = io.open(os.path.join(ROOT, "s12", "instrument.py"), encoding="utf-8").read()
+    _m = re.search(r"def project\(C, seq, fold, lam=([0-9.]+)", _src)
+    _lam = float(_m.group(1)) if _m else None
+    _returns_arm = bool(re.search(r'path\[0\.0\].*?path\[lam\]', _src, re.S)) and '"ca": np.asarray(arm[0]' in _src
+    show("  s12/instrument.project default lam", _lam, "the deployed chain is path[lam], not path[0.0]")
+    (OK if (_lam == 0.3 and _returns_arm) else BAD).append(
+        ("instrument.project emits the lam=0.3 arm as 'ca'", "0.3 / arm", "%s / %s" % (_lam, _returns_arm)))
+    n7 = 0
+    for src in DOCS:
+        if not os.path.exists(src):
+            continue
+        raw = io.open(src, encoding="utf-8").read().splitlines()
+        for ln0, line in enumerate(raw):
+            if not re.search(r"(final rung|last rung|the chain|deployed).{0,60}(runs at|is at|uses)\s*"
+                             r"\*{0,2}\s*(λ|lam(bda)?)\s*=\s*0(?![.\d])", line, re.I):
+                continue
+            ex, why = retraction_exempt(raw, ln0, A7_CORRECTION)
+            if ex:
+                EXEMPT.append((src, ln0 + 1, "AUDIT 7", why))
+                continue
+            FLAG.append(("says the final rung runs at lambda=0; the source default is %s" % _lam,
+                         "%s:%d" % (src, ln0 + 1)))
+            print("  FLAG %s:%d  %s %s" % (src, ln0 + 1, line.strip()[:78],
+                                           "[%s]" % why if "NO REPLACEMENT" in why else ""))
+            n7 += 1
+    print("  %d document line(s) still asserting lambda=0 for the deployed rung" % n7)
 
 
 # ================================================ EVERY PATH ANY S32 DOCUMENT NAMES
@@ -497,27 +722,40 @@ if _sj:
         STRATA_REG[round(float(_d["all_mean"]), 4)] = dict(
             arm=_arm, all=float(_d["all_mean"]), fail18=float(_d["fail18_mean"]),
             rest=float(_d["rest108_mean"]), gate=_d.get("rest108_gate"))
+#: what counts as qualifying the quotation.  Either the stratification is named, or the MEDIAN
+#: is quoted beside the mean -- which is contract rule 1's own requirement and is what makes the
+#: opposite-signed strata visible in the first place.
 STRATA_WORDS = ("fail18", "stratum", "strata", "the 108", "other 108", "outcome-defined",
-                "circular", "not a result on")
+                "circular", "not a result on", "median", "med ", "see d3", "retracted")
+CONTEXT = 4          # non-blank lines either side: a claim qualified in its own block is fine
 
 
 def strata_audit(docs=DOCS, quiet=False):
-    """Flag a document line quoting an aggregate whose two strata disagree in sign, unless the
-    line itself names the stratification."""
+    """Flag an aggregate whose two strata disagree in sign, quoted without its stratification
+    and without its median, anywhere in a +-CONTEXT non-blank-line window."""
     hits = []
     for src in docs:
         if not os.path.exists(src):
             continue
-        for ln, line in enumerate(io.open(src, encoding="utf-8").read().splitlines(), 1):
-            low = line.lower()
-            if any(w in low for w in STRATA_WORDS):
+        raw = io.open(src, encoding="utf-8").read().splitlines()
+        idx = [k for k, l in enumerate(raw) if l.strip()]          # non-blank line numbers
+        pos = {k: i for i, k in enumerate(idx)}
+        for ln0, line in enumerate(raw):
+            if not line.strip():
+                continue
+            i = pos[ln0]
+            win = " ".join(raw[k] for k in idx[max(0, i - CONTEXT):i + CONTEXT + 1]).lower()
+            if any(w in win for w in STRATA_WORDS):
+                continue
+            ex, why = retraction_exempt(raw, ln0, STRATA_WORDS)
+            if ex:
+                EXEMPT.append((src, ln0 + 1, "AUDIT 4", why))
                 continue
             for val, rec in STRATA_REG.items():
                 if rec["fail18"] * rec["rest"] >= 0:      # strata agree: nothing to flag
                     continue
-                if re.search(r"[-+]?%s" % re.escape(("%.4f" % abs(val)).lstrip("0") or "%.4f" % abs(val)), line) \
-                        or ("%.4f" % abs(val)) in line:
-                    hits.append((src, ln, val, rec, line.strip()[:100]))
+                if ("%.4f" % abs(val)) in line:
+                    hits.append((src, ln0 + 1, val, rec, line.strip()[:100]))
                     break
     if not quiet:
         for s, ln, val, rec, t in hits:
@@ -637,6 +875,7 @@ finally:
 _tmp3 = os.path.join("s32", "results", "_s32_verify_selftest_doc3.md")
 io.open(_tmp3, "w", encoding="utf-8").write(
     "The score is worse than random: +0.1872 at 1.06x MDE, WORSE.\n"
+    + "filler\n" * (2 * CONTEXT + 2) +
     "The score is +0.1872 overall, but on the 108 non-FAIL18 targets it is -0.0296, NOT A RESULT.\n")
 try:
     _h3 = strata_audit([_tmp3], quiet=True)
@@ -654,6 +893,90 @@ _ties = max([r.get("n_tied_at_cut", 0) for r in (dig(_s4, "per_target", default=
 st("ST5   the tie-at-the-cut claim is made on data that CAN tie", _ties > 1,
    "max %d candidates tied at the 75th score" % _ties)
 
+# ST7 -- the RETRACTION EXEMPTION, which is the most dangerous check here because it is the one
+# that makes other checks stop firing.  Contract rule 13 retracts in place, so a phrase audit
+# would flag every correctly-handled retraction forever until a real flag is invisible.  The
+# exemption must therefore satisfy THREE things, not one:
+#   (a) a struck claim WITH its replacement stated in the same block is exempt;
+#   (b) the SAME claim asserted live below the struck block is still CAUGHT -- otherwise the
+#       exemption is a laundering route ("write 'corrected' nearby and say anything");
+#   (c) a strike with NO replacement stated is NOT exempt -- the exemption is a positive
+#       obligation, and "struck without saying what replaces it" is itself a defect this
+#       project has committed before.
+_doc = ["> ~~Gain exactly 1 means no noise suppression.~~ STRUCK: gain is 1 inside the active",
+        "> hull and exactly 0 outside it -- total suppression, not none.",
+        "",
+        "Gain exactly 1 means no noise suppression.",
+        "",
+        "> ~~Gain exactly 1 means no noise suppression.~~ RETRACTED.",
+        ""]
+_a = retraction_exempt(_doc, 0, A5_CORRECTION)
+_b = retraction_exempt(_doc, 3, A5_CORRECTION)
+_c = retraction_exempt(_doc, 5, A5_CORRECTION)
+st("ST7a  a struck claim WITH its replacement stated is EXEMPT", _a[0] is True, _a[1])
+st("ST7b  the same claim asserted LIVE below the block is still CAUGHT", _b[0] is False, _b[1])
+st("ST7c  a strike with NO replacement stated is NOT exempt", _c[0] is False, _c[1])
+
+
+# ======================= AUDIT 8: rows vs DISTINCT pdbs in every results jsonl (standing check)
+# Lane P shipped 108 rows over 84 distinct pdbs because surplus launchers duplicated work; rows
+# looked like progress.  `len(set(pdbs)) == 126` is the cheap assertion that catches the class.
+# A file with a legitimate repeat key (item / draw / shard / variant) is allowed many rows per
+# target; a file WITHOUT one and with repeats is flagged.
+print()
+print("--- AUDIT 8: rows vs distinct pdbs, aggregated over shards (the lane-P duplication class) ---")
+REPEAT_KEYS = ("item", "draw", "shard", "variant", "tag", "arm", "k", "s", "eps", "rep", "seed",
+               "split", "fam", "start", "scorer", "m", "branch")
+#: shards of one logical result are ONE object; the check is on the GROUP, because a shard
+#: legitimately holds a slice of the targets and only the union must reach 126.
+_SHARD_RE = re.compile(r"(_shard\d+|\.s\d+of\d+|_\d+_\d+)(?=\.jsonl$)")
+_groups = {}
+for _f in sorted(glob.glob(os.path.join("s32", "results", "*.jsonl"))):
+    _g = _SHARD_RE.sub("", _f)
+    _groups.setdefault(_g, []).append(_f)
+_n8 = 0
+for _g, _fs in sorted(_groups.items()):
+    _pdbs, _rows, _keys, _perfile = [], 0, set(), []
+    for _f in _fs:
+        _c = 0
+        for _ln in io.open(_f, encoding="utf-8"):
+            _ln = _ln.strip()
+            if not _ln:
+                continue
+            try:
+                _r = json.loads(_ln)
+            except Exception:                                        # noqa: BLE001
+                continue
+            _rows += 1; _c += 1
+            _keys |= set(_r.keys())
+            if "pdb" in _r:
+                _pdbs.append(_r["pdb"])
+        _perfile.append(_c)
+    if not _pdbs:
+        continue
+    _d = len(set(_pdbs))
+    _rk = sorted(_keys & set(REPEAT_KEYS))
+    #: a repeat key legitimises many rows per target; without one, a repeated pdb is duplicated work
+    _dup = 0
+    if not _rk:
+        _dup = len(_pdbs) - _d
+    _bad = _dup > 0
+    _short = (_d > 0) and (_rows >= 126) and (_d < 126) and not _rk
+    _tag = ""
+    if _bad:
+        _tag = "   *** %d duplicate pdb row(s), no repeat key ***" % _dup
+    elif _short:
+        _tag = "   *** %d rows but only %d targets ***" % (_rows, _d)
+    print("  %-44s files %d  rows %5d  distinct pdbs %3d  %s%s"
+          % (os.path.basename(_g)[:44], len(_fs), _rows, _d,
+             ("repeat key %s" % _rk) if _rk else "no repeat key", _tag))
+    if _bad or _short:
+        FLAG.append(("rows %d over only %d distinct pdbs, repeat keys %s"
+                     % (_rows, _d, _rk or "none"), _g))
+        _n8 += 1
+print("  %d result GROUP(s) with duplicated targets and no repeat key" % _n8)
+
+
 ST_FAIL = [n for n, ok in ST if not ok]
 for n in ST_FAIL:
     FLAG.append(("SELF-TEST FAILED -- the audit it guards is decoration", n))
@@ -668,5 +991,9 @@ for m in MISSING[:25]:
     print("  NOT FOUND %s" % m)
 for why, lbl in FLAG:
     print("  FLAG  %-56s %s" % (why[:56], lbl))
+if EXEMPT:
+    print("  -- %d struck claim(s) exempted (rule 13, replacement stated in the same block):" % len(EXEMPT))
+    for f, ln, aud, why in EXEMPT:
+        print("     exempt  %-8s %s:%d  %s" % (aud, f, ln, why))
 print("=" * 98)
 sys.exit(1 if (BAD or MISSING or ST_FAIL) else 0)
