@@ -134,13 +134,47 @@ observable cannot see. The Ramachandran density over (φ, ψ) for L-amino acids 
 chiral (the α_L region is rare), so it is the first native-free in-band signal in this project
 with a mechanistic reason to work rather than a fitted one.
 
-**WHY THE FINAL RUNG DOES NOT ALREADY DO THIS.** The branch is fixed at the **λ = 0** rung of
-`lam_path`, where the penalty has weight zero, so the branch is chosen by a coordinate distance
-whose best-vs-runner-up gap is ~1e-7 on the majority of targets. At λ = 0.3 the penalty that
-enters is `RamaHingePenalty`, which has **sparse support**: a residue already as plausible as
-95% of real residues of its class contributes exactly zero. Among branches that are all above
-the hinge threshold it is identically blind. The criterion proposed here is the **un-hinged,
-dense** `RamaPenalty` log-density, which is a different function of the same table.
+**WHY THE FINAL RUNG DOES NOT ALREADY DO THIS.**
+
+> ~~The branch is fixed at the **λ = 0** rung of `lam_path`, where the penalty has weight zero,
+> so the branch is chosen by a coordinate distance whose best-vs-runner-up gap is ~1e-7 on the
+> majority of targets.~~
+>
+> **RETRACTED IN PLACE 2026-09-21, before any R3 number existed** (contract rule 13). The
+> coordinator supplied this premise and then withdrew it, correctly. `lam_path(C, pen,
+> (0.0, 0.3), multi=True)` solves at λ = 0, **then walks to λ = 0.3, and the emitted chain is
+> the λ = 0.3 arm** — `core/pipeline.py:988` takes `path[cfg.lam]`, and `multi=True` re-runs
+> `fit_multi` **with the penalty active** at that rung. So the Ramachandran prior IS already
+> weighting the branch choice, and `lam_path`'s own docstring says that was the intent: *"The
+> prior's real job is choosing among near-degenerate solutions."* Nothing in this lane's
+> construction changes — every branch this lane builds is already a λ = 0.3 arm — but the
+> sentence above was wrong and is struck rather than edited.
+
+**The surviving, and sharper, mechanism: A PENALTY IS NOT A SELECTOR.** What ships is a *term
+in the objective* that biases each optimisation trajectory. What is proposed here is a *post-hoc
+ranking over converged structures*. Those are different operators and only the first is
+deployed. Two concrete reasons the second can differ from the first:
+
+1. the shipped term is `RamaHingePenalty`, which has **sparse support** — a residue already as
+   plausible as 95% of real residues of its class contributes exactly zero, so among branches
+   that are all above threshold it is identically blind. The criterion here is the **un-hinged,
+   dense** `RamaPenalty` log-density: a different function of the same table.
+2. the shipped objective is `RMSD(build(φ,ψ), C) + 0.3 · ramah`, so the prior competes against
+   the coordinate-distance term at a fixed exchange rate. A post-hoc ranking is not required to
+   pay that exchange rate.
+
+**THE NULL IS THEREFORE THE SHIPPED OBJECTIVE ITSELF.** The registered question is: *given the
+set of distinct converged branches a target admits, does post-hoc Ramachandran ranking beat the
+λ = 0.3 objective's own argmin over the same set?* `obj1` is carried as a criterion for exactly
+this, and `SEL_obj1_*` / `OBJARGMIN_*` are its arms. **λ is not varied anywhere in this lane**:
+the module states that starts, `maxiter`, the penalty, λ and the tolerance are science, not
+tuning knobs, and a λ sweep scored on native RMSD would violate contract rule 11.
+
+**ADDED (registered here, before the number exists): the λ ladder's own endpoint cost.** The
+coordinator reports 3.2148 (λ=0.3) vs 3.2041 (λ=0) from the production cache, i.e. the prior
+costs +0.0107 Å at the endpoint. This lane holds both arms for the **same** cloud in the **same
+job** (`prod_chain` and `prod_fit_chain`) and will report that contrast **with its MDE**, since
++0.0107 is below the 0.0134 mean chain floor and may be entirely inside it.
 
 **HOW THIS DIFFERS FROM S31's BRANCH-CARRY NULL** (−0.0055 Å at 0.44× MDE): S31 *carried* a
 branch down the λ ladder — it changed which trajectory was continued. This lane *scores the
