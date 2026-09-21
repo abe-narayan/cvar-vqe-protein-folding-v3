@@ -77,12 +77,12 @@ weights `w` with `Σ_x w_x = 1` (non-negativity not required). `U` is the `K × 
 ```
 
 *Proof.* `Uᵀw − t = Σ_x w_x (W_x − t)` by `Σw = 1`; expand and substitute
-`⟨W_x−t, W_y−t⟩ = ½(a_x + a_y − B_xy)`. ∎ **Verified to 4.1e-14 relative** over 126 targets × 80
+`⟨W_x−t, W_y−t⟩ = ½(a_x + a_y − B_xy)`. ∎ **Verified to 1.1e-11 relative** over 126 targets × 80
 draws, simplex and signed-affine.
 
 **(II) `a` is affine in `t`.** `a_x = ‖W_x‖² − 2⟨W_x, t⟩ + ‖t‖²`. The first term is native-free; the
 third is **constant in `x`**, and `Σw = 1` makes an `x`-constant an additive constant of the
-objective, which cannot move an argmin over the simplex. **Verified to 3.0e-15 relative.**
+objective, which cannot move an argmin over the simplex. **Verified to 5.8e-13 relative.**
 
 > **Therefore the readout-relevant content of the quality vector `a ∈ R^K` is the linear functional
 > `g_x = ⟨W_x, t⟩`, i.e. `P_aff{W} t` — the native's coordinates in the candidate set's own affine
@@ -98,10 +98,12 @@ objective, which cannot move an argmin over the simplex. **Verified to 3.0e-15 r
         t = Xbar - mu                              a_x = c_x - 2<W_x,t> + ||t||^2
 ```
 
-**Numerical falsifier, run:** replace `t` by `P_aff{W} t` everywhere and re-solve the readout's
-convex program. Predicted identical; measured **max |Δw| = 2.5e-14**, **max Δx = 6.1e-14 Å**.
-`rank(aff{W_x})` is **≈ 32–33** against `d ≈ 38`, and `‖t − P_aff t‖ = 2.0e-14` — the native already
-lies in the candidates' affine span, which is S31 §10.5's observation arriving from the other side.
+**Numerical falsifier, run on all 126:** replace `t` by `P_aff{W} t` everywhere and re-solve the
+readout's convex program. Predicted identical; measured **max |Δw| = 7.0e-12**, **max Δx =
+2.9e-12 Å**, with the QP carrying a **KKT certificate at 2.0e-12** and `|Σw − 1| ≤ 4.4e-15`.
+`rank(aff{W_x})` is **32.88 mean (21–42)** against `d = 38.88 mean`, and `‖t − P_aff t‖ = 1.5e-14`
+— the native already lies in the candidates' affine span, which is S31 §10.5's observation arriving
+from the other side.
 
 > ### THEOREM Q1-T1. The per-candidate quality vector and the pool common mode are the same
 > ### object up to a known native-free affine bijection, and the sufficient statistic for the
@@ -154,11 +156,38 @@ projector onto the **direction space of the active candidates' affine hull**, of
 **Verified by finite differences, n = 126 × 4 draws each:**
 
 ```
-|| dx - P_aff(S) dt || / || P_aff(S) dt ||     7.9e-08   (mean)     <- the identity
-gain along a PURE in-hull direction            1.0000000  sd 3.1e-09
-gain along a PURE orthogonal direction         4.3e-08               <- exactly blind
-support size |S|, unconstrained convex optimum   see s32_Q1_sufficiency.json
+n = 126, 4 draws per target, h = 1e-4 * sqrt(n)
+ACTIVE SET UNCHANGED on 0 of 504 draws moved -- the theorem's hypothesis holds on every draw
+
+|| dx - P_aff(S) dt || / || P_aff(S) dt ||   1.47e-08 mean, 3.17e-07 max  <- the identity
+|| dx - P_aff(S) dt || / h,  ALL 126         4.50e-08 max                 <- includes |S| = 1
+gain along a PURE in-hull direction          0.9999999999, max dev 1.17e-08   (123 targets)
+gain along a PURE orthogonal direction       4.01e-09 mean, 2.72e-08 max  <- exactly blind
+support |S|           6.254 mean, 6 median, 16 max     window dim |S|-1: 5.254 mean
+DEGENERATE |S| = 1                           3 of 126 -- window dimension ZERO, dx = 0 exactly,
+                                             which the ABSOLUTE residual above verifies
 ```
+
+> **The step size was chosen by a convergence test, not by what passed.** On a fixed active set the
+> map is **exactly** affine in `t`, not affine to first order, so any residual must be pure
+> floating-point roundoff — and roundoff in a difference quotient scales as `1/h`. Swept over four
+> targets and five decades (`s32/results/s32_Q1_hsweep.json`), the relative residual goes
+> **7.95e-08 → 7.11e-07 → 7.39e-06 → 3.93e-05 → 3.09e-04** for `h/scale = 1e-4 … 1e-8`: **decade
+> for decade, exactly `1/h`**, with the active set unmoved at every step. *That is the signature of
+> roundoff and not of a wrong model, and it is why the bar in `s32_Q_verify.py` is set from the
+> sweep rather than from the outcome.*
+
+*The relative check is undefined on the three `|S| = 1` targets — the theorem's own degenerate case,
+where the readout is a single pool member and is locally constant in every direction. Reporting only
+the relative residual would have silently dropped exactly the targets where the prediction is
+strongest; the absolute residual covers all 126.*
+
+> **The solver carries a KKT certificate, and that is not decoration — it caught a real defect.**
+> A 4000-iteration FISTA with a drop-only active-set polish passed a 3-target smoke and then
+> **failed its own certificate on the full instrument** (residual **1.26** at K = 128, **10.85** at
+> K = 500), because a drop-only polish never adds a violated index back. The shipped solver is
+> Lawson–Hanson NNLS on the sum-to-one-augmented system, certificate **2.0e-12**. *The smoke did not
+> catch it; the certificate did.*
 
 ### (c) The three consequences that decide the route
 
@@ -168,9 +197,10 @@ support size |S|, unconstrained convex optimum   see s32_Q1_sufficiency.json
    globally** (across active-set changes).
 2. **The readout is dominated by its own input.** `‖P_C(t̂) − t‖ ≤ ε + d`, while emitting `t̂`
    directly costs `ε`. So the projection readout beats direct emission **iff** the estimate's error
-   exceeds `d` *and* lies outside the hull's affine span — measured crossover at `ε ≈ 2.2 Å`
-   against a hull floor `d ≈ 1.96 Å` (CA cloud, **ORACLE / NOT DEPLOYABLE**). *A structure
-   estimate good enough to make the readout worth solving is already good enough to emit.*
+   exceeds `d` *and* lies outside the hull's affine span — measured crossover at **`ε ≈ 2.2 Å`**
+   against a hull floor **`d = 1.8290 ± 0.1178`** (CA cloud, **ORACLE / NOT DEPLOYABLE**).
+   *A structure estimate good enough to make the readout worth solving is already good enough to
+   emit.*
 3. **Gain exactly 1 means no noise suppression.** There is no regime in which a noisy `â` is
    cleaned up by the convex program. This is why S31 measured "solving the objective exactly
    reshuffles the answer everywhere and buys nothing": the program is a faithful, non-contracting
@@ -228,9 +258,31 @@ inherits its input's error at gain exactly 1.**
 > exact global minimiser of the constrained problem. **For `s ≥ s°` the "sparse" problem IS the
 > convex program**, solvable in milliseconds with a KKT certificate.
 
-Measured `s°` (unconstrained convex optimum, **ORACLE / NOT DEPLOYABLE**): see
-`s32_Q1_sufficiency.json :: Q1C_cardinality_ORACLE`. **This is the item that decides whether the
-charter's 2.10 Å sparse headroom is a combinatorial prize or a convex one.**
+**Measured `s°`** — the support the unconstrained convex optimum chooses for itself over the full
+`K = 500` pool, in the deployed common frame, KKT certificate **2.0e-12**, **ORACLE / NOT
+DEPLOYABLE**:
+
+```
+s*  mean 10.06   median 10   min 3   p90 13   max 23
+fraction with s* <= 10   61.1%          fraction with s* <= 20   98.4%
+emitted value of the UNCONSTRAINED convex optimum, K=500:  1.1535 +/- 0.0669   (CA cloud)
+```
+
+*(That 1.1535 is **not** differenced against S32-L1's ORACLE `s = 10` figure of **1.1139 built
+chain**. Different basis, different frame convention, and a cross-sprint number must be re-derived
+in one script before it is differenced — contract rules 4 and 7. Q1-T3 does not need the
+comparison.)*
+
+> ### And the closure does not depend on where `s°` falls.
+> `f*(s) = min{ ‖Uᵀw − t‖² : |supp(w)| ≤ s }` is non-increasing in `s` and **constant for
+> `s ≥ s°`**. So the problem splits exactly two ways:
+> * **`s ≥ s°`** — the constraint is slack, `w°` is the exact global optimum, and the problem **is
+>   the convex program**: milliseconds, with a certificate.
+> * **`s < s°`** — the problem is genuinely combinatorial **and `f*(s) > f*(s°)`: strictly worse.**
+>
+> **The hard instances are exactly the ones whose optimum is worse.** A quantum solver could only
+> ever be needed to compute an answer a convex program already beats. *That is a closure by
+> monotonicity and it holds for every target regardless of its own `s°`.*
 
 **VERDICT: the combinatorial hardness is an artefact of quoting `s` below the solution's own
 sparsity. It escapes S31 §5.2's obstructions 1 and 3 — the subset basis gives every bitstring a
@@ -302,9 +354,30 @@ price this decision, and the two must not be differenced.
 
 **The registered pricing curve, in real numbers rather than bits.** Truncate the native's
 representation to the top `r` directions of the pool's **own** spread (the ordering is native-free;
-only the coefficients are ORACLE), re-solve the convex readout, and emit. **ORACLE / NOT
-DEPLOYABLE**, CA cloud — see `s32_Q1_sufficiency.json :: Q4_curve_ORACLE`. `r = 0` is the uniform
-mean of the 128 and is the curve's own baseline; `r = rank(aff{W}) ≈ 33` is the hull floor.
+only the coefficients are ORACLE), re-solve the convex readout, and emit. **ORACLE / NOT DEPLOYABLE**, CA cloud, n = 126. `r = 0` is the uniform mean of the 128 — the
+curve's own baseline — and `r = rank(aff{W}) ≈ 33` is the hull floor.
+
+```
+ r    emitted (CA cloud, ORACLE)       r    emitted
+ 0      3.0532 +/- 0.1455   <- baseline (the uniform mean of the 128)
+ 1      2.5804 +/- 0.1307   <- ONE real number is worth -0.473 A
+ 2      2.3752 +/- 0.1239        8      1.9508 +/- 0.1164
+ 3      2.2638 +/- 0.1233       10      1.9110 +/- 0.1164
+ 4      2.1613 +/- 0.1201       12      1.8821 +/- 0.1166
+ 5      2.0823 +/- 0.1173       16      1.8584 +/- 0.1172
+ 6      2.0312 +/- 0.1162       20      1.8422 +/- 0.1176
+                             ~33      1.8290 +/- 0.1178   <- the hull floor
+```
+
+**Six real numbers buy 83% of what all thirty-three buy** (3.0532 → 2.0312 of 3.0532 → 1.8290).
+The statistic **is** compressible — the curve is steeply concave and effectively saturated by
+`r ≈ 10`. *That is the honest replacement for the five-bit figure, and it is in a different
+currency, so the two are never differenced.*
+
+> **What the curve does NOT say.** The coefficients are the native's, so every rung is ORACLE. The
+> ordering of the directions is native-free (it is the pool's own SVD), which is the only part of
+> the construction that could ever be deployed — and it is the part that is worth nothing on its
+> own.
 
 **Answers to §41's questions, from the derivation:**
 
@@ -400,3 +473,50 @@ Stated explicitly, because S31's G1 was over-applied and this derivation is now 
    discontinuous in its input at one float64 ULP, ~1e13 amplification. *The contraction argument
    stops at the cloud, and saying otherwise would be this project's signature defect: a number
    re-used across a boundary its definition does not cross.*
+
+---
+
+## The near-miss, killed by its own control
+
+**The observation.** Projecting a *noisy* structure estimate onto the pool's convex hull looks like
+a large win: an estimate with 2.75 Å of isotropic error emits at **2.10 Å**, and one with 3.65 Å
+emits at **2.23 Å** — both better than production's 3.0483 CA cloud. This is the shape of number
+that becomes a headline before anyone checks it.
+
+**The control, matched to the operator's own space** (contract rule 6): projecting onto a *bounded*
+convex set **is a shrinkage**, so the comparator is a shrinkage toward the pool mean matched to
+**the projection's own displacement** — not to any other arm's norm, which is the trap S31 walked
+up to. `n = 126`, **8 draws** per target per level, draw sd reported, **ORACLE / NOT DEPLOYABLE**,
+CA cloud:
+
+```
+eps     DIRECT     PROJ     SPAN   SHRINK     c     PROJ-DIRECT        PROJ-SHRINK (the control)
+0.5     0.4582   1.8466   0.4515   1.4766  0.555   +1.388  4.25x      +0.370  4.71x  WORSE
+1.0     0.9179   1.8853   0.9027   1.6204  0.513   +0.967  3.02x      +0.265  3.17x  WORSE
+1.5     1.3756   1.9356   1.3550   1.7658  0.470   +0.560  1.78x      +0.170  1.96x  WORSE
+2.0     1.8276   1.9895   1.8007   1.9125  0.433   +0.162  0.53x      +0.077  0.89x  NOT MEASURED
+2.5     2.2925   2.0497   2.2577   2.0502  0.396   -0.243  0.80x      -0.001  0.01x  NOT MEASURED
+3.0     2.7462   2.1012   2.7056   2.1676  0.365   -0.645  2.16x      -0.066  0.77x  NOT MEASURED
+4.0     3.6521   2.2291   3.5993   2.3663  0.316   -1.423  4.91x      -0.137  1.59x  better
+```
+
+> ### The hull is a shrinkage. Against its own norm-matched shrinkage it is WORSE wherever the
+> ### estimate is good, NOT MEASURED in the middle, and clears MDE only at ε = 4.0 Å.
+> And at `ε = 4.0` the **median is −0.074 against a mean of −0.137**, a mean/median ratio of 1.85 —
+> the free early-warning sign of a concentrated effect, so even that rung is a candidate for a
+> uniform-effect null rather than a broad effect.
+
+**Two further reasons it is not a lead, both structural.**
+
+1. **`SPAN ≈ DIRECT` at every level** (e.g. 3.6521 → 3.5993 at ε = 4). The affine span of the
+   candidates removes almost none of an isotropic error, because the span already contains the
+   native (`‖t − P_aff t‖ = 1.5e-14`). So the whole of the effect is the hull's **boundedness**,
+   i.e. shrinkage — which is what the control says.
+2. **The isotropic error model is the most favourable geometry there is, not a neutral one.**
+   A real predictor's error is not isotropic around the native: this project has measured the
+   pool's error as **68% common-mode**, i.e. concentrated in exactly the directions a hull built
+   from that pool cannot correct. **The table above is therefore an upper bound obtained under an
+   error direction no real estimator has, and it must not be read as an achievable gain.**
+
+And the arm needs a native-free external structure estimate at ~4 Å to be realisable at all —
+which, by Q1-T1, **is the same missing channel** as everything else in this report.

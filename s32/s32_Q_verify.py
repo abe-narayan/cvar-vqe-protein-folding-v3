@@ -74,14 +74,23 @@ def check(q0_rows=None, q1_rows=None):
     # ---- Q1-T2, and the two gains must be DISTINGUISHABLE (else the check is decoration)
     gi = np.array([r["gain_in_mean"] for r in q1 if np.isfinite(r["gain_in_mean"])])
     go = np.array([r["gain_out_mean"] for r in q1])
-    out.append(("Q1-T2 in-hull gain == 1 (|g-1| < 1e-5)",
-                bool(np.abs(gi - 1.0).max() < 1e-5), float(np.abs(gi - 1.0).max())))
-    out.append(("Q1-T2 orthogonal gain == 0 (< 1e-5)",
-                bool(go.max() < 1e-5), float(go.max())))
+    # Bars set by the h-sweep (s32_Q1_hsweep.json), NOT by what happened to pass: the residual
+    # scales as 1/h decade-for-decade, so at h = 1e-4*scale roundoff sits at ~1e-8.  A bar of
+    # 1e-6 is two decades of headroom over roundoff and three below any real violation.
+    out.append(("Q1-T2 in-hull gain == 1 (|g-1| < 1e-6)",
+                bool(np.abs(gi - 1.0).max() < 1e-6), float(np.abs(gi - 1.0).max())))
+    out.append(("Q1-T2 orthogonal gain == 0 (< 1e-6)",
+                bool(go.max() < 1e-6), float(go.max())))
     out.append(("Q1-T2 the two gains are DISTINGUISHABLE (>0.5 apart)",
                 bool(gi.mean() - go.mean() > 0.5), float(gi.mean() - go.mean())))
-    sr = max(r["sens_rel_max"] for r in q1)
-    out.append(("Q1-T2 dx == P_aff(S) dt (rel < 1e-4)", sr < 1e-4, sr))
+    sr = max(r["sens_rel_max"] for r in q1 if not r["degenerate"])
+    out.append(("Q1-T2 dx == P_aff(S) dt (rel < 1e-6, non-degenerate)", sr < 1e-6, sr))
+    sa = max(r["sens_abs_max"] for r in q1)
+    out.append(("Q1-T2 dx == P_aff(S) dt (abs/h < 1e-6, ALL incl |S|=1)", sa < 1e-6, sa))
+    mv = sum(r["n_activeset_moved"] for r in q1)
+    out.append(("Q1-T2 active set unchanged on every draw", mv == 0, mv))
+    out.append(("Q1 |sum w - 1| < 1e-12", max(r["sum_err"] for r in q1) < 1e-12,
+                max(r["sum_err"] for r in q1)))
 
     # ---- Q1-T3
     if "k500_support" in q1[0]:

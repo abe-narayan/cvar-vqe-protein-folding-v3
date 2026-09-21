@@ -209,8 +209,10 @@ def do_target(pdb, draws, rng):
     else:
         Pa = np.zeros((d, d))
         rs = 0
-    h = 1e-7 * scale
-    sens_rel, gain_in, gain_out = [], [], []
+    h = 1e-4 * scale   # chosen by the h-sweep in s32_Q1_hsweep.json: the residual scales as
+    #                     1/h decade-for-decade (pure roundoff, the map is EXACTLY affine on a
+    #                     fixed active set), and the active set still does not move at 1e-4.
+    sens_rel, sens_abs, gain_in, gain_out = [], [], [], []
     n_moved = 0
     set0 = set(S_full.tolist())
     for _ in range(draws):
@@ -222,7 +224,11 @@ def do_target(pdb, draws, rng):
             continue
         dx = U.T @ (w2 - w_full)
         pred = Pa @ dt
-        sens_rel.append(float(np.linalg.norm(dx - pred) / max(np.linalg.norm(pred), 1e-30)))
+        # ABSOLUTE residual, normalised by the perturbation -- well defined when |S| == 1,
+        # where the window has dimension ZERO and the theorem predicts dx == 0 exactly.
+        sens_abs.append(float(np.linalg.norm(dx - pred) / h))
+        if np.linalg.norm(pred) > 1e-24:
+            sens_rel.append(float(np.linalg.norm(dx - pred) / np.linalg.norm(pred)))
         # pure in-hull and pure orthogonal directions
         din = Pa @ rng.normal(size=d)
         nin = float(np.linalg.norm(din))
@@ -292,6 +298,8 @@ def do_target(pdb, draws, rng):
         "hull_fixed": hull_fixed, "hull_kabsch": hull_kabsch,
         "sens_rel_mean": float(np.mean(sens_rel)) if sens_rel else float("nan"),
         "sens_rel_max": float(np.max(sens_rel)) if sens_rel else float("nan"),
+        "sens_abs_max": float(np.max(sens_abs)) if sens_abs else float("nan"),
+        "degenerate": bool(rs == 0),
         "n_sens": int(len(sens_rel)), "n_activeset_moved": int(n_moved),
         "sum_err": float(sum_full), "k500_sum_err": float(sum5),
         "gain_in_mean": float(np.mean(gain_in)) if gain_in else float("nan"),
@@ -369,12 +377,15 @@ def main():
             "support_median": float(np.median(col("support"))),
             "support_max": int(col("support").max()),
             "support_aff_dim_mean": float(col("support_aff_dim").mean()),
-            "sens_rel_mean": float(col("sens_rel_mean").mean()),
-            "sens_rel_max": float(col("sens_rel_max").max()),
-            "gain_in_mean": float(col("gain_in_mean").mean()),
-            "gain_in_sd": float(col("gain_in_mean").std(ddof=1)),
-            "gain_out_mean": float(col("gain_out_mean").mean()),
-            "gain_out_max": float(col("gain_out_mean").max()),
+            "n_degenerate_support1": int(sum(1 for r in rows if r["degenerate"])),
+            "sens_rel_mean_nondegen": float(np.nanmean(col("sens_rel_mean"))),
+            "sens_rel_max_nondegen": float(np.nanmax(col("sens_rel_max"))),
+            "sens_abs_max_ALL": float(np.nanmax(col("sens_abs_max"))),
+            "gain_in_mean": float(np.nanmean(col("gain_in_mean"))),
+            "gain_in_max_dev_from_1": float(np.nanmax(np.abs(col("gain_in_mean") - 1.0))),
+            "n_gain_in_targets": int(np.isfinite(col("gain_in_mean")).sum()),
+            "gain_out_mean": float(np.nanmean(col("gain_out_mean"))),
+            "gain_out_max": float(np.nanmax(col("gain_out_mean"))),
         },
         "hull": {
             "fixed_mean": float(col("hull_fixed").mean()),
