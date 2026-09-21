@@ -244,6 +244,27 @@ trial 1  first5: [-1.718572 -1.691507 -1.664443 -1.637379 -1.610315]   last3: [1
 trial 2  first5: [-1.718572 -1.691507 -1.664443 -1.637379 -1.610315]   last3: [1.664443 1.691507 1.718572]
 ```
 
+> **CORRECTION — the algebra is right and MY VERIFICATION WAS NOT.** Those three trials were fed an
+> **already-sorted** vector, so they could only print a ramp — and **random floats never tie**, which
+> is precisely the case the caveat is about. **My check was structurally incapable of testing its own
+> caveat.** The claim survives only because `sc[o]` *is* sorted in the real pipeline
+> (`core/pipeline.py:757` `order = argsort(sc)`, `:863` `o = top[:dim]`, verified non-decreasing on
+> all 126 real targets). Measured on the **real** scores instead of synthetic ones:
+>
+> ```
+> targets with >=1 tie in the top-128      125 of 126
+> targets whose E is EXACTLY the ramp        1 of 126
+> tied positions   mean 9.56  median 8  p90 18  max 34
+> max |E - ramp|                           0.0407   (the vector spans +/-1.7186)
+> max |E_i - E_j| between any two targets  0.0812
+> distinct structures in the top-128       mean 118.45, min 94   <- the source of the ties
+> ```
+>
+> **`118.45` reproduces the independently measured distinct-candidate count exactly** — the ties
+> **are** duplicate structures carrying identical scores. So `E` does carry the tie pattern, which
+> is a target-specific fact, and **"zero information" overstates a quantity that is now measured.**
+> A measured bound beats an absolute; **the conclusion is unchanged.**
+
 Since `p*` is a closed-form function of `(E, α, T)` alone and the circuit is seeded at 0, **both the
 closed-form optimum and the circuit's output are one fixed weighting curve per α**, identical across
 targets — the ties in a real pool leave a residual of **max deviation 4.07e-02** across the 126, but the vector is otherwise fixed. Measured: **`H(p*) = 4.9137` bits at α = 1 with standard deviation `3.1e-04` across the 126
@@ -260,7 +281,8 @@ targets**; 6.6392 bits at α = 0.25 with sd 4.5e-3.
 
 **This is strictly stronger than both of the sprint's earlier capacity theorems** — T1 said the
 state specifies one integer, R1 said the selection readout's alphabet is 6.886 bits; this says the
-state specifies **nothing** — and it explains every other negative at once: why the objective does
+state specifies **almost nothing — 0.0407 in max-norm, and two curves selected by fold** — and it
+explains every other negative at once: why the objective does
 not point at good solutions (*it is not a function of the target*), why α is inert beyond reshaping
 a fixed curve, why the circuit's 0.930-bit optimisation gap cancels in the mean, and why the convex
 optimum over that family converges to the uniform average.
