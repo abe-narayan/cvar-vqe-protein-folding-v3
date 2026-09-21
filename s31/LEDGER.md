@@ -434,3 +434,251 @@ and the distogram's error is 1.6x too large.** That is a quantitative target, no
 orthogonal to the true `mu`, what is the best achievable endpoint? Early indications from the
 orthogonal decomposition are that the prize is **along** the common mode, which would invert the
 sprint's open question rather than answer it. Endpoint arms pending; nothing is claimed from them here.
+
+---
+
+## S31-L4 -- **THE DEPLOYED CVaR FREE ENERGY IS A CONVEX PROGRAM WITH A CLOSED-FORM GLOBAL MINIMISER.** THE SHIPPED CIRCUIT IS STRICTLY WORSE THAN IT IN 12/12 CELLS, AND THE GAP IS AN **EXPRESSIVITY** FLOOR, NOT AN OPTIMISER ONE -- SO CHARTER §11 IS CLOSED FOR THE DEPLOYED OBJECTIVE (2026-09-21 00:01, L)
+
+Full working, tables and caveats: `s31/LIT_L.md` §L1.1-L1.4. Scripts:
+`scratchpad/lit_L_dequant_check.py`, `scratchpad/lit_L_gap_budget.py`.
+
+### THEOREM (derived here from Rockafellar-Uryasev 2000 + the Gibbs variational principle)
+
+For `F(p) = CVaR_alpha(E;p) - T*H(p)` -- the objective at `core/quantum.py:993` --
+the Rockafellar-Uryasev lower-tail form `CVaR^low = max_s { s - (1/alpha) sum_i p_i (s-E_i)_+ }`
+is **affine in p** inside the max, so `F` is **convex in p**, strictly for `T>0`, and concave
+in `s`. Sion's minimax swaps the order:
+
+```
+min_p F = max_s { s - T*log sum_i exp( (s-E_i)_+ / (alpha*T) ) }      [1-D, concave]
+p*_i   proportional to   exp( (s* - E_i)_+ / (alpha*T) )
+```
+
+`p*` is a **hinged Gibbs distribution**: uniform on every candidate at or above the VaR level
+`s*`, exponentially tilted only below it. **The whole 2**n-dimensional optimisation is pinned
+by one scalar, and that scalar has a closed form.** This is strictly stronger than T1: the
+entropy term was added to break T1's degeneracy, and the result is still one number.
+
+### OURS -- verified against the shipped code, 12 cells, n in {7,9}, alpha in {0.1,0.25,1.0}, T in {0.1,0.05}
+
+- **Strong duality holds to 1e-9 ... 1e-16 in all 12 cells.** An independent mirror descent
+  over the full simplex reproduces the same optimum to ~1e-5. The closed form IS the optimum.
+- **`run_cvar_vqe` at its deployed settings is strictly worse in 12/12**, gap +0.0186 to
+  +0.2368 in F units, total-variation distance **0.246 to 0.962** from `p*`.
+- The closed form is always the **more entropic** distribution (n=9, alpha=1, T=0.1:
+  `H* = 3.693` bits vs the circuit's `1.181`).
+
+### OURS -- the gap is EXPRESSIVITY, not optimisation
+
+80 -> 2000 Adam iterations at fixed depth moves the gap by **nothing** (0.025764 -> 0.025944
+at alpha=0.1; 0.233580 -> 0.233116 at alpha=1.0). Only **depth** and **restarts** close it,
+and even at layers=12/400 iters/8 restarts (~60 s) the gap is +0.0042/+0.0176 with TV ~0.10 --
+against **microseconds** for the closed form. 21 parameters (`n*layers`) cannot cover a
+127-dimensional simplex.
+
+### THE CORRECTION THIS FORCES ON OUR OWN SHIPPED DOCSTRING
+
+`core/quantum.py:997-1002` states the entropy collapse "**is a property of CVaR, not of the
+optimiser**."
+
+- At **T = 0** this is CORRECT, and now has a one-line proof: any `p` with mass `>= alpha` on
+  the argmin attains `CVaR = E_min` exactly, so the minimiser set is a **positive-volume flat
+  face** and the optimiser's path -- not the objective -- picks the point in it. **Anything the
+  readout reads at T=0 is an Adam artefact.**
+- At the **deployed T = 0.1** it is **WRONG**. The objective's own optimum at `alpha=1, T=0.1`
+  carries **2.310 bits** (n=7); the circuit delivers **0.671**. The collapse is a property of
+  **the ansatz** -- neither CVaR nor the optimiser.
+
+Re-pricing the inherited alpha reading (`pipeline.py:825`, 0.076 -> 6.36 bits): on a shuffled
+z-rank ladder the circuit spans 3.88 bits while the **objective** asks for 2.375, so ~60% of the
+alpha-effect on state entropy is real and ~40% is the ansatz amplifying it. **CAVEAT CARRIED
+WITH THE NUMBER: synthetic ladder at n=7, not our measured pool `E`. Indicative, not measured
+on the instrument.**
+
+### WHAT IS CLOSED, AND THE ONE THING THAT IS NOT
+
+**CLOSED -- charter §11 for the deployed objective.** The shipped CVaR-VQE is a *lossy
+approximate solver for a convex program with an analytic solution*. No interference, no
+spectrum, no entanglement is doing anything. Whatever it contributes, it contributes **by
+failing to optimise**.
+
+**NOT CLOSED.** The circuit's reachable set is a 21-parameter manifold inside the simplex; that
+constraint is an inductive bias, and S20's law says optimising a bad objective harder makes
+things worse. So the failure may be *useful* -- but if it is, the bias is a **Born machine**
+`|psi|^2` from a shallow 1-D RY+CNOT circuit, i.e. an **MPS Born machine** (Han et al., PRX
+8:031012, 2018), which is a classical tensor-network model. **Even the escape hatch is
+classical.**
+
+### THE DECISIVE EXPERIMENT, WHICH COSTS NOTHING (handed to lanes A and C)
+
+Substitute the closed-form `p*` for `run_cvar_vqe`'s `p` and rerun tuning126.
+- endpoint **improves** -> the quantum layer is a softmax plus a root-find;
+- endpoint **worsens** -> the circuit's *inability* to optimise is the active ingredient, which
+  is S20 arriving from the objective side and is a real publishable negative.
+
+There is no third outcome. **CAVEAT: the readout is `consensus_medoid(block, p)`, so a large TV
+in `p` need not move the medoid. Score at the ENDPOINT, never on `p`.**
+
+### TWO FURTHER CLOSURES FROM THE LITERATURE (details in `LIT_L.md`)
+
+1. **`H = diag(zrank) - lambda*W(block)` is not a CVaR-VQE and cannot be made into one.** CVaR
+   needs an energy per *shot*; only a diagonal `H` gives every bitstring a definite eigenvalue
+   (Barkoutsos et al., *Quantum* 4, 256). Off-diagonal terms cannot be assigned to a single
+   outcome. **And dimension counting kills it independently:** a candidate-index register has
+   Hilbert dimension = number of candidates, so *any* operator on it is a 128x128 or 512x512
+   matrix and its spectrum is a microsecond `eigh`. **No Hamiltonian on a candidate-index
+   register can be classically hard.** The clustering literature that does this properly
+   (*Front. Phys.* 2025, arXiv:2502.06542) uses **one qubit per data point** -- 128 qubits for
+   our pool, not 7 -- and demonstrates **no** quantum advantage at 175 points on D-Wave.
+2. **Our `Var ~ 16/D = 16*2^(-n)` gradient law is the predicted global-cost barren plateau**
+   (Cerezo et al., *Nat. Commun.* 12, 1791, 2021: global costs vanish exponentially **even at
+   O(1) depth**; depth does not fix it). Quantitatively this prices lane C's widening at **4x
+   less gradient signal per two added qubits**: n=7 -> 0.125, n=9 -> 0.031, n=12 -> 0.0039.
+   128->512 is affordable; past ~12 qubits is the wall. **CAVEAT THAT CUTS THE OTHER WAY: at
+   n=7-9 we are NOT yet gradient-limited** -- depth and restarts still move the objective a
+   lot, so this is a bound on where the architecture can go, not a diagnosis of where it is
+   stuck now.
+
+### ALPHA SCHEDULING -- the literature's alpha and ours are different objects
+
+Kolotouros & Wallden (*PRResearch* 4, 023225): Ascending-CVaR, `alpha_{t+1} = alpha_t + lambda`,
+`lambda in [0.025,0.045]`. Their Prop. 1 -- **all `CVaR_alpha` with `alpha <= kappa` share the
+same ground state** -- holds at `T=0`, so their alpha is a **landscape homotopy**, and the
+schedule runs **upward to alpha=1**. At our `T=0.1` the optimum is genuinely alpha-dependent
+(`H*` 4.685 vs 2.310 bits), so our alpha is a **distribution-shape** knob and their endpoint is
+our *narrowest* ensemble -- the direction the consensus readout least wants. **The usable
+translation**: schedule alpha upward while solving `T(alpha)` to hold `H*` fixed, which the
+closed form gives analytically. Ranked **below** the `p*` substitution, because it fixes the
+landscape and L1.1 says the landscape is not the binding constraint.
+
+## S31-L5 -- **THE 128->512 WIDENING SURVIVES ITS CIRCULARITY GATE BUT IS RE-PRICED FROM -1.9004 TO -1.1811 A**, AND THE CIRCULARITY IS A **LITERAL IDENTITY**: THE 18 TARGETS WITH THE LARGEST WIDENING GAIN FROM THE TOP-75 **ARE** `FAIL18`, 18 OF 18. ON THE CLEAN FILTER-INDEPENDENT TAIL THE ORACLE EFFECT IS **-1.1811 A CLOUD / -1.1762 A CHAIN, p = 0.0001** AGAINST ITS OWN RANDOM-18 NULL -- AND A LEVEL CONTROL REMOVES TWO THIRDS OF `FAIL18`'s EXCESS (2026-09-21 00:02, C)
+
+Pre-registration `s31/PREREG_S31_C.md`, committed at **8ce5e1a0** (swept into the coordinator's R1
+commit) **before the first lane-C number existed**; amendment 1 at **2e12e02c**, also before.
+Code `s31/s31_C_cache.py` (shared pool table, 126 npz) and `s31/s31_C_widen.py`.
+Artefacts `s31/results/s31_C_widen.json` and `s31/results/s31_C_widen_rows.jsonl` (126 rows).
+
+**EVERY NUMBER IN THIS ENTRY IS ORACLE AND NOT DEPLOYABLE.** `best1(N)` is the minimum native
+RMSD over the first `N` of the shipped DIS order: it says the good candidate **is there**, not that
+anything native-free can find it. S29 closed recognition three ways and S30 confirmed it.
+
+## WHAT WAS ASKED
+
+S30-L11 published, as an incidental finding, that widening the quantum register 128 -> 512 is worth
+**-1.9004 A on FAIL18** against -0.1907 on the other 108 (2.77x MDE), and the S30 report carried it
+forward as **"OPEN, with a known circularity the sprint never discharged"**: `FAIL18` is defined by
+the filter's own recall, so *"the good candidate is outside the window"* may be **produced by** the
+thing it is offered as evidence about. The coordinator called the filter-independent-tail check
+"the gate on that whole direction". No S30 ledger entry ran it. Lane F ran the analogous check for
+the **averaging** operator (S30-L16) and found the effect absent or reversed; that is a different
+operator and its own entry says so.
+
+## THE CIRCULARITY IS NOT A RISK, IT IS AN IDENTITY
+
+The pre-registration defined a **definition-matched stratum** `defn18` -- the 18 targets with the
+largest `best1(75) - best1(500)`, i.e. selected explicitly for the quantity `FAIL18`'s rule
+thresholds -- to price how much of the published figure is forced by its own construction.
+
+```
+defn18 INTERSECT FAIL18  =  18 of 18          (s31_C_widen.json: overlap["FAIL18&defn18"])
+defn18 effect            =  -1.9004 A          identical to FAIL18's, to four decimals
+```
+
+**`FAIL18` *is* the top-18 by the widening gain from the top-75.** Choosing the 18 targets whose
+best candidate hides below rank 75 and then reporting that their best candidate also hides below
+rank 128 is one statement, not two. The published -1.9004 is a near-tautology and **is not
+quotable again.**
+
+The rank diagnostic says the same thing from the other side. Under a score with no within-pool
+skill the ORACLE-best member's rank is uniform on 1..500, so `P(rank > 128) = 0.744`:
+
+```
+stratum              frac(best member below rank 128)
+other 108                       0.417        the score genuinely pulls the answer into the window
+worst18_poolmean                0.667        near the uninformative null
+worst18_bestpool                0.722        near the uninformative null
+FAIL18                          1.000        ABOVE the null; p = 0.744^18 = 0.005 by chance
+```
+
+`FAIL18` is the only stratum **worse than an uninformative score**, which cannot happen by sampling
+and is the definition showing through.
+
+## THE GATE'S ANSWER: THE DIRECTION SURVIVES, AT 62% OF THE PUBLISHED SIZE
+
+Effect of widening = `best1(500) - best1(128)`, negative = widening helps. **ORACLE / NOT
+DEPLOYABLE.** CA point cloud; the chain column is s29 lane O's already-built chains, nothing was
+rebuilt.
+
+```
+stratum               n   effect(cloud)  effect(chain)   best1_128   best1_500   p vs random-18
+FAIL18               18      -1.9004        -1.8996        4.1846      2.2842       0.0000
+defn18 (= FAIL18)    18      -1.9004        -1.8996        4.1846      2.2842       0.0000
+worst18_poolmean     18      -1.1811        -1.1762        3.4097      2.2286       0.0001   <- headline
+worst18_bestpool     18      -0.8260        -0.8260        3.9190      3.0930       0.0168
+other 108           108      -0.1907        -0.1917        1.8060      1.6153          --
+all 126             126      -0.4350        -0.4357        2.1458      1.7108          --
+
+random-18 null on the stratum mean: mean -0.4363, sd 0.1652, 2.5th percentile -0.7953
+```
+
+**F-C3a fires as registered**: the headline filter-independent stratum is at **-1.1811 A**, below
+the registered -1.00 bar, and below the random-18 null's 2.5th percentile at **p = 0.0001**.
+`worst18_bestpool` -- which the pre-registration flagged in advance as biased *against* the effect,
+because `best1(500)` is the subtrahend -- clears its null at p = 0.0168 but not the -1.00 bar.
+
+**The registered verdict is REVIVE, and the registered consequence is that the quotable number is
+now -1.1811 A (cloud) / -1.1762 A (chain), ORACLE, not -1.9004.**
+
+## THE LEVEL CONTROL, WHICH IS THE PART THAT SHOULD TRAVEL WITH THE NUMBER
+
+The effect is mechanically bounded by how bad `best1(128)` already is. Regressing the per-target
+effect on `best1(128)` over all 126:
+
+```
+slope -0.4356   R2 0.5564
+
+residual (the part NOT explained by the level of best1_128)
+  FAIL18            -0.5774
+  defn18            -0.5774
+  worst18_poolmean  -0.1956
+  worst18_bestpool  +0.3813        <- positive: widening helps this stratum LESS than its level predicts
+  other 108         +0.0962
+```
+
+**Once the level is removed, only -0.196 A of the clean tail's -1.181 A is unexplained, against
+FAIL18's -0.577 A.** So roughly two thirds of `FAIL18`'s excess over the general level-effect is
+the stratum definition, and the honest mechanism is not "hard targets hide their answer deeper" but
+**"the score has no within-pool skill on hard targets, so the best member lands roughly uniformly
+and a 128-window misses it ~74% of the time"** -- which is S30 section 4.1's within-pool rho
+degradation (+0.645 on the easy 108 against +0.107 / +0.380 / +0.344 on the three tails) arriving
+at the register.
+
+## A SIGN ERROR I MADE AND CAUGHT BEFORE ANY NUMBER LEFT THE LANE
+
+The first version of `s31_C_widen.py` defined the contrast as `best1(128) - best1(500)`, which is
+non-negative by construction (a running minimum cannot rise), and then read the falsifiers and the
+null's **2.5th** percentile as though more negative were better -- the wrong tail of the right null,
+which is S31 contract rule 8's exact failure mode, committed by the lane that quoted rule 8 in its
+own pre-registration. The first run therefore printed `F-C3b FIRES -- CLOSE`, the opposite of the
+truth. Corrected in place with the original error stated in the file's own comment at
+`s31/s31_C_widen.py:49-54`; no number from the wrong-tail run was reported anywhere.
+
+## WHAT THIS DOES AND DOES NOT LICENCE
+
+- It **does** relocate the tail's failure from "the pool does not contain the answer" to "the
+  register does not contain the candidate", at a re-priced -1.18 A rather than -1.90 A, on a
+  stratum that is not defined by the filter.
+- It **does not** say two more qubits are worth 1.18 A. The measurement is the ORACLE argmin, and
+  production does not achieve the argmin at *any* width -- production is 3.2105 on the chain where
+  `best1_top128` is 2.1435. Widening only pays if a selector exists, and recognition is closed.
+- It **does** compose with the set-matched readout ladder (S31-L6, next): the convex readout over
+  the **same** 128 reaches 1.8538 A on the built chain where the argmin over those 128 reaches
+  2.1435, so the register width and the readout class are separable levers and the second one is
+  larger at the deployed width.
+
+## COMPARISONS MADE (contract rule 23)
+
+5 strata x 1 contrast on 2 bases = 10; 1 random-18 null (20,000 draws) reused for all strata;
+2 diagnostics (rank fraction, definition-match); 1 regression level control; 2 fold-clustered
+paired comparisons. **13 read as results, all pre-registered.** No grid, no per-target maximum,
+no split-half arm needed.
