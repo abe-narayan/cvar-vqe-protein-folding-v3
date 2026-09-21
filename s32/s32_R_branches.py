@@ -212,13 +212,28 @@ def one(pdb, verbose=True):
     P = np.zeros((B, B))
     for a in range(B):
         P[a] = I.kabsch_rmsd_batch(CA, CA[a])
-    lab = -np.ones(B, int)
-    nc = 0
+    #: CONNECTED COMPONENTS of the `P < 1e-3` adjacency, by union-find.
+    #: BUG FIXED 2026-09-21 (found by lane V's adversary pass, before any n_distinct was
+    #: quoted).  The previous line was `lab[P[a] < 1e-3] = nc`, which OVERWRITES labels that
+    #: an earlier seed had already assigned -- it counted greedy seeds, not components, and
+    #: it stole members from earlier clusters.  `n_distinct` underwrites this lane's claim
+    #: that the branches are structurally distinct, so it has to be the real quantity.
+    par = np.arange(B)
+
+    def find(x):
+        while par[x] != x:
+            par[x] = par[par[x]]
+            x = par[x]
+        return x
+
     for a in range(B):
-        if lab[a] >= 0:
-            continue
-        lab[P[a] < 1e-3] = nc
-        nc += 1
+        for b in np.where(P[a] < 1e-3)[0]:
+            ra, rb = find(a), find(int(b))
+            if ra != rb:
+                par[ra] = rb
+    roots = np.array([find(a) for a in range(B)])
+    _, lab = np.unique(roots, return_inverse=True)
+    nc = int(lab.max()) + 1
 
     out = dict(
         pdb=pdb, n=n, fold=fold, seq=seq,

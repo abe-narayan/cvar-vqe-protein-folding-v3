@@ -10,10 +10,24 @@ Basis for every RMSD in this lane unless stated otherwise: **built-chain Cα RMS
 is never differenced against a chain number except as the explicitly named `price`.**
 
 Input cloud: `s29/results/s29_O_structs/<pdb>.npz["prod"]`, the production 75-member
-coordinate average. Rule 3 check: this array is asserted bit-identical to
-`bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json["avg_ca"]` for all 126 targets, and the
-check is printed and persisted. Both arms of every chain contrast are projected **in the same
-job**.
+coordinate average. Rule 3 check:
+
+> ~~this array is asserted bit-identical to `bench_results/cache/1fc9f2dcf489e2fb/<pdb>.json
+> ["avg_ca"]` for all 126 targets, and the check is printed and persisted.~~
+>
+> **ANNOTATED IN PLACE 2026-09-21** (contract rule 13; found by lane V's adversary pass).
+> **The assertion is FALSE and the prose, not the experiment, was wrong.** The two arrays are
+> bit-identical on **0 of 126** targets; max |Δ| is 5.7e-14, a recomputation of the same
+> average rather than a copy. The check is still printed and persisted — as
+> `cloud_cache_delta` — and the experiment already treated the two as different objects:
+> `s32_R_branches.py`'s header says "a recomputation, not a copy" and the job projects
+> **both** clouds, as `PROD` and `PROD_CACHECLOUD`, so the 1e-14 perturbation is *measured
+> as a chain effect* rather than assumed away. That measurement is now a registered
+> comparison in its own right (`cloud_perturbation_floor`). The correct standing rule is the
+> one in the S29 canonical basis: **all arms take the `s29_O_structs` cloud**, which is what
+> the contract's 3.2105 and 3.0483 are defined on.
+
+Both arms of every chain contrast are projected **in the same job**.
 
 ---
 

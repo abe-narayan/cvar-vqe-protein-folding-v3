@@ -35,6 +35,49 @@ CRITERIA = ["rama_nlp", "rama20_nlp", "ramah", "posphi_frac", "disto_risk", "dis
 SUBSET_SIZES = (1, 2, 4, 8, 16, 32, 64, 128, 256)
 
 
+STRUCTS = os.path.join(RESULTS, "s32_R_structs")
+
+
+def components(pdb, thresh=1e-3):
+    """CONNECTED COMPONENTS of the `pairwise RMSD < thresh` adjacency, by union-find.
+
+    Recomputed here from the persisted torsions rather than trusted from the rows: rows
+    written before 2026-09-21 carry a GREEDY-SEED count, which overwrites labels an earlier
+    seed assigned and is therefore not a component count.  Lane V's adversary pass found it.
+    Returns (labels, n_components) or (None, None) if the npz is absent.
+
+    SELF-TEST (contract rule 5): this CAN differ from the stored labels, and the analysis
+    prints how often it does.  On data where every branch is isolated the two agree, which
+    is exactly the input that would have hidden the bug.
+    """
+    f = os.path.join(STRUCTS, f"{pdb}.npz")
+    if not os.path.exists(f):
+        return None, None
+    from core import project as pj
+    with np.load(f, allow_pickle=True) as z:
+        PH = np.asarray(z["phi"], float)
+        PS = np.asarray(z["psi"], float)
+    CA = np.asarray(pj.build_ca_exact(PH, PS), float)
+    B = len(CA)
+    par = np.arange(B)
+
+    def find(x):
+        while par[x] != x:
+            par[x] = par[par[x]]
+            x = par[x]
+        return x
+
+    for a in range(B):
+        row = I.kabsch_rmsd_batch(CA, CA[a])
+        for b in np.where(row < thresh)[0]:
+            ra, rb = find(a), find(int(b))
+            if ra != rb:
+                par[ra] = rb
+    roots = np.array([find(a) for a in range(B)])
+    _, lab = np.unique(roots, return_inverse=True)
+    return lab, int(lab.max()) + 1
+
+
 def load():
     rows = {}
     for p in sorted(glob.glob(os.path.join(RESULTS, "s32_R_branches_shard*.jsonl"))):
@@ -44,7 +87,22 @@ def load():
                 if line:
                     r = json.loads(line)
                     rows[r["pdb"]] = r
-    return rows
+    #: repair the greedy-seed labels in place
+    n_changed, n_ok = 0, 0
+    for p, r in rows.items():
+        lab, nc = components(p)
+        if lab is None:
+            continue
+        if nc != r.get("n_distinct"):
+            n_changed += 1
+        else:
+            n_ok += 1
+        r["cluster"] = lab.tolist()
+        r["n_distinct_greedy_BUGGY"] = r.get("n_distinct")
+        r["n_distinct"] = nc
+    return rows, {"n_relabelled": n_changed, "n_agreed": n_ok,
+                  "note": "union-find components recomputed from persisted torsions; the "
+                          "stored count was a greedy-seed count (lane V, 2026-09-21)"}
 
 
 def argmin_tied_mean(score, outcome, atol=1e-12, rtol=1e-9):
@@ -62,12 +120,12 @@ def argmin_tied_mean(score, outcome, atol=1e-12, rtol=1e-9):
 
 
 def main():
-    rows = load()
+    rows, clusterfix = load()
     pdbs = [t["pdb"] for t in I.targets() if t["pdb"] in rows]
     n = len(pdbs)
     folds = np.array([rows[p]["fold"] for p in pdbs], int)
     out = {"n": n, "pdbs": pdbs, "basis": "built chain CA-RMSD, tuning126",
-           "prereg_commit": "02754f5a"}
+           "prereg_commit": "02754f5a", "cluster_relabel": clusterfix}
     if n < 126:
         out["INCOMPLETE"] = True
 
@@ -116,6 +174,23 @@ def main():
         "observed_price_mean": float((prod - cloud).mean()),
         "compare_PROD_vs_null": ST.compare(prod, null, folds, names=pdbs,
                                            label="PROD chain - isotropic null"),
+    }
+
+    # ------------------------------------------------- R2 the ball bound on the ceiling
+    #: Kabsch RMSD is a metric on shape space, so every branch X satisfies
+    #:     |RMSD(X, nat) - RMSD(C, nat)| <= RMSD(X, C).
+    #: Every branch is a near-optimal projection, so RMSD(X, C) ~ d.  The BEST a branch can
+    #: possibly be is therefore cloud_rmsd - d, and that requires the projection displacement
+    #: to point exactly at the native -- a measure-zero direction.  This is the hard bound on
+    #: everything R2 can win, and it is free.
+    dbr = np.array([float(np.median(rows[p]["d_to_C"])) for p in pdbs])
+    ball = np.maximum(cloud - dbr, 0.0)
+    out["R2_ball_bound"] = {
+        "branch_d_to_C_median_of_medians": float(np.median(dbr)),
+        "branch_d_to_C_mean": float(dbr.mean()),
+        "ball_bound_mean": float(ball.mean()),
+        "ball_bound_note": "cloud_rmsd - d; a LOWER BOUND on any branch, not achievable",
+        "isotropic_null_mean": float(np.sqrt(cloud ** 2 + dbr ** 2).mean()),
     }
 
     # ---------------------------------------------------------------- R2a the census
@@ -211,6 +286,41 @@ def main():
     curve["ALL"] = {"ORACLE_NOT_DEPLOYABLE": True,
                     "draw_mean": orc["ALL"]["mean"], "draw_sd": 0.0, "n_draws": 1}
     out["R2b_order_statistic_curve"] = curve
+
+    #: BEST-OF-K PRICING AND SPLIT-HALF TRANSFER (contract rule 9).  A column of `M` is one
+    #: SETTING held fixed across targets.  For GEN4/GEN4D a column is one named generic start;
+    #: for MEM75 it is "the r-th distogram-ranked member's torsions" -- both are transferable
+    #: labels.  For RAND the column index is arbitrary BY CONSTRUCTION, so its split-half
+    #: transfer is the built-in zero-signal control and must come out at ~0.
+    bok = {}
+    for f in ["GEN4", "GEN4D", "MEM75", "RAND0", "ALL"]:
+        cols = []
+        ok = True
+        for p in pdbs:
+            r = rows[p]
+            fam = np.array(r["fam"]); rm = np.array(r["rmsd_nat"])
+            m = np.ones(len(fam), bool) if f == "ALL" else (fam == f)
+            cols.append(rm[m])
+        w = min(len(c) for c in cols)
+        if w < 2:
+            continue
+        M = np.array([c[:w] for c in cols])
+        bok[f] = ST.best_of_k_within(M, n_boot=300, seed_parts=("s32R", f))
+        bok[f]["K"] = int(w)
+    #: production's own 8-candidate set, the S31-D comparison point
+    cols = []
+    for p in pdbs:
+        r = rows[p]
+        fam = np.array(r["fam"]); rm = np.array(r["rmsd_nat"])
+        cols.append(np.concatenate([rm[fam == "GEN4"], rm[fam == "GEN4D"]]))
+    w = min(len(c) for c in cols)
+    bok["PROD8"] = ST.best_of_k_within(np.array([c[:w] for c in cols]), n_boot=300,
+                                       seed_parts=("s32R", "PROD8"))
+    bok["PROD8"]["K"] = int(w)
+    bok["_note"] = ("ORACLE / NOT DEPLOYABLE.  `split_half` is the number to quote: it nulls "
+                    "itself.  RAND0's column index is arbitrary by construction and is the "
+                    "zero-signal control for the transfer statistic.")
+    out["R2b_best_of_k"] = bok
 
     # ---------------------------------------------------------------- R3a in-band skill
     from scipy.stats import spearmanr
@@ -327,6 +437,15 @@ def main():
     print("\n== R2b order-statistic curve (ORACLE / NOT DEPLOYABLE) ==")
     for k, v in out["R2b_order_statistic_curve"].items():
         print("  K=%-5s %.4f +- %.4f" % (k, v["draw_mean"], v["draw_sd"]))
+    print("\n== R2b best-of-K pricing / split-half transfer (ORACLE) ==")
+    for k, v in out["R2b_best_of_k"].items():
+        if k.startswith("_"):
+            continue
+        print("  %-7s K=%-4d oracle %+.4f  across-target null %+.4f (%.0f%%)  "
+              "SPLIT-HALF %+.4f (%.0f%% of oracle)  k_eff %.1f"
+              % (k, v["K"], v["observed_gain"], v["null_across_targets"],
+                 100 * v["share_accounted"], v["split_half"], 100 * v["split_half_frac"],
+                 v["k_eff"]))
     print("\n== R3a in-band rho (positive = criterion ranks RMSD correctly) ==")
     for c, v in sorted(inband.items(), key=lambda kv: -kv[1]["mean_rho"]):
         print("  %-12s rho %+.4f  median %+.4f  foldCI [%+.4f, %+.4f]  %d/%d positive"
