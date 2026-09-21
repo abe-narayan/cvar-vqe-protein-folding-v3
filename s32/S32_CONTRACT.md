@@ -175,3 +175,50 @@ proposed channel reports **directional** utility, not just correlation or R².
 Permitted (charter §13) and encouraged — but the burden is a concrete statement of *which*
 assumption of the original closure fails, quoted from the original entry. "I dislike the negative
 result" is not a mechanism.
+
+## 20. Bit-identity, not value-identity, licenses a cross-job chain comparison
+
+Measured by lane V on the canonical λ=0.3 arm (S32-L4): **a one-ULP change in the input cloud
+(7.1e-15 Å) moves the built chain by 0.10–0.15 Å.** The stage is perfectly deterministic given
+bit-identical input — three in-process repeats agree to 9 dp, thread count 1/2/4/8 is irrelevant —
+and it is **discontinuous** in that input. 7e-15 × the ~1e13 amplification is 0.07–0.15 Å, which is
+what is measured.
+
+- **"The same cloud value" is not enough. It must be the same float64 bits.**
+- Both sides of a chain contrast are projected **in one job**, from clouds that are bit-identical.
+- **Unpaired cross-job chain claims below ~0.03 Å are not resolvable.** Paired comparisons are
+  untouched: SE of the chain mean is 0.1543, so an unpaired MDE against production is **0.4324 Å**.
+- An independent re-projection disagrees with the S29 canonical on **126/126** targets — mean
+  +0.0021, p90 0.026, **max 0.5174**. That is not a bug to fix; it is the stage's character.
+
+## 21. The endpoint is not a cached scalar — quote its definition, not just its value
+
+**3.210534** = *the λ = 0.3 multi-start projection arm of `s12/instrument.project` applied to the
+production top-75 coordinate average, CA-RMSD to native, averaged over `tuning126`* — concretely,
+the 126 `item="prod"` rows of `s29/results/s29_O_chain_rows*.jsonl`.
+
+Five distinct objects live near it and **they are not five estimates of one** (S32-L4):
+
+```
+3.048338  CA point cloud, unprojected                       rmsd_avg
+3.204076  lambda = 0 arm, no Ramachandran penalty           rmsd_fit      (a DIAGNOSTIC)
+3.214765  lambda = 0.3 arm -- what PRODUCTION ITSELF EMITS   rmsd_arm / ca
+3.235460  the same chain after AMBER relaxation             rmsd_full     (AMBER costs +0.0207)
+3.210534  THE CANONICAL ENDPOINT -- a RE-PROJECTION of the stored cloud, lambda = 0.3
+```
+
+**The canonical endpoint is 0.0043 Å better than the chain the production pipeline emits.** A reader
+who assumes the endpoint is what the pipeline outputs is wrong by more than several historical
+claims are large.
+
+## 22. The Ramachandran prior is already active, and a penalty is not a selector
+
+The λ-ladder is `(0.0 → 0.3)` and the **canonical arm is λ = 0.3**, so the prior is already choosing
+among near-degenerate solutions — `lam_path`'s docstring states that as its purpose. **Do not
+propose "use the Ramachandran prior to pick the branch" as a new lever; it ships.**
+
+What is *not* shipped, and remains open, is **post-hoc ranking of converged branches** by
+Ramachandran likelihood, which is a different operator from a penalty term inside the objective.
+And `λ`, the number of starts, `maxiter`, the penalty and the tolerance are **science, not tuning
+knobs** — varying them is a different pipeline and must be keyed as one; tuning them on native RMSD
+violates rule 11.
