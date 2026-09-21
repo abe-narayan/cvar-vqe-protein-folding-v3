@@ -32,7 +32,12 @@ RESULTS = os.path.join(ROOT, "s32", "results")
 #: criteria, all "lower is better" as registered in the PREREG
 CRITERIA = ["rama_nlp", "rama20_nlp", "ramah", "posphi_frac", "disto_risk", "disto_mae",
             "legacy", "typicality", "obj1", "obj0", "d_to_C"]
-SUBSET_SIZES = (1, 2, 4, 8, 16, 32, 64, 128, 256)
+SUBSET_SIZES = (1, 2, 4, 8, 16, 32, 64, 128)
+
+#: THE ANALYSED BRANCH SET, fixed for every target so that no quantity is compared across a
+#: changed object.  Rows written before 09:20 on 2026-09-21 also carry RAND1/RAND2; they are
+#: dropped here.  158 branches per target: 4 + 4 + 75 + 75.
+FAMILIES = ("GEN4", "GEN4D", "MEM75", "RAND0")
 
 
 STRUCTS = os.path.join(RESULTS, "s32_R_structs")
@@ -52,11 +57,14 @@ def components(pdb, thresh=1e-3):
     """
     f = os.path.join(STRUCTS, f"{pdb}.npz")
     if not os.path.exists(f):
-        return None, None
+        return None, None, None
     from core import project as pj
     with np.load(f, allow_pickle=True) as z:
         PH = np.asarray(z["phi"], float)
         PS = np.asarray(z["psi"], float)
+        fam = np.asarray(z["fam"]).astype(str)
+    keep = np.isin(fam, FAMILIES)
+    PH, PS = PH[keep], PS[keep]
     CA = np.asarray(pj.build_ca_exact(PH, PS), float)
     B = len(CA)
     par = np.arange(B)
@@ -75,7 +83,7 @@ def components(pdb, thresh=1e-3):
                 par[ra] = rb
     roots = np.array([find(a) for a in range(B)])
     _, lab = np.unique(roots, return_inverse=True)
-    return lab, int(lab.max()) + 1
+    return lab, int(lab.max()) + 1, keep
 
 
 def load():
@@ -88,11 +96,17 @@ def load():
                     r = json.loads(line)
                     rows[r["pdb"]] = r
     #: repair the greedy-seed labels in place
-    n_changed, n_ok = 0, 0
+    n_changed, n_ok, per_branch = 0, 0, None
     for p, r in rows.items():
-        lab, nc = components(p)
+        lab, nc, keep = components(p)
         if lab is None:
             continue
+        if per_branch is None:
+            per_branch = [k for k, v in r.items()
+                          if isinstance(v, list) and len(v) == r["n_branches"]]
+        for k in per_branch:
+            if isinstance(r.get(k), list) and len(r[k]) == r["n_branches"]:
+                r[k] = [x for x, m in zip(r[k], keep) if m]
         if nc != r.get("n_distinct"):
             n_changed += 1
         else:
@@ -100,6 +114,8 @@ def load():
         r["cluster"] = lab.tolist()
         r["n_distinct_greedy_BUGGY"] = r.get("n_distinct")
         r["n_distinct"] = nc
+        r["n_branches_all_families"] = r["n_branches"]
+        r["n_branches"] = int(keep.sum())
     return rows, {"n_relabelled": n_changed, "n_agreed": n_ok,
                   "note": "union-find components recomputed from persisted torsions; the "
                           "stored count was a greedy-seed count (lane V, 2026-09-21)"}
@@ -247,7 +263,7 @@ def main():
     out["selftest_production_rule"] = st
 
     # ---------------------------------------------------------------- R2b ORACLE ceiling
-    fams = ["GEN4", "GEN4D", "MEM75", "RAND0", "RAND1", "RAND2"]
+    fams = list(FAMILIES)
     orc = {}
     for f in fams + ["ALL", "GEN4+GEN4D", "GEN4+MEM75"]:
         v = []
@@ -293,7 +309,7 @@ def main():
     #: labels.  For RAND the column index is arbitrary BY CONSTRUCTION, so its split-half
     #: transfer is the built-in zero-signal control and must come out at ~0.
     bok = {}
-    for f in ["GEN4", "GEN4D", "MEM75", "RAND0", "ALL"]:
+    for f in list(FAMILIES) + ["ALL"]:
         cols = []
         ok = True
         for p in pdbs:
@@ -406,7 +422,7 @@ def main():
     add("MEDOID_ONLY", v, note="the branch reached from the medoid member's own torsions")
 
     for famset, tag in ((["GEN4", "MEM75"], "GEN4+MEM75"), (None, "ALL"),
-                        (["RAND0"], "RAND0"), (["RAND1"], "RAND1"), (["RAND2"], "RAND2")):
+                        (["RAND0"], "RAND0")):
         v = []
         for p in pdbs:
             r = rows[p]

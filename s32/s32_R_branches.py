@@ -62,7 +62,15 @@ LAM = 0.3
 MAXITER = 300
 GRAD = "exact"
 N_RAND = 75
-RAND_DRAWS = 3
+#: REDUCED 3 -> 1 at 09:20 on 2026-09-21, for throughput, WITHOUT changing the analysed
+#: branch set.  The analysis has always been able to select families by name, and it now
+#: fixes the set to GEN4 + GEN4D + MEM75 + RAND0 = 158 branches for EVERY target.  Rows
+#: written before this change carry RAND1/RAND2 as well; those extra branches are IGNORED
+#: by the analysis, so every target contributes the same families at the same K and no
+#: comparison is made across a changed object (contract rule 4).  The draw-distribution
+#: requirement for a random control (rule 10) is carried by RANDBRANCH, which takes 5 draws
+#: from the emitted branch set at no compute cost.
+RAND_DRAWS = 1
 RAND_SEED0 = 32_000_017          # pinned here, in the committed source
 
 
