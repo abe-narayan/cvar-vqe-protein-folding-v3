@@ -561,9 +561,73 @@ suggestion** — see §7.
 
 ---
 
-## 7. Longer proteins
+## 7. Longer proteins — the requirement is derived, and the instrument now exists
 
-[PENDING — lane L, and why the requirement is derived rather than suggested.]
+The charter closes with *"maybe test on longer proteins"*, and §6 turned that into a **derived
+requirement**: the quantum question fails condition A because `2^n_res ≤ 65536` at 9–16 residues, and
+the decision spaces that would grow with the target *exist only where one fragment no longer spans
+it*. §2.0 sharpens the same point from the other side: at `3n ≈ 39` a hull of 500 fragments is close
+to saturated, **so the top rung prices a fit rather than a retrieval.** Both statements predict that
+something changes when the chain gets long.
+
+**An instrument was built: 45 targets, mean length 54.7 residues**, against the canonical 126 at mean
+12.96 — a **4.2×** increase. It is **separate from `tuning126`**, has its own folds, and no endpoint
+claim in this report is computed on it. From a census of 13,751 candidate files, 599 fell in band and
+191 were rejected for chain breaks.
+
+**The ladder at both lengths (CA POINT CLOUD — a diagnostic, not the built-chain endpoint):**
+
+```
+rung                 short (n=126, 12.96 aa)    long (n=45, 54.71 aa)     long/short
+pool best                    1.7108                    4.9797               2.91
+top-75 best                  2.1041                    5.8330               2.77
+pool mean                    4.4533                   11.9866               2.69
+top-75 mean                  4.2866                   11.7295               2.74
+avg75 (what it emits)        3.2928                    9.4094               2.86
+```
+
+**The shape is preserved and the absolute numbers are not.** Every rung scales by 2.7–2.9× while the
+chain grows 4.2×, so the pipeline degrades *sub-linearly* in length — but the *ratios* that carry
+this sprint's conclusions barely move:
+
+```
+                              short      long
+avg75 / pool best              1.92       1.89     <- the selection+readout loss, unchanged
+top-75 best / pool best        1.23       1.17     <- the filter's best-axis loss, unchanged
+pool mean / avg75              1.35       1.27     <- what averaging buys, still the largest single win
+```
+
+> ### The loss ladder has the same shape at 4.2× the chain length. **This sprint's conclusions are not a peptide-length artefact.**
+
+**And averaging still does the work.** In absolute terms it buys **more** at length: pool mean 11.99 →
+emitted 9.41 is **−2.58 Å**, against 4.45 → 3.29 = **−1.16 Å** on the short instrument. *The one
+operator this project has that demonstrably works, works harder on longer chains.*
+
+### 7.1 What changes, and it is exactly what §6 predicted
+
+**At 54.7 residues `3n ≈ 164`, not 39.** Five hundred fragments cannot saturate a 164-dimensional
+space the way they saturate a 39-dimensional one, so **the donor-pool control of §2.0 should fail at
+this length** — a pool assembled for a different protein should *not* reach the target's hull. That
+is a concrete, falsifiable prediction which follows from the same geometry that produced §2.0, and it
+is the first place where retrieval should start to matter for the *ceiling* rather than only for the
+pool mean.
+
+**Equally, `2^54.7` is not enumerable.** Condition A — the one that fails by chain length alone on
+`tuning126` — **passes** here. Fragment assembly and per-residue branch selection become real
+decisions rather than degenerate ones, because one fragment no longer spans the target.
+
+> **The honest summary: this sprint closed the quantum question *on this instrument* and simultaneously
+> produced the reason a different instrument might answer it differently. Those are the same fact seen
+> twice.**
+
+### 7.2 Caveats, stated rather than buried
+
+**This is the CA point cloud at n = 45**, not the built-chain endpoint at n = 126, and the two are
+never differenced. `n = 45` gives a much weaker instrument: the SEs above are **0.43 on the long pool
+best against 0.079 on the short**, so an MDE on the long instrument is roughly **5× wider** and only
+large effects are resolvable there. **No deployable claim is made on it.** Lane L also declared a
+reproducibility defect in one of its own controls before quoting it, and that declaration stands in
+the record.
 
 ---
 
@@ -575,7 +639,74 @@ suggestion** — see §7.
 
 ## 9. Is it possible to lower the RMSD?
 
-[PENDING — the charter's closing question, answered directly.]
+The charter asks for a direct answer. **Yes — but not by any route this pipeline's architecture makes
+available, and the sprint can now say precisely why.**
+
+### 9.1 What would have to be true
+
+Every stage-level intervention reduces to the **same requirement**, and that collapse is this
+sprint's central result rather than a coincidence:
+
+- The readout's optimisation is the **projection of the native onto the candidate hull**, with gain
+  exactly 1 on the active subspace (§3.1). To use it you must know `a` on ~5 active directions.
+- `a` and the common mode `μ` are **one object** under a native-free affine bijection, proved
+  independently by two lanes in opposite directions (§3.2). *A per-candidate quality estimator with
+  in-band skill **is** a structure predictor.*
+- The deviation space has `rank(d) = 3n − 6` **exactly on 126/126**, so the requirement is **exactly
+  `3n − 6` ≈ 39 real numbers and there is no compression hiding in the pool's geometry** (§3.2).
+- And the hull's 2.10 Å of apparent headroom is **not something retrieval found** — a pool built for
+  a *different protein* reaches it equally well (§2.0).
+
+> ### The missing quantity is ~39 real numbers that ARE the answer. Every "channel" this project has looked for is a way of obtaining some of them, and every one measured is worth a few hundredths of an Ångström.
+
+### 9.2 What was actually tried, and what each cost
+
+```
+intervention                                  result                         why it failed
+random window instead of the score's          +0.1648  0.92x  NOT MEASURED   the score buys the set MEAN
+per-target sign, ORACLE, one bit              -0.2101  1.66x  ORACLE only    26% of the direction's value
+per-target sign, native-free                  at or below the marginal       a 81/19 feature can't carry 59/41
+branch selection, 64 criteria both ways       best 0.51x, search-adj +0.0028 skill at finding the worst only
+chiral Ramachandran branch criterion          -0.0031  0.16x                 the achiral twin matches it
+scalar dilation (ideal bond)                  +1.0425  2.79x  WORSE          contraction is separation-dependent
+scalar dilation (Rg-matched)                  +0.0622  1.47x  WORSE          one scalar, one moment
+relaxation displacement, applied              +0.02 to +0.10 at every step   indistinguishable from random
+spread-maximisation above a score floor       SPREAD - RANDFLOOR ~ 0         the dispersion term does no work
+exact solution of the CVaR objective          -0.0112  0.19x  (S31)          forced by gain 1 (section 3.1)
+```
+
+**Not one arm reached its own MDE in the helpful direction. The endpoint is unmoved at 3.2105 Å.**
+
+### 9.3 The three things that would actually move it
+
+**1. A structure predictor** — which by §3.1 makes the pool redundant rather than better. If you can
+estimate `t` to better than the hull floor `d = 1.8290`, emit it; the readout adds nothing. *This is
+not a criticism of the readout; it is what gain 1 means.*
+
+**2. A longer instrument, where the geometry changes** (§7). At `3n ≈ 164` the hull no longer
+saturates, so retrieval starts to determine the *ceiling* and not merely the pool mean; and
+`2^n_res` becomes non-enumerable, which is the one condition the quantum question failed on. **Both
+of the sprint's two central negatives are length-conditional, and both were derived rather than
+guessed.**
+
+**3. Averaging more, or better.** It is the only operator here that demonstrably works — pool mean
+4.4533 → emitted 3.2928 on the short instrument, and **−2.58 Å on the long one.** The readout program
+says it wants **low `⟨w,a⟩` and high `w'Bw`**; production has no control over the first and destroys
+the second at the filter. *That is the one place where the sprint's own theory points at an untested
+arm rather than away from one* — and lane P's re-measured operator law gives the coefficient:
+`out = −0.9934 + 0.9219·set_mean + 0.3232·set_best`, **ratio 2.85**, R² 0.9162. **The set best is not
+unreachable — it reaches the output about a third as hard as the set mean**, which contradicts the
+lane's own registered prediction of ≥5× and is the one arm this sprint's data argues *for*.
+
+### 9.4 The honest bottom line
+
+**On `tuning126`, with this architecture, at this chain length: no.** The 2.10 Å is a fit, not a
+retrieval; collecting it costs the answer itself; and every native-free channel measured across four
+sprints returns a few hundredths.
+
+**The primary target of < 3.00 Å is 0.21 Å away and it is not 0.21 Å of engineering.** It is 0.21 Å
+of information that nothing in the pool, the physics, the geometry or the quantum stage has been
+shown to contain.
 
 ---
 
