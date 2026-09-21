@@ -9,6 +9,39 @@ Primary target < 3.00 Å. Ambitious < 2.50 Å.
 
 ---
 
+## NOTE 2 (2026-09-21 09:37, coordinator): **LANE Q CLOSED. THE QUANTUM QUESTION IS ANSWERED — NO ON THIS INSTRUMENT — AND THE REASON IS CHAIN LENGTH**
+
+`S32-L(Q1)–L(Q3)`. Three things settled:
+
+1. **Sparse `s`-of-`K` falls by monotonicity**, and it is the cleanest closure of the sprint. It
+   **escapes all three of S31's obstructions** — *those were properties of the candidate-index
+   register, not of CVaR-VQE* — and then dies to a different argument: `f*(s)` is constant for
+   `s ≥ s*` and strictly worse for `s < s*`, so ***the hard instances are exactly the ones whose
+   optimum is worse.*** `s*` mean 10.06, 61.1% ≤ 10.
+2. **Charter §14: NO, on this instrument.** `n_res` is 9–16, so `2^n_res ≤ 65536` on 126/126 and
+   the enumerability condition fails **on chain length alone**. The two properties a problem would
+   need: **P1 a decision space that grows with the target** (exists only where one fragment no
+   longer spans it) and **P2 a genuinely stochastic energy** — *they must hold together and this
+   project has never had either.* **That is the user's “test on longer proteins” arriving as a
+   DERIVED requirement rather than a suggestion**, and it is what lane L is now pricing.
+3. **Six reals buy 83% of what thirty-three buy** (3.0532 → 2.0312 → 1.8290, CA cloud, ORACLE).
+   *A bit count prices a selection alphabet; this decision is continuous.*
+
+**The correction that changed the sprint's central theorem, and it was against me.** I wrote that
+*“gain exactly 1 means no noise suppression”* and made it the reason S32-L5's headline holds. **Lane
+V refuted it from lane Q's own table**: gain is 1 on the active hull (≈ 5.25 dims) and **0 on its
+≈ 33-dimensional complement** — *gain zero is TOTAL suppression*, ~87% of a generic error
+annihilated, and at ε = 4.0 a 3.65 Å estimate emits at **2.23 Å**. **The headline survives on the
+LOWER bound instead: the hull floor `d = 1.8290`, crossover at ε ≈ 2.2.** Charter §4 names *“a
+theorem was stronger than the empirical conclusion”* as an S31 failure mode; this was one.
+
+**Live now:** lane R (branch pricing at 32/126, plus the alignment result), lane P (random-128
+endpoint arm, 84 distinct of 126), lane D (**is the per-target sign predictable native-free? one
+bit, 126 targets** — the sprint's clearest remaining route), lane L (the longer-protein instrument,
+now with a derived reason to exist), lane V (ULP distribution, then the R and D adversary passes).
+
+---
+
 ## NOTE 1 (2026-09-21 08:25, coordinator): **THE SPRINT'S SHAPE AFTER THREE HOURS — ONE THEOREM CLOSED THE READOUT, AND MY OWN LADDER FRAMING WAS WRONG TWICE**
 
 **What is now established (L2–L5), and it is more than I expected this early:**
