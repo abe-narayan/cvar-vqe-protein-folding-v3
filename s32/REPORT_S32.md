@@ -12,7 +12,96 @@ Multiplicity `s32/MULTIPLICITY.md` · Theory `s32/THEORY_Q.md`
 
 ## 0. The answer, up front
 
-[PENDING — written last.]
+**The endpoint did not move. It is 3.2105 Å.** Walking every `effect_over_mde` in all 56 result
+artefacts:
+
+> ### Improvements clearing 1.0× MDE on the BUILT CHAIN, deployable: **ZERO.**
+> Thirty arms clear 1.0× on *some* basis — about twenty read the native, four are filter-vs-random on
+> the pool mean, six are in-band diagnostics. **Every arm that clears MDE either reads the native, is
+> measured on a basis that is not the endpoint, or points the wrong way.** That is exhaustive over the
+> artefacts rather than over memory.
+
+The charter's primary target of < 3.00 Å and its ambition of < 2.50 Å are both unmet.
+
+**What the sprint produced instead is a causal account that makes the failure necessary rather than
+unlucky, and it rests on four results that were not available before.**
+
+### 0.1 The readout is a hull projection, and that closes a family by derivation
+
+`‖Σ w_x W_x − t‖² = ⟨w,a⟩ − ½ w'Bw` **is** the squared distance from the native to a point of the
+candidate hull. So the readout's optimisation is the **Euclidean projection of the native onto that
+hull**, `∂x*/∂t` is the projector onto the active candidates' affine hull — **gain exactly 1 inside,
+0 outside** — and the binding constraint is the **hull floor `d = 1.8290`**.
+
+> **A structure estimate good enough to make the readout worth solving is already good enough to
+> emit.** S31 measured that solving the CVaR objective exactly *"reshuffles the answer on 66 of 126
+> targets and buys nothing"* and recorded it as a surprising null. **It is forced.**
+
+### 0.2 `a` and `μ` are one object, and the requirement is 3n − 6 real numbers
+
+Per-candidate quality `a` and the pool's common mode `μ` are related by a **native-free affine
+bijection** — established independently by two lanes working in opposite directions, one deriving
+`a` from `μ`, the other recovering `μ` from `{a_k, d_k}` at relative residual **2e-14 on 126/126**.
+**S31 called this the sharpest question it produced and left it open. It is closed.**
+
+> **A per-candidate quality estimator with in-band skill IS a structure predictor.** And since
+> `rank(d) = 3n − 6` **exactly on 126/126**, the requirement is **exactly ~39 real numbers with no
+> compression available.**
+
+### 0.3 The 2.10 Å of "headroom in the pool" is a FIT, not a RETRIEVAL
+
+The control that had never been run: **500 fragments drawn from a *different protein's* universe
+reach 1.1626 Å on this target, against the retrieved pool's 1.1167 Å — NOT A RESULT (0.49× MDE).**
+
+> **Do not call a pool "containing the answer" when a pool assembled for a different protein contains
+> it equally well.** At 9–16 residues `3n ≈ 39`, and a hull of 500 fragments is close to saturated.
+> **The ladder's top rung prices a fit.** Retrieval's share of the 2.10 Å is **2.2%**; what retrieval
+> actually buys is the **pool mean**, which is what a uniform average consumes.
+
+### 0.4 "In-band skill is zero" has been read wrong for four sprints — and it still does not help
+
+`Var(ρ) > 0` with `E[ρ] = 0`: the ordering information is **present on every scorer** — AMBER at
+exactly +0.0000 mean skill still carries |ρ| at **1.88×** a within-band permutation null — and **the
+per-target SIGN is what is missing.** The sign is a property of the **target**, transferring across a
+split half at 2.6–4.2× MDE under a *cross-target* null, with a pure-noise arm at 0.15× proving the
+test can fail.
+
+**And the ceiling closes it anyway.** 2.0 Å needs in-band `ρ ≈ 0.638`; a **free, perfect** sign gives
+the best scorer **0.3228**.
+
+> **Even a free, perfect per-target sign leaves the best in-band scorer 2–3× short. The sign is a real
+> finding and a closed route.** Worse for the architecture: **positive in-band skill does exist on the
+> deployable band — it is typicality — and the terminal operator is already its argmin.** *The only
+> native-free channel with in-band skill is redundant with the operator already deployed.*
+
+### 0.5 The quantum question, answered
+
+**Charter §14: no, on this instrument, and the binding reason is chain length.** `n_res` is 9–16, so
+`2^n_res ≤ 65536` on 126/126 and the enumerability condition fails outright. The two properties a
+problem would need — **a decision space that grows with the target**, and **a genuinely stochastic
+energy** — must hold together, **and this project has never had either.** The last formulation
+standing, sparse `s`-of-`K`, escapes all three of S31's obstructions and then falls to monotonicity:
+***the hard instances are exactly the ones whose optimum is worse.***
+
+### 0.6 The pattern in this sprint's own errors
+
+**Eleven defects were found in work already written down, and the coordinator wrote most of them.**
+Three of mine: a ladder increment quoted on the **member** basis inside a **chain** ladder; a
+convexity check that **initialised its accumulator at the pass threshold** and could not fail, written
+one hour after I wrote the rule forbidding exactly that; and an inverted gloss on a column named
+after the property it is *inversely* related to.
+
+**Every one is the same shape as S31's: a number re-used across a boundary its definition does not
+cross.** What is different this sprint is that **most were caught by machine rather than by memory** —
+the verifier grew from 58 checks to 134 with 18 self-tests, and each new audit was built from the
+defect that motivated it, including one that flags *any aggregate whose FAIL18 and non-FAIL18 strata
+have opposite signs*. That generalisation caught its third instance in ten minutes instead of a
+retraction.
+
+**And a whole class is now named**: *any comparison of the score's prefix against an alternative
+prefix, scored on the BEST MEMBER, is entirely FAIL18* — because FAIL18 is **defined** as the targets
+whose prefix excludes the good band. Three instances, each with the aggregate clearing MDE and the
+non-circular 108 NOT A RESULT.
 
 ---
 
@@ -633,7 +722,47 @@ the record.
 
 ## 8. What was falsified, including by its own author
 
-[PENDING — the registered falsifiers that fired, and the corrections.]
+**Registered falsifiers that fired against the lane that wrote them:**
+
+| prediction | registered by | outcome |
+|---|---|---|
+| a **chiral** criterion can pick the projection branch where achiral ones provably cannot | **the coordinator** | **`rama_nlp` — 0.0031 at 0.16× MDE.** Nothing of 64 comparisons reaches 0.7× except in the wrong direction |
+| the random gate improves the endpoint | coordinator (predicted *unchanged or worse*) | **held** — +0.1648 at 0.92×, 0 of 8 draws better |
+| dilating the cloud to ideal bond length helps (P1.3) | lane R | **FALSIFIED**, +1.0425 at 2.79× WORSE |
+| relaxation displacement points at the target, median `cos ≥ +0.10` | lane D | **FAILED**, 0.09–0.73×; indistinguishable from a matched random direction |
+| chiral in-band variance share < 15% | lane D | **FAILED at 23.6%** |
+| the 9–16-residue scope excuse (one basin / frozen) | lane D | **FALSIFIED on both horns** — the excuse is *not available* |
+| READOUT is the largest decomposition cell | lane P | **partly failed** — readout and ranking are **tied** (−1.05 vs −1.09) |
+| the operator law's set-best ratio ≥ 5× | lane P | **FAILED** — measured **2.85×**; the set best *does* reach the output |
+| the negative in-band ρ is a collider artefact | lane P | **FAILED** — the collider alone gives the **wrong sign** |
+| spread-maximisation above a score floor helps | coordinator | **closed by its own control** — `SPREAD − RANDFLOOR ≈ 0` |
+| the chirality/filter synthesis | **coordinator** | **CIRCULAR — controlled and refuted before it was written down.** Lane D's 0.271 and lane V's 0.272 are one number, not two |
+
+**Three theorems closed more than any measurement did.**
+
+- **D-E**: an achiral force field's stochastic propagator is `O(3)`-equivariant, so any achiral
+  invariant averaged over it is itself an achiral functional of the seed — a distance-map reading.
+  ***Charter §23 entire*** (MD, ensembles, basin populations, metastability, transition rates,
+  autocorrelation, dynamic modes) **and §24's ensemble reweighting and temperature response are closed
+  as scalar rankers.** *Stochasticity is not an escape: noise is variance, not information.*
+- **D-F**: `⟨F(x), G(x)⟩` for two equivariant fields is invariant, hence achiral, hence closed — **every
+  physics/prior consistency scalar**, including force-vs-prior-gradient alignment.
+- **And AMBER is not a chiral scorer.** ff14SB+GBn2 is **reflection-invariant**. ***This project has
+  no chiral scorer at all***, which retires the premise the coordinator opened lane R on.
+
+**Also closed with a named mechanism, not merely "did not work":** AMBER has **no resolution
+advantage** — a candidate stores only a Cα trace and φ/ψ, sidechains are modal rotamers, so every atom
+AMBER sees is `Ψ(seq, φ, ψ)`; converged relaxed AMBER in band is **−0.0089** against the single
+point's +0.0006, so **the zero is not a clash artefact and minimisation does not rescue it**; and
+relaxation's 45,867 → −483 kcal/mol for **0.094 Å** of Cα motion is a deterministic rotamer-placement
+artefact carrying no candidate information.
+
+> **Every use of a force field on this pipeline is now closed — as a RANKER by theorem and by
+> measurement, and as a MOVER by measurement.**
+
+**One free by-product worth more than the arm that produced it:** `cos(e_prod, e_pool75) = +0.9443`.
+**The production chain's own error is 94% aligned with the pool's common mode** — S31 §20.1 confirmed
+from a different object by a job that was not looking for it.
 
 ---
 
@@ -712,7 +841,36 @@ shown to contain.
 
 ## 10. The next bottleneck
 
-[PENDING]
+**It is the same one, stated more precisely than before, and the sprint's contribution is that it is
+now a quantity rather than a direction.**
+
+> ### `3n − 6` ≈ 39 real numbers per target, which are the answer. Not a channel, not a bit, not a score.
+
+Four sprints have looked for *a signal*. This one showed that every candidate signal is a partial
+observation of the same ~39-dimensional object, that the readout transcribes it at gain exactly 1
+without amplification, and that the pool's apparent 2.10 Å of headroom is the **capacity of fragment
+space at this length** rather than anything retrieval discovered.
+
+**What follows for S33, in priority order:**
+
+1. **Go longer.** Both central negatives are **length-conditional and derived, not guessed**: the
+   quantum question fails on `2^n_res ≤ 65536`, and the hull saturates because `3n ≈ 39`. At 54.7
+   residues `3n ≈ 164`, both change. **The instrument exists** (45 targets) and carries a sharp
+   falsifiable prediction: **the donor-pool control of §2.0 should FAIL there.** Run that first — it
+   is cheap, and it decides whether this project's architecture has a regime where it is not
+   saturated.
+2. **Weight toward the set best.** The re-measured operator law is
+   `out = −0.9934 + 0.9219·set_mean + 0.3232·set_best`, **ratio 2.85, R² 0.9162** — against a
+   registered prediction of ≥ 5×. **The set best is not unreachable; it reaches the output about a
+   third as hard as the set mean.** *This is the one arm the sprint's own data argues for rather than
+   against*, and it is untested.
+3. **Stop looking for native-free in-band skill as posed.** It exists, it is typicality, and the
+   deployed operator is already its argmin. A new channel must beat the hull floor `d = 1.8290` — at
+   which point it makes the pool redundant, which is a different architecture, not an improvement to
+   this one.
+4. **Do not re-open**: the prefix length `m`; scalar dilation in any calibration; branch selection by
+   any of the sixteen criteria; force fields as rankers or movers; the per-target sign as a route;
+   ensemble/dynamics scalars (theorem D-E).
 
 ---
 
@@ -723,3 +881,48 @@ shown to contain.
 ## Appendix B — multiplicity and the search that was run
 
 [PENDING]
+
+---
+
+## Appendix C — methodology this sprint had to learn
+
+Six rules were added to the contract mid-sprint, each paid for by a defect. Three are worth carrying
+beyond this project.
+
+**1. `split_half_transfer` nulls the wrong question unless you give it production as the baseline.**
+It centres on the grid's **column mean**, not the incumbent. On a 16-criterion grid containing one
+implausible column it read **−0.0254 with a CI excluding zero** — an effect nearly 3× the best single
+arm, entirely an artefact of the baseline. Done against production: **+0.0004, CI [−0.0091, +0.0116]**,
+a CI centred on zero. *Caught by the lane that wrote it, before it reached the report.*
+
+**2. Bit-identity, not value-identity, licenses a cross-job chain comparison.** A **one-ULP
+(7.1e-15 Å)** change in the input cloud moves the built chain **0.10–0.15 Å**. The operator is
+perfectly deterministic and **discontinuous** in its input. Measured irreducible sd on an unpaired
+built-chain mean: **±0.003 Å**. Paired contrasts from bit-identical clouds in one job are unaffected;
+**nothing else below ~0.03 Å is resolvable.** And a *reduction* over 126 float64s is not exact either
+— the per-target identity is, the mean is not, which a lane found by having its own verifier fail.
+
+**3. An audit that cannot fail is decoration; an audit whose scope shrinks silently is worse.** Both
+happened here. A convexity check initialised its accumulator at the pass threshold and reported
+`+0.000e+00` in every regime including ones where the true value is −0.26. And a global string
+replace narrowed the path audit from 71 paths to 35, **visible only as the matched count falling** —
+*an audit whose scope narrows without failing is the same class of defect as one that cannot fail.*
+Both now carry positive controls; the path audit asserts its own coverage by file extension.
+
+**4. Retractions in place versus phrase-matching audits.** Contract rule 13 requires struck claims to
+stay visible, so a phrase-matching audit fires forever on correctly-handled retractions. The fix is a
+**positive obligation, not an exemption**: a struck claim is exempt **only if its replacement is
+stated in the same block**, with a self-test proving the same claim asserted *live* below the block is
+still caught. That turns the audit from *"stops nagging"* into *"starts catching retractions that
+strike a claim without saying what replaces it"*.
+
+**5. A job name is not a lock, and killing a wrapper does not kill its child.** Duplicate launchers
+raced on two shards and wrote 24 duplicated rows; a lane found the **orphaned workers** after the
+wrappers were killed. **Check the pid, not the name** — and assert **both** `len(rows) == 126` **and**
+`len(set(pdbs)) == 126`, because the second alone would have passed.
+
+**6. Staging is not lane-isolated.** Concurrent commits collided on `.git/index.lock`, one lane's
+commit swept in another's staged files, and a lane's commit **silently reverted a coordinator edit
+that had not yet been committed — twice.** Write and commit in one call, and **verify the edit is in
+`HEAD`, not just on disk.**
+
