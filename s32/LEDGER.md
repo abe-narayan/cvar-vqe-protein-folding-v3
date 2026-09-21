@@ -290,3 +290,61 @@ operator-matched control — keep the block *sizes*, relocate the blocks — at 
 per target.** S31 is sharper, not wrong.
 
 ---
+
+## S32-L6 -- **THE ENDPOINT IS CLOSED, AND IT IS A POSITIVE RESULT: THE PROJECTION OPERATOR IS BIT-REPRODUCIBLE. WHAT VARIES IS THE INPUT'S LAST BITS, NOT THE STAGE** (2026-09-21 08:40, lane V)
+
+Artefact `s32/results/s32_V_chain_bitexact.json`. Three inputs, **all the same top-75 coordinate
+average**, agreeing to 5.7e-14 Å with cloud RMSDs identical to 9 dp:
+
+```
+input cloud                            n    mean chain    mean d     max|d|   bit-identical
+s29_O_structs/<pdb>.npz['prod']       126   3.210533995  +0.000000  0.000000    126/126
+production cache avg_ca               126   3.214765154  +0.004231  0.416765      0/126
+recomputed coordinate average         126   3.212625220  +0.002091  0.517410      0/126
+```
+
+**This reverses the natural reading of S32-L4.** `s12.instrument.project` is **not flaky**: the
+canonical endpoint reproduces from its stated input **bit-for-bit on 126/126**, across processes,
+across BLAS thread counts 1/2/4/8, and across the gap between S29 and today, with mean `d` and
+max |d| both **exactly 0.0**. That is a stronger reproducibility statement than the project had
+before. And re-projecting the production cache's own `avg_ca` reproduces production's stored `ca[]`
+**bit-identically on 126/126** — so **production's 3.2148 and S29's 3.2105 are the same operator on
+the same mathematical object; S29 recomputed the average and drew different last bits.**
+
+> ### The endpoint, in one sentence, for the report
+> **3.2105 Å** is the λ=0.3 multi-start projection arm of `s12/instrument.project` applied to
+> `s29/results/s29_O_structs/<pdb>.npz["prod"]`, CA-RMSD to native, meaned over `tuning126`. **The
+> operator is bit-reproducible. The *input* is not uniquely determined** — three honest computations
+> of the same 75-member average differ in the last bits and give **3.2105, 3.2126 and 3.2148** — so
+> the anchor carries roughly **±0.002 Å of pure arithmetic noise**, and the chain production itself
+> emits is **3.2148**.
+
+**The charter's targets stay checkable**: < 3.00 is 0.21 Å away and < 2.50 is 0.71 Å away, both two
+to three orders of magnitude above the noise. **What is not checkable is any unpaired cross-job chain
+claim below ~0.03 Å.** Lane V has queued `s32_V_ulp_distribution.py` (ε = 1e-14 Å per coordinate,
+5 draws × 126, asserting the cloud RMSD is unchanged per draw) to convert rule 20 from a caution into
+a quotable sd.
+
+### `s32/s32_verify.py` is live: 58 matched, 0 mismatched, 0 flagged, 11/11 self-tests passing
+
+It carries S31's cross-basis audit and adds two that S31 did not have:
+
+- **AUDIT 2, the OBJECT audit.** L4's six-object table is **recomputed live** from
+  `bench_results/cache/*` and `s29_O_chain_rows*` at every run, so it cannot rot, and a chain number
+  attributed to the wrong object is flagged **even though its basis word ("chain") is correct**.
+  ***A basis is not an object*** — that is a genuine advance on S31's audit, which could only catch a
+  missing or wrong *basis*.
+- **AUDIT 3, cross-job chain deltas.** Any line quoting a chain delta below 0.03 Å that names neither
+  same-job pairing nor a bit-identity check is flagged.
+- **The path audit now distinguishes MISSING from *pending*** — a path a document itself marks as
+  running is not a defect. *Missing, unfinished and crashed look identical to `ls`*, and this is the
+  first sprint whose verifier knows the difference.
+
+Self-tests, each fed the real historical defect **and** its corrected form: a chain number declared
+cloud (CAUGHT) and the true cloud number (CLEAN); the **emitted** chain 3.2148 called the endpoint
+(CAUGHT), the true 3.2105 (CLEAN), the λ=0 arm 3.2041 (CAUGHT), the cloud 3.0483 (CAUGHT); an absent
+path (CAUGHT) and a present one (CLEAN); an unsupported cross-job delta (CAUGHT) and the same delta
+with a same-job statement (CLEAN); and **ST5, which asserts its own input can exhibit a tie** —
+S31's "verified a tie claim on random floats" failure, closed by construction.
+
+---
