@@ -234,7 +234,8 @@ a:focus-visible, summary:focus-visible, button:focus-visible{
       <strong>the same object</strong>, and the pool's apparent headroom is
       <strong>a fit, not a retrieval</strong>.</p>
 
-    <div class="tile flag">
+    <div class="tiles">
+      <div class="tile flag">
         <span class="l">Endpoint</span>
         <span class="k">3.2105 <em>Å</em></span>
         <span class="n">Unchanged. Primary target &lt; 3.00, ambition &lt; 2.50 — both unmet.</span>
@@ -251,8 +252,8 @@ a:focus-visible, summary:focus-visible, button:focus-visible{
       </div>
       <div class="tile">
         <span class="l">Verifier</span>
-        <span class="k">138 <em>/ 0</em></span>
-        <span class="n">Numbers recomputed / mismatched. Eleven audits, 18 self-tests.</span>
+        <span class="k">143 <em>/ 0</em></span>
+        <span class="n">Numbers recomputed / mismatched, each against the artefact that produced it. Eleven audits, 18 self-tests.</span>
       </div>
     </div>
 
@@ -468,6 +469,11 @@ a:focus-visible, summary:focus-visible, button:focus-visible{
              !/^\s*---+\s*$/.test(lines[i])){
         buf.push(lines[i].trim()); i++;
       }
+      /* PROGRESS GUARANTEE.  A line can match none of the block branches and still be
+         excluded from the paragraph condition -- e.g. a line beginning "|i-j|", which
+         looks like a table row but has no separator on the next line.  Without this,
+         i never advances and the page hangs with a blank article.  Consume it. */
+      if (!buf.length){ buf.push(lines[i].trim()); i++; }
       para(buf);
     }
     return html.join("");

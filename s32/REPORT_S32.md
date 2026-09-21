@@ -1020,7 +1020,8 @@ space at this length** rather than anything retrieval discovered.
    **And the one named engineering prerequisite:** the deployed distance prior is **hard-capped
    at peptide length** — `core/predict.py` sets `MAXLEN = 26`, `SEP_BINS` tops out at 24, so at
    n = 55 **27% of all pairs collapse into a single terminal bin** that in training held only
-   |i−j| ∈ {24, 25}, and the MLP carries raw `n` and raw `j−i`, fitted only on n ∈ [8, 26].
+   separations |i−j| ∈ {24, 25}, and the MLP carries raw `n` and raw `j−i`, fitted only on
+   n ∈ [8, 26].
    ***It is evaluated outside its fitted support by construction.*** **Retraining it is the
    single largest named piece of work a long deployment needs**, and until it is done the
    distogram-defined rungs of the ladder cannot be evaluated at length at all.

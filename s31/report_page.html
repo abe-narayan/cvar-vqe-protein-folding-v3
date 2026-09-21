@@ -470,6 +470,11 @@ a:focus-visible, summary:focus-visible, button:focus-visible{
              !/^\s*---+\s*$/.test(lines[i])){
         buf.push(lines[i].trim()); i++;
       }
+      /* PROGRESS GUARANTEE (added after S32 hit this).  A line can match none of the block
+         branches and still be excluded from the paragraph condition -- e.g. one beginning
+         "|i-j|", which looks like a table row but has no separator on the next line.
+         Without this, i never advances and the page hangs with a blank article. */
+      if (!buf.length){ buf.push(lines[i].trim()); i++; }
       para(buf);
     }
     return html.join("");
