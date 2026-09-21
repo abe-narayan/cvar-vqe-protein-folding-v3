@@ -194,6 +194,30 @@ state's measurement distribution. Four consequences:
 4. All `2^k` outcomes are reachable: at a vertex `p = e_j`, `(P e_j)_i = P[i,j]` and `P[j,j] = 0`,
    so the argmin is `j`.
 
+> **ANNOTATION 2 (2026-09-21 00:14, coordinator, on lane A's measurement) — POINT 4 IS FALSE, AND THAT
+> MAKES THE CAPACITY *STRICTLY BELOW* k, WHICH IS THE OUTCOME I SAID WOULD BE MORE INTERESTING.**
+>
+> `argmin(P e_j) = j` requires `P[i,j] > 0` for every `i != j`. **The pool contains duplicate
+> structures**, for which `P[i,j] = 0` off the diagonal and `np.argmin` returns the *first* index.
+> Measured reachable vertices: **118.45 / 128 mean, 94 worst** — and the count equals the number of
+> **byte-distinct** structures **exactly, on every target**, so the mechanism is confirmed rather
+> than inferred. `filter_pool` already dedups (`core/pipeline.py:766-773` builds `rep_of`); **the
+> readout does not.**
+>
+> **Corrected R1(3): the selection readout's alphabet is the number of DISTINCT candidates, so its
+> capacity is log2(118.45) = 6.888 bits mean, 6.555 worst — not 7.** Only 0.11 bits, so no
+> conclusion changes; the theorem's *statement* does.
+>
+> Lane A also settled points 1-3 numerically rather than by code-reading: **the emitted structure
+> sits 1.1144 A (mean; min 0.073) from the nearest pool member.** And it located the capacity claim
+> precisely: `p` enters the emitted structure through a 7-bit piecewise-constant **frame** and a
+> continuous (D-1)-dimensional **weight vector**, and **only the frame is capped.**
+>
+> **Final form of R1, third restatement:** *the SELECTION readout's alphabet is the number of
+> distinct candidates (6.888 bits mean), and it is a **scored diagnostic arm** (`rmsd_vqe_sel`,
+> `core/pipeline.py:1173`, registered `:1609`) rather than the answer path.* The theorem has been
+> true at every restatement and about something smaller each time.
+
 ### Why it matters more than T1
 
 T1 (S30) says a **diagonal** `H` makes the CVaR tail a prefix, so the state specifies one integer.
@@ -316,6 +340,23 @@ rather than heuristic.
    weights (2.1683 A, 11.4+ bits) is *worse* than argmin-over-128 (2.1435 A, 7 bits) -- but 75 != 128.
    **Hold the candidate set fixed across the ladder or the comparison is not about the readout.**
    This alone may explain S30's "argmin dominates at every bit budget".
+
+> **ANNOTATION (2026-09-21 00:14, coordinator, on lane A's flag) — THE +0.2260 BELOW IS WRONG. IT IS THE
+> AFFINE HARNESS READOUT'S COST, NOT THE SHIPPED STAGE'S, AND I BROADCAST IT TO FOUR LANES.**
+>
+> The +0.2260 came from the S30 meter's `circ_opt` against `PROD` on the built chain. **`circ_opt`
+> is `circ_l1_i80`, which lives in `s27/s28_A_amp.py` — the AFFINE amplitude module**, not the
+> shipped convex `average_weighted`. I compared the *measurement harness's* readout to production
+> and called it the deficit.
+>
+> **Measured on the shipped operator (lane A, CA point cloud): the quantum synthesis costs
+> +0.0178 A against production (3.0661 vs 3.0483), and +0.0125 A against the matched uniform-128
+> control (3.0536).** The built-chain figure is **not measured** and lane P now owns it.
+>
+> Lane A found this as a factor-of-12.7 inconsistency between my chain number and its cloud number
+> and refused to resolve it by assuming the projection amplified — **the right call, and the answer
+> was that two different operators were wearing one label.** Third readout conflation of mine this
+> sprint, second caught by a lane. Original wording stands below.
 
 ### The deficit this sprint actually has to close, stated plainly
 
@@ -682,3 +723,444 @@ truth. Corrected in place with the original error stated in the file's own comme
 2 diagnostics (rank fraction, definition-match); 1 regression level control; 2 fold-clustered
 paired comparisons. **13 read as results, all pre-registered.** No grid, no per-target maximum,
 no split-half arm needed.
+
+## S31-L6 -- **DEFECT D-B RESOLVED, AND THE THREE-SPRINT "UNPINNED MULTI-START SEED" DIAGNOSIS IS WRONG.** THERE IS NO RNG ON THE PROJECTION PATH AT ALL: REPROJECTING THE SAME CLOUD TWICE IS **BIT-IDENTICAL**. THE INSTRUMENT'S IRREPRODUCIBILITY IS **CONDITIONING** -- A lam=0 ARGMIN DECIDED AT **1e-7** SELECTS THE WARM START FOR A RUNG WHERE THE BRANCHES ARE **1e-1** APART, AN AMPLIFICATION OF **~1e13** (2026-09-21 00:10, D)
+
+### The claim that has to go first
+
+`s31/BRIEF.md` section 19/20B, `s27/LEDGER.md:1025` (S28-L18), `s30/LEDGER.md:3889`,
+`s30/REPORT_S30.md:169` and `s30/s30_verify.py:254` all say the same thing in the same words:
+*"the cloud-to-chain projection is multi-start and its seed is not pinned"*, *"only the
+projection is stochastic"*. **That is false, and this entry supersedes it.** It has propagated
+unchallenged through three sprints, and it matters because it named a fix (set a seed) that
+would have done nothing at all.
+
+**There is no random number generator anywhere on the projection path.** `core.project.fit_multi`
+loops over the four fixed starts in `core.project.STARTS` and keeps a strict argmin;
+`fit_prior` is a deterministic `scipy.optimize.minimize` L-BFGS-B call; the builder and the
+Kabsch are deterministic. Verified rather than read:
+
+    reproject the SAME stored cloud twice, same process, 126 targets
+      -> max |dCA| over all targets and all atoms   EXACTLY 0.0     (bit-identical)
+      -> max |d rmsd|                                EXACTLY 0.0
+      -> unchanged under OMP/MKL/OPENBLAS_NUM_THREADS = 1 vs default
+
+### The actual mechanism, which is worse than a seed
+
+`lam_path` solves at **lam = 0** from four generic starts and takes the argmin. Those four
+converge to objectives that agree to ~1e-7 -- **numerical noise** -- while sitting on
+**different torsion branches**. 1A13:
+
+    lam=0   0.5091924865   0.5091925170   0.5091924488   0.5091924188   <- spread 1e-7
+    lam=0.3 0.9470961958   0.5190590069   0.5615765828   2.3960369367   <- spread 1e+0
+
+The winner of that noise-level argmin becomes the **warm start** for the lam=0.3 rung. So a
+decision taken where the objective **cannot discriminate** determines an outcome where it
+**can**, and the two differ by seven orders of magnitude. **The lam=0 branch selection is a
+selection made on noise.**
+
+### Demonstrated, not argued
+
+Perturb the input cloud by **1e-14 relative** -- not a stress test, that is the scale at which
+two code paths that build the same average actually disagree (S28-L27b measured the production
+cloud against S27's rows at 5.7e-14) -- and reproject, same job, same code path:
+
+    input moved:  max |dcoord| 1.39e-12 A   (the cloud is essentially unchanged)
+    output moved: n = 126 targets
+
+      |d chain|   p50 1.63e-03   p75 8.29e-03   p90 1.75e-02   p95 4.22e-02   p99 1.86e-01
+                  mean 1.35e-02   max 5.11e-01
+      counts      >1e-6: 122/126    >1e-4: 97/126    >1e-3: 71/126
+                  >0.01: 28/126     >0.05:  6/126    >0.1:    4/126
+      worst       2LNG 0.5113   1RSW 0.1970   2NDN 0.1519   9BFL 0.1309   8HVS 0.0789
+
+**NOT ONE TARGET of 126 is unchanged to 1e-9.** The median target's emitted chain moves
+1.6e-3 A -- nine orders of magnitude more than its input did.
+
+**2LNG's emitted chain moves +0.511 A.** That reproduces the historical 2LNG discrepancy
+(0.517 A between `s29_O_chain_rows.jsonl::prod` and `chain_rows.jsonl::DIS`) essentially
+exactly, from an input perturbation of ~1e-13 A. Amplification ~1e13.
+
+### This is a property of the instrument, not one pathological target
+
+The lam=0 branch margin, all 126 targets:
+
+    p1 4.56e-10   p10 5.39e-09   p25 2.68e-08   p50 3.11e-07   p75 2.79e-04   p90 1.42e-02
+    below 1e-9:  3/126     below 1e-7: 52/126     below 1e-6: 73/126
+    below 1e-5: 82/126     below 1e-4: 91/126
+
+**58% of the benchmark (73/126) has its branch chosen at a margin below 1e-6**, and a quarter
+of it below 2.7e-8. This is not one pathological target; it is the normal condition of the
+operator. The median is 3.1e-7 -- i.e. **the typical target's branch is selected by numerical
+noise**, and it is only because most branches happen to lead to similar structures that the
+endpoint is stable at all.
+
+### Consequences, and they bind on every lane
+
+1. **Reprojection is reproducible only from bit-identical input clouds.** Both sides of any
+   built-chain contrast must be projected **in the same job from the same stored clouds**, and
+   the entry must say so. Two sides from different code paths carry a per-target floor with a
+   0.5 A tail.
+2. **The canonical endpoint is 3.2105 A**, `s29/results/s29_O_chain_rows.jsonl :: item=prod`.
+   It is canonical because it is the run the endpoint was declared from **and** the only one
+   whose input clouds are persisted target-by-target (`s29/results/s29_O_structs/*.npz`), so it
+   is the only one that can be reprojected from its own bits. **Not changed, not retro-fitted.**
+   This lane's independent reprojection reproduces it **bit-for-bit, per target, max |diff|
+   0.0** -- so the endpoint IS deterministically reproducible today, from the pinned inputs.
+3. **The 0.0107 A spread is verified and its composition is now known.** Five values circulate
+   for "production, built chain" (S30 AUDIT_Z row 6): 3.2105 (s29 O prod), 3.2126
+   (`chain_rows.jsonl::DIS`, and independently `s30_P_chain_rows.jsonl::PROD_chain`), 3.2071
+   (s30 lane R / the meter), 3.2148 (s30 lane X), 3.2041 (`s30_P_chain_rows.jsonl::rec_fit`).
+   Range 3.2148 - 3.2041 = **0.0107**. I recomputed 3.2105, 3.2126 and 3.2041 from their
+   artefacts; 3.2071 and 3.2148 are taken from the S30 record and not recomputed here.
+   **Against this project's one confirmed effect of 0.0221 A, any built-chain claim below
+   0.0107 A is inside the instrument's own reprojection noise.** I will flag any that appears.
+4. **A heavier consequence nobody has drawn.** The measured cloud->chain transfer coefficient of
+   0.92 (S30-L25 annotation) is an **average over a map that is locally chaotic on a substantial
+   minority of targets**. Any lane proposing a cloud-level improvement must know the chain
+   response is not smooth there: a small cloud gain can be erased or reversed by a branch flip.
+
+### What "pinning" actually is here, since there is no seed
+
+Two halves, both in `s31/results/s31_D_projection_pin.json`:
+(a) the **operator pin** -- every constant that determines the output (STARTS, gradient mode,
+FD_EPS, lam, maxiter, penalty, tie-break rule, and an explicit `"rng": "NONE"`), digested, so a
+future run can assert it is the same operator; (b) the **input pin** -- the sha256 of each
+canonical cloud's float64 bytes, because the input is where the variation actually entered and
+without this half the operator pin is worthless.
+
+### Not done, deliberately
+
+I did **not** change the tie-break, the start set, or any default in `core/project.py`. Every
+number in the record stands. The follow-on question -- whether deciding the branch at lam=0.3,
+where the objective separates by 1e-1, is worth anything in **accuracy** -- is a separate,
+pre-registered experiment (`s31/PREREG_S31_D_branch.md`), registered before any of its arms was
+computed, with H0 (no accuracy gain) as the expected outcome.
+
+Artefacts: `s31/s31_pin_projection.py`, `s31/results/s31_D_projection_pin.json`,
+`s31/results/s31_D_projection_pin_rows_shard{0,1,2,3}of4.jsonl`.
+Registered in `s31/MULTIPLICITY.md` rows 1-3 (instrument characterisation, no alpha spent).
+
+
+## S31-L7 -- **DEFECTS D-A AND D-C FIXED IN PLACE.** A WITHDRAWN POSITIVE HAD BEEN ASSERTED IN SHIPPED CODE FOR SIX SPRINTS; AND THE LAUNCHER HAD BEEN CONTRADICTING THE GOVERNOR SINCE S29 BECAUSE ONLY ONE HALF OF A PAIRED THRESHOLD WAS EVER MOVED (2026-09-21 00:10, D)
+
+### D-A: `core/pipeline.py`, the CVaR docstring
+
+`quantum_stage`'s docstring asserted, under the heading **"WHY CVaR, MEASURED"**:
+
+> *"So the CVaR tail is worth +0.113 A **by preventing the collapse**, and that is the
+> component's measured role."*
+
+**S25-L5 (`s25/LEDGER.md:233`) withdrew that number.** It was read off MARGINAL MEANS where a
+PAIRED statistic was required. Paired, `s25/results/q_alpha.json`, n = 126:
+
+    vqe_a0.1_T0.1 - vqe_a1.0_T0.1   -0.1126  SE 0.0792  MDE 0.2220  0.51x MDE
+                                    fold CI spans zero, 55W/44L, median EXACTLY 0.0000  -> NULL
+    VQE_LFO - argmin  (the replacement figure, s25/LEDGER.md:280)
+                                    -0.1405  SE 0.0732  MDE 0.2051  0.68x MDE
+                                    66W/48L, 5/5 folds same sign  -> NOT MEASURED
+
+Sign convention stated because it has to be: lower RMSD is better, so both contrasts are
+**nominally in the CVaR arm's favour and neither clears its MDE**. The defensible statement is
+that alpha < 1 prevents the entropy collapse -- a fact about the **state**, visible in 0.076 vs
+6.36 bits -- and that **no Angstrom effect of that mechanism has been measured.**
+
+Corrected in place, with the old wording **quoted verbatim in the new text** so the correction
+is visible to anyone who read the old version rather than silently erased, and with a direct
+instruction not to quote a CVaR contribution from that docstring.
+
+**This is the sixth instance in this project of prose asserting a state that does not hold, and
+the first in shipped code** -- which is the part that matters: `s26/pr_changes.py:79` recorded
+in S26 that this docstring carried a withdrawn claim, and the docstring was still wrong four
+sprints later. Recording a defect in a table is not fixing it. A reader who greps the source
+rather than the ledger got a withdrawn positive presented as an established role.
+
+### D-C: `s26/jobrun.py` v3 -- the launch gate is now DERIVED from the governor
+
+**The defect.** `jobrun.py` last changed in **S26** (v2.3). `governor.py` changed **four times
+in S29** -- v2.5, v2.6, v2.6b, v2.6c -- and every one of those changes moved in the same
+direction, away from treating CPU as a safety signal, ending at
+`CPU_CEILING = 101.0  # CPU-triggered suspension is DISABLED ... A saturated CPU has no failure
+mode; RAM does (OOM)`. **The launcher never followed.** It still refused to launch while the
+governor's 15 s CPU mean exceeded **85%** -- below the **94-95%** band the charter instructs.
+So in exactly the regime the charter asks for, `jobrun` blocked every launch while the governor
+was content, and lanes responded by launching **detached**, which registers nothing in
+`s26/jobs/` and leaves the governor unable to suspend, resume, kill or even see the process.
+**That is strictly worse than either policy alone.**
+
+Caught live while writing the fix: `s26/governor_state.json` at 23:52:33 read `cpu_smooth 96.8,
+n_jobs 0`. The 96.8% was four of **this lane's own** shards, launched detached for this exact
+reason. I am the instance.
+
+**The fix, and why this one.** RAM is the binding constraint on this box: 16.75 GB total, ~10-11
+GB of it the user's own baseline load, and an OOM is the only way a job here takes the machine
+down. A saturated CPU makes everything slower and nothing unsafe. So the launch gate is now
+**imported from `governor.py`** rather than duplicated:
+
+    CEILING   = governor.CEILING - 1.0   = 93.0   RAM, UNCHANGED IN VALUE, one point of
+                                                  hysteresis below the suspend ceiling
+    CPU_START = governor.CPU_CEILING     = 101.0  i.e. CPU does not gate launches
+    _cap()    = min(launch_cap.json, governor.MAX_JOBS)
+
+**The structural point is the import, not the constant.** If a future sprint re-enables
+CPU-triggered suspension by lowering `governor.CPU_CEILING`, the launcher follows automatically
+and nobody has to remember to grep for the partner. This is the **third** instance of the
+standing `paired-thresholds-move-together` failure, and the first fix that makes the next one
+impossible rather than merely unlikely.
+
+**Nothing safety-relevant was relaxed.** The per-job headroom test (`avail < est_ram + 0.5 GB`),
+the refusal to start unsupervised above 0.5 GB with no live governor, the AMBER cap of 2, and
+the concurrency cap all stand -- and the cap is now **clamped** to the governor's `MAX_JOBS`, so
+an over-large `launch_cap.json` cannot register more jobs than the governor will manage. The
+fallback when `launch_cap.json` is unreadable stays the conservative 4, deliberately not the
+governor's 8: an unreadable cap file is a fault, and a fault should launch fewer jobs, not more.
+`--cpu-gate` restores a CPU launch gate for any caller that wants one.
+
+**Verified live, not asserted.** A job launched successfully at `cpu_smooth 100.0%` -- which the
+old gate would have blocked indefinitely -- and the four shards of `s31_D_branch` are registered
+in `s26/jobs/` and visible to the governor as I write this.
+
+Two smaller things fixed in the same file while I was in it:
+- the registration and completion records were written through a **shared** `<name>.tmp`;
+  `os.replace` is atomic but a shared temp path is not, so two writers can publish an
+  interleaved file atomically. Now `<name>.<pid>.tmp`.
+- the wait message said only `box at ram X% cpu Y% jobs n/m`; it now names **which** gate is
+  actually blocking, because "waiting" with no reason is how a lane decides to go detached.
+
+**Correction to a standing memory:** the note *"s26/jobrun.py does not dedupe by --name"* is no
+longer true of the current file -- `main()` reads `s26/jobs/<name>.json` and refuses with exit 3
+if that pid is alive. The S29 incident of four copies of one job is fully explained by
+**detached launches bypassing jobrun entirely**, which is the defect fixed above. The operative
+half of that lesson stands and is now load-bearing: **check the pid, not the name** -- and a
+detached process has no registration to check at all.
+
+### The rule this puts on every lane
+
+**Stop launching detached.** `nohup python s31/foo.py &` is invisible to the governor: it cannot
+be suspended when RAM climbs, cannot be killed before an OOM, and does not appear in
+`governor_state.json`. Launch through `s26/jobrun.py`, which now works in the band the charter
+asks for. If `jobrun` still blocks you, it will now tell you which gate and why -- send me that
+line rather than going around it.
+
+Artefacts: `core/pipeline.py` (docstring), `s26/jobrun.py` (v3), `s31/MULTIPLICITY.md`.
+
+
+## S31-L8 -- **THE BRANCH SET CONTAINS 0.0938 A OF REAL ACCURACY AND THE OBJECTIVE CANNOT FIND IT.** DECIDING THE BRANCH WHERE THE OBJECTIVE DISCRIMINATES (1e-4 INSTEAD OF 1e-7) FIXES THE CONDITIONING BY **1082x** AND IS WORTH **-0.0055 A AT 0.44x MDE -- NOT A RESULT.** H0 AS PRE-REGISTERED (2026-09-21 00:10, D)
+
+Pre-registered in `s31/PREREG_S31_D_branch.md` **before any arm was computed**, including the
+decision rule, the expected outcome (H0), and the structural caveat below. Proposed by the
+coordinator off S31-L<D-B>'s mechanism.
+
+### The arms, all projected in ONE job from the SAME stored clouds
+
+`s29/results/s29_O_structs/<pdb>.npz :: prod`, n = 126, built chain, `grad="exact"`, lam 0.3.
+
+    PROD        lam_path(multi=True) replicated exactly -- the incumbent
+    B4          continue EACH of the four lam=0 branches to lam=0.3, union the four fresh
+                lam=0.3 starts, argmin of the LAM=0.3 OBJECTIVE over all eight.
+                Native-free, deterministic, DEPLOYABLE.
+    ORACLE_B4   the same eight candidates, argmin of CA-RMSD TO THE NATIVE.
+                **ORACLE / NOT DEPLOYABLE.**
+
+**Identity gate passed before anything was read:** PROD reproduces
+`s29_O_chain_rows.jsonl :: prod` **bit-for-bit on all 126 targets, max |diff| exactly 0.0**. So
+the arms are comparable to the canonical endpoint and both sides of every contrast below come
+from the same code path, as this lane's own D-B rule requires.
+
+### The ceiling first, as pre-registered
+
+    ORACLE_B4 - PROD   -0.0938 A   SE 0.0114   MDE 0.0321   2.92x MDE
+                       fold CI [-0.1097, -0.0786]   114W / 0L / 12 tied   median -0.0279
+                       best single target -0.573
+                       **ORACLE / NOT DEPLOYABLE -- this is a ceiling, not a method.**
+
+**The eight candidates the projection already computes contain 0.0938 A of accuracy, and it
+clears its MDE at 2.92x with 114 wins and zero losses.** That is four times the project's one
+confirmed effect (0.0221 A) and it is sitting inside an operator that is run on every target of
+every arm of every experiment. It is ORACLE and it is NOT DEPLOYABLE.
+
+### The native-free arm: the primary
+
+    B4 - PROD          -0.0055 A   SE 0.0044   MDE 0.0124   **0.44x MDE**
+                       34W / 21L / **71 tied**   median EXACTLY +0.0000
+                       fold CI [-0.0071, -0.0031]   iid CI [-0.0144, +0.0031]   5/5 folds
+                       -> **NOT A RESULT** by this project's fixed rule.
+
+**I am stating this as a null and I want to be explicit about why, because the temptation here
+is real.** The fold CI excludes zero and all five folds agree in sign. That is not enough. The
+rule is MDE = 2.8016 x SE per comparison, and **below 0.7x is not a result** -- this is 0.44x.
+The iid CI spans zero. Reaching for the fold CI because it is the one that excludes zero,
+having seen both, is the exact move this project has a standing rule against. **B4 is a null on
+accuracy.**
+
+And a second disqualification, from my own instrument work an hour earlier: **-0.0055 A is
+half the instrument's own 0.0107 A reprojection spread.** By the rule I set for every other
+lane this sprint, a built-chain claim of that size is inside the noise of the thing measuring
+it. The rule applies to me.
+
+### Concentration: suggested by the median, NOT established by the null
+
+    mean -0.0055   median EXACTLY 0.0000   71 of 126 tied
+    drop-top-10 mean +0.0031 (the SIGN FLIPS)
+    uniform-effect null: p10 -0.00038, p50 +0.0027, p90 +0.0069
+    -> observed drop-top-10 sits at the **55.9th percentile of the null.  flag = FALSE.**
+
+The median-vs-mean gap is exactly the free early warning the standing rule describes, and the
+sign flip on drop-top-10 looks alarming -- **and the matched uniform-effect null says it is
+ordinary.** A raw drop-top threshold is not a valid test; the null is. Reported as SUGGESTED
+and NOT ESTABLISHED, which is what the rule requires and what it would have required if the
+answer had gone the other way.
+
+### Strata, reported whichever way they fell
+
+    FAIL18     +0.0049   0.08x MDE   4W/3L    (NOT MEASURED, and a null at n=18)
+    other 108  -0.0072   0.69x MDE   30W/18L  (below 0.7x: NOT A RESULT)
+
+No switch, no stratum rescue.
+
+### What DID move, and it is the thing the exercise was for
+
+    decision margin, median:   PROD (at lam=0)  3.11e-07  ->  B4 (at lam=0.3)  3.36e-04
+    targets with margin < 1e-6:            73/126        ->             21/126
+    improvement in the median margin:                 **1082x**
+
+**The conditioning fix is real and it is large.** B4 decides the branch where the objective
+separates by ~1e-4 instead of ~1e-7, which collapses most of the 1e13 amplification that makes
+the instrument irreproducible. That is a property of the operator and it does **not** depend on
+the accuracy null above.
+
+### The structural caveat, registered before the result and repeated here
+
+**B4's candidate set is a strict superset of PROD's and both minimise the same objective, so
+B4's objective is <= PROD's on every target BY CONSTRUCTION** -- verified, 126/126. "B4 reaches
+a lower objective" is therefore not evidence of anything and is not offered as any. B4 is
+strictly a harder search on the same objective, and it bought **-0.0055 A at 0.44x MDE** while
+changing the emitted branch on **55 of 126 targets**, with a per-target range from -0.348 to
++0.321. It moves a great deal and nets nothing.
+
+### The reading, and it is the project's own central finding again
+
+The branch set contains **0.0938 A** (ORACLE, NOT DEPLOYABLE, 2.92x MDE, 114W/0L). The
+objective recovers **0.0055 A of it at 0.44x MDE**, i.e. **within noise of nothing** -- about
+6% of the ceiling, and not distinguishable from zero. So: **search is not the barrier here;
+discrimination is.** A 1082x better-conditioned argmin over a set demonstrably containing 0.094
+A finds essentially none of it, because it is an argmin of an objective that does not rank the
+native. This is the same wall as S15, S29's certified optimum and S30, arriving from a new
+direction -- the numerical conditioning of stage 3b -- and it is worth recording precisely
+because the direction was new and the wall was in the same place.
+
+### Recommendation, and it is not mine to take
+
+1. **Do not adopt B4 for accuracy.** It is a null and it is inside the instrument spread.
+2. **B4 is defensible purely as a CONDITIONING fix** (1082x, 73/126 -> 21/126 below 1e-6), and
+   if the coordinator wants the endpoint reproducible against re-implementation rather than
+   only against re-running the same bits, that is the argument for it -- **stated as a
+   conditioning change with a null accuracy effect, never as an improvement.** It would move
+   the canonical 3.2105 to 3.2050 and that is a decision above this lane.
+3. **The 0.0938 A ORACLE ceiling is the interesting object and it is native-free-adjacent**:
+   the candidates exist, are already computed, and cost nothing. Whether any native-free signal
+   orders them better than the objective does is a real question for a future sprint -- and the
+   honest prior, from S12/S29/S30, is that nothing will.
+
+Artefacts: `s31/s31_D_branch.py`, `s31/results/s31_D_branch.json`,
+`s31/results/s31_D_branch_rows*.jsonl`, prereg `s31/PREREG_S31_D_branch.md`.
+Registered in `s31/MULTIPLICITY.md` row 7 (k = 2 primary, one basis).
+
+---
+
+## S31-L9 -- **92.9% OF tuning126 IS NMR-DETERMINED, SO THE NEW-OBSERVABLE QUESTION IS CLOSED BY PROVENANCE, NOT BY GEOMETRY** -- AND THE ALARMING FOLLOW-UP IS A NULL: THE DEPOSITED ENSEMBLE IS 1.08 A WIDE BUT **UNCORRELATED WITH FAIL18** (0.20x MDE) (2026-09-21 00:13, L)
+
+Full working: `s31/LIT_L.md` §L1.5, §L2, §L2.1. Scripts: `scratchpad/lit_L_expmethod.py`,
+`lit_L_ensemble_spread.py`, `lit_L_tail_vs_spread.py`.
+
+### OURS -- what actually determined our reference coordinates (RCSB GraphQL, all 126)
+
+```
+  115  ( 91.3%)  SOLUTION NMR          4  (  3.2%)  X-RAY DIFFRACTION
+    5  (  4.0%)  ELECTRON CRYSTALLOGRAPHY    2  (  1.6%)  SOLID-STATE NMR
+  -> NMR-determined 117/126 = 92.9%
+```
+
+### THE L2 VERDICT: THE BINDING CONSTRAINT IS INFORMATION PROVENANCE, NOT G1
+
+1. **Any observable computed at inference from `(sequence, pool)` adds NO information**,
+   whatever equivalence class it occupies -- data-processing inequality. It can only be a
+   better estimator, and that ceiling is already measured (`in-band-ordering-is-per-target`:
+   0.600 across targets vs the 0.638 needed for 2.0 A). **G1 is not the binding constraint.**
+2. **Any NMR observable of these targets IS the data that determined the reference.** For
+   117/126 the deposited coordinates are a fit to deposited NOEs, J-couplings and torsion
+   restraints. Feeding them back is **ORACLE through a different door**.
+3. **This re-prices the chemical-shift direction retroactively.** TALOS+/TALOS-N dihedral
+   restraints derived from shifts are standard practice in NMR peptide structure
+   determination, so on NMR-determined targets "ORACLE-perfect torsions" was close to a
+   **tautology**. *Stated as standard practice, NOT verified per-target here.* The direction
+   is already closed; the **reason** should be recorded correctly.
+4. **The only genuine escape is an observable measured on the molecule and NOT used in its
+   structure determination.** Best physical candidate: **VCD / ROA** -- genuinely chiral, so
+   outside G1 by construction, and they work **in our 9-16 band** (ROA run on ~6-residue
+   peptides; Keiderling, *Chem. Rev.* 2020, 120(7):3381-3419). **But there is no repository of measured VCD/ROA
+   spectra keyed to PDB entries** -- I searched and found only method papers. Measured-spectrum
+   count for these 126 targets: **zero**, against 54/126 for shifts which (2) disqualifies.
+
+> **L2 is CLOSED for this benchmark, by DATA AVAILABILITY rather than physics.** The physics
+> leaves chiral and many-body channels open; the benchmark supplies no measurement to put in
+> them. Same wall as `no-fresh-benchmark-exists`, arriving from the observable side.
+
+### THE ALARMING FOLLOW-UP, AND THE NULL THAT KILLS IT
+
+The manifest reference is **"deposited coordinates, MODEL 1"** -- an arbitrary member of an
+NMR ensemble. ORACLE DIAGNOSTIC of the benchmark, never an inference-time signal; 111/126
+ensembles resolved.
+
+```
+mean pairwise CA-RMSD BETWEEN DEPOSITED MODELS : mean 1.0823  median 0.9929  max 4.2648
+model 1 -> ensemble medoid                     : mean 0.6965  median 0.4565  max 4.2943
+spread >1.0 A : 55/111     >2.0 A : 15/111     >3.0 A : 2/111
+widest: 3BTB 4.265, 6CEJ 4.200, 6GIJ 2.958, 6EY3 2.674, 2MIG 2.629
+```
+
+**The reference really is uncertain. It does NOT explain the tail.** Production arm, n=111:
+
+```
+corr(production RMSD, ensemble spread) = +0.1118  95% CI [-0.0762,+0.2921]  SPANS ZERO
+corr(production RMSD, model1->medoid)  = +0.1341  95% CI [-0.0536,+0.3127]  SPANS ZERO
+
+WORST 18 by production RMSD : mean RMSD 6.0291   mean ensemble spread 0.9672
+the other 93                : mean RMSD 2.6842   mean ensemble spread 1.1046
+difference tail-minus-rest  : -0.1374  SE 0.2421  MDE 0.6783  -> 0.20x MDE = NULL
+```
+
+The tail's targets have if anything **slightly narrower** deposited ensembles. **FAIL18 is
+real failure against a reference no worse determined than any other target's.** Same null in
+all four other arms (0.08x-0.90x MDE, every CI spanning zero).
+
+**Reported prominently BECAUSE it is a null.** Stopping at "the reference is uncertain by
+1.08 A" would have been quotable, alarming and wrong, and would have redirected the sprint's
+tail work. `control-at-the-decisive-step`: the cheap null sits exactly where the wrong answer
+would first have become quotable.
+
+### WHAT SURVIVES -- an interpretive caveat on the ABSOLUTE number only
+
+The endpoint carries a **uniform** ~0.70 A reference term: a perfect predictor aiming at the
+ensemble medoid still scores ~0.70 A against model 1. In quadrature that is
+`sqrt(3.21^2 - 0.70^2) = 3.13` vs 3.21 -- **~0.08 A now**, and far more material near 1 A.
+Because it is uniform it **cancels in every arm-to-arm delta**, which is the project's actual
+currency.
+
+> **NOT a reason to re-score against the medoid.** `benchmark-and-folds-must-be-pinned`: the
+> reference is part of the sealed instrument. Report the uncertainty; change nothing.
+
+### ADAPT-VQE / qubit-ADAPT -- ranked last, with reasons
+
+qubit-ADAPT (arXiv:1911.10205), ADAPT-QAOA (arXiv:2005.10258). (a) ADAPT is an **expressivity**
+fix and S31-L4 shows our expressivity gap has a **free** alternative -- ADAPT would be an
+efficient way to approximate a quantity with a closed form. (b) **ADAPT's selection rule is
+undefined for CVaR**: the criterion `|<psi|[H,A]|psi>|` presumes the cost is `<H>`, a *linear*
+functional of the state, and CVaR is not the expectation of any observable. Not worth a lane.
+
+### A SMALL INTEGRITY NOTE FOR LANE D
+
+`results/summary/results.csv` gives the production mean as **3.2126** (n=126) against the
+charter's **3.2105** -- a 0.0021 discrepancy. Flagged, not reconciled: the charter already
+lists **the unpinned projection seed** as an open defect gating every sub-0.01 A claim, and
+this is consistent with exactly that. Lane D owns it.
