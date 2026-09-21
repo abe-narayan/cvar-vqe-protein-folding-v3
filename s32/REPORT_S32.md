@@ -729,33 +729,44 @@ something changes when the chain gets long.
 claim in this report is computed on it. From a census of 13,751 candidate files, 599 fell in band and
 191 were rejected for chain breaks.
 
-**The ladder at both lengths (CA POINT CLOUD — a diagnostic, not the built-chain endpoint):**
+**The ladder at both lengths, on the BUILT CHAIN** (the projector's output, pre-AMBER; lane L's own
+ladder arms, so `avg75` is its construction rather than the production pipeline — the *ratios* are
+the result, not the absolute values):
 
 ```
-rung                 short (n=126, 12.96 aa)    long (n=45, 54.71 aa)     long/short
-pool best                    1.7108                    4.9797               2.91
-top-75 best                  2.1041                    5.8330               2.77
-pool mean                    4.4533                   11.9866               2.69
-top-75 mean                  4.2866                   11.7295               2.74
-avg75 (what it emits)        3.2928                    9.4094               2.86
+rung                short (n=126, 12.96 aa)   long (n=45, 54.71 aa)   long/short
+pool best                   1.7078                  5.0182               2.94
+top-75 best                 2.1004                  5.8691               2.79
+sparse s=10                 1.1192                  3.6648               3.27
+avg75 (the ladder's)        3.4822                  9.7450               2.80
+avg75 from a RANDOM 75      3.6244                 10.0622               2.78
 ```
 
-**The shape is preserved and the absolute numbers are not.** Every rung scales by 2.7–2.9× while the
-chain grows 4.2×, so the pipeline degrades *sub-linearly* in length — but the *ratios* that carry
-this sprint's conclusions barely move:
+**Every rung scales by 2.8–3.3× while the chain grows 4.2×, so the pipeline degrades sub-linearly in
+length.** And the ratios that carry this sprint's conclusions barely move:
 
 ```
                               short      long
-avg75 / pool best              1.92       1.89     <- the selection+readout loss, unchanged
+avg75 / pool best              2.04       1.94     <- the selection+readout loss, unchanged
 top-75 best / pool best        1.23       1.17     <- the filter's best-axis loss, unchanged
-pool mean / avg75              1.35       1.27     <- what averaging buys, still the largest single win
 ```
 
-> ### The loss ladder has the same shape at 4.2× the chain length. **This sprint's conclusions are not a peptide-length artefact.**
+### 7.0 All three registered predictions HOLD at 4.2× the chain length
 
-**And averaging still does the work.** In absolute terms it buys **more** at length: pool mean 11.99 →
-emitted 9.41 is **−2.58 Å**, against 4.45 → 3.29 = **−1.16 Å** on the short instrument. *The one
-operator this project has that demonstrably works, works harder on longer chains.*
+```
+P1  pool headroom            4.7268 against a 0.75 threshold   HOLDS
+      -> generation is NOT the bottleneck at 40-60 residues
+P2  selection is the largest cell (top75_best -> avg75)        HOLDS
+P3  projection cost is a property of the OBJECT projected      HOLDS
+      real member  +0.0385   vs   dense average  +0.3356
+```
+
+> ### The loss ladder has the same shape at 4.2× the chain length, on the built chain, and all three structural claims survive. **This sprint's conclusions are not a peptide-length artefact.**
+
+**And P3 is the sharpest of the three**, because it reproduces contract rule 16 on an instrument that
+had no part in writing it: **a real deposited member pays +0.0385 to be projected and a dense average
+pays +0.3356 — an 8.7× difference at the same chain length.** *The projection cost is a property of
+the object, measured twice, on two instruments, 4.2× apart in length.*
 
 ### 7.1 What changes, and it is exactly what §6 predicted
 
@@ -776,8 +787,10 @@ decisions rather than degenerate ones, because one fragment no longer spans the 
 
 ### 7.2 Caveats, stated rather than buried
 
-**This is the CA point cloud at n = 45**, not the built-chain endpoint at n = 126, and the two are
-never differenced. `n = 45` gives a much weaker instrument: the SEs above are **0.43 on the long pool
+**This is the BUILT CHAIN at n = 45, not the built-chain endpoint at n = 126**, and the two are
+never differenced. Lane L's `avg75` is its own ladder arm, not the production operator — its short
+value is 3.4822 against production's 3.2105, so **only the ratios transfer, never the absolute
+numbers.** `n = 45` gives a much weaker instrument: the SEs above are **0.43 on the long pool
 best against 0.079 on the short**, so an MDE on the long instrument is roughly **5× wider** and only
 large effects are resolvable there. **No deployable claim is made on it.** Lane L also declared a
 reproducibility defect in one of its own controls before quoting it, and that declaration stands in
