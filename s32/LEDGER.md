@@ -1013,3 +1013,158 @@ pdbs across shards and caught lane P (141 rows / 117 distinct, no repeat key) *a
 bitexact rows, since rewritten clean at 126/126.
 
 ---
+
+## S32-L(R1) -- **SPARSITY BUYS NOTHING. THE SAME s=10 COMBINATION PAYS +0.0002 WHEN THE NATIVE CHOSE ITS MEMBERS AND +0.199 WHEN IT DID NOT -- AND EVERY NATIVE-FREE OBJECT SITS AT ITS OWN ORTHOGONAL NULL** (2026-09-21 09:55, lane R; supplies the control S32-L9 was missing)
+
+Artefacts `s32/results/s32_R_ladder_null.json`, `s32/results/s32_R_sparse_control.json`.
+Jobs `s32/s32_R_ladder_null.py`, `s32/s32_R_sparse_control.py`. PREREG `s32/PREREG_S32_R.md` @ `02754f5a`
+(R1); the random-sparse control is **EXPLORATORY**, logged as R-12 in `s32/MULTIPLICITY.md` when it
+was written. **Basis: built-chain Ca RMSD, `tuning126`, n = 126. Every arm projected in the same
+process per target.**
+
+**The registered test.** For a cloud with native error `e` and manifold distance `d = RMSD(chain, cloud)`,
+the ORTHOGONAL NULL -- matched to the operator's *own* displacement, contract rule 6 -- is
+`price = sqrt(e^2 + d^2) - e`. The realised alignment is recovered from the triangle,
+`cos = (e^2 + d^2 - chain^2) / (2ed)`: **0 = orthogonal, +1 = the displacement removes error one for one.**
+
+```
+rung                cloud    chain       d |    price   orthogonal |  cos   | obs-vs-null
+prod (PRODUCTION)  3.0483   3.2105  0.8150 |  +0.1622      +0.1504 | -0.061 | 0.24x  NOT MEASURED
+bestm  ORACLE      2.6062   2.7763  0.8505 |  +0.1701      +0.1634 | -0.004 | 0.13x  NOT MEASURED
+best1_pool ORACLE  1.7108   1.7078  0.0791 |  -0.0030      +0.0046 | +0.055 | 1.16x  BETTER
+sparse s=10 ORACLE 1.1136   1.1139  0.7023 |  +0.0002      +0.2124 | +0.380 | 4.65x  BETTER
+sparse s=20 ORACLE 1.1118   1.1066  0.7039 |  -0.0052      +0.2134 | +0.391 | 4.54x  BETTER
+```
+
+**Read the `d` column against the `price` column.** Production sits **0.8150 A** off the valid-chain
+manifold and the ORACLE sparse combination sits **0.7023 A** off it -- *the sparse object is no closer*
+-- and they pay **+0.1622** and **+0.0002**. The price is not a function of `d`.
+
+**THE CONTROL THAT SETTLES IT.** Same sparsity `s = 10`, same averaging operator (superpose on the
+subset medoid, uniform mean), same projection call, same job; the **only** difference from the ORACLE
+rung is whether the native chose the ten members. Three pinned draws (contract rule 10):
+
+```
+arm                          cloud    chain       d |    price   orthogonal |   cos    | price-vs-null
+ORACLE sparse s=10          1.1136   1.1139  0.7023 |  +0.0002      +0.2124 |  +0.380  | 4.65x BETTER
+RANDSPARSE s=10, 3 draws    3.5541   3.7529  1.1701 |  +0.1988      +0.2088 |  +0.019  | 0.22x NOT MEASURED
+                            draw sd over 3 draws:   |   0.0075              |   0.0094 |
+SCORESPARSE s=10 (top-10)   3.1455   3.2826  0.6274 |  +0.1371      +0.0905 |  -0.076  | 1.46x WORSE
+PROD s=75                   3.0483   3.2105  0.8150 |  +0.1622      +0.1504 |  -0.061  | 0.24x NOT MEASURED
+```
+
+**A thousand-fold difference in price at identical sparsity:** `+0.0002` against `+0.1988`. And every
+object whose members the native did *not* choose lands at or above its own orthogonal null --
+production 0.24x MDE, random sparse 0.22x MDE, and the deployable score-top-10 is 1.46x MDE on the
+**wrong** side.
+
+**MECHANISM.** The native is, near enough, *on* the ideal-geometry manifold. Snapping a cloud onto
+that manifold therefore removes error **if** the cloud's off-manifold component is part of its error,
+and adds noise in quadrature if it is not. An ORACLE-weighted combination has already spent its
+native information removing the in-hull error, so what remains off-manifold *is* error and the
+projection removes 38% of it. A uniform average of members chosen without the native carries an
+off-manifold component that is the **averaging artefact** (S32-L(R2)), which is unrelated to the
+error, so it pays the full quadrature tax.
+
+**REGISTERED FALSIFIER OUTCOME.** P1.2 predicted the price would not fall below the orthogonal null.
+It **holds for production (0.24x) and for the dense average (0.13x)** and is **falsified for both
+sparse rungs at 4.65x and 4.54x MDE**, 5/5 folds, 117W/9L and 116W/10L. Both outcomes were registered
+before the numbers existed.
+
+**CONSEQUENCE FOR THE CONTRACT.** Rule 16's ladder is reproduced here to the fourth decimal on all
+five rungs (|err| <= 4.2e-5) -- the *numbers* were right. The *reading* that sparsity is what makes
+projection cheap is **wrong**, and this lane's own `SCALE_NF` / `SCALE_RG` arms were built on the same
+wrong reading and failed accordingly (S32-L(R3)). **Any readout proposal must state its `cos`, not its
+sparsity -- and no native-free readout has been shown to control `cos`.**
+
+**WHAT THIS DOES NOT SAY.** It does not say a sparse readout is useless; it says sparsity is not the
+reason the ORACLE sparse rung projects for free, so the 2.10 A of headroom contract rule 17 records
+inside sparse combinations is **not** reachable by being sparse. It does not reopen the `m` axis:
+`SCORESPARSE` is reported as a **regime diagnostic**, never as an endpoint proposal, and S31's
+leave-fold-out `m` result (+0.0075, 63W/63L) stands.
+
+**BIT-EXACT REPRODUCTION, IN THE STRONG FORM.** All **630** chain RMSDs (126 targets x 5 rungs)
+reproduce the value S29 recorded for the same `(pdb, item)` **bit-for-bit**: mean |d| exactly
+`0.000e+00`, max exactly `0.000e+00`, 126/126 bit-identical on every rung. Production comes back as
+**3.210533994943299**, all sixteen digits, and the cloud as 3.048338093879531 -- from a different job,
+a different script and a different process. Beside lane V's S32-L6 (an independent *recomputation* of
+the cloud disagrees on 126/126) this pins the statement exactly:
+***the operator is bit-reproducible; the input is what is fragile.***
+
+---
+
+## S32-L(R2) -- **THE PROJECTION TAX IS A TAX ON THE POOL'S OWN DISAGREEMENT: `d` IS RANK-DETERMINED BY THE SPREAD OF WHAT IS AVERAGED, rho = +0.965, AND BOTH SIDES ARE NATIVE-FREE** (2026-09-21 09:50, lane R)
+
+Artefact `s32/results/s32_R_offmanifold_source.json`. **EXPLORATORY**, logged as R-13 in
+`s32/MULTIPLICITY.md`. n = 126. `d` = Ca-RMSD(production chain, production cloud); `spread75` = mean
+pairwise Ca-RMSD of the 75 members being averaged. **Neither quantity reads the native.**
+
+```
+spearman(d, member spread)                        +0.9646     pearson +0.9733   R2 0.947
+  partial, controlling for chain length            +0.9667
+  partial, controlling for the native error e      +0.9534
+  per fold                     0:+0.935 1:+0.971 2:+0.982 3:+0.961 4:+0.967   (5/5)
+  within-n permutation null, 4000 draws   mean +0.099  p95 +0.243  p99.9 +0.377  max +0.466
+```
+
+**The shared-referent floor was measured first** (the standing lesson): `d` and `spread75` are both
+RMSDs over the same target and share its scale. Permuting `spread75` *within* chain-length strata
+destroys the relation and leaves rho ~ +0.10, maximum +0.466 over 4000 draws. The observed +0.965 is
+far outside it and survives partialling on both chain length and the native error.
+
+**So the causal chain of the projection price is closed end to end, and every link but the last is
+native-free:**
+
+> pool disagreement -> (rho +0.965) -> off-manifold distance `d` -> (cos = -0.061, i.e. orthogonal)
+> -> price ~ `sqrt(e^2 + d^2) - e` = **+0.1622**, which is **5.05%** of the 3.2105 endpoint.
+
+**HONEST LIMIT ON THE FORM.** This is a **monotone** relation, not a proportionality: the ratio
+`d / spread75` has mean 0.267 with **cv 0.467** (sd 0.125). Quote the rank correlation, not a
+coefficient. The linear R2 of 0.947 comes from a fit with an intercept and is not licence for
+`d = 0.27 x spread`.
+
+**WHY IT MATTERS FOR THE CAUSAL MAP.** Charter section 56 asks for the earliest irreversible loss.
+**The projection is not it.** The stage is bit-reproducible (S32-L6), reproduces its own historical
+numbers exactly, and adds error in quadrature at a rate set entirely upstream -- by how much the
+retrieved members disagree. Reducing the tax means averaging things that agree, which is a retrieval
+and selection problem, or making the off-manifold component *be* the error, which requires already
+knowing the error. **The reconstruction stage faithfully transmits an upstream defect; it does not
+create one.**
+
+---
+
+## S32-L(R3) -- **SCALAR DILATION IS CLOSED IN BOTH NATURAL CALIBRATIONS, BECAUSE THE AVERAGING CONTRACTION IS SEPARATION-DEPENDENT: 22.15% AT |i-j| = 1 AND 5.40% IN Rg** (2026-09-21 09:30, lane R)
+
+Artefacts `s32/results/s32_R_dilation_cloud.json`, `s32/results/s32_R_dilation_rg_cloud.json`.
+**CLOUD basis, n = 126** -- an intermediate, never differenced against a chain number. R-14 is the
+**registered** P1.3 arm; R-15 is EXPLORATORY.
+
+```
+production cloud virtual Ca-Ca  2.9614  vs the builder's ideal 3.8040  -> 22.15% contracted
+production cloud Rg             6.2061  vs the mean Rg of its own 75 members 6.5602 -> 5.40%
+                                        (native Rg 6.6009)
+
+R-14  dilate to ideal virtual bond (s mean 1.353, max 2.143)  +1.0425  2.79x MDE  5/5 folds  WORSE
+R-15  dilate to the members' own mean Rg (s mean 1.059)       +0.0622  1.47x MDE  5/5 folds  WORSE
+      ORACLE best dilation on a fixed grid                    -0.158             ORACLE / NOT DEPLOYABLE
+```
+
+**P1.3 IS FALSIFIED**, by its own registered falsifier. **Because:** the contraction is not a scale,
+it is a *shape* distortion that varies with sequence separation -- 22.15% at |i-j| = 1 and 5.40% at
+the radius of gyration, consistent with S31's finding that the distortion crosses 1.00 near
+|i-j| = 8. A single scalar is matched to one moment of it and is wrong at every other, so repairing
+the bond over-inflates the long range and repairing Rg leaves the bond short. This is the
+*control-must-match-the-operator's-space* failure appearing as an **operator** rather than as a control.
+
+**AND A SIMPLER REASON IT COULD NEVER HAVE WORKED, which S32-L(R1) supplies:** the tax is set by
+`cos`, not by `d`. Pre-scaling changes `d` and has no reason to change `cos` -- and the projection is
+*already* the bond-length repair, performed optimally in the RMSD sense. Pre-dilating moves the cloud
+away from the native without giving the projection anything it did not already have.
+
+**A DEFINITIONAL NOTE, because this number has been quoted three ways** (contract rule 4). The
+project's memory carries "the 25.8% contraction is WITHDRAWN (correct: 3.5%)", and
+`core/project.py`'s docstring says "its mean CA-CA bond is ~2.96 A against a real 3.80" -- which is
+22.15%. **Both are right and they measure different separations.** 22.15% is |i-j| = 1; ~3.5-5.4% is
+the aggregate / Rg scale. Neither figure may be substituted for the other.
+
+---

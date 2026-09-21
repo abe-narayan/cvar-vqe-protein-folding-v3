@@ -18,18 +18,24 @@ Rules that bind every row:
 
 ## Running totals
 
+*(Lane-V rows only; the per-lane sections below carry each lane's own count.)*
+
 | | count |
 |---|---|
-| hypotheses opened | 0 |
-| pre-registered arms (REG) | 0 |
-| exploratory arms (EXP) | 2 |
-| confirmatory / replication arms (CONF) | 0 |
-| audit arms (AUDIT, no hypothesis, no multiplicity cost) | 4 |
-| **comparisons emitted against the endpoint** | **0** |
-| headline claims | 0 |
+| audit arms (AUDIT, no hypothesis, no multiplicity cost) | 8 (V-A1 … V-A8) |
+| confirmatory / independent replication arms (CONF) | 2 (V-A7 `cos`, V-A8 DIS row of D1-T) |
+| defects found and reported when found | 5 (D1 … D5) |
+| **lane-V comparisons emitted against the endpoint** | **0** |
 
-No arm has yet emitted a comparison against the 3.2105 endpoint. The multiplicity budget is
-untouched. The moment a lane emits one, it lands here in the same edit as its number.
+**Lane V emits no endpoint comparison by design.** Its arms are audits and replications, which
+carry no multiplicity cost against the sprint's discovery budget — but the arms they audit do,
+and two are logged here explicitly:
+
+- **V-A5** re-gated 2 comparisons already emitted by S32-L3 (it did not add new ones).
+- **V-A8** emitted **8** in-band comparisons (4 scorers x {full band, deduplicated}). All are
+  DIAGNOSTIC, on the in-band Spearman basis, **never differenced against a chain RMSD**, and one
+  of the 8 is a pure-noise falsifier included precisely so the family can fail. Reported in full,
+  not best-of.
 
 ---
 
@@ -46,9 +52,13 @@ untouched. The moment a lane emits one, it lands here in the same edit as its nu
 | id | what | artefact | outcome |
 |---|---|---|---|
 | V-A1 | Charter Step 4: rebuild the endpoint from artefacts (targets -> pool -> score -> top-75 -> coordinate average -> projection -> chain) | `s32/results/s32_V_step4_endpoint.json` | cloud / set-mean / pool / top-75 confirmed exactly; chain to 0.0021 only — see **D1** |
-| V-A2 | Is 3.2105 bit-reproducible from its stated input? | `s32/results/s32_V_chain_bitexact.json` | see **D1** |
+| V-A2 | Is 3.2105 bit-reproducible from its stated input? | `s32/results/s32_V_chain_bitexact.json` | **YES, 126/126 bit-identical** from `s29_O_structs['prod']`; the two other float64 representations of the same average give 0/126 — see **D1** |
 | V-A3 | Size-matched random null for the ladder's narrowing increments (2000 draws/target) | `s32/results/s32_V_ladder_orderstat.json` | see **D2** |
 | V-A4 | rr spread of the DIS top-128 vs the pool (mechanism for V-A3) | `s32/results/s32_V_top128_spread.json` | mean 4.4533 -> 3.5847, sd 1.3206 -> 0.6384, **p5 2.6098 -> 2.6184 (unchanged)** |
+| V-A5 | The full contract-rule-1 gate + rule-10 draw distribution + rule-12 strata on V-A3 | `s32/results/s32_V_orderstat_gate.json`, `s32_V_orderstat_strata.json` | see **D3** — the aggregate is an outcome-defined stratum |
+| V-A6 | The ARITHMETIC-NOISE distribution of the endpoint: eps = 1e-14 A per coordinate, 5 draws x 126 | `s32/results/s32_V_ulp_distribution.json` | **draw-to-draw sd 0.0030 A**; per-target &#124;delta&#124; mean 0.0127 / p90 0.0248 / max 0.5006; cloud unchanged to 1.1e-13. *The irreducible sd on an unpaired built-chain mean.* |
+| V-A7 | Is lane R's `cos_align` independent evidence, and is it the cosine it is named for? | `s32/results/s32_V_cos_identity.json` | **NOT independent** — price rebuilt from (e,d,cos) to max error **0.000e+00**, a bijection. **But it IS a real cosine**: direct measurement in a common frame agrees to 0.0038 mean / 0.0642 max. Production mean cos **-0.052**, on the wrong side of the orthogonal null. |
+| V-A8 | Adversarial replication of lane D's D1-T sign transfer, with the three controls its artefact lacks | `s32/results/s32_V_D_signadversary.json` | see **D4** |
 
 ---
 
@@ -255,7 +265,7 @@ Basis is named on every row. `OB` = ORACLE band (top-24 by the native label `a`,
 | P-18 | in-band ρ of CONS on the NATIVE-FREE band | NFB, ORACLE label only | EXPLORATORY | **+0.2531 ± 0.0434**, 73% positive — positive in-band skill EXISTS |
 | P-19 | `Var(U)/Var(V)` on the native-free band | NFB, ORACLE | EXPLORATORY | median 4.89 (mean 19.0) — worse than the ORACLE band |
 | P-20 | P5 strata `Var(U)/Var(V)`: tail vs other108 | cloud, ORACLE | REGISTERED (H-P5) | 13.60 / 7.43 (filter-independent) vs 4.71 — **PASS** |
-| R-1 | R | PROD(cache cloud) vs PROD(s29 cloud) | R | built chain n=126 | pending | pending | the 1e-14 cloud floor |
+| R-1 | R | PROD(cache cloud) vs PROD(s29 cloud) | R | built chain n=126 | pending (branch job) | pending | the 1e-14 cloud floor |
 | R-2 | R | lam=0.3 arm vs lam=0 arm (same cloud, same job) | R | built chain n=126 | pending | pending | the ladder's own cost |
 | R-3 | R | PROD chain vs isotropic null sqrt(e^2+d^2) | R | built chain n=126 | pending | pending | R1 direction test |
 | R-4 | R | ORACLE best branch (9 family subsets) vs PROD | R | built chain n=126 | pending | pending | ORACLE ceiling |
@@ -485,8 +495,8 @@ dynamic range on this pool is spent on a rotamer-placement artefact that carries
 information, and the 0.5 Å of Cα motion it buys leaves the band's quality unchanged (−0.008 Å) and
 its best member slightly worse (+0.038 Å).** That is *why* the force field cannot rank here, stated
 as a mechanism rather than as a null.
-| R-10 | R | ladder rungs x5: observed price vs ORTHOGONAL isotropic null | R | built chain n=126 | pending | pending | R1 registered test |
-| R-11 | R | ladder rungs x5: cos_align + on-manifold null sqrt(e^2-d^2) | **E** | built chain n=126 | pending | pending | EXPLORATORY, added after seeing 10 of 126 ladder rows; the registered test said only "orthogonal or not", the first rows said not, in a direction |
+| R-10 | R | ladder rungs x5: observed price vs ORTHOGONAL isotropic null | R | built chain n=126 | prod +0.0118 / bestm +0.0067 / best1 -0.0076 / sp10 -0.2121 / sp20 -0.2186 | 0.24 / 0.13 / 1.16 / 4.65 / 4.54 | P1.2 HOLDS on prod+bestm, FALSIFIED on both sparse rungs (5/5 folds) |
+| R-11 | R | ladder rungs x5: cos_align + on-manifold null sqrt(e^2-d^2) | **E** | built chain n=126 | cos: prod -0.061, bestm -0.004, best1 +0.055, sp10 +0.380, sp20 +0.391 | SE 0.016-0.022 | EXPLORATORY, added after 10 of 126 rows |
 | P-25 | SPREAD (score floor + max w'Bw over survivors) vs PROD, 4 floors | **CLOUD SCREEN**, gated | EXPLORATORY (coordinator arm) | +0.6447 / +0.1796 / +0.0436 / +0.0076 at floors 25/50/60/75% — 1.96× WORSE to 0.11× NOT MEASURED |
 | P-26 | SPREAD vs RANDFLOOR (random 75 from the SAME survivor set) — the control that decides whether spread does work | CLOUD SCREEN | EXPLORATORY (control) | +0.4196 / +0.0864 / −0.0104 / −0.0039 — **spread does no work at any floor** |
 | P-27 | SPREAD with the floor chosen leave-fold-out vs PROD | CLOUD SCREEN | EXPLORATORY | +0.0076, 0.11×, 59W/67L — **NOT MEASURED**; LFO picks the tightest floor (0.75) on 5/5 folds, i.e. converges on production |
@@ -541,8 +551,8 @@ observation, not a lead.)
 | P-28 | ORACLE top-75 through the **DEPLOYED** uniform average vs production | CLOUD, ORACLE | REGISTERED (H-P1) | **−1.0853, 4.26× MDE, 125W/1L, 5/5** |
 | P-29 | ORACLE top-m (m=5, ORACLE-global) through the deployed average vs production | CLOUD, ORACLE | REGISTERED (H-P1) | **−1.5670, 5.17× MDE, 126W/0L, 5/5** |
 | P-30 | operator law `out ~ set_mean + set_best`, both prefix families, m=3..75 | CLOUD | REGISTERED (H-P2b-1) | 0.6730 / 0.3256, **ratio 2.07 — the registered ≥5× PREDICTION FAILS** |
-| R-12 | R | RANDSPARSE s=10 (3 draws) + SCORESPARSE vs PROD: price, d, cos | **E** | built chain n=126 | pending | pending | EXPLORATORY; the control L9 demands -- separates "sparse is cheap" from "aligned is cheap". Matched to the operator's space: same s, same averaging operator, same projection, same job; only the native's involvement in choosing members differs |
-| R-13 | R | d(prod) vs top-75 member spread; d vs cos | **E** | cloud+chain n=126 | pending | pending | EXPLORATORY; is production's off-manifold deviation the AVERAGING artefact (native-free both sides)? |
+| R-12 | R | RANDSPARSE s=10 (3 draws) + SCORESPARSE: price vs own orthogonal null | **E** | built chain n=126 | RANDSPARSE price +0.1988 (draw sd 0.0075), cos +0.019 (draw sd 0.0094); SCORESPARSE price +0.1371, cos -0.076 | 0.22 / 1.46 | THE DECISIVE CONTROL: same s=10 pays +0.0002 (ORACLE members) vs +0.1988 (native-free members). Sparsity explains nothing |
+| R-13 | R | spearman(d, top-75 member spread), both sides NATIVE-FREE | **E** | n=126 | rho +0.9646 (partial|n +0.967, partial|e +0.953, 5/5 folds) | null: within-n permutation mean +0.099, p99.9 +0.377, max +0.466 over 4000 draws | ratio cv 0.467 -> MONOTONE, not a proportionality |
 | R-14 | R | s_nf dilation (ideal bond) at CLOUD basis | R (P1.3) | CLOUD n=126 | +1.0425 | 2.79x | WORSE, 5/5 folds -- P1.3 FALSIFIED |
 | R-15 | R | Rg-matched dilation at CLOUD basis | **E** | CLOUD n=126 | +0.0622 | 1.47x | WORSE, 5/5 folds |
 | P-31 | cos(μ̂, μ) for μ̂ = c − t′ (a MISMATCHED same-length deposited native — native-free at inference) | cloud, ORACLE-scored | EXPLORATORY | **−0.0088 ± 0.0235**, 52% positive — zero |
