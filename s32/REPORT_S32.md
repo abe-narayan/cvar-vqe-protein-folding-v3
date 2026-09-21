@@ -70,7 +70,75 @@ float64 bits.
 
 ## 2. Where the RMSD is actually lost
 
-[PENDING — the ladder with all order-statistic pricing and stratification.]
+**Built chain, all ORACLE rungs ORACLE / NOT DEPLOYABLE:**
+
+```
+best sparse convex combination, K=500, s=10      1.1139        2.10 A of headroom
+best single member, K=500                        1.7078        1.50 A of headroom
+  + distogram SCORE prefix, 500 -> 128          +0.4350   ->   2.1435
+  + prefix 128 -> 75                            +0.1620   ->   2.3055
+  + selection / readout (uniform average)       +0.9051   ->   3.2105   PRODUCTION
+```
+
+**The pool is not the bottleneck.** The existing K=500 pool supports **1.1139 A** through a sparse
+convex combination of about ten members. Everything downstream of retrieval destroys **2.10 A that is
+already present**. Charter §56 asks for the earliest irreversible loss; **it is not candidate
+generation.**
+
+### 2.1 Most of the "filter loss" is a bare order statistic, and the rest is 18 circular targets
+
+The 500 → 128 step is **not** retrieval — it is the **distogram Bayes-risk score prefix**, which the
+S29 code calls *"the quantum field of view"*: **128 = 2⁷, the VQE register width.** Retrieval is the
+earlier arrow. Priced against a **size-matched random subset**, 2000 draws per target (CA cloud,
+ORACLE):
+
+```
+                              TOTAL      set-size order statistic     ordering effect
+K=500 -> 128                 +0.4350            +0.2477                   +0.1872
+128  ->  75                  +0.1604            +0.0907                   +0.0696
+```
+
+**57% of the 500 → 128 loss is bare set size** — a minimum over 500 is lower than a minimum over 128
+for *any* subset. The ordering effect is formally past MDE (1.06×, fold CI excluding zero, 4/5 folds),
+and **it is entirely 18 targets**:
+
+```
+                 ALL 126              FAIL18 (n=18)        OTHER 108
+500 -> 128   +0.1872 (med -0.0380)   +1.4879  0W/18L    -0.0296   0.30x   NOT A RESULT
+128 ->  75   +0.0696 (med -0.0045)   +0.3611  3W/15L    +0.0210   0.38x   NOT A RESULT
+```
+
+The ten worst targets are **all ten in FAIL18**; the score loses **18 of 18** there. Drop the 10 worst
+and the aggregate falls to +0.0294; drop 20 and it goes **negative**. And **FAIL18 is defined in
+`s12/instrument.py::selfcheck` as the targets where no pool member within 1.5 A of the pool best
+survives into the top-75** — so a contrast asking *"does the score's prefix retain the good
+members?"* is **near-circular on precisely those 18**, and *directly* circular for the 128 → 75 arm.
+The filter-independent control (split by chain length, median 13) shows **no gradient**: +0.1826 short
+against +0.1940 long. **It is not a broad property. It is the 18.**
+
+> ### The score is not a general anti-ordering. On 108 of 126 targets its top-128 retains a marginally *better* best-member than a random 128 — NOT A RESULT. Its failure is catastrophic and total on 14% of targets, and those are exactly the targets already named FAIL18. **The problem is not that it orders badly everywhere; it is that on one target in seven it places its window in the wrong part of the pool entirely.**
+
+This was **independently reproduced by two lanes from different raw artefacts** — the first time in
+this project that a retraction has been confirmed that way.
+
+**And the earlier arrow is fine.** `universe → 500` is **−0.0718**, with FAIL18 contributing **0%**
+and the other 108 at −0.0833 (0.98×, NOT MEASURED but the right sign). **Retrieval is not the
+problem.**
+
+**Also settled and not re-opened:** the prefix length `m` does not transfer — ORACLE global `m*` = 72
+is −0.0044 (0.19×) and the leave-fold-out `m` is **+0.0075, 63W/63L, a literal coin flip** on the
+endpoint; and a matched **random-subset** family reaches **141%** of the prefix family's gain on the
+chain, because prefix variants are nested (lag-1 autocorrelation 0.917 against 0.112) so a
+less-correlated family has a larger per-target minimum.
+
+**The corrected increment sentence:** *narrowing 500 → 128 → 75 costs 0.595 A of oracle-best
+headroom; 0.338 is the set-size order statistic; the remaining 0.257 is 18 targets' worth of the
+score placing its window wrongly, and is NOT MEASURED on the other 108.*
+
+**Rank moments, both true and different:** the K=500 best member sits at mean rank **170.3**, median
+**134.0** of 500; it survives into the top-128 on **63/126** targets and into the top-75 on
+**41/126**. *On half the targets the best available candidate is gone before the readout ever sees
+it.*
 
 ---
 
