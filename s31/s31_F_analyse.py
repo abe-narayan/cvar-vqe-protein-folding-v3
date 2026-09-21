@@ -550,6 +550,30 @@ def main():
                                   if tn == "T_CHAIN" else "filter-independent stratum")))
                 for tn, tm in tails.items()})
 
+    # ---- the COMPLETE readout-choice ceiling over all four operators (UNREGISTERED arm)
+    Mall = np.stack([ch_A, ch_M, ch_R, ch_S], 1)
+    o4 = cmp2(Mall.min(1), ch_A, folds, names,
+              "ORACLE min over all FOUR operators - AVG (BUILT CHAIN)")
+    cnt = np.bincount(Mall.argmin(1), minlength=4)
+    from scipy.stats import chisquare
+    cs = chisquare(cnt)
+    g4 = Mall.min(1) - ch_A
+    out["ORACLE_readout_choice_ceiling"] = dict(
+        UNREGISTERED="this arm was not pre-registered and is declared as such",
+        ORACLE="ORACLE / NOT DEPLOYABLE -- a per-target minimum over K = 4, the construction "
+               "S31-L11 audited; read with that entry's discipline",
+        basis="BUILT CHAIN", arms=["AVG", "MED", "AVG_RG", "AVG_SEP"],
+        cmp=brief(o4), mean=float(Mall.min(1).mean()),
+        argmin_counts=cnt.tolist(), chi2=float(cs.statistic), p_vs_uniform=float(cs.pvalue),
+        frac_targets_where_winner_is_not_AVG=float(1.0 - cnt[0] / len(R)),
+        per_target=dict(mean=float(g4.mean()), median=float(np.median(g4)),
+                        p90=float(np.percentile(g4, 90)), min=float(g4.min()),
+                        n_tied_with_AVG=int((g4 == 0).sum())),
+        split_half_transfer=dict(
+            value=ST.split_half_transfer(Mall, seed_parts=("s31F", str(SEED), "of4")),
+            DO_NOT_QUOTE="degenerate at small K when one column dominates globally -- the CI "
+                         "collapses to a point; recorded so that nobody quotes it later"))
+
     out["multiplicity"] = dict(registered=44, emitted=int(NCOMP[0]))
     with open(OUT, "w") as fh:
         json.dump(out, fh, indent=1, default=float)

@@ -585,6 +585,16 @@ try:
           dig(fa, "F2_tails", "T_POOL", "rank_best_in_pool", "tail"), tol=1e-2, basis="none")
     check("rank of the pool's best member, off that tail", 151.130,
           dig(fa, "F2_tails", "T_POOL", "rank_best_in_pool", "rest"), tol=1e-2, basis="none")
+    # 9b: the complete ORACLE readout-choice ceiling, and its order-statistic reading
+    oc = dig(fa, "ORACLE_readout_choice_ceiling")
+    check("ORACLE min over all FOUR operators", 3.0655, oc["mean"], basis="chain")
+    check("  vs production, same job", -0.1471, oc["cmp"]["effect"], basis="chain")
+    exact("  the argmin is spread over all four operators (no count > 50%)", True,
+          bool(max(oc["argmin_counts"]) < 63))
+    check("  chi-square p against a uniform argmin", 0.0271, oc["p_vs_uniform"], tol=1e-3,
+          basis="none")
+    exact("  the per-target median gain is much smaller than the mean (a max over draws)", True,
+          bool(abs(oc["per_target"]["median"]) < 0.5 * abs(oc["per_target"]["mean"])))
 except Exception as e:
     MISSING.append("lane F S31-L21 block (%s)" % e)
 

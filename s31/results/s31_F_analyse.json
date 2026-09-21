@@ -1770,8 +1770,68 @@
    }
   }
  },
+ "ORACLE_readout_choice_ceiling": {
+  "UNREGISTERED": "this arm was not pre-registered and is declared as such",
+  "ORACLE": "ORACLE / NOT DEPLOYABLE -- a per-target minimum over K = 4, the construction S31-L11 audited; read with that entry's discipline",
+  "basis": "BUILT CHAIN",
+  "arms": [
+   "AVG",
+   "MED",
+   "AVG_RG",
+   "AVG_SEP"
+  ],
+  "cmp": {
+   "label": "ORACLE min over all FOUR operators - AVG (BUILT CHAIN)",
+   "mean_a": 3.0654939188571952,
+   "mean_b": 3.212625219723354,
+   "effect": -0.14713130086615814,
+   "median_effect": -0.05696580881246849,
+   "se": 0.020656480932748925,
+   "mde": 0.057871196981189386,
+   "effect_over_mde": -2.542392563851446,
+   "ci95_fold": [
+    -0.16705823411448115,
+    -0.12199424986416804
+   ],
+   "folds_same_sign": 5,
+   "n_folds": 5,
+   "W": 100,
+   "L": 0,
+   "T": 26,
+   "n": 126
+  },
+  "mean": 3.0654939188571952,
+  "argmin_counts": [
+   26,
+   46,
+   25,
+   29
+  ],
+  "chi2": 9.174603174603174,
+  "p_vs_uniform": 0.027057298414178334,
+  "frac_targets_where_winner_is_not_AVG": 0.7936507936507937,
+  "per_target": {
+   "mean": -0.14713130086615814,
+   "median": -0.05696580881246849,
+   "p90": 0.0,
+   "min": -1.7214734407830992,
+   "n_tied_with_AVG": 26
+  },
+  "split_half_transfer": {
+   "value": {
+    "oracle_gain": -0.29143568422471694,
+    "transfer": -0.14395842471328757,
+    "ci95": [
+     -0.14430438335855877,
+     -0.14430438335855872
+    ],
+    "frac_of_oracle": 0.4939629307792169
+   },
+   "DO_NOT_QUOTE": "degenerate at small K when one column dominates globally -- the CI collapses to a point; recorded so that nobody quotes it later"
+  }
+ },
  "multiplicity": {
   "registered": 44,
-  "emitted": 28
+  "emitted": 29
  }
 }
