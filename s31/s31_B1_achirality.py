@@ -103,6 +103,17 @@ def f1_reflection(pdb_paths):
 
             X = np.asarray(mod.positions.value_in_unit(unit.nanometer), float)
             Xm = 2.0 * X.mean(0)[None, :] - X            # EXACT point reflection about centroid
+            # MATCHED CONTROL (contract rule 7): a pure ROTATION is also ANALYTICALLY exact
+            # for this potential, so its numerical residual IS the floating-point noise floor
+            # for a coordinate transform of this magnitude. The reflection residual must be
+            # read against it, not against zero.
+            rng = np.random.default_rng(1234)
+            A_ = rng.normal(size=(3, 3))
+            Q_, R_ = np.linalg.qr(A_)
+            Q_ = Q_ * np.sign(np.diag(R_))[None, :]
+            if np.linalg.det(Q_) < 0:
+                Q_[:, 0] *= -1.0                          # proper rotation, det = +1
+            Xr = (X - X.mean(0)[None, :]) @ Q_.T + X.mean(0)[None, :]
 
             def energies(P):
                 ctx.setPositions(P * unit.nanometer)
@@ -116,23 +127,30 @@ def f1_reflection(pdb_paths):
 
             e0, p0 = energies(X)
             e1, p1 = energies(Xm)
+            e2, p2 = energies(Xr)
             rel = abs(e1 - e0) / (abs(e0) + 1.0)
+            rel_rot = abs(e2 - e0) / (abs(e0) + 1.0)
             rows.append(dict(pdb=os.path.basename(p)[:-4], n_atoms=int(sysm.getNumParticles()),
-                             E=e0, E_mirror=e1, rel=rel,
-                             per_group={k: dict(E=p0[k], E_mirror=p1[k],
-                                                rel=abs(p1[k] - p0[k]) / (abs(p0[k]) + 1.0))
+                             E=e0, E_mirror=e1, E_rot=e2, rel=rel, rel_rot=rel_rot,
+                             per_group={k: dict(E=p0[k], E_mirror=p1[k], E_rot=p2[k],
+                                                rel=abs(p1[k] - p0[k]) / (abs(p0[k]) + 1.0),
+                                                rel_rot=abs(p2[k] - p0[k]) / (abs(p0[k]) + 1.0))
                                         for k in p0}))
             del ctx, integ
         except Exception as exc:                                   # noqa: BLE001
             rows.append(dict(pdb=os.path.basename(p)[:-4], error=repr(exc)[:300]))
     ok = [r for r in rows if "rel" in r]
     worst = max((r["rel"] for r in ok), default=float("nan"))
-    grp = {}
+    worst_rot = max((r["rel_rot"] for r in ok), default=float("nan"))
+    grp, grp_rot = {}, {}
     for r in ok:
         for k, v in r["per_group"].items():
             grp[k] = max(grp.get(k, 0.0), v["rel"])
+            grp_rot[k] = max(grp_rot.get(k, 0.0), v["rel_rot"])
     return dict(n_ok=len(ok), n_fail=len(rows) - len(ok), max_rel=float(worst),
-                max_rel_per_group=grp, rows=rows,
+                max_rel_rotation_control=float(worst_rot),
+                reflection_over_rotation=float(worst / worst_rot) if worst_rot > 0 else float("inf"),
+                max_rel_per_group=grp, max_rel_per_group_rotation=grp_rot, rows=rows,
                 F1_fired=bool(len(ok) and worst > 1e-6))
 
 
@@ -207,8 +225,14 @@ def main():
     out["F1"] = f1_reflection(pdbs)
     print("    n_ok=%(n_ok)d n_fail=%(n_fail)d  max relative |dE| = %(max_rel).3e  "
           "FIRED=%(F1_fired)s" % out["F1"], flush=True)
+    print("    ROTATION CONTROL (analytically exact -> the FP noise floor): %.3e   "
+          "reflection/rotation = %.2fx"
+          % (out["F1"]["max_rel_rotation_control"], out["F1"]["reflection_over_rotation"]),
+          flush=True)
+    print("      %-28s %10s %10s" % ("force group", "reflect", "rotate"), flush=True)
     for k, v in sorted(out["F1"]["max_rel_per_group"].items(), key=lambda kv: -kv[1]):
-        print("      %-28s %.3e" % (k, v), flush=True)
+        print("      %-28s %.3e %.3e" % (k, v, out["F1"]["max_rel_per_group_rotation"][k]),
+              flush=True)
 
     print("F3  Legacy term parity on real pool members ...", flush=True)
     out["F3"] = f3_legacy_parity(a.f3_targets, a.f3_members)

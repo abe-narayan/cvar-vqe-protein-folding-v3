@@ -481,7 +481,7 @@ sprint's open question rather than answer it. Endpoint arms pending; nothing is 
 ## S31-L4 -- **THE DEPLOYED CVaR FREE ENERGY IS A CONVEX PROGRAM WITH A CLOSED-FORM GLOBAL MINIMISER.** THE SHIPPED CIRCUIT IS STRICTLY WORSE THAN IT IN 12/12 CELLS, AND THE GAP IS AN **EXPRESSIVITY** FLOOR, NOT AN OPTIMISER ONE -- SO CHARTER §11 IS CLOSED FOR THE DEPLOYED OBJECTIVE (2026-09-21 00:01, L)
 
 Full working, tables and caveats: `s31/LIT_L.md` §L1.1-L1.4. Scripts:
-`scratchpad/lit_L_dequant_check.py`, `scratchpad/lit_L_gap_budget.py`.
+`s31/lit_L/lit_L_dequant_check.py`, `s31/lit_L/lit_L_gap_budget.py`.
 
 ### THEOREM (derived here from Rockafellar-Uryasev 2000 + the Gibbs variational principle)
 
@@ -1070,8 +1070,8 @@ Registered in `s31/MULTIPLICITY.md` row 7 (k = 2 primary, one basis).
 
 ## S31-L9 -- **92.9% OF tuning126 IS NMR-DETERMINED, SO THE NEW-OBSERVABLE QUESTION IS CLOSED BY PROVENANCE, NOT BY GEOMETRY** -- AND THE ALARMING FOLLOW-UP IS A NULL: THE DEPOSITED ENSEMBLE IS 1.08 A WIDE BUT **UNCORRELATED WITH FAIL18** (0.20x MDE) (2026-09-21 00:13, L)
 
-Full working: `s31/LIT_L.md` §L1.5, §L2, §L2.1. Scripts: `scratchpad/lit_L_expmethod.py`,
-`lit_L_ensemble_spread.py`, `lit_L_tail_vs_spread.py`.
+Full working: `s31/LIT_L.md` §L1.5, §L2, §L2.1. Scripts: `s31/lit_L/lit_L_expmethod.py`,
+`s31/lit_L/lit_L_ensemble_spread.py`, `s31/lit_L/lit_L_tail_vs_spread.py`.
 
 ### OURS -- what actually determined our reference coordinates (RCSB GraphQL, all 126)
 
@@ -1164,3 +1164,274 @@ functional of the state, and CVaR is not the expectation of any observable. Not 
 charter's **3.2105** -- a 0.0021 discrepancy. Flagged, not reconciled: the charter already
 lists **the unpinned projection seed** as an open defect gating every sub-0.01 A claim, and
 this is consistent with exactly that. Lane D owns it.
+
+## S31-L10 -- **THE FREE ENERGY IS ACHIRAL FOR THE SAME REASON THE ENERGY IS, SO G1 CLOSES BOTH HALVES OF `F = E - TS` -- AND THE TORSION CHANNEL'S ESCAPE FROM G1 IS REAL, MEASURABLE, AND WORKS ONLY ON THE PROBLEM THE PIPELINE DOES NOT HAVE.** THE 32-COST SWEEP REPRODUCES EXACTLY AND ITS TOP ROWS MEASURE TRIAGE, NOT NATIVENESS: **`pref(circ_best vs PROD)` IS AT OR BELOW A COIN FLIP FOR EVERY ONE OF THEM** (2026-09-21 00:15, B)
+
+Pre-registered in `s31/PREREG_S31_B.md`, committed at **e2fc6257 before the first number**.
+Artefacts: `s31/results/s31_B1_achirality.json`, `s31_B2_sweep_parity.json`,
+`s31_B2_inpool.json` + `s31_B2_inpool_rows.jsonl`, `s31_B3_graph.json`, and the three `.log`s.
+Code: `s31/s31_B1_achirality.py`, `s31_B2_sweep_parity.py`, `s31_B2_inpool.py`, `s31_B3_graph.py`.
+**Basis:** B2's correlations are **per-candidate CA point-cloud RMSD to native**, which is neither
+the 3.2105 Å built-chain endpoint nor the 3.0483 Å cloud endpoint. The sweep contrasts are on the
+**built-chain** rungs. **ORACLE / NOT DEPLOYABLE**: every correlation here is labelled by `rr`, and
+the coherence quantity needs the native in both arguments. Lane B emitted **146 comparisons**.
+
+---
+
+### 1. B1 — the free-energy stage, CLOSED BY DERIVATION, no thermodynamics computed
+
+**What `S` is a function of.** `S(x) = Φ_{β,B}[U_seq](x)`. Its arguments are the candidate `x` (a
+pool member), the sequence (only through the atom typing that instantiates `U`), and `β` and the
+basin map `B`, which are universal. **There is no fourth argument**, so by lane P's repaired source
+enumeration `S` is an *operator* on (sequence, pool), not a third source — exactly like `E`.
+
+**Lemma B1, verified not assumed.** The shipped potential
+`app.ForceField("amber14/protein.ff14SB.xml", "implicit/gbn2.xml")` (`core/amber.py:927`) is
+reflection-invariant, `U(Rx) = U(x)`.
+
+**Corollary B1.** `F_β`, `E`, `S` and every temperature derivative of `F` are rotation-,
+translation- **and reflection**-invariant single-structure observables, so **by G1 each is a
+function of the candidate's distance map** and lies in the class S30 closed by theorem and measured
+empty on 43 channels. The enthalpic half was already closed by measurement; the entropic half is
+closed by the same theorem that closed contact topology and Rg, because **`S` is achiral for exactly
+the reason `E` is.**
+
+> ### Corollary B1′ — the part nobody had connected, and the more valuable half
+> An **ANM or GNM Hessian is built from pairwise distances**, so its spectrum, its log-determinant
+> — which *is* the harmonic configurational entropy, `S_harm = const − ½ ln det′ H` — and **every
+> spectral-graph observable derived from it are distance-map functions.** This closes the whole
+> *elastic/network — normal-mode — energy-landscape-curvature* family of charter §14 by the same
+> theorem, without computing one of them. Basin populations, ensemble reweighting and
+> temperature-dependent ranking are monotone transforms of single-structure free energies and close
+> with it; local/per-residue configurational entropy closes **twice**, by B1′ and by S30-R's
+> locality result.
+
+**F2, registered falsifier — did not fire.** ff14SB's `PeriodicTorsionForce`, **1340 torsions**,
+maximum distance of any phase to `{0, π}` = **0.000e+00 exactly**; no `CMAPTorsionForce`. The
+algebra `cos(−nφ − γ) = cos(nφ − γ) ⟺ γ ∈ {0, π}` therefore holds term by term.
+
+**F1, registered falsifier — FIRED AGAINST ITS THRESHOLD, AND THE MATCHED CONTROL INVERTS THE
+READING.** `max |U(x) − U(Rx)| / (|U(x)|+1)` over 10 real target structures (208–390 atoms) is
+**3.673e-06** against my pre-registered **1e-6** bar. A **pure proper rotation**, equally
+analytically exact for this potential, gives **5.377e-06 — larger**; reflection/rotation = **0.68×**.
+Per force group, reflect vs rotate: `PeriodicTorsionForce` **2.0e-16** vs 3.6e-16, `HarmonicBond`
+1.9e-15, `HarmonicAngle` 1.3e-15 — *the only terms that could carry chirality are exact to machine
+epsilon*. The 1e-6-scale residual is confined to `NonbondedForce` (5.5e-07 vs 3.2e-06) and
+`CustomGBForce` (6.8e-07 vs 7.9e-07), which are pairwise-distance functions and analytically
+invariant under **any** isometry; their residual is summation-order noise.
+
+> **A registered threshold set at an absolute value, on a quantity only a matched control can read,
+> is a mis-set threshold, not a falsification.** The original wording stands; F1 is never quoted
+> without the rotation control in the same sentence. *(14 of 24 PDBs failed to build — non-standard
+> residues `CGU`/`DAL`, waters, missing atoms — unrelated to the test.)*
+
+**Left OPEN, on price and not on theory.** A **multi-structure** free energy — a barrier
+`F‡(x_a → x_b)` — depends on the *path* and so is not a function of `D(x_a)` and `D(x_b)`. G1 does
+not bind it. 10³–10⁵ trajectories per target is out of reach here; it is neither closed nor run.
+
+**Registered directional prediction, recorded before measurement (§B1.5), for whoever runs it.** A
+free energy **restrained toward the distogram prior is coherent with the prior's error by
+construction**, hence with the pool common mode, hence **harmful rather than neutral**
+(+0.0554 coherent against −0.2466 i.i.d. at matched R²).
+
+---
+
+### 2. The 32-cost meter sweep — REPRODUCED EXACTLY, and what its top rows actually measure
+
+Lane B rebuilt the published statistic independently and, once the meter's own tie rule
+(`s29_D_cost_audit.py:454`, **ties count 0.5**) is used, reproduces it to four decimals:
+`LEG_steric` **+0.2515**, `CAGEO` **+0.2341**, `LEG_torsion` **+0.2212**, `DIS` **+0.0357**,
+`DSSPHB` **−0.1835**. **The rows are correctly computed. Three things about them are new.**
+
+**(a) It is NOT an artefact of the `RAND_SIGNED` construction.** The same contrast against
+`GAUSS_MATCHED_0` — a Gaussian perturbation at matched distance, not a signed affine combination of
+the pool — is **the same size**: `LEG_torsion` +0.2222 vs +0.2212, `LEG_steric` +0.2460 vs +0.2515,
+`CAGEO` +0.2778 vs +0.2341. **The rows stand as measurements of what they measure.**
+
+**(b) What they measure is that the CONTROL is worse, not that the near-native is better.**
+Splitting the contrast into its two terms:
+
+```
+cost              pref(circ_best vs PROD)   pref(RAND_SIGNED vs PROD)   contrast
+LEG_steric                  0.5079                    0.2564            +0.2515
+CAGEO                       0.4206                    0.1865            +0.2341
+LEG_torsion                 0.4048                    0.1835            +0.2212
+RAMA                        0.4127                    0.2629            +0.1498
+```
+
+**Not one of the top rows reaches 0.5 on `pref(circ_best vs PROD)`** — `LEG_steric` is a coin flip
+at 0.508 and `LEG_torsion` is **below** one at 0.405, i.e. it prefers production to the ORACLE
+near-native structure on 60% of targets. A cost that recognised nativeness would score high there.
+**The contrast is coarse triage against a displaced structure.**
+
+**(c) The torsion-family contrasts are carried by the CHIRAL part; `LEG_steric`'s is not.**
+Decomposing each cost into `f_even = ½[f(x)+f(Rx)]` and `f_odd = ½[f(x)−f(Rx)]` under the exact
+point reflection and recomputing the *same* contrast:
+
+```
+cost              contrast_tot   contrast_even   contrast_odd    odd/tot
+LEG_torsion         +0.2212        +0.1220         +0.2698  2.78x  +1.22
+RAMA                +0.1498        +0.1002         +0.2242  2.25x  +1.50
+LEG                 +0.0546        +0.0317         +0.2133  1.87x  +3.91
+TORS_CONS_POOL      +0.0159        -0.0714         +0.1429  1.40x  +9.00
+LEG_steric          +0.2515        +0.1523         +0.1225         +0.49
+CAGEO               +0.2341        +0.1845         +0.0863         +0.37
+DIS / CONTACT       +0.0357        +0.0357         +0.0000          0.00   <- self-check
+```
+
+**`LEG_steric` splits roughly evenly, so my own opening hypothesis about it was half wrong and is
+corrected here**: its *variance* is dominated by chirality (odd share 13.0) but its *contrast* is
+not. **`CAGEO` is not achiral either** (mirror self-check 6.57) though its contrast is mostly even.
+The two achiral CA costs come out at **exactly 0.0000** odd, which is the self-check that the mirror
+is being applied correctly.
+
+**The construction-level mechanism, not a correlation.** `core/geometry.build_backbone_batch` places
+`CB = −0.58273431·cross(b, d) + …`. `cross` is a **pseudovector**, so every CB-dependent Legacy term
+inherits chirality. Measured odd variance share on 40 targets × 300 real pool members: steric
+**13.02**, torsion **0.301**, electrostatic 0.230, contact 0.105, solvation 0.100, aromatic 0.089 —
+and **exactly 0.000** for `hbond_local`, `hbond_longrange`, `coop_helix`, `coop_sheet`,
+`compactness`, which are the achiral terms.
+
+---
+
+### 3. B2 — the torsion channel, CLOSED. The escape from G1 is real and works on the wrong problem.
+
+**The decomposition theorem.** For an ideal-geometry backbone the point reflection acts on torsions
+**exactly** as `(φ,ψ) → (−φ,−ψ)`. So `T_even` is a reflection-invariant single-structure observable
+and **by G1 a function of the distance map**. **All of a torsion channel's escape from G1 lives in
+`T_odd`.** Crossed with separability (S30-R: a sum of per-residue terms cannot see a lever arm), the
+only cell no existing theorem closes is **chiral AND non-separable**. It was built (`XTWIST`) and
+measured.
+
+**The result, in one table.** `LEG_torsion`'s odd variance share over the pool is **0.3001** (median
+0.2844) — so the channel is genuinely chiral, and the registered `G1-check` (fires below 10%) does
+not fire. But the skill sits in different halves on the two problems:
+
+```
+                                 EVEN half (G1-CLOSED)      ODD half (G1-ESCAPING)
+coarse triage (sweep contrast)   +0.1220   1.35x MDE        +0.2698   2.78x MDE
+in-pool selection, 500 band      +0.2428   2.51x MDE        +0.0183   0.28x MDE
+in-pool selection, top-75 band   +0.0288   0.40x MDE        +0.0423   0.66x MDE
+```
+
+> **The chiral escape from G1 is real, measurable and not degenerate — and it only works on a
+> problem the pipeline does not have.** On the problem it does have, the surviving skill is in the
+> G1-closed half, and even that dies in band.
+
+**G2 fires exactly as registered.** In-pool ρ on the shipped **top-75** band: `LEG_torsion` +0.0444
+at **0.65× MDE**, `RAMA` +0.0368 at 0.51×, `LEG_tors_odd` +0.0423 at 0.66×. **Below 0.7× is not a
+result.** For scale, the *shipped* cost `DIS` scores +0.0652 at **0.83× MDE — NOT MEASURED** in its
+own band. **G3 does not fire**: no channel's partial ρ on `DIS` clears 1.0× MDE (best +0.0401,
+0.61×). Partialling on Rg changes nothing.
+
+**G5 fires, and this is the sharpest single number.** A **constant α-helix** at (−57°, −47°) — a
+plausible zero-*target*-information reference, never uniform-on-the-torus (contract rule 9) —
+**beats every torsion channel on both bands**: on the 500 band `HELIX_CONST` ρ = **+0.3413 (2.89×
+MDE, 5/5 folds)** against `LEG_torsion`'s +0.1676, a paired gap of **−0.1722 at 3.17× MDE with the
+fold CI [−0.2081, −0.1453]**; in band the gap is −0.0901 at 1.81× MDE, 5/5 folds. `HELIX_CONST` also
+beats Rg (+0.2794). **The Ramachandran channel's in-pool skill is a constant-prior effect — "this
+benchmark's peptides are helical" — and a single constant does it better than the fold-conditioned
+channel.**
+
+**M6, the open cell, is empty.** `XTWIST` = mean `sin(crossing dihedral)` over spatially contacting
+segment pairs at sequence separation ≥ s — chiral by construction (`χ → −χ` under reflection) and
+non-separable by construction. In-pool ρ at the 500 band: `XTWIST_4` **−0.0104 (−0.23×)**,
+`XTWIST_8` −0.0853 (−1.02×, i.e. *backwards*); in band +0.0320 (0.36×) and +0.0091 (0.09×). **Its
+own achiral twin `XTWABS` beats it** (+0.1124 and +0.1486 at the 500 band) — the matched control in
+the operator's own space. The α-helix control beats `XTWIST_4` by −0.3429 at 4.06× MDE, 5/5 folds.
+
+**M2 — why triage and selection come apart.** `LEG_torsion` of the `RAND_SIGNED` rung sits at
+**z = +2.363** in the pool's *own* torsion distribution (median +2.069), and **70.6% of targets have
+the control above the pool's 95th percentile**. `PROD` sits at +0.844 and the ORACLE `circ_best` at
+**+1.129 — worse than production**. The channel's dynamic range is spent outside the pool; inside it
+there is nothing left to spend.
+
+**M0 — chiral dynamic range does exist.** Mirroring a candidate changes its RMSD by **0.5168 Å**
+against a pool spread of 1.3206 Å, a ratio of **0.402**. *Reported as a diagnostic and explicitly
+not as a ceiling*: `D(x)` determines `x` up to reflection and the real pool holds no mirror pairs,
+so on **this** pool an achiral observable is not information-limited. **G1 forbids a new channel,
+not a good function of the old one** — and that is what the charter asked about.
+
+**My own registered prior failed and is recorded as failed.** I gave **4 : 1 that `LEG_torsion` is
+predominantly odd**. It is **70% even**. The three other priors (no in-pool skill at 1.0× MDE;
+nothing passes the coherence bar; B2 ends closed) all held.
+
+---
+
+### 4. M5 — WHY NO RANKER WILL EVER PASS S30'S COHERENCE ADMISSION TEST
+
+**The derivation.** Let the readout be an affine combination of pool members, `C = Σ a_m x_m` with
+`Σ a_m = 1` (argmin is `a = δ`; the uniform average is `a = 1/75`). To first order in pair-distance
+space, `e_p = Σ_m a_m (d_{m,p} − d_nat,p) = μ_p + Σ_m a_m η_{m,p}`. **`Σ a_m = 1` passes the common
+mode `μ_p` through with coefficient exactly one, whatever the weights are.** So
+`coh = corr(e, μ)` depends on the **concentration of `a`**, not on the ranker that produced it.
+
+**Measured, n = 126, ORACLE / NOT DEPLOYABLE (both arguments need the native):**
+
+```
+uniform mean in pair space       coh = 1.0000   sd 0.0000     <- EXACTLY, as derived
+coordinate average (production)        0.9780   sd 0.0322     <- leaves the hull, barely
+argmin by HELIX_CONST                  0.8684
+argmin by RAMA                         0.8552
+argmin by LEG_torsion                  0.8467
+argmin by DIS  (the shipped cost)      0.8288
+argmin by a RANDOM pool member         0.8244   <- the shipped cost and a coin are the same
+argmin by LEG_tors_odd                 0.7861
+ORACLE best member                     0.6708   <- the ONLY arm under the 0.6931 bar
+```
+
+> **The shipped cost and a random pick differ by 0.0044 in coherence. The entire 43-channel ranking
+> search was searching a dimension along which the admission test does not vary** — and the ORACLE
+> *ceiling* of all in-pool ranking is 0.6708 against a bar of 0.6931, so even perfect selection
+> barely clears it. **The admission test cannot be passed by choosing better inside the pool; it can
+> only be passed by leaving the pool's affine hull.** The project's one confirmed positive — the
+> AMBER relax at k = 30, −0.0221 Å — is exactly such an operator.
+
+---
+
+### 5. The coordinator's multi-structure proxy — pre-checked before anything was built
+
+Graph observables on the pairwise Kabsch-RMSD matrix `P` of the top-75 are functions of the **set**
+of distance maps, so they escape G1 on the same argument that leaves barriers open, at the cost of
+one matrix operation. Both failure modes were checked first (n = 126, kNN = 8).
+
+**C1 — collapse to the direct distance: DOES NOT FIRE.** Within-target Spearman against the direct
+`P` over all 75·74/2 pairs: **geodesic 0.867**, **commute time 0.792** (p10 0.787 / 0.662). These
+are **not** relabellings of `P`; they carry real independent rank variance.
+
+**C2 — reduction to consensus: FIRES, decisively.** In-band ρ with the ORACLE label, then the same
+partialled on the **medoid criterion** `mean_j P_ij`:
+
+```
+node statistic     rho      xMDE          rho | medoid      xMDE
+medoid_crit      +0.2237    2.27   5/5     +0.2094 (|DIS)   2.22   5/5
+geo_cent         +0.2099    2.10   5/5     +0.0377          0.53   4/5
+commute_cent     +0.1697    1.88   5/5     +0.0121          0.19   3/5
+degree           +0.1519    1.87   5/5     -0.0225         -0.49   4/5
+fiedler_abs      +0.0738    0.88   5/5     +0.0458          0.54   3/5
+```
+
+**Every node-level graph observable's in-band skill is fully absorbed by consensus** — which the
+project already owns and already priced at −0.172 Å. Note the consensus criterion itself is
+**+0.2094 at 2.22× MDE, 5/5 folds, partialled on the shipped cost**, i.e. it is the one thing in
+this entry that beats `DIS` in band (`DIS` is 0.83×, NOT MEASURED).
+
+> **The escape is real at the PAIR level and empty at the NODE level.** Anyone spending on it needs
+> a **pair-level terminal operator**, not a candidate ranking. That is the handoff.
+
+---
+
+### 6. What lane B closed, and what it did not
+
+| direction | status | closed by |
+|---|---|---|
+| single-candidate free energy, entropy, `E`/`S` decomposition, basin populations, ensemble reweighting, temperature-dependent ranking | **CLOSED** | Corollary B1 (G1 + Lemma B1, verified) |
+| ANM/GNM spectra, normal-mode/harmonic entropy, landscape curvature, spectral-graph-on-one-structure | **CLOSED** | Corollary B1′ |
+| local/per-residue configurational entropy | **CLOSED twice** | B1′ and S30-R locality |
+| the backbone-torsion channel for **in-pool selection** | **CLOSED** | G2 fires (0.65× MDE), G3 does not fire, **G5 fires at 1.81–3.85× MDE** — a constant α-helix beats it |
+| the chiral **and** non-separable cell (the only one G1 left) | **built and empty at this length** | `XTWIST` −0.23× / 0.36×; its own achiral twin beats it |
+| node-level candidate-graph observables | **CLOSED** | C2: fully absorbed by consensus |
+| passing S30's coherence bar **by ranking** | **CLOSED by derivation** | M5: `Σa=1` passes μ through with coefficient 1 |
+| **multi-structure free energy (true barriers)** | **OPEN, on price only** | 10³–10⁵ trajectories/target |
+| **pair-level** graph quantities | **OPEN** | C1 did not fire; needs a pair-level operator |
+| chiral functionals at 40+ residues | **still open, still unaskable here** | the theorem is length-free, the emptiness is not |

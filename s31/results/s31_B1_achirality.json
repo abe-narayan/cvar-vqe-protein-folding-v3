@@ -1,0 +1,4422 @@
+{
+ "forcefield": [
+  "amber14/protein.ff14SB.xml",
+  "implicit/gbn2.xml"
+ ],
+ "prereg": "s31/PREREG_S31_B.md",
+ "F2": {
+  "n_torsions": 1340,
+  "forces": {
+   "HarmonicBondForce": 1,
+   "PeriodicTorsionForce": 1,
+   "NonbondedForce": 1,
+   "CMMotionRemover": 1,
+   "HarmonicAngleForce": 1,
+   "CustomGBForce": 1
+  },
+  "max_dist_to_0_or_pi_rad": 0.0,
+  "unique_phases_rad": [
+   0.0,
+   3.14159265359
+  ],
+  "has_cmap": false,
+  "F2_fired": false
+ },
+ "F1": {
+  "n_ok": 10,
+  "n_fail": 14,
+  "max_rel": 3.672637437693676e-06,
+  "max_rel_rotation_control": 5.377308888602537e-06,
+  "reflection_over_rotation": 0.682987998974358,
+  "max_rel_per_group": {
+   "HarmonicBondForce": 1.8744266587156624e-15,
+   "PeriodicTorsionForce": 1.9802433198770317e-16,
+   "NonbondedForce": 5.498011483749481e-07,
+   "CMMotionRemover": 0.0,
+   "HarmonicAngleForce": 1.3340692640998765e-15,
+   "CustomGBForce": 6.82303169043599e-07
+  },
+  "max_rel_per_group_rotation": {
+   "HarmonicBondForce": 6.3515544273855876e-15,
+   "PeriodicTorsionForce": 3.607412455680675e-16,
+   "NonbondedForce": 3.197557564867429e-06,
+   "CMMotionRemover": 0.0,
+   "HarmonicAngleForce": 2.234782041442153e-15,
+   "CustomGBForce": 7.899335662028006e-07
+  },
+  "rows": [
+   {
+    "pdb": "1A11",
+    "n_atoms": 390,
+    "E": -448.88115320178173,
+    "E_mirror": -448.88109341708156,
+    "E_rot": -448.8811930132726,
+    "rel": 1.3288998604298043e-07,
+    "rel_rot": 8.849335114732653e-08,
+    "per_group": {
+     "HarmonicBondForce": {
+      "E": 60.38567053087619,
+      "E_mirror": 60.38567053087623,
+      "E_rot": 60.38567053087654,
+      "rel": 6.945035181160461e-16,
+      "rel_rot": 5.671778731281043e-15
+     },
+     "PeriodicTorsionForce": {
+      "E": 366.41414001036156,
+      "E_mirror": 366.4141400103615,
+      "E_rot": 366.41414001036156,
+      "rel": 1.5471211548691337e-16,
+      "rel_rot": 0.0
+     },
+     "NonbondedForce": {
+      "E": -506.3769512403475,
+      "E_mirror": -506.3768447953416,
+      "E_rot": -506.3770590529559,
+      "rel": 2.0979472102554223e-07,
+      "rel_rot": 2.1249015763310883e-07
+     },
+     "CMMotionRemover": {
+      "E": 0.0,
+      "E_mirror": 0.0,
+      "E_rot": 0.0,
+      "rel": 0.0,
+      "rel_rot": 0.0
+     },
+     "HarmonicAngleForce": {
+      "E": 22.846041445553176,
+      "E_mirror": 22.846041445553173,
+      "E_rot": 22.846041445553123,
+      "rel": 1.4898546942947687e-16,
+      "rel_rot": 2.234782041442153e-15
+     },
+     "CustomGBForce": {
+      "E": -392.15005394822515,
+      "E_mirror": -392.1501006085309,
+      "E_rot": -392.1499859471079,
+      "rel": 1.1868319818778135e-07,
+      "rel_rot": 1.7296479187358753e-07
+     }
+    }
+   },
+   {
+    "pdb": "1A13",
+    "n_atoms": 239,
+    "E": 20.278662105681413,
+    "E_mirror": 20.27866184187915,
+    "E_rot": 20.278547683742534,
+    "rel": 1.2397502356071807e-08,
+    "rel_rot": 5.377308888602537e-06,
+    "per_group": {
+     "HarmonicBondForce": {
+      "E": 30.80683986251288,
+      "E_mirror": 30.806839862512874,
+      "E_rot": 30.80683986251285,
+      "rel": 2.2339306225688156e-16,
+      "rel_rot": 1.005268780155967e-15
+     },
+     "PeriodicTorsionForce": {
+      "E": 182.82133237554123,
+      "E_mirror": 182.8213323755412,
+      "E_rot": 182.82133237554123,
+      "rel": 1.5461594725219022e-16,
+      "rel_rot": 0.0
+     },
+     "NonbondedForce": {
+      "E": 275.66995980534386,
+      "E_mirror": 275.66992322199593,
+      "E_rot": 275.6698617938823,
+      "rel": 1.322273945488406e-07,
+      "rel_rot": 3.5425407808937326e-07
+     },
+     "CMMotionRemover": {
+      "E": 0.0,
+      "E_mirror": 0.0,
+      "E_rot": 0.0,
+      "rel": 0.0,
+      "rel_rot": 0.0
+     },
+     "HarmonicAngleForce": {
+      "E": 7.654962502184744,
+      "E_mirror": 7.654962502184755,
+      "E_rot": 7.654962502184742,
+      "rel": 1.3340692640998765e-15,
+      "rel_rot": 2.0524142524613486e-16
+     },
+     "CustomGBForce": {
+      "E": -476.6744324399014,
+      "E_mirror": -476.6743961203556,
+      "E_rot": -476.6744488503786,
+      "rel": 7.603410052323015e-08,
+      "rel_rot": 3.435494153897149e-08
+     }
+    }
+   },
+   {
+    "pdb": "1A1P",
+    "n_atoms": 208,
+    "E": -183.5161079106558,
+    "E_mirror": -183.5160982552234,
+    "E_rot": -183.5161261271777,
+    "rel": 5.232839833067237e-08,
+    "rel_rot": 9.872591675041648e-08,
+    "per_group": {
+     "HarmonicBondForce": {
+      "E": 32.5607327568429,
+      "E_mirror": 32.56073275684291,
+      "E_rot": 32.56073275684269,
+      "rel": 2.1171848091285292e-16,
+      "rel_rot": 6.3515544273855876e-15
+     },
+     "PeriodicTorsionForce": {
+      "E": 202.4218180727333,
+      "E_mirror": 202.4218180727333,
+      "E_rot": 202.4218180727333,
+      "rel": 0.0,
+      "rel_rot": 0.0
+     },
+     "NonbondedForce": {
+      "E": -145.2804451618528,
+      "E_mirror": -145.280422510948,
+      "E_rot": -145.28044521883632,
+      "rel": 1.548457470538834e-07,
+      "rel_rot": 3.895497405927413e-10
+     },
+     "CMMotionRemover": {
+      "E": 0.0,
+      "E_mirror": 0.0,
+      "E_rot": 0.0,
+      "rel": 0.0,
+      "rel_rot": 0.0
+     },
+     "HarmonicAngleForce": {
+      "E": 54.71911110280471,
+      "E_mirror": 54.719111102804696,
+      "E_rot": 54.71911110280461,
+      "rel": 2.550445338042494e-16,
+      "rel_rot": 1.785311736629746e-15
+     },
+     "CustomGBForce": {
+      "E": -327.93732468118384,
+      "E_mirror": -327.9373376766563,
+      "E_rot": -327.937342840722,
+      "rel": 3.9507442514481816e-08,
+      "rel_rot": 5.5206681666359344e-08
+     }
+    }
+   },
+   {
+    "pdb": "1AD7",
+    "error": "ValueError('No template found for residue 2 (CGU).  The set of atoms is similar to CGLU, but is missing 1 H atom and has 1 C atom and 1 O atom too many.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#template')"
+   },
+   {
+    "pdb": "1AJ1",
+    "error": "ValueError('No template found for residue 0 (DAL).  The set of atoms matches ALA, but the residue is missing 1 H-C bond and has 1 H-N bond too many.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#template')"
+   },
+   {
+    "pdb": "1AKG",
+    "error": "ValueError('No template found for residue 17 (HOH).  The set of atoms is similar to ACE, but is missing 1 H atom and 2 C atoms.  Is the chain terminated in a way that is unsupported by the force field?  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#templa"
+   },
+   {
+    "pdb": "1AL1",
+    "error": "ValueError('No template found for residue 5 (LYS).  The set of atoms is similar to VAL, but is missing 3 H atoms and 1 C atom.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#template')"
+   },
+   {
+    "pdb": "1ALE",
+    "n_atoms": 294,
+    "E": -579.5554439969195,
+    "E_mirror": -579.5553739083517,
+    "E_rot": -579.554991719453,
+    "rel": 1.2072674282241265e-07,
+    "rel_rot": 7.790426756925646e-07,
+    "per_group": {
+     "HarmonicBondForce": {
+      "E": 97.55873017950393,
+      "E_mirror": 97.55873017950411,
+      "E_rot": 97.55873017950415,
+      "rel": 1.8744266587156624e-15,
+      "rel_rot": 2.306986656880815e-15
+     },
+     "PeriodicTorsionForce": {
+      "E": 234.6782218665231,
+      "E_mirror": 234.67822186652307,
+      "E_rot": 234.67822186652307,
+      "rel": 1.2059539997081574e-16,
+      "rel_rot": 1.2059539997081574e-16
+     },
+     "NonbondedForce": {
+      "E": -130.8747860317885,
+      "E_mirror": -130.87481691679562,
+      "E_rot": -130.8743643545688,
+      "rel": 2.3419948622657436e-07,
+      "rel_rot": 3.197557564867429e-06
+     },
+     "CMMotionRemover": {
+      "E": 0.0,
+      "E_mirror": 0.0,
+      "E_rot": 0.0,
+      "rel": 0.0,
+      "rel_rot": 0.0
+     },
+     "HarmonicAngleForce": {
+      "E": 55.93373959881899,
+      "E_mirror": 55.933739598819024,
+      "E_rot": 55.933739598818924,
+      "rel": 6.240084884348959e-16,
+      "rel_rot": 1.1232152791828125e-15
+     },
+     "CustomGBForce": {
+      "E": -836.8513496099771,
+      "E_mirror": -836.8512486364024,
+      "E_rot": -836.8513190097304,
+      "rel": 1.2051490370517823e-07,
+      "rel_rot": 3.652228603577732e-08
+     }
+    }
+   },
+   {
+    "pdb": "1ALF",
+    "n_atoms": 339,
+    "E": -484.4821858215625,
+    "E_mirror": -484.4821544801174,
+    "E_rot": -484.4822666864055,
+    "rel": 6.455735351293046e-08,
+    "rel_rot": 1.6656603556131447e-07,
+    "per_group": {
+     "HarmonicBondForce": {
+      "E": 84.03476127152572,
+      "E_mirror": 84.03476127152575,
+      "E_rot": 84.03476127152625,
+      "rel": 3.342363641105575e-16,
+      "rel_rot": 6.1833727360453145e-15
+     },
+     "PeriodicTorsionForce": {
+      "E": 235.36090782173542,
+      "E_mirror": 235.36090782173542,
+      "E_rot": 235.36090782173534,
+      "rel": 0.0,
+      "rel_rot": 3.607412455680675e-16
+     },
+     "NonbondedForce": {
+      "E": -59.37243734343005,
+      "E_mirror": -59.37240415059467,
+      "E_rot": -59.37251841657401,
+      "rel": 5.498011483749481e-07,
+      "rel_rot": 1.3428834005625968e-06
+     },
+     "CMMotionRemover": {
+      "E": 0.0,
+      "E_mirror": 0.0,
+      "E_rot": 0.0,
+      "rel": 0.0,
+      "rel_rot": 0.0
+     },
+     "HarmonicAngleForce": {
+      "E": 59.27545840739739,
+      "E_mirror": 59.275458407397394,
+      "E_rot": 59.27545840739742,
+      "rel": 1.1788259343588797e-16,
+      "rel_rot": 5.894129671794399e-16
+     },
+     "CustomGBForce": {
+      "E": -803.780875978791,
+      "E_mirror": -803.7808778301813,
+      "E_rot": -803.7808757704905,
+      "rel": 2.3004900276966615e-09,
+      "rel_rot": 2.58828758108022e-10
+     }
+    }
+   },
+   {
+    "pdb": "1ALG",
+    "error": "ValueError('No template found for residue 23 (ASP).  The atoms and bonds in the residue match ASP, but the set of externally bonded atoms is missing 1 C atom.  Is the chain missing a terminal capping group?  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#t"
+   },
+   {
+    "pdb": "1AQG",
+    "error": "ValueError('No template found for residue 10 (PHE).  The atoms and bonds in the residue match PHE, but the set of externally bonded atoms is missing 1 C atom.  Is the chain missing a terminal capping group?  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#t"
+   },
+   {
+    "pdb": "1AS5",
+    "n_atoms": 357,
+    "E": -418.62116635515525,
+    "E_mirror": -418.62107788428193,
+    "E_rot": -418.6212483019634,
+    "rel": 2.1083510655785734e-07,
+    "rel_rot": 1.9528759446922073e-07,
+    "per_group": {
+     "HarmonicBondForce": {
+      "E": 97.81438884626456,
+      "E_mirror": 97.81438884626452,
+      "E_rot": 97.81438884626513,
+      "rel": 4.314408523229725e-16,
+      "rel_rot": 5.752544697639634e-15
+     },
+     "PeriodicTorsionForce": {
+      "E": 353.16922352930294,
+      "E_mirror": 353.16922352930294,
+      "E_rot": 353.1692235293029,
+      "rel": 0.0,
+      "rel_rot": 1.604979063238818e-16
+     },
+     "NonbondedForce": {
+      "E": -169.6572173380165,
+      "E_mirror": -169.65714804619245,
+      "E_rot": -169.65733312830145,
+      "rel": 4.0602926221528424e-07,
+      "rel_rot": 6.784962672982173e-07
+     },
+     "CMMotionRemover": {
+      "E": 0.0,
+      "E_mirror": 0.0,
+      "E_rot": 0.0,
+      "rel": 0.0,
+      "rel_rot": 0.0
+     },
+     "HarmonicAngleForce": {
+      "E": 261.8004283761818,
+      "E_mirror": 261.8004283761817,
+      "E_rot": 261.80042837618214,
+      "rel": 4.3259761189917346e-16,
+      "rel_rot": 1.2977928356975205e-15
+     },
+     "CustomGBForce": {
+      "E": -961.7479897688881,
+      "E_mirror": -961.7479705898386,
+      "E_rot": -961.7479559254122,
+      "rel": 1.9921152537305628e-08,
+      "rel_rot": 3.515299574688724e-08
+     }
+    }
+   },
+   {
+    "pdb": "1AWY",
+    "error": "ValueError('No template found for residue 2 (CGU).  The set of atoms is similar to CGLU, but is missing 1 H atom and has 1 C atom and 1 O atom too many.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#template')"
+   },
+   {
+    "pdb": "1B03",
+    "error": "ValueError('No template found for residue 17 (GLY).  The atoms and bonds in the residue match GLY, but the set of externally bonded atoms is missing 1 C atom.  Is the chain missing a terminal capping group?  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#t"
+   },
+   {
+    "pdb": "1B0Q",
+    "error": "ValueError('No template found for residue 6 (TRP).  The atoms and bonds in the residue match TRP, but the set of externally bonded atoms has 1 N atom too many.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#template')"
+   },
+   {
+    "pdb": "1B1V",
+    "error": "ValueError('No template found for residue 22 (PHE).  The atoms and bonds in the residue match PHE, but the set of externally bonded atoms is missing 1 C atom.  Is the chain missing a terminal capping group?  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#t"
+   },
+   {
+    "pdb": "1B45",
+    "n_atoms": 199,
+    "E": -265.06938571239385,
+    "E_mirror": -265.06938969494945,
+    "E_rot": -265.06946668808774,
+    "rel": 1.4968109114247335e-08,
+    "rel_rot": 3.0434051506467e-07,
+    "per_group": {
+     "HarmonicBondForce": {
+      "E": 22.475073627396743,
+      "E_mirror": 22.475073627396746,
+      "E_rot": 22.47507362739687,
+      "rel": 1.5133983114132952e-16,
+      "rel_rot": 5.448233921087863e-15
+     },
+     "PeriodicTorsionForce": {
+      "E": 142.5263492375721,
+      "E_mirror": 142.52634923757208,
+      "E_rot": 142.5263492375721,
+      "rel": 1.9802433198770317e-16,
+      "rel_rot": 0.0
+     },
+     "NonbondedForce": {
+      "E": -147.0094181120393,
+      "E_mirror": -147.00943338359264,
+      "E_rot": -147.0094956094743,
+      "rel": 1.0317960527288981e-07,
+      "rel_rot": 5.235979979475836e-07
+     },
+     "CMMotionRemover": {
+      "E": 0.0,
+      "E_mirror": 0.0,
+      "E_rot": 0.0,
+      "rel": 0.0,
+      "rel_rot": 0.0
+     },
+     "HarmonicAngleForce": {
+      "E": 52.901569776634176,
+      "E_mirror": 52.90156977663416,
+      "E_rot": 52.90156977663415,
+      "rel": 2.636445427116721e-16,
+      "rel_rot": 5.272890854233442e-16
+     },
+     "CustomGBForce": {
+      "E": -335.9629602419576,
+      "E_mirror": -335.96294895295983,
+      "E_rot": -335.96296372021664,
+      "rel": 3.350219193374266e-08,
+      "rel_rot": 1.0322377953382946e-08
+     }
+    }
+   },
+   {
+    "pdb": "1B5N",
+    "error": "ValueError('No template found for residue 22 (PHE).  The atoms and bonds in the residue match PHE, but the set of externally bonded atoms is missing 1 C atom.  Is the chain missing a terminal capping group?  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#t"
+   },
+   {
+    "pdb": "1BCV",
+    "error": "ValueError('No template found for residue 19 (LEU).  The set of atoms is similar to CLYS, but is missing 1 H atom and 1 N atom.  Is the chain terminated in a way that is unsupported by the force field?  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#templa"
+   },
+   {
+    "pdb": "1BDK",
+    "error": "ValueError('No template found for residue 0 (DAR).  The set of atoms matches NARG, but the residue is missing 2 H-N bonds.  For more information, see https://github.com/openmm/openmm/wiki/Frequently-Asked-Questions#template')"
+   },
+   {
+    "pdb": "1BFW",
+    "error": "ValueError('No template found for residue 0 (LML).  The set of atoms is similar to GLH, but is missing 1 N atom and has 3 H atoms and 2 C atoms too many.  Is the chain terminated in a way that is unsupported by the force field?  For more information, see https://github.com/openmm/openmm/wiki/Frequen"
+   },
+   {
+    "pdb": "1BQF",
+    "n_atoms": 371,
+    "E": -607.1775840170659,
+    "E_mirror": -607.1775965662982,
+    "E_rot": -607.1775656025856,
+    "rel": 2.063415796229154e-08,
+    "rel_rot": 3.027813063313727e-08,
+    "per_group": {
+     "HarmonicBondForce": {
+      "E": 55.026856047875064,
+      "E_mirror": 55.02685604787499,
+      "E_rot": 55.026856047874745,
+      "rel": 1.2682181116015861e-15,
+      "rel_rot": 5.706981502207137e-15
+     },
+     "PeriodicTorsionForce": {
+      "E": 352.73883149076426,
+      "E_mirror": 352.73883149076426,
+      "E_rot": 352.73883149076426,
+      "rel": 0.0,
+      "rel_rot": 0.0
+     },
+     "NonbondedForce": {
+      "E": -422.8085223990279,
+      "E_mirror": -422.8085335107925,
+      "E_rot": -422.8084723675961,
+      "rel": 2.6218832339655134e-08,
+      "rel_rot": 1.1805197191427808e-07
+     },
+     "CMMotionRemover": {
+      "E": 0.0,
+      "E_mirror": 0.0,
+      "E_rot": 0.0,
+      "rel": 0.0,
+      "rel_rot": 0.0
+     },
+     "HarmonicAngleForce": {
+      "E": 16.435156897009417,
+      "E_mirror": 16.43515689700941,
+      "E_rot": 16.435156897009424,
+      "rel": 4.075344661119607e-16,
+      "rel_rot": 4.075344661119607e-16
+     },
+     "CustomGBForce": {
+      "E": -608.5699060536867,
+      "E_mirror": -608.5699074911544,
+      "E_rot": -608.569937670638,
+      "rel": 2.3581669909774797e-09,
+      "rel_rot": 5.1867637993449294e-08
+     }
+    }
+   },
+   {
+    "pdb": "1BTQ",
+    "n_atoms": 313,
+    "E": -11.414169409669478,
+    "E_mirror": -11.41421500241281,
+    "E_rot": -11.414156243685403,
+    "rel": 3.672637437693676e-06,
+    "rel_rot": 1.0605610122541784e-06,
+    "per_group": {
+     "HarmonicBondForce": {
+      "E": 37.50056024570856,
+      "E_mirror": 37.50056024570857,
+      "E_rot": 37.500560245708655,
+      "rel": 1.8455386914513804e-16,
+      "rel_rot": 2.3992002988867946e-15
+     },
+     "PeriodicTorsionForce": {
+      "E": 243.66943574815866,
+      "E_mirror": 243.66943574815866,
+      "E_rot": 243.6694357481587,
+      "rel": 0.0,
+      "rel_rot": 1.1616371020554784e-16
+     },
+     "NonbondedForce": {
+      "E": -229.64813557056212,
+      "E_mirror": -229.64813101188946,
+      "E_rot": -229.6480870206989,
+      "rel": 1.9764619583258748e-08,
+      "rel_rot": 2.1049319600477854e-07
+     },
+     "CMMotionRemover": {
+      "E": 0.0,
+      "E_mirror": 0.0,
+      "E_rot": 0.0,
+      "rel": 0.0,
+      "rel_rot": 0.0
+     },
+     "HarmonicAngleForce": {
+      "E": 9.567096398458364,
+      "E_mirror": 9.567096398458366,
+      "E_rot": 9.567096398458343,
+      "rel": 1.6810264356625e-16,
+      "rel_rot": 2.017231722795e-15
+     },
+     "CustomGBForce": {
+      "E": -72.503126231433,
+      "E_mirror": -72.50317638284896,
+      "E_rot": -72.5031616153122,
+      "rel": 6.82303169043599e-07,
+      "rel_rot": 4.813928469159678e-07
+     }
+    }
+   },
+   {
+    "pdb": "1BTR",
+    "n_atoms": 313,
+    "E": -11.44560334786172,
+    "E_mirror": -11.44560338056527,
+    "E_rot": -11.445572309077697,
+    "rel": 2.6277191371230075e-09,
+    "rel_rot": 2.49395574930718e-06,
+    "per_group": {
+     "HarmonicBondForce": {
+      "E": 38.07669852226621,
+      "E_mirror": 38.076698522266184,
+      "E_rot": 38.076698522266234,
+      "rel": 7.273313894265937e-16,
+      "rel_rot": 5.454985420699453e-16
+     },
+     "PeriodicTorsionForce": {
+      "E": 243.47696768541317,
+      "E_mirror": 243.4769676854132,
+      "E_rot": 243.4769676854131,
+      "rel": 1.1625516178266883e-16,
+      "rel_rot": 3.487654853480065e-16
+     },
+     "NonbondedForce": {
+      "E": -228.428630698012,
+      "E_mirror": -228.42861303315553,
+      "E_rot": -228.4285400943922,
+      "rel": 7.699499586458445e-08,
+      "rel_rot": 3.949098224342328e-07
+     },
+     "CMMotionRemover": {
+      "E": 0.0,
+      "E_mirror": 0.0,
+      "E_rot": 0.0,
+      "rel": 0.0,
+      "rel_rot": 0.0
+     },
+     "HarmonicAngleForce": {
+      "E": 9.834228373307221,
+      "E_mirror": 9.834228373307223,
+      "E_rot": 9.834228373307218,
+      "rel": 1.6395785451382408e-16,
+      "rel_rot": 3.2791570902764817e-16
+     },
+     "CustomGBForce": {
+      "E": -74.40486723083635,
+      "E_mirror": -74.40488492839637,
+      "E_rot": -74.40492679567203,
+      "rel": 2.3470049978705268e-07,
+      "rel_rot": 7.899335662028006e-07
+     }
+    }
+   }
+  ],
+  "F1_fired": true
+ },
+ "F3": {
+  "n_targets": 40,
+  "n_members": 300,
+  "seed": 0,
+  "per_term": {
+   "steric": {
+    "mean_odd_share": 13.016006829362215,
+    "median_odd_share": 4.541739360399456,
+    "n_targets_nondegenerate": 40
+   },
+   "contact": {
+    "mean_odd_share": 0.10535793644171947,
+    "median_odd_share": 0.10115822078681813,
+    "n_targets_nondegenerate": 40
+   },
+   "hbond_local": {
+    "mean_odd_share": 1.2530137989098707e-29,
+    "median_odd_share": 1.2245092164739261e-29,
+    "n_targets_nondegenerate": 40
+   },
+   "hbond_longrange": {
+    "mean_odd_share": 2.9640134314194923e-28,
+    "median_odd_share": 1.62874909629922e-28,
+    "n_targets_nondegenerate": 40
+   },
+   "coop_helix": {
+    "mean_odd_share": 0.0,
+    "median_odd_share": 0.0,
+    "n_targets_nondegenerate": 40
+   },
+   "coop_sheet": {
+    "mean_odd_share": 0.0,
+    "median_odd_share": 0.0,
+    "n_targets_nondegenerate": 34
+   },
+   "solvation": {
+    "mean_odd_share": 0.10031213894130775,
+    "median_odd_share": 0.0881663006641826,
+    "n_targets_nondegenerate": 40
+   },
+   "electrostatic": {
+    "mean_odd_share": 0.2297474304442909,
+    "median_odd_share": 0.22301611103694574,
+    "n_targets_nondegenerate": 36
+   },
+   "aromatic": {
+    "mean_odd_share": 0.08906506249989335,
+    "median_odd_share": 0.08887069702814962,
+    "n_targets_nondegenerate": 21
+   },
+   "torsion": {
+    "mean_odd_share": 0.3006144290130755,
+    "median_odd_share": 0.2940030521096168,
+    "n_targets_nondegenerate": 40
+   },
+   "compactness": {
+    "mean_odd_share": 1.2127589161410757e-30,
+    "median_odd_share": 9.98129587368569e-31,
+    "n_targets_nondegenerate": 40
+   }
+  },
+  "per_target": [
+   {
+    "pdb": "1A13",
+    "n": 14,
+    "fold": 4,
+    "steric": {
+     "var_total": 0.004150336141618946,
+     "var_even": 0.1697851557920297,
+     "var_odd": 0.15980497532813653,
+     "odd_share": 38.50410421595405,
+     "mean": 0.01343469275655759,
+     "mean_mirror": 0.2979490650293878
+    },
+    "contact": {
+     "var_total": 0.4880494584604954,
+     "var_even": 0.4484008751094985,
+     "var_odd": 0.03869065690306854,
+     "odd_share": 0.0792760984206692,
+     "mean": 1.7916294476353476,
+     "mean_mirror": 1.7029011035795527
+    },
+    "hbond_local": {
+     "var_total": 12.463407383554813,
+     "var_even": 12.463407383554811,
+     "var_odd": 1.8115501859440654e-28,
+     "odd_share": 1.4534951239212202e-29,
+     "mean": -5.517499530466265,
+     "mean_mirror": -5.517499530466262
+    },
+    "hbond_longrange": {
+     "var_total": 0.14553299034653247,
+     "var_even": 0.14553299034653416,
+     "var_odd": 6.708323295514e-29,
+     "odd_share": 4.609486329897182e-28,
+     "mean": -0.10151150702158147,
+     "mean_mirror": -0.10151150702158304
+    },
+    "coop_helix": {
+     "var_total": 0.7384333333333334,
+     "var_even": 0.7384333333333334,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.43,
+     "mean_mirror": -1.43
+    },
+    "coop_sheet": {
+     "var_total": 0.013155555555555561,
+     "var_even": 0.013155555555555561,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.013333333333333334,
+     "mean_mirror": -0.013333333333333334
+    },
+    "solvation": {
+     "var_total": 6.334180874734538,
+     "var_even": 5.9143046954649785,
+     "var_odd": 0.842976258620688,
+     "odd_share": 0.1330837049480398,
+     "mean": -17.619126239403414,
+     "mean_mirror": -17.333975874262997
+    },
+    "electrostatic": {
+     "var_total": 0.034833573828533165,
+     "var_even": 0.04013781484544952,
+     "var_odd": 0.004042933806880233,
+     "odd_share": 0.11606428403761866,
+     "mean": 0.3106704116930166,
+     "mean_mirror": 0.3220307439468008
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 8.355487902319634,
+     "var_even": 3.3151365932989876,
+     "var_odd": 1.6870098847173363,
+     "odd_share": 0.20190441353508415,
+     "mean": -2.916781468743737,
+     "mean_mirror": 9.947778911245777
+    },
+    "compactness": {
+     "var_total": 16.762101043549233,
+     "var_even": 16.762101043549254,
+     "var_odd": 2.6894398930664383e-29,
+     "odd_share": 1.6044766023537657e-30,
+     "mean": 1.78302112204812,
+     "mean_mirror": 1.7830211220481207
+    }
+   },
+   {
+    "pdb": "1A1P",
+    "n": 13,
+    "fold": 1,
+    "steric": {
+     "var_total": 0.42689460609111385,
+     "var_even": 0.9529245068676041,
+     "var_odd": 0.6745949259926048,
+     "odd_share": 1.5802376426574556,
+     "mean": 0.11794102896492002,
+     "mean_mirror": 0.8588083610955082
+    },
+    "contact": {
+     "var_total": 1.9868014275335668,
+     "var_even": 2.1672988462864606,
+     "var_odd": 0.162749813442101,
+     "odd_share": 0.08191549048972653,
+     "mean": 2.503810946923186,
+     "mean_mirror": 2.7188243534285457
+    },
+    "hbond_local": {
+     "var_total": 6.900877215286861,
+     "var_even": 6.900877215286854,
+     "var_odd": 7.046360054162517e-29,
+     "odd_share": 1.0210817892185332e-29,
+     "mean": -2.735174727604354,
+     "mean_mirror": -2.735174727604351
+    },
+    "hbond_longrange": {
+     "var_total": 0.31521419578300663,
+     "var_even": 0.3152141957830088,
+     "var_odd": 1.6517048825495935e-28,
+     "odd_share": 5.239944471557451e-28,
+     "mean": -0.2134260933413042,
+     "mean_mirror": -0.21342609334130497
+    },
+    "coop_helix": {
+     "var_total": 0.7586222222222223,
+     "var_even": 0.7586222222222223,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.7266666666666667,
+     "mean_mirror": -0.7266666666666667
+    },
+    "coop_sheet": {
+     "var_total": 0.07173333333333334,
+     "var_even": 0.07173333333333334,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.04,
+     "mean_mirror": -0.04
+    },
+    "solvation": {
+     "var_total": 14.594401706158976,
+     "var_even": 13.815741915858325,
+     "var_odd": 0.8974945250524202,
+     "odd_share": 0.06149580799010548,
+     "mean": -17.0335760541415,
+     "mean_mirror": -17.721376628995603
+    },
+    "electrostatic": {
+     "var_total": 0.19233811582130167,
+     "var_even": 0.1897587992488347,
+     "var_odd": 0.0718849265022068,
+     "odd_share": 0.37374249090073214,
+     "mean": -0.4732809423926591,
+     "mean_mirror": -0.49079278218997086
+    },
+    "aromatic": {
+     "var_total": 0.17375608342687685,
+     "var_even": 0.16313262454737865,
+     "var_odd": 0.009607344625340613,
+     "odd_share": 0.05529213386870422,
+     "mean": -0.3539620624881089,
+     "mean_mirror": -0.3684269624886537
+    },
+    "torsion": {
+     "var_total": 7.228181672584654,
+     "var_even": 2.4968977067035736,
+     "var_odd": 2.0117714896130665,
+     "odd_share": 0.2783233157023981,
+     "mean": -0.2522469033363979,
+     "mean_mirror": 9.88740452888125
+    },
+    "compactness": {
+     "var_total": 24.089061911380554,
+     "var_even": 24.089061911380558,
+     "var_odd": 3.047347731769098e-29,
+     "odd_share": 1.2650337912616762e-30,
+     "mean": 2.220510228637713,
+     "mean_mirror": 2.220510228637713
+    }
+   },
+   {
+    "pdb": "1CB3",
+    "n": 11,
+    "fold": 2,
+    "steric": {
+     "var_total": 0.017672838080089168,
+     "var_even": 0.2775265327068805,
+     "var_odd": 0.2340243138713051,
+     "odd_share": 13.242033498567782,
+     "mean": 0.033684664661525095,
+     "mean_mirror": 0.3389634882511232
+    },
+    "contact": {
+     "var_total": 0.6646083343297361,
+     "var_even": 0.607538861580183,
+     "var_odd": 0.03969668621660348,
+     "odd_share": 0.059729443893655004,
+     "mean": 1.0989031324991887,
+     "mean_mirror": 1.0296114951933357
+    },
+    "hbond_local": {
+     "var_total": 6.408275467410955,
+     "var_even": 6.4082754674109506,
+     "var_odd": 5.768686487879472e-29,
+     "odd_share": 9.001932762122839e-30,
+     "mean": -2.64966256848749,
+     "mean_mirror": -2.649662568487487
+    },
+    "hbond_longrange": {
+     "var_total": 0.3522407249193672,
+     "var_even": 0.3522407249193691,
+     "var_odd": 3.9018527982207e-29,
+     "odd_share": 1.1077233613784688e-28,
+     "mean": -0.17664123769721637,
+     "mean_mirror": -0.17664123769721687
+    },
+    "coop_helix": {
+     "var_total": 0.8579,
+     "var_even": 0.8579,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.89,
+     "mean_mirror": -0.89
+    },
+    "coop_sheet": {
+     "var_total": 0.045955555555555576,
+     "var_even": 0.045955555555555576,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.02666666666666667,
+     "mean_mirror": -0.02666666666666667
+    },
+    "solvation": {
+     "var_total": 13.730610609260394,
+     "var_even": 13.150653089773963,
+     "var_odd": 0.46911965021547125,
+     "odd_share": 0.03416597146080896,
+     "mean": -16.326749299398184,
+     "mean_mirror": -16.669193493342938
+    },
+    "electrostatic": {
+     "var_total": 0.042441955292237064,
+     "var_even": 0.10037640698184895,
+     "var_odd": 0.025181609232165784,
+     "odd_share": 0.5933187822939835,
+     "mean": -0.2794990524423851,
+     "mean_mirror": -0.3364572629923443
+    },
+    "aromatic": {
+     "var_total": 0.5768508434242607,
+     "var_even": 0.5512602720940698,
+     "var_odd": 0.010220325504050434,
+     "odd_share": 0.017717449182151263,
+     "mean": -0.8271113630799527,
+     "mean_mirror": -0.8124216991036171
+    },
+    "torsion": {
+     "var_total": 5.967037033654295,
+     "var_even": 2.191600266901647,
+     "var_odd": 1.474626169387078,
+     "odd_share": 0.24712871079400636,
+     "mean": -1.307023282902212,
+     "mean_mirror": 8.384194428383426
+    },
+    "compactness": {
+     "var_total": 31.838134739352725,
+     "var_even": 31.838134739352718,
+     "var_odd": 3.0568069535633405e-29,
+     "odd_share": 9.601086805456136e-31,
+     "mean": 2.9014507513405943,
+     "mean_mirror": 2.901450751340593
+    }
+   },
+   {
+    "pdb": "1CEK",
+    "n": 13,
+    "fold": 2,
+    "steric": {
+     "var_total": 0.2089669016417612,
+     "var_even": 1.5903338709128887,
+     "var_odd": 0.6790514096763827,
+     "odd_share": 3.249564425473,
+     "mean": 0.04853151944204082,
+     "mean_mirror": 0.27283556839610723
+    },
+    "contact": {
+     "var_total": 0.4278756613297067,
+     "var_even": 0.4164334871764393,
+     "var_odd": 0.015969508039828977,
+     "odd_share": 0.03732277734657921,
+     "mean": 1.2376117646161509,
+     "mean_mirror": 1.2055747622605026
+    },
+    "hbond_local": {
+     "var_total": 12.963929189557271,
+     "var_even": 12.963929189557271,
+     "var_odd": 1.4892949882435965e-28,
+     "odd_share": 1.1487990766281384e-29,
+     "mean": -4.627855135517125,
+     "mean_mirror": -4.627855135517125
+    },
+    "hbond_longrange": {
+     "var_total": 0.2836279699583646,
+     "var_even": 0.283627969958364,
+     "var_odd": 1.133810536894094e-29,
+     "odd_share": 3.9975272433834105e-29,
+     "mean": -0.14423272347958796,
+     "mean_mirror": -0.14423272347958768
+    },
+    "coop_helix": {
+     "var_total": 0.8244888888888888,
+     "var_even": 0.8244888888888888,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.2866666666666666,
+     "mean_mirror": -1.2866666666666666
+    },
+    "coop_sheet": {
+     "var_total": 0.01982222222222222,
+     "var_even": 0.01982222222222222,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.013333333333333334,
+     "mean_mirror": -0.013333333333333334
+    },
+    "solvation": {
+     "var_total": 28.75707949218174,
+     "var_even": 28.045734809223458,
+     "var_odd": 0.653553573013488,
+     "odd_share": 0.022726701895829555,
+     "mean": -30.752622201549944,
+     "mean_mirror": -30.93299627161241
+    },
+    "electrostatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 6.1715501941347055,
+     "var_even": 2.4269433995649177,
+     "var_odd": 1.4353535690947663,
+     "odd_share": 0.23257585597519603,
+     "mean": -2.349776963099312,
+     "mean_mirror": 9.623612726151407
+    },
+    "compactness": {
+     "var_total": 58.27080932034439,
+     "var_even": 58.270809320344405,
+     "var_odd": 6.183677747310426e-29,
+     "odd_share": 1.061196475462627e-30,
+     "mean": 3.092006327050914,
+     "mean_mirror": 3.092006327050914
+    }
+   },
+   {
+    "pdb": "1D6X",
+    "n": 13,
+    "fold": 4,
+    "steric": {
+     "var_total": 0.05875563736289964,
+     "var_even": 0.23325983894080243,
+     "var_odd": 0.14282329442262623,
+     "odd_share": 2.4308015508450573,
+     "mean": 0.03424808025231698,
+     "mean_mirror": 0.22209593645620174
+    },
+    "contact": {
+     "var_total": 0.13706020659914528,
+     "var_even": 0.11163218337965287,
+     "var_odd": 0.01399956589658169,
+     "odd_share": 0.10214172474966189,
+     "mean": 0.01927882473509609,
+     "mean_mirror": 0.006437032353043335
+    },
+    "hbond_local": {
+     "var_total": 8.74772840245187,
+     "var_even": 8.747728402451864,
+     "var_odd": 9.25821812554334e-29,
+     "odd_share": 1.058356832723383e-29,
+     "mean": -3.5635632626282936,
+     "mean_mirror": -3.5635632626282905
+    },
+    "hbond_longrange": {
+     "var_total": 0.1526013219186567,
+     "var_even": 0.1526013219186565,
+     "var_odd": 4.606587631747683e-30,
+     "odd_share": 3.0187075536627396e-29,
+     "mean": -0.10583554602420792,
+     "mean_mirror": -0.10583554602420787
+    },
+    "coop_helix": {
+     "var_total": 0.8331555555555555,
+     "var_even": 0.8331555555555555,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.9866666666666667,
+     "mean_mirror": -0.9866666666666667
+    },
+    "coop_sheet": {
+     "var_total": 0.023055555555555555,
+     "var_even": 0.023055555555555555,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.016666666666666666,
+     "mean_mirror": -0.016666666666666666
+    },
+    "solvation": {
+     "var_total": 32.97319048105105,
+     "var_even": 29.57688283570801,
+     "var_odd": 0.8923341160184888,
+     "odd_share": 0.02706241352444475,
+     "mean": -29.75478347154943,
+     "mean_mirror": -29.885037730451266
+    },
+    "electrostatic": {
+     "var_total": 0.1264924935809264,
+     "var_even": 0.15311950971557456,
+     "var_odd": 0.014691616788656608,
+     "odd_share": 0.11614615518079986,
+     "mean": 0.38015253297343427,
+     "mean_mirror": 0.3972037325780057
+    },
+    "aromatic": {
+     "var_total": 1.4343925300888858,
+     "var_even": 1.3584208067877117,
+     "var_odd": 0.0724635824255091,
+     "odd_share": 0.050518655741339305,
+     "mean": -1.911268428103223,
+     "mean_mirror": -1.7257698037646614
+    },
+    "torsion": {
+     "var_total": 9.571874105891602,
+     "var_even": 4.115212890005264,
+     "var_odd": 3.113374685189214,
+     "odd_share": 0.32526281172804966,
+     "mean": 0.36213809692326293,
+     "mean_mirror": 17.01447534232126
+    },
+    "compactness": {
+     "var_total": 37.948897377336515,
+     "var_even": 37.94889737733651,
+     "var_odd": 2.546792751941978e-29,
+     "odd_share": 6.711111331163339e-31,
+     "mean": 2.6508605907769724,
+     "mean_mirror": 2.650860590776972
+    }
+   },
+   {
+    "pdb": "1FUV",
+    "n": 11,
+    "fold": 2,
+    "steric": {
+     "var_total": 0.20673383872977388,
+     "var_even": 0.7144125281907544,
+     "var_odd": 0.41208294426440706,
+     "odd_share": 1.9933018551600026,
+     "mean": 0.06765675565588535,
+     "mean_mirror": 0.5852483000236707
+    },
+    "contact": {
+     "var_total": 2.4742577762470606,
+     "var_even": 2.492372120734978,
+     "var_odd": 0.15264387728255374,
+     "odd_share": 0.06169279480413842,
+     "mean": 2.8557626888198966,
+     "mean_mirror": 2.7485666736438588
+    },
+    "hbond_local": {
+     "var_total": 5.393992036947276,
+     "var_even": 5.393992036947275,
+     "var_odd": 4.5378441696639426e-29,
+     "odd_share": 8.41277506266422e-30,
+     "mean": -2.0704768117876946,
+     "mean_mirror": -2.0704768117876933
+    },
+    "hbond_longrange": {
+     "var_total": 0.32197881399092954,
+     "var_even": 0.32197881399093187,
+     "var_odd": 4.4332100974514853e-29,
+     "odd_share": 1.3768639130326052e-28,
+     "mean": -0.19408194033597576,
+     "mean_mirror": -0.19408194033597687
+    },
+    "coop_helix": {
+     "var_total": 0.656488888888889,
+     "var_even": 0.656488888888889,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.5133333333333333,
+     "mean_mirror": -0.5133333333333333
+    },
+    "coop_sheet": {
+     "var_total": 0.11078888888888888,
+     "var_even": 0.11078888888888888,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.07666666666666666,
+     "mean_mirror": -0.07666666666666666
+    },
+    "solvation": {
+     "var_total": 6.789224140806738,
+     "var_even": 5.754140216494081,
+     "var_odd": 0.7419745597864528,
+     "odd_share": 0.10928709148469604,
+     "mean": -11.8431497531081,
+     "mean_mirror": -12.184796319410715
+    },
+    "electrostatic": {
+     "var_total": 0.11645639371373112,
+     "var_even": 0.08889243289490519,
+     "var_odd": 0.02828285313581108,
+     "odd_share": 0.24286217556534478,
+     "mean": -0.6719180293627871,
+     "mean_mirror": -0.6014336764959457
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 4.844672437298765,
+     "var_even": 1.4995447259088621,
+     "var_odd": 1.4245210183715622,
+     "odd_share": 0.2940386655255127,
+     "mean": 0.035505097240054226,
+     "mean_mirror": 8.260278124109359
+    },
+    "compactness": {
+     "var_total": 7.555969140791782,
+     "var_even": 7.555969140791784,
+     "var_odd": 1.0351105190493376e-29,
+     "odd_share": 1.3699242278017952e-30,
+     "mean": 1.297528285774593,
+     "mean_mirror": 1.2975282857745931
+    }
+   },
+   {
+    "pdb": "1G89",
+    "n": 13,
+    "fold": 2,
+    "steric": {
+     "var_total": 0.02144887220131562,
+     "var_even": 0.4017618526929705,
+     "var_odd": 0.32269841239492153,
+     "odd_share": 15.045006066805135,
+     "mean": 0.034556483968281954,
+     "mean_mirror": 0.4048757630688303
+    },
+    "contact": {
+     "var_total": 0.2120187240215161,
+     "var_even": 0.20113532816192028,
+     "var_odd": 0.024932042281082114,
+     "odd_share": 0.11759358705767874,
+     "mean": -0.26234280872817656,
+     "mean_mirror": -0.28352466663386033
+    },
+    "hbond_local": {
+     "var_total": 7.5082392059368885,
+     "var_even": 7.508239205936871,
+     "var_odd": 1.1322130237139617e-28,
+     "odd_share": 1.5079607783655883e-29,
+     "mean": -3.0606691902913092,
+     "mean_mirror": -3.060669190291304
+    },
+    "hbond_longrange": {
+     "var_total": 0.277892744081292,
+     "var_even": 0.27789274408129655,
+     "var_odd": 7.909743663023626e-29,
+     "odd_share": 2.846329683480252e-28,
+     "mean": -0.13625843552063482,
+     "mean_mirror": -0.13625843552063577
+    },
+    "coop_helix": {
+     "var_total": 0.8251555555555555,
+     "var_even": 0.8251555555555555,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.8533333333333334,
+     "mean_mirror": -0.8533333333333334
+    },
+    "coop_sheet": {
+     "var_total": 0.04555555555555556,
+     "var_even": 0.04555555555555556,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.03333333333333333,
+     "mean_mirror": -0.03333333333333333
+    },
+    "solvation": {
+     "var_total": 35.21403060396933,
+     "var_even": 33.02422729530578,
+     "var_odd": 1.4135368125361218,
+     "odd_share": 0.04014129562256892,
+     "mean": -33.7068048311118,
+     "mean_mirror": -34.25080412816135
+    },
+    "electrostatic": {
+     "var_total": 0.10216137664682774,
+     "var_even": 0.12245548202063394,
+     "var_odd": 0.022678008694270987,
+     "odd_share": 0.2219822151836202,
+     "mean": 0.336999491450453,
+     "mean_mirror": 0.35255483255021164
+    },
+    "aromatic": {
+     "var_total": 0.9687034791989474,
+     "var_even": 0.8764196438578669,
+     "var_odd": 0.07999762319269257,
+     "odd_share": 0.08258215739954318,
+     "mean": -1.4332342716994275,
+     "mean_mirror": -1.367793666739561
+    },
+    "torsion": {
+     "var_total": 10.175432393365156,
+     "var_even": 5.3134721250736625,
+     "var_odd": 3.8805797930020267,
+     "odd_share": 0.3813675569730423,
+     "mean": 1.2510715614075938,
+     "mean_mirror": 21.364554402088466
+    },
+    "compactness": {
+     "var_total": 33.1878219499356,
+     "var_even": 33.187821949935596,
+     "var_odd": 2.5502990052991503e-29,
+     "odd_share": 7.684442230485387e-31,
+     "mean": 2.70980159570603,
+     "mean_mirror": 2.7098015957060295
+    }
+   },
+   {
+    "pdb": "1JBF",
+    "n": 15,
+    "fold": 1,
+    "steric": {
+     "var_total": 0.1928712745926397,
+     "var_even": 2.1554603342981853,
+     "var_odd": 1.7281779625254066,
+     "odd_share": 8.960266199181103,
+     "mean": 0.08347524434266165,
+     "mean_mirror": 1.2967762189055176
+    },
+    "contact": {
+     "var_total": 1.425056263923239,
+     "var_even": 1.363517984850626,
+     "var_odd": 0.22415378782613662,
+     "odd_share": 0.15729469319971406,
+     "mean": 2.089609906755075,
+     "mean_mirror": 2.1535857374932514
+    },
+    "hbond_local": {
+     "var_total": 8.378116911357111,
+     "var_even": 8.378116911357102,
+     "var_odd": 1.2116942659634466e-28,
+     "odd_share": 1.4462608707702707e-29,
+     "mean": -3.3865681784272197,
+     "mean_mirror": -3.3865681784272152
+    },
+    "hbond_longrange": {
+     "var_total": 0.7051065568647494,
+     "var_even": 0.705106556864755,
+     "var_odd": 3.3856250924212528e-28,
+     "odd_share": 4.801579363373683e-28,
+     "mean": -0.39758358071004046,
+     "mean_mirror": -0.39758358071004285
+    },
+    "coop_helix": {
+     "var_total": 0.8873222222222222,
+     "var_even": 0.8873222222222222,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.9033333333333333,
+     "mean_mirror": -0.9033333333333333
+    },
+    "coop_sheet": {
+     "var_total": 0.2894555555555555,
+     "var_even": 0.2894555555555555,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.14333333333333334,
+     "mean_mirror": -0.14333333333333334
+    },
+    "solvation": {
+     "var_total": 20.756155712154364,
+     "var_even": 18.904659957121687,
+     "var_odd": 1.7817358664602787,
+     "odd_share": 0.08584132298722986,
+     "mean": -27.105172796351514,
+     "mean_mirror": -27.792924513915555
+    },
+    "electrostatic": {
+     "var_total": 0.07940701767848396,
+     "var_even": 0.06454486711038321,
+     "var_odd": 0.01879966033885508,
+     "odd_share": 0.23675061585833887,
+     "mean": -0.4502331660110942,
+     "mean_mirror": -0.4538279593029058
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 10.175413079174247,
+     "var_even": 4.24048085461558,
+     "var_odd": 4.429791676555915,
+     "odd_share": 0.4353426875241315,
+     "mean": 0.45192642255832455,
+     "mean_mirror": 18.829740297557112
+    },
+    "compactness": {
+     "var_total": 40.387089999541104,
+     "var_even": 40.38708999954113,
+     "var_odd": 7.295004606335012e-29,
+     "odd_share": 1.806271411586698e-30,
+     "mean": 2.7510134307694503,
+     "mean_mirror": 2.7510134307694525
+    }
+   },
+   {
+    "pdb": "1KZ2",
+    "n": 16,
+    "fold": 2,
+    "steric": {
+     "var_total": 0.11644734300468872,
+     "var_even": 0.8267500188311209,
+     "var_odd": 0.4993121785286825,
+     "odd_share": 4.287879531167816,
+     "mean": 0.08379375678219833,
+     "mean_mirror": 0.6054456727950636
+    },
+    "contact": {
+     "var_total": 1.706498245054114,
+     "var_even": 1.6842483035088547,
+     "var_odd": 0.08192408212164848,
+     "odd_share": 0.048007129429570916,
+     "mean": 2.982856269890312,
+     "mean_mirror": 2.925089082006246
+    },
+    "hbond_local": {
+     "var_total": 17.529213080210113,
+     "var_even": 17.529213080210095,
+     "var_odd": 2.343922653291357e-28,
+     "odd_share": 1.3371522398444492e-29,
+     "mean": -5.641390463179113,
+     "mean_mirror": -5.641390463179108
+    },
+    "hbond_longrange": {
+     "var_total": 0.5729032765911086,
+     "var_even": 0.5729032765910891,
+     "var_odd": 3.7655300889465516e-28,
+     "odd_share": 6.572715225774626e-28,
+     "mean": -0.19320267999045998,
+     "mean_mirror": -0.19320267999045618
+    },
+    "coop_helix": {
+     "var_total": 0.7741666666666664,
+     "var_even": 0.7741666666666664,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.35,
+     "mean_mirror": -1.35
+    },
+    "coop_sheet": {
+     "var_total": 0.11345555555555559,
+     "var_even": 0.11345555555555559,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.056666666666666664,
+     "mean_mirror": -0.056666666666666664
+    },
+    "solvation": {
+     "var_total": 8.738457500096292,
+     "var_even": 8.665226053936642,
+     "var_odd": 0.8794778652522253,
+     "odd_share": 0.10064452052808336,
+     "mean": -9.563302359764833,
+     "mean_mirror": -9.293334686590633
+    },
+    "electrostatic": {
+     "var_total": 1.0846214287279436,
+     "var_even": 0.9878388465261844,
+     "var_odd": 0.2451628241913003,
+     "odd_share": 0.22603538681586816,
+     "mean": 4.67084154965494,
+     "mean_mirror": 4.963028564734473
+    },
+    "aromatic": {
+     "var_total": 0.14554611016943386,
+     "var_even": 0.120414936151967,
+     "var_odd": 0.01256838121421241,
+     "odd_share": 0.08635326082972086,
+     "mean": -0.159989911089441,
+     "mean_mirror": -0.14744617711624414
+    },
+    "torsion": {
+     "var_total": 9.83010271905527,
+     "var_even": 3.511401574364993,
+     "var_odd": 2.8570684873160777,
+     "odd_share": 0.2906448252852701,
+     "mean": -2.0737260112793208,
+     "mean_mirror": 11.767740199668024
+    },
+    "compactness": {
+     "var_total": 87.01200922643517,
+     "var_even": 87.01200922643515,
+     "var_odd": 7.214310195405168e-29,
+     "odd_share": 8.291166081030324e-31,
+     "mean": 4.307716447311099,
+     "mean_mirror": 4.3077164473110985
+    }
+   },
+   {
+    "pdb": "1MF6",
+    "n": 12,
+    "fold": 1,
+    "steric": {
+     "var_total": 0.06049857696686967,
+     "var_even": 0.25972762169042407,
+     "var_odd": 0.15254937407467678,
+     "odd_share": 2.5215365670206773,
+     "mean": 0.04181564212528572,
+     "mean_mirror": 0.3031322576469234
+    },
+    "contact": {
+     "var_total": 1.3813411245969096,
+     "var_even": 1.1802626832707,
+     "var_odd": 0.15680017188174958,
+     "odd_share": 0.11351299768730594,
+     "mean": 1.723236393295248,
+     "mean_mirror": 1.5845513660920123
+    },
+    "hbond_local": {
+     "var_total": 6.6603363324646185,
+     "var_even": 6.660336332464607,
+     "var_odd": 7.96076861070551e-29,
+     "odd_share": 1.1952502416285145e-29,
+     "mean": -2.627885265031061,
+     "mean_mirror": -2.6278852650310567
+    },
+    "hbond_longrange": {
+     "var_total": 0.18479971524964475,
+     "var_even": 0.18479971524964284,
+     "var_odd": 7.81886355873522e-29,
+     "odd_share": 4.230993293562584e-28,
+     "mean": -0.13017928558209524,
+     "mean_mirror": -0.13017928558209496
+    },
+    "coop_helix": {
+     "var_total": 0.8184888888888887,
+     "var_even": 0.8184888888888887,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.8533333333333334,
+     "mean_mirror": -0.8533333333333334
+    },
+    "coop_sheet": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "solvation": {
+     "var_total": 3.658404177266216,
+     "var_even": 2.8617818561465396,
+     "var_odd": 0.6464769075193117,
+     "odd_share": 0.1767100834666111,
+     "mean": -2.491483661890073,
+     "mean_mirror": -2.407110843656927
+    },
+    "electrostatic": {
+     "var_total": 0.23903708625741302,
+     "var_even": 0.20375502528000003,
+     "var_odd": 0.03872869897303635,
+     "odd_share": 0.1620196245670866,
+     "mean": 0.07858070868095747,
+     "mean_mirror": 0.10488461630543922
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 6.349611441669005,
+     "var_even": 2.4549932295220924,
+     "var_odd": 2.0666533188402876,
+     "odd_share": 0.32547713160493247,
+     "mean": -0.2556849166791108,
+     "mean_mirror": 12.125390666469405
+    },
+    "compactness": {
+     "var_total": 27.995797397684193,
+     "var_even": 27.99579739768419,
+     "var_odd": 1.9931353609951075e-29,
+     "odd_share": 7.119409148031552e-31,
+     "mean": 2.548649597829805,
+     "mean_mirror": 2.548649597829805
+    }
+   },
+   {
+    "pdb": "1RSW",
+    "n": 12,
+    "fold": 0,
+    "steric": {
+     "var_total": 0.019669912675405025,
+     "var_even": 0.2447226573336494,
+     "var_odd": 0.18596652485831341,
+     "odd_share": 9.45436453771568,
+     "mean": 0.0276008773315388,
+     "mean_mirror": 0.29257993747743316
+    },
+    "contact": {
+     "var_total": 0.9570848745438117,
+     "var_even": 0.6712190437282964,
+     "var_odd": 0.12189605967323926,
+     "odd_share": 0.1273618076258286,
+     "mean": 0.631509305924872,
+     "mean_mirror": 0.5942221957334631
+    },
+    "hbond_local": {
+     "var_total": 7.901915369795227,
+     "var_even": 7.901915369795218,
+     "var_odd": 7.681879615567825e-29,
+     "odd_share": 9.721541241673531e-30,
+     "mean": -2.458385355394973,
+     "mean_mirror": -2.4583853553949706
+    },
+    "hbond_longrange": {
+     "var_total": 0.1480460822623839,
+     "var_even": 0.1480460822623844,
+     "var_odd": 1.9061339182267726e-30,
+     "odd_share": 1.2875274300393225e-29,
+     "mean": -0.08884148475872798,
+     "mean_mirror": -0.0888414847587284
+    },
+    "coop_helix": {
+     "var_total": 0.7787888888888889,
+     "var_even": 0.7787888888888889,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.6766666666666666,
+     "mean_mirror": -0.6766666666666666
+    },
+    "coop_sheet": {
+     "var_total": 0.00662222222222222,
+     "var_even": 0.00662222222222222,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.006666666666666667,
+     "mean_mirror": -0.006666666666666667
+    },
+    "solvation": {
+     "var_total": 2.5532726758756903,
+     "var_even": 1.574643730649072,
+     "var_odd": 0.4651117636227287,
+     "odd_share": 0.18216298165773084,
+     "mean": 3.0260417128509913,
+     "mean_mirror": 2.954284879834723
+    },
+    "electrostatic": {
+     "var_total": 0.6005487299700222,
+     "var_even": 0.47952834718644094,
+     "var_odd": 0.13455294708772714,
+     "odd_share": 0.2240500068902713,
+     "mean": 1.2086660263877287,
+     "mean_mirror": 1.1599243848478054
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 3.4381494372994212,
+     "var_even": 1.3262406520177539,
+     "var_odd": 1.0634857319289366,
+     "odd_share": 0.309319228650014,
+     "mean": -0.546368993741285,
+     "mean_mirror": 8.90857499330444
+    },
+    "compactness": {
+     "var_total": 47.20735636597292,
+     "var_even": 47.20735636597292,
+     "var_odd": 3.526424421188652e-29,
+     "odd_share": 7.470073930533631e-31,
+     "mean": 3.9053147300255335,
+     "mean_mirror": 3.9053147300255326
+    }
+   },
+   {
+    "pdb": "1S9Z",
+    "n": 16,
+    "fold": 1,
+    "steric": {
+     "var_total": 0.04375037455228148,
+     "var_even": 0.3528736161523985,
+     "var_odd": 0.22065634694278502,
+     "odd_share": 5.043530465758683,
+     "mean": 0.0521169801746304,
+     "mean_mirror": 0.3557324768050412
+    },
+    "contact": {
+     "var_total": 0.7424130700144856,
+     "var_even": 0.5792086439155869,
+     "var_odd": 0.13165223295724265,
+     "odd_share": 0.17733016601482232,
+     "mean": -0.1707317387669608,
+     "mean_mirror": -0.2247386916379271
+    },
+    "hbond_local": {
+     "var_total": 15.423548855841366,
+     "var_even": 15.423548855841357,
+     "var_odd": 2.174712673896542e-28,
+     "odd_share": 1.409994998053196e-29,
+     "mean": -6.233090239061014,
+     "mean_mirror": -6.233090239061009
+    },
+    "hbond_longrange": {
+     "var_total": 0.26208590414992755,
+     "var_even": 0.26208590414994065,
+     "var_odd": 6.67850815242885e-28,
+     "odd_share": 2.5482134089166336e-27,
+     "mean": -0.17596211138525036,
+     "mean_mirror": -0.175962111385254
+    },
+    "coop_helix": {
+     "var_total": 0.6217333333333332,
+     "var_even": 0.6217333333333332,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.54,
+     "mean_mirror": -1.54
+    },
+    "coop_sheet": {
+     "var_total": 0.08506666666666667,
+     "var_even": 0.08506666666666667,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.04,
+     "mean_mirror": -0.04
+    },
+    "solvation": {
+     "var_total": 5.9755046099819955,
+     "var_even": 4.004982304818945,
+     "var_odd": 1.1949880811249851,
+     "odd_share": 0.19998111609332114,
+     "mean": -9.47980059358638,
+     "mean_mirror": -9.19740555253779
+    },
+    "electrostatic": {
+     "var_total": 0.6680531112824742,
+     "var_even": 0.7176479062627402,
+     "var_odd": 0.11806859820203523,
+     "odd_share": 0.17673534664837756,
+     "mean": -1.8002466096652445,
+     "mean_mirror": -1.8748954690266881
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 9.350662171248873,
+     "var_even": 3.9011285891227545,
+     "var_odd": 1.6909673268588934,
+     "odd_share": 0.18083931339731507,
+     "mean": -3.269426300594627,
+     "mean_mirror": 11.613013784559632
+    },
+    "compactness": {
+     "var_total": 50.79345270175791,
+     "var_even": 50.79345270175792,
+     "var_odd": 8.645576060412775e-29,
+     "odd_share": 1.702104424988924e-30,
+     "mean": 3.319234577347162,
+     "mean_mirror": 3.319234577347161
+    }
+   },
+   {
+    "pdb": "2FBU",
+    "n": 12,
+    "fold": 4,
+    "steric": {
+     "var_total": 0.01640276844740336,
+     "var_even": 0.06906762138285202,
+     "var_odd": 0.06169572888974353,
+     "odd_share": 3.761299751781247,
+     "mean": 0.022428619473344555,
+     "mean_mirror": 0.13165561772849543
+    },
+    "contact": {
+     "var_total": 0.7665360846539522,
+     "var_even": 0.6891668324052143,
+     "var_odd": 0.17876548235896028,
+     "odd_share": 0.23321208999529724,
+     "mean": 0.041395796789852626,
+     "mean_mirror": 0.05621322238964752
+    },
+    "hbond_local": {
+     "var_total": 8.489368320544996,
+     "var_even": 8.489368320544992,
+     "var_odd": 9.304811373180111e-29,
+     "odd_share": 1.0960546205377464e-29,
+     "mean": -3.8029845912010996,
+     "mean_mirror": -3.8029845912010964
+    },
+    "hbond_longrange": {
+     "var_total": 0.06580044908140027,
+     "var_even": 0.06580044908140062,
+     "var_odd": 2.6026772803741502e-30,
+     "odd_share": 3.9554096008591615e-29,
+     "mean": -0.04919992307451726,
+     "mean_mirror": -0.04919992307451753
+    },
+    "coop_helix": {
+     "var_total": 0.8455555555555557,
+     "var_even": 0.8455555555555557,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.1666666666666667,
+     "mean_mirror": -1.1666666666666667
+    },
+    "coop_sheet": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "solvation": {
+     "var_total": 4.427850876674895,
+     "var_even": 3.848106740721051,
+     "var_odd": 0.5466564960766086,
+     "odd_share": 0.1234586510029718,
+     "mean": -3.5117849020997225,
+     "mean_mirror": -3.2929718888018984
+    },
+    "electrostatic": {
+     "var_total": 0.49250692198678164,
+     "var_even": 0.3360304956221509,
+     "var_odd": 0.12968690133988786,
+     "odd_share": 0.2633199566347791,
+     "mean": 0.0016947422563552313,
+     "mean_mirror": 0.11434223788070698
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 6.455864768349259,
+     "var_even": 2.5055320630624554,
+     "var_odd": 1.3010809039576665,
+     "odd_share": 0.2015347208535702,
+     "mean": -1.3199627731076224,
+     "mean_mirror": 8.49092840996647
+    },
+    "compactness": {
+     "var_total": 23.885113144630818,
+     "var_even": 23.885113144630814,
+     "var_odd": 2.1326516248501146e-29,
+     "odd_share": 8.928790129384494e-31,
+     "mean": 1.9675018019327986,
+     "mean_mirror": 1.9675018019327983
+    }
+   },
+   {
+    "pdb": "2LU6",
+    "n": 14,
+    "fold": 4,
+    "steric": {
+     "var_total": 0.509472269743379,
+     "var_even": 1.7478163999015697,
+     "var_odd": 1.4254762719017695,
+     "odd_share": 2.7979467314674094,
+     "mean": 0.125019059852151,
+     "mean_mirror": 1.0250107095675893
+    },
+    "contact": {
+     "var_total": 2.2826016816287757,
+     "var_even": 2.0521024537865737,
+     "var_odd": 0.2997310501262564,
+     "odd_share": 0.13131114926384352,
+     "mean": 3.0405967202537347,
+     "mean_mirror": 3.048928254501779
+    },
+    "hbond_local": {
+     "var_total": 9.115781792906555,
+     "var_even": 9.11578179290655,
+     "var_odd": 9.734330523200868e-29,
+     "odd_share": 1.0678547100343755e-29,
+     "mean": -3.4694678072568292,
+     "mean_mirror": -3.4694678072568257
+    },
+    "hbond_longrange": {
+     "var_total": 0.4299357280221208,
+     "var_even": 0.4299357280221299,
+     "var_odd": 2.0470985562381776e-28,
+     "odd_share": 4.761406002835966e-28,
+     "mean": -0.2422609971413884,
+     "mean_mirror": -0.2422609971413913
+    },
+    "coop_helix": {
+     "var_total": 0.8506222222222223,
+     "var_even": 0.8506222222222223,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.8733333333333333,
+     "mean_mirror": -0.8733333333333333
+    },
+    "coop_sheet": {
+     "var_total": 0.12795555555555557,
+     "var_even": 0.12795555555555557,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.07333333333333333,
+     "mean_mirror": -0.07333333333333333
+    },
+    "solvation": {
+     "var_total": 13.04855187398517,
+     "var_even": 10.30966046681911,
+     "var_odd": 1.6959460947067464,
+     "odd_share": 0.12997197781678327,
+     "mean": -9.471629309533494,
+     "mean_mirror": -9.14154957245802
+    },
+    "electrostatic": {
+     "var_total": 0.22094808233239988,
+     "var_even": 0.15786003053958317,
+     "var_odd": 0.08071241243542017,
+     "odd_share": 0.36530035284033097,
+     "mean": 0.8616728177681517,
+     "mean_mirror": 0.8775889026909234
+    },
+    "aromatic": {
+     "var_total": 0.14324538078155788,
+     "var_even": 0.11690733525379178,
+     "var_odd": 0.01742697772393492,
+     "odd_share": 0.12165821772996784,
+     "mean": -0.36978371702351026,
+     "mean_mirror": -0.3271854629439743
+    },
+    "torsion": {
+     "var_total": 7.054881544417507,
+     "var_even": 2.4998849873951126,
+     "var_odd": 1.8835838939804201,
+     "odd_share": 0.2669901517298885,
+     "mean": 0.19424942668508435,
+     "mean_mirror": 10.832529560881524
+    },
+    "compactness": {
+     "var_total": 17.30582043960394,
+     "var_even": 17.305820439603934,
+     "var_odd": 2.869388343800383e-29,
+     "odd_share": 1.6580481427126442e-30,
+     "mean": 1.5163376338730843,
+     "mean_mirror": 1.516337633873084
+    }
+   },
+   {
+    "pdb": "2LWU",
+    "n": 15,
+    "fold": 4,
+    "steric": {
+     "var_total": 0.522454879468834,
+     "var_even": 2.6997084656209185,
+     "var_odd": 1.5346658471328019,
+     "odd_share": 2.937413176603989,
+     "mean": 0.09123119479169504,
+     "mean_mirror": 0.9763894122297104
+    },
+    "contact": {
+     "var_total": 2.6097680167998205,
+     "var_even": 2.5850331518699714,
+     "var_odd": 0.19712909404687115,
+     "odd_share": 0.07553510226882044,
+     "mean": 3.4017473692497955,
+     "mean_mirror": 3.2436280940352344
+    },
+    "hbond_local": {
+     "var_total": 9.634494342847335,
+     "var_even": 9.634494342847328,
+     "var_odd": 1.1583013112337083e-28,
+     "odd_share": 1.2022440099242294e-29,
+     "mean": -3.316921809186549,
+     "mean_mirror": -3.316921809186547
+    },
+    "hbond_longrange": {
+     "var_total": 0.5749314789578842,
+     "var_even": 0.5749314789578964,
+     "var_odd": 2.463304308933148e-28,
+     "odd_share": 4.284518067088816e-28,
+     "mean": -0.2772135790641269,
+     "mean_mirror": -0.2772135790641311
+    },
+    "coop_helix": {
+     "var_total": 0.9051000000000001,
+     "var_even": 0.9051000000000001,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.93,
+     "mean_mirror": -0.93
+    },
+    "coop_sheet": {
+     "var_total": 0.23382222222222226,
+     "var_even": 0.23382222222222226,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.11333333333333333,
+     "mean_mirror": -0.11333333333333333
+    },
+    "solvation": {
+     "var_total": 18.13175818792108,
+     "var_even": 17.696111531358287,
+     "var_odd": 0.4940973868138216,
+     "odd_share": 0.027250384749945365,
+     "mean": -22.984068115328135,
+     "mean_mirror": -23.480305124724136
+    },
+    "electrostatic": {
+     "var_total": 0.005616731122291378,
+     "var_even": 0.0036007581327699473,
+     "var_odd": 0.0017929359018949746,
+     "odd_share": 0.31921341129883674,
+     "mean": -0.002944352485264644,
+     "mean_mirror": 0.013024584266501082
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 11.732725764370308,
+     "var_even": 4.087700897978497,
+     "var_odd": 5.83916483716878,
+     "odd_share": 0.4976818647633469,
+     "mean": 1.2491183489102058,
+     "mean_mirror": 18.683369111535473
+    },
+    "compactness": {
+     "var_total": 61.66432557797547,
+     "var_even": 61.66432557797547,
+     "var_odd": 6.888456032541193e-29,
+     "odd_share": 1.1170893329289132e-30,
+     "mean": 3.8477542954817476,
+     "mean_mirror": 3.8477542954817454
+    }
+   },
+   {
+    "pdb": "2MFV",
+    "n": 14,
+    "fold": 1,
+    "steric": {
+     "var_total": 0.3354752833351514,
+     "var_even": 1.0366156090872838,
+     "var_odd": 0.43848752079067244,
+     "odd_share": 1.3070635679368612,
+     "mean": 0.0839035188313436,
+     "mean_mirror": 0.5282488073021955
+    },
+    "contact": {
+     "var_total": 1.275080152269526,
+     "var_even": 1.222376719644846,
+     "var_odd": 0.05294411641523471,
+     "odd_share": 0.04152218691585703,
+     "mean": 2.007914314580373,
+     "mean_mirror": 1.8161124729052585
+    },
+    "hbond_local": {
+     "var_total": 10.341369263641473,
+     "var_even": 10.341369263641472,
+     "var_odd": 1.2184005149519492e-28,
+     "odd_share": 1.178181035692867e-29,
+     "mean": -3.627317836907455,
+     "mean_mirror": -3.627317836907454
+    },
+    "hbond_longrange": {
+     "var_total": 0.42811518120082287,
+     "var_even": 0.42811518120082087,
+     "var_odd": 2.1857565540063133e-29,
+     "odd_share": 5.10553386094712e-29,
+     "mean": -0.2023433881502128,
+     "mean_mirror": -0.20234338815021163
+    },
+    "coop_helix": {
+     "var_total": 0.8894555555555557,
+     "var_even": 0.8894555555555557,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.9766666666666667,
+     "mean_mirror": -0.9766666666666667
+    },
+    "coop_sheet": {
+     "var_total": 0.032622222222222226,
+     "var_even": 0.032622222222222226,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.02666666666666667,
+     "mean_mirror": -0.02666666666666667
+    },
+    "solvation": {
+     "var_total": 5.0184115401124805,
+     "var_even": 4.539602565451167,
+     "var_odd": 0.3131750728786949,
+     "odd_share": 0.06240521933593265,
+     "mean": -11.298778051372464,
+     "mean_mirror": -11.428568115713302
+    },
+    "electrostatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 7.74870971912771,
+     "var_even": 3.1046662442915576,
+     "var_odd": 2.4826476011383583,
+     "odd_share": 0.32039496782411864,
+     "mean": -0.8714988524639379,
+     "mean_mirror": 13.539145821990541
+    },
+    "compactness": {
+     "var_total": 84.14558831386763,
+     "var_even": 84.14558831386758,
+     "var_odd": 7.947242048769172e-29,
+     "odd_share": 9.444633055657683e-31,
+     "mean": 4.529829240510115,
+     "mean_mirror": 4.5298292405101135
+    }
+   },
+   {
+    "pdb": "2MK7",
+    "n": 9,
+    "fold": 4,
+    "steric": {
+     "var_total": 0.015528396054321965,
+     "var_even": 0.08127117352111482,
+     "var_odd": 0.07446796353437714,
+     "odd_share": 4.795599189631097,
+     "mean": 0.014896463569537305,
+     "mean_mirror": 0.08927153948952071
+    },
+    "contact": {
+     "var_total": 0.04149905177998805,
+     "var_even": 0.03408412010158724,
+     "var_odd": 0.003673771967273653,
+     "odd_share": 0.08852664843405515,
+     "mean": -0.20317959566861593,
+     "mean_mirror": -0.1894455987660317
+    },
+    "hbond_local": {
+     "var_total": 2.443084053067302,
+     "var_even": 2.4430840530673,
+     "var_odd": 2.7271753495226355e-29,
+     "odd_share": 1.1162838814729505e-29,
+     "mean": -1.476158210629272,
+     "mean_mirror": -1.47615821062927
+    },
+    "hbond_longrange": {
+     "var_total": 0.04306879694653084,
+     "var_even": 0.04306879694653027,
+     "var_odd": 4.34058044758672e-30,
+     "odd_share": 1.0078248651745428e-28,
+     "mean": -0.025557843854752918,
+     "mean_mirror": -0.025557843854752644
+    },
+    "coop_helix": {
+     "var_total": 0.6881222222222223,
+     "var_even": 0.6881222222222223,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.6233333333333333,
+     "mean_mirror": -0.6233333333333333
+    },
+    "coop_sheet": {
+     "var_total": 0.003322222222222222,
+     "var_even": 0.003322222222222222,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.0033333333333333335,
+     "mean_mirror": -0.0033333333333333335
+    },
+    "solvation": {
+     "var_total": 0.7070492348837684,
+     "var_even": 0.5336196721262477,
+     "var_odd": 0.07884914064100655,
+     "odd_share": 0.11151859976762232,
+     "mean": -1.5199664177406877,
+     "mean_mirror": -1.5725944829883625
+    },
+    "electrostatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 8.283817480451553,
+     "var_even": 3.08061353548994,
+     "var_odd": 4.228768089686223,
+     "odd_share": 0.510485425308491,
+     "mean": 1.1731271427448837,
+     "mean_mirror": 18.06939601005019
+    },
+    "compactness": {
+     "var_total": 12.130568944780146,
+     "var_even": 12.130568944780144,
+     "var_odd": 6.222770185783157e-30,
+     "odd_share": 5.129825496322537e-31,
+     "mean": 1.7698569108269213,
+     "mean_mirror": 1.769856910826921
+    }
+   },
+   {
+    "pdb": "2MQ2",
+    "n": 14,
+    "fold": 4,
+    "steric": {
+     "var_total": 0.023878633496269185,
+     "var_even": 0.5725175977433885,
+     "var_odd": 0.4524470241758067,
+     "odd_share": 18.947777068000867,
+     "mean": 0.028901925413895243,
+     "mean_mirror": 0.4601543210446813
+    },
+    "contact": {
+     "var_total": 1.845378637731777,
+     "var_even": 1.8491831942616075,
+     "var_odd": 0.0671505079935363,
+     "odd_share": 0.036388471515023856,
+     "mean": 2.268984282327314,
+     "mean_mirror": 2.2332766710823817
+    },
+    "hbond_local": {
+     "var_total": 12.239554239900565,
+     "var_even": 12.239554239900556,
+     "var_odd": 1.0015598769393405e-28,
+     "odd_share": 8.182976743338304e-30,
+     "mean": -3.864565063495144,
+     "mean_mirror": -3.864565063495141
+    },
+    "hbond_longrange": {
+     "var_total": 0.19373217045993893,
+     "var_even": 0.19373217045993862,
+     "var_odd": 1.6393844378667993e-29,
+     "odd_share": 8.462117747273166e-29,
+     "mean": -0.10917525431842307,
+     "mean_mirror": -0.10917525431842298
+    },
+    "coop_helix": {
+     "var_total": 0.8598222222222222,
+     "var_even": 0.8598222222222222,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.9866666666666667,
+     "mean_mirror": -0.9866666666666667
+    },
+    "coop_sheet": {
+     "var_total": 0.026266666666666664,
+     "var_even": 0.026266666666666664,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.02,
+     "mean_mirror": -0.02
+    },
+    "solvation": {
+     "var_total": 3.9120432171720623,
+     "var_even": 3.9008201268364178,
+     "var_odd": 0.4845748055238295,
+     "odd_share": 0.1238674469128485,
+     "mean": -4.044750782585581,
+     "mean_mirror": -4.06797483685146
+    },
+    "electrostatic": {
+     "var_total": 1.2181853843027552,
+     "var_even": 1.2024783154336967,
+     "var_odd": 0.12714843809428553,
+     "odd_share": 0.10437527796071912,
+     "mean": 3.364306412369289,
+     "mean_mirror": 3.4035758768813094
+    },
+    "aromatic": {
+     "var_total": 0.1381159600927575,
+     "var_even": 0.11772213229606332,
+     "var_odd": 0.012274461644155455,
+     "odd_share": 0.08887069702814962,
+     "mean": -0.35073865190469034,
+     "mean_mirror": -0.3279880078687
+    },
+    "torsion": {
+     "var_total": 8.625205907262693,
+     "var_even": 3.033749664028229,
+     "var_odd": 2.371804353880813,
+     "odd_share": 0.2749852443387676,
+     "mean": -1.0995438020873372,
+     "mean_mirror": 9.812469790002467
+    },
+    "compactness": {
+     "var_total": 101.61117797295799,
+     "var_even": 101.61117797295802,
+     "var_odd": 9.494507699622145e-29,
+     "odd_share": 9.343959876293275e-31,
+     "mean": 5.532724531404775,
+     "mean_mirror": 5.532724531404776
+    }
+   },
+   {
+    "pdb": "2N5C",
+    "n": 15,
+    "fold": 4,
+    "steric": {
+     "var_total": 0.2330899781647407,
+     "var_even": 0.9864887516169691,
+     "var_odd": 0.6828205136484535,
+     "odd_share": 2.929428879888853,
+     "mean": 0.09860840027780758,
+     "mean_mirror": 0.5460414783403226
+    },
+    "contact": {
+     "var_total": 1.499380820088567,
+     "var_even": 1.3811056963072765,
+     "var_odd": 0.13698257643460354,
+     "odd_share": 0.09135942957207636,
+     "mean": 2.2990434879199593,
+     "mean_mirror": 2.3476895265897415
+    },
+    "hbond_local": {
+     "var_total": 13.585403387282343,
+     "var_even": 13.58540338728232,
+     "var_odd": 2.0138327301210652e-28,
+     "odd_share": 1.4823503378679704e-29,
+     "mean": -4.383422527388655,
+     "mean_mirror": -4.3834225273886505
+    },
+    "hbond_longrange": {
+     "var_total": 0.2344233006848059,
+     "var_even": 0.2344233006848055,
+     "var_odd": 6.455776488804428e-29,
+     "odd_share": 2.7538971040615747e-28,
+     "mean": -0.16603324492841268,
+     "mean_mirror": -0.1660332449284119
+    },
+    "coop_helix": {
+     "var_total": 0.8204,
+     "var_even": 0.8204,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.14,
+     "mean_mirror": -1.14
+    },
+    "coop_sheet": {
+     "var_total": 0.03612222222222222,
+     "var_even": 0.03612222222222222,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.023333333333333334,
+     "mean_mirror": -0.023333333333333334
+    },
+    "solvation": {
+     "var_total": 16.36702786882084,
+     "var_even": 14.165614078083742,
+     "var_odd": 1.1313206583889652,
+     "odd_share": 0.06912193633788143,
+     "mean": -20.148721921542727,
+     "mean_mirror": -20.232567097285152
+    },
+    "electrostatic": {
+     "var_total": 0.11938260610139492,
+     "var_even": 0.06598142031936967,
+     "var_odd": 0.02507001004559389,
+     "odd_share": 0.20999717516889557,
+     "mean": -0.578222729920979,
+     "mean_mirror": -0.5008340161849484
+    },
+    "aromatic": {
+     "var_total": 0.36237641286965244,
+     "var_even": 0.28076015256082615,
+     "var_odd": 0.044156629380576434,
+     "odd_share": 0.12185293471752441,
+     "mean": -0.5839019984746289,
+     "mean_mirror": -0.520389707809497
+    },
+    "torsion": {
+     "var_total": 8.789920755720274,
+     "var_even": 3.2196603300386446,
+     "var_odd": 3.4184237412458525,
+     "odd_share": 0.38890268026833147,
+     "mean": -0.02757452219412934,
+     "mean_mirror": 14.225368203025027
+    },
+    "compactness": {
+     "var_total": 58.6427119214432,
+     "var_even": 58.642711921443215,
+     "var_odd": 8.433998943824852e-29,
+     "odd_share": 1.438200701755215e-30,
+     "mean": 3.5553258934127516,
+     "mean_mirror": 3.555325893412752
+    }
+   },
+   {
+    "pdb": "2N9M",
+    "n": 16,
+    "fold": 3,
+    "steric": {
+     "var_total": 0.12757550745954765,
+     "var_even": 1.1871685954074822,
+     "var_odd": 0.8485724921085872,
+     "odd_share": 6.65153138722695,
+     "mean": 0.06647469327857425,
+     "mean_mirror": 0.7309159142321539
+    },
+    "contact": {
+     "var_total": 1.6652535056894164,
+     "var_even": 1.6405492861778421,
+     "var_odd": 0.12785412539358754,
+     "odd_share": 0.07677757467963163,
+     "mean": 3.1829897250784454,
+     "mean_mirror": 3.240405596018465
+    },
+    "hbond_local": {
+     "var_total": 14.251056158555096,
+     "var_even": 14.25105615855508,
+     "var_odd": 2.3696226719647655e-28,
+     "odd_share": 1.6627698646336818e-29,
+     "mean": -4.992195865031211,
+     "mean_mirror": -4.9921958650312055
+    },
+    "hbond_longrange": {
+     "var_total": 0.33504864721109334,
+     "var_even": 0.3350486472110925,
+     "var_odd": 4.1810204694295544e-29,
+     "odd_share": 1.2478845995146946e-28,
+     "mean": -0.21655919501962037,
+     "mean_mirror": -0.21655919501962037
+    },
+    "coop_helix": {
+     "var_total": 0.8473222222222222,
+     "var_even": 0.8473222222222222,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.2366666666666666,
+     "mean_mirror": -1.2366666666666666
+    },
+    "coop_sheet": {
+     "var_total": 0.041988888888888895,
+     "var_even": 0.041988888888888895,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.03666666666666667,
+     "mean_mirror": -0.03666666666666667
+    },
+    "solvation": {
+     "var_total": 10.817703460929026,
+     "var_even": 10.88008517671493,
+     "var_odd": 0.8377522391575664,
+     "odd_share": 0.07744270696486813,
+     "mean": -12.174610326813854,
+     "mean_mirror": -12.446894231678034
+    },
+    "electrostatic": {
+     "var_total": 0.49593447534112084,
+     "var_even": 0.5122027844089206,
+     "var_odd": 0.08457455675782019,
+     "odd_share": 0.17053574809383215,
+     "mean": 2.339446105834772,
+     "mean_mirror": 2.3693766361670963
+    },
+    "aromatic": {
+     "var_total": 0.0285792676852516,
+     "var_even": 0.028856018736913066,
+     "var_odd": 0.0009344883366741402,
+     "odd_share": 0.0326981204335192,
+     "mean": -0.0441034667056401,
+     "mean_mirror": -0.04534582990226161
+    },
+    "torsion": {
+     "var_total": 10.991595971133739,
+     "var_even": 4.754825785125189,
+     "var_odd": 3.326012255133694,
+     "odd_share": 0.30259593455477324,
+     "mean": -1.227030874533979,
+     "mean_mirror": 14.7697428968526
+    },
+    "compactness": {
+     "var_total": 78.9112517347954,
+     "var_even": 78.91125173479541,
+     "var_odd": 1.2350181076916688e-28,
+     "odd_share": 1.5650722559088435e-30,
+     "mean": 4.294037965574361,
+     "mean_mirror": 4.29403796557436
+    }
+   },
+   {
+    "pdb": "2NBC",
+    "n": 16,
+    "fold": 3,
+    "steric": {
+     "var_total": 0.27533415644341147,
+     "var_even": 2.902250050509686,
+     "var_odd": 2.0964760763667596,
+     "odd_share": 7.614297126980834,
+     "mean": 0.11353759723570017,
+     "mean_mirror": 1.6036511908000584
+    },
+    "contact": {
+     "var_total": 2.272792644202611,
+     "var_even": 1.932520181951098,
+     "var_odd": 0.35455426805535795,
+     "odd_share": 0.15599939086381112,
+     "mean": 3.9607970306700704,
+     "mean_mirror": 4.017824831016761
+    },
+    "hbond_local": {
+     "var_total": 8.526566298638631,
+     "var_even": 8.52656629863863,
+     "var_odd": 1.4140225051822906e-28,
+     "odd_share": 1.6583727325360225e-29,
+     "mean": -3.6298702114004877,
+     "mean_mirror": -3.629870211400483
+    },
+    "hbond_longrange": {
+     "var_total": 0.5995060699764471,
+     "var_even": 0.5995060699764599,
+     "var_odd": 3.7903432814206223e-28,
+     "odd_share": 6.3224435435149715e-28,
+     "mean": -0.3580589384063665,
+     "mean_mirror": -0.3580589384063714
+    },
+    "coop_helix": {
+     "var_total": 0.8281222222222221,
+     "var_even": 0.8281222222222221,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.8766666666666667,
+     "mean_mirror": -0.8766666666666667
+    },
+    "coop_sheet": {
+     "var_total": 0.2597666666666667,
+     "var_even": 0.2597666666666667,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.13,
+     "mean_mirror": -0.13
+    },
+    "solvation": {
+     "var_total": 11.14037365168274,
+     "var_even": 9.354159287614436,
+     "var_odd": 1.1252754728094732,
+     "odd_share": 0.10100877295435254,
+     "mean": -7.901628969301894,
+     "mean_mirror": -7.900487319278557
+    },
+    "electrostatic": {
+     "var_total": 0.24601976465824862,
+     "var_even": 0.16730545263616706,
+     "var_odd": 0.05568741011857131,
+     "odd_share": 0.2263533996787937,
+     "mean": 2.1295775282969194,
+     "mean_mirror": 2.102406438895342
+    },
+    "aromatic": {
+     "var_total": 0.04204120097143733,
+     "var_even": 0.03313124694616898,
+     "var_odd": 0.007350026269273663,
+     "odd_share": 0.17482912237134354,
+     "mean": -0.056940702278205746,
+     "mean_mirror": -0.053535075076066786
+    },
+    "torsion": {
+     "var_total": 10.78695036881058,
+     "var_even": 3.8974822699784437,
+     "var_odd": 2.733296116370487,
+     "odd_share": 0.25338914363354703,
+     "mean": -0.07733671090854631,
+     "mean_mirror": 11.813414448668567
+    },
+    "compactness": {
+     "var_total": 33.5937121746139,
+     "var_even": 33.5937121746139,
+     "var_odd": 4.8174756234651965e-29,
+     "odd_share": 1.4340408700368837e-30,
+     "mean": 2.607454128856447,
+     "mean_mirror": 2.607454128856446
+    }
+   },
+   {
+    "pdb": "2O0S",
+    "n": 12,
+    "fold": 2,
+    "steric": {
+     "var_total": 0.08765418741374885,
+     "var_even": 0.904086992496088,
+     "var_odd": 0.5761180686872613,
+     "odd_share": 6.572624602266238,
+     "mean": 0.0449749748157383,
+     "mean_mirror": 0.5245818931999481
+    },
+    "contact": {
+     "var_total": 0.9266668593216181,
+     "var_even": 0.8955885576745092,
+     "var_odd": 0.04272791928097688,
+     "odd_share": 0.0461092558249645,
+     "mean": 1.448312813833201,
+     "mean_mirror": 1.4285735639370307
+    },
+    "hbond_local": {
+     "var_total": 8.887390905713595,
+     "var_even": 8.88739090571359,
+     "var_odd": 1.0640525449042301e-28,
+     "odd_share": 1.1972608791407653e-29,
+     "mean": -3.429756114566303,
+     "mean_mirror": -3.4297561145663007
+    },
+    "hbond_longrange": {
+     "var_total": 0.33835434307114315,
+     "var_even": 0.33835434307114376,
+     "var_odd": 3.738493715247797e-29,
+     "odd_share": 1.1049048997907302e-28,
+     "mean": -0.17983590954622358,
+     "mean_mirror": -0.17983590954622394
+    },
+    "coop_helix": {
+     "var_total": 0.8833222222222222,
+     "var_even": 0.8833222222222222,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.0033333333333334,
+     "mean_mirror": -1.0033333333333334
+    },
+    "coop_sheet": {
+     "var_total": 0.10888888888888891,
+     "var_even": 0.10888888888888891,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.06666666666666667,
+     "mean_mirror": -0.06666666666666667
+    },
+    "solvation": {
+     "var_total": 13.006930539916887,
+     "var_even": 13.824251718807448,
+     "var_odd": 0.6278846355149527,
+     "odd_share": 0.0482730828451833,
+     "mean": -16.325039191729406,
+     "mean_mirror": -16.60599746861574
+    },
+    "electrostatic": {
+     "var_total": 0.09974149587220671,
+     "var_even": 0.05866896275220164,
+     "var_odd": 0.04516745750936714,
+     "odd_share": 0.4528451986246298,
+     "mean": 1.4928395620673685,
+     "mean_mirror": 1.5376111633975393
+    },
+    "aromatic": {
+     "var_total": 0.289395440291987,
+     "var_even": 0.2543565851469834,
+     "var_odd": 0.034176576409475634,
+     "odd_share": 0.11809645782598718,
+     "mean": -0.630646676355448,
+     "mean_mirror": -0.6042653697679743
+    },
+    "torsion": {
+     "var_total": 5.5325282272163285,
+     "var_even": 2.1414183675828085,
+     "var_odd": 1.3763337685791721,
+     "odd_share": 0.2487712149047036,
+     "mean": -1.8887370764570763,
+     "mean_mirror": 9.041207273871308
+    },
+    "compactness": {
+     "var_total": 20.53873119251858,
+     "var_even": 20.538731192518576,
+     "var_odd": 1.7003463796203812e-29,
+     "odd_share": 8.278731357269762e-31,
+     "mean": 1.9096340827578702,
+     "mean_mirror": 1.90963408275787
+    }
+   },
+   {
+    "pdb": "2P5H",
+    "n": 9,
+    "fold": 4,
+    "steric": {
+     "var_total": 0.014685527221615348,
+     "var_even": 0.07580150919331644,
+     "var_odd": 0.05764195439306562,
+     "odd_share": 3.92508580204213,
+     "mean": 0.014948144962902473,
+     "mean_mirror": 0.13280268741133525
+    },
+    "contact": {
+     "var_total": 0.5919713497533446,
+     "var_even": 0.6070730311762761,
+     "var_odd": 0.029135253726079047,
+     "odd_share": 0.04921733752523457,
+     "mean": 0.9075207698467231,
+     "mean_mirror": 0.8817839149142541
+    },
+    "hbond_local": {
+     "var_total": 2.5591784721453568,
+     "var_even": 2.5591784721453554,
+     "var_odd": 3.595509827512109e-29,
+     "odd_share": 1.4049468869195343e-29,
+     "mean": -1.4590941791894585,
+     "mean_mirror": -1.4590941791894583
+    },
+    "hbond_longrange": {
+     "var_total": 0.11360452769946965,
+     "var_even": 0.11360452769946944,
+     "var_odd": 1.8182009900629733e-30,
+     "odd_share": 1.6004652515900222e-29,
+     "mean": -0.0585715652955773,
+     "mean_mirror": -0.0585715652955773
+    },
+    "coop_helix": {
+     "var_total": 0.6622222222222225,
+     "var_even": 0.6622222222222225,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.5333333333333333,
+     "mean_mirror": -0.5333333333333333
+    },
+    "coop_sheet": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "solvation": {
+     "var_total": 8.104742045096522,
+     "var_even": 7.4574170494588605,
+     "var_odd": 0.2670882314806289,
+     "odd_share": 0.032954562895955566,
+     "mean": -12.227742113793205,
+     "mean_mirror": -12.398884656139673
+    },
+    "electrostatic": {
+     "var_total": 0.026707072815309405,
+     "var_even": 0.038152744217841095,
+     "var_odd": 0.008702815576890788,
+     "odd_share": 0.32586182832818866,
+     "mean": -0.2788128884975126,
+     "mean_mirror": -0.26816852580524403
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 2.7689462204280284,
+     "var_even": 0.7376390553829317,
+     "var_odd": 1.222729288678514,
+     "odd_share": 0.4415865066853853,
+     "mean": -0.8490370206044718,
+     "mean_mirror": 6.940225339284302
+    },
+    "compactness": {
+     "var_total": 17.827004519770018,
+     "var_even": 17.827004519770014,
+     "var_odd": 9.240755191375394e-30,
+     "odd_share": 5.183571463802269e-31,
+     "mean": 2.919124913909965,
+     "mean_mirror": 2.9191249139099638
+    }
+   },
+   {
+    "pdb": "5MXS",
+    "n": 14,
+    "fold": 3,
+    "steric": {
+     "var_total": 0.07412085505448013,
+     "var_even": 1.031311069831259,
+     "var_odd": 0.6986889757568503,
+     "odd_share": 9.426348026386119,
+     "mean": 0.0503588091577043,
+     "mean_mirror": 0.4412614306154874
+    },
+    "contact": {
+     "var_total": 0.5884355634684226,
+     "var_even": 0.5226956815532192,
+     "var_odd": 0.05894636593960503,
+     "odd_share": 0.10017471682397437,
+     "mean": 1.407876372728905,
+     "mean_mirror": 1.3683934267036848
+    },
+    "hbond_local": {
+     "var_total": 12.205965855263825,
+     "var_even": 12.205965855263813,
+     "var_odd": 1.6212617541409827e-28,
+     "odd_share": 1.3282535551595151e-29,
+     "mean": -4.730101799475179,
+     "mean_mirror": -4.730101799475174
+    },
+    "hbond_longrange": {
+     "var_total": 0.2961253815610236,
+     "var_even": 0.29612538156102614,
+     "var_odd": 8.028869123760494e-29,
+     "odd_share": 2.711307312273047e-28,
+     "mean": -0.1988610693459969,
+     "mean_mirror": -0.19886106934599818
+    },
+    "coop_helix": {
+     "var_total": 0.8244888888888888,
+     "var_even": 0.8244888888888888,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.2866666666666666,
+     "mean_mirror": -1.2866666666666666
+    },
+    "coop_sheet": {
+     "var_total": 0.18195555555555556,
+     "var_even": 0.18195555555555556,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.10666666666666667,
+     "mean_mirror": -0.10666666666666667
+    },
+    "solvation": {
+     "var_total": 9.098350852824742,
+     "var_even": 8.0482598809096,
+     "var_odd": 0.6614177762174764,
+     "odd_share": 0.07269644652273743,
+     "mean": -13.174787020772422,
+     "mean_mirror": -13.168848816517341
+    },
+    "electrostatic": {
+     "var_total": 0.22661177597848928,
+     "var_even": 0.20919206255323247,
+     "var_odd": 0.05012295471014651,
+     "odd_share": 0.221184245583532,
+     "mean": 0.570299530649878,
+     "mean_mirror": 0.5164926086470816
+    },
+    "aromatic": {
+     "var_total": 0.6884963665748061,
+     "var_even": 0.426816698956859,
+     "var_odd": 0.07354918377404,
+     "odd_share": 0.10682581251654112,
+     "mean": -0.735135349944467,
+     "mean_mirror": -0.6461122987865102
+    },
+    "torsion": {
+     "var_total": 10.985856503479438,
+     "var_even": 3.958074150442939,
+     "var_odd": 2.366718972714627,
+     "odd_share": 0.2154332683996956,
+     "mean": -1.734300089073087,
+     "mean_mirror": 10.139314432149977
+    },
+    "compactness": {
+     "var_total": 65.00494060688013,
+     "var_even": 65.00494060688013,
+     "var_odd": 3.6197542891016517e-29,
+     "odd_share": 5.568429499831797e-31,
+     "mean": 3.1345304972146733,
+     "mean_mirror": 3.134530497214674
+    }
+   },
+   {
+    "pdb": "5NVB",
+    "n": 15,
+    "fold": 2,
+    "steric": {
+     "var_total": 0.5976662581900313,
+     "var_even": 2.4649938492124153,
+     "var_odd": 1.1540975244972065,
+     "odd_share": 1.931006659121544,
+     "mean": 0.13005517116306975,
+     "mean_mirror": 0.7884243360828402
+    },
+    "contact": {
+     "var_total": 0.7146755469981771,
+     "var_even": 0.6379503607878312,
+     "var_odd": 0.1404107222275726,
+     "odd_share": 0.19646778572085483,
+     "mean": 0.6809513906103657,
+     "mean_mirror": 0.6459524807630915
+    },
+    "hbond_local": {
+     "var_total": 12.030222921752271,
+     "var_even": 12.030222921752275,
+     "var_odd": 1.5346284907531367e-28,
+     "odd_share": 1.2756442675541122e-29,
+     "mean": -4.3315325831457745,
+     "mean_mirror": -4.331532583145772
+    },
+    "hbond_longrange": {
+     "var_total": 0.1280688499104638,
+     "var_even": 0.1280688499104661,
+     "var_odd": 4.981923665060811e-29,
+     "odd_share": 3.8900354524490544e-28,
+     "mean": -0.0823265845701907,
+     "mean_mirror": -0.08232658457019147
+    },
+    "coop_helix": {
+     "var_total": 0.8184888888888888,
+     "var_even": 0.8184888888888888,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.1866666666666668,
+     "mean_mirror": -1.1866666666666668
+    },
+    "coop_sheet": {
+     "var_total": 0.003322222222222221,
+     "var_even": 0.003322222222222221,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.0033333333333333335,
+     "mean_mirror": -0.0033333333333333335
+    },
+    "solvation": {
+     "var_total": 3.4808345831343694,
+     "var_even": 2.4977322365220886,
+     "var_odd": 0.7487097921190685,
+     "odd_share": 0.2150949073382515,
+     "mean": 0.16793212273718197,
+     "mean_mirror": 0.13604157697571392
+    },
+    "electrostatic": {
+     "var_total": 0.37764530008089653,
+     "var_even": 0.4180881397943425,
+     "var_odd": 0.05913025029518849,
+     "odd_share": 0.15657615832243119,
+     "mean": 0.4545791008926855,
+     "mean_mirror": 0.472209031892714
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 6.891594266758778,
+     "var_even": 2.609290331614971,
+     "var_odd": 2.1111951250021495,
+     "odd_share": 0.3063435024295295,
+     "mean": -1.194421850687643,
+     "mean_mirror": 11.084121960135818
+    },
+    "compactness": {
+     "var_total": 79.05551304508032,
+     "var_even": 79.0555130450803,
+     "var_odd": 7.481707140637851e-29,
+     "odd_share": 9.463865140400152e-31,
+     "mean": 4.047843235419334,
+     "mean_mirror": 4.047843235419335
+    }
+   },
+   {
+    "pdb": "6A5J",
+    "n": 13,
+    "fold": 4,
+    "steric": {
+     "var_total": 0.005210076623676601,
+     "var_even": 0.07935730263853231,
+     "var_odd": 0.07619945065525592,
+     "odd_share": 14.625399232897301,
+     "mean": 0.010222664779346401,
+     "mean_mirror": 0.12024390112302068
+    },
+    "contact": {
+     "var_total": 0.07831613955178943,
+     "var_even": 0.07196478605355995,
+     "var_odd": 0.009721104932564045,
+     "odd_share": 0.124126457052133,
+     "mean": 0.5786966640270018,
+     "mean_mirror": 0.5626394825481962
+    },
+    "hbond_local": {
+     "var_total": 10.665079859102539,
+     "var_even": 10.665079859102518,
+     "var_odd": 1.994969073181715e-28,
+     "odd_share": 1.8705617768806756e-29,
+     "mean": -5.855911316275736,
+     "mean_mirror": -5.855911316275727
+    },
+    "hbond_longrange": {
+     "var_total": 0.20347404491320203,
+     "var_even": 0.20347404491320195,
+     "var_odd": 3.6660198586809804e-29,
+     "odd_share": 1.8017137567815252e-28,
+     "mean": -0.08805523444254278,
+     "mean_mirror": -0.08805523444254298
+    },
+    "coop_helix": {
+     "var_total": 0.5878222222222222,
+     "var_even": 0.5878222222222222,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.5466666666666666,
+     "mean_mirror": -1.5466666666666666
+    },
+    "coop_sheet": {
+     "var_total": 0.0396,
+     "var_even": 0.0396,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.02,
+     "mean_mirror": -0.02
+    },
+    "solvation": {
+     "var_total": 4.181886918569223,
+     "var_even": 3.967985359898745,
+     "var_odd": 0.48591541664801213,
+     "odd_share": 0.1161952549434937,
+     "mean": -11.391507222916387,
+     "mean_mirror": -11.282167137447296
+    },
+    "electrostatic": {
+     "var_total": 0.45833567169354544,
+     "var_even": 0.42813209619275444,
+     "var_odd": 0.08658561306064518,
+     "odd_share": 0.18891310104821704,
+     "mean": 4.01297706772816,
+     "mean_mirror": 4.124692052072308
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 6.313237445757494,
+     "var_even": 2.4209877466068277,
+     "var_odd": 1.1422875674990471,
+     "odd_share": 0.18093530891455165,
+     "mean": -3.2058909319150204,
+     "mean_mirror": 9.02229447424998
+    },
+    "compactness": {
+     "var_total": 11.926458136890414,
+     "var_even": 11.926458136890416,
+     "var_odd": 1.1303431863095914e-29,
+     "odd_share": 9.477609977209091e-31,
+     "mean": 0.862673631137742,
+     "mean_mirror": 0.8626736311377421
+    }
+   },
+   {
+    "pdb": "6F3V",
+    "n": 9,
+    "fold": 0,
+    "steric": {
+     "var_total": 0.0022433419121945693,
+     "var_even": 0.12331374412438405,
+     "var_odd": 0.1174972131362054,
+     "odd_share": 52.37597198068782,
+     "mean": 0.006387156720038661,
+     "mean_mirror": 0.14559496636317604
+    },
+    "contact": {
+     "var_total": 0.19186306867461478,
+     "var_even": 0.15687466739887934,
+     "var_odd": 0.017726360072052482,
+     "odd_share": 0.09239068359797291,
+     "mean": 0.5971521555720729,
+     "mean_mirror": 0.4763313160751858
+    },
+    "hbond_local": {
+     "var_total": 2.914798568953852,
+     "var_even": 2.914798568953852,
+     "var_odd": 2.1238089094930206e-29,
+     "odd_share": 7.286297352119516e-30,
+     "mean": -1.451809635420683,
+     "mean_mirror": -1.4518096354206822
+    },
+    "hbond_longrange": {
+     "var_total": 0.03519611615962772,
+     "var_even": 0.03519611615962768,
+     "var_odd": 5.392056024211192e-31,
+     "odd_share": 1.5320031334582985e-29,
+     "mean": -0.02170858558151434,
+     "mean_mirror": -0.0217085855815143
+    },
+    "coop_helix": {
+     "var_total": 0.5169333333333334,
+     "var_even": 0.5169333333333334,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.42,
+     "mean_mirror": -0.42
+    },
+    "coop_sheet": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "solvation": {
+     "var_total": 3.613266950228994,
+     "var_even": 3.0337272128986035,
+     "var_odd": 0.27701621620924605,
+     "odd_share": 0.07666641297889432,
+     "mean": -8.604570016644352,
+     "mean_mirror": -8.49778296101634
+    },
+    "electrostatic": {
+     "var_total": 0.016796413112937215,
+     "var_even": 0.011654973142291126,
+     "var_odd": 0.0013775082621536334,
+     "odd_share": 0.08201204941146785,
+     "mean": 0.14157260117237294,
+     "mean_mirror": 0.13185349223516168
+    },
+    "aromatic": {
+     "var_total": 0.19317396209308565,
+     "var_even": 0.18548881042275922,
+     "var_odd": 0.006509149637278064,
+     "odd_share": 0.03369579195223769,
+     "mean": -0.4068837061468368,
+     "mean_mirror": -0.392301463788718
+    },
+    "torsion": {
+     "var_total": 8.500306342132667,
+     "var_even": 3.938604795853605,
+     "var_odd": 4.343212244704406,
+     "odd_share": 0.5109477317513623,
+     "mean": 1.6788944193026747,
+     "mean_mirror": 17.813953430314292
+    },
+    "compactness": {
+     "var_total": 6.416063245568982,
+     "var_even": 6.41606324556898,
+     "var_odd": 6.838769548598567e-30,
+     "odd_share": 1.0658825025332335e-30,
+     "mean": 1.229533186568023,
+     "mean_mirror": 1.229533186568023
+    }
+   },
+   {
+    "pdb": "6J9P",
+    "n": 12,
+    "fold": 4,
+    "steric": {
+     "var_total": 0.009563093507914733,
+     "var_even": 0.16251712046964922,
+     "var_odd": 0.11776780536806897,
+     "odd_share": 12.314823155352443,
+     "mean": 0.028494813648887587,
+     "mean_mirror": 0.22840752094323402
+    },
+    "contact": {
+     "var_total": 0.12093201250386851,
+     "var_even": 0.133695485310053,
+     "var_odd": 0.01564045268004697,
+     "odd_share": 0.12933260892806728,
+     "mean": 1.0549654223887592,
+     "mean_mirror": 1.1189567103575147
+    },
+    "hbond_local": {
+     "var_total": 7.998103600213926,
+     "var_even": 7.9981036002139145,
+     "var_odd": 1.51894156435316e-28,
+     "odd_share": 1.8991271434800277e-29,
+     "mean": -5.317346970109126,
+     "mean_mirror": -5.317346970109122
+    },
+    "hbond_longrange": {
+     "var_total": 0.10352881002467898,
+     "var_even": 0.10352881002467983,
+     "var_odd": 1.1837748090460021e-29,
+     "odd_share": 1.1434254955348337e-28,
+     "mean": -0.059990018722464504,
+     "mean_mirror": -0.05999001872246472
+    },
+    "coop_helix": {
+     "var_total": 0.5502666666666668,
+     "var_even": 0.5502666666666668,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.58,
+     "mean_mirror": -1.58
+    },
+    "coop_sheet": {
+     "var_total": 0.0099,
+     "var_even": 0.0099,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.01,
+     "mean_mirror": -0.01
+    },
+    "solvation": {
+     "var_total": 7.28374834630965,
+     "var_even": 7.002694557119266,
+     "var_odd": 0.601418823391701,
+     "odd_share": 0.08256996189282309,
+     "mean": -21.44495569138946,
+     "mean_mirror": -21.82879324454688
+    },
+    "electrostatic": {
+     "var_total": 0.4186877714336653,
+     "var_even": 0.3864802399963642,
+     "var_odd": 0.051663499131181324,
+     "odd_share": 0.12339385732302577,
+     "mean": 2.828556672801887,
+     "mean_mirror": 2.9020630438232846
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 6.871990495870413,
+     "var_even": 2.608880163215,
+     "var_odd": 1.209528589865295,
+     "odd_share": 0.17600847827018057,
+     "mean": -3.4881750253890065,
+     "mean_mirror": 8.306938034228072
+    },
+    "compactness": {
+     "var_total": 14.170350561702088,
+     "var_even": 14.170350561702088,
+     "var_odd": 5.3247532779198565e-30,
+     "odd_share": 3.7576722288797545e-31,
+     "mean": 0.9863318429202084,
+     "mean_mirror": 0.9863318429202085
+    }
+   },
+   {
+    "pdb": "6MBM",
+    "n": 16,
+    "fold": 1,
+    "steric": {
+     "var_total": 0.7533688667894242,
+     "var_even": 2.295231550990558,
+     "var_odd": 1.018222158610261,
+     "odd_share": 1.3515585837115123,
+     "mean": 0.1433595030706147,
+     "mean_mirror": 0.7858144474637729
+    },
+    "contact": {
+     "var_total": 0.4581450712955749,
+     "var_even": 0.4432054360414563,
+     "var_odd": 0.04207867417533528,
+     "odd_share": 0.09184574234607007,
+     "mean": 1.8681842596259997,
+     "mean_mirror": 1.9454759442747582
+    },
+    "hbond_local": {
+     "var_total": 18.154853226592596,
+     "var_even": 18.154853226592607,
+     "var_odd": 2.3667964682077963e-28,
+     "odd_share": 1.3036714969091545e-29,
+     "mean": -6.100108150994272,
+     "mean_mirror": -6.100108150994269
+    },
+    "hbond_longrange": {
+     "var_total": 0.3750308519656082,
+     "var_even": 0.37503085196560754,
+     "var_odd": 1.2107682322814786e-28,
+     "odd_share": 3.228449675368337e-28,
+     "mean": -0.187501170013609,
+     "mean_mirror": -0.18750117001360986
+    },
+    "coop_helix": {
+     "var_total": 0.7502666666666667,
+     "var_even": 0.7502666666666667,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.42,
+     "mean_mirror": -1.42
+    },
+    "coop_sheet": {
+     "var_total": 0.21915555555555552,
+     "var_even": 0.21915555555555552,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.08666666666666667,
+     "mean_mirror": -0.08666666666666667
+    },
+    "solvation": {
+     "var_total": 14.669750141448882,
+     "var_even": 13.045691742552707,
+     "var_odd": 1.2110247298823789,
+     "odd_share": 0.08255251236083903,
+     "mean": -24.842111613299853,
+     "mean_mirror": -25.065236808435344
+    },
+    "electrostatic": {
+     "var_total": 0.7928340904508702,
+     "var_even": 0.7201685594866192,
+     "var_odd": 0.06992208232006268,
+     "odd_share": 0.08819257794565731,
+     "mean": 3.025709928915091,
+     "mean_mirror": 3.072442404547439
+    },
+    "aromatic": {
+     "var_total": 0.17441764292085027,
+     "var_even": 0.14016761291857086,
+     "var_odd": 0.019285363857701476,
+     "odd_share": 0.11057002912516747,
+     "mean": -0.4935781057930225,
+     "mean_mirror": -0.48127427158989833
+    },
+    "torsion": {
+     "var_total": 7.5812299838839685,
+     "var_even": 2.897906863917209,
+     "var_odd": 1.9079754713163,
+     "odd_share": 0.2516709657103448,
+     "mean": -1.6947769715090588,
+     "mean_mirror": 11.351994048197513
+    },
+    "compactness": {
+     "var_total": 51.54804165400635,
+     "var_even": 51.548041654006326,
+     "var_odd": 8.685382080380919e-29,
+     "odd_share": 1.6849101928406404e-30,
+     "mean": 3.3486867406472793,
+     "mean_mirror": 3.348686740647279
+    }
+   },
+   {
+    "pdb": "6MK8",
+    "n": 13,
+    "fold": 1,
+    "steric": {
+     "var_total": 0.03302543381563245,
+     "var_even": 0.2263768386892501,
+     "var_odd": 0.12427420163048666,
+     "odd_share": 3.762984683994128,
+     "mean": 0.035192376623256846,
+     "mean_mirror": 0.2107496245407693
+    },
+    "contact": {
+     "var_total": 1.2527329944530023,
+     "var_even": 1.2527971175029708,
+     "var_odd": 0.08011665544223386,
+     "odd_share": 0.06395349671237506,
+     "mean": 2.5849839961019243,
+     "mean_mirror": 2.5336180139050812
+    },
+    "hbond_local": {
+     "var_total": 11.735955874095792,
+     "var_even": 11.735955874095778,
+     "var_odd": 1.3295529681066003e-28,
+     "odd_share": 1.1328885200065027e-29,
+     "mean": -4.5297634499665405,
+     "mean_mirror": -4.529763449966536
+    },
+    "hbond_longrange": {
+     "var_total": 0.25118759813026276,
+     "var_even": 0.2511875981302641,
+     "var_odd": 2.6489766225417165e-29,
+     "odd_share": 1.0545809754381227e-28,
+     "mean": -0.15741047988508614,
+     "mean_mirror": -0.15741047988508655
+    },
+    "coop_helix": {
+     "var_total": 0.7786222222222221,
+     "var_even": 0.7786222222222221,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.2733333333333334,
+     "mean_mirror": -1.2733333333333334
+    },
+    "coop_sheet": {
+     "var_total": 0.0099,
+     "var_even": 0.0099,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.01,
+     "mean_mirror": -0.01
+    },
+    "solvation": {
+     "var_total": 26.73471082935962,
+     "var_even": 24.100974907806798,
+     "var_odd": 0.7583922130938555,
+     "odd_share": 0.028367324334812018,
+     "mean": -30.529608451160318,
+     "mean_mirror": -30.817274335512703
+    },
+    "electrostatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 7.484012528017768,
+     "var_even": 2.869883105063985,
+     "var_odd": 1.4247489723135238,
+     "odd_share": 0.19037233930057115,
+     "mean": -2.4577087760173164,
+     "mean_mirror": 8.989607115157002
+    },
+    "compactness": {
+     "var_total": 41.14067136674895,
+     "var_even": 41.140671366748954,
+     "var_odd": 3.8821188696162733e-29,
+     "odd_share": 9.436206898543497e-31,
+     "mean": 2.4466860528018257,
+     "mean_mirror": 2.4466860528018257
+    }
+   },
+   {
+    "pdb": "6TWG",
+    "n": 13,
+    "fold": 0,
+    "steric": {
+     "var_total": 0.01316662946214946,
+     "var_even": 0.32827966400471564,
+     "var_odd": 0.27689985132415074,
+     "odd_share": 21.030427879827847,
+     "mean": 0.021216335972744048,
+     "mean_mirror": 0.2893947441902493
+    },
+    "contact": {
+     "var_total": 0.1463497461868924,
+     "var_even": 0.13938927421515265,
+     "var_odd": 0.015839653455243012,
+     "odd_share": 0.10823150615523014,
+     "mean": 1.1635799695703883,
+     "mean_mirror": 1.185955605419676
+    },
+    "hbond_local": {
+     "var_total": 11.31252572624399,
+     "var_even": 11.31252572624399,
+     "var_odd": 1.4098148813512135e-28,
+     "odd_share": 1.2462423648510044e-29,
+     "mean": -5.151543282344984,
+     "mean_mirror": -5.151543282344983
+    },
+    "hbond_longrange": {
+     "var_total": 0.05892312366955771,
+     "var_even": 0.05892312366955745,
+     "var_odd": 4.0044053185015124e-30,
+     "odd_share": 6.795982746872541e-29,
+     "mean": -0.05165068343514964,
+     "mean_mirror": -0.0516506834351496
+    },
+    "coop_helix": {
+     "var_total": 0.7041222222222222,
+     "var_even": 0.7041222222222222,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.4233333333333333,
+     "mean_mirror": -1.4233333333333333
+    },
+    "coop_sheet": {
+     "var_total": 0.006622222222222221,
+     "var_even": 0.006622222222222221,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.006666666666666667,
+     "mean_mirror": -0.006666666666666667
+    },
+    "solvation": {
+     "var_total": 8.518688097531134,
+     "var_even": 7.839390147841457,
+     "var_odd": 0.7398305402915086,
+     "odd_share": 0.0868479432303578,
+     "mean": -19.48433529926964,
+     "mean_mirror": -19.083381585678975
+    },
+    "electrostatic": {
+     "var_total": 0.4165938135195909,
+     "var_even": 0.3807616109486573,
+     "var_odd": 0.04982695197451477,
+     "odd_share": 0.1196055974848786,
+     "mean": 2.363910481919957,
+     "mean_mirror": 2.48015395581305
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 9.050149171899601,
+     "var_even": 3.665472787651291,
+     "var_odd": 2.055239663257415,
+     "odd_share": 0.22709456211383375,
+     "mean": -2.1583557428780726,
+     "mean_mirror": 12.8423713824389
+    },
+    "compactness": {
+     "var_total": 18.797967385152155,
+     "var_even": 18.797967385152155,
+     "var_odd": 1.3796812049270445e-29,
+     "odd_share": 7.339523346640156e-31,
+     "mean": 1.4060998659941033,
+     "mean_mirror": 1.4060998659941037
+    }
+   },
+   {
+    "pdb": "7BX2",
+    "n": 14,
+    "fold": 2,
+    "steric": {
+     "var_total": 0.01126600207387325,
+     "var_even": 0.8095479859408131,
+     "var_odd": 0.7270595208852401,
+     "odd_share": 64.5357169400269,
+     "mean": 0.02542702497408654,
+     "mean_mirror": 0.47731403841194975
+    },
+    "contact": {
+     "var_total": 0.07163035110310186,
+     "var_even": 0.07067955437820067,
+     "var_odd": 0.010874659209760763,
+     "odd_share": 0.15181636055515368,
+     "mean": 0.5751266112252768,
+     "mean_mirror": 0.5948340842581773
+    },
+    "hbond_local": {
+     "var_total": 11.362299729254499,
+     "var_even": 11.36229972925448,
+     "var_odd": 1.5484203103051376e-28,
+     "odd_share": 1.362770167309019e-29,
+     "mean": -5.516194373514732,
+     "mean_mirror": -5.516194373514722
+    },
+    "hbond_longrange": {
+     "var_total": 0.049029470450095376,
+     "var_even": 0.04902947045009557,
+     "var_odd": 1.0462810097366008e-30,
+     "odd_share": 2.1339839083139956e-29,
+     "mean": -0.04359433964113332,
+     "mean_mirror": -0.04359433964113347
+    },
+    "coop_helix": {
+     "var_total": 0.5957666666666666,
+     "var_even": 0.5957666666666666,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.53,
+     "mean_mirror": -1.53
+    },
+    "coop_sheet": {
+     "var_total": 0.0033222222222222216,
+     "var_even": 0.0033222222222222216,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.0033333333333333335,
+     "mean_mirror": -0.0033333333333333335
+    },
+    "solvation": {
+     "var_total": 6.276553593846976,
+     "var_even": 5.295517059603968,
+     "var_odd": 0.5616552523792163,
+     "odd_share": 0.08948465809800742,
+     "mean": -15.182839348190633,
+     "mean_mirror": -14.895722559361811
+    },
+    "electrostatic": {
+     "var_total": 1.062317674261512,
+     "var_even": 0.9600332446313994,
+     "var_odd": 0.14822247258692042,
+     "odd_share": 0.1395274466180371,
+     "mean": 4.211665417760139,
+     "mean_mirror": 4.321477601936884
+    },
+    "aromatic": {
+     "var_total": 0.01877058220946311,
+     "var_even": 0.010922735797265319,
+     "var_odd": 0.0020951811274367666,
+     "odd_share": 0.11162046568702008,
+     "mean": -0.026321617429931398,
+     "mean_mirror": -0.01171624980206748
+    },
+    "torsion": {
+     "var_total": 5.395509548301542,
+     "var_even": 2.01419773695296,
+     "var_odd": 1.260379984085212,
+     "odd_share": 0.23359795266824582,
+     "mean": -1.9734612082805105,
+     "mean_mirror": 9.891934254069367
+    },
+    "compactness": {
+     "var_total": 21.381340725291373,
+     "var_even": 21.381340725291395,
+     "var_odd": 7.149031445901669e-29,
+     "odd_share": 3.343584267120015e-30,
+     "mean": 1.6968221214227186,
+     "mean_mirror": 1.69682212142272
+    }
+   },
+   {
+    "pdb": "7JGX",
+    "n": 13,
+    "fold": 0,
+    "steric": {
+     "var_total": 0.08798898046239514,
+     "var_even": 0.7072707130747459,
+     "var_odd": 0.4840238104580745,
+     "odd_share": 5.50095941462735,
+     "mean": 0.06688237775895783,
+     "mean_mirror": 0.6499257907880989
+    },
+    "contact": {
+     "var_total": 0.6210485483226723,
+     "var_even": 0.5621060077871148,
+     "var_odd": 0.07198757536185224,
+     "odd_share": 0.11591295971349785,
+     "mean": 1.740965095806066,
+     "mean_mirror": 1.8209089399280227
+    },
+    "hbond_local": {
+     "var_total": 9.09824367256072,
+     "var_even": 9.098243672560717,
+     "var_odd": 1.2909657711893056e-28,
+     "odd_share": 1.418917559971177e-29,
+     "mean": -3.4098562902046807,
+     "mean_mirror": -3.409856290204678
+    },
+    "hbond_longrange": {
+     "var_total": 0.38204646056252706,
+     "var_even": 0.38204646056252556,
+     "var_odd": 1.0539522369360658e-28,
+     "odd_share": 2.7587017437204404e-28,
+     "mean": -0.2481580071472114,
+     "mean_mirror": -0.24815800714721067
+    },
+    "coop_helix": {
+     "var_total": 0.884488888888889,
+     "var_even": 0.884488888888889,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.9533333333333334,
+     "mean_mirror": -0.9533333333333334
+    },
+    "coop_sheet": {
+     "var_total": 0.02305555555555556,
+     "var_even": 0.02305555555555556,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.016666666666666666,
+     "mean_mirror": -0.016666666666666666
+    },
+    "solvation": {
+     "var_total": 15.741230367775854,
+     "var_even": 15.939746448313805,
+     "var_odd": 1.1726803788351206,
+     "odd_share": 0.07449737736103113,
+     "mean": -20.732865375153956,
+     "mean_mirror": -21.509098358815034
+    },
+    "electrostatic": {
+     "var_total": 0.1353927646201864,
+     "var_even": 0.08736555405456786,
+     "var_odd": 0.035435549697851336,
+     "odd_share": 0.2617241017070425,
+     "mean": -0.37304572742369924,
+     "mean_mirror": -0.4179328960185926
+    },
+    "aromatic": {
+     "var_total": 0.20747007122177885,
+     "var_even": 0.19965160237218146,
+     "var_odd": 0.0064077692630734205,
+     "odd_share": 0.030885270464980564,
+     "mean": -0.4778969581462025,
+     "mean_mirror": -0.49389139091177714
+    },
+    "torsion": {
+     "var_total": 5.212783286429476,
+     "var_even": 1.8762409275414587,
+     "var_odd": 1.5889576289725167,
+     "odd_share": 0.30481942978697696,
+     "mean": -1.414016144998161,
+     "mean_mirror": 9.582818327671077
+    },
+    "compactness": {
+     "var_total": 22.7571516635311,
+     "var_even": 22.7571516635311,
+     "var_odd": 2.3579833942559228e-29,
+     "odd_share": 1.0361504941915247e-30,
+     "mean": 1.9645635746804415,
+     "mean_mirror": 1.964563574680441
+    }
+   },
+   {
+    "pdb": "7LCW",
+    "n": 15,
+    "fold": 4,
+    "steric": {
+     "var_total": 0.920435901621454,
+     "var_even": 3.6363301216445576,
+     "var_odd": 1.3075824830915055,
+     "odd_share": 1.4206122129613243,
+     "mean": 0.18111466815353622,
+     "mean_mirror": 0.9529391819124657
+    },
+    "contact": {
+     "var_total": 0.4715702279403819,
+     "var_even": 0.4228155977786047,
+     "var_odd": 0.068428211575589,
+     "odd_share": 0.14510714952140705,
+     "mean": -0.6351021164029081,
+     "mean_mirror": -0.667054139933865
+    },
+    "hbond_local": {
+     "var_total": 13.352363224372121,
+     "var_even": 13.35236322437211,
+     "var_odd": 1.3010713190564688e-28,
+     "odd_share": 9.744127666341627e-30,
+     "mean": -3.9873708172908104,
+     "mean_mirror": -3.9873708172908073
+    },
+    "hbond_longrange": {
+     "var_total": 0.22042181030471888,
+     "var_even": 0.2204218103047188,
+     "var_odd": 5.975488565463453e-29,
+     "odd_share": 2.7109334403899177e-28,
+     "mean": -0.17173665745926517,
+     "mean_mirror": -0.1717366574592659
+    },
+    "coop_helix": {
+     "var_total": 0.8965666666666667,
+     "var_even": 0.8965666666666667,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.01,
+     "mean_mirror": -1.01
+    },
+    "coop_sheet": {
+     "var_total": 0.055322222222222224,
+     "var_even": 0.055322222222222224,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.03666666666666667,
+     "mean_mirror": -0.03666666666666667
+    },
+    "solvation": {
+     "var_total": 3.2912420904031614,
+     "var_even": 2.3150934136283197,
+     "var_odd": 0.4755064054149229,
+     "odd_share": 0.1444762774520411,
+     "mean": 0.7241842430370726,
+     "mean_mirror": 0.9492295567667154
+    },
+    "electrostatic": {
+     "var_total": 0.48280560668670375,
+     "var_even": 0.495386790479432,
+     "var_odd": 0.1273237959950563,
+     "odd_share": 0.2637164818130989,
+     "mean": -0.6604709651464478,
+     "mean_mirror": -0.7682137062224996
+    },
+    "aromatic": {
+     "var_total": 0.10566855494502643,
+     "var_even": 0.08217836562907921,
+     "var_odd": 0.01162624258855618,
+     "odd_share": 0.11002556621129794,
+     "mean": -0.10199147087274368,
+     "mean_mirror": -0.09215267674636876
+    },
+    "torsion": {
+     "var_total": 6.90194506943767,
+     "var_even": 2.6300047374162507,
+     "var_odd": 2.0344466427097654,
+     "odd_share": 0.29476424721466526,
+     "mean": -0.05132911898181952,
+     "mean_mirror": 11.280748143185713
+    },
+    "compactness": {
+     "var_total": 69.0520883520553,
+     "var_even": 69.05208835205536,
+     "var_odd": 1.332094701380637e-28,
+     "odd_share": 1.9291157344714656e-30,
+     "mean": 4.1483314524440855,
+     "mean_mirror": 4.148331452444087
+    }
+   },
+   {
+    "pdb": "7P3M",
+    "n": 13,
+    "fold": 4,
+    "steric": {
+     "var_total": 0.07186560766042807,
+     "var_even": 0.14380861059360028,
+     "var_odd": 0.057838090234245826,
+     "odd_share": 0.8048090333770832,
+     "mean": 0.0401380488187211,
+     "mean_mirror": 0.14584540193335013
+    },
+    "contact": {
+     "var_total": 0.31070019077712685,
+     "var_even": 0.3101251853092209,
+     "var_odd": 0.05928538801362277,
+     "odd_share": 0.19081220344711564,
+     "mean": 0.9784936593255763,
+     "mean_mirror": 0.8182521621686796
+    },
+    "hbond_local": {
+     "var_total": 11.552179395088165,
+     "var_even": 11.552179395088153,
+     "var_odd": 1.8868600453994066e-28,
+     "odd_share": 1.6333368630006513e-29,
+     "mean": -4.950391537075768,
+     "mean_mirror": -4.950391537075762
+    },
+    "hbond_longrange": {
+     "var_total": 0.0840099048659297,
+     "var_even": 0.08400990486592973,
+     "var_odd": 3.441978718823095e-30,
+     "odd_share": 4.097110601798804e-29,
+     "mean": -0.06617771167002455,
+     "mean_mirror": -0.06617771167002454
+    },
+    "coop_helix": {
+     "var_total": 0.7369333333333334,
+     "var_even": 0.7369333333333334,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -1.42,
+     "mean_mirror": -1.42
+    },
+    "coop_sheet": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "solvation": {
+     "var_total": 4.821737512557573,
+     "var_even": 4.171440067472978,
+     "var_odd": 0.3527109769182473,
+     "odd_share": 0.07315018206604125,
+     "mean": -11.287868085025199,
+     "mean_mirror": -11.212447428306035
+    },
+    "electrostatic": {
+     "var_total": 0.18305135229161118,
+     "var_even": 0.14597303835227063,
+     "var_odd": 0.024728746139133333,
+     "odd_share": 0.13509185171021867,
+     "mean": -0.18388019761011384,
+     "mean_mirror": -0.2223044888440629
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 9.056232498419918,
+     "var_even": 4.5591212747615755,
+     "var_odd": 1.5572843172743918,
+     "odd_share": 0.17195719274500718,
+     "mean": -1.6928049149650681,
+     "mean_mirror": 13.240809631049867
+    },
+    "compactness": {
+     "var_total": 64.84013020467373,
+     "var_even": 64.8401302046737,
+     "var_odd": 5.556227582875225e-29,
+     "odd_share": 8.569118484704597e-31,
+     "mean": 2.964595344713033,
+     "mean_mirror": 2.9645953447130333
+    }
+   },
+   {
+    "pdb": "8IS3",
+    "n": 9,
+    "fold": 0,
+    "steric": {
+     "var_total": 0.02321493458205344,
+     "var_even": 0.15035271738672054,
+     "var_odd": 0.1321208594437731,
+     "odd_share": 5.691201023065152,
+     "mean": 0.02476371657765248,
+     "mean_mirror": 0.2641216561953534
+    },
+    "contact": {
+     "var_total": 0.374640676441131,
+     "var_even": 0.3505182621083779,
+     "var_odd": 0.02489460635367359,
+     "odd_share": 0.06644928839590485,
+     "mean": 0.9766805564125449,
+     "mean_mirror": 0.9213332057237007
+    },
+    "hbond_local": {
+     "var_total": 2.3658867679553124,
+     "var_even": 2.365886767955307,
+     "var_odd": 2.451125746910179e-29,
+     "odd_share": 1.0360283425687923e-29,
+     "mean": -1.3339294531115968,
+     "mean_mirror": -1.3339294531115942
+    },
+    "hbond_longrange": {
+     "var_total": 0.02484379209128065,
+     "var_even": 0.02484379209128048,
+     "var_odd": 3.616720585315773e-30,
+     "odd_share": 1.4557844358169148e-28,
+     "mean": -0.03088775328000132,
+     "mean_mirror": -0.030887753280000988
+    },
+    "coop_helix": {
+     "var_total": 0.576388888888889,
+     "var_even": 0.576388888888889,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.48333333333333334,
+     "mean_mirror": -0.48333333333333334
+    },
+    "coop_sheet": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "solvation": {
+     "var_total": 3.0924620566727414,
+     "var_even": 3.1008767020374357,
+     "var_odd": 0.4562616553760059,
+     "odd_share": 0.14753993646955507,
+     "mean": -8.990716409882243,
+     "mean_mirror": -8.898121632005717
+    },
+    "electrostatic": {
+     "var_total": 0.2961978819676367,
+     "var_even": 0.4080575086764969,
+     "var_odd": 0.09526452684570767,
+     "odd_share": 0.32162460518916375,
+     "mean": 1.6041683224710268,
+     "mean_mirror": 1.8021783454234188
+    },
+    "aromatic": {
+     "var_total": 0.36458119484989243,
+     "var_even": 0.3381015994725166,
+     "var_odd": 0.029820398043910387,
+     "odd_share": 0.08179357154224101,
+     "mean": -0.7377268434638158,
+     "mean_mirror": -0.5835317652836817
+    },
+    "torsion": {
+     "var_total": 4.334581962924313,
+     "var_even": 1.9093000570154632,
+     "var_odd": 1.5416442399869572,
+     "odd_share": 0.35566157317438096,
+     "mean": -0.21031856862732123,
+     "mean_mirror": 10.5540003351774
+    },
+    "compactness": {
+     "var_total": 10.061654518797521,
+     "var_even": 10.061654518797521,
+     "var_odd": 4.781515414452386e-30,
+     "odd_share": 4.752215856268368e-31,
+     "mean": 1.5185597366602812,
+     "mean_mirror": 1.5185597366602812
+    }
+   },
+   {
+    "pdb": "8T61",
+    "n": 16,
+    "fold": 3,
+    "steric": {
+     "var_total": 0.383753165591361,
+     "var_even": 2.3113768112684983,
+     "var_odd": 1.3948999084950897,
+     "odd_share": 3.6348883437757666,
+     "mean": 0.13268951445881919,
+     "mean_mirror": 1.2319044034217195
+    },
+    "contact": {
+     "var_total": 0.6393944051423422,
+     "var_even": 0.5159243076932082,
+     "var_odd": 0.07594701767905647,
+     "odd_share": 0.11877960937451293,
+     "mean": 1.1463961364587147,
+     "mean_mirror": 1.1859322805859116
+    },
+    "hbond_local": {
+     "var_total": 12.860568897687655,
+     "var_even": 12.860568897687648,
+     "var_odd": 1.6256560175318552e-28,
+     "odd_share": 1.2640622902958439e-29,
+     "mean": -3.876416043648658,
+     "mean_mirror": -3.876416043648657
+    },
+    "hbond_longrange": {
+     "var_total": 0.6607707936239433,
+     "var_even": 0.6607707936239448,
+     "var_odd": 1.7834267194618607e-28,
+     "odd_share": 2.699009606161318e-28,
+     "mean": -0.31589698884567724,
+     "mean_mirror": -0.31589698884567696
+    },
+    "coop_helix": {
+     "var_total": 0.9088888888888887,
+     "var_even": 0.9088888888888887,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.9333333333333333,
+     "mean_mirror": -0.9333333333333333
+    },
+    "coop_sheet": {
+     "var_total": 0.2547888888888888,
+     "var_even": 0.2547888888888888,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.12333333333333334,
+     "mean_mirror": -0.12333333333333334
+    },
+    "solvation": {
+     "var_total": 5.260851627698,
+     "var_even": 4.84443220346761,
+     "var_odd": 0.5492200546470052,
+     "odd_share": 0.1043975564251616,
+     "mean": -8.616643309699471,
+     "mean_mirror": -8.848277879587277
+    },
+    "electrostatic": {
+     "var_total": 0.38023750949856616,
+     "var_even": 0.5263685536770359,
+     "var_odd": 0.12260840891238847,
+     "odd_share": 0.3224521669997179,
+     "mean": 1.7330523163636,
+     "mean_mirror": 1.9305974064830211
+    },
+    "aromatic": {
+     "var_total": 4.115390211333282,
+     "var_even": 3.9497851538106397,
+     "var_odd": 0.16762349120470518,
+     "odd_share": 0.04073088640369765,
+     "mean": -3.0921031846700946,
+     "mean_mirror": -3.04487807886174
+    },
+    "torsion": {
+     "var_total": 9.187550375051035,
+     "var_even": 3.020448814479133,
+     "var_odd": 2.7735189746807767,
+     "odd_share": 0.30187796109530124,
+     "mean": -0.42530017328415226,
+     "mean_mirror": 12.226387013797622
+    },
+    "compactness": {
+     "var_total": 81.11987712531163,
+     "var_even": 81.11987712531172,
+     "var_odd": 2.8670298612370567e-28,
+     "odd_share": 3.534312381672068e-30,
+     "mean": 4.063145545963306,
+     "mean_mirror": 4.06314554596331
+    }
+   },
+   {
+    "pdb": "8TXS",
+    "n": 16,
+    "fold": 4,
+    "steric": {
+     "var_total": 1.6050349482075097,
+     "var_even": 4.396007833275048,
+     "var_odd": 1.2710807993594677,
+     "odd_share": 0.7919334097858746,
+     "mean": 0.22747062589608855,
+     "mean_mirror": 1.1303859579705087
+    },
+    "contact": {
+     "var_total": 0.9386146514689344,
+     "var_even": 0.8913305207377963,
+     "var_odd": 0.08655301766733137,
+     "odd_share": 0.09221358044206499,
+     "mean": 1.5676752412990744,
+     "mean_mirror": 1.5464572023356706
+    },
+    "hbond_local": {
+     "var_total": 12.848099108469896,
+     "var_even": 12.848099108469887,
+     "var_odd": 1.6828219830377004e-28,
+     "odd_share": 1.309782847120418e-29,
+     "mean": -3.865515390334672,
+     "mean_mirror": -3.865515390334667
+    },
+    "hbond_longrange": {
+     "var_total": 0.3795997166001921,
+     "var_even": 0.37959971660018754,
+     "var_odd": 2.9076673559998367e-28,
+     "odd_share": 7.659824886176865e-28,
+     "mean": -0.22069763578205046,
+     "mean_mirror": -0.2206976357820497
+    },
+    "coop_helix": {
+     "var_total": 0.8897222222222223,
+     "var_even": 0.8897222222222223,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.9833333333333333,
+     "mean_mirror": -0.9833333333333333
+    },
+    "coop_sheet": {
+     "var_total": 0.061455555555555555,
+     "var_even": 0.061455555555555555,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.043333333333333335,
+     "mean_mirror": -0.043333333333333335
+    },
+    "solvation": {
+     "var_total": 3.747007037236349,
+     "var_even": 3.3212078408453194,
+     "var_odd": 0.41095756318196264,
+     "odd_share": 0.10967621867213503,
+     "mean": -3.5837696680605813,
+     "mean_mirror": -3.602798483121926
+    },
+    "electrostatic": {
+     "var_total": 0.1591415971569875,
+     "var_even": 0.1324294745995038,
+     "var_odd": 0.021674235665264368,
+     "odd_share": 0.13619465967708938,
+     "mean": -0.25845613272459755,
+     "mean_mirror": -0.24722887016552575
+    },
+    "aromatic": {
+     "var_total": 0.04269018392719534,
+     "var_even": 0.029041606550934573,
+     "var_odd": 0.0075188762171553,
+     "odd_share": 0.1761265828692173,
+     "mean": -0.06302437795019987,
+     "mean_mirror": -0.044440341157488676
+    },
+    "torsion": {
+     "var_total": 8.08130562648838,
+     "var_even": 3.3902088791351654,
+     "var_odd": 3.2379043769638907,
+     "odd_share": 0.40066599713181217,
+     "mean": -0.35597372890401824,
+     "mean_mirror": 16.057330299107562
+    },
+    "compactness": {
+     "var_total": 88.53556570365639,
+     "var_even": 88.53556570365642,
+     "var_odd": 1.2512676868252794e-28,
+     "odd_share": 1.413293829299612e-30,
+     "mean": 5.798730241486032,
+     "mean_mirror": 5.798730241486031
+    }
+   },
+   {
+    "pdb": "9BAF",
+    "n": 16,
+    "fold": 2,
+    "steric": {
+     "var_total": 0.7667610363325383,
+     "var_even": 2.9006272660440158,
+     "var_odd": 1.4888612806494144,
+     "odd_share": 1.9417539625783837,
+     "mean": 0.12615219582735848,
+     "mean_mirror": 1.2431685330815774
+    },
+    "contact": {
+     "var_total": 2.4897936860210645,
+     "var_even": 2.2395472971785315,
+     "var_odd": 0.32665195108999145,
+     "odd_share": 0.1311963930682198,
+     "mean": 4.246783290615117,
+     "mean_mirror": 4.026417961745886
+    },
+    "hbond_local": {
+     "var_total": 12.239564120904989,
+     "var_even": 12.239564120904976,
+     "var_odd": 1.4721454808561355e-28,
+     "odd_share": 1.2027760680968479e-29,
+     "mean": -3.9365384777769683,
+     "mean_mirror": -3.936538477776965
+    },
+    "hbond_longrange": {
+     "var_total": 0.596876914301698,
+     "var_even": 0.5968769143016921,
+     "var_odd": 2.551220108132813e-28,
+     "odd_share": 4.274281760616513e-28,
+     "mean": -0.285748625957836,
+     "mean_mirror": -0.2857486259578356
+    },
+    "coop_helix": {
+     "var_total": 0.8963999999999999,
+     "var_even": 0.8963999999999999,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.94,
+     "mean_mirror": -0.94
+    },
+    "coop_sheet": {
+     "var_total": 0.18732222222222225,
+     "var_even": 0.18732222222222225,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.09666666666666666,
+     "mean_mirror": -0.09666666666666666
+    },
+    "solvation": {
+     "var_total": 9.097666341690884,
+     "var_even": 8.370607762293812,
+     "var_odd": 0.9424773323968338,
+     "odd_share": 0.10359550427540365,
+     "mean": -7.444581847847791,
+     "mean_mirror": -7.473717363669642
+    },
+    "electrostatic": {
+     "var_total": 0.30723098954806005,
+     "var_even": 0.20823060933584414,
+     "var_odd": 0.09764708184768638,
+     "odd_share": 0.31782953272821285,
+     "mean": 2.239101530122896,
+     "mean_mirror": 2.3200001063877176
+    },
+    "aromatic": {
+     "var_total": 0.0,
+     "var_even": 0.0,
+     "var_odd": 0.0,
+     "odd_share": NaN,
+     "mean": 0.0,
+     "mean_mirror": 0.0
+    },
+    "torsion": {
+     "var_total": 15.321355280274814,
+     "var_even": 5.725720182916682,
+     "var_odd": 4.503979569058903,
+     "odd_share": 0.2939674386937209,
+     "mean": 0.828825654334738,
+     "mean_mirror": 16.000395228659677
+    },
+    "compactness": {
+     "var_total": 18.948108468878843,
+     "var_even": 18.948108468878853,
+     "var_odd": 4.242802576903045e-29,
+     "odd_share": 2.239169457928531e-30,
+     "mean": 2.094121137108685,
+     "mean_mirror": 2.0941211371086856
+    }
+   },
+   {
+    "pdb": "9UV5",
+    "n": 9,
+    "fold": 2,
+    "steric": {
+     "var_total": 0.001099645846532043,
+     "var_even": 0.17136145088742552,
+     "var_odd": 0.16598844480242453,
+     "odd_share": 150.94718479217912,
+     "mean": 0.007234306499838954,
+     "mean_mirror": 0.3014444633688579
+    },
+    "contact": {
+     "var_total": 0.05318196800479187,
+     "var_even": 0.040725612654973924,
+     "var_odd": 0.00565694297462415,
+     "odd_share": 0.1063695682362571,
+     "mean": 0.13556117477240717,
+     "mean_mirror": 0.12420321523905162
+    },
+    "hbond_local": {
+     "var_total": 3.314522280651956,
+     "var_even": 3.3145222806519503,
+     "var_odd": 3.1715095949489826e-29,
+     "odd_share": 9.56852700451649e-30,
+     "mean": -1.5599183316956469,
+     "mean_mirror": -1.5599183316956455
+    },
+    "hbond_longrange": {
+     "var_total": 0.035901755382459176,
+     "var_even": 0.03590175538245898,
+     "var_odd": 4.391513471060344e-30,
+     "odd_share": 1.2232029950284666e-28,
+     "mean": -0.025865910086508334,
+     "mean_mirror": -0.02586591008650809
+    },
+    "coop_helix": {
+     "var_total": 0.7593222222222221,
+     "var_even": 0.7593222222222221,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.5633333333333334,
+     "mean_mirror": -0.5633333333333334
+    },
+    "coop_sheet": {
+     "var_total": 0.01656666666666667,
+     "var_even": 0.01656666666666667,
+     "var_odd": 0.0,
+     "odd_share": 0.0,
+     "mean": -0.01,
+     "mean_mirror": -0.01
+    },
+    "solvation": {
+     "var_total": 0.5719164712189388,
+     "var_even": 0.33181039526638795,
+     "var_odd": 0.18535854581359573,
+     "odd_share": 0.3241007299869101,
+     "mean": -0.9451132248348412,
+     "mean_mirror": -1.1202356114655556
+    },
+    "electrostatic": {
+     "var_total": 0.26561538233808757,
+     "var_even": 0.13699013480598396,
+     "var_odd": 0.0704835995427915,
+     "odd_share": 0.2653596298616347,
+     "mean": 1.0762324006165804,
+     "mean_mirror": 0.9710823697200976
+    },
+    "aromatic": {
+     "var_total": 0.16694959149966515,
+     "var_even": 0.13608135000969737,
+     "var_odd": 0.019637133270249962,
+     "odd_share": 0.11762312859740869,
+     "mean": -0.35412087760716865,
+     "mean_mirror": -0.3158439724356114
+    },
+    "torsion": {
+     "var_total": 3.8261530753419515,
+     "var_even": 1.4372746581057645,
+     "var_odd": 1.5263168924995194,
+     "odd_share": 0.39891683956296214,
+     "mean": 0.21273761774288866,
+     "mean_mirror": 10.478449822713122
+    },
+    "compactness": {
+     "var_total": 7.0342664198273495,
+     "var_even": 7.0342664198273495,
+     "var_odd": 7.648606293377017e-30,
+     "odd_share": 1.0873353149971744e-30,
+     "mean": 1.1838853726093632,
+     "mean_mirror": 1.1838853726093632
+    }
+   }
+  ],
+  "F3_fired": false
+ }
+}
