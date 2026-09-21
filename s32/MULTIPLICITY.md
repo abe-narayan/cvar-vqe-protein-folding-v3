@@ -662,3 +662,4 @@ and applying it costs **+0.012 to +0.105 Å** at the endpoint.
 the production chain's own pair-distance error and the pool's common-mode error point in **almost
 exactly the same direction**. S31 §20.1's common-mode story, confirmed from a different object
 (the production chain's error, not the prior's) in a different lane.
+| P-38 | the whole H-P3 decomposition repeated on the **production top-75** set (not the quantum 128) | cloud, ORACLE | REGISTERED (H-P3, basis check) | identity 4.6e-13; f_common **0.6780** (matches S23's 0.676); Var(U)/Var(V) median 3.45 / 4.73 in the score's band; ρ_inband(CONS) **−0.2362 ± 0.0145** ORACLE band, **+0.2829 ± 0.0322** score band; zero-μ +0.7828; μ recovery 1e-14 |
