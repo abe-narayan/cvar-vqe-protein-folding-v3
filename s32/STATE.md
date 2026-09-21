@@ -9,6 +9,47 @@ Primary target < 3.00 Å. Ambitious < 2.50 Å.
 
 ---
 
+## NOTE 1 (2026-09-21 08:25, coordinator): **THE SPRINT'S SHAPE AFTER THREE HOURS — ONE THEOREM CLOSED THE READOUT, AND MY OWN LADDER FRAMING WAS WRONG TWICE**
+
+**What is now established (L2–L5), and it is more than I expected this early:**
+
+1. **The readout is the Euclidean projection of the native onto the candidate hull, with gain exactly
+   1** (lane Q, re-derived by me). `a` is needed only along `|S|−1` ≈ 33 directions; everything else
+   is *exactly invisible*. And gain 1 means **no noise suppression**, so ***a structure estimate good
+   enough to make the readout worth solving is already good enough to emit.*** **Arrow 4 is closed by
+   derivation**, and S31's "solving it exactly buys nothing" is now forced rather than surprising.
+2. **`a` and `μ` are ONE object** — `μ ↔ t ↔ a` is a native-free affine bijection. **S31's sharpest
+   open question is resolved.** In-band skill and common-mode correction are one missing channel in
+   two vocabularies.
+3. **The endpoint is not a cached scalar** (lane V). 3.210534 is a *re-projection* of the stored
+   cloud at λ=0.3, and it is **0.0043 Å better than what production itself emits (3.2148)**. Five
+   distinct objects live near it.
+4. **The chain rung is discontinuous at one ULP**: 7e-15 Å in → **0.10–0.15 Å out**, deterministic
+   given identical bits. Contract rules 20–22 written from this.
+5. **The score prefix is worse than random** at retaining the best candidate (+0.1872, 1.06× MDE,
+   Type-M ~1.10×), and **57% of what I called a filter loss is a bare order statistic**. Mechanism:
+   *the score concentrates on the mode and buys nothing in the good tail* — 5th percentile unchanged
+   (2.6098 → 2.6184) while the spread halves.
+
+**Two corrections to me, both annotated in place.** I called the 500→128 step "the retrieval filter"
+— it is the **distogram score prefix**, *"the quantum field of view"*, 128 = 2⁷. And I told lane R
+the final rung is λ=0 with the Ramachandran prior inactive — **it is λ=0.3 and the prior is already
+selecting among branches**, exactly as `lam_path`'s docstring intends. *A penalty is not a selector,
+though, and post-hoc branch ranking remains open.*
+
+**And one against myself with no lane involved:** my first verification of L2's convexity was
+**vacuous** — accumulator initialised at the pass threshold, max over always-negative quantities,
+could not fail on any input. Contract rule 5, violated one hour after I wrote it. The shipped check
+carries a positive control.
+
+**Where that leaves the sprint.** Arrows 2–4 are one information problem and it is now bounded by a
+theorem. **The live routes are: (i) lane P's random-128 endpoint arm, which needs no `a` at all and
+is therefore the cheapest possible deployable gain; (ii) lane R's branch degeneracy, which is the
+only loss whose missing quantity may be computable today; (iii) whether the sparse cardinality
+constraint binds — if it does not, the 2.10 Å sparse headroom is a convex prize, not a quantum one.**
+
+---
+
 ## HEADLINE HYPOTHESIS (provisional, hours in): THE LOSS IS DOWNSTREAM OF RETRIEVAL, AND PART OF IT IS ARITHMETIC
 
 The S29 O-ladder, read on the **built chain**, says the pool already contains the answer:
