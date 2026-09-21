@@ -3195,3 +3195,166 @@ and no rule for realising it exists.** That is the strongest form of this entry'
 * `T_CHAIN` is defined by the outcome and is therefore partly downstream of the filter; the
   filter-vs-readout decomposition is quoted from `T_POOL` as well for that reason.
 * 24 comparisons emitted against 44 registered; appended to `s31/MULTIPLICITY.md`.
+
+## S31-L22 -- **THE PRIZE IN PRIOR CORRECTION IS ALONG THE POOL'S COMMON MODE; THE ORTHOGONAL COMPLEMENT IS WORTH LESS THAN NOTHING EVEN WITH ORACLE MAGNITUDE AND A PERFECT DIRECTION** -- SO CHARTER §14 AND CONTRACT RULE 29 ARE INVERTED: THE NEXT CHANNEL MUST **IDENTIFY** THE COMMON MODE, NOT AVOID IT (2026-09-21 01:13, E)
+
+Registered in `s31/PREREG_S31_E.md` (`593bdd2e`) and AMENDMENT 1 (`f246eaba`), both committed before
+their numbers existed. Artefacts: `s31/results/s31_E2_applied.json` and `s31_E5_applied.json` (126/126
+each), `s31_E2_rows.jsonl`, `s31_E5_rows.s*.jsonl`, `s31_E3_decomp.json`, `s31_E4_predictability.json`,
+`s31_E6_selection.json`. Code `s31/s31_E{_lib,1,2_deltas,2_emit,2_agg,3,4,5,6}*.py`. Follows S31-L3,
+which killed the native-free direction estimate. **Endpoint basis: built-chain Cα RMSD**, paired
+against this run's own `PROD` = **3.2126** (canonical 3.2105; the projection seed is unpinned and the
+delta is what transfers). CA point cloud reported beside it throughout.
+
+### Reproduction first, because the claim is about S30's own corrector
+
+`FIT_N3` emits **+0.0554 Å CA cloud**, bit-identical to S30's published +0.05542; `PROD` cloud is
+**3.0483** exactly; out-of-fold R² **0.235453** and `coh` **0.693096** both match S30 to six decimals;
+`PROD`'s top-75 set mean comes out **3.5507**, the contract's stored value. Same object, re-measured.
+
+### The decomposition
+
+Split the ORACLE ideal correction `y = expected − d_nat` against the ORACLE common mode
+`mu = pool75_mean − d_nat` per target, and apply each half through production's readout:
+
+```
+ORACLE_Y_ALONG_MU    2.4025   -0.8102   3.29x MDE  5/5 folds  121W/5L   RESULT   ORACLE / NOT DEPLOYABLE
+ORACLE_FULL          2.4370   -0.7756   3.12x MDE  5/5 folds  114W/12L  RESULT   ORACLE / NOT DEPLOYABLE
+ORACLE_Y_PERP_MU     3.2873   +0.0747   0.87x MDE             57W/69L   HARMFUL  ORACLE / NOT DEPLOYABLE
+
+along vs perp, paired  -0.8848   3.50x MDE   fold95 [-0.9598,-0.8256]   5/5 folds   118W/8L
+```
+
+### The controls, and they are what decide which half of the claim is sharp
+
+```
+(1) MAGNITUDE IS NOT THE EXPLANATION
+    CTRL_SHRINK_ORACLE_Y  the PERFECT correction shrunk to the perp arm's EXACT norm    -0.5422
+    perp arm vs that control       +0.6169   3.25x MDE   5/5 folds   9W/117L
+
+(2) THE ENERGY-MATCHED DIRECTION CONTROL -- a direction carrying the SAME per-target energy
+    fraction of y as mu, otherwise arbitrary; norms identical by construction (0.8432 / 0.5376)
+    ENERGYMATCHED_ALONG  2.5342  -0.6785        ENERGYMATCHED_PERP  2.9076  -0.3051
+    perp,  mu vs energy-matched    +0.3797   2.53x MDE   5/5 folds   12W/114L
+    along, mu vs energy-matched    -0.1317   2.07x MDE   5/5 folds   101W/25L
+    -> mu IS special, on BOTH sides, and the specialness is in WHAT IS LEFT BEHIND.
+
+(3) THE SHRINK CURVE, c * y (ORACLE)
+    c=0.25 -0.2978 | 0.50 -0.5857 | 0.75 -0.7488 | 0.90 -0.7697 | 1.00 -0.7756
+    ORACLE_Y_ALONG_MU   vs SHRINK_Y_090    -0.0405   0.64x MDE   NOT A RESULT
+    ENERGYMATCHED_ALONG vs SHRINK_Y_090    +0.0912   1.43x MDE   WORSE
+
+(4) THE PROJECTION IS NOT THE MECHANISM
+    E2_PROJ_MUHAT   vs its norm-matched shrinkage   +0.0216   0.26x MDE   indistinguishable
+    E3_CONSTR_MUHAT vs the same                     +0.0124   0.16x MDE   indistinguishable
+
+(5) PROJECTING AGAINST THE **TRUE** mu BUYS NOTHING OVER NOT PROJECTING
+    E2o_PROJ_MU vs FIT_N3  +0.0192 (0.18x)    E3o_CONSTR_MU vs FIT_N3  +0.0095 (0.08x)
+
+(6) THE DEGENERATE NULL, for scale: an isotropic rank-1 split.  RANDDIR_ALONG carries 11.8% of
+    y's norm and is worth -0.0229 (0.66x MDE, FALSIFIED); RANDDIR_PERP carries 99.3% and is
+    worth -0.7884, i.e. the full correction.  A random direction captures nothing; mu captures 71%.
+```
+
+> **Which half of the finding is sharp, stated against my own interest.** Control (3) says the ALONG
+> arm is **not** distinguishable from norm-matched shrinkage of a perfect correction (0.64× MDE), so
+> "correcting along `mu` is uniquely valuable" is only **partly** controlled — much of it is "correcting
+> most of the error is valuable". **The controlled half is the negative one**, and it is controlled
+> three ways: the orthogonal correction is +0.6169 worse than its norm-matched control (3.25× MDE,
+> 9W/117L) and +0.3797 worse than its energy-matched-direction control (2.53× MDE, 12W/114L), and it
+> is the class E2/E3 and charter §14 actually propose.
+
+### The registered arms and their registered verdict
+
+```
+E2_PROJ_MUHAT    3.2540  +0.0414  0.46x MDE   FALSIFIED   LFO-supervised, native-free at inference
+E3_CONSTR_MUHAT  3.2449  +0.0323  0.44x MDE   FALSIFIED   LFO-supervised, native-free at inference
+```
+
+Both fall below the pre-registered 0.7× MDE floor **on the wrong side of zero**. The E2/E3 hypothesis
+is closed, and closed **at its ORACLE ceiling**, not merely at this estimator: with the true `mu` the
+same operators give +0.0741 and +0.0644.
+
+### Why -- the E1 identity again, not a second mechanism
+
+Refit S30's ridge on each half, same features, same pinned folds:
+
+```
+y_PERP_mu    out-of-fold R2  +0.9403     random-feature control  -0.0026
+y_ALONG_mu   out-of-fold R2  -0.0051     random-feature control  -0.0039
+pooled energy share of y:  71.10% along  /  28.90% perp
+```
+
+Not a lucky regression. `mu_hat = mu − y` (S31-L3) forces `y_perp = −P_perp(mu_hat; mu)` **exactly**
+(max |dev| 9.3e-15), and with `cos(mu_hat, mu) = 0.0495` that is `y_perp ≈ −mu_hat` at corr 0.971.
+
+> **The predictable half is not predicted -- it is OBSERVED.** It is the native-free pool-disagreement
+> feature itself wearing a regression as a disguise. The unpredictable half is exactly the component
+> S30-L7 proves non-identifiable from within the pool.
+
+**It acts through selection** (`s31_E6_selection.json`, ORACLE diagnostic): in-pool Spearman of the
+corrected score against members' true RMSD rises **+0.2284** for the along correction and **+0.0040**
+for the orthogonal one, against PROD's 0.5678; oracle-best-75 recall 0.3280 → 0.6070 (along) against
+0.3290 (perp).
+
+### What this does to S30 -- precisely, so it is not read as a retraction
+
+**S30's measurements are untouched and still stand** — +0.0554 coherent against −0.2466 i.i.d. at
+matched R², and `coh` rising 0.6931 → 0.9172. **Its slogan survives verbatim.** What was backwards is
+the mechanism: §12 said *"the predictable part of the prior's error IS the common mode."* Measured on
+S30's own corrector: `corr(yhat, mu) = −0.0295`, its energy is **8.94%** along `mu`, and **100.79%** of
+its pooled sum-of-squares reduction is in the **orthogonal** component. `coh` rises because the
+corrector strips everything *except* the common mode, leaving a residual that is nearly pure common
+mode. The second half of §12.3 — that the common mode is non-identifiable — is **confirmed and
+strengthened** (out-of-fold R² −0.0051 against a random-feature floor of −0.0039).
+
+### THE STATEMENT OF RECORD, replacing S30's
+
+> **What can be predicted is the component ORTHOGONAL to the pool's common mode, and it is harmful.
+> What would help is the common mode itself, and it is unpredictable.**
+
+### CHARTER §14 AND CONTRACT RULE 29 ARE INVERTED
+
+Both ask for an observable whose error is **incoherent** with the pool's common mode. **Measured, with
+ORACLE magnitude and a perfect direction, an incoherent correction is worth +0.0747 Å — harmful, and
++0.3797 worse than an energy-matched arbitrary direction.** Incoherence was the wrong target.
+
+> **RULE 29, rewritten on this measurement: the next channel must IDENTIFY the pool's common mode, not
+> avoid it.** The common mode is the one direction proven non-identifiable *from pool data* (S30-L7),
+> so the requirement is information about it **from outside the pool**.
+
+**And I withdraw half of my own S31-L3 closing line.** I wrote that an observable "must carry orthogonal
+INFORMATION". That is wrong by this lane's own measurement: orthogonal information is exactly what the
+project already has — 94% of it, out of fold — and it is worth **+0.075 Å**.
+
+### Sizing, ORACLE / NOT DEPLOYABLE, with the tie reported as a tie
+
+The along-`mu` correction alone puts the built chain at **2.4025 Å**, which would clear the charter's
+*ambitious* 2.50 target, and it is **4× concentrated on the tail**: FAIL18 **6.0195 → 3.7392**
+(−2.2803) against −0.5651 on the other 108. *(FAIL18 is defined by the filter's own recall — contract
+rule 12 — so that is a stratum reading, not a claim about the stratum.)* **It does not beat the perfect
+prior: ALONG vs FULL is −0.0345 at 0.51× MDE, 3/5 folds — NOT MEASURED, a tie.** It matches a perfect
+prior while correcting 71% of its energy; it does not exceed one.
+
+### The open question this composes with lane A's, which neither lane can answer alone
+
+Lane A closes with: what is missing is a per-candidate quality estimate with positive **in-band** skill,
+and every native-free candidate measured has in-band skill of the **wrong sign**. This lane closes with:
+what is missing is information about the pool's **common mode**. **These are two different objects** —
+lane A's is *which candidate is better*, this lane's is *how all of them are wrong together* — **and
+both are things the pool cannot tell you about itself.** Whether they are two faces of one requirement
+or two independent ones is, in my view, the sharpest question the sprint produces, and it is **stated as
+open rather than resolved by assertion.**
+
+### Registered predictions, both wrong for the second time in the same lane
+
+The coordinator registered 2:1 against E2/E3 and I registered 4:1 / 3:1, both on the ground that the
+orthogonal complement would be **noise**. It is **94% predictable and actively harmful** — the opposite
+of noise. Direction right, mechanism wrong, twice in one lane; recorded as such.
+
+### Multiplicity and honesty about what was decided when
+
+The E5 control family (rows 7–8 of `MULTIPLICITY.md`) was **built before the endpoint arms ran** and
+**launched after seeing them**, which is stated here rather than left to be inferred. Registering extra
+controls after an effect appears can only make a positive harder to claim, never easier; the effect
+they test was pre-registered in §3 and AMENDMENT 1.

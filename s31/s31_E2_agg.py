@@ -68,6 +68,7 @@ def main():
     ap.add_argument("--all-oracle", action="store_true")
     a = ap.parse_args()
     ALL_ORACLE = a.all_oracle
+    outpath = a.out
     R = {}
     for p in sorted(glob.glob(os.path.join(HERE, "results", a.rows_glob))):
         for ln in open(p):
@@ -113,10 +114,10 @@ def main():
         ch, cl = res["arms"][nm]["chain"]["delta"], res["arms"][nm]["cloud"]["delta"]
         res["arms"][nm]["cloud_to_chain_transfer"] = float(ch / cl) if abs(cl) > 1e-9 else None
 
-    tmp = a.out + ".%d.tmp" % os.getpid()
+    tmp = outpath + ".%d.tmp" % os.getpid()
     with open(tmp, "w") as fh:
         json.dump(res, fh, indent=1, default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
-    os.replace(tmp, a.out)
+    os.replace(tmp, outpath)
 
     print("n = %d  (missing %d)   PROD chain %.4f (canonical 3.2105)  cloud %.4f (canonical 3.0483)"
           % (res["n"], res["n_missing"], res["prod_chain_this_run"], res["prod_cloud_this_run"]))
@@ -130,7 +131,7 @@ def main():
             print("%-22s %-40s %7.4f %+8.4f %6.2f %3d/%-3d %-38s"
                   % (nm, a["status"], a["mean"], a["delta"], abs(a["x_mde"]), a["W"], a["L"],
                      a["PREREG_VERDICT"]))
-    print("\nwrote", OUT)
+    print("\nwrote", outpath)
 
 
 if __name__ == "__main__":

@@ -161,3 +161,5 @@ any cell of an exploratory family. Pre-registered primaries keep 2.8016.
 
 *Lanes: append your row when you emit the family. A lower bound in the hundreds is what S30
 ended with and it is not a number anyone can correct with.*
+| 7 | 2026-09-21 01:13 | E | E5 magnitude control family: 4-point shrink curve c*y through the endpoint | 8 | both bases, 126 targets | ORACLE magnitude reference curve; no effect claimed from any single point |
+| 8 | 2026-09-21 01:13 | E | E5 direction controls: energy-matched split and isotropic split of y, x2 bases | 8 | both bases, 126 targets | the matched null for "is mu special"; **built before the endpoint arms ran, launched after seeing them** -- stated in S31-L22 rather than left to be inferred |
