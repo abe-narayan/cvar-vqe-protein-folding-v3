@@ -749,6 +749,7 @@ a 59/41 label.** Every arm is under 0.7× MDE — NOT A RESULT.
 | L-3d | in-band Spearman(BLOSUM sim, ORACLE CA-RMSD) inside the K=500 pool, L~55 (n=45) vs L~13 (n=126) | **EXPLORATORY**, found by looking at the ladder's filter_skill column | rank correlation, ORACLE labels | **HYPOTHESIS NOT SUPPORTED.** rho -0.0464 (SE 0.0074) at L~13 vs **+0.0261** (SE 0.0304) at L~55 -- the WRONG SIGN at length, 44.4% of targets negative vs 67.5%. Contrast +0.072, MDE 0.088, **0.83x -> NOT MEASURED**. The global in-band sequence channel does NOT strengthen with length; `structure-and-sequence-are-decoupled` survives at 55 residues as a statement about GLOBAL ordering. What does grow is the HEAD-of-order advantage (top-1 vs pool mean: 8% at L~13, 25% at L~55) -- a different statistic, reported as such. |
 | L-3e | readout prefix size: ONE global m fitted OUT-OF-FOLD vs the shipped m=75, at L~55 (n=45) and L~13 (n=126) | **EXPLORATORY**, and the only lane-L arm proposing a deployable change | **CA CLOUD, not the built chain** | **L~13: +0.0201, MDE 0.0424, 0.47x -> NOT A RESULT.** m=75 is right at peptide length (curve flat 3.304/3.293/3.293 over m=30/50/75). **L~55: -1.0127, MDE 1.4156, 0.72x -> NOT MEASURED**, W/L 21/24, per-fold +0.200/-1.111/-0.540/-1.265/-2.347 (4/5 improve). The cloud curve minimises at **m=3** (8.130) and every fold's out-of-fold choice is m in {3,5}; the shipped m=75 sits 1.28 A past the minimum. A LEAD, not a result: near-even W/L with a large mean is the concentration warning, and it is on the CLOUD. |
 | L-3f | ORACLE per-target m vs LFO global m, L~55 | ORACLE, priced as an order statistic | CA cloud | 6.557 vs 8.397. The per-target argmin over a 13-point grid is mostly best-of-13 (memory: `grid-oracles-are-order-statistics`) and is quoted only to bound the arm. |
+| L-5 | CLOUD ladder, FULL instrument, both lengths (n=126 and n=45) | **registered** (L-H2, P1/P2) | **CA point cloud** -- diagnostic, NOT the endpoint | See the table below. **P1 and P2 both HOLD at full instrument size, every rung a RESULT.** Implementation check: the recomputed canonical `pool_best` is **1.7108**, bit-matching the value pinned in `s12/instrument.py`'s selfcheck. |
 | L-4 | `long40` ladder: pool_best / sparse_s10 / top75_best / avg75 / avg75_random, at L 40–60 and L 9–16 | **registered** (L-H2, P1–P3) | built chain, pre-AMBER | in progress |
 
 | P-37 | rank of the pool's deviation matrix vs 3n−6 | cloud, native-free | EXPLORATORY (structural) | **exact on 126/126**; μ lies inside that span on 126/126, which is why μ is exactly recoverable |
@@ -1016,3 +1017,23 @@ defect of my own, found by lane V and fixed in place** (D1-T's missing script an
 **Zero lane-D arms reached the endpoint as an improvement**, and the one ORACLE arm that did
 (D-75, −0.2101 Å) is **ORACLE / NOT DEPLOYABLE** with nothing native-free to supply it.
 | R-19 | R | typicality ARGMIN vs ARGMAX (both directions), vs PROD | **E** | built chain n=126 | pending | pending | EXPLORATORY; re-derivation of a cross-lane sign defect (contract rule 7). NOT two new hypotheses: one arm, two directions, published together so the pair can never be quoted as one number |
+
+### L-5 — the cloud ladder at full instrument size (basis: CA POINT CLOUD, not the endpoint)
+
+| rung | L ~ 13 (n=126) | L ~ 55 (n=45) |
+|---|---|---|
+| `pool_best` ORACLE / NOT DEPLOYABLE | 1.7108 (SE 0.0791) | 4.9797 (SE 0.4329) |
+| `top75_best` ORACLE / NOT DEPLOYABLE | 2.1041 (SE 0.0994) | 5.8330 (SE 0.5055) |
+| `avg75` deployable-shaped | 3.2928 (SE 0.1390) | 9.4094 (SE 0.3403) |
+| `pool_mean` (a typical member) | 4.4533 | 11.9866 |
+
+| difference (LOWER IS BETTER) | L ~ 13 | L ~ 55 |
+|---|---|---|
+| headroom `avg75 - pool_best` | **+1.5820**, MDE 0.3045, **5.20x**, W/L 1/125 | **+4.4297**, MDE 1.3164, **3.36x**, W/L 2/43 |
+| retrieval `top75_best - pool_best` | +0.3933, MDE 0.1207, 3.26x, W/L 0/102 | +0.8534, MDE 0.4815, 1.77x, W/L 0/25 |
+| readout `avg75 - top75_best` | **+1.1887**, MDE 0.2777, **4.28x**, W/L 6/120 | **+3.5764**, MDE 1.4805, **2.42x**, W/L 8/37 |
+
+**Share of the recoverable loss:** retrieval 24.9% / readout 75.1% at L~13; retrieval 19.3%
+/ readout **80.7%** at L~55. The ladder's shape is preserved over a 4x length change and the
+readout's share GROWS. `top75_best` here is the **BLOSUM** top-75, not the distogram top-75
+(2.3062 on record) — a different object, never differenced against it.
