@@ -600,3 +600,101 @@ automatically.** That is the generalisable form of this defect. State: 64 matche
 0 missing, 0 flagged, 11/11 self-tests.
 
 ---
+
+---
+
+## S32-L(D2) -- **THE MISSING PER-TARGET SIGN IS A REAL LATENT AND IT TRANSFERS; AND THE 9–16-RESIDUE SCOPE EXCUSE IS NOT AVAILABLE** (2026-09-21 09:40, lane D)
+
+Pre-registration `s32/PREREG_S32_D.md`, commit **`34973b1b`**. Artefacts
+`s32/results/s32_D1_signtransfer.json`, `s32_D2_basin_0_1.jsonl`, `s32_D0X_circularity.json`.
+**Basis: in-band Spearman ρ against true Cα-RMSD inside each target's shipped top-75 band. A
+diagnostic, never differenced against a chain RMSD.**
+
+### (a) The sign transfers — split-half inside each target, matched null
+
+Sign estimated on a random half A of the band, applied to held-out half B, **16 splits per target**,
+own distribution averaged; **matched null = same sign, labels on B permuted**:
+
+```
+scorer         transfer   null    excess    se     xMDE  folds
+AMBER           +0.1125  -0.0056  +0.1181  0.0164  2.57   5/5
+DIS             +0.1890  -0.0033  +0.1923  0.0226  3.04   5/5
+LEG_total       +0.2263  -0.0003  +0.2266  0.0237  3.41   5/5
+LEG_torsion     +0.1499  -0.0008  +0.1507  0.0196  2.75   5/5
+```
+
+**The latent is a property of the TARGET, not of the sample** — which `Var(ρ) > 0` alone could not
+establish. AMBER goes **+0.0000 → +0.1125** and Legacy **+0.0376 → +0.2263** once the sign is
+supplied. **ORACLE / NOT DEPLOYABLE**: estimating the sign requires native labels on half the band.
+Memory `in-band-signal-limited-not-sample-limited` records a **flat learning curve** for supplying
+this sign natively, so *the latent existing* and *the latent being natively recoverable* are
+different claims and only the first is established here.
+
+### (b) The reality check — both registered horns MISSED, and the hypothesis was mine
+
+10 targets chosen **native-free and deterministically** (first 2 of each frozen fold, pinned order),
+24 band members each, free AMBER relaxation, 97.5% converged:
+
+```
+CONTRACTION horn   median spread ratio <= 0.70   measured 0.972    DID NOT FIRE
+FROZEN horn        median move <= 0.30 A         measured 0.5006   DID NOT FIRE
+```
+
+**H-D2 is falsified.** At 9–16 residues the candidates are neither collapsed into one basin nor
+frozen. **The scope excuse this lane was entitled to use is not available**, and any future negative
+on dynamics must name a different reason.
+
+### (c) Minimisation does not rescue AMBER, and the mechanism is a rotamer artefact
+
+Converged relaxed energy in band **−0.0089** (n = 10, DIAGNOSTIC) against the single point's
+**+0.0006**; the relaxed energies are physical (median −887…−293 kcal/mol, per-target sd **1–9
+kcal/mol on 8 of 10 targets**), so **D-1's zero is not a clash artefact.** Per-target ρ mean
+**−0.0089**, mean |ρ| **0.242** — *zero mean, real dispersion, random sign*, reproduced on converged
+all-atom physics.
+
+```
+energy, median over candidates      3.18e9  ->  -558 kcal/mol
+CA motion required to get there                 0.50 A
+band mean CA-RMSD to native         3.1931  ->  3.1849  (-0.0083)   ORACLE / NOT DEPLOYABLE
+BEST member of the band             2.5358  ->  2.5741  (+0.0382, WORSE)   ORACLE
+rank preservation rho(rr_in,rr_out)             0.9208
+```
+
+**Nine orders of magnitude of energy relieved by half an Ångström of Cα motion.** By §0.2c the
+sidechains are **modal rotamers** and the hydrogens **frozen local frames** — a deterministic
+function of `(seq, φ, ψ)`. **AMBER's dynamic range on this pool is spent on a rotamer-placement
+artefact that carries no candidate information**, and the motion it buys leaves the band's quality
+unchanged and its best member slightly worse. *That is why the force field cannot rank here.*
+
+### (d) The cross-lane chirality synthesis is CIRCULAR — controlled before it was written down
+
+The coordinator proposed that lane D's *"the top-75 filter removes 79% of the chiral variance"* and
+lane V's *"the score prefix halves the pool's quality spread"* are one event seen twice, and asked to
+be told if they are one variance measured twice. **They are.** Variance retained under the shipped
+filter, with a size-matched **random-75** control and the **exact achiral twin** (`mean cos τ` against
+`mean sin τ`, same family, same scale, differing only in parity):
+
+```
+                      score-75   random-75
+DIS (the criterion)      0.037      0.964
+RG                       0.111      0.979
+CHI_even_cos  (TWIN)     0.196      0.978
+E2E                      0.244      0.957
+CHI_odd_sin   (CHIRAL)   0.271      0.975
+RR_ORACLE  (lane V's)    0.272      0.965
+LEG_total                0.323      0.973
+```
+
+The random-75 control retains 0.96–0.98 everywhere, so the shrinkage is **selection**, not
+subsetting — but it is **general** selection. Chirality is the **second-least** shrunk coordinate and
+is shrunk **less than its own achiral twin** (+0.0755, **2.35× MDE, 5/5 folds**). **Lane D's 0.271
+and lane V's 0.272 are the same number to three decimals: one fact, not two.** The proposed
+500 → 128 chiral arm is **NOT RUN by derivation** — the achiral twin reaches the same global
+magnitude with the opposite sign (**−0.3359** against **+0.3302**), so the G1 escape is not doing the
+work, for the **third** time (WRITHE S30-L26, XTWIST S31 §9, this); and what remains is a
+weakly-independent global coordinate (+0.1302 past `DIS`, rank-corr **+0.464** with `Rg`) added to a
+global filter, which is **S30-L21's closed question** (21 fields span ~2 directions; best
+leave-fold-out combination **0.0948**).
+
+**Contract rule 7 in action:** this is a cross-lane claim, it was re-derived from the raw artefacts
+in one script by one person before anyone wrote it down, and it did not survive.

@@ -93,6 +93,22 @@ def analyse_mover(out):
                                                      label="%s relaxed vs production chain" % rung))
         g["ENDPOINT_built_chain"]["mean_arm"] = float(rm.mean())
         g["ENDPOINT_built_chain"]["mean_prod"] = float(prod.mean())
+        # --- the SCALE ladder.  Each alpha is its own registered arm; no per-target maximum.
+        # BASIS: an interpolate of two valid chains, NOT reprojected; the virtual-bond mean and
+        # sd travel with it so the deviation from a valid chain can be priced.
+        g["SCALE_ladder"] = {}
+        for al in (25, 50, 75):
+            k = "%s_a%02d_rmsd" % (rung, al)
+            if k not in rows[0]:
+                continue
+            v = np.array([r[k] for r in rows], float)
+            e = brief(ST.compare(v, prod, folds=folds, names=pdbs,
+                                 label="%s alpha=%.2f vs production" % (rung, al / 100)))
+            e["mean_arm"] = float(v.mean())
+            e["vb_mean"] = float(np.mean([r["%s_a%02d_vb_mean" % (rung, al)] for r in rows]))
+            e["vb_sd"] = float(np.mean([r["%s_a%02d_vb_sd" % (rung, al)] for r in rows]))
+            e["basis"] = "interpolated chain, NOT reprojected"
+            g["SCALE_ladder"]["alpha_%.2f" % (al / 100)] = e
         # --- (c) the G1-CLOSED twin and the geometry secondaries (contract rule 15, row one)
         nd = np.array([r["%s_norm_dd" % rung] for r in rows], float)
         mv = np.array([r["%s_move_ca" % rung] for r in rows], float)
