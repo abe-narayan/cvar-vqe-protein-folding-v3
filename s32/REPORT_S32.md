@@ -280,6 +280,30 @@ score placing its window wrongly, and is NOT MEASURED on the other 108.*
 **41/126**. *On half the targets the best available candidate is gone before the readout ever sees
 it.*
 
+### 2.3 The ranking cell, measured on the BUILT CHAIN
+
+The S29 ladder's *best single member* changes the ranker **and** the readout at once and reports a
+structure production never emits. The cell nobody had isolates the **ranker alone**, leaving the
+shipped uniform average in place. Lane P computed it on the cloud and left the chain job queued; it
+completed after the lane closed and is **measured, not interpolated** — all three arms projected in
+the same process per target, n = 126, **ORACLE / NOT DEPLOYABLE**:
+
+```
+                                                   chain    vs PROD    xMDE    fold CI
+PRODUCTION (in job)                               3.2126
+ORACLE top-75 through the DEPLOYED average        2.1186   -1.0941    4.17x   [-1.195, -0.995]
+ORACLE top-5  through the DEPLOYED average        1.5703   -1.6424    5.31x   [-1.778, -1.509]
+                                          other 108:       -0.8283
+```
+
+> ### **−1.09 Å from ranking alone, with the readout untouched** — and **−1.64 Å** at the ORACLE
+> global `m = 5`. *The prefix curve is non-monotone: averaging the five best beats naming the single
+> best by 0.23 Å.* **Error cancellation, a second independent instance.**
+
+**This is the largest single ORACLE lever in the sprint, and §3 is why it cannot be collected:**
+ranking and readout are **the same requirement**, and knowing which 75 to rank means knowing `a` on
+the active subspace, which by the affine bijection means knowing the structure.
+
 ### 2.2 The decisive deployable test: replacing the score's window with a random one, at the endpoint
 
 The one intervention in this sprint that needs **no native information at all** — and therefore the

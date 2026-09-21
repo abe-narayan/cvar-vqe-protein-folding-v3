@@ -1,0 +1,149 @@
+{
+ "prereg": "s32/PREREG_S32_P.md @ 33dfe0d3",
+ "hypothesis": "H-P1 on the BUILT CHAIN",
+ "basis": "BUILT CHAIN, all three arms projected in the same process per target",
+ "ORACLE": "ORA75 and ORA5 are ORACLE / NOT DEPLOYABLE (they rank by rr)",
+ "n": 126,
+ "m_star_from_cloud": 5,
+ "PROD_reproduction": {
+  "n_matched": 126,
+  "mean_abs": 0.012263039507329763,
+  "p90_abs": 0.026034792690871278,
+  "max_abs": 0.5174101434362743,
+  "my_mean": 3.212625219723354,
+  "s29_mean": 3.210533994943299,
+  "A2_floor": "0.0134 mean / 0.0329 p90 / 0.2285 max"
+ },
+ "means": {
+  "PROD": {
+   "cloud": 3.0483380938795324,
+   "chain": 3.212625219723354,
+   "projection_price": 0.1642871258438211,
+   "setmean": 3.5506829818026735,
+   "setbest": 2.3061526409453816,
+   "bond_mean": 3.803954938363982,
+   "bond_sd": 9.209877768520543e-16
+  },
+  "ORA75": {
+   "cloud": 1.9630468028074672,
+   "chain": 2.1185541354791564,
+   "projection_price": 0.15550733267168934,
+   "setmean": 2.685511122219777,
+   "setbest": 1.7108244199364904,
+   "bond_mean": 3.803954938363982,
+   "bond_sd": 9.443041809804965e-16
+  },
+  "ORA5": {
+   "cloud": 1.481323579631233,
+   "chain": 1.570261914514684,
+   "projection_price": 0.08893833488345064,
+   "setmean": 1.9337851644508421,
+   "setbest": 1.7108244199364904,
+   "bond_mean": 3.803954938363982,
+   "bond_sd": 9.811379921687502e-16
+  }
+ },
+ "ORA75_vs_PROD": {
+  "label": "ORACLE top-75 through the DEPLOYED average - PROD (BUILT CHAIN)",
+  "mean_a": 2.1185541354791564,
+  "mean_b": 3.212625219723354,
+  "median_a": 2.04718894660719,
+  "median_b": 2.966075811657328,
+  "effect": -1.0940710842441967,
+  "median_effect": -0.6984172598475669,
+  "se": 0.09372166179053121,
+  "mde": 0.26257060767235224,
+  "effect_over_mde": -4.166769060493737,
+  "ci95_fold": [
+   -1.1953664897100964,
+   -0.9949542834444888
+  ],
+  "folds_same_sign": 5,
+  "n_better": 124,
+  "n_worse": 2,
+  "verdict": "BETTER"
+ },
+ "ORA5_vs_PROD": {
+  "label": "ORACLE top-5 through the DEPLOYED average - PROD (BUILT CHAIN)",
+  "mean_a": 1.570261914514684,
+  "mean_b": 3.212625219723354,
+  "median_a": 1.6205632985284242,
+  "median_b": 2.966075811657328,
+  "effect": -1.64236330520867,
+  "median_effect": -1.2252627265039342,
+  "se": 0.11033872513454915,
+  "mde": 0.3091249723369529,
+  "effect_over_mde": -5.312942829537752,
+  "ci95_fold": [
+   -1.7779063058567155,
+   -1.5088244144274376
+  ],
+  "folds_same_sign": 5,
+  "n_better": 126,
+  "n_worse": 0,
+  "verdict": "BETTER"
+ },
+ "ORA5_vs_ORA75": {
+  "label": "ORACLE top-5 - ORACLE top-75 (BUILT CHAIN)",
+  "mean_a": 1.570261914514684,
+  "mean_b": 2.1185541354791564,
+  "median_a": 1.6205632985284242,
+  "median_b": 2.04718894660719,
+  "effect": -0.5482922209644726,
+  "median_effect": -0.40952051263685063,
+  "se": 0.048696552574522094,
+  "mde": 0.1364282616927811,
+  "effect_over_mde": -4.018904984651613,
+  "ci95_fold": [
+   -0.653797248607538,
+   -0.4548256864230587
+  ],
+  "folds_same_sign": 5,
+  "n_better": 117,
+  "n_worse": 9,
+  "verdict": "BETTER"
+ },
+ "strata": {
+  "ORA75_vs_PROD_other108": {
+   "label": "ORA75 - PROD, other 108 (BUILT CHAIN)",
+   "mean_a": 1.9165417330928507,
+   "mean_b": 2.7448186300815434,
+   "median_a": 1.922580839784505,
+   "median_b": 2.7670831764945634,
+   "effect": -0.8282768969886928,
+   "median_effect": -0.5509852593866778,
+   "se": 0.07493232221513073,
+   "mde": 0.20993039391791027,
+   "effect_over_mde": -3.9454834601633553,
+   "ci95_fold": [
+    -0.9830108667182584,
+    -0.6470430868559759
+   ],
+   "folds_same_sign": 5,
+   "n_better": 106,
+   "n_worse": 2,
+   "verdict": "BETTER"
+  },
+  "ORA75_vs_PROD_FAIL18_CIRCULAR": {
+   "label": "ORA75 - PROD, FAIL18 (BUILT CHAIN) [CIRCULAR STRATUM]",
+   "mean_a": 3.3306285497969905,
+   "mean_b": 6.019464757574215,
+   "median_a": 3.4029149184845338,
+   "median_b": 5.886616525721143,
+   "effect": -2.6888362077772245,
+   "median_effect": -2.598506540963876,
+   "se": 0.2559745487937383,
+   "mde": 0.7171382959005373,
+   "effect_over_mde": -3.7493970453784686,
+   "ci95_fold": [
+    -3.0150389187462916,
+    -2.0364307858390913
+   ],
+   "folds_same_sign": 4,
+   "n_better": 18,
+   "n_worse": 0,
+   "verdict": "BETTER"
+  }
+ },
+ "multiplicity_emitted": 5
+}
