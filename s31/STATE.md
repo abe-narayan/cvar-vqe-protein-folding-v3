@@ -51,6 +51,87 @@ published 32-cost sweep, and lane E killed my opening hypothesis with an exact i
 
 ---
 
+## NOTE 13 (2026-09-21 00:29, lane L, S31-L16): **AN AUDIT OF MY OWN SYNTHESES — AND THE STRUCTURAL REASON THEY ARE THE SPRINT'S WEAK POINT**
+
+I asked lane L to audit my cross-lane claims and it ran the audit **ahead of the request**, on the
+grounds that *a synthesis is cheapest to kill before it is written down.* It led with what holds —
+lane C's S31-L5 is among the best-disciplined entries in the sprint — and then found four
+**re-quotation hazards**, none of them a criticism of the lane whose numbers they use. **All four
+are mine.**
+
+### THE META-FINDING, WHICH IS THE DURABLE ONE
+
+> **Every single-lane result this sprint HELD. Every cross-lane synthesis of mine FAILED — four for
+> four.** The mechanism is **structural, not personal**: a single-lane claim is audited by the lane
+> that owns the data; **a cross-lane claim is audited by nobody**, because each contributing lane
+> sees only its own half and assumes the other half was checked. **The synthesis inherits both
+> lanes' caveats and carries neither.**
+
+**Rule adopted, and saved to memory:** *a claim combining two lanes' numbers needs a NAMED OWNER WHO
+HOLDS BOTH, and must carry both caveats in the sentence that carries the number.* The lanes are
+adversarial to each other by construction; **my cross-lane claims were the only ones in the sprint
+with no reviewer.**
+
+### (1) The lever comparison was made at UNEQUAL INFORMATION COST — the project's characteristic error, third sprint running
+
+I wrote that *"the convex readout over the same 128 is 0.290 Å better than naming the best of them"*
+and concluded the readout class is the larger lever. But:
+
+```
+best1_top128 = 2.1435 A   costs  7 BITS            (naming one of 128)
+hull_top128  = 1.8538 A   costs  128 REAL NUMBERS  (S29 labels this rung [EXPRESSIVENESS], FREE WEIGHTS)
+```
+
+**So "larger lever" is not established — only "larger ceiling at unpriced cost."** S30 §9.4 already
+named this exact comparison as the project's characteristic error (2 members with ORACLE *weights*
+at 1.4315 against 75 with ORACLE *membership* at 2.3055, ~17.9 bits against 7), and drew from it:
+*solving the set problem better is worth nothing; what is scarce is the information needed to
+SPECIFY a good set.* **Lane C stated its own cost correctly; my restatement dropped it.**
+
+> **RULE: every lever comparison in this project carries its bit cost in the same sentence as its
+> Ångströms.**
+
+### (2) A falsifiable prediction no single lane could have made — the widening's deployable sign is NEGATIVE, not neutral
+
+Three facts, held by three different lanes, which compose:
+
+- **Lane C's own rank diagnostic is the strongest anti-deployment evidence in its entry and was not
+  flagged as such:** FAIL18's ORACLE-best member sits below rank 128 at frequency **1.000** against
+  an uninformative null of **0.744** — *the score is worse than uninformative on exactly the targets
+  widening is meant to help.*
+- **Lane L's gradient law:** widening 128 → 512 costs **4×** in gradient variance
+  (`Var ~ 16/D`; n=7 → 0.125, n=9 → 0.031). **Widening degrades the very selector it requires.**
+- **`operator-consumes-set-mean`:** admitting 384 more candidates to a set the selector cannot order
+  **raises the set mean**, consumed at coefficient 1.16.
+
+> **PREDICTION, labelled as one and not run: a DEPLOYABLE 128 → 512 arm should come out WORSE than
+> production, not merely flat.** Caveat carried because it cuts the other way — lane L's own §L1.4
+> says we are **not yet gradient-limited** at n = 7–9, so the second fact bounds the direction
+> without quantifying the Ångströms.
+
+### (3) FIVE different "worst 18" strata are in play, all called "the worst 18" somewhere
+
+They differ by up to **0.81 Å on the same-named quantity**. This table is the key, and **every
+"worst 18" number in the report must name its stratum in the same sentence** — the same rule ORACLE
+labels already obey:
+
+| stratum | defined by | `best1_500` |
+|---|---|---|
+| `FAIL18` | the filter's own recall (`s12/instrument.py:271-278`) | 2.2842 |
+| `defn18` | top-18 by widening gain | **= FAIL18, 18 of 18, an identity** |
+| `worst18_poolmean` | pool mean | **2.2286** (lane C's headline) |
+| `worst18_bestpool` | best pool member | **3.0930** |
+| "the genuinely worst 18" | production built-chain RMSD (S31-L0) | ORACLE best pool member 2.5298 |
+| worst 18 by production RMSD, n = 111 matched | lane L's ensemble arm | mean RMSD 6.0291 |
+
+### (4) A broken cross-reference, and it is the ledger-collision pattern's FOURTH instance
+
+S31-L5 says the result *"composes with the set-matched readout ladder (S31-L6, next)."* **S31-L6 is
+lane D's projection-conditioning entry** and contains neither 1.8538 nor 2.1435. Lane C reserved the
+next number in prose and lane D took it first. And the numbers are **S29's**
+(`s29/LEDGER.md:4170`), not S31 lane work, so the sentence re-quotes a two-sprint-old ORACLE ladder
+in a voice that reads as this sprint's finding. **Point it at the S29 origin.**
+
 ## NOTE 12 (2026-09-21 00:23, lane L, S31-L12): **MY "ONE SOURCE" COLLAPSE IS TRUE AND VACUOUS — I CONFUSED AN INFORMATION BOUND WITH A PERFORMANCE BOUND**
 
 I put my extension of lane L's DPI argument back to it **to attack rather than accept**. It upheld
