@@ -166,7 +166,13 @@ and +1 means it removes error one-for-one.
 > in a direction that has nothing to do with your error. It is not sparsity that is cheap — it is
 > ALIGNMENT.**
 
-Any readout proposal must state its **`d` and its `cos`**, not merely "sparse" or "dense".
+Any readout proposal must state its **`d` and its `price`** — not merely "sparse" or "dense".
+
+> **But `cos` is an INTERPRETATION of the price, never corroboration of it.** Lane V verified (`s32/results/s32_V_cos_identity.json`, n = 79) that rebuilding the price from `(e, d, cos)` returns the observed price with **max |error| = 0.000e+00**. `cos = (e² + d² − chain²)/(2ed)` is the law of cosines inverted on three numbers the row already carries, so it is a **bijection** with the price given `(e, d)`. ***Any sentence quoting the price AND the cos as two pieces of support is double-counting one measurement.***
+>
+> **It does, however, mean what its name says** — which was not free. The three RMSDs are Kabsch distances in Kendall shape space, which is curved and in which the law of cosines is *not* an identity, so the inverted quantity could have been a triangle defect rather than an angle. Measured directly with all three objects in the cloud's own frame: `cos_algebraic` **−0.0519** against `cos_direct` **−0.0557**, mean difference **0.0038** (p90 0.0085), and `|cos| > 1` on **0 of 79**. *The triangle is near-Euclidean at this scale, so `cos` is a real alignment cosine to ±0.004.*
+>
+> **And one number to carry: production's mean `cos` is −0.052 — on the WRONG side of the orthogonal null.** The projection's displacement is not merely uncorrelated with the cloud's error; **it points slightly away from the native.** That sharpens S32-L9 rather than weakening it.
 
 ## 17. The pool is not the bottleneck; say what is, with the ladder in the sentence
 
