@@ -137,6 +137,40 @@ Derived from the code, not from prose, after the lanes were briefed. Handed to A
 realised capacity), C (design a readout that escapes it) and F (the medoid's ceiling). **Posted
 before any of them reported, so it is falsifiable by them rather than confirmed by them.**
 
+> **ANNOTATION (2026-09-20 23:58, coordinator, on lane C's refutation) — R1's THEOREM IS RIGHT AND ITS
+> QUANTIFIER IS WRONG. MY OWN FALSIFIER FIRED, IN SHIPPED CODE.**
+>
+> I wrote the falsifier as *"R1 fails if any code path lets the stage emit a structure that is not
+> a pool member."* Lane C took it seriously and found that path **in `core/pipeline.py`**:
+>
+> ```python
+> def average_weighted(Wo, block, w, clk):            # core/pipeline.py:880-895
+>     b   = consensus_medoid(block, w)                #   medoid only as the superposition FRAME
+>     Sup = cc.superpose_batch(Wo, Wo[b])
+>     ww  = w / w.sum()
+>     C   = np.tensordot(ww, Sup, axes=(0, 0))        #   a NEW structure, generically not a member
+> ```
+>
+> called at `:1110` (p-weighted) and `:1116` (uniform), scored at `:1179-1182`, registered as
+> comparison arms at `:1611` and `:1613`. **`p` enters continuously.** So there are **three**
+> readouts, not the one R1 describes and not the two of S31-L2:
+>
+> | | where | what `p` does | reachable set | capacity |
+> |---|---|---|---|---|
+> | **R1-sel** | `core/pipeline.py:795-803` | picks a cell of an argmin arrangement | the `2^k` pool members | **<= k bits — R1 is exactly right here** |
+> | **R1-convex** | `core/pipeline.py:880-895` **SHIPPED** | enters continuously as weights | the **convex hull** of the posed candidates | not k bits |
+> | **R2-affine** | `s27/s28_A_amp.py:105-117`, harness only | signed amplitudes | **outside** the hull | not k bits |
+>
+> **Points 1 and 3 hold for R1-sel only.** The sentence *"the entire quantum stage carries at most
+> k bits"* is false as written, and S31-L2 compounded it by merging the convex and affine readouts —
+> a distinction that is load-bearing, because **the convex one is shipped and the affine one is
+> not**, and they have different ceilings and opposite verdicts. The original wording of both
+> entries stands above.
+>
+> **What survives, and it is still the useful part:** the *selection* readout — the one the charter's
+> §6 Hamiltonian question is really about — is capped at k bits and cannot leave the pool, and that
+> cap is a property of the readout rather than of any Hamiltonian.
+
 ### The statement
 
 The quantum stage's output is exactly
@@ -205,6 +239,20 @@ attack them.
 ## S31-L2 -- **THERE ARE TWO QUANTUM READOUTS AND THE DEPLOYABLE PATH USES THE WEAK ONE.** THE CHARTER'S "THE CIRCUIT CAN EXPRESS GOOD SOLUTIONS" IS ABOUT THE OTHER ONE -- AND THE REAL FINDING IS THE INVERSE: **EXPRESSIVITY WITHOUT AN ALIGNED OBJECTIVE IS HARMFUL** (2026-09-20 23:53, coordinator)
 
 Read from the code. Handed to C (whose remit it reframes) and A (whose premise it qualifies).
+
+> **ANNOTATION (2026-09-20 23:58, coordinator, on lane C's refutation) — "TWO READOUTS" IS WRONG; THERE ARE
+> THREE, AND THE ONE I OMITTED IS THE SHIPPED CONTINUOUS ONE.** See the annotation on S31-L1. The
+> merge of *convex* (`core/pipeline.py:880-895`, shipped, `p >= 0`, reachable set = the convex hull)
+> with *affine* (`s27/s28_A_amp.py`, harness only, signed amplitudes, leaves the hull) is the error;
+> they have different ceilings and opposite verdicts. Original wording stands.
+>
+> **And one rung of the ladder I proposed already has a measured answer, which lane C supplied:**
+> the convex optimum under the deployed objective, started from production and converged, is
+> **3.0522 A (CA cloud) — i.e. the best convex reweighting the objective can find over that set IS
+> the uniform average it already emits.** Two independent constructions agree (S23-L8's
+> probability-weighted readout at +0.0213, 0.65x MDE, a NULL; S23-L5's leakage-ORACLE grid selecting
+> the uniform point as optimal). **The convex rung is closed by ceiling, not by a failed fit** —
+> nobody should re-derive it. The open rung is the **norm- or sparsity-bounded middle.**
 
 ### The two readouts
 
