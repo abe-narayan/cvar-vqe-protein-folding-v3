@@ -318,3 +318,85 @@ mean of the 128 and is the curve's own baseline; `r = rank(aff{W}) ≈ 33` is th
 - *Is the five-bit structure an artefact of the oracle construction?* **Yes, in the specific sense
   that it prices an alphabet and the decision is continuous** — and the honest replacement is the
   `r`-reals curve above, which is a different currency and is never differenced against a bit count.
+
+---
+
+## The charter's own question, answered plainly
+
+**Charter §14: *"Can a genuine CVaR-VQE be designed whose quantum state and objective actually
+contain information that can improve RMSD?"*** Charter §58 frees this lane from defending the
+spine. So: **on this instrument, no — and the reason is a property of the instrument, not of
+CVaR-VQE.** Here is the derivation rather than the opinion.
+
+A CVaR-VQE does real work on a decision only if **all five** of these hold:
+
+| | condition | why |
+|---|---|---|
+| **A** | the decision space is discrete and **too large to enumerate** | otherwise `argmin` by brute force |
+| **B** | the energy `E(x)` is **per-shot computable, target-dependent, native-free** | otherwise there is no diagonal Hamiltonian, or no target in it |
+| **C** | choosing better in the space **lowers built-chain RMSD** | charter §2 |
+| **D** | **no cheap exact classical algorithm** — not convex, not separable, not greedy-optimal | charter §16 item 13 |
+| **E** | `E` is a genuine **random variable**, so the lower tail differs from the minimum | otherwise CVaR is `argmin` in risk notation |
+
+Every discrete decision this architecture contains, scored against those five:
+
+| decision | A | B | C | D | E | verdict |
+|---|---|---|---|---|---|---|
+| **candidate index** (deployed) | ✗ 128 | ✗ target-independent (Q0) | — | ✗ argmin | ✗ | dead 4 ways |
+| **subset / sparse `s`-of-`K`** | ✓ `C(500,10)≈2.5e20` | ✗ `E(x)` needs `a` = ORACLE | ✓ | **✗ Q1-T3: the constraint is slack** | ✗ | dead |
+| **reconstruction branch, per target** | ✗ a handful | ✓ | ✓ open (lane R) | ✗ enumerable | ✗ | argmax in quantum notation |
+| **reconstruction branch, per residue** | **✗ `2^n_res ≤ 65536` on 126/126** | ✓ | ✓ open (lane R) | ✗ enumerable | ✗ | **blocked only by chain length** |
+| **fragment assembly** (which window where) | ✓ `K^n_res` | ✓ | ✓ | ✓ genuinely NP-hard | ✗ | **does not exist at this length** |
+
+Measured on the instrument: **`n_res` is 9–16, mean 12.96, so `2^n_res ≤ 65536` on 126 of 126
+targets.** Contract-adjacent memory: *exhaustive enumeration closes the search half — the budget
+exceeds the `2**n` latent on 75/126.*
+
+> ### The two properties a problem would need, stated so they can be checked rather than argued.
+>
+> **P1 — a decision space that GROWS WITH THE TARGET and outruns enumeration.** On 9–16-residue
+> peptides every decision here is a total ordering over ≤ 500 objects, a convex program in
+> disguise, or a search of ≤ 2^16. **Fragment assembly and per-residue branch selection are the
+> two places where a genuine combinatorial problem appears — and both only exist at chain lengths
+> where one retrieved fragment no longer spans the target.** That is the charter's own closing
+> instruction (*"maybe test on longer proteins"*) arriving as a derived requirement rather than a
+> suggestion.
+>
+> **P2 — an energy that is GENUINELY STOCHASTIC, so the lower tail is not the minimum.** For every
+> decision in the deployed pipeline `E(x)` is a deterministic function of the bitstring, so
+> `CVaR_α` reduces to a reweighting of a fixed vector whose minimiser is a face of the argmin set
+> (S31 §7, measured). **CVaR earns its name only where the energy is a sampled quantity** — a free
+> energy from a finite MD sample, a physically noisy observable. Charter §34 (*"CVaR of
+> conformational free energy"*) is the one place in the charter where P2 could be met, and it is
+> met by the *sampling*, not by the physics vocabulary.
+>
+> **P1 and P2 must hold together.** P1 alone gives a quantum optimiser with a deterministic
+> objective — QAOA, not CVaR-VQE. P2 alone gives risk-sensitive selection over a small set — a
+> classical one-dimensional rule. *This project has never had either.*
+
+---
+
+## Scope of Q1-T1 and Q1-T2 — what the theorems do NOT cover
+
+Stated explicitly, because S31's G1 was over-applied and this derivation is now load-bearing.
+
+1. **`Σw = 1` is assumed.** Identity (I) and Q1-T1's bijection hold for **signed affine** weights
+   too (verified on signed draws, 4.1e-14). Q1-T2's *active-set* formula does **not**: with no
+   non-negativity there is no active set, the window is `rank(aff{W}) ≈ 33` everywhere, and by
+   S31 §10.5 the affine hull already spans the residual space — so the theorem is **vacuous**, not
+   false, on the affine readout.
+2. **No cardinality constraint is assumed.** With a **binding** `|supp(w)| ≤ s` the feasible set is
+   a non-convex union of faces; the global 1-Lipschitz statement fails and only the local,
+   fixed-support projector formula survives. Q1-T3 establishes that the constraint is **slack** at
+   the sparsity the solution chooses for itself, which is what makes the convex statement apply
+   here — it is **not** a claim about sparse readouts in general.
+3. **The emitted object is assumed to lie in the candidates' affine hull.** Arms that **re-embed**
+   are outside the hypotheses entirely — S31's `AVG_SEP` left the hull and measured **0.045 Å**
+   from it, and nothing here applies to it.
+4. **A fixed common frame is assumed.** The endpoint does one further Kabsch; both fixed-frame and
+   re-superposed values are reported and the gap is small but not zero.
+5. **"Gain exactly 1" is a statement about the CA POINT CLOUD and must not be carried to the
+   built chain.** The projection to a chain is **not** 1-Lipschitz — S32-L4 measures it as
+   discontinuous in its input at one float64 ULP, ~1e13 amplification. *The contraction argument
+   stops at the cloud, and saying otherwise would be this project's signature defect: a number
+   re-used across a boundary its definition does not cross.*
