@@ -311,9 +311,16 @@ does *not* dissolve the arm. The adversary went looking for that and did not fin
 
 ### 5.4 Bit-exactness, the strong form
 
-**All 630 chain RMSDs (126 targets x 5 ladder rungs) reproduce S29's recorded values bit-for-bit**,
-mean and max |Δ| exactly **0.000e+00**, from a different job, script and process. Production returns
-**3.210533994943299** to sixteen digits; the cloud **3.048338093879531**.
+**All 630 per-target chain RMSDs (126 targets × 5 ladder rungs) reproduce S29's recorded values
+bit-for-bit — max |Δ| exactly 0.000e+00** — from a different job, script and process. **The mean over
+the 126 agrees to 1e-12**, not to the last digit: *an earlier draft of this section said production
+"returns 3.210533994943299 to sixteen digits", and lane R's own verifier asserted that and FAILED* —
+recomputing the mean in a different summation order gives `...300`. **The per-target identity is
+exact and order-independent; a reduction over 126 float64s is not.**
+
+> That sharpens rather than weakens the pairing with §1.2: **the operator is bit-reproducible per
+> structure; what is fragile is the input's last bits — and now also any reduction taken over 126 of
+> them.**
 
 ---
 

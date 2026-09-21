@@ -288,3 +288,38 @@ selected arm beats the incumbent, **the baseline must be the incumbent, not the 
 grid containing any arm nobody would deploy will inflate the number with a tight CI. This is contract
 rule 6 (*a control matched to a different arm's magnitude is not a control*) in a new disguise, and
 it is the same shape as S31's `CTRL_SHRINK_ORACLE_Y` in rule 4.
+
+
+## 23. `split_half_transfer` nulls the wrong question unless you give it production as the baseline
+
+The contract and every lane brief point at `stats_lib.split_half_transfer` for any best-of-K arm, and
+its docstring says it *"nulls itself and needs no null at all."* **That is true of the question it
+answers — does *which* setting wins transfer? — and false of the question a lane usually wants — does
+the winner beat PRODUCTION?**
+
+`split_half_transfer(M - prod)` centres on `M.mean(1)`, **the mean over the grid's columns**. If any
+column is implausible, the "transfer" measures *"the chosen arm beats the average arm, one of which
+is catastrophically bad"* — and nobody would deploy the average of the grid.
+
+**Lane V caught this in its own code before it reached the report.** On lane R's 16 criteria one
+column is `typicality` at **+0.3434**, and the wrong version read **−0.0254 with CI [−0.0356,
+−0.0153]** — a CI excluding zero and an effect nearly 3× the best single arm, **entirely an artefact
+of the baseline.** Done correctly (choose `argmin` of the per-criterion effect **vs production** on
+one half, evaluate that criterion **vs production** on the other, 400 repeats): **+0.0004, CI
+[−0.0091, +0.0116] — a CI centred on zero.**
+
+**The rule:** when asking whether a *selected* arm beats the incumbent, **the baseline must be the
+incumbent, not the grid mean**, and a grid containing any arm nobody would deploy will inflate the
+number with a tight CI. This is rule 6 in a new disguise.
+
+## 24. Staging is not lane-isolated in practice
+
+Observed repeatedly in S32: concurrent commits collide on `.git/index.lock`, one lane's commit swept
+in another's staged files, and **a lane's commit silently reverted a coordinator edit to
+`S32_CONTRACT.md` that had not yet been committed.** Staging only your own paths is necessary and
+**not sufficient**.
+
+- **Write and commit in the same call**, so the window between edit and commit is as small as possible.
+- **Verify the edit is in `HEAD`, not just on disk**, before relying on it: `git show HEAD:<path> | grep`.
+- Retry on `index.lock` with backoff; a failed commit is silent if you only check the exit code of
+  `git add`.
