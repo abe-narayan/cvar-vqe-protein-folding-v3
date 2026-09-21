@@ -995,11 +995,37 @@ def free_energy(circ: StatevectorCircuit, theta: np.ndarray, E: np.ndarray,
     """``F = CVaR_alpha(E; p_theta) - T H(p_theta)``, and its exact gradient.
 
     Why an entropy term, and why it is not A fudge
-    Minimising CVaR alone is degenerate for this task: for ANY alpha the minimiser
-    concentrates p on the lowest-energy basis states, so the readout collapses back to the
-    argmin -- the shipped selector, 3.454 A.  That was measured before this term existed
-    (every ``vqe_a*`` arm returned the argmin's structure, state entropy 0.01 bits at
-    alpha=1) and it is a property of CVaR, not of the optimiser.
+    Minimising CVaR alone is degenerate for this task.  This paragraph used to read:
+
+        "for ANY alpha the minimiser concentrates p on the lowest-energy basis states, so
+         the readout collapses back to the argmin -- the shipped selector, 3.454 A.  That
+         was measured before this term existed (every ``vqe_a*`` arm returned the argmin's
+         structure, state entropy 0.01 bits at alpha=1) and it is a property of CVaR, not
+         of the optimiser."
+
+    S31 lane A corrected it on the real instrument (126 dev targets, the deployed pool E,
+    n=7/layers=3/iters=50, 8 seeds each; `s31/results/s31_A_cap.json`,
+    `s31_A_cap_rows.jsonl`).  The quantifier "for ANY alpha" is FALSE, by theorem:
+
+      * at ``alpha = 1`` (folds 0, 3, 4 of ``VQE_LFO``) ``CVaR_1 = <E,p>`` and the minimiser
+        IS the unique argmin vertex, so the collapse is real and IS a property of CVaR.
+        Measured entropy at T = 0: **0.258 bits** over the 78 such targets -- not 0.01, but
+        the same statement.
+      * at ``alpha < 1`` the argmin set is ``{p : p_x0 >= alpha}``, a face of POSITIVE
+        VOLUME, so the objective does not determine p at all and the optimiser's path picks
+        the point.  Measured entropy at T = 0 over the 48 targets at ``alpha = 0.25``:
+        **3.596 bits**.  There is no collapse, and what entropy there is belongs to the
+        OPTIMISER, which is the opposite of the sentence above.
+
+    So the entropy term's real job is not to prevent a collapse that only happens at
+    alpha = 1 -- it is to make the readout WELL POSED, by selecting one point out of a
+    positive-volume argmin set.  With T > 0 the minimiser is unique and closed-form:
+    ``p*_x propto exp((mu - E_x)_+ / (alpha T))`` with mu fixed by
+    ``sum_{E_x < mu} p*_x = alpha`` (S31 lane A theorem A1, and lane L by duality).
+
+    Separately, at the deployed T the observed narrowness is a property of the ANSATZ, not
+    of CVaR: 21 parameters cannot cover a 127-dimensional simplex, and the circuit lands
+    KL = 0.930 bits from p* (S31 lane L, and `s31/results/s31_A_r1.json`).
 
     The quantity the consensus readout needs is an ENSEMBLE: concentrated on good
     hypotheses but still broad enough to have a centre.  That is a free energy, and it is

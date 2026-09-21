@@ -813,6 +813,59 @@ def agreement_weights(Wsub, C, floor=0.25):
 #: they are still the same four.
 STARTS = ((-120.0, 130.0), (-57.0, -47.0), (-139.0, 135.0), (-75.0, 145.0))
 
+# --------------------------------------------------------------------------------------
+# THERE IS NO SEED ON THIS PATH, AND THE RECORD SAID OTHERWISE FOR THREE SPRINTS.
+# (S31-L6, lane D, 2026-09-21.)
+#
+# `s28/L18`, `s30/LEDGER.md:3889`, `s30/REPORT_S30.md:169` and `s30/s30_verify.py:254` all
+# state that "the cloud-to-chain projection is multi-start and its SEED IS NOT PINNED" and
+# that "only the projection is stochastic".  **That is false.**  `fit_multi` below loops
+# over the four fixed `STARTS` and keeps a strict argmin; `fit_prior` is a deterministic
+# L-BFGS-B call; the builder and the Kabsch are deterministic.  Measured at n = 126:
+# reprojecting the SAME cloud twice gives BIT-IDENTICAL chains, max |dCA| EXACTLY 0.0,
+# unchanged under BLAS thread count.  There is nothing to seed.
+#
+# WHAT IS ACTUALLY WRONG IS THE CONDITIONING, and it is worse than a seed would be.  The
+# lam = 0 rung's argmin is decided among four starts whose objectives agree to ~1e-7 --
+# numerical noise -- while sitting on DIFFERENT torsion branches; the winner becomes the
+# warm start for the lam = 0.3 rung, where those branches are ~1e-1 apart.  So a decision
+# taken where the objective CANNOT discriminate fixes an outcome where it CAN.  Measured:
+# the median lam=0 branch margin is 3.1e-7 and 73 of 126 targets are below 1e-6, and a
+# 1e-14 RELATIVE perturbation of the input cloud moves the emitted chain by a median of
+# 1.6e-3 A with a 0.511 A tail (2LNG).  Amplification ~1e13.  Not one target of 126 is
+# unchanged to 1e-9.
+#
+# CONSEQUENCE FOR ANY CALLER: this stage is reproducible ONLY from bit-identical input
+# clouds.  Both sides of a built-chain contrast must be projected in the same job from the
+# same stored clouds; two sides from different code paths carry a per-target floor with a
+# 0.5 A tail.  Any built-chain claim below 0.0107 A is inside the instrument's own spread.
+#
+# Deciding the branch at lam = 0.3 instead fixes the conditioning by 1082x -- and is worth
+# -0.0055 A at 0.44x MDE, i.e. NOTHING, while the ORACLE choice over the same eight
+# candidates is worth -0.0938 A at 2.92x MDE (ORACLE / NOT DEPLOYABLE).  Search is not the
+# barrier; discrimination is.  Registered and measured in `s31/PREREG_S31_D_branch.md` and
+# `s31/results/s31_D_branch.json`.  NOTHING BELOW WAS CHANGED: the canonical endpoint
+# 3.2105 A stands and reproduces from the pinned inputs bit-for-bit.
+
+#: Every constant that determines this stage's output.  Pin the OPERATOR with this and the
+#: INPUT with a hash of the cloud's float64 bytes; together those are what "pinning the
+#: projection" means here, since there is no seed.  `s31/s31_pin_projection.py` digests it
+#: and `s31/s31_verify.py` asserts it.
+PROJECTION_PIN = {
+    "starts_deg": STARTS,
+    "n_starts": len(STARTS),
+    "tie_break": "strict argmin; the FIRST start wins an exact tie (fit_multi)",
+    "rng": "NONE -- no random number generator is constructed on this path",
+    "optimiser": "scipy.optimize.minimize, L-BFGS-B, jac=True",
+    "production_call": "lam_path(C, ramah_pen, (0.0, 0.3), maxiter=300, multi=True, "
+                       "grad='exact')  -- see s12.instrument.project",
+    "deterministic_given_input_bits": True,
+    "continuous_in_the_input": False,
+    "measured_amplification": "~1e13 (1e-14 relative cloud -> up to 0.511 A chain)",
+    "authority": "S31-L6",
+}
+# --------------------------------------------------------------------------------------
+
 
 def _emit(x, n):
     """The CA trace the stage RETURNS, built by the reference builder from the final

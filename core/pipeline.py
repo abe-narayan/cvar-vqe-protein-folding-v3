@@ -814,13 +814,39 @@ def quantum_stage(pool, top, Pt, fold, cfg: Config, clk: Clock):
     candidates, the state is a 3-layer RY/CNOT ansatz, and the readout is the
     p_theta-weighted consensus medoid.
 
-    WHY CVaR, MEASURED
-    Minimising the mean energy is degenerate here: at T = 0.1 the alpha = 1 arm collapses
-    to 0.076 bits of state entropy -- i.e. back to the argmin, 3.4540 A, the shipped
-    selector, contributing exactly nothing.  At the same temperature alpha = 0.1 holds
-    6.36 bits and returns 3.3414 A.  So the CVaR tail is worth +0.113 A **by preventing
-    the collapse**, and that is the component's measured role.  (alpha, T) is read from a
-    LEAVE-FOLD-OUT table, not chosen here.
+    WHY CVaR -- AND WHAT IS AND IS NOT MEASURED ABOUT IT
+    CORRECTED 2026-09-20 (S31-D, defect D-A).  Until this edit these lines read:
+    "So the CVaR tail is worth +0.113 A **by preventing the collapse**, and that is the
+    component's measured role."  THAT CLAIM WAS WITHDRAWN BY S25-L5 (`s25/LEDGER.md:233`)
+    AND IS NOT TRUE.  It is recorded here rather than deleted so the correction is visible
+    to anyone who read the old text.
+
+    What survives is the MECHANISM, not an effect size.  At T = 0.1 the alpha = 1 arm
+    collapses to 0.076 bits of state entropy -- i.e. back to the argmin, 3.4540 A, the
+    shipped selector.  At the same temperature alpha = 0.1 holds 6.36 bits and returns
+    3.3414 A.  Those two marginal means differ by 0.113 A, and that difference is where the
+    withdrawn number came from: it was read off MARGINAL MEANS where a PAIRED statistic was
+    required.  Paired (`s25/q_alpha.py` -> `s25/results/q_alpha.json`, n = 126):
+
+        vqe_a0.1_T0.1 - vqe_a1.0_T0.1   -0.1126 A   SE 0.0792   MDE 0.2220   0.51x MDE
+                                        fold CI spans zero, 55W/44L, median exactly 0.0000
+                                        -> a NULL by this project's fixed rule.
+
+    The component's role against the selector it replaces -- the REPLACEMENT FIGURE, from
+    the same entry (`s25/LEDGER.md:280`) -- is likewise not established:
+
+        VQE_LFO - argmin                -0.1405 A   SE 0.0732   MDE 0.2051   0.68x MDE
+                                        66W/48L, 5/5 folds same sign
+                                        -> below its own MDE: NOT MEASURED, not a result.
+
+    Sign convention: lower RMSD is better, so both contrasts are NOMINALLY in the CVaR
+    arm's favour and NEITHER clears its MDE.  The defensible statement is that the alpha < 1
+    tail prevents the entropy collapse -- which is a fact about the state, observable in the
+    0.076 vs 6.36 bits -- and that NO ANGSTROM EFFECT of that mechanism has been measured.
+    Do not quote a number for the CVaR tail's contribution from this docstring.
+    (alpha, T) is read from a LEAVE-FOLD-OUT table, not chosen here; S25-L5 also concluded
+    that `VQE_LFO` should not be touched, because forcing alpha < 1 on all folds buys
+    nothing (-0.0311 at 0.27x MDE, ORACLE, priced only).
 
     THE GRADIENT.  `run_cvar_vqe` optimises the EXACT parameter-shift gradient, which has
     no baseline at all, so the historical `baseline="tail"` CVaR defect -- cosine +0.6556

@@ -1,0 +1,75 @@
+{
+  "n": 126,
+  "ALPHABET_n_distinct_mean": 118.45238095238095,
+  "ALPHABET_n_distinct_min": 94.0,
+  "ALPHABET_reachable_vertices_mean": 118.45238095238095,
+  "ALPHABET_reachable_vertices_min": 94.0,
+  "CAPACITY_bits_alphabet_mean": 6.88616195242242,
+  "ORACLE_bits_delivered_sel_theta": 1.804947800166353,
+  "ORACLE_bits_delivered_sel_uniform": 1.6593878344274975,
+  "ORACLE_bits_delivered_sel_pstar": 1.8763152898318225,
+  "ORACLE_bits_delivered_argmin_E": 1.6933746797833988,
+  "ORACLE_mean_rank_sel_theta": 49.76984126984127,
+  "ORACLE_mean_rank_sel_uniform": 48.888888888888886,
+  "BIAS_r2_logptheta_popcount": 0.1216750150713336,
+  "BIAS_r2_logptheta_E": 0.437912113746016,
+  "BIAS_r2_logpstar_popcount": 0.3235237361743892,
+  "BIAS_r2_logpstar_E": 0.6680162877890973,
+  "BIAS_r2_survey_popcount": 0.0035638100619331315,
+  "BIAS_r2_survey_E": 0.0037304991453087017,
+  "BIAS_r2_logptheta_hinge": 0.46742893869364677,
+  "BIAS_r2_logptheta_hinge_pop": 0.48344853024929624,
+  "BIAS_r2_logpstar_hinge": 1.0,
+  "BIAS_r2_survey_hinge_mean": 0.00708855376500263,
+  "BIAS_r2_survey_hinge_max": 0.05382412325241664,
+  "BIAS_survey_entropy_bits": 4.889121020969235,
+  "BIAS_bond_dims": [
+    2,
+    4,
+    8,
+    8,
+    4,
+    2
+  ],
+  "HW_kl_to_star_mean": 0.9668450198009576,
+  "HW_kl_baseline_mean": 0.9302330610473863,
+  "HW_entropy_bits_mean": 5.350911430699599,
+  "means": {
+    "r_synth_theta": 3.066101945087794,
+    "r_synth_star": 3.0605291924977007,
+    "r_synth_hw": 3.062985278091825,
+    "r_synth_unif": 3.053208733970858,
+    "H_theta_bits": 5.912887233305908,
+    "H_star_bits": 5.571033119903556
+  },
+  "A1d_seed_sd_T_deployed": 0.09639874008981177,
+  "A1d_seed_sd_T_zero": 0.16203798929931093,
+  "A1d_entropy_T_deployed": 5.463670109462688,
+  "A1d_entropy_T_zero": 1.5292853557573731,
+  "comparisons": [
+    {
+      "tag": "HW-relabel - deployed theta",
+      "mean": -0.0031166669959700384,
+      "SE": 0.018607403048492326,
+      "MDE": 0.0521305003806561,
+      "ratio_to_MDE": 0.05978586380740995,
+      "verdict": "NOT A RESULT"
+    },
+    {
+      "tag": "theta - p* (both synth)",
+      "mean": 0.005572752590094859,
+      "SE": 0.021717507370506,
+      "MDE": 0.060843768649209616,
+      "ratio_to_MDE": 0.09159118039226274,
+      "verdict": "NOT A RESULT"
+    },
+    {
+      "tag": "theta - uniform128",
+      "mean": 0.012893211116937402,
+      "SE": 0.01354449222172701,
+      "MDE": 0.03794624940839039,
+      "ratio_to_MDE": 0.3397756383819728,
+      "verdict": "NOT A RESULT"
+    }
+  ]
+}

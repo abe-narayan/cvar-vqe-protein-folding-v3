@@ -461,4 +461,145 @@ consistent with exactly that. Lane D owns it.
 
 ---
 
+
+---
+
+## L2.2 — THE COLLAPSE TO ONE SOURCE IS TRUE, AND AS AN INFORMATION STATEMENT IT IS VACUOUS
+
+The coordinator asked me to attack this rather than agree with it. **The premise survives; the
+conclusion does not.**
+
+### The premise is right, with one contamination caveat
+
+`pool = f(sequence; library)` with a universal library is processing, so `I(N; pool) <=
+I(N; sequence)`. A codebook indexed by a sequence-derived key carries no target argument —
+the coordinator's reading is correct, and I could not break it. Enumerating sources is
+closed: no field, energy, graph statistic or free energy is a second source.
+
+**One real caveat**: the library is *not* independent of the native for every target.
+`containment-threshold-is-at-the-null` records **4/126 targets carrying a verbatim copy in
+their own distogram's training set**. For those the Markov chain `N -> S -> pool` is broken
+and the DPI does not apply. That is **leakage, not a channel** — it argues for excluding
+those 4, never for counting the library as a source.
+
+### The conclusion does not follow, and the reason is Anfinsen
+
+By the thermodynamic hypothesis the native is a function of the sequence, so
+
+```
+I(N ; sequence) = H(N)
+```
+
+— **the sequence already contains all of it.** The DPI bound therefore reads *"the pool
+contains at most everything,"* which is true and empty. **It places no constraint whatever
+on achievable accuracy.**
+
+The cleanest way to see that the strong reading is false:
+
+> **If "all target-specific information is the sequence" implied a ceiling, AlphaFold would
+> be impossible.** A different computation on the same single source extracts far more than
+> ours does. Information-source counting cannot be what limits us, because we are nowhere
+> near the source's content.
+
+**And this project has its own internal counterexample.** `esm-adds-nothing-for-short-
+peptides` was OVERTURNED: on SELECTION, ESM buys **0.288 Å over one-hot (p = 0.005,
+n = 126)**. That is a *pure computation on the sequence* beating a weaker computation on the
+same sequence, with no new source and no new measurement. Under the strong reading that gain
+could not exist. It does.
+
+### What the argument actually licenses
+
+Not *"you need a measurement of the molecule, not a computation."* That conclusion is
+unlicensed, and adopting it would wrongly close the two escapes the field actually used.
+What is licensed is the narrower and still very useful:
+
+> **No re-combination of the objects we currently hold can help. The remaining moves are a
+> better ESTIMATOR or a better LIBRARY — not a further source.**
+
+### The distinction the collapse invites us to lose, and must not
+
+The library plays **two different roles**, and the enumeration conflates them:
+
+| role | verdict |
+|---|---|
+| **as an information source** | it is a constant, carries no target argument — **not a source**. Coordinator is right |
+| **as an architectural ceiling** | **binding, and measured**: ORACLE distances still give only ~1.95–2.0 Å through this library (`distance-prior-is-the-ceiling`, `sequence-signal-is-the-ceiling`) |
+
+**"Not a source" does not mean "not a constraint."** The ~2.0 Å figure is a *library*
+statement, not an information statement, and it is the real ceiling — it survives perfect
+information, which is precisely what an informational argument can never produce.
+
+So the two measured constraints that actually bind are both **estimator/architecture**
+facts, neither of them informational:
+
+1. in-band ordering **0.600 across targets** against the **0.638** needed for 2.0 Å;
+2. ORACLE distances capping at **~1.95–2.0 Å through this library**.
+
+**Proposed central statement, replacing the vacuous form:**
+
+> All target-specific information is the sequence, so enumerating sources is closed — but
+> that is a statement about *sources*, not about *ceilings*. Because Anfinsen makes the
+> sequence informationally complete, the bound is vacuous and cannot limit accuracy. What
+> limits accuracy is measured and architectural: our estimator reaches 0.600 in-band against
+> 0.638 needed, and this library caps even ORACLE distances at ~2.0 Å. The open moves are a
+> better estimator or a better library. A measurement of the molecule is *one* escape, not
+> the only one.
+
+---
+
+## L3.1 — AUDIT OF `bestm128 = 2.9027 Å`: THE TRANSFER ARM EXISTS, AND IT SAYS ZERO
+
+Requested by the coordinator on the suspicion that a per-target ORACLE minimum over 128
+prefix lengths is `grid-oracles-are-order-statistics` and was never transfer-tested.
+
+**It was transfer-tested, in the same entry that produced it.** `s29/LEDGER.md:2777`,
+S29-L30, in its own heading:
+
+> *"...AND ITS TRANSFERABLE PART IS ZERO — THE ORACLE GLOBAL PREFIX IS m = 72 (WORTH
+> −0.0018 Å, i.e. THE SHIPPED 75) AND THE LEAVE-FOLD-OUT PREFIX IS +0.0079 Å WORSE THAN
+> PRODUCTION AT 0.30× MDE"*
+
+The 33-arm ladder (`s29/LEDGER.md:4288-4290`) carries a dedicated **`transferable`** column,
+and all three prefix-m rungs read `global m = 72 worth -0.0018; LFO +0.0079`.
+`s29/REPORT_S29.md:252` lists *"A transferable prefix length m"* in its hypothesis table with
+verdict **FALSIFIED**.
+
+So the per-target ORACLE gain of **−0.3079 Å is ~99.4% order statistics**, and S29 both
+measured that and said so. `grid-oracles-are-order-statistics` was **honoured here, not
+violated** — this is one of the rungs that has a transfer arm.
+
+### The number does not deflate. Its USE does.
+
+This is the part worth being precise about, because the intuition runs the wrong way:
+
+> **Order-statistics inflation makes an ORACLE number optimistically biased — and an
+> optimistically biased UPPER BOUND is still a valid upper bound.**
+
+So the inference S29 actually drew — *"2.5 Å is unreachable through this architecture"* — is
+**safe, and in fact safer than stated**: the true ceiling is *worse* than 2.9027, which
+strengthens unreachability rather than weakening it. **The "architectural ceiling" framing
+was licensed.**
+
+What is **not** licensed is reading 2.9027 as *"a −0.3079 Å lead available to a better
+selector."* S29 priced that at **−0.0018 Å global / +0.0079 Å LFO** and marked it
+**FALSIFIED**. If this sprint is treating "close the gap to 2.9027" as its most promising
+remaining lead, that lead was measured to be worth **0.6% of its face value two sprints ago**
+and the caveat was dropped in re-quotation — exactly the L3 pattern.
+
+### The one thing genuinely still open, for lane F
+
+The transfer numbers (−0.0018 / +0.0079) were measured on the **POINT CLOUD** — S29-L30's own
+arm is 2.7605 against production 3.0483, both cloud. **2.9027 is the BUILT CHAIN.** The
+cloud→chain price on that rung is **+0.1422**. So *"the transferable part is zero"* is being
+quoted **across bases**. It is very likely fine — the transfer is ~0 on the cloud and the
+chain price is near-uniform — but it is **not literally measured on the chain**, and the
+charter's basis discipline says not to transfer across bases silently.
+
+> **Recommendation to lane F: do not re-derive the ladder — S29 already did. Pin the one
+> open thing: run the global-m and leave-fold-out-m arms ON THE BUILT CHAIN.** That is a
+> two-arm measurement, not a sprint, and it either closes the last gap in a two-sprint-old
+> claim or finds the only place it could move.
+
+---
+
 *(file continues; entries appended as the sprint runs)*

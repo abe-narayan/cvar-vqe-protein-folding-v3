@@ -384,7 +384,15 @@ def cmd_report(args):
         "min_margin_final": float(mf.min()),
         "median_margin_lam0": float(np.median(m0)),
         "min_margin_lam0": float(m0.min()),
+        #: TWO DIFFERENT COUNTS, published separately because they were briefly conflated
+        #: while writing S31-L6: `n_margin_below_1e-6` is min(lam0, final) and
+        #: `n_lam0_margin_below_1e-6` is the lam=0 rung alone, which is the one the
+        #: mechanism is about.  They differ (74 vs 73) and are not interchangeable.
         "n_margin_below_1e-6": len(risk),
+        "n_lam0_margin_below_1e-6": int((m0 < 1e-6).sum()),
+        "n_final_margin_below_1e-6": int((mf < 1e-6).sum()),
+        "lam0_margin_percentiles": {str(q): float(np.percentile(m0, q))
+                                    for q in (1, 10, 25, 50, 75, 90)},
         "n_margin_below_1e-9": int(sum(1 for p in pdbs
                                        if min(rows[p]["margin_final_decision"],
                                               rows[p]["margin_lam0"]) < 1e-9)),
@@ -417,14 +425,22 @@ def cmd_report(args):
 
     # ---- the instrument's own noise floor, measured against the confirmed effect
     if len(pdbs) >= 126:
-        known = [("s29_O_prod_canonical", 3.2105),
-                 ("s27_DIS", 3.2126),
-                 ("s28_A_reprojection", 3.2071),
-                 ("s31_D_reprojection", float(r1.mean()))]
-        vals = [v for _, v in known]
+        #: the FIVE values that circulate for "production, built chain" (s30/AUDIT_Z.md row
+        #: 6, s30/LEDGER.md:3884).  Three are recomputed from their artefacts by
+        #: `s31/s31_verify.py`; two are taken from the S30 record and marked so.
+        known = [("s29_O_prod_canonical", 3.2105, "recomputed"),
+                 ("s27_chain_rows_DIS", 3.2126, "recomputed"),
+                 ("s30_P_rec_fit", 3.2041, "recomputed"),
+                 ("s30_R_meter_reprojection", 3.2071, "S30 record, not recomputed here"),
+                 ("s30_X_endpoint", 3.2148, "S30 record, not recomputed here"),
+                 ("s31_D_reprojection", float(r1.mean()), "recomputed, this run")]
+        vals = [v for _, v, _ in known]
         out["instrument_spread"] = {
-            "records": dict(known),
+            "records": {k: {"value": v, "status": s} for k, v, s in known},
             "spread_A": float(max(vals) - min(vals)),
+            "spread_recomputed_only_A": float(
+                max(v for _, v, s in known if s.startswith("recomputed"))
+                - min(v for _, v, s in known if s.startswith("recomputed"))),
             "confirmed_effect_for_scale": 0.0221,
             "note": ("any chain claim smaller than the spread is inside the instrument's "
                      "own reprojection noise; this is what the brief's 'any future "
@@ -450,6 +466,8 @@ def main():
     ap.add_argument("mode", choices=["determinism", "report"])
     ap.add_argument("--pdbs", default="")
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--shard", type=int, default=0)
+    ap.add_argument("--nshards", type=int, default=0)
     ap.add_argument("--force", action="store_true")
     a = ap.parse_args()
     {"determinism": cmd_determinism, "report": cmd_report}[a.mode](a)
