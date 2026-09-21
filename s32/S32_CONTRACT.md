@@ -255,3 +255,36 @@ Ramachandran likelihood, which is a different operator from a penalty term insid
 And `λ`, the number of starts, `maxiter`, the penalty and the tolerance are **science, not tuning
 knobs** — varying them is a different pipeline and must be keyed as one; tuning them on native RMSD
 violates rule 11.
+
+
+## 23. `split_half_transfer` nulls the wrong question unless you give it production as the baseline
+
+The contract and every lane brief point at `stats_lib.split_half_transfer` for any best-of-K arm, and
+its docstring says it *"nulls itself and needs no null at all."* **That is true of the question it
+answers — does *which* setting wins transfer? — and false of the question a lane usually wants — does
+the winner beat PRODUCTION?**
+
+`split_half_transfer(M - prod)` centres on `M.mean(1)`, **the mean over the grid's columns**. If any
+column is implausible, the "transfer" is measuring *"the chosen arm beats the average arm, one of
+which is catastrophically bad"* — and nobody would deploy the average of the grid.
+
+**Lane V caught this in its own code before it reached the report.** On lane R's 16 criteria, one
+column is `typicality` at **+0.3434**, and the wrong version read:
+
+```
+oracle-over-criteria -0.1168, SPLIT-HALF TRANSFER -0.0254, CI [-0.0356, -0.0153], 22% of the oracle
+```
+
+**A CI excluding zero and an effect nearly 3× the best single arm — and entirely an artefact of the
+baseline.** Done correctly (choose `argmin` of the per-criterion effect **vs production** on one
+half, evaluate that criterion **vs production** on the other, 400 repeats):
+
+```
+out-of-sample transfer vs production   +0.0004   CI [-0.0091, +0.0116]
+```
+
+***A CI centred on zero.*** **The rule:** when you use `split_half_transfer` to ask whether a
+selected arm beats the incumbent, **the baseline must be the incumbent, not the grid mean** — and a
+grid containing any arm nobody would deploy will inflate the number with a tight CI. This is contract
+rule 6 (*a control matched to a different arm's magnitude is not a control*) in a new disguise, and
+it is the same shape as S31's `CTRL_SHRINK_ORACLE_Y` in rule 4.

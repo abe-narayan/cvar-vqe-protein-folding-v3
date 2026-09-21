@@ -279,10 +279,27 @@ search: the best of 32 comparisons has an achieved MDE well above its nominal on
 **compute-matched** GEN4-only subset — production searches 4 starts, so an arm searching ~200 and
 winning is a bigger search rather than a better selector — the best is 0.42x.
 
-***`typicality` at +0.3434, 2.35x, 5/5 folds is load-bearing as a positive control***: the machinery
-*can* emit a RESULT, so the sixteen nulls are a measurement rather than a broken pipeline. (That it
-is a RESULT in the *wrong* direction — the most typical branch is much worse — is consistent with
-consensus being outlier avoidance rather than a nativeness signal.)
+***The `typicality` arm is load-bearing as a positive control***: the machinery *can* emit a RESULT,
+so the sixteen nulls are a measurement rather than a broken pipeline.
+
+**But read its direction carefully — `typicality` in these rows is a DISTANCE** (mean Cα-RMSD of a
+branch to the production top-75), so **lower means more typical**, the sense the consensus medoid
+uses. The adversary maximised it. Both directions, from the raw branch rows in one script (n = 111,
+tie-averaged argmin, paired to production in-job):
+
+```
+ARGMIN typicality = the MOST typical branch    3.1499   -0.0041   0.21x MDE   62W/48L   NOT MEASURED
+ARGMAX typicality = the LEAST typical branch   3.4957   +0.3417   2.42x MDE   31W/80L   WORSE
+branch-set MEAN (zero-skill reference)         3.1589   +0.0049
+PRODUCTION                                     3.1540
+```
+
+**So the RESULT is that the most ATYPICAL branch is much worse** — the *expected* direction, and it
+**supports** consensus-as-outlier-avoidance rather than contradicting it. *The most typical branch is
+a plain null at 0.21x and belongs with the other fifteen.* An earlier draft of this section called it
+*"a RESULT in the wrong direction"*; **that was an inverted reading and is corrected here.** The trap
+was a column named after the property it is *inversely* related to — lane R has stated the direction
+explicitly in every artefact rather than renaming a column other lanes are already reading.
 
 **Two checks came out in the lane's favour and are recorded as such.** The branches are **genuinely
 distinct structures, not arithmetic noise** — 207.5 per target, 152.7 distinct at 1e-3 A, with

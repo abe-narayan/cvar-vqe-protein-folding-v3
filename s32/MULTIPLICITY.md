@@ -241,6 +241,56 @@ exact shape twice already — **this is the third instance.** V-A8 covers the DI
 controls; AMBER, LEG_total and LEG_torsion must be re-emitted from a committed script with a
 provenance block and a pinned seed before the report quotes them.
 
+### D6 — `split_half_transfer` centres on the arm-family mean, not on production (caught in my own code)
+
+`s32/s32_V_R_adversary.py`. My first accounting of lane R's 16-criterion search called
+`ST.split_half_transfer(E)` on the per-criterion effects and reported
+
+> *oracle-over-criteria −0.1168, **SPLIT-HALF TRANSFER −0.0254, CI [−0.0356, −0.0153], 22% of
+> the oracle*** — a tight CI excluding zero and nearly 3x the best single arm.
+
+**It is an artefact of the baseline.** `split_half_transfer` centres on `M.mean(1)`, the mean
+**over criteria**, and that mean includes `typicality` at **+0.3434**. The number measured *"the
+chosen criterion beats the average criterion"*, and nobody deploys the average of 16 criteria.
+**A control matched to a different arm's magnitude is not a control** — contract rule 6, the
+project's most repeated error, and the same shape as rule 4's `CTRL_SHRINK_ORACLE_Y`.
+
+Corrected: choose `argmin` of the per-criterion mean effect **vs production** on one half of the
+targets, evaluate that criterion **vs production** on the other half, 400 repeats:
+**+0.0004, CI [−0.0091, +0.0116]** — centred on zero. The invalid version is kept in the
+artefact under `criterion_search_INVALID_criterion_mean_baseline`, labelled and never quoted,
+the same treatment `stats_lib.best_of_k_within` gives the `s25/temper.py` null.
+
+**Generalisable rule this earns:** `split_half_transfer` nulls itself for the question *"does
+WHICH setting wins transfer?"* and **not** for *"does the winner beat production?"*. Any lane
+applying it to a grid whose columns are not all plausible arms gets an inflated effect with a
+tight CI. State the baseline in the same sentence as the transfer.
+
+---
+
+## Lane V — comparisons emitted (charter §45)
+
+**32 comparisons**, all on the **built-chain basis**, all paired to the production chain
+**recomputed in lane R's own job** (rule 3), all tie-averaged over the argmin set, all
+EXPLORATORY (lane V registered no hypothesis — these are the adversarial re-scoring of lane R's
+arms, emitted so the search has an owner):
+
+| family | comparisons | best single arm | its x MDE | the search accounted |
+|---|---|---|---|---|
+| 16 native-free criteria x {all branches, GEN4-only} | 32 | `d_to_C` −0.0091 | 0.56x | **+0.0004, CI [−0.0091, +0.0116]** |
+
+Supporting arms, not endpoint comparisons: the ORACLE best branch (**−0.11**, split-half
+transfer **5%**, NOT A SIGNAL), and the zero-information control (a uniformly random branch from
+the same set, 300 draws, **+0.0049 ± 0.0079** vs production — *production's multi-start argmin is
+worth 0.005 Å over a coin*).
+
+**Positive control, which is what makes the sixteen nulls a measurement rather than a broken
+pipeline:** `typicality` reports **+0.3434 at 2.35x MDE, 5/5 folds, 27W/75L** — a RESULT, in the
+wrong direction. The family can emit one.
+
+Lane V's in-band family (V-A8) emitted **8** further comparisons on the in-band Spearman basis,
+DIAGNOSTIC, never differenced against a chain RMSD, one of which is a pure-noise falsifier.
+
 ---
 
 ## Standing attack surfaces for this sprint (charter §53)
@@ -965,3 +1015,4 @@ variance share (D-12, measured 23.6%), the H-D2 basin horns (D-40/D-41, neither 
 defect of my own, found by lane V and fixed in place** (D1-T's missing script and provenance).
 **Zero lane-D arms reached the endpoint as an improvement**, and the one ORACLE arm that did
 (D-75, −0.2101 Å) is **ORACLE / NOT DEPLOYABLE** with nothing native-free to supply it.
+| R-19 | R | typicality ARGMIN vs ARGMAX (both directions), vs PROD | **E** | built chain n=126 | pending | pending | EXPLORATORY; re-derivation of a cross-lane sign defect (contract rule 7). NOT two new hypotheses: one arm, two directions, published together so the pair can never be quoted as one number |

@@ -29,7 +29,11 @@ from s12 import instrument as I                                          # noqa:
 
 RESULTS = os.path.join(ROOT, "s32", "results")
 
-#: criteria, all "lower is better" as registered in the PREREG
+#: criteria, all "lower is better" as registered in the PREREG.
+#: NOTE ON `typicality`: it is a DISTANCE to the pool (mean CA-RMSD to the top-75), so lower
+#: = MORE typical.  Minimising it selects the most typical branch.  Lane V's adversary script
+#: maximised it and so measured the LEAST typical branch; both directions are reported in
+#: `s32/results/s32_R_typicality_sign.json`.
 CRITERIA = ["rama_nlp", "rama20_nlp", "ramah", "posphi_frac", "disto_risk", "disto_mae",
             "legacy", "typicality", "obj1", "obj0", "d_to_C"]
 SUBSET_SIZES = (1, 2, 4, 8, 16, 32, 64, 128)

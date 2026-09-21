@@ -178,7 +178,14 @@ def criteria(seq, fold, pdb, PH, PS, CA, C, Wmem):
     wv = np.array([lf.FITTED_WEIGHTS.get(t, 0.0) for t in lf.TERMS], float)
     out["legacy"] = np.asarray(T, float) @ wv
 
-    #: typicality -- mean CA-RMSD of the branch to the production top-75 members
+    #: `typicality` IS A DISTANCE: mean CA-RMSD of the branch to the production top-75
+    #: members, so **LOWER = MORE TYPICAL**, the sense `s8/inband.py` and the consensus
+    #: medoid use.  THE NAME IS A TRAP AND IT CAUGHT A LANE: `s32_V_R_adversary.py` set
+    #: `MAXIMISE = {"typicality"}` and so selected the LEAST typical branch (+0.3417 at
+    #: 2.42x MDE), which the report then glossed as "the most typical branch is much
+    #: worse".  It is the most ATYPICAL branch that is much worse.  The column is not
+    #: renamed because rows are already written and other lanes read them; the direction
+    #: is stated here, in the artefact, and in every ledger line that quotes it.
     out["typicality"] = np.array([I.kabsch_rmsd_batch(Wmem, ca).mean() for ca in CA])
     #: geometry secondaries, carried from row one (contract rule 15)
     vb = np.linalg.norm(CA[:, 1:] - CA[:, :-1], axis=-1)
