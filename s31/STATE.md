@@ -322,6 +322,20 @@ picks `m_best` on the cloud curve and projects that one structure).
 
 ---
 
+> **HEADLINE WITHDRAWN AND REPLACED (2026-09-21 00:56, lane V's D0). The 0.6931 bar grades a DIFFERENT
+> OBJECT from every arm in this note.** S30's `coh` is the coherence of a **corrector's
+> residual** (the distogram's prediction error, an *input*); this note's arms are **emitted
+> readout errors** (an *output*). Production reads **0.6931** in S30's table and **0.9780**
+> here — same pipeline, same 126, same `mu`, two different errors. **No readout-space bar
+> exists**, and against the matched reference every arm passes.
+>
+> **The correct headline is: COHERENCE DOES NOT VARY ALONG THE RANKING AXIS AT ALL.** The
+> theorem stands — `Σa = 1` passes the common mode with coefficient exactly one, so `coh`
+> tracks *concentration*, not the ranker — and so does the within-space finding that **the
+> shipped cost and a random pool member differ by 0.0044**. Only the comparison with 0.6931
+> and everything derived from it falls, including my line about AVG_SEP being *"the first
+> native-free operator to pass"*. Original heading stands below.
+
 ## NOTE 10 (2026-09-21 00:23, lane B closing, S31-L10): **NO RANKER CAN EVER PASS THE COHERENCE BAR — AND THAT EXPLAINS FIVE SPRINTS OF FAILURE WITH ONE IDENTITY**
 
 Beyond its remit, and I think it is the sprint's most important theorem.

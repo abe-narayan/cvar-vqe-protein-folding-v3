@@ -198,8 +198,22 @@ uniform mean in pair space        coh = 1.0000  sd 0.0000   <- exactly, as deriv
 coordinate average (shipped)            0.9780
 argmin by the SHIPPED DIS               0.8288
 argmin by a RANDOM pool member          0.8244   <- the shipped cost and a coin, 0.0044 apart
-ORACLE best member                      0.6708   <- the only arm under the 0.6931 bar
+ORACLE best member                      0.6708
 ```
+
+> **THE 0.6931 BAR DOES NOT BELONG IN THIS TABLE, and an earlier draft of this report put it
+> there.** S30's `coh` grades a **corrector's residual** — the distogram's own prediction
+> error, an *input* to scoring. These arms are **emitted readout errors**, an *output*. Same
+> pipeline, same 126 targets, same `mu`, and **production reads 0.6931 in S30's table and
+> 0.9780 in this one**, because they are two different errors. **No readout-space admission
+> bar has been established**, and against the matched reference (production's own readout at
+> 0.9780) *every* arm in this table is lower.
+>
+> **What survives is the theorem and the within-space comparisons**, which need no imported
+> reference: `Σa = 1` passes the common mode with coefficient exactly one, `coh` tracks
+> concentration rather than the ranker, and **the shipped cost sits 0.0044 from a random pool
+> member.** The claim *"no ranker can ever pass the coherence bar"* is withdrawn and replaced
+> by *"coherence does not vary along the ranking axis at all."*
 
 **The entire 43-channel ranking search of S30 was searching a dimension along which the admission
 test does not vary**, and the ORACLE ceiling of *all* in-pool ranking barely clears the bar. **The
@@ -217,7 +231,7 @@ in **three** different ways, only one of which emits the answer:
 
 | readout | where | what `p` does | reachable set | capacity |
 |---|---|---|---|---|
-| **selection** | `core/pipeline.py:795-803` | picks a cell of an argmin arrangement | the distinct pool members | **6.886 bits mean, 6.555 worst** |
+| **selection** | `core/pipeline.py:795-803` | picks a cell of an argmin arrangement | the distinct pool members | **6.886 bits mean, 6.555 worst** *(the mean of `log2(distinct)` per target; note `log2(118.45)` = 6.888 is the log of the mean, a different quantity by Jensen)* |
 | **convex** | `core/pipeline.py:880-895` **SHIPPED, emits the answer** | enters continuously as weights | the **convex hull** | not bit-capped |
 | **affine** | `s27/s28_A_amp.py:105-117`, **harness only** | signed amplitudes | **outside** the hull | not bit-capped |
 
