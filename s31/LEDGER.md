@@ -2149,6 +2149,47 @@ F-C1c, F-C1d and the set-matched inversion -- 5.** No per-target maximum is repo
 this entry.
 
 
+
+### CORRECTION 1 to S31-L14, made by the lane's own self-audit at 2026-09-21 00:31, original numbers left standing above
+
+**The defect.** The `ORACLE_convex128` rung was solved by two iterative solvers (FISTA with simplex
+projection, and s29 lane O's alternating convex-NNLS) and the better of the two was taken. **On 4
+of 126 targets both returned a point WORSE than the best simplex VERTEX** — which is feasible, so
+the returned value could not have been the convex optimum. The targets are **1ID6 (+0.1821),
+2NDM (+0.1794), 9L1M (+0.0267), 2BP4 (+0.0031)**, three of them `FAIL18`, i.e. exactly the
+ill-conditioned candidate sets.
+
+**The fix.** The best vertex is now a third candidate and the bound is `assert`ed rather than
+assumed (`s31/s31_C_ladder.py`, the `ORACLE_convex128` block). Solver used across the 126:
+**hull 115, fista 6, vertex 5.**
+
+**Every affected number, old -> new.** The correction moves in the direction that STRENGTHENS the
+entry's conclusion, which is why it is stated here in full rather than quietly applied:
+
+```
+                                              published        corrected
+ORACLE convex over the 128 (cloud)              1.8008           1.7977
+   vs the ORACLE argmin over the same 128      -0.3450          -0.3481
+   xMDE / fold CI / folds / W-L        -4.38x [-0.4070,-0.2938]  -4.48x [-0.4072,-0.2984]
+                                        5/5  119W/4L             5/5  119W/0L
+ORACLE convex cross term (A^2)                -10.4214         -10.3193
+ORACLE convex ||Dw||^2 (A^2)                    3.9984           4.2054
+|cross| / ||Dw||^2                               2.61             2.45
+best native-free capture of the ORACLE cross     3.96%            3.99%
+f needed for 2.50 A on the ORACLE axis           0.42             0.44
+f needed for 3.00 A on the ORACLE axis           0.06             0.06
+```
+
+**Nothing qualitative changes**, and the W/L improves from 119W/4L to **119W/0L** because the four
+losses *were* the four solver failures. The BUILT CHAIN row `hull_top128 = 1.8538` is s29 lane O's
+own artefact and is untouched by this; it carries whatever solver tolerance S29 used, and the
+0.290 A chain contrast against `best1_top128` is quoted from S29's rows unchanged.
+
+**Why this is recorded rather than fixed silently.** A ceiling that violates its own feasibility
+bound is a solver failure that flatters nothing — but it would have been invisible to any reader,
+and the audit that caught it was a one-line check (`is the convex optimum ever worse than a
+vertex?`) that should have been in the file from the start. It is now an `assert`.
+
 ## S31-L15 -- **RE-INDEXING THE 7-BIT CANDIDATE REGISTER IS WORTH -0.0655 A ON AN ORACLE CEILING AND NOTHING DEPLOYABLE**, AND THE MECHANISM IS A **CONFLICT BY CONSTRUCTION**: STRUCTURE-AWARE INDEXING RAISES THE ORACLE VALUE OF A PARTIAL MEASUREMENT (2.4216 -> 2.2712) AND **LOWERS** ITS DEPLOYABLE VALUE (3.2369 -> 3.3721) -- THE BEST MAP FOR A DEPLOYABLE PARTIAL READOUT IS THE **RANDOM PERMUTATION**. PLUS: GRAY CODING IS A PROVEN NO-OP HERE, AND NO INDEX BIT CARRIES 0.07 BITS ABOUT CANDIDATE QUALITY (2026-09-21 00:20, C)
 
 Pre-registration as above. Code `s31/s31_C_index.py`; artefacts `s31/results/s31_C_index.json`,
