@@ -2849,3 +2849,254 @@ NOT A RESULT and must not be quoted as one.**
 > exact shape `_verdict` was hardened against (`s24/stats_lib.py:145`) — the MDE gate binds, the
 > CI does not rescue it, and a lane that quoted the CI alone would be repeating the sibling of
 > the underpowered bug.
+
+## S31-L21 -- **THE TERMINAL OPERATOR SHOULD STAY THE UNIFORM TOP-75 AVERAGE. ALL FOUR REGISTERED FALSIFIERS FIRED AGAINST THIS LANE** -- MEDOID **+0.0688**, Rg-RESTORE **+0.0475**, PER-SEPARATION RESTORE **+0.4609**, AND EVERY NATIVE-FREE GATE WORSE IN THE **REGISTERED** DIRECTION. THE PREREG's DERIVATION PREDICTED THE MEDOID's CHAIN COST AT **+0.0717** BEFORE ANY NUMBER EXISTED AND IT MEASURED **+0.0688**. AND F2: ON THE FILTER-INDEPENDENT TAIL THE **FILTER's** LOSS GROWS **3.4x** WHILE THE **READOUT's** GROWS **1.9x** (2026-09-21 00:56, F)
+
+**Pre-registered** in `s31/PREREG_S31_F.md` (commits `8a14edea`, `49ee7c92`, `bc81f029`, `f5f69ba1`,
+plus the sixth amendment), every falsifier committed before the number existed. **Four of them fired
+against the lane that wrote them, and one of them is the entry's best result.**
+
+Artefacts: `s31/s31_F_terminal.py`, `s31/s31_F_analyse.py`, `s31/s31_F_coh.py`;
+`s31/results/s31_F_terminal_rows.jsonl` (126 rows), `s31/results/s31_F_analyse.json`,
+`s31/results/s31_F_coh.json`. Seed 31006. 24 comparisons emitted against 44 registered.
+
+### 0. Reproduction, and the comparator
+
+Recomputed shipped top-75 equals the production record's `sub` set-wise on **126/126**, and the
+recomputed coordinate average reproduces `rec["rmsd_avg"]` to **7.3e-14** (CA point cloud, 3.0483).
+The built-chain comparator is **production re-projected in this same process, 3.2126** -- *not*
+S29's 3.2105 and not the record's 3.2041. Per-target chain deviation from the record reaches
+**0.3256**, which is above lane P's per-target same-operator floor (0.0134 mean / 0.0329 p90 /
+0.2285 max) and is exactly why **every arm below is paired against the in-process number**.
+
+### 1. THE DERIVATION, WRITTEN BEFORE THE FIRST NUMBER, AND WHAT IT PREDICTED
+
+`PREREG §2` derived, before measuring: for an *averaging* terminal `set_mean² = B² + S²` makes
+concentration worth zero, but the medoid is not an average, and the analogous statement is
+
+```
+d_MED_cloud²  ~  B² + s_b²   >=   B²  =  d_AVG_cloud²
+```
+
+so **on the point cloud the average dominates the medoid by construction, with a margin that grows
+with the spread** -- and the medoid's only route to a win is the stage-3b penalty it avoids, a
+budget of `3.2126 - 3.0483 = 0.1643`. Measured:
+
+| quantity | predicted in the prereg | measured |
+|---|---|---|
+| `sqrt(B² + s_b²)` vs observed `d_MED_cloud` | -- | 3.3260 vs **3.2822**, rho = **0.958**, mean abs error 0.262 |
+| fraction of targets with MED worse than AVG on the cloud | "every target" (approx.) | **73.0%** |
+| `d_MED - d_AVG` on the CA point cloud | > 0.1643 -> "dead on arrival" | **+0.2339** -> DEAD ON ARRIVAL |
+| **`d_MED - d_AVG` on the BUILT CHAIN** | **+0.0717** | **+0.0688** |
+
+**The prereg's arithmetic predicted the endpoint number to 0.003 Å before the run started.** The
+cloud arm also reproduces `s12/agg_FINDINGS.md`'s `medoid75` independently and to the digit:
+3.2822 cloud, +0.23386 against the record's +0.2339, **34W/92L against the record's 34/92**.
+
+### 2. THE OPERATORS, BUILT CHAIN, n = 126, paired, fold-clustered CI on the pinned folds
+
+Comparator = production re-projected in the same job, **3.2126 Å built chain**.
+
+| arm | mean | effect | MDE | xMDE | fold CI | folds | W/L | verdict |
+|---|---|---|---|---|---|---|---|---|
+| **MED** (consensus medoid MEMBER) | 3.2814 | **+0.0688** | 0.0848 | +0.81 | [+0.029, +0.110] | 4/5 | 58/68 | **NOT MEASURED (0.7-1.0x)** -- worse, CI excludes zero on the BAD side |
+| **AVG_RG** (uniform Rg restore) | 3.2602 | **+0.0475** | 0.0428 | +1.11 | [+0.003, +0.088] | 4/5 | 51/75 | **MEASURED -- WORSE** |
+| **AVG_SEP** (per-separation restore + MDS) | 3.6736 | **+0.4609** | 0.1967 | +2.34 | [+0.378, +0.565] | 5/5 | 41/85 | **MEASURED -- MUCH WORSE** |
+
+`AVG_SEP`'s full paired distribution, as demanded: mean +0.4609, **median +0.2045**, sd 0.7880,
+41W/85L, p10 **-0.2283**, p90 **+1.7176**, best **-0.7328 (6BX9)**, **worst +2.9878 (1S9Z)**. The
+early per-target wins that looked like 0.4-0.6 Å were the left tail of a distribution whose right
+tail is three times longer. **No mean was computed before 126/126; that commitment is on the record
+in two messages sent before the run finished.**
+
+`AVG_RG` also reproduces, on a second instrument and the endpoint basis, the already-CLOSED
+native-free `pool`-scale arm (+0.095 cloud, `s23/LEDGER.md:143-176`). It was demoted to a
+**registered negative control** in `PREREG §8` when the 25.8% contraction it was built on was
+withdrawn, and it failed for the reason the corrected mechanism predicts.
+
+### 3. THE GATES -- EVERY ONE WORSE, AND THE REGISTERED DIRECTION FIRED AGAINST ME
+
+| gate | rule | effect | xMDE | W/L | verdict |
+|---|---|---|---|---|---|
+| **G0** | `DISP > median` -> MED (**the registered direction**) | **+0.0591** | +0.72 | 25/38 | **REFUTED** |
+| G0 reversed | `DISP <= median` -> MED | +0.0096 | +0.40 | 33/30 | NOT A RESULT |
+| **G3** | `MOVE(AVG) > median` -> MED (native-free, EXPLORATORY) | **+0.0600** | +0.74 | 26/37 | **REFUTED** |
+| G3 reversed | the other direction | +0.0087 | +0.33 | 32/31 | NOT A RESULT |
+| **G4** | `MOVE > median` -> AVG_SEP | **+0.1412** | +1.34 | 20/43 | **REFUTED, MEASURED WORSE** |
+| **G5** | `DISP > median` -> AVG_SEP | **+0.1457** | +1.30 | 20/43 | **REFUTED, MEASURED WORSE** |
+| G1 | LFO `DISP` threshold -- **ORACLE-ADJACENT, the threshold touches the native** | -0.0039 | -0.08 | 4/3 | NOT A RESULT |
+| G3tau | LFO `MOVE` threshold -- **ORACLE-ADJACENT** | +0.0171 | +0.45 | 1/6 | NOT A RESULT |
+| G2 | per-target `min(AVG, MED)` -- **ORACLE / NOT DEPLOYABLE, best-of-2 not skill** | -0.0782 | -1.57 | 58/0 | ORACLE prize only |
+| G6 | per-target `min(AVG, AVG_SEP)` -- **ORACLE / NOT DEPLOYABLE** | -0.0615 | -1.61 | 41/0 | ORACLE prize only |
+
+**Even the ORACLE per-target choice between the two operators is worth 0.0782 Å**, and its
+split-half transfer is **-0.0323 with CI [-0.0344, +0.0354] spanning zero**. *Caveat on that
+statistic, stated rather than buried:* `split_half_transfer` on a **2-column** matrix picks one
+GLOBAL column per half, so it prices *"does a global preference between the two operators
+transfer"*, not the per-target question; for G6, where `AVG` dominates globally, it degenerates
+(CI width 1e-16) and its 79% must not be quoted.
+
+### 4. THE MECHANISM FALSIFIER FIRED, AND IT FIRED IN THE DIRECTION THE PREREG DERIVED
+
+Registered: *the hi-minus-lo `DISP`-half contrast of `chain(MED) - chain(AVG)` must be NEGATIVE.*
+
+```
+hi-minus-lo DISP contrast   +0.0990   0.59x MDE   fold CI [+0.042, +0.171]   5/5 folds
+DISP tertiles, mean(chain MED - chain AVG):   +0.0049   +0.0604   +0.1410     (n = 42 each)
+rho(DISP, chain MED - chain AVG) = +0.176
+```
+
+**Monotone in the WRONG direction.** The medoid gets progressively worse as the pool diverges --
+which is `PREREG §2`'s prediction (`s_b` grows with `S`) and the opposite of the briefed mechanism.
+*The contrast is 0.59x MDE, so by this project's fixed rule it is **NOT A RESULT** and supports
+only the refutation of the registered NEGATIVE direction, not a positive claim for the other one.*
+
+Both halves of the derived trade-off are visible and both scale with dispersion, which is exactly
+why the gate cannot work: `P(AVG)` hi vs lo = **0.2655 vs 0.0631** (contrast +0.2024, 2.06x MDE) --
+the projection budget does grow on divergent pools -- but the medoid's own cost grows faster.
+
+### 5. THE SEPARATION-BAND MECHANISM: THE WITHDRAWN 25.8% IS REPLACED, AND THE BAND FRAMING IS REFUTED FOR THIS OPERATOR PAIR
+
+Mean CA-CA distance at each sequence separation, as a **ratio to the native's own**, n = 126
+(ORACLE diagnostic):
+
+```
+s                 1     2     3     4     5     6     7     8     9    10    11    12    13    14
+the 75 members  0.999 0.980 0.948 0.966 0.999 1.019 1.043 1.075 1.131 1.195 1.269 1.308 1.414 1.448
+cloud AVG       0.777 0.836 0.856 0.902 0.951 0.982 1.013 1.048 1.104 1.163 1.237 1.267 1.347 1.345
+cloud MED       0.998 0.971 0.920 0.942 0.995 1.016 1.037 1.078 1.135 1.188 1.263 1.304 1.377 1.418
+chain AVG       0.998 0.935 0.906 0.941 0.995 1.019 1.042 1.078 1.138 1.187 1.260 1.304 1.360 1.376
+```
+
+**Two independent confirmations and one correction.**
+
+* **Confirmed:** the corrected profile is reproduced on a third instrument -- **0.777** at the
+  virtual bond against the record's 0.773, crossing 1.00 near **s = 7**, rising at long range. And
+  the contraction is **3.27% against the native** / 5.39% against the members -- the corrected
+  figure, not the withdrawn 25.8%.
+* **CORRECTION, and it matters:** *the long-range expansion is the POOL's, not the averaging
+  operator's.* The 75 members' own profile rises to **1.448**, and the average is **BELOW the
+  members at every single separation**. So "averaging expands long-range distances" is wrong as
+  stated; averaging **contracts everywhere**, and it contracts *least* at long range, against a
+  pool that is already long there. **The crossing of 1.00 near s = 8 is an artefact of comparing
+  the average to the NATIVE rather than to the members that produced it.**
+* **Registered band falsifier FIRED:** the medoid's long-band profile must be **flatter** than the
+  average's. Long-band mean `|ratio - 1|`: **MED 0.2918 vs AVG 0.2824**, difference **+0.0094**
+  (0.55x MDE, 54W/72L) -- the medoid is slightly **less** flat. **The separation-band framing is
+  refuted for this operator pair.**
+* What the projection actually does: it repairs the **short** band (`|ratio-1|` 0.1609 -> 0.1033)
+  and leaves the **long** band alone (0.2717 -> 0.2824). The 0.1643 Å it costs buys back geometry,
+  not long-range shape.
+
+### 6. AVG_SEP DOES NOT LEAVE THE AFFINE HULL -- and the bar I was told to use is STRUCK
+
+Lane B's theorem is confirmed on a second implementation: `coh(uniform mean in pair space) =
+1.0000, sd 1.2e-16`, exactly as derived; `coh(coordinate average) = 0.9780` and
+`coh(ORACLE best member) = 0.6708`, both matching lane B to four decimals. **ORACLE / NOT
+DEPLOYABLE -- `coh` needs the native in both arguments.**
+
+`coh(AVG_SEP) = 0.9689`, and `coh(AVG_SEP) - coh(AVG) = -0.0090, SE 0.0014, 2.37x MDE, fold CI
+[-0.0108, -0.0066], 5/5 folds, 109W/17L` -- real, repeatable, and **tiny**. The certificate is the
+direct measurement: `AVG_SEP` sits **0.045 Å RMS per coordinate** (median 0.030, max 0.222) from
+the best affine (`sum a = 1`) combination of the same 75 superposed members, against a 3.8 Å virtual
+bond. **The MDS re-embedding is affine-in-disguise.** `AVG_SEP` was registered as "NOT affine" and
+is MEASURED to be affine in practice -- a registered claim of my own that failed.
+
+**S30's 0.6931 admission bar is STRUCK from this lane** (`PREREG §13`): it grades a **corrector**
+(the distogram's own prediction error, an input) and this lane grades a **readout** (the emitted
+structure's error, an output); the same pipeline, the same 126 and the same `mu` give 0.6931 and
+0.9780, 0.285 apart, because they are two different errors. Contract rule 8, sixth instance; the
+coordinator has recorded the instruction as theirs. `s31_F_coh.py` now defines no bar and the
+artefact no longer contains `admitted`. **No readout-space bar has been established at all.**
+
+And the observation that makes this independent of any bar: **`MED` is the most affine readout in
+the table -- a delta -- and moves `coh` furthest of all the deployable arms (0.8886), by pure
+concentration of `a`. So `coh` cannot certify an operator as non-affine. The hull residual can.**
+
+### 7. PHYSICAL VALIDITY, on the endpoint basis
+
+Mean virtual bond (Å): native 3.8122, the 75 members 3.8079, **cloud AVG 2.9614 (sd 0.311)**,
+cloud MED 3.8056, cloud AVG_SEP 3.1018 -- and **every CHAIN arm 3.803955 with sd 9e-16**, identical
+to 15 digits across AVG, MED and AVG_SEP, because stage 3b is parameterised by `(phi, psi)` on ideal
+geometry. **Peptide geometry, chirality and continuity are guaranteed by construction for every
+emitted arm; no arm here buys a cloud RMSD with impossible coordinates.** The *cloud* arms are not
+structures and their bond statistics say so -- that is the point, not a defect.
+
+### 8. F2 -- WHAT ACTUALLY DISTINGUISHES THE TAIL
+
+**Primary strata are FILTER-INDEPENDENT.** `T_POOL` = worst 18 by `pool_mean` (a property of
+retrieval). `T_BEST` = worst 18 by `pool_best`. `T_CHAIN` = worst 18 by production built chain (the
+outcome, so partly downstream of the filter -- said every time). **`FAIL18` is defined by the
+filter's own zero recall** -- `s12/instrument.py:271-278` marks a target when no pool member within
+`BAND = 1.5` of `pool_best` survives into `sub` -- **so it cannot measure filter recall and appears
+only as a cross-check.** Overlap `T_CHAIN` and `FAIL18`: 13/18.
+
+**(a) Useful candidates ARE present and ARE badly ranked, and this is the sharpest statistic here.**
+The rank of the pool's best member under the shipped score, out of 500:
+
+```
+              T_POOL       T_BEST      T_CHAIN     FAIL18(diag)
+tail           285.6        283.0        391.1        386.6
+rest           151.1        151.6        133.5        134.3
+```
+
+On the outcome tail the best member sits in the **bottom quintile of the score's own order**.
+
+**(b) The tail is disproportionately a FILTER failure, not a READOUT failure.** Decomposed on ONE
+basis (CA point cloud throughout, so nothing is quoted across bases):
+
+```
+                         pool_best -> set_best   set_best -> cloud_AVG
+                            (the FILTER loses)    (the READOUT loses)
+all 126                          0.595                   0.742
+T_POOL  (filter-independent)     1.452  (2.4x)           1.434  (1.9x)
+T_CHAIN (the outcome tail)       2.050  (3.4x)           1.445  (1.9x)
+```
+
+The readout's loss grows **1.9x** on both tails; the filter's grows **2.4-3.4x**. And
+`n_top75_under3` -- how many of the retained 75 are under 3 Å -- is **5.7 on T_POOL and 0.0 on
+T_CHAIN**, against **33.9 / 34.8** on the rest.
+
+**(c) The pool is COHERENTLY wrong on the tail, not diversely wrong.** `S/B`, the set's spread over
+the average's error, falls from **0.776 to 0.423** (T_CHAIN) and **0.733 to 0.680** (T_POOL), while
+`n_distinct` is unchanged (70.3 vs 69.0). The tail's pools are not smaller or less varied -- they
+are *displaced together*.
+
+**(d) The tail's distortion is a LONG-SEPARATION phenomenon**, independently confirming the ~4x
+concentration the record reports: mean `|ratio-1|` of the production chain at `s >= 7` is
+**0.915 on T_CHAIN vs 0.177 elsewhere (5.2x)**, against **0.200 vs 0.087 (2.3x)** at `s < 7`.
+
+**(e) The terminal operator is NOT failing differently in a way that favours the medoid.**
+`chain(MED) - chain(AVG)` on the tails: **+0.087 / +0.203 / +0.173** (T_POOL / T_BEST / T_CHAIN)
+against +0.066 / +0.046 / +0.051 on the rest. **The medoid is worse on the tail on all three
+definitions**, so "switch readout on the tail" is refuted on every stratum, not just on average.
+`AVG_SEP` is *relatively* less bad on the tail (+0.05 on T_CHAIN vs +0.53 elsewhere) but is **never
+better than zero on any stratum**, so there is no tail rescue there either.
+
+### 9. WHAT THIS CHANGES ABOUT WHAT THE TERMINAL OPERATOR SHOULD BE
+
+> **It should stay exactly what it is: the uniform coordinate average of the shipped top-75.** Four
+> alternatives and six gates were measured on the endpoint against an in-process comparator, and
+> **every single one is worse in its registered direction.** The medoid is closed on the built
+> chain as well as the cloud; the two de-contraction operators are closed; dispersion- and
+> MOVE-gated switching is closed in both directions; and the ORACLE ceiling on choosing between the
+> average and any one of these, per target with the native in hand, is **0.078 Å**.
+
+The lane's own derivation says why, and said it first: the medoid pays `s_b` on the cloud and saves
+`P(AVG)` at the projection, **both grow with the spread, and the first grows faster.** There is no
+operating point where the trade-off turns over.
+
+**Where the tail's money actually is, on the evidence above: the FILTER, and specifically the
+score's inability to rank its own pool there** -- best member at rank 391/500, filter loss growing
+3.4x against the readout's 1.9x. That is not this lane's remit and this lane has no result there;
+it is stated because it is what the measurement says.
+
+### 10. WHAT IS NOT CLAIMED
+
+* The `0.59x MDE` positive dispersion contrast in §4 is **below MDE and is not a result**; it
+  supports the refutation of the registered direction, nothing more.
+* The F2 numbers are **ORACLE diagnostics** wherever they touch `rr` or `nat_ca`; none tunes a
+  parameter, and the two `pool_best`-defined strata are ORACLE strata (though filter-independent).
+* `T_CHAIN` is defined by the outcome and is therefore partly downstream of the filter; the
+  filter-vs-readout decomposition is quoted from `T_POOL` as well for that reason.
+* 24 comparisons emitted against 44 registered; appended to `s31/MULTIPLICITY.md`.

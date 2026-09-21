@@ -1,0 +1,1635 @@
+{
+ "seed": 31006,
+ "n": 126,
+ "rows": "C:\\Users\\abena\\Protein-Folding-Algorithm\\s31\\results\\s31_F_terminal_rows.jsonl",
+ "prereg": "s31/PREREG_S31_F.md @ 8a14edea + 49ee7c92",
+ "reproduction": {
+  "basis": "CA point cloud / built chain, n=126",
+  "cloud_AVG_mean": 3.0483380938795324,
+  "record_rmsd_avg_mean": 3.048338093879532,
+  "cloud_max_abs_dev": 7.252531908363835e-14,
+  "chain_AVG_mean": 3.212625219723354,
+  "record_rmsd_fit_mean": 3.2040761603809194,
+  "chain_max_abs_dev": 0.32557401265746844,
+  "note": "chain_AVG is production RE-PROJECTED IN THIS PROCESS and is the comparator for every arm below (contract rule 31: the projection seed is not pinned, and the cross-instrument spread is 0.0107 A)."
+ },
+ "S2_theorem": {
+  "claim": "d_MED_cloud^2 ~ B^2 + s_b^2 with B = d_AVG_cloud -- derived in the prereg before any number existed",
+  "basis": "CA point cloud",
+  "pred_mean": 3.326014134881092,
+  "obs_mean": 3.282200454492328,
+  "mean_signed_err": -0.04381368038876447,
+  "mean_abs_err": 0.2623589924360384,
+  "rho_pred_obs": 0.9582212223472066,
+  "frac_MED_worse_than_AVG_on_cloud": 0.7301587301587301,
+  "rho_s_b_vs_cloud_gap": 0.5043599550056242,
+  "rho_DISP_vs_cloud_gap": 0.4958950131233596,
+  "rho_DISP_vs_P_AVG": 0.5971083614548182,
+  "note": "the derivation predicted BOTH sides of the inequality grow with the spread"
+ },
+ "S2_precheck": {
+  "cmp": {
+   "label": "F.precheck.cloud MED-AVG (CA POINT CLOUD)",
+   "mean_a": 3.282200454492328,
+   "mean_b": 3.0483380938795324,
+   "effect": 0.23386236061279483,
+   "median_effect": 0.1270859971319167,
+   "se": 0.03628562929418793,
+   "mde": 0.10165781903059691,
+   "effect_over_mde": 2.3004857161297854,
+   "ci95_fold": [
+    0.1771951926316243,
+    0.3016928167775323
+   ],
+   "folds_same_sign": 5,
+   "n_folds": 5,
+   "W": 34,
+   "L": 92,
+   "T": 0,
+   "n": 126
+  },
+  "verdict": "MEASURED (|effect| >= 1.0x MDE, fold CI excludes zero)",
+  "budget_P_AVG_mean": 0.1642871258438211,
+  "dead_on_arrival": true
+ },
+ "F1_operators": {
+  "basis": "BUILT CHAIN, n=126, paired, fold-clustered CI on pinned folds",
+  "chain_AVG_mean": 3.212625219723354,
+  "chain_MED_mean": 3.281383780533748,
+  "chain_AVG_RG_mean": 3.26015301937975,
+  "chain_AVG_SEP_mean": 3.6735563926907977,
+  "arms": {
+   "MED": {
+    "cmp": {
+     "label": "F1.MED - AVG (BUILT CHAIN)",
+     "mean_a": 3.281383780533748,
+     "mean_b": 3.212625219723354,
+     "effect": 0.06875856081039423,
+     "median_effect": 0.012217127043881892,
+     "se": 0.03027644444369458,
+     "mde": 0.08482248675345475,
+     "effect_over_mde": 0.810617130457965,
+     "ci95_fold": [
+      0.02909127748582545,
+      0.11031471180981615
+     ],
+     "folds_same_sign": 4,
+     "n_folds": 5,
+     "W": 58,
+     "L": 68,
+     "T": 0,
+     "n": 126
+    },
+    "verdict": "NOT MEASURED (0.7-1.0x MDE)",
+    "cloud_cmp": {
+     "label": "F1.MED - AVG (CA POINT CLOUD)",
+     "mean_a": 3.282200454492328,
+     "mean_b": 3.0483380938795324,
+     "effect": 0.23386236061279483,
+     "median_effect": 0.1270859971319167,
+     "se": 0.03628562929418793,
+     "mde": 0.10165781903059691,
+     "effect_over_mde": 2.3004857161297854,
+     "ci95_fold": [
+      0.1771951926316243,
+      0.30169281677753235
+     ],
+     "folds_same_sign": 5,
+     "n_folds": 5,
+     "W": 34,
+     "L": 92,
+     "T": 0,
+     "n": 126
+    },
+    "record_cross_check": {
+     "source": "s12/agg_FINDINGS.md:43-70 (predates this lane; found only AFTER the registration was committed -- declared as lane F's own defect in PREREG s10.4)",
+     "record_medoid75_cloud": 3.2822,
+     "record_avg75_cloud": 3.0483,
+     "record_delta": 0.2339,
+     "record_ci": [
+      0.162,
+      0.305
+     ],
+     "record_WL": "34/92",
+     "this_run_cloud_MED": 3.282200454492328,
+     "this_run_cloud_AVG": 3.0483380938795324,
+     "this_run_delta": 0.23386236061279483,
+     "prereg_predicted_chain_delta": 0.0717
+    }
+   },
+   "AVG_RG": {
+    "cmp": {
+     "label": "F1.AVG_RG - AVG (BUILT CHAIN)",
+     "mean_a": 3.26015301937975,
+     "mean_b": 3.212625219723354,
+     "effect": 0.04752779965639701,
+     "median_effect": 0.004267519217633353,
+     "se": 0.015264170913702134,
+     "mde": 0.042764101231827896,
+     "effect_over_mde": 1.1113947981449368,
+     "ci95_fold": [
+      0.002881285599557616,
+      0.08747468065462173
+     ],
+     "folds_same_sign": 4,
+     "n_folds": 5,
+     "W": 51,
+     "L": 75,
+     "T": 0,
+     "n": 126
+    },
+    "verdict": "MEASURED (|effect| >= 1.0x MDE, fold CI excludes zero)",
+    "cloud_cmp": {
+     "label": "F1.AVG_RG - AVG (CA POINT CLOUD)",
+     "mean_a": 3.1105150118984346,
+     "mean_b": 3.0483380938795324,
+     "effect": 0.06217691801890203,
+     "median_effect": 0.01879528175901224,
+     "se": 0.015091982877027132,
+     "mde": 0.042281699228279214,
+     "effect_over_mde": 1.4705397170347478,
+     "ci95_fold": [
+      0.038172290902940886,
+      0.08606437948778525
+     ],
+     "folds_same_sign": 5,
+     "n_folds": 5,
+     "W": 45,
+     "L": 81,
+     "T": 0,
+     "n": 126
+    },
+    "record_cross_check": {
+     "source": "s23/LEDGER.md:143-176 via s31/PREREG_S31_C.md A1.1 -- the native-free `pool` scale arm, CLOSED at +0.095 with the CI excluding zero on the bad side",
+     "note": "AVG_RG is a REGISTERED NEGATIVE CONTROL here, not a candidate"
+    }
+   },
+   "AVG_SEP": {
+    "cmp": {
+     "label": "F1.AVG_SEP - AVG (BUILT CHAIN)",
+     "mean_a": 3.6735563926907977,
+     "mean_b": 3.212625219723354,
+     "effect": 0.4609311729674438,
+     "median_effect": 0.20446814294501636,
+     "se": 0.07020025259402736,
+     "mde": 0.19667302766742706,
+     "effect_over_mde": 2.343642025722387,
+     "ci95_fold": [
+      0.3782020521121065,
+      0.5645608391424887
+     ],
+     "folds_same_sign": 5,
+     "n_folds": 5,
+     "W": 41,
+     "L": 85,
+     "T": 0,
+     "n": 126
+    },
+    "verdict": "MEASURED (|effect| >= 1.0x MDE, fold CI excludes zero)",
+    "cloud_cmp": {
+     "label": "F1.AVG_SEP - AVG (CA POINT CLOUD)",
+     "mean_a": 3.4966292367339817,
+     "mean_b": 3.0483380938795324,
+     "effect": 0.44829114285445004,
+     "median_effect": 0.19949175074780312,
+     "se": 0.06625976927957716,
+     "mde": 0.1856333696136634,
+     "effect_over_mde": 2.4149275735684,
+     "ci95_fold": [
+      0.37473315301907717,
+      0.5447169604903365
+     ],
+     "folds_same_sign": 5,
+     "n_folds": 5,
+     "W": 34,
+     "L": 92,
+     "T": 0,
+     "n": 126
+    }
+   }
+  }
+ },
+ "F1_gates": {
+  "G0": {
+   "rule": "DISP > median(DISP) -> MED else AVG; 0 free parameters; NATIVE-FREE",
+   "threshold": 2.7231728628731053,
+   "n_to_MED": 63,
+   "cmp": {
+    "label": "F1.G0 median-DISP gate (hi->MED) - AVG (BUILT CHAIN)",
+    "mean_a": 3.2717588253198633,
+    "mean_b": 3.212625219723354,
+    "effect": 0.0591336055965098,
+    "median_effect": 0.0,
+    "se": 0.02921896901629103,
+    "mde": 0.08185986359604094,
+    "effect_over_mde": 0.7223760582881026,
+    "ci95_fold": [
+     0.026911656247631643,
+     0.09905858019898113
+    ],
+    "folds_same_sign": 5,
+    "n_folds": 5,
+    "W": 25,
+    "L": 38,
+    "T": 63,
+    "n": 126
+   },
+   "verdict": "NOT MEASURED (0.7-1.0x MDE)"
+  },
+  "G0_reversed": {
+   "rule": "DISP <= median(DISP) -> MED else AVG; NATIVE-FREE; this is the OPPOSITE of the registered direction and is reported only because the registered one may fire against the lane",
+   "cmp": {
+    "label": "F1.G0rev median-DISP gate (LO->MED) - AVG (BUILT CHAIN)",
+    "mean_a": 3.2222501749372383,
+    "mean_b": 3.212625219723354,
+    "effect": 0.009624955213884437,
+    "median_effect": 0.0,
+    "se": 0.008486546451011734,
+    "mde": 0.023775908537154476,
+    "effect_over_mde": 0.4048196601548822,
+    "ci95_fold": [
+     -0.004769329465970179,
+     0.023291825059792506
+    ],
+    "folds_same_sign": 4,
+    "n_folds": 5,
+    "W": 33,
+    "L": 30,
+    "T": 63,
+    "n": 126
+   },
+   "verdict": "NOT A RESULT (< 0.7x MDE); may support a NULL, never a presence"
+  },
+  "G1": {
+   "rule": "DISP > tau, tau fitted LEAVE-FOLD-OUT on native chain RMSD",
+   "ORACLE": "ORACLE-ADJACENT / the threshold touches the native -- a diagnostic, NOT a clean deployable",
+   "tau_by_fold": {
+    "0": 4.47132085204535,
+    "1": 4.47132085204535,
+    "2": 4.47132085204535,
+    "3": 4.47132085204535,
+    "4": 4.47132085204535
+   },
+   "cmp": {
+    "label": "F1.G1 leave-fold-out DISP threshold - AVG (BUILT CHAIN)",
+    "mean_a": 3.2087710709753376,
+    "mean_b": 3.212625219723354,
+    "effect": -0.003854148748016043,
+    "median_effect": 0.0,
+    "se": 0.017930276779755557,
+    "mde": 0.05023346342616317,
+    "effect_over_mde": -0.07672472660940756,
+    "ci95_fold": [
+     -0.036501424284136795,
+     0.029539984050637798
+    ],
+    "folds_same_sign": 2,
+    "n_folds": 5,
+    "W": 4,
+    "L": 3,
+    "T": 119,
+    "n": 126
+   },
+   "verdict": "NOT A RESULT (< 0.7x MDE); may support a NULL, never a presence"
+  },
+  "G2": {
+   "rule": "per-target min(AVG, MED)",
+   "ORACLE": "ORACLE / NOT DEPLOYABLE -- this is best-of-2, not skill",
+   "cmp": {
+    "label": "F1.G2 per-target min(AVG,MED) - AVG (BUILT CHAIN)",
+    "mean_a": 3.1344664523641907,
+    "mean_b": 3.212625219723354,
+    "effect": -0.07815876735916306,
+    "median_effect": 0.0,
+    "se": 0.017824201241759718,
+    "mde": 0.04993628219891403,
+    "effect_over_mde": -1.5651699309097302,
+    "ci95_fold": [
+     -0.09522430727089247,
+     -0.05904352365194142
+    ],
+    "folds_same_sign": 5,
+    "n_folds": 5,
+    "W": 58,
+    "L": 0,
+    "T": 68,
+    "n": 126
+   },
+   "verdict": "MEASURED (|effect| >= 1.0x MDE, fold CI excludes zero)",
+   "split_half_transfer": {
+    "oracle_gain": -0.11253804776436016,
+    "transfer": -0.032341506408765194,
+    "ci95": [
+     -0.03437928040519711,
+     0.03539230337379406
+    ],
+    "frac_of_oracle": 0.28738286340708563
+   }
+  },
+  "G3": {
+   "rule": "MOVE(AVG) > median(MOVE(AVG)) -> MED else AVG; 0 free parameters; NATIVE-FREE (both arguments of MOVE exist at inference)",
+   "EXPLORATORY": "registered mid-run (PREREG s9) -- if this is the only arm that clears it is exploratory and requires confirmation, never the lane's confirmed result",
+   "threshold": 1.0244356784703443,
+   "n_to_MED": 63,
+   "cmp": {
+    "label": "F1.G3 median-MOVE gate (hi->MED) - AVG (BUILT CHAIN)",
+    "mean_a": 3.272652937176749,
+    "mean_b": 3.212625219723354,
+    "effect": 0.060027717453395406,
+    "median_effect": 0.0,
+    "se": 0.028885670627384473,
+    "mde": 0.08092609482968034,
+    "effect_over_mde": 0.7417597201462849,
+    "ci95_fold": [
+     0.028087974109825414,
+     0.09766031427612346
+    ],
+    "folds_same_sign": 5,
+    "n_folds": 5,
+    "W": 26,
+    "L": 37,
+    "T": 63,
+    "n": 126
+   },
+   "verdict": "NOT MEASURED (0.7-1.0x MDE)",
+   "split_half_transfer": {
+    "oracle_gain": -0.11253804776436016,
+    "transfer": -0.03272783770591313,
+    "ci95": [
+     -0.03437928040519711,
+     -0.034379280405197096
+    ],
+    "frac_of_oracle": 0.2908157583685911
+   }
+  },
+  "G3_reversed": {
+   "rule": "the OPPOSITE direction, reported because the registered one may fire against the lane",
+   "cmp": {
+    "label": "F1.G3rev median-MOVE gate (LO->MED) - AVG (BUILT CHAIN)",
+    "mean_a": 3.221356063080352,
+    "mean_b": 3.212625219723354,
+    "effect": 0.008730843356998825,
+    "median_effect": 0.0,
+    "se": 0.009521901182484646,
+    "mde": 0.026676558352848986,
+    "effect_over_mde": 0.3272852232854241,
+    "ci95_fold": [
+     -0.004613167797391014,
+     0.021471046748081785
+    ],
+    "folds_same_sign": 4,
+    "n_folds": 5,
+    "W": 32,
+    "L": 31,
+    "T": 63,
+    "n": 126
+   },
+   "verdict": "NOT A RESULT (< 0.7x MDE); may support a NULL, never a presence"
+  },
+  "G3tau": {
+   "rule": "MOVE(AVG) > tau, tau fitted LEAVE-FOLD-OUT on native chain RMSD",
+   "ORACLE": "ORACLE-ADJACENT / the threshold touches the native -- a diagnostic, NOT a clean deployable",
+   "tau_by_fold": {
+    "0": 1.6192413598182853,
+    "1": 1.6192413598182853,
+    "2": 1.6192413598182853,
+    "3": 1.6192413598182853,
+    "4": 1.6192413598182853
+   },
+   "cmp": {
+    "label": "F1.G3tau leave-fold-out MOVE threshold - AVG (BUILT CHAIN)",
+    "mean_a": 3.2296974322558216,
+    "mean_b": 3.212625219723354,
+    "effect": 0.01707221253246812,
+    "median_effect": 0.0,
+    "se": 0.013471695880726211,
+    "mde": 0.037742303179442556,
+    "effect_over_mde": 0.4523362671138469,
+    "ci95_fold": [
+     -0.011234307371926707,
+     0.0510567990379099
+    ],
+    "folds_same_sign": 4,
+    "n_folds": 5,
+    "W": 1,
+    "L": 6,
+    "T": 119,
+    "n": 126
+   },
+   "verdict": "NOT A RESULT (< 0.7x MDE); may support a NULL, never a presence"
+  }
+ },
+ "F1_gate_variables": {
+  "rho_DISP_vs_chain_MED_minus_AVG": 0.17574503187101612,
+  "rho_MOVE_vs_chain_MED_minus_AVG": 0.20006599175103112,
+  "rho_DISP_vs_MOVE": 0.9645264341957255,
+  "rho_MOVE_vs_P_AVG": 0.6143862017247844,
+  "MOVE_AVG_mean": 0.8134589710452705,
+  "MOVE_MED_mean": 0.049954096983174594,
+  "note": "MOVE(MED) ~ 0 is the check that the medoid is already a chain; a nonzero MOVE(MED) would mean the pool members are not ideal-geometry backbones"
+ },
+ "F1_mechanism": {
+  "basis": "BUILT CHAIN; hi-minus-lo contrast of chain(MED) - chain(AVG) across the DISP median",
+  "registered_expectation": "NEGATIVE (the medoid should help most where the pool diverges)",
+  "contrast": {
+   "label": "F1.mech hi-minus-lo DISP of chain(MED)-chain(AVG)",
+   "effect": 0.0990173007652507,
+   "mean_hi": 0.11826721119301957,
+   "mean_lo": 0.019249910427768874,
+   "n_hi": 63,
+   "n_lo": 63,
+   "se": 0.060142781605407085,
+   "mde": 0.16849601694570848,
+   "effect_over_mde": 0.5876536582888799,
+   "ci95_fold": [
+    0.042374074282371305,
+    0.17100528227271156
+   ],
+   "excludes_zero": true,
+   "folds_same_sign": "5/5",
+   "per_fold": [
+    0.020765858161914133,
+    0.04590298027469433,
+    0.06663320119068007,
+    0.2438448268587269,
+    0.11795136900539563
+   ]
+  },
+  "rho_DISP_vs_dMA": 0.17574503187101612,
+  "mean_dMA_hi": 0.11826721119301957,
+  "mean_dMA_lo": 0.019249910427768874,
+  "by_DISP_tertile": [
+   {
+    "t": 0,
+    "disp_lo": 0.2196654093221813,
+    "disp_hi": 1.511583362992046,
+    "mean_dMA": 0.004889851813627631,
+    "n": 42
+   },
+   {
+    "t": 1,
+    "disp_lo": 1.511583362992046,
+    "disp_hi": 3.4538578493122123,
+    "mean_dMA": 0.06038705410675771,
+    "n": 42
+   },
+   {
+    "t": 2,
+    "disp_lo": 3.4538578493122123,
+    "disp_hi": 4.817761028830745,
+    "mean_dMA": 0.14099877651079734,
+    "n": 42
+   }
+  ]
+ },
+ "AVG_SEP_mechanism": {
+  "basis": "BUILT CHAIN, paired, n=126",
+  "registered_prediction": "if the separation-band story is right the gain must CONCENTRATE on high-dispersion targets, because averaging's distortion scales with spread (rho(DISP, contraction) = +0.947). A FLAT profile in dispersion refutes the mechanism even if the number is good.",
+  "full_paired_distribution": {
+   "mean": 0.4609311729674438,
+   "median": 0.20446814294501636,
+   "sd": 0.7879958810155171,
+   "W": 41,
+   "L": 85,
+   "worst_degradation": 2.9877614100658523,
+   "worst_target": "1S9Z",
+   "best_improvement": -0.7327577364326965,
+   "best_target": "6BX9",
+   "p10": -0.2282562224182374,
+   "p90": 1.717647023217498
+  },
+  "by_DISP_half": {
+   "label": "AVG_SEP.hi-minus-lo DISP of chain(SEP)-chain(AVG)",
+   "effect": -0.33899616396912297,
+   "mean_hi": 0.2914330909828822,
+   "mean_lo": 0.6304292549520052,
+   "n_hi": 63,
+   "n_lo": 63,
+   "se": 0.18105834856267505,
+   "mde": 0.5072530693331905,
+   "effect_over_mde": -0.6682979058455977,
+   "ci95_fold": [
+    -0.7679018456598642,
+    -0.04546190191367777
+   ],
+   "excludes_zero": true,
+   "folds_same_sign": "4/5",
+   "per_fold": [
+    -0.08761901861397087,
+    -1.066342026879764,
+    -0.21428470796616994,
+    -0.5767168931910784,
+    0.08891369497989793
+   ]
+  },
+  "mean_hi": 0.2914330909828822,
+  "mean_lo": 0.6304292549520052,
+  "rho_DISP_vs_dSA": -0.06603674540682415,
+  "rho_MOVE_vs_dSA": -0.08150881139857517,
+  "by_tail": {
+   "T_POOL_worst18_by_pool_mean": {
+    "tail_mean": 0.23377379203560414,
+    "rest_mean": 0.4987907364560837,
+    "n_tail": 18,
+    "CAVEAT": null
+   },
+   "T_BEST_worst18_by_pool_best": {
+    "tail_mean": 0.09302815661477142,
+    "rest_mean": 0.5222483423595559,
+    "n_tail": 18,
+    "CAVEAT": null
+   },
+   "T_CHAIN_worst18_by_production_chain": {
+    "tail_mean": 0.049452129798871064,
+    "rest_mean": 0.5295110134955392,
+    "n_tail": 18,
+    "CAVEAT": null
+   },
+   "FAIL18_DIAGNOSTIC_ONLY": {
+    "tail_mean": 0.0961364897008685,
+    "rest_mean": 0.5217302868452063,
+    "n_tail": 18,
+    "CAVEAT": "FAIL18 is defined by the filter's own recall (s12/instrument.py:271-278) and cannot measure it; diagnostic cross-check only"
+   }
+  },
+  "gates": {
+   "REGISTERED": "PREREG s12 (fifth amendment), appended at 93/126 rows with NO AVG_SEP aggregate computed; both G4 and G5 are EXPLORATORY",
+   "G4": {
+    "rule": "MOVE(AVG) > median -> AVG_SEP else AVG; native-free, 0 parameters",
+    "cmp": {
+     "label": "G4 MOVE gate -> AVG_SEP",
+     "mean_a": 3.353842900887555,
+     "mean_b": 3.212625219723354,
+     "effect": 0.14121768116420133,
+     "median_effect": 0.0,
+     "se": 0.03756614990262523,
+     "mde": 0.10524532556719485,
+     "effect_over_mde": 1.3417952807228442,
+     "ci95_fold": [
+      0.0873061262610582,
+      0.1910138501968755
+     ],
+     "folds_same_sign": 5,
+     "n_folds": 5,
+     "W": 20,
+     "L": 43,
+     "T": 63,
+     "n": 126
+    }
+   },
+   "G5": {
+    "rule": "DISP > median -> AVG_SEP else AVG; native-free, 0 parameters",
+    "cmp": {
+     "label": "G5 DISP gate -> AVG_SEP",
+     "mean_a": 3.3583417652147944,
+     "mean_b": 3.212625219723354,
+     "effect": 0.1457165454914411,
+     "median_effect": 0.0,
+     "se": 0.0399958598717589,
+     "mde": 0.11205240101671975,
+     "effect_over_mde": 1.3004321564666714,
+     "ci95_fold": [
+      0.10027591285453928,
+      0.18549391421785166
+     ],
+     "folds_same_sign": 5,
+     "n_folds": 5,
+     "W": 20,
+     "L": 43,
+     "T": 63,
+     "n": 126
+    }
+   },
+   "G6": {
+    "rule": "per-target min(AVG, AVG_SEP)",
+    "ORACLE": "ORACLE / NOT DEPLOYABLE -- best-of-2, not skill",
+    "cmp": {
+     "label": "G6 per-target min(AVG, AVG_SEP)",
+     "mean_a": 3.1511650715121045,
+     "mean_b": 3.212625219723354,
+     "effect": -0.06146014821124892,
+     "median_effect": 0.0,
+     "se": 0.013645236801710087,
+     "mde": 0.03822849542367098,
+     "effect_over_mde": -1.60770513016824,
+     "ci95_fold": [
+      -0.07327629430648583,
+      -0.047826133485975544
+     ],
+     "folds_same_sign": 5,
+     "n_folds": 5,
+     "W": 41,
+     "L": 0,
+     "T": 85,
+     "n": 126
+    },
+    "split_half_transfer": {
+     "oracle_gain": -0.2919257346949708,
+     "transfer": -0.23046558648372187,
+     "ci95": [
+      -0.23046558648372195,
+      -0.23046558648372184
+     ],
+     "frac_of_oracle": 0.7894664947046625
+    }
+   }
+  },
+  "coherence_cross_check": {
+   "source": "s31/results/s31_F_coh.json",
+   "note": "ORACLE / NOT DEPLOYABLE: coh(AVG_SEP) = 0.9689 against AVG's 0.9780 and the 0.6931 bar, 0/126 targets under the bar, and the direct affine-hull residual is 0.045 A RMS per coordinate. AVG_SEP does NOT leave the pool's affine hull, so any endpoint gain it shows is NOT explained by lane B's non-affine mechanism."
+  }
+ },
+ "physical_validity": {
+  "virtual_bond_A_from_the_separation_profile": {
+   "native": 3.812176007269521,
+   "members": 3.8078575905357956,
+   "cloud_AVG": 2.9613938229671057,
+   "cloud_MED": 3.8055986080997104,
+   "cloud_AVG_SEP": 3.101786659428632,
+   "chain_AVG": 3.803954938363982,
+   "chain_MED": 3.803954938363983,
+   "chain_AVG_SEP": 3.8039549383639817
+  },
+  "note": "every CHAIN arm is the output of stage 3b, which is parameterised by (phi, psi) on IDEAL peptide geometry -- so peptide bond geometry, chirality and continuity are guaranteed BY CONSTRUCTION for all arms, and the virtual-bond column is the check that the builder was actually used. The CLOUD arms are NOT structures and their virtual bond says so; that is the point, not a defect."
+ },
+ "F1_geometry_vs_accuracy": {
+  "note": "(a) accuracy = built-chain CA RMSD; (b) geometry = projection penalty P and Rg contraction. Reported separately, and the accuracy half governs the verdict.",
+  "contraction_cloud": {
+   "AVG_rg_over_nat": 0.9673460050421497,
+   "MED_rg_over_nat": 1.018294323115929,
+   "AVG_rg_over_members": 0.9461301541102991,
+   "AVG_contraction_pct": 5.386984588970092,
+   "hi_DISP": 9.120367217693728,
+   "lo_DISP": 1.6536019602464573
+  },
+  "bond_CA_CA": {
+   "cloud_AVG_mean": 2.9613938229671057,
+   "cloud_AVG_sd": 0.3113949760703525,
+   "cloud_MED_mean": 3.8055986080997104,
+   "cloud_MED_sd": 0.020404979057924124,
+   "chain_AVG_mean": 3.803954938363982,
+   "chain_AVG_sd": 9.209877768520543e-16,
+   "chain_MED_mean": 3.803954938363983,
+   "chain_MED_sd": 9.448777027124618e-16,
+   "note": "a real backbone is ~3.80 A with a small sd; the AVG cloud is not a structure and its bond statistics say so"
+  },
+  "projection_penalty": {
+   "P_AVG_mean": 0.1642871258438211,
+   "P_MED_mean": -0.0008166739585795576,
+   "P_AVG_RG_mean": 0.14963800748131603,
+   "P_AVG_hi": 0.26550843824223813,
+   "P_AVG_lo": 0.06306581344540399,
+   "contrast": {
+    "label": "F1.geom hi-minus-lo DISP of P(AVG)",
+    "effect": 0.20244262479683414,
+    "mean_hi": 0.26550843824223813,
+    "mean_lo": 0.06306581344540399,
+    "n_hi": 63,
+    "n_lo": 63,
+    "se": 0.03513692768686145,
+    "mde": 0.09843961660751104,
+    "effect_over_mde": 2.056515778642189,
+    "ci95_fold": [
+     0.13798011580844038,
+     0.27152378339626076
+    ],
+    "excludes_zero": true,
+    "folds_same_sign": "5/5",
+    "per_fold": [
+     0.18146658365618143,
+     0.33023527787622253,
+     0.09934387866288974,
+     0.2565004230955067,
+     0.13841675921362867
+    ]
+   }
+  }
+ },
+ "MECH_separation_band": {
+  "basis": "ORACLE diagnostic (ratios are against the NATIVE's own per-separation distances); no parameter is tuned here",
+  "per_separation_vs_native": {
+   "s": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+   ],
+   "n_targets": [
+    126,
+    126,
+    126,
+    126,
+    126,
+    126,
+    126,
+    126,
+    117,
+    106,
+    93,
+    74,
+    51,
+    37,
+    21
+   ],
+   "prof_members": [
+    0.9989223490321638,
+    0.9799605979440628,
+    0.9478370078934479,
+    0.9657048357931144,
+    0.9994481279279229,
+    1.019111821711161,
+    1.042792562181974,
+    1.074658908206019,
+    1.1310823651900808,
+    1.1953810129689093,
+    1.268768144072075,
+    1.3084799095021231,
+    1.4141621249464564,
+    1.4481974520802894,
+    1.4473981630143904
+   ],
+   "prof_cloud_AVG": [
+    0.7770005884107636,
+    0.8360730404241765,
+    0.8561871438065343,
+    0.9019935059038857,
+    0.9509988481636684,
+    0.9824421286690748,
+    1.0129434632417267,
+    1.0478597141208352,
+    1.104118548460934,
+    1.1633810117803576,
+    1.236633689249863,
+    1.2671863520134525,
+    1.3474544196469618,
+    1.344903717763375,
+    1.2746488184013969
+   ],
+   "prof_cloud_MED": [
+    0.9983370378747857,
+    0.9705425780699757,
+    0.9195837049739237,
+    0.9424595750793819,
+    0.9954704250241765,
+    1.0164166535593067,
+    1.0365914507863367,
+    1.0779080405976318,
+    1.1347301926534503,
+    1.1876087850306234,
+    1.2628625845988444,
+    1.303787886080194,
+    1.3766751366411865,
+    1.4180145247480287,
+    1.3314507087607708
+   ],
+   "prof_cloud_AVG_SEP": [
+    0.813813547542079,
+    0.8776648205839923,
+    0.8923752810572537,
+    0.9320016131160862,
+    0.9761420034718339,
+    1.0008901277869637,
+    1.0255295122637054,
+    1.0585133697799876,
+    1.115725710239855,
+    1.1777312506793907,
+    1.2515877175636674,
+    1.2918363308430245,
+    1.3950993901651945,
+    1.4256500663186238,
+    1.420781187872047
+   ],
+   "prof_chain_AVG": [
+    0.9978991742690951,
+    0.9353566755526519,
+    0.9061907993638737,
+    0.9410704697620423,
+    0.9949713299384598,
+    1.0188454541071845,
+    1.042129281909817,
+    1.0778285618340786,
+    1.1378978761024494,
+    1.186613711891985,
+    1.260071491749007,
+    1.303573170201703,
+    1.3596833871389,
+    1.3755362745725335,
+    1.2980172028011268
+   ],
+   "prof_chain_MED": [
+    0.9978991742690952,
+    0.9700559908251711,
+    0.9202319488020516,
+    0.943155075571927,
+    0.9957678343193659,
+    1.0171432022057347,
+    1.03755243173382,
+    1.0786133614653348,
+    1.1356213479452186,
+    1.188685256038622,
+    1.2637941190785178,
+    1.3044926959759156,
+    1.3775509150916527,
+    1.419549823478852,
+    1.3298475824265232
+   ],
+   "prof_chain_AVG_SEP": [
+    0.997899174269095,
+    0.962852163723805,
+    0.9417635869360511,
+    0.9693623875848788,
+    1.0142479468446723,
+    1.034278135715435,
+    1.0529796630734527,
+    1.0813209909376358,
+    1.1473821915708506,
+    1.2006383107500507,
+    1.2740634703522697,
+    1.3267642701520777,
+    1.4182162130139828,
+    1.4870254408718768,
+    1.4795884086558857
+   ]
+  },
+  "per_separation_vs_members_NATIVE_FREE": {
+   "s": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+   ],
+   "prof_cloud_AVG": [
+    0.7776408431369295,
+    0.8532390911723968,
+    0.905543829667716,
+    0.9355380491689568,
+    0.9518738709734788,
+    0.964607658427957,
+    0.9723189849128279,
+    0.9757009099605257,
+    0.976484972155637,
+    0.9744682270915694,
+    0.9756991146070837,
+    0.968304989448941,
+    0.9520926609702728,
+    0.936603385842393,
+    0.9010534848999663
+   ],
+   "prof_cloud_MED": [
+    0.9994059391164424,
+    0.990305918519869,
+    0.9693616565647135,
+    0.9751766147091339,
+    0.9951665152160623,
+    0.9967026266483848,
+    0.9937209005392919,
+    1.0019337298940034,
+    1.0037681377119612,
+    0.9936033236972704,
+    0.9906084618733882,
+    0.9943952505540041,
+    0.9706550721203142,
+    0.9752105651242607,
+    0.9395177336800857
+   ],
+   "prof_chain_AVG": [
+    0.9989762805863932,
+    0.9546374244766187,
+    0.9566538252037378,
+    0.9747122173510004,
+    0.9953196219058644,
+    0.9994098443187986,
+    0.9993314696264594,
+    1.0028215915084673,
+    1.0054665883975804,
+    0.9930360046833407,
+    0.9949431660075052,
+    0.9935821520077068,
+    0.9573670201832319,
+    0.955400820772868,
+    0.9217807853041929
+   ],
+   "prof_chain_MED": [
+    0.9989762805863933,
+    0.9898159727403861,
+    0.9700857460808535,
+    0.9759321149901913,
+    0.995490262217474,
+    0.9974232159979344,
+    0.9946973671760174,
+    1.0025918544475414,
+    1.0044899415287103,
+    0.9945298453669181,
+    0.9914006769415883,
+    0.9949486103582996,
+    0.9712620325972204,
+    0.9759884551088891,
+    0.9391903625833711
+   ]
+  },
+  "band_abs_deviation_from_native": {
+   "prof_cloud_AVG": {
+    "short_1_6": 0.1609361604436292,
+    "long_7plus": 0.27174670784605787,
+    "n_with_long": 126
+   },
+   "prof_cloud_MED": {
+    "short_1_6": 0.10487233543189879,
+    "long_7plus": 0.29198722640070945,
+    "n_with_long": 126
+   },
+   "prof_chain_AVG": {
+    "short_1_6": 0.103341433830329,
+    "long_7plus": 0.28239330730567974,
+    "n_with_long": 126
+   },
+   "prof_chain_MED": {
+    "short_1_6": 0.10414523567089203,
+    "long_7plus": 0.29176557549443227,
+    "n_with_long": 126
+   },
+   "prof_chain_AVG_SEP": {
+    "short_1_6": 0.09917486314560879,
+    "long_7plus": 0.29368134357915554,
+    "n_with_long": 126
+   }
+  },
+  "registered_falsifier": "the medoid's profile must be FLATTER than the average's in the s >= 7 band; if it is not, the separation-band framing is refuted for this operator pair",
+  "long_band_MED_minus_AVG": 0.009372268188752511,
+  "short_band_MED_minus_AVG": 0.0008038018405630652,
+  "cmp_long": {
+   "label": "MECH.long-band |ratio-1| MED - AVG (BUILT CHAIN, ORACLE)",
+   "mean_a": 0.29176557549443227,
+   "mean_b": 0.28239330730567974,
+   "effect": 0.009372268188752511,
+   "median_effect": 0.002120048542326152,
+   "se": 0.006121488945281813,
+   "mde": 0.01714996342910153,
+   "effect_over_mde": 0.5464891063761013,
+   "ci95_fold": [
+    0.0008060909677405936,
+    0.01890119406414352
+   ],
+   "folds_same_sign": 4,
+   "n_folds": 5,
+   "W": 54,
+   "L": 72,
+   "T": 0,
+   "n": 126
+  },
+  "cmp_short": {
+   "label": "MECH.short-band |ratio-1| MED - AVG (BUILT CHAIN, ORACLE)",
+   "mean_a": 0.10414523567089203,
+   "mean_b": 0.103341433830329,
+   "effect": 0.0008038018405630652,
+   "median_effect": 0.0002659276975665774,
+   "se": 0.002898754113922782,
+   "mde": 0.008121149525566067,
+   "effect_over_mde": 0.09897636264824687,
+   "ci95_fold": [
+    -0.0018954501329110918,
+    0.004108063145906571
+   ],
+   "folds_same_sign": 2,
+   "n_folds": 5,
+   "W": 58,
+   "L": 68,
+   "T": 0,
+   "n": 126
+  },
+  "rho_long_band_distortion_vs_dMA": 0.18902737157855268,
+  "rho_short_band_distortion_vs_dMA": 0.11314885639295089,
+  "withdrawn": "the 25.8%% backbone contraction is WITHDRAWN (s15/coord_FINDINGS.md:914-921); the corrected figure is 3.5%% against true distances and the distortion is separation-dependent, not uniform"
+ },
+ "F2_tails": {
+  "T_POOL": {
+   "members": [
+    "1NIZ",
+    "2BFI",
+    "2LM8",
+    "2LWU",
+    "2MFV",
+    "2MQ2",
+    "2MSA",
+    "2N5C",
+    "2NDM",
+    "2NDN",
+    "5W52",
+    "7JS6",
+    "7LCW",
+    "8T61",
+    "8T62",
+    "8T63",
+    "8TXS",
+    "9KAR"
+   ],
+   "overlap_with_T_CHAIN": 12,
+   "overlap_with_FAIL18": 9,
+   "chain_AVG": {
+    "tail": 5.340116062123817,
+    "rest": 2.858043412656609,
+    "delta": 2.482072649467208
+   },
+   "chain_MED": {
+    "tail": 5.427263860153491,
+    "rest": 2.9237371005971236,
+    "delta": 2.503526759556367
+   },
+   "chain_AVG_SEP": {
+    "tail": 5.573889854159422,
+    "rest": 3.3568341491126934,
+    "delta": 2.2170557050467283
+   },
+   "cloud_AVG": {
+    "tail": 5.1151507163165615,
+    "rest": 2.703869323473361,
+    "delta": 2.4112813928432004
+   },
+   "MOVE_AVG": {
+    "tail": 1.337094944443567,
+    "rest": 0.7261863088122211,
+    "delta": 0.6109086356313458
+   },
+   "long_band_dev_AVG": {
+    "tail": 0.770139500087802,
+    "rest": 0.20110227517532608,
+    "delta": 0.5690372249124759
+   },
+   "short_band_dev_AVG": {
+    "tail": 0.17634431749540094,
+    "rest": 0.09117428655281697,
+    "delta": 0.08517003094258398
+   },
+   "pool_mean": {
+    "tail": 6.722204200062487,
+    "rest": 4.07509125885809,
+    "delta": 2.647112941204397
+   },
+   "pool_best": {
+    "tail": 2.228592571285036,
+    "rest": 1.6245297280450661,
+    "delta": 0.60406284323997
+   },
+   "set_mean": {
+    "tail": 5.786712433011444,
+    "rest": 3.1780114066012115,
+    "delta": 2.6087010264102326
+   },
+   "set_best": {
+    "tail": 3.6809582942061954,
+    "rest": 2.0770183654019125,
+    "delta": 1.6039399288042828
+   },
+   "DISP": {
+    "tail": 3.8676478097656517,
+    "rest": 2.256020127001008,
+    "delta": 1.6116276827646439
+   },
+   "S": {
+    "tail": 2.888975857247297,
+    "rest": 1.7371785011215364,
+    "delta": 1.1517973561257606
+   },
+   "s_b": {
+    "tail": 1.904052646018425,
+    "rest": 1.0186715811294558,
+    "delta": 0.8853810648889693
+   },
+   "P_AVG": {
+    "tail": 0.22496534580725658,
+    "rest": 0.15417408918324846,
+    "delta": 0.07079125662400812
+   },
+   "P_MED": {
+    "tail": 0.004528908207805247,
+    "rest": -0.0017076043196436917,
+    "delta": 0.006236512527448938
+   },
+   "rank_best_in_pool": {
+    "tail": 285.55555555555554,
+    "rest": 151.12962962962962,
+    "delta": 134.42592592592592
+   },
+   "frac_top75_better_than_avg": {
+    "tail": 0.26148148148148154,
+    "rest": 0.2466666666666667,
+    "delta": 0.014814814814814836
+   },
+   "n_top75_under3": {
+    "tail": 5.666666666666667,
+    "rest": 33.898148148148145,
+    "delta": -28.231481481481477
+   },
+   "n_distinct": {
+    "tail": 70.22222222222223,
+    "rest": 69.06481481481481,
+    "delta": 1.157407407407419
+   },
+   "d_MED_minus_AVG_chain": {
+    "tail": 0.08714779802967348,
+    "rest": 0.06569368794051436,
+    "delta": 0.021454110089159123
+   },
+   "recall_gap_set_best_minus_pool_best": {
+    "tail": 1.4523657229211595,
+    "rest": 0.4524886373568464,
+    "delta": 0.9998770855643131
+   },
+   "selection_gap_chain_minus_set_best": {
+    "tail": 1.6591577679176222,
+    "rest": 0.7810250472546971,
+    "delta": 0.878132720662925
+   },
+   "S_over_B": {
+    "tail": 0.6804082780860099,
+    "rest": 0.733024288694876,
+    "delta": -0.052616010608866115
+   }
+  },
+  "T_BEST": {
+   "members": [
+    "1ID6",
+    "1KWE",
+    "1RSW",
+    "2JN5",
+    "2LM8",
+    "2MAI",
+    "2MFV",
+    "2MID",
+    "2MQ2",
+    "2MSA",
+    "3BTB",
+    "5H1H",
+    "6BX9",
+    "6OQP",
+    "7JS6",
+    "7LCW",
+    "8T63",
+    "9L1M"
+   ],
+   "overlap_with_T_CHAIN": 10,
+   "overlap_with_FAIL18": 8,
+   "CAVEAT": "ORACLE stratum (defined on pool_best), but filter-independent",
+   "chain_AVG": {
+    "tail": 5.199941902767662,
+    "rest": 2.881405772549302,
+    "delta": 2.3185361302183605
+   },
+   "chain_MED": {
+    "tail": 5.402941402917183,
+    "rest": 2.927790843469842,
+    "delta": 2.4751505594473415
+   },
+   "chain_AVG_SEP": {
+    "tail": 5.292970059382434,
+    "rest": 3.403654114908859,
+    "delta": 1.8893159444735748
+   },
+   "cloud_AVG": {
+    "tail": 4.981720075658086,
+    "rest": 2.7261077635831072,
+    "delta": 2.255612312074979
+   },
+   "MOVE_AVG": {
+    "tail": 1.0853736835126213,
+    "rest": 0.768139852300712,
+    "delta": 0.3172338312119093
+   },
+   "long_band_dev_AVG": {
+    "tail": 0.6834013653207482,
+    "rest": 0.21555863096983505,
+    "delta": 0.46784273435091317
+   },
+   "short_band_dev_AVG": {
+    "tail": 0.1812979640463288,
+    "rest": 0.090348678794329,
+    "delta": 0.09094928525199981
+   },
+   "pool_mean": {
+    "tail": 5.858126703500747,
+    "rest": 4.219104174951713,
+    "delta": 1.6390225285490336
+   },
+   "pool_best": {
+    "tail": 3.092995842297872,
+    "rest": 1.4804625162095935,
+    "delta": 1.6125333260882786
+   },
+   "set_mean": {
+    "tail": 5.506579292438648,
+    "rest": 3.224700263363344,
+    "delta": 2.281879029075304
+   },
+   "set_best": {
+    "tail": 4.148124787542555,
+    "rest": 1.999157283179186,
+    "delta": 2.1489675043633687
+   },
+   "DISP": {
+    "tail": 3.132058379702309,
+    "rest": 2.3786183653448982,
+    "delta": 0.7534400143574107
+   },
+   "S": {
+    "tail": 2.3708424496548073,
+    "rest": 1.8235340690536181,
+    "delta": 0.5473083806011891
+   },
+   "s_b": {
+    "tail": 1.534318702599571,
+    "rest": 1.0802939050325981,
+    "delta": 0.4540247975669729
+   },
+   "P_AVG": {
+    "tail": 0.21822182710957513,
+    "rest": 0.15529800896619542,
+    "delta": 0.06292381814337972
+   },
+   "P_MED": {
+    "tail": -0.0004983237027914958,
+    "rest": -0.0008697323345442346,
+    "delta": 0.0003714086317527387
+   },
+   "rank_best_in_pool": {
+    "tail": 283.0,
+    "rest": 151.55555555555554,
+    "delta": 131.44444444444446
+   },
+   "frac_top75_better_than_avg": {
+    "tail": 0.2785185185185185,
+    "rest": 0.24382716049382716,
+    "delta": 0.03469135802469134
+   },
+   "n_top75_under3": {
+    "tail": 0.3888888888888889,
+    "rest": 34.77777777777778,
+    "delta": -34.38888888888889
+   },
+   "n_distinct": {
+    "tail": 70.38888888888889,
+    "rest": 69.03703703703704,
+    "delta": 1.3518518518518476
+   },
+   "d_MED_minus_AVG_chain": {
+    "tail": 0.202999500149521,
+    "rest": 0.04638507092053977,
+    "delta": 0.15661442922898122
+   },
+   "recall_gap_set_best_minus_pool_best": {
+    "tail": 1.0551289452446833,
+    "rest": 0.5186947669695925,
+    "delta": 0.5364341782750908
+   },
+   "selection_gap_chain_minus_set_best": {
+    "tail": 1.0518171152251068,
+    "rest": 0.8822484893701164,
+    "delta": 0.16956862585499044
+   },
+   "S_over_B": {
+    "tail": 0.5409971506252985,
+    "rest": 0.7562594766049946,
+    "delta": -0.21526232597969608
+   }
+  },
+  "T_CHAIN": {
+   "members": [
+    "1ID6",
+    "2BFI",
+    "2BP4",
+    "2JN5",
+    "2LM8",
+    "2MAI",
+    "2MFV",
+    "2MQ2",
+    "2MSA",
+    "2N5C",
+    "2NDM",
+    "3SGO",
+    "5W52",
+    "7JS6",
+    "7LCW",
+    "7YFS",
+    "8T63",
+    "9KAR"
+   ],
+   "overlap_with_T_CHAIN": 18,
+   "overlap_with_FAIL18": 13,
+   "chain_AVG": {
+    "tail": 6.2759375576996455,
+    "rest": 2.702073163393971,
+    "delta": 3.5738643943056743
+   },
+   "chain_MED": {
+    "tail": 6.448894415015233,
+    "rest": 2.7534653414535,
+    "delta": 3.695429073561733
+   },
+   "chain_AVG_SEP": {
+    "tail": 6.325389687498517,
+    "rest": 3.2315841768895117,
+    "delta": 3.0938055106090054
+   },
+   "cloud_AVG": {
+    "tail": 6.024921577876506,
+    "rest": 2.5522408465467037,
+    "delta": 3.472680731329802
+   },
+   "MOVE_AVG": {
+    "tail": 1.131232383531376,
+    "rest": 0.7604967356309196,
+    "delta": 0.37073564790045643
+   },
+   "long_band_dev_AVG": {
+    "tail": 0.9151074299594407,
+    "rest": 0.17694095353005293,
+    "delta": 0.7381664764293878
+   },
+   "short_band_dev_AVG": {
+    "tail": 0.19965397200416107,
+    "rest": 0.08728934413469028,
+    "delta": 0.1123646278694708
+   },
+   "pool_mean": {
+    "tail": 6.30262591593133,
+    "rest": 4.145020972879949,
+    "delta": 2.157604943051381
+   },
+   "pool_best": {
+    "tail": 2.529841896560457,
+    "rest": 1.5743215071658294,
+    "delta": 0.9555203893946278
+   },
+   "set_mean": {
+    "tail": 6.374654307895237,
+    "rest": 3.0800210941205792,
+    "delta": 3.2946332137746577
+   },
+   "set_best": {
+    "tail": 4.580298887358771,
+    "rest": 1.92712826654315,
+    "delta": 2.6531706208156214
+   },
+   "DISP": {
+    "tail": 3.2574383901321204,
+    "rest": 2.3577216969399295,
+    "delta": 0.8997166931921909
+   },
+   "S": {
+    "tail": 2.478921390127581,
+    "rest": 1.8055209123081557,
+    "delta": 0.6734004778194254
+   },
+   "s_b": {
+    "tail": 1.5464850881637076,
+    "rest": 1.078266174105242,
+    "delta": 0.4682189140584656
+   },
+   "P_AVG": {
+    "tail": 0.25101597982313956,
+    "rest": 0.14983231684726797,
+    "delta": 0.10118366297587159
+   },
+   "P_MED": {
+    "tail": 0.005153556200136084,
+    "rest": -0.0018117123183654979,
+    "delta": 0.006965268518501582
+   },
+   "rank_best_in_pool": {
+    "tail": 391.05555555555554,
+    "rest": 133.5462962962963,
+    "delta": 257.50925925925924
+   },
+   "frac_top75_better_than_avg": {
+    "tail": 0.3444444444444445,
+    "rest": 0.23283950617283952,
+    "delta": 0.11160493827160498
+   },
+   "n_top75_under3": {
+    "tail": 0.0,
+    "rest": 34.842592592592595,
+    "delta": -34.842592592592595
+   },
+   "n_distinct": {
+    "tail": 70.33333333333333,
+    "rest": 69.04629629629629,
+    "delta": 1.287037037037038
+   },
+   "d_MED_minus_AVG_chain": {
+    "tail": 0.17295685731558783,
+    "rest": 0.051392178059528636,
+    "delta": 0.12156467925605918
+   },
+   "recall_gap_set_best_minus_pool_best": {
+    "tail": 2.0504569907983146,
+    "rest": 0.3528067593773206,
+    "delta": 1.697650231420994
+   },
+   "selection_gap_chain_minus_set_best": {
+    "tail": 1.6956386703408741,
+    "rest": 0.7749448968508218,
+    "delta": 0.9206937734900523
+   },
+   "S_over_B": {
+    "tail": 0.4232391176218745,
+    "rest": 0.7758858154388985,
+    "delta": -0.35264669781702396
+   }
+  },
+  "FAIL18": {
+   "members": [
+    "1ID6",
+    "1JBF",
+    "1LB7",
+    "2BFI",
+    "2BP4",
+    "2JN5",
+    "2MQ2",
+    "2N5C",
+    "2NB7",
+    "2NDM",
+    "3BTB",
+    "3SGO",
+    "5W52",
+    "7JS6",
+    "7LCW",
+    "8T63",
+    "9KAR",
+    "9L1M"
+   ],
+   "overlap_with_T_CHAIN": 13,
+   "overlap_with_FAIL18": 18,
+   "CAVEAT": "FAIL18 is defined by the FILTER's own recall (s12/instrument.py:271-278) and therefore cannot measure filter recall; it appears here as a diagnostic cross-check only",
+   "chain_AVG": {
+    "tail": 6.019464757574215,
+    "rest": 2.7448186300815434,
+    "delta": 3.2746461274926717
+   },
+   "chain_MED": {
+    "tail": 6.104787014373795,
+    "rest": 2.81081657489374,
+    "delta": 3.2939704394800544
+   },
+   "chain_AVG_SEP": {
+    "tail": 6.115601247275084,
+    "rest": 3.26654891692675,
+    "delta": 2.849052330348334
+   },
+   "cloud_AVG": {
+    "tail": 5.8319107925803575,
+    "rest": 2.5844093107627284,
+    "delta": 3.247501481817629
+   },
+   "MOVE_AVG": {
+    "tail": 0.9898052090919397,
+    "rest": 0.7840679313708256,
+    "delta": 0.20573727772111405
+   },
+   "long_band_dev_AVG": {
+    "tail": 0.7484887421977191,
+    "rest": 0.20471073482367322,
+    "delta": 0.5437780073740459
+   },
+   "short_band_dev_AVG": {
+    "tail": 0.20866541313433998,
+    "rest": 0.08578743727966047,
+    "delta": 0.12287797585467951
+   },
+   "pool_mean": {
+    "tail": 5.964470873071088,
+    "rest": 4.201380146689989,
+    "delta": 1.7630907263810984
+   },
+   "pool_best": {
+    "tail": 2.2841586106353335,
+    "rest": 1.6152687214866832,
+    "delta": 0.6688898891486503
+   },
+   "set_mean": {
+    "tail": 6.159200071582088,
+    "rest": 3.115930133506104,
+    "delta": 3.043269938075984
+   },
+   "set_best": {
+    "tail": 4.67738950252533,
+    "rest": 1.9109464973487236,
+    "delta": 2.766443005176606
+   },
+   "DISP": {
+    "tail": 2.879120678859375,
+    "rest": 2.420774648818721,
+    "delta": 0.45834603004065366
+   },
+   "S": {
+    "tail": 2.18644472620577,
+    "rest": 1.854267022961791,
+    "delta": 0.332177703243979
+   },
+   "s_b": {
+    "tail": 1.3713360049188204,
+    "rest": 1.1074576879793898,
+    "delta": 0.26387831693943054
+   },
+   "P_AVG": {
+    "tail": 0.18755396499385782,
+    "rest": 0.1604093193188149,
+    "delta": 0.027144645675042905
+   },
+   "P_MED": {
+    "tail": 0.00508266390089027,
+    "rest": -0.001799896935157862,
+    "delta": 0.006882560836048132
+   },
+   "rank_best_in_pool": {
+    "tail": 386.55555555555554,
+    "rest": 134.2962962962963,
+    "delta": 252.25925925925924
+   },
+   "frac_top75_better_than_avg": {
+    "tail": 0.38222222222222224,
+    "rest": 0.22654320987654322,
+    "delta": 0.15567901234567902
+   },
+   "n_top75_under3": {
+    "tail": 0.0,
+    "rest": 34.842592592592595,
+    "delta": -34.842592592592595
+   },
+   "n_distinct": {
+    "tail": 69.61111111111111,
+    "rest": 69.16666666666667,
+    "delta": 0.44444444444444287
+   },
+   "d_MED_minus_AVG_chain": {
+    "tail": 0.08532225679957911,
+    "rest": 0.06599794481219676,
+    "delta": 0.019324311987382353
+   },
+   "recall_gap_set_best_minus_pool_best": {
+    "tail": 2.393230891889996,
+    "rest": 0.29567777586204036,
+    "delta": 2.0975531160279557
+   },
+   "selection_gap_chain_minus_set_best": {
+    "tail": 1.3420752550488857,
+    "rest": 0.8338721327328199,
+    "delta": 0.5082031223160658
+   },
+   "S_over_B": {
+    "tail": 0.3826104395159508,
+    "rest": 0.7826572617898859,
+    "delta": -0.4000468222739351
+   }
+  }
+ },
+ "F2_note": "every statistic derived from rr / nat_ca is an ORACLE diagnostic; nothing here tunes a parameter",
+ "F2_decomposition": {
+  "basis": "mixed: pool_best/set_best are CA POINT CLOUD ORACLE member RMSDs, chain_AVG is the BUILT CHAIN -- the two are NOT the same object and the gap is an upper bound",
+  "whole": {
+   "pool_best": 1.7108244199364904,
+   "set_best": 2.3061526409453816,
+   "set_mean": 3.5506829818026735,
+   "cloud_AVG": 3.0483380938795324,
+   "chain_AVG": 3.212625219723354
+  },
+  "T_CHAIN": {
+   "pool_best": 2.529841896560457,
+   "set_best": 4.580298887358771,
+   "set_mean": 6.374654307895237,
+   "cloud_AVG": 6.024921577876506,
+   "chain_AVG": 6.2759375576996455
+  },
+  "T_POOL": {
+   "pool_best": 2.228592571285036,
+   "set_best": 3.6809582942061954,
+   "set_mean": 5.786712433011444,
+   "cloud_AVG": 5.1151507163165615,
+   "chain_AVG": 5.340116062123817
+  }
+ },
+ "multiplicity": {
+  "registered": 44,
+  "emitted": 24
+ }
+}

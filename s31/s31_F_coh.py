@@ -4,7 +4,12 @@
 Lane B's theorem (`s31/s31_B2_inpool.py:256-268`): for any readout `C = sum_m a_m x_m` with
 `sum_m a_m = 1`, the pool's common mode passes through with coefficient EXACTLY one, so
 `coh = corr(pair error, common mode)` is a function of the CONCENTRATION of `a` and not of the
-ranker.  Only a readout that leaves the affine hull can move it.  S30's admission bar is 0.6931.
+ranker.  Only a readout that leaves the affine hull can move it.
+
+**S30's 0.6931 admission bar is STRUCK from this file (2026-09-21 00:55) -- it grades a
+CORRECTOR (the distogram's own prediction error) and not a READOUT (the emitted structure's
+error).  See the note at the constants.  This file grades nothing; it reports LEVELS, a
+PAIRED CONTRAST, and the affine-hull residual, which is the certificate that actually bears.**
 
 `coh` is **ORACLE** -- both of its arguments need the native.  It is a diagnostic of WHY an
 operator works and is never a deployable gate.  Every number here carries that label.
@@ -15,7 +20,9 @@ Arms, all on the shipped top-75 of the 500-member pool, CA point cloud:
     AVG                      the shipped uniform coordinate average          -- affine
     MED                      the consensus medoid MEMBER                     -- affine (a delta)
     AVG_RG                   AVG rescaled about its centroid to the members' mean Rg
-    AVG_SEP                  AVG rescaled PER SEPARATION, re-embedded by MDS -- NOT affine
+    AVG_SEP                  AVG rescaled PER SEPARATION, re-embedded by MDS
+                             (registered as 'NOT affine' -- MEASURED to be affine in
+                              practice: hull residual 0.045 A RMS per coordinate)
     ORACLE_best              the best member of the 75                       -- affine (a delta)
 
     python s31/s31_F_coh.py
@@ -43,7 +50,16 @@ RESULTS = os.path.join(HERE, "results")
 OUT = os.path.join(RESULTS, "s31_F_coh.json")
 ROWS = os.path.join(RESULTS, "s31_F_coh_rows.jsonl")
 POOL_K, M, MIN_SEP, SEED = 500, 75, 2, 31006
-BAR = 0.6931
+
+#: THE 0.6931 ADMISSION BAR IS STRUCK (2026-09-21 00:55).  Lane V read S30 at source: S30's
+#: `coh` grades a CORRECTOR -- its first argument is `(expected - d_nat) - correction`, the
+#: DISTOGRAM'S OWN PREDICTION ERROR, an INPUT to scoring, and the 0.6931 row is the
+#: `correction = 0` baseline of exactly that object.  THIS file's `coh` grades a READOUT --
+#: the EMITTED STRUCTURE's error, the OUTPUT.  They share only `mu`.  The arithmetic settles
+#: it without interpretation: the same pipeline, the same 126 targets and the same `mu` give
+#: 0.6931 in the corrector table and 0.9780 in the readout table, 0.285 apart, because they
+#: are two different errors.  Contract rule 8, sixth instance.  NO READOUT-SPACE BAR HAS
+#: BEEN ESTABLISHED, so this file reports LEVELS and PAIRED CONTRASTS and grades nothing.
 
 
 def one(t):
@@ -133,7 +149,12 @@ def main():
     R.sort(key=lambda r: r["pdb"])
     assert len(R) == 126, len(R)
     folds = np.array([r["fold"] for r in R]); names = [r["pdb"] for r in R]
-    out = dict(seed=SEED, n=126, admission_bar_S30=BAR,
+    out = dict(seed=SEED, n=126,
+               STRUCK="S30's 0.6931 admission bar is NOT applicable here -- it grades the "
+                      "distogram's own prediction error (a CORRECTOR), not an emitted "
+                      "structure's error (a READOUT). Same pipeline, same 126, same mu, "
+                      "0.6931 vs 0.9780 -- two different errors. The claim is carried by "
+                      "the PAIRED CONTRAST and by the affine-hull residual, not by a bar.",
                ORACLE="ORACLE / NOT DEPLOYABLE -- coh needs the native in BOTH arguments; it is a "
                       "diagnostic of why an operator works, never a deployable gate",
                basis="CA POINT CLOUD, pair-distance space, min_sep 2, shipped top-75",
@@ -146,8 +167,8 @@ def main():
         ok = np.isfinite(v)
         arms[k] = dict(mean=float(v[ok].mean()), median=float(np.median(v[ok])),
                        sd=float(v[ok].std(ddof=1)), n=int(ok.sum()),
-                       admitted=bool(v[ok].mean() < BAR),
-                       frac_targets_under_bar=float((v[ok] < BAR).mean()))
+                       NO_BAR="0.6931 is a CORRECTOR-space quantity and is struck here; "
+                              "no readout-space bar exists, so this level is not graded")
     out["coh"] = arms
     a_sep = np.array([r["AVG_SEP"] for r in R], float)
     a_avg = np.array([r["AVG"] for r in R], float)

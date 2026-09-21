@@ -450,3 +450,35 @@ targets under the bar and an affine-hull residual of 0.045 Å RMS per coordinate
 will say the mechanism is unexplained rather than attach lane B's theorem to it.
 
 Lane F's registered comparison count rises from 51 to **57**.
+
+---
+
+## 13. SIXTH AMENDMENT — the `0.6931` coherence bar is STRUCK
+
+**Appended 2026-09-21 00:58, after the coordinator relayed lane V's reading of S30 at source.**
+
+§12 above, and my message reporting `coh`, both graded `AVG_SEP` against **S30's 0.6931 admission
+bar**. **That bar is struck.** The original wording is left standing (rule 13) and the reason is
+recorded here:
+
+* **S30's `coh` grades a CORRECTOR.** Its first argument is `(expected − d_nat) − correction`, the
+  **distogram's own prediction error** — an *input* to scoring. The 0.6931 row is the
+  `correction = 0` baseline of exactly that object, and the admission rule was stated for it.
+* **This lane's `coh` (and lane B's) grades a READOUT** — the **emitted structure's** error, the
+  *output*. The two share only `mu`.
+* The arithmetic settles it with no interpretation: **the same pipeline, the same 126 targets and
+  the same `mu` give 0.6931 in the corrector table and 0.9780 in the readout table — 0.285 apart,
+  because they are two different errors.**
+
+**This was the coordinator's instruction and they have recorded the error as theirs; it is
+contract rule 8's sixth instance.** `s31/s31_F_coh.py` no longer defines a bar, and
+`s31/results/s31_F_coh.json` no longer contains `admitted` or `frac_targets_under_bar`. **No
+readout-space bar has been established at all**, so this lane grades nothing on `coh`: it reports
+levels, one paired contrast, and the affine-hull residual.
+
+**What still bears, unchanged:** `coh(AVG_SEP) − coh(AVG) = −0.0090, SE 0.0014, 2.37× MDE, fold CI
+[−0.0108, −0.0066], 5/5 folds, 109W/17L` (ORACLE), and the **affine-hull residual of 0.045 Å RMS
+per coordinate** — which is the certificate that `AVG_SEP` is affine-in-disguise. And the
+observation that makes the point independent of any bar: **`MED` is the most affine readout in the
+table (a delta) and moves `coh` furthest of all the deployable arms, by pure concentration of `a`.
+So `coh` alone cannot certify an operator as non-affine. The hull residual can.**

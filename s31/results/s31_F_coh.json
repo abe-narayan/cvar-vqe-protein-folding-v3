@@ -1,7 +1,7 @@
 {
  "seed": 31006,
  "n": 126,
- "admission_bar_S30": 0.6931,
+ "STRUCK": "S30's 0.6931 admission bar is NOT applicable here -- it grades the distogram's own prediction error (a CORRECTOR), not an emitted structure's error (a READOUT). Same pipeline, same 126, same mu, 0.6931 vs 0.9780 -- two different errors. The claim is carried by the PAIRED CONTRAST and by the affine-hull residual, not by a bar.",
  "ORACLE": "ORACLE / NOT DEPLOYABLE -- coh needs the native in BOTH arguments; it is a diagnostic of why an operator works, never a deployable gate",
  "basis": "CA POINT CLOUD, pair-distance space, min_sep 2, shipped top-75",
  "theorem": "lane B, s31_B2_inpool.py:256-268 -- sum(a) = 1 passes the common mode through with coefficient exactly one, so coh depends on the CONCENTRATION of a and not on the ranker; only a readout OUTSIDE the affine hull moves it",
@@ -11,48 +11,42 @@
    "median": 1.0,
    "sd": 1.2080532582046505e-16,
    "n": 126,
-   "admitted": false,
-   "frac_targets_under_bar": 0.0
+   "NO_BAR": "0.6931 is a CORRECTOR-space quantity and is struck here; no readout-space bar exists, so this level is not graded"
   },
   "AVG": {
    "mean": 0.9779792771647142,
    "median": 0.9889618573322672,
    "sd": 0.03237786884429572,
    "n": 126,
-   "admitted": false,
-   "frac_targets_under_bar": 0.0
+   "NO_BAR": "0.6931 is a CORRECTOR-space quantity and is struck here; no readout-space bar exists, so this level is not graded"
   },
   "MED": {
    "mean": 0.8885774455419863,
    "median": 0.9442095751545598,
    "sd": 0.15579073676703958,
    "n": 126,
-   "admitted": false,
-   "frac_targets_under_bar": 0.07936507936507936
+   "NO_BAR": "0.6931 is a CORRECTOR-space quantity and is struck here; no readout-space bar exists, so this level is not graded"
   },
   "AVG_RG": {
    "mean": 0.9592285256005446,
    "median": 0.9807188509062769,
    "sd": 0.057169467288853866,
    "n": 126,
-   "admitted": false,
-   "frac_targets_under_bar": 0.007936507936507936
+   "NO_BAR": "0.6931 is a CORRECTOR-space quantity and is struck here; no readout-space bar exists, so this level is not graded"
   },
   "AVG_SEP": {
    "mean": 0.9689454735837675,
    "median": 0.9869222053005229,
    "sd": 0.043686908110035366,
    "n": 126,
-   "admitted": false,
-   "frac_targets_under_bar": 0.0
+   "NO_BAR": "0.6931 is a CORRECTOR-space quantity and is struck here; no readout-space bar exists, so this level is not graded"
   },
   "ORACLE_best": {
    "mean": 0.6708322168758447,
    "median": 0.7565547715520224,
    "sd": 0.30890548822432606,
    "n": 126,
-   "admitted": true,
-   "frac_targets_under_bar": 0.3888888888888889
+   "NO_BAR": "0.6931 is a CORRECTOR-space quantity and is struck here; no readout-space bar exists, so this level is not graded"
   }
  },
  "coh_AVG_SEP_minus_AVG": {
