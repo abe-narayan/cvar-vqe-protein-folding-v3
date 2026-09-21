@@ -201,3 +201,82 @@ Basis is named on every row. `OB` = ORACLE band (top-24 by the native label `a`,
 | P-18 | in-band ρ of CONS on the NATIVE-FREE band | NFB, ORACLE label only | EXPLORATORY | **+0.2531 ± 0.0434**, 73% positive — positive in-band skill EXISTS |
 | P-19 | `Var(U)/Var(V)` on the native-free band | NFB, ORACLE | EXPLORATORY | median 4.89 (mean 19.0) — worse than the ORACLE band |
 | P-20 | P5 strata `Var(U)/Var(V)`: tail vs other108 | cloud, ORACLE | REGISTERED (H-P5) | 13.60 / 7.43 (filter-independent) vs 4.71 — **PASS** |
+| R-1 | R | PROD(cache cloud) vs PROD(s29 cloud) | R | built chain n=126 | pending | pending | the 1e-14 cloud floor |
+| R-2 | R | lam=0.3 arm vs lam=0 arm (same cloud, same job) | R | built chain n=126 | pending | pending | the ladder's own cost |
+| R-3 | R | PROD chain vs isotropic null sqrt(e^2+d^2) | R | built chain n=126 | pending | pending | R1 direction test |
+| R-4 | R | ORACLE best branch (9 family subsets) vs PROD | R | built chain n=126 | pending | pending | ORACLE ceiling |
+| R-5 | R | order-statistic curve, 9 subset sizes x 24 draws | R | built chain n=126 | pending | pending | best-of-K pricing |
+| R-6 | R | in-band rho, 11 criteria | R | within-target rank | pending | pending | R3a |
+| R-7 | R | SEL_<criterion>_<subset>, 11 criteria x 2 subsets | R | built chain n=126 | pending | pending | R3b directional |
+| R-8 | R | BRANCHMEAN, RANDBRANCH (5 draws), MEDOID_ONLY, OBJARGMIN x5 | R | built chain n=126 | pending | pending | controls + R4 |
+| R-9 | R | MEDOID_EXTRA, SCALE_NF, SCALE_NF_MED, SCALE_GRID x8 | R | built chain n=126 | pending | pending | R1/R4 repair job |
+
+### Registered — D1-N, the matched permutation null (`s32/results/s32_D1_signrandom.json`)
+
+The null is **within-band label permutation**: the score vector and the band size are held fixed and
+the ORACLE `rr` labels are permuted inside each target's own top-75 band, 24 draws per target, own
+distribution reported. This is the control matched to *this* operator's space (contract rule 6) and
+it answers a question the mean ρ cannot: **is the per-target |ρ| bigger than chance?**
+
+| # | reg? | scorer | mean\|ρ\| in band | matched null | ratio | ×MDE | folds |
+|---|---|---|---|---|---|---|---|
+| D-14 | R | **AMBER** | **0.1779** | 0.0948 | **1.88** | **2.36** | **5/5** |
+| D-15 | R | `DIS` | 0.2496 | 0.0939 | 2.66 | 3.05 | 5/5 |
+| D-16 | R | `LEG_total` | 0.2819 | 0.0908 | 3.10 | 3.52 | 5/5 |
+| D-17 | R | `LEG_torsion` | 0.2142 | 0.0947 | 2.26 | 2.77 | 5/5 |
+
+**Reading, and it changes what D-1 means.** AMBER's mean in-band ρ is exactly `+0.0000` (62W/64L)
+*while* its per-target |ρ| is **1.88× the permutation null at 2.36× MDE, 5/5 folds**. The two are
+not in conflict: `Var(ρ_true) > 0` with `E[ρ_true] = 0`. **In-band ordering content exists on every
+scorer measured, including the one with exactly zero mean skill; what is missing is the per-target
+SIGN.** This reproduces memory `in-band-ordering-is-per-target` on a channel it had never been
+measured on. It is **not** a claim that the sign is recoverable — memory
+`in-band-signal-limited-not-sample-limited` records a flat learning curve for exactly that.
+
+### Registered caveat on D-1, measured not asserted
+
+The cached AMBER energies are **single points on the ideal-geometry rebuild and are
+clash-dominated**: median energy over the 126 targets' pool medians is **29,668 kcal/mol**, the p90
+is **6.83e6**, the median per-target maximum is **1.80e16**, and **58.6% of every 500-pool sits above
+1e4 kcal/mol**. D-1 therefore prices **unminimised** AMBER, not AMBER. Rung **D2-R** scores the
+relaxed energy on the same band and is the arm that settles it.
+
+### Registered follow-up — D1-S: is the missing per-target in-band SIGN shared across Hamiltonians?
+
+Motivated by D-14…D-17: ordering content exists on every scorer, the sign does not. If two
+*independent* Hamiltonians agreed on the sign, a native-free vote would recover it. **They do not,
+and where they depart from chance they depart the wrong way.** `s32/results/s32_D1_signshare.json`.
+Ten pairwise tests; at 10 comparisons the Bonferroni bar is |z| > 2.81.
+
+| # | reg? | pair | sign agreement (chance 0.50) | z |
+|---|---|---|---|---|
+| D-18 | E | AMBER vs `LEG_total` | **0.365** | **−3.0** (anti-agreement survives Bonferroni) |
+| D-19 | E | AMBER vs `RG` | **0.317** | **−4.1** |
+| D-20 | E | `LEG_total` vs `RG` | **0.683** | **+4.1** |
+| D-21 | E | AMBER vs `LEG_torsion` | 0.587 | +2.0 (does not survive) |
+| D-22 | E | AMBER vs `DIS` | 0.532 | +0.7 |
+| D-23..27 | E | the other five pairs | 0.421–0.571 | \|z\| ≤ 1.8 |
+
+**Mechanism, and it is the compactness confound again.** `LEG_total`'s in-band sign agrees with
+plain `Rg`'s on **68.3%** of targets while AMBER's agrees on **31.7%** — Legacy tracks compactness in
+band and AMBER anti-tracks it, which is *why* the two disagree. A native-free vote therefore fails:
+
+| # | reg? | arm | in-band ρ | se | ×MDE | folds |
+|---|---|---|---|---|---|---|
+| D-28 | E | AMBER oriented by `LEG_total`'s sign (native-free) | **−0.0508** | 0.0197 | 0.92 | 4/5 |
+| D-29 | E | AMBER oriented by `DIS`'s sign (native-free) | −0.0108 | 0.0202 | 0.19 | 4/5 |
+
+Both are NOT MEASURED or NOT A RESULT, and D-28 points the **wrong way** — orienting AMBER by
+Legacy is worse than leaving it unoriented.
+
+**The ORACLE price of the sign, labelled ORACLE / NOT DEPLOYABLE** (it is `mean|ρ|`, i.e. what the
+scorer would be worth if an oracle supplied the per-target sign — a price, never a method):
+`RG` +0.3709, `LEG_total` +0.2819, `DIS` +0.2496, `LEG_torsion` +0.2142, **AMBER +0.1779**, all at
+4.9–5.7× MDE. Memory `in-band-ordering-is-per-target` prices 2.0 Å at ρ = 0.638, so **even a perfect
+sign oracle on the best of these leaves the in-band channel short of the crossing price by more than
+a factor of two.**
+
+**Limitation, stated rather than discovered later:** sign agreement is dominated by the targets where
+|ρ| sits in the noise, and the two ρ's being compared are estimated against a **common** referent
+(`rr`), so memory `shared-referent-floor` applies to their correlation. The *anti*-agreements are the
+robust half of this table; the near-chance rows are uninformative either way.
