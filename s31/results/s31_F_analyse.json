@@ -1628,8 +1628,150 @@
    "chain_AVG": 5.340116062123817
   }
  },
+ "F2_filter_vs_readout_MEASURED": {
+  "basis": "CA POINT CLOUD throughout -- pool_best, set_best and cloud_AVG are the same object, so nothing here is quoted across bases",
+  "ORACLE": "ORACLE diagnostic: pool_best and set_best need the native",
+  "whole": {
+   "filter_loss": 0.5953282210088912,
+   "readout_loss": 0.7421854529341513
+  },
+  "strata": {
+   "T_POOL": {
+    "filter_loss_tail": 1.4523657229211595,
+    "filter_loss_rest": 0.4524886373568464,
+    "filter_growth": 2.4396050307507067,
+    "readout_loss_tail": 1.434192422110366,
+    "readout_loss_rest": 0.6268509580714486,
+    "readout_growth": 1.9323909090921125,
+    "excess_filter_over_readout": {
+     "label": "F2.T_POOL tail-minus-rest of (filter loss - readout loss)",
+     "effect": 0.192535621525396,
+     "mean_hi": 0.018173300810793776,
+     "mean_lo": -0.17436232071460223,
+     "n_hi": 18,
+     "n_lo": 108,
+     "se": 0.4404321306368342,
+     "mde": 1.2339146571921547,
+     "effect_over_mde": 0.1560364166218125,
+     "ci95_fold": [
+      -0.40061537584413776,
+      1.255767429278175
+     ],
+     "excludes_zero": false,
+     "folds_same_sign": "2/5",
+     "per_fold": [
+      -0.6596634871911119,
+      -0.6007532181886371,
+      4.822838126140051,
+      0.6237987221785573,
+      -0.14462814326802675
+     ]
+    },
+    "CAVEAT": "filter-independent stratum"
+   },
+   "T_BEST": {
+    "filter_loss_tail": 1.0551289452446833,
+    "filter_loss_rest": 0.5186947669695925,
+    "filter_growth": 1.7723482744637518,
+    "readout_loss_tail": 0.8335952881155317,
+    "readout_loss_rest": 0.726950480403921,
+    "readout_growth": 1.1231630649994573,
+    "excess_filter_over_readout": {
+     "label": "F2.T_BEST tail-minus-rest of (filter loss - readout loss)",
+     "effect": 0.4297893705634799,
+     "mean_hi": 0.2215336571291514,
+     "mean_lo": -0.20825571343432847,
+     "n_hi": 18,
+     "n_lo": 108,
+     "se": 0.4020661105625614,
+     "mde": 1.126428415352072,
+     "effect_over_mde": 0.3815505403680238,
+     "ci95_fold": [
+      -0.2706940505080896,
+      1.2701270684279469
+     ],
+     "excludes_zero": false,
+     "folds_same_sign": "2/5",
+     "per_fold": [
+      -0.0037895018180323925,
+      1.050265961080801,
+      -0.7371249401991443,
+      2.081610887564512,
+      -0.055944419940345276
+     ]
+    },
+    "CAVEAT": "filter-independent stratum"
+   },
+   "T_CHAIN": {
+    "filter_loss_tail": 2.0504569907983146,
+    "filter_loss_rest": 0.3528067593773206,
+    "filter_growth": 3.4442462467568644,
+    "readout_loss_tail": 1.4446226905177348,
+    "readout_loss_rest": 0.6251125800035539,
+    "readout_growth": 1.9464443621288623,
+    "excess_filter_over_readout": {
+     "label": "F2.T_CHAIN tail-minus-rest of (filter loss - readout loss)",
+     "effect": 0.878140120906813,
+     "mean_hi": 0.6058343002805798,
+     "mean_lo": -0.2723058206262332,
+     "n_hi": 18,
+     "n_lo": 108,
+     "se": 0.3710950781849299,
+     "mde": 1.0396599710428998,
+     "effect_over_mde": 0.8446416572390841,
+     "ci95_fold": [
+      0.31223357910318716,
+      1.5588236449463067
+     ],
+     "excludes_zero": true,
+     "folds_same_sign": "4/5",
+     "per_fold": [
+      -0.6092724722785046,
+      0.8267814654404229,
+      1.1907950040376647,
+      2.2826716401773455,
+      0.4230405340161263
+     ]
+    },
+    "CAVEAT": "defined by the OUTCOME, so partly downstream of the filter"
+   },
+   "FAIL18": {
+    "filter_loss_tail": 2.393230891889996,
+    "filter_loss_rest": 0.29567777586204036,
+    "filter_growth": 4.020019222059109,
+    "readout_loss_tail": 1.154521290055028,
+    "readout_loss_rest": 0.673462813414005,
+    "readout_growth": 1.5555698181509092,
+    "excess_filter_over_readout": {
+     "label": "F2.FAIL18 tail-minus-rest of (filter loss - readout loss)",
+     "effect": 1.6164946393869326,
+     "mean_hi": 1.2387096018349681,
+     "mean_lo": -0.3777850375519645,
+     "n_hi": 18,
+     "n_lo": 108,
+     "se": 0.4646136804683381,
+     "mde": 1.3016616872000961,
+     "effect_over_mde": 1.2418700306560067,
+     "ci95_fold": [
+      1.026373292193727,
+      2.932694482706949
+     ],
+     "excludes_zero": true,
+     "folds_same_sign": "4/4",
+     "per_fold": [
+      NaN,
+      1.2773401839555731,
+      3.5196326595039347,
+      2.3579185249281127,
+      0.7719187704630823
+     ]
+    },
+    "CAVEAT": "FAIL18 is the filter's own zero-recall set and cannot measure filter recall -- cross-check only"
+   }
+  }
+ },
  "multiplicity": {
   "registered": 44,
-  "emitted": 24
+  "emitted": 28
  }
 }

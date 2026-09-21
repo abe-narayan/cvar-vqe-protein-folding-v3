@@ -2850,7 +2850,7 @@ NOT A RESULT and must not be quoted as one.**
 > CI does not rescue it, and a lane that quoted the CI alone would be repeating the sibling of
 > the underpowered bug.
 
-## S31-L21 -- **THE TERMINAL OPERATOR SHOULD STAY THE UNIFORM TOP-75 AVERAGE. ALL FOUR REGISTERED FALSIFIERS FIRED AGAINST THIS LANE** -- MEDOID **+0.0688**, Rg-RESTORE **+0.0475**, PER-SEPARATION RESTORE **+0.4609**, AND EVERY NATIVE-FREE GATE WORSE IN THE **REGISTERED** DIRECTION. THE PREREG's DERIVATION PREDICTED THE MEDOID's CHAIN COST AT **+0.0717** BEFORE ANY NUMBER EXISTED AND IT MEASURED **+0.0688**. AND F2: ON THE FILTER-INDEPENDENT TAIL THE **FILTER's** LOSS GROWS **3.4x** WHILE THE **READOUT's** GROWS **1.9x** (2026-09-21 00:56, F)
+## S31-L21 -- **THE TERMINAL OPERATOR SHOULD STAY THE UNIFORM TOP-75 AVERAGE. ALL FOUR REGISTERED FALSIFIERS FIRED AGAINST THIS LANE** -- MEDOID **+0.0688**, Rg-RESTORE **+0.0475**, PER-SEPARATION RESTORE **+0.4609**, AND EVERY NATIVE-FREE GATE WORSE IN THE **REGISTERED** DIRECTION. THE PREREG's DERIVATION PREDICTED THE MEDOID's CHAIN COST AT **+0.0717** BEFORE ANY NUMBER EXISTED AND IT MEASURED **+0.0688**. AND F2: ON THE FILTER-INDEPENDENT TAIL THE **FILTER's** LOSS GROWS **3.4x** WHILE THE **READOUT's** GROWS **1.9x** (2026-09-21 00:56, F) *[RETRACTED IN PART at 01:05 by my own control: the 3.4x is the OUTCOME-DEFINED stratum, and the paired contrast that the claim requires is 0.16x and 0.38x MDE with CIs spanning zero on the two FILTER-INDEPENDENT strata. Which of filter and readout is hurt more on the tail is **NOT MEASURED**. Original wording left standing per rule 13; see the retraction in s8(b).]*
 
 **Pre-registered** in `s31/PREREG_S31_F.md` (commits `8a14edea`, `49ee7c92`, `bc81f029`, `f5f69ba1`,
 plus the sixth amendment), every falsifier committed before the number existed. **Four of them fired
@@ -3057,10 +3057,65 @@ The readout's loss grows **1.9x** on both tails; the filter's grows **2.4-3.4x**
 `n_top75_under3` -- how many of the retained 75 are under 3 Å -- is **5.7 on T_POOL and 0.0 on
 T_CHAIN**, against **33.9 / 34.8** on the rest.
 
+> **RETRACTION, appended 2026-09-21 01:05, original wording left standing (rule 13).** The
+> paragraph above is a table of MEANS and I quoted its growth ratios as if they were a finding.
+> **They do not survive their own paired contrast.** I then ran the statistic the claim actually
+> requires -- per target, `(filter loss) - (readout loss)`, tail minus rest, fold-clustered --
+> and it is **NOT A RESULT on both filter-independent strata**:
+>
+> ```
+> stratum                           excess of filter loss over readout loss, tail minus rest
+> T_POOL   (filter-independent)     +0.1925   0.16x MDE   fold CI [-0.401, +1.256]   2/5 folds
+> T_BEST   (filter-independent)     +0.4298   0.38x MDE   fold CI [-0.271, +1.270]   2/5 folds
+> T_CHAIN  (defined by the OUTCOME) +0.8781   0.84x MDE   fold CI [+0.312, +1.559]   4/5 folds
+> FAIL18   (the filter's OWN zero-recall set)
+>                                   +1.6165   1.24x MDE   fold CI [+1.026, +2.933]   4/4 folds
+> ```
+>
+> **The effect size rises monotonically with how circular the stratum is -- 0.16x, 0.38x, 0.84x,
+> 1.24x -- which is the signature of the stratum's DEFINITION doing the work**, and it is S30-L2's
+> failure mode exactly. `FAIL18` is by construction the set where the filter retained nothing
+> within 1.5 A of `pool_best`, so its 1.24x is forced arithmetic and is quoted only to show the
+> gradient.
+>
+> **The defensible statement is therefore weaker than the one above and is the one that should
+> travel:** on a filter-independent tail the filter's loss and the readout's loss are **both**
+> roughly doubled, and *which of them is hurt more is NOT MEASURED*. What IS measured on the clean
+> strata is §8(a) -- the pool's best member sits at rank 286/500 on `T_POOL` against 151 elsewhere
+> -- and §8(c), (d) and (e), none of which depend on the filter/readout split.
+>
+> This retraction is mine, it was produced by a control I registered and ran on my own headline,
+> and it cost nothing because the control ran in the same job. `s31/results/s31_F_analyse.json`
+> key `F2_filter_vs_readout_MEASURED`.
+
 **(c) The pool is COHERENTLY wrong on the tail, not diversely wrong.** `S/B`, the set's spread over
 the average's error, falls from **0.776 to 0.423** (T_CHAIN) and **0.733 to 0.680** (T_POOL), while
 `n_distinct` is unchanged (70.3 vs 69.0). The tail's pools are not smaller or less varied -- they
 are *displaced together*.
+
+> **THE COMPOSITION, appended 2026-09-21 01:08.** (c) is not just a description of the tail. Lane E
+> measured, on a different object and without speaking to this lane, that **the entire recoverable
+> prize lies ALONG the pool's common mode** (-0.8102 A, 3.29x MDE) while the component orthogonal
+> to it is **harmful** (+0.0747), and that the common mode is **non-identifiable from pool data at
+> any K**.
+>
+> **"The tail's pools are displaced together" and "the prize is the common mode" are the same fact,
+> reached from opposite ends.** `S/B` falling from 0.776 to 0.423 with `n_distinct` unchanged says
+> the tail's error is almost entirely the *shared* displacement `B` and almost none of it the
+> *spread* `S`. Lane E says the shared displacement is exactly where the money is and exactly what
+> cannot be estimated from the pool. **So the tail is hard because it is where the common mode is
+> large -- which is simultaneously where the prize is and where it is unrecoverable from the only
+> data the pipeline has.**
+>
+> This also explains, without any new measurement, why every operator in this entry fails. Every
+> readout tested here is an affine combination of pool members (`sum a = 1`), and lane B's theorem
+> says such a readout passes the common mode through **with coefficient exactly one, whatever the
+> weights.** An operator cannot remove the very component that carries the prize. `AVG_SEP` was my
+> attempt to leave that hull and it **measured 0.045 A from it**. **The readout is not where the
+> tail is lost, and this lane's four refutations are four instances of one theorem.**
+>
+> Neither half of this is a synthesis: lane E's number is lane E's, and `S/B` with `n_distinct`
+> held is measured here in `s31/results/s31_F_analyse.json` -> `F2_tails`.
 
 **(d) The tail's distortion is a LONG-SEPARATION phenomenon**, independently confirming the ~4x
 concentration the record reports: mean `|ratio-1|` of the production chain at `s >= 7` is

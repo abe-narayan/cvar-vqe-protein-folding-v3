@@ -525,6 +525,31 @@ def main():
                     cloud_AVG=float(cl_A[tails["T_POOL"]].mean()),
                     chain_AVG=float(ch_A[tails["T_POOL"]].mean())))
 
+    # ---- F2: is the tail MORE filter-limited than readout-limited?  MEASURED, not tabulated.
+    # Single basis throughout: pool_best, set_best and cloud_AVG are all CA POINT CLOUD.
+    fl = set_best - pool_best                       # what the FILTER throws away
+    rl = cl_A - set_best                            # what the READOUT loses on what it kept
+    out["F2_filter_vs_readout_MEASURED"] = dict(
+        basis="CA POINT CLOUD throughout -- pool_best, set_best and cloud_AVG are the same object, "
+              "so nothing here is quoted across bases",
+        ORACLE="ORACLE diagnostic: pool_best and set_best need the native",
+        whole=dict(filter_loss=float(fl.mean()), readout_loss=float(rl.mean())),
+        strata={tn: dict(filter_loss_tail=float(fl[tm].mean()),
+                         filter_loss_rest=float(fl[~tm].mean()),
+                         filter_growth=float(fl[tm].mean() / fl.mean()),
+                         readout_loss_tail=float(rl[tm].mean()),
+                         readout_loss_rest=float(rl[~tm].mean()),
+                         readout_growth=float(rl[tm].mean() / rl.mean()),
+                         excess_filter_over_readout=two_group(
+                             fl - rl, folds, tm,
+                             "F2.%s tail-minus-rest of (filter loss - readout loss)" % tn),
+                         CAVEAT=("FAIL18 is the filter's own zero-recall set and cannot measure "
+                                 "filter recall -- cross-check only"
+                                 if tn.startswith("FAIL18") else
+                                 ("defined by the OUTCOME, so partly downstream of the filter"
+                                  if tn == "T_CHAIN" else "filter-independent stratum")))
+                for tn, tm in tails.items()})
+
     out["multiplicity"] = dict(registered=44, emitted=int(NCOMP[0]))
     with open(OUT, "w") as fh:
         json.dump(out, fh, indent=1, default=float)
