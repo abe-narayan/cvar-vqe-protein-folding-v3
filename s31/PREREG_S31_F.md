@@ -417,3 +417,36 @@ job from the same stored clouds** (lane D's 1e13 branch amplification).
 
 F3 adds 7 registered comparison families. Lane F's registered count rises from 44 to **51**, and
 the family is appended to `s31/MULTIPLICITY.md` as it is emitted.
+
+---
+
+## 12. FIFTH AMENDMENT — two gates for `AVG_SEP`, registered before any `AVG_SEP` aggregate exists
+
+**Appended 2026-09-21 00:47. The main run stands at 93 of 126 rows. I have NOT computed any mean,
+median, W/L or contrast for `AVG_SEP` and will not until 126/126 — that commitment is on the record
+in two messages to the coordinator.** What I have seen is individual log lines, and they are mixed:
+`1G89` −0.409 and `1I6Y` −0.578 in `AVG_SEP`'s favour, `2MID` **+0.884** against it. A mixed
+per-target distribution is exactly the shape a gate exists for, so I register the gates now rather
+than after the aggregate tells me whether I need one.
+
+* **G4** — `MOVE(AVG) > median(MOVE(AVG))` → `AVG_SEP`, else `AVG`. Native-free, 0 free parameters.
+* **G5** — `DISP > median(DISP)` → `AVG_SEP`, else `AVG`. Native-free, 0 free parameters.
+* **G6** — per-target `min(AVG, AVG_SEP)`: **ORACLE / NOT DEPLOYABLE, best-of-2 not skill**,
+  reported only with a split-half transfer arm.
+
+Both G4 and G5 are **EXPLORATORY** — registered after the run began — and each carries a
+split-half transfer arm. Falsifier identical in form to F1: `−1.0 × MDE` with a fold CI excluding
+zero to count, `> −0.7 × MDE` refutes.
+
+**Registered directions, fixed now.** G4 sends **high**-MOVE targets to `AVG_SEP`, and G5 sends
+**high**-DISP targets to `AVG_SEP`, because both variables index *how badly the average is
+distorted* and `AVG_SEP` exists to undo that distortion. **If the measured effect runs the other
+way, these fire against me and are reported as refutations, not as sign flips.**
+
+**One thing I am registering so it cannot be claimed afterwards.** `s31/results/s31_F_coh.json`
+already shows `coh(AVG_SEP) = 0.9689` against `AVG`'s 0.9780 and a bar of 0.6931, with **0 of 126**
+targets under the bar and an affine-hull residual of 0.045 Å RMS per coordinate. So **whatever
+`AVG_SEP` does at the endpoint, it does NOT do it by leaving the pool's affine hull.** If it wins, I
+will say the mechanism is unexplained rather than attach lane B's theorem to it.
+
+Lane F's registered comparison count rises from 51 to **57**.

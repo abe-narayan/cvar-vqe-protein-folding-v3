@@ -334,6 +334,21 @@ def main():
                                  "(s12/instrument.py:271-278) and cannot measure it; diagnostic "
                                  "cross-check only" if k.startswith("FAIL18") else None))
                  for k, m in tails0.items()},
+        gates=dict(
+            REGISTERED="PREREG s12 (fifth amendment), appended at 93/126 rows with NO AVG_SEP "
+                       "aggregate computed; both G4 and G5 are EXPLORATORY",
+            G4=dict(rule="MOVE(AVG) > median -> AVG_SEP else AVG; native-free, 0 parameters",
+                    cmp=brief(cmp2(np.where(MOVE_A > np.median(MOVE_A), ch_S, ch_A), ch_A,
+                                   folds, names, "G4 MOVE gate -> AVG_SEP"))),
+            G5=dict(rule="DISP > median -> AVG_SEP else AVG; native-free, 0 parameters",
+                    cmp=brief(cmp2(np.where(hi, ch_S, ch_A), ch_A, folds, names,
+                                   "G5 DISP gate -> AVG_SEP"))),
+            G6=dict(rule="per-target min(AVG, AVG_SEP)",
+                    ORACLE="ORACLE / NOT DEPLOYABLE -- best-of-2, not skill",
+                    cmp=brief(cmp2(np.minimum(ch_S, ch_A), ch_A, folds, names,
+                                   "G6 per-target min(AVG, AVG_SEP)")),
+                    split_half_transfer=ST.split_half_transfer(
+                        np.stack([ch_A, ch_S], 1), seed_parts=("s31F", str(SEED), "g6")))),
         coherence_cross_check=dict(
             source="s31/results/s31_F_coh.json",
             note="ORACLE / NOT DEPLOYABLE: coh(AVG_SEP) = 0.9689 against AVG's 0.9780 and the "
