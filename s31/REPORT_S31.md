@@ -586,7 +586,25 @@ and three facts held by three different lanes compose into a prediction that it 
 
 ## 16. What was closed
 
-[PENDING]
+Several of these are theorems. Where a direction closed by **derivation before compute was spent**,
+that is noted — it is the charter's §24 ladder working as intended, and it is most of this table.
+
+| direction | closed by | how |
+|---|---|---|
+| **The deployed CVaR objective as a quantum problem** | **theorem** | It is a **convex program with a closed-form global minimiser** pinned by one scalar. `run_cvar_vqe` is strictly worse in **126/126** targets at the deployed settings; `p*` costs 0.0012 s against 0.0985 s. Charter §11 closed for the deployed objective |
+| **Any target-specific role for the quantum state** | **derivation + measurement** | `E = _zrank(...)` is a **target-independent constant** (§5). `H(p*)` has sd **1.4e-4** across 126 targets. The stage answers a global hyperparameter question |
+| **A non-diagonal Hamiltonian** | **three independent theorems** | CVaR needs a per-shot eigenvalue; the forced operator is mean-field and quartic in ψ; and a candidate-index register's Hilbert dimension *is* the candidate count, so no operator on it can be classically hard |
+| **ADAPT-VQE / qubit-ADAPT** | **theorem** | Its selection rule `\|⟨ψ\|[H,A]\|ψ⟩\|` presumes the cost is `⟨H⟩`, a linear functional; **CVaR is not the expectation of any observable**, so the criterion is *undefined*, not merely unhelpful |
+| **The free-energy stage (§7A)** | **derivation, no compute** | `S` has no target argument, and the shipped potential is **reflection-invariant** (1340 torsion phases at distance 0.000e+00 from {0,π}), so `F`, `E`, `S` and every `dF/dT` are distance-map functions by G1 |
+| **The elastic-network / normal-mode / landscape-curvature family** | **derivation, no compute** | **Corollary B1′** — an ANM/GNM Hessian is built from pairwise distances, so its spectrum and log-determinant (*which is the harmonic entropy*) are distance-map functions |
+| **The backbone-torsion channel (§7B)** | measurement | The chiral escape from G1 is real (odd half 2.78× MDE on coarse triage) **and only works on a problem the pipeline does not have** (0.28× in-pool). A **constant α-helix beats every torsion channel on both bands** |
+| **Charter §14, the new-observable question** | **provenance** | 92.9% of the benchmark is NMR-determined; for **117/126** the deposited coordinates *are* a fit to the deposited restraints, so any NMR observable is **ORACLE through a different door**. The one genuine escape (VCD/ROA, chiral, works at 9–16 residues) has **zero measured spectra** for these targets |
+| **Candidate-index redesign (§12)** | measurement | Gray coding is a **proven no-op**; the best map raises an ORACLE ceiling and **lowers** the deployable value; the best map for a deployable partial readout is the **random permutation**; no index bit carries more than **0.066 bits** about candidate quality |
+| **The per-target prefix length `m`** | **matched control** | A per-target minimum over 128 **random subsets** reaches **149%** of the prefix family's gain — the prefix axis is *worse than an arbitrary 7-bit index*. And the transfer was already **FALSIFIED in S29** (−0.0018 global, +0.0079 leave-fold-out) |
+| **The constrained-affine readout** | **by exhaustion of selection rules** | No knee by ceiling (the ridge path is smooth and monotone) and no answer by fit (out-of-fold R² 0.021, applied +0.0309 worse). **It cannot be selected by ceiling and cannot be selected by fit** |
+| **Consensus as a quality estimate** | **identity** | The consensus criterion **is** the free half of the objective read at uniform weights — `corr(medoid criterion, B·1/D) = 0.9667` over all 126. Setting `â ∝ +consensus` **cancels** the term it was meant to complement |
+| **My own opening hypothesis (E1)** | **exact identity** | `mu_hat = mu − y`, so the proposed common-mode estimator's error **is** the prior error it was meant to help predict. Circular |
+| **The orthogonal-correction family (E2/E3)** | **ORACLE ceiling** | With perfect magnitude *and* a perfect direction, correcting only the component orthogonal to the common mode is worth **+0.0747 Å — harmful** (§20) |
 
 ---
 
@@ -635,13 +653,133 @@ caveat was dropped in re-quotation.
 
 ## 20. The remaining information bottleneck
 
-[PENDING]
+### 20.1 The requirement was stated backwards, and the correction is the sprint's most consequential result
+
+S30 concluded — and this report's own contract rule 29 encoded — that the next channel must supply
+an observable whose error is **incoherent** with the pool's common mode. **Measured with ORACLE
+magnitude and a perfect direction, that is worth `+0.0747 Å`: harmful.** The decomposition, splitting
+the ORACLE ideal correction `y` against the ORACLE common mode `mu` per target (built chain, all
+**ORACLE / NOT DEPLOYABLE**):
+
+```
+correcting ONLY the along-mu half    -0.8102 A   3.29x MDE, 5/5 folds, 121W/5L   <- the WHOLE prize
+correcting ONLY the orthogonal half  +0.0747 A   0.87x MDE, 57W/69L              <- worth less than nothing
+along vs perp, paired                -0.8848 A   3.50x MDE, 5/5 folds, 118W/8L
+```
+
+And the reason is an **identity, not a fit**. Refitting the same ridge on each half:
+
+```
+y_PERP_mu    out-of-fold R2  +0.9403    (random-feature control -0.0026)
+y_ALONG_mu   out-of-fold R2  -0.0051    (random-feature control -0.0039)
+```
+
+`mu_hat = mu − y` forces `y_perp = −P_perp(mu_hat; mu)` **exactly to 9.3e-15**, and with
+`cos(mu_hat, mu) = 0.05` that makes `y_perp ≈ −mu_hat` at corr 0.971. **The predictable half is not
+predicted — it is observed.** The unpredictable half is exactly the common mode that S30-L7 proved
+non-identifiable from pool data at any K.
+
+> ### What can be predicted is the component ORTHOGONAL to the common mode, and it is harmful.
+> ### What would help is the common mode itself, and it is unpredictable.
+
+**S30's slogan survives verbatim; its mechanism was inverted.** The measurement behind it (+0.0554
+coherent against −0.2466 i.i.d. at matched R²) is **untouched and still stands** — it was explained
+backwards, not measured wrongly.
+
+**Controls, all registered before the numbers:** magnitude is not the explanation (the perfect
+correction shrunk to the perp arm's exact norm gives −0.5422, so the perp arm is **+0.6169 worse
+than its own magnitude-matched control**, 3.25× MDE, **9W/117L**); the projection is not the
+mechanism (against a norm-matched shrinkage, 0.26× MDE); and projecting against the *true* `mu` buys
+nothing over not projecting (0.18× / 0.08×).
+
+**Sizing, ORACLE / NOT DEPLOYABLE:** the along-`mu` correction alone puts the built chain at
+**2.4025 Å** — which would clear the charter's *ambitious* 2.50 target — and it is **4× concentrated
+on the tail** (FAIL18 6.0195 → 3.7392, −2.2803, against −0.5651 on the other 108). It does **not**
+beat a perfect prior: ALONG against FULL is −0.0345 at **0.51× MDE, 3/5 folds — a tie, NOT
+MEASURED**, and it is reported as a tie.
+
+### 20.2 The second bottleneck, which is a different object
+
+Lane A's closing statement, from the exact readout identity:
+
+> The readout's objective is exact and half of it is free; the conversion from any quality estimate
+> to an endpoint is a tuning-free convex program; that program's ORACLE ceiling is **1.7977 Å**
+> against production's **3.0483** (CA cloud). **What is missing is a per-candidate quality estimate
+> with positive IN-BAND skill.**
+
+Every native-free candidate now measured has in-band skill that is **zero or the wrong sign**:
+
+```
+DIS z-rank (the shipped cost)    rho global +0.1176    IN BAND  -0.0262
+CONS (the medoid criterion)      rho global +0.4278    IN BAND  -0.2837
+DIS + CONS, leave-fold-out       rho global +0.4281    IN BAND  -0.2827
+```
+
+**Consensus reaches double the crossing price on the global axis and the wrong sign in band** — its
+`ρ_global = +0.428` is **entirely outlier detection**. *The binding axis is in-band `ρ`, and the
+global crossing price of 0.211 is necessary-not-sufficient: it holds along an interpolation path and
+must not be quoted as a target for a real feature.*
+
+### 20.3 The two bottlenecks are different objects, and whether they are one requirement is open
+
+`â` is *which candidate is better*. `mu` is *how all of them are wrong together*. **Both are things
+the pool cannot tell you about itself**, and both would have to come from outside it. Whether they
+are two faces of one requirement or two separate ones is **the sharpest question this sprint
+produces, and it is stated as open rather than resolved by assertion.**
+
+### 20.4 What is NOT the bottleneck, so the next sprint does not pay for it again
+
+The circuit's expressivity (`p*` is free and closed-form, and substituting it is worth **−0.0112 Å at
+0.19× MDE**); the optimiser (80 → 2000 iterations move the gap by nothing); the CVaR α (inactive by
+construction on three of five folds); the ansatz depth; the register width (the 75 → 128 widening is
+a **+0.0307 Å cost**, NOT MEASURED); the index encoding; the readout class (exact, and its
+native-free channel is **3.99%** of ORACLE); and the candidate set (the set effect is **+0.0049 Å at
+0.14× MDE — NOT A RESULT**, while the weighting rule costs **+0.1102 Å at 2.68× MDE**).
 
 ---
 
 ## 21. Next-sprint recommendation
 
-[PENDING]
+**One question, stated as a requirement rather than a direction.**
+
+> ### Find a source of information about the POOL'S COMMON MODE — the shared component of the retrieved candidates' error — that does not come from the pool.
+
+This is the inverse of what S30 and this sprint's own opening contract asked for, and the inversion
+is measured (§20.1), not argued. Three things make it a well-posed target rather than a wish:
+
+1. **It is priced.** Perfect knowledge of the along-`mu` component alone is worth **−0.8102 Å on the
+   built chain (ORACLE / NOT DEPLOYABLE)**, taking the endpoint to **2.4025 Å** — past the charter's
+   *ambitious* target — with **4× concentration on the tail**.
+2. **The conversion is free and tuning-free.** The readout identity makes any quality estimate
+   convert to an endpoint through a **convex program with no hyperparameters** (§3(ii)).
+3. **The failure mode is named.** The common mode is **non-identifiable from pool data at any K**
+   (S30-L7), so a channel that reads the pool — however cleverly — cannot supply it. *That is the
+   one thing we now know for certain about where it must come from.*
+
+**And the parallel requirement, which may or may not be the same one:** a per-candidate quality
+estimate with **positive in-band skill**. Every native-free candidate measured has zero or negative
+in-band skill (§20.2). **State which of the two any proposal addresses.**
+
+### What NOT to spend the next sprint on
+
+- **Any further readout, index, ansatz, optimiser, α-schedule or register-width work.** All are
+  closed above, most by theorem, and §20.4 lists them so the case does not have to be re-made.
+- **A deployable 128 → 512 widening**, on the prediction in §11 — three facts held by three
+  different lanes compose to say it should come out **worse** than production, not flat.
+- **Chiral single-structure functionals at 9–16 residues.** Empty here, twice. **The theorem is
+  length-free and only the emptiness is length-dependent**, so this is worth retesting at 40+
+  residues on an instrument that does not exist yet.
+
+### Two engineering items that gate future measurement
+
+- **The per-target built-chain floor is ~0.03 Å, not 0.0107** (§1.2). Any S32 claim below that on
+  individual targets is indistinguishable from re-running the same code twice. **The branch-carry
+  fix (B4) is available, improves the conditioning 1082×, and is a NULL for accuracy at 0.44× MDE**
+  — adopt it deliberately at a sprint boundary as a *conditioning change*, never as an improvement,
+  and note it moves canonical 3.2105 → 3.2050.
+- **The verifier should assert each number against the value on the basis it names**, not merely
+  check that a basis is named. An audit for an *unstated* basis does not catch a *misstated* one,
+  and this sprint had exactly one of the latter — in its own headline.
 
 ---
 

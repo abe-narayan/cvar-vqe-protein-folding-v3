@@ -15,6 +15,7 @@ Registered verdict (`s31/PREREG_S31_E.md` §3, unchanged by AMENDMENT 1):
 """
 from __future__ import annotations
 
+import argparse
 import glob
 import json
 import os
@@ -35,9 +36,12 @@ OUT = os.path.join(HERE, "results", "s31_E2_applied.json")
 PROD_CHAIN_CANON, PROD_CLOUD_CANON = 3.2105, 3.0483
 
 
+ALL_ORACLE = False
+
+
 def status(nm):
     return ("baseline" if nm == "PROD" else
-            "ORACLE / NOT DEPLOYABLE" if nm in ORACLE_ARMS else
+            "ORACLE / NOT DEPLOYABLE" if (ALL_ORACLE or nm in ORACLE_ARMS) else
             "LFO-supervised, native-free at inference")
 
 
@@ -57,8 +61,15 @@ def verdict(c):
 
 
 def main():
+    global ALL_ORACLE
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--rows-glob", default="s31_E2_rows*.jsonl")
+    ap.add_argument("--out", default=OUT)
+    ap.add_argument("--all-oracle", action="store_true")
+    a = ap.parse_args()
+    ALL_ORACLE = a.all_oracle
     R = {}
-    for p in sorted(glob.glob(os.path.join(HERE, "results", "s31_E2_rows*.jsonl"))):
+    for p in sorted(glob.glob(os.path.join(HERE, "results", a.rows_glob))):
         for ln in open(p):
             try:
                 r = json.loads(ln)
@@ -102,10 +113,10 @@ def main():
         ch, cl = res["arms"][nm]["chain"]["delta"], res["arms"][nm]["cloud"]["delta"]
         res["arms"][nm]["cloud_to_chain_transfer"] = float(ch / cl) if abs(cl) > 1e-9 else None
 
-    tmp = OUT + ".%d.tmp" % os.getpid()
+    tmp = a.out + ".%d.tmp" % os.getpid()
     with open(tmp, "w") as fh:
         json.dump(res, fh, indent=1, default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
-    os.replace(tmp, OUT)
+    os.replace(tmp, a.out)
 
     print("n = %d  (missing %d)   PROD chain %.4f (canonical 3.2105)  cloud %.4f (canonical 3.0483)"
           % (res["n"], res["n_missing"], res["prod_chain_this_run"], res["prod_cloud_this_run"]))

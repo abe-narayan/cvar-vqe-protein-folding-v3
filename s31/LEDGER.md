@@ -2665,3 +2665,187 @@ four cells native-free and deployable.
 > (−0.026), consensus (−0.284), and every graph observable consensus absorbs — has in-band
 > skill that is **zero or negative**. Not small: *the wrong sign*.
 
+
+## S31-L20 -- **THE DECISIVE SUBSTITUTION IS A NULL AT 0.19x MDE, AND LANE L'S "THERE IS NO THIRD OUTCOME" IS ITSELF FALSIFIED.** SOLVING THE DEPLOYED CVaR FREE ENERGY **EXACTLY** INSTEAD OF WITH THE CIRCUIT MOVES THE ENDPOINT BY **-0.0112 A** WHILE MOVING **100 OF 126 TARGETS BY 10.7x THE INSTRUMENT'S OWN NOISE** -- THE ANSWER CHANGES EVERYWHERE AND CANCELS (2026-09-21 00:45, P)
+
+Pre-registration `s31/PREREG_S31_P.md`, written before the first arm and amended (AMENDMENT 1)
+before the first arm, when the coordinator withdrew the +0.2260 A parity deficit as measured on
+the wrong readout. Code `s31/s31_P_substitute.py`, artefact `s31/results/s31_P_substitute.json`,
+rows `s31/results/s31_P_rows*.jsonl` + `s31_P_a2_rows*.jsonl`. Multiplicity row 14, k = 18.
+
+**All six arms of a target were built and projected in ONE process from ONE stored pool cache**
+(`s31/results/s31_C_cache`, verified bit-identical to the canonical `s29_O_structs` clouds at
+max dev **0.0**), because the projection is deterministic but chaotic (S31-L4, amplification
+~1e13). **Arm A re-projected to 3.2105 A against the canonical 3.2105 A with a worst per-target
+deviation of 0.0000 A** -- the endpoint basis is reproduced, not quoted.
+
+### 1. The certificates, on the real instrument rather than a synthetic ladder
+
+Lane L verified the closed form on a shuffled z-rank ladder at `T = 0.1, 0.05`. **The deployed
+`T` is 0.3 on every fold** (`core/pipeline.py:113`), so none of its 12 cells was at the deployed
+temperature. Re-verified here at the deployed settings, n = 126:
+
+```
+strong duality   max |F(p*) - phi(s*)|                3.560e-09
+KKT at s*        max |grad F(p*) - mean(grad)|        2.665e-15   (analytic identity)
+mirror descent   min (F_mirror - F*) over 126        -1.627e-09   (i.e. AT the duality gap's
+                                                                   own precision, never below)
+the circuit is strictly worse on   126 / 126 targets,  F gap mean +0.1937  [+0.0483, +0.2951]
+TV(p*, p_vqe)    mean 0.378  [0.210, 0.465]          H: p* 5.57 bits vs circuit 5.91 bits
+cost             p* 0.0012 s   vs   run_cvar_vqe 0.0985 s   per target  (82x)
+```
+
+**`p*` is the global optimum of the deployed objective on this instrument, and the shipped
+circuit never reaches it.** Lane L's L1.1 is confirmed at the deployed temperature.
+
+> **One correction to L1.1, and it reverses the direction it reported.** L1.1 states "the closed
+> form is always **more entropic** than what the circuit finds." **At the deployed `T = 0.3` that
+> is false for three of the five folds.** At `alpha = 1.0` (folds 0, 3, 4; 78 of 126 targets)
+> `H* = 4.9137` bits against the circuit's `5.6738` -- **the circuit is MORE entropic than the
+> optimum**, ESS 44.4 against the optimum's 22.2. At `alpha = 0.25` (folds 1, 2) the L1.1
+> direction holds (6.6392 vs 6.3014). The entropy ordering is alpha-dependent, not universal.
+
+### 2. THE PRIMARY -- and neither registered branch fires
+
+Paired, n = 126, fold-clustered on the pinned folds, MDE = 2.8016 x SE, **BUILT CHAIN**.
+
+```
+P1  E - D   p* vs VQE p, CONVEX readout (shipped)     -0.0112 A  SE 0.0207  MDE 0.0580  0.19x
+            62W/64L/0T   median +0.0023   fold CI [-0.0644, +0.0465]   2/5 folds same sign
+                                                                                        NULL
+P2  C - B   p* vs VQE p, SELECTION readout            -0.0280 A  SE 0.0348  MDE 0.0975  0.29x
+            37W/29L/60T  median +0.0000   fold CI [-0.0629, +0.0021]   4/5 folds same sign
+                                                                                        NULL
+```
+
+The prereg registered: *improves at >= 1.0x MDE* -> the quantum layer is a softmax and a
+root-find; *worsens at >= 1.0x MDE* -> the circuit's failure to optimise is the active
+ingredient; *below 0.7x* -> NULL. **It is 0.19x. Lane L wrote "there is no third outcome, and
+both are results." There was a third outcome and it is the one that happened.**
+
+### 3. AND THE NULL IS NOT "NO EFFECT" -- it is 10.7x the instrument's noise, cancelling
+
+AMENDMENT 1 made the per-target |delta| distribution a registered obligation, against the
+implementation-noise null measured in the same job (S31-L18, `A2 - A`):
+
+```
+                     |d| mean   median     p90      MAX     exactly 0   > 0.0107 A
+P1  E - D             0.1432    0.0494   0.3706   1.1457     0 / 126     100 / 126
+P2  C - B             0.1802    0.0132   0.6288   1.8766    60 / 126      64 / 126
+X1  A2 - A  (NULL)    0.0134    0.0026   0.0329   0.2285     0 / 126      28 / 126
+```
+
+> **`P1`'s per-target spread is 10.7x the implementation-noise null (6.4x on rms), and 74 of 126
+> targets move by more than the null's own p90.** So the substitution **changes the answer on
+> most targets by an amount the instrument cannot produce by itself**, and those changes cancel
+> to -0.0112 A. The honest sentence is *"solving the objective exactly reshuffles the answer
+> everywhere and buys nothing"* -- **not** *"`p*` makes no difference."*
+
+**P2's structure is different and it is lane L's caveat firing exactly as written.** The
+selection readout is `argmin(P.p)`, piecewise-constant, so `TV = 0.378` need not move the
+medoid. **It moves it on 66 of 126 targets** (12/48 at `alpha = 0.25`, **54/78** at
+`alpha = 1.0`) and is identically zero on the other 60. On the 66 that disagree the effect is
+`-0.0534 A, SE 0.0666, 0.29x MDE` -- still a null, with `|d|` mean 0.3440 and max 1.8766.
+**P2 is not vacuous; it is a null carried by a 48% exact-tie rate and a huge cancelling spread.**
+My registered point prediction was 20-45 disagreements of 126; the answer is 66, and I was wrong.
+
+### 4. THE ENDPOINT TABLE, and the row this project did not have
+
+```
+BUILT CHAIN (mean +- SE, n = 126)                        median     [CA cloud]
+A   quantum OFF -- production                3.2105 +- 0.1540   2.9661   [3.0483]   canonical
+B   ON, VQE p,   SELECTION readout           3.3117 +- 0.1648   3.1482   [3.3135]
+C   ON, p*,      SELECTION readout           3.2838 +- 0.1586   3.2029   [3.2852]
+D   ON, VQE p,   CONVEX readout  (SHIPPED)   3.2281 +- 0.1558   2.9926   [3.0661]
+E   ON, p*,      CONVEX readout              3.2169 +- 0.1526   3.1136   [3.0605]
+F   ON, uniform, CONVEX readout (ablation)   3.2415 +- 0.1528   3.0973   [3.0532]
+A2  code-path control (uniform, top-75)      3.2108 +- 0.1542   2.9946   [3.0483]
+```
+
+**`S3 = D - A` is the built-chain cost of the SHIPPED quantum stage and this project did not
+have it: `+0.0175 A, SE 0.0180, MDE 0.0504, 0.35x -- a NULL`**, fold CI [-0.0173, +0.0446],
+55W/71L. On the CA cloud it is **+0.0178 A**, which reproduces lane A's independently measured
++0.0178 A **to four decimals on a different code path**. The stage is very nearly free, and the
++0.2260 A deficit the sprint was carrying was an artefact of the affine readout.
+
+**Decomposed, and the decomposition is exact (BUILT CHAIN):**
+
+```
+D - A  =  code path (A2-A)  +  widening 75->128 (F-A2)  +  weights (D-F)
++0.0175   =   +0.0003       +        +0.0307            +      -0.0134
+E - A  =  +0.0003 + 0.0307 + (E-F) -0.0247  =  +0.0063        (0.08x MDE, BELOW CHAIN FLOOR)
+```
+
+**None of the three components is measured.** The widening of the retained prefix from 75 to
+128 -- which exists only to feed the quantum register -- is the largest of them at +0.0307 A
+(0.42x MDE) and is a cost, not a benefit.
+
+**The one arm that is measurably worse is the SELECTION readout, and only on the cloud:**
+`B - A = +0.2652 A at 2.15x MDE (MEASURED)` and `C - A = +0.2368 A at 1.82x (MEASURED)` on the
+CA point cloud; on the built chain the same contrasts are +0.1012 (0.93x, NOT MEASURED) and
++0.0732 (0.61x, NULL). **State the basis: the selection readout's cost is a cloud result that
+does not survive onto the chain.**
+
+### 5. WHY THE NULL WAS INEVITABLE, which is S31-L17
+
+`E = _zrank(dis[o])` is the standardised rank of 128 values, so **it is the same vector on every
+target**: measured max deviation from the tie-free reference `[-1.718572 ... +1.718572]` is
+**4.07e-02** over 126 targets (125 of 126 carry ties inside the top-128, from byte-identical
+duplicate fragments; that is the only mechanism by which `E` can vary at all). `p*` is a
+function of `(E, alpha, T)` and `run_cvar_vqe` is seeded at 0, so **both distributions are ONE
+FIXED WEIGHTING CURVE PER ALPHA**:
+
+```
+alpha = 0.25 (folds 1,2)   H* 6.6392 bits  sd 4.6e-03   ESS* 58.34 / 128  sd 6.0e-01
+                           H_vqe 6.3014    sd 5.0e-02   ESS  48.29        sd 1.8e+00
+alpha = 1.00 (folds 0,3,4) H* 4.9137 bits  sd 3.1e-04   ESS* 22.19 / 128  sd 9.2e-03
+                           H_vqe 5.6738    sd 5.7e-02   ESS  44.39        sd 2.2e+00
+```
+
+> **The quantum stage answers "what fixed weight should rank k receive?" -- a 128-number global
+> hyperparameter, not a per-target computation.** The rank -> candidate *mapping* is
+> target-specific; the weight on each rank is not. So `p*` and `p_theta` are two points in the
+> same one-parameter-ish family of monotone rank decays, `F` (uniform) is a third, and no
+> member of that family can carry information about *which target* it is being applied to.
+> **An aggregate improvement was never available from moving within it, and the measurement says
+> so at 0.19x MDE.** This is S31-L17 arriving at the endpoint.
+
+### 6. What I registered and got wrong, stated because I registered it
+
+| registered, before any number | outcome |
+|---|---|
+| P2 selection ~3:1 NULL or NOT MEASURED | **right** -- NULL at 0.29x |
+| disagreement 20-45 of 126 | **wrong** -- 66 |
+| `p*` more entropic than the circuit -> **E lies between D and F** | **falsified.** The premise fails at `alpha = 1` (3/5 folds) and E (3.2169) is **below both** D (3.2281) and F (3.2415) |
+| ~2:1 that `E - D >= 0` (`p*` does not improve) | sign went **against** me (-0.0112) but at 0.19x MDE, so neither of us is paid |
+| revised ~60% that arm D is worse than arm A | nominally right (+0.0175) but a NULL at 0.35x |
+
+### 7. Scope, and what this does NOT close
+
+- **It does not say the CVaR-VQE is harmless**; it says the difference between solving its
+  objective exactly and solving it badly is invisible at the endpoint. S20's law is neither
+  confirmed nor refuted here -- it is **not reachable through this substitution**, because both
+  arms are target-independent rank curves.
+- **It does not license quoting -0.0112 A as "p* is slightly better."** 0.19x MDE, median +0.0023,
+  2/5 folds same sign, and the effect is within a factor of 1 of the chain floor.
+- **Two targets' 128-set differs** from `np.argsort(sc, kind='stable')` (`1DEP`, `1M02`) because
+  of an exact `dis` tie at the boundary. This affects B-F identically on those targets, so P1/P2
+  are unaffected; only `D-A` and `F-A` touch it, on 2 of 126.
+- **`alpha` remains unswept.** `VQE_LFO` was used as shipped and nothing here was tuned.
+
+### 8. ONE S32 CANDIDATE, AND ITS GATE IS STATED BEFORE THE SENTENCE IS READ
+
+The decomposition isolates **`F - A2 = +0.0307 A` for widening the retained prefix from 75 to
+128** — a cost paid **only** to fill the `2**7` quantum register (`core/pipeline.py:757`,
+`want = max(cfg.m, (1 << cfg.vqe_qubits) if cfg.quantum else 0)`). **It is a NULL at 0.42x MDE
+(SE 0.0260, MDE 0.0728, fold CI [+0.0028, +0.0557], 4/5 folds same sign, median +0.0112). It is
+NOT A RESULT and must not be quoted as one.**
+
+> Recorded anyway for one reason: **it is the only place in this sprint where turning something
+> OFF has a measured sign**, and the thing being turned off has no purpose when the quantum
+> stage is off — which is its state in production. **S32 candidate: price the widening on its
+> own, pre-registered, rather than as a by-product of a decomposition.** Note the honest reading
+> of its own CI: the fold CI excludes zero while the effect sits at 0.42x MDE, which is the
+> exact shape `_verdict` was hardened against (`s24/stats_lib.py:145`) — the MDE gate binds, the
+> CI does not rescue it, and a lane that quoted the CI alone would be repeating the sibling of
+> the underpowered bug.

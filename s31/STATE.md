@@ -61,6 +61,86 @@ published 32-cost sweep, and lane E killed my opening hypothesis with an exact i
 
 ---
 
+## NOTE 14 (2026-09-21 00:47, lane P, S31-L20): **THE DECISIVE SUBSTITUTION IS A NULL AT 0.19x MDE — AND "THERE IS NO THIRD OUTCOME" WAS ITSELF THE HYPOTHESIS THAT DIED**
+
+Lane L handed the sprint a clean dichotomy: replace `run_cvar_vqe`'s `p` with the closed-form
+global minimiser `p*`, and *"endpoint improves -> the quantum layer is a softmax; endpoint
+worsens -> the circuit's inability to optimise is the active ingredient. There is no third
+outcome."* **Measured at n = 126 on the built chain, in one process from one cache, with arm A
+re-projected to 3.2105 against the canonical 3.2105 at a worst per-target deviation of 0.0000 A:**
+
+```
+P1  E - D   p* vs VQE p, CONVEX readout (shipped)   -0.0112 A  SE 0.0207  MDE 0.0580  0.19x  NULL
+P2  C - B   p* vs VQE p, SELECTION readout          -0.0280 A  SE 0.0348  MDE 0.0975  0.29x  NULL
+```
+
+**Neither branch fires.** The closed form is certified optimal on the real instrument (duality
+gap 3.56e-09, KKT at `s*` 2.67e-15, mirror descent never below it, **circuit strictly worse
+126/126**, F gap +0.1937, `p*` at 0.0012 s against the circuit's 0.0985 s) — and solving the
+deployed objective *exactly* instead of *badly* is worth **nothing at the endpoint**.
+
+**And the null is not "no effect."** Against the implementation-noise null measured in the same
+job (S31-L18): `P1`'s per-target `|d|` is **0.1432 mean / 0.3706 p90 / 1.1457 max, above the
+chain floor on 100 of 126 targets** — **10.7x the noise null's 0.0134**, with **74 of 126** above
+the null's own p90. **The substitution changes the answer nearly everywhere and the changes
+cancel.** `P2` is lane L's own caveat firing as written: the selection readout is
+piecewise-constant, so `TV = 0.378` moves the medoid on **66 of 126** targets and is identically
+zero on the other 60; on the 66 the effect is -0.0534 A at 0.29x, still a null.
+
+**Why it had to be null, and this is S31-L17 arriving at the endpoint.** `E = _zrank(dis[o])` is
+the standardised rank of 128 values, so it is the **same vector on every target** (max deviation
+from the tie-free reference 4.07e-02). Both `p*` and `p_theta` are therefore **one fixed
+weighting curve per alpha** — `H(p*) = 4.9137` bits at `alpha = 1` with **sd 3.1e-04** across
+126 targets. **P1 compares two points inside a family none of whose members knows which target
+it is being applied to.** An aggregate gain was never available from moving within it.
+
+> **Consequence for the sprint, and it is a scope fix, not a result.** This experiment **does not
+> test S20's law** ("optimising a bad objective harder makes things worse"). It cannot: both arms
+> are target-independent rank curves, so neither carries the information S20 is about. **Do not
+> record S31-L20 as evidence for or against S20.** What it does establish is that **the
+> optimisation quality of the deployed CVaR-VQE is invisible at the endpoint**, which is what
+> charter §11 needed.
+
+**The row this project did not have.** `S3 = D - A`, the **built-chain** cost of the **shipped**
+quantum stage: **+0.0175 A, SE 0.0180, MDE 0.0504, 0.35x — a NULL.** On the CA cloud +0.0178,
+reproducing lane A's independent +0.0178 to four decimals on a different code path. It
+decomposes exactly: `+0.0003` code path `+ 0.0307` prefix widening 75->128 `- 0.0134` weights.
+**The largest component is the widening that exists only to feed the quantum register, and it is
+a cost.** The **+0.2260 A parity deficit the sprint was carrying is withdrawn** — it was the
+affine readout, not the shipped one.
+
+**Two corrections to lane L's L1.1, both confirmed by the coordinator.** (1) Its 12 verification
+cells ran at `T = 0.1, 0.05`; the **deployed `T` is 0.3 on every fold** (`core/pipeline.py:113`).
+(2) Its *"the closed form is always more entropic than what the circuit finds"* **reverses at the
+deployed `T` on 3 of 5 folds**: at `alpha = 1`, `H* = 4.9137` against the circuit's `5.6738`.
+**That also falsified my own registered prediction that arm E would sit between D and F** — it
+sits below both (E 3.2169, D 3.2281, F 3.2415) — and I registered 20-45 medoid disagreements
+when the answer is 66. Both recorded in S31-L20 §6.
+
+**Endpoint table (BUILT CHAIN, n = 126; CA cloud in brackets — a different object):**
+
+```
+A  quantum OFF (production)  3.2105 +- 0.1540  [3.0483]   D  ON, VQE p, CONVEX  3.2281 +- 0.1558  [3.0661]
+B  ON, VQE p,  SELECTION     3.3117 +- 0.1648  [3.3135]   E  ON, p*,    CONVEX  3.2169 +- 0.1526  [3.0605]
+C  ON, p*,     SELECTION     3.2838 +- 0.1586  [3.2852]   F  uniform,   CONVEX  3.2415 +- 0.1528  [3.0532]
+A2 code-path control         3.2108 +- 0.1542  [3.0483]
+```
+
+The only measurably worse arm is the **selection readout, and only on the CA cloud**:
+`B - A = +0.2652 at 2.15x` and `C - A = +0.2368 at 1.82x` (MEASURED, cloud); the same contrasts
+on the built chain are 0.93x and 0.61x — **NOT MEASURED. State the basis.**
+
+**One S32 candidate, gate first.** The decomposition isolates **`F - A2 = +0.0307 A` for widening
+the retained prefix 75 -> 128** — paid **only** to fill the `2**7` register
+(`core/pipeline.py:757`), and pointless when `quantum = False`, which is production.
+**It is a NULL at 0.42x MDE and is NOT A RESULT.** Recorded because it is the only place this
+sprint where turning something **off** has a measured sign. Its fold CI [+0.0028, +0.0557]
+excludes zero while the effect sits at 0.42x — **the MDE gate binds and the CI does not rescue
+it**; quoting the CI alone would repeat the sibling of the underpowered bug
+(`s24/stats_lib.py:145`). **S32 should price the widening on its own, pre-registered.**
+
+---
+
 ## NOTE 13 (2026-09-21 00:29, lane L, S31-L16): **AN AUDIT OF MY OWN SYNTHESES — AND THE STRUCTURAL REASON THEY ARE THE SPRINT'S WEAK POINT**
 
 I asked lane L to audit my cross-lane claims and it ran the audit **ahead of the request**, on the

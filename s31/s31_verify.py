@@ -20,6 +20,7 @@ four ways S31 asked for:
 Usage:  python s31/s31_verify.py            # verify
         python s31/s31_verify.py --paths    # only the ledger-path audit
 """
+import glob
 import io
 import json
 import os
@@ -58,8 +59,12 @@ def dig(obj, *keys, **kw):
     return cur
 
 
+CHECKS = []          # (label, claimed, basis) -- consumed by the CROSS-basis audit below
+
+
 def check(label, claimed, actual, tol=5e-4, basis=None):
     """Recompute one headline number.  `basis` is MANDATORY for any RMSD-valued number."""
+    CHECKS.append((label, float(claimed), basis))
     if basis is None:
         FLAG.append(("basis unstated", label))
     elif basis not in BASES:
@@ -501,6 +506,77 @@ if not FLAG:
     print("  none -- every checked number named one of %s" % (BASES,))
 for why, lbl in FLAG:
     print("  FLAG %-28s %s" % (why, lbl))
+
+# ---------------------------------------------------------------- CROSS-basis audit
+# Added by lane V after S31-V D3 (s31/AUDIT_V.md): the STATE headline labelled the BUILT
+# CHAIN value 2.1435 as "CA cloud" and differenced it against the cloud production, so the
+# sprint understated its own headroom by 0.16 A.  The audit above could not catch it,
+# because it only asks whether a basis is NAMED, never whether the number IS that basis.
+# This asks the second question: every s29 O-ladder item is persisted on BOTH bases, so a
+# claimed value can be matched against both and the declared basis checked against the fit.
+print()
+print("--- CROSS-basis audit: does each number MATCH the basis it NAMES? (lane V, D3) ---")
+_BB = {}
+for _f in sorted(glob.glob(os.path.join(ROOT, "s29", "results", "s29_O_chain_rows*.jsonl"))):
+    for _ln in io.open(_f, encoding="utf-8"):
+        if not _ln.strip():
+            continue
+        _r = json.loads(_ln)
+        # DEDUPE by (pdb, item): the shards overlap, and appending blind inflated the row
+        # count past 126 so only 3 of 33 items survived the completeness filter.
+        _BB[(_r["item"], _r["pdb"])] = (float(_r["rmsd_chain"]), float(_r["rmsd_cloud"]))
+_AGG = {}
+for (_it, _pdb), (_ch, _cd) in _BB.items():
+    _AGG.setdefault(_it, [[], []])
+    _AGG[_it][0].append(_ch)
+    _AGG[_it][1].append(_cd)
+_ITEMS = {k: (sum(v[0]) / len(v[0]), sum(v[1]) / len(v[1])) for k, v in _AGG.items()
+          if len(v[0]) == 126}
+_OTHER = {"chain": "cloud", "cloud": "chain"}
+_nx = 0
+for _lbl, _cl, _bs in CHECKS:
+    if _bs not in _OTHER:
+        continue
+    for _it, (_ch, _cd) in _ITEMS.items():
+        _dec = _ch if _bs == "chain" else _cd
+        _oth = _cd if _bs == "chain" else _ch
+        if abs(_cl - _oth) <= 5e-4 and abs(_cl - _oth) < abs(_cl - _dec) - 1e-9:
+            FLAG.append(("BASIS MISSTATED: %s is %s of '%s'" % (_cl, _OTHER[_bs], _it), _lbl))
+            print("  FLAG  %-46s claims %s=%.4f but that is %s of '%s' (its %s is %.4f)"
+                  % (_lbl[:46], _bs, _cl, _OTHER[_bs], _it, _bs, _dec))
+            _nx += 1
+            break
+print("  %d s29 O-ladder items carry both bases; %d cross-basis misstatement(s) found"
+      % (len(_ITEMS), _nx))
+if _nx == 0:
+    print("  every chain/cloud number that matches a persisted ladder item matches it on the "
+          "basis it names")
+
+
+def _cross_basis_hit(claimed, basis):
+    """True iff `claimed` fits the OTHER basis of some ladder item better than the named one."""
+    _o = _OTHER.get(basis)
+    if _o is None:
+        return None
+    for _it, (_ch, _cd) in _ITEMS.items():
+        _dec = _ch if basis == "chain" else _cd
+        _oth = _cd if basis == "chain" else _ch
+        if abs(claimed - _oth) <= 5e-4 and abs(claimed - _oth) < abs(claimed - _dec) - 1e-9:
+            return _it
+    return None
+
+
+# SELF-TEST, so this audit cannot be decoration: the real D3 defect must trip it, and the
+# correctly-stated version of the same number must not.  best1_top128 is chain 2.1435 / cloud
+# 2.1458 -- the STATE headline called the chain value "CA cloud".
+_st_bad = _cross_basis_hit(2.1435, "cloud")
+_st_ok = _cross_basis_hit(2.1458, "cloud")
+print("  selftest: the D3 defect (chain 2.1435 declared 'cloud')   %s"
+      % ("CAUGHT via '%s'" % _st_bad if _st_bad else "*** NOT CAUGHT -- audit is broken ***"))
+print("  selftest: the corrected number (cloud 2.1458 as 'cloud')  %s"
+      % ("clean" if _st_ok is None else "*** FALSE POSITIVE via '%s' ***" % _st_ok))
+if _st_bad is None or _st_ok is not None:
+    FLAG.append(("CROSS-basis audit SELFTEST FAILED", "s31_verify.py"))
 
 print()
 print("=" * 96)
