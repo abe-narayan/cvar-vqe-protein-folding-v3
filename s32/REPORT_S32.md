@@ -543,7 +543,8 @@ solutions *"one Ramachandran-plausible and one not"*, with the reference disagre
 up to 1.6 A; every native-free ranker this project has tested is a distance-map function and
 therefore **achiral** by theorem G1; **so a chiral criterion should be able to pick the branch where
 an achiral one provably cannot.** Lane V tested it as a deployable argmin arm, chain basis, paired
-in the same job, tie-averaged, independently of lane R (n = 126; **production in that job is exactly 3.2105**, so these arms sit on the canonical realisation):
+in the same job, tie-averaged, independently of lane R (n = 126; **production in that job is exactly
+3.2105**, so these arms sit on the canonical realisation):
 
 **The decision is real.** 126/126 targets have ≥ 2 distinct branches (median 149 of 158, union-find
 at 1e-3 Å); the RMSD spread across distinct branches is mean **0.5542**, **> 0.3 Å on 86 targets**;
