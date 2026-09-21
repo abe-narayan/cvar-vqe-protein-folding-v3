@@ -1,0 +1,306 @@
+{
+ "prereg": "s32/PREREG_S32_P.md @ 33dfe0d3",
+ "hypothesis": "H-P2a",
+ "n": 126,
+ "ndraw": 200,
+ "seed": 3205501,
+ "basis": "CA POINT CLOUD quality labels rr; ORACLE / NOT DEPLOYABLE (every `best` reads rr)",
+ "universe": {
+  "n_windows_min": 7016,
+  "n_windows_median": 17088.0,
+  "n_windows_max": 39410,
+  "best": 1.313446881279113,
+  "mean": 4.815506799033171
+ },
+ "ladder_best": {
+  "universe": 1.313446881279113,
+  "blosum500": 1.7108244199364904,
+  "score128": 2.1457974866978704,
+  "score75": 2.3061526409453816,
+  "blosum75": 2.1041258630298434
+ },
+ "ladder_mean": {
+  "universe": 4.815506799033171,
+  "blosum500": 4.453250250458717,
+  "score128": 3.584701865209296,
+  "score75": 3.5506829818026735,
+  "blosum75": 4.286647438703391
+ },
+ "rungs": {
+  "R1_universe_to_500": {
+   "filter": "BLOSUM62 sum (core/pipeline.py:698-700)",
+   "BEST": {
+    "parent": 1.313446881279113,
+    "child": 1.7108244199364904,
+    "rung_loss": 0.3973775386573776,
+    "matched_random_at_child_K": 1.7843663875232378,
+    "order_statistic_part": 0.4709195062441249,
+    "attributable_to_the_filter": -0.07354196758674723,
+    "filter_vs_random": {
+     "label": "R1_universe_to_500 BEST: filter - matched random",
+     "mean_a": 1.7108244199364904,
+     "mean_b": 1.7843663875232378,
+     "effect": -0.07354196758674723,
+     "median_effect": -0.024729894399643015,
+     "se": 0.029499254908022906,
+     "mde": 0.08264511255031698,
+     "effect_over_mde": -0.8898525916093651,
+     "ci95_fold": [
+      -0.1297166076734537,
+      -0.020911931953400627
+     ],
+     "folds_same_sign": 4,
+     "n_better": 73,
+     "n_worse": 53,
+     "verdict": "NOT MEASURED (|effect| 0.0735 <= its own MDE 0.0826, 0.89x)"
+    },
+    "draw_sd_within_target": 0.21567173622563798
+   },
+   "MEAN": {
+    "parent": 4.815506799033171,
+    "child": 4.453250250458717,
+    "rung_gain": -0.36225654857445294,
+    "matched_random_at_child_K": 4.814964267946143,
+    "order_statistic_part": -0.000542531087028147,
+    "attributable_to_the_filter": -0.3617140174874249,
+    "filter_vs_random": {
+     "label": "R1_universe_to_500 MEAN: filter - matched random",
+     "mean_a": 4.453250250458717,
+     "mean_b": 4.814964267946143,
+     "effect": -0.3617140174874249,
+     "median_effect": -0.325873506963551,
+     "se": 0.032280452028452256,
+     "mde": 0.09043691440291184,
+     "effect_over_mde": -3.9996280266255813,
+     "ci95_fold": [
+      -0.4156259771486025,
+      -0.3257477989363706
+     ],
+     "folds_same_sign": 5,
+     "n_better": 108,
+     "n_worse": 18,
+     "verdict": "BETTER"
+    },
+    "draw_sd_within_target": 0.058065870700254804
+   }
+  },
+  "R2_500_to_128": {
+   "filter": "distogram Bayes risk (core/pipeline.py:755-760) -- QUANTUM ONLY",
+   "BEST": {
+    "parent": 1.7108244199364904,
+    "child": 2.1457974866978704,
+    "rung_loss": 0.43497306676138014,
+    "matched_random_at_child_K": 1.9578501382635698,
+    "order_statistic_part": 0.24702571832707954,
+    "attributable_to_the_filter": 0.18794734843430064,
+    "filter_vs_random": {
+     "label": "R2_500_to_128 BEST: filter - matched random",
+     "mean_a": 2.1457974866978704,
+     "mean_b": 1.9578501382635698,
+     "effect": 0.18794734843430064,
+     "median_effect": -0.0361621119081974,
+     "se": 0.06272464376691642,
+     "mde": 0.17572936197739303,
+     "effect_over_mde": 1.0695272908262161,
+     "ci95_fold": [
+      0.03926000296196435,
+      0.275135589182502
+     ],
+     "folds_same_sign": 4,
+     "n_better": 72,
+     "n_worse": 54,
+     "verdict": "WORSE [TYPE-M ZONE: magnitude inflated ~1.09x]"
+    },
+    "draw_sd_within_target": 0.2055483623639173
+   },
+   "MEAN": {
+    "parent": 4.453250250458717,
+    "child": 3.584701865209296,
+    "rung_gain": -0.8685483852494212,
+    "matched_random_at_child_K": 4.453432787145595,
+    "order_statistic_part": 0.0001825366868787403,
+    "attributable_to_the_filter": -0.8687309219363,
+    "filter_vs_random": {
+     "label": "R2_500_to_128 MEAN: filter - matched random",
+     "mean_a": 3.584701865209296,
+     "mean_b": 4.453432787145595,
+     "effect": -0.8687309219363,
+     "median_effect": -0.8057194905914369,
+     "se": 0.0720634996570749,
+     "mde": 0.20189310063926105,
+     "effect_over_mde": -4.302925256908767,
+     "ci95_fold": [
+      -0.9451248110124661,
+      -0.7980902805168177
+     ],
+     "folds_same_sign": 5,
+     "n_better": 110,
+     "n_worse": 16,
+     "verdict": "BETTER"
+    },
+    "draw_sd_within_target": 0.10117223463558361
+   }
+  },
+  "R3_128_to_75": {
+   "filter": "distogram Bayes risk prefix",
+   "BEST": {
+    "parent": 2.1457974866978704,
+    "child": 2.3061526409453816,
+    "rung_loss": 0.160355154247511,
+    "matched_random_at_child_K": 2.2377039321127623,
+    "order_statistic_part": 0.09190644541489225,
+    "attributable_to_the_filter": 0.06844870883261875,
+    "filter_vs_random": {
+     "label": "R3_128_to_75 BEST: filter - matched random",
+     "mean_a": 2.3061526409453816,
+     "mean_b": 2.2377039321127623,
+     "effect": 0.06844870883261875,
+     "median_effect": -0.003788263499736766,
+     "se": 0.02484214940765844,
+     "mde": 0.06959776578049588,
+     "effect_over_mde": 0.9834900311096029,
+     "ci95_fold": [
+      0.0070829907919818125,
+      0.12696020742950512
+     ],
+     "folds_same_sign": 3,
+     "n_better": 65,
+     "n_worse": 61,
+     "verdict": "NOT MEASURED (|effect| 0.0684 <= its own MDE 0.0696, 0.98x)"
+    },
+    "draw_sd_within_target": null
+   },
+   "MEAN": {
+    "parent": 3.584701865209296,
+    "child": 3.5506829818026735,
+    "rung_gain": -0.03401888340662316,
+    "matched_random_at_child_K": 3.5855629564375002,
+    "order_statistic_part": 0.0008610912282039525,
+    "attributable_to_the_filter": -0.03487997463482711,
+    "filter_vs_random": {
+     "label": "R3_128_to_75 MEAN: filter - matched random",
+     "mean_a": 3.5506829818026735,
+     "mean_b": 3.5855629564375002,
+     "effect": -0.03487997463482711,
+     "median_effect": -0.024321371048688867,
+     "se": 0.017483836998428946,
+     "mde": 0.048982717734798537,
+     "effect_over_mde": -0.7120873697468916,
+     "ci95_fold": [
+      -0.05035036972422138,
+      -0.017829408981995358
+     ],
+     "folds_same_sign": 5,
+     "n_better": 77,
+     "n_worse": 49,
+     "verdict": "NOT MEASURED (|effect| 0.0349 <= its own MDE 0.0490, 0.71x)"
+    },
+    "draw_sd_within_target": null
+   }
+  },
+  "R2b_500_to_75_DEPLOYABLE": {
+   "filter": "distogram Bayes risk -- THE FILTER PRODUCTION ACTUALLY RUNS",
+   "BEST": {
+    "parent": 1.7108244199364904,
+    "child": 2.3061526409453816,
+    "rung_loss": 0.5953282210088912,
+    "matched_random_at_child_K": 2.0775113226550204,
+    "order_statistic_part": 0.3666869027185299,
+    "attributable_to_the_filter": 0.2286413182903613,
+    "filter_vs_random": {
+     "label": "R2b_500_to_75_DEPLOYABLE BEST: filter - matched random",
+     "mean_a": 2.3061526409453816,
+     "mean_b": 2.0775113226550204,
+     "effect": 0.2286413182903613,
+     "median_effect": 0.00034834727644911245,
+     "se": 0.06944734795163819,
+     "mde": 0.19456369002130958,
+     "effect_over_mde": 1.175148961583322,
+     "ci95_fold": [
+      0.054648051422612726,
+      0.3411911355607382
+     ],
+     "folds_same_sign": 4,
+     "n_better": 63,
+     "n_worse": 63,
+     "verdict": "WORSE [TYPE-M ZONE: magnitude inflated ~1.05x]"
+    },
+    "draw_sd_within_target": 0.24792198944625823
+   },
+   "MEAN": {
+    "parent": 4.453250250458717,
+    "child": 3.5506829818026735,
+    "rung_gain": -0.9025672686560443,
+    "matched_random_at_child_K": 4.453727025804735,
+    "order_statistic_part": 0.0004767753460183611,
+    "attributable_to_the_filter": -0.9030440440020627,
+    "filter_vs_random": {
+     "label": "R2b_500_to_75_DEPLOYABLE MEAN: filter - matched random",
+     "mean_a": 3.5506829818026735,
+     "mean_b": 4.453727025804735,
+     "effect": -0.9030440440020627,
+     "median_effect": -0.8264783285001913,
+     "se": 0.08036228293738487,
+     "mde": 0.22514297187737747,
+     "effect_over_mde": -4.01098038491692,
+     "ci95_fold": [
+      -1.0026614366492388,
+      -0.8175818852657836
+     ],
+     "folds_same_sign": 5,
+     "n_better": 110,
+     "n_worse": 16,
+     "verdict": "BETTER"
+    },
+    "draw_sd_within_target": 0.14109130801710637
+   }
+  }
+ },
+ "survival": {
+  "rank_of_pool_best_in_score_mean": 171.33333333333334,
+  "rank_median": 135.0,
+  "survives_128": 0.5,
+  "survives_75": 0.3253968253968254,
+  "uninformative_null_survives_128": 0.256,
+  "uninformative_null_survives_75": 0.15
+ },
+ "blosum75_vs_score75": {
+  "BEST": {
+   "label": "BLOSUM top-75 - score top-75, BEST",
+   "mean_a": 2.1041258630298434,
+   "mean_b": 2.3061526409453816,
+   "effect": -0.2020267779155383,
+   "median_effect": 0.0,
+   "se": 0.06302630649623377,
+   "mde": 0.17657450027984853,
+   "effect_over_mde": -1.14414469583859,
+   "ci95_fold": [
+    -0.31859991277835165,
+    -0.040797692125405724
+   ],
+   "folds_same_sign": 4,
+   "n_better": 62,
+   "n_worse": 53,
+   "verdict": "BETTER [TYPE-M ZONE: magnitude inflated ~1.06x]"
+  },
+  "MEAN": {
+   "label": "BLOSUM top-75 - score top-75, MEAN",
+   "mean_a": 4.286647438703391,
+   "mean_b": 3.5506829818026735,
+   "effect": 0.7359644569007177,
+   "median_effect": 0.6933905712763466,
+   "se": 0.07401274359087344,
+   "mde": 0.20735410244419103,
+   "effect_over_mde": 3.549312254860263,
+   "ci95_fold": [
+    0.6471015337087158,
+    0.8521779948857524
+   ],
+   "folds_same_sign": 5,
+   "n_better": 16,
+   "n_worse": 110,
+   "verdict": "WORSE"
+  }
+ },
+ "multiplicity_emitted": 10
+}

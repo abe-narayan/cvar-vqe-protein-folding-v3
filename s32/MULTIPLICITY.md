@@ -173,3 +173,31 @@ targets and are reported as such, not as nulls): `hbond_local` +0.0308 (0.38×),
 **Registered before the numbers: primary = median `cos(Δd, −e_prod)` ≥ +0.10; endpoint = built-chain
 CA-RMSD paired against the production chain rebuilt in the same job.** Control draws: 32 per target
 per rung, **own distribution reported (mean, sd, max)**, never a best draw (contract rule 10).
+
+## LANE P (pool, filter, selection) — prereg `s32/PREREG_S32_P.md` @ `33dfe0d3`
+
+Basis is named on every row. `OB` = ORACLE band (top-24 by the native label `a`, a collider).
+`NFB` = native-free band (the score's own top-24, not a collider).
+
+| # | comparison | basis | registered? | emitted |
+|---|---|---|---|---|
+| P-01 | R1 universe→500 BLOSUM, BEST vs matched random-500 (200 draws) | cloud label `rr`, ORACLE | REGISTERED (H-P2a) | −0.0735, 0.89× — **NOT MEASURED** |
+| P-02 | R1 universe→500 BLOSUM, MEAN vs matched random-500 | cloud label, ORACLE | REGISTERED (H-P2a) | −0.3617, 4.00×, 5/5, 108W/18L — **BETTER** |
+| P-03 | R2 500→128 score, BEST vs matched random-128 | cloud label, ORACLE | REGISTERED (H-P2a) | +0.1879, 1.07×, 4/5, 72W/54L — **WORSE** |
+| P-04 | R2 500→128 score, MEAN vs matched random-128 | cloud label, ORACLE | REGISTERED (H-P2a) | −0.8687, 4.30×, 5/5 — **BETTER** |
+| P-05 | R3 128→75 score, BEST vs matched random-75-of-128 | cloud label, ORACLE | REGISTERED (H-P2a) | +0.0684, 0.98× — **NOT MEASURED** |
+| P-06 | R3 128→75 score, MEAN vs matched random-75-of-128 | cloud label, ORACLE | REGISTERED (H-P2a) | −0.0349, 0.71× — **NOT MEASURED** |
+| P-07 | R2b 500→75 score (THE DEPLOYABLE FILTER), BEST vs random-75-of-500 | cloud label, ORACLE | REGISTERED (H-P2a) | +0.2286, 1.18×, 4/5, 63W/63L — **WORSE** |
+| P-08 | R2b 500→75 score, MEAN vs random-75-of-500 | cloud label, ORACLE | REGISTERED (H-P2a) | −0.9030, 4.01×, 5/5, 110W/16L — **BETTER** |
+| P-09 | BLOSUM top-75 vs score top-75, BEST | cloud label, ORACLE | EXPLORATORY | −0.2021, 1.06× TYPE-M, 62W/53L |
+| P-10 | BLOSUM top-75 vs score top-75, MEAN | cloud label, ORACLE | EXPLORATORY | +0.7360, 3.55×, 5/5 — **WORSE** |
+| P-11 | P3-1 `Var(U)/Var(V)` over the 128 > 1 | cloud, ORACLE | REGISTERED | median 2.62, 78% of targets — **PASS** |
+| P-12 | P3-2 in-band ρ(CONS, a) negative on ≥80% | OB, ORACLE | REGISTERED | −0.2745 ± 0.0366, 78.6% — **FAIL on the 80% bar, sign confirmed** |
+| P-13 | P3-2 shuffled-U collider control | OB, ORACLE | REGISTERED (control) | +0.1387 ± 0.0214 — collider alone gives the WRONG sign |
+| P-14 | P3-3 μ recovered by least squares from {a, d} | cloud, ORACLE | REGISTERED | rel. resid 2e-14, 126/126; shuffled-d control 0.373 — **PASS** |
+| P-15 | P3-4 zero-μ control, ρ(CONS, a′) in band | OB, ORACLE | REGISTERED (control) | −0.2745 → **+0.7046 ± 0.0096** — **PASS** |
+| P-16 | P3-5 price curve, cos\* for positive in-band ρ | OB, ORACLE | REGISTERED | cos\* = **0.2137** (6 draws/target × 126) |
+| P-17 | P3-6 cos(μ̂, μ) for 7 native-free directions | cloud, ORACLE-scored | REGISTERED | max +0.0568 ± 0.0434 (ARGMIN); all **below cos\*** |
+| P-18 | in-band ρ of CONS on the NATIVE-FREE band | NFB, ORACLE label only | EXPLORATORY | **+0.2531 ± 0.0434**, 73% positive — positive in-band skill EXISTS |
+| P-19 | `Var(U)/Var(V)` on the native-free band | NFB, ORACLE | EXPLORATORY | median 4.89 (mean 19.0) — worse than the ORACLE band |
+| P-20 | P5 strata `Var(U)/Var(V)`: tail vs other108 | cloud, ORACLE | REGISTERED (H-P5) | 13.60 / 7.43 (filter-independent) vs 4.71 — **PASS** |
