@@ -332,7 +332,154 @@ Recommend lanes stage explicit paths.
 
 ---
 
+## D6 — MODERATE, AND IT IS THE SPRINT'S HEADLINE. S31-L17'S ALGEBRA IS CORRECT; ITS EVIDENCE COULD NOT HAVE TESTED ITS OWN CAVEAT, AND "ZERO" OVERSTATES A MEASURABLE QUANTITY
+
+**Claimed** — `s31/LEDGER.md` S31-L17 / `s31/STATE.md`: *"`E = _zrank(pool["sc"][o])` … The ranks of
+any 128 distinct values are 1..128, so the standardised vector is a **constant** … **Identical to six
+decimals.** Up to the pool's tie structure, `E` is **the same vector on every target in the
+benchmark**"* and *"**The quantum stage carries ZERO target-specific information.**"* The recorded
+evidence is **three synthetic random score vectors**.
+
+**What I found.** Artefacts `s31/s31_V_zrank.py`, `s31/results/s31_V_zrank.json`, all 126 targets,
+native-free (`E` is a function of the score order only).
+
+**(a) The load-bearing step is CONFIRMED, and it is not the one the entry verified.** The claim holds
+only if `sc[o]` is *sorted* — `rankdata` of an *unsorted* vector is a target-specific permutation of
+1..128, which would carry up to `log2(128!)` bits. It is sorted: `core/pipeline.py:757` sets
+`order = argsort(sc)` and `:863` sets `o = top[:dim]`. **I confirmed `sc[top]` is non-decreasing on
+all 126 targets from the real scores.** The three synthetic trials cannot establish this — they were
+fed an already-sorted vector, which is why they printed a monotone ramp. **The algebra is right and
+the recorded evidence does not test the step it rests on.**
+
+My recomputed ramp reproduces lane P's printed values exactly: first five
+`[-1.718572, -1.691507, -1.664443, -1.637379, -1.610315]`, last three
+`[1.664443, 1.691507, 1.718572]`.
+
+**(b) The tie hedge is the common case, not an edge case — and the synthetic test could not see it.**
+`rankdata` uses `method='average'`, so ties bend `E` off the ramp. Random floats never tie, so three
+synthetic vectors are structurally incapable of exhibiting the phenomenon the caveat is about. On the
+real benchmark:
+
+```
+targets with at least one tie in the top-128       125 of 126
+targets whose E is EXACTLY the ramp                  1 of 126
+tied positions per target        mean 9.56   median 8   p90 18   max 34
+max |E - ramp| over all targets                   0.0407     (on a vector spanning +/-1.7186)
+max |E_i - E_j| between any two targets           0.0812
+distinct STRUCTURES in the top-128     mean 118.45, min 94   <- the source of the ties
+```
+
+`118.45` reproduces lane A's `ALPHABET_n_distinct_mean` **exactly**, which independently confirms the
+mechanism: **ties are duplicate structures, and duplicate structures have identical scores.**
+
+**(c) So "ZERO" is an overstatement of a quantity that is now measured.** `E` does carry a little
+target-specific information — the tie pattern, which is a target-specific fact about which retrieved
+structures are duplicates. The honest statement is that it is **negligible and bounded**, and lane P
+already measured the downstream size: `sd(H(p*))` across targets is `1.4e-4` bits at α = 1.
+
+**Nothing in the conclusion changes.** The stage is a fixed weighting curve per α and the target
+enters only through the readout's `P` and `W`. The defect is that the sprint's headline rests on
+evidence that could not have tested its own caveat, and states "zero" where a measured bound is
+available and stronger.
+
+**Corrected sentence:**
+
+> `core/pipeline.py:757` sorts the pool by score and `:863-864` takes `E = _zrank(sc[top[:128]])` of
+> that **sorted** slice, so `E` is the standardised rank ramp — **confirmed non-decreasing on all 126
+> targets from the real scores, not only on synthetic draws.** It is target-independent to within a
+> **max-norm deviation of 0.0407 on a vector spanning ±1.7186 (2.4% of range)**, with a maximum
+> between-target deviation of **0.0812**. The residual is entirely the tie structure of duplicate
+> retrieved windows — **125/126 targets carry ties, mean 9.56 of 128 positions, max 34**, from
+> `n_distinct` 118.45/128 — and its downstream effect is `sd(H(p*)) = 1.4e-4` bits. **The quantum
+> stage therefore carries no target-specific information beyond that bound**: it answers *"what fixed
+> weight should rank k receive?"*, a global hyperparameter, and the target enters only through the
+> readout's `P` and `W`.
+
+**One further precision, offered rather than charged as a defect:** `(alpha, T)` is read from
+`VQE_LFO[fold]`, so `p` takes **two** distinct values across the benchmark (α = 1 on folds 0/3/4,
+α = 0.25 on 1/2), selected by fold — which is a property of the target. Lane P's own phrasing *"one
+fixed weighting curve per alpha"* is exactly right; the STATE compression to *"zero target-specific
+information"* loses it.
+
+---
+
+## D7 — LOW. THE ~0.70 Å REFERENCE TERM DOES NOT "CANCEL", IT ATTENUATES; IT IS NOT "UNIFORM"; AND THE QUADRATURE USES THE WRONG MOMENT, UNDERSTATING ITS OWN CAVEAT BY ~2×
+
+**Claimed** — `s31/STATE.md` NOTE 7: *"The endpoint carries a **uniform** ~0.70 Å reference term …
+In quadrature `sqrt(3.21² − 0.70²) = 3.13` … i.e. ~0.08 Å today, material near 1 Å. **Because it is
+uniform it CANCELS in every arm-to-arm delta**, which is the project's actual currency."*
+
+**What the artefact says** — `s31/lit_L/ens_spread.json`, 111 resolved targets, recomputed by me:
+
+**(a) It is not uniform, and lane L's own table says so.** `model1 → medoid` has **mean 0.6965,
+median 0.4565, sd 0.7767, max 4.2943** — **CV = 1.12**, i.e. the standard deviation exceeds the mean,
+and **13 of 111 targets are exactly 0.0**. That is about as far from uniform as a positive quantity
+gets. **The conclusion is right and the stated reason is falsified by the data two paragraphs
+above it in the same note.** The correct reason: **both arms are scored against the same reference on
+the same target**, so the term is common to the pair and largely differences out — which holds
+whether or not it is uniform.
+
+**(b) It attenuates rather than cancels.** Under lane L's own quadrature model the observed delta is
+the true delta times `d/sqrt(d² + r²)`:
+
+```
+r = 0.6965 (the quoted mean)   d = 3.2105 -> 2.3% attenuation    d = 1.0 -> 17.9%
+```
+
+On the project's one confirmed effect (0.0221 Å) that is **0.0005 Å — immaterial now**, and it grows
+in exactly the regime lane L already flags. *"Cancels"* should be *"attenuates by 2.3% at the current
+endpoint."*
+
+**(c) The quadrature uses the wrong moment, and the error is one-sided.** `d_obs² = d_true² + r²` is
+a per-target identity **in squares**, so it must be applied with **second** moments. Lane L applied
+it to **first** moments on both sides. Because the reference term is far more skewed (CV 1.12) than
+the endpoint, the understatement lands on `r`:
+
+```
+r as quoted, MEAN of the per-target RMSDs        0.6965
+r as the model needs it, RMS of the same         1.0407     (+49%)
+
+endpoint inflation   sqrt(d^2+r^2) - d   at d = 3.2105:   +0.0747  (quoted ~0.08)
+                                          with r = RMS:   +0.1645
+delta attenuation at d = 1.0                   r = mean:    17.9%
+                                                r = RMS:    30.7%
+```
+
+**So the caveat is about 2× larger than stated.** It still changes nothing — lane L's recommendation
+(*report the uncertainty beside the headline and change nothing*) remains correct, and I endorse it.
+
+**(d) A positive lane L could have claimed and did not.** **13 of 111 deposited `model 1`s are
+*exactly* their own ensemble medoid (11.7%)**, against ~5% expected by chance at ~20 models per
+entry. Depositors commonly order NMR models by agreement, and this is direct evidence that the
+benchmark's reference is a **better-than-random** ensemble member — which strengthens lane L's
+"change nothing" recommendation on its own terms.
+
+**Corrected sentence:**
+
+> The endpoint carries a reference term of mean **0.6965 Å** (median 0.4565, sd 0.7767, max 4.2943;
+> **13/111 exactly zero** — model 1 is its own ensemble medoid more often than chance). **It is not
+> uniform**; what protects arm-to-arm deltas is that **both arms are scored against the same
+> reference on the same target**, so it is common to the pair. It does not cancel exactly — it
+> **attenuates every delta by 2.3% at the current endpoint** (0.0005 Å on the project's confirmed
+> 0.0221 Å effect), rising to ~31% if arms reach 1.0 Å. Applied with the moment the model requires
+> (**RMS 1.0407**, not the mean), the absolute inflation at the endpoint is **+0.1645 Å**, not
+> ~0.08. **Report it beside the headline and change nothing.**
+
+---
+
 # CONFIRMED
+
+* **S31-L17's algebra is CORRECT** and I confirmed the step its own evidence did not test:
+  `sc[top]` is non-decreasing on all 126 targets from the real scores, so `E` really is the
+  standardised rank ramp. See D6 for the measured size of the tie caveat.
+* **The cross-basis audit D3 asked for is implemented** in `s31/s31_verify.py` (lane D's file,
+  at the coordinator's request) and **carries a self-test so it cannot be decoration**: the real
+  D3 defect (chain 2.1435 declared `cloud`) is CAUGHT via `best1_top128`, and the corrected
+  number (cloud 2.1458 declared `cloud`) is clean. The verifier now runs **129 matched / 0
+  mismatched / 0 not-found / 0 flagged**, with 33 s29 O-ladder items carrying both bases.
+* **Lane L's reference-term arithmetic reproduces** (`sqrt(3.2105^2 - 0.6965^2) = 3.1358`, quoted
+  ~0.08 A) and **its recommendation -- report it beside the headline and change nothing -- is
+  correct.** D7 corrects the stated reason and the moment, not the decision.
 
 * **`bestm128 = 2.9027` is real on the endpoint basis, and its deflation is correctly stated.**
   I independently confirm the chain arm from `s29/results/s29_O_chain_rows*.jsonl`: `bestm128`
