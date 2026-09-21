@@ -1,0 +1,27 @@
+{
+ "13": {
+  "deployed_library_windows": 17853,
+  "prots_windows": 2153224,
+  "n_prots_long_enough": 13751
+ },
+ "26": {
+  "deployed_library_windows": 0,
+  "prots_windows": 1974465,
+  "n_prots_long_enough": 13750
+ },
+ "35": {
+  "deployed_library_windows": 0,
+  "prots_windows": 1850715,
+  "n_prots_long_enough": 13749
+ },
+ "45": {
+  "deployed_library_windows": 0,
+  "prots_windows": 1713271,
+  "n_prots_long_enough": 13725
+ },
+ "55": {
+  "deployed_library_windows": 0,
+  "prots_windows": 1576535,
+  "n_prots_long_enough": 13573
+ }
+}
