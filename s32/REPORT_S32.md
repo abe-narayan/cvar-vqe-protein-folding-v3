@@ -82,10 +82,59 @@ best single member, K=500                        1.7078        1.50 A of headroo
   + selection / readout (uniform average)       +0.9051   ->   3.2105   PRODUCTION
 ```
 
-**The pool is not the bottleneck.** The existing K=500 pool supports **1.1139 A** through a sparse
-convex combination of about ten members. Everything downstream of retrieval destroys **2.10 A that is
-already present**. Charter §56 asks for the earliest irreversible loss; **it is not candidate
-generation.**
+**The pool is not the bottleneck** — but the reason is not the one this ladder first suggested, and
+the correction is the deepest result of the sprint.
+
+### 2.0 The top rung prices a FIT, not a RETRIEVAL
+
+The obvious reading — *"the K=500 pool supports 1.1139 Å, so everything downstream destroys 2.10 Å
+that retrieval already found"* — attributes the headroom to retrieval. **A size-matched control that
+had never been run says retrieval's share of it is 2.2%.** Three arms, same medoid frame, same NNLS
+solver, same alternation rounds, same native-pose seeding, n = 126, CA point cloud, **ORACLE / NOT
+DEPLOYABLE**:
+
+```
+A  BLOSUM500   the shipped pool                        1.1167   (median 1.1002, support 9.9)
+B  RAND500     same universe, RETRIEVAL-blind          1.1495   +0.0328   0.38x   63W/63L  NOT A RESULT
+C  DONOR500    ANOTHER TARGET'S universe, TARGET-blind 1.1626   +0.0459   0.49x   47W/79L  NOT A RESULT
+```
+
+Arm A reproduces the S29 ladder's `hull_pool` = 1.1167 to four decimals, which is what certifies the
+implementation is the ladder's operator rather than a lookalike. (Support **9.9** also explains why
+the ladder's sparse `s=10` ≈ the full hull: **the hull is already sparse.**)
+
+> ### 500 fragments taken from a DIFFERENT protein reach 1.1626 Å on this target, against the retrieved pool's 1.1167 Å, and the difference is NOT A RESULT.
+
+**So the 2.10 Å is not information retrieval supplied. It is the expressive capacity of 500
+fragments in a ~39-dimensional space** — a convex hull of 500 points in `R^{3n}` with `3n ≈ 39` comes
+within ~1.16 Å of essentially any target of that length, whether or not the points were chosen for
+it. **And realising it requires the ~39 real numbers that ARE the answer.**
+
+Charter §27 warns: *do not call a bad candidate pool a selection problem just because the best
+candidate exists somewhere inside it.* **This is that warning one level up: do not call a pool
+"containing the answer" when a pool assembled for a different protein contains it equally well.**
+
+**The corrected statement, which is stronger than the one it replaces:**
+
+> **At 9–16 residues fragment space is close to saturated, so the ladder's top rung prices a FIT, not
+> a RETRIEVAL.**
+
+**What this does NOT say**, and the distinction is load-bearing: **retrieval is not useless.** It sets
+the **pool mean** — 4.4533 against a random universe draw's 4.8155 — and production **averages 75
+members rather than fitting a hull**, so mean quality is what production actually consumes.
+***The ORACLE top rung and the deployed pipeline consume different properties of the pool, and only
+the second is retrieval-sensitive.***
+
+It also makes three other results cohere rather than sitting beside them: lane P's best-member rung
+`universe → 500` is **−0.0718 at 0.85×, NOT MEASURED** — retrieval's contribution to the *best member*
+is unmeasured and of the same size; the readout's hull floor `d = 1.8290` is for the **top-75** hull,
+and the K=500 hull is 1.1167 **because it has 500 points, not because they are the right ones**; and
+charter §41's five-bit question is answered by the same fact — **the 2.10 Å "prize" costs ~39 real
+numbers of oracle information to collect, which is why every attempt to collect a few bits of it has
+returned nothing.**
+
+Charter §56 asks for the earliest irreversible loss. **It is not candidate generation** — and now for
+a better reason than "the pool already contains the answer".
 
 ### 2.1 Most of the "filter loss" is a bare order statistic, and the rest is 18 circular targets
 
@@ -180,15 +229,156 @@ missing quantity as §4's per-target sign — not an independent opportunity.
 
 ---
 
-## 3. The readout is a hull projection, and that closes a family
+## 3. The readout is a hull projection, and that closes the family by derivation
 
-[PENDING — S32-L5, L(Q1)–L(Q3): gain, the sufficient statistic, the hull floor, monotonicity.]
+For any weights with `Σw = 1`, `a_x = ‖W_x − t‖²` (**ORACLE**) and `B_xy = ‖W_x − W_y‖²` (native-free):
+
+```
+|| sum_x w_x W_x - t ||^2  =  <w, a>  -  0.5 * w' B w
+```
+
+`B` is a Euclidean squared-distance matrix, so `w'Bw` is **concave** on the simplex and the program is
+**convex and tuning-free**. Reading the terms: minimising wants **low `⟨w,a⟩`** (good candidates) **and
+high `w'Bw`** (spread — the variance-cancellation term). ***Spread is rewarded.*** That is why
+quality-blind dispersion maximisation — this program with `a` constant — is **+0.1436 Å at 1.22× MDE,
+WORSE**: it picks garbage. **`a` is load-bearing and it is the only unknown.**
+
+### 3.1 The left-hand side is a distance to the hull, and that fixes everything
+
+`‖Σw W_x − t‖²` **is** the squared distance from the native to a point of the candidate hull, so the
+readout's optimisation is the **Euclidean projection of the native onto the convex hull of the
+candidates**. Therefore `∂x*/∂t` is the orthogonal projector onto the **active** candidates' affine
+hull: **gain 1 inside it, 0 outside** (finite differences 1.0000000, sd 3.1e-09; orthogonal 4.0e-09;
+re-derived independently by the coordinator at 0.9991 / 5.9e-03).
+
+- **`a` is needed only along `|S| − 1` ≈ 5.25 directions**, out of an ambient ~38.9. Everything else in
+  `a` is **exactly invisible** to the emitted structure.
+- **Gain 0 on ~33 directions is TOTAL suppression, not none** — a generic error is ~87% annihilated,
+  and at ε = 4.0 the program turns a 3.65 Å estimate into a 2.23 Å emission.
+- **The binding constraint is the LOWER bound**: `d ≤ ‖P_C(t̂) − t‖ ≤ d + ε` with the **hull floor
+  `d = 1.8290 ± 0.1178`** (CA cloud, ORACLE). The crossover against direct emission is at **ε ≈ 2.2**.
+
+> ### A structure estimate good enough to make the readout worth solving is already good enough to emit.
+
+**That turns S31's measurement into a theorem.** S31 found that solving the CVaR objective exactly
+*"reshuffles the answer on 66 of 126 targets and buys nothing"* (−0.0112 Å, 0.19× MDE) and recorded it
+as a surprising null. **It is forced.**
+
+### 3.2 `a` and `μ` are ONE object — S31's sharpest open question, closed twice
+
+`a` is **affine in `t`** and `Σw = 1` makes `‖t‖²` an additive constant, so the readout-relevant part of
+`a` is `P_aff{W} t`. Substituting it moves `w` by **7.0e-12** and the structure by **2.9e-12 Å** on
+126/126. Since `t = X̄ − μ`, the map **`μ ↔ t ↔ a` is a native-free affine bijection.**
+
+> **A per-candidate quality estimator with in-band skill IS a structure predictor, and a common-mode
+> corrector IS a per-candidate quality estimator. One missing channel in two vocabularies.**
+
+**Two lanes established this independently and in opposite directions** — one derived `a` from `μ`,
+the other **recovered `μ` from `{a_k, d_k}` by least squares at relative residual 2e-14 on 126/126**
+(shuffled-`d` control 0.373, `cos = 1.0000`). *Contract rule 7 satisfied without coordination.*
+
+**And there is no compression hiding in the pool's geometry.** Superposing members *and* native on the
+medoid removes 3 translations and 3 rotations, so `rank(d) = 3n − 6` **EXACTLY on 126/126** (median
+33) and 128 fragments span it fully. **`μ` lies inside that span necessarily, and the requirement is
+exactly `3n − 6` numbers.**
+
+### 3.3 The last quantum formulation falls by monotonicity
+
+Sparse `s`-of-`K` **escapes all three of S31's obstructions** — the subset basis is diagonal, `⟨E⟩` is
+linear in `p` because the weights are solved classically inside `E(x)`, and the dimension is `2^K`
+not `K`. ***Those obstructions are properties of the candidate-index register, not of CVaR-VQE.***
+
+It falls to a different argument: **`f*(s)` is constant for `s ≥ s*` and strictly worse for
+`s < s*`.** So `s ≥ s*` **is** the convex program and `s < s*` is hard **and worse**.
+
+> ### The hard instances are exactly the ones whose optimum is worse.
+
+`s*` at K = 500: mean **10.06**, median 10, p90 13, max 23; **61.1% ≤ 10.** The closure does not depend
+on where `s*` falls.
+
+### 3.4 Priced in reals rather than bits
+
+```
+r reals     0        1        3        6       10      ~33
+CA cloud  3.0532   2.5804   2.2638   2.0312   1.9110  1.8290      ORACLE / NOT DEPLOYABLE
+```
+
+**Six reals buy 83% of what thirty-three buy.** *A bit count prices a selection alphabet; this
+decision is continuous, so the two are never differenced.* That is charter §41's five-bit question
+answered in the right currency.
 
 ---
 
-## 4. In-band skill is not zero — the per-target SIGN is missing
+## 4. In-band skill is not zero — the per-target SIGN is missing, and it is still not enough
 
-[PENDING — S32-L7, L(D2), and whether anything native-free reads the bit.]
+Four sprints have read *"in-band skill is zero"* as **the information is absent**. It is not.
+
+```
+                in band      xMDE   W/L        mean|rho|   perm null   ratio   xMDE   folds
+AMBER           +0.0000      0.00   62/64        0.1779      0.0948    1.88    2.36    5/5
+DIS             +0.0652      0.83                0.2496      0.0939    2.66    3.05    5/5
+LEG_total       +0.0376      0.42                0.2819      0.0908    3.10    3.52    5/5
+LEG_torsion     +0.0444      0.65                0.2142      0.0947    2.26    2.77    5/5
+```
+
+> ### `Var(ρ) > 0` with `E[ρ] = 0`. The ordering information is present on every scorer — including the one with exactly zero mean skill — and what is missing is the per-target SIGN.
+
+### 4.1 The sign is a property of the target, and the right null proves it
+
+Estimated on half A of a band, applied to **held-out half B**, 16 splits/target, **deduplicated**
+(7.7% of band members are exact coordinate duplicates on 122/126 targets), from a committed script
+with a pinned seed:
+
+```
+scorer        transfer  nullPERM  nullXTGT  globalSGN   xMDE  folds  verdict
+AMBER          +0.1163   +0.0058   +0.0004    -0.0725   2.61   5/5   PER-TARGET
+DIS            +0.1901   +0.0010   +0.0088    +0.0649   3.19   5/5   PER-TARGET
+LEG_total      +0.2180   +0.0042   +0.0082    +0.0426   3.10   5/5   PER-TARGET
+LEG_torsion    +0.1492   +0.0046   +0.0017    +0.0460   2.68   5/5   PER-TARGET
+RG             +0.3228   +0.0014   +0.0053    +0.0489   4.15   5/5   PER-TARGET
+NOISE          +0.0056   -0.0004   +0.0016    +0.0123   0.15   2/5   NOT A RESULT  <- self-test
+```
+
+**`nullPERM` — the first null used — could not test the claim.** It permutes `rr` inside half B and
+destroys *all* structure, so it is ≈0 for every scorer **including pure noise**. The null the claim
+needs is **cross-target**: apply another target's sign. Under it the transfers are genuinely
+per-target — and **`NOISE` at 0.15×, 2/5 folds is the self-test proving the audit can fail.**
+`DIS` replicates across two independently coded implementations at **+0.1901 / +0.1911**.
+
+**Two framing corrections the lane imposed on its own result.** These are **not** unrelated
+Hamiltonians — they all load on compactness, and **plain `Rg`, one line of numpy, beats every
+Hamiltonian measured.** *The bit is very likely "is the native more or less compact than its own
+band."* And this is **largely a confirmation on a new instrument, not a discovery**: the project
+already recorded native-free compactness proxies at 0.24–0.37, and `Rg`'s 0.3228 lands inside that.
+
+### 4.2 The ceiling, which closes the route
+
+2.0 Å requires in-band `ρ ≈ 0.638`. A **perfect, free** per-target sign gives AMBER 0.1163 (18% of
+it), `DIS` 0.1901 (30%), `LEG_total` 0.2180 (34%), **`Rg` 0.3228 (51%)**.
+
+> ### Even a free, perfect per-target sign leaves the best in-band scorer 2–3× short of the useful range. **The sign is CLOSED AS A ROUTE and kept as a FINDING.**
+
+**And it is not supplied natively.** Leave-fold-out ridge over 20 native-free per-target features,
+scored **against the marginal** rather than 50%: AMBER 0.381 vs marginal 0.508 (**worse than a
+constant**); `DIS` 0.548 vs 0.548 (**exactly**); `LEG_total` 0.595 vs 0.587 (**one target in 126**);
+per-fold accuracy swings 0.30–0.70. The one mechanism-motivated single feature,
+`sign(rg_pred − rg_pool)`, fails with a named mechanism: **it is positive on 81% of targets, so it is
+a constant wearing a label. A one-bit feature that is 81/19 cannot carry a 59/41 label.**
+
+**In Ångströms, BUILT CHAIN, n = 126, all arms in one process:** the price of **one ORACLE bit** is
+**−0.2101 Å, 1.66× MDE, 5/5 folds — ORACLE / NOT DEPLOYABLE.** Against S31's −0.8102 Å for the
+common-mode *direction*, **one bit is 26% of it.** (Median exactly 0.0000 with 74 ties, and that is
+**structural**: where the bit is +1, ORACLE ≡ constant. The effect is carried by 52 targets at
+≈ −0.51 Å each.)
+
+### 4.3 And the one native-free channel that DOES have in-band skill is redundant
+
+S31's *"in-band skill is zero or the wrong sign"* is a property of the **ORACLE band**, which
+conditions on the quantity being predicted. On the band a deployed selector actually ranges over —
+the score's own top-24, no native conditioning — consensus has **ρ = +0.2531 ± 0.0434** on the 128
+and **+0.2829 ± 0.0322** on the production 75, **positive on ~73% of targets.**
+
+> ### Positive in-band skill EXISTS. It is typicality — small `|d_k|`. And the terminal operator is already the argmin of exactly that: the medoid-superposed average sits at `V = 0`. **The only native-free channel with in-band skill is redundant with the operator already deployed.** That is the wall, and it is mechanical rather than statistical.
 
 ---
 
@@ -336,7 +526,38 @@ exact and order-independent; a reduction over 126 float64s is not.**
 
 ## 6. The quantum question, answered
 
-[PENDING — charter §14, the five conditions, P1 and P2, and why chain length is the binding one.]
+**Charter §14 asks: can a genuine CVaR-VQE be designed whose quantum state and objective actually
+contain information that can improve RMSD? On this instrument, NO** — and the reason is not a
+failure of imagination, it is **chain length**.
+
+Five conditions were scored on every discrete decision in the pipeline: **A** a space too big to
+enumerate, **B** per-shot, target-dependent and native-free, **C** endpoint-relevant, **D** no cheap
+classical algorithm, **E** a genuinely stochastic energy.
+
+> **`n_res` is 9–16, mean 12.96, so `2^n_res ≤ 65536` on 126/126. Condition A fails by chain length
+> alone.**
+
+And the deployed stage does not satisfy the others either. **S31's target-invariance result survives
+a falsification attempt built to break it** — a self-test that fires on a deliberately tied vector
+(0.1221) and a deliberately unsorted one (3.3830) *before* touching data, unlike S31's own, which ran
+on random floats that never tie. On the real 126: `sc[o]` non-decreasing 126/126; the **block model
+reproduces `E` bit-for-bit, max error 0.0e+00, on all 126**; `max|E − ramp| = 0.0406840`. Priced at
+**0.26× MDE**, with the selection readout **identically tied 126/126**, and an operator-matched
+control — keep the block *sizes*, relocate the blocks — at **0.38×, the same size.** ***The residual
+channel is the existence of duplicates, not which candidates duplicate: one integer per target.***
+
+### The two properties a problem would need
+
+> **P1 — a decision space that GROWS WITH THE TARGET.** Fragment assembly and per-residue branch
+> selection are the candidates, and **both exist only where one fragment no longer spans the
+> target.**
+>
+> **P2 — a genuinely STOCHASTIC energy.** A sampled free energy is the only candidate.
+>
+> **They must hold together, and this project has never had either.**
+
+**That is the charter's "test on longer proteins" arriving as a DERIVED REQUIREMENT rather than a
+suggestion** — see §7.
 
 ---
 
