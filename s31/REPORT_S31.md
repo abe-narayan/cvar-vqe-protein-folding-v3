@@ -693,7 +693,68 @@ lane that stood to lose from them.
 
 ## 14. The 126-target endpoint
 
-[PENDING]
+**Production is 3.2105 Å and nothing this sprint moved it.** No arm was deployed, and no arm earned
+deployment.
+
+### 14.1 The quantum stage, measured end-to-end for the first time
+
+All six arms **built and projected in one process from one stored cache**, with arm A re-projected
+to **3.2105 Å against the canonical 3.2105 Å, worst per-target deviation 0.0000 Å** — so the
+comparisons are internally valid under §1.2's rules. Built chain ± SE; **CA point cloud in brackets,
+a different object**:
+
+```
+A   quantum OFF (production)      3.2105 +/- 0.1540   [3.0483]
+A2  the same operator, recoded    3.2108 +/- 0.1542   [3.0483]   <- the implementation-noise null
+B   selection readout, VQE p      3.3117 +/- 0.1648   [3.3135]
+C   selection readout, p*         3.2838 +/- 0.1586   [3.2852]
+D   convex readout, VQE p         3.2281 +/- 0.1558   [3.0661]   <- the SHIPPED quantum arm
+E   convex readout, p*            3.2169 +/- 0.1526   [3.0605]
+F   convex readout, uniform p     3.2415 +/- 0.1528   [3.0532]
+```
+
+| contrast | effect | × MDE | verdict |
+|---|---|---|---|
+| **`P1` = E − D** — solving the objective *exactly* instead of with the circuit, shipped readout | **−0.0112** | **0.19×** | **NULL** |
+| `P2` = C − B — the same, selection readout | −0.0280 | 0.29× | NULL |
+| **`S3` = D − A** — the built-chain cost of the **shipped quantum stage** | **+0.0175** | **0.35×** | **NULL** |
+| B − A — selection readout against production, **CA cloud** | +0.2652 | 2.15× | **MEASURED, worse** |
+| B − A — the same contrast, **built chain** | — | 0.93× | NOT MEASURED |
+
+**`S3` decomposes exactly:** `+0.0175 = +0.0003` (code path) `+ 0.0307` (prefix widening 75 → 128)
+`− 0.0134` (weights). **The largest component is the widening that exists only to fill the `2^7`
+register** (`core/pipeline.py:757`) and is pointless when `quantum = False`, which is production.
+**NOT MEASURED at 0.42×** — *and its fold CI [+0.0028, +0.0557] excludes zero, which is the exact
+shape `stats_lib._verdict` was hardened against; the MDE gate binds.*
+
+### 14.2 The null is not "no effect"
+
+```
+                  |d| mean  median    p90     MAX    exactly 0   > 0.0107
+P1  E - D          0.1432  0.0494  0.3706  1.1457    0 / 126    100 / 126
+P2  C - B          0.1802  0.0132  0.6288  1.8766   60 / 126     64 / 126
+X1  A2 - A (null)  0.0134  0.0026  0.0329  0.2285    0 / 126     28 / 126
+```
+
+**`P1`'s per-target spread is 10.7× the implementation-noise null, and 74 of 126 targets move by
+more than that null's own p90** — while the mean is −0.0112 at 0.19×. The honest sentence is
+***"solving the objective exactly reshuffles the answer everywhere and buys nothing."*** The two
+selection readouts choose a **different candidate on 66 of 126 targets** (54 of 78 at α = 1) and are
+identically tied on the other 60.
+
+### 14.3 The caveat that limits what §14.1 can mean
+
+**Both substituted arms are target-independent rank curves (§5).** `P1` therefore compares two
+points inside a family **none of whose members knows which target it is** — so it could not have
+found an aggregate effect even if one existed in the objective. **This experiment does not test
+whether a better objective would help, and must not be recorded as evidence either way.** What it
+establishes is what the charter needed: **the optimisation quality of the deployed CVaR-VQE is
+invisible at the endpoint**, with certificates at the deployed settings (duality gap 3.56e-09, KKT
+2.67e-15, **circuit strictly worse 126/126**, `p*` at 0.0012 s against 0.0985 s).
+
+### 14.4 The terminal-operator arms
+
+[PENDING — lane F's `AVG_SEP` at 126/126, and the `F3` chain arms.]
 
 ---
 
