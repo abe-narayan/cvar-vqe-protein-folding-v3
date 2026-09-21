@@ -442,10 +442,19 @@ try:
           dig(fc, "coh", "ORACLE_best", "mean"), basis="in-band")
     check("coh(AVG_SEP)", 0.9689, dig(fc, "coh", "AVG_SEP", "mean"), basis="in-band")
     check("coh(MED)", 0.8886, dig(fc, "coh", "MED", "mean"), basis="in-band")
-    exact("AVG_SEP does NOT pass the 0.6931 admission bar",
-          False, dig(fc, "coh", "AVG_SEP", "admitted"))
-    exact("AVG_SEP passes on 0 of 126 targets", 0.0,
-          dig(fc, "coh", "AVG_SEP", "frac_targets_under_bar"))
+    # ---- WITHDRAWN (S31, lane V's D0).  These two lines used to read:
+    #   exact("AVG_SEP does NOT pass the 0.6931 admission bar", False, ... "admitted")
+    #   exact("AVG_SEP passes on 0 of 126 targets", 0.0, ... "frac_targets_under_bar")
+    # The 0.6931 bar is S30's coherence of the UNCORRECTED DISTOGRAM PREDICTION ERROR -- a
+    # corrector's residual, an INPUT to scoring.  These arms are EMITTED READOUT errors, an
+    # OUTPUT.  Same pipeline, same 126 targets, same mu, and production reads 0.6931 in one
+    # table and 0.9780 in the other, because they are two different errors.  The bar never was
+    # a readout-space quantity and no readout-space bar has been established.
+    # What replaces it is the PAIRED contrast, which needs no imported reference:
+    check("coh(AVG_SEP) - coh(AVG), the paired contrast that carries the claim",
+          -0.0090, dig(fc, "coh_AVG_SEP_minus_AVG", "effect"), basis="in-band")
+    check("  its multiple of its own MDE", -2.3710,
+          dig(fc, "coh_AVG_SEP_minus_AVG", "effect_over_mde"), basis="none")
     check("AVG_SEP affine-hull residual, RMS per coordinate", 0.0452,
           dig(fc, "affine_hull_departure", "AVG_SEP_residual_rms_A", "mean"), basis="none")
 except Exception as e:
