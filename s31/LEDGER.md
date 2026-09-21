@@ -277,3 +277,112 @@ chain** (`circ_opt` 3.4330 against PROD 3.2071 in the S30 meter cache). So a qua
 architecture must recover **0.226 A to reach parity with the classical path it replaces**, and then
 **0.211 A more** to take 3.2105 below 3.00 -- **~0.437 A in total**, not the 0.21 A that
 "3.21 -> 3.00" suggests.
+
+## S31-L3 -- **THE COMMON-MODE DIRECTION IS NOT NATIVE-FREE ESTIMABLE, AND THE CLOSED FORM SAYS EXACTLY WHY**: `mu_hat = mu - y` EXACTLY, SO THE ESTIMATOR'S ERROR *IS* THE PRIOR ERROR IT EXISTS TO PREDICT -- AND THE FITTED CORRECTOR TURNS OUT TO PREDICT THE COMPONENT **ORTHOGONAL** TO THE COMMON MODE, NOT THE COMMON MODE (2026-09-20 23:57, E)
+
+Registered in `s31/PREREG_S31_E.md`, committed at `593bdd2e` **before the first number existed**;
+AMENDMENT 1 at `f246eaba`, timestamped and marked as decided *after* seeing E1.
+Artefacts: `s31/results/s31_E1_direction.json`, `s31/results/s31_E2_deltas.json`,
+`s31/results/s31_E3_decomp.json`. Code: `s31/s31_E_lib.py`, `s31/s31_E1_direction.py`,
+`s31/s31_E2_deltas.py`, `s31/s31_E3_decomp.py`.
+
+### The closed form, which is the durable output
+
+With `y = expected - d_nat` (prior error, ORACLE), `mu = pool75_mean - d_nat` (the pool's
+common-mode pair error, ORACLE, the S30-L7 quantity) and `mu_hat = pool75_mean - expected`
+(**native-free**, and the trace is *proved in code*, not asserted -- `mu_hat` is bit-identical when
+`nat_ca` is replaced by NaN, `s31_E_lib.native_free_trace`):
+
+```
+mu_hat = mu - y          EXACTLY.   max |dev| = 1.8e-15 over all 8549 pairs, 126/126 targets
+
+=>  corr(mu_hat, mu) = (1 - coh0 * r) / sqrt(1 + r^2 - 2 * coh0 * r),    r = sd(y)/sd(mu)
+    reproduces the measured per-target correlation to 1.1e-15.
+```
+
+**`mu_hat` is not a noisy estimate of `mu`. Its error is exactly `-y`** -- the quantity the corrector
+exists to predict. To use the estimator you would already need the answer.
+
+### MEASURED: r = 1.5997, fold95 [1.4421, 1.7549], median 1.305, **100% of targets above 1**
+
+The prior's within-target error dispersion is **1.6x** the pool's common-mode dispersion, so the
+"estimate" is dominated by its own error. At those values the closed form is *negative*; the small
+positive number we measure is Jensen curvature across targets, not signal.
+
+**Not a contradiction of `pool-error-is-68-percent-common-mode`.** That 68% splits *pool members'*
+coordinate error into a shared bias and an idiosyncratic part. `r` compares the **distogram's** error
+against the pool's shared part. Different objects; both can be true and are.
+
+### E1, the registered gate -- DEAD on both clauses
+
+Within-target cosine(`mu_hat`, `mu`), 126 targets, all pairs `min_sep = 2`:
+
+```
+cos                 mean +0.0495  median +0.0614  fold95 [+0.0143, +0.0779]
+cos (perm control)  mean +0.0213      <- mu_hat permuted within target: same marginal, same norm
+excess over control       +0.0282  0.51x MDE  fold95 [-0.0120, +0.0820]  2/5 folds  NOT MEASURED
+centered corr       mean +0.0408; excess over the same control 0.50x MDE, also NOT MEASURED
+long range (sep>=7, 106 targets)  cos +0.0205; excess 1.20x MDE but the LEVEL is 0.02
+only 1% of targets reach the registered USABLE bar of 0.577
+```
+
+Registered bars were STRONG 0.707 / USABLE 0.577 / WEAK 0.30 / **DEAD** below 0.30 *or* not
+separated from the matched control at 1.0x MDE. It fails **both**.
+
+### The mechanism finding, which corrects S30 §12 and contract rule 29
+
+S30's `N3_plus_pool` corrector is reproduced **bit-exactly** here (R² 0.235453 vs S30's 0.235453;
+`coh` 0.693096 vs S30's 0.693096), so this is the same object, not a re-implementation.
+
+```
+within-target corr(yhat, mu)       -0.0295      pooled -0.0058     <- essentially UNCORRELATED
+within-target corr(yhat, mu_hat)   -0.9329      pooled -0.9078     <- it IS the pool-disagreement feature
+within-target corr(y - yhat, mu)   +0.9172      pooled +0.9658     <- S30's number, reproduced
+
+orthogonal SSE decomposition against mu (ORACLE / NOT DEPLOYABLE):
+  energy of y      54.70% along mu / 45.30% perp   (per-target mean; POOLED 71.10 / 28.90)
+  the corrector's sum-of-squares reduction:
+        79.84% from the PERP component  (per-target mean)
+       100.79% from the PERP component, -0.79% along  (POOLED)
+  yhat's own energy along mu:  8.94% mean, 4.12% median
+```
+
+> **S30 §12 says "the predictable part of the prior's error *is* the common mode." Measured on
+> S30's own corrector, the opposite is true: essentially all of what it predicts is ORTHOGONAL to
+> the common mode, and it leaves the common mode untouched.** `coh` rises 0.6931 -> 0.9172 for the
+> *opposite* reason to the one published -- not because the corrector captures the common mode, but
+> because it strips everything *except* the common mode, leaving a residual that is nearly pure
+> common mode. The observation S30 reported is exact; its explanation is inverted.
+
+The reason is algebra again: the corrector's dominant feature is `exp_minus_pool75 = -mu_hat`, and
+`mu_hat = mu - y` contains `-y`. Regressing `y` on `mu - y` recovers `y` through the `-y` term. That
+is legitimate (native-free at inference) but it means the pool's "information about the prior's
+error", S30's +0.0758 out-of-fold at long range, is the **non-common-mode** part of that error.
+
+**Contract rule 29** ("correlating with the error is not the test; incoherence with the pool's
+common mode is") rests on S30's inverted mechanism and should be re-read in light of this. The
+*measurement* behind it -- +0.0554 coherent vs -0.2466 i.i.d. at matched R² -- stands untouched.
+
+### Status of the lane's own prediction
+
+The coordinator registered 2:1 against E2/E3 and I registered 4:1 / 3:1, both on the reasoning that
+the corrector's residual sits at `coh` 0.9172 so its orthogonal complement would be noise. **The
+direction was right and the mechanism was wrong**: the failure is one level earlier, at `mu_hat` not
+being an estimate of `mu` at all, and the corrector is only 8.9% along `mu` rather than "almost
+entirely" along it. A prediction that got the sign right for the wrong reason is worth less than a
+correct one, and it is recorded that way.
+
+### What is closed, what is open, and the specification this leaves
+
+**CLOSED:** "the common-mode direction is native-free estimable as `pool75_mean - expected`". It is
+*computable* and it is not an *estimate*. S30's `coh` admission test keeps its ORACLE label and loses
+its only proposed native-free surrogate.
+
+**THE SPECIFICATION, which is the point of the entry:** the closed form says exactly what a future
+common-mode estimator must satisfy -- **its error must be small relative to the common mode itself,
+and the distogram's error is 1.6x too large.** That is a quantitative target, not an exhausted search.
+
+**OPEN, and running now:** the ORACLE class ceiling registered in AMENDMENT 1 -- over all corrections
+orthogonal to the true `mu`, what is the best achievable endpoint? Early indications from the
+orthogonal decomposition are that the prize is **along** the common mode, which would invert the
+sprint's open question rather than answer it. Endpoint arms pending; nothing is claimed from them here.
