@@ -562,13 +562,75 @@ and three facts held by three different lanes compose into a prediction that it 
 
 ## 12. FAIL18 analysis
 
-[PENDING]
+**`FAIL18` is not a stratum. It is an identity, and this sprint proved it.**
+
+A pre-registered definition-matched stratum `defn18` — the 18 targets with the largest widening gain
+from the top-75 — turned out to be **`defn18 ∩ FAIL18 = 18 of 18. The same targets, effect identical
+to four decimals.** Choosing the 18 targets whose best candidate hides below rank 75, then reporting
+that their best candidate also hides below rank 128, **is one statement and not two.**
+
+**The rank diagnostic confirms it independently and says something sharper.** Under a score with no
+within-pool skill the ORACLE best member's rank is uniform on 1..500, so `P(rank > 128) = 0.744`:
+
+```
+other 108           0.417     the score genuinely pulls the answer into the window
+worst18_poolmean    0.667     near the uninformative null
+worst18_bestpool    0.722     near the uninformative null
+FAIL18              1.000     ABOVE the null -- p = 0.744^18 = 0.005 by chance
+```
+
+> **`FAIL18` is the only stratum *worse than an uninformative score*, which cannot happen by
+> sampling.** That is the tail's mechanism: **not "hard targets hide their answer deeper" but "the
+> score has no within-pool skill on hard targets, so the best member lands roughly uniformly and a
+> 128-window misses it ~74% of the time."**
+
+**And the excess is mostly definitional.** Regressing per-target widening effect on `best1(128)`
+gives slope −0.4356, R² 0.5564; the residuals are **−0.577 for `FAIL18` against −0.196 for the clean
+filter-independent tail**. **Two thirds of `FAIL18`'s excess is the stratum definition.**
+
+**Consequences enforced throughout this report:** filter-independent tails are primary (`worst18` by
+pool mean and by best-in-pool), `FAIL18` appears only as a labelled diagnostic, and **Appendix B is
+the key** — five different strata are called "the worst 18" somewhere in this project's record and
+they differ by up to **0.81 Å on the same-named quantity**.
+
+**The reference is not the explanation** (§1.3): the tail's targets have, if anything, **narrower**
+deposited NMR ensembles, and the tail-minus-rest difference in ensemble spread is **0.20× MDE — a
+null**. **FAIL18 is real failure.**
+
+**Where the tail's prize is, ORACLE / NOT DEPLOYABLE:** the along-`mu` correction (§20.1) is **4×
+concentrated on the tail** — FAIL18 6.0195 → 3.7392, **−2.2803 Å**, against −0.5651 on the other 108.
+The tail is where the endpoint's mean is decided and where the only priced route would pay most.
 
 ---
 
 ## 13. Controls and nulls
 
-[PENDING]
+Charter item 25. **Several results in this sprint were killed by their own lane's control**, which
+is the point of the table.
+
+| control | what it was matched to | what it ruled out |
+|---|---|---|
+| **Shuffled-`B`** (random relabelling of the pairwise matrix) | quality-blind dispersion maximisation, which beat the shipped argmin by −0.2621 Å at 2.74× MDE | **Killed the reason for its own lane's only positive.** Costs 0.0250 Å at **0.54× MDE — NOT A RESULT** — so the mechanism is *"spread the weights over many candidates"*, **not** *"spread them along the real geometry"*. No part of the gain may be attributed to the pairwise structure |
+| **Matched random subsets at fixed `K`** | the per-target ORACLE prefix length | **Destroyed `bestm128` as a lead.** Random subsets reach **149%** of the prefix family's gain: the prefix axis is *worse than an arbitrary 7-bit index* |
+| **Matched search size `K`** | 2-of-128 against argmin-over-128 | **Inverted the sign.** A minimum over C(128,2) = 8128 supports read against one over 128; at matched `K` the 0.076 Å gain is a **0.077 Å penalty** |
+| **`A2` = the same operator written twice** | every built-chain arm-to-arm comparison | **Recalibrated the whole instrument.** Clouds agree to 3.6e-14, chain means at 0.03× MDE — but per-target |Δ| is 0.0134 mean / 0.0329 p90 / **0.2285 max**. **The 0.0107 Å floor is a MEAN floor** |
+| **Pure rotation** (analytically exact, like reflection) | a reflection-invariance test whose 1e-6 threshold had fired at 3.673e-06 | **Inverted a registered falsifier.** Rotation gives **5.377e-06, larger** — the threshold was mis-set at an absolute value only a matched control could read |
+| **Constant α-helix** (plausible, never uniform-on-the-torus) | every torsion channel | **Beat all of them on both bands** (−0.1722 at 3.17× MDE) — the Ramachandran channel's in-pool skill is a **constant-prior effect** |
+| **Achiral twin** `\|X\|` | chiral functionals | Whatever the chiral channel does, its reflection-invariant shadow already does |
+| **Deposited-ensemble spread** | the tail's difficulty | **Ruled out the reference as the explanation** — 0.20× MDE, and the tail's ensembles are *narrower* |
+| **Random-feature control** | the predictability split | `y_perp` R² **+0.9403** against −0.0026; `y_along` −0.0051 against −0.0039 |
+| **Magnitude-matched shrinkage** | the orthogonal-correction arm | **The perp arm is +0.6169 Å worse than its own magnitude-matched control** (3.25× MDE, 9W/117L) — magnitude is not the explanation |
+| **Norm-matched shrinkage** | the projection operation itself | 0.26× MDE — projecting is indistinguishable from making the corrector smaller |
+| **Uniform-weight ablation** (`:1116`, already in the code) | the p-weighted convex readout | The shipped ablation, used rather than rebuilt |
+| **Shuffled-feature / shuffled-label** | the `â` combination arms | 0.13× and 0.71× MDE — NOT MEASURED |
+| **Random permutation index map** | structure-aware indexing | **It is the best map** for a deployable partial readout |
+| **Random-18 stratum null** (20,000 draws) | tail claims | Rules out *"an ordinary 18-subset"* — and **does not** rule out *"a stratum defined by the quantity measured on it"*, which is why `FAIL18` needed §12 |
+| **Vertex feasibility assert** | the ORACLE convex solver | Caught 4 of 126 targets where both iterative solvers returned a point worse than a feasible vertex; **119W/4L → 119W/0L**, the four losses *were* the four failures |
+
+**Two controls that changed a lane's own conclusion rather than confirming it** deserve naming:
+the **shuffled-`B`** control (which demolished the reason for its lane's only positive) and the
+**rotation** control (which inverted a registered falsifier that had fired). Both were run by the
+lane that stood to lose from them.
 
 ---
 
@@ -580,7 +642,55 @@ and three facts held by three different lanes compose into a prediction that it 
 
 ## 15. Statistical analysis
 
-[PENDING]
+**MDE = 2.8016 × SE, per comparison.** Below **0.7×** is *not a result*; **0.7–1.0×** is *NOT
+MEASURED*. Fold-clustered CIs on the pinned folds; `s24.stats_lib.compare` **refuses a verdict** if
+`folds` is not passed.
+
+**Multiplicity was tracked sprint-wide and written to as comparisons were emitted**, not
+reconstructed at the end — the build item S30 carried forward. `s31/MULTIPLICITY.md` holds the
+register; the running total is in the hundreds with a Bonferroni multiplier table computed up front
+(k = 32 → 1.43×, k = 912 → 1.74×). **One lane's first total was wrong by 145 and was corrected in
+place with the error stated.**
+
+**The verifier** (`s31/s31_verify.py`) recomputes **129 numbers from artefacts, 0 mismatched, 0
+missing, 0 flagged.** It **parses the sprint's own documents for every path they name** (28 found, 28
+exist) rather than using a hand-kept list — *because a hand-kept list is exactly what fails*. It
+checks both reporting bases, asserts `MDE == 2.8016 × SE` from the SEs, and carries forward S30's
+sign-convention trap. **It caught two defects in its own author's work.**
+
+### Three places the rules bound against the person applying them
+
+1. **A fold CI that excludes zero does not rescue a sub-MDE effect.** The branch-carry arm came in at
+   **0.44× MDE** with a fold CI excluding zero and 5/5 folds agreeing — *and was reported as NOT A
+   RESULT*. The widening arm is the same shape at **0.42× MDE** with CI [+0.0028, +0.0557]. This is
+   the documented sibling of the underpowered bug (`s24/stats_lib.py:145`), and **the MDE gate
+   binds.**
+2. **A null in the mean is not "no effect".** `P1`'s per-target spread is **10.7× the implementation
+   noise null**, with 74 of 126 targets moving more than that null's p90, while the mean is −0.0112
+   at 0.19×. The honest sentence is *"it reshuffles the answer everywhere and buys nothing."*
+3. **The per-target floor is not the mean floor.** 0.0107 Å bounds *mean* built-chain claims; the
+   per-target floor is **~0.03 Å with a 0.23 Å tail** (§1.2).
+
+### Registered predictions, scored
+
+Ten pre-registrations were committed before their first number. **Predictions that failed are
+recorded as failures, including the coordinator's.**
+
+| prediction | by | outcome |
+|---|---|---|
+| The orthogonal complement is noise (2:1 against E2/E3) | coordinator | **Right for the wrong reason** — it is 94% predictable and *actively harmful*, not noise |
+| Long-range R² ≈ 0 (3:1) | coordinator | **Falsified** on the raw statistic (+0.1959) |
+| A substantial fraction of `bestm128` survives (2:1) | coordinator | **Falsified** — the surviving fraction is *negative* |
+| `LEG_torsion` is predominantly odd (4:1) | lane B | **Failed** — it is 70% even |
+| `F-G2` does not fire | lane G (S30) | Held, and its *mechanism* was refuted by its own pre-check |
+| The derived readout beats production ([−0.15, +0.10]) | lane A | **Missed at +0.1334**, on the side that says the direction fails |
+| Disagreement count 20–45 | lane P | **Wrong — 66** |
+| Arm E lies between D and F | lane P | **Falsified in premise and outcome** |
+| `p*` does not improve on the VQE (2:1) | lane P | Held |
+| A deployable prefix-`m` rule transfers | lane F | **Falsified**, three ways |
+
+> **A pre-registration that only ever confirms is decoration.** Six of these went against the lane
+> that wrote them, and three of those six are the coordinator's.
 
 ---
 
