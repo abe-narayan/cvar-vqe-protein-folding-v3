@@ -96,12 +96,19 @@ here, in the open, rather than by whoever would benefit from the answer.)*
 | 10 | 2026-09-21 00:16 | B | S31-L10 sweep parity: 19 chain/CA costs x {total, even, odd} preference contrast | 57 | built chain rungs, 126 targets | EXPLORATORY diagnostic of the S30 meter. No cost was accepted or rejected on it; it decomposes a published statistic. The reproduction of the published values to four decimals is a verification, not a claim. |
 | 11 | 2026-09-21 00:16 | B | S31-L10 in-pool: 11 channels x 2 bands x {rho, rho|DIS, rho|RG} plus the G5 control contrasts | 78 | per-candidate CA point cloud, 126 targets | **G2, G3 and G5 are pre-registered primaries** in `s31/PREREG_S31_B.md` with falsifiers fixed before any number (k = 1 each for their own purposes). The remaining cells are exploratory and are reported at the adjusted multiplier. G2 fired, G3 did not, **G5 fired at 1.81-3.85x MDE**. |
 | 12 | 2026-09-21 00:16 | B | S31-L10 candidate graph: C1 collapse (2) + C2 node statistics rho and rho\|medoid (9) | 11 | top-75 band, CA cloud, 126 targets | pre-check requested by the coordinator and run BEFORE anything was built on it. C1 did not fire, C2 fired. Nothing was deployed from it. |
+| 13 | 2026-09-21 00:18 | F | **[renumbered in place from 9 at 00:20 -- collided with lane B's row 9, which is stamped 00:16; contract rule 18 renumbers the LATER-stamped entry, which is mine]**  S31-L11 F3 prefix-length order-statistic audit: F3a (chain+cloud), F3b zero-skill random m, F3c ORACLE-global + LFO m, F3d split-half transfer, F3e matched random-subset family (4 draws), F3f four native-free LFO m-rules, F3g effective-K | 12 | CA point cloud for the 126x128 matrix; built chain for F3a (basis stated on every row) | **pre-registered in `s31/PREREG_S31_F.md` s11 (commit de852bef) before any aggregate of the family existed**, with two bars written to fire. BOTH FIRED: the matched random family reaches 146% of the prefix gain (bar: >=80%), and the best fold-held-out native-free m-rule is -0.51x its own MDE (bar: >-0.7x). No positive claimed; the family DEFLATES a two-sprint-old number rather than asserting one. |
 
 ### Running total
 
 **k = 478 comparisons registered** as of 2026-09-21 00:16
 (the 332 below plus lane B's **146** in rows 9-12; the earlier 332 line is left standing
 immediately after this one rather than overwritten)
+
+**k = 490 comparisons registered** as of 2026-09-21 00:20
+(lane B's 478 plus lane F's **12** in row 13. *Correction, annotated in place:* at 00:18
+lane F overwrote the 332 line below while lane B was mid-edit and briefly published a
+total of 344, which was 134 too low; lane B's 478 line above was never removed and the
+332 line is restored here with its original wording.)
 
 **k = 332 comparisons registered** as of 2026-09-21 00:10
 (126 + 126 + 2 + 28 + 28 + 18 + 2 + 2 = 332, recomputed — the first version of this line said

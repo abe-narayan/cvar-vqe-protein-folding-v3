@@ -261,6 +261,41 @@ def analyse():
                                "reaches >= 80%% of the prefix gain",
                 BAR_FIRES=bool(g_prefix and (g_rand / g_prefix) >= 0.80),
                 prefix_curve_repro_maxdev=float(max(E[p]["curve_repro_maxdev"] for p in names)))
+
+            # ---- the MECHANISM: how many effectively independent variants does each family have?
+            RC = np.array([E[p]["curves_random"][0] for p in names], float)
+
+            def struct(X):
+                lag1 = np.array([np.corrcoef(X[i, :-1], X[i, 1:])[0, 1] for i in range(len(X))])
+                return dict(within_target_sd=float(X.std(1, ddof=1).mean()),
+                            lag1_autocorr_of_values=float(np.nanmean(lag1)),
+                            n_local_minima=float(np.mean([
+                                ((X[i, 1:-1] < X[i, :-2]) & (X[i, 1:-1] < X[i, 2:])).sum()
+                                for i in range(len(X))])))
+
+            rngk = np.random.default_rng(SEED + 7)
+
+            def gain_vs_k(X, ks=(1, 2, 4, 8, 16, 32, 64, 128), nrep=200):
+                """min over a random k-subset of the COLUMNS: the order-statistic growth curve."""
+                g = {}
+                for k in ks:
+                    acc = []
+                    for _ in range(nrep):
+                        c = rngk.choice(X.shape[1], k, replace=False)
+                        acc.append(X[:, c].min(1).mean())
+                    g[str(k)] = float(np.mean(acc) - m75.mean())
+                return g
+
+            out["F3e_MECHANISM"] = dict(
+                basis="CA POINT CLOUD",
+                prefix_family=struct(pref), random_family=struct(RC),
+                order_statistic_growth_gain_vs_k=dict(
+                    prefix=gain_vs_k(pref), random=gain_vs_k(RC)),
+                reading="the prefix variants are NESTED (curve[m] and curve[m+1] share m members) "
+                        "so they are far more correlated than random subsets of the same sizes; "
+                        "a family of less-correlated variants has a LARGER per-target minimum, "
+                        "which is the order-statistic mechanism itself. The prefix ordering does "
+                        "not merely fail to beat an arbitrary index -- it LOSES to one.")
         else:
             out["F3e_matched_random_family"] = dict(status="INCOMPLETE %d/126" % len(E))
     else:

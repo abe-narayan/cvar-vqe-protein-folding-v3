@@ -1,0 +1,334 @@
+{
+ "seed": 31007,
+ "n": 126,
+ "prereg": "s31/PREREG_S31_F.md s11 @ this commit",
+ "source_rows": "C:\\Users\\abena\\Protein-Folding-Algorithm\\s29\\results\\s29_O_p128_rows.jsonl",
+ "BASIS_NOTE": "the 126x128 matrix is CA POINT CLOUD. The built-chain 2.9027 is a CLOUD-SELECTED oracle, projected (s29_O_ladder.py:542 picks m_best on the cloud curve and projects that one structure).",
+ "F3a_chain": {
+  "cmp": {
+   "label": "F3a.bestm128 - production (BUILT CHAIN, ORACLE)",
+   "mean_a": 2.902668439905362,
+   "mean_b": 3.210533994943299,
+   "effect": -0.3078655550379381,
+   "median_effect": -0.1892091500807117,
+   "se": 0.03505109412973858,
+   "mde": 0.09819914531387561,
+   "effect_over_mde": -3.1351144050582334,
+   "ci95_fold": [
+    -0.3625367508046218,
+    -0.24960936282753757
+   ],
+   "folds_same_sign": 5,
+   "W": 117,
+   "L": 9,
+   "n": 126
+  },
+  "verdict": "MEASURED",
+  "ORACLE": "ORACLE / NOT DEPLOYABLE -- a per-target minimum over K = 128 prefix lengths, selected on the cloud",
+  "mean_bestm128": 2.902668439905362,
+  "mean_prod": 3.210533994943299
+ },
+ "F3a_cloud": {
+  "cmp": {
+   "label": "F3a.bestm128 - m=75 (CA POINT CLOUD, ORACLE)",
+   "mean_a": 2.7604686020122555,
+   "mean_b": 3.0483380938795324,
+   "effect": -0.28786949186727684,
+   "median_effect": -0.17550640701030795,
+   "se": 0.03121640562191776,
+   "mde": 0.0874558819903648,
+   "effect_over_mde": -3.291596692135493,
+   "ci95_fold": [
+    -0.33123124017996164,
+    -0.23892382299670248
+   ],
+   "folds_same_sign": 5,
+   "W": 126,
+   "L": 0,
+   "n": 126
+  },
+  "verdict": "MEASURED",
+  "mean_oracle": 2.7604686020122555,
+  "mean_m75": 3.0483380938795324,
+  "mean_prod_record": 3.0483380938795324,
+  "argmin_m": {
+   "mean": 58.86507936507937,
+   "median": 49.5,
+   "hist": [
+    10,
+    13,
+    13,
+    12,
+    8,
+    20,
+    9,
+    41
+   ],
+   "bins": "[1,2) [2,5) [5,10) [10,20) [20,40) [40,75) [75,100) [100,128]"
+  }
+ },
+ "F3b_zero_skill_random_m": {
+  "basis": "CA POINT CLOUD",
+  "mean_over_draws": 3.078407740492272,
+  "sd_over_draws": 0.020714852838420075,
+  "pct": [
+   3.038899091549585,
+   3.0778957241662335,
+   3.1195030185655885
+  ],
+  "row_mean_over_m": 3.0783961221351737,
+  "gain_vs_m75": 0.030069646612739476,
+  "note": "a rule with NO skill picking m uniformly; reported as a distribution, not a maximum"
+ },
+ "F3c_global_m": {
+  "m_star": 72,
+  "mean_at_m_star": 3.0465045137024243,
+  "mean_at_75": 3.048338093879531,
+  "m_by_fold": {
+   "0": 70,
+   "1": 108,
+   "2": 72,
+   "3": 72,
+   "4": 72
+  },
+  "ORACLE_global": {
+   "cmp": {
+    "label": "F3c.ORACLE global m - m=75 (CA POINT CLOUD)",
+    "mean_a": 3.046504513702423,
+    "mean_b": 3.0483380938795324,
+    "effect": -0.0018335801771105855,
+    "median_effect": -5.2892973174456515e-05,
+    "se": 0.0029141670916054277,
+    "mde": 0.008164330523841766,
+    "effect_over_mde": -0.22458426588145838,
+    "ci95_fold": [
+     -0.0036646278681665635,
+     0.0002961294683056313
+    ],
+    "folds_same_sign": 4,
+    "W": 63,
+    "L": 63,
+    "n": 126
+   },
+   "verdict": "NOT A RESULT (<0.7x MDE)"
+  },
+  "LFO": {
+   "cmp": {
+    "label": "F3c.leave-fold-out global m - m=75 (CA POINT CLOUD)",
+    "mean_a": 3.0562158323355733,
+    "mean_b": 3.0483380938795324,
+    "effect": 0.00787773845604002,
+    "median_effect": 0.001370841809631651,
+    "se": 0.009296188764891678,
+    "mde": 0.026044202443720528,
+    "effect_over_mde": 0.3024757034915234,
+    "ci95_fold": [
+     -0.003354534114034192,
+     0.02368680852840552
+    ],
+    "folds_same_sign": 2,
+    "W": 59,
+    "L": 67,
+    "n": 126
+   },
+   "verdict": "NOT A RESULT (<0.7x MDE)"
+  }
+ },
+ "F3d_split_half_transfer": {
+  "oracle_gain": -0.3179275201229176,
+  "transfer": -0.0039004420005007167,
+  "ci95": [
+   -0.026133944693763324,
+   0.03903279894542384
+  ],
+  "frac_of_oracle": 0.01226833713228953
+ },
+ "F3d_note": "stats_lib.split_half_transfer chooses ONE GLOBAL column on half the targets and scores it on the other half: it prices the m axis as a GLOBAL setting, which is the only thing a split over targets can price. It is NOT a test of a per-target rule -- F3-f is.",
+ "F3e_matched_random_family": {
+  "construction": "same top-128, same operator, same K=128, same size distribution 1..128; each variant a RANDOM subset of that size instead of the score-ordered prefix",
+  "n_draws": 4,
+  "gain_prefix": -0.28786949186727684,
+  "gain_random_mean": -0.4191301591518836,
+  "gain_random_per_draw": [
+   -0.42413301667683306,
+   -0.4246219486402494,
+   -0.4109971300357666,
+   -0.41676854125468527
+  ],
+  "gain_random_sd": 0.006504145777769814,
+  "share_of_prefix_gain": 1.4559728314146083,
+  "REGISTERED_BAR": "'the m axis is an order statistic' FIRES if the random family reaches >= 80%% of the prefix gain",
+  "BAR_FIRES": true,
+  "prefix_curve_repro_maxdev": 0.0
+ },
+ "F3e_MECHANISM": {
+  "basis": "CA POINT CLOUD",
+  "prefix_family": {
+   "within_target_sd": 0.1811714231916924,
+   "lag1_autocorr_of_values": 0.9171604830748586,
+   "n_local_minima": 25.317460317460316
+  },
+  "random_family": {
+   "within_target_sd": 0.15592431454563813,
+   "lag1_autocorr_of_values": 0.12591889458288208,
+   "n_local_minima": 41.96825396825397
+  },
+  "order_statistic_growth_gain_vs_k": {
+   "prefix": {
+    "1": 0.02662245914591388,
+    "2": -0.061814829372949465,
+    "4": -0.12817745664493163,
+    "8": -0.17815969531808618,
+    "16": -0.211762592169233,
+    "32": -0.24137637700029124,
+    "64": -0.2639591068571927,
+    "128": -0.28786949186727684
+   },
+   "random": {
+    "1": 0.03481318790596655,
+    "2": -0.03774881494385118,
+    "4": -0.08242962635912354,
+    "8": -0.13166799990062428,
+    "16": -0.18535776422658845,
+    "32": -0.254708407814753,
+    "64": -0.33252814442115985,
+    "128": -0.4241330166768331
+   }
+  },
+  "reading": "the prefix variants are NESTED (curve[m] and curve[m+1] share m members) so they are far more correlated than random subsets of the same sizes; a family of less-correlated variants has a LARGER per-target minimum, which is the order-statistic mechanism itself. The prefix ordering does not merely fail to beat an arbitrary index -- it LOSES to one."
+ },
+ "F3f_native_free_rules": {
+  "DISP128": {
+   "cmp": {
+    "label": "F3f.DISP128 LFO m-rule - m=75 (CA POINT CLOUD)",
+    "mean_a": 3.044472564169464,
+    "mean_b": 3.0483380938795324,
+    "effect": -0.0038655297100688643,
+    "median_effect": 0.002863980729243709,
+    "se": 0.015678766908256876,
+    "mde": 0.04392563337017247,
+    "effect_over_mde": -0.08800168406208429,
+    "ci95_fold": [
+     -0.020891892057122552,
+     0.013231491017316964
+    ],
+    "folds_same_sign": 2,
+    "W": 62,
+    "L": 64,
+    "n": 126
+   },
+   "verdict": "NOT A RESULT (<0.7x MDE)",
+   "last_fold_fit": [
+    128,
+    -32.0
+   ],
+   "DEPLOYABLE": "native-free feature, threshold fitted LEAVE-FOLD-OUT on the native cloud RMSD -- the FIT touches the native, so this is an upper bound on a deployable rule, not a clean one"
+  },
+  "rg_sd128": {
+   "cmp": {
+    "label": "F3f.rg_sd128 LFO m-rule - m=75 (CA POINT CLOUD)",
+    "mean_a": 3.0784362543222654,
+    "mean_b": 3.0483380938795324,
+    "effect": 0.03009816044273247,
+    "median_effect": 0.009939312361668229,
+    "se": 0.01759060529200302,
+    "mde": 0.049281839786075664,
+    "effect_over_mde": 0.6107353250889906,
+    "ci95_fold": [
+     0.0048727180204703475,
+     0.058882969198422584
+    ],
+    "folds_same_sign": 4,
+    "W": 50,
+    "L": 75,
+    "n": 126
+   },
+   "verdict": "NOT A RESULT (<0.7x MDE)",
+   "last_fold_fit": [
+    122,
+    48.0
+   ],
+   "DEPLOYABLE": "native-free feature, threshold fitted LEAVE-FOLD-OUT on the native cloud RMSD -- the FIT touches the native, so this is an upper bound on a deployable rule, not a clean one"
+  },
+  "n_distinct": {
+   "cmp": {
+    "label": "F3f.n_distinct LFO m-rule - m=75 (CA POINT CLOUD)",
+    "mean_a": 3.026190402125355,
+    "mean_b": 3.0483380938795324,
+    "effect": -0.02214769175417817,
+    "median_effect": -0.0024678526525829803,
+    "se": 0.015639459637607555,
+    "mde": 0.04381551012072133,
+    "effect_over_mde": -0.505476067565034,
+    "ci95_fold": [
+     -0.047713704340605026,
+     0.00642608701888714
+    ],
+    "folds_same_sign": 3,
+    "W": 65,
+    "L": 61,
+    "n": 126
+   },
+   "verdict": "NOT A RESULT (<0.7x MDE)",
+   "last_fold_fit": [
+    77,
+    -32.0
+   ],
+   "DEPLOYABLE": "native-free feature, threshold fitted LEAVE-FOLD-OUT on the native cloud RMSD -- the FIT touches the native, so this is an upper bound on a deployable rule, not a clean one"
+  },
+  "n": {
+   "cmp": {
+    "label": "F3f.n LFO m-rule - m=75 (CA POINT CLOUD)",
+    "mean_a": 3.0428960264999625,
+    "mean_b": 3.0483380938795324,
+    "effect": -0.005442067379569726,
+    "median_effect": 0.0,
+    "se": 0.018231925991360403,
+    "mde": 0.05107856385739531,
+    "effect_over_mde": -0.10654307734186241,
+    "ci95_fold": [
+     -0.020006162098873067,
+     0.010535592921406852
+    ],
+    "folds_same_sign": 3,
+    "W": 62,
+    "L": 61,
+    "n": 126
+   },
+   "verdict": "NOT A RESULT (<0.7x MDE)",
+   "last_fold_fit": [
+    113,
+    -48.0
+   ],
+   "DEPLOYABLE": "native-free feature, threshold fitted LEAVE-FOLD-OUT on the native cloud RMSD -- the FIT touches the native, so this is an upper bound on a deployable rule, not a clean one"
+  }
+ },
+ "F3f_summary": {
+  "best_rule": "n_distinct",
+  "best_effect": -0.02214769175417817,
+  "best_over_mde": -0.505476067565034,
+  "share_of_oracle": 0.07693657153634548,
+  "REGISTERED_BAR": "'no part of it is deployable' FIRES if the best rule is > -0.7 x its own MDE",
+  "BAR_FIRES": true
+ },
+ "F3g_effective_K": {
+  "n_local_minima": {
+   "mean": 25.317460317460316,
+   "median": 25.0,
+   "max": 38.0
+  },
+  "n_m_within_tol_of_min": {
+   "0.001": 1.3492063492063493,
+   "0.01": 6.285714285714286,
+   "0.05": 30.095238095238095,
+   "0.1": 48.492063492063494
+  },
+  "lag1_autocorr_of_curve_increments": 0.035692445899999585,
+  "curve_range_mean": 0.8985873131862202,
+  "note": "a SMOOTH curve has few effectively independent choices, so the best-of-K inflation is priced at K_eff, not at 128; many m within 0.01 of the min means the argmin is not sharply identified"
+ },
+ "multiplicity": {
+  "registered_families": 7,
+  "comparisons_emitted": 12
+ }
+}

@@ -1435,3 +1435,129 @@ this entry that beats `DIS` in band (`DIS` is 0.83×, NOT MEASURED).
 | **multi-structure free energy (true barriers)** | **OPEN, on price only** | 10³–10⁵ trajectories/target |
 | **pair-level** graph quantities | **OPEN** | C1 did not fire; needs a pair-level operator |
 | chiral functionals at 40+ residues | **still open, still unaskable here** | the theorem is length-free, the emptiness is not |
+
+## S31-L11 -- **`bestm128 = 2.9027` IS AN ORDER STATISTIC, AND THE PREFIX AXIS IS A *WORSE-THAN-ARBITRARY* 7-BIT INDEX.** A MATCHED RANDOM-SUBSET FAMILY OVER THE SAME TOP-128, SAME OPERATOR, SAME K, SAME SIZE DISTRIBUTION, BUYS **-0.4191 A** AGAINST THE PREFIX FAMILY'S **-0.2879 A** -- **146% OF IT.** BOTH PRE-REGISTERED BARS FIRE (2026-09-21 00:17, F)
+
+**Pre-registered** in `s31/PREREG_S31_F.md` §11 (commit `de852bef`), **before any aggregate of this
+family existed**, with two bars written so they could fire. Both fired.
+
+Artefacts: `s31/s31_F3_prefix.py`, `s31/results/s31_F3_prefix.json`,
+`s31/results/s31_F3_randfamily_rows.jsonl` (126 rows). Seed 31007. Source of the 126x128 matrix:
+`s29/results/s29_O_p128_rows.jsonl`.
+
+### 0. Provenance gate, passed exactly
+
+My recomputation of the score-ordered prefix curve reproduces S29's stored `curve128`
+**bit-for-bit on all 126 targets: max |curve - stored| = 0.0e+00.** So everything below is about
+the same object S29 measured, not a lookalike.
+
+### 1. The number is real on the endpoint basis, and I confirm it first
+
+| arm | basis | mean | vs production | MDE | x MDE | fold CI | W/L | verdict |
+|---|---|---|---|---|---|---|---|---|
+| `bestm128` vs production | **BUILT CHAIN** | **2.9027** | **-0.3079** | 0.0982 | **-3.14** | [-0.3625, -0.2496] | 117/9 | **MEASURED** |
+| `bestm128` vs m=75 | CA point cloud | 2.7605 | -0.2879 | 0.0875 | -3.29 | [-0.3312, -0.2389] | 126/0 | MEASURED |
+
+**ORACLE / NOT DEPLOYABLE**, both rows. And one structural fact that must travel with every
+future quotation of 2.9027: **it is a CLOUD-SELECTED oracle, projected** --
+`s29/s29_O_ladder.py:542` picks `m_best` on the cloud curve and projects that one structure.
+
+### 2. THE MATCHED CONTROL, AND IT INVERTS THE READING (contract rule 7)
+
+The registered control holds **everything** fixed except the one thing under test: the same
+top-128, the same operator (superpose on the subset medoid, uniform coordinate mean), the same
+K = 128 variants, the same variant-size distribution 1..128 -- but each variant is a **random
+subset of that size** instead of the **score-ordered prefix**. The variant index therefore carries
+no score information and nothing else changes. Four independent draws, and the **mean** over draws
+is reported, never the maximum (contract rule 10).
+
+```
+per-target min over the 128 score-ordered PREFIXES     -0.2879 A   (this is bestm128)
+per-target min over 128 RANDOM SUBSETS, same sizes     -0.4191 A   sd over 4 draws 0.0065
+                                                       -------------------------------
+share of the prefix gain reached by the null family     146%
+```
+
+**Registered bar: "the m axis is an order statistic" fires if the random family reaches >= 80%.
+It reached 146%.** The prefix ordering does not merely fail to beat an arbitrary 7-bit index over
+the same set -- **it loses to one, by 0.13 A.**
+
+### 3. The mechanism, measured, so this is not just a null
+
+| family | within-target sd | lag-1 autocorrelation of the curve VALUES | local minima per curve |
+|---|---|---|---|
+| score-ordered prefixes | 0.1812 | **0.9172** | 25.3 |
+| random subsets | 0.1559 | **0.1259** | 42.0 |
+
+The random family has **lower** dispersion and still a **larger** per-target minimum. The
+difference is **correlation**: prefix variants are *nested* -- `curve[m]` and `curve[m+1]` share m
+members -- so the 128 of them are ~0.92-autocorrelated and contribute far fewer effectively
+independent draws than 128. Decorrelate the family and the minimum grows. **That is the
+order-statistic mechanism itself, measured directly.**
+
+And the growth curve settles it. Minimum over a random k-subset of the columns, gain vs m = 75,
+CA point cloud, 200 repetitions per cell:
+
+```
+k          1        2        4        8       16       32       64      128
+prefix  +0.0266  -0.0618  -0.1282  -0.1782  -0.2118  -0.2414  -0.2640  -0.2879
+random  +0.0348  -0.0377  -0.0824  -0.1317  -0.1854  -0.2547  -0.3325  -0.4241
+```
+
+Monotone, unsaturated, in both families. **A quantity that keeps growing with K and has not begun
+to flatten at K = 128 is a best-of-K, not a ceiling.** Note also `k = 1`: a *randomly chosen* m is
+**worse** than the shipped m = 75 (+0.0266), which is the same statement from the other end.
+
+### 4. And nothing of it transfers -- three independent ways
+
+| arm | basis | effect vs m=75 | MDE | x MDE | verdict |
+|---|---|---|---|---|---|
+| ORACLE **global** m (m* = 72, one m for all 126) | cloud | -0.0018 | 0.0082 | -0.22 | NOT A RESULT |
+| **leave-fold-out** global m | cloud | **+0.0079** (worse) | 0.0260 | +0.30 | NOT A RESULT |
+| `stats_lib.split_half_transfer` over the 128 columns | cloud | transfer **-0.0039** of a -0.3179 oracle = **1.2%**, CI [-0.0261, +0.0390] spanning zero | | | |
+
+Best **fold-held-out native-free per-target m-rule**, over four native-free features with a
+two-parameter monotone rule fitted per fold:
+
+```
+n_distinct   -0.0221   0.51x MDE   65W/61L   fold CI [-0.0477, +0.0064]     NOT A RESULT
+DISP128      -0.0039   0.09x MDE                                            NOT A RESULT
+n            -0.0054   0.11x MDE                                            NOT A RESULT
+rg_sd128     +0.0301   0.61x MDE   (wrong sign)                             NOT A RESULT
+```
+
+**Registered bar: "no part of it is deployable" fires if the best rule is > -0.7 x its own MDE.
+The best rule is -0.51x. It fired.** And note the *fit itself* touches the native, so even that
+-0.0221 is an upper bound on a deployable rule, not a clean one.
+
+### 5. What this changes
+
+**`2.9027 A` must never again be quoted as "the architectural ceiling" or as "what the one integer
+T1 says the state can specify is worth".** The defensible sentence is:
+
+> **ORACLE / NOT DEPLOYABLE: a per-target minimum over 128 nested prefix averages of the top-128
+> reaches 2.9027 A built chain. A per-target minimum over 128 *arbitrary* subsets of the same set
+> reaches 46% further, the gain is still growing at K = 128, and the transferable content of the
+> m axis is 1.2% of it with every deployable rule below 0.7x its own MDE.**
+
+The corollary is the useful part. S29-L44 observed that `best1_top128` (choose a member, 7 bits,
+-1.0657) beats `bestm128` (choose m, 7 bits, -0.3084) by 3.5x at equal information cost, and read
+it as *the architecture spends its bits on the wrong question*. **This entry sharpens that: it is
+not that m is a less valuable question than membership. It is that m is not a question at all** --
+an arbitrary 7-bit index into the same set outperforms it. The whole -0.3084 is the price of the
+minimum, and the axis contributes nothing.
+
+Two prior odds are settled on the record. The coordinator registered ~2:1 that a substantial
+fraction is best-of-128; I registered ~4:1 and 8:1-against-deployability, in `PREREG §11.4`, before
+measuring. **Both of us were directionally right and both of us were too generous: the surviving
+fraction is not "40%", it is negative.**
+
+### 6. What is NOT claimed
+
+* **The random-family control is CA point cloud only.** `F3-a` is confirmed on the built chain
+  (-0.3079, 3.14x MDE) but the 146% figure is a within-basis cloud comparison. A same-job chain
+  version of the control is the one open piece and is queued.
+* This says nothing about whether *some other* per-target readout decision is valuable.
+  `best1_top128` at -1.0657 is a different arm and is untouched here.
+* Nothing here is a deployable gain. Lane F emitted **12 comparisons** in this family; the
+  registered family count is 7. Appended to `s31/MULTIPLICITY.md`.
