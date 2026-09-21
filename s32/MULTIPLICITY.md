@@ -404,3 +404,30 @@ the lane's remaining AMBER window on it is not, and the mechanism that motivated
 
 D-12: the registered prediction *"in-band share of chiral variance < 15%"* **FAILED at 23.6%.** The
 79%/21% split it was meant to explain is, per D-30, **not chirality-specific**. Both statements stand.
+
+### Registered — D1-T: the per-target in-band sign is a real latent and it TRANSFERS
+
+The adversarial check on D-14…D-17. `Var(ρ) > 0` could in principle be dispersion without a stable
+per-target *cause*. **Split-half within each target**: the sign is estimated on a random half A of
+the top-75 band and applied to the held-out half B, 16 random splits per target, own distribution
+averaged (contract rule 10). **Matched null: the same sign, with the labels on B permuted.**
+`s32/results/s32_D1_signtransfer.json`.
+
+| # | reg? | scorer | transfer `sign(ρ_A)·ρ_B` | matched null | excess | se | ×MDE | folds |
+|---|---|---|---|---|---|---|---|---|
+| D-36 | R | **AMBER** | **+0.1125** | −0.0056 | **+0.1181** | 0.0164 | **2.57** | **5/5** |
+| D-37 | R | `DIS` | +0.1890 | −0.0033 | +0.1923 | 0.0226 | 3.04 | 5/5 |
+| D-38 | R | `LEG_total` | **+0.2263** | −0.0003 | +0.2266 | 0.0237 | **3.41** | **5/5** |
+| D-39 | R | `LEG_torsion` | +0.1499 | −0.0008 | +0.1507 | 0.0196 | 2.75 | 5/5 |
+
+**A sign learned on one half of a target's band predicts the ordering on the other half.** The latent
+is a property of the **target**, not of the sample — which is what `Var(ρ) > 0` alone could not
+establish. AMBER goes from **+0.0000 to +0.1125** and Legacy from **+0.0376 to +0.2263** once the
+sign is supplied.
+
+**ORACLE / NOT DEPLOYABLE.** Estimating the sign on half A requires native labels on half A. This
+prices *what a partial oracle buys*; it is not a method. And memory
+`in-band-signal-limited-not-sample-limited` records that a set-transformer over the full signed
+deviation map has a **flat learning curve** when asked to supply this sign natively — so the latent
+existing and the latent being *nativly* recoverable are different claims, and only the first is
+established here.

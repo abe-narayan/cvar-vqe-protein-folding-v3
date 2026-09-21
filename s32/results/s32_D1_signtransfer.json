@@ -1,0 +1,62 @@
+{
+ "note": "D1-T split-half per-target in-band SIGN transfer, 16 random splits/target, matched label-permutation null. ORACLE rr is the label; this prices what a PARTIAL oracle would buy and is NOT DEPLOYABLE as such.",
+ "n_splits": 16,
+ "res": {
+  "AMBER": {
+   "transfer": 0.11251150862203244,
+   "null": -0.005610779756706634,
+   "excess": 0.11812228837873905,
+   "se": 0.016415502971547896,
+   "x_mde": 2.56845244490986,
+   "folds_same_sign": 5,
+   "ci95_fold": [
+    0.0853827590301935,
+    0.16046280860151152
+   ],
+   "n_better": 41,
+   "n_worse": 85
+  },
+  "DIS": {
+   "transfer": 0.18899430890948107,
+   "null": -0.003331559828873481,
+   "excess": 0.19232586873835467,
+   "se": 0.022558275884953412,
+   "x_mde": 3.0431661910854406,
+   "folds_same_sign": 5,
+   "ci95_fold": [
+    0.13428230609038969,
+    0.2332579482355885
+   ],
+   "n_better": 38,
+   "n_worse": 88
+  },
+  "LEG_total": {
+   "transfer": 0.2263042232137285,
+   "null": -0.00032164006319107633,
+   "excess": 0.22662586327691953,
+   "se": 0.023701178623022363,
+   "x_mde": 3.4129772969184917,
+   "folds_same_sign": 5,
+   "ci95_fold": [
+    0.15378770749241838,
+    0.28300074043299744
+   ],
+   "n_better": 29,
+   "n_worse": 97
+  },
+  "LEG_torsion": {
+   "transfer": 0.14987517632061703,
+   "null": -0.0007941270061483914,
+   "excess": 0.1506693033267655,
+   "se": 0.019561124442014622,
+   "x_mde": 2.7493171139819146,
+   "folds_same_sign": 5,
+   "ci95_fold": [
+    0.11908301969210915,
+    0.18597162033020487
+   ],
+   "n_better": 36,
+   "n_worse": 90
+  }
+ }
+}
