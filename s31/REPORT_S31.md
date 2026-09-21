@@ -102,7 +102,25 @@ tail-minus-rest  -0.1374   SE 0.2421   MDE 0.6783  ->  0.20x MDE   NULL
 four other arms. FAIL18 is real failure against a reference no worse determined than any other
 target's.
 
-**What survives is a caveat on the absolute number only:** a **uniform ~0.70 Å reference term** — a
+**What survives is a caveat on the absolute number only** — and it is **~2× larger than first
+stated, for two reasons lane V found.** The reference term is **not uniform** (mean 0.6965 but
+**median 0.4565, sd 0.7767, CV 1.12, max 4.2943, and 13/111 exactly 0**), and the quadrature needs
+the **RMS** of the per-target reference RMSDs — **1.0407**, not the mean — because
+`d_obs² = d_true² + r²` is an identity **in squares** applied to **first** moments. So the endpoint
+inflation is **+0.1645 Å, not ~0.08**, and the attenuation at `d = 1.0` is **30.7%, not 17.9%**.
+
+**And paired deltas are protected for a different reason than the one first given.** They do not
+survive because the term is uniform — it is not. They survive because **both arms share the same
+reference on the same target**, which holds regardless of uniformity, and the effect on a delta is
+**attenuation, not cancellation**: `observed = true × d/√(d²+r²)`, i.e. **2.3% at the endpoint**
+(0.0005 Å on this project's confirmed 0.0221 Å effect — immaterial) rising to **30.7% at d = 1.0**.
+
+**A positive that could have been claimed and was not:** **13 of 111 deposited `model 1`s are
+exactly their own ensemble medoid (11.7%)** against ~5% expected by chance at ~20 models — depositors
+commonly order NMR models by agreement. **Direct evidence that the reference is a better-than-random
+ensemble member**, which strengthens the "change nothing" recommendation on its own terms.
+
+*The original framing, for the record:* a **uniform ~0.70 Å reference term** — a
 perfect predictor aiming at the ensemble medoid still scores ~0.70 Å against model 1. In quadrature
 `sqrt(3.21² − 0.70²) = 3.13` against 3.21, i.e. **~0.08 Å today and material only near 1 Å**. Because
 it is uniform it **cancels in every arm-to-arm delta**, which is this project's actual currency.
@@ -231,7 +249,10 @@ closed-form optimum and the circuit's output are one fixed weighting curve per �
 targets — the ties in a real pool leave a residual of **max deviation 4.07e-02** across the 126, but the vector is otherwise fixed. Measured: **`H(p*) = 4.9137` bits at α = 1 with standard deviation `3.1e-04` across the 126
 targets**; 6.6392 bits at α = 0.25 with sd 4.5e-3.
 
-> ### The quantum stage carries zero target-specific information.
+> ### The quantum stage is target-independent to within a measured bound.
+> **0.0407 max-norm on `E`; 0.0812 between any two targets; downstream `sd(H(p*)) = 1.4e-4`
+> bits.** And `(α,T) = VQE_LFO[fold]`, so `p` takes **exactly two values, selected by fold** —
+> *one fixed weighting curve per α.*
 > The target enters the answer **only** through the readout's own `P` and `W` — never through the
 > objective, the Hamiltonian, the CVaR, or the state. The stage answers *"what fixed weight should
 > rank `k` receive?"*, which is a **128-number global hyperparameter, not a per-target
@@ -895,7 +916,73 @@ in-band skill (§20.2). **State which of the two any proposal addresses.**
 
 ## Appendix A — every claim withdrawn this sprint
 
-[PENDING]
+Recorded in full because the charter requires it and because it is the reason the surviving results
+are worth anything. **The distribution is the finding**: every single-lane result held; **every
+cross-lane synthesis by the coordinator failed.**
+
+### A.1 The coordinator's
+
+| claim | how it died |
+|---|---|
+| **R1's quantifier** — *"the entire quantum stage carries at most k bits"* | **My own falsifier fired in shipped code.** I wrote *"R1 fails if any code path lets the stage emit a structure that is not a pool member"*; lane C found `average_weighted` (`core/pipeline.py:880-895`), **shipped**, called at `:1110`/`:1116`, emitting a continuous convex combination — measured **1.1144 Å from the nearest pool member**. The theorem holds for the *selection* readout only |
+| **R1 point 4** — all `2^k` vertices reachable | Duplicate structures make `P[i,j] = 0` off-diagonal, so `argmin` returns the first index. **Capacity is 6.886 bits, not 7** — and the reachable count equals the byte-distinct count on every target |
+| **"Two readouts"** (S31-L2) | There are **three**, and I merged the two that matter most to distinguish: the **convex** one ships, the **affine** one does not |
+| **The +0.2260 Å deficit**, broadcast to four lanes | It is the **affine harness readout's** cost (`circ_l1_i80` lives in `s28_A_amp.py`), not the shipped stage's. Lane A caught it as a **12.7× inconsistency** with its own cloud measurement and refused to resolve it by assuming the projection amplified. The shipped stage costs **+0.0178 Å cloud / +0.0175 built chain, both NULL** |
+| **"Averaging contracts the backbone 25.8%"**, which I built a lane's entire mechanism on | **A number withdrawn two sprints earlier** (`s15/coord_FINDINGS.md:914-921`; correct: **3.5%**, and it is a *separation-dependent distortion* crossing 1.00 near \|i−j\| = 8, not a contraction). Still stale in S30's ledger and in project memory when I quoted it |
+| **My opening hypothesis (E1)** — estimate the common mode as `mu_hat = pool75_mean − expected` | **Circular, killed by one line of algebra.** `mu_hat = mu − y` exactly (1.8e-15), so the estimator's error **is** the prior error it was meant to help predict. To use it you would already need the answer |
+| **"You need a measurement of the molecule, not a computation"** — nearly the sprint's headline | **True premise, vacuous conclusion.** By Anfinsen `I(N; sequence) = H(N)`, so the bound reads *"the pool contains at most everything"*. **If it implied a ceiling, AlphaFold would be impossible** — and our own ESM result (+0.288 Å over one-hot on the same sequence) could not exist |
+| **"The set-matched ladder inverts S30-L11"** | **A withdrawal that was itself wrong** (contract rule 25). S30 computed the correct reference curve **in the same file**: argmin reaches **1.7108 at 9 bits** against the sparse arm's ~9.1. **S30's support was mismatched; its conclusion survives** |
+| **"0.076 Å of pure error cancellation at zero weight bits"** | Two errors at once. The support is **ORACLE-greedy at 12.99 bits**, which S30 *did* charge; and at **matched search size** it is a **0.077 Å penalty** — a minimum over C(128,2) = 8128 read against one over 128 |
+| **The headline's basis** — *"2.1435 Å (CA cloud) … ~0.90 Å of headroom"* | **2.1435 is the built chain** (cloud is 2.1458), differenced against the cloud production — so the headline **understated its own headroom by 0.16 Å** in the sentence carrying the framing claim |
+| **"If `coh(AVG_SEP) < 0.6931` it is the first native-free operator to pass"** | **The bar is measured on a different object.** S30's `coh` grades a *corrector's* residual (the distogram's prediction error, an **input**); lane B's and lane F's grades the *emitted structure's* error (the **output**). Same pipeline, same `mu`, **0.6931 against 0.9780** — two different errors. It reached **shipped code in two lanes** before anyone read the definition at source |
+| **The lever comparison** — *"the convex readout is 0.290 Å better, so the readout class is the larger lever"* | **Unequal information cost**: 7 bits against **128 free reals**. A larger *ceiling at unpriced cost*, not a larger lever — **the error S30 §9.4 had already named as this project's characteristic one** |
+| **"`bestm128` may deflate"** | **Inverted.** The transfer arm existed *in the entry that produced the number*, and S29 marked it **FALSIFIED**. Order-statistic inflation makes an oracle number **optimistically biased, and an optimistically biased upper bound is still a valid upper bound** — so the ceiling reading was licensed. **My use of it as a "0.308 Å lead" was not**, and I had dropped S29's caveat in re-quotation |
+| **The widening null as 0.35×** | That is `D − A`; the widening is `F − A2` at **0.42×** |
+| **My 2:1 reasoning on E2/E3** | Right in direction, **wrong in mechanism, twice**: I predicted the orthogonal complement would be *noise*. It is **94% predictable and actively harmful** |
+
+### A.2 The lanes'
+
+| lane | claim | how it died |
+|---|---|---|
+| **A** | The derived readout as a deployable improvement — its **registered primary** | **+0.1334 Å, 1.17× MDE, WORSE**, outside a registered band of [−0.15, +0.10], *missed on the side that says the direction fails* |
+| **A** | Its one positive — quality-blind dispersion beating the shipped argmin by −0.2621 Å at 2.74× | **Demolished by its own shuffled-`B` control at 0.54× MDE.** The mechanism is *"spread the weights"*, not *"spread along the real geometry"* |
+| **A** | `ρ = 0.211` as a crossing **target** | Consensus reaches **double** it and is the **wrong sign in band**. The global price is necessary-not-sufficient and holds only along an interpolation path |
+| **A** | Its popcount explanation of the optimisation residual | Registered and **refuted** by its own relabel intervention; **no post-hoc replacement offered** |
+| **A** | +0.0178 / +0.0125 quoted without MDEs | **NOT A RESULT** (0.37× / 0.27×) — self-corrected and propagated |
+| **B** | 4:1 that `LEG_torsion` is predominantly odd | **It is 70% even** |
+| **B** | That the 32-cost sweep's contrast was a `RAND_SIGNED` artefact | **Refuted by its own control** — `GAUSS_MATCHED` gives the same contrast. The construction is exonerated |
+| **B** | That `LEG_steric`'s contrast is chirality-dominated | Its **variance** is (odd share 13.02); its **contrast** is not (odd/tot 0.49). Self-corrected |
+| **C** | A wrong-tail sign error in C3 | Defined a contrast that could only rise, then read the null's lower tail. **The first run printed the opposite verdict; caught before any number left the lane** |
+| **C** | The ORACLE convex ceiling | **Violated its own feasibility bound on 4 of 126** (3 of them FAIL18). Self-audited, vertex added as a third candidate, bound asserted: **119W/4L → 119W/0L — the four losses *were* the four failures** |
+| **C** | *"must never again be quoted as the architectural ceiling"* | Withdrawn by lane C as **too strong** |
+| **D** | Two defects in its own work | Caught by its own verifier |
+| **E** | *"It must carry orthogonal INFORMATION"* | **Half withdrawn by its author.** Orthogonal information is exactly what we have, and it is worth **+0.075 Å** |
+| **F** | Its `hash()`-seeded random family | Python salts `hash()` per process, so the subsets were not regenerable. **Repaired to `crc32` and the control re-run from zero** — 146% → **149%**, conclusion strengthened, **draw sd 4.2× larger** |
+| **F** | A missed grep — `medoid75` was already on disk | **Declared as its own defect in its prereg before anyone could find it**, and its derivation had predicted the sign and margin first |
+| **L** | *"Consistent with the unpinned projection seed"* | Withdrawn — **there is no RNG on that path.** *"I inferred from the charter's defect list rather than from the code, the same error this lane exists to catch in others"* |
+| **L** | Its 12 verification cells | Run at **T = 0.1 / 0.05**; the deployed `T` is **0.3 on every fold**. Its entropy-direction claim **reverses** there |
+| **P** | Disagreement count 20–45 | **66** |
+| **P** | *"Arm E lies between D and F"* | **Falsified in premise and in outcome**, and the premise failure was flagged by its author before the outcome was known |
+| **P** | Lane L's *"there is no third outcome"* | **There was, and it happened** — a null at 0.19× MDE |
+
+### A.3 The rules this sprint earned
+
+1. **A claim combining two lanes' numbers needs a named owner who holds both**, and must carry both
+   caveats in the sentence carrying the number. *Every single-lane result held; every cross-lane
+   synthesis failed — because a single-lane claim is audited by the lane that owns the data and a
+   cross-lane claim is audited by nobody.*
+2. **Every lever comparison carries its information cost in the same sentence as its Ångströms.**
+3. **A bar imported from another sprint must be checked against the object it graded there.** The
+   `0.6931` bar crossed from corrector-space into readout-space with no owner holding both, and
+   reached shipped code in two lanes.
+4. **A fold CI excluding zero does not rescue a sub-MDE effect** — twice this sprint, at 0.44× and
+   0.42×.
+5. **A null in the mean is not "no effect"**: report the per-target distribution against a matched
+   implementation-noise null.
+6. **An optimistically biased upper bound is still a valid upper bound.** Order-statistic inflation
+   deflates a *lead*, not a *ceiling*.
+
+---
 
 ## Appendix B — the five "worst 18" strata, as a key
 
