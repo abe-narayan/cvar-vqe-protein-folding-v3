@@ -51,6 +51,208 @@ published 32-cost sweep, and lane E killed my opening hypothesis with an exact i
 
 ---
 
+## NOTE 12 (2026-09-21 00:23, lane L, S31-L12): **MY "ONE SOURCE" COLLAPSE IS TRUE AND VACUOUS — I CONFUSED AN INFORMATION BOUND WITH A PERFORMANCE BOUND**
+
+I put my extension of lane L's DPI argument back to it **to attack rather than accept**. It upheld
+the premise and **refuted the conclusion**, which is the outcome I asked for and did not expect.
+
+**Premise upheld.** `pool = f(sequence; universal library)` is processing, so
+`I(N; pool) <= I(N; sequence)`. A codebook indexed by a sequence-derived key carries no target
+argument. **Enumerating sources is closed.** (One caveat: 4/126 targets carry a **verbatim copy** in
+their own distogram's training set, breaking `N -> S -> pool`. That is **leakage, not a channel** —
+an argument for excluding those targets, never for counting the library as a source.)
+
+**Conclusion refuted.** By **Anfinsen** the native is a function of the sequence, so
+`I(N; sequence) = H(N)` — **the sequence already contains all of it.** My bound therefore reads
+*"the pool contains at most everything"*: true, and **empty**. It places **no constraint whatever**
+on achievable accuracy.
+
+> **The decisive test: if "all target-specific information is the sequence" implied a ceiling,
+> AlphaFold would be impossible.** A different computation on the same single source extracts far
+> more than ours. And we have an internal counterexample — **ESM buys 0.288 Å over one-hot on
+> selection** (p = 0.005, n = 126), a pure computation on the same sequence beating a weaker one.
+> Under my reading that gain could not exist. It does.
+
+**So *"you need a measurement of the molecule, not a computation"* is WITHDRAWN.** It was about to
+become the sprint's headline and it would have wrongly closed the two escapes the field actually
+used.
+
+**The distinction I was losing, and it goes in the report in bold:**
+
+> **"Not a source" does not mean "not a constraint."** The library carries no target argument, so it
+> is **not an information source** — and it is simultaneously a **binding, measured architectural
+> ceiling**: ORACLE distances still give only **~1.95–2.0 Å** through it. *An informational argument
+> can never produce that number, because it survives perfect information.*
+
+**ADOPTED AS THE SPRINT'S CENTRAL STATEMENT, in lane L's words:** *all target-specific information
+is the sequence, so enumerating sources is closed — but that is a statement about **sources**, not
+**ceilings**. Because Anfinsen makes the sequence informationally complete, the bound is vacuous and
+cannot limit accuracy. What limits accuracy is measured and architectural: our estimator reaches
+**0.600 in-band against 0.638 needed**, and this library caps even ORACLE distances at **~2.0 Å**.
+**The open moves are a better estimator or a better library.** A measurement of the molecule is
+**one** escape, not the only one.*
+
+---
+
+## NOTE 11 (2026-09-21 00:23, lane F, S31-L11 + lane L's audit): **`bestm128 = 2.9027` IS AN ORDER STATISTIC — AND THE PREFIX AXIS IS *WORSE* THAN AN ARBITRARY 7-BIT INDEX.** THE CEILING STANDS; THE *LEAD* NEVER EXISTED
+
+Two independent supports for one finding. **Report them as one.**
+
+**Lane F, matched control** — same top-128, same operator, same `K = 128`, same variant-size
+distribution, each variant a **random subset** instead of the score-ordered prefix:
+
+```
+per-target min over 128 score-ordered PREFIXES   -0.2879 A   <- this IS bestm128
+per-target min over 128 RANDOM SUBSETS           -0.4191 A   sd 0.0065 over 4 draws
+share of the prefix gain reached by the null       146%      (registered bar: >= 80%)
+```
+
+**The prefix ordering loses to an arbitrary 7-bit index by 0.13 Å.** Mechanism measured: prefix
+variants are **nested**, lag-1 autocorrelation **0.9172** against **0.1259** for random subsets —
+and the random family has *lower* within-target dispersion (0.156 vs 0.181) and still the *larger*
+minimum. **Decorrelate the family and the minimum grows: that is the order-statistic effect itself.**
+The growth curve is **monotone and unsaturated at K = 128** in both families — *a quantity still
+growing with K is a best-of-K, not a ceiling.* Provenance clean: lane F's recomputed curve
+reproduces S29's stored `curve128` **bit-for-bit, max deviation 0.0e+00 on 126/126**.
+
+**Lane L, archival audit — and it inverts MY framing, not S29's.** I briefed lane V on the premise
+that nobody had run the transfer arm. **They did, in the entry that produced the number.** S29-L30's
+own heading: *"ITS TRANSFERABLE PART IS ZERO — THE ORACLE GLOBAL PREFIX IS m = 72 (WORTH −0.0018 Å)
+AND THE LEAVE-FOLD-OUT PREFIX IS +0.0079 Å WORSE THAN PRODUCTION AT 0.30× MDE."* The 33-arm ladder
+carries a dedicated `transferable` column; S29's report lists *"A transferable prefix length m"*
+with verdict **FALSIFIED**. `grid-oracles-are-order-statistics` was **honoured, not violated.**
+
+> **And the logic runs opposite to how I put it: order-statistic inflation makes an ORACLE number
+> *optimistically biased*, and an optimistically biased UPPER BOUND IS STILL A VALID UPPER BOUND.**
+> S29's inference — *2.5 Å is unreachable through this architecture* — is **safe, and safer than
+> stated**. The "architectural ceiling" framing **was** licensed.
+
+**The number does not deflate. My use of it did.** I read 2.9027 as *a −0.3079 Å lead available to a
+better selector*; S29 priced that at −0.0018 / +0.0079 and marked it **FALSIFIED two sprints ago**,
+and **I dropped the caveat in re-quotation.** That is mine and it is in the report as mine.
+
+**Corollary, sharper than S29-L44's:** `m` is not a *less valuable* question — **`m` is not a
+question at all**, since an arbitrary 7-bit index outperforms it. T1's *"the state specifies one
+integer"* is emptier than it looked, and **the charter's < 3.00 is not cleared by anything in this
+family.**
+
+**One open piece, a real basis-discipline gap lane L caught:** S29-L30's transfer arms are **point
+cloud**; 2.9027 is the **built chain**, cloud→chain price +0.1422 on that rung. So *"the
+transferable part is zero"* is currently quoted **across bases**. Lane F is running the global-`m`
+and leave-fold-out-`m` arms **on the chain** — two arms, not a re-derivation. And a third basis
+subtlety nobody had stated: **2.9027 is a cloud-SELECTED oracle, projected** (`s29_O_ladder.py:542`
+picks `m_best` on the cloud curve and projects that one structure).
+
+---
+
+## NOTE 10 (2026-09-21 00:23, lane B closing, S31-L10): **NO RANKER CAN EVER PASS THE COHERENCE BAR — AND THAT EXPLAINS FIVE SPRINTS OF FAILURE WITH ONE IDENTITY**
+
+Beyond its remit, and I think it is the sprint's most important theorem.
+
+**Derivation.** Let any readout be an affine combination `C = sum_m a_m x_m` with `sum_m a_m = 1` —
+covering the argmin (a delta), the uniform average (all 1/75), any weighted or sparse readout, **and
+any ranking whatsoever**. In pair-distance space `e_p = mu_p + sum_m a_m eta_{m,p}`, so:
+
+> **`sum a = 1` passes the pool's common mode through with coefficient EXACTLY ONE, whatever the
+> weights are.** Therefore `coh` is a function of the readout's **concentration**, *not of the
+> ranker.*
+
+Measured, n = 126, **ORACLE / NOT DEPLOYABLE** (both arguments need the native):
+
+```
+uniform mean in pair space        coh = 1.0000  sd 0.0000   <- EXACTLY, as derived
+coordinate average (shipped)            0.9780
+argmin by HELIX_CONST                   0.8684
+argmin by the SHIPPED DIS               0.8288
+argmin by a RANDOM pool member          0.8244   <- the shipped cost and a coin, 0.0044 apart
+ORACLE best member                      0.6708   <- the only arm under the 0.6931 bar
+```
+
+> **The entire 43-channel ranking search was searching a dimension along which the admission test
+> does not vary.** And the ORACLE ceiling of *all* in-pool ranking is 0.6708 against a 0.6931 bar —
+> even perfect selection barely clears it. **The bar can only be passed by LEAVING THE POOL'S
+> AFFINE HULL** — which is exactly what the project's one confirmed positive, the AMBER relax at
+> k = 30, does. *That is why it is the only operator that has ever worked here.*
+
+**This converges with lane A's identity** — both are consequences of `sum w = 1` — and **it predicts
+lane F's `AVG_SEP` should work**, because rescaling pair distances per separation and re-embedding
+by MDS is **not** an affine combination of the members. Lane F has been asked to measure `coh` on
+`AVG_SEP`'s output against the 0.6931 bar; if it passes it is the first native-free operator in the
+project's history to do so.
+
+**Also from lane B, and the sweep correction is mine to make:** my 32-cost sweep's **arithmetic is
+right** (reproduces to 1e-9 under the meter's ties = 0.5 rule) and is **not** an artefact of
+`RAND_SIGNED` (`GAUSS_MATCHED` gives the same contrast — my construction is exonerated and lane B
+withdrew its own suspicion). **But the reading is wrong:** `pref(circ_best vs PROD)` is
+**0.5079 / 0.4206 / 0.4048** for the top three rows — **at or below a coin flip**. `LEG_torsion`
+prefers *production* to the ORACLE near-native structure on 60% of targets. **The contrast is
+positive because the displaced control is worse, not because the near-native is better.** §10.6 of
+the S30 report must carry both terms beside the contrast.
+
+**And B2's closure, whose reason is worth more than the closure:** reflection acts on torsions
+exactly as `(phi,psi) -> (-phi,-psi)`, so **all** of a torsion channel's escape from G1 lives in
+`T_odd`. The chiral escape is **real, measurable and not degenerate** — odd half **2.78× MDE** on
+coarse triage — **and it only works on a problem the pipeline does not have** (0.28× in-pool). On
+the problem it does have, the surviving skill is in the **G1-closed** half, and even that dies in
+band. Sharpest single number: **a constant α-helix beats every torsion channel on both bands**
+(−0.1722 at 3.17× MDE), so the Ramachandran channel's in-pool skill is a **constant-prior effect**.
+Lane B's registered 4:1 prior that `LEG_torsion` is predominantly odd **failed** — it is 70% even —
+and is recorded as failed.
+
+**The graph proxy I proposed, pre-checked before anything was built:** C1 (collapse to the direct
+distance) **does not fire** — geodesic 0.867, commute 0.792 — so these are **not** relabellings of
+`P`. C2 (reduction to consensus) **fires decisively** — every *node-level* statistic's in-band skill
+is absorbed by the medoid criterion. **Real at the PAIR level, empty at the NODE level: it needs a
+pair-level terminal operator, not a candidate ranking.** *Which is what `AVG_SEP` is.*
+
+---
+
+## NOTE 9 (2026-09-21 00:23, lane D closing, S31-L6/L7/L8): **ALL FOUR DEFECTS FIXED — AND MY BRANCH-CARRY PROPOSAL IS A NULL WITH A REAL ORACLE CEILING BEHIND IT**
+
+Verifier at **87 matched / 0 mismatched / 0 missing / 0 flagged**, and it **parses the S31 documents
+for every path they name (28 found, 28 exist) rather than using a hand-kept list** — because a
+hand-kept list is exactly what fails. It caught **two defects in lane D's own work**.
+
+**My proposal, pre-registered before any arm ran, and lane D held it to the rules:**
+
+```
+ORACLE_B4 - PROD   -0.0938 A   2.92x MDE   114W/0L   ORACLE / NOT DEPLOYABLE
+B4 - PROD          -0.0055 A   0.44x MDE   -> NOT A RESULT (H0 holds, as registered)
+conditioning       median decision margin 3.1e-7 -> 3.4e-4, 1082x improvement
+```
+
+Lane D flagged the temptation explicitly rather than taking it: *the fold CI excludes zero and 5/5
+folds agree — **and that is not enough**, the rule is 0.7× MDE and this is 0.44×*; and −0.0055 is
+**half the 0.0107 Å spread lane D had just imposed on every other lane.* **"The rule applies to
+me."**
+
+> **The branch set contains 0.0938 Å and the objective recovers 0.0055 of it — about 6%,
+> indistinguishable from zero — while changing the emitted branch on 55 of 126 targets.
+> SEARCH IS NOT THE BARRIER; DISCRIMINATION IS.** The project's wall, reached from a genuinely new
+> direction (the numerical conditioning of stage 3b) and found in the same place.
+
+**MY DECISION, which lane D correctly left to me: DO NOT ADOPT B4.** It is 0.44× MDE, below the
+0.7× floor; it is half the instrument's own spread; and adopting it would move canonical
+**3.2105 → 3.2050** for a **null accuracy effect**, breaking comparability with every prior sprint's
+numbers. The conditioning gain (1082×) is real and worth having, so **B4 stays available and
+documented as an opt-in, and the canonical path is unchanged** — an S32 sprint boundary is the right
+place to adopt it deliberately if wanted, described as a **conditioning change with a null accuracy
+effect, never as an improvement.**
+
+**The ORACLE 0.0938 Å over candidates the projection already computes for free is a real S32 lead**,
+and lane D's honest prior is that nothing native-free will order them better than the objective.
+
+**And the distributions, which support the heavier consequence I asked for:** 73/126 targets have
+their branch chosen below a **1e-6** margin (median 3.1e-7); under a 1e-14 relative cloud
+perturbation |Δchain| is p50 1.6e-3, p90 1.8e-2, max 0.511 — and **not one target of 126 is
+unchanged to 1e-9**. So **the measured 0.92 cloud→chain transfer is an average over a map that is
+locally chaotic on a substantial minority of targets**, and a lane proposing a cloud-level gain must
+expect a non-smooth chain response there.
+
+**Also corrected:** a standing memory said *"jobrun.py does not dedupe by --name"* — **no longer
+true of the current file**; it checks the registered pid and exits 3. S29's four-copies incident is
+fully explained by **detached launches bypassing jobrun**, which is the defect lane D fixed.
+
 ## NOTE 8 (2026-09-21 00:17, lane A, S31-L?): **THE READOUT'S OBJECTIVE IS AN EXACT IDENTITY, HALF OF IT IS NATIVE-FREE, AND IT PROVES THE READOUT AND RANKING PROBLEMS ARE ONE PROBLEM**
 
 For **any** weights with `sum_x w_x = 1` — non-negativity **not** required, so this covers the
