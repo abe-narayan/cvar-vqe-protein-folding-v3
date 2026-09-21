@@ -349,3 +349,71 @@ emits, on two independent constructions. The medoid/average *choice* is a differ
 | `core/pipeline.py:880-895` `average_weighted`, called at `:1110` | p_θ-weighted convex mean → a **new** point cloud | **not run here** — it needs the VQE's `p`, and its convex ceiling is closed at 3.0522 (lane C) |
 
 Lane F's registered comparison count rises from 36 to **44**.
+
+---
+
+## 11. FOURTH AMENDMENT — F3: IS `bestm128 = 2.9027` AN ORDER STATISTIC?
+
+**Appended 2026-09-21 00:33 on the coordinator's new highest-priority item, before any aggregate
+from the `bestm128` family has been computed.** The only row I have opened is `1A13`
+(`s29/results/s29_O_p128_rows.jsonl`), to learn the schema.
+
+### 11.1 What is being audited, and the structural fact that decides how
+
+`s29/LEDGER.md:3943` and `s29/results/s29_O_p128_rows.jsonl` hold, per target, the full
+`curve128` — the CA-point-cloud RMSD of the prefix average of the first `m` of the score-ordered
+top-128, for **every** `m = 1..128` — and `bestm128 = min_m curve128[m]`. The **built-chain**
+value 2.9027 comes from projecting *one* structure per target: the prefix average at the
+**cloud-argmin** `m_best` (`s29/s29_O_ladder.py:542`). **So the chain-basis 2.9027 is a
+cloud-selected oracle, projected** — not a chain-selected one. That is stated in every sentence
+this lane writes about it.
+
+`bestm128` is a **per-target minimum over K = 128 variants**, which is the exact shape contract
+rule 11 exists for.
+
+### 11.2 The registered arms
+
+All on the **CA point cloud** where the full 126×128 matrix exists (exact, K = 128, no
+projections), with the **built chain** carried for the arms that survive, projected **in the same
+job from the same stored clouds** (lane D's 1e13 branch amplification).
+
+| id | arm | native? |
+|---|---|---|
+| **F3-a** | `min_m curve128[m]` vs `curve128[75]` — the ORACLE gain being audited | **ORACLE / NOT DEPLOYABLE** |
+| **F3-b** | random `m` per target — the **zero-skill** control | native-free |
+| **F3-c** | ORACLE **global** `m` (one m for all 126) and its **leave-fold-out** twin — the transferable part of the axis | LFO = held out |
+| **F3-d** | `stats_lib.split_half_transfer` over the 126×128 matrix | — |
+| **F3-e** | **the matched random-variant-family control** (contract rule 7): per-target min over K = 128 *random* subsets of the same top-128, sizes drawn to match the prefix-size distribution. Same operator, same set, same K, **index carries no score order** | ORACLE min over a null family |
+| **F3-f** | native-free per-target `m` rules (n, DISP, MOVE, pool-score spread, `rg` sd, `n_distinct`), **fold-held-out** | native-free, deployable if it clears |
+| **F3-g** | effective K: curve smoothness / count of distinct local minima, and the best-of-K inflation re-priced at K_eff | — |
+
+### 11.3 REGISTERED BARS — written before the numbers, so they can fire
+
+1. **"The m axis is an order statistic"** fires if **F3-e reaches within 20% of F3-a's gain**, i.e.
+   if a min over 128 *arbitrary* subsets of the same 128 buys ≥ 0.80 × 0.3084 = **0.247 Å**. In
+   that case 2.9027 must be reported as *"7 bits of ORACLE index over the top-128"* and never as
+   *"the value of choosing the prefix length"*.
+2. **"No part of it is deployable"** fires if the best **F3-f** rule's fold-held-out gain is
+   `> −0.7 × MDE` of its own comparison. Then the number may never again be quoted as a reachable
+   ceiling without that sentence attached.
+3. **F3 is a POSITIVE** only if some F3-f rule reaches `≤ −1.0 × MDE` with a fold CI excluding
+   zero **on the built chain**.
+
+### 11.4 My registered prior
+
+* **That a substantial fraction of the 0.3084 Å is best-of-128: ~4:1 in favour** (the coordinator
+  registered ~2:1). My reason is the arithmetic already in the record: `best1_top128` spends the
+  **same 7 bits** and is worth **−1.0657**, i.e. 3.5×. If 7 bits of *arbitrary* oracle index over
+  this set is worth ≥ 1.07, then 0.31 for one particular 7-bit index is not evidence that *that
+  index* is special — it is a lower bound on what any 7-bit oracle buys.
+* **That a native-free per-target m-rule clears 1.0× MDE on the built chain: ~8:1 against.**
+  S29 already measured the ORACLE **global** m at **−0.0018** and its LFO twin at **+0.0079
+  worse**, and S30 closed filter width globally. The per-target question is genuinely open, but
+  every per-target native-free rule this project has built has landed in the hundredths.
+* **I do not expect F3 to be the sprint's best shot, and I am saying so before I measure it.** The
+  coordinator rates it highest; I rate `AVG_SEP` higher, and both of us should be on record.
+
+### 11.5 Multiplicity
+
+F3 adds 7 registered comparison families. Lane F's registered count rises from 44 to **51**, and
+the family is appended to `s31/MULTIPLICITY.md` as it is emitted.
