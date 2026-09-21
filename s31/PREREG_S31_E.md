@@ -126,3 +126,49 @@ unweakened, which is also worth knowing in one hour rather than one sprint.
 
 No reopening of benchmark60, no regeneration of folds or clusters, no tuning of any deployable
 parameter on native RMSD. The ridge path, the fold split and the feature list are S30's, unchanged.
+
+---
+
+# AMENDMENT 1 — written 2026-09-20 23:52, AFTER seeing E1 and labelled as such
+
+**E1 came back DEAD** (within-target cosine +0.0495 against a 0.30 kill bar; not separated from the
+matched permutation control, 0.51× MDE). Under §2 the registered consequence is "report immediately,
+run nothing below". I am amending, and the amendment is recorded here with its timestamp and its
+motive so nobody has to reconstruct it later.
+
+**What changes.** §2's stop applies to the *deployable* claim, which is dead and stays dead. It does
+not answer the coordinator's actual E2/E3 question, which is about the *operation* (projecting out
+the common mode), not about this particular estimator of it. I therefore add an **ORACLE ceiling**:
+run the identical projection and constrained-fit operators using the **true `mu`**, which is
+**ORACLE / NOT DEPLOYABLE** and is labelled so in every sentence that carries a number from it.
+
+**Why this is worth compute and is not a fishing expedition.** It is a *ceiling*, and a ceiling has a
+pre-stated meaning in both directions:
+
+* **If the ORACLE-direction projection emits nothing**, the projection idea closes *at its ceiling* —
+  no better estimator of the common mode could rescue it — and S30's §12 requirement sharpens from
+  "find an incoherent observable" to "find an observable carrying **orthogonal information**",
+  because `mu_hat`'s own error is incoherent and is worth nothing.
+* **If it emits a gain**, the next sprint has a named, sized target: estimate the common-mode
+  direction. We already know `pool75_mean − expected` is not it, and why (`r = sd(y)/sd(mu) = 1.60`).
+
+**Bars for the amendment, registered now, before the arms are run.** Same as §3 and applied to the
+built chain against this lane's own PROD arm in the same process: RESULT at `|delta| ≥ 1.0× MDE` in
+the better direction with ≥ 4/5 folds same sign; NOT MEASURED at 0.7–1.0×; **the projection route
+closes at `|delta| < 0.7× MDE` or any positive delta**. The §3 matched controls are mandatory and
+are now matched **per projection arm**: a norm-matched shrinkage control for each projection, and a
+random-direction projection control.
+
+**The registered native-free arms are run anyway**, despite the DEAD gate, because they cost one
+extra vector each and a *measured* negative is worth more than an inferred one. They are reported as
+registered arms whose gate had already failed, not as new hypotheses.
+
+**Additional diagnostic registered now:** the per-target norm fraction `||P_along(yhat)|| / ||yhat||`
+for both directions. The coordinator's stated reason for expecting a null is that the fitted
+corrector is "almost entirely in the `mu` direction", so its orthogonal complement is nearly pure
+noise. That fraction measures it directly and is reported whatever the endpoint does.
+
+**Prior odds for the amendment, registered before running it:** ~3:1 against the ORACLE projection
+producing a gain, for the §1.3 reason (the projection removes corrector capacity lying along `−y`)
+which applies to the true `mu` just as it does to `mu_hat`. A null here is the more informative
+outcome and is the one I expect.
