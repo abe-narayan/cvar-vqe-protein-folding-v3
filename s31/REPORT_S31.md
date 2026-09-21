@@ -12,7 +12,111 @@ Contract: `s31/S31_CONTRACT.md` (32 rules) · Verifier: `s31/s31_verify.py` · M
 
 ## 0. The answer, up front
 
-[PENDING — written last.]
+**The endpoint did not move. It is 3.2105 Å.** Nothing was deployed and nothing earned deployment:
+**not one arm in the sprint reached its own MDE in the helpful direction.** The charter's primary
+target of < 3.00 Å and its ambition of < 2.50 Å are both unmet.
+
+What the sprint did instead was **dissolve the question it was given and replace it with a sharper
+one that points the opposite way.**
+
+### 0.1 The charter's central question does not have an answer, because it is not well posed
+
+The charter asks what objective and Hamiltonian a CVaR-VQE should optimise so that quantum
+optimisation spends its capacity on endpoint-relevant selection. Reading the code rather than the
+record moved the diagnosis twice, and the second move ended the question:
+
+> **The Hamiltonian's diagonal is `E = _zrank(pool["sc"][o])` — the standardised *rank* of 128
+> sorted values — so it is THE SAME VECTOR ON EVERY TARGET**, to within 0.0407 in max-norm.
+> `p*` and the circuit's output are therefore **one fixed weighting curve per α**, two values
+> selected by fold, with `sd(H(p*)) = 1.4e-4` bits across 126 targets. **The stage answers *"what
+> fixed weight should rank `k` receive?"* — a 128-number global hyperparameter, not a per-target
+> computation.**
+
+That is strictly stronger than either capacity theorem the sprint began with, and it explains every
+other negative at once: why the objective does not point at good solutions (*it is not a function of
+the target*), why α is inert on three of five folds by construction, why the circuit's 0.930-bit
+optimisation gap **cancels in the mean**, and why the convex optimum over that family converges to
+the uniform average production already emits.
+
+**And the deployed objective is not a quantum problem.** `F(p) = CVaR_α(E;p) − T·H(p)` is a **convex
+program with a closed-form global minimiser** pinned by one scalar (Rockafellar–Uryasev + Sion,
+derived twice independently). `run_cvar_vqe` is **strictly worse in 126/126 targets** at the deployed
+settings; `p*` costs **0.0012 s against 0.0985 s**. Substituting it changes the selected candidate on
+**66 of 126 targets** and is worth **−0.0112 Å at 0.19× MDE — a null.** *Solving the objective
+exactly reshuffles the answer everywhere and buys nothing.*
+
+### 0.2 The bottleneck was stated backwards, and the correction is the sprint's most consequential result
+
+S30 concluded — and this sprint's own opening contract encoded — that the next channel must supply an
+observable whose error is **incoherent** with the pool's common mode. Measured with ORACLE magnitude
+**and** a perfect direction, an incoherent correction is worth **+0.0747 Å: harmful.**
+
+```
+correcting ONLY the along-mu half    -0.8102 A   3.29x MDE, 5/5 folds, 121W/5L    <- the WHOLE prize
+correcting ONLY the orthogonal half  +0.0747 A   0.87x MDE, 57W/69L               <- worth less than nothing
+```
+
+And the reason is an **identity, not a fit**: `mu_hat = mu − y` forces `y_perp = −P_perp(mu_hat; mu)`
+to 9.3e-15, so out-of-fold `R²` is **+0.9403** on the orthogonal half and **−0.0051** on the
+along-`mu` half. **The predictable half is not predicted — it is observed.**
+
+> ### What can be predicted is the component ORTHOGONAL to the common mode, and it is harmful.
+> ### What would help is the common mode itself, and it is unpredictable.
+
+**S30's slogan survives verbatim; its mechanism was inverted.** And two lanes that never spoke
+measured the same fact from opposite ends: the tail's pools are **coherently wrong, not diversely
+wrong** — `S/B` falls 0.78 → 0.42 while the distinct-candidate count is unchanged, *they are
+displaced together* — and **the entire recoverable prize lies along that displacement**, 4×
+concentrated on the tail.
+
+**So the next sprint's question is the inverse of this one's:** find information about the pool's
+**common mode** that does not come from the pool. It is **priced** (−0.8102 Å ORACLE, which would put
+the chain at **2.4025 Å**, past the *ambitious* target), the **conversion is free and tuning-free**
+(an exact convex program, §3(ii)), and the **failure mode is named** (non-identifiable from pool data
+at any K, so a channel that reads the pool cannot supply it).
+
+### 0.3 What closed, and how much of it by derivation
+
+Thirteen directions, **most by theorem or by derivation before compute was spent** — the free-energy
+stage and the entire elastic-network/normal-mode family (achiral, hence distance-map readings by G1);
+non-diagonal Hamiltonians (three independent obstructions); ADAPT-VQE (its selection rule is
+*undefined* for CVaR); the torsion channel (the chiral escape is real **and only works on a problem
+the pipeline does not have**); charter §14 by **provenance** — 92.9% of the benchmark is
+NMR-determined and for **117/126** the deposited coordinates *are* a fit to the deposited restraints,
+so any NMR observable is **ORACLE through a different door**; index redesign; the per-target prefix
+length (a matched random-subset family reaches **149%** of it); and the constrained-affine readout,
+which **cannot be selected by ceiling and cannot be selected by fit**.
+
+**The readout is now exact and closed.** For any `Σw = 1`,
+`‖Σ w_x W_x − t‖² = ⟨w,a⟩ − ½ w'Bw`, verified to 1.66e-11 — **half of it is free, the only unknown is
+per-candidate quality, and the native-free channel is 3.99% of the ORACLE cross term.** Every
+native-free quality estimate measured has **in-band skill that is zero or the wrong sign.**
+
+### 0.4 How much of this report is negative, and the pattern in the errors
+
+Nine lanes, 21 ledger entries, ten pre-registrations. **Six registered predictions fired against the
+lane that wrote them, three of those six mine.** The sprint's only live deployable candidate,
+`AVG_SEP`, is **refuted at +0.4609 Å, 2.34× MDE** — and the *"0.4–0.6 Å better"* that circulated
+mid-sprint was **the magnitude of that deficit with the sign inverted**, read off partial rows the
+lane itself had refused to average.
+
+**Fourteen claims of mine were withdrawn, and the distribution is the finding:**
+
+> **Every single-lane result held. Every cross-lane synthesis of mine failed** — four for four before
+> an adversary was assigned, then eleven more defects, four severe. **A single-lane claim is audited
+> by the lane that owns the data; a cross-lane claim is audited by nobody**, because each lane sees
+> only its own half and assumes the other was checked.
+
+And the shape is one shape. Every defect the adversary found — and every one of mine — is **a
+quantity transplanted across a boundary its definition does not cross**: an object, a search size, a
+bit budget, a basis, a data regime, a moment, a key, a sign.
+
+> **A number carries its definition, not just its value.**
+
+With one instrument corollary that cost the sprint a headline: **an audit that checks for an absent
+label cannot catch a wrong one.** The verifier passed 97/97 on *"is a basis named?"* while the
+headline carried a **misnamed** basis. It now asserts each number against the value on the basis it
+names, and ships with a self-test on the defect that motivated it.
 
 ---
 
