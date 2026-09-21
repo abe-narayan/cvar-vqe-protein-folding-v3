@@ -419,15 +419,15 @@ Basis is named on every row. `OB` = ORACLE band (top-24 by the native label `a`,
 | P-18 | in-band ρ of CONS on the NATIVE-FREE band | NFB, ORACLE label only | EXPLORATORY | **+0.2531 ± 0.0434**, 73% positive — positive in-band skill EXISTS |
 | P-19 | `Var(U)/Var(V)` on the native-free band | NFB, ORACLE | EXPLORATORY | median 4.89 (mean 19.0) — worse than the ORACLE band |
 | P-20 | P5 strata `Var(U)/Var(V)`: tail vs other108 | cloud, ORACLE | REGISTERED (H-P5) | 13.60 / 7.43 (filter-independent) vs 4.71 — **PASS** |
-| R-1 | R | PROD(cache cloud) vs PROD(s29 cloud) | R | built chain n=126 | pending (branch job) | pending | the 1e-14 cloud floor |
-| R-2 | R | lam=0.3 arm vs lam=0 arm (same cloud, same job) | R | built chain n=126 | pending | pending | the ladder's own cost |
-| R-3 | R | PROD chain vs isotropic null sqrt(e^2+d^2) | R | built chain n=126 | pending | pending | R1 direction test |
-| R-4 | R | ORACLE best branch (9 family subsets) vs PROD | R | built chain n=126 | pending | pending | ORACLE ceiling |
-| R-5 | R | order-statistic curve, 9 subset sizes x 24 draws | R | built chain n=126 | pending | pending | best-of-K pricing |
-| R-6 | R | in-band rho, 11 criteria | R | within-target rank | pending | pending | R3a |
-| R-7 | R | SEL_<criterion>_<subset>, 11 criteria x 2 subsets | R | built chain n=126 | pending | pending | R3b directional |
-| R-8 | R | BRANCHMEAN, RANDBRANCH (5 draws), MEDOID_ONLY, OBJARGMIN x5 | R | built chain n=126 | pending | pending | controls + R4 |
-| R-9 | R | MEDOID_EXTRA, SCALE_NF, SCALE_NF_MED, SCALE_GRID x8 | R | built chain n=126 | pending | pending | R1/R4 repair job |
+| R-1 | R | PROD(cache cloud) vs PROD(s29 cloud) | R | built chain n=126 | per-target abs mean 0.0133, p90 0.0245, max 0.4168 | n/a (a floor, not an effect) | >1e-3 on 71/126, >0.1 on 3/126; independent replication of lane V's ULP result |
+| R-2 | R | lam=0.3 arm vs lam=0 arm (same cloud, same job) | R | built chain n=126 | +0.0055 (SE 0.0057) | 0.35x | NOT MEASURED -- the +0.0107 from the cache is a cross-job difference |
+| R-3 | R | PROD chain vs orthogonal null sqrt(e^2+d^2) | R | built chain n=126 | +0.0118 | 0.24x | NOT MEASURED -- P1.2 HOLDS for production |
+| R-4 | R | ORACLE best branch (7 family subsets) vs PROD | R | built chain n=126 | GEN4 -0.0355 / PROD8 -0.0938 / MEM75 -0.0720 / RAND0 -0.0783 / ALL -0.1165 | 1.73 / 2.92 / 2.70 / 2.92 / 3.43 | ALL ORACLE. PROD8 replicates S31-D's -0.0938 at 2.92x exactly |
+| R-5 | R | order-statistic curve (8 sizes x 24 draws) + best_of_k_within + split-half on 6 families | R | built chain n=126 | ALL: oracle -0.1210, split-half -0.0046 | 4% of oracle | 96% of the ceiling is an order statistic; RAND0 control transfers 3% |
+| R-6 | R | in-band rho, 11 criteria | R | within-target rank, n=126 | d_to_C +0.1122 ... rama_nlp +0.0153 | 5 of 11 have fold CI excluding zero | P3.1, P3.2, P3.3 ALL FALSIFIED |
+| R-7 | R | SEL_<criterion>_<subset>, 11 criteria x 2 subsets = 22 arms | R | built chain n=126 | best SEL_d_to_C_GEN4+MEM75 -0.0100 | 0.61x | P3.4 FALSIFIED; nothing clears MDE, before charging the search over 22 |
+| R-8 | R | BRANCHMEAN, RANDBRANCH (5 draws), MEDOID_ONLY, OBJARGMIN x4 | R | built chain n=126 | RANDBRANCH 3.2106 (draw sd 0.0028) vs PROD 3.2105 | n/a | production's argmin is worth 0.0001 A over a coin |
+| R-9 | R | MEDOID_EXTRA, SCALE_NF, SCALE_NF_MED, SCALE_GRID x8 | R | built chain n=126 | MEDOID_EXTRA -0.0064 / SCALE_NF +0.7219 | 0.35x / 2.24x | NOT MEASURED / WORSE 5/5 folds |
 
 ### Registered — D1-N, the matched permutation null (`s32/results/s32_D1_signrandom.json`)
 
@@ -1015,9 +1015,9 @@ artefact, offered so two vocabularies are not mistaken for two findings:
 Every other lane-L arm is deterministic. The fix (a stable digest of the pdb code in place
 of `hash`) is applied to the module **after** this run so that code and artefact are never
 silently inconsistent; the artefact predating the fix is flagged here.
-| R-16 | R | GEN4D named-start choice: ORACLE global + LEAVE-FOLD-OUT vs PROD | **E** | built chain n=126 | pending | pending | EXPLORATORY; written after best-of-K showed GEN4D is the only family whose split-half transfer is materially non-zero (-0.1338, 64% of its own oracle) |
-| R-17 | R | MEDOID_EXTRA / SCALE_NF / SCALE_NF_MED vs PROD (CHAIN basis) | R (R4) | built chain n=126 | pending | pending | R4 deployable arms |
-| R-18 | R | SCALE_GRID per-target ORACLE, priced best-of-K + split-half | R (R1) | built chain n=126 | pending | pending | order-statistic pricing of the scale axis |
+| R-16 | R | GEN4D named-start choice: ORACLE global + LEAVE-FOLD-OUT vs PROD | **E** | built chain n=126 | LFO +0.0081 | 0.28x, 2/5 folds | NOT MEASURED. The only family that transfers (60%) and it is redundant: production's argmin already reaches the alpha-helix start |
+| R-17 | R | MEDOID_EXTRA / SCALE_NF / SCALE_NF_MED vs PROD (CHAIN basis) | R (R4) | built chain n=126 | -0.0064 / +0.7219 / +0.7228 | 0.35 / 2.24 / 2.24 | MEDOID_EXTRA's fold CI excludes zero and 4/5 agree, but the MDE gate binds |
+| R-18 | R | SCALE_GRID per-target ORACLE, priced best-of-K + LEAVE-FOLD-OUT | R (R1) | built chain n=126 | ORACLE -0.1352; LFO +0.0044 | 3.84x ORACLE; 0.14x LFO | 122% accounted by the across-target null. Its split-half (-0.0497) is centred on the GRID MEAN and must NOT be quoted vs production |
 
 ### Registered — D3-M FINAL, n = 126. **The registered prediction FAILED; the endpoint is a regression.**
 
@@ -1063,7 +1063,7 @@ variance share (D-12, measured 23.6%), the H-D2 basin horns (D-40/D-41, neither 
 defect of my own, found by lane V and fixed in place** (D1-T's missing script and provenance).
 **Zero lane-D arms reached the endpoint as an improvement**, and the one ORACLE arm that did
 (D-75, −0.2101 Å) is **ORACLE / NOT DEPLOYABLE** with nothing native-free to supply it.
-| R-19 | R | typicality ARGMIN vs ARGMAX (both directions), vs PROD | **E** | built chain n=126 | pending | pending | EXPLORATORY; re-derivation of a cross-lane sign defect (contract rule 7). NOT two new hypotheses: one arm, two directions, published together so the pair can never be quoted as one number |
+| R-19 | R | typicality ARGMIN vs ARGMAX (both directions), vs PROD | **E** | built chain n=126 | ARGMIN -0.0054 / ARGMAX +0.3314 | 0.29x / 2.58x | cross-lane sign defect resolved; the MOST typical branch is a null, the LEAST typical is much worse |
 
 ### L-5 — the cloud ladder at full instrument size (basis: CA POINT CLOUD, not the endpoint)
 
@@ -1084,3 +1084,4 @@ defect of my own, found by lane V and fixed in place** (D1-T's missing script an
 / readout **80.7%** at L~55. The ladder's shape is preserved over a 4x length change and the
 readout's share GROWS. `top75_best` here is the **BLOSUM** top-75, not the distogram top-75
 (2.3062 on record) — a different object, never differenced against it.
+| R-20 | R | rama headroom: is there plausibility variation left among lam=0.3 branches? | **E** | diagnostic, n=126 | posphi within-target spread 0.632; 31.2% of branches above the 17.5% unconstrained rate; 126/126 targets carry one | n/a | EXPLORATORY; REFUTED my own first mechanism for R3's negative |

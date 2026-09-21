@@ -1281,3 +1281,182 @@ matched control.** Combined with D0's derivations and D1/D2's measurements:
 escape, `F‡(x_a → x_b)` — a function of a *pair*, which breaks G1's single-structure hypothesis
 (**Cor. D-E4**), left open by S31 §8 *"on price, not theory"*. D4-P was gated on D3-M showing a
 positive `cos`; it did not, so D4-P was not run. The gate was registered in advance.
+
+## S32-L(R4) -- **THE BRANCH DECISION IS REAL, ITS ORACLE CEILING IS 0.117 A, AND 96% OF THAT IS AN ORDER STATISTIC. PRODUCTION'S MULTI-START ARGMIN IS WORTH 0.0001 A OVER A COIN, AND NOTHING NATIVE-FREE BEATS IT** (2026-09-21 11:10, lane R)
+
+Artefacts `s32/results/s32_R_analysis.json`, `s32_R_branches_aligned.json`,
+`s32_R_typicality_sign.json`, `s32_R_rama_headroom.json`, `s32_R_gen4d_start.json`,
+`s32_R_repair.json`. Jobs `s32_R_branches.py`, `s32_R_analyse.py`, `s32_R_repair.py`.
+Verifier `s32/s32_R_verify.py` -- **43 checks, 43 pass, every number re-derived from the raw
+`.jsonl` rows rather than from the summary JSONs.** PREREG `s32/PREREG_S32_R.md` @ `02754f5a`
+(R2, R3, R4). **Basis: built-chain Ca RMSD, `tuning126`, n = 126.** 158 branches per target --
+`GEN4` (4 production generic starts, continued lam 0 -> 0.3), `GEN4D` (the same 4 taken
+directly to lam = 0.3), `MEM75` (the top-75 members' own torsions), `RAND0` (75 uniformly
+drawn windows) -- all from the same cloud, in one process per target.
+
+**THE SELF-TEST THAT COULD HAVE FAILED (contract rule 5).** Production's own selection rule
+re-executed on the recorded branch scalars -- argmin of the lam = 0 objective over `GEN4`,
+continued, then argmin of the lam = 0.3 objective against `GEN4D` -- reproduces `prod_chain`
+on **126/126 targets with max |error| exactly 0.0**. The branch set provably contains
+production's answer.
+
+### R2a -- the decision is real
+
+```
+distinct branches (union-find on pairwise RMSD < 1e-3)   median 149 of 158, min 4
+targets with >= 2 distinct branches                      126 of 126
+RMSD spread across distinct branches   mean 0.5542  median 0.4331  p90 1.2124  max 1.9951
+  spread > 0.05 A on 120 targets;  > 0.3 A on 86;  > 1.0 A on 18
+lam = 0.3 objective gap, best vs runner-up distinct branch   median 9.2e-05
+  below 1e-3 on 102 of 126 targets;  below 1e-6 on 12
+```
+
+**This is not "there is no decision".** The branches are structurally distinct -- 86 targets
+admit branches more than 0.3 A apart -- while the objective that chooses between them is
+degenerate to below 1e-3 on 81% of targets.
+
+> **The `n_distinct` figure is the corrected one.** The first implementation counted greedy
+> seeds (`lab[P[a] < 1e-3] = nc` overwrites labels an earlier seed assigned); lane V's
+> adversary pass caught it before any number was quoted. Recomputed by union-find from the
+> persisted torsions, **39 of 126 targets change count**. The bug was material.
+
+### R2b -- the ORACLE ceiling, and what survives pricing it
+
+```
+                                        chain    vs PROD    xMDE     W/L
+ORACLE best over GEN4   (K=4)          3.1751    -0.0355    1.73    103/8
+ORACLE best over GEN4+GEN4D (K=8)      3.1168    -0.0938    2.92    114/0
+ORACLE best over MEM75  (K=75)         3.1385    -0.0720    2.70    123/3
+ORACLE best over RAND0  (K=75)         3.1322    -0.0783    2.92    123/3
+ORACLE best over ALL    (K=158)        3.0941    -0.1165    3.43    124/0
+                                                 ALL ORACLE / NOT DEPLOYABLE
+```
+
+> **The K=8 row is an exact independent replication of S31-D.** S31's `ORACLE_B4` over
+> production's own eight candidates is **3.1167631446217534, -0.09377085032154638, 2.924x
+> MDE, 114W/0L**. This lane, from a different job and a different script, returns
+> **3.1168, -0.0938, 2.92x, 114W/0L**. A cross-sprint number reproduced rather than quoted.
+
+**And 150 extra restarts beyond production's own 8 buy -0.0227 more.** The order-statistic
+curve is a straight slide with no saturation, which is what an order statistic looks like:
+
+```
+K =     1      2      4      8     16     32     64    128    ALL(158)
+     3.2173 3.1921 3.1741 3.1596 3.1463 3.1342 3.1201 3.1013 3.0941   (24 draws each, sd <= 0.008)
+```
+
+**BEST-OF-K PRICING (contract rule 9), the number to quote being the split half, which nulls
+itself:**
+
+```
+family   K     oracle    across-target null    SPLIT-HALF TRANSFER   k_eff
+GEN4     4    -0.0359    -0.0441  (123%)       +0.0019   ( -5%)       3.9
+GEN4D    4    -0.2070    -0.2308  (111%)       -0.1246   ( 60%)       3.7
+MEM75   75    -0.0733    -0.2251  (307%)       -0.0002   (  0%)      53.2
+RAND0   75    -0.0795    -0.2417  (304%)       -0.0024   (  3%)      54.5
+ALL    158    -0.1210    -0.3181  (263%)       -0.0046   (  4%)      52.7
+PROD8    8    -0.1608    -0.2278  (142%)       -0.0631   ( 39%)       7.7
+```
+
+> ### **96% of the ORACLE branch ceiling does not survive a split half.** `RAND0`, whose column index is arbitrary **by construction**, transfers 3% -- it is the built-in zero-signal control and it behaves like one.
+
+**`GEN4D` is the one family that transfers (60%), and it buys nothing.** Its columns are
+*named* generic starts that mean the same thing on every target. The transferable content is
+"the alpha-helix start (phi -57, psi -47) is the best single generic start", and production's
+objective argmin already reaches it: **leave-fold-out the arm is +0.0081 at 0.28x MDE, 2/5
+folds, NOT MEASURED** (`s32_R_gen4d_start.json`). *A real, transferable, completely redundant
+signal is a sharper negative than a null.*
+
+### R3 -- all four registered predictions FALSIFIED, and the chiral mechanism with them
+
+In-band Spearman rho of each criterion with true RMSD **within** a target's distinct-branch
+set, fold-clustered CI:
+
+```
+d_to_C       +0.1122  foldCI [+0.0418,+0.1772]  *excludes 0*
+typicality   +0.0905  foldCI [-0.0389,+0.2120]
+obj1         +0.0742  foldCI [+0.0007,+0.1601]  *excludes 0*
+disto_risk   +0.0702  foldCI [+0.0260,+0.1125]  *excludes 0*
+legacy       +0.0696  foldCI [-0.0255,+0.1428]
+obj0         +0.0603  foldCI [+0.0417,+0.0889]  *excludes 0*
+disto_mae    +0.0594  foldCI [+0.0139,+0.0950]  *excludes 0*
+posphi_frac  +0.0359  foldCI [-0.0417,+0.1100]
+ramah        +0.0265  foldCI [-0.0401,+0.0969]
+rama_nlp     +0.0153  foldCI [-0.0461,+0.0608]   median -0.0740, 54/126 positive
+rama20_nlp   +0.0138  foldCI [-0.0529,+0.0725]
+```
+
+- **P3.1 FALSIFIED.** I predicted the projection's own objective would be blind in band. It
+  is not: `obj1` +0.0742 and `obj0` +0.0603, both with fold CIs excluding zero.
+- **P3.2 FALSIFIED.** `rama_nlp`, the chiral criterion the lane was opened for, has a fold CI
+  spanning zero and a **negative median**.
+- **P3.3 FALSIFIED.** I predicted the achiral distance-map channels would have strictly
+  smaller |rho| than the chiral one. `disto_risk` (+0.0702) and `disto_mae` (+0.0594) are
+  four times larger than `rama_nlp` (+0.0153). **The achirality argument does not hold here.**
+- **P3.4 FALSIFIED.** Over **29 deployable arms**, the best is `SEL_d_to_C_GEN4+MEM75` at
+  **-0.0100, 0.61x MDE** -- not a result, and that is *before* charging the search.
+
+**WHY -- and I had to withdraw my own first answer.** I wrote that the lam = 0.3 branches must
+all already be Ramachandran-plausible, so the dense log-density had nothing left to separate.
+**My own data refutes that** (`s32_R_rama_headroom.json`): the within-target positive-phi
+spread is **0.632**, **31.2%** of branches sit above the **17.5%** rate of a *completely
+unconstrained* fit, and **126 of 126** targets carry such a branch, against a real-library
+rate of 5.40%. The `rama_nlp` within-target spread is 2.02 nats. **The criterion has an
+enormous amount to discriminate and carries no information about which branch is nearer the
+native.** So:
+
+> **Ramachandran plausibility and native proximity are ORTHOGONAL among the branches this
+> projection admits.** `core/project.py`'s docstring is *right* that the solutions differ as
+> "one Ramachandran-plausible and one not" -- they do -- but **the plausible one is not the
+> one closer to the native.** This is S9-2's "a torsion prior buys physical validity for
+> free, and no accuracy", re-derived one level down, at the level of individual branches,
+> from a different measurement.
+
+### The control that makes the whole section quotable
+
+```
+PRODUCTION                                3.2105
+random branch, 5 draws        3.2106  (draw means 3.2082/3.2131/3.2149/3.2085/3.2083, sd 0.0028)
+branch-set mean (zero skill)  3.2151   +0.0045   0.28x MDE
+most typical branch           3.2051   -0.0054   0.29x MDE
+MEDOID_ONLY                   3.2065   -0.0041   0.18x MDE
+```
+
+> ### **Production's multi-start argmin is worth 0.0001 A over picking a branch with a coin.** Any branch-selection rule is competing for 0.117 A of ORACLE headroom, 96% of which is an order statistic, against an incumbent that is indistinguishable from random.
+
+### R4 -- the repair arms
+
+```
+                        chain    vs PROD    xMDE    W/L/T      verdict
+PROD                   3.2105
+MEDOID_EXTRA           3.2042    -0.0064    0.35    27/21/78   NOT MEASURED
+SCALE_NF               3.9324    +0.7219    2.24    34/92/0    WORSE, 5/5 folds
+SCALE_NF_MED           3.9334    +0.7228    2.24    33/93/0    WORSE, 5/5 folds
+SCALE_GRID per-target  3.0753    -0.1352    3.84               ORACLE / NOT DEPLOYABLE
+SCALE_GRID leave-fold-out       +0.0044    0.14               DEPLOYABLE -> nothing
+```
+
+`MEDOID_EXTRA` -- offering `lam_path` the medoid member's own torsions as the `extra` start it
+already accepts and production never passes -- changes the emitted chain on 75 of 126 targets
+and is **-0.0064 at 0.35x MDE**. Its fold CI `[-0.0113,-0.0018]` excludes zero and 4/5 folds
+agree, **and the MDE gate binds: NOT MEASURED.** Reported as the null it is.
+
+**The scale grid's split half is 27% of its oracle and that number must not be quoted against
+production.** `stats_lib.split_half_transfer` centres on `M.mean(1)`, here the mean over the
+**eight dilation factors**, which includes 1.12 and 1.15. It answers *"beats the average of
+eight dilations"*, and nobody deploys that -- a control matched to a different arm's magnitude
+is not a control. The number against production is the **leave-fold-out factor: +0.0044 at
+0.14x MDE.** Lane V documented this same trap for its criterion search; this is the same shape
+in my arm.
+
+### Two instrument numbers this lane settles in passing
+
+- **The lam ladder's own endpoint cost is inside the floor.** lam = 0.3 arm minus lam = 0 arm,
+  **same cloud, same job**: **+0.0055, SE 0.0057, 0.35x MDE, 57W/69L -- NOT MEASURED.** The
+  +0.0107 read off the production cache is a cross-job difference and is not an effect.
+- **The 1e-14 cloud perturbation, measured as a chain effect**, independently of lane V:
+  per-target |delta| **mean 0.0133, p90 0.0245, max 0.4168**, moving more than 1e-3 on **71 of
+  126** targets and more than 0.1 on **3**. The mean lands on the contract's own 0.0134 chain
+  floor, from a different construction.
+
+---
