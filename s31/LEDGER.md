@@ -2491,3 +2491,57 @@ Lane P found that arm A uses `I.coordinate_average` while arms D/E/F use
 contain an unknown amount of pure implementation noise. It is running `A2 = average_weighted(uniform,
 top-75)` so that `A2 - A` **measures that noise on the built chain** and `F - A2` is the clean
 effect. **Without it the sprint would have published a contaminated number on a row I promoted.**
+
+---
+
+## S31-L18 -- **THE 0.0107 A CHAIN FLOOR IS A *MEAN* FLOOR. THE PER-TARGET FLOOR IS 0.0134 A MEAN / 0.0329 p90 / 0.2285 MAX** -- MEASURED BETWEEN TWO IMPLEMENTATIONS OF THE SAME OPERATOR (2026-09-21 00:43, lane P)
+
+Lane P built a control nobody asked for, because it noticed that its arm A uses
+`I.coordinate_average` while arms D/E/F use `core.pipeline.average_weighted` -- **the same operator,
+written twice**. It ran `A2 = average_weighted(uniform, top-75)` to measure the difference.
+
+```
+CA POINT CLOUD    mean 3.048338 vs 3.048338      max per-target |dcloud| = 3.6e-14
+                  (the two implementations agree to floating point, as they must)
+
+BUILT CHAIN       mean 3.2108 vs canonical 3.2105
+                  paired +0.0003 A, SE 0.0033, MDE 0.0091, 0.03x  -- A NULL IN THE MEAN
+                  fold CI [-0.0092, +0.0090]
+
+BUT PER TARGET    |d| mean 0.0134   median 0.0026   p90 0.0329   MAX 0.2285 A
+                  exactly zero on 0 of 126
+                  ABOVE the stated 0.0107 A floor on 28 of 126 (22%)
+                  worst: 8ZG2 -0.2285, 1RSW +0.1863, 2NDN -0.1665, 7VI4 +0.1333, 8TXS -0.0996
+```
+
+> **A 1e-14 input difference -- not a different method, THE SAME METHOD WRITTEN TWICE -- moves the
+> built chain by up to 0.23 A on individual targets and by more than the project's own floor on 22%
+> of them, while cancelling to nothing in the mean.**
+
+### THE RULE CHANGE, binding from now
+
+The **0.0107 A** figure survives as a **mean-level** floor -- lane P's measured mean-level MDE here
+is 0.0091, consistent -- **but it has been quoted throughout this sprint as though it bounded
+per-target chain statements, and it does not.**
+
+```
+MEAN-level built-chain claims        floor 0.0107 A   (unchanged)
+PER-TARGET built-chain claims        floor ~0.033 A at p90, and 0.23 A in the tail
+```
+
+**Any per-target chain statement below ~0.03 A is indistinguishable from re-running the same
+computation in a different implementation.**
+
+### Why this is a matched null and not just a caveat
+
+S31-L6 demonstrated the projection's chaos with a **deliberately injected** 1e-14 relative
+perturbation and found one target moving 0.511 A. **This is the same mechanism occurring by itself,
+between two functions the shipped pipeline actually contains, with nothing injected** -- and it puts
+a **distribution** on the effect rather than a single worst case. It is
+`control-must-match-the-operators-space` applied to the operator's own space.
+
+**Consequence for the sprint's per-target reporting:** the per-target |delta endpoint| spreads that
+lanes were asked to report must be read **against this null, not against zero**. Lane A's *"0.102 A
+per-target while cancelling to -0.0044 in the mean"* was measured on the **CA cloud**, where this
+noise is 3.6e-14 and therefore **cannot** explain it -- but any **chain**-basis version of that
+sentence needs the A2 null beside it.
