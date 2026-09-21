@@ -1169,6 +1169,58 @@ than its own magnitude-matched control**, 3.25× MDE, **9W/117L**); the projecti
 mechanism (against a norm-matched shrinkage, 0.26× MDE); and projecting against the *true* `mu` buys
 nothing over not projecting (0.18× / 0.08×).
 
+**The last control, and it is the one that could have killed the result.** The asymmetry could be
+*magnitude* (the along component is simply bigger) or *geometry* (splitting any vector against any
+direction produces this pattern). Both are now tested at n = 126, **ORACLE / NOT DEPLOYABLE**, built
+chain. An **energy-matched** direction `u` is built per target to capture *exactly the fraction of
+`y`'s energy that `mu` captures* — `cos²(t) = ‖y_along(mu)‖² / ‖y‖²` — but is otherwise arbitrary:
+
+```
+                                        effect   xMDE  folds    W/L     reading
+energy-matched ALONG  vs true along-mu  +0.1317  2.07   5/5    25/101   true mu is BETTER
+energy-matched PERP   vs true perp-mu   -0.3797  2.53   5/5   114/12    true mu is WORSE
+```
+
+**`mu` is special on both sides, both at 5/5 folds and both past MDE.** Its along-component is worth
+0.13 Å *more* than an arbitrary direction carrying identical energy; its perp-component is worth
+0.38 Å *less*. The control was built so that a null result would have refuted the section, and it
+did not fire.
+
+**But the asymmetry is not entirely `mu`'s, and that qualification is the honest one.** At matched
+energy an arbitrary direction *still* shows along-beating-perp, by **−0.3734 (1.98× MDE, 5/5,
+84W/42L)**. Against the true split's **−0.8848**, roughly **42% of the asymmetry is generic** and `mu`
+supplies the remaining 58%. ***`mu` more than doubles an asymmetry that is already there — it does
+not create one.*** The mu-specific part is where the prize is: **−1.4697 on FAIL18 against −0.1907
+elsewhere.**
+
+**The random-direction null behaves exactly as pure magnitude predicts, which is what makes it a
+scale.** An isotropic direction captures almost none of `y`, so its along-arm is **−0.0229 at 0.66×
+MDE — NOT MEASURED** and its perp-arm is nearly the entire correction (−0.7884). *Given a meaningless
+direction the labels carry no meaning, and the split collapses to how much of `y` survived it.*
+
+**The shrink curve prices accuracy against direction** (ORACLE, built chain, paired against the
+same-job production):
+
+```
+c        0.25     0.50     0.75     0.90     1.00
+delta  -0.2978  -0.5857  -0.7488  -0.7697  -0.7756
+frac      38%      76%      97%      99%     100%
+```
+
+**Three quarters of a perfect correction buys 97% of its benefit; a quarter still buys 38%.** The
+curve is steeply concave and effectively saturated by `c = 0.75`. ***A future common-mode channel
+does not have to be accurate — it has to point the right way.*** That is the most encouraging number
+in this report, and it is why §21 prices the *direction* and not the magnitude.
+
+> **Instrument fact, and it sharpens when cross-job chain comparison is legal.** These control arms
+> were computed in a **different process** from the `mu`-split they are differenced against — which
+> lane D's ~1e13 amplification result would normally forbid. It is legal here, and checked rather
+> than assumed: the two jobs' production rows are **bit-identical on all 126 targets in both bases**
+> (max |diff| exactly `0.000e+00`, 126/126 exact ties). **The projection is deterministic; what
+> lane D measured is sensitivity to *differing* inputs, not nondeterminism.** So the rule is sharper
+> than *"always project in one job"*: **identical clouds give identical chains to the last bit, and
+> the check costs one line.**
+
 **Sizing, ORACLE / NOT DEPLOYABLE:** the along-`mu` correction alone puts the built chain at
 **2.4025 Å** — which would clear the charter's *ambitious* 2.50 target — and it is **4× concentrated
 on the tail** (FAIL18 6.0195 → 3.7392, −2.2803, against −0.5651 on the other 108). It does **not**

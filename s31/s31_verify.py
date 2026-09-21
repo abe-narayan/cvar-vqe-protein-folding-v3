@@ -598,6 +598,90 @@ try:
 except Exception as e:
     MISSING.append("lane F S31-L21 block (%s)" % e)
 
+# ================================================== LANE E, S31-L22: THE DIRECTION CONTROLS
+print()
+print("--- S31-L22 lane E: the energy-matched direction control and the shrink curve ---")
+try:
+    ec = load("s31/results/s31_E5_contrasts.json")
+    e5 = load("s31/results/s31_E5_applied.json")
+    e2 = load("s31/results/s31_E2_applied.json")
+    K_AL = "EM-ALONG vs true along-mu"
+    K_PE = "EM-PERP  vs true perp-mu"
+    K_AP = "EM-ALONG vs EM-PERP"
+    K_RA = "RANDDIR-ALONG vs PROD"
+    check("energy-matched ALONG vs true along-mu", 0.1317, dig(ec, K_AL, "effect"), basis="chain")
+    check("  x MDE", 2.07, abs(dig(ec, K_AL, "effect_over_mde")), tol=1e-2, basis="none")
+    exact("  the TRUE along-mu is better (positive effect, lower-is-better)", True,
+          bool(dig(ec, K_AL, "effect") > 0))
+    exact("  5/5 folds same sign", 5, int(dig(ec, K_AL, "folds_same_sign")))
+    check("energy-matched PERP vs true perp-mu", -0.3797, dig(ec, K_PE, "effect"), basis="chain")
+    check("  x MDE", 2.53, abs(dig(ec, K_PE, "effect_over_mde")), tol=1e-2, basis="none")
+    exact("  the TRUE perp-mu is WORSE (negative effect)", True,
+          bool(dig(ec, K_PE, "effect") < 0))
+    exact("  5/5 folds same sign", 5, int(dig(ec, K_PE, "folds_same_sign")))
+    exact("mu is special on BOTH sides, both past 1.0x MDE", True,
+          bool(abs(dig(ec, K_AL, "effect_over_mde")) > 1.0 and
+               abs(dig(ec, K_PE, "effect_over_mde")) > 1.0))
+    # the qualification: the asymmetry is NOT entirely mu's
+    gen = dig(ec, K_AP, "effect")
+    check("energy-matched ALONG vs energy-matched PERP (the generic asymmetry)", -0.3734, gen,
+          basis="chain")
+    check("  x MDE", 1.98, abs(dig(ec, K_AP, "effect_over_mde")), tol=1e-2, basis="none")
+    check("  generic share of the true -0.8848 asymmetry", 0.4220, abs(gen) / 0.8848, tol=1e-3,
+          basis="none")
+    exact("  the report does NOT claim mu creates the asymmetry (generic share > 1/3)", True,
+          bool(abs(gen) / 0.8848 > 0.333))
+    check("  the mu-specific asymmetry on FAIL18", -1.4697, dig(ec, K_AP, "FAIL18_delta"),
+          basis="chain")
+    check("  the mu-specific asymmetry off FAIL18", -0.1907, dig(ec, K_AP, "other108_delta"),
+          basis="chain")
+    exact("  the mu-specific part is concentrated on the tail (> 5x)", True,
+          bool(abs(dig(ec, K_AP, "FAIL18_delta")) > 5 * abs(dig(ec, K_AP, "other108_delta"))))
+    # the random-direction null
+    check("random-direction ALONG vs production", -0.0229, dig(ec, K_RA, "effect"), basis="chain")
+    check("  x MDE", 0.66, abs(dig(ec, K_RA, "effect_over_mde")), tol=1e-2, basis="none")
+    exact("  the random-direction ALONG arm is NOT MEASURED (< 0.7x MDE)", True,
+          bool(abs(dig(ec, K_RA, "effect_over_mde")) < 0.7))
+    exact("  its PERP arm recovers nearly the whole correction (a pure-magnitude null)", True,
+          bool(dig(e5, "arms", "RANDDIR_PERP", "chain", "delta") < -0.75))
+    # the shrink curve: monotone, concave, saturated by c = 0.75
+    sh = [dig(e5, "arms", "SHRINK_Y_%03d" % c, "chain", "delta") for c in (25, 50, 75, 90)]
+    full = dig(e2, "arms", "ORACLE_FULL", "chain", "delta")
+    for c, claimed, got in zip((25, 50, 75, 90), (-0.2978, -0.5857, -0.7488, -0.7697), sh):
+        check("shrink curve c = 0.%02d" % c, claimed, got, basis="chain")
+    check("shrink curve c = 1.00 (ORACLE_FULL, lane E2)", -0.7756, full, basis="chain")
+    exact("the shrink curve is monotone in c", True,
+          bool(sh[0] > sh[1] > sh[2] > sh[3] > full))
+    exact("the shrink curve is CONCAVE (decreasing increments)", True,
+          bool(abs(sh[1] - sh[0]) > abs(sh[2] - sh[1]) > abs(sh[3] - sh[2])))
+    check("c = 0.75 buys this fraction of the full correction", 0.9654, sh[2] / full, tol=1e-3,
+          basis="none")
+    exact("  three quarters of the correction buys > 95% of the benefit", True,
+          bool(sh[2] / full > 0.95))
+    check("c = 0.25 buys this fraction", 0.3840, sh[0] / full, tol=1e-3, basis="none")
+    # THE STRUCTURAL CHECK: is the cross-job comparison legal? recomputed, not read.
+    import glob as _g
+    def _rows(pat):
+        R = {}
+        for pp in sorted(_g.glob(os.path.join("s31", "results", pat))):
+            for ln in open(pp):
+                try:
+                    r = json.loads(ln)
+                except Exception:
+                    continue
+                R[r["pdb"]] = r
+        return R
+    _e2, _e5 = _rows("s31_E2_rows*.jsonl"), _rows("s31_E5_rows.s*.jsonl")
+    _com = sorted(set(_e2) & set(_e5))
+    show("targets common to the E2 and E5 jobs", len(_com))
+    for _b in ("chain", "cloud"):
+        _d = max(abs(_e2[q]["PROD_" + _b] - _e5[q]["PROD_" + _b]) for q in _com)
+        exact("cross-job PROD_%s is BIT-identical (this is what makes the "
+              "comparison legal)" % _b, True, bool(_d == 0.0))
+    exact("  and it covers all 126 targets", 126, len(_com))
+except Exception as e:
+    MISSING.append("lane E S31-L22 direction-control block (%s)" % e)
+
 # ================================================== EVERY PATH THE LEDGER CLAIMS TO HAVE WRITTEN
 print()
 print("--- every path any S31 ledger entry names (parsed from the ledger, not hand-kept) ---")

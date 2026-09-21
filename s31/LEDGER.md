@@ -3358,3 +3358,52 @@ The E5 control family (rows 7–8 of `MULTIPLICITY.md`) was **built before the e
 **launched after seeing them**, which is stated here rather than left to be inferred. Registering extra
 controls after an effect appears can only make a positive harder to claim, never easier; the effect
 they test was pre-registered in §3 and AMENDMENT 1.
+
+### The E5 direction controls, which landed after the lane handed back (appended by the coordinator, 2026-09-21 01:14)
+
+Lane E handed back at *"waiting on the energy-matched control arms"*; the arms completed at
+**126/126** and are analysed here rather than left unreported. Code `s31/s31_E5_controls.py` and
+`s31/s31_E5_contrasts.py`; artefacts `s31/results/s31_E5_applied.json`,
+`s31/results/s31_E5_contrasts.json`. All arms **ORACLE / NOT DEPLOYABLE**. Built chain, paired.
+
+**The control was built so that a null would refute §20.1, and it did not fire.** An energy-matched
+direction `u` captures per target *exactly* the fraction of `y`'s energy that `mu` captures
+(`cos²(t) = ‖y_along(mu)‖² / ‖y‖²`) but is otherwise arbitrary:
+
+```
+energy-matched ALONG  vs true along-mu   +0.1317   2.07x MDE   5/5 folds    25W/101L   true mu BETTER
+energy-matched PERP   vs true perp-mu    -0.3797   2.53x MDE   5/5 folds   114W/12L    true mu WORSE
+```
+
+**`mu` is special on both sides, both past MDE, both 5/5 folds.** Magnitude is not the explanation.
+
+**The qualification, which is mine to state because it weakens my own section.** At matched energy an
+*arbitrary* direction still shows along-beating-perp by **−0.3734 (1.98x MDE, 5/5, 84W/42L)**. Against
+the true split's **−0.8848**, **≈42% of the asymmetry is generic geometry** and `mu` supplies the other
+58%. **`mu` more than doubles an asymmetry that is already there — it does not create one**, and the
+report says so. The mu-specific part is where the prize sits: **−1.4697 on FAIL18 against −0.1907
+elsewhere (7.7x)**.
+
+**The random-direction null behaves exactly as pure magnitude predicts, which is what makes it a
+scale.** An isotropic direction captures almost none of `y`, so ALONG is **−0.0229 at 0.66x MDE — NOT
+MEASURED** and PERP recovers nearly the whole correction (−0.7884). *Given a meaningless direction the
+labels mean nothing and the split collapses to how much of `y` survived.*
+
+**The shrink curve prices accuracy against direction:**
+
+```
+c        0.25     0.50     0.75     0.90     1.00
+delta  -0.2978  -0.5857  -0.7488  -0.7697  -0.7756      (monotone, concave, saturated by c = 0.75)
+frac      38%      76%      97%      99%     100%
+```
+
+**Three quarters of a perfect correction buys 97% of the benefit; a quarter buys 38%.** *A future
+common-mode channel does not need to be accurate — it needs to point the right way.*
+
+**Instrument fact, checked rather than assumed.** These arms ran in a **different process** from the
+`mu`-split they are differenced against, which lane D's ~1e13 amplification would normally forbid. It
+is legal here because the two jobs' `PROD` rows are **bit-identical on all 126 targets in both bases**
+(max |diff| exactly `0.000e+00`). **The projection is deterministic; lane D measured sensitivity to
+*differing* inputs, not nondeterminism.** The rule is therefore sharper than *"always project in one
+job"*: **identical clouds give identical chains to the last bit, and the check costs one line.**
+`s31_verify.py` recomputes it from the raw rows.
