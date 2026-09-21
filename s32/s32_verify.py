@@ -566,7 +566,13 @@ if not selftest_only:
                 continue
             raw = io.open(src, encoding="utf-8").read().splitlines()
             for ln0, line in enumerate(raw):
+                #: FALSE-POSITIVE GUARD.  A line that states the CORRECT value beside |S|-1 is
+                #: not a conflation even when a 3x number also appears on it -- the correct
+                #: sentence is precisely the one that contrasts 5.25 against the ambient ~38.9.
+                #: Without this, the audit fires on the fix it asked for, which is the fastest
+                #: way to make a real flag unreadable.
                 if not (re.search(r"\|S\|\s*[-−]\s*1", line) and re.search(r"\b3[0-9]\b", line)
+                        and not re.search(r"\b5\.2[0-9]|\b5\.3|≈\s*5\b|~\s*5\b", line)
                         and "rank" not in line.lower() and "globally" not in line.lower()):
                     continue
                 ex, why = retraction_exempt(raw, ln0, A6_CORRECTION)
