@@ -3146,6 +3146,19 @@ score's inability to rank its own pool there** -- best member at rank 391/500, f
 3.4x against the readout's 1.9x. That is not this lane's remit and this lane has no result there;
 it is stated because it is what the measurement says.
 
+> **ANNOTATED 01:07, original standing (rule 13). This paragraph over-reaches and is corrected
+> by my own control in s8(b).** The *filter loss growing 3.4x against the readout's 1.9x* is the
+> **outcome-defined** stratum, and the paired contrast the claim requires is **0.16x and 0.38x
+> MDE with fold CIs spanning zero** on both filter-independent strata. **Which of the filter and
+> the readout is hurt more on the tail is NOT MEASURED**, and this lane should not be quoted as
+> saying the tail's money is in the filter.
+>
+> **What survives, and it is enough to point somewhere:** on the *filter-independent* `T_POOL` the
+> pool's best member sits at **rank 285.6 of 500** under the shipped score against **151.1**
+> elsewhere, and only **5.7** of the retained 75 are under 3 A against **33.9**. *The score cannot
+> order its own pool on the tail* stands on a clean stratum. *That this outweighs the readout*
+> does not. Both statements were in the original paragraph and only the first is measured.
+
 ### 9b. THE COMPLETE READOUT-CHOICE CEILING, AND WHY IT IS MOSTLY AN ORDER STATISTIC
 
 *Appended 2026-09-21 01:05; an unregistered arm, declared as such.* With the native in hand and a
