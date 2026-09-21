@@ -1,0 +1,591 @@
+{
+ "prereg": "s32/PREREG_S32_P.md @ 33dfe0d3",
+ "hypothesis": "H-P2b (coordinator arm)",
+ "basis": "BUILT CHAIN, every arm projected in the same process as PROD for that target",
+ "n": 126,
+ "ndraw": 8,
+ "seed": 3202119,
+ "PROD_reproduction": {
+  "n_matched": 126,
+  "mean_abs": 0.012263039507329763,
+  "p90_abs": 0.026034792690871278,
+  "max_abs": 0.5174101434362743,
+  "mean_signed": 0.002091224780054017,
+  "my_PROD_mean": 3.212625219723354,
+  "s29_PROD_mean": 3.210533994943299,
+  "A2_floor": "0.0134 mean / 0.0329 p90 / 0.2285 max (contract rule 3)",
+  "within_A2_floor": true
+ },
+ "R128": {
+  "what": "random 128 of 500, then the SCORE's top-75 within",
+  "chain_draw_means": [
+   3.3897570596424065,
+   3.361370020542568,
+   3.343741029083029,
+   3.3914353264672656,
+   3.393346013431366,
+   3.365209202646084,
+   3.380115780051642,
+   3.3943289983070075
+  ],
+  "chain_draw_mean": 3.377412928771421,
+  "chain_draw_sd": 0.018656403989989898,
+  "cloud_draw_mean": 3.1852511765270553,
+  "cloud_draw_sd": 0.014509685359183512,
+  "setmean_draw_mean": 3.855139605997218,
+  "setbest_draw_mean": 2.122775267321794,
+  "wBw_draw_mean": 194.3839012625232,
+  "per_draw_vs_PROD": [
+   {
+    "label": "R128 draw 0 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.3897570596424065,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.3571159336486707,
+    "median_b": 2.966075811657328,
+    "effect": 0.17713183991905293,
+    "median_effect": 0.06300731873291388,
+    "se": 0.06781742082027098,
+    "mde": 0.1899972861700712,
+    "effect_over_mde": 0.9322861578164748,
+    "ci95_fold": [
+     0.04359432267671346,
+     0.3106693571613924
+    ],
+    "folds_same_sign": 4,
+    "n_better": 53,
+    "n_worse": 73,
+    "verdict": "NOT MEASURED (|effect| 0.1771 <= its own MDE 0.1900, 0.93x)"
+   },
+   {
+    "label": "R128 draw 1 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.361370020542568,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.3043250696176023,
+    "median_b": 2.966075811657328,
+    "effect": 0.14874480081921443,
+    "median_effect": 0.07626384548612553,
+    "se": 0.06594704028218823,
+    "mde": 0.18475722805457856,
+    "effect_over_mde": 0.8050824445973729,
+    "ci95_fold": [
+     0.0007220995629606567,
+     0.27007213388736
+    ],
+    "folds_same_sign": 4,
+    "n_better": 49,
+    "n_worse": 77,
+    "verdict": "NOT MEASURED (|effect| 0.1487 <= its own MDE 0.1848, 0.81x)"
+   },
+   {
+    "label": "R128 draw 2 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.3437410290830285,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.225380413169124,
+    "median_b": 2.966075811657328,
+    "effect": 0.13111580935967557,
+    "median_effect": 0.03069721615769705,
+    "se": 0.06536290699307826,
+    "mde": 0.18312072023180806,
+    "effect_over_mde": 0.7160075014651497,
+    "ci95_fold": [
+     0.002930635988359985,
+     0.23623057230683486
+    ],
+    "folds_same_sign": 4,
+    "n_better": 57,
+    "n_worse": 69,
+    "verdict": "NOT MEASURED (|effect| 0.1311 <= its own MDE 0.1831, 0.72x)"
+   },
+   {
+    "label": "R128 draw 3 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.3914353264672665,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.38864577968325,
+    "median_b": 2.966075811657328,
+    "effect": 0.17881010674391243,
+    "median_effect": 0.08009538683456063,
+    "se": 0.0693363052198755,
+    "mde": 0.1942525927040032,
+    "effect_over_mde": 0.9205030638452193,
+    "ci95_fold": [
+     0.05944328986528463,
+     0.27966858634672415
+    ],
+    "folds_same_sign": 4,
+    "n_better": 53,
+    "n_worse": 73,
+    "verdict": "NOT MEASURED (|effect| 0.1788 <= its own MDE 0.1943, 0.92x)"
+   },
+   {
+    "label": "R128 draw 4 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.3933460134313664,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.307869866180249,
+    "median_b": 2.966075811657328,
+    "effect": 0.18072079370801275,
+    "median_effect": 0.0807467794602228,
+    "se": 0.06435323776336059,
+    "mde": 0.18029203091783103,
+    "effect_over_mde": 1.0023781571930772,
+    "ci95_fold": [
+     0.0886919610917859,
+     0.26966413536329886
+    ],
+    "folds_same_sign": 5,
+    "n_better": 53,
+    "n_worse": 73,
+    "verdict": "WORSE [TYPE-M ZONE: magnitude inflated ~1.12x]"
+   },
+   {
+    "label": "R128 draw 5 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.365209202646086,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.2764546754871615,
+    "median_b": 2.966075811657328,
+    "effect": 0.15258398292273173,
+    "median_effect": 0.08923174194867356,
+    "se": 0.06772874644305756,
+    "mde": 0.18974885603487004,
+    "effect_over_mde": 0.8041365102864781,
+    "ci95_fold": [
+     0.04581433210205977,
+     0.24582233393294467
+    ],
+    "folds_same_sign": 4,
+    "n_better": 48,
+    "n_worse": 78,
+    "verdict": "NOT MEASURED (|effect| 0.1526 <= its own MDE 0.1897, 0.80x)"
+   },
+   {
+    "label": "R128 draw 6 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.380115780051641,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.264318332252782,
+    "median_b": 2.966075811657328,
+    "effect": 0.16749056032828724,
+    "median_effect": 0.03706256192502022,
+    "se": 0.05967663700498187,
+    "mde": 0.16719006623315721,
+    "effect_over_mde": 1.0017973202708765,
+    "ci95_fold": [
+     0.04639992740713697,
+     0.25336114164855983
+    ],
+    "folds_same_sign": 4,
+    "n_better": 56,
+    "n_worse": 70,
+    "verdict": "WORSE [TYPE-M ZONE: magnitude inflated ~1.12x]"
+   },
+   {
+    "label": "R128 draw 7 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.3943289983070084,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.3211358102788378,
+    "median_b": 2.966075811657328,
+    "effect": 0.1817037785836549,
+    "median_effect": 0.11800506370558761,
+    "se": 0.06536675814047144,
+    "mde": 0.18313150960634478,
+    "effect_over_mde": 0.9922037937340281,
+    "ci95_fold": [
+     0.04453994849453772,
+     0.31886760867277214
+    ],
+    "folds_same_sign": 4,
+    "n_better": 51,
+    "n_worse": 75,
+    "verdict": "NOT MEASURED (|effect| 0.1817 <= its own MDE 0.1831, 0.99x)"
+   }
+  ],
+  "effect_draw_mean": 0.16478770904806778,
+  "effect_draw_sd": 0.01865640398998992,
+  "ratio_draw_mean": 0.8967993686510847,
+  "n_draws_better": 0,
+  "AVG_OF_DRAWS_vs_PROD": {
+   "label": "R128 per-target mean over 8 draws - PROD (BUILT CHAIN)",
+   "n": 126,
+   "mean_a": 3.377412928771421,
+   "mean_b": 3.212625219723354,
+   "median_a": 3.248300598693179,
+   "median_b": 2.966075811657328,
+   "effect": 0.1647877090480677,
+   "median_effect": 0.07335002328982632,
+   "se": 0.06369064935313414,
+   "mde": 0.1784357232277406,
+   "effect_over_mde": 0.9235129942996129,
+   "ci95_fold": [
+    0.03850449844315307,
+    0.2676299794803016
+   ],
+   "folds_same_sign": 4,
+   "n_better": 52,
+   "n_worse": 74,
+   "verdict": "NOT MEASURED (|effect| 0.1648 <= its own MDE 0.1784, 0.92x)"
+  },
+  "stratified": {
+   "FAIL18_CIRCULAR": {
+    "label": "R128 - PROD on FAIL18 (BUILT CHAIN) [CIRCULAR STRATUM]",
+    "n": 18,
+    "mean_a": 5.604584386617072,
+    "mean_b": 6.019464757574215,
+    "median_a": 5.709171381293965,
+    "median_b": 5.886616525721143,
+    "effect": -0.41488037095714314,
+    "median_effect": -0.15585970442284758,
+    "se": 0.2100791371699824,
+    "mde": 0.5885577106954227,
+    "effect_over_mde": -0.704910263543965,
+    "ci95_fold": [
+     -0.6552075163871929,
+     -0.06594288362162413
+    ],
+    "folds_same_sign": 3,
+    "n_better": 15,
+    "n_worse": 3,
+    "verdict": "NOT MEASURED (|effect| 0.4149 <= its own MDE 0.5886, 0.70x)"
+   },
+   "other108": {
+    "label": "R128 - PROD on the other 108 (BUILT CHAIN)",
+    "n": 108,
+    "mean_a": 3.0062176857971457,
+    "mean_b": 2.7448186300815434,
+    "median_a": 3.153598651756374,
+    "median_b": 2.7670831764945634,
+    "effect": 0.26139905571560285,
+    "median_effect": 0.14236827282785236,
+    "se": 0.061232839422982056,
+    "mde": 0.17154992292742655,
+    "effect_over_mde": 1.5237491877287908,
+    "ci95_fold": [
+     0.12655692018613476,
+     0.3464486405001264
+    ],
+    "folds_same_sign": 5,
+    "n_better": 37,
+    "n_worse": 71,
+    "verdict": "WORSE"
+   },
+   "n_fail18": 18
+  }
+ },
+ "R75": {
+  "what": "random 75 of 500, the score never consulted",
+  "chain_draw_means": [
+   3.6101407175301743,
+   3.636293305218031,
+   3.601448988515849,
+   3.645223651440357,
+   3.589068919431734,
+   3.5647150369990137,
+   3.635265283504,
+   3.687859739644855
+  ],
+  "chain_draw_mean": 3.6212519552855014,
+  "chain_draw_sd": 0.0381381750121249,
+  "cloud_draw_mean": 3.4223330065464217,
+  "cloud_draw_sd": 0.02801580642681978,
+  "setmean_draw_mean": 4.4513294111308515,
+  "setbest_draw_mean": 2.0584415668799054,
+  "wBw_draw_mean": 317.0796569688772,
+  "per_draw_vs_PROD": [
+   {
+    "label": "R75 draw 0 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.610140717530172,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.591205335371627,
+    "median_b": 2.966075811657328,
+    "effect": 0.3975154978068183,
+    "median_effect": 0.2374338548389736,
+    "se": 0.09269591514008085,
+    "mde": 0.2596968758564505,
+    "effect_over_mde": 1.5306903346290084,
+    "ci95_fold": [
+     0.21209864238841566,
+     0.5909454093239578
+    ],
+    "folds_same_sign": 5,
+    "n_better": 43,
+    "n_worse": 83,
+    "verdict": "WORSE"
+   },
+   {
+    "label": "R75 draw 1 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.6362933052180315,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.713195997975021,
+    "median_b": 2.966075811657328,
+    "effect": 0.4236680854946777,
+    "median_effect": 0.27417801055315183,
+    "se": 0.09001487387004463,
+    "mde": 0.252185670634317,
+    "effect_over_mde": 1.6799847684804405,
+    "ci95_fold": [
+     0.29819716393987755,
+     0.5312603647051695
+    ],
+    "folds_same_sign": 5,
+    "n_better": 41,
+    "n_worse": 85,
+    "verdict": "WORSE"
+   },
+   {
+    "label": "R75 draw 2 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.601448988515849,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.593653708980975,
+    "median_b": 2.966075811657328,
+    "effect": 0.38882376879249503,
+    "median_effect": 0.2858742174464305,
+    "se": 0.08914613144841099,
+    "mde": 0.24975180186586823,
+    "effect_over_mde": 1.5568406949925304,
+    "ci95_fold": [
+     0.20649396306593396,
+     0.5423603888669026
+    ],
+    "folds_same_sign": 5,
+    "n_better": 43,
+    "n_worse": 83,
+    "verdict": "WORSE"
+   },
+   {
+    "label": "R75 draw 3 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.6452236514403578,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.6290345262777617,
+    "median_b": 2.966075811657328,
+    "effect": 0.4325984317170039,
+    "median_effect": 0.3387443734178085,
+    "se": 0.09094920248843484,
+    "mde": 0.25480328569159905,
+    "effect_over_mde": 1.6977741497438894,
+    "ci95_fold": [
+     0.27597083173386316,
+     0.5438489500411695
+    ],
+    "folds_same_sign": 5,
+    "n_better": 43,
+    "n_worse": 83,
+    "verdict": "WORSE"
+   },
+   {
+    "label": "R75 draw 4 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.5890689194317345,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.5092476327946858,
+    "median_b": 2.966075811657328,
+    "effect": 0.37644369970838043,
+    "median_effect": 0.2019742269258462,
+    "se": 0.08947648734219531,
+    "mde": 0.2506773269378944,
+    "effect_over_mde": 1.5017062145458604,
+    "ci95_fold": [
+     0.16852880871748938,
+     0.5074057266841087
+    ],
+    "folds_same_sign": 4,
+    "n_better": 46,
+    "n_worse": 80,
+    "verdict": "WORSE"
+   },
+   {
+    "label": "R75 draw 5 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.564715036999015,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.340892695281784,
+    "median_b": 2.966075811657328,
+    "effect": 0.3520898172756617,
+    "median_effect": 0.22861861289740248,
+    "se": 0.0911660083274226,
+    "mde": 0.25541068893010715,
+    "effect_over_mde": 1.3785242064477994,
+    "ci95_fold": [
+     0.20576793781819025,
+     0.48586806680211103
+    ],
+    "folds_same_sign": 5,
+    "n_better": 41,
+    "n_worse": 85,
+    "verdict": "WORSE"
+   },
+   {
+    "label": "R75 draw 6 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.635265283504001,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.587311115943546,
+    "median_b": 2.966075811657328,
+    "effect": 0.4226400637806472,
+    "median_effect": 0.21799405291393814,
+    "se": 0.09115546821969142,
+    "mde": 0.2553811597642875,
+    "effect_over_mde": 1.6549383054362228,
+    "ci95_fold": [
+     0.23363630014592948,
+     0.5621730784361555
+    ],
+    "folds_same_sign": 5,
+    "n_better": 43,
+    "n_worse": 83,
+    "verdict": "WORSE"
+   },
+   {
+    "label": "R75 draw 7 - PROD (BUILT CHAIN)",
+    "n": 126,
+    "mean_a": 3.6878597396448547,
+    "mean_b": 3.212625219723354,
+    "median_a": 3.5783419161799284,
+    "median_b": 2.966075811657328,
+    "effect": 0.4752345199215014,
+    "median_effect": 0.3284627236079847,
+    "se": 0.09180685214874422,
+    "mde": 0.2572060769799218,
+    "effect_over_mde": 1.8476799829212411,
+    "ci95_fold": [
+     0.29152989599860535,
+     0.6304687423089069
+    ],
+    "folds_same_sign": 5,
+    "n_better": 42,
+    "n_worse": 84,
+    "verdict": "WORSE"
+   }
+  ],
+  "effect_draw_mean": 0.40862673556214824,
+  "effect_draw_sd": 0.03813817501212479,
+  "ratio_draw_mean": 1.606017332149624,
+  "n_draws_better": 0,
+  "AVG_OF_DRAWS_vs_PROD": {
+   "label": "R75 per-target mean over 8 draws - PROD (BUILT CHAIN)",
+   "n": 126,
+   "mean_a": 3.6212519552855023,
+   "mean_b": 3.212625219723354,
+   "median_a": 3.600869004958846,
+   "median_b": 2.966075811657328,
+   "effect": 0.40862673556214824,
+   "median_effect": 0.2677023651959687,
+   "se": 0.0884070332856445,
+   "mde": 0.24768114445306166,
+   "effect_over_mde": 1.6498096230316295,
+   "ci95_fold": [
+    0.23254608574375302,
+    0.5480754199456073
+   ],
+   "folds_same_sign": 5,
+   "n_better": 43,
+   "n_worse": 83,
+   "verdict": "WORSE"
+  },
+  "stratified": {
+   "FAIL18_CIRCULAR": {
+    "label": "R75 - PROD on FAIL18 (BUILT CHAIN) [CIRCULAR STRATUM]",
+    "n": 18,
+    "mean_a": 5.503493750612809,
+    "mean_b": 6.019464757574215,
+    "median_a": 5.508322512694976,
+    "median_b": 5.886616525721143,
+    "effect": -0.5159710069614059,
+    "median_effect": -0.3109599503661724,
+    "se": 0.1964266765395535,
+    "mde": 0.5503089769932131,
+    "effect_over_mde": -0.9376023807217836,
+    "ci95_fold": [
+     -0.729657361466011,
+     -0.2774255562580373
+    ],
+    "folds_same_sign": 4,
+    "n_better": 14,
+    "n_worse": 4,
+    "verdict": "NOT MEASURED (|effect| 0.5160 <= its own MDE 0.5503, 0.94x)"
+   },
+   "other108": {
+    "label": "R75 - PROD on the other 108 (BUILT CHAIN)",
+    "n": 108,
+    "mean_a": 3.3075449893976168,
+    "mean_b": 2.7448186300815434,
+    "median_a": 3.276777295874281,
+    "median_b": 2.7670831764945634,
+    "effect": 0.5627263593160738,
+    "median_effect": 0.3820090336362434,
+    "se": 0.08987312340588502,
+    "mde": 0.25178854253392746,
+    "effect_over_mde": 2.2349164646371817,
+    "ci95_fold": [
+     0.3500090347017389,
+     0.7254290898492098
+    ],
+    "folds_same_sign": 5,
+    "n_better": 29,
+    "n_worse": 79,
+    "verdict": "WORSE"
+   },
+   "n_fail18": 18
+  }
+ },
+ "PROD": {
+  "chain": 3.212625219723354,
+  "cloud": 3.0483380938795324,
+  "setmean": 3.5506829818026735,
+  "setbest": 2.3061526409453816,
+  "wBw": 127.6387041660351,
+  "ndist": 69.23015873015873,
+  "pool_best": 1.7108244199364904,
+  "pool_mean": 4.453250250458717
+ },
+ "operator_law": {
+  "all_arms": {
+   "intercept": -0.9934210660461499,
+   "coef_set_mean": 0.9218899917295806,
+   "coef_set_best": 0.3231791727207946,
+   "R2": 0.9162091665942149,
+   "ratio_mean_over_best": 2.852566221914407
+  },
+  "PROD": {
+   "intercept": -0.2659588724877997,
+   "coef_set_mean": 0.7717442592966524,
+   "coef_set_best": 0.3201717316161411,
+   "R2": 0.9545249692376004
+  },
+  "R128": {
+   "intercept": -0.7146089355617091,
+   "coef_set_mean": 0.9129572906257208,
+   "coef_set_best": 0.2696677615714965,
+   "R2": 0.9367490482112193
+  },
+  "R75": {
+   "intercept": -1.8386752418476167,
+   "coef_set_mean": 1.0973980164438772,
+   "coef_set_best": 0.279360434647394,
+   "R2": 0.9234927927811046
+  }
+ },
+ "geometry": {
+  "PROD": {
+   "bond_mean": 3.803954938363982,
+   "bond_sd": 9.209877768520543e-16
+  },
+  "R128_0": {
+   "bond_mean": 3.803954938363982,
+   "bond_sd": 9.36534639695089e-16
+  },
+  "R75_0": {
+   "bond_mean": 3.803954938363982,
+   "bond_sd": 9.177907693615186e-16
+  }
+ },
+ "multiplicity_emitted": 22
+}

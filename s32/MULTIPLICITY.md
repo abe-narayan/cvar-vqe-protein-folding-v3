@@ -688,3 +688,18 @@ R75         4.4541     2.0520    316.2      Δ mean +0.9021  Δ best −0.2536
 Both predict the random gate is **WORSE**, agreeing with the coordinator's own registered
 prediction. A chain effect within ±0.10 Å of these confirms the law transfers to a gate family it
 was not fitted on; a miss falsifies it for random gates.
+
+### The random-gate endpoint arm — BUILT CHAIN, n = 126, all arms projected in the same process per target
+
+| # | comparison | registered? | emitted |
+|---|---|---|---|
+| P-41 | `R128` (random 128 of 500, then the score's top-75 within) − PROD | REGISTERED (H-P2b) | **+0.1648, 0.92× MDE — NOT MEASURED**; median +0.0734, 52W/74L, 4/5; **0 of 8 draws better**, draw sd 0.0187 |
+| P-42 | `R128` − PROD on the **other 108** (filter-independent) | REGISTERED | **+0.2614, 1.52× — WORSE**, 37W/71L |
+| P-43 | `R128` − PROD on **FAIL18 (CIRCULAR)** | REGISTERED, diagnostic only | −0.4149, 0.70× — NOT MEASURED, 15W/3L |
+| P-44 | `R75` (random 75 of 500, score never consulted) − PROD | REGISTERED (H-P2b) | **+0.4086, 1.65× MDE, 5/5 folds, 43W/83L — WORSE**; 0 of 8 draws better, draw sd 0.0381 |
+| P-45 | `R75` − PROD on the other 108 | REGISTERED | **+0.5627, 2.23× — WORSE** |
+| P-46 | `R75` − PROD on FAIL18 (CIRCULAR) | REGISTERED, diagnostic only | −0.5160, 0.94× — NOT MEASURED, 14W/4L |
+| P-47 | operator law on the **BUILT CHAIN**, all 17 arms | REGISTERED (H-P2b-1) | `out = −0.9934 + 0.9219·set_mean + 0.3232·set_best`, **ratio 2.85**, R² 0.9162 — the registered ≥5× **FAILS**, and S18's 1.16/0.04 (ratio 29) does not hold under gates that order candidates |
+| P-39 | scored: predicted `R128 − PROD` cloud **+0.144**, measured **+0.1369** | REGISTERED | **HIT** (error 0.007) |
+| P-40 | scored: predicted `R75 − PROD` cloud **+0.524**, measured **+0.3740** | REGISTERED | **MISS** (error 0.150) — the law over-predicts a large gate change; it is a local linearisation |
+| P-48 | PROD reproduction against `s29_O_chain_rows` | REGISTERED (rule 3 check) | mean \|Δ\| 0.0123 (within the 0.0134 floor), p90 0.0260, **max 0.5174 on 2LNG — ABOVE the contract's 0.2285 max floor** |
