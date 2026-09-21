@@ -627,6 +627,8 @@ a 59/41 label.** Every arm is under 0.7× MDE — NOT A RESULT.
 | L-1 | PROJ_NAT_LONG (n=60, L 41–60) vs PROJ_NAT_SHORT (n=126, L 9–16) — deployed projector on the native, λ=0 | **registered** (L-H1) | CA cloud vs native, ORACLE / NOT DEPLOYABLE | 0.700 (SE 0.029) vs 0.0429 (SE 0.0053). **L-H1 FALSIFIED**: the registered falsifier was "< 1.0 Å at L=45"; measured mean 0.700, p90 0.956, max 1.129. The representation is NOT the obstacle at 40–60 residues. |
 | L-2 | native-torsion rebuild vs deployed-projector residual, same 60 chains | registered control (L-H1) | CA cloud, ORACLE | 2.742 vs 0.700 — the rebuild bound overstates the manifold distance by **3.9×** at L≈52 and by **8.1×** on the canonical 126 (0.347 vs 0.0429). |
 | L-3 | leakage filter `identity(norm="shorter")` vs composition-shuffled null, 60 targets × 3 shuffles | **registered control** (instrument admission) | rejection rate | **At the null**: rejects 100% of real AND 100% of shuffled at every threshold ≤ 0.9. Filter discarded. `verbatim` separates (real 0.330, shuffled 0.000) and is used instead. |
+| L-3b | common-mode fraction f, BLOSUM top-75, L 40-60 (n=45) vs L 9-16 (n=126) | **exploratory** (L-H3a) | squared CA error in the medoid frame; bias-variance identity verified to 1.6e-15 | 0.530 (SE 0.027) vs 0.468 (SE 0.016); diff +0.062, SE_diff 0.031, **0.70x MDE -> NOT MEASURED**. The fraction does not measurably move over a 4x length change. **DEFINITION WARNING: these are BLOSUM top-75 subsets. The 0.676 on record is the DISTOGRAM top-75 and is a different object; no claim is made about it.** |
+| L-3c | provenance audit of the ORACLE pool-best member, long40 (n=45) | **registered adversarial check**, threshold fixed before reading | sequence identity | Window identity to target: mean 0.231, **median 0.189**, p90 0.400, max 0.519. Longest verbatim common substring: median 3, max 7. Withdrawal threshold was median > 0.40. **HOLDS** -- the long pool's headroom is retrieval reach, not PDB redundancy. ORACLE pool-best cloud RMSD over all 45: mean 4.980, median 5.475. |
 | L-4 | `long40` ladder: pool_best / sparse_s10 / top75_best / avg75 / avg75_random, at L 40–60 and L 9–16 | **registered** (L-H2, P1–P3) | built chain, pre-AMBER | in progress |
 
 | P-37 | rank of the pool's deviation matrix vs 3n−6 | cloud, native-free | EXPLORATORY (structural) | **exact on 126/126**; μ lies inside that span on 126/126, which is why μ is exactly recoverable |
@@ -663,3 +665,26 @@ the production chain's own pair-distance error and the pool's common-mode error 
 exactly the same direction**. S31 §20.1's common-mode story, confirmed from a different object
 (the production chain's error, not the prior's) in a different lane.
 | P-38 | the whole H-P3 decomposition repeated on the **production top-75** set (not the quantum 128) | cloud, ORACLE | REGISTERED (H-P3, basis check) | identity 4.6e-13; f_common **0.6780** (matches S23's 0.676); Var(U)/Var(V) median 3.45 / 4.73 in the score's band; ρ_inband(CONS) **−0.2362 ± 0.0145** ORACLE band, **+0.2829 ± 0.0322** score band; zero-μ +0.7828; μ recovery 1e-14 |
+
+### Registered BEFORE the endpoint rows were complete (n=123 of 126 at the time of writing, chain values NOT read)
+
+The operator law fitted in `s32_P_decomp.json` on the SCORE and ORACLE prefix families
+(`out = −0.2536 + 0.6730·set_mean + 0.3256·set_best`, cloud, R² 0.9467) is used here to predict a
+family it was **not** fitted on. Set statistics of the random-gate arms (ORACLE labels, but the
+chain numbers were not looked at):
+
+```
+          set_mean   set_best    wBw
+PROD        3.5520     2.3056    127.8
+R128        3.8576     2.1165    193.4      Δ mean +0.3056  Δ best −0.1891
+R75         4.4541     2.0520    316.2      Δ mean +0.9021  Δ best −0.2536
+```
+
+| # | PREDICTION (registered) |
+|---|---|
+| P-39 | `R128 − PROD` cloud effect = **+0.144 Å** (0.673·(+0.3056) + 0.326·(−0.1891)) |
+| P-40 | `R75 − PROD` cloud effect = **+0.524 Å** |
+
+Both predict the random gate is **WORSE**, agreeing with the coordinator's own registered
+prediction. A chain effect within ±0.10 Å of these confirms the law transfers to a gate family it
+was not fitted on; a miss falsifies it for random gates.
