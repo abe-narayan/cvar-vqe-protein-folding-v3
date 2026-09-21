@@ -93,6 +93,15 @@ def main():
     bok = ST.best_of_k_within(M, n_boot=400, seed_parts=("s32R", "scalegrid"))
     glob_s = keys[int(np.argmin(M.mean(0)))]
     gl = M[:, keys.index(glob_s)]
+    #: THE DEPLOYABLE FORM: the factor chosen on the four TRAINING folds and applied to the
+    #: held-out fold, so no parameter is fitted on the native RMSD of the target it scores.
+    lfo = np.empty(len(pdbs))
+    lfo_pick = {}
+    for q in sorted(set(folds.tolist())):
+        tr = folds != q
+        kk = int(np.argmin(M[tr].mean(0)))
+        lfo_pick[int(q)] = keys[kk]
+        lfo[folds == q] = M[folds == q, kk]
     out["SCALE_GRID"] = {
         "ORACLE_NOT_DEPLOYABLE": True, "grid": keys,
         "oracle_per_target_mean": float(orc.mean()),
@@ -101,7 +110,18 @@ def main():
         "best_global_factor": glob_s, "global_mean": float(gl.mean()),
         "vs_prod_global_ORACLE_CHOICE": ST.compare(gl, prod, folds, names=pdbs,
                                                    label="global best scale - PROD"),
+        "lfo_pick_per_fold": lfo_pick, "lfo_mean": float(lfo.mean()),
+        "vs_prod_LEAVE_FOLD_OUT_DEPLOYABLE": ST.compare(
+            lfo, prod, folds, names=pdbs, label="leave-fold-out scale factor - PROD"),
         "best_of_k": bok,
+        "best_of_k_CAVEAT": (
+            "stats_lib.split_half_transfer centres on M.mean(1), the mean OVER THE 8 GRID "
+            "FACTORS, so its transfer answers 'beats the average of the eight factors', "
+            "and that average includes 1.12 and 1.15 which are badly wrong. NOBODY DEPLOYS "
+            "THE AVERAGE OF EIGHT DILATIONS. A control matched to a different arm's "
+            "magnitude is not a control (rule 6). The number to quote against PRODUCTION "
+            "is `vs_prod_LEAVE_FOLD_OUT_DEPLOYABLE`. Lane V documented this same trap in "
+            "s32_V_R_adversary.py for its criterion search; it is the same shape here."),
     }
     c = out["SCALE_GRID"]["vs_prod_ORACLE"]
     print("\nSCALE_GRID, ORACLE / NOT DEPLOYABLE, %d factors %s" % (len(keys), keys))
@@ -111,13 +131,22 @@ def main():
     print("  best GLOBAL factor %s -> %.4f  eff %+.4f  %.2fxMDE  (the factor itself chosen "
           "on native RMSD: ORACLE)" % (glob_s, gl.mean(), cg["effect"],
                                        abs(cg["effect_over_mde"])))
+    cl = out["SCALE_GRID"]["vs_prod_LEAVE_FOLD_OUT_DEPLOYABLE"]
+    print("  LEAVE-FOLD-OUT factor %s -> %.4f  eff %+.4f  %.2fxMDE  %dW/%dL  %s"
+          % (lfo_pick, lfo.mean(), cl["effect"], abs(cl["effect_over_mde"]),
+             cl["n_better"], cl["n_worse"], cl["verdict"][:40]))
+    print("           ^ DEPLOYABLE: the factor never sees the native RMSD of the target "
+          "it scores.")
     print("  BEST-OF-K PRICING (contract rule 9): observed per-target gain %+.4f"
           % bok["observed_gain"])
     print("    across-target null      %+.4f  (%.0f%% of the observed gain accounted)"
           % (bok["null_across_targets"], 100 * bok["share_accounted"]))
-    print("    SPLIT-HALF TRANSFER     %+.4f  (%.0f%% of oracle)  <- the number to quote"
+    print("    split-half transfer     %+.4f  (%.0f%% of oracle)   *** NOT vs PRODUCTION:"
           % (bok["split_half"], 100 * bok["split_half_frac"]))
-    print("    k_eff %.2f of %d   |   %s" % (bok["k_eff"], len(keys), bok["verdict"]))
+    print("      it is centred on the mean OVER THE 8 FACTORS, which includes 1.12 and 1.15."
+          "\n      Nobody deploys the average of eight dilations.  Quote the "
+          "LEAVE-FOLD-OUT line above.")
+    print("    k_eff %.2f of %d" % (bok["k_eff"], len(keys)))
 
     ST.save_atomic(os.path.join(RESULTS, "s32_R_repair.json"), out, module_file=__file__)
     print("\nwrote", os.path.join(RESULTS, "s32_R_repair.json"))
