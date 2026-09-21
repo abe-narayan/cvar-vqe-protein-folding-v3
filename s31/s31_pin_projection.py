@@ -74,6 +74,21 @@ S27_ROWS = os.path.join(ROOT, "s27", "results", "chain_rows.jsonl")
 OUT = os.path.join(RESULTS, "s31_D_projection_pin.json")
 ROWS = os.path.join(RESULTS, "s31_D_projection_pin_rows.jsonl")
 
+#: the input perturbation used to DEMONSTRATE the mechanism.  1e-14 relative is the scale
+#: at which two code paths that build the same average disagree (S28-L27b measured the
+#: production cloud and S27's rows agreeing to 5.7e-14), so this is not a stress test, it
+#: is the actual operating condition.
+PERTURB = 1e-14
+PERTURB_SEED = 20260920
+
+
+def rows_path(shard=None, nshards=0):
+    """One rows file per shard, so no two processes ever append to the same file.
+    (S29-L31: two jobs sharing a rows file had no corruption and no guarantee either.)"""
+    if shard is None:
+        return ROWS
+    return ROWS.replace(".jsonl", "_shard%dof%d.jsonl" % (int(shard), int(nshards)))
+
 #: the production projection's configuration, as `s12.instrument.project` calls it.
 LAM = 0.3
 MAXITER = 300
@@ -211,6 +226,16 @@ def one_target(pdb):
     r_a = float(I.ca_rmsd(ca_a, nat))
     r_b = float(I.ca_rmsd(ca_b, nat))
 
+    #: THE MECHANISM, demonstrated rather than argued.  Perturb the input cloud at the
+    #: scale two code paths disagree by (1e-14 relative) and reproject.  If the emitted
+    #: chain moves by orders of magnitude more than 1e-14, the operator is a discontinuous
+    #: function of its input and no "seed" can fix that.
+    rng = np.random.default_rng(PERTURB_SEED)
+    Cp = C * (1.0 + PERTURB * rng.standard_normal(C.shape))
+    cp = I.project(Cp, seq, fold, lam=LAM, multi=True, maxiter=MAXITER)
+    ca_p = np.asarray(cp["ca"], float)
+    r_p = float(I.ca_rmsd(ca_p, nat))
+
     row = dict(pdb=pdb, n=int(len(C)), fold=fold,
                cloud_sha256=cloud_sha(C),
                rmsd_cloud=float(I.ca_rmsd(C, nat)),
@@ -218,6 +243,11 @@ def one_target(pdb):
                chain_bit_identical=bitwise,
                coord_maxdiff=coord_maxdiff,
                rmsd_diff=float(r_a - r_b),
+               perturb_rel=PERTURB,
+               cloud_perturbed_maxdiff=float(np.abs(Cp - C).max()),
+               rmsd_cloud_perturbed=float(I.ca_rmsd(Cp, nat)),
+               rmsd_chain_perturbed=r_p,
+               rmsd_chain_perturb_shift=float(r_p - r_a),
                secs=float(time.time() - t0))
     row.update(branch_margins(C, seq, fold))
     return row
@@ -229,8 +259,11 @@ def cmd_determinism(args):
             sorted(x[:-4] for x in os.listdir(STRUCTS) if x.endswith(".npz")))
     if args.limit:
         pdbs = pdbs[:int(args.limit)]
-    done = load_rows(ROWS, "kind", "pin")
-    fh = open(ROWS, "a", encoding="utf-8")
+    if args.nshards:
+        pdbs = [p for k, p in enumerate(pdbs) if k % int(args.nshards) == int(args.shard)]
+    path = rows_path(args.shard if args.nshards else None, args.nshards)
+    done = all_rows()
+    fh = open(path, "a", encoding="utf-8")
     for i, pdb in enumerate(pdbs):
         if pdb in done and not args.force:
             continue
@@ -239,17 +272,38 @@ def cmd_determinism(args):
         fh.write(json.dumps(row) + "\n")
         fh.flush()
         print("[%3d/%3d] %-6s n=%3d  bit-identical %-5s  |dCA|max %.2e  chain %.6f  "
-              "margin(final) %.3e  margin(lam0) %.3e  %.1fs"
+              "perturb-shift %+.2e  margin(final) %.3e  margin(lam0) %.3e  %.1fs"
               % (i + 1, len(pdbs), pdb, row["n"], row["chain_bit_identical"],
                  row["coord_maxdiff"], row["rmsd_chain_pass1"],
+                 row["rmsd_chain_perturb_shift"],
                  row["margin_final_decision"], row["margin_lam0"], row["secs"]),
               flush=True)
     fh.close()
-    return cmd_report(args)
+    if not args.nshards:
+        return cmd_report(args)
+
+
+def all_rows():
+    """Every pin row, from the unsharded file and from every shard file.  A (pdb) computed
+    twice must agree bit-for-bit; that is asserted, not assumed."""
+    import glob as _glob
+    out, seen = {}, {}
+    for f in sorted(_glob.glob(ROWS.replace(".jsonl", "*.jsonl"))):
+        for pdb, r in load_rows(f, "kind", "pin").items():
+            if pdb in seen and abs(seen[pdb]["rmsd_chain_pass1"]
+                                   - r["rmsd_chain_pass1"]) > 0.0:
+                raise AssertionError(
+                    "%s computed twice and disagrees: %.12f vs %.12f (%s vs %s)"
+                    % (pdb, seen[pdb]["rmsd_chain_pass1"], r["rmsd_chain_pass1"],
+                       seen[pdb].get("_src"), f))
+            r["_src"] = f
+            seen[pdb] = r
+            out[pdb] = r
+    return out
 
 
 def cmd_report(args):
-    rows = load_rows(ROWS, "kind", "pin")
+    rows = all_rows()
     if not rows:
         print("no rows at %s" % ROWS)
         return
@@ -339,20 +393,49 @@ def cmd_report(args):
             int(sum(1 for p in pdbs if rows[p]["chose_multistart_over_continuation"])),
     }
 
+    # ---- the mechanism: a 1e-14 input perturbation, reprojected
+    if all("rmsd_chain_perturb_shift" in rows[p] for p in pdbs):
+        sh = np.array([rows[p]["rmsd_chain_perturb_shift"] for p in pdbs])
+        cin = np.array([rows[p]["cloud_perturbed_maxdiff"] for p in pdbs])
+        k = int(np.argmax(np.abs(sh)))
+        out["perturbation"] = {
+            "what": ("the SAME cloud perturbed by %g relative and reprojected.  The input "
+                     "moves by ~1e-13 A; the question is how far the OUTPUT moves"
+                     % PERTURB),
+            "seed": PERTURB_SEED,
+            "max_input_coord_shift_A": float(cin.max()),
+            "n": len(pdbs),
+            "n_output_unchanged_to_1e-9": int((np.abs(sh) < 1e-9).sum()),
+            "n_output_above_1e-4": int((np.abs(sh) > 1e-4).sum()),
+            "n_output_above_0.01": int((np.abs(sh) > 0.01).sum()),
+            "n_output_above_0.1": int((np.abs(sh) > 0.1).sum()),
+            "max_abs_output_shift_A": float(np.abs(sh).max()),
+            "worst_target": pdbs[k], "worst_shift": float(sh[k]),
+            "mean_shift_A": float(sh.mean()),
+            "amplification_worst": float(np.abs(sh).max() / max(float(cin.max()), 1e-300)),
+        }
+
     # ---- the instrument's own noise floor, measured against the confirmed effect
-    known = [("s29_O_prod_canonical", 3.2105),
-             ("s27_DIS", 3.2126),
-             ("s28_A_reprojection", 3.2071),
-             ("s31_D_reprojection", float(r1.mean()))]
-    vals = [v for _, v in known]
-    out["instrument_spread"] = {
-        "records": dict(known),
-        "spread_A": float(max(vals) - min(vals)),
-        "confirmed_effect_for_scale": 0.0221,
-        "note": ("any chain claim smaller than the spread is inside the instrument's own "
-                 "reprojection noise; this is the number the brief's 'any future sub-0.01 A "
-                 "chain claim is invalid' rests on"),
-    }
+    if len(pdbs) >= 126:
+        known = [("s29_O_prod_canonical", 3.2105),
+                 ("s27_DIS", 3.2126),
+                 ("s28_A_reprojection", 3.2071),
+                 ("s31_D_reprojection", float(r1.mean()))]
+        vals = [v for _, v in known]
+        out["instrument_spread"] = {
+            "records": dict(known),
+            "spread_A": float(max(vals) - min(vals)),
+            "confirmed_effect_for_scale": 0.0221,
+            "note": ("any chain claim smaller than the spread is inside the instrument's "
+                     "own reprojection noise; this is what the brief's 'any future "
+                     "sub-0.01 A chain claim is invalid' rests on"),
+        }
+    else:
+        out["instrument_spread"] = {
+            "PARTIAL": True, "n": len(pdbs),
+            "note": "NOT COMPUTED: the spread is a 126-target mean and this run is partial",
+        }
+        out["reprojection"]["PARTIAL"] = True
 
     ST.save_atomic(OUT, out, module_file=__file__)
     print(json.dumps({k: v for k, v in out.items()

@@ -1,0 +1,161 @@
+{
+ "R2_N3_reproduced": 0.23545312895964132,
+ "R2_N1_reproduced": 0.15578731522317746,
+ "S30_published_R2_N3": 0.23545312895964132,
+ "S30_published_coh_N3": 0.9171667941971987,
+ "S30_published_coh_uncorrected": 0.6930959406368322,
+ "seed": 310502,
+ "arms": {
+  "PROD": {
+   "status": "baseline",
+   "R2_vs_y": -0.01926176523812373,
+   "coh_residual_with_mu_ORACLE": 0.6930959406368322,
+   "norm_frac_along_mu_mean": NaN,
+   "norm_frac_along_mu_median": NaN,
+   "norm_frac_along_muhat_mean": NaN,
+   "norm_frac_along_muhat_median": NaN,
+   "rms_delta": 0.0
+  },
+  "FIT_N3": {
+   "status": "LFO-supervised, native-free at inference",
+   "R2_vs_y": 0.23545312895964132,
+   "coh_residual_with_mu_ORACLE": 0.9171667941971987,
+   "norm_frac_along_mu_mean": 0.24239781909999236,
+   "norm_frac_along_mu_median": 0.20292881621727588,
+   "norm_frac_along_muhat_mean": 0.8641686773627617,
+   "norm_frac_along_muhat_median": 0.9170065352288453,
+   "rms_delta": 1.9146530283180596
+  },
+  "E2_PROJ_MUHAT": {
+   "status": "LFO-supervised, native-free at inference",
+   "R2_vs_y": -0.03354299011519246,
+   "coh_residual_with_mu_ORACLE": 0.6904257703668714,
+   "norm_frac_along_mu_mean": 0.35714058139062965,
+   "norm_frac_along_mu_median": 0.32176641052147187,
+   "norm_frac_along_muhat_mean": 4.275773304300862e-16,
+   "norm_frac_along_muhat_median": 2.616616472078066e-16,
+   "rms_delta": 0.7449016127700856
+  },
+  "E2o_PROJ_MU": {
+   "status": "ORACLE / NOT DEPLOYABLE",
+   "R2_vs_y": 0.23746551711387975,
+   "coh_residual_with_mu_ORACLE": 0.9089321415375073,
+   "norm_frac_along_mu_mean": 5.2412998447671443e-17,
+   "norm_frac_along_mu_median": 3.2572944989699453e-17,
+   "norm_frac_along_muhat_mean": 0.8539876206246318,
+   "norm_frac_along_muhat_median": 0.9096819919028876,
+   "rms_delta": 1.802374499534557
+  },
+  "CTRL_PROJ_RAND": {
+   "status": "LFO-supervised, native-free at inference",
+   "R2_vs_y": 0.22229318588393143,
+   "coh_residual_with_mu_ORACLE": 0.8985800068600266,
+   "norm_frac_along_mu_mean": 0.23024276228238608,
+   "norm_frac_along_mu_median": 0.20196729943999703,
+   "norm_frac_along_muhat_mean": 0.8510341474409432,
+   "norm_frac_along_muhat_median": 0.8957295828688848,
+   "rms_delta": 1.8626311020738195
+  },
+  "CTRL_SHRINK_E2": {
+   "status": "LFO-supervised, native-free at inference",
+   "R2_vs_y": 0.1141068521335109,
+   "coh_residual_with_mu_ORACLE": 0.7970149225019311,
+   "norm_frac_along_mu_mean": 0.2423978190999924,
+   "norm_frac_along_mu_median": 0.2029288162172759,
+   "norm_frac_along_muhat_mean": 0.8641686773627617,
+   "norm_frac_along_muhat_median": 0.9170065352288455,
+   "rms_delta": 0.7449016127700856
+  },
+  "CTRL_SHRINK_E2o": {
+   "status": "ORACLE / NOT DEPLOYABLE",
+   "R2_vs_y": 0.24233769683420758,
+   "coh_residual_with_mu_ORACLE": 0.9127807738124263,
+   "norm_frac_along_mu_mean": 0.24239781909999236,
+   "norm_frac_along_mu_median": 0.2029288162172759,
+   "norm_frac_along_muhat_mean": 0.8641686773627617,
+   "norm_frac_along_muhat_median": 0.9170065352288455,
+   "rms_delta": 1.802374499534557
+  },
+  "E3_CONSTR_MUHAT": {
+   "status": "LFO-supervised, native-free at inference",
+   "R2_vs_y": -0.039784071135054555,
+   "coh_residual_with_mu_ORACLE": 0.6719503800821306,
+   "norm_frac_along_mu_mean": 0.4615741525956886,
+   "norm_frac_along_mu_median": 0.4836444839706155,
+   "norm_frac_along_muhat_mean": 3.4170248188812827e-17,
+   "norm_frac_along_muhat_median": 2.7016921748112148e-17,
+   "rms_delta": 0.6114754238146948
+  },
+  "E3o_CONSTR_MU": {
+   "status": "ORACLE / NOT DEPLOYABLE",
+   "R2_vs_y": 0.2581329002990036,
+   "coh_residual_with_mu_ORACLE": 0.9683611329987263,
+   "norm_frac_along_mu_mean": 2.8832086588279714e-17,
+   "norm_frac_along_mu_median": 2.1350636563166144e-17,
+   "norm_frac_along_muhat_mean": 0.9333841777011013,
+   "norm_frac_along_muhat_median": 0.9548304343732719,
+   "rms_delta": 1.924172479097724
+  },
+  "ORACLE_FULL": {
+   "status": "ORACLE / NOT DEPLOYABLE",
+   "R2_vs_y": 1.0,
+   "coh_residual_with_mu_ORACLE": NaN,
+   "norm_frac_along_mu_mean": 0.7079381970818254,
+   "norm_frac_along_mu_median": 0.7773877278650074,
+   "norm_frac_along_muhat_mean": 0.598996191413538,
+   "norm_frac_along_muhat_median": 0.6113801321188496,
+   "rms_delta": 3.7041628603201766
+  },
+  "ORACLE_Y_PERP_MU": {
+   "status": "ORACLE / NOT DEPLOYABLE",
+   "R2_vs_y": 0.275348841001546,
+   "coh_residual_with_mu_ORACLE": 1.0,
+   "norm_frac_along_mu_mean": 2.886875051539385e-16,
+   "norm_frac_along_mu_median": 1.6634412692652362e-16,
+   "norm_frac_along_muhat_mean": 0.9681352611988553,
+   "norm_frac_along_muhat_median": 0.9866103718394743,
+   "rms_delta": 1.991459117690599
+  },
+  "ORACLE_Y_ALONG_MU": {
+   "status": "ORACLE / NOT DEPLOYABLE",
+   "R2_vs_y": 0.7053893937603302,
+   "coh_residual_with_mu_ORACLE": 0.0044691058699803735,
+   "norm_frac_along_mu_mean": 1.0,
+   "norm_frac_along_mu_median": 1.0,
+   "norm_frac_along_muhat_mean": 0.19527457725395786,
+   "norm_frac_along_muhat_median": 0.16309383796358073,
+   "rms_delta": 3.123285622280219
+  },
+  "ORACLE_Y_PERP_MUHAT": {
+   "status": "ORACLE / NOT DEPLOYABLE",
+   "R2_vs_y": 0.6947584978950645,
+   "coh_residual_with_mu_ORACLE": -0.027725254630756344,
+   "norm_frac_along_mu_mean": 0.9681352611988554,
+   "norm_frac_along_mu_median": 0.9866103718394743,
+   "norm_frac_along_muhat_mean": 1.6755916596379523e-16,
+   "norm_frac_along_muhat_median": 8.251822979561879e-17,
+   "rms_delta": 3.100291108624716
+  },
+  "CTRL_SHRINK_ORACLE_Y": {
+   "status": "ORACLE / NOT DEPLOYABLE",
+   "R2_vs_y": 0.6926674007834253,
+   "coh_residual_with_mu_ORACLE": 0.6930959406368322,
+   "norm_frac_along_mu_mean": 0.7079381970818254,
+   "norm_frac_along_mu_median": 0.7773877278650072,
+   "norm_frac_along_muhat_mean": 0.5989961914135379,
+   "norm_frac_along_muhat_median": 0.6113801321188495,
+   "rms_delta": 1.991459117690599
+  },
+  "ORACLE_Y_PERP_1MU": {
+   "status": "ORACLE / NOT DEPLOYABLE",
+   "R2_vs_y": 0.24116754259917972,
+   "coh_residual_with_mu_ORACLE": 0.9841269841269841,
+   "norm_frac_along_mu_mean": 3.4489030003792016e-16,
+   "norm_frac_along_mu_median": 2.0426538639210576e-16,
+   "norm_frac_along_muhat_mean": 0.9194190361483762,
+   "norm_frac_along_muhat_median": 0.9307030814793682,
+   "rms_delta": 1.8723719862194248
+  }
+ },
+ "coh_UNCORRECTED_reproduced": 0.6930959406368322
+}
