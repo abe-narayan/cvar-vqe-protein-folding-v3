@@ -458,3 +458,72 @@ clash-dominated**: median per-target pool median **29,668 kcal/mol**, p90 **6.83
 per-target max **1.80e16**, and **58.6% of every 500-pool above 1e4 kcal/mol**. **(b) prices
 unminimised AMBER, not AMBER.** Rungs D2-R (relaxed energies in band) and D3-M (physics as mover)
 are running and settle it.
+
+## S32-L7 -- **"IN-BAND SKILL IS ZERO" HAS BEEN READ WRONG FOR FOUR SPRINTS. THE ORDERING INFORMATION IS PRESENT ON EVERY SCORER; WHAT IS MISSING IS THE PER-TARGET SIGN** (2026-09-21 08:47, lane D)
+
+Prereg `34973b1b`. Basis: **in-band Spearman ρ against true CA-RMSD inside each target's shipped
+top-75 band**, per target, aggregated over n = 126. **Not a chain RMSD** — a diagnostic.
+
+```
+                in band       xMDE    W/L
+AMBER           +0.0000       0.00x   62/64     <- EXACTLY zero
+DIS             +0.0652       0.83x             (reproduces S31 section 9's 0.83x)
+LEG_total       +0.0376       0.42x
+LEG_torsion     +0.0444       0.65x             (reproduces S31 section 9's 0.65x)
+```
+
+**And then the control that changes what the zero means** — a matched **within-band label-permutation
+null**, 24 draws per target:
+
+```
+scorer        mean|rho|    null     ratio    xMDE    folds
+AMBER           0.1779    0.0948    1.88     2.36    5/5
+DIS             0.2496    0.0939    2.66     3.05    5/5
+LEG_total       0.2819    0.0908    3.10     3.52    5/5
+LEG_torsion     0.2142    0.0947    2.26     2.77    5/5
+```
+
+> ### `Var(ρ) > 0` with `E[ρ] = 0`. In-band ordering content EXISTS on every scorer — including the one with exactly zero mean skill — and what is missing is the per-target SIGN.
+
+**This is a different problem from the one the project has been trying to solve.** "In-band skill is
+zero" has been read as *the information is absent*; it means *the information is present and
+unoriented*. It also confirms, by direct measurement on the shipped instrument, an inference
+on record from an earlier sprint: *"in-band ordering is learnable but per-target, and the only
+leverage supplies the per-target SIGN at inference."*
+
+**D1-S closes the obvious route to the sign.** It is **not shared between independent Hamiltonians**:
+AMBER and Legacy agree on **36.5%** of targets — *anti*-agreement at **z = −3.0**. The mechanism is
+compactness: Legacy's in-band sign agrees with plain Rg on **68.3%** (z = +4.1) while AMBER's agrees
+on **31.7%** (z = −4.1). Orienting AMBER by Legacy's sign is **−0.0508, 0.92× MDE — the wrong way.**
+
+**D0-X, and this is the mechanism that matters for the rest of the sprint.** The chiral CA
+pseudo-torsion has **real global skill (+0.3302, 2.85× MDE, 5/5)** that is **lost in band (+0.0607,
+0.58×, NOT MEASURED)**. The lane's registered `<15%` in-band-variance-share prediction **FAILED at
+23.6%** — recorded as a fired falsifier. But the finding underneath it is:
+
+> **the top-75 filter removes 79% of the pool's chiral variance (sd 0.3774 → 0.1678)** — the
+> mechanism behind two sprints' *"chiral channels are empty at 9–16 residues"* scope note. **They are
+> not empty; they are filtered out before the readout sees them.**
+
+**Caveat measured rather than asserted:** the cached AMBER energies are **unminimised single points**
+on the ideal-geometry rebuild and are clash-dominated — median **29,668 kcal/mol**, p90 **6.83e6**,
+**58.6% of every 500-pool above 1e4**. **D-1 prices UNMINIMISED AMBER only.** Rung D2-R settles it.
+
+### The cross-lane proposal this generates — NOT YET ESTABLISHED, and it carries rule 7
+
+Lane D's *"the top-75 filter removes 79% of the chiral variance"* and lane V's *"the score prefix
+concentrates on the mode and buys nothing in the good tail — spread halved, 5th percentile
+unchanged, and it is worse than random at retaining the best member"* **may be the same event seen
+from two sides**: the filter discarding exactly the variance that carries signal. By S32-L2 the
+readout **rewards** spread, so the filter would be destroying the chiral signal, the term the readout
+wants, and the best member simultaneously.
+
+**The arm:** apply the chiral observable at the **500 → 128** stage, where the chiral variance still
+exists, rather than in band where 79% of it is gone. Native-free, deployable, leave-fold-out.
+
+**Neither half has been re-derived by one person in one script, so this is a hypothesis and is
+labelled as one.** If lane D's 79% and lane V's spread-halving turn out to be the *same variance
+measured twice* rather than two facts, the synthesis is circular. **Every cross-lane synthesis in
+S31 failed, four for four**; this one is written down as unaudited on purpose.
+
+---
