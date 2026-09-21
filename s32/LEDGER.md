@@ -1460,3 +1460,111 @@ in my arm.
   floor, from a different construction.
 
 ---
+
+## S32-L(P1) -- **EVERY FILTER IN THIS PIPELINE IS A SET-MEAN DEVICE, NOT A BEST-MEMBER DEVICE -- SO THE "FILTER LOSS" IS A LOSS ON AN AXIS PRODUCTION NEVER CONSUMES** (2026-09-21 11:22, lane P; recorded by the coordinator because the lane closed without a ledger entry)
+
+Prereg `33dfe0d3`, committed before the first number. 38 comparisons in `s32/MULTIPLICITY.md`, eight
+scripts, eight artefacts. **This entry is the coordinator's transcription of lane P's handback; the
+lane's own artefacts are authoritative.**
+
+### The six-way decomposition, each stage idealised ALONE (CA cloud unless marked)
+
+```
+cell                                              effect vs production   stats
+WITHIN-POOL RANKING, ORACLE top-75 -> the deployed average   -1.0853    4.26x MDE, 125W/1L, 5/5
+   ... at the ORACLE-global m = 5                            -1.5670    5.17x,     126W/0L, 5/5
+READOUT, ORACLE convex over the SAME 75                      -1.0508
+BOTH (ORACLE convex over K=500)                              -1.9316
+POOL QUALITY / generation (universe best vs pool best)       +0.3974 on the BEST axis
+   of which pure ORDER STATISTIC                             +0.4691
+   BLOSUM's own skill                                        -0.0718 at 0.89x -- NOT MEASURED
+RECONSTRUCTION                                     +0.1643 -> +0.1989 as dispersion rises
+```
+
+**The cell nobody had:** the S29 ladder's *best single member* changes the ranker **and** the readout
+at once and reports a structure production never emits. **Idealising only the ranker and leaving the
+readout shipped gives −1.09 Å.** And the ORACLE prefix curve is **non-monotone** — `m=1` gives 1.7108,
+`m=5` gives **1.4813** — so *averaging the five best beats naming the single best by 0.23 Å.* **Error
+cancellation, a second independent instance.**
+
+**The lane's registered prediction partly failed and it reported it:** READOUT was predicted to be the
+largest cell. **It and RANKING are tied** (−1.05 vs −1.09). Rule 17's burden is discharged in
+selection's favour — *with the caveat that ranking and readout are the same requirement (S32-L5).*
+
+### The filter, priced at matched K — the finding
+
+Two code facts first: the 500→128 cut is the **distogram Bayes-risk score** (`core/pipeline.py:755-760`),
+not BLOSUM; and **the 128 window does not exist on the deployable path** (`want = max(m, 128 if quantum
+else 0)`, and production is `quantum=False`), where the filter is **500→75**. 200 random draws per rung:
+
+```
+rung             filter    BEST axis                              MEAN axis
+universe->500    BLOSUM    -0.0718  0.89x  NOT MEASURED           -0.3617  4.00x MDE  5/5
+500->128         score     +0.1853                                -0.8687  4.30x
+128->75          score     +0.0684  0.98x  NOT MEASURED           -0.0349  0.71x  NOT MEASURED
+500->75 (DEPLOYABLE) score +0.2260                                -0.9030  4.01x  5/5  110W/16L
+```
+
+> ### Every filter in the pipeline buys the set MEAN at ≥ 4× MDE and buys nothing on the BEST axis. **It is not throwing away reachable quality — through a uniform average the set mean IS what is reachable. It is throwing away UNREACHABLE quality, and doing so is how it lowers the set mean.**
+
+### The operator law, RE-MEASURED rather than quoted — and the lane's prediction failed
+
+**BUILT CHAIN**, 17 arms: `out = −0.9934 + 0.9219·set_mean + 0.3232·set_best`, **ratio 2.85, R² 0.9162.**
+The lane registered ≥ 5×. **S18's `1.16 / 0.04` (ratio 29) does not hold under a gate that orders
+candidates — the set BEST does reach the output, about a third as hard as the set mean.** Out-of-sample,
+registered before the chain rows were read: `R128` predicted **+0.144**, measured **+0.1369** — HIT;
+`R75` predicted +0.524, measured +0.3740 — **MISS by 0.150.** *The law is a local linearisation: it
+transfers for a mild gate change and over-predicts a large one.*
+
+### The wall, sharpened in both directions
+
+With `c` the pool centroid, `μ = c − t`, `d_k = x_k − c`:
+`a_k = |μ|² + 2⟨μ, d_k⟩ + |d_k|²` — exact to **4.5e-13 on 126/126**. The middle term is **unobservable**;
+the last is a **pool statistic**.
+
+- **`Var(U)/Var(V)` median 2.62** over the 128, **4.89 on the score's own top-24**. *The filter squeezes
+  the observable component's variance out and leaves the unobservable one.*
+- **`μ` is recovered from `{a_k, d_k}` by least squares at relative residual 2e-14 on 126/126**
+  (shuffled-`d` control **0.373**, `cos = 1.0000`), and `μ` lies **entirely** in `span(d)` on 126/126.
+  **`rank(d) = 3n − 6` EXACTLY on 126/126** — superposing members *and* native on the medoid removes
+  3 translations and 3 rotations, so the deviation space **is** the internal-coordinate space and 128
+  fragments span it fully. ***No rank deficiency, so no low-dimensional compression of the requirement
+  hides in the pool's geometry.***
+- **Removing `μ` flips consensus's in-band ρ from −0.2745 ± 0.0366 to +0.7046 ± 0.0096.** The negative
+  sign is caused by `μ` and by nothing else.
+- **A registered prediction failed informatively:** the negative sign was predicted to be a *collider*
+  artefact of the ORACLE band. The shuffled-`U` control gives **+0.1387** — *the collider alone produces
+  the WRONG sign*, so the negative needs the real `U–V` dependence.
+- **Seven native-free direction estimates all have `cos(μ̂, μ)` indistinguishable from zero** (best
+  +0.0568 ± 0.0434); the crossing point is `cos* = 0.2137`. **The distogram gradient — the pipeline's
+  only external structural channel, read as a correction direction — is −0.0140 ± 0.0095.**
+
+**And the answer to "is positive in-band skill obtainable" is *yes, and it is worthless*, which is
+stronger than no.** On the band a deployed selector actually ranges over, consensus has **ρ = +0.2531**
+(128) and **+0.2829** (top-75), positive on ~73% of targets. **But it is typicality, and the
+medoid-superposed average sits at `V = 0` — the deployed operator is already its argmin.**
+
+### The PC1 / sign route, opened and closed inside the lane
+
+`cos²(μ, PC1) = 0.2277` against a measured same-space null of 0.0316 — **7.21×**, which looked like the
+first structural handle on `μ`. **Two controls killed it.** *Placebo*: a **mismatched same-length
+deposited native** reproduces `cos² = 0.2024`, **87.1% of the excess** — the alignment is "the pool
+centroid versus *any* plausible compact chain", not versus this target's native. *Price*: one
+**perfect** bit with one global leave-fold-out step is worth **+0.1835 Å**, and the best of nine
+native-free sign rules delivers **+0.0032 Å — 1.7% of it**, because 58–60% accuracy cancels against
+`|cos| = 0.394`. ***The headline-looking +0.4589 Å needs the sign AND a per-target step: one bit plus
+one real, not one bit.***
+
+### Data integrity, and a contract number that needs widening
+
+Two launchers raced on shards 1 and 2. **The coordinator killed the surplus `jobrun` wrappers; the
+lane found and killed their orphaned WORKERS — killing a wrapper does not kill its child.** No figure
+was ever computed over the 150 rows: the loader dedupes by pdb, asserts **126 rows AND 126 distinct
+pdbs**, and checks every duplicate pair for differing content (**0 conflicting over all 150 lines**).
+Re-run after deduplication: **identical to four decimals.**
+
+**And the per-target built-chain reproduction floor is wider than contract rule 3 states:** this lane
+reproduces `s29_O_chain_rows` at mean |Δ| 0.0123 and p90 0.0260 — inside the floor — but **max 0.5174
+on 2LNG, against the contract's recorded 0.2285 max.**
+
+---
