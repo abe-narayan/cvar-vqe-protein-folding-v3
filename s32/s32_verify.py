@@ -374,6 +374,47 @@ if not selftest_only:
                                               dig(up, "per_target_abs_delta", "max") or 0),
              "rule 3's floor: 0.0134 / 0.0329 / 0.2285")
 
+    # -------------------------- lane V: the adversarial audit of lane R's branch arms
+    print()
+    print("--- lane V: lane R's branch arms, attacked (s32_V_R_adversary.json) ---")
+    ra = load("s32/results/s32_V_R_adversary.json")
+    if ra:
+        show("  n targets / production chain IN LANE R'S JOB",
+             "%s / %.4f" % (dig(ra, "n"), dig(ra, "prod_mean") or 0),
+             "a subset mean while R runs; NOT 3.2105")
+        ob = dig(ra, "oracle_best_branch") or {}
+        show("  ORACLE best branch [NOT DEPLOYABLE]",
+             "%.4f (%+.4f vs prod)" % (ob.get("mean", 0), ob.get("gain_vs_prod", 0)), "")
+        sh = dig(ra, "oracle_best_branch", "best_of_k_within") or {}
+        show("  ... SPLIT-HALF TRANSFER of that oracle",
+             "%+.4f = %.0f%%" % (sh.get("split_half", 0), 100 * (sh.get("split_half_frac") or 0)),
+             "the number to quote for a best-of-K arm")
+        rc = dig(ra, "random_branch_control") or {}
+        show("  zero-information control (random branch)",
+             "%.4f +- %.4f" % (rc.get("draw_mean", 0), rc.get("draw_sd", 0)),
+             "%+.4f vs production" % rc.get("vs_prod", 0))
+        cs = dig(ra, "criterion_search") or {}
+        show("  ORACLE per-target best criterion", "%+.4f" % cs.get("oracle_per_target_best_criterion", 0),
+             "an order statistic over %s criteria" % cs.get("n_criteria"))
+        show("  best SINGLE arm", "%s %+.4f" % (str(cs.get("best_single_arm")).split("|")[-1],
+                                                cs.get("best_single_effect", 0)), "")
+        show("  THE SEARCH ACCOUNTED (baseline = production)",
+             "%+.4f" % cs.get("out_of_sample_transfer_vs_production", 0),
+             "CI %s over %s comparisons" % (cs.get("ci95"), cs.get("n_comparisons")))
+        inv = dig(ra, "criterion_search_INVALID_criterion_mean_baseline") or {}
+        if inv:
+            show("  ... and the INVALID criterion-mean baseline, kept labelled",
+                 "%+.4f" % inv.get("transfer", 0), "never quoted; rule-6 trap, reproduced")
+        #: the family must contain at least one arm that DOES clear, or the null rows are not a
+        #: measurement -- typicality is that positive control.
+        arms = dig(ra, "arms") or {}
+        clears = [k for k, v in arms.items()
+                  if abs(dig(v, "compare", "effect_over_mde") or 0) >= 1.0]
+        ok = bool(clears)
+        (OK if ok else BAD).append(("the criterion family contains a positive control that clears MDE",
+                                    ">=1 arm", clears[:3]))
+        print("%-56s %s" % ("  positive control: arms clearing 1.0x MDE", clears[:3] or "*** NONE ***"))
+
     # ------------------------------------ lane V: is lane R's cos_align independent evidence?
     print()
     print("--- lane V: lane R's cos_align -- identity check (s32_V_cos_identity.json) ---")
@@ -524,6 +565,115 @@ if not selftest_only:
     print("  %d document line(s) still asserting lambda=0 for the deployed rung" % n7)
 
 
+# ====== AUDIT 10: no document may cite an artefact that declares itself INCOMPLETE (rule: a
+# partial table must not look finished).  Project memory, "check the job, not just the file":
+# missing, unfinished and crashed look identical to `ls`, and S29 declared a COMPLETED 126-row
+# result unresolved on a mid-write read.  The inverse is worse -- quoting a partial one as final.
+_PATHS_IN = re.compile(r"`([A-Za-z0-9_./\{},*-]+\.(?:json|jsonl|npz))`")
+
+
+def completeness_audit(docs=DOCS, quiet=False):
+    partial = {}
+    for f in sorted(glob.glob(os.path.join("s32", "results", "*.json"))):
+        try:
+            d = json.load(io.open(f, encoding="utf-8"))
+        except Exception:                                            # noqa: BLE001
+            continue
+        if not isinstance(d, dict):
+            continue
+        bad = None
+        if d.get("INCOMPLETE") is True:
+            bad = "INCOMPLETE: true"
+        elif d.get("complete") is False:
+            bad = "complete: false"
+        elif isinstance(d.get("n"), int) and 0 < d["n"] < 126 and "n_expected" not in d:
+            #: only flag an n<126 file if it ALSO carries a 126-shaped sibling key, so partial
+            #: smoke tests and genuinely small-n arms are not reported as defects
+            if any(isinstance(v, int) and v == 126 for v in d.values()):
+                bad = "n = %d with a 126 elsewhere in the same file" % d["n"]
+        if bad:
+            partial[f.replace("\\", "/")] = (bad, d.get("n"))
+    cited = {}
+    for src in docs:
+        if not os.path.exists(src):
+            continue
+        raw = io.open(src, encoding="utf-8").read().splitlines()
+        for ln0, line in enumerate(raw):
+            for tok in _PATHS_IN.findall(line):
+                q = tok.replace("\\", "/")
+                if q in partial and not re.search(r"partial|incomplete|in flight|running|pending",
+                                                  line, re.I):
+                    cited.setdefault(q, []).append((src, ln0 + 1))
+    if not quiet:
+        for q, (why, n) in sorted(partial.items()):
+            print("  partial  %-46s %s" % (os.path.basename(q), why))
+        for q, where in sorted(cited.items()):
+            FLAG.append(("cited as final but the artefact declares %s" % partial[q][0], q))
+            print("  FLAG  %s is %s but is cited without qualification at %s"
+                  % (os.path.basename(q), partial[q][0],
+                     ", ".join("%s:%d" % w for w in where[:3])))
+        print("  %d partial artefact(s) on disk; %d cited by a document without saying so"
+              % (len(partial), len(cited)))
+    return partial, cited
+
+
+if not selftest_only:
+    print()
+    print("--- AUDIT 10: artefacts that declare themselves INCOMPLETE, and who cites them ---")
+    completeness_audit()
+
+
+# =========== AUDIT 9: a ladder's increments must CLOSE, on ONE basis (S32-V, the basis-mix class)
+# A rung written `+0.4350 -> 2.1435` under a value of 1.7078 does not close: the chain increment
+# is +0.4357 and +0.4350 is the MEMBER-basis one.  Mixing a member/cloud increment into a
+# built-chain ladder is the S31 defect shape exactly (a number crossing a basis boundary), and
+# it is invisible to a reader because both numbers are "right" somewhere.  This re-does the
+# arithmetic of every ladder block in every S32 document.
+LADDER_VAL = re.compile(r"^\s*(?!\+)(?P<lab>\S.*?)\s{2,}(?P<val>\d\.\d{3,5})\s*(?:\S.*)?$")
+LADDER_INC = re.compile(r"^\s*\+\s*(?P<lab>.*?)\s{2,}(?P<inc>[-+]\d\.\d{3,5})\s*->\s*"
+                        r"(?P<val>\d\.\d{3,5})")
+
+
+def ladder_audit(docs=DOCS, quiet=False, tol=1.5e-4):
+    bad = []
+    for src in docs:
+        if not os.path.exists(src):
+            continue
+        raw = io.open(src, encoding="utf-8").read().splitlines()
+        infence, prev, prevln = False, None, None
+        for ln0, line in enumerate(raw):
+            if line.strip().startswith("```"):
+                infence = not infence
+                prev = None
+                continue
+            if not infence:
+                continue
+            mi = LADDER_INC.match(line)
+            if mi and prev is not None:
+                inc, val = float(mi.group("inc")), float(mi.group("val"))
+                if abs(prev + inc - val) > tol:
+                    bad.append((src, ln0 + 1, prev, inc, val, prev + inc, line.strip()[:76]))
+                prev = val
+                continue
+            mv = LADDER_VAL.match(line)
+            if mv:
+                prev = float(mv.group("val"))
+    if not quiet:
+        for src, ln, p0, inc, val, got, txt in bad:
+            FLAG.append(("ladder does not close: %.4f %+0.4f = %.4f, written %.4f (basis mix?)"
+                         % (p0, inc, got, val), "%s:%d" % (src, ln)))
+            print("  FLAG %s:%d  %.4f %+0.4f = %.4f but the row says %.4f   |   %s"
+                  % (src, ln, p0, inc, got, val, txt))
+        print("  %d ladder rung(s) whose arithmetic does not close to %.0e" % (len(bad), tol))
+    return bad
+
+
+if not selftest_only:
+    print()
+    print("--- AUDIT 9: every ladder block's increments must close on ONE basis ---")
+    ladder_audit()
+
+
 # ================================================ EVERY PATH ANY S32 DOCUMENT NAMES
 if not selftest_only:
     print()
@@ -576,10 +726,23 @@ def path_audit(docs=DOCS, quiet=False):
             BAD.append(("path claimed but ABSENT: %s" % p, "exists", "*** MISSING ***"))
             if not quiet:
                 print("  *** MISSING *** %-56s  named in %s" % (p, ", ".join(sorted(srcs))))
+    #: COVERAGE GUARD.  A regex narrowed by accident silently halves this audit's scope and the
+    #: only visible symptom is a smaller MATCHED count.  That happened once here (a global
+    #: replace swapped this regex for a json-only one and the path count fell 71 -> 35).  The
+    #: audit now asserts it still sees every extension class it is supposed to.
     if not quiet:
+        ext = {}
+        for q in seen:
+            ext[q.rsplit(".", 1)[-1]] = ext.get(q.rsplit(".", 1)[-1], 0) + 1
         print("  %d distinct paths named across %d S32 documents; %d exist, %d pending, %d MISSING"
               % (len(seen), sum(os.path.exists(d) for d in docs),
                  len(seen) - len(missing) - len(pending), len(pending), len(missing)))
+        print("     by extension: %s" % dict(sorted(ext.items())))
+        for need in ("py", "json", "md"):
+            good = ext.get(need, 0) > 0
+            (OK if good else BAD).append(("path audit still covers *.%s" % need, ">0", ext.get(need, 0)))
+            if not good:
+                print("     *** COVERAGE REGRESSION: no *.%s path seen -- the regex narrowed ***" % need)
     return seen, missing
 
 
@@ -727,7 +890,7 @@ if _sj:
 #: opposite-signed strata visible in the first place.
 STRATA_WORDS = ("fail18", "stratum", "strata", "the 108", "other 108", "outcome-defined",
                 "circular", "not a result on", "median", "med ", "see d3", "retracted")
-CONTEXT = 4          # non-blank lines either side: a claim qualified in its own block is fine
+CONTEXT = 8          # non-blank lines either side: a claim qualified in its own block is fine
 
 
 def strata_audit(docs=DOCS, quiet=False):
@@ -975,6 +1138,29 @@ for _g, _fs in sorted(_groups.items()):
                      % (_rows, _d, _rk or "none"), _g))
         _n8 += 1
 print("  %d result GROUP(s) with duplicated targets and no repeat key" % _n8)
+
+
+# ST8 -- AUDIT 9 must catch the real basis mix (a member-basis +0.4350 inside a built-chain
+# ladder) and must NOT fire on the same ladder written consistently on the chain basis.
+_tmp4 = os.path.join("s32", "results", "_s32_verify_selftest_doc4.md")
+_FENCE = "```"
+io.open(_tmp4, "w", encoding="utf-8").write("\n".join([
+    _FENCE,
+    "best single member, K=500                        1.7078",
+    "  + distogram SCORE prefix, 500 -> 128          +0.4350   ->   2.1435",
+    _FENCE, "",
+    _FENCE,
+    "best single member, K=500                        1.7078",
+    "  + distogram SCORE prefix, 500 -> 128          +0.4357   ->   2.1435",
+    _FENCE, ""]))
+try:
+    _l = ladder_audit([_tmp4], quiet=True)
+    st("ST8a  a member-basis increment in a chain ladder is CAUGHT", len(_l) == 1,
+       "1.7078 +0.4350 = 2.1428, row says 2.1435" if _l else "")
+    st("ST8b  the same ladder written on ONE basis is CLEAN", len(_l) == 1,
+       "(2 rungs, 1 flagged)")
+finally:
+    os.remove(_tmp4)
 
 
 ST_FAIL = [n for n, ok in ST if not ok]

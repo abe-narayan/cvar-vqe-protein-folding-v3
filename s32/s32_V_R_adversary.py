@@ -183,7 +183,8 @@ def main():
                 continue
             c = ST.compare(v, prod, folds, names=pdbs,
                            label="branch argmin(%s), %s vs production (BUILT CHAIN)" % (k, lab))
-            out["arms"]["%s|%s" % (sub, k)] = dict(compare=c, mean_tied=float(np.mean(nt)), subset=lab)
+            out["arms"]["%s|%s" % (sub, k)] = dict(compare=c, mean_tied=float(np.mean(nt)),
+                                                     subset=lab, per_target=v.tolist())
             gate = ("RESULT" if abs(c["effect_over_mde"]) >= 1.0 and c["folds_same_sign"] >= 4
                     and max(c["ci95_fold"]) * min(c["ci95_fold"]) > 0
                     else "NOT MEASURED" if abs(c["effect_over_mde"]) >= 0.7 else "not a result")
@@ -193,19 +194,64 @@ def main():
                      "" if np.mean(nt) < 1.05 else "  (mean %.1f tied)" % np.mean(nt)))
         print("     --- %s above ---" % lab)
 
-    # split-half transfer for the best deployable criterion, treating criteria as the K grid
-    names = [k for k in out["arms"] if k.startswith("ALL|")]
+    # ---- 4. THE SEARCH ITSELF, accounted.  Choosing the best of 32 comparisons is a best-of-K
+    #         over criteria, so it gets the same treatment the ORACLE branch arm got: pick the
+    #         criterion on a random half of the TARGETS, score it on the other half, both
+    #         directions, 400 repeats.  If the winning criterion is noise the transfer is ~0 and
+    #         no separate null is needed.
+    names = sorted(k for k in out["arms"] if k.startswith("ALL|"))
     if names:
-        G = np.array([[out["arms"][k]["compare"]["mean_a"] for k in names]])  # placeholder shape
         best = min(names, key=lambda k: out["arms"][k]["compare"]["effect"])
         out["best_deployable_arm"] = best
-        print()
-        print("  4/5. best deployable arm over %d criteria x 2 subsets = %d comparisons: %s"
-              % (len(keys), 2 * len(keys), best))
-        print("       THE SEARCH ITSELF IS A MULTIPLICITY COST -- the best of %d comparisons needs "
-              "the search accounted (charter 45).  Its nominal MDE is not its achieved MDE."
-              % (2 * len(keys)))
         out["n_comparisons_emitted"] = 2 * len(keys)
+        M2 = np.column_stack([np.array(out["arms"][k]["per_target"], float) for k in names])
+        E = M2 - prod[:, None]                     # effect vs PRODUCTION, per target per criterion
+
+        #: THE TRAP, REPRODUCED SO IT CANNOT BE RE-INVENTED (the same treatment
+        #: `stats_lib.best_of_k_within` gives the s25/temper.py null).  The first version of this
+        #: block called `ST.split_half_transfer(E)` and reported transfer -0.0254, CI
+        #: [-0.0356, -0.0153], "22% of the oracle" -- a tight CI excluding zero and nearly 3x the
+        #: best single arm.  It is an artefact: `split_half_transfer` centres on `M.mean(1)`, the
+        #: mean OVER CRITERIA, and that mean includes `typicality` at +0.3434.  The number was
+        #: "the chosen criterion beats the average criterion", and nobody deploys the average of
+        #: 16 criteria.  A control matched to a different arm's magnitude is not a control.
+        INVALID = ST.split_half_transfer(E)      # kept, labelled, never quoted
+        out["criterion_search_INVALID_criterion_mean_baseline"] = INVALID
+
+        #: `stats_lib.split_half_transfer` centres on the CRITERION MEAN, not on production, so
+        #: its transfer answers "beats the average criterion by how much" -- and the average
+        #: criterion here includes `typicality` at +0.34, which is not a baseline anyone would
+        #: deploy.  A control matched to a different arm's magnitude is not a control (rule 6).
+        #: The number wanted is the effect VS PRODUCTION of the criterion chosen out of sample.
+        rngc = np.random.default_rng(3200324)
+        nrep, nn = 400, len(pdbs)
+        tr = np.empty(nrep)
+        for t in range(nrep):
+            perm = rngc.permutation(nn)
+            h1, h2 = perm[: nn // 2], perm[nn // 2:]
+            tr[t] = 0.5 * (E[h2][:, int(np.argmin(E[h1].mean(0)))].mean()
+                           + E[h1][:, int(np.argmin(E[h2].mean(0)))].mean())
+        oracle_pt = float(E.min(1).mean())                 # per-target best criterion, ORACLE
+        out["criterion_search"] = dict(
+            n_criteria=len(names), n_comparisons=2 * len(keys),
+            oracle_per_target_best_criterion=oracle_pt,
+            best_single_arm=best, best_single_effect=out["arms"][best]["compare"]["effect"],
+            out_of_sample_transfer_vs_production=float(tr.mean()),
+            ci95=[float(np.percentile(tr, 2.5)), float(np.percentile(tr, 97.5))],
+            note="baseline is PRODUCTION, not the criterion mean")
+        print()
+        print("  4. THE SEARCH, ACCOUNTED.  %d criteria x 2 subsets = %d comparisons emitted."
+              % (len(keys), 2 * len(keys)))
+        print("     best single arm: %-16s effect %+0.4f at %.2fx its own (nominal) MDE"
+              % (best.split("|")[1], out["arms"][best]["compare"]["effect"],
+                 out["arms"][best]["compare"]["effect_over_mde"]))
+        print("     ORACLE per-target best criterion (an order statistic over %d): %+0.4f"
+              % (len(names), oracle_pt))
+        print("     criterion CHOSEN on half the targets, scored on the held-out half, 400 repeats,")
+        print("       baseline = PRODUCTION: %+0.4f  [%+0.4f, %+0.4f]"
+              % (tr.mean(), np.percentile(tr, 2.5), np.percentile(tr, 97.5)))
+        print("     -> that is what survives the search; compare it to the best arm's MDE %.4f."
+              % out["arms"][best]["compare"]["mde"])
 
     with open(os.path.join(RESULTS, "s32_V_R_adversary.json"), "w") as fh:
         json.dump(out, fh, indent=1, default=lambda o: o.item() if hasattr(o, "item") else str(o))
