@@ -599,3 +599,23 @@ clue, not a limit, and per-bit the price is small.**
 | P-34 | R2/R2b/R1 BEST-axis deficits, stratified FAIL18 vs other-108 | cloud, ORACLE | REGISTERED (H-P5) | 500→128: mean +0.1853, **median −0.0371**, 72 of 126 favour the score; FAIL18 +1.4773 = **114% of the total**, other-108 −0.0300 at 0.30× — **NOT A RESULT off the circular stratum** |
 | P-35 | same for the DEPLOYABLE 500→75 filter | cloud, ORACLE | REGISTERED (H-P5) | mean +0.2260, median +0.0046, 62W/64L; FAIL18 +1.7713 = 112%, other-108 −0.0316 at 0.27× |
 | P-36 | same for universe→500 BLOSUM | cloud, ORACLE | REGISTERED (H-P5) | mean −0.0718; FAIL18 contributes **0%**, other-108 −0.0833 at 0.98× — NOT MEASURED, and a different SHAPE from the score's |
+
+### Exploratory but mechanism-motivated — D4-X: `sign(rg_pred − rg_pool)` as the bit. **Also fails, and the reason is that the feature is nearly constant.**
+
+D-20 showed `LEG_total`'s in-band sign agrees with `Rg`'s on 68.3%. That suggests a *physical*
+native-free candidate for the bit: **if the predicted structure is more compact than the pool, then
+more-compact candidates are better, so a compactness-tracking scorer should be oriented `+`.** The
+distogram supplies `rg_pred` without touching a native. One feature, one test, motivated by a
+measured mechanism — logged as exploratory. `s32/results/s32_D4X_rgsign.json`.
+
+| # | reg? | scorer | marginal | accuracy of `sign(rg_disagree)` | oriented ρ | vs its own constant control | ×MDE |
+|---|---|---|---|---|---|---|---|
+| D-64 | E | `RG` | 0.540 | 0.587 | +0.0879 | +0.0378 | 0.33 |
+| D-65 | E | `LEG_total` | 0.587 | **0.540 — below its own marginal** | +0.0410 | +0.0034 | 0.04 |
+| D-66 | E | **AMBER** | 0.508 | **0.460 — below chance** | −0.0256 | −0.0256 | 0.64 |
+
+**The mechanism for the failure, and it is the feature's own distribution:** `rg_pred − rg_pool_mean`
+is **positive on 81.0% of targets**. `sign(rg_disagree)` is therefore *nearly a constant `+1`*, and
+its apparent accuracy is its target's marginal wearing a different label. Its correlation with the
+ORACLE quantity it is meant to predict is **+0.199**. **A one-bit feature that is 81/19 cannot carry
+a 59/41 label.** Every arm is under 0.7× MDE — NOT A RESULT.
