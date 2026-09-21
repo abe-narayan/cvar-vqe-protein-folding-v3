@@ -431,3 +431,57 @@ prices *what a partial oracle buys*; it is not a method. And memory
 deviation map has a **flat learning curve** when asked to supply this sign natively — so the latent
 existing and the latent being *nativly* recoverable are different claims, and only the first is
 established here.
+
+### Registered — D2-R: the 9–16-residue reality check. **BOTH HORNS MISSED. My own hypothesis is falsified.**
+
+`s32/results/s32_D2_basin_0_1.jsonl`. 10 targets (**native-free, deterministic**: the first 2 of each
+of the 5 frozen folds in pinned pdb order), 24 candidates each from the head of the shipped top-75
+band, free AMBER relaxation (`k=0`, `steps=200`, `tol=5.0`), **97.5% converged**, 4.2 s/structure.
+
+| # | reg? | registered horn | threshold | measured | fired? |
+|---|---|---|---|---|---|
+| D-40 | R | **CONTRACTION** — the pool collapses to a common attractor | median spread ratio ≤ **0.70** | **0.972** (1/10 targets below) | **NO** |
+| D-41 | R | **FROZEN** — the trajectory carries no new bit | median per-candidate move ≤ **0.30 Å** | **0.5006 Å** | **NO** |
+
+**H-D2 is FALSIFIED and I registered it as my own expectation.** Relaxation moves each candidate
+~0.50 Å (max 1.11 Å) and leaves the band's spread essentially untouched (1.4842 Å → 1.3972 Å). *At
+9–16 residues the candidates are not in one basin, and they are not frozen.* **The scope excuse this
+lane was entitled to use is not available**, and any future negative on dynamics must name a
+different reason.
+
+### Registered — D2-E: minimisation does **not** rescue AMBER's in-band ranking. D-1's caveat is answered.
+
+n = 10 targets, 24 candidates each — **DIAGNOSTIC, no MDE verdict is claimed on this subset.**
+
+| # | reg? | AMBER energy | in-band ρ | se |
+|---|---|---|---|---|
+| D-42 | R | **single point** (as in D-1) | +0.0006 | 0.1250 |
+| D-43 | R | **converged relaxed** | **−0.0089** | 0.1062 |
+| D-44 | R | single point, `Rg` partialled | −0.0036 | 0.1179 |
+| D-45 | R | relaxed, `Rg` partialled | +0.0254 | 0.1030 |
+
+The relaxed energies are **physically well-behaved** — median −887 to −293 kcal/mol, per-target sd
+**1–9 kcal/mol on 8 of 10 targets** — so D-1's zero is **not a clash artefact**. And the per-target
+pattern is the headline again, on a completely independent computation: relaxed-energy ρ per target
+is {+0.056, +0.092, −0.090, +0.543, −0.686, +0.263, −0.125, +0.117, −0.353, +0.093}, **mean −0.0089,
+mean |ρ| 0.242.** *Zero mean, real dispersion, random sign* — reproduced on converged all-atom
+physics rather than cached single points.
+
+### The mechanism, and it is the sharpest thing in rung D2
+
+```
+energy, median over candidates      3.18e9  ->  -558 kcal/mol
+Cα motion required to get there                 0.50 Å
+mean CA-RMSD of the band to native  3.1931  ->  3.1849   (-0.0083, nothing)
+BEST member of the band             2.5358  ->  2.5741   (+0.0382, WORSE)   ORACLE / NOT DEPLOYABLE
+rank preservation rho(rr_in, rr_out)            0.9208
+closest pair in the band            0.0643  ->  0.0990 Å
+```
+
+**Nine orders of magnitude of energy are relieved by half an Ångström of Cα motion.** The clash lives
+in the **sidechains and hydrogens**, which by §0.2c are a *deterministic* function of `(seq, φ, ψ)` —
+modal rotamers and frozen local frames, identical construction for every candidate. **AMBER's entire
+dynamic range on this pool is spent on a rotamer-placement artefact that carries no candidate
+information, and the 0.5 Å of Cα motion it buys leaves the band's quality unchanged (−0.008 Å) and
+its best member slightly worse (+0.038 Å).** That is *why* the force field cannot rank here, stated
+as a mechanism rather than as a null.
