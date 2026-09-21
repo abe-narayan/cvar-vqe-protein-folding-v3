@@ -774,3 +774,156 @@ obvious route — **AMBER and Legacy anti-agree on that bit (36.5%, z = −3.0)*
 cannot be recovered by consensus between Hamiltonians.
 
 ---
+
+---
+
+## S32-L(Q1) -- **THE SPARSE READOUT IS CLOSED BY MONOTONICITY, NOT BY A MEASUREMENT: THE HARD INSTANCES ARE EXACTLY THE ONES WHOSE OPTIMUM IS WORSE** (2026-09-21 09:14, lane Q)
+
+Artefacts: `s32/s32_Q1_sufficiency.py`, `s32/results/s32_Q1_sufficiency.json`, `s32_Q1_rows.jsonl`;
+verified by `s32/s32_Q_verify.py` (22 checks, all pass, with a self-test that fails on corrupted
+rows). Prereg `s32/PREREG_S32_Q.md` @ `a8f9d6a7`.
+
+**Sparse `s`-of-`K` was the last formulation standing after S31's three obstructions** — it escapes
+them cleanly, and that is worth recording before it dies: a bitstring labels a **subset**, so
+`E(x) = min over supp(w) ⊆ x of ||U'w - t||^2` is **diagonal in the subset basis** (obstruction 1
+survived); `<E>` is **linear in p** because the continuous weights are solved classically *inside*
+`E(x)` rather than being the state's own probabilities (obstruction 2 survived); and the register's
+Hilbert dimension is `2^K`, not `K` (obstruction 3 survived). **All three of S31 §5.2's obstructions
+are properties of the CANDIDATE-INDEX REGISTER, not of CVaR-VQE.**
+
+**It is then closed one level down, and by monotonicity rather than by an arm.** Let
+`f*(s) = min{ ||U'w - t||^2 : w in the simplex, |supp(w)| <= s }`. `f*` is non-increasing in `s` and
+**constant for `s >= s*`**, where `s*` is the support the *unconstrained* convex optimum chooses for
+itself. So the problem splits exactly two ways:
+
+* **`s >= s*`** — the constraint is **slack**, the unconstrained minimiser is feasible and therefore
+  exactly optimal, and the problem **is the convex program**: milliseconds, with a KKT certificate.
+* **`s < s*`** — the problem is genuinely combinatorial **and `f*(s) > f*(s*)`: strictly worse.**
+
+> **The hard instances are exactly the ones whose optimum is worse. A quantum solver could only
+> ever be needed to compute an answer a convex program already beats.**
+
+**Measured `s*` over the full K = 500 pool**, deployed common frame, KKT certificate **2.0e-12**,
+`|sum w - 1| <= 9.3e-15`, **ORACLE / NOT DEPLOYABLE**, **CA point cloud**:
+
+```
+s*    mean 10.06   median 10   min 3   p90 13   max 23
+      fraction s* <= 10   61.1%        fraction s* <= 20   98.4%
+emitted value of the UNCONSTRAINED convex optimum, K=500   1.1535 +/- 0.0669   (CA cloud)
+```
+
+**That 1.1535 is deliberately NOT differenced against S32-L1's ORACLE `s = 10` figure of 1.1139
+built chain.** Different basis (cloud vs chain), different frame convention, different solver — and
+contract rules 4 and 7 say a cross-sprint number is re-derived in one script before it is
+differenced. **The closure does not need the comparison**, which is the point of stating it as
+monotonicity.
+
+**And a defect, recorded because the certificate is what caught it.** The first solver was a
+4000-iteration FISTA with a drop-only active-set polish. It **passed a 3-target smoke** and then
+**failed its own KKT certificate on the full instrument** — residual **1.26** at K = 128 and
+**10.85** at K = 500 — because a drop-only polish never adds a violated index back, so a support
+FISTA got wrong stays wrong. Every sensitivity number from that run was invalid and none was
+reported. The shipped solver is Lawson–Hanson NNLS on the sum-to-one-augmented system. *The smoke
+did not catch it; the certificate did, and the certificate existed only because it was written as a
+returned value rather than as an assertion nobody reads.*
+
+---
+
+## S32-L(Q2) -- **THE HULL IS A SHRINKAGE. PROJECTING A NOISY STRUCTURE ESTIMATE ONTO THE CANDIDATE HULL LOOKS LIKE A 0.6 A WIN AND IS WORSE THAN ITS OWN NORM-MATCHED SHRINKAGE WHEREVER THE ESTIMATE IS ANY GOOD** (2026-09-21 09:14, lane Q)
+
+Artefacts: `s32/s32_Q2_shrinkctrl.py`, `s32/results/s32_Q2_shrinkctrl.json`, `..._rows.jsonl`.
+n = 126, **8 draws** per target per level, draw sd recorded per target, **ORACLE / NOT DEPLOYABLE**,
+**CA POINT CLOUD** (a diagnostic; nothing here is differenced against 3.2105).
+
+**The observation that had to be killed.** By S32-L5's consequence (2) the convex readout beats
+emitting an estimate directly once the estimate's error exceeds the hull radius. Measured, it looks
+large: an estimate with **2.75 A** of isotropic error emits at **2.10 A**, and one with **3.65 A**
+emits at **2.23 A** — both better than production's 3.0483 CA cloud.
+
+**The control matched to the operator's own space** (contract rule 6): projection onto a *bounded*
+convex set **is a shrinkage**, so the comparator is a shrinkage toward the pool mean matched to
+**the projection's own displacement** — not to any other arm's norm, which is the exact trap S31
+recorded in its §20.1 box.
+
+```
+eps     DIRECT     PROJ     SPAN   SHRINK      PROJ-SHRINK  (the control)
+0.5     0.4582   1.8466   0.4515   1.4766      +0.370  4.71x   WORSE
+1.0     0.9179   1.8853   0.9027   1.6204      +0.265  3.17x   WORSE
+1.5     1.3756   1.9356   1.3550   1.7658      +0.170  1.96x   WORSE
+2.0     1.8276   1.9895   1.8007   1.9125      +0.077  0.89x   NOT MEASURED
+2.5     2.2925   2.0497   2.2577   2.0502      -0.001  0.01x   NOT MEASURED
+3.0     2.7462   2.1012   2.7056   2.1676      -0.066  0.77x   NOT MEASURED
+4.0     3.6521   2.2291   3.5993   2.3663      -0.137  1.59x   better, 86W/40L
+```
+
+**The control fired.** Against its own norm-matched shrinkage the hull is **WORSE** wherever the
+estimate is any good, NOT MEASURED in the middle, and clears MDE only at eps = 4.0 — where the
+**median is -0.074 against a mean of -0.137**, a mean/median ratio of **1.85**, which is the free
+early-warning sign of a concentrated effect rather than a broad one.
+
+**Two structural reasons it is not a lead, neither visible in the Angstroms alone.**
+
+1. **`SPAN` tracks `DIRECT` at every level** (3.6521 -> 3.5993 at eps = 4). The candidates' affine
+   span removes almost none of an isotropic error, because **the span already contains the native**
+   (`||t - P_aff t|| = 1.5e-14` on 126/126). So the entire effect is the hull's **boundedness** —
+   i.e. shrinkage — which is exactly what the control says.
+2. **The isotropic error model is the most favourable geometry available, not a neutral one.** A
+   real predictor's error is not isotropic about the native; this project has measured the pool's
+   error as **68% common-mode**, concentrated in exactly the directions a hull built from that pool
+   cannot correct. **The table is an upper bound under an error direction no real estimator has.**
+
+And realising any rung of it needs a native-free **external** structure estimate — which, by
+S32-L5's bijection, **is the same missing channel as everything else in this sprint.**
+
+---
+
+## S32-L(Q3) -- **CVaR-VQE CANNOT DO REAL WORK ON THIS INSTRUMENT, AND THE REASON IS THE INSTRUMENT'S CHAIN LENGTH. TWO NAMED PROPERTIES WOULD CHANGE THAT** (2026-09-21 09:14, lane Q)
+
+Charter §14 asks whether a genuine CVaR-VQE can be designed whose state and objective contain
+information that improves RMSD; charter §58 explicitly frees this lane from defending the spine.
+**The answer on `tuning126` is no, by derivation rather than by exhaustion.**
+
+A CVaR-VQE does real work on a decision only if **all five** hold: **(A)** the space is discrete and
+**too large to enumerate**; **(B)** `E(x)` is per-shot computable, **target-dependent** and
+**native-free**; **(C)** choosing better lowers **built-chain** RMSD; **(D)** no cheap exact
+classical algorithm; **(E)** `E` is a genuine **random variable**, so the lower tail differs from
+the minimum.
+
+```
+decision                          A      B      C      D      E    verdict
+candidate index (deployed)        no     no     -      no     no   dead 4 ways (Q0: target-independent)
+subset / sparse s-of-K            YES    no     yes    no     no   S32-L(Q1): constraint slack, objective ORACLE
+recon branch, per target          no     yes    open   no     no   argmax in quantum notation
+recon branch, PER RESIDUE         no*    yes    open   no*    no   * blocked ONLY by chain length
+fragment assembly (window->slot)  YES    yes    yes    YES    no   does not exist at this length
+```
+
+**Measured on the instrument: `n_res` is 9-16, mean 12.96, so `2^n_res <= 65536` on 126 of 126
+targets.** Every per-residue binary decision here is exhaustively enumerable — the memory entry
+*"exhaustive enumeration closes the search half"* arriving at the quantum register.
+
+> **P1 — the decision space must GROW WITH THE TARGET and outrun enumeration.** On 9-16-residue
+> peptides every decision in this architecture is a total ordering over <= 500 objects, a convex
+> program in disguise, or a search of <= 2^16. **Fragment assembly and per-residue branch selection
+> are the two places a genuine combinatorial problem appears, and both only exist at chain lengths
+> where one retrieved fragment no longer spans the target.**
+>
+> **P2 — the energy must be GENUINELY STOCHASTIC.** For every decision in the deployed pipeline
+> `E(x)` is a deterministic function of the bitstring, so `CVaR_alpha` is a reweighting of a fixed
+> vector whose minimiser is a face of the argmin set (S31 §7, measured). **CVaR earns its name only
+> where the energy is a SAMPLED quantity** — a free energy from a finite MD sample, a physically
+> noisy observable. Charter §34 is the one place this could be met, and it is met by the
+> **sampling**, not by the physics vocabulary.
+>
+> **P1 and P2 must hold TOGETHER.** P1 alone gives a quantum optimiser with a deterministic
+> objective, which is QAOA and not CVaR-VQE. P2 alone gives risk-sensitive selection over a small
+> set, which is a one-dimensional classical rule. **This project has never had either.**
+
+**This is the charter's closing instruction arriving as a derived requirement rather than a
+suggestion:** the honest way to give CVaR-VQE something to do is **longer chains**, and the reason
+is now a property that can be checked rather than a hope.
+
+**What this entry does NOT say.** That the quantum stage should be deleted — that is the
+coordinator's call, not this lane's. That reconstruction-branch selection is worthless: conditions
+**B and C** hold for it and **C is open**, owned by lane R. Only **A and D** fail, and they fail on
+chain length alone.
