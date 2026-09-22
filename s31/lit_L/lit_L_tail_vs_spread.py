@@ -6,7 +6,7 @@ import csv, json, os, sys, collections
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = r"C:\Users\abena\Protein-Folding-Algorithm"
+import os as _os; ROOT = _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
 
 rows = list(csv.DictReader(open(os.path.join(ROOT, "results/summary/results.csv"))))
 cfgs = collections.Counter(r["configuration"] for r in rows)

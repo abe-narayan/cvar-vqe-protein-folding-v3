@@ -6,7 +6,7 @@ the circuit cannot EXPRESS the closed-form optimum p*, and no optimiser fixes it
 """
 import sys, os, time
 import numpy as np
-sys.path.insert(0, r"C:\Users\abena\Protein-Folding-Algorithm")
+import os as _os; sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))))
 from core.quantum import cvar_exact, run_cvar_vqe
 
 sys.path.insert(0, os.path.dirname(__file__))

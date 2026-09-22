@@ -7,7 +7,7 @@ channel.  For an X-ray structure the same is true of the density.
 import sys, json, collections
 import urllib.request
 
-sys.path.insert(0, r"C:\Users\abena\Protein-Folding-Algorithm")
+import os as _os; sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))))
 import core.pipeline as P
 
 ids = [t.pdb.upper() for t in P.manifest("tuning126")]

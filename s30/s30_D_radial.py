@@ -1,9 +1,9 @@
 import os, sys, json, numpy as np
-sys.path.insert(0, r"C:\Users\abena\Protein-Folding-Algorithm")
+import os as _os; sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
 for v in ("OMP_NUM_THREADS","MKL_NUM_THREADS","OPENBLAS_NUM_THREADS"): os.environ.setdefault(v,"1")
 from s24 import stats_lib as ST
 from s27 import s28_A2_local as A2
-sys.path.insert(0, r"C:\Users\abena\Protein-Folding-Algorithm\s30")
+import os as _os; sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), "s30"))
 import s30_D_gram as G
 
 pdbs=[f[:-4] for f in sorted(os.listdir(G.CACHE)) if f.endswith(".npz")]

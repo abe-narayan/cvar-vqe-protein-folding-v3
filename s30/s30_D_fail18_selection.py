@@ -1,5 +1,5 @@
 import os, sys, json, numpy as np
-sys.path.insert(0, r"C:\Users\abena\Protein-Folding-Algorithm")
+import os as _os; sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
 for v in ("OMP_NUM_THREADS","MKL_NUM_THREADS","OPENBLAS_NUM_THREADS"): os.environ.setdefault(v,"1")
 from s12 import instrument as I
 from s24 import stats_lib as ST

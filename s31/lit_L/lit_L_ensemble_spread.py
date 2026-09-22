@@ -13,7 +13,7 @@ model 1 to the ensemble medoid.
 import sys, os, json, urllib.request, collections
 import numpy as np
 
-sys.path.insert(0, r"C:\Users\abena\Protein-Folding-Algorithm")
+import os as _os; sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))))
 import core.pipeline as P
 
 CACHE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pdbcache")
