@@ -5773,3 +5773,7 @@
 2026-09-22T01:22:20 SAMPLE   ram=87.7% (14.70GB used, 2.05GB free) cpu=9.5% (15s mean 7.8%) jobs=0 amber=0 queued=0 lanes=8
 2026-09-22T01:23:20 SAMPLE   ram=89.6% (15.01GB used, 1.74GB free) cpu=62.3% (15s mean 29.4%) jobs=0 amber=0 queued=0 lanes=8
 2026-09-22T01:24:20 SAMPLE   ram=87.1% (14.59GB used, 2.16GB free) cpu=9.1% (15s mean 9.2%) jobs=0 amber=0 queued=0 lanes=8
+2026-09-22T01:25:20 SAMPLE   ram=86.4% (14.47GB used, 2.28GB free) cpu=21.2% (15s mean 16.8%) jobs=0 amber=0 queued=0 lanes=8
+2026-09-22T01:26:20 SAMPLE   ram=86.2% (14.44GB used, 2.31GB free) cpu=13.1% (15s mean 12.3%) jobs=0 amber=0 queued=0 lanes=8
+2026-09-22T01:27:20 SAMPLE   ram=86.9% (14.56GB used, 2.19GB free) cpu=27.5% (15s mean 18.3%) jobs=0 amber=0 queued=0 lanes=8
+2026-09-22T01:28:20 SAMPLE   ram=87.7% (14.70GB used, 2.06GB free) cpu=22.1% (15s mean 17.3%) jobs=0 amber=0 queued=0 lanes=8
